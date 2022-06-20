@@ -30,6 +30,7 @@ type LoaderData = {
   user: Awaited<ReturnType<typeof getUser>>;
 };
 
+
 export const loader: LoaderFunction = async ({ request }) => {
   return json<LoaderData>({
     user: await getUser(request),
@@ -42,6 +43,8 @@ export default function App() {
       <head>
         <Meta />
         <Links />
+        <script src="https://code.iconify.design/2/2.2.1/iconify.min.js"></script>
+
       </head>
       <body className="h-full">
         <Outlet />
