@@ -82,15 +82,6 @@ async function seed() {
     }
   })
 
-
-  // const section= await prisma.section.create({
-  //   data: {
-  //     name: 'Aptitude'
-  //   }
-  // })
-
-
-
   const question= await prisma.question.create({
     data: {
       question: 'Do you know your name?',
@@ -144,16 +135,6 @@ async function seed() {
     }
   })
 
-  // const sectionWiseQuestionsForTest= await prisma.sectionWiseQuestionForTest.create({
-  //   data: {
-  //     sectionId: section.id,
-  //     testId: test.id,
-  //     questions: [
-  //       question
-  //     ]
-  //   }
-  // })
-
   // const updatedTest= await prisma.test.update({
   //   where: {
   //     id: test.id
@@ -162,14 +143,6 @@ async function seed() {
 
   //   }
   // })
-
-
-
-
-
-
-
-
 
   await prisma.note.create({
     data: {

@@ -45,32 +45,30 @@ model Role {
 }
 
 model Section {
-  id                         String                       @id @default(cuid())
-  name                       String                       @unique
-  createdAt                  DateTime                     @default(now())
-  updatedAt                  DateTime                     @updatedAt
-  questions                  Question[]
-  SectionWiseQuestionForTest SectionWiseQuestionForTest[]
-  testId                     String?
+  id        String     @id @default(cuid())
+  name      String     @unique
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  questions Question[]
+  testId    String?
+  Test      Test?      @relation(fields: [testId], references: [id])
 }
 
 model Question {
-  id                           String                      @id @default(cuid())
-  question                     String
-  options                      Option[]                    @relation("options_in_question")
-  correctOption                String[]
-  correctAnswer                String?
-  timeInSec                    Int?
-  imageUrl                     String?
-  marks                        Int                         @default(1)
-  questionType                 QuestionType                @relation(fields: [questionTypeId], references: [id])
-  section                      Section                     @relation(fields: [sectionId], references: [id])
-  createdAt                    DateTime                    @default(now())
-  updatedAt                    DateTime                    @updatedAt
-  sectionId                    String
-  questionTypeId               String
-  SectionWiseQuestionForTest   SectionWiseQuestionForTest? @relation(fields: [sectionWiseQuestionForTestId], references: [id])
-  sectionWiseQuestionForTestId String?
+  id             String       @id @default(cuid())
+  question       String
+  options        Option[]     @relation("options_in_question")
+  correctOption  String[]
+  correctAnswer  String?
+  timeInSec      Int?
+  imageUrl       String?
+  marks          Int          @default(1)
+  questionType   QuestionType @relation(fields: [questionTypeId], references: [id])
+  section        Section      @relation(fields: [sectionId], references: [id])
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  sectionId      String
+  questionTypeId String
 }
 
 model QuestionType {
@@ -102,24 +100,15 @@ model Option {
 }
 
 model Test {
-  id                     String                       @id @default(cuid())
-  name                   String                       @unique
-  totalQuestions         Int                          @default(0)
+  id                     String       @id @default(cuid())
+  name                   String       @unique
+  totalQuestions         Int          @default(0)
   description            String
   totalDurationInSeconds Int
-  createdAt              DateTime                     @default(now())
-  updatedAt              DateTime                     @updatedAt
+  createdAt              DateTime     @default(now())
+  updatedAt              DateTime     @updatedAt
   userResults            UserResult[]
-  sectionWiseQuestion    SectionWiseQuestionForTest[]
-}
-
-model SectionWiseQuestionForTest {
-  id        String     @id @default(cuid())
-  section   Section    @relation(fields: [sectionId], references: [id])
-  questions Question[]
-  Test      Test?      @relation(fields: [testId], references: [id])
-  testId    String?
-  sectionId String
+  sections               Section[]
 }
 
 model Candidates {
