@@ -4,6 +4,9 @@
 // and it will log out the cookie value you can use to interact with the server
 // as that new user.
 
+const { PrismaClient, Prisma } = require("@prisma/client");
+const prisma = new PrismaClient();
+
 import { parse } from "cookie";
 import { installGlobals } from "@remix-run/node/globals";
 import { createUserSession } from "~/session.server";
@@ -19,7 +22,13 @@ async function createAndLogin(email: string) {
     throw new Error("All test emails must end in @example.com");
   }
 
-  const user = await createUser(email, "myreallystrongpassword");
+  const role= await prisma.role.findUnique({
+    where: {
+      name: 'Test Creator',
+    },
+  })
+
+  const user = await createUser(email, "myreallystrongpassword", 'test',"user",role.id);
 
   const response = await createUserSession({
     request: new Request("test://test"),
