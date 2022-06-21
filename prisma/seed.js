@@ -28,7 +28,12 @@ async function seed() {
 
   const role=  await prisma.role.create({
     data: {
-      name: 'Admin',
+      name: 'Test Creator',
+    }
+  }) 
+  const role2= await prisma.role.create({
+    data: {
+      name: 'Recruiter',
     }
   })
 
