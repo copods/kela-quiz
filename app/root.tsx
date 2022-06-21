@@ -18,7 +18,10 @@ import styles from "./styles/global.css";
 import { getUser } from "./session.server";
 
 export const links: LinksFunction = () => {
-  return [{ rel: "stylesheet", href: tailwindStylesheetUrl },{ rel: "stylesheet", href: styles }];
+  return [
+    { rel: "stylesheet", href: tailwindStylesheetUrl },
+    { rel: "stylesheet", href: styles },
+  ];
 };
 
 export const meta: MetaFunction = () => ({
@@ -30,7 +33,6 @@ export const meta: MetaFunction = () => ({
 type LoaderData = {
   user: Awaited<ReturnType<typeof getUser>>;
 };
-
 
 export const loader: LoaderFunction = async ({ request }) => {
   return json<LoaderData>({
@@ -44,7 +46,6 @@ export default function App() {
       <head>
         <Meta />
         <Links />
-
       </head>
       <body className="h-full">
         <Outlet />

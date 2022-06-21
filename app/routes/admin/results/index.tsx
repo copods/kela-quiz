@@ -1,8 +1,3 @@
 export default function NotesPage() {
-
-  return (
-    <div >
-          Results Works...!
-    </div>
-  );
+  return <div>Results Works...!</div>;
 }

@@ -1,8 +1,3 @@
 export default function NotesPage() {
-
-  return (
-    <div >
-          Dashboard Works...!
-    </div>
-  );
+  return <div>Dashboard Works...!</div>;
 }
