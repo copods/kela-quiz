@@ -1,12 +1,8 @@
-import { Outlet } from "@remix-run/react";
 import { redirect } from "@remix-run/node";
 import type {
-    ActionFunction,
     LoaderFunction,
-    MetaFunction,
   } from "@remix-run/node";
 import { getUserId } from "~/session.server";
-import { json } from "stream/consumers";
 
 // throw redirect(`/admin/dashboard`);
 export const loader: LoaderFunction = async ({ request }) => {
