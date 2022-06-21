@@ -13,7 +13,7 @@ async function seed() {
 
   const hashedPassword = await bcrypt.hash("testPassword", 10);
 
-  await prisma.role.createMa({
+  await prisma.role.create({
     data: {
       name: "Test Creator",
     },
