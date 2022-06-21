@@ -4,13 +4,14 @@
 // and it will log out the cookie value you can use to interact with the server
 // as that new user.
 
-const { PrismaClient } = require("@prisma/client");
-const prisma = new PrismaClient();
 
 import { parse } from "cookie";
 import { installGlobals } from "@remix-run/node/globals";
 import { createUserSession } from "~/session.server";
 import { createUser } from "~/models/user.server";
+
+const { PrismaClient } = require("@prisma/client");
+const prisma = new PrismaClient();
 
 installGlobals();
 
