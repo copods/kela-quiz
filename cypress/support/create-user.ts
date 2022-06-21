@@ -4,7 +4,7 @@
 // and it will log out the cookie value you can use to interact with the server
 // as that new user.
 
-const { PrismaClient, Prisma } = require("@prisma/client");
+const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 import { parse } from "cookie";

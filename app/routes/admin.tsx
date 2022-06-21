@@ -11,7 +11,6 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 
 export default function NotesPage() {
-
   return (
     <main className="flex h-screen">
         <div className="w-2/12 bg-white min-w-260 p-6 drop-shadow-md">
