@@ -12,9 +12,6 @@ import { getUserId, createUserSession } from "~/session.server";
 import { createUser, getUserByEmail } from "~/models/user.server";
 import { safeRedirect, validateEmail } from "~/utils";
 
-const { PrismaClient } = require("@prisma/client");
-const prisma = new PrismaClient();
-
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await getUserId(request);
   if (userId) return redirect("/");
@@ -28,7 +25,7 @@ interface ActionData {
   };
 }
 
-export const action: ActionFunction = async ({ request }) => {
+export const action: ActionFunction =async ({ request }) => {
   const formData = await request.formData();
   const email = formData.get("email");
   const password = formData.get("password");
@@ -63,14 +60,7 @@ export const action: ActionFunction = async ({ request }) => {
     );
   }
 
-  const role= await prisma.role.findUnique({
-    where: {
-      name: 'Test Creator',
-    },
-  })
-
-
-  const user = await createUser(email, password, 'test','user',role.id);
+  const user = await createUser(email, password);
 
   return createUserSession({
     request,

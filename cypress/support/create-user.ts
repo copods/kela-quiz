@@ -10,9 +10,6 @@ import { installGlobals } from "@remix-run/node/globals";
 import { createUserSession } from "~/session.server";
 import { createUser } from "~/models/user.server";
 
-const { PrismaClient } = require("@prisma/client");
-const prisma = new PrismaClient();
-
 installGlobals();
 
 async function createAndLogin(email: string) {
@@ -23,13 +20,7 @@ async function createAndLogin(email: string) {
     throw new Error("All test emails must end in @example.com");
   }
 
-  const role= await prisma.role.findUnique({
-    where: {
-      name: 'Test Creator',
-    },
-  })
-
-  const user = await createUser(email, "myreallystrongpassword", 'test',"user",role.id);
+  const user = await createUser(email, "myreallystrongpassword");
 
   const response = await createUserSession({
     request: new Request("test://test"),
