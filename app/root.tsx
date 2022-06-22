@@ -14,10 +14,14 @@ import {
 } from "@remix-run/react";
 
 import tailwindStylesheetUrl from "./styles/tailwind.css";
+import globalStyles from "./styles/global.css";
 import { getUser } from "./session.server";
 
 export const links: LinksFunction = () => {
-  return [{ rel: "stylesheet", href: tailwindStylesheetUrl }];
+  return [
+    { rel: "stylesheet", href: tailwindStylesheetUrl },
+    { rel: "stylesheet", href: globalStyles },
+  ];
 };
 
 export const meta: MetaFunction = () => ({
@@ -29,7 +33,6 @@ export const meta: MetaFunction = () => ({
 type LoaderData = {
   user: Awaited<ReturnType<typeof getUser>>;
 };
-
 
 export const loader: LoaderFunction = async ({ request }) => {
   return json<LoaderData>({
@@ -43,8 +46,6 @@ export default function App() {
       <head>
         <Meta />
         <Links />
-        <script src="https://code.iconify.design/2/2.2.1/iconify.min.js"></script>
-
       </head>
       <body className="h-full">
         <Outlet />

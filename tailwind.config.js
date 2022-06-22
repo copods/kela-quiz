@@ -8,8 +8,8 @@ module.exports = {
         bgcolor : "#EFF6FF"
       },
       minWidth: {
-        260: '260px'
-      }
+        260: "260px",
+      },
     },
   },
   plugins: [],

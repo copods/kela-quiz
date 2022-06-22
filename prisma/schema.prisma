@@ -125,7 +125,7 @@ model UserResult {
   id          String       @id @default(cuid())
   userName    String
   test        Test         @relation(fields: [testId], references: [id])
-  startedAt   DateTime
+  startedAt   DateTime 
   endAt       DateTime
   marks       Int
   totalMarks  Int

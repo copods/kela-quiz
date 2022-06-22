@@ -1,6 +1,6 @@
-import type { LoaderFunction } from "@remix-run/node";
 import { Outlet } from "@remix-run/react";
-import SideNav from "~/components/SideNav/SideNav";
+import { LoaderFunction } from "@remix-run/server-runtime";
+import SideNav from "~/components/SideNav/sideNav";
 
 import { requireUserId } from "~/session.server";
 

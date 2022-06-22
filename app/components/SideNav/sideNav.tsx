@@ -1,4 +1,5 @@
 import MenuItems from "./menuItems";
+import Header from "../header";
 
 let SideNavGuide =[
     {
@@ -44,7 +45,11 @@ let SideNavGuide =[
 
 function SideNav () {
     return (
-        <div className="flex flex-col gap-8">
+        <div>
+            <div>
+                <Header />
+            </div>
+            <div className="flex flex-col gap-8">
             {SideNavGuide.map(guide => {
                 return (
                     // eslint-disable-next-line react/jsx-key
@@ -57,6 +62,7 @@ function SideNav () {
                     </div>
                 )
             })}
+        </div>
         </div>
     )
 }

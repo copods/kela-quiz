@@ -45,7 +45,6 @@ CREATE TABLE "Question" (
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "sectionId" TEXT NOT NULL,
     "questionTypeId" TEXT NOT NULL,
-    "sectionWiseQuestionForTestId" TEXT,
 
     CONSTRAINT "Question_pkey" PRIMARY KEY ("id")
 );
@@ -94,15 +93,6 @@ CREATE TABLE "Test" (
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Test_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "SectionWiseQuestionForTest" (
-    "id" TEXT NOT NULL,
-    "testId" TEXT,
-    "sectionId" TEXT NOT NULL,
-
-    CONSTRAINT "SectionWiseQuestionForTest_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -155,25 +145,19 @@ CREATE UNIQUE INDEX "Candidates_email_key" ON "Candidates"("email");
 ALTER TABLE "User" ADD CONSTRAINT "User_roleId_fkey" FOREIGN KEY ("roleId") REFERENCES "Role"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "Section" ADD CONSTRAINT "Section_testId_fkey" FOREIGN KEY ("testId") REFERENCES "Test"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "Question" ADD CONSTRAINT "Question_sectionId_fkey" FOREIGN KEY ("sectionId") REFERENCES "Section"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Question" ADD CONSTRAINT "Question_questionTypeId_fkey" FOREIGN KEY ("questionTypeId") REFERENCES "QuestionType"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Question" ADD CONSTRAINT "Question_sectionWiseQuestionForTestId_fkey" FOREIGN KEY ("sectionWiseQuestionForTestId") REFERENCES "SectionWiseQuestionForTest"("id") ON DELETE SET NULL ON UPDATE CASCADE;
-
--- AddForeignKey
 ALTER TABLE "Option" ADD CONSTRAINT "Option_questionId_fkey" FOREIGN KEY ("questionId") REFERENCES "Question"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Option" ADD CONSTRAINT "Option_optionTypeId_fkey" FOREIGN KEY ("optionTypeId") REFERENCES "OptionType"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "SectionWiseQuestionForTest" ADD CONSTRAINT "SectionWiseQuestionForTest_sectionId_fkey" FOREIGN KEY ("sectionId") REFERENCES "Section"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "SectionWiseQuestionForTest" ADD CONSTRAINT "SectionWiseQuestionForTest_testId_fkey" FOREIGN KEY ("testId") REFERENCES "Test"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Candidates" ADD CONSTRAINT "Candidates_userResultsId_fkey" FOREIGN KEY ("userResultsId") REFERENCES "UserResult"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
