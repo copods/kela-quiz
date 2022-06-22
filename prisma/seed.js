@@ -4,27 +4,27 @@ const bcrypt = require("bcryptjs");
 const prisma = new PrismaClient();
 
 async function seed() {
-  const email = "test@user.com";
+  const email = "anurag@copods.co";
 
   // cleanup the existing database
   await prisma.user.delete({ where: { email } }).catch(() => {
     // no worries if it doesn't exist yet
   });
 
-  const hashedPassword = await bcrypt.hash("testPassword", 10);
+  const hashedPassword = await bcrypt.hash("anurag", 10);
 
   const roles= ["Test Creator","Recruiter"]
 
-  await roles.forEach(async(el)=>{
+  await roles.forEach(async(roleName)=>{
     await prisma.role.upsert({
       where: {
-        name: el,
+        name: roleName,
       },
       update: {
-        name: el
+        name: roleName
       },
       create: {
-        name: el,
+        name: roleName,
       },
     })
   })
@@ -45,40 +45,40 @@ async function seed() {
           hash: hashedPassword,
         },
       },
-      firstName: "Test",
-      lastName: "User",
+      firstName: "Anurag",
+      lastName: "Patel",
       roleId: role.id
     },
   })
 
   const questionType= ["SINGLE_CHOICE","MULTIPLE_CHOICE","TEXT"]
   
-  questionType.forEach(async(el)=>{
+  questionType.forEach(async(questionName)=>{
     await prisma.questionType.upsert({
       where: {
-        name: el,
+        name: questionName,
       },
       update: {
-        name: el
+        name: questionName
       },
       create: {
-        name: el,
+        name: questionName,
       },
     })
   })
 
   const optionType= ["TEXT", "IMAGE"]
 
-  optionType.forEach(async(el)=>{
+  optionType.forEach(async(optionName)=>{
     await prisma.optionType.upsert({
       where: {
-        name: el,
+        name: optionName,
       },
       update: {
-        name: el
+        name: optionName
       },
       create: {
-        name: el,
+        name: optionName,
       },
     })
   })  

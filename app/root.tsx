@@ -14,13 +14,13 @@ import {
 } from "@remix-run/react";
 
 import tailwindStylesheetUrl from "./styles/tailwind.css";
-import styles from "./styles/globalStyles.css";
+import globalStyles from "./styles/global.css";
 import { getUser } from "./session.server";
 
 export const links: LinksFunction = () => {
   return [
     { rel: "stylesheet", href: tailwindStylesheetUrl },
-    { rel: "stylesheet", href: styles },
+    { rel: "stylesheet", href: globalStyles },
   ];
 };
 
