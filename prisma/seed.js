@@ -1,27 +1,27 @@
-const { PrismaClient } = require("@prisma/client");
-const bcrypt = require("bcryptjs");
+const { PrismaClient } = require('@prisma/client')
+const bcrypt = require('bcryptjs')
 
-const prisma = new PrismaClient();
+const prisma = new PrismaClient()
 
 async function seed() {
-  const email = "anurag@copods.co";
+  const email = 'anurag@copods.co'
 
   // cleanup the existing database
   await prisma.user.delete({ where: { email } }).catch(() => {
     // no worries if it doesn't exist yet
-  });
+  })
 
-  const hashedPassword = await bcrypt.hash("anurag", 10);
+  const hashedPassword = await bcrypt.hash('anuragpatel', 10)
 
-  const roles= ["Test Creator","Recruiter"]
+  const roles = ['Test Creator', 'Recruiter']
 
-  await roles.forEach(async(roleName)=>{
+  await roles.forEach(async (roleName) => {
     await prisma.role.upsert({
       where: {
         name: roleName,
       },
       update: {
-        name: roleName
+        name: roleName,
       },
       create: {
         name: roleName,
@@ -29,14 +29,14 @@ async function seed() {
     })
   })
 
-  const role= await prisma.role.findUnique({where: {name: "Recruiter"}})
+  const role = await prisma.role.findUnique({ where: { name: 'Recruiter' } })
 
   await prisma.user.upsert({
     where: {
-      email
+      email,
     },
     update: {
-      email
+      email,
     },
     create: {
       email,
@@ -45,21 +45,21 @@ async function seed() {
           hash: hashedPassword,
         },
       },
-      firstName: "Anurag",
-      lastName: "Patel",
-      roleId: role.id
+      firstName: 'Anurag',
+      lastName: 'Patel',
+      roleId: role.id,
     },
   })
 
-  const questionType= ["SINGLE_CHOICE","MULTIPLE_CHOICE","TEXT"]
-  
-  questionType.forEach(async(questionName)=>{
+  const questionType = ['SINGLE_CHOICE', 'MULTIPLE_CHOICE', 'TEXT']
+
+  questionType.forEach(async (questionName) => {
     await prisma.questionType.upsert({
       where: {
         name: questionName,
       },
       update: {
-        name: questionName
+        name: questionName,
       },
       create: {
         name: questionName,
@@ -67,30 +67,30 @@ async function seed() {
     })
   })
 
-  const optionType= ["TEXT", "IMAGE"]
+  const optionType = ['TEXT', 'IMAGE']
 
-  optionType.forEach(async(optionName)=>{
+  optionType.forEach(async (optionName) => {
     await prisma.optionType.upsert({
       where: {
         name: optionName,
       },
       update: {
-        name: optionName
+        name: optionName,
       },
       create: {
         name: optionName,
       },
     })
-  })  
+  })
 
-  console.log(`Database has been seeded. 🌱`);
+  console.log(`Database has been seeded. 🌱`)
 }
 
 seed()
   .catch((e) => {
-    console.error(e);
-    process.exit(1);
+    console.error(e)
+    process.exit(1)
   })
   .finally(async () => {
-    await prisma.$disconnect();
-  });
+    await prisma.$disconnect()
+  })

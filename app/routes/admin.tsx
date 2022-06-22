@@ -1,5 +1,5 @@
-import { Outlet } from "@remix-run/react";
-import { Icon } from '@iconify/react';
+import { Outlet } from '@remix-run/react'
+import { Icon } from '@iconify/react'
 
 export default function Admin() {
   return (
@@ -12,5 +12,5 @@ export default function Admin() {
         <Outlet />
       </div>
     </main>
-  );
+  )
 }
