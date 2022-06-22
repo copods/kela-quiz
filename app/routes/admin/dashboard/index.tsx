@@ -1,10 +1,3 @@
-import { Outlet } from "@remix-run/react";
-
-export default function NotesPage() {
-
-  return (
-    <div >
-          Dashboard Works...!
-    </div>
-  );
+export default function Dashboard() {
+  return <div>Dashboard Works...!</div>;
 }

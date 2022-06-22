@@ -8,7 +8,7 @@ module.exports = {
       },
       minWidth: {
         260: '260px',
-      }
+      },
     },
   },
   plugins: [],
