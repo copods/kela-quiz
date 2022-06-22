@@ -3,12 +3,10 @@ module.exports = {
   content: ["./app/**/*.{ts,tsx,jsx,js}"],
   theme: {
     extend: {
-      colors: {
-        
-      },
+      colors: {},
       minWidth: {
-        260: '260px'
-      }
+        260: "260px",
+      },
     },
   },
   plugins: [],
