@@ -13,19 +13,32 @@ async function seed() {
 
   const hashedPassword = await bcrypt.hash("testPassword", 10);
 
-  await prisma.role.create({
-    data: {
-      name: "Test Creator",
-    },
-  });
-  const role2 = await prisma.role.create({
-    data: {
-      name: "Recruiter",
-    },
-  });
+  const roles= ["Test Creator","Recruiter"]
 
-  await prisma.user.create({
-    data: {
+  await roles.forEach(async(el)=>{
+    await prisma.role.upsert({
+      where: {
+        name: el,
+      },
+      update: {
+        name: el
+      },
+      create: {
+        name: el,
+      },
+    })
+  })
+
+  const role= await prisma.role.findUnique({where: {name: "Recruiter"}})
+
+  await prisma.user.upsert({
+    where: {
+      email
+    },
+    update: {
+      email
+    },
+    create: {
       email,
       password: {
         create: {
@@ -34,21 +47,41 @@ async function seed() {
       },
       firstName: "Test",
       lastName: "User",
-      roleId: role2.id,
+      roleId: role.id
     },
-  });
+  })
 
-  await prisma.questionType.createMany({
-    data: [
-      { name: "SINGLE_CHOICE" },
-      { name: "MULTIPLE_CHOICE" },
-      { name: "TEXT" },
-    ],
-  });
+  const questionType= ["SINGLE_CHOICE","MULTIPLE_CHOICE","TEXT"]
+  
+  questionType.forEach(async(el)=>{
+    await prisma.questionType.upsert({
+      where: {
+        name: el,
+      },
+      update: {
+        name: el
+      },
+      create: {
+        name: el,
+      },
+    })
+  })
 
-  await prisma.optionType.createMany({
-    data: [{ name: "TEXT" }, { name: "IMAGE" }],
-  });
+  const optionType= ["TEXT", "IMAGE"]
+
+  optionType.forEach(async(el)=>{
+    await prisma.optionType.upsert({
+      where: {
+        name: el,
+      },
+      update: {
+        name: el
+      },
+      create: {
+        name: el,
+      },
+    })
+  })  
 
   console.log(`Database has been seeded. 🌱`);
 }

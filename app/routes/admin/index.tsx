@@ -9,7 +9,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   return null;
 };
 
-export default function NotesPage() {
+export default function AdminHome() {
   return (
     <div className="flex items-center justify-center h-screen text-xl">
       Hello Admin

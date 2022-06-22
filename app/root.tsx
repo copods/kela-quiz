@@ -14,7 +14,7 @@ import {
 } from "@remix-run/react";
 
 import tailwindStylesheetUrl from "./styles/tailwind.css";
-import styles from "./styles/global.css";
+import styles from "./styles/globalStyles.css";
 import { getUser } from "./session.server";
 
 export const links: LinksFunction = () => {
