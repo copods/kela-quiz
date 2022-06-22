@@ -33,6 +33,7 @@
     "/public/build"
   ],
   "dependencies": {
+    "@iconify/react": "^3.2.2",
     "@prisma/client": "^3.15.0",
     "@remix-run/express": "^1.6.0",
     "@remix-run/node": "^1.6.0",
@@ -93,5 +94,21 @@
   },
   "prisma": {
     "seed": "node --require tsconfig-paths/register prisma/seed.js"
-  }
+  },
+  "description": "![The Remix Blues Stack](https://repository-images.githubusercontent.com/461012689/37d5bd8b-fa9c-4ab0-893c-f0a199d5012d)",
+  "version": "1.0.0",
+  "main": ".eslintrc.js",
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/copods/kela-quiz.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/copods/kela-quiz/issues"
+  },
+  "homepage": "https://github.com/copods/kela-quiz#readme"
 }

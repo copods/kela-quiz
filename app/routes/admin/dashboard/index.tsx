@@ -4,7 +4,7 @@ export default function NotesPage() {
 
   return (
     <div >
-          Dashboard Works...!
+          Dashboard Works...! 
     </div>
   );
 }
