@@ -4,10 +4,10 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        
+        primary:"#353988"
       },
       minWidth: {
-        260: '260px'
+        260: '260px',
       }
     },
   },
