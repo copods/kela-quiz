@@ -2,82 +2,82 @@ import type {
   ActionFunction,
   LoaderFunction,
   MetaFunction,
-} from "@remix-run/node";
-import { json, redirect } from "@remix-run/node";
-import { useActionData, useSearchParams } from "@remix-run/react";
+} from '@remix-run/node'
+import { json, redirect } from '@remix-run/node'
+import { useActionData, useSearchParams } from '@remix-run/react'
 
-import { createUserSession, getUserId } from "~/session.server";
-import Login from "~/components/login/login";
-import { verifyLogin } from "~/models/user.server";
-import { safeRedirect, validateEmail } from "~/utils";
+import { createUserSession, getUserId } from '~/session.server'
+import Login from '~/components/login/login'
+import { verifyLogin } from '~/models/user.server'
+import { safeRedirect, validateEmail } from '~/utils'
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const userId = await getUserId(request);
-  if (userId) return redirect("/");
-  return json({});
-};
+  const userId = await getUserId(request)
+  if (userId) return redirect('/')
+  return json({})
+}
 
 export interface ActionData {
   errors?: {
-    email?: string;
-    password?: string;
-  };
+    email?: string
+    password?: string
+  }
 }
 
 export const action: ActionFunction = async ({ request }) => {
-  const formData = await request.formData();
-  const email = formData.get("email");
-  const password = formData.get("password");
-  const redirectTo = safeRedirect(formData.get("redirectTo"), "/");
-  const remember = formData.get("remember");
+  const formData = await request.formData()
+  const email = formData.get('email')
+  const password = formData.get('password')
+  const redirectTo = safeRedirect(formData.get('redirectTo'), '/')
+  const remember = formData.get('remember')
 
   if (!validateEmail(email)) {
     return json<ActionData>(
-      { errors: { email: "Email is invalid" } },
+      { errors: { email: 'Email is invalid' } },
       { status: 400 }
-    );
+    )
   }
 
-  if (typeof password !== "string" || password.length === 0) {
+  if (typeof password !== 'string' || password.length === 0) {
     return json<ActionData>(
-      { errors: { password: "Password is required" } },
+      { errors: { password: 'Password is required' } },
       { status: 400 }
-    );
+    )
   }
 
   if (password.length < 8) {
     return json<ActionData>(
-      { errors: { password: "Password is too short" } },
+      { errors: { password: 'Password is too short' } },
       { status: 400 }
-    );
+    )
   }
 
-  const user = await verifyLogin(email, password);
+  const user = await verifyLogin(email, password)
   if (!user) {
     return json<ActionData>(
-      { errors: { email: "Invalid email or password" } },
+      { errors: { email: 'Invalid email or password' } },
       { status: 400 }
-    );
+    )
   }
 
   return createUserSession({
     request,
     userId: user.id,
-    remember: remember === "on" ? true : false,
+    remember: remember === 'on' ? true : false,
     redirectTo,
-  });
-};
+  })
+}
 
 export const meta: MetaFunction = () => {
   return {
-    title: "Login",
-  };
-};
+    title: 'Login',
+  }
+}
 
 export default function LoginPage() {
-  const [searchParams] = useSearchParams();
-  const redirectTo = searchParams.get("redirectTo") || "/admin";
-  const actionData = useActionData() as ActionData;
+  const [searchParams] = useSearchParams()
+  const redirectTo = searchParams.get('redirectTo') || '/admin'
+  const actionData = useActionData() as ActionData
   // const emailRef = useRef<HTMLInputElement>(null);
   // const passwordRef = useRef<HTMLInputElement>(null);
 
@@ -92,5 +92,5 @@ export default function LoginPage() {
     <div className="flex min-h-full items-center justify-center">
       <Login actionData={actionData} redirectTo={redirectTo} />
     </div>
-  );
+  )
 }

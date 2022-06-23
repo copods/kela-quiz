@@ -1,3 +1,3 @@
 export default function Pagination() {
-  return <div>Pagination Works...!</div>;
+  return <div>Pagination Works...!</div>
 }
