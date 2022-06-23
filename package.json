@@ -109,6 +109,6 @@
     }
   },
   "lint-staged": {
-    "*.tsx": "eslint"
+    "*.tsx": "eslint --fix --no-verify"
   }
 }
