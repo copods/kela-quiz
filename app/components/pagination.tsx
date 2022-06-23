@@ -1,10 +1,8 @@
-import { Outlet } from "@remix-run/react";
 
-export default function NotesPage() {
-
+export default function PageNation() {
   return (
-    <div >
-          Pagination Works...!
-    </div>
+   <div>
+    
+   </div>
   );
 }

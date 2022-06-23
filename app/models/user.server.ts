@@ -5,6 +5,11 @@ import { prisma } from "~/db.server";
 
 export type { User } from "@prisma/client";
 
+export async function getAllUsers() {
+  console.log("kyu aisa kar raha hai")
+  return prisma.user.findMany();
+}
+
 export async function getUserById(id: User["id"]) {
   return prisma.user.findUnique({ where: { id } });
 }
@@ -16,16 +21,16 @@ export async function getUserByEmail(email: User["email"]) {
 export async function createUser(email: User["email"], password: string) {
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  return prisma.user.create({
-    data: {
-      email,
-      password: {
-        create: {
-          hash: hashedPassword,
-        },
-      },
-    },
-  });
+  // return prisma.user.create({
+  //   data: {
+  //     email,
+  //     password: {
+  //       create: {
+  //         hash: hashedPassword,
+  //       },
+  //     },
+  //   },
+  // });
 }
 
 export async function deleteUserByEmail(email: User["email"]) {
