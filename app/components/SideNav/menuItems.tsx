@@ -1,16 +1,15 @@
 import { Icon } from "@iconify/react"
-// import { Link } from "@remix-run/react"
+import { NavLink } from "react-router-dom"
 
 function MenuItems(props: any) {
-    // var route = "/" + props.itemName;
-    // console.log(window.location.href);
     return (
         <div>
-            {/* <Link > */}
-            <div className="flex flex-row items-start p-3.5  bg-bgcolor rounded-lg gap-2">
-                <Icon icon={props.iconClass} className="stroke-primary h-6 w-6 grow-0 order-none flex-none" ></Icon><span><p className="non-italic font-bold text-base leading-6 text-primary">{props.itemName}</p></span>
-            </div>
-            {/* </Link> */}
+            <NavLink to={`/admin/${props.itemRoute}`} className={({ isActive }) => `flex flex-row items-start p-3.5 rounded-lg gap-2 ${isActive ? 'bg-bgcolor activeNavLink' : ""}`}>
+                <div className="flex flex-row items-center gap-2">
+                    <Icon id="tabIcon" icon={props.iconClass} className="text-gray-400 text-2xl grow-0 order-none flex-none" ></Icon>
+                    <span><p className="non-italic font-semibold text-base leading-6 text-gray-500">{props.itemName}</p></span>
+                </div>
+            </NavLink>
         </div>
     )
 }

@@ -15,13 +15,13 @@ export const loader: LoaderFunction = async ({ request }) => {
 export default function NotesPage() {
 
   return (
-    <main className="flex h-screen">
-        <div className="w-2/12 bg-white min-w-260 p-6 drop-shadow-md">
+    <main className="flex min-h-screen">
+        <div className="w-2/12 bg-white min-w-260 p-5 drop-shadow-md">
             <SideNav />
         </div>
         <div className="bg-slate-50 flex-1 p-6">
             <Outlet />
         </div>
     </main>
-  );
+  )
 }

@@ -1,9 +1,9 @@
-import { faker } from "@faker-js/faker";
+import { faker } from '@faker-js/faker'
 
-describe("smoke tests", () => {
+describe('smoke tests', () => {
   afterEach(() => {
-    cy.cleanupUser();
-  });
+    cy.cleanupUser()
+  })
 
   // it("should allow you to register and login", () => {
   //   const loginForm = {
@@ -45,4 +45,4 @@ describe("smoke tests", () => {
 
   //   cy.findByText("No notes yet");
   // });
-});
+})

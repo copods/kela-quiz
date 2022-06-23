@@ -1,5 +1,7 @@
 import MenuItems from "./menuItems";
 import Header from "../header";
+import Footer from "../footer";
+
 
 let SideNavGuide =[
     {
@@ -7,11 +9,13 @@ let SideNavGuide =[
         subItem : [
             {
                 iconClass : "mdi:view-dashboard",
-                itemName : "Dashboard"
+                itemName : "Dashboard",
+                itemRoute : "dashboard"
             },
             {
                 iconClass : "mdi:chart-box-outline",
-                itemName : "Results"
+                itemName : "Results",
+                itemRoute : "results"
             }
         ]
     },
@@ -20,11 +24,13 @@ let SideNavGuide =[
         subItem : [
             {
                 iconClass : "carbon:result",
-                itemName : "Tests"
+                itemName : "Tests",
+                itemRoute : "tests"
             },
             {
                 iconClass : "ci:list-checklist-alt",
-                itemName : "Sections"
+                itemName : "Sections",
+                itemRoute : "sections"
             }
         ]
     },
@@ -33,11 +39,13 @@ let SideNavGuide =[
         subItem : [
             {
                 iconClass : "mdi:account-group",
-                itemName : "Members"
+                itemName : "Members",
+                itemRoute : "members"
             },
             {
                 iconClass : "mdi:cog",
-                itemName : "Settings"
+                itemName : "Settings",
+                itemRoute : "settings"
             }
         ]
     }
@@ -45,24 +53,29 @@ let SideNavGuide =[
 
 function SideNav () {
     return (
-        <div>
+        <div className="flex flex-col justify-between h-full">
             <div>
-                <Header />
-            </div>
-            <div className="flex flex-col gap-8">
-            {SideNavGuide.map(guide => {
-                return (
-                    // eslint-disable-next-line react/jsx-key
-                    <div className="gap-1 flex flex-col" >
-                        <p className="text-[#9CA3AF]  text-xs non-italic font-semibold leading-4 text-left pb-2 pl-2">{guide.navGuide}</p>
-                        {guide.subItem.map(item => {
+                <div className="mb-16 px-1">
+                    <Header />
+                </div>
+                <div className="flex flex-col gap-8">
+                    {SideNavGuide.map(guide => {
+                        return (
                             // eslint-disable-next-line react/jsx-key
-                            return (<MenuItems iconClass={item.iconClass} itemName={item.itemName} />)
-                        })}
-                    </div>
-                )
-            })}
-        </div>
+                            <div className="gap-1 flex flex-col" >
+                                <p className="text-[#9CA3AF]  text-xs non-italic font-semibold leading-4 text-left pb-2 px-2">{guide.navGuide}</p>
+                                {guide.subItem.map(item => {
+                                    // eslint-disable-next-line react/jsx-key
+                                    return (<MenuItems iconClass={item.iconClass} itemName={item.itemName} itemRoute={item.itemRoute} />)
+                                })}
+                            </div>
+                        )
+                    })}
+                </div>
+            </div>
+            <div className="justify-end">
+                <Footer />
+            </div>
         </div>
     )
 }

@@ -1,3 +1,3 @@
 export default function Members() {
-  return <div>Members Works...!</div>;
+  return <div>Members Works...!</div>
 }

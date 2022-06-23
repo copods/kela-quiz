@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./app/**/*.{ts,tsx,jsx,js}"],
+  content: ['./app/**/*.{ts,tsx,jsx,js}'],
   theme: {
     extend: {
       colors: {
@@ -8,9 +8,9 @@ module.exports = {
         bgcolor : "#EFF6FF"
       },
       minWidth: {
-        260: "260px",
+        260: '260px',
       },
     },
   },
   plugins: [],
-};
+}
