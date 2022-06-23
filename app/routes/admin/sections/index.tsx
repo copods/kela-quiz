@@ -1,7 +1,3 @@
-import Pagination from "~/components/pagination";
-
 export default function Section() {
-  return <div>
-    <Pagination />
-  </div>
+  return <div>Section Works...!</div>
 }
