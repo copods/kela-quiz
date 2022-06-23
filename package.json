@@ -109,6 +109,7 @@
     }
   },
   "lint-staged": {
-    "*.tsx": "eslint"
+    "*.tsx": "eslint",
+    "*.ts": "eslint"
   }
 }
