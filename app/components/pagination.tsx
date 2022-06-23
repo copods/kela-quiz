@@ -1,10 +1,3 @@
-export default function Pagination(abc: {abc: []}) {
-  console.log(abc,"abc")
-  abc.abc=[]
-
-
-
-
-
+export default function Pagination() {
   return <div>Pagination Works...!</div>
 }
