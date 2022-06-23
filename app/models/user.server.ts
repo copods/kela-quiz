@@ -15,7 +15,6 @@ export async function getUserByEmail(email: User["email"]) {
 
 export async function createUser(email: User["email"], password: string) {
   const hashedPassword = await bcrypt.hash(password, 10);
-
   const role = await prisma.role.findUnique({
     where: {
       name: "Test Creator",
@@ -51,8 +50,7 @@ export async function verifyLogin(
       password: true,
     },
   });
-
-  if (!userWithPassword || !userWithPassword.password) {
+  if (!userWithPassword || !userWithPassword?.password) {
     return null;
   }
 

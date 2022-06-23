@@ -11,7 +11,7 @@ async function seed() {
     // no worries if it doesn't exist yet
   });
 
-  const hashedPassword = await bcrypt.hash("anurag", 10);
+  const hashedPassword = await bcrypt.hash("anuragpatel", 10);
 
   const roles= ["Test Creator","Recruiter"]
 

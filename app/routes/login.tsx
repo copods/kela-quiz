@@ -5,7 +5,6 @@ import type {
 } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import { useActionData, useSearchParams } from "@remix-run/react";
-import * as React from "react";
 
 import { createUserSession, getUserId } from "~/session.server";
 import Login from "~/components/login/login";
@@ -18,7 +17,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   return json({});
 };
 
-interface ActionData {
+export interface ActionData {
   errors?: {
     email?: string;
     password?: string;
@@ -54,7 +53,6 @@ export const action: ActionFunction = async ({ request }) => {
   }
 
   const user = await verifyLogin(email, password);
-
   if (!user) {
     return json<ActionData>(
       { errors: { email: "Invalid email or password" } },
@@ -80,20 +78,19 @@ export default function LoginPage() {
   const [searchParams] = useSearchParams();
   const redirectTo = searchParams.get("redirectTo") || "/admin";
   const actionData = useActionData() as ActionData;
-  const emailRef = React.useRef<HTMLInputElement>(null);
-  const passwordRef = React.useRef<HTMLInputElement>(null);
+  // const emailRef = useRef<HTMLInputElement>(null);
+  // const passwordRef = useRef<HTMLInputElement>(null);
 
-  React.useEffect(() => {
-    if (actionData?.errors?.email) {
-      emailRef.current?.focus();
-    } else if (actionData?.errors?.password) {
-      passwordRef.current?.focus();
-    }
-  }, [actionData]);
-
+  // useEffect(() => {
+  //   if (actionData?.errors?.email) {
+  //     emailRef.current?.focus();
+  //   } else if (actionData?.errors?.password) {
+  //     passwordRef.current?.focus();
+  //   }
+  // }, [actionData]);
   return (
     <div className="flex min-h-full items-center justify-center">
-      <Login />
+      <Login actionData={actionData} redirectTo={redirectTo} />
     </div>
   );
 }

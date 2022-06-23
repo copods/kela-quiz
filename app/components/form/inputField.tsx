@@ -4,9 +4,27 @@ interface result {
   placeholder: string;
   type: string;
   required: boolean;
+  value: string;
+  setValue: React.Dispatch<React.SetStateAction<string>>;
+  error?: string;
+  errorId: string;
 }
 
-function InputField({ name, label, placeholder, type, required }: result) {
+function InputField({
+  name,
+  label,
+  placeholder,
+  type,
+  required,
+  value,
+  setValue,
+  error,
+  errorId,
+}: result) {
+  function onhandleChange(e: string) {
+    setValue(e);
+  }
+
   return (
     <div>
       <label
@@ -22,8 +40,16 @@ function InputField({ name, label, placeholder, type, required }: result) {
         autoFocus={true}
         name={name}
         type={type}
-        className="h-11 w-full rounded rounded-lg border border-[#D5DAE1] px-3.5 py-2.5 text-lg"
+        value={value}
+        className="h-11 w-full rounded rounded-lg border border-gray-200 px-3.5 py-2.5 text-lg"
+        onChange={(e) => onhandleChange(e.target.value)}
       />
+
+      {required && error && (
+        <div className="pt-1 text-red-700" id={errorId}>
+          {error}
+        </div>
+      )}
     </div>
   );
 }
