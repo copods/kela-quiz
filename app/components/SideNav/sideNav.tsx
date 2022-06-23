@@ -55,14 +55,14 @@ function SideNav () {
     return (
         <div className="flex flex-col justify-between h-full">
             <div>
-                <div className="mb-16 px-1">
+                <div className="mb-14 px-1">
                     <Header />
                 </div>
                 <div className="flex flex-col gap-8">
                     {SideNavGuide.map(guide => {
                         return (
                             // eslint-disable-next-line react/jsx-key
-                            <div className="gap-1 flex flex-col" >
+                            <div className="gap-1 flex flex-col 10px" >
                                 <p className="text-[#9CA3AF]  text-xs non-italic font-semibold leading-4 text-left pb-2 px-2">{guide.navGuide}</p>
                                 {guide.subItem.map(item => {
                                     // eslint-disable-next-line react/jsx-key

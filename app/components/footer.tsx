@@ -5,7 +5,7 @@ function Footer() {
     const user = useUser()
     return (
         <div>
-            <div className="border-gray-300 border border-solid mb-4"></div>
+            <hr className="border-gray-300 border border-solid mb-3 mt-3"></hr>
             <div className="flex items-center gap-1 justify-between">
 
                 <div className="w-10 h-10 bg-primary rounded-full flex justify-center items-center">
@@ -13,7 +13,7 @@ function Footer() {
                 </div>
 
                 <div className="flex-col gap-2">
-                    <p className="text-xs leading-4 font-semibold ">{user.firstName} {user.lastName}</p>
+                    <p className="text-xs leading-4 font-semibold text-gray-900">{user.firstName} {user.lastName}</p>
                     <p className="text-xs leading-4 font-normal text-gray-500 truncate w-32">shreya.jain@copods.co</p>
                 </div>
 
