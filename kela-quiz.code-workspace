@@ -1,0 +1,57 @@
+{
+	"folders": [
+		{
+			"path": "app"
+		},
+		{
+			"path": "build"
+		},
+		{
+			"path": "cypress"
+		},
+		{
+			"path": "mocks"
+		},
+		{
+			"path": "prisma"
+		},
+		{
+			"path": "public"
+		},
+		{
+			"path": "test"
+		},
+	],
+	"settings": {
+		"editor.tabSize": 2,
+		"editor.codeActionsOnSave": {
+			"source.fixAll.eslint": true
+		},
+		"editor.formatOnSave": true,
+		"editor.formatOnType": true,
+		"editor.formatOnPaste": true,
+		"editor.defaultFormatter": "dbaeumer.vscode-eslint",
+		"[typescript]": {
+			"editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
+		},
+		"[css]": {
+			"editor.defaultFormatter": "esbenp.prettier-vscode"
+		},
+		"[prisma]": {
+			"editor.defaultFormatter": "Prisma.prisma"
+		},
+	},
+	"extensions": {
+		"recommendations": [
+      "bradlc.vscode-tailwindcss",
+      "dbaeumer.vscode-eslint",
+      "rvest.vs-code-prettier-eslint",
+      "esbenp.prettier-vscode",
+      "usernamehw.errorlens",
+      "prisma.prisma",
+			"streetsidesoftware.code-spell-checker",
+			"eamodio.gitlens",
+			"github.vscode-pull-request-github",
+		]
+	}
+}
