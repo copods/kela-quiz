@@ -1,3 +1,7 @@
+import Pagination from "~/components/pagination";
+
 export default function Section() {
-  return <div>Section Works...!</div>
+  return <div>
+    <Pagination abc={[]} />
+  </div>
 }
