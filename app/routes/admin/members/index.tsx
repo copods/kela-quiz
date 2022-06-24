@@ -15,18 +15,7 @@ export default function NotesPage() {
   const data = useLoaderData() as LoaderData;
   return (
     <div>
-      <Member />
-      
-      <ul>
-        {data?.users.map((user) => (
-          <li key={user.id}>
-            <h1 >{user.firstName}</h1>
-          </li>
-        ))}
-      </ul>
-
-
-
+      <Member data={data.users} />
     </div>
   );
 }
