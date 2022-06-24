@@ -1,9 +1,9 @@
-import MenuItems from "./menuItems";
-import Header from "../header";
-import Footer from "../footer";
+import MenuItems from "./MenuItems";
+import Header from "../Header";
+import Footer from "../Footer";
 
 
-let SideNavGuide =[
+let sideNavGuide =[
     {
         navGuide : "Main Menu",
         subItem : [
@@ -59,11 +59,11 @@ function SideNav () {
                     <Header />
                 </div>
                 <div className="flex flex-col gap-8">
-                    {SideNavGuide.map(guide => {
+                    {sideNavGuide.map(guide => {
                         return (
                             // eslint-disable-next-line react/jsx-key
                             <div className="gap-1 flex flex-col 10px" >
-                                <p className="text-[#9CA3AF]  text-xs non-italic font-semibold leading-4 text-left pb-2 px-2">{guide.navGuide}</p>
+                                <p className="text-gray-400  text-xs non-italic font-semibold leading-4 text-left pb-2 px-2">{guide.navGuide}</p>
                                 {guide.subItem.map(item => {
                                     // eslint-disable-next-line react/jsx-key
                                     return (<MenuItems iconClass={item.iconClass} itemName={item.itemName} itemRoute={item.itemRoute} />)

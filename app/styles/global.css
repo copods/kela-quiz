@@ -6,9 +6,9 @@
   font-family: 'Poppins', sans-serif;
 }
 
-.activeNavLink div #tabIcon{
+.active_nav_link div #tabIcon{
   color: #353988;
 }
-.activeNavLink div span p{
+.active_nav_link div span p{
   color: #353988 !important;
 }

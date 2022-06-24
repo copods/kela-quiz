@@ -13,8 +13,8 @@ function Footer() {
                 </div>
 
                 <div className="flex-col gap-2">
-                    <p className="text-xs leading-4 font-semibold text-gray-900">{user.firstName} {user.lastName}</p>
-                    <p className="text-xs leading-4 font-normal text-gray-500 truncate w-32">shreya.jain@copods.co</p>
+                    <p className="text-xs leading-4 font-semibold text-gray-900 truncate w-32">{user.firstName} {user.lastName}</p>
+                    <p className="text-xs leading-4 font-normal text-gray-500 truncate w-32">{ user.email }</p>
                 </div>
 
                 
