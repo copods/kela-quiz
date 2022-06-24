@@ -1,46 +1,46 @@
-import React, { useState } from "react";
-import { Form } from "@remix-run/react";
-import Button from "../form/button";
-import Checkbox from "../form/checkbox";
-import InputField from "../form/inputField";
-import Logo from "../logo";
-import e from "express";
-import { ActionData } from "../../routes/login";
+import React, { useState } from 'react'
+import { Form } from '@remix-run/react'
+import Button from '../form/button'
+import Checkbox from '../form/checkbox'
+import InputField from '../form/inputField'
+import Logo from '../logo'
+import e from 'express'
+import { ActionData } from '../../routes/login'
 
 interface props {
-  actionData: ActionData;
-  redirectTo: string;
+  actionData: ActionData
+  redirectTo: string
 }
 
 function Login({ actionData, redirectTo }: props) {
-  const [isRemember, setIsRemember] = React.useState<boolean>(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [isRemember, setIsRemember] = React.useState<boolean>(false)
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
 
   const inputFieldsProps = [
     {
-      label: "Email",
-      placeholder: "Enter Email",
-      type: "text",
-      name: "email",
+      label: 'Email',
+      placeholder: 'Enter Email',
+      type: 'text',
+      name: 'email',
       required: true,
       value: email,
       setValue: setEmail,
       error: actionData?.errors?.email,
-      errorId: "email-error",
+      errorId: 'email-error',
     },
     {
-      label: "Password",
-      placeholder: "Enter Password",
-      type: "password",
-      name: "password",
+      label: 'Password',
+      placeholder: 'Enter Password',
+      type: 'password',
+      name: 'password',
       required: true,
       value: password,
       setValue: setPassword,
       error: actionData?.errors?.password,
-      errorId: "password-error",
+      errorId: 'password-error',
     },
-  ];
+  ]
 
   return (
     <div className="z-10 flex	 min-h-[480px] w-full max-w-[554px] flex-col items-center justify-center rounded-2xl bg-white px-24 drop-shadow-xl">
@@ -57,7 +57,7 @@ function Login({ actionData, redirectTo }: props) {
         <Form method="post">
           <div className="flex flex-col gap-6">
             {inputFieldsProps.map((props) => {
-              return <InputField {...props} key={props.name} />;
+              return <InputField {...props} key={props.name} />
             })}
           </div>
           <div className="mt-4 flex items-center justify-between">
@@ -81,7 +81,7 @@ function Login({ actionData, redirectTo }: props) {
         </Form>
       </div>
     </div>
-  );
+  )
 }
 
-export default Login;
+export default Login
