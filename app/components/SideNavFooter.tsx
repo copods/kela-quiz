@@ -1,6 +1,7 @@
 import { Icon } from "@iconify/react"
-import { useUser } from "~/utils";
-import { Form } from "@remix-run/react";
+import { useUser } from "~/utils"
+import { Form } from "@remix-run/react"
+
 function Footer() {
     const user = useUser()
     return (

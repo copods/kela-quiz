@@ -2,7 +2,6 @@ import MenuItems from "./MenuItems";
 import Header from "~/components/SideNavHeader";
 import Footer from "~/components/SideNavFooter";
 
-
 let sideNavGuide =[
     {
         navGuide : "Main Menu",
@@ -52,6 +51,7 @@ let sideNavGuide =[
 ]
 
 function SideNav () {
+
     return (
         <div className="flex flex-col justify-between h-full">
             <div>

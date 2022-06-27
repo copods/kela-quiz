@@ -13,7 +13,8 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 
 export default function NotesPage() {
-
+  // const user= useUser()
+  // console.log(user)
   return (
     <main className="flex min-h-screen">
         <div className="w-2/12 bg-white min-w-260 p-5 drop-shadow-md">

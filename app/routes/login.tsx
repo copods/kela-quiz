@@ -13,7 +13,7 @@ import { safeRedirect, validateEmail } from '~/utils'
 
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await getUserId(request)
-  if (userId) return redirect('/')
+  if (userId) return redirect('/admin/dashboard')
   return json({})
 }
 
@@ -77,7 +77,7 @@ export const meta: MetaFunction = () => {
 
 export default function LoginPage() {
   const [searchParams] = useSearchParams()
-  const redirectTo = searchParams.get('redirectTo') || '/admin'
+  const redirectTo = searchParams.get('redirectTo') || '/admin/dashboard'
   const actionData = useActionData() as ActionData
   const emailRef = React.useRef<HTMLInputElement>(null)
   const passwordRef = React.useRef<HTMLInputElement>(null)
