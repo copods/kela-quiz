@@ -49,7 +49,7 @@ export async function requireUserId(
   const userId = await getUserId(request)
   if (!userId) {
     const searchParams = new URLSearchParams([['redirectTo', redirectTo]])
-    throw redirect(`/login?${searchParams}`)
+    throw redirect(`/sign-in?${searchParams}`)
   }
   return userId
 }
@@ -89,7 +89,7 @@ export async function createUserSession({
 
 export async function logout(request: Request) {
   const session = await getSession(request)
-  return redirect('/login', {
+  return redirect('/sign-in', {
     headers: {
       'Set-Cookie': await sessionStorage.destroySession(session),
     },
