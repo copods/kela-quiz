@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Form } from '@remix-run/react'
-import Button from '~/components/Form/Button'
+import { Button } from '~/components/Form/Button'
 import Checkbox from '~/components/Form/CheckBox'
 import InputField from '~/components/Form/InputField'
 import Logo from '~/components/Logo'
