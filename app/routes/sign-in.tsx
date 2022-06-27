@@ -7,10 +7,10 @@ import { json, redirect } from '@remix-run/node'
 import { useActionData, useSearchParams } from '@remix-run/react'
 
 import { createUserSession, getUserId } from '~/session.server'
-import Login from '~/components/Login/Login'
 import { verifyLogin } from '~/models/user.server'
 import { safeRedirect, validateEmail } from '~/utils'
 import type { ActionData } from '~/components/Interface'
+import Login from '~/components/Login/Login'
 
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await getUserId(request)

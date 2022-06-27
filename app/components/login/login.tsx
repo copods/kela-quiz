@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { Form } from '@remix-run/react'
-import Button from '../Form/Button'
-import Checkbox from '../Form/CheckBox'
-import InputField from '../Form/InputField'
-import Logo from '../Logo'
+import Button from '~/components/Form/Button'
+import Checkbox from '~/components/Form/CheckBox'
+import InputField from '~/components/Form/InputField'
+import Logo from '~/components/Logo'
 import type { LoginProps } from '~/components/Interface'
 
 function Login({ actionData, redirectTo }: LoginProps) {
