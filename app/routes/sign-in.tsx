@@ -14,7 +14,7 @@ import Login from '~/components/login/Login'
 
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await getUserId(request)
-  if (userId) return redirect('/admin/dashboard')
+  if (userId) return redirect('/dashboard')
   return json({})
 }
 
@@ -22,7 +22,7 @@ export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
   const email = formData.get('email')
   const password = formData.get('password')
-  const redirectTo = safeRedirect(formData.get('redirectTo'), '/admin/dashboard')
+  const redirectTo = safeRedirect(formData.get('redirectTo'), '/dashboard')
   const remember = formData.get('remember')
 
   if (!validateEmail(email)) {
@@ -70,7 +70,7 @@ export const meta: MetaFunction = () => {
 
 export default function LoginPage() {
   const [searchParams] = useSearchParams()
-  const redirectTo = searchParams.get('redirectTo') || '/admin/dashboard'
+  const redirectTo = searchParams.get('redirectTo') || '/dashboard'
   const actionData = useActionData() as ActionData
   // const emailRef = useRef<HTMLInputElement>(null);
   // const passwordRef = useRef<HTMLInputElement>(null);
