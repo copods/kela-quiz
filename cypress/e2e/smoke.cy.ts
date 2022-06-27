@@ -1,10 +1,23 @@
+/// <reference types="Cypress"/>
+
 import { faker } from '@faker-js/faker'
 
 describe('smoke tests', () => {
-  afterEach(() => {
-    cy.cleanupUser()
+  it ("Login", ()=>{
+      cy.visit("/sign-in");
+      cy.get("#email").type("anurag@copods.co").should("have.value","anurag@copods.co");
+      cy.get("#password").type("anuragpatel").should("have.value","anuragpatel");
+      cy.findByRole("button").click();
+      cy.url().should("includes","/admin/dashboard");
   })
-
+  // it ("Login Message Check", ()=>{
+  //     cy.visit("/sign-in");
+  //     cy.get("#email").type("anuragpods.co"); 
+  //     cy.get("#password").type("anuragpatel").should("have.value","anuragpatel");
+  //     cy.findByRole("button").click();
+  //     cy.get("#email-error").should("have.value","Email is invalid");
+  //     cy.url().should("includes","/admin/dashboard");
+  // })
   // it("should allow you to register and login", () => {
   //   const loginForm = {
   //     email: `${faker.internet.userName()}@example.com`,
