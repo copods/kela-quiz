@@ -9,7 +9,7 @@ function Footer() {
             <div className="flex items-center gap-1 justify-between">
 
                 <div className="w-10 h-10 bg-primary rounded-full flex justify-center items-center">
-                    <span className="text-white text-lg leading-7 font-medium absolute">{user.firstName.slice(0, 1)}{user.lastName.slice(0, 1)}</span>
+                    <span className="text-white text-lg leading-7 font-medium">{user.firstName.slice(0, 1)}{user.lastName.slice(0, 1)}</span>
                 </div>
 
                 <div className="flex-col gap-2">
@@ -18,7 +18,7 @@ function Footer() {
                 </div>
 
                 
-                <Form action="/login" method="post">
+                <Form action="/logout" method="post">
                     <button type="submit" className="w-10 h-10 bg-red-500 rounded-lg items-center flex justify-center">
                         <Icon icon="mdi:logout-variant" className="absolute text-gray-50 w-5 h-5"></Icon>
                     </button>
