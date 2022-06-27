@@ -10,7 +10,7 @@ import { createUserSession, getUserId } from '~/session.server'
 import { verifyLogin } from '~/models/user.server'
 import { safeRedirect, validateEmail } from '~/utils'
 import type { ActionData } from '~/components/Interface'
-import Login from '~/components/Login/Login'
+import Login from '~/components/login/Login'
 
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await getUserId(request)

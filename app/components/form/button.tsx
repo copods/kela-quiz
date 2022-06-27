@@ -1,6 +1,6 @@
 import type { ButtonProps } from '~/components/Interface'
 
-export function Button(props: ButtonProps) {
+export default function Button(props: ButtonProps) {
   return (
     <button
       className="w-full rounded bg-primary py-2.5 text-gray-50"
