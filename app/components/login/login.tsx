@@ -1,21 +1,24 @@
 import React, { useState } from 'react'
 import { Form } from '@remix-run/react'
-import Button from '../form/button'
-import Checkbox from '../form/checkbox'
-import InputField from '../form/inputField'
-import Logo from '../logo'
+import Button from '../Form/Button'
+import Checkbox from '../Form/CheckBox'
+import InputField from '../Form/InputField'
+import Logo from '../Logo'
 import e from 'express'
-import { ActionData } from '../../routes/login'
+import type { LoginProps } from '~/components/Interface'
 
-interface props {
-  actionData: ActionData
-  redirectTo: string
-}
-
-function Login({ actionData, redirectTo }: props) {
+function Login({ actionData, redirectTo }: LoginProps) {
   const [isRemember, setIsRemember] = React.useState<boolean>(false)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+
+  const checkboxProps = {
+    handleChange: function (e: any) {
+      setIsRemember((e.target as HTMLInputElement).checked)
+    },
+    isChecked: isRemember,
+    name: 'remember-me',
+  }
 
   const inputFieldsProps = [
     {
@@ -25,9 +28,11 @@ function Login({ actionData, redirectTo }: props) {
       name: 'email',
       required: true,
       value: email,
-      setValue: setEmail,
       error: actionData?.errors?.email,
       errorId: 'email-error',
+      onChange: function (event: any) {
+        setEmail(event?.target.value)
+      },
     },
     {
       label: 'Password',
@@ -36,14 +41,16 @@ function Login({ actionData, redirectTo }: props) {
       name: 'password',
       required: true,
       value: password,
-      setValue: setPassword,
       error: actionData?.errors?.password,
       errorId: 'password-error',
+      onChange: function (event: any) {
+        setPassword(event?.target.value)
+      },
     },
   ]
 
   return (
-    <div className="z-10 flex	 min-h-[480px] w-full max-w-[554px] flex-col items-center justify-center rounded-2xl bg-white px-24 drop-shadow-xl">
+    <div className="z-10 flex	min-h-[480px] w-full max-w-[554px] flex-col items-center justify-center rounded-2xl bg-white px-24 drop-shadow-xl">
       <div className="z-20 -mt-24 mb-6">
         <Logo />
       </div>
@@ -62,7 +69,7 @@ function Login({ actionData, redirectTo }: props) {
           </div>
           <div className="mt-4 flex items-center justify-between">
             <div className="flex">
-              <Checkbox setIsRemember={setIsRemember} />
+              <Checkbox {...checkboxProps} />
               <label
                 htmlFor="remember"
                 className="ml-2 block text-xs text-gray-800"

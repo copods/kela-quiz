@@ -7,21 +7,15 @@ import { json, redirect } from '@remix-run/node'
 import { useActionData, useSearchParams } from '@remix-run/react'
 
 import { createUserSession, getUserId } from '~/session.server'
-import Login from '~/components/login/login'
+import Login from '~/components/Login/Login'
 import { verifyLogin } from '~/models/user.server'
 import { safeRedirect, validateEmail } from '~/utils'
+import type { ActionData } from '~/components/Interface'
 
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await getUserId(request)
-  if (userId) return redirect('/')
+  if (userId) return redirect('/sign-in')
   return json({})
-}
-
-export interface ActionData {
-  errors?: {
-    email?: string
-    password?: string
-  }
 }
 
 export const action: ActionFunction = async ({ request }) => {
@@ -89,7 +83,7 @@ export default function LoginPage() {
   //   }
   // }, [actionData]);
   return (
-    <div className="flex min-h-full items-center justify-center">
+    <div className="flex min-h-full items-center justify-center bg-gray-50">
       <Login actionData={actionData} redirectTo={redirectTo} />
     </div>
   )

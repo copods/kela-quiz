@@ -1,19 +1,14 @@
-interface types {
-  type: "submit" | "reset" | "button";
-  buttonText: string;
-  handleClick?: React.MouseEventHandler<HTMLButtonElement>;
-}
+import type { ButtonProps } from '~/components/Interface'
 
-function Button({ type, buttonText, handleClick }: types) {
+function Button(props: ButtonProps) {
   return (
     <button
-      type={type}
       className="w-full rounded bg-primary py-2.5 text-gray-50"
-      onClick={handleClick}
+      {...props}
     >
-      {buttonText}
+      {props.buttonText}
     </button>
-  );
+  )
 }
 
-export default Button;
+export default Button

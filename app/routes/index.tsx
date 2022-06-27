@@ -9,7 +9,7 @@ import { useOptionalUser } from '~/utils'
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await getUserId(request)
   if (userId) return redirect('/admin/dashboard')
-  return null
+  return redirect('/sign-in')
 }
 
 export default function Index() {
@@ -54,7 +54,7 @@ export default function Index() {
                       Sign up
                     </Link>
                     <Link
-                      to="/login"
+                      to="/sign-in"
                       className="flex items-center justify-center rounded-md bg-blue-500 px-4 py-3 font-medium text-white hover:bg-blue-600  "
                     >
                       Log In
