@@ -5,3 +5,10 @@
 * {
   font-family: 'Poppins', sans-serif;
 }
+
+.active_nav_link div #tabIcon{
+  color: #353988;
+}
+.active_nav_link div span p{
+  color: #353988 !important;
+}

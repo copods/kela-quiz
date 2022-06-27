@@ -5,7 +5,6 @@ import { redirect } from '@remix-run/node'
 
 import { useOptionalUser } from '~/utils'
 
-// throw redirect(`/admin/dashboard`);
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await getUserId(request)
   if (userId) return redirect('/admin/dashboard')
