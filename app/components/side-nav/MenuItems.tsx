@@ -1,5 +1,5 @@
 import { Icon } from "@iconify/react"
-import { NavLink } from "react-router-dom"
+import { NavLink } from "@remix-run/react"
 
 export interface tabProps {
     iconClass : string,
