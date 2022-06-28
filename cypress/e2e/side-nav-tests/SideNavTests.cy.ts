@@ -27,7 +27,7 @@ import { includes } from "cypress/types/lodash"
     cy.get('#password').type('anuragpatel').should('have.value' , 'anuragpatel')
     cy.findByRole("button").click();
 
-    cy.visit('/admin/results')
+    cy.visit('/admin/results').wait(5000)
     cy.get('a').find('#Results').should('have.text','Results').click().url().should('includes' , '/admin/results')
   })
 
@@ -37,7 +37,7 @@ import { includes } from "cypress/types/lodash"
     cy.get('#password').type('anuragpatel').should('have.value' , 'anuragpatel')
     cy.findByRole("button").click();
 
-    cy.visit('/admin/tests')
+    cy.visit('/admin/tests').wait(5000)
     cy.get('a').find('#Tests').should('have.text','Tests').click().url().should('includes' , '/admin/tests')
   })
 
@@ -47,7 +47,7 @@ import { includes } from "cypress/types/lodash"
     cy.get('#password').type('anuragpatel').should('have.value' , 'anuragpatel')
     cy.findByRole("button").click();
 
-    cy.visit('/admin/members')
+    cy.visit('/admin/members').wait(5000)
     cy.get('a').find('#Members').should('have.text','Members').click().url().should('includes' , '/admin/members')
   })
 
@@ -57,7 +57,7 @@ import { includes } from "cypress/types/lodash"
     cy.get('#password').type('anuragpatel').should('have.value' , 'anuragpatel')
     cy.findByRole("button").click();
 
-    cy.visit('/admin/results')
+    cy.visit('/admin/results').wait(5000)
     cy.get('a').should('have.class' , 'bg-blue-50')
   })
 
