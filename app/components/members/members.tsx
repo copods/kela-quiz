@@ -1,5 +1,4 @@
 export default function Member({ data }: any) {
-  console.log(data)
   return (
     <div>
       <div className="p-6">

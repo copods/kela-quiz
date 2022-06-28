@@ -26,9 +26,11 @@ type LoaderData = {
 export const loader: LoaderFunction = async ({ request, params }) => {
   const sections = await getAllSections()
   const userId = await getUserId(request)
+  console.log("section me h bahi hum", sections[0])
   if (!userId) return redirect('/sign-in')
   const selectedSectionId = params.sectionId ? params.sectionId?.toString() : 'NA'
-  return json<LoaderData>({ sections, selectedSectionId })
+  // return redirect(`/sections/${sections[0].id}`)
+  return json<LoaderData>({ sections, selectedSectionId }) 
 }
 
 export const action: ActionFunction = async ({ request }) => {

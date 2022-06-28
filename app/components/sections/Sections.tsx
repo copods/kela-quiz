@@ -20,7 +20,7 @@ const Sections = ({ data }: any) => {
   const getClassName = (id: string) => {
     var tempClasses = "rounded-2xl p-6 flex flex-col gap-2 "
     if (id === selectedSection) {
-      tempClasses += "bg-white border pl-[17px] border-transparent shadow-md border-l-8 border-copods"
+      tempClasses += "bg-white border pl-[17px] border-transparent shadow-md border-l-8 border-primary"
     } else {
       tempClasses += "bg-gray-100 border border-gray-200"
     }
