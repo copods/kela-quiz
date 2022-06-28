@@ -3,13 +3,15 @@
 import { faker } from '@faker-js/faker'
 
 describe('smoke tests', () => {
-  // it ("Login", ()=>{
-  //     cy.visit("/sign-in");
-  //     cy.get("#email").type("anurag@copods.co").should("have.value","anurag@copods.co");
-  //     cy.get("#password").type("anuragpatel").should("have.value","anuragpatel");
-  //     cy.findByRole("button").click();
-  //     cy.url().should("includes","/admin/dashboard");
-  // })
+  it('Login', () => {
+    cy.visit('/sign-in')
+    cy.get('#email')
+      .type('anurag@copods.co')
+      .should('have.value', 'anurag@copods.co')
+    cy.get('#password').type('anuragpatel').should('have.value', 'anuragpatel')
+    cy.findByRole('button').click()
+    cy.url().should('includes', '/admin/dashboard')
+  })
   // it ("Login Message Check", ()=>{
   //     cy.visit("/sign-in");
   //     cy.get("#email").type("anuragpods.co");

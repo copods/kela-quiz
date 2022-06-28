@@ -33,19 +33,26 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 }
 
 export const action: ActionFunction = async ({ request }) => {
-  const userId = await requireUserId(request)
+  const createdById = await requireUserId(request)
 
   const formData = await request.formData()
   const name = formData.get('name')
+  const description = formData.get('description')
 
   if (typeof name !== 'string' || name.length === 0) {
     return json<ActionData>(
-      { errors: { title: 'Title is required' } },
+      { errors: { title: 'Name is required' } },
+      { status: 400 }
+    )
+  }
+  if (typeof description !== 'string' || description.length === 0) {
+    return json<ActionData>(
+      { errors: { title: 'Description is required' } },
       { status: 400 }
     )
   }
 
-  const section = await createSection({ name, userId })
+  const section = await createSection({ name, description, createdById })
 
   return redirect(`/sections/${section.id}`)
   // return null

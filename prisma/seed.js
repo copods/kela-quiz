@@ -6,30 +6,38 @@ const prisma = new PrismaClient()
 async function seed() {
   const email = 'anurag@copods.co'
 
-  // cleanup the existing database
-  await prisma.user.delete({ where: { email } }).catch(() => {
-    // no worries if it doesn't exist yet
-  })
-
   const hashedPassword = await bcrypt.hash('anuragpatel', 10)
 
-  const roles = ['Test Creator', 'Recruiter']
+  const roles = [
+    {
+      id: 'cl4xvj89a000209jp4qtlfyih',
+      name: 'Test Creator'
+    },
+    {
+      id: 'cl4xvjdqs000309jp3rwiefp8',
+      name: 'Recruiter'
+    }
+  ]
 
-  await roles.forEach(async (roleName) => {
-    await prisma.role.upsert({
-      where: {
-        name: roleName,
-      },
-      update: {
-        name: roleName,
-      },
-      create: {
-        name: roleName,
-      },
+  const createRoles = () => {
+    roles.forEach(async (role) => {
+      await prisma.role.upsert({
+        where: {
+          id: role.id,
+        },
+        update: {
+          id: role.id,
+          name: role.name,
+        },
+        create: {
+          id: role.id,
+          name: role.name,
+        },
+      })
     })
-  })
+  }
 
-  const role = await prisma.role.findUnique({ where: { name: 'Recruiter' } })
+  await createRoles()
 
   await prisma.user.upsert({
     where: {
@@ -47,38 +55,64 @@ async function seed() {
       },
       firstName: 'Anurag',
       lastName: 'Patel',
-      roleId: role.id,
+      roleId: roles[0].id,
     },
   })
 
-  const questionType = ['SINGLE_CHOICE', 'MULTIPLE_CHOICE', 'TEXT']
+  const questionType = [
+    {
+      displayName: 'Single Choice',
+      value: 'SINGLE_CHOICE'
+    },
+    {
+      displayName: 'Multiple Choice',
+      value: 'MULTIPLE_CHOICE'
+    },
+    {
+      displayName: 'Text',
+      value: 'TEXT'
+    }
+  ]
 
   questionType.forEach(async (questionName) => {
     await prisma.questionType.upsert({
       where: {
-        name: questionName,
+        value: questionName.value,
       },
       update: {
-        name: questionName,
+        displayName: questionName.displayName,
+        value: questionName.value,
       },
       create: {
-        name: questionName,
+        displayName: questionName.displayName,
+        value: questionName.value,
       },
     })
   })
 
-  const optionType = ['TEXT', 'IMAGE']
+  const optionType = [
+    {
+      displayName: 'Text',
+      value: 'TEXT'
+    },
+    {
+      displayName: 'Image',
+      value: 'IMAGE'
+    },
+  ]
 
   optionType.forEach(async (optionName) => {
     await prisma.optionType.upsert({
       where: {
-        name: optionName,
+        value: optionName.value,
       },
       update: {
-        name: optionName,
+        displayName: optionName.displayName,
+        value: optionName.value,
       },
       create: {
-        name: optionName,
+        displayName: optionName.displayName,
+        value: optionName.value,
       },
     })
   })

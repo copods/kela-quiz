@@ -38,98 +38,160 @@ model Role {
 }
 
 model Section {
-  id        String     @id @default(cuid())
-  name      String     @unique
-  user      User       @relation(fields: [userId], references: [id])
-  userId    String
-  questions Question[]
-  tests     Test[]
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
+  id                     String                   @id @default(cuid())
+  name                   String                   @unique
+  createdBy              User                     @relation(fields: [createdById], references: [id])
+  createdById            String
+  description            String
+  questions              Question[]
+  sectionInCandidateTest SectionInCandidateTest[]
+  sectionInTest          SectionInTest[]
+  createdAt              DateTime                 @default(now())
+  updatedAt              DateTime                 @updatedAt
 }
 
 model Question {
-  id             String       @id @default(cuid())
-  question       String
-  options        Option[]     @relation("options_in_question")
-  correctOptions Option[]     @relation("correct_options_in_question")
-  correctAnswer  String[]
-  imageUrl       String?
-  marks          Int          @default(1)
-  questionType   QuestionType @relation(fields: [questionTypeId], references: [id])
-  questionTypeId String
-  section        Section      @relation(fields: [sectionId], references: [id])
-  sectionId      String
-  user           User         @relation(fields: [userId], references: [id])
-  userId         String
-  createdAt      DateTime     @default(now())
-  updatedAt      DateTime     @updatedAt
+  id                String              @id @default(cuid())
+  question          String
+  options           Option[]            @relation("options_in_question")
+  correctOptions    Option[]            @relation("correct_options_in_question")
+  correctAnswer     String[]
+  marks             Int                 @default(1)
+  questionType      QuestionType        @relation(fields: [questionTypeId], references: [id])
+  questionTypeId    String
+  section           Section             @relation(fields: [sectionId], references: [id])
+  sectionId         String
+  createdBy         User                @relation(fields: [createdById], references: [id])
+  createdById       String
+  candidateQuestion CandidateQuestion[]
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
 }
 
 model QuestionType {
-  id        String     @id @default(cuid())
-  name      String     @unique
-  questions Question[]
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
+  id          String     @id @default(cuid())
+  value       String     @unique
+  displayName String
+  questions   Question[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
 }
 
 model OptionType {
-  id        String   @id @default(cuid())
-  name      String   @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  questions Option[]
+  id          String   @id @default(cuid())
+  value       String   @unique
+  displayName String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  questions   Option[]
 }
 
 model Option {
-  id             String     @id @default(cuid())
-  option         String?
-  optionType     OptionType @relation(fields: [optionTypeId], references: [id])
-  optionTypeId   String
-  imageUrl       String?
-  question       Question   @relation("options_in_question", fields: [questionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  questionId     String
-  coInQuestion   Question   @relation("correct_options_in_question", fields: [coInQuestionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  coInQuestionId String
-  user           User       @relation(fields: [userId], references: [id])
-  userId         String
-  createdAt      DateTime   @default(now())
-  updatedAt      DateTime   @updatedAt
+  id                  String             @id @default(cuid())
+  option              String?
+  optionType          OptionType         @relation(fields: [optionTypeId], references: [id])
+  optionTypeId        String
+  imageUrl            String?
+  question            Question           @relation("options_in_question", fields: [questionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  questionId          String
+  coInQuestion        Question           @relation("correct_options_in_question", fields: [coInQuestionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  coInQuestionId      String
+  createdBy           User               @relation(fields: [createdById], references: [id])
+  createdById         String
+  candidateQuestion   CandidateQuestion? @relation(fields: [candidateQuestionId], references: [id])
+  candidateQuestionId String?
+  createdAt           DateTime           @default(now())
+  updatedAt           DateTime           @updatedAt
 }
 
 model Test {
-  id          String       @id @default(cuid())
-  name        String       @unique
-  description String
-  userResults UserResult[]
-  sections    Section[]
-  user        User         @relation(fields: [userId], references: [id])
-  userId      String
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
+  id              String            @id @default(cuid())
+  name            String            @unique
+  description     String
+  sections        SectionInTest[]
+  createdBy       User              @relation(fields: [createdById], references: [id])
+  createdById     String
+  candidateTest   CandidateTest[]
+  candidateResult CandidateResult[]
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+}
+
+model SectionInTest {
+  id             String   @id @default(cuid())
+  section        Section  @relation(fields: [sectionId], references: [id])
+  sectionId      String
+  timeInSeconds  Int
+  totalQuestions Int
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  Test           Test?    @relation(fields: [testId], references: [id])
+  testId         String?
 }
 
 model Candidate {
-  id          String       @id @default(cuid())
-  email       String       @unique
-  isQualified Boolean
-  result      UserResult[]
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
+  id          String            @id @default(cuid())
+  email       String            @unique
+  isQualified Boolean?
+  tests       CandidateTest[]
+  result      CandidateResult[]
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
 }
 
-model UserResult {
-  id          String    @id @default(cuid())
-  candidates  Candidate @relation(fields: [candidateId], references: [id])
-  candidateId String
-  test        Test      @relation(fields: [testId], references: [id])
-  testId      String
+model CandidateTest {
+  id              String                   @id @default(cuid())
+  sections        SectionInCandidateTest[]
+  test            Test                     @relation(fields: [testId], references: [id])
+  testId          String
+  link            String
+  candidate       Candidate[]
+  startedAt       DateTime?
+  endAt           DateTime?
+  createdAt       DateTime                 @default(now())
+  updatedAt       DateTime                 @updatedAt
+  CandidateResult CandidateResult[]
+}
+
+model SectionInCandidateTest {
+  id              String              @id @default(cuid())
+  section         Section             @relation(fields: [sectionId], references: [id])
+  sectionId       String
+  questions       CandidateQuestion[]
+  candidateTest   CandidateTest?      @relation(fields: [candidateTestId], references: [id])
+  candidateTestId String?
+  startedAt       DateTime?
+  endAt           DateTime?
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @updatedAt
+}
+
+model CandidateQuestion {
+  id                       String                  @id @default(cuid())
+  question                 Question                @relation(fields: [questionId], references: [id])
+  questionId               String
+  selectedOptions          Option[]
+  answers                  String[]
+  SectionInCandidateTest   SectionInCandidateTest? @relation(fields: [sectionInCandidateTestId], references: [id])
+  sectionInCandidateTestId String?
+  createdAt                DateTime                @default(now())
+  updatedAt                DateTime                @updatedAt
+}
+
+model CandidateResult {
+  id              String        @id @default(cuid())
+  candidates      Candidate     @relation(fields: [candidateId], references: [id])
+  candidateId     String
+  candidateTest   CandidateTest @relation(fields: [candidateTestId], references: [id])
+  candidateTestId String
+
+  // easier access of test and results
+  test   Test   @relation(fields: [testId], references: [id])
+  testId String
+
   marks       Int
   totalMarks  Int
   isQualified Boolean
-  startedAt   DateTime
-  endedAt     DateTime
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }

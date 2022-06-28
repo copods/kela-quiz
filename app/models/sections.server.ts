@@ -18,12 +18,14 @@ export async function getAllSections() {
 
 export async function createSection({
   name,
-  userId,
-}: Pick<Section, 'name'> & { userId: User['id'] }) {
+  description,
+  createdById,
+}: Pick<Section, 'name' | 'description'> & { createdById: User['id'] }) {
   return await prisma.section.create({
     data: {
       name,
-      userId,
+      description,
+      createdById,
     },
   })
 }
