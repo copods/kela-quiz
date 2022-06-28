@@ -49,7 +49,14 @@ export const action: ActionFunction = async ({ request }) => {
   const user = await verifyLogin(email, password)
   if (!user) {
     return json<ActionData>(
-      { errors: { email: 'Invalid email or password' } },
+      { errors: { email: 'Invalid email' } },
+      { status: 400 }
+    )
+  }
+
+  if (user === 'passwordInvalid') {
+    return json<ActionData>(
+      { errors: { password: 'Invalid password' } },
       { status: 400 }
     )
   }

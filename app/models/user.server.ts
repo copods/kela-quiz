@@ -57,12 +57,10 @@ export async function verifyLogin(
   }
 
   const isValid = await bcrypt.compare(password, userWithPassword.password.hash)
-
   if (!isValid) {
-    return null
+    return "passwordInvalid"
   }
 
   const { password: _password, ...userWithoutPassword } = userWithPassword
-
   return userWithoutPassword
 }
