@@ -25,9 +25,9 @@ CREATE TABLE "Role" (
 CREATE TABLE "Section" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "testId" TEXT,
 
     CONSTRAINT "Section_pkey" PRIMARY KEY ("id")
 );
@@ -36,15 +36,14 @@ CREATE TABLE "Section" (
 CREATE TABLE "Question" (
     "id" TEXT NOT NULL,
     "question" TEXT NOT NULL,
-    "correctOption" TEXT[],
-    "correctAnswer" TEXT,
-    "timeInSec" INTEGER,
+    "correctAnswer" TEXT[],
     "imageUrl" TEXT,
     "marks" INTEGER NOT NULL DEFAULT 1,
+    "questionTypeId" TEXT NOT NULL,
+    "sectionId" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "sectionId" TEXT NOT NULL,
-    "questionTypeId" TEXT NOT NULL,
 
     CONSTRAINT "Question_pkey" PRIMARY KEY ("id")
 );
@@ -72,12 +71,14 @@ CREATE TABLE "OptionType" (
 -- CreateTable
 CREATE TABLE "Option" (
     "id" TEXT NOT NULL,
-    "option" TEXT NOT NULL,
+    "option" TEXT,
+    "optionTypeId" TEXT NOT NULL,
     "imageUrl" TEXT,
+    "questionId" TEXT NOT NULL,
+    "coInQuestionId" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "questionId" TEXT NOT NULL,
-    "optionTypeId" TEXT NOT NULL,
 
     CONSTRAINT "Option_pkey" PRIMARY KEY ("id")
 );
@@ -86,9 +87,8 @@ CREATE TABLE "Option" (
 CREATE TABLE "Test" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
-    "totalQuestions" INTEGER NOT NULL DEFAULT 0,
     "description" TEXT NOT NULL,
-    "totalDurationInSeconds" INTEGER NOT NULL,
+    "userId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -96,31 +96,36 @@ CREATE TABLE "Test" (
 );
 
 -- CreateTable
-CREATE TABLE "Candidates" (
+CREATE TABLE "Candidate" (
     "id" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "isQualified" BOOLEAN NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "userResultsId" TEXT NOT NULL,
 
-    CONSTRAINT "Candidates_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Candidate_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "UserResult" (
     "id" TEXT NOT NULL,
-    "userName" TEXT NOT NULL,
-    "startedAt" TIMESTAMP(3) NOT NULL,
-    "endAt" TIMESTAMP(3) NOT NULL,
+    "candidateId" TEXT NOT NULL,
+    "testId" TEXT NOT NULL,
     "marks" INTEGER NOT NULL,
     "totalMarks" INTEGER NOT NULL,
     "isQualified" BOOLEAN NOT NULL,
+    "startedAt" TIMESTAMP(3) NOT NULL,
+    "endedAt" TIMESTAMP(3) NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "testId" TEXT NOT NULL,
 
     CONSTRAINT "UserResult_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "_SectionToTest" (
+    "A" TEXT NOT NULL,
+    "B" TEXT NOT NULL
 );
 
 -- CreateIndex
@@ -139,13 +144,22 @@ CREATE UNIQUE INDEX "OptionType_name_key" ON "OptionType"("name");
 CREATE UNIQUE INDEX "Test_name_key" ON "Test"("name");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Candidates_email_key" ON "Candidates"("email");
+CREATE UNIQUE INDEX "Candidate_email_key" ON "Candidate"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "_SectionToTest_AB_unique" ON "_SectionToTest"("A", "B");
+
+-- CreateIndex
+CREATE INDEX "_SectionToTest_B_index" ON "_SectionToTest"("B");
 
 -- AddForeignKey
 ALTER TABLE "User" ADD CONSTRAINT "User_roleId_fkey" FOREIGN KEY ("roleId") REFERENCES "Role"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Section" ADD CONSTRAINT "Section_testId_fkey" FOREIGN KEY ("testId") REFERENCES "Test"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "Section" ADD CONSTRAINT "Section_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Question" ADD CONSTRAINT "Question_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Question" ADD CONSTRAINT "Question_sectionId_fkey" FOREIGN KEY ("sectionId") REFERENCES "Section"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -154,13 +168,28 @@ ALTER TABLE "Question" ADD CONSTRAINT "Question_sectionId_fkey" FOREIGN KEY ("se
 ALTER TABLE "Question" ADD CONSTRAINT "Question_questionTypeId_fkey" FOREIGN KEY ("questionTypeId") REFERENCES "QuestionType"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "Option" ADD CONSTRAINT "Option_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "Option" ADD CONSTRAINT "Option_questionId_fkey" FOREIGN KEY ("questionId") REFERENCES "Question"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Option" ADD CONSTRAINT "Option_coInQuestionId_fkey" FOREIGN KEY ("coInQuestionId") REFERENCES "Question"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Option" ADD CONSTRAINT "Option_optionTypeId_fkey" FOREIGN KEY ("optionTypeId") REFERENCES "OptionType"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Candidates" ADD CONSTRAINT "Candidates_userResultsId_fkey" FOREIGN KEY ("userResultsId") REFERENCES "UserResult"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Test" ADD CONSTRAINT "Test_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "UserResult" ADD CONSTRAINT "UserResult_testId_fkey" FOREIGN KEY ("testId") REFERENCES "Test"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "UserResult" ADD CONSTRAINT "UserResult_candidateId_fkey" FOREIGN KEY ("candidateId") REFERENCES "Candidate"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_SectionToTest" ADD CONSTRAINT "_SectionToTest_A_fkey" FOREIGN KEY ("A") REFERENCES "Section"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_SectionToTest" ADD CONSTRAINT "_SectionToTest_B_fkey" FOREIGN KEY ("B") REFERENCES "Test"("id") ON DELETE CASCADE ON UPDATE CASCADE;

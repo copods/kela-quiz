@@ -4,7 +4,8 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary:"#353988"
+        primary: '#353988',
+        bgcolor: '#EFF6FF',
       },
       minWidth: {
         260: '260px',
