@@ -5,10 +5,9 @@ import { includes } from "cypress/types/lodash"
  describe('Test for Logout, SideNav' , ()=>{   
   it('Sample Login' , ()=> {
     cy.visit("/sign-in")
-    cy.on('uncaught:exception', (err, runnable) => { return false; })
     cy.get('#email').type('anurag@copods.co').should('have.value' , 'anurag@copods.co')
     cy.get('#password').type('anuragpatel').should('have.value' , 'anuragpatel')
-    cy.find("button").click();
+    cy.findByRole("button").click();
   })
 
 
@@ -19,7 +18,7 @@ import { includes } from "cypress/types/lodash"
     cy.findByRole("button").click()
 
     cy.visit('/admin/dashboard')
-    cy.url().should('include','/admin/dashboard')
+    cy.url().should('includes','/admin/dashboard')
   })
 
   it('Test for Routing and Active Tab for Results' , () => {
@@ -62,7 +61,7 @@ import { includes } from "cypress/types/lodash"
     cy.get('a').should('have.class' , 'bg-blue-50')
   })
 
-  it('is redirected to the login page on log out', () => {
+  it('Test to redirect to the login page on log out', () => {
     cy.get('form').click().url().should('includes', '/sign-in')
   })
 
