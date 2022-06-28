@@ -61,7 +61,7 @@ import { includes } from "cypress/types/lodash"
     cy.get('a').should('have.class' , 'bg-blue-50')
   })
 
-  it('is redirected to the login page on log out', () => {
+  it('Test to redirect to the login page on log out', () => {
     cy.get('form').click().url().should('includes', '/sign-in')
   })
 
