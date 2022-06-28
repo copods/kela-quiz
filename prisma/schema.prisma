@@ -77,21 +77,9 @@ model QuestionType {
   updatedAt   DateTime   @updatedAt
 }
 
-model OptionType {
-  id          String   @id @default(cuid())
-  value       String   @unique
-  displayName String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  questions   Option[]
-}
-
 model Option {
   id                  String             @id @default(cuid())
   option              String?
-  optionType          OptionType         @relation(fields: [optionTypeId], references: [id])
-  optionTypeId        String
-  imageUrl            String?
   question            Question           @relation("options_in_question", fields: [questionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   questionId          String
   coInQuestion        Question           @relation("correct_options_in_question", fields: [coInQuestionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
@@ -125,16 +113,18 @@ model SectionInTest {
   totalQuestions Int
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
-  Test           Test?    @relation(fields: [testId], references: [id])
-  testId         String?
+  test           Test     @relation(fields: [testId], references: [id])
+  testId         String
 }
 
 model Candidate {
   id          String            @id @default(cuid())
   email       String            @unique
+  firstName   String
+  lastName    String
   isQualified Boolean?
   tests       CandidateTest[]
-  result      CandidateResult[]
+  results     CandidateResult[]
   createdAt   DateTime          @default(now())
   updatedAt   DateTime          @updatedAt
 }
@@ -145,42 +135,59 @@ model CandidateTest {
   test            Test                     @relation(fields: [testId], references: [id])
   testId          String
   link            String
-  candidate       Candidate[]
+  candidate       Candidate                @relation(fields: [candidateId], references: [id])
+  candidateId     String
+  candidateResult CandidateResult[]
   startedAt       DateTime?
   endAt           DateTime?
   createdAt       DateTime                 @default(now())
   updatedAt       DateTime                 @updatedAt
-  CandidateResult CandidateResult[]
 }
 
 model SectionInCandidateTest {
-  id              String              @id @default(cuid())
-  section         Section             @relation(fields: [sectionId], references: [id])
-  sectionId       String
-  questions       CandidateQuestion[]
-  candidateTest   CandidateTest?      @relation(fields: [candidateTestId], references: [id])
-  candidateTestId String?
-  startedAt       DateTime?
-  endAt           DateTime?
-  createdAt       DateTime            @default(now())
-  updatedAt       DateTime            @updatedAt
+  id                      String                    @id @default(cuid())
+  section                 Section                   @relation(fields: [sectionId], references: [id])
+  sectionId               String
+  questions               CandidateQuestion[]
+  candidateTest           CandidateTest             @relation(fields: [candidateTestId], references: [id])
+  candidateTestId         String
+  timeInCandidateQuestion TimeInCandidateQuestion[]
+  startedAt               DateTime?
+  endAt                   DateTime?
+  createdAt               DateTime                  @default(now())
+  updatedAt               DateTime                  @updatedAt
 }
 
 model CandidateQuestion {
-  id                       String                  @id @default(cuid())
-  question                 Question                @relation(fields: [questionId], references: [id])
+  id                       String                    @id @default(cuid())
+  question                 Question                  @relation(fields: [questionId], references: [id])
   questionId               String
+  status                   String                    @default("NOT_VIEWED") // NOT_VIEWED, VIEWED, SKIPPED, ANSWERED
   selectedOptions          Option[]
   answers                  String[]
-  SectionInCandidateTest   SectionInCandidateTest? @relation(fields: [sectionInCandidateTestId], references: [id])
-  sectionInCandidateTestId String?
-  createdAt                DateTime                @default(now())
-  updatedAt                DateTime                @updatedAt
+  sectionInCandidateTest   SectionInCandidateTest    @relation(fields: [sectionInCandidateTestId], references: [id])
+  sectionInCandidateTestId String
+  timeInCandidateQuestion  TimeInCandidateQuestion[]
+  answeredAt               DateTime?
+  createdAt                DateTime                  @default(now())
+  updatedAt                DateTime                  @updatedAt
+}
+
+model TimeInCandidateQuestion {
+  id         String                 @id @default(cuid())
+  question   CandidateQuestion      @relation(fields: [questionId], references: [id])
+  questionId String
+  section    SectionInCandidateTest @relation(fields: [sectionId], references: [id])
+  sectionId  String
+  enterAt    DateTime
+  exitAt     DateTime
+  createdAt  DateTime               @default(now())
+  updatedAt  DateTime               @updatedAt
 }
 
 model CandidateResult {
   id              String        @id @default(cuid())
-  candidates      Candidate     @relation(fields: [candidateId], references: [id])
+  candidate       Candidate     @relation(fields: [candidateId], references: [id])
   candidateId     String
   candidateTest   CandidateTest @relation(fields: [candidateTestId], references: [id])
   candidateTestId String
@@ -189,8 +196,6 @@ model CandidateResult {
   test   Test   @relation(fields: [testId], references: [id])
   testId String
 
-  marks       Int
-  totalMarks  Int
   isQualified Boolean
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt

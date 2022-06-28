@@ -90,33 +90,6 @@ async function seed() {
     })
   })
 
-  const optionType = [
-    {
-      displayName: 'Text',
-      value: 'TEXT'
-    },
-    {
-      displayName: 'Image',
-      value: 'IMAGE'
-    },
-  ]
-
-  optionType.forEach(async (optionName) => {
-    await prisma.optionType.upsert({
-      where: {
-        value: optionName.value,
-      },
-      update: {
-        displayName: optionName.displayName,
-        value: optionName.value,
-      },
-      create: {
-        displayName: optionName.displayName,
-        value: optionName.value,
-      },
-    })
-  })
-
   console.log(`Database has been seeded. 🌱`)
 }
 
