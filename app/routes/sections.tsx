@@ -26,11 +26,10 @@ type LoaderData = {
 export const loader: LoaderFunction = async ({ request, params }) => {
   const sections = await getAllSections()
   const userId = await getUserId(request)
-  console.log("section me h bahi hum", sections[0])
   if (!userId) return redirect('/sign-in')
   const selectedSectionId = params.sectionId ? params.sectionId?.toString() : 'NA'
   // return redirect(`/sections/${sections[0].id}`)
-  return json<LoaderData>({ sections, selectedSectionId }) 
+  return json<LoaderData>({ sections, selectedSectionId })
 }
 
 export const action: ActionFunction = async ({ request }) => {
@@ -79,24 +78,24 @@ export default function Section() {
   return (
     <AdminLayout>
       <SectionsPage>
-          <div className={getparentClassName()}>
-            {/* section list */}
-            <Sections data={data} />
+        <div className={getparentClassName()}>
+          {/* section list */}
+          <Sections data={data} />
 
-            {/* section details */}
-            <div className={getSectionDetailClassName()}>
-              <span className="z-20 -mr-5">
-                {
-                  sectionDetailFull
-                    ?
-                    <Icon icon={'akar-icons:circle-chevron-right-fill'} className="cursor-pointer text-primary text-4xl" onClick={() => setSectionDetailFull(!sectionDetailFull)} />
-                    :
-                    <Icon icon={'akar-icons:circle-chevron-left-fill'} className="cursor-pointer text-primary text-4xl" onClick={() => setSectionDetailFull(!sectionDetailFull)} />
-                }
-              </span>
-              <Outlet />
-            </div>
+          {/* section details */}
+          <div className={getSectionDetailClassName()}>
+            <span className="z-20 -mr-5">
+              {
+                sectionDetailFull
+                  ?
+                  <Icon icon={'akar-icons:circle-chevron-right-fill'} className="cursor-pointer text-primary text-4xl" onClick={() => setSectionDetailFull(!sectionDetailFull)} />
+                  :
+                  <Icon icon={'akar-icons:circle-chevron-left-fill'} className="cursor-pointer text-primary text-4xl" onClick={() => setSectionDetailFull(!sectionDetailFull)} />
+              }
+            </span>
+            <Outlet />
           </div>
+        </div>
       </SectionsPage>
     </AdminLayout>
   )
