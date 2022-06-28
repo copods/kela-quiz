@@ -18,6 +18,8 @@ const QuestionDetails = ({ sectionDetails }: any) => {
   const [currentAccordian, setOpenAccordian] = useState(-1)
   const [search, setSearch] = useState('')
 
+  const [question, setQuestion] = useState('')
+
 
   return (
     <div className="w-full px-9 py-6 h-full bg-white border border-gray-200 rounded-2xl flex flex-col gap-6 overflow-auto" >
@@ -25,7 +27,7 @@ const QuestionDetails = ({ sectionDetails }: any) => {
       <hr className="-mt-2 border-0 h-px bg-gray-300 w-full" />
       <div className="flex justify-between items-center">
         <input type="text" name="search" className="w-48 h-9 rounded-lg border border-gray-200 text-sm px-3" placeholder="Search" onChange={(e) => setSearch(e.target.value)} />
-        <button className="px-5 h-9 text-[#F0FDF4] bg-copods rounded-lg text-xs" onClick={() => setAddQuestionModalValue(!addQuestionModal)} >+ Add Question</button>
+        <button className="px-5 h-9 text-[#F0FDF4] bg-primary rounded-lg text-xs" onClick={() => setAddQuestionModalValue(!addQuestionModal)} >+ Add Question</button>
       </div>
 
       {/* QUESTION LIST  */}
@@ -51,7 +53,6 @@ const QuestionDetails = ({ sectionDetails }: any) => {
                 {question.question}<br />
                 {question.question}<br />
                 {question.question}<br />
-                {question.question}<br />
 
               </div>
             </div>
@@ -61,10 +62,6 @@ const QuestionDetails = ({ sectionDetails }: any) => {
       {
         sectionDetails.questions.length === 0 && <div className='flex justify-center p-7'>No Record Found</div>
       }
-
-
-
-
 
       {/* ADD QUESTIONS  */}
       <Transition.Root show={addQuestionModal} as={Fragment}>
@@ -101,9 +98,10 @@ const QuestionDetails = ({ sectionDetails }: any) => {
                   <div className="pb-6">
 
                     <ClientOnly fallback={<div ></div>}>
-                      {() => <QuillEditor />}
+                      {() => <QuillEditor setData={(e)=>{console.log('std: ',e);setQuestion(e)}}/>}
                     </ClientOnly>
-                    <div className='h-8'></div>
+                    <div className='h-12'></div>
+                    <div dangerouslySetInnerHTML={{__html: question}}></div>
                   </div>
 
                   <div className="flex gap-2 justify-end">
@@ -116,7 +114,7 @@ const QuestionDetails = ({ sectionDetails }: any) => {
                     </button>
                     <button
                       type="submit"
-                      className="px-4 h-9 rounded-md text-sm text-[#F0FDF4] bg-copods"
+                      className="px-4 h-9 rounded-md text-sm text-[#F0FDF4] bg-primary"
                       onClick={() => setAddQuestionModalValue(false)}
                     >
                       Add

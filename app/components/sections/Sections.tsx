@@ -54,7 +54,7 @@ const Sections = ({ data }: any) => {
       {
         data.sections?.map((el: any) => {
           return <div onClick={() => setSelectedSection(el.id)} key={el.id}>
-            <Link to={'/admin/sections/' + el.id} className={getClassName(el.id)}>
+            <Link to={'/sections/' + el.id} className={getClassName(el.id)}>
               <div className="flex justify-between items-center">
                 <h2 className="text-xl font-semibold text-gray-700">{el.name}</h2>
                 <Icon className="text-2xl text-gray-600" icon={'mdi:dots-vertical'} />
@@ -72,6 +72,9 @@ const Sections = ({ data }: any) => {
             </Link>
           </div>
         })
+      }
+      {
+        data.sections.length === 0 && <div className='flex justify-center p-7'>No Record Found</div>
       }
     </div >
   )

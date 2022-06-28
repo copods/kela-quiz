@@ -15,12 +15,14 @@ import {
 
 import tailwindStylesheetUrl from './styles/tailwind.css'
 import globalStyles from './styles/global.css'
+import quillEditorStyles from 'quill/dist/quill.snow.css'
 import { getUser } from './session.server'
 
 export const links: LinksFunction = () => {
   return [
     { rel: 'stylesheet', href: tailwindStylesheetUrl },
     { rel: 'stylesheet', href: globalStyles },
+    { rel: 'stylesheet', href: quillEditorStyles },
   ]
 }
 
