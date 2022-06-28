@@ -2,63 +2,72 @@
 
 import { includes } from "cypress/types/lodash"
 
- describe('Test for Logout, SideNav' , ()=>{   
-  it('Sample Login' , ()=> {
+describe('Test for Logout, SideNav', () => {
+  it('Sample Login', () => {
     cy.visit("/sign-in")
-    cy.get('#email').type('anurag@copods.co').should('have.value' , 'anurag@copods.co')
-    cy.get('#password').type('anuragpatel').should('have.value' , 'anuragpatel')
+    cy.get('#email').type('anurag@copods.co').should('have.value', 'anurag@copods.co')
+    cy.get('#password').type('anuragpatel').should('have.value', 'anuragpatel')
     cy.findByRole("button").click();
   })
 
 
-  it('Test to Direct to Dashboard after Login' , ()=>{
+  it('Test to Direct to Dashboard after Login', () => {
     cy.visit("/sign-in")
-    cy.get('#email').type('anurag@copods.co').should('have.value' , 'anurag@copods.co')
-    cy.get('#password').type('anuragpatel').should('have.value' , 'anuragpatel')
+    cy.get('#email').type('anurag@copods.co').should('have.value', 'anurag@copods.co')
+    cy.get('#password').type('anuragpatel').should('have.value', 'anuragpatel')
     cy.findByRole("button").click()
 
-    cy.visit('/admin/dashboard')
-    cy.url().should('includes','/admin/dashboard')
+    cy.location('pathname', { timeout: 60000 })
+      .should('include', '/admin/dashboard');
+
   })
 
-  it('Test for Routing and Active Tab for Results' , () => {
+  it('Test for Routing and Active Tab for Results', () => {
     cy.visit("/sign-in")
-    cy.get('#email').type('anurag@copods.co').should('have.value' , 'anurag@copods.co')
-    cy.get('#password').type('anuragpatel').should('have.value' , 'anuragpatel')
+    cy.get('#email').type('anurag@copods.co').should('have.value', 'anurag@copods.co')
+    cy.get('#password').type('anuragpatel').should('have.value', 'anuragpatel')
     cy.findByRole("button").click();
 
-    cy.visit('/admin/results').wait(5000)
-    cy.get('a').find('#Results').should('have.text','Results').click().url().should('includes' , '/admin/results')
+    cy.get('a').find('#Results').should('have.text', 'Results').click()
+    cy.location('pathname', { timeout: 60000 })
+      .should('include', '/admin/results');
   })
 
-  it('Test for Routing and Active Tab for Tests' , () => {
+  it('Test for Routing and Active Tab for Tests', () => {
     cy.visit("/sign-in")
-    cy.get('#email').type('anurag@copods.co').should('have.value' , 'anurag@copods.co')
-    cy.get('#password').type('anuragpatel').should('have.value' , 'anuragpatel')
+    cy.get('#email').type('anurag@copods.co').should('have.value', 'anurag@copods.co')
+    cy.get('#password').type('anuragpatel').should('have.value', 'anuragpatel')
     cy.findByRole("button").click();
 
-    cy.visit('/admin/tests').wait(5000)
-    cy.get('a').find('#Tests').should('have.text','Tests').click().url().should('includes' , '/admin/tests')
+  
+    cy.get('a').find('#Tests').should('have.text', 'Tests').click()
+    cy.location('pathname', { timeout: 60000 })
+      .should('include', '/admin/tests')
   })
 
-  it('Test for Routing and Active Tab for Members' , () => {
+  it('Test for Routing and Active Tab for Members', () => {
     cy.visit("/sign-in")
-    cy.get('#email').type('anurag@copods.co').should('have.value' , 'anurag@copods.co')
-    cy.get('#password').type('anuragpatel').should('have.value' , 'anuragpatel')
+    cy.get('#email').type('anurag@copods.co').should('have.value', 'anurag@copods.co')
+    cy.get('#password').type('anuragpatel').should('have.value', 'anuragpatel')
     cy.findByRole("button").click();
 
-    cy.visit('/admin/members').wait(5000)
-    cy.get('a').find('#Members').should('have.text','Members').click().url().should('includes' , '/admin/members')
+
+    cy.get('a').find('#Members').should('have.text', 'Members').click()
+    cy.location('pathname', { timeout: 60000 })
+      .should('include', '/admin/members')
   })
 
-  it('Test for Active Tab Color' , () => {
+  it('Test for Active Tab Color', () => {
     cy.visit("/sign-in")
-    cy.get('#email').type('anurag@copods.co').should('have.value' , 'anurag@copods.co')
-    cy.get('#password').type('anuragpatel').should('have.value' , 'anuragpatel')
+    cy.get('#email').type('anurag@copods.co').should('have.value', 'anurag@copods.co')
+    cy.get('#password').type('anuragpatel').should('have.value', 'anuragpatel')
     cy.findByRole("button").click();
 
-    cy.visit('/admin/results').wait(5000)
-    cy.get('a').should('have.class' , 'bg-blue-50')
+
+    cy.get('a').find('#Members').should('have.text', 'Members').click()
+    cy.location('pathname', { timeout: 60000 })
+      .should('include', '/admin/members')
+    cy.get('a').should('have.class', 'bg-blue-50')
   })
 
   it('Test to redirect to the login page on log out', () => {
