@@ -98,10 +98,10 @@ const QuestionDetails = ({ sectionDetails }: any) => {
                   <div className="pb-6">
 
                     <ClientOnly fallback={<div ></div>}>
-                      {() => <QuillEditor setData={(e)=>{console.log('std: ',e);setQuestion(e)}}/>}
+                      {() => <QuillEditor setData={(e) => { setQuestion(e) }} />}
                     </ClientOnly>
                     <div className='h-12'></div>
-                    <div dangerouslySetInnerHTML={{__html: question}}></div>
+                    <div dangerouslySetInnerHTML={{ __html: question }}></div>
                   </div>
 
                   <div className="flex gap-2 justify-end">
