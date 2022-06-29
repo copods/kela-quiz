@@ -1,8 +1,8 @@
 // import process from 'process'
 import sendgrid from '@sendgrid/mail'
 
-export async function sendMail() {
-  const to = 'patelanurag.0411@gmail.com'
+export async function sendMail(email: string, name: string, password: string) {
+  const to = email
   const from = 'anurag@copods.co'
   const subject = 'Hello Kela Quiz @ Copods'
   const text = 'Kela Quiz @ Copods'
@@ -18,13 +18,13 @@ export async function sendMail() {
   <img src="https://res.cloudinary.com/drpi0krkh/image/upload/c_scale,w_134/v1656065336/Logo_jtr0wl.png" width="60" />
 
   <p>
-    Hello ${'Anurag'},
+    Hello ${name},
   </p>
   <p>
-    Your account for Kela Quiz is created as ${'Recruiter'} with email ${'anurag@copods.co'}.
+    Your account for Kela Quiz is created with email ${email}.
   </p>
   <p>
-    Your Passowrd for login is: <span style="color:blue;background:yellow;font-size:18px">ABC#$12</span>
+    Your Passowrd for login is: <span style="color:blue;background:yellow;font-size:18px">${password}</span>
   </p>
 
   <h2>Welcome at Copods</h2>
