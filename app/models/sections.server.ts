@@ -13,7 +13,11 @@ export async function getSectionById({ id }: Pick<Section, 'id'>) {
 }
 
 export async function getAllSections() {
-  return await prisma.section.findMany()
+  return await prisma.section.findMany({
+    include: {
+      createdBy: true,
+    },
+  })
 }
 
 export async function createSection({

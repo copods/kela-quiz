@@ -10,7 +10,7 @@ describe('smoke tests', () => {
       .should('have.value', 'anurag@copods.co')
     cy.get('#password').type('anuragpatel').should('have.value', 'anuragpatel')
     cy.findByRole('button').click()
-    cy.url().should('includes', '/admin/dashboard')
+    cy.url().should('includes', '/dashboard')
   })
   // it ("Login Message Check", ()=>{
   //     cy.visit("/sign-in");

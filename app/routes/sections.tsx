@@ -8,7 +8,7 @@ import { Icon } from "@iconify/react"
 import { getUserId, requireUserId } from "~/session.server";
 import Sections from "~/components/sections/Sections";
 import AdminLayout from "~/components/layouts/AdminLayout";
-import SectionsPage from "~/components/sections/SectionsPage";
+import AddSection from "~/components/sections/AddSection";
 
 type ActionData = {
   errors?: {
@@ -19,7 +19,6 @@ type ActionData = {
 
 type LoaderData = {
   sections: Awaited<ReturnType<typeof getAllSections>>
-  // users: Awaited<ReturnType<typeof getAllUsers>>
   selectedSectionId: string
 }
 
@@ -61,36 +60,25 @@ export const action: ActionFunction = async ({ request }) => {
 
 export default function Section() {
   const data = useLoaderData() as LoaderData
-  // redirect(`/sections/${data.sections[0].id}`)
 
   const [sectionDetailFull, setSectionDetailFull] = useState(false)
-
-
-  const getparentClassName = () => {
-    var className = "flex overflow-hidden flex-1 "
-    if (!sectionDetailFull) {
-      className += 'gap-12 '
-    }
-    return className
-  }
-  const getSectionDetailClassName = () => {
-    var className = "flex-1 flex items-center z-10 "
-    if (sectionDetailFull) {
-      className += 'min-w-full'
-    }
-    return className
-  }
-
+  const [addSectionModal, setAddSectionModalValue] = useState(false)
 
   return (
     <AdminLayout>
-      <SectionsPage>
-        <div className={getparentClassName()}>
+      <div className="flex flex-col gap-12 h-full overflow-hidden">
+        {/* header */}
+        <header className="flex justify-between items-center">
+          <h2 className="text-3xl font-bold text-black">Sections</h2>
+          <button className="px-5 h-9 text-[#F0FDF4] bg-primary rounded-lg text-xs" onClick={() => setAddSectionModalValue(!addSectionModal)}>+ Add Section</button>
+        </header>
+
+        <div className={`flex overflow-hidden flex-1 ${sectionDetailFull ? '' : 'gap-12'}`}>
           {/* section list */}
           <Sections data={data} />
 
           {/* section details */}
-          <div className={getSectionDetailClassName()}>
+          <div className={`flex-1 flex items-center z-10 ${sectionDetailFull ? 'min-w-full' : ''}`}>
             <span className="z-20 -mr-5">
               {
                 sectionDetailFull
@@ -103,7 +91,11 @@ export default function Section() {
             <Outlet />
           </div>
         </div>
-      </SectionsPage>
+
+        <AddSection addSectionModalOpen={addSectionModal} setAddSectionModalOpen={setAddSectionModalValue} />
+
+      </div>
+
     </AdminLayout>
   )
 }
