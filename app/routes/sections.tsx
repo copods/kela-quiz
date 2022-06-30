@@ -25,7 +25,7 @@ export type LoaderData = {
 export const loader: LoaderFunction = async ({ request, params }) => {
   const url = new URL(request.url).searchParams.entries()
   const obj = Object.fromEntries(url).filter
-  const sections = await getAllSections()
+  const sections = await getAllSections(obj)
   const userId = await getUserId(request)
   if (!userId) return redirect('/sign-in')
   const selectedSectionId = params.sectionId
@@ -108,9 +108,8 @@ export default function Section() {
         </header>
 
         <div
-          className={`flex flex-1 overflow-hidden ${
-            sectionDetailFull ? '' : 'gap-12'
-          }`}
+          className={`flex flex-1 overflow-hidden ${sectionDetailFull ? '' : 'gap-12'
+            }`}
         >
           {/* section list */}
           <Sections
@@ -124,9 +123,8 @@ export default function Section() {
 
           {/* section details */}
           <div
-            className={`z-10 flex flex-1 items-center ${
-              sectionDetailFull ? 'min-w-full' : ''
-            }`}
+            className={`z-10 flex flex-1 items-center ${sectionDetailFull ? 'min-w-full' : ''
+              }`}
           >
             <span
               className="z-20 -mr-5"

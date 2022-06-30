@@ -12,17 +12,15 @@ export async function getSectionById({ id }: Pick<Section, 'id'>) {
   })
 }
 
-export async function getAllSections() {
-  // if(!filterbyType && !sort ){
-    // var filter = url?{...url}:null;
-    // console.log("hellllll",filter);
-    
-      return await prisma.section.findMany({
-      //  ...filter ,
-        include: {
-          createdBy: true,
-        },
-      })
+export async function getAllSections(obj: any) {
+  var filter = obj ? obj : '{}'
+
+  return await prisma.section.findMany({
+    ...JSON.parse(filter),
+    include: {
+      createdBy: true,
+    },
+  })
   // }
 
   // if(filterbyType && filterbyType === "name" && sort==="asc"){
@@ -47,7 +45,6 @@ export async function getAllSections() {
   //   })
   // }
 }
-
 
 export async function getAllSectionsByName() {
   return await prisma.section.findMany({
