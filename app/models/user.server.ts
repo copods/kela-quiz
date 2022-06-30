@@ -55,29 +55,6 @@ export async function createNewUser({
 
   return await sendMail(email, firstName, password, role?.name || 'NA')
 }
-export async function createUser(email: User['email'], password: string) {
-  const hashedPassword = await bcrypt.hash(password, 10)
-
-  const role = await prisma.role.findUnique({
-    where: {
-      name: 'Test Creator',
-    },
-  })
-
-  return prisma.user.create({
-    data: {
-      email,
-      password: {
-        create: {
-          hash: hashedPassword,
-        },
-      },
-      firstName: 'Test',
-      lastName: 'User',
-      roleId: role?.id,
-    },
-  })
-}
 
 export async function deleteUserByEmail(email: User['email']) {
   return prisma.user.delete({ where: { email } })
