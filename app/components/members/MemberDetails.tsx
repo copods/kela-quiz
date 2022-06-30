@@ -1,9 +1,9 @@
 import { Icon } from '@iconify/react'
-import type{  Role, User } from '@prisma/client'
+import type { Role, User } from '@prisma/client'
 import { Form } from '@remix-run/react'
 import moment from 'moment'
 
-export default function MemberDetails({ user }: {user: (User & { role: Role })}) {
+export default function MemberDetails({ user }: { user: (User & { role: Role }) }) {
   return (
     <div className='grid grid-cols-10 col-span-full'>
       <div
@@ -24,7 +24,7 @@ export default function MemberDetails({ user }: {user: (User & { role: Role })})
         </div>
         <div className="col-span-2 ">
           <h1 className="text-base leading-6 text-gray-700">
-            {moment(user?.createdAt).format('DD MMM YY')}
+            {moment(user?.createdAt).format('DD MMMM YY')}
           </h1>
         </div>
         <div className="col-span-1">
@@ -39,7 +39,7 @@ export default function MemberDetails({ user }: {user: (User & { role: Role })})
             </div>
             <div>
               <Form method="post"  >
-                <button type="submit" name="_action" value={JSON.stringify({action:'delete',id: user.id})} >
+                <button type="submit" name="_action" value={JSON.stringify({ action: 'delete', id: user.id })} >
                   <Icon
                     icon="ic:outline-delete-outline"
                     className="h-6 w-6 text-red-500 "

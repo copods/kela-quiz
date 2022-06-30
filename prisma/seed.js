@@ -10,6 +10,10 @@ async function seed() {
 
   const roles = [
     {
+      id: 'cl4xvj89a000209jp4qtlfyii',
+      name: 'Admin'
+    },
+    {
       id: 'cl4xvj89a000209jp4qtlfyih',
       name: 'Test Creator'
     },
