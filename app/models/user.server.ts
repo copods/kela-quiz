@@ -56,11 +56,7 @@ export async function createNewUser({
   return await sendMail(email, firstName, password, role?.name || 'NA')
 }
 
-export async function deleteUserByEmail(email: User['email']) {
-  return prisma.user.delete({ where: { email } })
-}
-
-export async function verifyLogin(
+export async function loginVerificationResponse(
   email: User['email'],
   password: Password['hash']
 ) {
@@ -76,12 +72,11 @@ export async function verifyLogin(
   }
 
   const isValid = await bcrypt.compare(password, userWithPassword.password.hash)
-
   if (!isValid) {
-    return null
+    var error = new Error('invalidPassword')
+    return error
   }
 
   const { password: _password, ...userWithoutPassword } = userWithPassword
-
   return userWithoutPassword
 }
