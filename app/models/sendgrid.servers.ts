@@ -1,5 +1,6 @@
 // import process from 'process'
 import sendgrid from '@sendgrid/mail'
+import { env } from 'process'
 
 export async function sendMail() {
   const to = 'patelanurag.0411@gmail.com'
@@ -43,8 +44,7 @@ export async function sendMail() {
 
     `
 
-  const SENDGRID_API_KEY =
-    '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'
+  const SENDGRID_API_KEY = env.SENDGRID_API_KEY || 'NULL'
 
   // const sgMail = require('@sendgrid/mail')
 
