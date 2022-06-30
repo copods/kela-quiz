@@ -1,6 +1,7 @@
+import type { User } from '@prisma/client'
 import MemberDetails from './MemberDetails'
 
-export default function MembersList({ data }: any) {
+export default function MembersList({ data }: {data: User[]} ){
   return (
     <div className="grid grid-cols-12 bg-[#F9FAFB] ">
       <div className="col-span-full grid grid-cols-10 rounded-lg border-[1px] border-solid border-[#E5E7EB] bg-white">
@@ -13,10 +14,9 @@ export default function MembersList({ data }: any) {
           </h1>
           <h1 className="col-span-1 text-sm leading-4 text-gray-500">Action</h1>
         </div>
-
         {data.map((user: any) => (
-          <div key={user} className="grid col-span-10">
-            <MemberDetails user={user} />
+          <div key={user.id} className="grid col-span-10">
+            <MemberDetails user={user}  />
           </div>
         ))}
       </div>
