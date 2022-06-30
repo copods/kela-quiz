@@ -1,9 +1,9 @@
 import { Icon } from '@iconify/react'
+import type{  Role, User } from '@prisma/client'
 import { Form } from '@remix-run/react'
 import moment from 'moment'
 
-export default function MemberDetails({user}:any) {
-
+export default function MemberDetails({ user }: {user: (User & { role: Role })}) {
   return (
     <div className='grid grid-cols-10 col-span-full'>
       <div
@@ -38,8 +38,8 @@ export default function MemberDetails({user}:any) {
               </button>
             </div>
             <div>
-              <Form method="post" action={`/members/delete/${user.id}`}>
-                <button type="submit">
+              <Form method="post"  >
+                <button type="submit" name="_action" value={JSON.stringify({action:'delete',id: user.id})} >
                   <Icon
                     icon="ic:outline-delete-outline"
                     className="h-6 w-6 text-red-500 "

@@ -93,7 +93,7 @@ export default function AddMembers({
                       type="text"
                       name="email"
                       className="my-1.5 h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
-                      placeholder="lorem@ipsum.dev"
+                      placeholder="user@copods.dev"
                     />
                   </div>
                   <div className="pb-6">
@@ -123,6 +123,8 @@ export default function AddMembers({
                     </button>
                     <button
                       type="submit"
+                      name="_action"
+                      value={JSON.stringify({action: 'add'})}
                       className="h-9 rounded-md bg-primary px-4 text-sm text-[#F0FDF4]"
                       onClick={() => setAddSectionModalOpen(false)}
                     >
