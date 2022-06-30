@@ -10,7 +10,7 @@ type LoaderData = {
 }
 
 export const loader: LoaderFunction = async ({ request, params }) => {
-  invariant(params.sectionId, 'noteId not found')
+  invariant(params.sectionId, 'sectionId not found')
 
   const sectionDetails = await getSectionById({ id: params.sectionId })
   if (!sectionDetails) {

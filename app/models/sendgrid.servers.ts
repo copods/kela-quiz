@@ -2,46 +2,59 @@
 import sendgrid from '@sendgrid/mail'
 import { env } from 'process'
 
-export async function sendMail(email: string, name: string, password: string) {
+export async function sendMail(
+  email: string,
+  name: string,
+  password: string,
+  role: string
+) {
   const to = email
   const from = 'anurag@copods.co'
-  const subject = 'Hello Kela Quiz @ Copods'
-  const text = 'Kela Quiz @ Copods'
+  const subject = 'K - Quiz @ Copods'
+  const text = 'K - Quiz @ Copods'
+
   const html = `
-    
   <html>
-  <head>
-    <title></title>
-  </head>
-  <body>
-  <div data-role="module-unsubscribe" class="module" role="module" data-type="unsubscribe" style="color:#444444; font-size:12px; line-height:20px; padding:16px 16px 16px 16px; text-align:Center;" data-muid="4e838cf3-9892-4a6d-94d6-170e474d21e5">
-
-  <img src="https://res.cloudinary.com/drpi0krkh/image/upload/c_scale,w_134/v1656065336/Logo_jtr0wl.png" width="60" />
-
-  <p>
-    Hello ${name},
-  </p>
-  <p>
-    Your account for Kela Quiz is created with email ${email}.
-  </p>
-  <p>
-    Your Passowrd for login is: <span style="color:blue;background:yellow;font-size:18px">${password}</span>
-  </p>
-
-  <h2>Welcome at Copods</h2>
-  <p style="font-size:12px; line-height:20px;">
-    <a class="Unsubscribe--unsubscribeLink" href="{{{unsubscribe}}}" target="_blank" style="font-family:sans-serif;text-decoration:none;">
-      Kela Quiz @ Copods
-    </a>
-    <!---
-    <a href="{{{unsubscribe_preferences}}}" target="_blank" class="Unsubscribe--unsubscribePreferences" style="font-family:sans-serif;text-decoration:none;">
-      To join click <u style="color:red;cursor:pointer">Link</u>
-    </a>-->
-  </p>
-</div>
-  </body>
-</html>
-
+    <body>
+      <div style="min-height:200px;background: url('https://res.cloudinary.com/drpi0krkh/image/upload/v1656596230/User_Invitation_1_he7s2e.png');background-repeat:repeat-x;font-family:'Poppins', sans-serif;background-color:#F3F4F6">
+      <div style="background:#353988;height:50px;text-align:center">
+        <img src="https://res.cloudinary.com/drpi0krkh/image/upload/c_scale,h_200/v1656065336/Logo_jtr0wl.png" height="48" />
+      </div>
+      <div style="padding-bottom:50px;">
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+        <td align="center">
+            <div style="background:#fff;margin:0 auto;padding:20px;width:350px">
+          <p style="text-align:center;font-size:20px;line-height:28px;color:#4B5563;margin:0;margin-bottom:13px"><span>Welcome !</span></p>
+          <div style="font-size:16px; line-height:24px;margin-bottom:16px">
+            <p style="text-align:left;color:#4B5563;margin:0;padding-bottom:24px"><span>Hey ${name},</span>
+            </p>
+            <p style="text-align:left;color:#4B5563;margin:0;padding-bottom:24px">You have been added as a ${role} on K - Quiz.
+            </p>
+            <p style="text-align:left;color:#4B5563;margin:0;padding-bottom:24px">
+              Please use the following credentials to access your account
+            </p>
+            <p style="text-align:left;color:#4B5563;margin:0;padding-bottom:24px">
+              Email: <span style="font-weight:600">${email}</span>
+            </p>
+            <p style="text-align:left;color:#4B5563;margin:0;padding-bottom:24px">
+              Password: <span style="font-weight:600">${password}</span>
+            </p>
+          </div>
+          <div style="text-align:center;padding:10px" >
+          <a href="${env.PUBLIC_URL}"><span style="padding: 10px 38px;background:#353988;color:#fff">Head to K - Quiz</span></a>
+          </div>
+        </div>
+        </td>
+    </tr>
+</table>
+        
+        <div style="text-align:center;padding: 20px">K - Quiz @ Copods</div>
+      </div>
+      </div>
+    </body>
+  </html>
+   
     `
 
   const SENDGRID_API_KEY = env.SENDGRID_API_KEY || 'NULL'
@@ -63,7 +76,7 @@ export async function sendMail(email: string, name: string, password: string) {
   await sendgrid.send(msg).then(
     () => {
       console.log('send successful')
-      return 'okok'
+      return 'ok'
     },
     (error: any) => {
       console.error('err: ', error)
