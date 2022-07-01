@@ -39,7 +39,7 @@ export default function MemberDetails({ user }: { user: (User & { role: Role }) 
             </div>
             <div>
               <Form method="post"  >
-                <button type="submit" name="_action" value={JSON.stringify({ action: 'delete', id: user.id })} >
+                <button type="submit" name="deleteMember" value={JSON.stringify({ action: 'delete', id: user.id })} >
                   <Icon
                     icon="ic:outline-delete-outline"
                     className="h-6 w-6 text-red-500 "

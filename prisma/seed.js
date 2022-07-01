@@ -4,9 +4,9 @@ const bcrypt = require('bcryptjs')
 const prisma = new PrismaClient()
 
 async function seed() {
-  const email = 'anurag@copods.co'
+  const email = 'careers@copods.co'
 
-  const hashedPassword = await bcrypt.hash('anuragpatel', 10)
+  const hashedPassword = await bcrypt.hash('kQuiz@copods', 10)
 
   const roles = [
     {

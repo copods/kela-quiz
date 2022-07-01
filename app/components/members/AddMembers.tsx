@@ -12,7 +12,7 @@ export default function AddMembers({
   addMemberModalOpen: boolean,
   setAddSectionModalOpen: (e: boolean) => void
 }) {
- 
+
 
 
   return (
@@ -123,8 +123,8 @@ export default function AddMembers({
                     </button>
                     <button
                       type="submit"
-                      name="_action"
-                      value={JSON.stringify({action: 'add'})}
+                      name="addMember"
+                      value={JSON.stringify({ action: 'add' })}
                       className="h-9 rounded-md bg-primary px-4 text-sm text-[#F0FDF4]"
                       onClick={() => setAddSectionModalOpen(false)}
                     >
