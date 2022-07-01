@@ -6,18 +6,22 @@ describe('Test for Logout, SideNav', () => {
   it('Sample Login', () => {
     cy.visit('/sign-in')
     cy.get('#email')
-      .type('anurag@copods.co')
-      .should('have.value', 'anurag@copods.co')
-    cy.get('#password').type('anuragpatel').should('have.value', 'anuragpatel')
+      .type('careers@copods.co')
+      .should('have.value', 'careers@copods.co')
+    cy.get('#password')
+      .type('kQuiz@copods')
+      .should('have.value', 'kQuiz@copods')
     cy.findByRole('button').click()
   })
 
   it('Test to Direct to Dashboard after Login', () => {
     cy.visit('/sign-in')
     cy.get('#email')
-      .type('anurag@copods.co')
-      .should('have.value', 'anurag@copods.co')
-    cy.get('#password').type('anuragpatel').should('have.value', 'anuragpatel')
+      .type('careers@copods.co')
+      .should('have.value', 'careers@copods.co')
+    cy.get('#password')
+      .type('kQuiz@copods')
+      .should('have.value', 'kQuiz@copods')
     cy.findByRole('button').click()
 
     cy.location('pathname', { timeout: 60000 }).should('include', '/dashboard')
@@ -26,9 +30,11 @@ describe('Test for Logout, SideNav', () => {
   it('Test for Routing and Active Tab for Results', () => {
     cy.visit('/sign-in')
     cy.get('#email')
-      .type('anurag@copods.co')
-      .should('have.value', 'anurag@copods.co')
-    cy.get('#password').type('anuragpatel').should('have.value', 'anuragpatel')
+      .type('careers@copods.co')
+      .should('have.value', 'careers@copods.co')
+    cy.get('#password')
+      .type('kQuiz@copods')
+      .should('have.value', 'kQuiz@copods')
     cy.findByRole('button').click()
 
     cy.get('a').find('#Results').should('have.text', 'Results').click()
@@ -38,9 +44,11 @@ describe('Test for Logout, SideNav', () => {
   it('Test for Routing and Active Tab for Tests', () => {
     cy.visit('/sign-in')
     cy.get('#email')
-      .type('anurag@copods.co')
-      .should('have.value', 'anurag@copods.co')
-    cy.get('#password').type('anuragpatel').should('have.value', 'anuragpatel')
+      .type('careers@copods.co')
+      .should('have.value', 'careers@copods.co')
+    cy.get('#password')
+      .type('kQuiz@copods')
+      .should('have.value', 'kQuiz@copods')
     cy.findByRole('button').click()
 
     cy.get('a').find('#Tests').should('have.text', 'Tests').click()
@@ -50,9 +58,11 @@ describe('Test for Logout, SideNav', () => {
   it('Test for Routing and Active Tab for Members', () => {
     cy.visit('/sign-in')
     cy.get('#email')
-      .type('anurag@copods.co')
-      .should('have.value', 'anurag@copods.co')
-    cy.get('#password').type('anuragpatel').should('have.value', 'anuragpatel')
+      .type('careers@copods.co')
+      .should('have.value', 'careers@copods.co')
+    cy.get('#password')
+      .type('kQuiz@copods')
+      .should('have.value', 'kQuiz@copods')
     cy.findByRole('button').click()
 
     cy.get('a').find('#Members').should('have.text', 'Members').click()
@@ -62,9 +72,11 @@ describe('Test for Logout, SideNav', () => {
   it('Test for Active Tab Color', () => {
     cy.visit('/sign-in')
     cy.get('#email')
-      .type('anurag@copods.co')
-      .should('have.value', 'anurag@copods.co')
-    cy.get('#password').type('anuragpatel').should('have.value', 'anuragpatel')
+      .type('careers@copods.co')
+      .should('have.value', 'careers@copods.co')
+    cy.get('#password')
+      .type('kQuiz@copods')
+      .should('have.value', 'kQuiz@copods')
     cy.findByRole('button').click()
 
     cy.get('a').find('#Members').should('have.text', 'Members').click()
