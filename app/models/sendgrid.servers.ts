@@ -82,7 +82,7 @@ export async function sendMail(
       console.log('send successful')
       return 'ok'
     },
-    (error: any) => {
+    (error) => {
       console.error('err: ', error)
 
       if (error.response) {
@@ -94,7 +94,7 @@ export async function sendMail(
   // ;(async () => {
   //   try {
   //     await sendgrid.send(msg)
-  //   } catch (error: any) {
+  //   } catch (error) {
   //     console.error('err3: ', error)
 
   //     if (error.response) {
