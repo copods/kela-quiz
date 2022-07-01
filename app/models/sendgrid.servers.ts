@@ -1,50 +1,67 @@
 // import process from 'process'
 import sendgrid from '@sendgrid/mail'
+import { env } from 'process'
 
-export async function sendMail(email: string, name: string, password: string) {
+export async function sendMail(
+  email: string,
+  name: string,
+  password: string,
+  role: string
+) {
   const to = email
-  const from = 'anurag@copods.co'
-  const subject = 'Hello Kela Quiz @ Copods'
-  const text = 'Kela Quiz @ Copods'
-  const html = `
-    
-  <html>
-  <head>
-    <title></title>
-  </head>
+  const from = 'careers@copods.co'
+  const subject = 'Welcome to K - Quiz @ Copods'
+  const text = 'K - Quiz @ Copods'
+
+  const html = `<html>
   <body>
-  <div data-role="module-unsubscribe" class="module" role="module" data-type="unsubscribe" style="color:#444444; font-size:12px; line-height:20px; padding:16px 16px 16px 16px; text-align:Center;" data-muid="4e838cf3-9892-4a6d-94d6-170e474d21e5">
+    <div style="min-height:200px;background: url('https://res.cloudinary.com/drpi0krkh/image/upload/v1656596230/User_Invitation_1_he7s2e.png');background-repeat:repeat-x;font-family:'Poppins', sans-serif;background-color:#F3F4F6">
+    <div style="background:#353988;height:50px;text-align:center">
+      <img src="https://res.cloudinary.com/drpi0krkh/image/upload/c_scale,h_200/v1656065336/Logo_jtr0wl.png" height="48" />
+    </div>
+    <div>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+      <td align="center" style="padding: 0 20px">
+          <div style="background:#fff;margin:0 auto;padding:20px;max-width: 320px">
+        <p style="text-align:center;font-size:20px;line-height:28px;color:#4B5563;margin:0;margin-bottom:13px"><span>Welcome !</span></p>
+        <div style="font-size:16px; line-height:24px;margin-bottom:16px">
+          <p style="text-align:left;color:#4B5563;margin:0;"><span>Hey ${name},</span>
+          </p>
+          <br>
+          <p style="text-align:left;color:#4B5563;margin:0;">You have been added as a ${role} on K - Quiz.
+          </p>
+          <br>
 
-  <img src="https://res.cloudinary.com/drpi0krkh/image/upload/c_scale,w_134/v1656065336/Logo_jtr0wl.png" width="60" />
-
-  <p>
-    Hello ${name},
-  </p>
-  <p>
-    Your account for Kela Quiz is created with email ${email}.
-  </p>
-  <p>
-    Your Passowrd for login is: <span style="color:blue;background:yellow;font-size:18px">${password}</span>
-  </p>
-
-  <h2>Welcome at Copods</h2>
-  <p style="font-size:12px; line-height:20px;">
-    <a class="Unsubscribe--unsubscribeLink" href="{{{unsubscribe}}}" target="_blank" style="font-family:sans-serif;text-decoration:none;">
-      Kela Quiz @ Copods
-    </a>
-    <!---
-    <a href="{{{unsubscribe_preferences}}}" target="_blank" class="Unsubscribe--unsubscribePreferences" style="font-family:sans-serif;text-decoration:none;">
-      To join click <u style="color:red;cursor:pointer">Link</u>
-    </a>-->
-  </p>
-</div>
+          <p style="text-align:left;color:#4B5563;margin:0;">
+            Please use the following credentials to access your account
+          </p>
+          <br>
+          
+          <p style="text-align:left;color:#4B5563;margin:0;">
+            Email: <span style="font-weight:600">${email}</span>
+          </p>
+          <p style="text-align:left;color:#4B5563;margin:0;">
+            Password: <span style="font-weight:600">${password}</span>
+          </p>
+          
+        </div>
+        <div style="text-align:center;padding:10px" >
+        <a href="${env.PUBLIC_URL}" style="text-decoration:none"><span style="padding: 10px 38px;background:#353988;color:#fff">Head to K - Quiz</span></a>
+        </div>
+      </div>
+      </td>
+  </tr>
+</table>
+      
+      <div style="text-align:center;padding: 20px 20px 24px">K - Quiz @ Copods</div>
+    </div>
+    </div>
   </body>
 </html>
-
     `
 
-  const SENDGRID_API_KEY =
-    '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'
+  const SENDGRID_API_KEY = env.SENDGRID_API_KEY || 'NULL'
 
   // const sgMail = require('@sendgrid/mail')
 
@@ -63,9 +80,9 @@ export async function sendMail(email: string, name: string, password: string) {
   await sendgrid.send(msg).then(
     () => {
       console.log('send successful')
-      return 'okok'
+      return 'ok'
     },
-    (error: any) => {
+    (error) => {
       console.error('err: ', error)
 
       if (error.response) {
@@ -77,7 +94,7 @@ export async function sendMail(email: string, name: string, password: string) {
   // ;(async () => {
   //   try {
   //     await sendgrid.send(msg)
-  //   } catch (error: any) {
+  //   } catch (error) {
   //     console.error('err3: ', error)
 
   //     if (error.response) {

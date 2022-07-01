@@ -38,8 +38,8 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 export const action: ActionFunction = async ({ request, params }) => {
   const formData = await request.formData()
-  const action= JSON.parse(formData.get('_action') as string)
-  
+  const action = formData.get('addMember') ? JSON.parse(formData.get('addMember') as string) : JSON.parse(formData.get('deleteMember') as string)
+
   if (action.action === 'add') {
     const firstName = formData.get('firstName')
     const lastName = formData.get('lastName')
@@ -79,8 +79,18 @@ export const action: ActionFunction = async ({ request, params }) => {
         { status: 400 }
       )
     }
+
+
+    var a = {
+      x: {
+        ['s']: 34
+      }
+    }
+
+
     await deleteUserById(action.id)
     return redirect(`/members`)
+
   }
 }
 

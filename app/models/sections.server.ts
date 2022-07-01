@@ -16,6 +16,9 @@ export async function getAllSections() {
   return await prisma.section.findMany({
     include: {
       createdBy: true,
+      _count: {
+        select: { questions: true },
+      },
     },
   })
 }

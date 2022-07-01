@@ -3,7 +3,7 @@ import { Link } from "@remix-run/react"
 import Moment from 'moment';
 import type { Question, Section, User } from "@prisma/client";
 
-const SectionCard = ({ section, selectedSectionId, setSelectedSectionId }: { section: (Section & { questions: Question[]; createdBy: User }), selectedSectionId: string, setSelectedSectionId: (e: string) => void }) => {
+const SectionCard = ({ section, selectedSectionId, setSelectedSectionId }: { section: (Section & { _count: { questions: number }; createdBy: User }), selectedSectionId: string, setSelectedSectionId: (e: string) => void }) => {
 
   return (
     <div onClick={() => setSelectedSectionId(section.id)}>
@@ -20,7 +20,7 @@ const SectionCard = ({ section, selectedSectionId, setSelectedSectionId }: { sec
           </span>
         </div>
         <div className="text-xs text-gray-400 flex">
-          Total Questions: {section?.questions?.length ? section?.questions?.length : 0}
+          Total Questions: {section?._count.questions}
         </div>
       </Link>
     </div>
