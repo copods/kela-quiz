@@ -67,7 +67,8 @@ export default function AddMembers({
                         First Name
                       </label>
                       <input
-                        type="text"
+                      id='firstName'
+                        type="firstName"
                         name="firstName"
                         className=" my-1.5 h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
                         placeholder="First Name"
@@ -78,7 +79,8 @@ export default function AddMembers({
                         Last Name
                       </label>
                       <input
-                        type="text"
+                         id='lastName'
+                        type="lastName"
                         name="lastName"
                         className="my-1.5 h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
                         placeholder="Last Name"
@@ -90,7 +92,8 @@ export default function AddMembers({
                       Email
                     </label>
                     <input
-                      type="text"
+                       id='email'
+                      type="email"
                       name="email"
                       className="my-1.5 h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
                       placeholder="user@copods.dev"

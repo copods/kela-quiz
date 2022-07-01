@@ -24,6 +24,7 @@ type ActionData = {
 }
 type LoaderData = {
   users: Awaited<ReturnType<typeof getAllUsers>>
+  userId: Awaited<ReturnType<typeof getUserId>>
   roles: Awaited<ReturnType<typeof getAllRoles>>
 }
 
@@ -32,7 +33,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   const roles = await getAllRoles()
   if (!userId) return redirect('/sign-in')
   const users = await getAllUsers()
-  return json<LoaderData>({ users, roles })
+  return json<LoaderData>({ users, roles, userId })
 }
 
 export const action: ActionFunction = async ({ request, params }) => {
@@ -70,10 +71,9 @@ export const action: ActionFunction = async ({ request, params }) => {
     }
     await createNewUser({ firstName, lastName, email, roleId })
   return redirect(`/members`)
-
   }
   if (action.action === 'delete') {
-    if (typeof action.id !== 'string' || action.id.length === 0) {
+    if (typeof action.id !== 'string') {
       return json<ActionData>(
         { errors: { title: 'Description is required' } },
         { status: 400 }
@@ -81,9 +81,7 @@ export const action: ActionFunction = async ({ request, params }) => {
     }
     await deleteUserById(action.id)
     return redirect(`/members`)
-  
   }
-
 }
 
 export default function Members() {
@@ -96,7 +94,7 @@ export default function Members() {
           <div className="">
             <MembersHeader roles={data.roles} />
           </div>
-          <MembersList data={data.users} />
+          <MembersList data={data.users} loggedInUser={data.userId} />
         </div>
       </AdminLayout>
     </>

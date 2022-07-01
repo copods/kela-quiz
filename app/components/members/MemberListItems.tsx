@@ -3,7 +3,10 @@ import type{  Role, User } from '@prisma/client'
 import { Form } from '@remix-run/react'
 import moment from 'moment'
 
-export default function MemberDetails({ user }: {user: (User & { role: Role })}) {
+
+export default function MemberListItems({ user,loggedInUser }: {user: (User & { role: Role }),loggedInUser:string | undefined}) {
+
+
   return (
     <div className='grid grid-cols-10 col-span-full'>
       <div
@@ -33,16 +36,16 @@ export default function MemberDetails({ user }: {user: (User & { role: Role })})
               <button type="submit">
                 <Icon
                   icon="eva:edit-2-outline"
-                  className="h-6 w-6 text-blue-900 "
+                  className="h-6 w-6 text-blue-900 pointer-cursor"
                 ></Icon>
               </button>
             </div>
             <div>
               <Form method="post"  >
-                <button type="submit" name="_action" value={JSON.stringify({action:'delete',id: user.id})} >
+                <button type="submit" name="_action" disabled={loggedInUser === user.id} value={JSON.stringify({action:'delete',id: user.id})} >
                   <Icon
                     icon="ic:outline-delete-outline"
-                    className="h-6 w-6 text-red-500 "
+                    className={`h-6 w-6 text-red-500 pointer-cursor ${loggedInUser === user.id&&"text-red-300 cursor-not-allowed"}`}
                   ></Icon>
                 </button>
               </Form>
