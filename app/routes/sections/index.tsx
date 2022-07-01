@@ -10,7 +10,7 @@ type LoaderData = {
 }
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const sections = await getAllSections({})
+  const sections = await getAllSections(null)
   const users = await getAllUsers()
   return json<LoaderData>({ sections, users })
 }
