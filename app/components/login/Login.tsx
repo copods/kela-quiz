@@ -1,57 +1,57 @@
-import React, { useState } from 'react'
-import { Form } from '@remix-run/react'
-import Button from '~/components/form/Button'
-import Checkbox from '~/components/form/CheckBox'
-import InputField from '~/components/form/InputField'
-import Logo from '~/components/Logo'
-import type { LoginProps } from '~/components/Interface'
+import React, { useState } from "react";
+import { Form } from "@remix-run/react";
+import Button from "~/components/form/Button";
+import Checkbox from "~/components/form/CheckBox";
+import InputField from "~/components/form/InputField";
+import Logo from "~/components/Logo";
+import type { LoginProps } from "~/components/Interface";
 
 function Login({ actionData, redirectTo }: LoginProps) {
-  const [isRemember, setIsRemember] = React.useState<boolean>(false)
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [isRemember, setIsRemember] = React.useState<boolean>(false);
+  const [email, setEmail] = useState("careers@copods.co");
+  const [password, setPassword] = useState("kQuiz@copods");
 
   const checkboxProps = {
     handleChange: function (e: any) {
-      setIsRemember((e.target as HTMLInputElement).checked)
+      setIsRemember((e.target as HTMLInputElement).checked);
     },
     isChecked: isRemember,
-    name: 'remember-me',
-  }
+    name: "remember-me",
+  };
 
   const inputFieldsProps = [
     {
-      label: 'Email',
-      placeholder: 'Enter Email',
-      type: 'text',
-      name: 'email',
+      label: "Email",
+      placeholder: "Enter Email",
+      type: "text",
+      name: "email",
       required: true,
       value: email,
       error: actionData?.errors?.email,
-      errorId: 'email-error',
+      errorId: "email-error",
       onChange: function (event: any) {
-        setEmail(event?.target.value)
+        setEmail(event?.target.value);
       },
     },
     {
-      label: 'Password',
-      placeholder: 'Enter Password',
-      type: 'password',
-      name: 'password',
+      label: "Password",
+      placeholder: "Enter Password",
+      type: "password",
+      name: "password",
       required: true,
       value: password,
       error: actionData?.errors?.password,
-      errorId: 'password-error',
+      errorId: "password-error",
       onChange: function (event: any) {
-        setPassword(event?.target.value)
+        setPassword(event?.target.value);
       },
     },
-  ]
+  ];
 
   return (
     <div className="z-10 flex	min-h-[480px] w-full max-w-[554px] flex-col items-center justify-center rounded-2xl bg-white px-24 drop-shadow-xl">
       <div className="z-20 -mt-24 mb-6">
-        <Logo />
+        <Logo height="64" width="64" />
       </div>
       <div className="w-full">
         <h1 className="text-3xl font-bold text-gray-900">
@@ -63,10 +63,10 @@ function Login({ actionData, redirectTo }: LoginProps) {
         <Form method="post">
           <div className="flex flex-col gap-6">
             {inputFieldsProps.map((props) => {
-              return <InputField {...props} key={props.name} />
+              return <InputField {...props} key={props.name} />;
             })}
           </div>
-          <div className="mt-4 flex items-center justify-between">
+          {/* <div className="mt-4 flex items-center justify-between">
             <div className="flex">
               <Checkbox {...checkboxProps} />
               <label
@@ -76,10 +76,10 @@ function Login({ actionData, redirectTo }: LoginProps) {
                 Remember Me
               </label>
             </div>
-            {/* <div className="cursor-pointer text-center text-xs text-indigo-600">
+            <div className="cursor-pointer text-center text-xs text-indigo-600">
               Forget your password?
-            </div> */}
-          </div>
+            </div>
+          </div> */}
           <div className="mt-6">
             <input type="hidden" name="redirectTo" value={redirectTo} />
             <Button buttonText="Sign in" type="submit" />
@@ -87,7 +87,7 @@ function Login({ actionData, redirectTo }: LoginProps) {
         </Form>
       </div>
     </div>
-  )
+  );
 }
 
-export default Login
+export default Login;
