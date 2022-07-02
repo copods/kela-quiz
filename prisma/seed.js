@@ -41,27 +41,27 @@ async function seed() {
     })
   }
 
-  await createRoles()
-
-  await prisma.user.upsert({
-    where: {
-      email,
-    },
-    update: {
-      email,
-    },
-    create: {
-      email,
-      password: {
-        create: {
-          hash: hashedPassword,
-        },
+  const createMasterAdmin = async () => {
+    await prisma.user.upsert({
+      where: {
+        email,
       },
-      firstName: 'Anurag',
-      lastName: 'Patel',
-      roleId: roles[0].id,
-    },
-  })
+      update: {
+        email,
+      },
+      create: {
+        email,
+        password: {
+          create: {
+            hash: hashedPassword,
+          },
+        },
+        firstName: 'Anurag',
+        lastName: 'Patel',
+        roleId: roles[0].id,
+      },
+    })
+  }
 
   const questionType = [
     {
@@ -78,21 +78,27 @@ async function seed() {
     }
   ]
 
-  questionType.forEach(async (questionName) => {
-    await prisma.questionType.upsert({
-      where: {
-        value: questionName.value,
-      },
-      update: {
-        displayName: questionName.displayName,
-        value: questionName.value,
-      },
-      create: {
-        displayName: questionName.displayName,
-        value: questionName.value,
-      },
+  const createQuestionType = () => {
+    questionType.forEach(async (questionName) => {
+      await prisma.questionType.upsert({
+        where: {
+          value: questionName.value,
+        },
+        update: {
+          displayName: questionName.displayName,
+          value: questionName.value,
+        },
+        create: {
+          displayName: questionName.displayName,
+          value: questionName.value,
+        },
+      })
     })
-  })
+  }
+
+  await createRoles()
+  await createMasterAdmin()
+  await createQuestionType()
 
   console.log(`Database has been seeded. 🌱`)
 }
