@@ -1,6 +1,5 @@
 import type { LoaderFunction } from "@remix-run/server-runtime";
 import { json } from '@remix-run/node'
-import { useLoaderData } from "@remix-run/react";
 import { getAllSections } from "~/models/sections.server";
 import { getAllUsers } from "~/models/user.server";
 
@@ -15,7 +14,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   return json<LoaderData>({ sections, users })
 }
 export default function Section() {
-  const data = useLoaderData() as LoaderData
+  // const data = useLoaderData() as LoaderData
 
   return (
     <div className="w-full px-9 py-6 h-full bg-white border border-gray-200 rounded-2xl flex flex-col gap-6 overflow-auto">

@@ -1,8 +1,7 @@
 import { Icon } from "@iconify/react"
 import { useState } from "react"
-import Moment from 'moment';
 import SectionCard from "./SectionCard";
-import { Section } from "@prisma/client";
+import type { Section } from "@prisma/client";
 
 const Sections = ({ data }: { data: { sections: Array<Section>, selectedSectionId: string } }) => {
   const [sortDirectionAscending, setSortDirection] = useState(true)

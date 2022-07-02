@@ -1,7 +1,5 @@
 /// <reference types="Cypress">
 
-import { includes } from 'cypress/types/lodash'
-
 describe('Test for Logout, SideNav', () => {
   it('Sample Login', () => {
     cy.visit('/sign-in')
