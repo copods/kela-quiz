@@ -1,9 +1,9 @@
 import { Icon } from "@iconify/react"
 import { useState } from "react"
 import SectionCard from "./SectionCard";
-import type { Section } from "@prisma/client";
+import type { Section, User } from "@prisma/client";
 
-const Sections = ({ data }: { data: { sections: Array<Section>, selectedSectionId: string } }) => {
+const Sections = ({ data }: { data: { sections: Array<(Section & { _count: { questions: number }; createdBy: User })>, selectedSectionId: string } }) => {
   const [sortDirectionAscending, setSortDirection] = useState(true)
   const [selectedSection, setSelectedSection] = useState(data.selectedSectionId)
 

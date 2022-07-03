@@ -1,3 +1,4 @@
+import type { User } from '@prisma/client'
 import type React from 'react'
 
 export interface InputFieldProps {
@@ -34,4 +35,18 @@ export interface CheckboxProps {
   handleChange: React.Dispatch<React.SetStateAction<boolean>>
   name?: string
   isChecked?: boolean
+}
+
+export interface TestSections {
+  id: string;
+  name: string;
+  description: string;
+  createdById: string;
+  createdAt: Date;
+  updatedAt: Date;
+  _count: { questions: number; };
+  createdBy: User;
+  isSelected?: boolean;
+  totalQuestions?: number;
+  time?: number
 }
