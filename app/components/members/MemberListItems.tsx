@@ -1,15 +1,29 @@
 import { Icon } from '@iconify/react'
 import type { Role, User } from '@prisma/client'
-import { Form } from '@remix-run/react'
+
 import moment from 'moment'
+import { useState } from 'react'
+import ConfirmationPopUp from './ConfirmationPopUp'
 
+export default function MemberListItems({
+  user,
+  loggedInUser,
+}: {
+  user: User & { role: Role }
+  loggedInUser: string | undefined
+}) {
+  const [open, setOpen] = useState(false)
 
-export default function MemberListItems({ user,loggedInUser }: {user: (User & { role: Role }),loggedInUser:string | undefined}) {
+  const openPopUp = () => {
+    setOpen(!open)
+  }
+  const description = 'do you wan to delete this user'
+  const deletebutton = 'delete'
+ const deleteMember='delete'
+ const DeleteName="deleteMember"
   return (
-    <div className='grid grid-cols-10 col-span-full'>
-      <div
-        className="col-span-full grid grid-cols-10 border-b-[1px] border-t-[1px] border-solid border-[#E5E7EB] px-12 py-4"
-      >
+    <div className="col-span-full grid grid-cols-10">
+      <div className="col-span-full grid grid-cols-10 border-b-[1px] border-t-[1px] border-solid border-[#E5E7EB] px-12 py-4">
         <div className="col-span-2 ">
           <h1 className="text-base leading-6 text-gray-700">
             {user.firstName}
@@ -30,23 +44,34 @@ export default function MemberListItems({ user,loggedInUser }: {user: (User & { 
         </div>
         <div className="col-span-1">
           <div className=" flex  gap-5">
-            <div>
+            {/* <div>
               <button type="submit">
                 <Icon
                   icon="eva:edit-2-outline"
                   className="h-6 w-6 text-blue-900 pointer-cursor"
                 ></Icon>
               </button>
-            </div>
+            </div> */}
             <div>
-              <Form method="post"  >
-                <button type="submit" name="deleteMember" value={JSON.stringify({ action: 'delete', id: user.id })} >
+              {!open ? (
+                <button
+              
+                  name="deleteMember"
+                  value={JSON.stringify({ action: 'delete', id: user.id })}
+                >
                   <Icon
+                   id='deleteButton'
+                    onClick={openPopUp}
                     icon="ic:outline-delete-outline"
-                    className={`h-6 w-6 text-red-500 pointer-cursor ${loggedInUser === user.id&&"text-red-300 cursor-not-allowed"}`}
+                    className={`pointer-cursor h-6 w-6 text-red-500 ${
+                      loggedInUser === user.id &&
+                      'cursor-not-allowed text-red-300'
+                    }`}
                   ></Icon>
                 </button>
-              </Form>
+              ) : (
+                <ConfirmationPopUp openPopUp={openPopUp} DeleteName={DeleteName} loggedInUser={loggedInUser} user={user} description={description} deletebutton={deletebutton} DeleteValue={deleteMember}  />
+              )}
             </div>
           </div>
         </div>
@@ -54,3 +79,7 @@ export default function MemberListItems({ user,loggedInUser }: {user: (User & { 
     </div>
   )
 }
+
+
+
+

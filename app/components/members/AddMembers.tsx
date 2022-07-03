@@ -55,6 +55,7 @@ export default function AddMembers({
                       Add Section
                     </h2>
                     <Icon
+                    id='crossIcon'
                       className="cursor-pointer text-2xl text-gray-600"
                       icon={'carbon:close'}
                       onClick={() => setAddSectionModalOpen(false)}
@@ -118,6 +119,7 @@ export default function AddMembers({
 
                   <div className="flex justify-end gap-2">
                     <button
+                    id="cancel"
                       type="button"
                       className="h-9 rounded-md px-4 text-sm text-gray-500"
                       onClick={() => setAddSectionModalOpen(false)}
@@ -125,6 +127,7 @@ export default function AddMembers({
                       Cancel
                     </button>
                     <button
+                    id="addUser"
                       type="submit"
                       name="addMember"
                       value={JSON.stringify({ action: 'add' })}
