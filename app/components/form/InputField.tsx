@@ -12,7 +12,7 @@ function InputField({ ...props }: InputFieldProps) {
       <input
         id={props.name}
         {...props}
-        className="h-11 w-full rounded rounded-lg border border-gray-200 px-3.5 py-2.5 text-lg"
+        className="h-11 w-full  rounded-lg border border-gray-200 px-3.5 py-2.5 text-lg"
       />
 
       {props.required && props.error && (

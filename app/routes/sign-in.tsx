@@ -7,7 +7,7 @@ import { json, redirect } from '@remix-run/node'
 import { useActionData, useSearchParams } from '@remix-run/react'
 
 import { createUserSession, getUserId } from '~/session.server'
-import { verifyLogin } from '~/models/user.server'
+import { loginVerificationResponse } from '~/models/user.server'
 import { safeRedirect, validateEmail } from '~/utils'
 import type { ActionData } from '~/components/Interface'
 import Login from '~/components/login/Login'
@@ -22,7 +22,10 @@ export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
   const email = formData.get('email')
   const password = formData.get('password')
-  const redirectTo = safeRedirect(formData.get('redirectTo'), '/dashboard')
+  const redirectTo = safeRedirect(
+    formData.get('redirectTo'),
+    '/dashboard'
+  )
   const remember = formData.get('remember')
 
   if (!validateEmail(email)) {
@@ -39,17 +42,17 @@ export const action: ActionFunction = async ({ request }) => {
     )
   }
 
-  if (password.length < 8) {
+  const user = await loginVerificationResponse(email, password)
+  if (!user) {
     return json<ActionData>(
-      { errors: { password: 'Password is too short' } },
+      { errors: { email: 'Email is invalid' } },
       { status: 400 }
     )
   }
 
-  const user = await verifyLogin(email, password)
-  if (!user) {
+  if (user instanceof Error) {
     return json<ActionData>(
-      { errors: { email: 'Invalid email or password' } },
+      { errors: { password: 'Password is invalid' } },
       { status: 400 }
     )
   }

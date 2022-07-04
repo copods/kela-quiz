@@ -23,7 +23,7 @@ const SectionDetails = ({ sectionDetails }: { sectionDetails: (Section & { quest
       {/* QUESTION LIST  */}
 
       {sectionDetails?.questions
-        .filter((question: any) => {
+        .filter((question: Question) => {
           return question.question.toLowerCase().includes(search.toLowerCase())
         })
         .map((question: Question, i: number) => {
