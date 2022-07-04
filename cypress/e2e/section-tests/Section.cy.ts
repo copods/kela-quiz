@@ -31,7 +31,16 @@ describe('Test for Section', () => {
     cy.get(":nth-child(3) > .h-11").type(`Aptitude - ${new Date().getTime()}`)
     cy.get(":nth-child(4) > .h-11").type("Aptitude")
     cy.get(".justify-end > .bg-primary",{ timeout: 10000 }).click()
+    cy.get('.shadow-md').find("h2").invoke('text').should(someValue => {
+      console.log(someValue);
+      const $el = Cypress.$('.px-9 > .text-2xl')
+      if($el.text() === someValue){
+        console.log("url matched");
+      }else {
+        console.log("url not matched");
+      }
   })
+ })
 
   it("Add Section modal open and cancel section", () =>{
     cy.visit('/sign-in')
