@@ -1,4 +1,4 @@
-import { useFetcher } from "@remix-run/react"
+import { useFetcher, useTransition } from "@remix-run/react"
 import { useState } from "react"
 import { Link } from "react-router-dom"
 import BreadCrumb from "../BreadCrumb"
@@ -10,6 +10,7 @@ import StepsTabComponent from "./StepsTab"
 
 const AddTestComponent = ({ sections }: { sections: Array<TestSections> }) => {
 
+  const transition = useTransition();
   const fetcher = useFetcher();
   const [sectionsCopy, setSectionsCopy] = useState(sections)
 
@@ -105,7 +106,9 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSections> }) => {
               // <button title="Next Tab" className={`text-white text-xs px-7 h-9 rounded-lg ${(!(name && description) || currentTab == 2 || (currentTab == 1 && selectedSections.length == 0)) ? 'bg-gray-600' : 'bg-primary'}`} onClick={() => setCurrentTab(currentTab + 1)} disabled={(!(name && description) || currentTab == 2)}>Next</button>
               <button title="Next Tab" className={`text-white text-xs px-7 h-9 rounded-lg ${(!(name && description) || currentTab == 2) ? 'bg-gray-600' : 'bg-primary'}`} onClick={() => setCurrentTab(currentTab + 1)} disabled={(!(name && description) || currentTab == 2)}>Next</button>
               :
-              <button title="Next Tab" className={`text-white text-xs px-7 h-9 rounded-lg ${(currentTab == 2) ? 'bg-primary' : 'bg-gray-600'}`} onClick={() => submit()} disabled={(currentTab != 2)}>Submit</button>
+              <button title="Next Tab" className={`text-white text-xs px-7 h-9 rounded-lg ${(currentTab == 2) ? 'bg-primary' : 'bg-gray-600'}`} onClick={() => submit()} disabled={(currentTab != 2)}>
+                {transition.state === "submitting" ? "Creating Test" : "Submit"}
+              </button>
           }
         </div>
       </div>
