@@ -1,9 +1,9 @@
-import type { LoaderFunction } from "@remix-run/server-runtime";
+import type { LoaderFunction } from '@remix-run/server-runtime'
 import { json } from '@remix-run/node'
-import { useLoaderData } from "@remix-run/react";
-import { getSectionById } from "~/models/sections.server";
-import invariant from "tiny-invariant";
-import SectionDetails from "~/components/sections/SectionDetails";
+import { useLoaderData } from '@remix-run/react'
+import { getSectionById } from '~/models/sections.server'
+import invariant from 'tiny-invariant'
+import SectionDetails from '~/components/sections/SectionDetails'
 
 type LoaderData = {
   sectionDetails: Awaited<ReturnType<typeof getSectionById>>

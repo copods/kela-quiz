@@ -9,6 +9,7 @@ import { getUserId, requireUserId } from '~/session.server'
 import Sections from '~/components/sections/Sections'
 import AdminLayout from '~/components/layouts/AdminLayout'
 import AddSection from '~/components/sections/AddSection'
+import { useNavigate } from 'react-router-dom'
 
 type ActionData = {
   errors?: {
@@ -31,7 +32,6 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const selectedSectionId = params.sectionId
     ? params.sectionId?.toString()
     : 'NA'
-  // return redirect(`/sections/${sections[0].id}`)
   return json<LoaderData>({ sections, selectedSectionId })
 }
 
@@ -56,13 +56,18 @@ export const action: ActionFunction = async ({ request }) => {
   }
 
   const section = await createSection({ name, description, createdById })
-
   return redirect(`/sections/${section.id}`)
   // return null
 }
 
 export default function Section() {
   const data = useLoaderData() as LoaderData
+  let navigate = useNavigate()
+  useEffect(() => {
+    if (data.selectedSectionId === 'NA') {
+      navigate(`/sections/${data.sections[0].id}`, { replace: true })
+    }
+  }, [data])
   const submit = useSubmit()
 
   const [sectionDetailFull, setSectionDetailFull] = useState(false)
@@ -81,17 +86,16 @@ export default function Section() {
 
   const [sortBy, setSortBy] = useState(sortByDetails[1])
 
-  useEffect(() => {
-    const formData = new FormData()
-    var filter = {
-      orderBy: {
-        [sortBy.id]: order,
-      },
-    }
-    console.log('hellow ', filter)
-    formData.append('filter', JSON.stringify(filter))
-    submit(formData, { method: 'get' })
-  }, [order, sortBy])
+  // useEffect(() => {
+  //   const formData = new FormData()
+  //   var filter = {
+  //     orderBy: {
+  //       [sortBy.id]: order,
+  //     },
+  //   }
+  //   formData.append('filter', JSON.stringify(filter))
+  //   submit(formData, { method: 'get' })
+  // }, [order, sortBy])
 
   return (
     <AdminLayout>
@@ -108,12 +112,18 @@ export default function Section() {
         </header>
 
         <div
-          className={`flex flex-1 overflow-hidden ${sectionDetailFull ? '' : 'gap-12'
-            }`}
+          className={`flex flex-1 overflow-hidden ${
+            sectionDetailFull ? '' : 'gap-12'
+          }`}
         >
           {/* section list */}
           <Sections
-            data={data}
+            sections={data.sections}
+            selectedSectionId={
+              data.selectedSectionId != 'NA'
+                ? data.selectedSectionId
+                : data.sections[0].id
+            }
             sortBy={sortBy}
             setSortBy={setSortBy}
             order={order}
@@ -123,8 +133,9 @@ export default function Section() {
 
           {/* section details */}
           <div
-            className={`z-10 flex flex-1 items-center ${sectionDetailFull ? 'min-w-full' : ''
-              }`}
+            className={`z-10 flex flex-1 items-center ${
+              sectionDetailFull ? 'min-w-full' : ''
+            }`}
           >
             <span
               className="z-20 -mr-5"
