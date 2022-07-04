@@ -1,7 +1,7 @@
 import type { ActionFunction, LoaderFunction } from '@remix-run/server-runtime'
 import { redirect } from '@remix-run/server-runtime'
 import { json } from '@remix-run/node'
-import { Outlet, useLoaderData, useSubmit } from '@remix-run/react'
+import { Outlet, useFetcher, useLoaderData, useSubmit } from '@remix-run/react'
 import { createSection, getAllSections } from '~/models/sections.server'
 import { useState, useEffect } from 'react'
 import { Icon } from '@iconify/react'
@@ -20,7 +20,8 @@ type ActionData = {
 
 export type LoaderData = {
   sections: Awaited<ReturnType<typeof getAllSections>>
-  selectedSectionId: string
+  selectedSectionId: string,
+  filters: string
 }
 
 export const loader: LoaderFunction = async ({ request, params }) => {
@@ -32,7 +33,9 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const selectedSectionId = params.sectionId
     ? params.sectionId?.toString()
     : 'NA'
-  return json<LoaderData>({ sections, selectedSectionId })
+  console.log(request)
+  const filters = new URL(request.url).search
+  return json<LoaderData>({ sections, selectedSectionId, filters })
 }
 
 export const action: ActionFunction = async ({ request }) => {
@@ -62,12 +65,17 @@ export const action: ActionFunction = async ({ request }) => {
 
 export default function Section() {
   const data = useLoaderData() as LoaderData
+  const fetcher = useFetcher();
+
   let navigate = useNavigate()
   useEffect(() => {
     if (data.selectedSectionId === 'NA') {
       navigate(`/sections/${data.sections[0].id}`, { replace: true })
     }
-  }, [data])
+  }, [data, navigate])
+
+
+
   const submit = useSubmit()
 
   const [sectionDetailFull, setSectionDetailFull] = useState(false)
@@ -86,16 +94,17 @@ export default function Section() {
 
   const [sortBy, setSortBy] = useState(sortByDetails[1])
 
-  // useEffect(() => {
-  //   const formData = new FormData()
-  //   var filter = {
-  //     orderBy: {
-  //       [sortBy.id]: order,
-  //     },
-  //   }
-  //   formData.append('filter', JSON.stringify(filter))
-  //   submit(formData, { method: 'get' })
-  // }, [order, sortBy])
+  useEffect(() => {
+    const formData = new FormData()
+    var filter = {
+      orderBy: {
+        [sortBy.id]: order,
+      },
+    }
+    fetcher.submit({ filter: JSON.stringify(filter) }, { method: "get" });
+    formData.append('filter', JSON.stringify(filter))
+    submit(formData, { method: 'get', action: `/sections/${data.sections[0].id}` })
+  }, [order, sortBy])
 
   return (
     <AdminLayout>
@@ -113,9 +122,8 @@ export default function Section() {
         </header>
 
         <div
-          className={`flex flex-1 overflow-hidden ${
-            sectionDetailFull ? '' : 'gap-12'
-          }`}
+          className={`flex flex-1 overflow-hidden ${sectionDetailFull ? '' : 'gap-12'
+            }`}
         >
           {/* section list */}
           <Sections
@@ -125,6 +133,7 @@ export default function Section() {
                 ? data.selectedSectionId
                 : data.sections[0].id
             }
+            filters={data.filters}
             sortBy={sortBy}
             setSortBy={setSortBy}
             order={order}
@@ -134,9 +143,8 @@ export default function Section() {
 
           {/* section details */}
           <div
-            className={`z-10 flex flex-1 items-center ${
-              sectionDetailFull ? 'min-w-full' : ''
-            }`}
+            className={`z-10 flex flex-1 items-center ${sectionDetailFull ? 'min-w-full' : ''
+              }`}
           >
             <span
               className="z-20 -mr-5"

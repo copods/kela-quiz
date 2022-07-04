@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react'
-import { Link } from '@remix-run/react'
+import { Link, useFetcher } from '@remix-run/react'
 import Moment from 'moment'
 import type { Question, Section, User } from '@prisma/client'
 
@@ -7,21 +7,22 @@ const SectionCard = ({
   section,
   selectedSectionId,
   setSelectedSectionId,
+  filters
 }: {
   section: Section & { questions: Question[]; createdBy: User }
   selectedSectionId: string
+  filters: string
   setSelectedSectionId: (e: string) => void
 }) => {
   return (
     <div onClick={() => setSelectedSectionId(section.id)}>
       <Link
         id={selectedSectionId}
-        to={'/sections/' + section.id}
-        className={`flex flex-col gap-2 rounded-2xl p-6 ${
-          section.id === selectedSectionId
-            ? 'border border-l-8 border-transparent border-primary bg-white pl-[17px] shadow-md'
-            : 'border border-gray-200 bg-gray-100'
-        }`}
+        to={'/sections/' + section.id + filters}
+        className={`flex flex-col gap-2 rounded-2xl p-6 ${section.id === selectedSectionId
+          ? 'border border-l-8 border-transparent border-primary bg-white pl-[17px] shadow-md'
+          : 'border border-gray-200 bg-gray-100'
+          }`}
       >
         <div className="flex items-center justify-between">
           <h2 className="text-xl font-semibold text-gray-700">

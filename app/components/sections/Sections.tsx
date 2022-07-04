@@ -2,8 +2,7 @@ import { Icon } from '@iconify/react'
 import { useEffect, useState } from 'react'
 import SectionCard from './SectionCard'
 import Dropdown from '../form/Dropdown'
-import type { LoaderData } from '../../routes/sections'
-import { Section } from '@prisma/client'
+import type { Section } from '@prisma/client'
 
 type SectionType = {
   sections: Section[]
@@ -12,6 +11,7 @@ type SectionType = {
     name: string
     id: string
   }
+  filters: string
   setSortBy: (e: { name: string; id: string }) => void
   order: string
   setOrder: Function
@@ -24,6 +24,7 @@ const Sections = ({
   setSortBy,
   order,
   setOrder,
+  filters,
   sortByDetails,
 }: SectionType) => {
   const [selectedSection, setSelectedSection] = useState(selectedSectionId)
@@ -65,6 +66,7 @@ const Sections = ({
           <SectionCard
             key={el.id}
             section={el}
+            filters={filters}
             selectedSectionId={selectedSection}
             setSelectedSectionId={setSelectedSection}
           />
