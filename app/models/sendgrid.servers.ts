@@ -28,15 +28,6 @@ export async function sendMail(
     <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
       <td align="center" style="padding: 0 20px">
-<<<<<<< HEAD
-          <div style="background:#fff;margin:0 auto;padding:20px;max-width: 320px">
-        <p style="text-align:center;font-size:20px;line-height:28px;color:#4B5563;margin:0;margin-bottom:13px"><span style="font-family:'Poppins', sans-serif;">Welcome !</span></p>
-        <div style="font-size:16px; line-height:24px;margin-bottom:16px">
-          <p style="text-align:left;color:#4B5563;margin:0;font-family:'Poppins', sans-serif;"><span>Hey ${name},</span>
-          </p>
-          <br>
-          <p style="text-align:left;color:#4B5563;margin:0;font-family:'Poppins', sans-serif;">You have been added as a ${role} on K - Quiz.
-=======
           <div style="background:#fff;margin:0 auto;padding:20px;max-width: 350px">
         <p style="text-align:center;font-size:20px;line-height:28px;color:#4B5563;margin:0;margin-bottom:13px"><span>Welcome !</span></p>
         <div style="font-size:16px; line-height:24px;margin-bottom:16px">
@@ -44,7 +35,6 @@ export async function sendMail(
           </p>
           <br>
           <p style="text-align:left;color:#4B5563;margin:0;">You have been added as ${role} on K - Quiz.
->>>>>>> cd7933b484f77ceb6869b5d90f9f68f44c0ec865
           </p>
           <br>
 
@@ -105,18 +95,6 @@ export async function sendMail(
       }
     }
   );
-  //ES8
-  // ;(async () => {
-  //   try {
-  //     await sendgrid.send(msg)
-  //   } catch (error) {
-  //     console.error('err3: ', error)
-
-  //     if (error.response) {
-  //       console.error('err4: ', error.response.body)
-  //     }
-  //   }
-  // })()
 
   return "Done";
 }
