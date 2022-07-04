@@ -4,7 +4,6 @@ import { Form } from '@remix-run/react'
 import { useState, Fragment } from 'react'
 
 import { ClientOnly } from 'remix-utils'
-import QuillEditor from '../QuillEditor.client'
 
 const AddQuestion = ({ addQuestionModal, setAddQuestionModalValue }: { addQuestionModal: boolean, setAddQuestionModalValue: (e: boolean) => void }) => {
 
@@ -44,9 +43,6 @@ const AddQuestion = ({ addQuestionModal, setAddQuestionModalValue }: { addQuesti
                 <hr className="mt-4 mb-6 border-0 h-px bg-gray-300 w-full" />
                 <div className="pb-6">
 
-                  <ClientOnly fallback={<div ></div>}>
-                    {() => <QuillEditor setData={(e) => { setQuestion(e) }} />}
-                  </ClientOnly>
                   {/* <TinyMceEditor /> */}
                   <div className='h-12'></div>
                   <div dangerouslySetInnerHTML={{ __html: question }}></div>
