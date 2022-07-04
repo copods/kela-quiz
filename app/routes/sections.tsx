@@ -51,7 +51,7 @@ export const action: ActionFunction = async ({ request }) => {
     )
   }
 
-  const section = await createSection({ name, description, createdById })
+  await createSection({ name, description, createdById })
 
   return null
 }

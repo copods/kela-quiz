@@ -69,7 +69,7 @@ export const action: ActionFunction = async ({ request, params }) => {
       )
     }
     await createNewUser({ firstName, lastName, email, roleId })
-  return redirect(`/members`)
+    return redirect(`/members`)
   }
   if (action.action === 'delete') {
     if (typeof action.id !== 'string') {
@@ -78,14 +78,6 @@ export const action: ActionFunction = async ({ request, params }) => {
         { status: 400 }
       )
     }
-
-
-    var a = {
-      x: {
-        ['s']: 34
-      }
-    }
-
 
     await deleteUserById(action.id)
     return redirect(`/members`)

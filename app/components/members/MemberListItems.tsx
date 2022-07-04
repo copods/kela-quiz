@@ -26,7 +26,7 @@ export default function MemberListItems({
       <div className="col-span-full grid grid-cols-10 border-b-[1px] border-t-[1px] border-solid border-[#E5E7EB] px-12 py-4">
         <div className="col-span-2 ">
           <h1 className="text-base leading-6 text-gray-700">
-            {user.firstName}
+            {user.firstName} {user.lastName}
           </h1>
         </div>
         <div className="col-span-3 ">
@@ -39,7 +39,7 @@ export default function MemberListItems({
         </div>
         <div className="col-span-2 ">
           <h1 className="text-base leading-6 text-gray-700">
-            {moment(user?.createdAt).format('DD MMMM YY')}
+            {moment(user?.createdAt).format("DD MMMM YY")}
           </h1>
         </div>
         <div className="col-span-1">
@@ -48,7 +48,7 @@ export default function MemberListItems({
               <button type="submit">
                 <Icon
                   icon="eva:edit-2-outline"
-                  className="h-6 w-6 text-blue-900 pointer-cursor"
+                  className="pointer-cursor h-6 w-6 text-blue-900"
                 ></Icon>
               </button>
             </div> */}
@@ -77,7 +77,7 @@ export default function MemberListItems({
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 

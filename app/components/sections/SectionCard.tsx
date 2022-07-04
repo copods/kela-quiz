@@ -1,7 +1,7 @@
 import { Icon } from "@iconify/react"
 import { Link } from "@remix-run/react"
 import Moment from 'moment';
-import type { Question, Section, User } from "@prisma/client";
+import type { Section, User } from "@prisma/client";
 
 const SectionCard = ({ section, selectedSectionId, setSelectedSectionId }: { section: (Section & { _count: { questions: number }; createdBy: User }), selectedSectionId: string, setSelectedSectionId: (e: string) => void }) => {
 
