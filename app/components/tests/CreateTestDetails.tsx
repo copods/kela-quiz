@@ -1,3 +1,6 @@
+import { ClientOnly } from "remix-utils"
+import QuillEditor from "../QuillEditor.client"
+
 const TestDetails = ({ name, setName, description, setDescription }: { name: string, setName: (e: string) => void, description: string, setDescription: (e: string) => void }) => {
   return (
     <div className="w-full bg-white shadow p-6 rounded-lg flex flex-col gap-6">
@@ -7,7 +10,12 @@ const TestDetails = ({ name, setName, description, setDescription }: { name: str
       </div>
       <div>
         <label htmlFor="description" className="text-base font-medium text-gray-800">Description</label>
-        <textarea name="description" id="description" rows={10} value={description} onChange={(e) => setDescription(e.target.value)} className="w-full rounded-lg border border-gray-200 test-base p-3 mt-1" placeholder="Description" />
+        {/* <textarea name="description" id="description" rows={10} value={description} onChange={(e) => setDescription(e.target.value)} className="w-full rounded-lg border border-gray-200 test-base p-3 mt-1" placeholder="Description" /> */}
+        <div className="h-52">
+          <ClientOnly fallback={<div ></div>}>
+            {() => <QuillEditor setData={(e) => { setDescription(e) }} />}
+          </ClientOnly>
+        </div>
       </div>
     </div>
   )
