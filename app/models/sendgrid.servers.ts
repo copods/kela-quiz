@@ -78,7 +78,6 @@ export async function sendMail(
   };
   await sendgrid.send(msg).then(
     () => {
-      console.log("send successful");
       return "ok";
     },
     (error) => {

@@ -14,7 +14,6 @@ export const loader: LoaderFunction = async ({ request }) => {
 export default function Dashboard() {
 
   const notify = () => {
-    console.log("hashdkad", toast)
     toast.warn("Wow so easy!");
     toast.error("Wow so easy!");
     toast.success("Wow so easy!");
