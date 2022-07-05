@@ -40,3 +40,7 @@ export async function createSection({
 export async function deleteSectionById(id: string) {
   return prisma.section.delete({ where: { id } })
 }
+
+export async function getQuestionType() {
+  return prisma.questionType.findMany();
+}

@@ -2,73 +2,40 @@ import { useEffect } from 'react'
 import { useQuill } from 'react-quilljs'
 
 export default function QuillEditor({setData}: {setData: (e: string) => void}) {
-  // const theme = 'snow';
-  // // const theme = 'bubble';
-  // const modules= {
-  //   toolbar: [
-  //     ['bold', 'italic', 'underline', 'strike'],
-  //     [{ align: [] }],
+  const theme = 'snow';
+  // const theme = 'bubble';
+  const modules= {
+    toolbar: {
+      container : [
+      // ['bold', 'italic', 'underline', 'strike'],
+      ['bold', 'italic', 'underline'],
+      [{ align: [] }],
   
-  //     [{ list: 'ordered'}, { list: 'bullet' }],
-  //     [{ indent: '-1'}, { indent: '+1' }],
+      [{ list: 'ordered'}, { list: 'bullet' }],
+      [{ indent: '-1'}, { indent: '+1' }],
   
-  //     [{ size: ['small', false, 'large', 'huge'] }],
-  //     [{ header: [1, 2, 3, 4, 5, 6, false] }],
-  //     ['link', 'image', 'video'],
-  //     [{ color: [] }, { background: [] }],
+      // [{ size: ['small', false, 'large', 'huge'] }],
+      [{ header: [1, 2, 3, 4, 5, 6, false] }],
+      // ['link', 'image', 'video'],
+      ['link', 'image'],
+      [{ color: [] }, { background: [] }],
   
-  //     ['clean'],
-  //   ],
-  //   clipboard: {
-  //     matchVisual: false,
-  //   },
-  // }
-  // const placeholder = 'Write your question here....';
+      ['clean'],
+    ] },
+    clipboard: {
+      matchVisual: false,
+    },
+  }
+  const placeholder = 'Write your question here....';
 
-  // const formats = ['bold', 'italic', 'underline', 'strike'];
+  const formats = ['bold', 'italic', 'underline', 'strike'];
 
-  // const { quill, quillRef} = useQuill({theme, modules, formats, placeholder})
-  const { quill, quillRef} = useQuill()
-
-
-  // image upload to server
-  // // Insert Image(selected by user) to quill
-  // const insertToEditor = (url) => {
-  //   const range = quill.getSelection();
-  //   quill.insertEmbed(range.index, 'image', url);
-  // };
-
-  // // Upload Image to Image Server such as AWS S3, Cloudinary, Cloud Storage, etc..
-  // const saveToServer = async (file) => {
-  //   const body = new FormData();
-  //   body.append('file', file);
-  //   console.log(file)
-
-  //   const res = await fetch('Your Image Server URL', { method: 'POST', body });
-  //   insertToEditor(res.uploadedImageUrl);
-  // };
-
-  // // Open Dialog to select Image File
-  // const selectLocalImage = () => {
-  //   const input = document.createElement('input');
-  //   input.setAttribute('type', 'file');
-  //   input.setAttribute('accept', 'image/*');
-  //   input.click();
-
-  //   input.onchange = () => {
-  //     const file = input.files[0];
-  //     saveToServer(file);
-  //   };
-  // };
-
+   const { quill, quillRef} = useQuill({theme, modules, formats, placeholder})
+  
   useEffect(() => {
-    // if (quill && defaultValue && quillRef) {
-    //   quill.clipboard.dangerouslyPasteHTML(defaultValue)
-    // }
-    // if (quill) {
-    //   // Add custom handler for Image Upload
-    //   // quill.getModule('toolbar').addHandler('image', selectLocalImage);
-    // }
+    if(quill){
+      console.log(quill);
+    }
     if (quill) {
       quill.on('text-change', (delta, oldDelta, source) => {
         // console.log('Text change!');
@@ -83,7 +50,7 @@ export default function QuillEditor({setData}: {setData: (e: string) => void}) {
   }, [quill])
 
   return (
-    <div className='w-full h-56'>
+    <div className='rounded-lg w-full h-full helloQuill'>
       <div ref={quillRef}  />
     </div>
   )
