@@ -6,10 +6,10 @@ import QuestionEditor from './QuestionEditor'
 import OptionForQuestion from './OptionForQuestion'
 
 
-const AddQuestionInSection = ({ sectionDetails,questionTypeList }: { sectionDetails: (Section & { questions: Question[]; }) | null ,questionTypeList : QuestionType[]}) => {
+const AddQuestionInSection = ({ sectionDetails, questionTypeList }: { sectionDetails: (Section & { questions: Question[]; }) | null, questionTypeList: QuestionType[] }) => {
 
-  
-  const [selectedTypeOfQuestion , setSelectedTypeOfQuestion] = useState(questionTypeList[0].id);
+
+  const [selectedTypeOfQuestion, setSelectedTypeOfQuestion] = useState(questionTypeList[0].id);
 
   const breadCrumbArray = [
     {
@@ -41,11 +41,11 @@ const AddQuestionInSection = ({ sectionDetails,questionTypeList }: { sectionDeta
         </div>
       </div>
 
-      <div className="flex-1 flex gap-6 ">
+      <div className="flex-1 flex gap-6 h-40">
 
-        <QuestionEditor questionTypeList = {questionTypeList} selectedTypeOfQuestion = {selectedTypeOfQuestion} setSelectedTypeOfQuestion={setSelectedTypeOfQuestion} />
-        
-        <OptionForQuestion selectedTypeOfQuestion={selectedTypeOfQuestion} questionTypeList = {questionTypeList}/>
+        <QuestionEditor questionTypeList={questionTypeList} selectedTypeOfQuestion={selectedTypeOfQuestion} setSelectedTypeOfQuestion={setSelectedTypeOfQuestion} />
+
+        <OptionForQuestion selectedTypeOfQuestion={selectedTypeOfQuestion} questionTypeList={questionTypeList} />
 
       </div>
       <div className='flex flex-end items-center justify justify-between'>
