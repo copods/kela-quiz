@@ -22,7 +22,6 @@ export const loader: LoaderFunction = async ({ request }) => {
   var status: string = ''
   await getAllTests()
     .then(res => {
-      toast.success("hey")
       tests = res
       status = "Success"
     }).catch(err => {

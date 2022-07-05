@@ -1,5 +1,5 @@
-describe('Visiting Add Test Page', () => {
-  it('Check Section', () => {
+describe('Creating tests', () => {
+  it.skip('Visiting Add Test Page', () => {
     cy.visit('/sign-in')
     cy.get('#email').clear()
       .type('careers@copods.co')
@@ -11,43 +11,240 @@ describe('Visiting Add Test Page', () => {
 
     cy.get('a').find('#Tests').should('have.text', 'Tests').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests') 
-    cy.get('button').find('#addTest').should('have.text', 'Add Test').click()
+    cy.get('#addTest').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests/add-test') 
-
   })
 
-  // it("Add Section modal open and Add section", () =>{
-  //   cy.visit('/sign-in')
-  //   cy.get('#email').clear()
-  //     .type('careers@copods.co')
-  //     .should('have.value', 'careers@copods.co')
-  //   cy.get('#password').clear()
-  //     .type('kQuiz@copods')
-  //     .should('have.value', 'kQuiz@copods')
-  //   cy.findByRole('button').click()
+  it.skip('Verify if add test page contains 3 tabs', () => {
+    cy.visit('/sign-in')
+    cy.get('#email').clear()
+      .type('careers@copods.co')
+      .should('have.value', 'careers@copods.co')
+    cy.get('#password').clear()
+      .type('kQuiz@copods')
+      .should('have.value', 'kQuiz@copods')
+    cy.findByRole('button').click()
 
-  //   cy.get('a').find('#Sections').should('have.text', 'Sections').click()
-  //   cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
-  //   cy.get("#add-section").click()
-  //   cy.get("#headlessui-dialog-panel-6",{ timeout: 10000 }).should("be.visible")
-  //   cy.get(":nth-child(3) > .h-11").type(`Aptitude - ${new Date().getTime()}`)
-  //   cy.get(":nth-child(4) > .h-11").type("Aptitude")
-  //   cy.get(".justify-end > .bg-primary",{ timeout: 10000 }).click()
-  // })
+    cy.get('a').find('#Tests').should('have.text', 'Tests').click()
+    cy.location('pathname', { timeout: 60000 }).should('include', '/tests') 
+    cy.get('#addTest').click()
+    cy.location('pathname', { timeout: 60000 }).should('include', '/tests/add-test') 
 
-  // it("Add Section modal open and cancel section", () =>{
-  //   cy.visit('/sign-in')
-  //   cy.get('#email').clear()
-  //     .type('careers@copods.co')
-  //     .should('have.value', 'careers@copods.co')
-  //   cy.get('#password').clear()
-  //     .type('kQuiz@copods')
-  //     .should('have.value', 'kQuiz@copods')
-  //   cy.findByRole('button').click()
-  //   cy.get('a').find('#Sections').should('have.text', 'Sections').click()
-  //   cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
-  //   cy.get("#add-section").click()
-  //   cy.get("#headlessui-dialog-panel-6",{ timeout: 10000 }).should("be.visible")
-  //   cy.get(".justify-end > .text-gray-500",{ timeout: 10000 }).click()
-  // })
+    cy.get("#0").find('.mb-1').should('have.text','Step 1')
+    cy.get("#1").find('.mb-1').should('have.text','Step 2')
+    cy.get("#2").find('.mb-1').should('have.text','Step 3')
+    cy.get("#0").find('.text-gray-500').should('have.text','Test Details')
+    cy.get("#1").find('.text-gray-500').should('have.text','Select Sections')
+    cy.get("#2").find('.text-gray-500').should('have.text','Preview')
+  })
+
+  it.skip('Verify if user able to navigate through tabs', () => {
+    cy.visit('/sign-in')
+    cy.get('#email').clear()
+      .type('careers@copods.co')
+      .should('have.value', 'careers@copods.co')
+    cy.get('#password').clear()
+      .type('kQuiz@copods')
+      .should('have.value', 'kQuiz@copods')
+    cy.findByRole('button').click()
+
+    cy.get('a').find('#Tests').should('have.text', 'Tests').click()
+    cy.location('pathname', { timeout: 60000 }).should('include', '/tests') 
+    cy.get('#addTest').click()
+    cy.location('pathname', { timeout: 60000 }).should('include', '/tests/add-test') 
+
+    cy.get("#0").click()
+    cy.get("#0").find('hr').should('have.class','bg-primary')
+
+    cy.get("#1").click()
+    cy.get("#0").find('hr').should('have.class','bg-primary')
+    cy.get("#1").find('hr').should('have.class','bg-primary')
+
+    cy.get("#2").click()
+    cy.get("#0").find('hr').should('have.class','bg-primary')
+    cy.get("#1").find('hr').should('have.class','bg-primary')
+    cy.get("#2").find('hr').should('have.class','bg-primary')
+  })
+
+  it.skip("Verify if next button is disabled if user do not provide name and description", () =>{
+    cy.visit('/sign-in')
+    cy.get('#email').clear()
+      .type('careers@copods.co')
+      .should('have.value', 'careers@copods.co')
+    cy.get('#password').clear()
+      .type('kQuiz@copods')
+      .should('have.value', 'kQuiz@copods')
+    cy.findByRole('button').click()
+
+    cy.get('a').find('#Tests').should('have.text', 'Tests').click()
+    cy.location('pathname', { timeout: 60000 }).should('include', '/tests') 
+    cy.get('#addTest').click()
+    cy.location('pathname', { timeout: 60000 }).should('include', '/tests/add-test') 
+
+    cy.get("button#nextButton").should('have.text','Next').should('have.disabled', true)
+  })
+
+  it.skip("Verify if user able to navigate to Step 2 by clicking next button if user provide name and description", () =>{
+    cy.visit('/sign-in')
+    cy.get('#email').clear()
+      .type('careers@copods.co')
+      .should('have.value', 'careers@copods.co')
+    cy.get('#password').clear()
+      .type('kQuiz@copods')
+      .should('have.value', 'kQuiz@copods')
+    cy.findByRole('button').click()
+
+    cy.get('a').find('#Tests').should('have.text', 'Tests').click()
+    cy.location('pathname', { timeout: 60000 }).should('include', '/tests') 
+    cy.get('#addTest').click()
+    cy.location('pathname', { timeout: 60000 }).should('include', '/tests/add-test') 
+
+    cy.get('#name').clear()
+        .type(`Test - ${new Date().getTime()}`)
+    cy.get('#description').clear()
+        .type(`Test Description`)
+
+    cy.get("button#nextButton").should('have.text','Next').click()
+    cy.get("#0").find('hr').should('have.class','bg-primary')
+    cy.get("#1").find('hr').should('have.class','bg-primary')
+  })
+
+  it.skip("Verify on clicking back button on step 2 user navigate back to step 2", () =>{
+    cy.visit('/sign-in')
+    cy.get('#email').clear()
+      .type('careers@copods.co')
+      .should('have.value', 'careers@copods.co')
+    cy.get('#password').clear()
+      .type('kQuiz@copods')
+      .should('have.value', 'kQuiz@copods')
+    cy.findByRole('button').click()
+
+    cy.get('a').find('#Tests').should('have.text', 'Tests').click()
+    cy.location('pathname', { timeout: 60000 }).should('include', '/tests') 
+    cy.get('#addTest').click()
+    cy.location('pathname', { timeout: 60000 }).should('include', '/tests/add-test') 
+
+    cy.get("#1").click()
+    cy.get("#0").find('hr').should('have.class','bg-primary')
+    cy.get("#1").find('hr').should('have.class','bg-primary')
+
+    cy.get("button#backButton").should('have.text','Back').click()
+    
+    cy.get("#0").find('hr').should('have.class','bg-primary')
+    cy.get("#1").find('hr').should('have.class','bg-gray-200')
+  })
+
+  it.skip("Verify if user able to add section and able to input total questions and time", () =>{
+    cy.visit('/sign-in')
+    cy.get('#email').clear()
+      .type('careers@copods.co')
+      .should('have.value', 'careers@copods.co')
+    cy.get('#password').clear()
+      .type('kQuiz@copods')
+      .should('have.value', 'kQuiz@copods')
+    cy.findByRole('button').click()
+
+    cy.get('a').find('#Tests').should('have.text', 'Tests').click()
+    cy.location('pathname', { timeout: 60000 }).should('include', '/tests') 
+    cy.get('#addTest').click()
+    cy.location('pathname', { timeout: 60000 }).should('include', '/tests/add-test') 
+
+    cy.get('#name').clear()
+        .type(`Test - ${new Date().getTime()}`)
+    cy.get('#description').clear()
+        .type(`Test Description`)
+
+    cy.get("button#nextButton").should('have.text','Next').click()
+    cy.get("#0").find('hr').should('have.class','bg-primary')
+    cy.get("#1").find('hr').should('have.class','bg-primary')
+    // user reached to step 2
+
+    cy.get("div#section").first().within(()=>{
+      cy.get("input#noOfQu").should('have.disabled', true)
+      cy.get("input#time").should('have.disabled', true)
+      cy.get("button").should('have.text','Add').click()
+      cy.get("button").should('have.text','Remove')
+
+      cy.get("input#noOfQu").clear().type('2')
+      cy.get("input#time").clear().type('2')
+    })
+  })
+
+
+  it.skip("Verify if user able to remove added section and able to input total questions and time", () =>{
+    cy.visit('/sign-in')
+    cy.get('#email').clear()
+      .type('careers@copods.co')
+      .should('have.value', 'careers@copods.co')
+    cy.get('#password').clear()
+      .type('kQuiz@copods')
+      .should('have.value', 'kQuiz@copods')
+    cy.findByRole('button').click()
+
+    cy.get('a').find('#Tests').should('have.text', 'Tests').click()
+    cy.location('pathname', { timeout: 60000 }).should('include', '/tests') 
+    cy.get('#addTest').click()
+    cy.location('pathname', { timeout: 60000 }).should('include', '/tests/add-test') 
+
+    cy.get('#name').clear()
+        .type(`Test - ${new Date().getTime()}`)
+    cy.get('#description').clear()
+        .type(`Test Description`)
+
+    cy.get("button#nextButton").should('have.text','Next').click()
+    cy.get("#0").find('hr').should('have.class','bg-primary')
+    cy.get("#1").find('hr').should('have.class','bg-primary')
+    // user reached to step 2
+
+    cy.get("div#section").first().within(()=>{
+      cy.get("input#noOfQu").should('have.disabled', true)
+      cy.get("input#time").should('have.disabled', true)
+      cy.get("button").should('have.text','Add').click()
+
+      cy.get("button").should('have.text','Remove').click()
+
+      cy.get("input#noOfQu").should('have.disabled', true)
+      cy.get("input#time").should('have.disabled', true)
+    })
+  })
+
+  it("Verify if user able to move to preview tab after selecting sections", () =>{
+    cy.visit('/sign-in')
+    cy.get('#email').clear()
+      .type('careers@copods.co')
+      .should('have.value', 'careers@copods.co')
+    cy.get('#password').clear()
+      .type('kQuiz@copods')
+      .should('have.value', 'kQuiz@copods')
+    cy.findByRole('button').click()
+
+    cy.get('a').find('#Tests').should('have.text', 'Tests').click()
+    cy.location('pathname', { timeout: 60000 }).should('include', '/tests') 
+    cy.get('#addTest').click()
+    cy.location('pathname', { timeout: 60000 }).should('include', '/tests/add-test') 
+
+    cy.get('#name').clear()
+        .type(`Test - ${new Date().getTime()}`)
+    cy.get('#description').clear()
+        .type(`Test Description`)
+
+    cy.get("button#nextButton").should('have.text','Next').click()
+    cy.get("#0").find('hr').should('have.class','bg-primary')
+    cy.get("#1").find('hr').should('have.class','bg-primary')
+    // user reached to step 2
+
+    cy.get("div#section").first().within(()=>{
+      cy.get("input#noOfQu").should('have.disabled', true)
+      cy.get("input#time").should('have.disabled', true)
+      cy.get("button").should('have.text','Add').click()
+      cy.get("button").should('have.text','Remove')
+
+      cy.get("input#noOfQu").clear().type('2')
+      cy.get("input#time").clear().type('2')
+    })
+    cy.get("button#nextButton").should('have.text','Next').click()
+    cy.get("#0").find('hr').should('have.class','bg-primary')
+    cy.get("#1").find('hr').should('have.class','bg-primary')
+    cy.get("#2").find('hr').should('have.class','bg-primary')
+  })
 })

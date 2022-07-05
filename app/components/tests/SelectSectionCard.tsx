@@ -25,7 +25,7 @@ const SelectSectionCard = ({ section, updateSection }: { section: TestSections, 
   }
 
   return (
-    <div className={`flex-1 flex flex-col gap-2 w-sectionCard min-w-sectionCard rounded-2xl border ${section.isSelected ? 'border-[3px] border-primary bg-white px-[18px] py-[22px]' : 'border-gray-300 bg-gray-100 px-5 py-6'}`}>
+    <div id="section" className={`flex-1 flex flex-col gap-2 w-sectionCard min-w-sectionCard rounded-2xl border ${section.isSelected ? 'border-[3px] border-primary bg-white px-[18px] py-[22px]' : 'border-gray-300 bg-gray-100 px-5 py-6'}`}>
       <div className="flex justify-between items-start">
         <h3 title={section.name} className="flex-1 text-xl font-semibold text-gray-700">{section.name}</h3>
         {
@@ -50,11 +50,11 @@ const SelectSectionCard = ({ section, updateSection }: { section: TestSections, 
       <div className="pt-1 flex gap-4">
         <div>
           <label htmlFor="noOfQuestion" className="text-xs font-medium text-gray-600">Total Questions</label>
-          <input type="number" name="noOfQuestion" value={section.totalQuestions} onChange={(e) => updateThisSection('totalQuestions', e.target.value)} className={`w-full h-11 rounded-lg border border-gray-300 text-xs px-3 mt-1 ${section.isSelected ? 'bg-white' : 'bg-gray-200'}`} placeholder="Total Questions" disabled={!section.isSelected} />
+          <input type="number" id="noOfQu" name="noOfQuestion" value={section.totalQuestions} onChange={(e) => updateThisSection('totalQuestions', e.target.value)} className={`w-full h-11 rounded-lg border border-gray-300 text-xs px-3 mt-1 ${section.isSelected ? 'bg-white' : 'bg-gray-200'}`} placeholder="Total Questions" disabled={!section.isSelected} />
         </div>
         <div>
           <label htmlFor="totalTime" className="text-xs font-medium text-gray-600">Total Time</label>
-          <input type="number" name="totalTime" value={section.time} onChange={(e) => updateThisSection('time', e.target.value)} className={`w-full h-11 rounded-lg border border-gray-300 text-xs px-3 mt-1 ${section.isSelected ? 'bg-white' : 'bg-gray-200'}`} placeholder="Time(min)" disabled={!section.isSelected} />
+          <input type="number" id="time" name="totalTime" value={section.time} onChange={(e) => updateThisSection('time', e.target.value)} className={`w-full h-11 rounded-lg border border-gray-300 text-xs px-3 mt-1 ${section.isSelected ? 'bg-white' : 'bg-gray-200'}`} placeholder="Time(min)" disabled={!section.isSelected} />
         </div>
       </div>
     </div >

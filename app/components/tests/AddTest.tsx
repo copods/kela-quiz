@@ -99,14 +99,14 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSections> }) => {
           </Link>
         </div>
         <div className="flex gap-4">
-          <button title="Previous Tab" className={`text-white text-xs px-7 h-9 rounded-lg ${currentTab != tabs[0].id ? 'bg-primary' : 'bg-gray-600'}`} onClick={() => setCurrentTab(currentTab - 1)} disabled={currentTab === tabs[0].id}>Back</button>
+          <button title="Previous Tab" id="backButton" className={`text-white text-xs px-7 h-9 rounded-lg ${currentTab != tabs[0].id ? 'bg-primary' : 'bg-gray-600'}`} onClick={() => setCurrentTab(currentTab - 1)} disabled={currentTab === tabs[0].id}>Back</button>
           {
             currentTab != 2
               ?
               // <button title="Next Tab" className={`text-white text-xs px-7 h-9 rounded-lg ${(!(name && description) || currentTab == 2 || (currentTab == 1 && selectedSections.length == 0)) ? 'bg-gray-600' : 'bg-primary'}`} onClick={() => setCurrentTab(currentTab + 1)} disabled={(!(name && description) || currentTab == 2)}>Next</button>
-              <button title="Next Tab" className={`text-white text-xs px-7 h-9 rounded-lg ${(!(name && description) || currentTab == 2) ? 'bg-gray-600' : 'bg-primary'}`} onClick={() => setCurrentTab(currentTab + 1)} disabled={(!(name && description) || currentTab == 2)}>Next</button>
+              <button title="Next Tab" id="nextButton" className={`text-white text-xs px-7 h-9 rounded-lg ${(!(name && description) || currentTab == 2) ? 'bg-gray-600' : 'bg-primary'}`} onClick={() => setCurrentTab(currentTab + 1)} disabled={(!(name && description) || currentTab == 2)}>Next</button>
               :
-              <button title="Next Tab" className={`text-white text-xs px-7 h-9 rounded-lg ${(currentTab == 2) ? 'bg-primary' : 'bg-gray-600'}`} onClick={() => submit()} disabled={(currentTab != 2)}>
+              <button title="Next Tab" id="submitButton" className={`text-white text-xs px-7 h-9 rounded-lg ${(currentTab == 2) ? 'bg-primary' : 'bg-gray-600'}`} onClick={() => submit()} disabled={(currentTab != 2)}>
                 {transition.state === "submitting" ? "Creating Test" : "Submit"}
               </button>
           }
