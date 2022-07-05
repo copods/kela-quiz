@@ -77,7 +77,9 @@ const AddSection = ({
                   <button
                     type="button"
                     className="h-9 rounded-md px-4 text-sm text-gray-500"
-                    onClick={() => setAddSectionModalOpen(false)}
+                    onClick={() => {
+                      setAddSectionModalOpen(false)
+                    }}
                   >
                     Cancel
                   </button>
