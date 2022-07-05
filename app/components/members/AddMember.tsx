@@ -1,19 +1,19 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import type { Role } from '@prisma/client'
-import { Form } from '@remix-run/react'
+import { Form, useTransition } from '@remix-run/react'
 import { Fragment } from 'react'
-export default function AddMembers({
+export default function AddMember({
   roles,
   addMemberModalOpen,
-  setAddSectionModalOpen,
+  setAddMemberModalOpen,
 }: {
   roles: Role[],
   addMemberModalOpen: boolean,
-  setAddSectionModalOpen: (e: boolean) => void
+  setAddMemberModalOpen: (e: boolean) => void
 }) {
 
-
+  const transition = useTransition()
 
   return (
     <div>
@@ -21,7 +21,7 @@ export default function AddMembers({
         <Dialog
           as="div"
           className="relative z-10"
-          onClose={setAddSectionModalOpen}
+          onClose={setAddMemberModalOpen}
         >
           <Transition.Child
             as={Fragment}
@@ -57,7 +57,7 @@ export default function AddMembers({
                     <Icon
                       className="cursor-pointer text-2xl text-gray-600"
                       icon={'carbon:close'}
-                      onClick={() => setAddSectionModalOpen(false)}
+                      onClick={() => setAddMemberModalOpen(false)}
                     />
                   </div>
                   <hr className="mt-4 mb-6 h-px w-full border-0 bg-gray-300" />
@@ -67,7 +67,7 @@ export default function AddMembers({
                         First Name
                       </label>
                       <input
-                      id='firstName'
+                        id='firstName'
                         type="firstName"
                         name="firstName"
                         className=" my-1.5 h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
@@ -79,7 +79,7 @@ export default function AddMembers({
                         Last Name
                       </label>
                       <input
-                         id='lastName'
+                        id='lastName'
                         type="lastName"
                         name="lastName"
                         className="my-1.5 h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
@@ -92,7 +92,7 @@ export default function AddMembers({
                       Email
                     </label>
                     <input
-                       id='email'
+                      id='email'
                       type="email"
                       name="email"
                       className="my-1.5 h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
@@ -120,7 +120,7 @@ export default function AddMembers({
                     <button
                       type="button"
                       className="h-9 rounded-md px-4 text-sm text-gray-500"
-                      onClick={() => setAddSectionModalOpen(false)}
+                      onClick={() => setAddMemberModalOpen(false)}
                     >
                       Cancel
                     </button>
@@ -129,9 +129,11 @@ export default function AddMembers({
                       name="addMember"
                       value={JSON.stringify({ action: 'add' })}
                       className="h-9 rounded-md bg-primary px-4 text-sm text-[#F0FDF4]"
-                      onClick={() => setAddSectionModalOpen(false)}
+                      onClick={() => setAddMemberModalOpen(false)}
                     >
-                      Add
+                      {transition.state === "submitting"
+                        ? "Adding..."
+                        : "Add"}
                     </button>
                   </div>
                 </Dialog.Panel>
