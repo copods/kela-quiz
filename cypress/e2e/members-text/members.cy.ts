@@ -24,11 +24,11 @@ describe('Members test', () => {
     cy.get('#cancel').click()
 
   })
-  it('Sample members', () => {
+  // it('Sample members', () => {
     // checking delete and cancel button on popup
-    cy.get('#addMember').click()
-    cy.get('#crossIcon').click()
-    cy.get('#deleteButton').click()
-    cy.get('#deleteConfirm').click()
-  })
+  //   cy.get('#addMember').click()
+  //   cy.get('#crossIcon').click()
+  //   cy.get('#deleteButton').click()
+  //   cy.get('#deleteConfirm').click()
+  // })
 })
