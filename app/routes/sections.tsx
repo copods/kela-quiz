@@ -45,6 +45,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     ? params.sectionId?.toString()
     : 'NA'
   const filters = new URL(request.url).search
+  console.log("Sections: ", sections)
   return json<LoaderData>({ sections, selectedSectionId, filters, status })
 }
 
@@ -75,6 +76,7 @@ export const action: ActionFunction = async ({ request }) => {
 
 export default function SectionPage() {
   const data = useLoaderData() as LoaderData
+  console.log("data: ", data)
   const fetcher = useFetcher()
 
   let navigate = useNavigate()
@@ -118,10 +120,18 @@ export default function SectionPage() {
       formData.append('filter', JSON.stringify(filter))
       submit(formData, {
         method: 'get',
-        action: `/sections/${data.sections[0]?.id}`,
+        action: `/sections/${selectedSection}`,
+        // action: `/sections/${data.sections[0]?.id}`,
       })
     }
   }, [order, sortBy])
+
+  const [selectedSection, setSelectedSection] = useState(data.selectedSectionId != 'NA'
+    ? data.selectedSectionId
+    : data.sections[0]?.id
+      ? data.sections[0].id
+      : 'NA')
+
 
   return (
     <AdminLayout>
@@ -139,19 +149,16 @@ export default function SectionPage() {
         </header>
 
         <div
-          className={`flex flex-1 overflow-hidden ${
-            sectionDetailFull ? '' : 'gap-12'
-          }`}
+          className={`flex flex-1 overflow-hidden ${sectionDetailFull ? '' : 'gap-12'
+            }`}
         >
           {/* section list */}
           <Sections
             sections={data.sections}
+            selectedSection={selectedSection}
+            setSelectedSection={setSelectedSection}
             selectedSectionId={
-              data.selectedSectionId != 'NA'
-                ? data.selectedSectionId
-                : data.sections[0]?.id
-                ? data.sections[0].id
-                : 'NA'
+              selectedSection
             }
             filters={data.filters}
             sortBy={sortBy}
@@ -163,9 +170,8 @@ export default function SectionPage() {
 
           {/* section details */}
           <div
-            className={`z-10 flex flex-1 items-center ${
-              sectionDetailFull ? 'min-w-full' : ''
-            }`}
+            className={`z-10 flex flex-1 items-center ${sectionDetailFull ? 'min-w-full' : ''
+              }`}
           >
             <span
               className="z-20 -mr-5"

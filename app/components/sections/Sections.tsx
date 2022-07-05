@@ -11,6 +11,8 @@ type SectionType = {
     name: string
     id: string
   }
+  selectedSection: string
+  setSelectedSection: (e: string) => void
   filters: string
   setSortBy: (e: { name: string; id: string }) => void
   order: string
@@ -20,6 +22,8 @@ type SectionType = {
 const Sections = ({
   sections,
   selectedSectionId,
+  setSelectedSection,
+  selectedSection,
   sortBy,
   setSortBy,
   order,
@@ -27,7 +31,8 @@ const Sections = ({
   filters,
   sortByDetails,
 }: SectionType) => {
-  const [selectedSection, setSelectedSection] = useState(selectedSectionId)
+
+  // const [selectedSection, setSelectedSection] = useState(selectedSectionId)
   useEffect(() => {
     setSelectedSection(selectedSectionId)
   }, [selectedSectionId])
