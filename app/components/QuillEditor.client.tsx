@@ -6,7 +6,7 @@ export default function QuillEditor({ onTextChange }: { onTextChange: (e: string
 
   useEffect(() => {
     if (quill) {
-      quill.on('text-change', (delta, oldDelta, source) => {
+      quill.on('text-change', () => {
         onTextChange(quill.root.innerHTML)
       });
     }
