@@ -46,12 +46,14 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSections> }) => {
   const [currentTab, setCurrentTab] = useState(0)     // testDetails  ||  selectSections  ||  preview
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
+  const [selectedSections, setSelectedSections] = useState<TestSections[]>([])
 
   const updateSection = (data: any, i: number) => {
     setSectionsCopy(sec => {
       sec[i] = { ...sec[i], ...data }
       return [...sec]
     })
+    setSelectedSections(sectionsCopy.filter(sec => { return sec.isSelected }))
   }
 
   const submit = () => {
@@ -87,7 +89,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSections> }) => {
           :
           currentTab === tabs[1].id ? <SelectSections sections={sectionsCopy} setSections={(e, i) => { updateSection(e, i) }} />
             :
-            currentTab === tabs[2].id ? <TestPreview sections={sectionsCopy} name={name} description={description} />
+            currentTab === tabs[2].id ? <TestPreview selectedSections={selectedSections} setSelectedSections={setSelectedSections} sections={sectionsCopy} name={name} description={description} />
               : ''
       }
 
