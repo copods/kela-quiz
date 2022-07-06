@@ -2,13 +2,16 @@ import { Form } from '@remix-run/react'
 import { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
+import type { ActionData } from '~/routes/sections'
 
 const AddSection = ({
   addSectionModalOpen,
   setAddSectionModalOpen,
+  action,
 }: {
   addSectionModalOpen: boolean
   setAddSectionModalOpen: (e: boolean) => void
+  action: ActionData
 }) => {
   return (
     <Transition.Root show={addSectionModalOpen} as={Fragment}>
@@ -63,14 +66,21 @@ const AddSection = ({
                     className="h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
                     placeholder="Enter Section Name"
                   />
+                  {action.errors?.title ? (
+                    <span>{action.errors?.title}</span>
+                  ) : null}
                 </div>
                 <div className="pb-6">
-                  <input
-                    type="text"
+                  <textarea
                     name="description"
-                    className="h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
+                    rows={4}
+                    cols={50}
+                    className="h-24 w-full rounded-lg border border-gray-200 py-2 px-3 text-base"
                     placeholder="Enter Section Description"
                   />
+                  {action.errors?.body ? (
+                    <span>{action.errors?.body}</span>
+                  ) : null}
                 </div>
 
                 <div className="flex justify-end gap-2">
@@ -85,8 +95,13 @@ const AddSection = ({
                   </button>
                   <button
                     type="submit"
-                    className="h-9 rounded-md bg-primary px-4 text-sm text-[#F0FDF4]"
-                    onClick={() => setAddSectionModalOpen(false)}
+                    className="h-9 rounded-md bg-primary px-4 text-sm text-[#F0FDF4] disabled:opacity-80 "
+                    onClick={() => {
+                      if (!action.errors?.title && !action.errors?.body) {
+                        console.log(action.errors)
+                        setAddSectionModalOpen(false)
+                      }
+                    }}
                   >
                     Add
                   </button>

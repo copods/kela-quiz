@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import SectionCard from './SectionCard'
 import Dropdown from '../form/Dropdown'
 import type { Section } from '@prisma/client'
@@ -31,13 +31,12 @@ const Sections = ({
   filters,
   sortByDetails,
 }: SectionType) => {
-
   // const [selectedSection, setSelectedSection] = useState(selectedSectionId)
   useEffect(() => {
     setSelectedSection(selectedSectionId)
-  }, [selectedSectionId])
+  }, [selectedSectionId, setSelectedSection])
   return (
-    <div className="flex w-96 flex-col gap-6 overflow-auto">
+    <div className="flex w-96 flex-col gap-6 ">
       {/* filters */}
       <div className="flex items-center justify-between ">
         <div className="flex items-center gap-2.5">
@@ -66,20 +65,23 @@ const Sections = ({
       </div>
 
       {/* list */}
-      {sections?.map((el: any) => {
-        return (
-          <SectionCard
-            key={el.id}
-            section={el}
-            filters={filters}
-            selectedSectionId={selectedSection}
-            setSelectedSectionId={setSelectedSection}
-          />
-        )
-      })}
-      {sections.length === 0 && (
-        <div className="flex justify-center p-7">No Record Found</div>
-      )}
+      <div className="flex flex-col gap-6 overflow-auto" id="section-cards">
+        {sections?.map((el: any) => {
+          return (
+            <SectionCard
+              key={el.id}
+              section={el}
+              filters={filters}
+              selectedSectionId={selectedSection}
+              setSelectedSectionId={setSelectedSection}
+            />
+          )
+        })}
+
+        {sections.length === 0 && (
+          <div className="flex justify-center p-7">No Record Found</div>
+        )}
+      </div>
     </div>
   )
 }

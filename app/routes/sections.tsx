@@ -1,7 +1,13 @@
 import type { ActionFunction, LoaderFunction } from '@remix-run/server-runtime'
 import { redirect } from '@remix-run/server-runtime'
 import { json } from '@remix-run/node'
-import { Outlet, useFetcher, useLoaderData, useSubmit } from '@remix-run/react'
+import {
+  Outlet,
+  useActionData,
+  useFetcher,
+  useLoaderData,
+  useSubmit,
+} from '@remix-run/react'
 import { createSection, getAllSections } from '~/models/sections.server'
 import { useState, useEffect } from 'react'
 import { Icon } from '@iconify/react'
@@ -12,7 +18,7 @@ import AddSection from '~/components/sections/AddSection'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import type { Section, User } from '@prisma/client'
-type ActionData = {
+export type ActionData = {
   errors?: {
     title?: string
     body?: string
@@ -45,7 +51,6 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     ? params.sectionId?.toString()
     : 'NA'
   const filters = new URL(request.url).search
-  console.log("Sections: ", sections)
   return json<LoaderData>({ sections, selectedSectionId, filters, status })
 }
 
@@ -57,6 +62,7 @@ export const action: ActionFunction = async ({ request }) => {
   const description = formData.get('description')
 
   if (typeof name !== 'string' || name.length === 0) {
+    console.log('Name', name)
     return json<ActionData>(
       { errors: { title: 'Name is required' } },
       { status: 400 }
@@ -64,7 +70,7 @@ export const action: ActionFunction = async ({ request }) => {
   }
   if (typeof description !== 'string' || description.length === 0) {
     return json<ActionData>(
-      { errors: { title: 'Description is required' } },
+      { errors: { body: 'Description is required' } },
       { status: 400 }
     )
   }
@@ -76,8 +82,13 @@ export const action: ActionFunction = async ({ request }) => {
 
 export default function SectionPage() {
   const data = useLoaderData() as LoaderData
-  console.log("data: ", data)
   const fetcher = useFetcher()
+  const action = useActionData as ActionData
+
+  console.log(action.errors)
+  if (action.errors?.title) {
+    toast.success('Something went wrong..!')
+  }
 
   let navigate = useNavigate()
   if (data.status != 'Success') {
@@ -106,7 +117,7 @@ export default function SectionPage() {
     },
   ]
 
-  const [sortBy, setSortBy] = useState(sortByDetails[1])
+  const [sortBy, setSortBy] = useState(sortByDetails[0])
 
   useEffect(() => {
     if (data.sections.length > 0) {
@@ -121,17 +132,17 @@ export default function SectionPage() {
       submit(formData, {
         method: 'get',
         action: `/sections/${selectedSection}`,
-        // action: `/sections/${data.sections[0]?.id}`,
       })
     }
   }, [order, sortBy])
 
-  const [selectedSection, setSelectedSection] = useState(data.selectedSectionId != 'NA'
-    ? data.selectedSectionId
-    : data.sections[0]?.id
+  const [selectedSection, setSelectedSection] = useState(
+    data.selectedSectionId != 'NA'
+      ? data.selectedSectionId
+      : data.sections[0]?.id
       ? data.sections[0].id
-      : 'NA')
-
+      : 'NA'
+  )
 
   return (
     <AdminLayout>
@@ -149,17 +160,16 @@ export default function SectionPage() {
         </header>
 
         <div
-          className={`flex flex-1 overflow-hidden ${sectionDetailFull ? '' : 'gap-12'
-            }`}
+          className={`flex flex-1 overflow-hidden ${
+            sectionDetailFull ? '' : 'gap-12'
+          }`}
         >
           {/* section list */}
           <Sections
             sections={data.sections}
             selectedSection={selectedSection}
             setSelectedSection={setSelectedSection}
-            selectedSectionId={
-              selectedSection
-            }
+            selectedSectionId={selectedSection}
             filters={data.filters}
             sortBy={sortBy}
             setSortBy={setSortBy}
@@ -170,8 +180,9 @@ export default function SectionPage() {
 
           {/* section details */}
           <div
-            className={`z-10 flex flex-1 items-center ${sectionDetailFull ? 'min-w-full' : ''
-              }`}
+            className={`z-10 flex flex-1 items-center ${
+              sectionDetailFull ? 'min-w-full' : ''
+            }`}
           >
             <span
               className="z-20 -mr-5"
@@ -198,6 +209,7 @@ export default function SectionPage() {
         </div>
 
         <AddSection
+          action={action}
           addSectionModalOpen={addSectionModal}
           setAddSectionModalOpen={setAddSectionModalValue}
         />

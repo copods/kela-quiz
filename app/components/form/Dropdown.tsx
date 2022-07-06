@@ -3,7 +3,7 @@ import { Fragment } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 
-function classNames(...classes: any) {
+function classNames(...classes: Array<string>) {
   return classes.filter(Boolean).join(' ')
 }
 
@@ -25,10 +25,10 @@ export default function Dropdown({
     <Listbox value={sortBy} onChange={setSortBy}>
       {({ open }) => (
         <>
-          <div className="relative mt-1">
+          <div className="relative mt-1 w-44">
             <Listbox.Button className="focus:border-primary-500 relative w-full cursor-default rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm">
               <span className="flex items-center">
-                <span className="ml-3 block truncate">{sortBy.name}</span>
+                <span className="block truncate">{sortBy.name}</span>
               </span>
               <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
                 <Icon icon="akar-icons:chevron-down" />
@@ -60,7 +60,7 @@ export default function Dropdown({
                           <span
                             className={classNames(
                               selected ? 'font-semibold' : 'font-normal',
-                              'ml-3 block truncate'
+                              'block truncate'
                             )}
                           >
                             {person.name}
