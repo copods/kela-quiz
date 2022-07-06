@@ -1,27 +1,27 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
-import type { Role } from '@prisma/client'
+import type { Role } from '../Interface'
 import { Form, useTransition } from '@remix-run/react'
 import { Fragment } from 'react'
-export default function AddMember({
+export default function AddMemberModal({
   roles,
-  addMemberModalOpen,
-  setAddMemberModalOpen,
+  open,
+  setOpen,
 }: {
   roles: Role[],
-  addMemberModalOpen: boolean,
-  setAddMemberModalOpen: (e: boolean) => void
+  open: boolean,
+  setOpen: (e: boolean) => void
 }) {
 
   const transition = useTransition()
 
   return (
     <div>
-      <Transition.Root show={addMemberModalOpen} as={Fragment}>
+      <Transition.Root show={open} as={Fragment}>
         <Dialog
           as="div"
           className="relative z-10"
-          onClose={setAddMemberModalOpen}
+          onClose={setOpen}
         >
           <Transition.Child
             as={Fragment}
@@ -52,12 +52,12 @@ export default function AddMember({
                 <Dialog.Panel className="relative transform overflow-hidden rounded-2xl bg-white p-6 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
                   <div className="flex items-center justify-between pt-1">
                     <h2 className="text-2xl font-bold text-gray-700">
-                      Add Section
+                      Add Member
                     </h2>
                     <Icon
                       className="cursor-pointer text-2xl text-gray-600"
                       icon={'carbon:close'}
-                      onClick={() => setAddMemberModalOpen(false)}
+                      onClick={() => setOpen(false)}
                     />
                   </div>
                   <hr className="mt-4 mb-6 h-px w-full border-0 bg-gray-300" />
@@ -96,7 +96,7 @@ export default function AddMember({
                       type="email"
                       name="email"
                       className="my-1.5 h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
-                      placeholder="user@copods.dev"
+                      placeholder="email@address.com"
                     />
                   </div>
                   <div className="pb-6">
@@ -105,9 +105,9 @@ export default function AddMember({
                     </div>
                     <div className='my-1.5 rounded-lg border border-gray-200 px-4'  >
                       <select name="roleId" className="test-base h-11 w-full focus:outline-none">
-                        {roles.map((role, i) => {
+                        {roles.map(role => {
                           return (
-                            <option key={i} value={role?.id}>
+                            <option key={role.id} value={role?.id}>
                               {role?.name}
                             </option>
                           )
@@ -120,7 +120,7 @@ export default function AddMember({
                     <button
                       type="button"
                       className="h-9 rounded-md px-4 text-sm text-gray-500"
-                      onClick={() => setAddMemberModalOpen(false)}
+                      onClick={() => setOpen(false)}
                     >
                       Cancel
                     </button>
@@ -128,8 +128,9 @@ export default function AddMember({
                       type="submit"
                       name="addMember"
                       value={JSON.stringify({ action: 'add' })}
-                      className="h-9 rounded-md bg-primary px-4 text-sm text-[#F0FDF4]"
-                      onClick={() => setAddMemberModalOpen(false)}
+                      className={`h-9 rounded-md bg-primary px-4 text-sm text-[#F0FDF4] ${transition.state === "submitting" ? 'disabled' : ''}`}
+                      onClick={() => setOpen(false)}
+                      disabled={transition.state === "submitting"}
                     >
                       {transition.state === "submitting"
                         ? "Adding..."

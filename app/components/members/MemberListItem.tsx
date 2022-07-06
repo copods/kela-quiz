@@ -1,14 +1,14 @@
 import { Icon } from "@iconify/react";
-import type { Role, User } from "@prisma/client";
+import type { Role, User } from "../Interface";
 import { Form } from "@remix-run/react";
 import moment from "moment";
 
-export default function MemberListItems({
+export default function MemberListItem({
   user,
-  loggedInUser,
+  disableDelete,
 }: {
   user: User & { role: Role };
-  loggedInUser: string | undefined;
+  disableDelete: boolean;
 }) {
   return (
     <div className="col-span-full grid grid-cols-10">
@@ -46,11 +46,12 @@ export default function MemberListItems({
                 <button
                   type="submit"
                   name="deleteMember"
+                  disabled={disableDelete}
                   value={JSON.stringify({ action: "delete", id: user.id })}
                 >
                   <Icon
                     icon="ic:outline-delete-outline"
-                    className={`pointer-cursor h-6 w-6 text-red-500 ${loggedInUser === user.id &&
+                    className={`pointer-cursor h-6 w-6 text-red-500 ${disableDelete &&
                       "cursor-not-allowed text-red-300"
                       }`}
                   ></Icon>
