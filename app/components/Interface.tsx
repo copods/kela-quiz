@@ -43,21 +43,39 @@ export interface QuestionType {
 }
 
 export interface Section {
-  id: string
-  name: string
-  description?: string
-  createdById?: string
-  createdAt?: Date
-  updatedAt?: Date
+  id: string;
+  name: string;
+  description: string;
+  createdById: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface User {
+  id: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  roleId: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface Role {
+  id: string;
+  name: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface Question {
-  id: string
-  question: string
-  marks?: number
-  questionTypeId: string
-  sectionId: string
-  createdById?: string
-  createdAt?: Date
-  updatedAt?: Date
+  id: string;
+  question: string;
+  correctAnswer?: string[];
+  marks?: number;
+  questionTypeId?: string;
+  sectionId?: string;
+  createdById?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }

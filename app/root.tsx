@@ -17,18 +17,22 @@ import tailwindStylesheetUrl from './styles/tailwind.css'
 import globalStyles from './styles/global.css'
 import quillEditorStyles from 'quill/dist/quill.snow.css'
 import { getUser } from './session.server'
+import toastrStyles from 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
+
 
 export const links: LinksFunction = () => {
   return [
     { rel: 'stylesheet', href: tailwindStylesheetUrl },
     { rel: 'stylesheet', href: globalStyles },
     { rel: 'stylesheet', href: quillEditorStyles },
+    { rel: 'stylesheet', href: toastrStyles },
   ]
 }
 
 export const meta: MetaFunction = () => ({
   charset: 'utf-8',
-  title: 'Kela Quiz',
+  title: 'K-Quiz',
   viewport: 'width=device-width,initial-scale=1',
 })
 
@@ -54,6 +58,17 @@ export default function App() {
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
+        <ToastContainer
+          position="top-center"
+          autoClose={500000}
+          hideProgressBar={true}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
       </body>
     </html>
   )

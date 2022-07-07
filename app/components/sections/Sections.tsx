@@ -1,13 +1,11 @@
 import { Icon } from "@iconify/react"
 import { useState } from "react"
-import Moment from 'moment';
 import SectionCard from "./SectionCard";
-import { Section } from "@prisma/client";
+import type { Section } from "../Interface";
+import { NavLink } from "@remix-run/react";
 
-const Sections = ({ data }: { data: { sections: Array<Section>, selectedSectionId: string } }) => {
-  const [sortDirectionAscending, setSortDirection] = useState(true)
-  const [selectedSection, setSelectedSection] = useState(data.selectedSectionId)
-
+const Sections = ({ data }: { data: { sections: Array<Section> } }) => {
+  const [sortDirection, setSortDirection] = useState(true)
 
   const filterByType = [
     {
@@ -27,7 +25,7 @@ const Sections = ({ data }: { data: { sections: Array<Section>, selectedSectionI
       <div className="flex justify-between items-center " >
         <div className="flex items-center gap-2.5">
           {
-            sortDirectionAscending ?
+            sortDirection ?
               <Icon icon="ph:sort-ascending-bold" onClick={() => setSortDirection(false)} className="text-2xl cursor-pointer" /> :
               <Icon icon="ph:sort-descending-bold" onClick={() => setSortDirection(true)} className="text-2xl cursor-pointer" />
           }
@@ -46,9 +44,10 @@ const Sections = ({ data }: { data: { sections: Array<Section>, selectedSectionI
 
       {/* list */}
       {
-        data.sections?.map((el: any) => {
-          console.log(el)
-          return <SectionCard key={el.id} section={el} selectedSectionId={selectedSection} setSelectedSectionId={setSelectedSection} />
+        data.sections?.map((section: any) => {
+          return <NavLink to={'/sections/' + section.id} key={section.id} className={({ isActive }) => isActive ? 'activeSection' : 'inactiveSection'}>
+            <SectionCard name={section?.name} createdBy={`${section?.createdBy?.firstName} ${section?.createdBy?.lastName}`} questionsCount={section?._count.questions} createdAt={section.createdAt} />
+          </NavLink>
         })
       }
       {

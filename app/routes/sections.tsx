@@ -27,7 +27,6 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const userId = await getUserId(request)
   if (!userId) return redirect('/sign-in')
   const selectedSectionId = params.sectionId ? params.sectionId?.toString() : 'NA'
-  // return redirect(`/sections/${sections[0].id}`)
   return json<LoaderData>({ sections, selectedSectionId })
 }
 
@@ -51,7 +50,7 @@ export const action: ActionFunction = async ({ request }) => {
     )
   }
 
-  const section = await createSection({ name, description, createdById })
+  await createSection({ name, description, createdById })
 
   return null
 }
@@ -61,7 +60,7 @@ export default function Section() {
   const data = useLoaderData() as LoaderData
 
   const [sectionDetailFull, setSectionDetailFull] = useState(false)
-  const [addSectionModal, setAddSectionModalValue] = useState(false)
+  const [open, setOpen] = useState(false)
 
   return (
     <AdminLayout>
@@ -69,7 +68,7 @@ export default function Section() {
         {/* header */}
         <header className="flex justify-between items-center">
           <h2 className="text-3xl font-bold text-black">Sections</h2>
-          <button className="px-5 h-9 text-[#F0FDF4] bg-primary rounded-lg text-xs" onClick={() => setAddSectionModalValue(!addSectionModal)}>+ Add Section</button>
+          <button className="px-5 h-9 text-[#F0FDF4] bg-primary rounded-lg text-xs" onClick={() => setOpen(!open)}>+ Add Section</button>
         </header>
 
         <div className={`flex overflow-hidden flex-1 ${sectionDetailFull ? '' : 'gap-12'}`}>
@@ -91,7 +90,7 @@ export default function Section() {
           </div>
         </div>
 
-        <AddSection addSectionModalOpen={addSectionModal} setAddSectionModalOpen={setAddSectionModalValue} />
+        <AddSection open={open} setOpen={setOpen} />
 
       </div>
 

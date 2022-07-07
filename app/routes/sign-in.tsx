@@ -75,16 +75,6 @@ export default function LoginPage() {
   const [searchParams] = useSearchParams()
   const redirectTo = searchParams.get('redirectTo') || '/dashboard'
   const actionData = useActionData() as ActionData
-  // const emailRef = useRef<HTMLInputElement>(null);
-  // const passwordRef = useRef<HTMLInputElement>(null);
-
-  // useEffect(() => {
-  //   if (actionData?.errors?.email) {
-  //     emailRef.current?.focus();
-  //   } else if (actionData?.errors?.password) {
-  //     passwordRef.current?.focus();
-  //   }
-  // }, [actionData]);
   return (
     <div className="flex min-h-full items-center justify-center bg-gray-50">
       <Login actionData={actionData} redirectTo={redirectTo} />
