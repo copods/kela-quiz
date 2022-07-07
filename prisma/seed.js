@@ -1,96 +1,113 @@
-const { PrismaClient } = require('@prisma/client')
-const bcrypt = require('bcryptjs')
+const { PrismaClient } = require("@prisma/client");
+const bcrypt = require("bcryptjs");
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
 async function seed() {
-  const email = 'anurag@copods.co'
+  const email = "careers@copods.co";
 
-  // cleanup the existing database
-  await prisma.user.delete({ where: { email } }).catch(() => {
-    // no worries if it doesn't exist yet
-  })
+  const hashedPassword = await bcrypt.hash("kQuiz@copods", 10);
 
-  const hashedPassword = await bcrypt.hash('anuragpatel', 10)
-
-  const roles = ['Test Creator', 'Recruiter']
-
-  await roles.forEach(async (roleName) => {
-    await prisma.role.upsert({
-      where: {
-        name: roleName,
-      },
-      update: {
-        name: roleName,
-      },
-      create: {
-        name: roleName,
-      },
-    })
-  })
-
-  const role = await prisma.role.findUnique({ where: { name: 'Recruiter' } })
-
-  await prisma.user.upsert({
-    where: {
-      email,
+  const roles = [
+    {
+      id: "cl4xvj89a000209jp4qtlfyii",
+      name: "Admin",
     },
-    update: {
-      email,
+    {
+      id: "cl4xvj89a000209jp4qtlfyih",
+      name: "Test Creator",
     },
-    create: {
-      email,
-      password: {
-        create: {
-          hash: hashedPassword,
+    {
+      id: "cl4xvjdqs000309jp3rwiefp8",
+      name: "Recruiter",
+    },
+  ];
+
+  const createRoles = () => {
+    roles.forEach(async (role) => {
+      await prisma.role.upsert({
+        where: {
+          id: role.id,
         },
+        update: {
+          id: role.id,
+          name: role.name,
+        },
+        create: {
+          id: role.id,
+          name: role.name,
+        },
+      });
+    });
+  };
+
+  const createMasterAdmin = async () => {
+    await prisma.user.upsert({
+      where: {
+        email,
       },
-      firstName: 'Anurag',
-      lastName: 'Patel',
-      roleId: role.id,
+      update: {
+        email,
+      },
+      create: {
+        email,
+        password: {
+          create: {
+            hash: hashedPassword,
+          },
+        },
+        firstName: 'Copods',
+        lastName: 'Careers',
+        roleId: roles[0].id,
+      },
+    })
+  }
+
+  const questionType = [
+    {
+      displayName: "Single Choice",
+      value: "SINGLE_CHOICE",
     },
-  })
+    {
+      displayName: "Multiple Choice",
+      value: "MULTIPLE_CHOICE",
+    },
+    {
+      displayName: "Text",
+      value: "TEXT",
+    },
+  ];
 
-  const questionType = ['SINGLE_CHOICE', 'MULTIPLE_CHOICE', 'TEXT']
-
-  questionType.forEach(async (questionName) => {
-    await prisma.questionType.upsert({
-      where: {
-        name: questionName,
-      },
-      update: {
-        name: questionName,
-      },
-      create: {
-        name: questionName,
-      },
+  const createQuestionType = () => {
+    questionType.forEach(async (questionName) => {
+      await prisma.questionType.upsert({
+        where: {
+          value: questionName.value,
+        },
+        update: {
+          displayName: questionName.displayName,
+          value: questionName.value,
+        },
+        create: {
+          displayName: questionName.displayName,
+          value: questionName.value,
+        },
+      })
     })
-  })
+  }
 
-  const optionType = ['TEXT', 'IMAGE']
+  await createRoles()
+  await createMasterAdmin()
+  await createQuestionType()
 
-  optionType.forEach(async (optionName) => {
-    await prisma.optionType.upsert({
-      where: {
-        name: optionName,
-      },
-      update: {
-        name: optionName,
-      },
-      create: {
-        name: optionName,
-      },
-    })
-  })
-
-  console.log(`Database has been seeded. 🌱`)
+  console.log(`Database has been seeded. 🌱`);
 }
 
 seed()
   .catch((e) => {
-    console.error(e)
-    process.exit(1)
+    console.error(e);
+    process.exit(1);
   })
   .finally(async () => {
-    await prisma.$disconnect()
-  })
+    await prisma.$disconnect();
+  });
