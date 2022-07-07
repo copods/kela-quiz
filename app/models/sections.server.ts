@@ -19,14 +19,6 @@ export async function getAllSections(obj: string) {
     ...JSON.parse(filter),
     include: {
       createdBy: true,
-    },
-  })
-}
-
-export async function getAllSectionsByName() {
-  return await prisma.section.findMany({
-    include: {
-      createdBy: true,
       _count: {
         select: { questions: true },
       },

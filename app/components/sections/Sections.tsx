@@ -1,18 +1,17 @@
 import { Icon } from '@iconify/react'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import SectionCard from './SectionCard'
 import Dropdown from '../form/Dropdown'
 import type { Section } from '@prisma/client'
+import { NavLink } from '@remix-run/react'
 
 type SectionType = {
   sections: Section[]
-  selectedSectionId: string
   sortBy: {
     name: string
     id: string
   }
   selectedSection: string
-  setSelectedSection: (e: string) => void
   filters: string
   setSortBy: (e: { name: string; id: string }) => void
   order: string
@@ -21,8 +20,6 @@ type SectionType = {
 }
 const Sections = ({
   sections,
-  selectedSectionId,
-  setSelectedSection,
   selectedSection,
   sortBy,
   setSortBy,
@@ -32,9 +29,6 @@ const Sections = ({
   sortByDetails,
 }: SectionType) => {
   // const [selectedSection, setSelectedSection] = useState(selectedSectionId)
-  useEffect(() => {
-    setSelectedSection(selectedSectionId)
-  }, [selectedSectionId, setSelectedSection])
   return (
     <div className="flex w-96 flex-col gap-6 ">
       {/* filters */}
@@ -66,18 +60,25 @@ const Sections = ({
 
       {/* list */}
       <div className="flex flex-col gap-6 overflow-auto" id="section-cards">
-        {sections?.map((el: any) => {
+        {/* list */}
+        {sections?.map((section: any) => {
           return (
-            <SectionCard
-              key={el.id}
-              section={el}
-              filters={filters}
-              selectedSectionId={selectedSection}
-              setSelectedSectionId={setSelectedSection}
-            />
+            <NavLink
+              to={'/sections/' + section.id + filters}
+              key={section.id}
+              className={({ isActive }) =>
+                isActive ? 'activeSection' : 'inactiveSection'
+              }
+            >
+              <SectionCard
+                name={section?.name}
+                createdBy={`${section?.createdBy?.firstName} ${section?.createdBy?.lastName}`}
+                questionsCount={section?._count?.questions}
+                createdAt={section.createdAt}
+              />
+            </NavLink>
           )
         })}
-
         {sections.length === 0 && (
           <div className="flex justify-center p-7">No Record Found</div>
         )}

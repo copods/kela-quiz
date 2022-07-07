@@ -1,12 +1,12 @@
-import type { User } from "@prisma/client";
-import MemberListItems from "./MemberListItems";
+import type { User } from '../Interface'
+import MemberListItem from './MemberListItem'
 
 export default function MembersList({
   data,
   loggedInUser,
 }: {
-  data: User[];
-  loggedInUser: string | undefined;
+  data: User[]
+  loggedInUser: string | undefined
 }) {
   return (
     <div className="grid grid-cols-12 bg-[#F9FAFB] ">
@@ -22,10 +22,13 @@ export default function MembersList({
         </div>
         {data.map((user: any) => (
           <div key={user.id} className="col-span-10 grid">
-            <MemberListItems user={user} loggedInUser={loggedInUser} />
+            <MemberListItem
+              user={user}
+              disableDelete={loggedInUser === user.id}
+            />
           </div>
         ))}
       </div>
     </div>
-  );
+  )
 }

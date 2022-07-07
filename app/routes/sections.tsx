@@ -18,6 +18,7 @@ import AddSection from '~/components/sections/AddSection'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import type { Section, User } from '@prisma/client'
+
 export type ActionData = {
   errors?: {
     title?: string
@@ -51,6 +52,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     ? params.sectionId?.toString()
     : 'NA'
   const filters = new URL(request.url).search
+  console.log('anananananan', filters)
   return json<LoaderData>({ sections, selectedSectionId, filters, status })
 }
 
@@ -62,7 +64,6 @@ export const action: ActionFunction = async ({ request }) => {
   const description = formData.get('description')
 
   if (typeof name !== 'string' || name.length === 0) {
-    console.log('Name', name)
     return json<ActionData>(
       { errors: { title: 'Name is required' } },
       { status: 400 }
@@ -70,7 +71,7 @@ export const action: ActionFunction = async ({ request }) => {
   }
   if (typeof description !== 'string' || description.length === 0) {
     return json<ActionData>(
-      { errors: { body: 'Description is required' } },
+      { errors: { title: 'Description is required' } },
       { status: 400 }
     )
   }
@@ -85,7 +86,9 @@ export default function SectionPage() {
   const fetcher = useFetcher()
   const action = useActionData as ActionData
 
-  console.log(action.errors)
+  const [sectionDetailFull, setSectionDetailFull] = useState(false)
+  const [open, setOpen] = useState(false)
+
   if (action.errors?.title) {
     toast.success('Something went wrong..!')
   }
@@ -103,8 +106,6 @@ export default function SectionPage() {
 
   const submit = useSubmit()
 
-  const [sectionDetailFull, setSectionDetailFull] = useState(false)
-  const [addSectionModal, setAddSectionModalValue] = useState(false)
   const [order, setOrder] = useState('asc')
   const sortByDetails = [
     {
@@ -129,6 +130,7 @@ export default function SectionPage() {
       }
       fetcher.submit({ filter: JSON.stringify(filter) }, { method: 'get' })
       formData.append('filter', JSON.stringify(filter))
+      console.log(selectedSection)
       submit(formData, {
         method: 'get',
         action: `/sections/${selectedSection}`,
@@ -153,7 +155,7 @@ export default function SectionPage() {
           <button
             className="h-9 rounded-lg bg-primary px-5 text-xs text-[#F0FDF4]"
             id="add-section"
-            onClick={() => setAddSectionModalValue(!addSectionModal)}
+            onClick={() => setOpen(!open)}
           >
             + Add Section
           </button>
@@ -168,8 +170,6 @@ export default function SectionPage() {
           <Sections
             sections={data.sections}
             selectedSection={selectedSection}
-            setSelectedSection={setSelectedSection}
-            selectedSectionId={selectedSection}
             filters={data.filters}
             sortBy={sortBy}
             setSortBy={setSortBy}
@@ -208,11 +208,7 @@ export default function SectionPage() {
           </div>
         </div>
 
-        <AddSection
-          action={action}
-          addSectionModalOpen={addSectionModal}
-          setAddSectionModalOpen={setAddSectionModalValue}
-        />
+        <AddSection action={action} open={open} setOpen={setOpen} />
       </div>
     </AdminLayout>
   )
