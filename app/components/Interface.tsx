@@ -66,11 +66,11 @@ export interface Role {
 export interface Question {
   id: string;
   question: string;
-  correctAnswer: string[];
-  marks: number;
-  questionTypeId: string;
-  sectionId: string;
-  createdById: string;
-  createdAt: Date;
-  updatedAt: Date;
+  correctAnswer?: string[];
+  marks?: number;
+  questionTypeId?: string;
+  sectionId?: string;
+  createdById?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
