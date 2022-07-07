@@ -4,16 +4,14 @@ import SectionCard from './SectionCard'
 import Dropdown from '../form/Dropdown'
 import type { Section } from '@prisma/client'
 import { NavLink } from '@remix-run/react'
+import DropdownField from '../form/Dropdown'
 
 type SectionType = {
   sections: Section[]
-  sortBy: {
-    name: string
-    id: string
-  }
+  sortBy: string
   selectedSection: string
   filters: string
-  setSortBy: (e: { name: string; id: string }) => void
+  setSortBy: (e: string) => void
   order: string
   setOrder: Function
   sortByDetails: Array<{ name: string; id: string }>
@@ -47,10 +45,17 @@ const Sections = ({
               className="cursor-pointer text-2xl"
             />
           )}
-          <Dropdown
+          {/* <Dropdown
             sortByDetails={sortByDetails}
             setSortBy={setSortBy}
             sortBy={sortBy}
+          /> */}
+          <DropdownField
+            data={sortByDetails}
+            displayKey={'name'}
+            valueKey={'id'}
+            value={sortBy}
+            setValue={setSortBy}
           />
         </div>
         <span className="flex h-11 w-11 items-center justify-center rounded-lg border border-gray-200 bg-white">

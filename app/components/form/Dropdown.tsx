@@ -1,37 +1,43 @@
-/* This example requires Tailwind CSS v2.0+ */
 import { Fragment } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 
-function classNames(...classes: Array<string>) {
-  return classes.filter(Boolean).join(' ')
-}
-
-type SortByTypes = {
-  sortByDetails: Array<{ name: string; id: string }>
-  sortBy: {
-    name: string
-    id: string
+function DropdownField({
+  data,
+  displayKey,
+  valueKey,
+  value,
+  setValue,
+}: {
+  data: Array<any>
+  displayKey: string
+  valueKey: string
+  value: any
+  setValue: (e: any) => void
+}) {
+  function classNames(...classes: Array<string>) {
+    return classes.filter(Boolean).join(' ')
   }
-  setSortBy: (e: { name: string; id: string }) => void
-}
-
-export default function Dropdown({
-  sortByDetails,
-  sortBy,
-  setSortBy,
-}: SortByTypes) {
+  console.log('dd', data, displayKey, valueKey, value)
+  const getName = (val: string) => {
+    for (let d of data) {
+      if (d[valueKey] === val) {
+        return d[displayKey]
+      }
+    }
+  }
+  console.log(data[0][valueKey])
   return (
-    <Listbox value={sortBy} onChange={setSortBy}>
+    <Listbox value={value} onChange={setValue}>
       {({ open }) => (
         <>
-          <div className="relative mt-1 w-44">
-            <Listbox.Button className="focus:border-primary-500 relative w-full cursor-default rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 text-left shadow-sm focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm">
+          <div className="relative w-44">
+            <Listbox.Button className="relative h-11 w-full cursor-default rounded-md border border-gray-200 bg-white px-3 py-2 text-left shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm">
               <span className="flex items-center">
-                <span className="block truncate">{sortBy.name}</span>
+                <span className="block truncate">{getName(value)}</span>
               </span>
               <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
-                <Icon icon="akar-icons:chevron-down" />
+                <Icon icon="ic:round-keyboard-arrow-down" />
               </span>
             </Listbox.Button>
 
@@ -43,16 +49,16 @@ export default function Dropdown({
               leaveTo="opacity-0"
             >
               <Listbox.Options className="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                {sortByDetails.map((person: any) => (
+                {data.map((el) => (
                   <Listbox.Option
-                    key={person.id}
+                    key={el[valueKey]}
                     className={({ active }) =>
                       classNames(
                         active ? 'bg-primary text-white' : 'text-gray-900',
-                        'relative cursor-default select-none py-2 pl-3 pr-9'
+                        'relative cursor-default select-none py-2 px-3'
                       )
                     }
-                    value={person}
+                    value={el[valueKey]}
                   >
                     {({ selected, active }) => (
                       <>
@@ -63,17 +69,23 @@ export default function Dropdown({
                               'block truncate'
                             )}
                           >
-                            {person.name}
+                            {el[displayKey]}
                           </span>
                         </div>
 
                         {selected ? (
                           <span
                             className={classNames(
-                              active ? 'text-white' : 'text-indigo-600',
+                              active ? 'text-white' : 'text-primary',
                               'absolute inset-y-0 right-0 flex items-center pr-4'
                             )}
-                          ></span>
+                          >
+                            <Icon
+                              icon="ic:round-check"
+                              className="h-5 w-5"
+                              aria-hidden="true"
+                            />
+                          </span>
                         ) : null}
                       </>
                     )}
@@ -87,3 +99,5 @@ export default function Dropdown({
     </Listbox>
   )
 }
+
+export default DropdownField

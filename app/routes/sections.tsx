@@ -38,6 +38,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const obj = Object.fromEntries(url).filter
   var sections: Array<Section> = []
   var status: string = ''
+  console.log('obj', Object.fromEntries(url).filter)
   await getAllSections(obj)
     .then((res) => {
       sections = res
@@ -90,7 +91,7 @@ export default function SectionPage() {
   const [open, setOpen] = useState(false)
 
   if (action.errors?.title) {
-    toast.success('Something went wrong..!')
+    toast.error('Something went wrong..!')
   }
 
   let navigate = useNavigate()
@@ -118,19 +119,18 @@ export default function SectionPage() {
     },
   ]
 
-  const [sortBy, setSortBy] = useState(sortByDetails[1])
+  const [sortBy, setSortBy] = useState(sortByDetails[1].id)
 
   useEffect(() => {
     if (data.sections.length > 0) {
       const formData = new FormData()
       var filter = {
         orderBy: {
-          [sortBy.id]: order,
+          [sortBy]: order,
         },
       }
       fetcher.submit({ filter: JSON.stringify(filter) }, { method: 'get' })
       formData.append('filter', JSON.stringify(filter))
-      console.log(selectedSection)
       submit(formData, {
         method: 'get',
         action: `/sections/${selectedSection}`,
