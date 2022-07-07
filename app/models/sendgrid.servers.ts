@@ -1,4 +1,3 @@
-// import process from 'process'
 import sendgrid from "@sendgrid/mail";
 import { env } from "process";
 
@@ -66,12 +65,7 @@ export async function sendMail(
 </html>
     `;
 
-  const SENDGRID_API_KEY = env.SENDGRID_API_KEY || "NULL";
-
-  // const sgMail = require('@sendgrid/mail')
-
-  // sgMail.setApiKey(process.env.SENDGRID_API_KEY)
-  sendgrid.setApiKey(SENDGRID_API_KEY);
+  sendgrid.setApiKey(env.SENDGRID_API_KEY as string);
 
   const msg = {
     to,
@@ -80,33 +74,16 @@ export async function sendMail(
     text,
     html,
   };
-  // console.log('SG: ', sendgrid.send(msg))
-  //ES6
   await sendgrid.send(msg).then(
     () => {
-      console.log("send successful");
       return "ok";
     },
     (error) => {
-      console.error("err: ", error);
-
       if (error.response) {
-        console.error("err2: ", error.response.body);
+        console.error("Sendgrid Error: ", error.response.body);
       }
     }
   );
-  //ES8
-  // ;(async () => {
-  //   try {
-  //     await sendgrid.send(msg)
-  //   } catch (error) {
-  //     console.error('err3: ', error)
-
-  //     if (error.response) {
-  //       console.error('err4: ', error.response.body)
-  //     }
-  //   }
-  // })()
 
   return "Done";
 }

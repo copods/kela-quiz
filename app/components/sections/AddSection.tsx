@@ -3,11 +3,11 @@ import { Fragment } from "react";
 import { Dialog, Transition } from '@headlessui/react'
 import { Icon } from "@iconify/react"
 
-const AddSection = ({ addSectionModalOpen, setAddSectionModalOpen }: { addSectionModalOpen: boolean, setAddSectionModalOpen: (e: boolean) => void }) => {
+const AddSection = ({ open, setOpen }: { open: boolean, setOpen: (e: boolean) => void }) => {
 
   return (
-    <Transition.Root show={addSectionModalOpen} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={setAddSectionModalOpen}>
+    <Transition.Root show={open} as={Fragment}>
+      <Dialog as="div" className="relative z-10" onClose={setOpen}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -34,7 +34,7 @@ const AddSection = ({ addSectionModalOpen, setAddSectionModalOpen }: { addSectio
               <Dialog.Panel className="relative bg-white rounded-2xl text-left p-6 overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-lg sm:w-full">
                 <div className="flex justify-between items-center pt-1">
                   <h2 className="text-2xl font-bold text-gray-700">Add Section</h2>
-                  <Icon className="text-2xl text-gray-600 cursor-pointer" icon={'carbon:close'} onClick={() => setAddSectionModalOpen(false)} />
+                  <Icon className="text-2xl text-gray-600 cursor-pointer" icon={'carbon:close'} onClick={() => setOpen(false)} />
                 </div>
                 <hr className="mt-4 mb-6 border-0 h-px bg-gray-300 w-full" />
                 <div className="pb-6">
@@ -48,14 +48,14 @@ const AddSection = ({ addSectionModalOpen, setAddSectionModalOpen }: { addSectio
                   <button
                     type="button"
                     className="px-4 h-9 rounded-md text-sm text-gray-500"
-                    onClick={() => setAddSectionModalOpen(false)}
+                    onClick={() => setOpen(false)}
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
                     className="px-4 h-9 rounded-md text-sm text-[#F0FDF4] bg-primary"
-                    onClick={() => setAddSectionModalOpen(false)}
+                    onClick={() => setOpen(false)}
                   >
                     Add
                   </button>

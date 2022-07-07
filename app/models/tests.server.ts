@@ -17,7 +17,7 @@ export async function getAllTests() {
   })
 }
 
-export async function createTest(createdById: string, data: {name: string, description: string, sections: Array<{sectionId: string, timeInSeconds:number, totalQuestions:number}>}){
+export async function createTest(createdById: string, data: {name: string, description: string, sections: Array<{sectionId: string, timeInSeconds:number, totalQuestions:number, order: number}>}){
   return await prisma.test.create({
     data: {
       name: data.name,

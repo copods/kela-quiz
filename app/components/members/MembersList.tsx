@@ -1,5 +1,5 @@
-import type { User } from "@prisma/client";
-import MemberListItems from "./MemberListItems";
+import type { User } from "../Interface";
+import MemberListItem from "./MemberListItem";
 
 export default function MembersList({
   data,
@@ -22,7 +22,7 @@ export default function MembersList({
         </div>
         {data.map((user: any) => (
           <div key={user.id} className="col-span-10 grid">
-            <MemberListItems user={user} loggedInUser={loggedInUser} />
+            <MemberListItem user={user} disableDelete={loggedInUser === user.id} />
           </div>
         ))}
       </div>

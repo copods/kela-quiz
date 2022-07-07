@@ -6,17 +6,8 @@ import Logo from "~/components/Logo";
 import type { LoginProps } from "~/components/Interface";
 
 function Login({ actionData, redirectTo }: LoginProps) {
-  // const [isRemember, setIsRemember] = React.useState<boolean>(false);
   const [email, setEmail] = useState("careers@copods.co");
   const [password, setPassword] = useState("kQuiz@copods");
-
-  // const checkboxProps = {
-  //   handleChange: function (e: any) {
-  //     setIsRemember((e.target as HTMLInputElement).checked);
-  //   },
-  //   isChecked: isRemember,
-  //   name: "remember-me",
-  // };
 
   const inputFieldsProps = [
     {
@@ -65,7 +56,8 @@ function Login({ actionData, redirectTo }: LoginProps) {
               return <InputField {...props} key={props.name} />;
             })}
           </div>
-          {/* <div className="mt-4 flex items-center justify-between">
+          {/* TODO: may be needed in future
+           <div className="mt-4 flex items-center justify-between">
             <div className="flex">
               <Checkbox {...checkboxProps} />
               <label

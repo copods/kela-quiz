@@ -57,7 +57,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSections> }) => {
   }
 
   const submit = () => {
-    var sendData: { name: string, description: string, sections: Array<{ sectionId: string, totalQuestions: number, timeInSeconds: number }> } = {
+    var sendData: { name: string, description: string, sections: Array<{ sectionId: string, totalQuestions: number, timeInSeconds: number, order: number }> } = {
       name,
       description,
       sections: []
@@ -66,7 +66,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSections> }) => {
       .filter(section => {
         return section.isSelected
       })
-      .map(section => { sendData.sections.push({ sectionId: section.id, totalQuestions: section.totalQuestions as number, timeInSeconds: section.time as number }) })
+      .map(section => { sendData.sections.push({ sectionId: section.id, totalQuestions: section.totalQuestions as number, timeInSeconds: section.time as number, order: 1 }) })
 
     fetcher.submit({ data: JSON.stringify(sendData) }, { method: "post" });
   }

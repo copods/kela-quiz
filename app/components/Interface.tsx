@@ -1,4 +1,3 @@
-import type { User } from '@prisma/client'
 import type React from 'react'
 
 export interface InputFieldProps {
@@ -49,4 +48,42 @@ export interface TestSections {
   isSelected?: boolean;
   totalQuestions?: number;
   time?: number
+}
+
+export interface Section {
+  id: string;
+  name: string;
+  description: string;
+  createdById: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface User {
+  id: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  roleId: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface Role {
+  id: string;
+  name: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface Question {
+  id: string;
+  question: string;
+  correctAnswer?: string[];
+  marks?: number;
+  questionTypeId?: string;
+  sectionId?: string;
+  createdById?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }

@@ -1,12 +1,10 @@
-/// <reference types="Cypress">
-
 describe('Test for Logout, SideNav', () => {
   it('Sample Login', () => {
     cy.visit('/sign-in')
-    cy.get('#email')
+    cy.get('#email').clear()
       .type('careers@copods.co')
       .should('have.value', 'careers@copods.co')
-    cy.get('#password')
+    cy.get('#password').clear()
       .type('kQuiz@copods')
       .should('have.value', 'kQuiz@copods')
     cy.findByRole('button').click()
@@ -14,10 +12,10 @@ describe('Test for Logout, SideNav', () => {
 
   it('Test to Direct to Dashboard after Login', () => {
     cy.visit('/sign-in')
-    cy.get('#email')
+    cy.get('#email').clear()
       .type('careers@copods.co')
       .should('have.value', 'careers@copods.co')
-    cy.get('#password')
+    cy.get('#password').clear()
       .type('kQuiz@copods')
       .should('have.value', 'kQuiz@copods')
     cy.findByRole('button').click()
@@ -27,10 +25,10 @@ describe('Test for Logout, SideNav', () => {
 
   it('Test for Routing and Active Tab for Results', () => {
     cy.visit('/sign-in')
-    cy.get('#email')
+    cy.get('#email').clear()
       .type('careers@copods.co')
       .should('have.value', 'careers@copods.co')
-    cy.get('#password')
+    cy.get('#password').clear()
       .type('kQuiz@copods')
       .should('have.value', 'kQuiz@copods')
     cy.findByRole('button').click()
@@ -41,10 +39,10 @@ describe('Test for Logout, SideNav', () => {
 
   it('Test for Routing and Active Tab for Tests', () => {
     cy.visit('/sign-in')
-    cy.get('#email')
+    cy.get('#email').clear()
       .type('careers@copods.co')
       .should('have.value', 'careers@copods.co')
-    cy.get('#password')
+    cy.get('#password').clear()
       .type('kQuiz@copods')
       .should('have.value', 'kQuiz@copods')
     cy.findByRole('button').click()
@@ -55,10 +53,10 @@ describe('Test for Logout, SideNav', () => {
 
   it('Test for Routing and Active Tab for Members', () => {
     cy.visit('/sign-in')
-    cy.get('#email')
+    cy.get('#email').clear()
       .type('careers@copods.co')
       .should('have.value', 'careers@copods.co')
-    cy.get('#password')
+    cy.get('#password').clear()
       .type('kQuiz@copods')
       .should('have.value', 'kQuiz@copods')
     cy.findByRole('button').click()
@@ -69,10 +67,10 @@ describe('Test for Logout, SideNav', () => {
 
   it('Test for Active Tab Color', () => {
     cy.visit('/sign-in')
-    cy.get('#email')
+    cy.get('#email').clear()
       .type('careers@copods.co')
       .should('have.value', 'careers@copods.co')
-    cy.get('#password')
+    cy.get('#password').clear()
       .type('kQuiz@copods')
       .should('have.value', 'kQuiz@copods')
     cy.findByRole('button').click()
