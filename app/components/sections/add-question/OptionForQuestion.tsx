@@ -1,25 +1,19 @@
 import { Icon } from "@iconify/react";
-import type { QuestionType } from "@prisma/client";
-import { useState } from "react";
+import { useEffect } from "react";
+import type { QuestionType } from "~/components/Interface";
+import cuid from "cuid";
 
-
-export default function OptionForQuestion({ questionTypeList, selectedTypeOfQuestion }: { questionTypeList: QuestionType[], selectedTypeOfQuestion: string }) {
-
-  const [addOptionArray, setAddOptionArray] = useState([{
-    option: '',
-    isCorrectOption: false
-  }]);
+export default function OptionForQuestion({ questionTypeList, selectedTypeOfQuestion, options, setOptions, singleChoiceAnswer, setSingleChoiceAnswer, textAnswer, setTextAnswer }: { questionTypeList: QuestionType[], selectedTypeOfQuestion: string, options: Array<{option:string, isCorrect: boolean,id:number}>, setOptions: (e: any)=> any,singleChoiceAnswer: string, setSingleChoiceAnswer: (e:string)=>void , textAnswer: string, setTextAnswer: (e:string)=>void}) {
 
   const addOptionArea = () => {
-    setAddOptionArray([...addOptionArray, {
-      option: '',
-      isCorrectOption: false
-    }])
+    setOptions([...options, {option:'', isCorrect: false, id: cuid()}])
   }
 
-  const deleteOption = (i: number) => {
-    setAddOptionArray(e => {
-      e.splice(i, 1)
+  const deleteOption = (index: number) => {
+    console.log(index)
+    setOptions((e: any)=>{
+      console.log(e)
+      e.splice(index,1)
       return [...e]
     })
   }
@@ -30,7 +24,24 @@ export default function OptionForQuestion({ questionTypeList, selectedTypeOfQues
       }
     }
   }
+
+  const addOption = (opt : string, index: number) => {
+    setOptions((e: any)=>{
+      e[index].option= opt
+      return [...e]
+    })
+  }
+
+  const checkBoxToggle = (option : any) => {
+    option.isCorrect = !option.isCorrect
+  }
+
+  useEffect(()=>{
+console.log(singleChoiceAnswer)
+  },[singleChoiceAnswer])
+
   getQuestionType(selectedTypeOfQuestion)
+  console.log(options)
   return (
     <div className="flex-1 flex flex-col gap-6">
       <div className='flex items-center justify-between'>
@@ -43,14 +54,14 @@ export default function OptionForQuestion({ questionTypeList, selectedTypeOfQues
 
       <div className='flex-1  overflow-auto'>
         <div className='h-full flex flex-col gap-4'>
-          {addOptionArray.map((option, index) => {
+          {options.map((option, index) => {
             return (
-              <div className='flex items-center gap-2.5' key={index}>
+              <div className='flex items-center gap-2.5' key={option.id}>
                 {getQuestionType(selectedTypeOfQuestion) === 'MULTIPLE_CHOICE'
-                  ? <input type="checkbox" />
-                  :  getQuestionType(selectedTypeOfQuestion) === 'SINGLE_CHOICE' && <input type="radio" />}
-                <textarea className='h-40  rounded-lg bg-slate-300 w-full'></textarea>
-                {addOptionArray.length > 1 && <span onClick={() => deleteOption(index)}><Icon
+                  ? <input type="checkbox" value={option.id} onChange={() => {checkBoxToggle(option)}} />
+                  :  getQuestionType(selectedTypeOfQuestion) === 'SINGLE_CHOICE' && <input type="radio" name="radioChoice" value={option.id} onChange={(e)=>setSingleChoiceAnswer(e.target.value)} />}
+                <textarea className='h-20 p-4 rounded-lg bg-white border border-gray-300 w-full' onChange={(e)=>{addOption(e.target.value,index)}}></textarea>
+                {options.length > 1 && <span onClick={() => deleteOption(index)}><Icon
                   icon="ic:outline-delete-outline"
                   className="h-6 w-6 text-red-500 "
                 ></Icon></span>}

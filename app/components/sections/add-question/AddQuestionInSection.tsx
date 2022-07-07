@@ -1,15 +1,24 @@
 import { Icon } from '@iconify/react'
-import type { Question, Section, QuestionType } from '@prisma/client'
+//import type { Question, Section, QuestionType } from '@prisma/client'
+import type { Section,QuestionType,Question } from '~/components/Interface';
 import { useState } from 'react'
 import BreadCrumb from '../../BreadCrumb'
 import QuestionEditor from './QuestionEditor'
 import OptionForQuestion from './OptionForQuestion'
 
 
-const AddQuestionInSection = ({ sectionDetails, questionTypeList }: { sectionDetails: (Section & { questions: Question[]; }) | null, questionTypeList: QuestionType[] }) => {
+const AddQuestionInSection = ({ sectionDetails, questionTypeList }: { sectionDetails: ((Section & { questions: Question[]; }) | null ), questionTypeList: QuestionType[] }) => {
 
 
   const [selectedTypeOfQuestion, setSelectedTypeOfQuestion] = useState(questionTypeList[0].id);
+  const [question, setQuestion] = useState('');
+  const [singleChoiceAnswer, setSingleChoiceAnswer] = useState('');
+  const [textAnswer, setTextAnswer] = useState("");
+  const [options, setOptions] = useState([{
+    option: "",
+    isCorrect: false,
+    id: 1 // just for maintaining data in UI(key for map)
+  }]);
 
   const breadCrumbArray = [
     {
@@ -25,6 +34,7 @@ const AddQuestionInSection = ({ sectionDetails, questionTypeList }: { sectionDet
       tabRoute: `/sections/${sectionDetails?.id}/add-question`
     }
   ]
+  // console.group(singleChoiceAnswer)
   return (
     <div className='h-full flex flex-col gap-6'>
       <div className='flex items-center justify-between '>
@@ -43,9 +53,9 @@ const AddQuestionInSection = ({ sectionDetails, questionTypeList }: { sectionDet
 
       <div className="flex-1 flex gap-6 h-40">
 
-        <QuestionEditor questionTypeList={questionTypeList} selectedTypeOfQuestion={selectedTypeOfQuestion} setSelectedTypeOfQuestion={setSelectedTypeOfQuestion} />
+        <QuestionEditor question={question} setQuestion={setQuestion} questionTypeList={questionTypeList} selectedTypeOfQuestion={selectedTypeOfQuestion} setSelectedTypeOfQuestion={setSelectedTypeOfQuestion} />
 
-        <OptionForQuestion selectedTypeOfQuestion={selectedTypeOfQuestion} questionTypeList={questionTypeList} />
+        <OptionForQuestion textAnswer={textAnswer} setTextAnswer={setTextAnswer} singleChoiceAnswer={singleChoiceAnswer} setSingleChoiceAnswer={setSingleChoiceAnswer} options={options} setOptions={setOptions} selectedTypeOfQuestion={selectedTypeOfQuestion} questionTypeList={questionTypeList} />
 
       </div>
       <div className='flex flex-end items-center justify justify-between'>

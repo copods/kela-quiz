@@ -35,3 +35,29 @@ export interface CheckboxProps {
   name?: string
   isChecked?: boolean
 }
+export interface QuestionType {
+  id: string
+  value?: string
+  displayName: string
+  createdAt?: Date
+}
+
+export interface Section {
+  id: string
+  name: string
+  description?: string
+  createdById?: string
+  createdAt?: Date
+  updatedAt?: Date
+}
+
+export interface Question {
+  id: string
+  question: string
+  marks?: number
+  questionTypeId: string
+  sectionId: string
+  createdById?: string
+  createdAt?: Date
+  updatedAt?: Date
+}
