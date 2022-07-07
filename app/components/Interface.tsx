@@ -37,7 +37,7 @@ export interface CheckboxProps {
 }
 
 
-export type Section = {
+export interface Section {
   id: string;
   name: string;
   description: string;
