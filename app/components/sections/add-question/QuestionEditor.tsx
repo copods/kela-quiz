@@ -12,7 +12,7 @@ export default function QuestionEditor({ questionTypeList, selectedTypeOfQuestio
   return (
     <div className='flex-1 flex flex-col'>
       <div className='flex mb-6'>
-        <DropdownField selected={selectedTypeOfQuestion} setSelected={setSelectedTypeOfQuestion} data={questionTypeList} />
+        <DropdownField value={selectedTypeOfQuestion} setValue={setSelectedTypeOfQuestion} data={questionTypeList} displayKey={"displayName"} valueKey={"id"} />
       </div>
 
       <div className='flex-1'>
