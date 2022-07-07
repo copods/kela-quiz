@@ -7,7 +7,7 @@ const SectionCard = ({
   section,
   selectedSectionId,
   setSelectedSectionId,
-  filters
+  filters,
 }: {
   section: Section & { questions: Question[]; createdBy: User }
   selectedSectionId: string
@@ -19,10 +19,11 @@ const SectionCard = ({
       <Link
         id={selectedSectionId}
         to={'/sections/' + section.id + filters}
-        className={`flex flex-col gap-2 rounded-2xl p-6 ${section.id === selectedSectionId
-          ? 'border border-l-8 border-transparent border-primary bg-white pl-[17px] shadow-md'
-          : 'border border-gray-200 bg-gray-100'
-          }`}
+        className={`flex flex-col gap-2 rounded-2xl p-6 ${
+          section.id === selectedSectionId
+            ? 'border border-l-8 border-transparent border-primary bg-white pl-[17px] shadow-md'
+            : 'border border-gray-200 bg-gray-100'
+        }`}
       >
         <div className="flex items-center justify-between">
           <h2 className="text-xl font-semibold text-gray-700">
@@ -34,7 +35,7 @@ const SectionCard = ({
           <span>
             By {section?.createdBy?.firstName} {section?.createdBy?.lastName}
           </span>
-          <span className="flex">
+          <span className="created-by-date flex">
             <Icon className="text-base" icon={'mdi:circle-small'} />
             {Moment(section?.createdAt).format('DD MMM YY')}
           </span>

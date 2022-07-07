@@ -1,6 +1,7 @@
 /// <reference types="Cypress">
+import moment from "moment";
 describe('Test for Section', () => {
-  xit('Check Section', () => {
+  it('Check Section', () => {
     cy.visit('/sign-in')
     cy.get('#email').clear()
       .type('careers@copods.co')
@@ -14,7 +15,7 @@ describe('Test for Section', () => {
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections') 
   })
 
-  xit("Add Section modal open and Add section", () =>{
+  it("Add Section modal open and Add section", () =>{
     cy.visit('/sign-in')
     cy.get('#email').clear()
       .type('careers@copods.co')
@@ -41,7 +42,7 @@ describe('Test for Section', () => {
   })
  })
 
-  xit("Add Section modal open and cancel section", () =>{
+  it("Add Section modal open and cancel section", () =>{
     cy.visit('/sign-in')
     cy.get('#email').clear()
       .type('careers@copods.co')
@@ -58,7 +59,7 @@ describe('Test for Section', () => {
     cy.get(".justify-end > .text-gray-500",{ timeout: 10000 }).click()
   })
 
-  xit("Check Active State of Section", () =>{
+  it("Check Active State of Section", () =>{
     cy.visit('/sign-in')
     cy.get('#email').clear()
       .type('careers@copods.co')
@@ -93,30 +94,28 @@ describe('Test for Section', () => {
         .then(listing => {
           const listingCount = Cypress.$(listing).length;
           expect(listing).to.have.length(listingCount);
-          // cy.get(":nth-child(1)").get(".cursor-pointer").click()
-          if(cy.get("#headlessui-listbox-button-1 span span").should("have.text","Name")){
-              cy.get("#headlessui-listbox-button-1 span span").should("have.text","Name").then(()=>{
-              cy.wait(1000);
-              cy.get('h2').then($elements => {
-                var strings = [...$elements].map($el => $el.innerText);
-
-                  expect(strings).to.deep.equal([...strings].sort())
-              });
+          cy.get("#headlessui-listbox-button-1 span span").invoke("text").then((el) =>{
+            if(el === "Name"){
+                cy.wait(1000);
+                cy.get('h2').then($elements => {
+                  var strings = [...$elements].map($el => $el.innerText);
+                    expect(strings).to.deep.equal([...strings].sort())
+                });
+            }
+        else if(el === "Created Date") {
+          cy.get("#headlessui-listbox-button-1 span span").should("have.text","Created Date").then(()=>{
+            cy.wait(1000)
+            cy.get('.created-by-date').then($elements => {
+               var strings = [...$elements].map($el =>
+               {
+                return  new Date($el.innerText)
+               })
+             expect(strings).to.deep.equal([...strings].sort())
             })
-         }else if (cy.get("#headlessui-listbox-button-1 span span").should("have.text","Created Date")){
-            cy.get("#headlessui-listbox-button-1 span span").should("have.text","Name").then(()=>{
-              cy.wait(1000);
-              cy.get('h2').then($elements => {
-                var strings = [...$elements].map($el => $el.innerText);
-
-                  expect(strings).to.deep.equal([...strings].sort())
-              });
-            })
+          })
          }
-          
+        })
     });
     })
   })
-
-
 })

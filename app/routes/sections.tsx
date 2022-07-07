@@ -117,7 +117,7 @@ export default function SectionPage() {
     },
   ]
 
-  const [sortBy, setSortBy] = useState(sortByDetails[0])
+  const [sortBy, setSortBy] = useState(sortByDetails[1])
 
   useEffect(() => {
     if (data.sections.length > 0) {
