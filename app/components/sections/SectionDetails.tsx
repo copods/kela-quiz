@@ -1,3 +1,4 @@
+import { Link } from '@remix-run/react';
 import { useState } from 'react'
 import type { Question, Section } from '../Interface'
 import QuestionCard from "./QuestionCard"
@@ -13,7 +14,7 @@ const SectionDetails = ({ sectionDetails }: { sectionDetails: (Section & { quest
       <hr className="-mt-2 border-0 h-px bg-gray-300 w-full" />
       <div className="flex justify-between items-center">
         <input type="text" name="search" className="w-48 h-9 rounded-lg border border-gray-200 text-sm px-3" placeholder="Search" onChange={(e) => setSearchText(e.target.value)} />
-        <button className="px-5 h-9 text-[#F0FDF4] bg-primary rounded-lg text-xs">+ Add Question</button>
+        <Link to={`/sections/${sectionDetails?.id}/add-question`}><button className="px-5 h-9 text-[#F0FDF4] bg-primary rounded-lg text-xs">+ Add Question</button></Link>
       </div>
 
       {/* QUESTION LIST  */}

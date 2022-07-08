@@ -2,18 +2,19 @@ import { Icon } from "@iconify/react";
 import { useEffect } from "react";
 import type { QuestionType } from "~/components/Interface";
 import cuid from "cuid";
+import QuillEditor from "~/components/QuillEditor.client";
+import { ClientOnly } from "remix-utils";
 
-export default function OptionForQuestion({ questionTypeList, selectedTypeOfQuestion, options, setOptions, singleChoiceAnswer, setSingleChoiceAnswer, textAnswer, setTextAnswer }: { questionTypeList: QuestionType[], selectedTypeOfQuestion: string, options: Array<{option:string, isCorrect: boolean,id:number}>, setOptions: (e: any)=> any,singleChoiceAnswer: string, setSingleChoiceAnswer: (e:string)=>void , textAnswer: string, setTextAnswer: (e:string)=>void}) {
-
+export default function OptionForQuestion({ questionTypeList, selectedTypeOfQuestion, options, setOptions, singleChoiceAnswer, setSingleChoiceAnswer, textAnswer, setTextAnswer }: { questionTypeList: QuestionType[], selectedTypeOfQuestion: string, options: Array<{ option: string, isCorrect: boolean, id: string }>, setOptions: (e: any) => any, singleChoiceAnswer: string, setSingleChoiceAnswer: (e: string) => void, textAnswer: string, setTextAnswer: (e: string) => void }) {
   const addOptionArea = () => {
-    setOptions([...options, {option:'', isCorrect: false, id: cuid()}])
+    setOptions([...options, { option: '', isCorrect: false, id: cuid() }])
   }
 
   const deleteOption = (index: number) => {
-    console.log(index)
-    setOptions((e: any)=>{
-      console.log(e)
-      e.splice(index,1)
+    if(options.length === 1)
+    return ;
+    setOptions((e: any) => {
+      e.splice(index, 1)
       return [...e]
     })
   }
@@ -25,23 +26,23 @@ export default function OptionForQuestion({ questionTypeList, selectedTypeOfQues
     }
   }
 
-  const addOption = (opt : string, index: number) => {
-    setOptions((e: any)=>{
-      e[index].option= opt
+  const addOption = (opt: string, index: number) => {
+    // console.log(opt);
+    // console.log(options)
+    setOptions((e: any) => {
+      e[index].option = opt
       return [...e]
     })
   }
 
-  const checkBoxToggle = (option : any) => {
+  const checkBoxToggle = (option: any) => {
     option.isCorrect = !option.isCorrect
   }
 
-  useEffect(()=>{
-console.log(singleChoiceAnswer)
-  },[singleChoiceAnswer])
+  useEffect(() => {
+  }, [singleChoiceAnswer])
 
   getQuestionType(selectedTypeOfQuestion)
-  console.log(options)
   return (
     <div className="flex-1 flex flex-col gap-6">
       <div className='flex items-center justify-between'>
@@ -58,13 +59,24 @@ console.log(singleChoiceAnswer)
             return (
               <div className='flex items-center gap-2.5' key={option.id}>
                 {getQuestionType(selectedTypeOfQuestion) === 'MULTIPLE_CHOICE'
-                  ? <input type="checkbox" value={option.id} onChange={() => {checkBoxToggle(option)}} />
-                  :  getQuestionType(selectedTypeOfQuestion) === 'SINGLE_CHOICE' && <input type="radio" name="radioChoice" value={option.id} onChange={(e)=>setSingleChoiceAnswer(e.target.value)} />}
-                <textarea className='h-20 p-4 rounded-lg bg-white border border-gray-300 w-full' onChange={(e)=>{addOption(e.target.value,index)}}></textarea>
-                {options.length > 1 && <span onClick={() => deleteOption(index)}><Icon
+                  ? <input type="checkbox" value={option.id} onChange={() => { checkBoxToggle(option) }} />
+                  : getQuestionType(selectedTypeOfQuestion) === 'SINGLE_CHOICE' && <input type="radio" name="radioChoice" value={option.id} onChange={(e) => setSingleChoiceAnswer(e.target.value)} />}
+                <div className='flex-1'>
+                  {
+                    getQuestionType(selectedTypeOfQuestion) === 'MULTIPLE_CHOICE' || getQuestionType(selectedTypeOfQuestion) === 'SINGLE_CHOICE'
+                      ?
+                      <ClientOnly fallback={<div></div>}>
+                        {() => <QuillEditor quillPlaceholder={"option"} fullAccess={false} onTextChange={(e) => { addOption(e, index) }} />}
+                      </ClientOnly>
+                      :
+                      <textarea className='h-20 p-4 rounded-lg bg-white border border-gray-300 w-full' onChange={(e) => { addOption(e.target.value, index) }}></textarea>
+
+                  }
+                </div>
+                <span onClick={() => deleteOption(index)}><Icon
                   icon="ic:outline-delete-outline"
-                  className="h-6 w-6 text-red-500 "
-                ></Icon></span>}
+                  className={`h-6 w-6  ${options.length < 2 ?'cursor-not-allowed text-red-400':'cursor-pointer text-red-600'}`}
+                ></Icon></span>
               </div>
             )
           })}
@@ -73,3 +85,4 @@ console.log(singleChoiceAnswer)
     </div>
   )
 }
+

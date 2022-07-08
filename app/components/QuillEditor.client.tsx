@@ -1,54 +1,49 @@
 import { useEffect } from 'react'
 import { useQuill } from 'react-quilljs'
 
-export default function QuillEditor({setData}: {setData: (e: string) => void}) {
-   const theme = 'snow';
-  // const theme = 'bubble';
-  const modules= {
+export default function QuillEditor({ onTextChange, fullAccess, quillPlaceholder }: { onTextChange: (e: string) => void, fullAccess: boolean, quillPlaceholder: string }) {
+  const theme = 'snow';
+  const modules = fullAccess ? {
     toolbar: [
-      ['bold', 'italic', 'underline', 'strike'],
-      //['bold', 'italic', 'underline'],
+      ['bold', 'italic', 'underline'],
       [{ align: [] }],
-  
-      [{ list: 'ordered'}, { list: 'bullet' }],
-      [{ indent: '-1'}, { indent: '+1' }],
-  
-      [{ size: ['small', false, 'large', 'huge'] }],
+      [{ list: 'ordered' }, { list: 'bullet' }],
       [{ header: [1, 2, 3, 4, 5, 6, false] }],
-      //[{'header' : [1,2,3,4,5,6,false]}],
-      ['link', 'image', 'video'],
       ['link', 'image'],
       [{ color: [] }, { background: [] }],
-      //['image','code-block'],
-  
+
       ['clean'],
     ],
     clipboard: {
       matchVisual: false,
     },
   }
-  const placeholder = 'Write your question here....';
-
-  const formats = ['bold', 'italic', 'underline','strike'];
-
-   const { quill, quillRef} = useQuill({ theme, modules, formats, placeholder})
-  
-  useEffect(() => {
-    if(quill){
-      console.log(quill);
+    :
+    {
+      toolbar: [
+        ['bold', 'italic', 'underline'],
+      ],
+      clipboard: {
+        matchVisual: false,
+      },
     }
+  const placeholder = `Write your ${quillPlaceholder} here....`;
+  var formats = ['bold', 'italic', 'underline', 'list', 'header', 'link', 'image', 'align', 'color', 'background'];
+
+  const { quill, quillRef } = useQuill({ theme, modules, formats, placeholder })
+
+  useEffect(() => {
     if (quill) {
-      quill.on('text-change', (delta, oldDelta, source) => {
-        setData(quill.root.innerHTML)
+      quill.on('text-change', () => {
+        onTextChange(quill.root.innerHTML);
       });
     }
 
-  }, [quill])
-  console.log(quill)
+  }, [quill, onTextChange])
 
   return (
     <div className='rounded-lg w-full h-full helloQuill'>
-      <div ref={quillRef}  />
+      <div ref={quillRef} />
     </div>
   )
 }
