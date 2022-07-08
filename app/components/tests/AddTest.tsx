@@ -1,6 +1,7 @@
 import { useFetcher, useTransition } from "@remix-run/react"
 import { useState } from "react"
 import { Link } from "react-router-dom"
+import { toast } from "react-toastify"
 import BreadCrumb from "../BreadCrumb"
 import type { TestSections } from "../Interface"
 import SelectSections from "./CreateSelectSections"
@@ -49,24 +50,38 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSections> }) => {
   const [selectedSections, setSelectedSections] = useState<TestSections[]>([])
 
   const updateSection = (data: any, i: number) => {
+    console.log(data, i)
     setSectionsCopy(sec => {
       sec[i] = { ...sec[i], ...data }
+      setSelectedSections(sec.filter(s => { return s.isSelected }))
       return [...sec]
     })
-    setSelectedSections(sectionsCopy.filter(sec => { return sec.isSelected }))
   }
 
   const submit = () => {
+    if (typeof name !== 'string' || name.length === 0) {
+      toast.error("Enter Name to add test")
+      return
+    }
+    if (typeof description !== 'string' || description.length === 0) {
+      toast.error("Enter description to add test")
+      return
+    }
+    if (selectedSections.length === 0) {
+      toast.error("Add sections to add test")
+      return
+    }
     var sendData: { name: string, description: string, sections: Array<{ sectionId: string, totalQuestions: number, timeInSeconds: number, order: number }> } = {
       name,
       description,
       sections: []
     }
-    sectionsCopy
-      .filter(section => {
-        return section.isSelected
-      })
-      .map(section => { sendData.sections.push({ sectionId: section.id, totalQuestions: section.totalQuestions as number, timeInSeconds: section.time as number, order: 1 }) })
+    // sectionsCopy
+    //   .filter(section => {
+    //     return section.isSelected
+    //   })
+    selectedSections
+      .map((section, index) => { sendData.sections.push({ sectionId: section.id, totalQuestions: section.totalQuestions as number, timeInSeconds: section.time as number, order: index + 1 }) })
 
     fetcher.submit({ data: JSON.stringify(sendData) }, { method: "post" });
   }

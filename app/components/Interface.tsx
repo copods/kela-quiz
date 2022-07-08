@@ -47,7 +47,8 @@ export interface TestSections {
   createdBy: User;
   isSelected?: boolean;
   totalQuestions?: number;
-  time?: number
+  time?: number;
+  order?: number
 }
 
 export interface Section {
