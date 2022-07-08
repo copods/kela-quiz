@@ -14,7 +14,6 @@ export const loader: LoaderFunction = async ({ request }) => {
   return json<LoaderData>({ sections, users })
 }
 export default function Section() {
-  // const data = useLoaderData() as LoaderData
 
   return (
     <div className="w-full px-9 py-6 h-full bg-white border border-gray-200 rounded-2xl flex flex-col gap-6 overflow-auto">

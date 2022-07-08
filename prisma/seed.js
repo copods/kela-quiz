@@ -56,8 +56,8 @@ async function seed() {
             hash: hashedPassword,
           },
         },
-        firstName: 'Anurag',
-        lastName: 'Patel',
+        firstName: 'Copods',
+        lastName: 'Careers',
         roleId: roles[0].id,
       },
     })

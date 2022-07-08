@@ -45,7 +45,7 @@ const AddQuestion = ({ addQuestionModal, setAddQuestionModalValue }: { addQuesti
                 <div className="pb-6">
 
                   <ClientOnly fallback={<div ></div>}>
-                    {() => <QuillEditor setData={(e) => { setQuestion(e) }} />}
+                    {() => <QuillEditor onTextChange={(e) => { setQuestion(e) }} />}
                   </ClientOnly>
                   {/* <TinyMceEditor /> */}
                   <div className='h-12'></div>

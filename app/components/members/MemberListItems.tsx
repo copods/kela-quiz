@@ -25,33 +25,25 @@ export default function MemberListItems({
     <div className="col-span-full grid grid-cols-10">
       <div className="col-span-full grid grid-cols-10 border-b-[1px] border-t-[1px] border-solid border-[#E5E7EB] px-12 py-4">
         <div className="col-span-2 ">
-          <h1 className="text-base leading-6 text-gray-700">
+          <h1 className="text-base leading-6 text-gray-700" id='userName'>
             {user.firstName} {user.lastName}
           </h1>
         </div>
-        <div className="col-span-3 ">
-          <h1 className="text-base leading-6 text-gray-700">{user.email}</h1>
+        <div className="col-span-3 overflow-ellipsis ">
+          <h1 className="text-base leading-6 text-gray-700 break-all pr-2 ">{user.email}</h1>
         </div>
-        <div className="col-span-2 ">
+        <div className="col-span-2 overflow-ellipsis">
           <h1 className="text-base leading-6 text-gray-700">
             {user.role.name}
           </h1>
         </div>
-        <div className="col-span-2 ">
+        <div className="col-span-2 overflow-ellipsis ">
           <h1 className="text-base leading-6 text-gray-700">
             {moment(user?.createdAt).format("DD MMMM YY")}
           </h1>
         </div>
-        <div className="col-span-1">
+        <div className="col-span-1 overflow-ellipsis">
           <div className=" flex  gap-5">
-            {/* <div>
-              <button type="submit">
-                <Icon
-                  icon="eva:edit-2-outline"
-                  className="pointer-cursor h-6 w-6 text-blue-900"
-                ></Icon>
-              </button>
-            </div> */}
             <div>
               {!open ? (
                 <button

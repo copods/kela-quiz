@@ -46,7 +46,6 @@ const Sections = ({ data }: { data: { sections: Array<Section>, selectedSectionI
       {/* list */}
       {
         data.sections?.map((el: any) => {
-          console.log(el)
           return <SectionCard key={el.id} section={el} selectedSectionId={selectedSection} setSelectedSectionId={setSelectedSection} />
         })
       }

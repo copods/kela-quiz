@@ -84,6 +84,8 @@ model Option {
   questionId          String
   coInQuestion        Question           @relation("correct_options_in_question", fields: [coInQuestionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   coInQuestionId      String
+  checkOrder          Boolean            @default(false)
+  order               Int
   createdBy           User               @relation(fields: [createdById], references: [id])
   createdById         String
   candidateQuestion   CandidateQuestion? @relation(fields: [candidateQuestionId], references: [id])
@@ -109,6 +111,7 @@ model SectionInTest {
   id             String   @id @default(cuid())
   section        Section  @relation(fields: [sectionId], references: [id])
   sectionId      String
+  order          Int
   timeInSeconds  Int
   totalQuestions Int
   createdAt      DateTime @default(now())

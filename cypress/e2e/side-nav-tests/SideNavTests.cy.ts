@@ -1,5 +1,3 @@
-/// <reference types="Cypress">
-
 describe('Test for Logout, SideNav', () => {
   it('Sample Login', () => {
     cy.visit('/sign-in')
