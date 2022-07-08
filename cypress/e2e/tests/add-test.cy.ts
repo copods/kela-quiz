@@ -159,7 +159,8 @@ describe('Creating tests', () => {
     cy.get("#1").find('hr').should('have.class','bg-primary')
     // user reached to step 2
 
-    cy.get("div#section").first().within(()=>{
+
+    cy.get("div#section", {timeout: 60000}).first().within(()=>{
       cy.get("input#noOfQu").should('have.disabled', true)
       cy.get("input#time").should('have.disabled', true)
       cy.get("button").should('have.text','Add').click()
