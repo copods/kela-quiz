@@ -11,11 +11,11 @@ const TestList = ({ tests }: { tests: Array<Test> }) => {
           <button id="addTest" className="px-5 h-9 text-[#F0FDF4] bg-primary rounded-lg text-xs" >+ Add Test</button>
         </Link>
       </header>
-      <div className="bg-white border border-gray-200 rounded-lg p-6">
+      <div className="bg-white border border-gray-200 rounded-lg p-6" id="testList">
         {
           tests.map((test, i) => {
             return (
-              <div className="mb-4" key={test.id}>{i + 1}. {test.name}</div>
+              <div className="mb-4" key={test.id}>{i + 1}. <span className="testName">{test.name}</span></div>
             )
           })
         }
