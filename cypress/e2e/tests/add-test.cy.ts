@@ -1,5 +1,3 @@
-import { waitFor } from "@testing-library/dom"
-
 describe('Creating tests', () => {
   it('Visiting Add Test Page', () => {
     cy.visit('/sign-in')

@@ -1,8 +1,8 @@
 import { Icon } from "@iconify/react"
 import Moment from 'moment';
-import type { TestSections } from "../Interface";
+import type { TestSection } from "../Interface";
 
-const SelectSectionCard = ({ section, updateSection }: { section: TestSections, updateSection: (e: any) => void }) => {
+const SelectSectionCard = ({ section, updateSection }: { section: TestSection, updateSection: (e: any) => void }) => {
 
   const updateThisSection = (target: string, value?: string, selected?: boolean) => {
     var temp = {

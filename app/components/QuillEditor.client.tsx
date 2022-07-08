@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useQuill } from 'react-quilljs'
 
-export default function QuillEditor({ setData }: { setData: (e: string) => void }) {
+export default function QuillEditor({ onTextChange }: { onTextChange: (e: string) => void }) {
 
   const { quill, quillRef } = useQuill()
 
@@ -9,11 +9,11 @@ export default function QuillEditor({ setData }: { setData: (e: string) => void 
 
     if (quill) {
       quill.on('text-change', (delta, oldDelta, source) => {
-        setData(quill.root.innerHTML)
+        onTextChange(quill.root.innerHTML)
       });
     }
 
-  }, [quill, setData])
+  }, [quill, onTextChange])
 
   return (
     <div className='w-full h-56 helloQuill'>

@@ -1,10 +1,10 @@
 import { Icon } from "@iconify/react"
 import type { Section, User } from "@prisma/client"
 import { useEffect, useState } from "react"
-import type { TestSections } from "../Interface";
+import type { TestSection } from "../Interface";
 import SelectSectionCard from "./SelectSectionCard";
 
-const SelectSections = ({ sections, setSections }: { sections: Array<TestSections>, setSections: (e: any, i: number) => void }) => {
+const SelectSections = ({ sections, setSections }: { sections: Array<TestSection>, setSections: (e: any, i: number) => void }) => {
 
   const [sortDirectionAscending, setSortDirection] = useState(true)
   const [pseudoDivs, setPseudoDivs] = useState([1])

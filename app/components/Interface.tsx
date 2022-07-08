@@ -36,7 +36,7 @@ export interface CheckboxProps {
   isChecked?: boolean
 }
 
-export interface TestSections {
+export interface TestSection {
   id: string;
   name: string;
   description: string;

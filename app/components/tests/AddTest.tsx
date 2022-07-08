@@ -3,13 +3,13 @@ import { useState } from "react"
 import { Link } from "react-router-dom"
 import { toast } from "react-toastify"
 import BreadCrumb from "../BreadCrumb"
-import type { TestSections } from "../Interface"
+import type { TestSection } from "../Interface"
 import SelectSections from "./CreateSelectSections"
 import TestDetails from "./CreateTestDetails"
 import TestPreview from "./CreateTestPreview"
 import StepsTabComponent from "./StepsTab"
 
-const AddTestComponent = ({ sections }: { sections: Array<TestSections> }) => {
+const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
 
   const transition = useTransition();
   const fetcher = useFetcher();
@@ -45,15 +45,15 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSections> }) => {
   ]
 
   const [currentTab, setCurrentTab] = useState(0)     // testDetails  ||  selectSections  ||  preview
-  const [name, setName] = useState('')
-  const [description, setDescription] = useState('')
-  const [selectedSections, setSelectedSections] = useState<TestSections[]>([])
+  const [name, onNameChange] = useState('')
+  const [description, onDescriptionChange] = useState('')
+  const [selectedSections, onSelectedSectionChange] = useState<TestSection[]>([])
 
   const updateSection = (data: any, i: number) => {
     console.log(data, i)
     setSectionsCopy(sec => {
       sec[i] = { ...sec[i], ...data }
-      setSelectedSections(sec.filter(s => { return s.isSelected }))
+      onSelectedSectionChange(sec.filter(s => { return s.isSelected }))
       return [...sec]
     })
   }
@@ -100,11 +100,11 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSections> }) => {
 
       {/* Components according to current step */}
       {
-        currentTab === tabs[0].id ? <TestDetails name={name} setName={setName} description={description} setDescription={setDescription} />
+        currentTab === tabs[0].id ? <TestDetails name={name} onNameChange={onNameChange} description={description} onDescriptionChange={onDescriptionChange} />
           :
           currentTab === tabs[1].id ? <SelectSections sections={sectionsCopy} setSections={(e, i) => { updateSection(e, i) }} />
             :
-            currentTab === tabs[2].id ? <TestPreview selectedSections={selectedSections} setSelectedSections={setSelectedSections} sections={sectionsCopy} name={name} description={description} />
+            currentTab === tabs[2].id ? <TestPreview selectedSections={selectedSections} onSelectedSectionChange={onSelectedSectionChange} sections={sectionsCopy} name={name} description={description} />
               : ''
       }
 
