@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 import type { Section, QuestionType, Question } from '~/components/Interface';
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import BreadCrumb from '../../BreadCrumb'
 import QuestionEditor from './QuestionEditor'
 import OptionForQuestion from './OptionForQuestion'
@@ -21,10 +21,10 @@ const AddQuestionInSection = ({ sectionDetails, questionTypeList }: { sectionDet
     id: cuid()
   }]);
 
-//   useEffect(()=>{
-// console.log(options)
-//   },[options])
-  const transition= useTransition()
+  //   useEffect(()=>{
+  // console.log(options)
+  //   },[options])
+  const transition = useTransition()
 
   const breadCrumbArray = [
     {
@@ -52,7 +52,7 @@ const AddQuestionInSection = ({ sectionDetails, questionTypeList }: { sectionDet
 
   const fetcher = useFetcher();
   const saveQuestion = () => {
-    var testQuestion: { question: string, options: Array<{ id: string, option: string, order: number }>, correctOptions: Array<{ id: string, option: string, order: number }>, correctAnswer: Array<string>, questionTypeId: string, sectionId: string } = {
+    var testQuestion: { question: string, options: Array<{ id: string, option: string, order: number, isCorrect: boolean }>, correctOptions: Array<{ id: string, option: string, order: number }>, correctAnswer: Array<string>, questionTypeId: string, sectionId: string } = {
       question,
       options: [],
       correctOptions: [],
@@ -68,6 +68,7 @@ const AddQuestionInSection = ({ sectionDetails, questionTypeList }: { sectionDet
           id: option.id,
           option: option.option,
           order: index + 1,
+          isCorrect: option.isCorrect
         }
         testQuestion.options.push(optionForQuestion);
         if (option.isCorrect) {
@@ -81,24 +82,24 @@ const AddQuestionInSection = ({ sectionDetails, questionTypeList }: { sectionDet
           option: option.option,
           order: index + 1,
         }
-        testQuestion.options.push(optionForQuestion);
+        // testQuestion.options.push(optionForQuestion);
         if (option.id === singleChoiceAnswer) {
           testQuestion.correctOptions.push(optionForQuestion)
         }
       })
     } else if (getQuestionType(selectedTypeOfQuestion) === "TEXT") {
       options.forEach((option, index) => {
-        var optionForQuestion = {
-          id: option.id,
-          option: option.option,
-          order: index + 1,
-        }
-        testQuestion.options.push(optionForQuestion);
+        // var optionForQuestion = {
+        //   id: option.id,
+        //   option: option.option,
+        //   order: index + 1,
+        // }
+        // testQuestion.options.push(optionForQuestion);
         testQuestion.correctAnswer.push(textAnswer);
         console.log(textAnswer)
       })
     }
-console.log(testQuestion)
+    console.log(testQuestion)
     fetcher.submit({ quesData: JSON.stringify(testQuestion) }, { method: "post" });
   }
   return (
