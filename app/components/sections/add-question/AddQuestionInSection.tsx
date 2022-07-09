@@ -21,9 +21,6 @@ const AddQuestionInSection = ({ sectionDetails, questionTypeList }: { sectionDet
     id: cuid()
   }]);
 
-  //   useEffect(()=>{
-  // console.log(options)
-  //   },[options])
   const transition = useTransition()
 
   const breadCrumbArray = [
@@ -41,7 +38,7 @@ const AddQuestionInSection = ({ sectionDetails, questionTypeList }: { sectionDet
     }
   ]
   const getQuestionType = (id: string) => {
-    var quesValue = "";
+    let quesValue = "";
     for (let quesType of questionTypeList) {
       if (quesType.id == id) {
         quesValue = quesType?.value as string;
@@ -52,7 +49,7 @@ const AddQuestionInSection = ({ sectionDetails, questionTypeList }: { sectionDet
 
   const fetcher = useFetcher();
   const saveQuestion = () => {
-    var testQuestion: { question: string, options: Array<{ id: string, option: string, order: number, isCorrect: boolean }>, correctOptions: Array<{ id: string, option: string, order: number }>, correctAnswer: Array<string>, questionTypeId: string, sectionId: string } = {
+    let testQuestion: { question: string, options: Array<{ id: string, option: string, order: number, isCorrect: boolean }>, correctOptions: Array<{ id: string, option: string, order: number }>, correctAnswer: Array<string>, questionTypeId: string, sectionId: string } = {
       question,
       options: [],
       correctOptions: [],
@@ -64,7 +61,7 @@ const AddQuestionInSection = ({ sectionDetails, questionTypeList }: { sectionDet
       console.log(options)
       options.forEach((option, index) => {
         console.log("Aos:", option)
-        var optionForQuestion = {
+        let optionForQuestion = {
           id: option.id,
           option: option.option,
           order: index + 1,
@@ -77,7 +74,7 @@ const AddQuestionInSection = ({ sectionDetails, questionTypeList }: { sectionDet
       })
     } else if (getQuestionType(selectedTypeOfQuestion) === "SINGLE_CHOICE") {
       options.forEach((option: any, index: number) => {
-        var optionForQuestion = {
+        let optionForQuestion = {
           id: option.id,
           option: option.option,
           order: index + 1,
@@ -89,7 +86,7 @@ const AddQuestionInSection = ({ sectionDetails, questionTypeList }: { sectionDet
       })
     } else if (getQuestionType(selectedTypeOfQuestion) === "TEXT") {
       options.forEach((option, index) => {
-        // var optionForQuestion = {
+        // let optionForQuestion = {
         //   id: option.id,
         //   option: option.option,
         //   order: index + 1,
