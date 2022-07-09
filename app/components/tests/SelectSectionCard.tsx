@@ -44,7 +44,7 @@ const SelectSectionCard = ({ section, updateSection }: { section: TestSection, u
         </span>
       </div>
       <div className="text-xs text-gray-400 flex">
-        Total Questions: {section?._count.questions}
+        {/* Total Questions: {section?._count.questions} */}
       </div>
       <hr className="border-0 w-full bg-gray-300 h-px" />
       <div className="pt-1 flex gap-4">

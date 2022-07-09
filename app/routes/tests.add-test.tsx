@@ -1,6 +1,7 @@
 import { useLoaderData } from "@remix-run/react"
 import type { ActionFunction, LoaderFunction } from "@remix-run/server-runtime"
 import { json, redirect } from "@remix-run/server-runtime"
+import type { Section } from "~/components/Interface"
 import AdminLayout from "~/components/layouts/AdminLayout"
 import AddTestComponent from "~/components/tests/AddTest"
 import { getAllSections } from "~/models/sections.server"
@@ -15,7 +16,17 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const userId = await getUserId(request)
   if (!userId) return redirect('/sign-in')
 
-  const sections = await getAllSections()
+  const filter = Object.fromEntries(new URL(request.url).searchParams.entries()).data ? JSON.parse(Object.fromEntries(new URL(request.url).searchParams.entries()).data) : {}
+  console.log(filter)
+
+  let sections: Array<Section> = []
+  await getAllSections(filter)
+    .then(res => {
+      sections = res
+    })
+    .catch(err => {
+
+    })
 
   return json<LoaderData>({ sections })
 }
@@ -33,10 +44,10 @@ export const action: ActionFunction = async ({ request }) => {
 
 const AddTest = () => {
   const data = useLoaderData() as LoaderData
-
   return (
     <AdminLayout>
       <AddTestComponent sections={data.sections} />
+      {/* <div>hi</div>  */}
     </AdminLayout>
   )
 }

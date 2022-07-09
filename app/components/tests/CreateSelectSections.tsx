@@ -1,12 +1,14 @@
 import { Icon } from "@iconify/react"
-import type { Section, User } from "@prisma/client"
+import { useFetcher, useSubmit } from "@remix-run/react";
 import { useEffect, useState } from "react"
 import type { TestSection } from "../Interface";
+import SortFilter from "../SortFilter";
 import SelectSectionCard from "./SelectSectionCard";
 
 const SelectSections = ({ sections, setSections }: { sections: Array<TestSection>, setSections: (e: any, i: number) => void }) => {
 
-  const [sortDirectionAscending, setSortDirection] = useState(true)
+  const [sortDirection, onSortDirectionChange] = useState('asc')
+  const [sortBy, onSortChange] = useState('name')
   const [pseudoDivs, setPseudoDivs] = useState([1])
 
 
@@ -17,7 +19,7 @@ const SelectSections = ({ sections, setSections }: { sections: Array<TestSection
     },
     {
       name: 'Created Date',
-      value: 'date'
+      value: 'createdAt'
     }
   ]
 
@@ -35,33 +37,28 @@ const SelectSections = ({ sections, setSections }: { sections: Array<TestSection
     }
   }, [sections.length])
 
+  const submit = useSubmit()
+  const fetcher = useFetcher()
+  useEffect(() => {
+    var filter = {
+      orderBy: {
+        [sortBy]: sortDirection,
+      },
+    }
+    console.log('filter', filter)
+    // submit({ data: JSON.stringify(filter) }, { method: "get" })
+    fetcher.submit({ data: JSON.stringify(filter) }, { method: "get" })
+  }, [sortDirection, sortBy])
+
   return (
     <div className="w-full bg-white shadow p-6 rounded-lg flex flex-col gap-6  overflow-x-auto">
       {/* filters */}
-      <div className="flex justify-between items-center " >
-        <div className="flex items-center gap-2.5">
-          {
-            sortDirectionAscending ?
-              <Icon icon="ph:sort-ascending-bold" onClick={() => setSortDirection(false)} className="text-2xl cursor-pointer" /> :
-              <Icon icon="ph:sort-descending-bold" onClick={() => setSortDirection(true)} className="text-2xl cursor-pointer" />
-          }
-          <select className="h-11 rounded-lg border border-gray-200 w-36 test-base px-3">
-            {
-              filterByType.map((filterBy, i) => {
-                return <option key={i} value={filterBy?.value}>{filterBy?.name}</option>
-              })
-            }
-          </select>
-        </div>
-        <span className="bg-white border border-gray-200 flex justify-center items-center h-11 w-11 rounded-lg">
-          {sections?.length}
-        </span>
-      </div>
+      <SortFilter filterData={filterByType} sortDirection={sortDirection} onSortDirectionChange={onSortDirectionChange} sortBy={sortBy} onSortChange={onSortChange} totalItems={sections?.length} />
 
       {/* Sections list */}
       <div className="flex flex-wrap gap-6">
         {
-          sections.map((section: (Section & { _count: { questions: number }; createdBy: User }), i) => {
+          sections.map((section: TestSection, i) => {
             return (
               // <SelectSectionCard selectedSection={getSectionWiseValue(section.id)} getDataFn={getData} section={section} key={section.id} />
               <SelectSectionCard section={section} updateSection={(e) => setSections(e, i)} key={section.id} />

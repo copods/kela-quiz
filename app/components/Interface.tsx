@@ -43,8 +43,8 @@ export interface TestSection {
   createdById: string;
   createdAt: Date;
   updatedAt: Date;
-  _count: { questions: number; };
-  createdBy: User;
+  _count?: { questions: number; };
+  createdBy?: User;
   isSelected?: boolean;
   totalQuestions?: number;
   time?: number;
