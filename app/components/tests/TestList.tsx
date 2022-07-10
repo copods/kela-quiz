@@ -39,7 +39,6 @@ const TestList = ({ tests }: { tests: Array<Test> }) => {
         [sortBy]: sortDirection,
       },
     }
-    console.log('filter', filter)
     submit({ data: JSON.stringify(filter) }, { method: "get" })
   }, [sortDirection, sortBy, submit])
 

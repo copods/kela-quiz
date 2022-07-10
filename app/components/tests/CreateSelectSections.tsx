@@ -1,5 +1,4 @@
-import { Icon } from "@iconify/react"
-import { useFetcher, useSubmit } from "@remix-run/react";
+import { useSubmit } from "@remix-run/react";
 import { useEffect, useState } from "react"
 import type { TestSection } from "../Interface";
 import SortFilter from "../SortFilter";
@@ -38,17 +37,14 @@ const SelectSections = ({ sections, setSections }: { sections: Array<TestSection
   }, [sections.length])
 
   const submit = useSubmit()
-  const fetcher = useFetcher()
   useEffect(() => {
     var filter = {
       orderBy: {
         [sortBy]: sortDirection,
       },
     }
-    console.log('filter', filter)
     submit({ data: JSON.stringify(filter) }, { method: "get" })
-    // fetcher.submit({ data: JSON.stringify(filter) }, { method: "get" })
-  }, [sortDirection, sortBy])
+  }, [sortDirection, sortBy, submit])
 
   return (
     <div className="w-full bg-white shadow p-6 rounded-lg flex flex-col gap-6  overflow-x-auto">
@@ -60,7 +56,6 @@ const SelectSections = ({ sections, setSections }: { sections: Array<TestSection
         {
           sections.map((section: TestSection, i) => {
             return (
-              // <SelectSectionCard selectedSection={getSectionWiseValue(section.id)} getDataFn={getData} section={section} key={section.id} />
               <SelectSectionCard section={section} updateSection={(e) => setSections(e, i)} key={section.id} />
             )
           })

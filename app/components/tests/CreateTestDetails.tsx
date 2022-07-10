@@ -10,7 +10,6 @@ const TestDetails = ({ name, onNameChange, description, onDescriptionChange }: {
       </div>
       <div className="flex-1">
         <label htmlFor="description" className="text-base font-medium text-gray-800">Description</label>
-        {/* <textarea name="description" id="description" rows={10} value={description} onChange={(e) => setDescription(e.target.value)} className="w-full rounded-lg border border-gray-200 test-base p-3 mt-1" placeholder="Description" /> */}
         <div className="pt-2 pb-4 h-full">
           <ClientOnly fallback={<div ></div>}>
             {() => <QuillEditor onTextChange={(e) => { onDescriptionChange(e) }} />}

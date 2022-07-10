@@ -16,7 +16,6 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
   const [sectionsCopy, setSectionsCopy] = useState(sections)
 
   useEffect(() => {
-    console.log(sections)
     setSectionsCopy(sections)
   }, [sections])
 
@@ -55,7 +54,6 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
   const [selectedSections, onSelectedSectionChange] = useState<TestSection[]>([])
 
   const updateSection = (data: any, i: number) => {
-    console.log(data, i)
     setSectionsCopy(sec => {
       sec[i] = { ...sec[i], ...data }
       onSelectedSectionChange(sec.filter(s => { return s.isSelected }))
@@ -81,10 +79,6 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
       description,
       sections: []
     }
-    // sectionsCopy
-    //   .filter(section => {
-    //     return section.isSelected
-    //   })
     selectedSections
       .map((section, index) => { sendData.sections.push({ sectionId: section.id, totalQuestions: section.totalQuestions as number, timeInSeconds: section.time as number, order: index + 1 }) })
 
@@ -125,7 +119,6 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
           {
             currentTab != 2
               ?
-              // <button title="Next Tab" className={`text-white text-xs px-7 h-9 rounded-lg ${(!(name && description) || currentTab == 2 || (currentTab == 1 && selectedSections.length == 0)) ? 'bg-gray-600' : 'bg-primary'}`} onClick={() => setCurrentTab(currentTab + 1)} disabled={(!(name && description) || currentTab == 2)}>Next</button>
               <button title="Next Tab" id="nextButton" className={`text-white text-xs px-7 h-9 rounded-lg ${(!(name && description) || currentTab == 2) ? 'bg-gray-600' : 'bg-primary'}`} onClick={() => setCurrentTab(currentTab + 1)} disabled={(!(name && description) || currentTab == 2)}>Next</button>
               :
               <button title="Next Tab" id="submitButton" className={`text-white text-xs px-7 h-9 rounded-lg ${(currentTab == 2) ? 'bg-primary' : 'bg-gray-600'}`} onClick={() => submit()} disabled={(currentTab != 2)}>
