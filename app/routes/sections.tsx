@@ -68,7 +68,7 @@ export default function Section() {
         {/* header */}
         <header className="flex justify-between items-center">
           <h2 className="text-3xl font-bold text-black">Sections</h2>
-          <button className="px-5 h-9 text-[#F0FDF4] bg-primary rounded-lg text-xs" onClick={() => setOpen(!open)}>+ Add Section</button>
+          <button className="px-5 h-9 text-[#F0FDF4] bg-primary rounded-lg text-xs" id="add-section" onClick={() => setOpen(!open)}>+ Add Section</button>
         </header>
 
         <div className={`flex overflow-hidden flex-1 ${sectionDetailFull ? '' : 'gap-12'}`}>
