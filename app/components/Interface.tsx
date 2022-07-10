@@ -88,3 +88,13 @@ export interface Question {
   createdAt?: Date;
   updatedAt?: Date;
 }
+
+export interface Test {
+  id: string;
+  name: string;
+  description: string;
+  createdBy?: User;
+  createdById: string;
+  createdAt: Date;
+  updatedAt: Date;
+}

@@ -23,9 +23,8 @@ const SelectSectionCard = ({ section, updateSection }: { section: TestSection, u
     }
     updateSection(temp)
   }
-
   return (
-    <div id="section" className={`flex-1 flex flex-col gap-2 w-sectionCard min-w-sectionCard rounded-2xl border ${section.isSelected ? 'border-[3px] border-primary bg-white px-[18px] py-[22px]' : 'border-gray-300 bg-gray-100 px-5 py-6'}`}>
+    <div id="section" className={`flex-1 flex flex-col gap-2 w-sectionCard min-w-sectionCard rounded-lg border ${section.isSelected ? 'border-[3px] border-primary bg-white px-[18px] py-[22px]' : 'border-gray-300 bg-gray-100 px-5 py-6'}`}>
       <div className="flex justify-between items-start">
         <h3 title={section.name} className="flex-1 text-xl font-semibold text-gray-700">{section.name}</h3>
         {

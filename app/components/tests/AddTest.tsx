@@ -1,5 +1,5 @@
 import { useFetcher, useTransition } from "@remix-run/react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import { toast } from "react-toastify"
 import BreadCrumb from "../BreadCrumb"
@@ -14,6 +14,11 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
   const transition = useTransition();
   const fetcher = useFetcher();
   const [sectionsCopy, setSectionsCopy] = useState(sections)
+
+  useEffect(() => {
+    console.log(sections)
+    setSectionsCopy(sections)
+  }, [sections])
 
   const breadCrumbData = [
     {

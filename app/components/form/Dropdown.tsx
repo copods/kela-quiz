@@ -7,7 +7,6 @@ function DropdownField({ data, displayKey, valueKey, value, setValue }: { data: 
   function classNames(...classes: Array<string>) {
     return classes.filter(Boolean).join(' ')
   }
-  console.log(data)
   const getName = (val: string) => {
     for (let d of data) {
       if (d[valueKey] === val) {
@@ -15,7 +14,6 @@ function DropdownField({ data, displayKey, valueKey, value, setValue }: { data: 
       }
     }
   }
-  console.log(data[0][valueKey])
   return (
 
     <Listbox value={value} onChange={setValue}>

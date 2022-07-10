@@ -1,7 +1,48 @@
-import type { Test } from "@prisma/client"
+import { useSubmit } from "@remix-run/react"
+import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
+import BreadCrumb from "../BreadCrumb"
+import type { Test } from "../Interface"
+import SortFilter from "../SortFilter"
+import TestCard from "./TestCard"
 
 const TestList = ({ tests }: { tests: Array<Test> }) => {
+
+  const [sortDirection, onSortDirectionChange] = useState('asc')
+  const [sortBy, onSortChange] = useState('name')
+
+  const filterByType = [
+    {
+      name: 'Name',
+      value: 'name'
+    },
+    {
+      name: 'Created Date',
+      value: 'createdAt'
+    }
+  ]
+
+  const breadCrumbData = [
+    {
+      tabName: 'Test',
+      route: '/tests'
+    },
+    {
+      tabName: 'test',
+      route: ''
+    }
+  ]
+  const submit = useSubmit()
+  useEffect(() => {
+    var filter = {
+      orderBy: {
+        [sortBy]: sortDirection,
+      },
+    }
+    console.log('filter', filter)
+    submit({ data: JSON.stringify(filter) }, { method: "get" })
+  }, [sortDirection, sortBy, submit])
+
   return (
     <div className="flex flex-col gap-6 h-full overflow-hidden">
       {/* header */}
@@ -11,11 +52,15 @@ const TestList = ({ tests }: { tests: Array<Test> }) => {
           <button id="addTest" className="px-5 h-9 text-[#F0FDF4] bg-primary rounded-lg text-xs" >+ Add Test</button>
         </Link>
       </header>
-      <div className="bg-white border border-gray-200 rounded-lg p-6" id="testList">
+      <BreadCrumb data={breadCrumbData} />
+
+      <SortFilter filterData={filterByType} sortDirection={sortDirection} onSortDirectionChange={onSortDirectionChange} sortBy={sortBy} onSortChange={onSortChange} totalItems={tests?.length} />
+
+      <div className="flex flex-col gap-6 overflow-auto" id="testList">
         {
           tests.map((test, i) => {
             return (
-              <div className="mb-4" key={test.id}>{i + 1}. <span className="testName">{test.name}</span></div>
+              <TestCard key={test.id} name={test.name} createdBy={`${test?.createdBy?.firstName} ${test?.createdBy?.lastName}`} createdAt={test.createdAt} description={test.description} />
             )
           })
         }

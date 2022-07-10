@@ -6,8 +6,8 @@ import TestList from "~/components/tests/TestList";
 import { getAllTests } from "~/models/tests.server";
 import { json } from '@remix-run/node'
 import { useLoaderData } from "@remix-run/react";
-import type { Test, User } from "@prisma/client";
 import { toast } from "react-toastify";
+import type { Test } from "~/components/Interface";
 
 
 type LoaderData = {
@@ -18,14 +18,17 @@ type LoaderData = {
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await getUserId(request)
   if (!userId) return redirect('/sign-in')
-  var tests: Array<(Test & { createdBy: User; })> = []
+
+  var tests: Array<(Test)> = []
   var status: string = ''
-  await getAllTests()
+
+  const filter = Object.fromEntries(new URL(request.url).searchParams.entries()).data ? JSON.parse(Object.fromEntries(new URL(request.url).searchParams.entries()).data) : {}
+
+  await getAllTests(filter)
     .then(res => {
       tests = res
       status = "Success"
     }).catch(err => {
-      console.log(err)
       status = err
     })
   return json<LoaderData>({ tests, status })

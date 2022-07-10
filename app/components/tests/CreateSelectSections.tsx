@@ -46,8 +46,8 @@ const SelectSections = ({ sections, setSections }: { sections: Array<TestSection
       },
     }
     console.log('filter', filter)
-    // submit({ data: JSON.stringify(filter) }, { method: "get" })
-    fetcher.submit({ data: JSON.stringify(filter) }, { method: "get" })
+    submit({ data: JSON.stringify(filter) }, { method: "get" })
+    // fetcher.submit({ data: JSON.stringify(filter) }, { method: "get" })
   }, [sortDirection, sortBy])
 
   return (

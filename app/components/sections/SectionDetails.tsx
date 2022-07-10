@@ -8,7 +8,7 @@ const SectionDetails = ({ sectionDetails }: { sectionDetails: (Section & { quest
   const [searchText, setSearchText] = useState('')
 
   return (
-    <div className="w-full px-9 py-6 h-full bg-white border border-gray-200 rounded-2xl flex flex-col gap-6 overflow-auto" >
+    <div className="w-full px-9 py-6 h-full bg-white border border-gray-200 rounded-lg flex flex-col gap-6 overflow-auto" >
       <h2 className="text-2xl font-semibold text-gray-700">{sectionDetails?.name}</h2>
       <hr className="-mt-2 border-0 h-px bg-gray-300 w-full" />
       <div className="flex justify-between items-center">
