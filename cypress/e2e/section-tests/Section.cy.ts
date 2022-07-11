@@ -1,6 +1,6 @@
 /// <reference types="Cypress">
 describe('Test for Section', () => {
-  xit('Visit Section page', () => {
+  it('Visit Section page', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -15,7 +15,7 @@ describe('Test for Section', () => {
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
   })
 
-  xit('Create Section', () => {
+  it('Create Section', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -50,7 +50,7 @@ describe('Test for Section', () => {
       })
   })
 
-  xit('cancel Add section', () => {
+  it('cancel Add section', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
