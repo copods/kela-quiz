@@ -101,7 +101,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
       {
         currentTab === tabs[0].id ? <TestDetails name={name} onNameChange={onNameChange} description={description} onDescriptionChange={onDescriptionChange} />
           :
-          currentTab === tabs[1].id ? <SelectSections sections={sectionsCopy} setSections={(e, i) => { updateSection(e, i) }} />
+          currentTab === tabs[1].id ? <SelectSections sections={sectionsCopy} setSections={(e, i) => { updateSection(e, i) }} updateSectionsList={setSectionsCopy} />
             :
             currentTab === tabs[2].id ? <TestPreview selectedSections={selectedSections} onSelectedSectionChange={onSelectedSectionChange} sections={sectionsCopy} name={name} description={description} />
               : ''

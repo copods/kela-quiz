@@ -7,8 +7,8 @@ const SelectSectionCard = ({ section, updateSection }: { section: TestSection, u
   const updateThisSection = (target: string, value?: string, selected?: boolean) => {
     var temp = {
       isSelected: section.isSelected,
-      totalQuestions: section.totalQuestions,
-      time: section.time
+      totalQuestions: section.totalQuestions ? section.totalQuestions : (section._count && section._count?.questions < 11 ? section._count?.questions : 10),
+      time: section.time ? section.time : (section._count && section._count?.questions < 11 ? section._count?.questions : 10)
     }
     switch (target) {
       case 'isSelected':
@@ -43,7 +43,7 @@ const SelectSectionCard = ({ section, updateSection }: { section: TestSection, u
         </span>
       </div>
       <div className="text-xs text-gray-400 flex">
-        {/* Total Questions: {section?._count.questions} */}
+        Total Questions: {section?._count?.questions}
       </div>
       <hr className="border-0 w-full bg-gray-300 h-px" />
       <div className="pt-1 flex gap-4">

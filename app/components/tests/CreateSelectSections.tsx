@@ -1,14 +1,14 @@
-import { useSubmit } from "@remix-run/react";
 import { useEffect, useState } from "react"
 import type { TestSection } from "../Interface";
 import SortFilter from "../SortFilter";
 import SelectSectionCard from "./SelectSectionCard";
 
-const SelectSections = ({ sections, setSections }: { sections: Array<TestSection>, setSections: (e: any, i: number) => void }) => {
+const SelectSections = ({ sections, setSections, updateSectionsList }: { sections: Array<TestSection>, setSections: (e: any, i: number) => void, updateSectionsList: (e: any) => void }) => {
 
   const [sortDirection, onSortDirectionChange] = useState('asc')
   const [sortBy, onSortChange] = useState('name')
   const [pseudoDivs, setPseudoDivs] = useState([1])
+
 
 
   const filterByType = [
@@ -36,15 +36,23 @@ const SelectSections = ({ sections, setSections }: { sections: Array<TestSection
     }
   }, [sections.length])
 
-  const submit = useSubmit()
+  const sortData = () => {
+    updateSectionsList((e: Array<TestSection>) => {
+      if (sortBy == 'name' && sortDirection == 'asc')
+        e.sort((a, b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0))
+      if (sortBy == 'name' && sortDirection == 'desc')
+        e.sort((a, b) => (b.name > a.name) ? 1 : ((a.name > b.name) ? -1 : 0))
+      if (sortBy == 'createdAt' && sortDirection == 'asc')
+        e.sort((a, b) => (new Date(a.createdAt).getTime() > new Date(b.createdAt).getTime()) ? 1 : ((new Date(b.createdAt).getTime() > new Date(a.createdAt).getTime()) ? -1 : 0))
+      if (sortBy == 'createdAt' && sortDirection == 'desc')
+        e.sort((a, b) => (new Date(b.createdAt).getTime() > new Date(a.createdAt).getTime()) ? 1 : ((new Date(a.createdAt).getTime() > new Date(b.createdAt).getTime()) ? -1 : 0))
+      return [...e]
+    })
+  }
+
   useEffect(() => {
-    var filter = {
-      orderBy: {
-        [sortBy]: sortDirection,
-      },
-    }
-    submit({ data: JSON.stringify(filter) }, { method: "get" })
-  }, [sortDirection, sortBy, submit])
+    sortData()
+  }, [sortDirection, sortBy])
 
   return (
     <div className="w-full bg-white shadow p-6 rounded-lg flex flex-col gap-6  overflow-x-auto">
