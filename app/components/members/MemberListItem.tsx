@@ -1,20 +1,31 @@
-import { Icon } from "@iconify/react";
-import type { Role, User } from "../Interface";
-import { Form } from "@remix-run/react";
-import moment from "moment";
+import { Icon } from '@iconify/react'
+import type { Role, User } from '../Interface'
+
+import moment from 'moment'
+import ConfirmationPopUp from './ConfirmationPopUp'
+import { useState } from 'react'
 
 export default function MemberListItem({
   user,
-  disableDelete,
+  loggedInUser,
 }: {
-  user: User & { role: Role };
-  disableDelete: boolean;
+  user: User & { role: Role }
+  loggedInUser: string | undefined
 }) {
+  const [open, setOpen] = useState(false)
+
+  const openPopUp = () => {
+    setOpen(!open)
+  }
+  const description = 'do you wan to delete this user'
+  const deletebutton = 'delete'
+  const deleteMember = 'delete'
+  const DeleteName = 'deleteMember'
   return (
     <div className="col-span-full grid grid-cols-10">
       <div className="col-span-full grid grid-cols-10 border-t-[1px] border-solid border-[#E5E7EB] px-12 py-4">
         <div className="col-span-2 ">
-          <h1 className="text-base leading-6 text-gray-700">
+          <h1 className="text-base leading-6 text-gray-700" >
             {user.firstName} {user.lastName}
           </h1>
         </div>
@@ -28,39 +39,42 @@ export default function MemberListItem({
         </div>
         <div className="col-span-2 ">
           <h1 className="text-base leading-6 text-gray-700">
-            {moment(user?.createdAt).format("DD MMMM YY")}
+            {moment(user?.createdAt).format('DD MMMM YY')}
           </h1>
         </div>
         <div className="col-span-1">
           <div className=" flex  gap-5">
             <div>
-              <button type="submit">
-                <Icon
-                  icon="eva:edit-2-outline"
-                  className="pointer-cursor h-6 w-6 text-blue-900"
-                ></Icon>
-              </button>
-            </div>
-            <div>
-              <Form method="post">
+              {!open ? (
                 <button
-                  type="submit"
                   name="deleteMember"
-                  disabled={disableDelete}
-                  value={JSON.stringify({ action: "delete", id: user.id })}
+                  value={JSON.stringify({ action: 'delete', id: user.id })}
                 >
                   <Icon
+                    id="deleteButton"
+                    onClick={openPopUp}
                     icon="ic:outline-delete-outline"
-                    className={`pointer-cursor h-6 w-6 text-red-500 ${disableDelete &&
-                      "cursor-not-allowed text-red-300"
-                      }`}
+                    className={`pointer-cursor h-6 w-6 text-red-500 ${
+                      loggedInUser === user.id &&
+                      'cursor-not-allowed text-red-300'
+                    }`}
                   ></Icon>
                 </button>
-              </Form>
+              ) : (
+                <ConfirmationPopUp
+                  openPopUp={openPopUp}
+                  DeleteName={DeleteName}
+                  loggedInUser={loggedInUser}
+                  user={user}
+                  description={description}
+                  deletebutton={deletebutton}
+                  DeleteValue={deleteMember}
+                />
+              )}
             </div>
           </div>
         </div>
       </div>
     </div>
-  );
+  )
 }

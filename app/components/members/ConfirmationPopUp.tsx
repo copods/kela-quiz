@@ -2,7 +2,7 @@ import { Fragment, useRef, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import { Form } from '@remix-run/react'
-import type { Role, User } from '@prisma/client'
+import type { Role, User } from '../Interface'
 
 export default function ConfirmationPopUp({
   openPopUp,

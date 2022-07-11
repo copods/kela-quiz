@@ -25,20 +25,4 @@ describe('Members test', () => {
   })
   
 
-  it('ckeck addMmeber cross icon', () => {
-    cy.get('#addMember').click()
-    cy.get('#crossIcon').click()
-    cy.contains('#addMember').click()
-    cy.get('#cancel').click()
-  })
-  it('checking cancel button in add member popup', () => {
- 
-  })
-  it('ckeck addMmeber cross icon', () => {
-    cy.get('#deleteButton').click()
-    cy.get('#deleteConfirm').click()
-
-  })
-  
-
 })
