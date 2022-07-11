@@ -1,4 +1,4 @@
-import { Form } from '@remix-run/react'
+import { Form, useTransition } from '@remix-run/react'
 import { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
@@ -7,12 +7,13 @@ import type { ActionData } from '~/routes/sections'
 const AddSection = ({
   open,
   setOpen,
-  action,
+  showErrorMessage,
 }: {
   open: boolean
   setOpen: (e: boolean) => void
-  action: ActionData
+  showErrorMessage: ActionData
 }) => {
+  const transition = useTransition()
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog
@@ -78,8 +79,8 @@ const AddSection = ({
                     className="h-24 w-full rounded-lg border border-gray-200 py-2 px-3 text-base"
                     placeholder="Enter Section Description"
                   />
-                  {action.errors?.body ? (
-                    <span>{action.errors?.body}</span>
+                  {showErrorMessage.errors?.body ? (
+                    <span>{showErrorMessage.errors?.body}</span>
                   ) : null}
                 </div>
 
@@ -95,15 +96,18 @@ const AddSection = ({
                   </button>
                   <button
                     type="submit"
-                    className="h-9 rounded-md bg-primary px-4 text-sm text-[#F0FDF4] disabled:opacity-80 "
+                    className={`h-9 rounded-md bg-primary px-4 text-sm text-[#F0FDF4] disabled:opacity-80  ${
+                      transition.state === 'submitting' ? 'disabled' : ''
+                    }`}
                     onClick={() => {
                       // if (!action.errors?.title && !action.errors?.body) {
                       //   console.log(action.errors)
                       setOpen(false)
                       // }
                     }}
+                    disabled={transition.state === 'submitting'}
                   >
-                    Add
+                    {transition.state === 'submitting' ? 'Adding...' : 'Add'}
                   </button>
                 </div>
               </Dialog.Panel>

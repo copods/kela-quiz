@@ -38,7 +38,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const obj = Object.fromEntries(url).filter
   var sections: Array<Section> = []
   var status: string = ''
-  console.log('obj', Object.fromEntries(url).filter)
+  console.log('filter data', obj)
   await getAllSections(obj)
     .then((res) => {
       sections = res
@@ -53,13 +53,12 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     ? params.sectionId?.toString()
     : 'NA'
   const filters = new URL(request.url).search
-  console.log('anananananan', filters)
   return json<LoaderData>({ sections, selectedSectionId, filters, status })
 }
 
 export const action: ActionFunction = async ({ request }) => {
+  console.log(request)
   const createdById = await requireUserId(request)
-
   const formData = await request.formData()
   const name = formData.get('name')
   const description = formData.get('description')
@@ -76,10 +75,8 @@ export const action: ActionFunction = async ({ request }) => {
       { status: 400 }
     )
   }
-
   const section = await createSection({ name, description, createdById })
-  return redirect(`/sections/${section.id}`)
-  // return null
+  return redirect(`/sections/${section.id}${new URL(request.url).search}`)
 }
 
 export default function SectionPage() {
@@ -96,7 +93,7 @@ export default function SectionPage() {
 
   let navigate = useNavigate()
   if (data.status != 'Success') {
-    toast.success('Something went wrong..!')
+    toast.error('Something went wrong..!')
   }
 
   useEffect(() => {
@@ -208,7 +205,7 @@ export default function SectionPage() {
           </div>
         </div>
 
-        <AddSection action={action} open={open} setOpen={setOpen} />
+        <AddSection showErrorMessage={action} open={open} setOpen={setOpen} />
       </div>
     </AdminLayout>
   )
