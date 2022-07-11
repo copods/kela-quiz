@@ -1,12 +1,8 @@
-import AdminLayout from "~/components/layouts/AdminLayout";
+import { Outlet } from "@remix-run/react";
 
 export default function Dashboard() {
 
   return (
-    <AdminLayout>
-      <div>
-        <div>Assessment Works.....!</div>
-      </div>
-    </AdminLayout>
+    <Outlet />
   )
 }
