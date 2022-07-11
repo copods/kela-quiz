@@ -1,5 +1,4 @@
 import { Icon } from "@iconify/react";
-import { useEffect } from "react";
 import type { QuestionType } from "~/components/Interface";
 import cuid from "cuid";
 import QuillEditor from "~/components/QuillEditor.client";
@@ -26,26 +25,25 @@ export default function OptionForQuestion({ questionTypeList, selectedTypeOfQues
     }
   }
 
-  const addOption = (opt: string, index: number) => {
-    // console.log(opt);
-    // console.log(options)
+  const updateOption = (opt: string, index: number) => {
     setOptions((e: any) => {
       e[index].option = opt
       return [...e]
     })
   }
 
-  const checkBoxToggle = (option: any) => {
-    option.isCorrect = !option.isCorrect
+  const checkBoxToggle = (index:number) => {
+    setOptions((e: any) => {
+      e[index].isCorrect=!e[index].isCorrect
+      return [...e]
+    })
   }
 
-  useEffect(() => {
-  }, [singleChoiceAnswer])
 
   getQuestionType(selectedTypeOfQuestion)
   return (
     <div className="flex-1 flex flex-col gap-6">
-      <div className='flex items-center justify-between'>
+      <div className='flex items-center flex-row justify-between'>
         <div className='text-gray-600 text-base leading-6 font-medium'>Select Correct Option</div>
         <button className='bg-primary text-white rounded-lg  text-xs h-9 flex items-center px-5' onClick={addOptionArea} >
           <Icon icon="fluent:add-16-filled"></Icon>
@@ -59,23 +57,23 @@ export default function OptionForQuestion({ questionTypeList, selectedTypeOfQues
             return (
               <div className='flex items-center gap-2.5' key={option.id}>
                 {getQuestionType(selectedTypeOfQuestion) === 'MULTIPLE_CHOICE'
-                  ? <input type="checkbox" value={option.id} onChange={() => { checkBoxToggle(option) }} />
-                  : getQuestionType(selectedTypeOfQuestion) === 'SINGLE_CHOICE' && <input type="radio" name="radioChoice" value={option.id} onChange={(e) => setSingleChoiceAnswer(e.target.value)} />}
-                <div className='flex-1'>
+                  ? <input id="checkBox" type="checkbox" value={option.id} onChange={() => { checkBoxToggle(index) }} checked={option.isCorrect} />
+                  : getQuestionType(selectedTypeOfQuestion) === 'SINGLE_CHOICE' && <input id="radioButton" type="radio" name="radioChoice" value={option.id} onChange={(e) => setSingleChoiceAnswer(e.target.value)} />}
+                <div className='flex-1' id="optionEditor">
                   {
                     getQuestionType(selectedTypeOfQuestion) === 'MULTIPLE_CHOICE' || getQuestionType(selectedTypeOfQuestion) === 'SINGLE_CHOICE'
                       ?
                       <ClientOnly fallback={<div></div>}>
-                        {() => <QuillEditor quillPlaceholder={"option"} fullAccess={false} onTextChange={(e) => { addOption(e, index) }} />}
+                        {() => <QuillEditor quillPlaceholder={"option"} fullAccess={false} onTextChange={(e) => { updateOption(e, index) }} />}
                       </ClientOnly>
                       :
-                      <textarea className='h-20 p-4 rounded-lg bg-white border border-gray-300 w-full' onChange={(e) => { addOption(e.target.value, index) }}></textarea>
+                      <textarea className='h-20 p-4 rounded-lg bg-white border border-gray-300 w-full' value={option.option} onChange={(e) => { updateOption(e.target.value,index) }}></textarea>
 
                   }
                 </div>
                 <span onClick={() => deleteOption(index)}><Icon
                   icon="ic:outline-delete-outline"
-                  className={`h-6 w-6  ${options.length < 2 ?'cursor-not-allowed text-red-400':'cursor-pointer text-red-600'}`}
+                  className={`h-6 w-6 ${index} ${options.length < 2 ?'cursor-not-allowed text-red-400':'cursor-pointer text-red-600'}`}
                 ></Icon></span>
               </div>
             )
