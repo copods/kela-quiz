@@ -4,7 +4,7 @@ import { redirect } from '@remix-run/node'
 import type { LoaderFunction, ActionFunction } from '@remix-run/node'
 import MembersList from '~/components/members/MembersList'
 import { json } from '@remix-run/node'
-import { useLoaderData } from '@remix-run/react'
+import { useActionData, useLoaderData } from '@remix-run/react'
 import {
   createNewUser,
   deleteUserById,
@@ -12,14 +12,21 @@ import {
   getAllUsers,
 } from '~/models/user.server'
 import MembersHeader from '~/components/members/MembersHeader'
+import { toast } from 'react-toastify'
+import { useEffect } from 'react'
 
-type ActionData = {
+
+export type ActionData = {
   errors?: {
     firstName?: string
     lastName?: string
     email?: string
     roleId?: string
     title?: string
+    status?: string
+  }
+  resp?: {
+    status?: string
   }
 }
 type LoaderData = {
@@ -35,15 +42,18 @@ export const loader: LoaderFunction = async ({ request }) => {
   const users = await getAllUsers()
   return json<LoaderData>({ users, roles, userId })
 }
-
-export const action: ActionFunction = async ({ request, params }) => {
+export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
-  const action = formData.get('addMember') ? JSON.parse(formData.get('addMember') as string) : JSON.parse(formData.get('deleteMember') as string)
+  const action = formData.get('addMember')
+    ? JSON.parse(formData.get('addMember') as string)
+    : JSON.parse(formData.get('deleteMember') as string)
+
   if (action.action === 'add') {
     const firstName = formData.get('firstName')
     const lastName = formData.get('lastName')
     const email = formData.get('email')
     const roleId = formData.get('roleId')
+
     if (typeof firstName !== 'string' || firstName.length === 0) {
       return json<ActionData>(
         { errors: { firstName: 'firstName is required' } },
@@ -68,8 +78,21 @@ export const action: ActionFunction = async ({ request, params }) => {
         { status: 400 }
       )
     }
+    let addHandle= null
+
     await createNewUser({ firstName, lastName, email, roleId })
-    return redirect(`/members`)
+    
+      .then((res) => {
+       addHandle= json<ActionData>(
+          { resp: { status: 'Member Added Successfully..!' } },
+          { status: 200 }
+        )
+      })
+      .catch((err) => {
+       addHandle= json<ActionData>({ errors: { status: err } }, { status: 400 })
+      })
+   
+    return addHandle
   }
   if (action.action === 'delete') {
     if (typeof action.id !== 'string') {
@@ -78,26 +101,39 @@ export const action: ActionFunction = async ({ request, params }) => {
         { status: 400 }
       )
     }
-
+    let deleteHandle= null
     await deleteUserById(action.id)
-    return redirect(`/members`)
-
+    .then((res) => {
+      deleteHandle= json<ActionData>(
+         { resp: { status: 'Deleted Successfully..!' } },
+         { status: 200 }
+       )
+     })
+     .catch((err) => {
+      deleteHandle= json<ActionData>({ errors: { status: err } }, { status: 400 })
+     })
+  
+   return deleteHandle
   }
 }
-
 export default function Members() {
   const data = useLoaderData() as LoaderData
-
+  const actData = useActionData() as ActionData
+ useEffect(()=>{
+  if (actData) {
+      if (actData.resp?.status) {
+        toast.success(actData.resp?.status)
+      } else if (actData.errors?.status) {
+        toast.error('Something went wrong...!')
+      }
+    }
+ },[actData])
   return (
-    <>
-      <AdminLayout>
-        <div>
-          <div className="">
-            <MembersHeader roles={data.roles} />
-          </div>
-          <MembersList data={data.users} loggedInUser={data.userId} />
-        </div>
-      </AdminLayout>
-    </>
+    <AdminLayout>
+      <div>
+        <MembersHeader roles={data.roles} actionStatus={actData?.resp?.status}/>
+        <MembersList data={data.users} loggedInUser={data.userId} />
+      </div>
+    </AdminLayout>
   )
 }

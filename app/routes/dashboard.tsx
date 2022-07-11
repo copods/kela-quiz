@@ -13,16 +13,10 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 export default function Dashboard() {
 
-  const notify = () => {
-    toast.warn("Wow so easy!");
-    toast.error("Wow so easy!");
-    toast.success("Wow so easy!");
-  }
   return (
     <AdminLayout>
       <div>
         <div>Hey Dashboard</div>
-        <button onClick={notify}>Hey</button>
       </div>
     </AdminLayout>
   )

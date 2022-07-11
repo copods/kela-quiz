@@ -43,8 +43,8 @@ CREATE TABLE "Section" (
 CREATE TABLE "Question" (
     "id" TEXT NOT NULL,
     "question" TEXT NOT NULL,
-    "correctAnswer" TEXT[],
     "marks" INTEGER NOT NULL DEFAULT 1,
+    "checkOrder" BOOLEAN NOT NULL DEFAULT false,
     "questionTypeId" TEXT NOT NULL,
     "sectionId" TEXT NOT NULL,
     "createdById" TEXT NOT NULL,
@@ -52,6 +52,18 @@ CREATE TABLE "Question" (
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Question_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "CorrectAnswer" (
+    "id" TEXT NOT NULL,
+    "answer" TEXT NOT NULL,
+    "order" INTEGER NOT NULL,
+    "questionId" TEXT,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "CorrectAnswer_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -71,6 +83,7 @@ CREATE TABLE "Option" (
     "option" TEXT,
     "questionId" TEXT NOT NULL,
     "coInQuestionId" TEXT NOT NULL,
+    "order" INTEGER NOT NULL,
     "createdById" TEXT NOT NULL,
     "candidateQuestionId" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -95,6 +108,7 @@ CREATE TABLE "Test" (
 CREATE TABLE "SectionInTest" (
     "id" TEXT NOT NULL,
     "sectionId" TEXT NOT NULL,
+    "order" INTEGER NOT NULL,
     "timeInSeconds" INTEGER NOT NULL,
     "totalQuestions" INTEGER NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -222,6 +236,9 @@ ALTER TABLE "Question" ADD CONSTRAINT "Question_sectionId_fkey" FOREIGN KEY ("se
 
 -- AddForeignKey
 ALTER TABLE "Question" ADD CONSTRAINT "Question_questionTypeId_fkey" FOREIGN KEY ("questionTypeId") REFERENCES "QuestionType"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "CorrectAnswer" ADD CONSTRAINT "CorrectAnswer_questionId_fkey" FOREIGN KEY ("questionId") REFERENCES "Question"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Option" ADD CONSTRAINT "Option_createdById_fkey" FOREIGN KEY ("createdById") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

@@ -65,9 +65,7 @@ export async function sendMail(
 </html>
     `;
 
-  const SENDGRID_API_KEY = env.SENDGRID_API_KEY || "NULL";
-
-  sendgrid.setApiKey(SENDGRID_API_KEY);
+  sendgrid.setApiKey(env.SENDGRID_API_KEY as string);
 
   const msg = {
     to,
@@ -81,10 +79,8 @@ export async function sendMail(
       return "ok";
     },
     (error) => {
-      console.error("err: ", error);
-
       if (error.response) {
-        console.error("err2: ", error.response.body);
+        console.error("Sendgrid Error: ", error.response.body);
       }
     }
   );

@@ -55,8 +55,9 @@ model Question {
   question          String
   options           Option[]            @relation("options_in_question")
   correctOptions    Option[]            @relation("correct_options_in_question")
-  correctAnswer     String[]
+  correctAnswer     CorrectAnswer[]
   marks             Int                 @default(1)
+  checkOrder        Boolean             @default(false)
   questionType      QuestionType        @relation(fields: [questionTypeId], references: [id])
   questionTypeId    String
   section           Section             @relation(fields: [sectionId], references: [id])
@@ -66,6 +67,16 @@ model Question {
   candidateQuestion CandidateQuestion[]
   createdAt         DateTime            @default(now())
   updatedAt         DateTime            @updatedAt
+}
+
+model CorrectAnswer {
+  id         String    @id @default(cuid())
+  answer     String
+  order      Int
+  question   Question? @relation(fields: [questionId], references: [id])
+  questionId String?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
 }
 
 model QuestionType {
@@ -84,7 +95,6 @@ model Option {
   questionId          String
   coInQuestion        Question           @relation("correct_options_in_question", fields: [coInQuestionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   coInQuestionId      String
-  checkOrder          Boolean            @default(false)
   order               Int
   createdBy           User               @relation(fields: [createdById], references: [id])
   createdById         String
