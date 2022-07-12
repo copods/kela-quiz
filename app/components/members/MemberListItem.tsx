@@ -17,15 +17,15 @@ export default function MemberListItem({
   const openPopUp = () => {
     setOpen(!open)
   }
-  const description = 'do you wan to delete this user'
-  const deletebutton = 'delete'
+  const description = 'Are you sure you want to delete this user ?'
+  const deletebutton = 'Delete'
   const deleteMember = 'delete'
   const DeleteName = 'deleteMember'
   return (
     <div className="col-span-full grid grid-cols-10">
       <div className="col-span-full grid grid-cols-10 border-t-[1px] border-solid border-[#E5E7EB] px-12 py-4">
         <div className="col-span-2 ">
-          <h1 className="text-base leading-6 text-gray-700" >
+          <h1 className="text-base leading-6 text-gray-700">
             {user.firstName} {user.lastName}
           </h1>
         </div>
