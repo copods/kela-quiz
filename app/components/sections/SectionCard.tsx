@@ -4,7 +4,7 @@ import moment from 'moment';
 const SectionCard = ({ name, questionsCount, createdBy, createdAt }: { name: string, questionsCount: number, createdBy: string, createdAt: string }) => {
 
   return (
-    <div className="rounded-2xl p-6 flex flex-col gap-2 sectionCard" >
+    <div className="rounded-2xl p-6 flex flex-col gap-2" id="sectionCard" >
       <div className="flex justify-between items-center">
         <h2 className="text-xl font-semibold text-gray-700" id={`${name}`}>{name}</h2>
         <Icon className="text-2xl text-gray-600" icon={'mdi:dots-vertical'} />
