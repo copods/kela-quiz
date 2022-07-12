@@ -1,4 +1,4 @@
-import { useFetcher, useTransition } from "@remix-run/react"
+import { useFetcher, useSubmit, useTransition } from "@remix-run/react"
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import { toast } from "react-toastify"
@@ -13,6 +13,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
 
   const transition = useTransition();
   const fetcher = useFetcher();
+  const submit2 = useSubmit();
   const [sectionsCopy, setSectionsCopy] = useState(sections)
 
   useEffect(() => {
@@ -82,7 +83,8 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
     selectedSections
       .map((section, index) => { sendData.sections.push({ sectionId: section.id, totalQuestions: section.totalQuestions as number, timeInSeconds: section.time as number, order: index + 1 }) })
 
-    fetcher.submit({ data: JSON.stringify(sendData) }, { method: "post" });
+    submit2({ data: JSON.stringify(sendData) }, { method: "post" });
+    // fetcher.submit({ data: JSON.stringify(sendData) }, { method: "post" });
   }
 
 
