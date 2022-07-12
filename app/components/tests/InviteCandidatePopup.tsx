@@ -3,7 +3,7 @@ import { Fragment, useState } from "react";
 import { Dialog, Transition } from '@headlessui/react'
 import { Icon } from "@iconify/react"
 
-const InviteCandidatePopup = ({ open, setOpen, testName }: { open: boolean, setOpen: (e: boolean) => void, testName: string }) => {
+const InviteCandidatePopup = ({ open, setOpen, testName, testId }: { open: boolean, setOpen: (e: boolean) => void, testName: string, testId: string }) => {
 
   const [emails, setEmails] = useState([""])
 
@@ -65,6 +65,8 @@ const InviteCandidatePopup = ({ open, setOpen, testName }: { open: boolean, setO
                   </button>
                   <button
                     type="submit"
+                    name="inviteCandidates"
+                    value={JSON.stringify({ testId })}
                     id="submitButton"
                     className="px-4 h-9 rounded-md text-sm text-[#F0FDF4] bg-primary"
                     onClick={() => setOpen(false)}

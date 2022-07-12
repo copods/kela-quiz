@@ -59,7 +59,7 @@ const TestList = ({ tests }: { tests: Array<Test> }) => {
         {
           tests.map((test, i) => {
             return (
-              <TestCard key={test.id} name={test.name} createdBy={`${test?.createdBy?.firstName} ${test?.createdBy?.lastName}`} createdAt={test.createdAt} description={test.description} />
+              <TestCard key={test.id} id={test.id} name={test.name} createdBy={`${test?.createdBy?.firstName} ${test?.createdBy?.lastName}`} createdAt={test.createdAt} description={test.description} />
             )
           })
         }

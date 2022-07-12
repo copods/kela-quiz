@@ -3,7 +3,7 @@ import moment from "moment"
 import { useState } from "react"
 import InviteCandidatePopup from "./InviteCandidatePopup"
 
-const TestCard = ({ name, createdBy, createdAt, description }: { name: string, createdBy: string, createdAt: Date, description: string }) => {
+const TestCard = ({ id, name, createdBy, createdAt, description }: { id: string, name: string, createdBy: string, createdAt: Date, description: string }) => {
 
   const [candidatePopupOpen, onPopupToggle] = useState(true)
 
@@ -27,7 +27,7 @@ const TestCard = ({ name, createdBy, createdAt, description }: { name: string, c
         <span className="cursor-pointer">Second Button</span>
         <span className="cursor-pointer" onClick={() => onPopupToggle(true)}>Invite Candidate</span>
       </div>
-      <InviteCandidatePopup open={candidatePopupOpen} setOpen={onPopupToggle} testName={name} />
+      <InviteCandidatePopup open={candidatePopupOpen} setOpen={onPopupToggle} testName={name} testId={id} />
     </div>
   )
 }

@@ -1,5 +1,5 @@
 import AdminLayout from "~/components/layouts/AdminLayout";
-import { getUserId } from '~/session.server'
+import { getUserId, requireUserId } from '~/session.server'
 import { redirect } from '@remix-run/node'
 import type { LoaderFunction, ActionFunction } from '@remix-run/node'
 import TestList from "~/components/tests/TestList";
@@ -8,6 +8,7 @@ import { json } from '@remix-run/node'
 import { useLoaderData } from "@remix-run/react";
 import { toast } from "react-toastify";
 import type { Test } from "~/components/Interface";
+import { createCandidate } from "~/models/candidate.server";
 
 
 type LoaderData = {
@@ -36,11 +37,18 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 
 export const action: ActionFunction = async ({ request }) => {
+  const createdById = await requireUserId(request)
 
   const formData = await request.formData()
   let emails: any = []
-  await formData.forEach(fd => emails.push(fd))
+  await formData.forEach(fd => {
+    console.log(fd);
+    emails.push(fd)
+  })
   console.log(emails)
+  const data = formData.get("inviteCandidates")
+  const testId = JSON.parse(data as string).testId
+  // await createCandidate({ emails, createdById, testId })
 
   return null
 }
