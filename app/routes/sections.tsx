@@ -17,7 +17,7 @@ import AdminLayout from '~/components/layouts/AdminLayout'
 import AddSection from '~/components/sections/AddSection'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import type { Section, User } from '@prisma/client'
+import type { Section } from '@prisma/client'
 
 export type ActionData = {
   errors?: {
@@ -135,13 +135,12 @@ export default function SectionPage() {
     }
   }, [order, sortBy])
 
-  const [selectedSection, setSelectedSection] = useState(
+  const selectedSection =
     data.selectedSectionId != 'NA'
       ? data.selectedSectionId
       : data.sections[0]?.id
       ? data.sections[0].id
       : 'NA'
-  )
 
   return (
     <AdminLayout>
