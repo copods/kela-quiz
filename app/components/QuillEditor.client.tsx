@@ -42,7 +42,7 @@ export default function QuillEditor({ onTextChange, fullAccess, quillPlaceholder
   }, [quill, onTextChange])
 
   return (
-    <div className='rounded-lg w-full h-full helloQuill'>
+    <div className='rounded-lg w-full h-full helloQuill bg-white'>
       <div ref={quillRef} />
     </div>
   )
