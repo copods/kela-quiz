@@ -1,30 +1,28 @@
 import { Icon } from '@iconify/react'
 import type { Section, QuestionType, Question } from '~/components/Interface';
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import BreadCrumb from '../../BreadCrumb'
 import QuestionEditor from './QuestionEditor'
 import OptionForQuestion from './OptionForQuestion'
 import cuid from 'cuid';
-import { useFetcher, useTransition } from '@remix-run/react';
+import { Link, useFetcher, useFetchers, useSubmit, useTransition } from '@remix-run/react';
+import { toast } from 'react-toastify';
 
 
-const AddQuestionInSection = ({ sectionDetails, questionTypeList }: { sectionDetails: ((Section & { questions: Question[]; }) | null), questionTypeList: QuestionType[] }) => {
+const AddQuestionInSection = ({ sectionDetails, questionTypeList, error }: { sectionDetails: ((Section & { questions: Question[]; }) | null), questionTypeList: QuestionType[], error:string }) => {
 
-
+  const optionStruct = {
+    option: "",
+    isCorrect: false,
+    id: cuid()
+  }
   const [selectedTypeOfQuestion, setSelectedTypeOfQuestion] = useState(questionTypeList[0].id);
   const [question, setQuestion] = useState('');
   const [singleChoiceAnswer, setSingleChoiceAnswer] = useState('');
   const [textAnswer, setTextAnswer] = useState("");
-  const [options, setOptions] = useState([{
-    option: "",
-    isCorrect: false,
-    id: cuid()
-  }]);
+  const [options, setOptions] = useState([optionStruct]);
 
-//   useEffect(()=>{
-// console.log(options)
-//   },[options])
-  const transition= useTransition()
+  const transition = useTransition()
 
   const breadCrumbArray = [
     {
@@ -33,7 +31,7 @@ const AddQuestionInSection = ({ sectionDetails, questionTypeList }: { sectionDet
     },
     {
       tabName: "Question",
-      tabRoute: `/${sectionDetails?.id}`
+      tabRoute: `/sections/${sectionDetails?.id}`
     },
     {
       tabName: "AddQuestion",
@@ -41,7 +39,7 @@ const AddQuestionInSection = ({ sectionDetails, questionTypeList }: { sectionDet
     }
   ]
   const getQuestionType = (id: string) => {
-    var quesValue = "";
+    let quesValue = "";
     for (let quesType of questionTypeList) {
       if (quesType.id == id) {
         quesValue = quesType?.value as string;
@@ -50,12 +48,40 @@ const AddQuestionInSection = ({ sectionDetails, questionTypeList }: { sectionDet
     return quesValue
   }
 
+  const submit = useSubmit();
   const fetcher = useFetcher();
   const saveQuestion = () => {
-    var testQuestion: { question: string, options: Array<{ id: string, option: string, order: number }>, correctOptions: Array<{ id: string, option: string, order: number }>, correctAnswer: Array<string>, questionTypeId: string, sectionId: string } = {
+
+    if (question.length === 0) {
+      toast.error("Enter the Question");
+      return;
+    }
+
+    for (let option of options) {
+      if (option.option.length === 0) {
+        toast.error("Enter all the Options")
+        return;
+      }
+    }
+
+    let flag=0;
+    for(let option of options) {
+      if(option.isCorrect){
+        flag=1;
+      }
+    }
+    if(flag==0 && getQuestionType(selectedTypeOfQuestion)==='MULTIPLE_CHOICE'){
+      toast.error("Select the Option");
+      return ;
+    }
+    if(flag===0 && getQuestionType(selectedTypeOfQuestion) === 'SINGLE_CHOICE' && !singleChoiceAnswer){
+      toast.error('Select the Option');
+      return ;
+    } 
+
+    let testQuestion: { question: string, options: Array<{ id: string, option: string }>, correctAnswer: Array<{ id: string, answer: string, order: number }>, questionTypeId: string, sectionId: string } = {
       question,
       options: [],
-      correctOptions: [],
       correctAnswer: [],
       questionTypeId: selectedTypeOfQuestion,
       sectionId: sectionDetails?.id as string,
@@ -67,54 +93,42 @@ const AddQuestionInSection = ({ sectionDetails, questionTypeList }: { sectionDet
         var optionForQuestion = {
           id: option.id,
           option: option.option,
-          order: index + 1,
+          isCorrect: option.isCorrect
         }
         testQuestion.options.push(optionForQuestion);
-        if (option.isCorrect) {
-          testQuestion.correctOptions.push(optionForQuestion)
-        }
       })
     } else if (getQuestionType(selectedTypeOfQuestion) === "SINGLE_CHOICE") {
       options.forEach((option: any, index: number) => {
         var optionForQuestion = {
           id: option.id,
           option: option.option,
-          order: index + 1,
+          isCorrect: singleChoiceAnswer === option.id ? true : false
         }
         testQuestion.options.push(optionForQuestion);
-        if (option.id === singleChoiceAnswer) {
-          testQuestion.correctOptions.push(optionForQuestion)
-        }
+
       })
     } else if (getQuestionType(selectedTypeOfQuestion) === "TEXT") {
       options.forEach((option, index) => {
         var optionForQuestion = {
           id: option.id,
-          option: option.option,
-          order: index + 1,
+          answer: option.option,
+          order: index + 1
         }
-        testQuestion.options.push(optionForQuestion);
-        testQuestion.correctAnswer.push(textAnswer);
-        console.log(textAnswer)
+        testQuestion.correctAnswer.push(optionForQuestion);
       })
     }
-console.log(testQuestion)
+    console.log(testQuestion)
     fetcher.submit({ quesData: JSON.stringify(testQuestion) }, { method: "post" });
+    //toast.success("Saved Successful from component")
+    // submit({ quesData: JSON.stringify(testQuestion) }, { method: "post" });
+
   }
   return (
     <div className='h-full flex flex-col gap-6'>
-      <div className='flex items-center justify-between '>
         <h1 title={sectionDetails?.name} className="text-3xl leading-9 font-bold text-gray-900">{sectionDetails?.name} - Add Question</h1>
+        <BreadCrumb data={breadCrumbArray} />
 
-      </div>
-
-      <div>
-        <div className="text-sm leading-5 font-medium text-primary" >
-          <BreadCrumb data={breadCrumbArray} />
-        </div>
-      </div>
-
-      <div className="flex-1 flex gap-6 h-40">
+      <div className="flex-1 flex flex-row gap-6 h-40">
 
         <QuestionEditor question={question} setQuestion={setQuestion} questionTypeList={questionTypeList} selectedTypeOfQuestion={selectedTypeOfQuestion} setSelectedTypeOfQuestion={setSelectedTypeOfQuestion} />
 
@@ -122,10 +136,11 @@ console.log(testQuestion)
 
       </div>
       <div className='flex flex-end items-center justify justify-between'>
-        <button className='bg-gray-600 rounded-lg h-9 text-xs text-white'><span className='py-2 px-5'>Cancel</span></button>
-        <button disabled={transition.state === "submitting"} className='bg-primary text-xs rounded-lg h-9 text-white flex items-center px-5 gap-1' onClick={saveQuestion}><Icon icon="ic:round-save"></Icon><span>{transition.state === "submitting"
+        <Link to="/sections" className='bg-gray-600 rounded-lg h-9 text-xs text-white py-2 px-5' id='cancel'>Cancel
+        </Link>
+        <button id="save" disabled={transition.state === 'submitting'} className={`bg-primary text-xs rounded-lg h-9 text-white flex items-center px-5 gap-1 ${transition.state === 'submitting' && 'disabled:opacity-75'}`} onClick={saveQuestion}><Icon icon="ic:round-save" className='mr-1'></Icon>{transition.state === "submitting"
           ? "Saving..."
-          : "Save"}</span></button>
+          : "Save"}</button>
       </div>
     </div>
   )

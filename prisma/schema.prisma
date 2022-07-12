@@ -95,7 +95,6 @@ model Option {
   questionId          String
   coInQuestion        Question?          @relation("correct_options_in_question", fields: [coInQuestionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   coInQuestionId      String?
-  order               Int
   createdBy           User               @relation(fields: [createdById], references: [id])
   createdById         String
   candidateQuestion   CandidateQuestion? @relation(fields: [candidateQuestionId], references: [id])

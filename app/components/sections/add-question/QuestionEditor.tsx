@@ -14,7 +14,7 @@ export default function QuestionEditor({ questionTypeList, selectedTypeOfQuestio
         <DropdownField value={selectedTypeOfQuestion} setValue={setSelectedTypeOfQuestion} data={questionTypeList} displayKey={"displayName"} valueKey={"id"} />
       </div>
 
-      <div className='flex-1'>
+      <div className='flex-1' id="questionEditor">
         <ClientOnly fallback={<div></div>}>
           {() => <QuillEditor quillPlaceholder={"question"} fullAccess= {true} onTextChange={(e) => { setEditorQuestion(e) }} />}
         </ClientOnly>

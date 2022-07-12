@@ -46,36 +46,27 @@ export async function getQuestionType() {
   return prisma.questionType.findMany();
 }
 
-// export async function addQuestion(question: string, options: Array<{ id: string, option: string, order: number }>, correctOptions: Array<{ id: string, option: string, order: number }>, correctAnswer: Array<string>, questionTypeId: string, sectionId: string, createdById: string) {  
-//   let questionId = cuid()
-//   console.log(questionId)
-//   await prisma.question.create({
-//     data: {
-//       // id: (() => {
-//       //   console.log(questionId)
-//       //   return questionId
-//       // })(),
-//       id: questionId,
-//       question,
-//       sectionId,
-//       createdById,
-//       questionTypeId,
-//       options: {
-//         createMany: {
-//           data: [
-//             {
-//               data: options.map(option => ({ ...option, createdById }))
-              
-//             }
-//           ]
-//         }
-//       },
-//       correctOptions: {
-//         createMany: {
-//           data: correctOptions.map(option => ({ ...option, createdById, coInQuestionId: questionId }))
-//         }
-//       }
-//     }
-//   })
-//   return true
-// }
+export async function addQuestion(question: string, options: Array<{ id: string, option: string, isCorrect:boolean }>, correctAnswer: Array<{id:string, answer:string, order: number}>, questionTypeId: string, sectionId: string, createdById: string) {  
+  let questionId = cuid()
+  console.log(questionId)
+  await prisma.question.create({
+    data: {
+      id: questionId,
+      question,
+      sectionId,
+      createdById,
+      questionTypeId,
+      options: {
+        createMany: {
+          data: options.map(option => ({ option:option.option, id: option.id, coInQuestionId: option.isCorrect? questionId: null, createdById }))
+        }
+      },
+      correctAnswer: {
+        createMany: {
+          data: correctAnswer
+        }
+      } 
+    }
+  })
+  return true
+}
