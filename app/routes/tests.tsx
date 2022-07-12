@@ -1,7 +1,7 @@
 import AdminLayout from "~/components/layouts/AdminLayout";
 import { getUserId } from '~/session.server'
 import { redirect } from '@remix-run/node'
-import type { LoaderFunction } from '@remix-run/node'
+import type { LoaderFunction, ActionFunction } from '@remix-run/node'
 import TestList from "~/components/tests/TestList";
 import { getAllTests } from "~/models/tests.server";
 import { json } from '@remix-run/node'
@@ -32,6 +32,17 @@ export const loader: LoaderFunction = async ({ request }) => {
       status = err
     })
   return json<LoaderData>({ tests, status })
+}
+
+
+export const action: ActionFunction = async ({ request }) => {
+
+  const formData = await request.formData()
+  let emails: any = []
+  await formData.forEach(fd => emails.push(fd))
+  console.log(emails)
+
+  return null
 }
 
 

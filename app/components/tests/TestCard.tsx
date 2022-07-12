@@ -1,7 +1,11 @@
 import { Icon } from "@iconify/react"
 import moment from "moment"
+import { useState } from "react"
+import InviteCandidatePopup from "./InviteCandidatePopup"
 
 const TestCard = ({ name, createdBy, createdAt, description }: { name: string, createdBy: string, createdAt: Date, description: string }) => {
+
+  const [candidatePopupOpen, onPopupToggle] = useState(true)
 
   return (
     <div className="rounded-lg p-4 bg-white border border-gray-200">
@@ -9,15 +13,21 @@ const TestCard = ({ name, createdBy, createdAt, description }: { name: string, c
         <h2 className="text-xl font-semibold text-gray-700">{name}</h2>
         <Icon className="text-2xl text-gray-600" icon={'mdi:dots-vertical'} />
       </div>
-      <div className="text-xs text-gray-400 flex pb-4">
+      <div className="text-xs text-gray-500 flex pb-4">
         <span>By {createdBy}</span>
         <span className="flex">
           <Icon className="text-base" icon={'mdi:circle-small'} />
           {moment(createdAt).format('DD MMM YY')}
         </span>
       </div>
-      <div className="text-xs text-gray-400 flex" dangerouslySetInnerHTML={{ __html: description }}>
+      <div className="text-xs text-gray-500 flex pb-2" dangerouslySetInnerHTML={{ __html: description }}>
       </div>
+      <div className="text-xs text-primary flex flex-row gap-4" >
+        <span className="cursor-pointer">First Button</span>
+        <span className="cursor-pointer">Second Button</span>
+        <span className="cursor-pointer" onClick={() => onPopupToggle(true)}>Invite Candidate</span>
+      </div>
+      <InviteCandidatePopup open={candidatePopupOpen} setOpen={onPopupToggle} testName={name} />
     </div>
   )
 }
