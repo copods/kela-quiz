@@ -1,4 +1,4 @@
-import { useLoaderData } from "@remix-run/react"
+import { useLoaderData, useActionData, useNavigate } from "@remix-run/react"
 import type { ActionFunction, LoaderFunction } from "@remix-run/server-runtime"
 import { json, redirect } from "@remix-run/server-runtime"
 import { useEffect } from "react"
@@ -40,13 +40,28 @@ export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
   const data: { name: string, description: string, sections: Array<{ sectionId: string, totalQuestions: number, timeInSeconds: number }> } | any = formData.get('data')
 
+  let test = null
   await createTest(createdById, JSON.parse(data))
-
-  return redirect('/tests')
+    .then(res => {
+      test = res
+    }).catch(err => {
+      test = err
+    })
+  return json<any>({ test }, { status: 202 })
 }
 
 const AddTest = () => {
   const data = useLoaderData() as LoaderData
+  const actionData = useActionData() as any;
+  const navigate = useNavigate()
+  useEffect(() => {
+    if (actionData?.test.id) {
+      toast.success("Test added successfully..")
+      navigate('/tests')
+    } else if (actionData) {
+      toast.error("Something went wrong..!")
+    }
+  }, [actionData, navigate])
 
   if (data.status != "success") {
     toast.success("Something went wrong..!")
