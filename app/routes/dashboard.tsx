@@ -1,4 +1,4 @@
-import AdminLayout from "~/components/layouts/AdminLayout";
+import AdminLayout from '~/components/layouts/AdminLayout'
 import { getUserId } from '~/session.server'
 import { redirect } from '@remix-run/node'
 import type { LoaderFunction } from '@remix-run/node'
@@ -9,9 +9,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   return null
 }
 
-
 export default function Dashboard() {
-
   return (
     <AdminLayout>
       <div>
