@@ -4,9 +4,11 @@ import MemberListItem from "./MemberListItem";
 export default function MembersList({
   data,
   loggedInUser,
+  actionStatus
 }: {
   data: User[];
   loggedInUser: string | undefined;
+  actionStatus:string|undefined 
 }) {
   return (
     <div className="grid grid-cols-12  bg-[#F9FAFB] ">
@@ -22,7 +24,7 @@ export default function MembersList({
         </div>
         {data.map((user: any) => (
           <div key={user.id} className="col-span-10 grid">
-            <MemberListItem user={user} loggedInUser={loggedInUser} />
+            <MemberListItem user={user} loggedInUser={loggedInUser==user.id} actionStatus={actionStatus} />
           </div>
         ))}
       </div>

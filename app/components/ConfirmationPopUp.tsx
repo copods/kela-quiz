@@ -2,28 +2,21 @@ import { Fragment, useRef, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import { Form } from '@remix-run/react'
-import type { Role, User } from '../Interface'
 
 export default function ConfirmationPopUp({
   openPopUp,
-  description,
-  deletebutton,
-  DeleteName,
-  DeleteValue,
-  user,
-  loggedInUser,
+  setOpen,
+  open,
+  onButtonClick,
 }: {
   openPopUp: () => void
-  description: string
-  loggedInUser: string | undefined
-  deletebutton: string
-  DeleteName: string
-  DeleteValue: string
-  user: User & { role: Role }
+  open: boolean
+  setOpen: (e: boolean) => void
+  onButtonClick: () => void
 }) {
-  const [open, setOpen] = useState(true)
-
   const cancelButtonRef = useRef(null)
+  console.log(onButtonClick)
+
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog
@@ -69,35 +62,31 @@ export default function ConfirmationPopUp({
                       <Dialog.Title
                         as="h3"
                         className="text-lg font-medium leading-6 text-gray-900"
-                      >
-                        Delete user
-                      </Dialog.Title>
+                      ></Dialog.Title>
                       <div className="mt-2">
-                        <p className="text-sm text-gray-500">{description}</p>
+                        <p className="text-sm text-gray-500">
+                          Do you want to delete
+                        </p>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                  <Form method="post">
+                <div className=" px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                  <Form method="post" onClick={onButtonClick}>
                     <button
-                      id='deleteConfirm'
-                      name={DeleteName}
-                      value={JSON.stringify({
-                        action: DeleteValue,
-                        id: user.id,
-                      })}
-                      type="submit"
-                      className={`inline-flex w-full justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm ${
-                        loggedInUser === user.id &&
-                        'cursor-not-allowed text-red-300'
-                      }`}
+                     onClick={() => setOpen(false)}
+                      id="Confirm"
+                      name="delete"
+                      // value={JSON.stringify({action:'delete',id: user.id})}
+                      type="button"
+                      className={`} inline-flex w-full justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto 
+                      sm:text-sm`}
                     >
-                      {deletebutton}
+                      delete
                     </button>
                   </Form>
                   <button
-                  id='cancelConfirm'
+                    id="popupConfirm"
                     type="button"
                     className="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
                     onClick={openPopUp}

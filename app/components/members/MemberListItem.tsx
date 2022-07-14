@@ -2,30 +2,38 @@ import { Icon } from '@iconify/react'
 import type { Role, User } from '../Interface'
 
 import moment from 'moment'
-import ConfirmationPopUp from './ConfirmationPopUp'
-import { useState } from 'react'
+import ConfirmationPopUp from '../ConfirmationPopUp'
+import { useEffect, useState } from 'react'
+import { useSubmit } from '@remix-run/react'
 
 export default function MemberListItem({
   user,
   loggedInUser,
+  actionStatus
 }: {
   user: User & { role: Role }
-  loggedInUser: string | undefined
+  loggedInUser: boolean
+  actionStatus:string|undefined 
 }) {
   const [open, setOpen] = useState(false)
-
+  useEffect(()=>{
+    if(actionStatus == "Member Added Successfully..!"){
+      setOpen(false)
+    }
+  },[actionStatus])
   const openPopUp = () => {
-    setOpen(!open)
+    if (!loggedInUser) setOpen(!open)
   }
-  const description = 'do you wan to delete this user'
-  const deletebutton = 'delete'
-  const deleteMember = 'delete'
-  const DeleteName = 'deleteMember'
+  const submit = useSubmit();
+  // let value=JSON.stringify({action:'delete',id: user.id});
+  const deleteUser= ()=>{
+    submit({ deleteMember:"delete", id: user.id},{method: "post"})
+  }
   return (
     <div className="col-span-full grid grid-cols-10">
       <div className="col-span-full grid grid-cols-10 border-t-[1px] border-solid border-[#E5E7EB] px-12 py-4">
         <div className="col-span-2 ">
-          <h1 className="text-base leading-6 text-gray-700" >
+          <h1 className="text-base leading-6 text-gray-700">
             {user.firstName} {user.lastName}
           </h1>
         </div>
@@ -48,6 +56,7 @@ export default function MemberListItem({
               {!open ? (
                 <button
                   name="deleteMember"
+                  disabled={loggedInUser}
                   value={JSON.stringify({ action: 'delete', id: user.id })}
                 >
                   <Icon
@@ -55,20 +64,16 @@ export default function MemberListItem({
                     onClick={openPopUp}
                     icon="ic:outline-delete-outline"
                     className={`pointer-cursor h-6 w-6 text-red-500 ${
-                      loggedInUser === user.id &&
-                      'cursor-not-allowed text-red-300'
+                      loggedInUser && 'cursor-not-allowed text-red-300'
                     }`}
                   ></Icon>
                 </button>
               ) : (
                 <ConfirmationPopUp
                   openPopUp={openPopUp}
-                  DeleteName={DeleteName}
-                  loggedInUser={loggedInUser}
-                  user={user}
-                  description={description}
-                  deletebutton={deletebutton}
-                  DeleteValue={deleteMember}
+                  setOpen={setOpen}
+                  open={open}
+                  onButtonClick={deleteUser}
                 />
               )}
             </div>

@@ -44,9 +44,11 @@ export const loader: LoaderFunction = async ({ request }) => {
 }
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
-  const action = formData.get('addMember')
+  const action = JSON.parse(formData.get('addMember') as string)
     ? JSON.parse(formData.get('addMember') as string)
-    : JSON.parse(formData.get('deleteMember') as string)
+    : formData.get('deleteMember')
+
+    console.log(action)
 
   if (action.action === 'add') {
     const firstName = formData.get('firstName')
@@ -94,15 +96,15 @@ export const action: ActionFunction = async ({ request }) => {
    
     return addHandle
   }
-  if (action.action === 'delete') {
-    if (typeof action.id !== 'string') {
+  if (action === 'delete') {
+    if (typeof formData.get('id')!== 'string') {
       return json<ActionData>(
         { errors: { title: 'Description is required' } },
         { status: 400 }
       )
     }
     let deleteHandle= null
-    await deleteUserById(action.id)
+    await deleteUserById(formData.get('id') as string)
     .then((res) => {
       deleteHandle= json<ActionData>(
          { resp: { status: 'Deleted Successfully..!' } },
@@ -132,7 +134,7 @@ export default function Members() {
     <AdminLayout>
       <div>
         <MembersHeader roles={data.roles} actionStatus={actData?.resp?.status}/>
-        <MembersList data={data.users} loggedInUser={data.userId} />
+        <MembersList data={data.users} actionStatus={actData?.resp?.status} loggedInUser={data.userId} />
       </div>
     </AdminLayout>
   )
