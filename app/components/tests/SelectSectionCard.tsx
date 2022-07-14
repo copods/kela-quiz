@@ -1,6 +1,6 @@
 import { Icon } from "@iconify/react"
 import Moment from 'moment';
-import type { TestSection } from "../Interface";
+import type { TestSection } from "~/interface/Interface";
 
 const SelectSectionCard = ({ section, updateSection }: { section: TestSection, updateSection: (e: any) => void }) => {
 

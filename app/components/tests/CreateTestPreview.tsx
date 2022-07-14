@@ -1,5 +1,5 @@
 import { Icon } from "@iconify/react";
-import type { TestSection } from "../Interface";
+import type { TestSection } from "~/interface/Interface";
 
 const TestPreview = ({ sections, name, description, onSelectedSectionChange, selectedSections }: { sections: Array<TestSection>, name: string, description: string, selectedSections: Array<TestSection>, onSelectedSectionChange: (e: any) => void }) => {
 

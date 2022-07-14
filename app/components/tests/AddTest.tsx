@@ -1,9 +1,9 @@
-import { useFetcher, useSubmit, useTransition } from "@remix-run/react"
+import { useSubmit, useTransition } from "@remix-run/react"
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import { toast } from "react-toastify"
+import type { TestSection } from "~/interface/Interface"
 import BreadCrumb from "../BreadCrumb"
-import type { TestSection } from "../Interface"
 import SelectSections from "./CreateSelectSections"
 import TestDetails from "./CreateTestDetails"
 import TestPreview from "./CreateTestPreview"
@@ -12,8 +12,7 @@ import StepsTabComponent from "./StepsTab"
 const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
 
   const transition = useTransition();
-  const fetcher = useFetcher();
-  const submit2 = useSubmit();
+  const submit = useSubmit();
   const [sectionsCopy, setSectionsCopy] = useState(sections)
 
   useEffect(() => {
@@ -62,7 +61,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
     })
   }
 
-  const submit = () => {
+  const submitAddTest = () => {
     if (typeof name !== 'string' || name.length === 0) {
       toast.error("Enter Name to add test")
       return
@@ -83,7 +82,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
     selectedSections
       .map((section, index) => { sendData.sections.push({ sectionId: section.id, totalQuestions: section.totalQuestions as number, timeInSeconds: section.time as number, order: index + 1 }) })
 
-    submit2({ data: JSON.stringify(sendData) }, { method: "post" });
+    submit({ data: JSON.stringify(sendData) }, { method: "post" });
     // fetcher.submit({ data: JSON.stringify(sendData) }, { method: "post" });
   }
 
@@ -123,7 +122,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
               ?
               <button title="Next Tab" id="nextButton" className={`text-white text-xs px-7 h-9 rounded-lg ${(!(name && description) || currentTab == 2) ? 'bg-gray-600' : 'bg-primary'}`} onClick={() => setCurrentTab(currentTab + 1)} disabled={(!(name && description) || currentTab == 2)}>Next</button>
               :
-              <button title="Next Tab" id="submitButton" className={`text-white text-xs px-7 h-9 rounded-lg ${(currentTab == 2) ? 'bg-primary' : 'bg-gray-600'}`} onClick={() => submit()} disabled={(currentTab != 2)}>
+              <button title="Next Tab" id="submitButton" className={`text-white text-xs px-7 h-9 rounded-lg ${(currentTab == 2) ? 'bg-primary' : 'bg-gray-600'}`} onClick={() => submitAddTest()} disabled={(currentTab != 2)}>
                 {transition.state === "submitting" ? "Creating Test" : "Submit"}
               </button>
           }

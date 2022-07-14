@@ -2,7 +2,6 @@ import type { LoaderFunction } from '@remix-run/node'
 import { getUserId } from '~/session.server'
 import { redirect } from '@remix-run/node'
 
-import { useOptionalUser } from '~/utils'
 import Logo from '~/components/Logo'
 import { Link } from 'react-router-dom'
 

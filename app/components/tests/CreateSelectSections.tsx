@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import type { TestSection } from "../Interface";
+import type { TestSection } from "~/interface/Interface";
 import SortFilter from "../SortFilter";
 import SelectSectionCard from "./SelectSectionCard";
 

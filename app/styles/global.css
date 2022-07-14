@@ -17,11 +17,6 @@
   height:100% !important;
   flex: 1 1 0% !important;
 }
-.helloQuill{
-  display: flex !important;
-  flex-direction: column !important ;
-  height: 100% !important;
-}
 
 .Toastify__close-button {
   align-self: center !important;

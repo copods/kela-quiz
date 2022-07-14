@@ -1,4 +1,4 @@
-import type { User } from "../Interface";
+import type { User } from "~/interface/Interface";
 import MemberListItem from "./MemberListItem";
 
 export default function MembersList({

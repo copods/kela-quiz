@@ -1,8 +1,8 @@
 import { useSubmit } from "@remix-run/react"
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
+import type { Test } from "~/interface/Interface"
 import BreadCrumb from "../BreadCrumb"
-import type { Test } from "../Interface"
 import SortFilter from "../SortFilter"
 import TestCard from "./TestCard"
 
@@ -24,11 +24,11 @@ const TestList = ({ tests }: { tests: Array<Test> }) => {
 
   const breadCrumbData = [
     {
-      tabName: 'Test',
+      tabName: 'Tests',
       route: '/tests'
     },
     {
-      tabName: 'test',
+      tabName: 'Test',
       route: ''
     }
   ]

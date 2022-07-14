@@ -1,5 +1,5 @@
 describe('Creating tests', () => {
-  it.skip('Visiting Add Test Page', () => {
+  it('Visiting Add Test Page', () => {
     cy.visit('/sign-in')
     cy.get('#email').clear()
       .type('careers@copods.co')
@@ -15,7 +15,7 @@ describe('Creating tests', () => {
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests/add-test')
   })
 
-  it.skip('Add section to test add test', () => {
+  it('Add section to test add test', () => {
     cy.visit('/sign-in')
     cy.get('#email').clear()
       .type('careers@copods.co')
@@ -33,7 +33,7 @@ describe('Creating tests', () => {
     cy.get("button#submitButton").should("have.text", "Add").click()
   })
 
-  it.skip('Verify if add test page contains 3 tabs', () => {
+  it('Verify if add test page contains 3 tabs', () => {
     cy.visit('/sign-in')
     cy.get('#email').clear()
       .type('careers@copods.co')
@@ -56,7 +56,7 @@ describe('Creating tests', () => {
     cy.get("#2").find('.text-gray-500').should('have.text', 'Preview')
   })
 
-  it.skip('Verify if user able to navigate through tabs', () => {
+  it('Verify if user able to navigate through tabs', () => {
     cy.visit('/sign-in')
     cy.get('#email').clear()
       .type('careers@copods.co')
@@ -84,7 +84,7 @@ describe('Creating tests', () => {
     cy.get("#2").find('hr').should('have.class', 'bg-primary')
   })
 
-  it.skip("Verify if next button is disabled if user do not provide name and description", () => {
+  it("Verify if next button is disabled if user do not provide name and description", () => {
     cy.visit('/sign-in')
     cy.get('#email').clear()
       .type('careers@copods.co')
@@ -102,7 +102,7 @@ describe('Creating tests', () => {
     cy.get("button#nextButton").should('have.text', 'Next').should('have.disabled', true)
   })
 
-  it.skip("Verify if user able to navigate to Step 2 by clicking next button if user provide name and description", () => {
+  it("Verify if user able to navigate to Step 2 by clicking next button if user provide name and description", () => {
     cy.visit('/sign-in')
     cy.get('#email').clear()
       .type('careers@copods.co')
@@ -119,7 +119,7 @@ describe('Creating tests', () => {
 
     cy.get('#name').clear()
       .type(`Test - ${new Date().getTime()}`)
-    cy.get('.helloQuill').within(() => {
+    cy.get('#quillEditor').within(() => {
       cy.get('.ql-editor').type(`Test Description`)
     })
 
@@ -128,7 +128,7 @@ describe('Creating tests', () => {
     cy.get("#1").find('hr').should('have.class', 'bg-primary')
   })
 
-  it.skip("Verify on clicking back button on step 2 user navigate back to step 2", () => {
+  it("Verify on clicking back button on step 2 user navigate back to step 2", () => {
     cy.visit('/sign-in')
     cy.get('#email').clear()
       .type('careers@copods.co')
@@ -153,7 +153,7 @@ describe('Creating tests', () => {
     cy.get("#1").find('hr').should('have.class', 'bg-gray-200')
   })
 
-  it.skip("Verify if user able to add section and able to input total questions and time", () => {
+  it("Verify if user able to add section and able to input total questions and time", () => {
     cy.visit('/sign-in')
     cy.get('#email').clear()
       .type('careers@copods.co')
@@ -171,7 +171,7 @@ describe('Creating tests', () => {
 
     cy.get('#name').clear()
       .type(`Test - ${new Date().getTime()}`)
-    cy.get('.helloQuill').within(() => {
+    cy.get('#quillEditor').within(() => {
       cy.get('.ql-editor').type(`Test Description`)
     })
     cy.get("button#nextButton").should('have.text', 'Next').click()
@@ -192,7 +192,7 @@ describe('Creating tests', () => {
   })
 
 
-  it.skip("Verify if user able to remove added section and able to input total questions and time", () => {
+  it("Verify if user able to remove added section and able to input total questions and time", () => {
     cy.visit('/sign-in')
     cy.get('#email').clear()
       .type('careers@copods.co')
@@ -209,7 +209,7 @@ describe('Creating tests', () => {
 
     cy.get('#name').clear()
       .type(`Test - ${new Date().getTime()}`)
-    cy.get('.helloQuill').within(() => {
+    cy.get('#quillEditor').within(() => {
       cy.get('.ql-editor').type(`Test Description`)
     })
 
@@ -230,7 +230,7 @@ describe('Creating tests', () => {
     })
   })
 
-  it.skip("Verify if user able to move to preview tab after selecting sections", () => {
+  it("Verify if user able to move to preview tab after selecting sections", () => {
     cy.visit('/sign-in')
     cy.get('#email').clear()
       .type('careers@copods.co')
@@ -247,7 +247,7 @@ describe('Creating tests', () => {
 
     cy.get('#name').clear()
       .type(`Test - ${new Date().getTime()}`)
-    cy.get('.helloQuill').within(() => {
+    cy.get('#quillEditor').within(() => {
       cy.get('.ql-editor').type(`Test Description`)
     })
 
@@ -271,7 +271,7 @@ describe('Creating tests', () => {
     cy.get("#2").find('hr').should('have.class', 'bg-primary')
   })
 
-  it.skip("Verify if user able create the test and navigate to test list page", () => {
+  it("Verify if user able create the test and navigate to test list page", () => {
     cy.visit('/sign-in')
     cy.get('#email').clear()
       .type('careers@copods.co')
@@ -288,7 +288,7 @@ describe('Creating tests', () => {
 
     cy.get('#name').clear()
       .type(`Test - ${new Date().getTime()}`)
-    cy.get('.helloQuill').within(() => {
+    cy.get('#quillEditor').within(() => {
       cy.get('.ql-editor').type(`Test Description`)
     })
 
@@ -317,7 +317,7 @@ describe('Creating tests', () => {
 
   })
 
-  it.skip("Verify if user able create the test and navigate to test list page and see added test there", () => {
+  it("Verify if user able create the test and navigate to test list page and see added test there", () => {
     cy.visit('/sign-in')
     cy.get('#email').clear()
       .type('careers@copods.co')
@@ -335,7 +335,7 @@ describe('Creating tests', () => {
     var testName = `Test - ${new Date().getTime()}`
     cy.get('#name').clear()
       .type(testName)
-    cy.get('.helloQuill').within(() => {
+    cy.get('#quillEditor').within(() => {
       cy.get('.ql-editor').type(`Test Description`)
     })
 
@@ -385,7 +385,7 @@ describe('Creating tests', () => {
     // cy.location('pathname', { timeout: 60000 }).should('include', '/tests/add-test')
     cy.get('button#headlessui-listbox-button-1').click()
     // cy.get("#headlessui-listbox-option-13").click()
-    cy.get("ul").within(()=>{
+    cy.get("ul").within(() => {
       cy.get("li").last().click()
     })
   })

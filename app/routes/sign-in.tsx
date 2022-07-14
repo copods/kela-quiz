@@ -9,7 +9,7 @@ import { useActionData, useSearchParams } from '@remix-run/react'
 import { createUserSession, getUserId } from '~/session.server'
 import { loginVerificationResponse } from '~/models/user.server'
 import { safeRedirect, validateEmail } from '~/utils'
-import type { ActionData } from '~/components/Interface'
+import type { ActionData } from '~/interface/Interface'
 import Login from '~/components/login/Login'
 
 export const loader: LoaderFunction = async ({ request }) => {

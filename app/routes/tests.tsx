@@ -7,7 +7,7 @@ import { getAllTests } from "~/models/tests.server";
 import { json } from '@remix-run/node'
 import { useLoaderData } from "@remix-run/react";
 import { toast } from "react-toastify";
-import type { Test } from "~/components/Interface";
+import type { Test } from "~/interface/Interface";
 
 
 type LoaderData = {

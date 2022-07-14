@@ -1,5 +1,5 @@
 import { Icon } from "@iconify/react"
-import type { Question } from "../Interface";
+import type { Question } from "~/interface/Interface";
 
 const QuestionCard = ({ question, isExpanded, onAccordianToggle, index }: { question: Question, isExpanded: number, onAccordianToggle: (e: number) => void, index: number }) => {
 

@@ -1,5 +1,5 @@
 import { Icon } from "@iconify/react";
-import type { Role, User } from "../Interface";
+import type { Role, User } from "~/interface/Interface";
 import { Form } from "@remix-run/react";
 import moment from "moment";
 
