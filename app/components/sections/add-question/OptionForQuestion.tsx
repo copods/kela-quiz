@@ -4,14 +4,15 @@ import cuid from "cuid";
 import QuillEditor from "~/components/QuillEditor.client";
 import { ClientOnly } from "remix-utils";
 
-export default function OptionForQuestion({ questionTypeList, selectedTypeOfQuestion, options, setOptions, singleChoiceAnswer, setSingleChoiceAnswer, textAnswer, setTextAnswer }: { questionTypeList: QuestionType[], selectedTypeOfQuestion: string, options: Array<{ option: string, isCorrect: boolean, id: string }>, setOptions: (e: any) => any, singleChoiceAnswer: string, setSingleChoiceAnswer: (e: string) => void, textAnswer: string, setTextAnswer: (e: string) => void }) {
+export default function OptionForQuestion({ questionTypeList, selectedTypeOfQuestion, options, setOptions, singleChoiceAnswer, setSingleChoiceAnswer, textAnswer, setTextAnswer, textCorrectAnswer, setTextCorrectAnswer }: { questionTypeList: QuestionType[], selectedTypeOfQuestion: string, options: Array<{ option: string, isCorrect: boolean, id: string }>, setOptions: (e: any) => void, singleChoiceAnswer: string, setSingleChoiceAnswer: (e: string) => void, textAnswer: string, setTextAnswer: (e: string) => void, textCorrectAnswer: any, setTextCorrectAnswer: (e: any) => void }) {
   const addOptionArea = () => {
+    console.log('here')
     setOptions([...options, { option: '', isCorrect: false, id: cuid() }])
   }
 
   const deleteOption = (index: number) => {
-    if(options.length === 1)
-    return ;
+    if (options.length === 1)
+      return;
     setOptions((e: any) => {
       e.splice(index, 1)
       return [...e]
@@ -32,15 +33,24 @@ export default function OptionForQuestion({ questionTypeList, selectedTypeOfQues
     })
   }
 
-  const checkBoxToggle = (index:number) => {
+  const checkBoxToggle = (index: number) => {
     setOptions((e: any) => {
-      e[index].isCorrect=!e[index].isCorrect
+      e[index].isCorrect = !e[index].isCorrect
       return [...e]
     })
   }
 
+  const updateTextAnswer = (textAns : string,index:number) =>{
+    setTextCorrectAnswer((e: any) => {
+      e[index].answer = textAns
+      return [...e]
+    })
+    setTextAnswer(textAns)
+  }
 
   getQuestionType(selectedTypeOfQuestion)
+
+
   return (
     <div className="flex-1 flex flex-col gap-6">
       <div className='flex items-center flex-row justify-between'>
@@ -51,34 +61,46 @@ export default function OptionForQuestion({ questionTypeList, selectedTypeOfQues
         </button>
       </div>
 
-      <div className='flex-1  overflow-auto'>
-        <div className='h-full flex flex-col gap-4'>
-          {options.map((option, index) => {
-            return (
-              <div className='flex items-center gap-2.5' key={option.id}>
-                {getQuestionType(selectedTypeOfQuestion) === 'MULTIPLE_CHOICE'
-                  ? <input id="checkBox" type="checkbox" value={option.id} onChange={() => { checkBoxToggle(index) }} checked={option.isCorrect} />
-                  : getQuestionType(selectedTypeOfQuestion) === 'SINGLE_CHOICE' && <input id="radioButton" type="radio" name="radioChoice" value={option.id} onChange={(e) => setSingleChoiceAnswer(e.target.value)} />}
-                <div className='flex-1' id="optionEditor">
-                  {
-                    getQuestionType(selectedTypeOfQuestion) === 'MULTIPLE_CHOICE' || getQuestionType(selectedTypeOfQuestion) === 'SINGLE_CHOICE'
-                      ?
-                      <ClientOnly fallback={<div></div>}>
-                        {() => <QuillEditor quillPlaceholder={"option"} fullAccess={false} onTextChange={(e) => { updateOption(e, index) }} />}
-                      </ClientOnly>
-                      :
-                      <textarea className='h-20 p-4 rounded-lg bg-white border border-gray-300 w-full' value={option.option} onChange={(e) => { updateOption(e.target.value,index) }}></textarea>
+      <div className='h-full flex flex-col gap-4 flex-1  overflow-auto'>
+        {(getQuestionType(selectedTypeOfQuestion) === 'MULTIPLE_CHOICE' || getQuestionType(selectedTypeOfQuestion) === 'SINGLE_CHOICE') && options.map((option, index) => {
+          return (
+            <div className='flex items-center gap-2.5' key={option.id}>
+              {getQuestionType(selectedTypeOfQuestion) === 'MULTIPLE_CHOICE'
+                ? <input id="checkBox" type="checkbox" value={option.id} onChange={() => { checkBoxToggle(index) }} checked={option.isCorrect} />
+                : getQuestionType(selectedTypeOfQuestion) === 'SINGLE_CHOICE' && <input id="radioButton" type="radio" name="radioChoice" value={option.id} onChange={(e) => setSingleChoiceAnswer(e.target.value)} />}
+              <div className='flex-1' id="optionEditor">
+                {
 
-                  }
-                </div>
-                <span onClick={() => deleteOption(index)}><Icon
-                  icon="ic:outline-delete-outline"
-                  className={`h-6 w-6 ${index} ${options.length < 2 ?'cursor-not-allowed text-red-400':'cursor-pointer text-red-600'}`}
-                ></Icon></span>
+                  <ClientOnly fallback={<div></div>}>
+                    {() => <QuillEditor quillPlaceholder={"option"} fullAccess={false} onTextChange={(e) => { updateOption(e, index) }} />}
+                  </ClientOnly>
+                }
               </div>
-            )
-          })}
-        </div>
+              <Icon onClick={() => deleteOption(index)} tabIndex={0}
+                icon="ic:outline-delete-outline"
+                className={`h-6 w-6 ${index} ${options.length < 2 ? 'cursor-not-allowed text-red-400' : 'cursor-pointer text-red-600'}`}
+              ></Icon>
+            </div>
+          )
+        })}
+
+        {getQuestionType(selectedTypeOfQuestion) === 'TEXT' && textCorrectAnswer.map((option: {id:string, answer:string}, index: number) => {
+          return (
+            <div className='flex items-center gap-2.5' key={option.id}>
+              <div className='flex-1' id="optionEditor">
+
+                {/* <input className='h-20 p-4 rounded-lg bg-white border border-gray-300 w-full' value={textAnswer} onChange={(e) => { setTextAnswer( e.target.value ) }}></input> */}
+                <input className='h-20 p-4 rounded-lg bg-white border border-gray-300 w-full' value={option.answer} onChange={(e) => { updateTextAnswer( e.target.value, index ) }}></input>
+                {/* {setTextCorrectAnswer([...textCorrectAnswer,{id:option.id , answer:textAnswer}])} */}
+
+              </div>
+              <Icon onClick={() => deleteOption(index)} tabIndex={0}
+                icon="ic:outline-delete-outline"
+                className={`h-6 w-6 ${index} ${options.length < 2 ? 'cursor-not-allowed text-red-400' : 'cursor-pointer text-red-600'}`}
+              ></Icon>
+            </div>
+          )
+        })}
       </div>
     </div>
   )

@@ -9,18 +9,33 @@ import { Link, useFetcher, useFetchers, useSubmit, useTransition } from '@remix-
 import { toast } from 'react-toastify';
 
 
-const AddQuestionInSection = ({ sectionDetails, questionTypeList, error }: { sectionDetails: ((Section & { questions: Question[]; }) | null), questionTypeList: QuestionType[], error:string }) => {
+const AddQuestionInSection = ({ sectionDetails, questionTypeList, error }: { sectionDetails: ((Section & { questions: Question[]; }) | null), questionTypeList: QuestionType[], error: string }) => {
 
-  const optionStruct = {
-    option: "",
-    isCorrect: false,
-    id: cuid()
-  }
   const [selectedTypeOfQuestion, setSelectedTypeOfQuestion] = useState(questionTypeList[0].id);
   const [question, setQuestion] = useState('');
   const [singleChoiceAnswer, setSingleChoiceAnswer] = useState('');
   const [textAnswer, setTextAnswer] = useState("");
-  const [options, setOptions] = useState([optionStruct]);
+  const [options, setOptions] = useState([{
+    option: "",
+    isCorrect: false,
+    id: cuid()
+  }, {
+    option: "",
+    isCorrect: false,
+    id: cuid()
+  }, {
+    option: "",
+    isCorrect: false,
+    id: cuid()
+  }, {
+    option: "",
+    isCorrect: false,
+    id: cuid()
+  }]);
+  const [textCorrectAnswer, setTextCorrectAnswer] = useState([{
+    id: cuid(),
+    answer: ""
+  }]);
 
   const transition = useTransition()
 
@@ -49,46 +64,53 @@ const AddQuestionInSection = ({ sectionDetails, questionTypeList, error }: { sec
   }
 
   const submit = useSubmit();
-  const fetcher = useFetcher();
-  const saveQuestion = () => {
+  const saveQuestion = (addMoreQuestion: boolean) => {
 
     if (question.length === 0) {
       toast.error("Enter the Question");
       return;
     }
 
-    for (let option of options) {
-      if (option.option.length === 0) {
-        toast.error("Enter all the Options")
+    if (getQuestionType(selectedTypeOfQuestion) === 'MULTIPLE_CHOICE' || getQuestionType(selectedTypeOfQuestion) === 'SINGLE_CHOICE') {
+
+      for (let option of options) {
+        if (option.option.length === 0) {
+          toast.error("Enter all the Options")
+          return;
+        }
+      }
+
+      let flag = 0;
+      for (let option of options) {
+        if (option.isCorrect) {
+          flag = 1;
+        }
+      }
+      if (flag == 0 && getQuestionType(selectedTypeOfQuestion) === 'MULTIPLE_CHOICE') {
+        toast.error("Select the Option");
+        return;
+      }
+      if (flag === 0 && getQuestionType(selectedTypeOfQuestion) === 'SINGLE_CHOICE' && !singleChoiceAnswer) {
+        toast.error('Select the Option');
         return;
       }
     }
-
-    let flag=0;
-    for(let option of options) {
-      if(option.isCorrect){
-        flag=1;
-      }
+    if (getQuestionType(selectedTypeOfQuestion) === 'TEXT' && textAnswer.length == 0) {
+      toast.error('Enter the Text');
+      return;
     }
-    if(flag==0 && getQuestionType(selectedTypeOfQuestion)==='MULTIPLE_CHOICE'){
-      toast.error("Select the Option");
-      return ;
-    }
-    if(flag===0 && getQuestionType(selectedTypeOfQuestion) === 'SINGLE_CHOICE' && !singleChoiceAnswer){
-      toast.error('Select the Option');
-      return ;
-    } 
 
-    let testQuestion: { question: string, options: Array<{ id: string, option: string }>, correctAnswer: Array<{ id: string, answer: string, order: number }>, questionTypeId: string, sectionId: string } = {
+    let testQuestion: { question: string, options: Array<{ id: string, option: string }>, correctAnswer: Array<{ id: string, answer: string }>, questionTypeId: string, sectionId: string, addMoreQuestion: boolean } = {
       question,
       options: [],
       correctAnswer: [],
       questionTypeId: selectedTypeOfQuestion,
       sectionId: sectionDetails?.id as string,
+      addMoreQuestion,
     }
     if (getQuestionType(selectedTypeOfQuestion) === "MULTIPLE_CHOICE") {
       console.log(options)
-      options.forEach((option, index) => {
+      options.forEach((option) => {
         console.log("Aos:", option)
         var optionForQuestion = {
           id: option.id,
@@ -98,7 +120,7 @@ const AddQuestionInSection = ({ sectionDetails, questionTypeList, error }: { sec
         testQuestion.options.push(optionForQuestion);
       })
     } else if (getQuestionType(selectedTypeOfQuestion) === "SINGLE_CHOICE") {
-      options.forEach((option: any, index: number) => {
+      options.forEach((option: {option: string, isCorrect:boolean, id: string}) => {
         var optionForQuestion = {
           id: option.id,
           option: option.option,
@@ -108,39 +130,38 @@ const AddQuestionInSection = ({ sectionDetails, questionTypeList, error }: { sec
 
       })
     } else if (getQuestionType(selectedTypeOfQuestion) === "TEXT") {
-      options.forEach((option, index) => {
+      console.log(textCorrectAnswer, "TextCorrectAnswer")
+      textCorrectAnswer.forEach((correctAnswer, index) => {
         var optionForQuestion = {
-          id: option.id,
-          answer: option.option,
-          order: index + 1
+          id: correctAnswer.id,
+          answer: correctAnswer.answer,
+          order: index
         }
         testQuestion.correctAnswer.push(optionForQuestion);
       })
     }
-    console.log(testQuestion)
-    fetcher.submit({ quesData: JSON.stringify(testQuestion) }, { method: "post" });
-    //toast.success("Saved Successful from component")
-    // submit({ quesData: JSON.stringify(testQuestion) }, { method: "post" });
-
+    submit({ quesData: JSON.stringify(testQuestion) }, { method: "post" });
   }
   return (
     <div className='h-full flex flex-col gap-6'>
-        <h1 title={sectionDetails?.name} className="text-3xl leading-9 font-bold text-gray-900">{sectionDetails?.name} - Add Question</h1>
-        <BreadCrumb data={breadCrumbArray} />
+      <h1 title={sectionDetails?.name} className="text-3xl leading-9 font-bold text-gray-900">{sectionDetails?.name} - Add Question</h1>
+      <BreadCrumb data={breadCrumbArray} />
 
       <div className="flex-1 flex flex-row gap-6 h-40">
 
         <QuestionEditor question={question} setQuestion={setQuestion} questionTypeList={questionTypeList} selectedTypeOfQuestion={selectedTypeOfQuestion} setSelectedTypeOfQuestion={setSelectedTypeOfQuestion} />
 
-        <OptionForQuestion textAnswer={textAnswer} setTextAnswer={setTextAnswer} singleChoiceAnswer={singleChoiceAnswer} setSingleChoiceAnswer={setSingleChoiceAnswer} options={options} setOptions={setOptions} selectedTypeOfQuestion={selectedTypeOfQuestion} questionTypeList={questionTypeList} />
+        <OptionForQuestion textCorrectAnswer={textCorrectAnswer} setTextCorrectAnswer={setTextCorrectAnswer} textAnswer={textAnswer} setTextAnswer={setTextAnswer} singleChoiceAnswer={singleChoiceAnswer} setSingleChoiceAnswer={setSingleChoiceAnswer} options={options} setOptions={setOptions} selectedTypeOfQuestion={selectedTypeOfQuestion} questionTypeList={questionTypeList} />
 
       </div>
       <div className='flex flex-end items-center justify justify-between'>
-        <Link to="/sections" className='bg-gray-600 rounded-lg h-9 text-xs text-white py-2 px-5' id='cancel'>Cancel
-        </Link>
-        <button id="save" disabled={transition.state === 'submitting'} className={`bg-primary text-xs rounded-lg h-9 text-white flex items-center px-5 gap-1 ${transition.state === 'submitting' && 'disabled:opacity-75'}`} onClick={saveQuestion}><Icon icon="ic:round-save" className='mr-1'></Icon>{transition.state === "submitting"
+        <button id="saveAndContinue" disabled={transition.state === 'submitting'} className={`bg-primary text-xs rounded-lg h-9 text-white flex items-center px-5 gap-1 ${transition.state === 'submitting' && 'disabled:opacity-75'}`} onClick={() => saveQuestion(false)}><Icon icon="ic:round-save" className='mr-1'></Icon>{transition.state === "submitting"
           ? "Saving..."
-          : "Save"}</button>
+          : "Save & Continue"}</button>
+
+        <button id="saveAndAddMore" disabled={transition.state === 'submitting'} className={`bg-primary text-xs rounded-lg h-9 text-white flex items-center px-5 gap-1 ${transition.state === 'submitting' && 'disabled:opacity-75'}`} onClick={() => saveQuestion(true)}><Icon icon="ic:round-save" className='mr-1'></Icon>{transition.state === "submitting"
+          ? "Saving..."
+          : "Save & Add More"}</button>
       </div>
     </div>
   )

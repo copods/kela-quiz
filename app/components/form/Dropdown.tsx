@@ -15,6 +15,16 @@ function DropdownField({ data, displayKey, valueKey, value, setValue }: { data: 
     }
   }
 
+  const getValue = (val: string) => {
+    for (let d of data) {
+      if (d[valueKey] === val) {
+        console.log(d[valueKey])
+        return d[valueKey]
+      }
+    }
+  }
+console.log("data" , data)
+
   return (
 
     <Listbox value={value} onChange={setValue}>
@@ -22,7 +32,7 @@ function DropdownField({ data, displayKey, valueKey, value, setValue }: { data: 
         <>
           <div className="relative w-44" id="dropdown">
             <Listbox.Button className="h-11 relative w-full bg-white border border-gray-200 rounded-md shadow-sm px-3 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-              <span className="flex items-center">
+              <span className="flex items-center" id={getValue(value)}>
                 <span className='block truncate'>{getName(value)}</span>
               </span>
               <span className="ml-3 absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
