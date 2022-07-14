@@ -4,17 +4,14 @@ import type { Role } from '../Interface'
 import { Form, useTransition } from '@remix-run/react'
 import { Fragment } from 'react'
 
-
 export default function AddMemberModal({
   roles,
   open,
   setOpen,
-
 }: {
   roles: Role[]
   open: boolean
   setOpen: (e: boolean) => void
- 
 }) {
   const transition = useTransition()
 
@@ -133,9 +130,10 @@ export default function AddMemberModal({
                       name="addMember"
                       value={JSON.stringify({ action: 'add' })}
                       className={`h-9 rounded-md bg-primary px-4 text-sm text-[#F0FDF4] ${
-                        transition.state === 'submitting' ? 'disabled:opacity-75' : ''
+                        transition.state === 'submitting'
+                          ? 'disabled:opacity-75'
+                          : ''
                       }`}
-                      
                       // onClick={() => {
                       //   setOpen(false)
                       // }}
