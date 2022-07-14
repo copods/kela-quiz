@@ -53,7 +53,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
   const [description, onDescriptionChange] = useState('')
   const [selectedSections, onSelectedSectionChange] = useState<TestSection[]>([])
 
-  const updateSection = (data: any, i: number) => {
+  const updateSection = (data: Array<TestSection>, i: number) => {
     setSectionsCopy(sec => {
       sec[i] = { ...sec[i], ...data }
       onSelectedSectionChange(sec.filter(s => { return s.isSelected }))
@@ -104,7 +104,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
           :
           currentTab === tabs[1].id ? <SelectSections sections={sectionsCopy} setSections={(e, i) => { updateSection(e, i) }} updateSectionsList={setSectionsCopy} />
             :
-            currentTab === tabs[2].id ? <TestPreview selectedSections={selectedSections} onSelectedSectionChange={onSelectedSectionChange} sections={sectionsCopy} name={name} description={description} />
+            currentTab === tabs[2].id ? <TestPreview selectedSections={selectedSections} onSelectedSectionChange={onSelectedSectionChange} name={name} description={description} />
               : ''
       }
 

@@ -1,14 +1,14 @@
 import { Icon } from "@iconify/react";
 import type { TestSection } from "~/interface/Interface";
 
-const TestPreview = ({ sections, name, description, onSelectedSectionChange, selectedSections }: { sections: Array<TestSection>, name: string, description: string, selectedSections: Array<TestSection>, onSelectedSectionChange: (e: any) => void }) => {
+const TestPreview = ({ name, description, onSelectedSectionChange, selectedSections }: { name: string, description: string, selectedSections: Array<TestSection>, onSelectedSectionChange: (e: any) => void }) => {
 
   const moveSection = (index: number, action: string) => {
     if (action == 'up') {
       if (index == 0) {
         return
       }
-      onSelectedSectionChange((section: any) => {
+      onSelectedSectionChange((section: Array<TestSection>) => {
         let temp = section[index]
         section[index] = section[index - 1]
         section[index - 1] = temp
@@ -18,7 +18,7 @@ const TestPreview = ({ sections, name, description, onSelectedSectionChange, sel
       if (index == selectedSections.length - 1) {
         return
       }
-      onSelectedSectionChange((section: any) => {
+      onSelectedSectionChange((section: Array<TestSection>) => {
         let temp = section[index]
         section[index] = section[index + 1]
         section[index + 1] = temp

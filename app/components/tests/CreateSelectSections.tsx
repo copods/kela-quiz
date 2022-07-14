@@ -3,7 +3,7 @@ import type { TestSection } from "~/interface/Interface";
 import SortFilter from "../SortFilter";
 import SelectSectionCard from "./SelectSectionCard";
 
-const SelectSections = ({ sections, setSections, updateSectionsList }: { sections: Array<TestSection>, setSections: (e: any, i: number) => void, updateSectionsList: (e: any) => void }) => {
+const SelectSections = ({ sections, setSections, updateSectionsList }: { sections: Array<TestSection>, setSections: (e: Array<TestSection>, i: number) => void, updateSectionsList: (e: any) => void }) => {
 
   const [sortDirection, onSortDirectionChange] = useState('asc')
   const [sortBy, onSortChange] = useState('name')
