@@ -5,7 +5,7 @@ import InviteCandidatePopup from "./InviteCandidatePopup"
 
 const TestCard = ({ id, name, createdBy, createdAt, description }: { id: string, name: string, createdBy: string, createdAt: Date, description: string }) => {
 
-  const [candidatePopupOpen, onPopupToggle] = useState(true)
+  const [candidatePopupOpen, onPopupToggle] = useState(false)
 
   return (
     <div className="rounded-lg p-4 bg-white border border-gray-200">

@@ -32,23 +32,28 @@ export const loader: LoaderFunction = async ({ request }) => {
     }).catch(err => {
       status = err
     })
+  console.log("============================================")
+  await createCandidate({
+    emails: ['anurag@copods.co'],
+    createdById: 'cl5hx6ju20001k0k2c1xctjti',
+    testId: 'cl5hxbjsj0086mdk26t7bdxd5'
+  })
   return json<LoaderData>({ tests, status })
 }
 
 
 export const action: ActionFunction = async ({ request }) => {
   const createdById = await requireUserId(request)
-
   const formData = await request.formData()
+  const testId = formData.get("inviteCandidates") as string
+  formData.delete('inviteCandidates')
+
   let emails: any = []
   await formData.forEach(fd => {
     console.log(fd);
     emails.push(fd)
   })
-  console.log(emails)
-  const data = formData.get("inviteCandidates")
-  const testId = JSON.parse(data as string).testId
-  // await createCandidate({ emails, createdById, testId })
+  await createCandidate({ emails, createdById, testId })
 
   return null
 }

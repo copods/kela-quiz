@@ -66,7 +66,7 @@ const InviteCandidatePopup = ({ open, setOpen, testName, testId }: { open: boole
                   <button
                     type="submit"
                     name="inviteCandidates"
-                    value={JSON.stringify({ testId })}
+                    value={testId}
                     id="submitButton"
                     className="px-4 h-9 rounded-md text-sm text-[#F0FDF4] bg-primary"
                     onClick={() => setOpen(false)}
