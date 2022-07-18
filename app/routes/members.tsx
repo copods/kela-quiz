@@ -15,7 +15,6 @@ import MembersHeader from '~/components/members/MembersHeader'
 import { toast } from 'react-toastify'
 import { useEffect } from 'react'
 
-
 export type ActionData = {
   errors?: {
     firstName?: string
@@ -47,9 +46,6 @@ export const action: ActionFunction = async ({ request }) => {
   const action = JSON.parse(formData.get('addMember') as string)
     ? JSON.parse(formData.get('addMember') as string)
     : formData.get('deleteMember')
-
-    console.log(action)
-
   if (action.action === 'add') {
     const firstName = formData.get('firstName')
     const lastName = formData.get('lastName')
@@ -80,61 +76,73 @@ export const action: ActionFunction = async ({ request }) => {
         { status: 400 }
       )
     }
-    let addHandle= null
+    let addHandle = null
 
     await createNewUser({ firstName, lastName, email, roleId })
-    
       .then((res) => {
-       addHandle= json<ActionData>(
+        addHandle = json<ActionData>(
           { resp: { status: 'Member Added Successfully..!' } },
           { status: 200 }
         )
       })
       .catch((err) => {
-       addHandle= json<ActionData>({ errors: { status: err } }, { status: 400 })
+        addHandle = json<ActionData>(
+          { errors: { status: err } },
+          { status: 400 }
+        )
       })
-   
+
     return addHandle
   }
   if (action === 'delete') {
-    if (typeof formData.get('id')!== 'string') {
+    if (typeof formData.get('id') !== 'string') {
       return json<ActionData>(
         { errors: { title: 'Description is required' } },
         { status: 400 }
       )
     }
-    let deleteHandle= null
+    let deleteHandle = null
     await deleteUserById(formData.get('id') as string)
-    .then((res) => {
-      deleteHandle= json<ActionData>(
-         { resp: { status: 'Deleted Successfully..!' } },
-         { status: 200 }
-       )
-     })
-     .catch((err) => {
-      deleteHandle= json<ActionData>({ errors: { status: err } }, { status: 400 })
-     })
-  
-   return deleteHandle
+      .then((res) => {
+        deleteHandle = json<ActionData>(
+          { resp: { status: 'Deleted Successfully..!' } },
+          { status: 200 }
+        )
+      })
+      .catch((err) => {
+        deleteHandle = json<ActionData>(
+          { errors: { status: err } },
+          { status: 400 }
+        )
+      })
+
+    return deleteHandle
   }
 }
 export default function Members() {
   const data = useLoaderData() as LoaderData
   const actData = useActionData() as ActionData
- useEffect(()=>{
-  if (actData) {
+  useEffect(() => {
+    if (actData) {
       if (actData.resp?.status) {
         toast.success(actData.resp?.status)
       } else if (actData.errors?.status) {
         toast.error('Something went wrong...!')
       }
     }
- },[actData])
+  }, [actData])
   return (
     <AdminLayout>
       <div>
-        <MembersHeader roles={data.roles} actionStatus={actData?.resp?.status}/>
-        <MembersList data={data.users} actionStatus={actData?.resp?.status} loggedInUser={data.userId} />
+        <MembersHeader
+          roles={data.roles}
+          actionStatus={actData?.resp?.status}
+        />
+        <MembersList
+          data={data.users}
+          actionStatus={actData?.resp?.status}
+          loggedInUser={data.userId}
+        />
       </div>
     </AdminLayout>
   )

@@ -119,6 +119,7 @@ export default function AddMemberModal({
 
                   <div className="flex justify-end gap-2">
                     <button
+                      id="cancelAddButton"
                       type="button"
                       className="h-9 rounded-md px-4 text-sm text-gray-500"
                       onClick={() => setOpen(false)}
@@ -126,17 +127,15 @@ export default function AddMemberModal({
                       Cancel
                     </button>
                     <button
+                      id="addbutton"
                       type="submit"
                       name="addMember"
                       value={JSON.stringify({ action: 'add' })}
-                      className={`h-9 rounded-md bg-primary px-4 text-sm text-[#F0FDF4] ${
+                      className={`h-9 rounded-md bg-primary px-4 text-sm text-[#F0FDF4]${
                         transition.state === 'submitting'
                           ? 'disabled:opacity-75'
                           : ''
                       }`}
-                      // onClick={() => {
-                      //   setOpen(false)
-                      // }}
                       disabled={transition.state === 'submitting'}
                     >
                       {transition.state === 'submitting' ? 'Adding...' : 'Add'}

@@ -1,14 +1,14 @@
-import type { User } from "../Interface";
-import MemberListItem from "./MemberListItem";
+import type { User } from '../Interface'
+import MemberListItem from './MemberListItem'
 
 export default function MembersList({
   data,
   loggedInUser,
-  actionStatus
+  actionStatus,
 }: {
-  data: User[];
-  loggedInUser: string | undefined;
-  actionStatus:string|undefined 
+  data: User[]
+  loggedInUser: string | undefined
+  actionStatus: string | undefined
 }) {
   return (
     <div className="grid grid-cols-12  bg-[#F9FAFB] ">
@@ -23,11 +23,15 @@ export default function MembersList({
           <h1 className="col-span-1 text-sm leading-4 text-gray-500">Action</h1>
         </div>
         {data.map((user: any) => (
-          <div key={user.id} className="col-span-10 grid">
-            <MemberListItem user={user} loggedInUser={loggedInUser==user.id} actionStatus={actionStatus} />
+          <div key={user.id} className="col-span-10 grid" id="MemberListItem">
+            <MemberListItem
+              user={user}
+              loggedInUser={loggedInUser == user.id}
+              actionStatus={actionStatus}
+            />
           </div>
         ))}
       </div>
     </div>
-  );
+  )
 }

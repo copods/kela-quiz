@@ -1,21 +1,18 @@
-import { Fragment, useRef, useState } from 'react'
+import { Fragment, useRef } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import { Form } from '@remix-run/react'
 
 export default function ConfirmationPopUp({
-  openPopUp,
   setOpen,
   open,
-  onButtonClick,
+  onDeleteClick,
 }: {
-  openPopUp: () => void
   open: boolean
   setOpen: (e: boolean) => void
-  onButtonClick: () => void
+  onDeleteClick: () => void
 }) {
   const cancelButtonRef = useRef(null)
-  console.log(onButtonClick)
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -72,24 +69,22 @@ export default function ConfirmationPopUp({
                   </div>
                 </div>
                 <div className=" px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                  <Form method="post" onClick={onButtonClick}>
+                  <Form method="post" onClick={onDeleteClick}>
                     <button
-                     onClick={() => setOpen(false)}
-                      id="Confirm"
+                      id="ConfirmDelete"
                       name="delete"
-                      // value={JSON.stringify({action:'delete',id: user.id})}
                       type="button"
                       className={`} inline-flex w-full justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto 
                       sm:text-sm`}
                     >
-                      delete
+                      Delete
                     </button>
                   </Form>
                   <button
-                    id="popupConfirm"
+                    id="cancelDeletePopUp"
                     type="button"
                     className="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-                    onClick={openPopUp}
+                    onClick={() => setOpen(false)}
                     ref={cancelButtonRef}
                   >
                     Cancel
