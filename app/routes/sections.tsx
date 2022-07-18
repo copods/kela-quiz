@@ -34,6 +34,7 @@ export type LoaderData = {
 }
 
 export const loader: LoaderFunction = async ({ request, params }) => {
+<<<<<<< HEAD
   const url = new URL(request.url).searchParams.entries()
   const obj = Object.fromEntries(url).filter
   var sections: Array<Section> = []
@@ -46,6 +47,9 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     .catch((err) => {
       status = err
     })
+=======
+  const sections = await getAllSections({})
+>>>>>>> 9b7989585817bf313c6cc747dc141f16e1b09b44
   const userId = await getUserId(request)
   if (!userId) return redirect('/sign-in')
   const selectedSectionId = params.sectionId

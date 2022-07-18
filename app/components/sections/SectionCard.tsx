@@ -13,7 +13,7 @@ const SectionCard = ({
   createdAt: string
 }) => {
   return (
-    <div className="flex flex-col gap-2 rounded-2xl p-6">
+    <div className="flex flex-col gap-2 rounded-lg p-6">
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-semibold text-gray-700">{name}</h2>
         <div className="flex">

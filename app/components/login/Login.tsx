@@ -3,7 +3,7 @@ import { Form } from '@remix-run/react'
 import Button from '~/components/form/Button'
 import InputField from '~/components/form/InputField'
 import Logo from '~/components/Logo'
-import type { LoginProps } from '~/components/Interface'
+import type { LoginProps } from '~/interface/Interface'
 
 function Login({ actionData, redirectTo }: LoginProps) {
   const [email, setEmail] = useState('careers@copods.co')
