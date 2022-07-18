@@ -41,7 +41,7 @@ const AddSection = ({ open, setOpen }: { open: boolean, setOpen: (e: boolean) =>
                   <input type="text" name="name" className="w-full h-11 rounded-lg border border-gray-200 text-base px-3" placeholder="Enter Section Name" />
                 </div>
                 <div className="pb-6">
-                  <input type="text" name="description" className="w-full h-11 rounded-lg border border-gray-200 text-base px-3" placeholder="Enter Section Description" />
+                  <textarea name="description" className="w-full h-11 rounded-lg border border-gray-200 text-base px-3" placeholder="Enter Section Description" />
                 </div>
 
                 <div className="flex gap-2 justify-end">
@@ -54,6 +54,7 @@ const AddSection = ({ open, setOpen }: { open: boolean, setOpen: (e: boolean) =>
                   </button>
                   <button
                     type="submit"
+                    id="submitButton"
                     className="px-4 h-9 rounded-md text-sm text-[#F0FDF4] bg-primary"
                     onClick={() => setOpen(false)}
                   >

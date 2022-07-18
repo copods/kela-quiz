@@ -13,10 +13,14 @@
   color: #353988 !important;
 }
 
+.ql-container{
+  height:100% !important;
+  flex: 1 1 0% !important;
+}
+
 .Toastify__close-button {
   align-self: center !important;
 }
-
 /* section active inactive state */
 .activeSection > div {
    /* pl-[17px] border-transparent shadow-md border-l-8 border-primary */
@@ -31,3 +35,5 @@
   background-color: #F3F4F6;
 }
 /* end section active inactive state */
+
+
