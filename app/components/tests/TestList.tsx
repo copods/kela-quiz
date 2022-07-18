@@ -2,7 +2,7 @@ import { useSubmit } from "@remix-run/react"
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import BreadCrumb from "../BreadCrumb"
-import type { Test } from "../Interface"
+import type { Test } from '../../interface/Interface'
 import SortFilter from "../SortFilter"
 import TestCard from "./TestCard"
 

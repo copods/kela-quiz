@@ -20,7 +20,7 @@ const TestCard = ({ id, name, createdBy, createdAt, description }: { id: string,
           {moment(createdAt).format('DD MMM YY')}
         </span>
       </div>
-      <div className="text-xs text-gray-500 flex pb-2" dangerouslySetInnerHTML={{ __html: description }}>
+      <div className="ql-editor" dangerouslySetInnerHTML={{ __html: description }}>
       </div>
       <div className="text-xs text-primary flex flex-row gap-4" >
         <span className="cursor-pointer">First Button</span>

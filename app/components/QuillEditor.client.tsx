@@ -16,7 +16,7 @@ export default function QuillEditor({ onTextChange }: { onTextChange: (e: string
   }, [quill, onTextChange])
 
   return (
-    <div className='w-full h-56 helloQuill'>
+    <div className='w-full flex flex-col h-full' id='quillEditor'>
       <div ref={quillRef} />
     </div>
   )
