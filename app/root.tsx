@@ -60,7 +60,7 @@ export default function App() {
         <LiveReload />
         <ToastContainer
           position="top-center"
-          autoClose={500000}
+          autoClose={5000}
           hideProgressBar={true}
           newestOnTop={false}
           closeOnClick

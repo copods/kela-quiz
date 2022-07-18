@@ -1,4 +1,4 @@
-import type { User } from '../Interface'
+import type { User, Role } from '~/interface/Interface'
 import MemberListItem from './MemberListItem'
 
 export default function MembersList({
@@ -22,8 +22,8 @@ export default function MembersList({
           </h1>
           <h1 className="col-span-1 text-sm leading-4 text-gray-500">Action</h1>
         </div>
-        {data.map((user: any) => (
-          <div key={user.id} className="col-span-10 grid" id="MemberListItem">
+        {data.map((user: User & { role?: Role }) => (
+          <div key={user.id} className="col-span-10 grid" id="memberRow">
             <MemberListItem
               user={user}
               loggedInUser={loggedInUser == user.id}

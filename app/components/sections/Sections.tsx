@@ -1,7 +1,7 @@
 import { Icon } from "@iconify/react"
 import { useState } from "react"
 import SectionCard from "./SectionCard";
-import type { Section } from "../Interface";
+import type { Section } from "~/interface/Interface";
 import { NavLink } from "@remix-run/react";
 
 const Sections = ({ data }: { data: { sections: Array<Section> } }) => {

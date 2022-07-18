@@ -1,26 +1,35 @@
-import type { Role } from "../Interface"
-import { useEffect, useState } from "react"
-import AddMemberModal from "./AddMemberModal"
+import type { Role } from '~/interface/Interface'
+import { useEffect, useState } from 'react'
+import AddMemberModal from './AddMemberModal'
 
-
-export default function MembersHeader({ roles,actionStatus }: { roles: Role[], actionStatus: string|undefined }) {
+export default function MembersHeader({
+  roles,
+  actionStatus,
+}: {
+  roles: Role[]
+  actionStatus: string | undefined
+}) {
   const [open, setOpen] = useState(false)
-  useEffect(()=>{
-    if(actionStatus == "Member Added Successfully..!"){
+  useEffect(() => {
+    if (actionStatus == 'Member Added Successfully..!') {
       setOpen(false)
     }
-  },[actionStatus])
+  }, [actionStatus])
   return (
     <div className="grid grid-cols-12 pb-12">
       <div className="col-span-full grid">
         <div className="flex items-center justify-between">
           <h1 className="text-3xl font-bold leading-9">Members</h1>
-          <button id="addMember" className="rounded-lg bg-blue-900 px-4  h-9  text-xs font-medium leading-4 text-[#F0FDF4]" onClick={() => setOpen(!open)}>
+          <button
+            id="addMember"
+            className="h-9 rounded-lg bg-blue-900  px-4  text-xs font-medium leading-4 text-[#F0FDF4]"
+            onClick={() => setOpen(!open)}
+          >
             + Add Member
           </button>
         </div>
       </div>
-      <AddMemberModal roles={roles} open={open} setOpen={setOpen}  />
+      <AddMemberModal roles={roles} open={open} setOpen={setOpen} />
     </div>
   )
 }

@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react'
-import type { Role, User } from '../Interface'
+import type { Role, User } from '~/interface/Interface'
 
 import moment from 'moment'
 import DeletePopUp from '../DeletePopUp'
@@ -11,7 +11,7 @@ export default function MemberListItem({
   loggedInUser,
   actionStatus,
 }: {
-  user: User & { role: Role }
+  user: User & { role?: Role }
   loggedInUser: boolean
   actionStatus: string | undefined
 }) {
@@ -21,7 +21,9 @@ export default function MemberListItem({
       setOpen(false)
     }
   }, [actionStatus])
-
+  const openPopUp = () => {
+    if (!loggedInUser) setOpen(!open)
+  }
   const submit = useSubmit()
   const deleteUser = () => {
     submit({ deleteMember: 'delete', id: user.id }, { method: 'post' })
@@ -44,7 +46,7 @@ export default function MemberListItem({
         </div>
         <div className="col-span-2 overflow-ellipsis break-all">
           <span className=" text-base leading-6 text-gray-700">
-            {user.role.name}
+            {user?.role?.name}
           </span>
         </div>
         <div className="col-span-2 overflow-ellipsis break-all">
@@ -60,7 +62,7 @@ export default function MemberListItem({
             value={JSON.stringify({ action: 'delete', id: user.id })}
           >
             <Icon
-              onClick={() => setOpen(!open)}
+              onClick={openPopUp}
               icon="ic:outline-delete-outline"
               className={`pointer-cursor h-6 w-6 text-red-500 ${
                 loggedInUser && 'cursor-not-allowed text-red-300'
@@ -68,7 +70,6 @@ export default function MemberListItem({
             ></Icon>
           </button>
         </div>
-
         <DeletePopUp setOpen={setOpen} open={open} onDeleteClick={deleteUser} />
       </div>
     </div>
