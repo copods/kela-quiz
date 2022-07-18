@@ -1,4 +1,4 @@
-import type { Role } from '../Interface'
+import type { Role } from '~/interface/Interface'
 import { useState } from 'react'
 import AddMemberModal from './AddMemberModal'
 

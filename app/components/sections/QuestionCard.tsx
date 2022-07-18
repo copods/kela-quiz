@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react'
-import type { Question } from '../Interface'
+import type { Question } from '~/interface/Interface'
 
 const QuestionCard = ({
   question,
@@ -15,7 +15,7 @@ const QuestionCard = ({
   return (
     <div
       key={question.id}
-      className="rounded-2xl border border-gray-300 bg-gray-50 px-6 py-7"
+      className="rounded-lg border border-gray-300 bg-gray-50 px-6 py-7"
     >
       <div className="flex items-center justify-between text-base text-gray-600 ">
         {question.question}

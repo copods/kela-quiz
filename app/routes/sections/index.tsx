@@ -15,7 +15,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 }
 export default function Section() {
   return (
-    <div className="flex h-full w-full flex-col gap-6 overflow-auto rounded-2xl border border-gray-200 bg-white px-9 py-6">
+    <div className="flex h-full w-full flex-col gap-6 overflow-auto rounded-lg border border-gray-200 bg-white px-9 py-6">
       Select any section to see its details....
     </div>
   )

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import type { Question, Section } from '@prisma/client'
+import type { Question, Section } from '~/interface/Interface'
 import QuestionCard from './QuestionCard'
 
 const SectionDetails = ({
