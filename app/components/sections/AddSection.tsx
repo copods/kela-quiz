@@ -74,14 +74,9 @@ const AddSection = ({
                 <div className="pb-6">
                   <textarea
                     name="description"
-                    rows={4}
-                    cols={50}
-                    className="h-24 w-full rounded-lg border border-gray-200 py-2 px-3 text-base"
+                    className="h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
                     placeholder="Enter Section Description"
                   />
-                  {showErrorMessage.errors?.body ? (
-                    <span>{showErrorMessage.errors?.body}</span>
-                  ) : null}
                 </div>
 
                 <div className="flex justify-end gap-2">
