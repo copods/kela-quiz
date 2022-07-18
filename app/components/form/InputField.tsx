@@ -1,4 +1,4 @@
-import type { InputFieldProps } from '~/components/Interface'
+import type { InputFieldProps } from '~/interface/Interface'
 
 function InputField({ ...props }: InputFieldProps) {
   return (

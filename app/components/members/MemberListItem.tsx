@@ -1,5 +1,5 @@
 import { Icon } from "@iconify/react";
-import type { Role, User } from "../Interface";
+import type { Role, User } from "~/interface/Interface";
 import { Form } from "@remix-run/react";
 import moment from "moment";
 
@@ -7,7 +7,7 @@ export default function MemberListItem({
   user,
   disableDelete,
 }: {
-  user: User & { role: Role };
+  user: User & { role?: Role };
   disableDelete: boolean;
 }) {
   return (
@@ -23,7 +23,7 @@ export default function MemberListItem({
         </div>
         <div className="col-span-2 ">
           <h1 className="text-base leading-6 text-gray-700">
-            {user.role.name}
+            {user?.role?.name}
           </h1>
         </div>
         <div className="col-span-2 ">
