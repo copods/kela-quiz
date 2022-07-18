@@ -38,7 +38,7 @@ describe('Test for Section', () => {
         cy.get('textarea').type('Aptitude')
         cy.get("button[type='submit']", { timeout: 10000 }).click()
       })
-    cy.wait(250)
+    cy.wait(500)
     cy.get('.activeSection ')
       .find('h2')
       .invoke('text')
