@@ -38,7 +38,6 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const obj = Object.fromEntries(url).filter
   var sections: Array<Section> = []
   var status: string = ''
-  console.log('filter data', obj)
   await getAllSections(obj)
     .then((res) => {
       sections = res
@@ -57,7 +56,6 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 }
 
 export const action: ActionFunction = async ({ request }) => {
-  console.log(request)
   const createdById = await requireUserId(request)
   const formData = await request.formData()
   const name = formData.get('name')
@@ -96,12 +94,6 @@ export default function SectionPage() {
     toast.error('Something went wrong..!')
   }
 
-  useEffect(() => {
-    if (data.sections.length && data.selectedSectionId === 'NA') {
-      navigate(`/sections/${data.sections[0].id}`, { replace: true })
-    }
-  }, [data, navigate])
-
   const submit = useSubmit()
 
   const [order, setOrder] = useState('asc')
@@ -115,9 +107,13 @@ export default function SectionPage() {
       id: 'createdAt',
     },
   ]
+  useEffect(() => {
+    if (data.sections.length && data.selectedSectionId === 'NA') {
+      navigate(`/sections/${data.sections[0].id}`, { replace: true })
+    }
+  }, [data, navigate])
 
   const [sortBy, setSortBy] = useState(sortByDetails[1].id)
-
   useEffect(() => {
     if (data.sections.length > 0) {
       const formData = new FormData()
@@ -142,7 +138,6 @@ export default function SectionPage() {
       ? data.sections[0].id
       : 'NA'
   )
-
   return (
     <AdminLayout>
       <div className="flex h-full flex-col gap-12 overflow-hidden">
@@ -164,23 +159,22 @@ export default function SectionPage() {
           }`}
         >
           {/* section list */}
-          <Sections
-            sections={data.sections}
-            selectedSection={selectedSection}
-            filters={data.filters}
-            sortBy={sortBy}
-            setSortBy={setSortBy}
-            order={order}
-            setOrder={setOrder}
-            sortByDetails={sortByDetails}
-          />
+          <div className={`${sectionDetailFull ? 'hidden' : ''}`}>
+            <Sections
+              sections={data.sections}
+              selectedSection={selectedSection}
+              filters={data.filters}
+              sortBy={sortBy}
+              setSortBy={setSortBy}
+              order={order}
+              setOrder={setOrder}
+              setSelectedSection={setSelectedSection}
+              sortByDetails={sortByDetails}
+            />
+          </div>
 
           {/* section details */}
-          <div
-            className={`z-10 flex flex-1 items-center ${
-              sectionDetailFull ? 'min-w-full' : ''
-            }`}
-          >
+          <div className={`z-10 flex flex-1 items-center `}>
             <span
               className="z-20 -mr-5"
               tabIndex={0}

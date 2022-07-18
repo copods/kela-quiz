@@ -30,23 +30,20 @@ describe('Test for Section', () => {
     cy.get('a').find('#Sections').should('have.text', 'Sections').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('#add-section').click()
-    cy.get('#headlessui-dialog-panel-6', { timeout: 10000 })
+    const sectionName = `Aptitude - ${new Date().getTime()}`
+    cy.get('.add-section-modal', { timeout: 10000 })
       .should('be.visible')
       .within((el) => {
-        cy.get('input').type(`Aptitude - ${new Date().getTime()}`)
+        cy.get('input').type(sectionName)
         cy.get('textarea').type('Aptitude')
         cy.get("button[type='submit']", { timeout: 10000 }).click()
       })
+    cy.wait(250)
     cy.get('.activeSection ')
       .find('h2')
       .invoke('text')
       .should((someValue) => {
-        const $el = Cypress.$('.px-9 > .text-2xl')
-        if ($el.text() === someValue) {
-          console.log('url matched')
-        } else {
-          console.log('url not matched')
-        }
+        expect(someValue).to.deep.equal(sectionName)
       })
   })
 
@@ -64,7 +61,7 @@ describe('Test for Section', () => {
     cy.get('a').find('#Sections').should('have.text', 'Sections').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('#add-section').click()
-    cy.get('#headlessui-dialog-panel-6', { timeout: 10000 })
+    cy.get('.add-section-modal', { timeout: 10000 })
       .should('be.visible')
       .within(() => {
         cy.get("button[type='button']", { timeout: 10000 }).click()

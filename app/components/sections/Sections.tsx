@@ -12,6 +12,7 @@ type SectionType = {
   setSortBy: (e: string) => void
   order: string
   setOrder: Function
+  setSelectedSection: Function
   sortByDetails: Array<{ name: string; id: string }>
 }
 const Sections = ({
@@ -21,10 +22,11 @@ const Sections = ({
   order,
   setOrder,
   filters,
+  setSelectedSection,
   sortByDetails,
 }: SectionType) => {
   return (
-    <div className="flex w-96 flex-col gap-6 ">
+    <div className="flex h-full w-96 flex-col gap-6">
       {/* filters */}
       <div className="flex items-center justify-between ">
         <div className="flex items-center gap-2.5">
@@ -55,7 +57,10 @@ const Sections = ({
       </div>
 
       {/* list */}
-      <div className="flex flex-col gap-6 overflow-auto" id="section-cards">
+      <div
+        className="flex flex-col gap-6 overflow-auto pb-6"
+        id="section-cards"
+      >
         {/* list */}
         {sections?.map((section: any) => {
           return (
@@ -65,6 +70,9 @@ const Sections = ({
               className={({ isActive }) =>
                 isActive ? 'activeSection' : 'inactiveSection'
               }
+              onClick={() => {
+                setSelectedSection(section.id)
+              }}
             >
               <SectionCard
                 name={section?.name}
