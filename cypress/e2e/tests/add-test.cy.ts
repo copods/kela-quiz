@@ -1,5 +1,5 @@
 describe('Creating tests', () => {
-  it('Visiting Add Test Page', () => {
+  it.skip('Visiting Add Test Page', () => {
     cy.visit('/sign-in')
     cy.get('#email').clear()
       .type('careers@copods.co')
@@ -15,7 +15,7 @@ describe('Creating tests', () => {
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests/add-test')
   })
 
-  it('Add section to test add test', () => {
+  it.skip('Add section to test add test', () => {
     cy.visit('/sign-in')
     cy.get('#email').clear()
       .type('careers@copods.co')
@@ -33,7 +33,7 @@ describe('Creating tests', () => {
     cy.get("button#submitButton").should("have.text", "Add").click()
   })
 
-  it('Verify if add test page contains 3 tabs', () => {
+  it.skip('Verify if add test page contains 3 tabs', () => {
     cy.visit('/sign-in')
     cy.get('#email').clear()
       .type('careers@copods.co')
@@ -56,7 +56,7 @@ describe('Creating tests', () => {
     cy.get("#2").find('.text-gray-500').should('have.text', 'Preview')
   })
 
-  it('Verify if user able to navigate through tabs', () => {
+  it.skip('Verify if user able to navigate through tabs', () => {
     cy.visit('/sign-in')
     cy.get('#email').clear()
       .type('careers@copods.co')
@@ -84,7 +84,7 @@ describe('Creating tests', () => {
     cy.get("#2").find('hr').should('have.class', 'bg-primary')
   })
 
-  it("Verify if next button is disabled if user do not provide name and description", () => {
+  it.skip("Verify if next button is disabled if user do not provide name and description", () => {
     cy.visit('/sign-in')
     cy.get('#email').clear()
       .type('careers@copods.co')
@@ -102,7 +102,7 @@ describe('Creating tests', () => {
     cy.get("button#nextButton").should('have.text', 'Next').should('have.disabled', true)
   })
 
-  it("Verify if user able to navigate to Step 2 by clicking next button if user provide name and description", () => {
+  it.skip("Verify if user able to navigate to Step 2 by clicking next button if user provide name and description", () => {
     cy.visit('/sign-in')
     cy.get('#email').clear()
       .type('careers@copods.co')
@@ -128,7 +128,7 @@ describe('Creating tests', () => {
     cy.get("#1").find('hr').should('have.class', 'bg-primary')
   })
 
-  it("Verify on clicking back button on step 2 user navigate back to step 2", () => {
+  it.skip("Verify on clicking back button on step 2 user navigate back to step 2", () => {
     cy.visit('/sign-in')
     cy.get('#email').clear()
       .type('careers@copods.co')
@@ -188,11 +188,13 @@ describe('Creating tests', () => {
 
       cy.get("input#noOfQu").clear().type('2')
       cy.get("input#time").clear().type('2')
+      cy.get("input#noOfQu").should("have.value", "2")
+      cy.get("input#time").should("have.value", "2")
     })
   })
 
 
-  it("Verify if user able to remove added section and able to input total questions and time", () => {
+  it.skip("Verify if user able to remove added section and able to input total questions and time", () => {
     cy.visit('/sign-in')
     cy.get('#email').clear()
       .type('careers@copods.co')
@@ -230,7 +232,7 @@ describe('Creating tests', () => {
     })
   })
 
-  it("Verify if user able to move to preview tab after selecting sections", () => {
+  it.skip("Verify if user able to move to preview tab after selecting sections", () => {
     cy.visit('/sign-in')
     cy.get('#email').clear()
       .type('careers@copods.co')
@@ -271,7 +273,7 @@ describe('Creating tests', () => {
     cy.get("#2").find('hr').should('have.class', 'bg-primary')
   })
 
-  it("Verify if user able create the test and navigate to test list page", () => {
+  it.skip("Verify if user able create the test and navigate to test list page", () => {
     cy.visit('/sign-in')
     cy.get('#email').clear()
       .type('careers@copods.co')
@@ -317,7 +319,7 @@ describe('Creating tests', () => {
 
   })
 
-  it("Verify if user able create the test and navigate to test list page and see added test there", () => {
+  it.skip("Verify if user able create the test and navigate to test list page and see added test there", () => {
     cy.visit('/sign-in')
     cy.get('#email').clear()
       .type('careers@copods.co')
@@ -366,28 +368,6 @@ describe('Creating tests', () => {
       cy.get('.text-gray-700').should("have.text", testName)
     })
 
-  })
-
-
-  it("Verify if user able create the test and navigate to test list page and see added test there", () => {
-    cy.visit('/sign-in')
-    cy.get('#email').clear()
-      .type('careers@copods.co')
-      .should('have.value', 'careers@copods.co')
-    cy.get('#password').clear()
-      .type('kQuiz@copods')
-      .should('have.value', 'kQuiz@copods')
-    cy.findByRole('button').click()
-
-    cy.get('a').find('#Tests').should('have.text', 'Tests').click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    // cy.get('#addTest').click()
-    // cy.location('pathname', { timeout: 60000 }).should('include', '/tests/add-test')
-    cy.get('button#headlessui-listbox-button-1').click()
-    // cy.get("#headlessui-listbox-option-13").click()
-    cy.get("ul").within(() => {
-      cy.get("li").last().click()
-    })
   })
 
 })
