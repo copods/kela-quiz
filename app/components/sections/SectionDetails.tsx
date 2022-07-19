@@ -1,4 +1,3 @@
-import { Link } from '@remix-run/react'
 import { useState } from 'react'
 import type { Question, Section } from '~/interface/Interface'
 import QuestionCard from './QuestionCard'

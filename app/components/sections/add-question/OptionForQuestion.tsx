@@ -4,15 +4,11 @@ import cuid from 'cuid'
 import QuillEditor from '~/components/QuillEditor.client'
 import { ClientOnly } from 'remix-utils'
 import Toggle from '~/components/form/Toggle'
+import type { SetStateAction } from 'react'
 
 interface x {
   id: string
   answer: string
-}
-interface opt {
-  option: string
-  isCorrect: boolean
-  id: string
 }
 
 export default function OptionForQuestion({
@@ -22,8 +18,6 @@ export default function OptionForQuestion({
   setOptions,
   singleChoiceAnswer,
   setSingleChoiceAnswer,
-  textAnswer,
-  setTextAnswer,
   textCorrectAnswer,
   setTextCorrectAnswer,
   checkOrder,
@@ -32,13 +26,15 @@ export default function OptionForQuestion({
   questionTypeList: QuestionType[]
   selectedTypeOfQuestion: string
   options: Array<{ option: string; isCorrect: boolean; id: string }>
-  setOptions: (e: any) => void
+  setOptions: (
+    e: SetStateAction<Array<{ option: string; isCorrect: boolean; id: string }>>
+  ) => void
   singleChoiceAnswer: string
   setSingleChoiceAnswer: (e: string) => void
-  textAnswer: string
-  setTextAnswer: (e: string) => void
   textCorrectAnswer: Array<{ id: string; answer: string }>
-  setTextCorrectAnswer: (e: any) => void
+  setTextCorrectAnswer: (
+    e: SetStateAction<Array<{ id: string; answer: string }>>
+  ) => void
   checkOrder: boolean
   setCheckOrder: (e: boolean) => void
 }) {
@@ -48,12 +44,14 @@ export default function OptionForQuestion({
 
   const deleteOption = (index: number) => {
     if (options.length === 1) return
-    setOptions((e: any) => {
-      e.splice(index, 1)
-      return [...e]
-    })
+    setOptions(
+      (e: Array<{ option: string; isCorrect: boolean; id: string }>) => {
+        e.splice(index, 1)
+        return [...e]
+      }
+    )
   }
-  const getQuestionType = (id: string): any => {
+  const getQuestionType = (id: string) => {
     for (let qtd of questionTypeList) {
       if (id === qtd.id) {
         return qtd.value
@@ -62,17 +60,21 @@ export default function OptionForQuestion({
   }
 
   const updateOption = (opt: string, index: number) => {
-    setOptions((e: any) => {
-      e[index].option = opt
-      return [...e]
-    })
+    setOptions(
+      (e: Array<{ option: string; isCorrect: boolean; id: string }>) => {
+        e[index].option = opt
+        return [...e]
+      }
+    )
   }
 
   const checkBoxToggle = (index: number) => {
-    setOptions((e: any) => {
-      e[index].isCorrect = !e[index].isCorrect
-      return [...e]
-    })
+    setOptions(
+      (e: Array<{ option: string; isCorrect: boolean; id: string }>) => {
+        e[index].isCorrect = !e[index].isCorrect
+        return [...e]
+      }
+    )
   }
 
   const updateTextAnswer = (textAns: string, index: number) => {
@@ -80,7 +82,6 @@ export default function OptionForQuestion({
       e[index].answer = textAns
       return [...e]
     })
-    setTextAnswer(textAns)
   }
 
   getQuestionType(selectedTypeOfQuestion)
@@ -175,7 +176,6 @@ export default function OptionForQuestion({
               return (
                 <div className="flex items-center gap-2.5" key={option.id}>
                   <div className="flex-1" id="optionEditor">
-                    {/* <input className='h-20 p-4 rounded-lg bg-white border border-gray-300 w-full' value={textAnswer} onChange={(e) => { setTextAnswer( e.target.value ) }}></input> */}
                     <input
                       className="h-20 w-full rounded-lg border border-gray-300 bg-white p-4"
                       value={option.answer}
@@ -183,7 +183,6 @@ export default function OptionForQuestion({
                         updateTextAnswer(e.target.value, index)
                       }}
                     ></input>
-                    {/* {setTextCorrectAnswer([...textCorrectAnswer,{id:option.id , answer:textAnswer}])} */}
                   </div>
                   <Icon
                     onClick={() => deleteOption(index)}

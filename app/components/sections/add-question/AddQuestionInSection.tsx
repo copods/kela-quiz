@@ -22,7 +22,6 @@ const AddQuestionInSection = ({
   )
   const [question, setQuestion] = useState('')
   const [singleChoiceAnswer, setSingleChoiceAnswer] = useState('')
-  const [textAnswer, setTextAnswer] = useState('')
   const [options, setOptions] = useState([
     {
       option: '',
@@ -118,13 +117,13 @@ const AddQuestionInSection = ({
         return
       }
     }
-    if (
-      getQuestionType(selectedTypeOfQuestion) === 'TEXT' &&
-      textAnswer.length == 0
-    ) {
-      toast.error('Enter the Text')
-      return
-    }
+    // if (
+    //   getQuestionType(selectedTypeOfQuestion) === 'TEXT' &&
+    //   textAnswer.length == 0
+    // ) {
+    //   toast.error('Enter the Text')
+    //   return
+    // }
 
     let testQuestion: {
       question: string
@@ -199,8 +198,6 @@ const AddQuestionInSection = ({
         <OptionForQuestion
           textCorrectAnswer={textCorrectAnswer}
           setTextCorrectAnswer={setTextCorrectAnswer}
-          textAnswer={textAnswer}
-          setTextAnswer={setTextAnswer}
           singleChoiceAnswer={singleChoiceAnswer}
           setSingleChoiceAnswer={setSingleChoiceAnswer}
           options={options}
