@@ -7,13 +7,13 @@ function DropdownField({
   displayKey,
   valueKey,
   value,
-  onValueChange,
+  setValue,
 }: {
   data: Array<any>
   displayKey: string
   valueKey: string
   value: any
-  onValueChange: (e: any) => void
+  setValue: (e: any) => void
 }) {
   function classNames(...classes: Array<string>) {
     return classes.filter(Boolean).join(' ')
@@ -26,7 +26,7 @@ function DropdownField({
     }
   }
   return (
-    <Listbox value={value} onChange={onValueChange}>
+    <Listbox value={value} onChange={setValue}>
       {({ open }) => (
         <>
           <div className="relative w-44">

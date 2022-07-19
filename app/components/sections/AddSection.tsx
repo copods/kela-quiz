@@ -67,9 +67,6 @@ const AddSection = ({
                     className="h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
                     placeholder="Enter Section Name"
                   />
-                  {/* {action.errors?.title ? (
-                    <span>{action.errors?.title}</span>
-                  ) : null} */}
                 </div>
                 <div className="pb-6">
                   <textarea

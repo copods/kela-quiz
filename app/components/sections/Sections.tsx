@@ -48,7 +48,7 @@ const Sections = ({
             displayKey={'name'}
             valueKey={'id'}
             value={sortBy}
-            onValueChange={setSortBy}
+            setValue={setSortBy}
           />
         </div>
         <span className="flex h-11 w-11 items-center justify-center rounded-lg border border-gray-200 bg-white">

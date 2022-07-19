@@ -9,10 +9,10 @@ export const loader: LoaderFunction = async ({ request }) => {
   return null
 }
 
-export default function Results() {
+export default function Settings() {
   return (
     <AdminLayout>
-      <div>Hey Result</div>
+      <div>Hey Settings</div>
     </AdminLayout>
   )
 }

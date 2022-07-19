@@ -3,8 +3,13 @@ import type React from 'react'
 export interface InputFieldProps {
   name: string
   label: string
+  placeholder: string
+  type: string
+  required: boolean
+  value: string
   error?: string
   errorId: string
+  onChange: (e: React.ChangeEvent) => void
 }
 
 export interface ButtonProps {

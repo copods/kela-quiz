@@ -37,7 +37,7 @@ const SortFilter = ({
           displayKey={'name'}
           valueKey={'value'}
           value={sortBy}
-          onValueChange={onSortChange}
+          setValue={onSortChange}
         />
       </div>
       <span className="flex h-11 w-11 items-center justify-center rounded-lg border border-gray-200 bg-white">
