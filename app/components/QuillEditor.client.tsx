@@ -1,13 +1,18 @@
 import { useEffect } from 'react'
 import { useQuill } from 'react-quilljs'
+import BlotFormatter from 'quill-blot-formatter'
 
 export default function QuillEditor({
   onTextChange,
 }: {
   onTextChange: (e: string) => void
 }) {
-  const { quill, quillRef } = useQuill()
-
+  const { quill, quillRef, Quill } = useQuill({
+    modules: { blotFormatter: {} },
+  })
+  if (Quill && !quill) {
+    Quill.register('modules/blotFormatter', BlotFormatter)
+  }
   useEffect(() => {
     if (quill) {
       quill.on('text-change', () => {
