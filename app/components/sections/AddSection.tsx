@@ -74,7 +74,8 @@ const AddSection = ({
                 <div className="pb-6">
                   <textarea
                     name="description"
-                    className="h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
+                    rows={4}
+                    className="w-full rounded-lg border border-gray-200 px-3 py-4 text-base"
                     placeholder="Enter Section Description"
                   />
                 </div>
@@ -95,10 +96,7 @@ const AddSection = ({
                       transition.state === 'submitting' ? 'disabled' : ''
                     }`}
                     onClick={() => {
-                      // if (!action.errors?.title && !action.errors?.body) {
-                      //   console.log(action.errors)
                       setOpen(false)
-                      // }
                     }}
                     disabled={transition.state === 'submitting'}
                   >
