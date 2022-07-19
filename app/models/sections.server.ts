@@ -46,9 +46,8 @@ export async function getQuestionType() {
   return prisma.questionType.findMany();
 }
 
-export async function addQuestion(question: string, options: Array<{ id: string, option: string, isCorrect:boolean }>, correctAnswer: Array<{id:string, answer:string, order: number}>, questionTypeId: string, sectionId: string, createdById: string) {  
+export async function addQuestion(question: string, options: Array<{ id: string, option: string, isCorrect:boolean }>, correctAnswer: Array<{id:string, answer:string, order: number}>, questionTypeId: string, sectionId: string, createdById: string, checkOrder:boolean) {  
   let questionId = cuid()
-  console.log(questionId)
   await prisma.question.create({
     data: {
       id: questionId,
@@ -56,6 +55,7 @@ export async function addQuestion(question: string, options: Array<{ id: string,
       sectionId,
       createdById,
       questionTypeId,
+      checkOrder,
       options: {
         createMany: {
           data: options.map(option => ({ option:option.option, id: option.id, coInQuestionId: option.isCorrect? questionId: null, createdById }))
