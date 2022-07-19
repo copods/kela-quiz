@@ -1,5 +1,5 @@
-import sendgrid from "@sendgrid/mail";
-import { env } from "process";
+import sendgrid from '@sendgrid/mail'
+import { env } from 'process'
 
 export async function sendMail(
   email: string,
@@ -7,10 +7,10 @@ export async function sendMail(
   password: string,
   role: string
 ) {
-  const to = email;
-  const from = "careers@copods.co";
-  const subject = "Welcome to K - Quiz @ Copods";
-  const text = "K - Quiz @ Copods";
+  const to = email
+  const from = 'careers@copods.co'
+  const subject = 'Welcome to K - Quiz @ Copods'
+  const text = 'K - Quiz @ Copods'
 
   const html = `<html>
   <head>
@@ -63,9 +63,9 @@ export async function sendMail(
     </div>
   </body>
 </html>
-    `;
+    `
 
-  sendgrid.setApiKey(env.SENDGRID_API_KEY as string);
+  sendgrid.setApiKey(env.SENDGRID_API_KEY as string)
 
   const msg = {
     to,
@@ -73,17 +73,17 @@ export async function sendMail(
     subject,
     text,
     html,
-  };
+  }
   await sendgrid.send(msg).then(
     () => {
-      return "ok";
+      return 'ok'
     },
     (error) => {
       if (error.response) {
-        console.error("Sendgrid Error: ", error.response.body);
+        console.error('Sendgrid Error: ', error.response.body)
       }
     }
-  );
+  )
 
-  return "Done";
+  return 'Done'
 }

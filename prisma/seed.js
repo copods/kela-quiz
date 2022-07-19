@@ -1,27 +1,27 @@
-const { PrismaClient } = require("@prisma/client");
-const bcrypt = require("bcryptjs");
+const { PrismaClient } = require('@prisma/client')
+const bcrypt = require('bcryptjs')
 
-const prisma = new PrismaClient();
+const prisma = new PrismaClient()
 
 async function seed() {
-  const email = "careers@copods.co";
+  const email = 'careers@copods.co'
 
-  const hashedPassword = await bcrypt.hash("kQuiz@copods", 10);
+  const hashedPassword = await bcrypt.hash('kQuiz@copods', 10)
 
   const roles = [
     {
-      id: "cl4xvj89a000209jp4qtlfyii",
-      name: "Admin",
+      id: 'cl4xvj89a000209jp4qtlfyii',
+      name: 'Admin',
     },
     {
-      id: "cl4xvj89a000209jp4qtlfyih",
-      name: "Test Creator",
+      id: 'cl4xvj89a000209jp4qtlfyih',
+      name: 'Test Creator',
     },
     {
-      id: "cl4xvjdqs000309jp3rwiefp8",
-      name: "Recruiter",
+      id: 'cl4xvjdqs000309jp3rwiefp8',
+      name: 'Recruiter',
     },
-  ];
+  ]
 
   const createRoles = () => {
     roles.forEach(async (role) => {
@@ -37,9 +37,9 @@ async function seed() {
           id: role.id,
           name: role.name,
         },
-      });
-    });
-  };
+      })
+    })
+  }
 
   const createMasterAdmin = async () => {
     await prisma.user.upsert({
@@ -65,18 +65,18 @@ async function seed() {
 
   const questionType = [
     {
-      displayName: "Single Choice",
-      value: "SINGLE_CHOICE",
+      displayName: 'Single Choice',
+      value: 'SINGLE_CHOICE',
     },
     {
-      displayName: "Multiple Choice",
-      value: "MULTIPLE_CHOICE",
+      displayName: 'Multiple Choice',
+      value: 'MULTIPLE_CHOICE',
     },
     {
-      displayName: "Text",
-      value: "TEXT",
+      displayName: 'Text',
+      value: 'TEXT',
     },
-  ];
+  ]
 
   const createQuestionType = () => {
     questionType.forEach(async (questionName) => {
@@ -100,14 +100,14 @@ async function seed() {
   await createMasterAdmin()
   await createQuestionType()
 
-  console.log(`Database has been seeded. 🌱`);
+  console.log(`Database has been seeded. 🌱`)
 }
 
 seed()
   .catch((e) => {
-    console.error(e);
-    process.exit(1);
+    console.error(e)
+    process.exit(1)
   })
   .finally(async () => {
-    await prisma.$disconnect();
-  });
+    await prisma.$disconnect()
+  })

@@ -91,16 +91,13 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
     } = {
       name,
       description,
-      sections: [],
-    }
-    selectedSections.map((section, index) => {
-      sendData.sections.push({
+      sections: selectedSections.map((section, index) => ({
         sectionId: section.id,
         totalQuestions: section.totalQuestions as number,
         timeInSeconds: section.time as number,
         order: index + 1,
-      })
-    })
+      })),
+    }
 
     submit({ data: JSON.stringify(sendData) }, { method: 'post' })
     // fetcher.submit({ data: JSON.stringify(sendData) }, { method: "post" });
