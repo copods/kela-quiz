@@ -93,7 +93,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
       description,
       sections: [],
     }
-    selectedSections.forEach((section, index) => {
+    selectedSections.map((section, index) => {
       sendData.sections.push({
         sectionId: section.id,
         totalQuestions: section.totalQuestions as number,
