@@ -5,14 +5,14 @@ function InputField({ ...props }: InputFieldProps) {
     <div>
       <label
         htmlFor={props.name}
-        className="mb-1.5 block text-base font-medium text-gray-800"
+        className="mb-1.5 block text-base font-medium text-gray-800" title={props.label}
       >
         {props.label}
       </label>
       <input
         id={props.name}
         {...props}
-        className="h-11 w-full  rounded-lg border border-gray-200 px-3.5 py-2.5 text-lg"
+        className="h-11 w-full  rounded-lg border border-gray-200 px-3.5 py-2.5 text-lg" title={props.placeholder}
       />
 
       {props.required && props.error && (
