@@ -19,7 +19,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   return json<LoaderData>({ sectionDetails })
 }
 export default function Section() {
-  const data = useLoaderData() as LoaderData
+  const data = useLoaderData() as unknown as LoaderData
 
   return <SectionDetails sectionDetails={data.sectionDetails} />
 }
