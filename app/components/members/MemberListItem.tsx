@@ -1,14 +1,14 @@
-import { Icon } from "@iconify/react";
-import type { Role, User } from "../Interface";
-import { Form } from "@remix-run/react";
-import moment from "moment";
+import { Icon } from '@iconify/react'
+import type { Role, User } from '~/interface/Interface'
+import { Form } from '@remix-run/react'
+import moment from 'moment'
 
 export default function MemberListItem({
   user,
   disableDelete,
 }: {
-  user: User & { role: Role };
-  disableDelete: boolean;
+  user: User & { role?: Role }
+  disableDelete: boolean
 }) {
   return (
     <div className="col-span-full grid grid-cols-10">
@@ -23,12 +23,12 @@ export default function MemberListItem({
         </div>
         <div className="col-span-2 ">
           <h1 className="text-base leading-6 text-gray-700">
-            {user.role.name}
+            {user?.role?.name}
           </h1>
         </div>
         <div className="col-span-2 ">
           <h1 className="text-base leading-6 text-gray-700">
-            {moment(user?.createdAt).format("DD MMMM YY")}
+            {moment(user?.createdAt).format('DD MMMM YY')}
           </h1>
         </div>
         <div className="col-span-1">
@@ -47,13 +47,13 @@ export default function MemberListItem({
                   type="submit"
                   name="deleteMember"
                   disabled={disableDelete}
-                  value={JSON.stringify({ action: "delete", id: user.id })}
+                  value={JSON.stringify({ action: 'delete', id: user.id })}
                 >
                   <Icon
                     icon="ic:outline-delete-outline"
-                    className={`pointer-cursor h-6 w-6 text-red-500 ${disableDelete &&
-                      "cursor-not-allowed text-red-300"
-                      }`}
+                    className={`pointer-cursor h-6 w-6 text-red-500 ${
+                      disableDelete && 'cursor-not-allowed text-red-300'
+                    }`}
                   ></Icon>
                 </button>
               </Form>
@@ -62,5 +62,5 @@ export default function MemberListItem({
         </div>
       </div>
     </div>
-  );
+  )
 }

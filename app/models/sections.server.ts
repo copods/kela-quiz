@@ -13,8 +13,11 @@ export async function getSectionById({ id }: Pick<Section, 'id'>) {
   })
 }
 
-export async function getAllSections() {
+export async function getAllSections(obj: any) {
+  var filter = obj ? obj : {}
+
   return await prisma.section.findMany({
+    ...filter,
     include: {
       createdBy: true,
       _count: {

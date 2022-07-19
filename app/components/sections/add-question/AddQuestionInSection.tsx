@@ -57,15 +57,15 @@ const AddQuestionInSection = ({
   const breadCrumbArray = [
     {
       tabName: 'Section',
-      tabRoute: '/sections',
+      route: '/sections',
     },
     {
       tabName: 'Question',
-      tabRoute: `/sections/${sectionDetails?.id}`,
+      route: `/sections/${sectionDetails?.id}`,
     },
     {
       tabName: 'AddQuestion',
-      tabRoute: `/sections/${sectionDetails?.id}/add-question`,
+      route: `/sections/${sectionDetails?.id}/add-question`,
     },
   ]
   const getQuestionType = (id: string) => {

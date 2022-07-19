@@ -17,9 +17,8 @@ import tailwindStylesheetUrl from './styles/tailwind.css'
 import globalStyles from './styles/global.css'
 import quillEditorStyles from 'quill/dist/quill.snow.css'
 import { getUser } from './session.server'
-import toastrStyles from 'react-toastify/dist/ReactToastify.css';
-import { ToastContainer } from 'react-toastify';
-
+import toastrStyles from 'react-toastify/dist/ReactToastify.css'
+import { ToastContainer } from 'react-toastify'
 
 export const links: LinksFunction = () => {
   return [

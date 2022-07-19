@@ -2,8 +2,19 @@ import { Fragment } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 
-
-function DropdownField({ data, displayKey, valueKey, value, setValue }: { data: Array<any>, displayKey: string, valueKey: string, value: any, setValue: (e: any) => void }) {
+function DropdownField({
+  data,
+  displayKey,
+  valueKey,
+  value,
+  setValue,
+}: {
+  data: Array<any>
+  displayKey: string
+  valueKey: string
+  value: any
+  setValue: (e: any) => void
+}) {
   function classNames(...classes: Array<string>) {
     return classes.filter(Boolean).join(' ')
   }
@@ -16,16 +27,15 @@ function DropdownField({ data, displayKey, valueKey, value, setValue }: { data: 
   }
 
   return (
-
     <Listbox value={value} onChange={setValue}>
       {({ open }) => (
         <>
           <div className="relative w-44" id="dropdown">
-            <Listbox.Button className="h-11 relative w-full bg-white border border-gray-200 rounded-md shadow-sm px-3 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+            <Listbox.Button className="relative h-11 w-full cursor-default rounded-md border border-gray-200 bg-white px-3 py-2 text-left shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm">
               <span className="flex items-center">
-                <span className='block truncate'>{getName(value)}</span>
+                <span className="block truncate">{getName(value)}</span>
               </span>
-              <span className="ml-3 absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+              <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
                 <Icon icon="ic:round-keyboard-arrow-down" />
               </span>
             </Listbox.Button>
@@ -37,14 +47,14 @@ function DropdownField({ data, displayKey, valueKey, value, setValue }: { data: 
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <Listbox.Options className="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-56 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm">
+              <Listbox.Options className="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                 {data.map((el) => (
                   <Listbox.Option
                     key={el[valueKey]}
                     className={({ active }) =>
                       classNames(
-                        active ? 'text-white bg-primary' : 'text-gray-900',
-                        'cursor-default select-none relative py-2 px-3'
+                        active ? 'bg-primary text-white' : 'text-gray-900',
+                        'relative cursor-default select-none py-2 px-3'
                       )
                     }
                     value={el[valueKey]}
@@ -53,7 +63,10 @@ function DropdownField({ data, displayKey, valueKey, value, setValue }: { data: 
                       <>
                         <div className="flex items-center">
                           <span
-                            className={classNames(selected ? 'font-semibold' : 'font-normal', 'block truncate')}
+                            className={classNames(
+                              selected ? 'font-semibold' : 'font-normal',
+                              'block truncate'
+                            )}
                           >
                             {el[displayKey]}
                           </span>
@@ -66,7 +79,11 @@ function DropdownField({ data, displayKey, valueKey, value, setValue }: { data: 
                               'absolute inset-y-0 right-0 flex items-center pr-4'
                             )}
                           >
-                            <Icon icon="ic:round-check" className="h-5 w-5" aria-hidden="true" />
+                            <Icon
+                              icon="ic:round-check"
+                              className="h-5 w-5"
+                              aria-hidden="true"
+                            />
                           </span>
                         ) : null}
                       </>
