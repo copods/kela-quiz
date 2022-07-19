@@ -46,7 +46,7 @@ export async function getQuestionType() {
   return prisma.questionType.findMany();
 }
 
-export async function addQuestion(question: string, options: Array<{ id: string, option: string, isCorrect:boolean }>, correctAnswer: Array<{id:string, answer:string, order: number}>, questionTypeId: string, sectionId: string, createdById: string) {  
+export async function addQuestion(question: string, options: Array<{ id: string, option: string, isCorrect: boolean, order: number }>, correctAnswer: Array<{ id: string, answer: string, order: number }>, questionTypeId: string, sectionId: string, createdById: string) {
   let questionId = cuid()
   console.log(questionId)
   await prisma.question.create({
@@ -58,18 +58,18 @@ export async function addQuestion(question: string, options: Array<{ id: string,
       questionTypeId,
       options: {
         createMany: {
-          data: options.map(option => ({ option:option.option, id: option.id, coInQuestionId: option.isCorrect? questionId: null, createdById }))
+          data: options.map(option => ({ option: option.option, id: option.id, coInQuestionId: option.isCorrect ? questionId : null, createdById }))
         }
       },
       correctAnswer: {
         createMany: {
           data: correctAnswer
         }
-      } 
+      }
     }
-  }).then(()=> { return true } )
-  .catch((err)=>{
-    console.log(err)
-    return err;
-  })
+  }).then(() => { return true })
+    .catch((err) => {
+      console.log(err)
+      return err;
+    })
 }
