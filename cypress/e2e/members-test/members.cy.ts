@@ -1,7 +1,5 @@
 /// <reference types="Cypress"/>
 
-import { should } from 'chai'
-
 describe('Test for members', () => {
   it('Sample Login', () => {
     cy.visit('/sign-in')
