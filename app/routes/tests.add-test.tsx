@@ -24,7 +24,7 @@ export const loader: LoaderFunction = async ({ request }) => {
     ? JSON.parse(
         Object.fromEntries(new URL(request.url).searchParams.entries()).data
       )
-    : {}
+    : '{}'
 
   let sections: Array<Section> = []
   let status: string = ''
