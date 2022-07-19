@@ -55,6 +55,7 @@ const AddSection = ({
                   <input
                     type="text"
                     name="name"
+                    id="sectionName"
                     className="h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
                     placeholder="Enter Section Name"
                   />
@@ -62,6 +63,7 @@ const AddSection = ({
                 <div className="pb-6">
                   <textarea
                     name="description"
+                    id="sectionDescription"
                     className="h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
                     placeholder="Enter Section Description"
                   />

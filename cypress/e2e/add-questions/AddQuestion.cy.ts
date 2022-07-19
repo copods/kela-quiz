@@ -1,5 +1,5 @@
 describe('Test for Add Question', ()=>{
-  xit('Visiting Add Question Page',() =>{
+  it('Visiting Add Question Page',() =>{
     cy.visit('/sign-in')
     cy.get('#email').clear()
       .type('careers@copods.co')
@@ -21,7 +21,7 @@ describe('Test for Add Question', ()=>{
     cy.location('pathname', { timeout: 60000 }).should('include', '/add-question') 
   })
 
-  xit('Visiting Sections after Reaching Add Question Page', () => {
+  it('Visiting Sections after Reaching Add Question Page', () => {
     cy.visit('/sign-in')
     cy.get('#email').clear()
       .type('careers@copods.co')
@@ -45,7 +45,7 @@ describe('Test for Add Question', ()=>{
     cy.location('pathname',{timeout:6000}).should('include', '/sections')
   })
 
-  xit('Visiting the Same Question Section after Reaching Add Question Page', ()=>{
+  it('Visiting the Same Question Section after Reaching Add Question Page', ()=>{
     cy.visit('/sign-in')
     cy.get('#email').clear()
       .type('careers@copods.co')
@@ -224,7 +224,7 @@ describe('Test for Add Question', ()=>{
 
   let lengthBefore: number;
 
-  xit('Verifying if Add Option functionality Working on Options', ()=>{
+  it('Verifying if Add Option functionality Working on Options', ()=>{
     cy.visit('/sign-in')
     cy.get('#email').clear()
       .type('careers@copods.co')
@@ -257,7 +257,7 @@ describe('Test for Add Question', ()=>{
     })
   })
 
-  xit('Verifying if Delete functionality Working on Options', ()=>{
+  it('Verifying if Delete functionality Working on Options', ()=>{
     cy.visit('/sign-in')
     cy.get('#email').clear()
       .type('careers@copods.co')
@@ -290,7 +290,7 @@ describe('Test for Add Question', ()=>{
     })
   })
 
-  xit('On Save and Add More visit the Add Question Page', ()=>{
+  it('On Save and Add More visit the Add Question Page', ()=>{
     cy.visit('/sign-in')
     cy.get('#email').clear()
       .type('careers@copods.co')
@@ -315,7 +315,7 @@ describe('Test for Add Question', ()=>{
     cy.location('pathname', {timeout:60000}).should('include','/add-question')
   })
 
-  xit('On Save and Continue visit the Sections Page', ()=>{
+  it('On Save and Continue visit the Sections Page', ()=>{
     cy.visit('/sign-in')
     cy.get('#email').clear()
       .type('careers@copods.co')
@@ -340,7 +340,7 @@ describe('Test for Add Question', ()=>{
     cy.location('pathname', {timeout:60000}).should('include','/sections')
   })
 
-  xit("Verifying if Question is Empty or not", ()=>{
+  it("Verifying if Question is Empty or not", ()=>{
     cy.visit('/sign-in')
     cy.get('#email').clear()
       .type('careers@copods.co')
