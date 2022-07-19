@@ -1,5 +1,4 @@
-import type { Candidate, User } from '@prisma/client'
-import { raw } from '@prisma/client/runtime'
+import type { User } from '@prisma/client'
 import { env } from 'process'
 import { prisma } from '~/db.server'
 
@@ -104,32 +103,7 @@ export async function createCandidate({
   testId
 }: { emails: Array<string>, createdById: User['id'], testId: string }) {
 
-  console.log(emails, createdById, testId)
-  emails.forEach(email => {
-    createCandidateData({ email, createdById, testId })
+  emails.forEach(async (email) => {
+    await createCandidateData({ email, createdById, testId })
   })
-
-
-
-
-  //   // creating candidate Test#CandidateTest
-  //   const candidateTest = await prisma.candidateTest.create({
-  //     data: {
-  //       testId,
-  //       link: candidateLink,
-  //       candidateId: candidate.id,
-  //     },
-  //   })
-
-  //   for (let section in test?.sections) {
-  //     // creating Section in CandidateTest#SectionInCandidateTest
-  //     // const sectionInCandidateTest= await prisma.sectionInCandidateTest.create({
-  //     //   data: {
-  //     //     sectionId: section?.sectionId,
-  //     //     candidateTestId: candidateTest.id
-  //     //     link: candidateLink,
-  //     //     candidateId: candidate.id,
-  //     //   }
-  //     // })
-  //   }
 }

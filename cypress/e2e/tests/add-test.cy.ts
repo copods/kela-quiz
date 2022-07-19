@@ -370,7 +370,6 @@ describe('Creating tests', () => {
 
   })
 
-
   it("Verify if user able create the test and navigate to test list page and see added test there", () => {
     cy.visit('/sign-in')
     cy.get('#email').clear()

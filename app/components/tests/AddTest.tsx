@@ -93,7 +93,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
       description,
       sections: [],
     }
-    selectedSections.map((section, index) => {
+    selectedSections.forEach((section, index) => {
       sendData.sections.push({
         sectionId: section.id,
         totalQuestions: section.totalQuestions as number,
@@ -105,6 +105,12 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
     submit({ data: JSON.stringify(sendData) }, { method: 'post' })
     // fetcher.submit({ data: JSON.stringify(sendData) }, { method: "post" });
   }
+
+  useEffect(() => {
+    if (!name || !description) {
+      setCurrentTab(0)
+    }
+  }, [currentTab, setCurrentTab, name, description])
 
   return (
     <div className="flex h-full flex-col gap-6 overflow-hidden">
