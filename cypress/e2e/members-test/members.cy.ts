@@ -1,4 +1,7 @@
 /// <reference types="Cypress"/>
+
+import { should } from 'chai'
+
 describe('Test for members', () => {
   it('Sample Login', () => {
     cy.visit('/sign-in')
@@ -13,7 +16,7 @@ describe('Test for members', () => {
     cy.findByRole('button').click()
   })
 
-  it('Test to Direct to members after Login', () => {
+  it('Test for recdirect to members page', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -28,7 +31,7 @@ describe('Test for members', () => {
     cy.location('pathname', { timeout: 60000 }).should('include', '/members')
   })
 
-  it('Test for add-members', () => {
+  it('Test for adding a new member', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -55,7 +58,7 @@ describe('Test for members', () => {
     cy.location('pathname', { timeout: 60000 }).should('include', '/members')
   })
 
-  it('Test for add-members cancel button', () => {
+  it('Test for add-members popUp cancel button', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -72,7 +75,7 @@ describe('Test for members', () => {
     cy.location('pathname', { timeout: 60000 }).should('include', '/members')
   })
 
-  it('Delete member cancel button', () => {
+  it('Test for Delete member popup cancel button', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -84,17 +87,24 @@ describe('Test for members', () => {
       .should('have.value', 'kQuiz@copods')
     cy.findByRole('button').click()
     cy.get('a').find('#Members').should('have.text', 'Members').click()
-    cy.wait(3000)
-    cy.contains('hinata hyuga')
-      .get('#memberRow')
-      .within(() => {
-        cy.get('#deleteButton').click()
-      })
-    cy.get('#cancelDeletePopUp').should('have.text', 'Cancel').click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/members')
+
+    cy.intercept('/members').as('membersPage')
+    cy.get('.memberRow').each((item) => {
+      cy.contains('hinata hyuga')
+        .parent()
+        .parent()
+        .within(() => {
+          cy.get('#deleteButton', { timeout: 60000 })
+            .should('be.visible')
+            .click()
+        })
+
+      cy.get('#cancelDeletePopUp').should('have.text', 'Cancel').click()
+      cy.location('pathname', { timeout: 60000 }).should('include', '/members')
+    })
   })
 
-  it('Delete member test', () => {
+  it('Test for Delete member ', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -106,14 +116,21 @@ describe('Test for members', () => {
       .should('have.value', 'kQuiz@copods')
     cy.findByRole('button').click()
     cy.get('a').find('#Members').should('have.text', 'Members').click()
-    cy.wait(3000)
-    cy.contains('hinata hyuga')
-      .get('#memberRow')
-      .within(() => {
-        cy.get('#deleteButton').click()
-      })
-    cy.get('#ConfirmDelete').should('have.text', 'Delete').click()
-    cy.get('.Toastify__toast').find('.Toastify__close-button  ').click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/members')
+
+    cy.intercept('/members').as('membersPage')
+    cy.get('.memberRow').each((item) => {
+      cy.contains('hinata hyuga')
+        .parent()
+        .parent()
+        .within(() => {
+          cy.get('#deleteButton', { timeout: 60000 })
+            .should('be.visible')
+            .click()
+        })
+      cy.get('.ConfirmDelete').should('have.text', 'Delete').click()
+      cy.get('.Toastify__toast').find('.Toastify__close-button  ').click()
+      cy.location('pathname', { timeout: 60000 }).should('include', '/members')
+      return false
+    })
   })
 })

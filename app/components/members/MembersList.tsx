@@ -23,7 +23,7 @@ export default function MembersList({
           <h1 className="col-span-1 text-sm leading-4 text-gray-500">Action</h1>
         </div>
         {data.map((user: User & { role?: Role }) => (
-          <div key={user.id} className="col-span-10 grid" id="memberRow">
+          <div key={user.id} className="memberRow col-span-10 grid">
             <MemberListItem
               user={user}
               loggedInUser={loggedInUser == user.id}
