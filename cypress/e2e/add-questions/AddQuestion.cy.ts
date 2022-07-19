@@ -14,7 +14,7 @@ describe('Test for Add Question', ()=>{
     cy.get('.px-5').click()
     cy.get("#headlessui-dialog-panel-5", { timeout: 10000 }).should("be.visible")
     cy.get("input#sectionName").type(`Aptitude - ${new Date().getTime()}`)
-    cy.get('input#sectionDescription').type(`Aptitude - ${new Date().getTime()} Description`)
+    cy.get('textarea#sectionDescription').type(`Aptitude - ${new Date().getTime()} Description`)
     cy.get("button#submitButton").should("have.text", "Add").click()
     cy.get('#sectionCard').first().click()
     cy.get('#addQuestion').click()
