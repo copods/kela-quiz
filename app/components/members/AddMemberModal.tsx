@@ -133,7 +133,7 @@ export default function AddMemberModal({
                       value={JSON.stringify({ action: 'add' })}
                       className={`h-9 rounded-md bg-primary px-4 text-sm text-[#F0FDF4]${
                         transition.state === 'submitting'
-                          ? 'disabled:opacity-75'
+                          ? 'disabled:text-[#F0FDF4] disabled:opacity-75'
                           : ''
                       }`}
                       disabled={transition.state === 'submitting'}
