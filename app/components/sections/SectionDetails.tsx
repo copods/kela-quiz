@@ -1,6 +1,6 @@
 import { Link } from '@remix-run/react'
 import { useState } from 'react'
-import type { Question, Section } from '../Interface'
+import type { Question, Section } from '~/interface/Interface'
 import QuestionCard from './QuestionCard'
 
 const SectionDetails = ({
@@ -12,7 +12,7 @@ const SectionDetails = ({
   const [searchText, setSearchText] = useState('')
 
   return (
-    <div className="flex h-full w-full flex-col gap-6 overflow-auto rounded-2xl border border-gray-200 bg-white px-9 py-6">
+    <div className="flex h-full w-full flex-col gap-6 overflow-auto rounded-lg border border-gray-200 bg-white px-9 py-6">
       <h2 className="text-2xl font-semibold text-gray-700">
         {sectionDetails?.name}
       </h2>
@@ -25,14 +25,9 @@ const SectionDetails = ({
           placeholder="Search"
           onChange={(e) => setSearchText(e.target.value)}
         />
-        <Link to={`/sections/${sectionDetails?.id}/add-question`}>
-          <button
-            className="h-9 rounded-lg bg-primary px-5 text-xs text-[#F0FDF4]"
-            id="addQuestion"
-          >
-            + Add Question
-          </button>
-        </Link>
+        <button className="h-9 rounded-lg bg-primary px-5 text-xs text-[#F0FDF4]">
+          + Add Question
+        </button>
       </div>
 
       {/* QUESTION LIST  */}

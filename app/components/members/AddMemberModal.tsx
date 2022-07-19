@@ -1,6 +1,6 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
-import type { Role } from '../Interface'
+import type { Role } from '~/interface/Interface'
 import { Form, useTransition } from '@remix-run/react'
 import { Fragment } from 'react'
 export default function AddMemberModal({
@@ -8,21 +8,16 @@ export default function AddMemberModal({
   open,
   setOpen,
 }: {
-  roles: Role[],
-  open: boolean,
+  roles: Role[]
+  open: boolean
   setOpen: (e: boolean) => void
 }) {
-
   const transition = useTransition()
 
   return (
     <div>
       <Transition.Root show={open} as={Fragment}>
-        <Dialog
-          as="div"
-          className="relative z-10"
-          onClose={setOpen}
-        >
+        <Dialog as="div" className="relative z-10" onClose={setOpen}>
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -67,7 +62,7 @@ export default function AddMemberModal({
                         First Name
                       </label>
                       <input
-                        id='firstName'
+                        id="firstName"
                         type="text"
                         name="firstName"
                         className=" my-1.5 h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
@@ -79,7 +74,7 @@ export default function AddMemberModal({
                         Last Name
                       </label>
                       <input
-                        id='lastName'
+                        id="lastName"
                         type="text"
                         name="lastName"
                         className="my-1.5 h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
@@ -92,7 +87,7 @@ export default function AddMemberModal({
                       Email
                     </label>
                     <input
-                      id='email'
+                      id="email"
                       type="email"
                       name="email"
                       className="my-1.5 h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
@@ -101,11 +96,16 @@ export default function AddMemberModal({
                   </div>
                   <div className="pb-6">
                     <div>
-                      <label htmlFor="" className='text-gray-800'>Role</label>
+                      <label htmlFor="" className="text-gray-800">
+                        Role
+                      </label>
                     </div>
-                    <div className='my-1.5 rounded-lg border border-gray-200 px-4'  >
-                      <select name="roleId" className="test-base h-11 w-full focus:outline-none">
-                        {roles.map(role => {
+                    <div className="my-1.5 rounded-lg border border-gray-200 px-4">
+                      <select
+                        name="roleId"
+                        className="test-base h-11 w-full focus:outline-none"
+                      >
+                        {roles.map((role) => {
                           return (
                             <option key={role.id} value={role?.id}>
                               {role?.name}
@@ -128,13 +128,13 @@ export default function AddMemberModal({
                       type="submit"
                       name="addMember"
                       value={JSON.stringify({ action: 'add' })}
-                      className={`h-9 rounded-md bg-primary px-4 text-sm text-[#F0FDF4] ${transition.state === "submitting" ? 'disabled' : ''}`}
+                      className={`h-9 rounded-md bg-primary px-4 text-sm text-[#F0FDF4] ${
+                        transition.state === 'submitting' ? 'disabled' : ''
+                      }`}
                       onClick={() => setOpen(false)}
-                      disabled={transition.state === "submitting"}
+                      disabled={transition.state === 'submitting'}
                     >
-                      {transition.state === "submitting"
-                        ? "Adding..."
-                        : "Add"}
+                      {transition.state === 'submitting' ? 'Adding...' : 'Add'}
                     </button>
                   </div>
                 </Dialog.Panel>

@@ -37,7 +37,7 @@ export interface CheckboxProps {
 }
 export interface QuestionType {
   id: string
-  value?: string
+  value: string
   displayName: string
   createdAt?: Date
 }

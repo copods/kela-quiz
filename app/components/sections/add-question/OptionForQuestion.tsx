@@ -1,18 +1,53 @@
-import { Icon } from "@iconify/react";
-import type { QuestionType } from "~/components/Interface";
-import cuid from "cuid";
-import QuillEditor from "~/components/QuillEditor.client";
-import { ClientOnly } from "remix-utils";
+import { Icon } from '@iconify/react'
+import type { QuestionType } from '~/components/Interface'
+import cuid from 'cuid'
+import QuillEditor from '~/components/QuillEditor.client'
+import { ClientOnly } from 'remix-utils'
+import Toggle from '~/components/form/Toggle'
 
-export default function OptionForQuestion({ questionTypeList, selectedTypeOfQuestion, options, setOptions, singleChoiceAnswer, setSingleChoiceAnswer, textAnswer, setTextAnswer, textCorrectAnswer, setTextCorrectAnswer }: { questionTypeList: QuestionType[], selectedTypeOfQuestion: string, options: Array<{ option: string, isCorrect: boolean, id: string }>, setOptions: (e: any) => void, singleChoiceAnswer: string, setSingleChoiceAnswer: (e: string) => void, textAnswer: string, setTextAnswer: (e: string) => void, textCorrectAnswer: any, setTextCorrectAnswer: (e: any) => void }) {
+interface x {
+  id: string
+  answer: string
+}
+interface opt {
+  option: string
+  isCorrect: boolean
+  id: string
+}
+
+export default function OptionForQuestion({
+  questionTypeList,
+  selectedTypeOfQuestion,
+  options,
+  setOptions,
+  singleChoiceAnswer,
+  setSingleChoiceAnswer,
+  textAnswer,
+  setTextAnswer,
+  textCorrectAnswer,
+  setTextCorrectAnswer,
+  checkOrder,
+  setCheckOrder,
+}: {
+  questionTypeList: QuestionType[]
+  selectedTypeOfQuestion: string
+  options: Array<{ option: string; isCorrect: boolean; id: string }>
+  setOptions: (e: any) => void
+  singleChoiceAnswer: string
+  setSingleChoiceAnswer: (e: string) => void
+  textAnswer: string
+  setTextAnswer: (e: string) => void
+  textCorrectAnswer: Array<{ id: string; answer: string }>
+  setTextCorrectAnswer: (e: any) => void
+  checkOrder: boolean
+  setCheckOrder: (e: boolean) => void
+}) {
   const addOptionArea = () => {
-    console.log('here')
     setOptions([...options, { option: '', isCorrect: false, id: cuid() }])
   }
 
   const deleteOption = (index: number) => {
-    if (options.length === 1)
-      return;
+    if (options.length === 1) return
     setOptions((e: any) => {
       e.splice(index, 1)
       return [...e]
@@ -40,8 +75,8 @@ export default function OptionForQuestion({ questionTypeList, selectedTypeOfQues
     })
   }
 
-  const updateTextAnswer = (textAns : string,index:number) =>{
-    setTextCorrectAnswer((e: any) => {
+  const updateTextAnswer = (textAns: string, index: number) => {
+    setTextCorrectAnswer((e: x[]) => {
       e[index].answer = textAns
       return [...e]
     })
@@ -50,59 +85,121 @@ export default function OptionForQuestion({ questionTypeList, selectedTypeOfQues
 
   getQuestionType(selectedTypeOfQuestion)
 
-
   return (
-    <div className="flex-1 flex flex-col gap-6">
-      <div className='flex items-center flex-row justify-between'>
-        <div className='text-gray-600 text-base leading-6 font-medium'>Select Correct Option</div>
-        <button className='bg-primary text-white rounded-lg  text-xs h-9 flex items-center px-5' onClick={addOptionArea} >
+    <div className="flex flex-1 flex-col gap-6">
+      <div className="flex flex-row items-center justify-between">
+        {getQuestionType(selectedTypeOfQuestion) === 'MULTIPLE_CHOICE' ||
+        getQuestionType(selectedTypeOfQuestion) === 'SINGLE_CHOICE' ? (
+          <div className="text-base font-medium leading-6 text-gray-600">
+            Select Correct Option
+          </div>
+        ) : (
+          <div className="flex items-center justify-center gap-2 text-base font-medium leading-6 text-gray-600">
+            Check Order
+            <span>
+              <Toggle toggle={checkOrder} onToggleChange={setCheckOrder} />
+            </span>
+          </div>
+        )}
+
+        <button
+          className="flex h-9 items-center  rounded-lg bg-primary px-5 text-xs text-white"
+          onClick={addOptionArea}
+        >
           <Icon icon="fluent:add-16-filled"></Icon>
           <span>Add Options</span>
         </button>
       </div>
 
-      <div className='h-full flex flex-col gap-4 flex-1  overflow-auto'>
-        {(getQuestionType(selectedTypeOfQuestion) === 'MULTIPLE_CHOICE' || getQuestionType(selectedTypeOfQuestion) === 'SINGLE_CHOICE') && options.map((option, index) => {
-          return (
-            <div className='flex items-center gap-2.5' key={option.id}>
-              {getQuestionType(selectedTypeOfQuestion) === 'MULTIPLE_CHOICE'
-                ? <input id="checkBox" type="checkbox" value={option.id} onChange={() => { checkBoxToggle(index) }} checked={option.isCorrect} />
-                : getQuestionType(selectedTypeOfQuestion) === 'SINGLE_CHOICE' && <input id="radioButton" type="radio" name="radioChoice" value={option.id} onChange={(e) => setSingleChoiceAnswer(e.target.value)} />}
-              <div className='flex-1' id="optionEditor">
-                {
-
-                  <ClientOnly fallback={<div></div>}>
-                    {() => <QuillEditor quillPlaceholder={"option"} fullAccess={false} onTextChange={(e) => { updateOption(e, index) }} />}
-                  </ClientOnly>
-                }
+      <div className="flex h-full flex-1 flex-col gap-4  overflow-auto">
+        {(getQuestionType(selectedTypeOfQuestion) === 'MULTIPLE_CHOICE' ||
+          getQuestionType(selectedTypeOfQuestion) === 'SINGLE_CHOICE') &&
+          options.map((option, index) => {
+            return (
+              <div className="flex items-center gap-2.5" key={option.id}>
+                {getQuestionType(selectedTypeOfQuestion) ===
+                'MULTIPLE_CHOICE' ? (
+                  <input
+                    id="checkBox"
+                    type="checkbox"
+                    value={option.id}
+                    onChange={() => {
+                      checkBoxToggle(index)
+                    }}
+                    checked={option.isCorrect}
+                  />
+                ) : (
+                  getQuestionType(selectedTypeOfQuestion) ===
+                    'SINGLE_CHOICE' && (
+                    <input
+                      id="radioButton"
+                      type="radio"
+                      name="radioChoice"
+                      value={option.id}
+                      onChange={(e) => setSingleChoiceAnswer(e.target.value)}
+                    />
+                  )
+                )}
+                <div className="h-32 flex-1" id="optionEditor">
+                  {
+                    <ClientOnly fallback={<div></div>}>
+                      {() => (
+                        <QuillEditor
+                          quillPlaceholder={'option'}
+                          fullAccess={false}
+                          onTextChange={(e) => {
+                            updateOption(e, index)
+                          }}
+                        />
+                      )}
+                    </ClientOnly>
+                  }
+                </div>
+                <Icon
+                  onClick={() => deleteOption(index)}
+                  tabIndex={0}
+                  icon="ic:outline-delete-outline"
+                  className={`h-6 w-6 ${index} ${
+                    options.length < 2
+                      ? 'cursor-not-allowed text-red-400'
+                      : 'cursor-pointer text-red-600'
+                  }`}
+                ></Icon>
               </div>
-              <Icon onClick={() => deleteOption(index)} tabIndex={0}
-                icon="ic:outline-delete-outline"
-                className={`h-6 w-6 ${index} ${options.length < 2 ? 'cursor-not-allowed text-red-400' : 'cursor-pointer text-red-600'}`}
-              ></Icon>
-            </div>
-          )
-        })}
+            )
+          })}
 
-        {getQuestionType(selectedTypeOfQuestion) === 'TEXT' && textCorrectAnswer.map((option: {id:string, answer:string}, index: number) => {
-          return (
-            <div className='flex items-center gap-2.5' key={option.id}>
-              <div className='flex-1' id="optionEditor">
-
-                {/* <input className='h-20 p-4 rounded-lg bg-white border border-gray-300 w-full' value={textAnswer} onChange={(e) => { setTextAnswer( e.target.value ) }}></input> */}
-                <input className='h-20 p-4 rounded-lg bg-white border border-gray-300 w-full' value={option.answer} onChange={(e) => { updateTextAnswer( e.target.value, index ) }}></input>
-                {/* {setTextCorrectAnswer([...textCorrectAnswer,{id:option.id , answer:textAnswer}])} */}
-
-              </div>
-              <Icon onClick={() => deleteOption(index)} tabIndex={0}
-                icon="ic:outline-delete-outline"
-                className={`h-6 w-6 ${index} ${options.length < 2 ? 'cursor-not-allowed text-red-400' : 'cursor-pointer text-red-600'}`}
-              ></Icon>
-            </div>
-          )
-        })}
+        {getQuestionType(selectedTypeOfQuestion) === 'TEXT' &&
+          textCorrectAnswer.map(
+            (option: { id: string; answer: string }, index: number) => {
+              return (
+                <div className="flex items-center gap-2.5" key={option.id}>
+                  <div className="flex-1" id="optionEditor">
+                    {/* <input className='h-20 p-4 rounded-lg bg-white border border-gray-300 w-full' value={textAnswer} onChange={(e) => { setTextAnswer( e.target.value ) }}></input> */}
+                    <input
+                      className="h-20 w-full rounded-lg border border-gray-300 bg-white p-4"
+                      value={option.answer}
+                      onChange={(e) => {
+                        updateTextAnswer(e.target.value, index)
+                      }}
+                    ></input>
+                    {/* {setTextCorrectAnswer([...textCorrectAnswer,{id:option.id , answer:textAnswer}])} */}
+                  </div>
+                  <Icon
+                    onClick={() => deleteOption(index)}
+                    tabIndex={0}
+                    icon="ic:outline-delete-outline"
+                    className={`h-6 w-6 ${index} ${
+                      options.length < 2
+                        ? 'cursor-not-allowed text-red-400'
+                        : 'cursor-pointer text-red-600'
+                    }`}
+                  ></Icon>
+                </div>
+              )
+            }
+          )}
       </div>
     </div>
   )
 }
-
