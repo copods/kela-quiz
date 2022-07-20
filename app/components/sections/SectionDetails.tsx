@@ -26,7 +26,10 @@ const SectionDetails = ({
           onChange={(e) => setSearchText(e.target.value)}
         />
         <Link to={`/sections/${sectionDetails?.id}/add-question`}>
-          <button className="h-9 rounded-lg bg-primary px-5 text-xs text-[#F0FDF4]">
+          <button
+            id="addQuestion"
+            className="h-9 rounded-lg bg-primary px-5 text-xs text-[#F0FDF4]"
+          >
             + Add Question
           </button>
         </Link>
