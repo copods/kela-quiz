@@ -44,6 +44,7 @@ const AddQuestionInSection = ({
       id: cuid(),
     },
   ])
+
   const [textCorrectAnswer, setTextCorrectAnswer] = useState([
     {
       id: cuid(),

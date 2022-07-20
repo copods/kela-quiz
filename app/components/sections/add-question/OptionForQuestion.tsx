@@ -60,12 +60,13 @@ export default function OptionForQuestion({
   }
 
   const updateOption = (opt: string, index: number) => {
-    setOptions(
-      (e: Array<{ option: string; isCorrect: boolean; id: string }>) => {
-        e[index].option = opt
-        return [...e]
-      }
-    )
+    // setOptions(
+    //   (e: Array<{ option: string; isCorrect: boolean; id: string }>) => {
+    //     e[index].option = opt
+    //     return [...e]
+    //   }
+    // )
+    options[index].option = opt
   }
 
   const checkBoxToggle = (index: number) => {
