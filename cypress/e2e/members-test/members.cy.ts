@@ -1,19 +1,6 @@
 /// <reference types="Cypress"/>
 
 describe('Test for members', () => {
-  it('Sample Login', () => {
-    cy.visit('/sign-in')
-    cy.get('#email')
-      .clear()
-      .type('careers@copods.co')
-      .should('have.value', 'careers@copods.co')
-    cy.get('#password')
-      .clear()
-      .type('kQuiz@copods')
-      .should('have.value', 'kQuiz@copods')
-    cy.findByRole('button').click()
-  })
-
   it('Test for recdirect to members page', () => {
     cy.visit('/sign-in')
     cy.get('#email')
@@ -42,18 +29,21 @@ describe('Test for members', () => {
     cy.findByRole('button').click()
     cy.get('a').find('#Members').should('have.text', 'Members').click()
     cy.get('#addMember').should('have.text', '+ Add Member').click()
+    cy.get('#addpopupModel').should('be.visible')
     cy.get('#firstName').clear().type('hinata').should('have.value', 'hinata')
     cy.get('#lastName').clear().type('hyuga').should('have.value', 'hyuga')
     cy.get('#email')
       .clear()
       .type('hinatahyuga@konoha.co')
       .should('have.value', 'hinatahyuga@konoha.co')
-    cy.get('select')
-      .select('Recruiter')
-      .should('have.value', 'cl4xvjdqs000309jp3rwiefp8')
+    cy.get('select').select('Recruiter')
     cy.get('.justify-end > .bg-primary').click()
     cy.get('.Toastify__toast').find('.Toastify__close-button').click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/members')
+
+    cy.intercept('/members').as('membersPage')
+    cy.get('.memberRow').each((item) => {
+      cy.contains('hinatahyuga@konoha.co')
+    })
   })
 
   it('Test for add-members popUp cancel button', () => {
@@ -72,7 +62,6 @@ describe('Test for members', () => {
     cy.get('#cancelAddButton').should('have.text', 'Cancel').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/members')
   })
-
   it('Test for Delete member popup cancel button', () => {
     cy.visit('/sign-in')
     cy.get('#email')
@@ -97,6 +86,7 @@ describe('Test for members', () => {
             .click()
         })
 
+      cy.get('#deleteDialog').should('be.visible')
       cy.get('#cancelDeletePopUp').should('have.text', 'Cancel').click()
       cy.location('pathname', { timeout: 60000 }).should('include', '/members')
     })
@@ -125,8 +115,12 @@ describe('Test for members', () => {
             .should('be.visible')
             .click()
         })
-      cy.get('.ConfirmDelete').should('have.text', 'Delete').click()
+      cy.get('.confirm-delete').should('have.text', 'Delete').click()
       cy.get('.Toastify__toast').find('.Toastify__close-button  ').click()
+      cy.intercept('/members').as('membersPage')
+      cy.get('.memberRow').each((item) => {
+        cy.contains('hinata hyuga').should('not.exist')
+      })
       cy.location('pathname', { timeout: 60000 }).should('include', '/members')
       return false
     })
