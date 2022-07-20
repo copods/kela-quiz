@@ -10,7 +10,13 @@ module.exports = {
       },
       minWidth: {
         260: '260px',
-        sectionCard: '330px'
+        sectionCard: '330px',
+      },
+      width: {
+        sectionCard: `30%`,
+      },
+      borderRadius: {
+        1: '1px',
       },
       width: {
         sectionCard: `30%`
