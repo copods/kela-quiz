@@ -146,6 +146,7 @@ export default function OptionForQuestion({
                     <ClientOnly fallback={<div></div>}>
                       {() => (
                         <QuillEditor
+                          id={index + ''}
                           quillPlaceholder={'option'}
                           fullAccess={false}
                           onTextChange={(e) => {
