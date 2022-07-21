@@ -7,7 +7,7 @@
 }
 
 .active_nav_link div #tabIcon {
-  color: #353988;
+  color: #353988 !important;
 }
 .active_nav_link div span p {
   color: #353988 !important;
