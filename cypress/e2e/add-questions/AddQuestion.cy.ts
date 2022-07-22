@@ -12,7 +12,8 @@ describe('Test for Add Question', () => {
     cy.get('a').find('#Sections').should('have.text', 'Sections').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('.px-5').click()
-    cy.get("#headlessui-dialog-panel-5", { timeout: 10000 }).should("be.visible")
+    // cy.get("#headlessui-dialog-panel-5", { timeout: 10000 }).should("be.visible")
+    cy.get(".addSectionDilog", { timeout: 10000 }).should("be.visible")
     cy.get("input#sectionName").type(`Aptitude - ${new Date().getTime()}`)
     cy.get('textarea#sectionDescription').type(`Aptitude - ${new Date().getTime()} Description`)
     cy.get("button#submitButton").should("have.text", "Add").click()
@@ -34,7 +35,8 @@ describe('Test for Add Question', () => {
     cy.get('a').find('#Sections').should('have.text', 'Sections').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('.px-5').click()
-    cy.get("#headlessui-dialog-panel-5", { timeout: 10000 }).should("be.visible")
+    // cy.get("#headlessui-dialog-panel-5", { timeout: 10000 }).should("be.visible")
+    cy.get(".addSectionDilog", { timeout: 10000 }).should("be.visible")
     cy.get("input#sectionName").type(`Aptitude - ${new Date().getTime()}`)
     cy.get('textarea#sectionDescription').type(`Aptitude - ${new Date().getTime()} Description`)
     cy.get("button#submitButton").should("have.text", "Add").click()
@@ -58,7 +60,8 @@ describe('Test for Add Question', () => {
     cy.get('a').find('#Sections').should('have.text', 'Sections').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('.px-5').click()
-    cy.get("#headlessui-dialog-panel-5", { timeout: 10000 }).should("be.visible")
+    // cy.get("#headlessui-dialog-panel-5", { timeout: 10000 }).should("be.visible")
+    cy.get(".addSectionDilog", { timeout: 10000 }).should("be.visible")
     cy.get("input#sectionName").type(`Aptitude - ${new Date().getTime()}`)
     cy.get('textarea#sectionDescription').type(`Aptitude - ${new Date().getTime()} Description`)
     cy.get("button#submitButton").should("have.text", "Add").click()
@@ -82,7 +85,8 @@ describe('Test for Add Question', () => {
     cy.get('a').find('#Sections').should('have.text', 'Sections').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('.px-5').click()
-    cy.get("#headlessui-dialog-panel-5", { timeout: 10000 }).should("be.visible")
+    // cy.get("#headlessui-dialog-panel-5", { timeout: 10000 }).should("be.visible")
+    cy.get(".addSectionDilog", { timeout: 10000 }).should("be.visible")
     cy.get("input#sectionName").type(`Aptitude - ${new Date().getTime()}`)
     cy.get('textarea#sectionDescription').type(`Aptitude - ${new Date().getTime()} Description`)
     cy.get("button#submitButton").should("have.text", "Add").click()
@@ -133,7 +137,8 @@ describe('Test for Add Question', () => {
     cy.get('a').find('#Sections').should('have.text', 'Sections').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('.px-5').click()
-    cy.get("#headlessui-dialog-panel-5", { timeout: 10000 }).should("be.visible")
+    // cy.get("#headlessui-dialog-panel-5", { timeout: 10000 }).should("be.visible")
+    cy.get(".addSectionDilog", { timeout: 10000 }).should("be.visible")
     cy.get("input#sectionName").type(`Aptitude - ${new Date().getTime()}`)
     cy.get('textarea#sectionDescription').type(`Aptitude - ${new Date().getTime()} Description`)
     cy.get("button#submitButton").should("have.text", "Add").click()
@@ -184,7 +189,8 @@ describe('Test for Add Question', () => {
     cy.get('a').find('#Sections').should('have.text', 'Sections').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('.px-5').click()
-    cy.get("#headlessui-dialog-panel-5", { timeout: 10000 }).should("be.visible")
+    // cy.get("#headlessui-dialog-panel-5", { timeout: 10000 }).should("be.visible")
+    cy.get(".addSectionDilog", { timeout: 10000 }).should("be.visible")
     cy.get("input#sectionName").type(`Aptitude - ${new Date().getTime()}`)
     cy.get('textarea#sectionDescription').type(`Aptitude - ${new Date().getTime()} Description`)
     cy.get("button#submitButton").should("have.text", "Add").click()
@@ -237,7 +243,8 @@ describe('Test for Add Question', () => {
     cy.get('a').find('#Sections').should('have.text', 'Sections').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('.px-5').click()
-    cy.get("#headlessui-dialog-panel-5", { timeout: 10000 }).should("be.visible")
+    // cy.get("#headlessui-dialog-panel-5", { timeout: 10000 }).should("be.visible")
+    cy.get(".addSectionDilog", { timeout: 10000 }).should("be.visible")
     cy.get("input#sectionName").type(`Aptitude - ${new Date().getTime()}`)
     cy.get('textarea#sectionDescription').type(`Aptitude - ${new Date().getTime()} Description`)
     cy.get("button#submitButton").should("have.text", "Add").click()
@@ -284,7 +291,8 @@ describe('Test for Add Question', () => {
     cy.get('a').find('#Sections').should('have.text', 'Sections').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('.px-5').click()
-    cy.get("#headlessui-dialog-panel-5", { timeout: 10000 }).should("be.visible")
+    // cy.get("#headlessui-dialog-panel-5", { timeout: 10000 }).should("be.visible")
+    cy.get(".addSectionDilog", { timeout: 10000 }).should("be.visible")
     cy.get("input#sectionName").type(`Aptitude - ${new Date().getTime()}`)
     cy.get('textarea#sectionDescription').type(`Aptitude - ${new Date().getTime()} Description`)
     cy.get("button#submitButton").should("have.text", "Add").click()
@@ -331,7 +339,8 @@ describe('Test for Add Question', () => {
     cy.get('a').find('#Sections').should('have.text', 'Sections').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('.px-5').click()
-    cy.get("#headlessui-dialog-panel-5", { timeout: 10000 }).should("be.visible")
+    // cy.get("#headlessui-dialog-panel-5", { timeout: 10000 }).should("be.visible")
+    cy.get(".addSectionDilog", { timeout: 10000 }).should("be.visible")
     cy.get("input#sectionName").type(`Aptitude - ${new Date().getTime()}`)
     cy.get('textarea#sectionDescription').type(`Aptitude - ${new Date().getTime()} Description`)
     cy.get("button#submitButton").should("have.text", "Add").click()
@@ -356,7 +365,8 @@ describe('Test for Add Question', () => {
     cy.get('a').find('#Sections').should('have.text', 'Sections').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('.px-5').click()
-    cy.get("#headlessui-dialog-panel-5", { timeout: 10000 }).should("be.visible")
+    // cy.get("#headlessui-dialog-panel-5", { timeout: 10000 }).should("be.visible")
+    cy.get(".addSectionDilog", { timeout: 10000 }).should("be.visible")
     cy.get("input#sectionName").type(`Aptitude - ${new Date().getTime()}`)
     cy.get('textarea#sectionDescription').type(`Aptitude - ${new Date().getTime()} Description`)
     cy.get("button#submitButton").should("have.text", "Add").click()
@@ -381,7 +391,8 @@ describe('Test for Add Question', () => {
     cy.get('a').find('#Sections').should('have.text', 'Sections').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('.px-5').click()
-    cy.get("#headlessui-dialog-panel-5", { timeout: 10000 }).should("be.visible")
+    // cy.get("#headlessui-dialog-panel-5", { timeout: 10000 }).should("be.visible")
+    cy.get(".addSectionDilog", { timeout: 10000 }).should("be.visible")
     cy.get("input#sectionName").type(`Aptitude - ${new Date().getTime()}`)
     cy.get('textarea#sectionDescription').type(`Aptitude - ${new Date().getTime()} Description`)
     cy.get("button#submitButton").should("have.text", "Add").click()
@@ -393,56 +404,55 @@ describe('Test for Add Question', () => {
     cy.get('.Toastify__toast').should('have.text', "Enter the Question")
   })
 
-  // it('Verifying if any Option is empty or not', () => {
-  //   cy.visit('/sign-in')
-  //   cy.get('#email').clear()
-  //     .type('careers@copods.co')
-  //     .should('have.value', 'careers@copods.co')
-  //   cy.get('#password').clear()
-  //     .type('kQuiz@copods')
-  //     .should('have.value', 'kQuiz@copods')
-  //   cy.findByRole('button').click()
+  it('Verifying if any Option is empty or not', () => {
+    cy.visit('/sign-in')
+    cy.get('#email').clear()
+      .type('careers@copods.co')
+      .should('have.value', 'careers@copods.co')
+    cy.get('#password').clear()
+      .type('kQuiz@copods')
+      .should('have.value', 'kQuiz@copods')
+    cy.findByRole('button').click()
 
-  //   cy.get('a').find('#Sections').should('have.text', 'Sections').click()
-  //   cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
-  //   cy.get('.px-5').click()
-  //   cy.get("#headlessui-dialog-panel-5", { timeout: 10000 }).should("be.visible")
-  //   cy.get("input#sectionName").type(`Aptitude - ${new Date().getTime()}`)
-  //   cy.get('textarea#sectionDescription').type(`Aptitude - ${new Date().getTime()} Description`)
-  //   cy.get("button#submitButton").should("have.text", "Add").click()
-  //   cy.get('#sectionCard').first().click()
-  //   cy.get('#addQuestion').should('have.text', '+ Add Question').click()
-  //   cy.location('pathname', { timeout: 60000 }).should('include', '/add-question')
-  //   let flag = 0;
+    cy.get('a').find('#Sections').should('have.text', 'Sections').click()
+    cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
+    cy.get('.px-5').click()
+    // cy.get("#headlessui-dialog-panel-5", { timeout: 10000 }).should("be.visible")
+    cy.get(".addSectionDilog", { timeout: 10000 }).should("be.visible")
+    cy.get("input#sectionName").type(`Aptitude - ${new Date().getTime()}`)
+    cy.get('textarea#sectionDescription').type(`Aptitude - ${new Date().getTime()} Description`)
+    cy.get("button#submitButton").should("have.text", "Add").click()
+    cy.get('#sectionCard').first().click()
+    cy.get('#addQuestion').should('have.text', '+ Add Question').click()
+    cy.location('pathname', { timeout: 60000 }).should('include', '/add-question')
+    let flag = 0;
 
-  //   cy.get('#dropdown').click()
+    cy.get('#dropdown').click()
 
-  //   cy.get('ul').within(() => {
-  //     cy.get("li").within(() => {
-  //       cy.get('div').then((el) => {
-  //         [...el].forEach((el) => {
-  //           if (el.innerText === "Multiple Choice") {
-  //             el.click()
-  //           }
-  //         })
-  //       })
-  //     })
-  //   })
+    cy.get('ul').within(() => {
+      cy.get("li").within(() => {
+        cy.get('div').then((el) => {
+          [...el].forEach((el) => {
+            if (el.innerText === "Multiple Choice") {
+              el.click()
+            }
+          })
+        })
+      })
+    })
 
-  //   cy.get(".h-40 > .gap-6 > .flex-col").within(() => {
-  //     cy.get(" #quillEditor ").its('length').then((len) => {
-  //       console.log("length", len)
-  //       let i = 1
-  //       while (i <= len) {
-  //         if (cy.get(":nth-child(i) > #quillEditor").type('{backspace}').should('have.value', "")) {
-  //           flag = 1;
-  //         }
-  //       }
-  //     })
-  //   })
-  //   // if (flag == 1) {
-  //   //   cy.get('#saveAndAddMore').should('have.text', 'Save & Add More').click()
-  //   //   cy.get('.Toastify__toast').should('have.text', 'Enter all the Options')
-  //   // }
-  // })
+    cy.get(".h-40 > .gap-6 > .flex-col").within(() => {
+      cy.get(" #quillEditor ").then((el) => {
+        [...el].forEach((element) => {
+          if(element.innerText === ""){
+            flag=1;
+          }
+        })
+      })
+    })
+    if (flag == 1) {
+      cy.get('#saveAndAddMore').should('have.text', 'Save & Add More').click()
+      cy.get('.Toastify__toast').should('have.text', 'Enter all the Options')
+    }
+  })
 })

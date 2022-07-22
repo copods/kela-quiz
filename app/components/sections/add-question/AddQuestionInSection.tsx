@@ -179,13 +179,14 @@ const AddQuestionInSection = ({
   }
   return (
     <div className="flex h-full flex-col gap-6">
+      <BreadCrumb data={breadCrumbArray} />
       <h1
         title={sectionDetails?.name}
         className="text-3xl font-bold leading-9 text-gray-900"
       >
         {sectionDetails?.name} - Add Question
       </h1>
-      <BreadCrumb data={breadCrumbArray} />
+      {/* <BreadCrumb data={breadCrumbArray} /> */}
 
       <div className="flex h-40 flex-1 flex-row gap-6">
         <QuestionEditor
