@@ -58,7 +58,7 @@ export const action: ActionFunction = async ({ request }) => {
 }
 
 export default function Section() {
-  const data = useLoaderData() as LoaderData
+  const data = useLoaderData() as unknown as LoaderData
 
   const [sectionDetailFull, setSectionDetailFull] = useState(false)
   const [open, setOpen] = useState(false)

@@ -40,7 +40,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 }
 
 export default function Results() {
-  const data = useLoaderData() as LoaderData
+  const data = useLoaderData() as unknown as LoaderData
   if (data.status != 'Success') {
     toast.success('Something went wrong..!')
   }

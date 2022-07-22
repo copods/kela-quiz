@@ -2,7 +2,25 @@ import { Icon } from '@iconify/react'
 import { useState } from 'react'
 import SectionCard from './SectionCard'
 import type { Section } from '~/interface/Interface'
-import { NavLink } from '@remix-run/react'
+import { useResolvedPath, useLocation, NavLink } from '@remix-run/react'
+import {} from '@remix-run/react'
+
+const SectionLink = ({ section }: { section: any }) => {
+  const path = `/sections/${section.id}`
+  const location = useLocation() // to get current location
+  const resolvedPath = useResolvedPath(path) // to get resolved path which would match with current location
+  return (
+    <NavLink to={path} key={section.id}>
+      <SectionCard
+        isActive={location.pathname === resolvedPath.pathname}
+        name={section?.name}
+        createdBy={`${section?.createdBy?.firstName} ${section?.createdBy?.lastName}`}
+        questionsCount={section?._count?.questions}
+        createdAt={section.createdAt}
+      />
+    </NavLink>
+  )
+}
 
 const Sections = ({ data }: { data: { sections: Array<Section> } }) => {
   const [sortDirection, setSortDirection] = useState(true)
@@ -52,24 +70,9 @@ const Sections = ({ data }: { data: { sections: Array<Section> } }) => {
       </div>
 
       {/* list */}
-      {data.sections?.map((section: any) => {
-        return (
-          <NavLink
-            to={'/sections/' + section.id}
-            key={section.id}
-            className={({ isActive }) =>
-              isActive ? 'activeSection' : 'inactiveSection'
-            }
-          >
-            <SectionCard
-              name={section?.name}
-              createdBy={`${section?.createdBy?.firstName} ${section?.createdBy?.lastName}`}
-              questionsCount={section?._count.questions}
-              createdAt={section.createdAt}
-            />
-          </NavLink>
-        )
-      })}
+      {data.sections?.map((section: any) => (
+        <SectionLink key={section.id} section={section} />
+      ))}
       {data.sections.length === 0 && (
         <div className="flex justify-center p-7">No Record Found</div>
       )}
