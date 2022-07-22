@@ -88,7 +88,7 @@ export const action: ActionFunction = async ({ request, params }) => {
 }
 
 export default function Members() {
-  const data = useLoaderData() as LoaderData
+  const data = useLoaderData() as unknown as LoaderData
 
   return (
     <>

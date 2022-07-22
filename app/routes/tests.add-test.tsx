@@ -66,7 +66,7 @@ export const action: ActionFunction = async ({ request }) => {
 }
 
 const AddTest = () => {
-  const data = useLoaderData() as LoaderData
+  const data = useLoaderData() as unknown as LoaderData
   const actionData = useActionData() as any
   const navigate = useNavigate()
   useEffect(() => {
