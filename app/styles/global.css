@@ -6,13 +6,6 @@
   font-family: 'Poppins', sans-serif;
 }
 
-.active_nav_link div #tabIcon {
-  color: #353988 !important;
-}
-.active_nav_link div span p {
-  color: #353988 !important;
-}
-
 .ql-container {
   height: 100% !important;
   flex: 1 1 0% !important;
