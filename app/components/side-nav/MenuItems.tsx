@@ -1,6 +1,5 @@
 import { Icon } from '@iconify/react'
-import { NavLink, useLocation, useResolvedPath } from '@remix-run/react'
-
+import { NavLink, useLocation } from '@remix-run/react'
 export interface tabProps {
   iconClass: string
   itemName: string
