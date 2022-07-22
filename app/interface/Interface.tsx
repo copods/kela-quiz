@@ -49,6 +49,8 @@ export interface TestSection {
   totalQuestions?: number
   time?: number
   order?: number
+  timeInSeconds?: number
+  section?: Section
 }
 
 export interface Section {

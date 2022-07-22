@@ -8,7 +8,6 @@ import SectionDetails from '~/components/sections/SectionDetails'
 type LoaderData = {
   sectionDetails: Awaited<ReturnType<typeof getSectionById>>
 }
-
 export const loader: LoaderFunction = async ({ request, params }) => {
   invariant(params.sectionId, 'sectionId not found')
 

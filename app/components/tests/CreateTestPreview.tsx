@@ -39,8 +39,10 @@ const TestPreview = ({
   const getTotalTime = () => {
     let time = 0
 
-    selectedSections.forEach((section) => (time += section?.time || 0))
-
+    selectedSections.forEach(
+      (section) =>
+        (time += (section?.time ? section.time : section.timeInSeconds) || 0)
+    )
     return time
   }
 
@@ -93,14 +95,16 @@ const TestPreview = ({
                 </div>
                 <div className=" flex max-w-2xl flex-1 items-center justify-between gap-6 rounded-lg border border-gray-300	py-3 px-4 font-normal text-gray-700">
                   <div className="text-base font-semibold text-gray-700">
-                    {section.name}
+                    {section.name ? section.name : section.section?.name}
                   </div>
                   <div className="flex gap-6 text-sm font-normal text-gray-700">
                     <span>
                       {section.totalQuestions ? section.totalQuestions : 0}{' '}
                       Questions
                     </span>
-                    <span>{section.time ? section.time : 0} Mins</span>
+                    <span>
+                      {section.time ? section.time : section.timeInSeconds} Mins
+                    </span>
                   </div>
                 </div>
                 <div className="flex gap-2">

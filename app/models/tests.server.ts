@@ -6,6 +6,13 @@ export async function getTestById({ id }: Pick<Section, 'id'>) {
     where: {
       id,
     },
+    include: {
+      sections: {
+        include: {
+          section: true,
+        },
+      },
+    },
   })
 }
 
