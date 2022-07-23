@@ -29,7 +29,7 @@ describe('Test for members', () => {
     cy.findByRole('button').click()
     cy.get('a').find('#Members').should('have.text', 'Members').click()
     cy.get('#addMember').should('have.text', '+ Add Member').click()
-    cy.get('#addpopupModel').should('be.visible')
+    cy.get('#AddPopUpModel').should('be.visible')
     cy.get('#firstName').clear().type('hinata').should('have.value', 'hinata')
     cy.get('#lastName').clear().type('hyuga').should('have.value', 'hyuga')
     cy.get('#email')
@@ -40,7 +40,6 @@ describe('Test for members', () => {
     cy.get('.justify-end > .bg-primary').click()
     cy.get('.Toastify__toast').find('.Toastify__close-button').click()
 
-    cy.intercept('/members').as('membersPage')
     cy.get('.memberRow').each((item) => {
       cy.contains('hinatahyuga@konoha.co')
     })
@@ -60,7 +59,6 @@ describe('Test for members', () => {
     cy.get('a').find('#Members').should('have.text', 'Members').click()
     cy.get('#addMember').should('have.text', '+ Add Member').click()
     cy.get('#cancelAddButton').should('have.text', 'Cancel').click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/members')
   })
   it('Test for Delete member popup cancel button', () => {
     cy.visit('/sign-in')
@@ -75,7 +73,6 @@ describe('Test for members', () => {
     cy.findByRole('button').click()
     cy.get('a').find('#Members').should('have.text', 'Members').click()
 
-    cy.intercept('/members').as('membersPage')
     cy.get('.memberRow').each((item) => {
       cy.contains('hinata hyuga')
         .parent()
@@ -88,7 +85,6 @@ describe('Test for members', () => {
 
       cy.get('#deleteDialog').should('be.visible')
       cy.get('#cancelDeletePopUp').should('have.text', 'Cancel').click()
-      cy.location('pathname', { timeout: 60000 }).should('include', '/members')
     })
   })
 
@@ -105,7 +101,6 @@ describe('Test for members', () => {
     cy.findByRole('button').click()
     cy.get('a').find('#Members').should('have.text', 'Members').click()
 
-    cy.intercept('/members').as('membersPage')
     cy.get('.memberRow').each((item) => {
       cy.contains('hinata hyuga')
         .parent()

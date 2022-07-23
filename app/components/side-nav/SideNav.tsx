@@ -52,7 +52,7 @@ let sideNavGuide = [
 
 function SideNav() {
   return (
-    <div className="flex h-full flex-col justify-between overflow-auto">
+    <div className="flex h-full flex-col justify-between overflow-auto p-5">
       <div>
         <div className="mb-14 px-1">
           <Header />

@@ -70,7 +70,7 @@ export default function MemberListItem({
             ></Icon>
           </button>
         </div>
-        <DeletePopUp setOpen={setOpen} open={open} onDeleteClick={deleteUser} />
+        <DeletePopUp setOpen={setOpen} open={open} onDelete={deleteUser} />
       </div>
     </div>
   )

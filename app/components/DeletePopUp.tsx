@@ -3,14 +3,14 @@ import { Dialog, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import { Form } from '@remix-run/react'
 
-export default function ConfirmationPopUp({
+export default function DeletePopUp({
   setOpen,
   open,
-  onDeleteClick,
+  onDelete,
 }: {
   open: boolean
   setOpen: (e: boolean) => void
-  onDeleteClick: () => void
+  onDelete: () => void
 }) {
   const cancelButtonRef = useRef(null)
 
@@ -68,7 +68,7 @@ export default function ConfirmationPopUp({
                   </div>
                 </div>
                 <div className=" px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                  <Form method="post" onClick={onDeleteClick}>
+                  <Form method="post" onClick={onDelete}>
                     <button
                       name="delete"
                       type="button"
