@@ -37,7 +37,7 @@ describe('Test for members', () => {
       .type('hinatahyuga@konoha.co')
       .should('have.value', 'hinatahyuga@konoha.co')
     cy.get('select').select('Recruiter')
-    cy.get('.justify-end > .bg-primary').click()
+    cy.get('#addbutton').click()
     cy.get('.Toastify__toast').find('.Toastify__close-button').click()
 
     cy.get('.memberRow').each((item) => {
@@ -116,7 +116,7 @@ describe('Test for members', () => {
       cy.get('.memberRow').each((item) => {
         cy.contains('hinata hyuga').should('not.exist')
       })
-      cy.location('pathname', { timeout: 60000 }).should('include', '/members')
+
       return false
     })
   })
