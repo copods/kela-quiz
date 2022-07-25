@@ -1,65 +1,76 @@
 import { Icon } from '@iconify/react'
 import type { Role, User } from '~/interface/Interface'
-import { Form } from '@remix-run/react'
+
 import moment from 'moment'
+import DeletePopUp from '../DeletePopUp'
+import { useEffect, useState } from 'react'
+import { useSubmit } from '@remix-run/react'
 
 export default function MemberListItem({
   user,
-  disableDelete,
+  loggedInUser,
+  actionStatus,
 }: {
   user: User & { role?: Role }
-  disableDelete: boolean
+  loggedInUser: boolean
+  actionStatus: string | undefined
 }) {
+  const [open, setOpen] = useState(false)
+  useEffect(() => {
+    if (actionStatus == 'Member Added Successfully..!') {
+      setOpen(false)
+    }
+  }, [actionStatus])
+  const openPopUp = () => {
+    if (!loggedInUser) setOpen(!open)
+  }
+  const submit = useSubmit()
+  const deleteUser = () => {
+    submit({ deleteMember: 'delete', id: user.id }, { method: 'post' })
+  }
   return (
     <div className="col-span-full grid grid-cols-10">
-      <div className="col-span-full grid grid-cols-10 border-t-[1px] border-solid border-[#E5E7EB] px-12 py-4">
-        <div className="col-span-2 ">
-          <h1 className="text-base leading-6 text-gray-700">
+      <div
+        id="memberRow"
+        className="col-span-full grid grid-cols-10 border-t-[1px] border-solid border-[#E5E7EB] px-12 py-4"
+      >
+        <div className=" col-span-2 overflow-ellipsis break-all">
+          <span className=" text-base leading-6 text-gray-700">
             {user.firstName} {user.lastName}
-          </h1>
+          </span>
         </div>
-        <div className="col-span-3 ">
-          <h1 className="text-base leading-6 text-gray-700">{user.email}</h1>
+        <div className="col-span-3 overflow-ellipsis break-all">
+          <span className="  text-base leading-6  text-gray-700">
+            {user.email}
+          </span>
         </div>
-        <div className="col-span-2 ">
-          <h1 className="text-base leading-6 text-gray-700">
+        <div className="col-span-2 overflow-ellipsis break-all">
+          <span className=" text-base leading-6 text-gray-700">
             {user?.role?.name}
-          </h1>
+          </span>
         </div>
-        <div className="col-span-2 ">
-          <h1 className="text-base leading-6 text-gray-700">
+        <div className="col-span-2 overflow-ellipsis break-all">
+          <span className=" text-base leading-6 text-gray-700">
             {moment(user?.createdAt).format('DD MMMM YY')}
-          </h1>
+          </span>
         </div>
         <div className="col-span-1">
-          <div className=" flex  gap-5">
-            <div>
-              <button type="submit">
-                <Icon
-                  icon="eva:edit-2-outline"
-                  className="pointer-cursor h-6 w-6 text-blue-900"
-                ></Icon>
-              </button>
-            </div>
-            <div>
-              <Form method="post">
-                <button
-                  type="submit"
-                  name="deleteMember"
-                  disabled={disableDelete}
-                  value={JSON.stringify({ action: 'delete', id: user.id })}
-                >
-                  <Icon
-                    icon="ic:outline-delete-outline"
-                    className={`pointer-cursor h-6 w-6 text-red-500 ${
-                      disableDelete && 'cursor-not-allowed text-red-300'
-                    }`}
-                  ></Icon>
-                </button>
-              </Form>
-            </div>
-          </div>
+          <button
+            id="deleteButton"
+            name="deleteMember"
+            disabled={loggedInUser}
+            value={JSON.stringify({ action: 'delete', id: user.id })}
+          >
+            <Icon
+              onClick={openPopUp}
+              icon="ic:outline-delete-outline"
+              className={`pointer-cursor h-6 w-6 text-red-500 ${
+                loggedInUser && 'cursor-not-allowed text-red-300'
+              }`}
+            ></Icon>
+          </button>
         </div>
+        <DeletePopUp setOpen={setOpen} open={open} onDelete={deleteUser} />
       </div>
     </div>
   )
