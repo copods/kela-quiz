@@ -15,8 +15,6 @@ export default function MembersHeader({
   const [open, setOpen] = useState(false)
   useEffect(() => {
     er ? setOpen(true) : setOpen(false)
-
-    console.log(actionStatus)
   }, [actionStatus, er])
   return (
     <div className="grid grid-cols-12 pb-12">

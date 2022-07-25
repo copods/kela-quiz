@@ -139,8 +139,7 @@ export default function Members() {
       }
     }
   }, [actData])
-  console.log(data)
-  console.log('hh', actData?.errors?.status)
+
   return (
     <AdminLayout>
       <div>
