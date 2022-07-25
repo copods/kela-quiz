@@ -59,9 +59,6 @@ export default function QuillEditor({
     formats,
     placeholder,
   })
-  // const { quill, quillRef, Quill } = useQuill({
-  //   modules: { blotFormatter: {} },
-  // })
 
   if (Quill && !quill) {
     Quill.register('modules/blotFormatter', BlotFormatter)
@@ -70,7 +67,6 @@ export default function QuillEditor({
   useEffect(() => {
     if (quill) {
       quill?.on('text-change', () => {
-        console.log(123)
         onTextChange(quill.root.innerHTML)
       })
     }

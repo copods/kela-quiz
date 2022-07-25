@@ -35,7 +35,7 @@ export default function QuestionEditor({
         <ClientOnly fallback={<div></div>}>
           {() => (
             <QuillEditor
-              id="99"
+              id="editorQuill"
               quillPlaceholder={'question'}
               fullAccess={true}
               onTextChange={(e) => {

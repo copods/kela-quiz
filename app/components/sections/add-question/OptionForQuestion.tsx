@@ -6,7 +6,7 @@ import { ClientOnly } from 'remix-utils'
 import Toggle from '~/components/form/Toggle'
 import type { SetStateAction } from 'react'
 
-interface x {
+interface textAnswerType {
   id: string
   answer: string
 }
@@ -52,20 +52,14 @@ export default function OptionForQuestion({
     )
   }
   const getQuestionType = (id: string) => {
-    for (let qtd of questionTypeList) {
-      if (id === qtd.id) {
-        return qtd.value
+    for (let quesType of questionTypeList) {
+      if (id === quesType.id) {
+        return quesType.value
       }
     }
   }
 
   const updateOption = (opt: string, index: number) => {
-    // setOptions(
-    //   (e: Array<{ option: string; isCorrect: boolean; id: string }>) => {
-    //     e[index].option = opt
-    //     return [...e]
-    //   }
-    // )
     options[index].option = opt
   }
 
@@ -79,13 +73,11 @@ export default function OptionForQuestion({
   }
 
   const updateTextAnswer = (textAns: string, index: number) => {
-    setTextCorrectAnswer((e: x[]) => {
+    setTextCorrectAnswer((e: textAnswerType[]) => {
       e[index].answer = textAns
       return [...e]
     })
   }
-
-  getQuestionType(selectedTypeOfQuestion)
 
   return (
     <div className="flex flex-1 flex-col gap-6">

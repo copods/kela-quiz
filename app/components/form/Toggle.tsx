@@ -7,8 +7,6 @@ export default function Toggle({
   toggle: boolean
   onToggleChange: (e: boolean) => void
 }) {
-  // const [enable, setEnable] = useState(false)
-
   return (
     <div>
       <Switch

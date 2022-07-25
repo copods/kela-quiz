@@ -118,13 +118,6 @@ const AddQuestionInSection = ({
         return
       }
     }
-    // if (
-    //   getQuestionType(selectedTypeOfQuestion) === 'TEXT' &&
-    //   textAnswer.length == 0
-    // ) {
-    //   toast.error('Enter the Text')
-    //   return
-    // }
 
     let testQuestion: {
       question: string
@@ -144,7 +137,6 @@ const AddQuestionInSection = ({
       checkOrder: false,
     }
     if (getQuestionType(selectedTypeOfQuestion) === 'MULTIPLE_CHOICE') {
-      console.log(options)
       options.forEach((option) => {
         var optionForQuestion = {
           id: option.id,
@@ -186,7 +178,6 @@ const AddQuestionInSection = ({
       >
         {sectionDetails?.name} - Add Question
       </h1>
-      {/* <BreadCrumb data={breadCrumbArray} /> */}
 
       <div className="flex h-40 flex-1 flex-row gap-6">
         <QuestionEditor

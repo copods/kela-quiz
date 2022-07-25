@@ -48,7 +48,6 @@ export const action: ActionFunction = async ({ request }) => {
   const question = JSON.parse(formData.get('quesData') as string)
   let ques
 
-  console.log('Call to function to save in DB')
   await addQuestion(
     question.question,
     question.options,
@@ -84,7 +83,6 @@ export default function AddQuestion() {
   const navigate = useNavigate()
   const [addQuestionKey, setAddQuestionKey] = useState(0)
   useEffect(() => {
-    console.log(actionData)
     if (actionData?.success) {
       toast.success(actionData?.success?.data)
       if (actionData.success.addMoreQuestion) {
