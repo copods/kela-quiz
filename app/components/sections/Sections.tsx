@@ -1,8 +1,27 @@
 import { Icon } from '@iconify/react'
 import SectionCard from './SectionCard'
-import type { Section } from '@prisma/client'
 import { NavLink } from '@remix-run/react'
 import DropdownField from '../form/Dropdown'
+import type { Section } from '~/interface/Interface'
+import { useResolvedPath, useLocation, NavLink } from '@remix-run/react'
+import {} from '@remix-run/react'
+
+const SectionLink = ({ section }: { section: any }) => {
+  const path = `/sections/${section.id}`
+  const location = useLocation() // to get current location
+  const resolvedPath = useResolvedPath(path) // to get resolved path which would match with current location
+  return (
+    <NavLink to={path} key={section.id}>
+      <SectionCard
+        isActive={location.pathname === resolvedPath.pathname}
+        name={section?.name}
+        createdBy={`${section?.createdBy?.firstName} ${section?.createdBy?.lastName}`}
+        questionsCount={section?._count?.questions}
+        createdAt={section.createdAt}
+      />
+    </NavLink>
+  )
+}
 
 type SectionType = {
   sections: Section[]
@@ -57,36 +76,12 @@ const Sections = ({
       </div>
 
       {/* list */}
-      <div
-        className="flex flex-col gap-6 overflow-auto pb-6"
-        id="section-cards"
-      >
-        {/* list */}
-        {sections?.map((section: any) => {
-          return (
-            <NavLink
-              to={'/sections/' + section.id + filters}
-              key={section.id}
-              className={({ isActive }) =>
-                isActive ? 'activeSection' : 'inactiveSection'
-              }
-              onClick={() => {
-                setSelectedSection(section.id)
-              }}
-            >
-              <SectionCard
-                name={section?.name}
-                createdBy={`${section?.createdBy?.firstName} ${section?.createdBy?.lastName}`}
-                questionsCount={section?._count?.questions}
-                createdAt={section.createdAt}
-              />
-            </NavLink>
-          )
-        })}
-        {sections.length === 0 && (
-          <div className="flex justify-center p-7">No Record Found</div>
-        )}
-      </div>
+      {data.sections?.map((section: any) => (
+        <SectionLink key={section.id} section={section} />
+      ))}
+      {data.sections.length === 0 && (
+        <div className="flex justify-center p-7">No Record Found</div>
+      )}
     </div>
   )
 }
