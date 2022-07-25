@@ -39,17 +39,35 @@ export default function OptionForQuestion({
   setCheckOrder: (e: boolean) => void
 }) {
   const addOptionArea = () => {
-    setOptions([...options, { option: '', isCorrect: false, id: cuid() }])
+    if (
+      getQuestionType(selectedTypeOfQuestion) === 'MULTIPLE_CHOICE' ||
+      getQuestionType(selectedTypeOfQuestion) === 'SINGLE_CHOICE'
+    ) {
+      setOptions([...options, { option: '', isCorrect: false, id: cuid() }])
+    } else if (getQuestionType(selectedTypeOfQuestion) === 'TEXT') {
+      setTextCorrectAnswer([...textCorrectAnswer, { id: cuid(), answer: '' }])
+    }
   }
 
   const deleteOption = (index: number) => {
-    if (options.length === 1) return
-    setOptions(
-      (e: Array<{ option: string; isCorrect: boolean; id: string }>) => {
+    if (
+      getQuestionType(selectedTypeOfQuestion) === 'MULTIPLE_CHOICE' ||
+      getQuestionType(selectedTypeOfQuestion) === 'SINGLE_CHOICE'
+    ) {
+      if (options.length === 1) return
+      setOptions(
+        (e: Array<{ option: string; isCorrect: boolean; id: string }>) => {
+          e.splice(index, 1)
+          return [...e]
+        }
+      )
+    } else if (getQuestionType(selectedTypeOfQuestion) === 'TEXT') {
+      if (textCorrectAnswer.length === 1) return
+      setTextCorrectAnswer((e: Array<{ id: string; answer: string }>) => {
         e.splice(index, 1)
         return [...e]
-      }
-    )
+      })
+    }
   }
   const getQuestionType = (id: string) => {
     for (let quesType of questionTypeList) {
@@ -183,7 +201,7 @@ export default function OptionForQuestion({
                     tabIndex={0}
                     icon="ic:outline-delete-outline"
                     className={`h-6 w-6 ${index} ${
-                      options.length < 2
+                      textCorrectAnswer.length < 2
                         ? 'cursor-not-allowed text-red-400'
                         : 'cursor-pointer text-red-600'
                     }`}
