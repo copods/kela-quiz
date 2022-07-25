@@ -38,8 +38,8 @@ describe('Test for Section', () => {
         cy.get('textarea').type('Aptitude')
         cy.get("button[type='submit']", { timeout: 10000 }).click()
       })
-    cy.wait(500)
-    cy.get('.activeSection ')
+    cy.wait(1600)
+    cy.get('.border-l-8')
       .find('h2')
       .invoke('text')
       .should((someValue) => {
@@ -111,11 +111,11 @@ describe('Test for Section', () => {
             .invoke('text')
             .then((el) => {
               if (el === 'Name') {
-                    cy.wait(1000)
-                    cy.get('h2').then(($elements) => {
-                      var strings = [...$elements].map(($el) => $el.innerText)
-                      expect(strings).to.deep.equal([...strings].sort())
-                    })    
+                cy.wait(1000)
+                cy.get('h2').then(($elements) => {
+                  var strings = [...$elements].map(($el) => $el.innerText)
+                  expect(strings).to.deep.equal([...strings].sort())
+                })
               } else if (el === 'Created Date') {
                 cy.wait(1000)
                 cy.get('.created-by-date').then(($elements) => {

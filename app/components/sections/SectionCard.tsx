@@ -21,6 +21,7 @@ const SectionCard = ({
           ? 'border border-l-8 border-transparent border-l-primary bg-white pl-[17px] shadow-md'
           : 'border border-gray-300 bg-gray-100'
       }`}
+      id="section-card"
     >
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-semibold text-gray-700">{name}</h2>

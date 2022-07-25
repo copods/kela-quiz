@@ -44,7 +44,7 @@ const Sections = ({
   sortByDetails,
 }: SectionType) => {
   return (
-    <div className="flex h-full w-96 flex-col gap-6 overflow-auto">
+    <div className="flex h-full w-96 flex-col gap-6">
       {/* filters */}
       <div className="flex items-center justify-between ">
         <div className="flex items-center gap-2.5">
@@ -75,12 +75,17 @@ const Sections = ({
       </div>
 
       {/* list */}
-      {sections?.map((section: any) => (
-        <SectionLink key={section.id} section={section} />
-      ))}
-      {sections.length === 0 && (
-        <div className="flex justify-center p-7">No Record Found</div>
-      )}
+      <div
+        className="flex flex-1 flex-col gap-6 overflow-auto"
+        id="section-cards"
+      >
+        {sections?.map((section: any) => (
+          <SectionLink key={section.id} section={section} />
+        ))}
+        {sections.length === 0 && (
+          <div className="flex justify-center p-7">No Record Found</div>
+        )}
+      </div>
     </div>
   )
 }
