@@ -4,7 +4,7 @@ import { redirect } from '@remix-run/node'
 import type { LoaderFunction, ActionFunction } from '@remix-run/node'
 import MembersList from '~/components/members/MembersList'
 import { json } from '@remix-run/node'
-import { useLoaderData } from '@remix-run/react'
+import { useActionData, useLoaderData } from '@remix-run/react'
 import {
   createNewUser,
   deleteUserById,
@@ -12,14 +12,22 @@ import {
   getAllUsers,
 } from '~/models/user.server'
 import MembersHeader from '~/components/members/MembersHeader'
+import { toast } from 'react-toastify'
+import { useEffect } from 'react'
 
-type ActionData = {
+export type ActionData = {
   errors?: {
     firstName?: string
     lastName?: string
     email?: string
     roleId?: string
     title?: string
+    status?: string
+    check?: Date
+  }
+  resp?: {
+    status?: string
+    check?: Date
   }
 }
 type LoaderData = {
@@ -35,18 +43,17 @@ export const loader: LoaderFunction = async ({ request }) => {
   const users = await getAllUsers()
   return json<LoaderData>({ users, roles, userId })
 }
-
-export const action: ActionFunction = async ({ request, params }) => {
+export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
-  const action = formData.get('addMember')
+  const action = JSON.parse(formData.get('addMember') as string)
     ? JSON.parse(formData.get('addMember') as string)
-    : JSON.parse(formData.get('deleteMember') as string)
-
+    : formData.get('deleteMember')
   if (action.action === 'add') {
     const firstName = formData.get('firstName')
     const lastName = formData.get('lastName')
     const email = formData.get('email')
     const roleId = formData.get('roleId')
+
     if (typeof firstName !== 'string' || firstName.length === 0) {
       return json<ActionData>(
         { errors: { firstName: 'firstName is required' } },
@@ -71,35 +78,82 @@ export const action: ActionFunction = async ({ request, params }) => {
         { status: 400 }
       )
     }
+
+    let addHandle = null
+
     await createNewUser({ firstName, lastName, email, roleId })
-    return redirect(`/members`)
+      .then((res) => {
+        addHandle = json<ActionData>(
+          {
+            resp: {
+              status: 'Member Added Successfully..!',
+              check: new Date(),
+            },
+          },
+          { status: 200 }
+        )
+      })
+      .catch((err) => {
+        addHandle = json<ActionData>(
+          { errors: { status: err, check: new Date() } },
+          { status: 400 }
+        )
+      })
+
+    return addHandle
   }
-  if (action.action === 'delete') {
-    if (typeof action.id !== 'string') {
+  if (action === 'delete') {
+    if (typeof formData.get('id') !== 'string') {
       return json<ActionData>(
         { errors: { title: 'Description is required' } },
         { status: 400 }
       )
     }
+    let deleteHandle = null
+    await deleteUserById(formData.get('id') as string)
+      .then((res) => {
+        deleteHandle = json<ActionData>(
+          { resp: { status: 'Deleted Successfully..!' } },
+          { status: 200 }
+        )
+      })
+      .catch((err) => {
+        deleteHandle = json<ActionData>(
+          { errors: { status: err, check: new Date() } },
+          { status: 400 }
+        )
+      })
 
-    await deleteUserById(action.id)
-    return redirect(`/members`)
+    return deleteHandle
   }
 }
-
 export default function Members() {
-  const data = useLoaderData() as unknown as LoaderData
+  const data = useLoaderData() as LoaderData
+  const actData = useActionData() as ActionData
+  useEffect(() => {
+    if (actData) {
+      if (actData.resp?.status) {
+        toast.success(actData.resp?.status)
+      } else if (actData.errors?.status) {
+        toast.error('Something went wrong...!')
+      }
+    }
+  }, [actData])
 
   return (
-    <>
-      <AdminLayout>
-        <div>
-          <div className="">
-            <MembersHeader roles={data.roles} />
-          </div>
-          <MembersList data={data.users} loggedInUser={data.userId} />
-        </div>
-      </AdminLayout>
-    </>
+    <AdminLayout>
+      <div>
+        <MembersHeader
+          roles={data.roles}
+          actionStatus={actData?.resp?.check}
+          er={actData?.errors?.check}
+        />
+        <MembersList
+          data={data.users}
+          actionStatus={actData?.resp?.status}
+          loggedInUser={data.userId}
+        />
+      </div>
+    </AdminLayout>
   )
 }
