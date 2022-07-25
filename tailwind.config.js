@@ -10,14 +10,14 @@ module.exports = {
       },
       minWidth: {
         260: '260px',
-        sectionCard: '330px',
+        sectionCard: '330px'
       },
       width: {
-        sectionCard: `30%`,
+        sectionCard: `30%`
       },
       borderRadius: {
-        1: '1px',
-      },
+        1: '1px'
+      }
     },
   },
   plugins: [],

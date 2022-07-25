@@ -37,64 +37,64 @@ export interface CheckboxProps {
 }
 
 export interface TestSection {
-  id: string
-  name: string
-  description: string
-  createdById: string
-  createdAt: Date
-  updatedAt: Date
-  _count?: { questions: number }
-  createdBy?: User
-  isSelected?: boolean
-  totalQuestions?: number
-  time?: number
+  id: string;
+  name: string;
+  description: string;
+  createdById: string;
+  createdAt: Date;
+  updatedAt: Date;
+  _count?: { questions: number; };
+  createdBy?: User;
+  isSelected?: boolean;
+  totalQuestions?: number;
+  time?: number;
   order?: number
 }
 
 export interface Section {
-  id: string
-  name: string
-  description: string
-  createdById: string
-  createdAt: Date
-  updatedAt: Date
+  id: string;
+  name: string;
+  description: string;
+  createdById: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface User {
-  id: string
-  email: string
-  firstName: string
-  lastName: string
-  roleId: string
-  createdAt: Date
-  updatedAt: Date
+  id: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  roleId: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface Role {
-  id: string
-  name: string
-  createdAt: Date
-  updatedAt: Date
+  id: string;
+  name: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface Question {
-  id: string
-  question: string
-  correctAnswer?: string[]
-  marks?: number
-  questionTypeId?: string
-  sectionId?: string
-  createdById?: string
-  createdAt?: Date
-  updatedAt?: Date
+  id: string;
+  question: string;
+  correctAnswer?: string[];
+  marks?: number;
+  questionTypeId?: string;
+  sectionId?: string;
+  createdById?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export interface Test {
-  id: string
-  name: string
-  description: string
-  createdBy?: User
-  createdById: string
-  createdAt: Date
-  updatedAt: Date
+  id: string;
+  name: string;
+  description: string;
+  createdBy?: User;
+  createdById: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
