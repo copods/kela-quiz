@@ -142,6 +142,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
           onSelectedSectionChange={onSelectedSectionChange}
           name={name}
           description={description}
+          isPreviewEditable
         />
       ) : (
         ''
