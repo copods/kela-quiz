@@ -2,7 +2,7 @@ import { Fragment, useRef } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import { Form } from '@remix-run/react'
-
+import { deletePopUp } from '~/constants/common.constants'
 export default function DeletePopUp({
   setOpen,
   open,
@@ -61,7 +61,7 @@ export default function DeletePopUp({
                     <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                       <div className="mt-2">
                         <p className="text-sm text-gray-500">
-                          Do you want to delete
+                          {deletePopUp.alert}
                         </p>
                       </div>
                     </div>
@@ -75,7 +75,7 @@ export default function DeletePopUp({
                       className={` confirm-delete inline-flex w-full justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto
                       sm:text-sm`}
                     >
-                      Delete
+                      {deletePopUp.delete}
                     </button>
                   </Form>
                   <button
@@ -85,7 +85,7 @@ export default function DeletePopUp({
                     onClick={() => setOpen(false)}
                     ref={cancelButtonRef}
                   >
-                    Cancel
+                    {deletePopUp.cancel}
                   </button>
                 </div>
               </Dialog.Panel>

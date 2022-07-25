@@ -23,9 +23,11 @@ export type ActionData = {
     roleId?: string
     title?: string
     status?: string
+    check?: Date
   }
   resp?: {
     status?: string
+    check?: Date
   }
 }
 type LoaderData = {
@@ -76,18 +78,24 @@ export const action: ActionFunction = async ({ request }) => {
         { status: 400 }
       )
     }
+
     let addHandle = null
 
     await createNewUser({ firstName, lastName, email, roleId })
       .then((res) => {
         addHandle = json<ActionData>(
-          { resp: { status: 'Member Added Successfully..!' } },
+          {
+            resp: {
+              status: 'Member Added Successfully..!',
+              check: new Date(),
+            },
+          },
           { status: 200 }
         )
       })
       .catch((err) => {
         addHandle = json<ActionData>(
-          { errors: { status: err } },
+          { errors: { status: err, check: new Date() } },
           { status: 400 }
         )
       })
@@ -111,7 +119,7 @@ export const action: ActionFunction = async ({ request }) => {
       })
       .catch((err) => {
         deleteHandle = json<ActionData>(
-          { errors: { status: err } },
+          { errors: { status: err, check: new Date() } },
           { status: 400 }
         )
       })
@@ -131,12 +139,15 @@ export default function Members() {
       }
     }
   }, [actData])
+  console.log(data)
+  console.log('hh', actData?.errors?.status)
   return (
     <AdminLayout>
       <div>
         <MembersHeader
           roles={data.roles}
-          actionStatus={actData?.resp?.status}
+          actionStatus={actData?.resp?.check}
+          er={actData?.errors?.check}
         />
         <MembersList
           data={data.users}
