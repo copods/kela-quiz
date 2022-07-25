@@ -1,6 +1,5 @@
 import { Icon } from '@iconify/react'
 import SectionCard from './SectionCard'
-import { NavLink } from '@remix-run/react'
 import DropdownField from '../form/Dropdown'
 import type { Section } from '~/interface/Interface'
 import { useResolvedPath, useLocation, NavLink } from '@remix-run/react'
@@ -45,7 +44,7 @@ const Sections = ({
   sortByDetails,
 }: SectionType) => {
   return (
-    <div className="flex h-full w-96 flex-col gap-6">
+    <div className="flex h-full w-96 flex-col gap-6 overflow-auto">
       {/* filters */}
       <div className="flex items-center justify-between ">
         <div className="flex items-center gap-2.5">
@@ -76,10 +75,10 @@ const Sections = ({
       </div>
 
       {/* list */}
-      {data.sections?.map((section: any) => (
+      {sections?.map((section: any) => (
         <SectionLink key={section.id} section={section} />
       ))}
-      {data.sections.length === 0 && (
+      {sections.length === 0 && (
         <div className="flex justify-center p-7">No Record Found</div>
       )}
     </div>
