@@ -16,7 +16,6 @@ const TestCard = ({
   createdAt: Date
   description: string
 }) => {
-  console.log(id)
   return (
     <div className="rounded-lg border border-gray-200 bg-white p-4">
       <div className="flex items-center justify-between pb-1">

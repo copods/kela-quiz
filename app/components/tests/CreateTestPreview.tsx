@@ -14,7 +14,6 @@ const TestPreview = ({
   onSelectedSectionChange: (e: any) => void
   isPreviewEditable: boolean
 }) => {
-  console.log('isPreviewEditable', isPreviewEditable)
   const moveSection = (index: number, action: string) => {
     if (action == 'up') {
       if (index == 0) {
