@@ -6,22 +6,6 @@
   font-family: 'Poppins', sans-serif;
 }
 
-.active_nav_link div #tabIcon {
-  color: #353988;
-}
-.active_nav_link div span p {
-  color: #353988 !important;
-}
-.ql-container{
-  height:100% !important;
-  flex: 1 1 0% !important;
-}
-#quillEditor{
-  display: flex !important;
-  flex-direction: column !important ;
-  height: 100% !important;
-}
-
 .ql-container {
   height: 100% !important;
   flex: 1 1 0% !important;
@@ -30,17 +14,3 @@
 .Toastify__close-button {
   align-self: center !important;
 }
-/* section active inactive state */
-.activeSection > div {
-  /* pl-[17px] border-transparent shadow-md border-l-8 border-primary */
-  border: 1px solid transparent;
-  border-left: 8px solid #353988;
-  background-color: #ffffff;
-  padding-left: 17px;
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-}
-.inactiveSection > div {
-  border: 1px solid #d1d5db;
-  background-color: #f3f4f6;
-}
-/* end section active inactive state */

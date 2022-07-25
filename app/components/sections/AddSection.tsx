@@ -1,18 +1,27 @@
-import { Form } from '@remix-run/react'
+import { Form, useTransition } from '@remix-run/react'
 import { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
+import type { ActionData } from '~/routes/sections'
 
 const AddSection = ({
   open,
   setOpen,
+  showErrorMessage,
 }: {
   open: boolean
   setOpen: (e: boolean) => void
+  showErrorMessage: ActionData
 }) => {
+  const transition = useTransition()
   return (
     <Transition.Root show={open} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={setOpen}>
+      <Dialog
+        as="div"
+        className="relative z-10"
+        onClose={setOpen}
+        id="modal-dialogue"
+      >
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -73,17 +82,24 @@ const AddSection = ({
                   <button
                     type="button"
                     className="h-9 rounded-md px-4 text-sm text-gray-500"
-                    onClick={() => setOpen(false)}
+                    onClick={() => {
+                      setOpen(false)
+                    }}
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
                     id="submitButton"
-                    className="h-9 rounded-md bg-primary px-4 text-sm text-[#F0FDF4]"
-                    onClick={() => setOpen(false)}
+                    className={`h-9 rounded-md bg-primary px-4 text-sm text-[#F0FDF4] disabled:opacity-80  ${
+                      transition.state === 'submitting' ? 'disabled' : ''
+                    }`}
+                    onClick={() => {
+                      setOpen(false)
+                    }}
+                    disabled={transition.state === 'submitting'}
                   >
-                    Add
+                    {transition.state === 'submitting' ? 'Adding...' : 'Add'}
                   </button>
                 </div>
               </Dialog.Panel>
@@ -94,5 +110,4 @@ const AddSection = ({
     </Transition.Root>
   )
 }
-
 export default AddSection
