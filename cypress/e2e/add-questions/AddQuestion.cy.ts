@@ -12,12 +12,11 @@ describe('Test for Add Question', () => {
     cy.get('a').find('#Sections').should('have.text', 'Sections').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('.px-5').click()
-    // cy.get("#headlessui-dialog-panel-5", { timeout: 10000 }).should("be.visible")
     cy.get(".addSectionDilog", { timeout: 10000 }).should("be.visible")
     cy.get("input#sectionName").type(`Aptitude - ${new Date().getTime()}`)
     cy.get('textarea#sectionDescription').type(`Aptitude - ${new Date().getTime()} Description`)
     cy.get("button#submitButton").should("have.text", "Add").click()
-    cy.get('#sectionCard').first().click()
+    cy.get('#section-card').first().click()
     cy.get('#addQuestion').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/add-question')
   })
@@ -35,12 +34,11 @@ describe('Test for Add Question', () => {
     cy.get('a').find('#Sections').should('have.text', 'Sections').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('.px-5').click()
-    // cy.get("#headlessui-dialog-panel-5", { timeout: 10000 }).should("be.visible")
     cy.get(".addSectionDilog", { timeout: 10000 }).should("be.visible")
     cy.get("input#sectionName").type(`Aptitude - ${new Date().getTime()}`)
     cy.get('textarea#sectionDescription').type(`Aptitude - ${new Date().getTime()} Description`)
     cy.get("button#submitButton").should("have.text", "Add").click()
-    cy.get('#sectionCard').first().click()
+    cy.get('#section-card').first().click()
     cy.get('#addQuestion').should('have.text', '+ Add Question').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/add-question')
     cy.get('#Section').should('have.text', 'Section').click()
@@ -60,16 +58,16 @@ describe('Test for Add Question', () => {
     cy.get('a').find('#Sections').should('have.text', 'Sections').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('.px-5').click()
-    // cy.get("#headlessui-dialog-panel-5", { timeout: 10000 }).should("be.visible")
     cy.get(".addSectionDilog", { timeout: 10000 }).should("be.visible")
     cy.get("input#sectionName").type(`Aptitude - ${new Date().getTime()}`)
     cy.get('textarea#sectionDescription').type(`Aptitude - ${new Date().getTime()} Description`)
     cy.get("button#submitButton").should("have.text", "Add").click()
-    cy.get('#sectionCard').first().click()
+    cy.get('#section-card').first().click()
     cy.get('#addQuestion').should('have.text', '+ Add Question').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/add-question')
     cy.get('#Question').should('have.text', 'Question').click()
-    cy.get('a').should('have.class', 'activeSection')
+    cy.wait(2000);
+    cy.get('a > div').should('have.class', 'border-l-8')
   })
 
   it('Verifying MCQ to have Check Box in options', () => {
@@ -85,21 +83,21 @@ describe('Test for Add Question', () => {
     cy.get('a').find('#Sections').should('have.text', 'Sections').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('.px-5').click()
-    // cy.get("#headlessui-dialog-panel-5", { timeout: 10000 }).should("be.visible")
     cy.get(".addSectionDilog", { timeout: 10000 }).should("be.visible")
     cy.get("input#sectionName").type(`Aptitude - ${new Date().getTime()}`)
     cy.get('textarea#sectionDescription').type(`Aptitude - ${new Date().getTime()} Description`)
     cy.get("button#submitButton").should("have.text", "Add").click()
-    cy.get('#sectionCard').first().click()
+    cy.get('#section-card').first().click()
     cy.get('#addQuestion').should('have.text', '+ Add Question').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/add-question')
-    cy.get('button#headlessui-listbox-button-6').click()
-    var flag = "";
-    cy.get('ul').within(() => {
+    cy.get('h1').wait(2000);
+    cy.get('#dropdown > button').click()
+
+    let flag = "";
+    cy.get('ul[role="listbox"]').within(() => {
       cy.get("li").within(() => {
         cy.get('div').then((el) => {
           [...el].map((el) => {
-            console.log(el);
             if (el.innerText === "Multiple Choice") {
               flag = "CheckBox"
               el.click()
@@ -137,21 +135,21 @@ describe('Test for Add Question', () => {
     cy.get('a').find('#Sections').should('have.text', 'Sections').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('.px-5').click()
-    // cy.get("#headlessui-dialog-panel-5", { timeout: 10000 }).should("be.visible")
     cy.get(".addSectionDilog", { timeout: 10000 }).should("be.visible")
     cy.get("input#sectionName").type(`Aptitude - ${new Date().getTime()}`)
     cy.get('textarea#sectionDescription').type(`Aptitude - ${new Date().getTime()} Description`)
     cy.get("button#submitButton").should("have.text", "Add").click()
-    cy.get('#sectionCard').first().click()
+    cy.get('#section-card').first().click()
     cy.get('#addQuestion').should('have.text', '+ Add Question').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/add-question')
-    cy.get('button#headlessui-listbox-button-6').click()
-    var flag = "";
+    cy.get('h1').wait(2000)
+    cy.get('#dropdown > button').click()
+
+    let flag = "";
     cy.get('ul').within(() => {
       cy.get("li").within(() => {
         cy.get('div').then((el) => {
           [...el].map((el) => {
-            console.log(el);
             if (el.innerText === "Multiple Choice") {
               flag = "CheckBox"
             }
@@ -168,11 +166,11 @@ describe('Test for Add Question', () => {
       })
     })
     if (flag === "CheckBox") {
-      cy.get('#checkBox');
+      cy.get('input[type="checkbox"]');
     } else if (flag === 'RadioButton') {
-      cy.get('#radioButton')
+      cy.get('input[type="radioButton"]')
     } else if (flag === 'TextArea') {
-      cy.get('#textarea')
+      cy.get('input[type="textarea"]')
     }
   })
 
@@ -189,21 +187,21 @@ describe('Test for Add Question', () => {
     cy.get('a').find('#Sections').should('have.text', 'Sections').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('.px-5').click()
-    // cy.get("#headlessui-dialog-panel-5", { timeout: 10000 }).should("be.visible")
     cy.get(".addSectionDilog", { timeout: 10000 }).should("be.visible")
     cy.get("input#sectionName").type(`Aptitude - ${new Date().getTime()}`)
     cy.get('textarea#sectionDescription').type(`Aptitude - ${new Date().getTime()} Description`)
     cy.get("button#submitButton").should("have.text", "Add").click()
-    cy.get('#sectionCard').first().click()
+    cy.get('#section-card').first().click()
     cy.get('#addQuestion').should('have.text', '+ Add Question').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/add-question')
-    cy.get('button#headlessui-listbox-button-6').click()
-    var flag = "";
+    cy.get('h1').wait(2000);
+    cy.get('#dropdown > button').click()
+
+    let flag = "";
     cy.get('ul').within(() => {
       cy.get("li").within(() => {
         cy.get('div').then((el) => {
           [...el].map((el) => {
-            console.log(el);
             if (el.innerText === "Multiple Choice") {
               flag = "CheckBox"
             }
@@ -220,11 +218,11 @@ describe('Test for Add Question', () => {
       })
     })
     if (flag === "CheckBox") {
-      cy.get('#checkBox');
+      cy.get('input[type="checkbox"]');
     } else if (flag === 'RadioButton') {
-      cy.get('#radioButton')
+      cy.get('input[type="radioButton"]')
     } else if (flag === 'TextArea') {
-      cy.get('#textarea')
+      cy.get('input[type="textarea"]')
     }
   })
 
@@ -243,16 +241,16 @@ describe('Test for Add Question', () => {
     cy.get('a').find('#Sections').should('have.text', 'Sections').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('.px-5').click()
-    // cy.get("#headlessui-dialog-panel-5", { timeout: 10000 }).should("be.visible")
     cy.get(".addSectionDilog", { timeout: 10000 }).should("be.visible")
     cy.get("input#sectionName").type(`Aptitude - ${new Date().getTime()}`)
     cy.get('textarea#sectionDescription').type(`Aptitude - ${new Date().getTime()} Description`)
     cy.get("button#submitButton").should("have.text", "Add").click()
-    cy.get('#sectionCard').first().click()
+    cy.get('#section-card').first().click()
     cy.get('#addQuestion').should('have.text', '+ Add Question').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/add-question')
+    cy.get('h1').wait(2000);
 
-    cy.get('#dropdown').click()
+    cy.get('#dropdown > button').click()
 
     cy.get('ul').within(() => {
       cy.get("li").within(() => {
@@ -269,7 +267,6 @@ describe('Test for Add Question', () => {
     cy.get('.h-40 > .gap-6').within(() => {
       cy.get("#quillEditor").its('length').then((len) => {
         lengthBefore = len;
-        console.log(lengthBefore)
       })
       cy.get('.iconify--fluent').click()
       cy.get("#quillEditor").its('length').then((len) => {
@@ -291,17 +288,16 @@ describe('Test for Add Question', () => {
     cy.get('a').find('#Sections').should('have.text', 'Sections').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('.px-5').click()
-    // cy.get("#headlessui-dialog-panel-5", { timeout: 10000 }).should("be.visible")
     cy.get(".addSectionDilog", { timeout: 10000 }).should("be.visible")
     cy.get("input#sectionName").type(`Aptitude - ${new Date().getTime()}`)
     cy.get('textarea#sectionDescription').type(`Aptitude - ${new Date().getTime()} Description`)
     cy.get("button#submitButton").should("have.text", "Add").click()
-    cy.get('#sectionCard').first().click()
+    cy.get('#section-card').first().click()
     cy.get('#addQuestion').should('have.text', '+ Add Question').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/add-question')
+    cy.get('h1').wait(2000);
 
-
-    cy.get('#dropdown').click()
+    cy.get('#dropdown > button').click()
 
     cy.get('ul').within(() => {
       cy.get("li").within(() => {
@@ -339,12 +335,11 @@ describe('Test for Add Question', () => {
     cy.get('a').find('#Sections').should('have.text', 'Sections').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('.px-5').click()
-    // cy.get("#headlessui-dialog-panel-5", { timeout: 10000 }).should("be.visible")
     cy.get(".addSectionDilog", { timeout: 10000 }).should("be.visible")
     cy.get("input#sectionName").type(`Aptitude - ${new Date().getTime()}`)
     cy.get('textarea#sectionDescription').type(`Aptitude - ${new Date().getTime()} Description`)
     cy.get("button#submitButton").should("have.text", "Add").click()
-    cy.get('#sectionCard').first().click()
+    cy.get('#section-card').first().click()
     cy.get('#addQuestion').should('have.text', '+ Add Question').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/add-question')
 
@@ -365,12 +360,11 @@ describe('Test for Add Question', () => {
     cy.get('a').find('#Sections').should('have.text', 'Sections').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('.px-5').click()
-    // cy.get("#headlessui-dialog-panel-5", { timeout: 10000 }).should("be.visible")
     cy.get(".addSectionDilog", { timeout: 10000 }).should("be.visible")
     cy.get("input#sectionName").type(`Aptitude - ${new Date().getTime()}`)
     cy.get('textarea#sectionDescription').type(`Aptitude - ${new Date().getTime()} Description`)
     cy.get("button#submitButton").should("have.text", "Add").click()
-    cy.get('#sectionCard').first().click()
+    cy.get('#section-card').first().click()
     cy.get('#addQuestion').should('have.text', '+ Add Question').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/add-question')
 
@@ -391,12 +385,11 @@ describe('Test for Add Question', () => {
     cy.get('a').find('#Sections').should('have.text', 'Sections').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('.px-5').click()
-    // cy.get("#headlessui-dialog-panel-5", { timeout: 10000 }).should("be.visible")
     cy.get(".addSectionDilog", { timeout: 10000 }).should("be.visible")
     cy.get("input#sectionName").type(`Aptitude - ${new Date().getTime()}`)
     cy.get('textarea#sectionDescription').type(`Aptitude - ${new Date().getTime()} Description`)
     cy.get("button#submitButton").should("have.text", "Add").click()
-    cy.get('#sectionCard').first().click()
+    cy.get('#section-card').first().click()
     cy.get('#addQuestion').should('have.text', '+ Add Question').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/add-question')
     cy.get("#questionEditor > .rounded-lg > .ql-container > .ql-editor").type('{backspace}').should('have.value', "")
@@ -417,17 +410,17 @@ describe('Test for Add Question', () => {
     cy.get('a').find('#Sections').should('have.text', 'Sections').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('.px-5').click()
-    // cy.get("#headlessui-dialog-panel-5", { timeout: 10000 }).should("be.visible")
     cy.get(".addSectionDilog", { timeout: 10000 }).should("be.visible")
     cy.get("input#sectionName").type(`Aptitude - ${new Date().getTime()}`)
     cy.get('textarea#sectionDescription').type(`Aptitude - ${new Date().getTime()} Description`)
     cy.get("button#submitButton").should("have.text", "Add").click()
-    cy.get('#sectionCard').first().click()
+    cy.get('#section-card').first().click()
     cy.get('#addQuestion').should('have.text', '+ Add Question').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/add-question')
+    cy.get('h1').wait(2000);
     let flag = 0;
 
-    cy.get('#dropdown').click()
+    cy.get('#dropdown > button').click()
 
     cy.get('ul').within(() => {
       cy.get("li").within(() => {
@@ -444,8 +437,8 @@ describe('Test for Add Question', () => {
     cy.get(".h-40 > .gap-6 > .flex-col").within(() => {
       cy.get(" #quillEditor ").then((el) => {
         [...el].forEach((element) => {
-          if(element.innerText === ""){
-            flag=1;
+          if (element.innerText === "") {
+            flag = 1;
           }
         })
       })
