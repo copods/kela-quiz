@@ -1,9 +1,9 @@
 import { Icon } from '@iconify/react'
 import { Link, useLoaderData } from '@remix-run/react'
-
 import TestPreview from './CreateTestPreview'
 const TestDetails = () => {
   const { testPreview } = useLoaderData()
+  console.log(testPreview)
   return (
     <div>
       <header className="mb-8  ">
@@ -41,6 +41,7 @@ const TestDetails = () => {
         onSelectedSectionChange={function (e: any): void {
           throw new Error('Function not implemented.')
         }}
+        isPreviewEditable={false}
       />
     </div>
   )

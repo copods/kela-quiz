@@ -6,12 +6,15 @@ const TestPreview = ({
   description,
   onSelectedSectionChange,
   selectedSections,
+  isPreviewEditable = true,
 }: {
   name: string
   description: string
   selectedSections: Array<TestSection>
   onSelectedSectionChange: (e: any) => void
+  isPreviewEditable: boolean
 }) => {
+  console.log('isPreviewEditable', isPreviewEditable)
   const moveSection = (index: number, action: string) => {
     if (action == 'up') {
       if (index == 0) {
@@ -107,18 +110,20 @@ const TestPreview = ({
                     </span>
                   </div>
                 </div>
-                <div className="flex gap-2">
-                  <Icon
-                    icon="fa:long-arrow-up"
-                    className="cursor-pointer"
-                    onClick={() => moveSection(i, 'up')}
-                  />
-                  <Icon
-                    icon="fa:long-arrow-down"
-                    className="cursor-pointer"
-                    onClick={() => moveSection(i, 'down')}
-                  />
-                </div>
+                {isPreviewEditable && (
+                  <div className="flex gap-2">
+                    <Icon
+                      icon="fa:long-arrow-up"
+                      className="cursor-pointer"
+                      onClick={() => moveSection(i, 'up')}
+                    />
+                    <Icon
+                      icon="fa:long-arrow-down"
+                      className="cursor-pointer"
+                      onClick={() => moveSection(i, 'down')}
+                    />
+                  </div>
+                )}
               </div>
             )
           })}
