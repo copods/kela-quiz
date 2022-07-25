@@ -73,7 +73,8 @@ const AddSection = ({
                   <textarea
                     name="description"
                     id="sectionDescription"
-                    className="h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
+                    rows={4}
+                    className="w-full rounded-lg border border-gray-200 px-3 py-4 text-base"
                     placeholder="Enter Section Description"
                   />
                 </div>
