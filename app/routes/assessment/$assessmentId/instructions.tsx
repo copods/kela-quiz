@@ -1,5 +1,6 @@
 import type { LoaderFunction } from '@remix-run/node'
 import { redirect } from '@remix-run/node'
+import CandidateLayout from '~/components/layouts/CandidateLayout'
 import { checkIfTestLinkIsValidAndRedirect } from '~/utils'
 
 export const loader: LoaderFunction = async ({ params, request }) => {
@@ -16,5 +17,9 @@ export const loader: LoaderFunction = async ({ params, request }) => {
 }
 
 export default function TestInstructions() {
-  return <div>Test Instructions</div>
+  return (
+    <CandidateLayout>
+      <h1>Test Instructions are here ..!!</h1>
+    </CandidateLayout>
+  )
 }

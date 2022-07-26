@@ -1,8 +1,9 @@
-export default function Dashboard() {
+import CandidateLayout from '~/components/layouts/CandidateLayout'
 
-
-
+export default function CandidateAssessment() {
   return (
-    <div>Assessment Candidate Works.....!</div>
+    <CandidateLayout>
+      <div>Assessment Candidate Works.....!</div>
+    </CandidateLayout>
   )
 }
