@@ -24,7 +24,7 @@ export const loader: LoaderFunction = async ({ request }) => {
     ? JSON.parse(
         Object.fromEntries(new URL(request.url).searchParams.entries()).data
       )
-    : {}
+    : '{}'
 
   let sections: Array<Section> = []
   let status: string = ''
@@ -66,7 +66,7 @@ export const action: ActionFunction = async ({ request }) => {
 }
 
 const AddTest = () => {
-  const data = useLoaderData() as LoaderData
+  const data = useLoaderData() as unknown as LoaderData
   const actionData = useActionData() as any
   const navigate = useNavigate()
   useEffect(() => {

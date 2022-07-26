@@ -1,4 +1,4 @@
-import { Section, SectionInTest } from '~/interface/Interface'
+import { SectionInTest } from '~/interface/Interface'
 const ChipGroups = ({ sections }: { sections: Array<SectionInTest> }) => {
   return (
     <>
