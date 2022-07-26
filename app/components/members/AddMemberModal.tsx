@@ -3,6 +3,7 @@ import { Icon } from '@iconify/react'
 import type { Role } from '~/interface/Interface'
 import { Form, useTransition } from '@remix-run/react'
 import { Fragment } from 'react'
+import { CommonMembersConstants } from '~/constants/common.constants'
 export default function AddMemberModal({
   roles,
   open,
@@ -13,7 +14,6 @@ export default function AddMemberModal({
   setOpen: (e: boolean) => void
 }) {
   const transition = useTransition()
-
   return (
     <div>
       <Transition.Root show={open} as={Fragment}>
@@ -30,7 +30,10 @@ export default function AddMemberModal({
             <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
           </Transition.Child>
 
-          <div className="fixed inset-0 z-10 overflow-y-auto">
+          <div
+            className="fixed inset-0 z-10 overflow-y-auto"
+            id="AddPopUpModel"
+          >
             <Form
               method="post"
               className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0"
@@ -47,7 +50,7 @@ export default function AddMemberModal({
                 <Dialog.Panel className="relative transform overflow-hidden rounded-2xl bg-white p-6 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
                   <div className="flex items-center justify-between pt-1">
                     <h2 className="text-2xl font-bold text-gray-700">
-                      Add Member
+                      {CommonMembersConstants.AddMember}
                     </h2>
                     <Icon
                       className="cursor-pointer text-2xl text-gray-600"
@@ -59,7 +62,7 @@ export default function AddMemberModal({
                   <div className="flex justify-between gap-4 pb-6">
                     <div>
                       <label htmlFor="" className="text-gray-800">
-                        First Name
+                        {CommonMembersConstants.FirstName}
                       </label>
                       <input
                         id="firstName"
@@ -71,7 +74,7 @@ export default function AddMemberModal({
                     </div>
                     <div>
                       <label htmlFor="" className="text-gray-800">
-                        Last Name
+                        {CommonMembersConstants.LastName}
                       </label>
                       <input
                         id="lastName"
@@ -84,7 +87,7 @@ export default function AddMemberModal({
                   </div>
                   <div className="pb-6 ">
                     <label htmlFor="" className="text-gray-800">
-                      Email
+                      {CommonMembersConstants.Email}
                     </label>
                     <input
                       id="email"
@@ -97,7 +100,7 @@ export default function AddMemberModal({
                   <div className="pb-6">
                     <div>
                       <label htmlFor="" className="text-gray-800">
-                        Role
+                        {CommonMembersConstants.Role}
                       </label>
                     </div>
                     <div className="my-1.5 rounded-lg border border-gray-200 px-4">
@@ -115,23 +118,25 @@ export default function AddMemberModal({
                       </select>
                     </div>
                   </div>
-
                   <div className="flex justify-end gap-2">
                     <button
+                      id="cancelAddButton"
                       type="button"
                       className="h-9 rounded-md px-4 text-sm text-gray-500"
                       onClick={() => setOpen(false)}
                     >
-                      Cancel
+                      {CommonMembersConstants.Cancel}
                     </button>
                     <button
+                      id="addbutton"
                       type="submit"
                       name="addMember"
                       value={JSON.stringify({ action: 'add' })}
-                      className={`h-9 rounded-md bg-primary px-4 text-sm text-[#F0FDF4] ${
-                        transition.state === 'submitting' ? 'disabled' : ''
+                      className={`h-9 rounded-md bg-primary px-4 text-sm text-[#F0FDF4]${
+                        transition.state === 'submitting'
+                          ? 'disabled:text-[#F0FDF4] disabled:opacity-75'
+                          : ''
                       }`}
-                      onClick={() => setOpen(false)}
                       disabled={transition.state === 'submitting'}
                     >
                       {transition.state === 'submitting' ? 'Adding...' : 'Add'}
