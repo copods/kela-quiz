@@ -123,7 +123,7 @@ export default function OptionForQuestion({
         </button>
       </div>
 
-      <div className="flex h-full flex-1 flex-col gap-4  overflow-auto">
+      <div className="flex h-full flex-1 flex-col gap-6  overflow-auto">
         {(getQuestionType(selectedTypeOfQuestion) === 'MULTIPLE_CHOICE' ||
           getQuestionType(selectedTypeOfQuestion) === 'SINGLE_CHOICE') &&
           options.map((option, index) => {

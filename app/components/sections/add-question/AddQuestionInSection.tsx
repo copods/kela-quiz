@@ -11,11 +11,9 @@ import { toast } from 'react-toastify'
 const AddQuestionInSection = ({
   sectionDetails,
   questionTypeList,
-  error,
 }: {
   sectionDetails: (Section & { questions: Question[] }) | null
   questionTypeList: QuestionType[]
-  error: string
 }) => {
   const [selectedTypeOfQuestion, onQuestionTypeChange] = useState(
     questionTypeList[0].id

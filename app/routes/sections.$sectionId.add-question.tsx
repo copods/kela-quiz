@@ -100,7 +100,6 @@ export default function AddQuestion() {
         key={addQuestionKey}
         sectionDetails={data.sectionDetails}
         questionTypeList={data.questionTypes}
-        error={actionData}
       />
     </AdminLayout>
   )
