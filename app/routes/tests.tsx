@@ -5,10 +5,11 @@ import type { LoaderFunction, ActionFunction } from '@remix-run/node'
 import TestList from '~/components/tests/TestList'
 import { getAllTests } from '~/models/tests.server'
 import { json } from '@remix-run/node'
-import { useLoaderData } from '@remix-run/react'
+import { useActionData, useLoaderData } from '@remix-run/react'
 import { toast } from 'react-toastify'
 import type { Test } from '~/interface/Interface'
 import { createCandidate } from '~/models/candidate.server'
+import { useEffect } from 'react'
 
 type LoaderData = {
   tests: Awaited<ReturnType<typeof getAllTests>>
@@ -58,11 +59,24 @@ export const action: ActionFunction = async ({ request }) => {
   })
   console.log('asadsdasda:', candidateInviteStatus)
 
-  return null
+  return json({ candidateInviteStatus })
 }
 
 export default function Results() {
   const data = useLoaderData() as LoaderData
+  const actionData = useActionData()
+
+  useEffect(() => {
+    console.log('Actiondata:', actionData)
+    if (actionData?.candidateInviteStatus == 'created') {
+      toast.success('Candidates Invited')
+    } else {
+      if (actionData?.candidateInviteStatus) {
+        toast.error('Candidate Invite Error')
+      }
+    }
+  }, [actionData])
+
   if (data.status != 'Success') {
     toast.success('Something went wrong..!')
   }
