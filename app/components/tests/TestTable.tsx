@@ -32,9 +32,9 @@ const TestTable = ({
         <div className="w-1/12 text-sm font-medium leading-6 text-gray-700">
           {uniqueId + 1}
         </div>
-        <div className="w-3/12 cursor-pointer truncate pr-4 text-sm font-semibold leading-6  text-primary underline underline-offset-2 ">
+        <div className="w-3/12 cursor-pointer truncate pr-4 text-sm font-semibold leading-6  text-gray-700 underline underline-offset-2 ">
           <NavLink to={`/tests/${id}`} key={uniqueId}>
-            {testName}
+            <span className="text-primary">{testName}</span>
           </NavLink>
         </div>
         <ChipGroups sections={sections} />

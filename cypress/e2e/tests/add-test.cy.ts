@@ -430,7 +430,7 @@ describe('Creating tests', () => {
       .get('.border-gray-200')
       .last()
       .within(() => {
-        cy.get('.text-primary').should('have.text', testName)
+        cy.get('.text-gray-700').should('have.text', testName)
       })
   })
 })
