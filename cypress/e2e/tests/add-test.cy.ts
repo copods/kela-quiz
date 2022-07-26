@@ -34,13 +34,13 @@ describe('Creating tests', () => {
     cy.get('a').find('#Sections').should('have.text', 'Sections').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('#add-section').click()
-    cy.get('.add-section-modal', { timeout: 10000 }).should(
-      'be.visible'
-    ).within(() => {
-      cy.get('input').type(`Aptitude - ${new Date().getTime()}`)
-      cy.get('textarea').type('Aptitude')
-      cy.get('button#submitButton').should('have.text', 'Add').click()
-    })
+    cy.get('.add-section-modal', { timeout: 10000 })
+      .should('be.visible')
+      .within(() => {
+        cy.get('input').type(`Aptitude - ${new Date().getTime()}`)
+        cy.get('textarea').type('Aptitude')
+        cy.get('button#submitButton').should('have.text', 'Add').click()
+      })
   })
 
   it('Verify if add test page contains 3 tabs', () => {
@@ -430,7 +430,7 @@ describe('Creating tests', () => {
       .get('.border-gray-200')
       .last()
       .within(() => {
-        cy.get('.text-gray-700').should('have.text', testName)
+        cy.get('.text-primary').should('have.text', testName)
       })
   })
 })
