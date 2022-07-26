@@ -86,7 +86,7 @@ const TestList = ({ tests }: { tests: Array<Test> }) => {
         </div>
         <div
           id="testList"
-          className=" flex  flex-1 flex-col  overflow-auto rounded-md border-[1px] border-solid border-[#E5E7EB] bg-white  "
+          className=" flex flex-1 flex-col  overflow-auto rounded-md border-[1px] border-solid border-[#E5E7EB] bg-white  "
         >
           {tests.map((test, i) => (
             <TestTable
