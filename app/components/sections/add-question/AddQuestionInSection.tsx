@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react'
-import type { Section, QuestionType, Question } from '~/components/Interface'
+import type { Section, QuestionType, Question } from '~/interface/Interface'
 import { useState } from 'react'
 import BreadCrumb from '../../BreadCrumb'
 import QuestionEditor from './QuestionEditor'

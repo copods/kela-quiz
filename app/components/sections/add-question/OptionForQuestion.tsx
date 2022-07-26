@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react'
-import type { QuestionType } from '~/components/Interface'
+import type { QuestionType } from '~/interface/Interface'
 import cuid from 'cuid'
 import QuillEditor from '~/components/QuillEditor.client'
 import { ClientOnly } from 'remix-utils'
