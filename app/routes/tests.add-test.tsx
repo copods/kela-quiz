@@ -85,7 +85,6 @@ const AddTest = () => {
   return (
     <AdminLayout>
       <AddTestComponent sections={data.sections} />
-      {/* <div>hi</div>  */}
     </AdminLayout>
   )
 }

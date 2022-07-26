@@ -14,7 +14,7 @@ const SelectSectionCard = ({
     value?: string,
     selected?: boolean
   ) => {
-    var temp = {
+    var tempSection = {
       isSelected: section.isSelected,
       totalQuestions: section.totalQuestions
         ? section.totalQuestions
@@ -29,16 +29,16 @@ const SelectSectionCard = ({
     }
     switch (target) {
       case 'isSelected':
-        temp.isSelected = selected
+        tempSection.isSelected = selected
         break
       case 'totalQuestions':
-        temp.totalQuestions = parseInt(value || '')
+        tempSection.totalQuestions = parseInt(value || '')
         break
       case 'time':
-        temp.time = parseInt(value || '')
+        tempSection.time = parseInt(value || '')
         break
     }
-    updateSection(temp)
+    updateSection(tempSection)
   }
   return (
     <div
