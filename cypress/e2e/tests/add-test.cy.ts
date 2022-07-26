@@ -71,38 +71,6 @@ describe('Creating tests', () => {
     cy.get('#2').find('.text-gray-500').should('have.text', 'Preview')
   })
 
-  it('Verify if user able to navigate through tabs', () => {
-    cy.visit('/sign-in')
-    cy.get('#email')
-      .clear()
-      .type('careers@copods.co')
-      .should('have.value', 'careers@copods.co')
-    cy.get('#password')
-      .clear()
-      .type('kQuiz@copods')
-      .should('have.value', 'kQuiz@copods')
-    cy.findByRole('button').click()
-
-    cy.get('a').find('#Tests').should('have.text', 'Tests').click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.get('#addTest').click()
-    cy.location('pathname', { timeout: 60000 }).should(
-      'include',
-      '/tests/add-test'
-    )
-
-    cy.get('#0').click()
-    cy.get('#0').find('hr').should('have.class', 'bg-primary')
-
-    cy.get('#1').click()
-    cy.get('#0').find('hr').should('have.class', 'bg-primary')
-    cy.get('#1').find('hr').should('have.class', 'bg-primary')
-
-    cy.get('#2').click()
-    cy.get('#0').find('hr').should('have.class', 'bg-primary')
-    cy.get('#1').find('hr').should('have.class', 'bg-primary')
-    cy.get('#2').find('hr').should('have.class', 'bg-primary')
-  })
 
   it('Verify if next button is disabled if user do not provide name and description', () => {
     cy.visit('/sign-in')
@@ -178,6 +146,11 @@ describe('Creating tests', () => {
       'include',
       '/tests/add-test'
     )
+
+    cy.get('#name').clear().type(`Test - ${new Date().getTime()}`)
+    cy.get('#quillEditor').within(() => {
+      cy.get('.ql-editor').type(`Test Description`)
+    })
 
     cy.get('#1').click()
     cy.get('#0').find('hr').should('have.class', 'bg-primary')
