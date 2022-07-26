@@ -3,26 +3,21 @@ import { Icon } from '@iconify/react'
 import type { Role } from '~/interface/Interface'
 import { Form, useTransition } from '@remix-run/react'
 import { Fragment } from 'react'
+import { CommonMembersConstants } from '~/constants/common.constants'
 export default function AddMemberModal({
   roles,
   open,
   setOpen,
 }: {
-  roles: Role[],
-  open: boolean,
+  roles: Role[]
+  open: boolean
   setOpen: (e: boolean) => void
 }) {
-
   const transition = useTransition()
-
   return (
     <div>
       <Transition.Root show={open} as={Fragment}>
-        <Dialog
-          as="div"
-          className="relative z-10"
-          onClose={setOpen}
-        >
+        <Dialog as="div" className="relative z-10" onClose={setOpen}>
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -35,7 +30,10 @@ export default function AddMemberModal({
             <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
           </Transition.Child>
 
-          <div className="fixed inset-0 z-10 overflow-y-auto">
+          <div
+            className="fixed inset-0 z-10 overflow-y-auto"
+            id="AddPopUpModel"
+          >
             <Form
               method="post"
               className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0"
@@ -52,7 +50,7 @@ export default function AddMemberModal({
                 <Dialog.Panel className="relative transform overflow-hidden rounded-2xl bg-white p-6 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
                   <div className="flex items-center justify-between pt-1">
                     <h2 className="text-2xl font-bold text-gray-700">
-                      Add Member
+                      {CommonMembersConstants.AddMember}
                     </h2>
                     <Icon
                       className="cursor-pointer text-2xl text-gray-600"
@@ -64,10 +62,10 @@ export default function AddMemberModal({
                   <div className="flex justify-between gap-4 pb-6">
                     <div>
                       <label htmlFor="" className="text-gray-800">
-                        First Name
+                        {CommonMembersConstants.FirstName}
                       </label>
                       <input
-                        id='firstName'
+                        id="firstName"
                         type="text"
                         name="firstName"
                         className=" my-1.5 h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
@@ -76,10 +74,10 @@ export default function AddMemberModal({
                     </div>
                     <div>
                       <label htmlFor="" className="text-gray-800">
-                        Last Name
+                        {CommonMembersConstants.LastName}
                       </label>
                       <input
-                        id='lastName'
+                        id="lastName"
                         type="text"
                         name="lastName"
                         className="my-1.5 h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
@@ -89,10 +87,10 @@ export default function AddMemberModal({
                   </div>
                   <div className="pb-6 ">
                     <label htmlFor="" className="text-gray-800">
-                      Email
+                      {CommonMembersConstants.Email}
                     </label>
                     <input
-                      id='email'
+                      id="email"
                       type="email"
                       name="email"
                       className="my-1.5 h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
@@ -101,11 +99,16 @@ export default function AddMemberModal({
                   </div>
                   <div className="pb-6">
                     <div>
-                      <label htmlFor="" className='text-gray-800'>Role</label>
+                      <label htmlFor="" className="text-gray-800">
+                        {CommonMembersConstants.Role}
+                      </label>
                     </div>
-                    <div className='my-1.5 rounded-lg border border-gray-200 px-4'  >
-                      <select name="roleId" className="test-base h-11 w-full focus:outline-none">
-                        {roles.map(role => {
+                    <div className="my-1.5 rounded-lg border border-gray-200 px-4">
+                      <select
+                        name="roleId"
+                        className="test-base h-11 w-full focus:outline-none"
+                      >
+                        {roles.map((role) => {
                           return (
                             <option key={role.id} value={role?.id}>
                               {role?.name}
@@ -115,26 +118,28 @@ export default function AddMemberModal({
                       </select>
                     </div>
                   </div>
-
                   <div className="flex justify-end gap-2">
                     <button
+                      id="cancelAddButton"
                       type="button"
                       className="h-9 rounded-md px-4 text-sm text-gray-500"
                       onClick={() => setOpen(false)}
                     >
-                      Cancel
+                      {CommonMembersConstants.Cancel}
                     </button>
                     <button
+                      id="addbutton"
                       type="submit"
                       name="addMember"
                       value={JSON.stringify({ action: 'add' })}
-                      className={`h-9 rounded-md bg-primary px-4 text-sm text-[#F0FDF4] ${transition.state === "submitting" ? 'disabled' : ''}`}
-                      onClick={() => setOpen(false)}
-                      disabled={transition.state === "submitting"}
+                      className={`h-9 rounded-md bg-primary px-4 text-sm text-[#F0FDF4]${
+                        transition.state === 'submitting'
+                          ? 'disabled:text-[#F0FDF4] disabled:opacity-75'
+                          : ''
+                      }`}
+                      disabled={transition.state === 'submitting'}
                     >
-                      {transition.state === "submitting"
-                        ? "Adding..."
-                        : "Add"}
+                      {transition.state === 'submitting' ? 'Adding...' : 'Add'}
                     </button>
                   </div>
                 </Dialog.Panel>
