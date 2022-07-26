@@ -31,7 +31,7 @@ describe('Test for Section', () => {
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('#add-section').click()
     const sectionName = `Aptitude - ${new Date().getTime()}`
-    cy.get('.add-section-modal', { timeout: 10000 })
+    cy.get('form > div', { timeout: 10000 })
       .should('be.visible')
       .within((el) => {
         cy.get('input').type(sectionName)
@@ -61,7 +61,7 @@ describe('Test for Section', () => {
     cy.get('a').find('#Sections').should('have.text', 'Sections').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('#add-section').click()
-    cy.get('.add-section-modal', { timeout: 10000 })
+    cy.get('form > div', { timeout: 10000 })
       .should('be.visible')
       .within(() => {
         cy.get("button[type='button']", { timeout: 10000 }).click()

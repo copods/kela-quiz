@@ -109,3 +109,12 @@ export interface SectionInTest {
   updatedAt: Date
   test: Test
 }
+
+export interface QuestionType {
+  id: string
+  value: string
+  displayName: string
+  questions?: Question[]
+  createdAt?: Date
+  updatedAt?: Date
+}
