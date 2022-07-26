@@ -24,7 +24,7 @@ const TestTable = ({
     <>
       <div
         key={uniqueId}
-        className="flex  items-center border-b border-t-0 px-2 py-3 "
+        className="flex  items-center border-b border-t-0 border-gray-200 px-2 py-3 "
       >
         <div className=" w-16 pl-2 text-sm font-medium leading-6 text-gray-700">
           <input type="checkbox"></input>
