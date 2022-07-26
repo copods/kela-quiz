@@ -1,59 +1,92 @@
-import { Icon } from "@iconify/react"
-import { useState } from "react"
-import SectionCard from "./SectionCard";
-import type { Section } from "~/interface/Interface";
-import { NavLink } from "@remix-run/react";
+import { Icon } from '@iconify/react'
+import SectionCard from './SectionCard'
+import DropdownField from '../form/Dropdown'
+import type { Section } from '~/interface/Interface'
+import { useResolvedPath, useLocation, NavLink } from '@remix-run/react'
+import {} from '@remix-run/react'
 
-const Sections = ({ data }: { data: { sections: Array<Section> } }) => {
-  const [sortDirection, setSortDirection] = useState(true)
-
-  const filterByType = [
-    {
-      name: 'Name',
-      value: 'name'
-    },
-    {
-      name: 'Created Date',
-      value: 'date'
-    }
-  ]
-
-
+const SectionLink = ({ section }: { section: any }) => {
+  const path = `/sections/${section.id}`
+  const location = useLocation() // to get current location
+  const resolvedPath = useResolvedPath(path) // to get resolved path which would match with current location
   return (
-    < div className="w-96 flex flex-col gap-6 overflow-auto" >
+    <NavLink to={path} key={section.id}>
+      <SectionCard
+        isActive={location.pathname === resolvedPath.pathname}
+        name={section?.name}
+        createdBy={`${section?.createdBy?.firstName} ${section?.createdBy?.lastName}`}
+        questionsCount={section?._count?.questions}
+        createdAt={section.createdAt}
+      />
+    </NavLink>
+  )
+}
+
+type SectionType = {
+  sections: Section[]
+  sortBy: string
+  selectedSection: string
+  filters: string
+  setSortBy: (e: string) => void
+  order: string
+  setOrder: Function
+  setSelectedSection: Function
+  sortByDetails: Array<{ name: string; id: string }>
+}
+const Sections = ({
+  sections,
+  sortBy,
+  setSortBy,
+  order,
+  setOrder,
+  filters,
+  setSelectedSection,
+  sortByDetails,
+}: SectionType) => {
+  return (
+    <div className="flex h-full w-96 flex-col gap-6">
       {/* filters */}
-      <div className="flex justify-between items-center " >
+      <div className="flex items-center justify-between ">
         <div className="flex items-center gap-2.5">
-          {
-            sortDirection ?
-              <Icon icon="ph:sort-ascending-bold" onClick={() => setSortDirection(false)} className="text-2xl cursor-pointer" /> :
-              <Icon icon="ph:sort-descending-bold" onClick={() => setSortDirection(true)} className="text-2xl cursor-pointer" />
-          }
-          <select className="h-11 rounded-lg border border-gray-200 w-36 test-base px-3">
-            {
-              filterByType.map((filterBy, i) => {
-                return <option key={i} value={filterBy?.value}>{filterBy?.name}</option>
-              })
-            }
-          </select>
+          {order === 'asc' ? (
+            <Icon
+              icon="ph:sort-descending-bold"
+              onClick={() => setOrder('desc')}
+              className="icon-desc cursor-pointer text-2xl"
+            />
+          ) : (
+            <Icon
+              icon="ph:sort-ascending-bold"
+              onClick={() => setOrder('asc')}
+              className="icon-asc cursor-pointer text-2xl"
+            />
+          )}
+          <DropdownField
+            data={sortByDetails}
+            displayKey={'name'}
+            valueKey={'id'}
+            value={sortBy}
+            setValue={setSortBy}
+          />
         </div>
-        <span className="bg-white border border-gray-200 flex justify-center items-center h-11 w-11 rounded-lg">
-          {data?.sections?.length}
+        <span className="flex h-11 w-11 items-center justify-center rounded-lg border border-gray-200 bg-white">
+          {sections?.length}
         </span>
-      </div >
+      </div>
 
       {/* list */}
-      {
-        data.sections?.map((section: any) => {
-          return <NavLink to={'/sections/' + section.id} key={section.id} className={({ isActive }) => isActive ? 'activeSection' : 'inactiveSection'}>
-            <SectionCard name={section?.name} createdBy={`${section?.createdBy?.firstName} ${section?.createdBy?.lastName}`} questionsCount={section?._count.questions} createdAt={section.createdAt} />
-          </NavLink>
-        })
-      }
-      {
-        data.sections.length === 0 && <div className='flex justify-center p-7'>No Record Found</div>
-      }
-    </div >
+      <div
+        className="flex flex-1 flex-col gap-6 overflow-auto"
+        id="section-cards"
+      >
+        {sections?.map((section: any) => (
+          <SectionLink key={section.id} section={section} />
+        ))}
+        {sections.length === 0 && (
+          <div className="flex justify-center p-7">No Record Found</div>
+        )}
+      </div>
+    </div>
   )
 }
 

@@ -38,7 +38,9 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 export const action: ActionFunction = async ({ request, params }) => {
   const formData = await request.formData()
-  const action = formData.get('addMember') ? JSON.parse(formData.get('addMember') as string) : JSON.parse(formData.get('deleteMember') as string)
+  const action = formData.get('addMember')
+    ? JSON.parse(formData.get('addMember') as string)
+    : JSON.parse(formData.get('deleteMember') as string)
 
   if (action.action === 'add') {
     const firstName = formData.get('firstName')
@@ -82,12 +84,11 @@ export const action: ActionFunction = async ({ request, params }) => {
 
     await deleteUserById(action.id)
     return redirect(`/members`)
-
   }
 }
 
 export default function Members() {
-  const data = useLoaderData() as LoaderData
+  const data = useLoaderData() as unknown as LoaderData
 
   return (
     <>
