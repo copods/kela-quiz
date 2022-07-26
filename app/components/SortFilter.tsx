@@ -40,8 +40,10 @@ const SortFilter = ({
           setValue={onSortChange}
         />
       </div>
-      <span className="flex h-11 w-11 items-center justify-center rounded-lg border border-gray-200 bg-white">
-        {totalItems}
+      <span className="flex items-center pl-4 text-sm font-normal  text-[#4B5563]  ">
+        <span className="pr-3">Total Counts: {totalItems}</span>{' '}
+        <Icon icon="ci:line-m" className="text-[#ACBBAC]" />
+        <span className="pl-3 ">Selected: 0/{totalItems}</span>
       </span>
     </div>
   )

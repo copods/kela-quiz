@@ -30,7 +30,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 
   await getAllTests(filter)
     .then((res) => {
-      tests = res
+      tests = res as Test[]
       status = 'Success'
     })
     .catch((err) => {
@@ -46,7 +46,7 @@ export default function Results() {
   }
   return (
     <AdminLayout>
-      <TestList tests={data.tests} />
+      <TestList tests={data.tests as Test[]} />
     </AdminLayout>
   )
 }

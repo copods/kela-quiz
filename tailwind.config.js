@@ -18,12 +18,6 @@ module.exports = {
       borderRadius: {
         1: '1px',
       },
-      width: {
-        sectionCard: `30%`
-      },
-      borderRadius: {
-        1: '1px'
-      }
     },
   },
   plugins: [],

@@ -18,7 +18,7 @@ const TestCard = ({
         <h2 className="text-xl font-semibold text-gray-700">{name}</h2>
         <Icon className="text-2xl text-gray-600" icon={'mdi:dots-vertical'} />
       </div>
-      <div className="flex pb-4 text-xs text-gray-400">
+      <div className="flex  text-xs text-gray-400">
         <span>By {createdBy}</span>
         <span className="flex">
           <Icon className="text-base" icon={'mdi:circle-small'} />
