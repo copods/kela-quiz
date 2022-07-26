@@ -37,11 +37,6 @@ export const loader: LoaderFunction = async ({ request }) => {
     .catch((err) => {
       status = err
     })
-  await createCandidate({
-    emails: ['anurag@copods.co'],
-    createdById: 'cl5hx6ju20001k0k2c1xctjti',
-    testId: 'cl5hxbjsj0086mdk26t7bdxd5',
-  })
   return json<LoaderData>({ tests, status })
 }
 
@@ -56,7 +51,12 @@ export const action: ActionFunction = async ({ request }) => {
     console.log(fd)
     emails.push(fd)
   })
-  await createCandidate({ emails, createdById, testId })
+  const candidateInviteStatus = await createCandidate({
+    emails,
+    createdById,
+    testId,
+  })
+  console.log('asadsdasda:', candidateInviteStatus)
 
   return null
 }

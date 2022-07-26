@@ -1,6 +1,7 @@
-import type { User } from '@prisma/client'
+import type { Question, User } from '@prisma/client'
 import { env } from 'process'
 import { prisma } from '~/db.server'
+import { sendTestInviteMail } from './sendgrid.servers'
 
 export async function createIndividualCandidate({ email, createdById }: { email: string, createdById: string }) {
   try {
@@ -26,7 +27,7 @@ export async function createIndividualCandidate({ email, createdById }: { email:
 export async function createCandidateTest({ testId, candidateId }: { testId: string, candidateId: string }) {
   try {
     // creating test for candidate
-    let candidateTest = prisma.candidateTest.create({
+    let candidateTest = await prisma.candidateTest.create({
       data: {
         testId,
         candidateId
@@ -41,18 +42,55 @@ export async function createCandidateTest({ testId, candidateId }: { testId: str
 
 export async function updateTestLink({ id, link }: { id: string, link: string }) {
   try {
-    prisma.candidateTest.update({
+    let candidateTest = await prisma.candidateTest.update({
       where: {
-
+        id
       },
       data: {
         link
       },
     })
+    return candidateTest
   } catch (error) {
     console.log(error)
     throw new Error('Error updating test link..!')
   }
+}
+
+export async function createSectionInTest({ sectionId, candidateTestId, totalQuestions }: { sectionId: string, candidateTestId: string, totalQuestions: number }) {
+  try {
+    let sectioInTest = await prisma.sectionInCandidateTest.create({
+      data: {
+        sectionId,
+        candidateTestId,
+      }
+    })
+    let randomQuestionsOfSections: Array<Question> = await prisma.$queryRaw`SELECT * FROM "Question" WHERE "sectionId" = ${sectionId} ORDER BY RANDOM() LIMIT ${totalQuestions};`
+
+    for (const question of randomQuestionsOfSections) {
+      await prisma.candidateQuestion.create({
+        data: {
+          questionId: question.id,
+          sectionInCandidateTestId: sectioInTest.id
+        }
+      })
+    }
+    return 'done'
+  } catch (error) {
+    console.log(error)
+    throw new Error('Error creating section in test ..!')
+  }
+}
+
+export async function getTestById(id: string) {
+  return await prisma.test.findUnique({
+    where: { id },
+    include: { sections: true },
+  })
+}
+
+export async function sendMailToCandidate(email: string, name: string, link: string) {
+  sendTestInviteMail(email, name, link)
 }
 
 async function createCandidateData({
@@ -65,72 +103,22 @@ async function createCandidateData({
 
   let candidateTest = await createCandidateTest({ testId, candidateId: user.id })
 
-  console.log(user)
-  console.log(candidateTest)
-
-
-
   // generating random link
   const candidateLink = env.PUBLIC_URL + '/assesment/' + candidateTest.id
 
-  // storing link to db
-  prisma.candidateTest.update({
-    where: {
-      id: candidateTest.id
-    },
-    data: {
-      link: candidateLink,
-    },
-  }).then(() => {
+  let updatedCandidateTest = await updateTestLink({ id: candidateTest.id, link: candidateLink })
 
-    // get test for which user should be registered for
-    prisma.test.findUnique({
-      where: { id: testId },
-      include: { sections: true },
-    }).then(test => {
-      console.log("test: ", test)
-      // creating section in test
-      if (test?.sections) {
-        for (let section of test.sections) {
-          prisma.sectionInCandidateTest.create({
-            data: {
-              sectionId: section.sectionId,
-              candidateTestId: candidateTest.id,
-            }
-          }).then(sectionInCandidateTest => {
-            console.log('section in candidatetest: ', sectionInCandidateTest)
+  let test = await getTestById(testId)
 
-            prisma.$queryRaw`SELECT * FROM "Question" WHERE "sectionId" = ${section.sectionId} ORDER BY RANDOM() LIMIT ${section.totalQuestions};`.then((randomQuestions: any) => {
-              console.log("randomQu:", randomQuestions)
-              for (let question of randomQuestions) {
-                prisma.candidateQuestion.create({
-                  data: {
-                    questionId: question.id,
-                    sectionInCandidateTestId: sectionInCandidateTest.id
-                  }
-                }).then(question => {
+  // creating section in test
+  if (test?.sections) {
+    for (const section of test.sections) {
+      await createSectionInTest({ sectionId: section.sectionId, candidateTestId: candidateTest.id, totalQuestions: section.totalQuestions })
+    }
+  }
 
-                }).catch(err => {
+  await sendMailToCandidate(user.email, `${user.firstName} ${user.lastName}`, updatedCandidateTest.link as string)
 
-                })
-              }
-            }).catch(err => {
-              return { err }
-            })
-          }).catch(err => {
-            return { err }
-          })
-        }
-      }
-
-    }).catch(err => {
-      return { err }
-    })
-
-
-  }).catch(err => {
-    return { err }
-  })
 }
 
 export async function createCandidate({
@@ -139,7 +127,8 @@ export async function createCandidate({
   testId
 }: { emails: Array<string>, createdById: User['id'], testId: string }) {
 
-  emails.forEach(async (email) => {
+  for (const email of emails) {
     await createCandidateData({ email, createdById, testId })
-  })
+  }
+  return "created"
 }
