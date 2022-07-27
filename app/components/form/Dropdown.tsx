@@ -25,12 +25,16 @@ function DropdownField({
       }
     }
   }
+
   return (
     <Listbox value={value} onChange={setValue}>
       {({ open }) => (
         <>
-          <div className="relative w-44">
-            <Listbox.Button className="relative h-11 w-full cursor-default rounded-md border border-gray-200 bg-white px-3 py-2 text-left shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm">
+          <div className="relative w-48" id="dropdown">
+            <Listbox.Button
+              id="dropdownButton"
+              className="relative h-11 w-full cursor-default rounded-md border border-gray-200 bg-white px-3 py-3 text-left shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
+            >
               <span className="flex items-center">
                 <span className="block truncate">{getName(value)}</span>
               </span>

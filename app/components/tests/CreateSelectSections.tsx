@@ -1,3 +1,4 @@
+import type { SetStateAction } from 'react'
 import { useEffect, useState } from 'react'
 import type { TestSection } from '~/interface/Interface'
 import SortFilter from '../SortFilter'
@@ -10,7 +11,7 @@ const SelectSections = ({
 }: {
   sections: Array<TestSection>
   setSections: (e: Array<TestSection>, i: number) => void
-  updateSectionsList: (e: any) => void
+  updateSectionsList: (e: SetStateAction<Array<TestSection>>) => void
 }) => {
   const [sortDirection, onSortDirectionChange] = useState('asc')
   const [sortBy, onSortChange] = useState('name')

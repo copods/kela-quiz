@@ -91,12 +91,11 @@ model QuestionType {
 
 model Option {
   id                  String             @id @default(cuid())
-  option              String?
+  option              String
   question            Question           @relation("options_in_question", fields: [questionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   questionId          String
-  coInQuestion        Question           @relation("correct_options_in_question", fields: [coInQuestionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  coInQuestionId      String
-  order               Int
+  coInQuestion        Question?          @relation("correct_options_in_question", fields: [coInQuestionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  coInQuestionId      String?
   createdBy           User               @relation(fields: [createdById], references: [id])
   createdById         String
   candidateQuestion   CandidateQuestion? @relation(fields: [candidateQuestionId], references: [id])

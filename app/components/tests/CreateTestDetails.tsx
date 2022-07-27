@@ -40,6 +40,9 @@ const TestDetails = ({
             {() => (
               <QuillEditor
                 text={description}
+                id="testDescription"
+                fullAccess={true}
+                quillPlaceholder="Question"
                 onTextChange={(e) => {
                   onDescriptionChange(e)
                 }}
