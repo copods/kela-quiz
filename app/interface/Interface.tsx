@@ -132,3 +132,11 @@ export interface CorrectAnswer {
   createdAt: Date
   updatedAt: Date
 }
+export interface QuestionType {
+  id: string
+  value: string
+  displayName: string
+  questions?: Question[]
+  createdAt?: Date
+  updatedAt?: Date
+}

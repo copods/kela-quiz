@@ -10,12 +10,12 @@ const OptionsCard = ({
     <div
       className={`flex h-full gap-2 ${
         options.coInQuestionId
-          ? 'border-2 border-solid border-[#30fc02bd] '
+          ? 'border-4 border-solid border-[#30fc02bd] font-bold text-primary '
           : 'border-2 border-solid border-transparent '
       }`}
     >
       <div>{index}.</div>
-      <div>{options.option}</div>
+      <div dangerouslySetInnerHTML={{ __html: `${options.option}` }}></div>
     </div>
   )
 }

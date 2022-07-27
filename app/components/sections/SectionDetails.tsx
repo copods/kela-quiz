@@ -1,17 +1,8 @@
 import { useLoaderData } from '@remix-run/react'
+import { Link } from '@remix-run/react'
 import { useState } from 'react'
 import type { Question } from '~/interface/Interface'
 import QuestionCard from './QuestionCard'
-
-// interface SectionDetailType {
-//   id: string
-//   name: string
-//   description: string
-//   createdById: string
-//   createdAt: Date
-//   updatedAt: Date
-//   questions: Array<any>
-// }
 
 const SectionDetails = () => {
   const sectionDetails = useLoaderData()
@@ -33,9 +24,16 @@ const SectionDetails = () => {
           placeholder="Search"
           onChange={(e) => setSearchText(e.target.value)}
         />
-        <button className="h-9 rounded-lg bg-primary px-5 text-xs text-[#F0FDF4]">
-          + Add Question
-        </button>
+        <Link
+          to={`/sections/${sectionDetails.sectionDetails?.id}/add-question`}
+        >
+          <button
+            id="addQuestion"
+            className="h-9 rounded-lg bg-primary px-5 text-xs text-[#F0FDF4]"
+          >
+            + Add Question
+          </button>
+        </Link>
       </div>
 
       {/* QUESTION LIST  */}

@@ -1,5 +1,7 @@
 import { Icon } from '@iconify/react'
+
 import type { Question, Option } from '~/interface/Interface'
+
 import OptionsCard from './OptionsCard'
 
 const QuestionCard = ({
@@ -16,10 +18,13 @@ const QuestionCard = ({
   return (
     <div
       key={question.id}
-      className="flex flex-col gap-6 rounded-lg border border-gray-300 bg-gray-50 px-6 py-7"
+      className="flex flex-col  rounded-lg border border-gray-300 bg-gray-50 px-6 py-7"
     >
       <div className="flex items-center justify-between text-base text-gray-600 ">
-        <div dangerouslySetInnerHTML={{ __html: question.question }}></div>
+        <div className="ql-editor flex-1">
+          <div dangerouslySetInnerHTML={{ __html: question.question }}></div>
+        </div>
+
         {isExpanded === index ? (
           <Icon
             icon={'akar-icons:circle-chevron-up'}
@@ -40,7 +45,7 @@ const QuestionCard = ({
           (isExpanded === index ? 'max-h-96' : 'max-h-0')
         }
       >
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4 pt-6">
           {question.options?.map((options: Option, index: number) => {
             return (
               <div key={options.id}>
