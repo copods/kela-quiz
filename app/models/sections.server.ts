@@ -7,7 +7,13 @@ export async function getSectionById({ id }: Pick<Section, 'id'>) {
       id,
     },
     include: {
-      questions: true,
+      questions: {
+        include: {
+          correctOptions: true,
+          options: true,
+          correctAnswer: true,
+        },
+      },
     },
   })
 }

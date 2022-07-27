@@ -1,12 +1,21 @@
+import { useLoaderData } from '@remix-run/react'
 import { useState } from 'react'
-import type { Question, Section } from '~/interface/Interface'
+import type { Question } from '~/interface/Interface'
 import QuestionCard from './QuestionCard'
 
-const SectionDetails = ({
-  sectionDetails,
-}: {
-  sectionDetails: (Section & { questions: Question[] }) | null
-}) => {
+// interface SectionDetailType {
+//   id: string
+//   name: string
+//   description: string
+//   createdById: string
+//   createdAt: Date
+//   updatedAt: Date
+//   questions: Array<any>
+// }
+
+const SectionDetails = () => {
+  const sectionDetails = useLoaderData()
+  console.log(sectionDetails)
   const [currentAccordian, setCurrentAccordian] = useState(-1)
   const [searchText, setSearchText] = useState('')
 
@@ -31,7 +40,7 @@ const SectionDetails = ({
 
       {/* QUESTION LIST  */}
 
-      {sectionDetails?.questions
+      {sectionDetails.sectionDetails?.questions
         .filter((question: Question) => {
           return question.question
             .toLowerCase()
@@ -49,7 +58,7 @@ const SectionDetails = ({
           )
         })}
 
-      {sectionDetails?.questions.length === 0 && (
+      {sectionDetails.sectionDetails?.questions.length === 0 && (
         <div className="flex justify-center p-7">
           No questions found. Add your first question
         </div>
