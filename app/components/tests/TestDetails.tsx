@@ -10,7 +10,9 @@ const TestDetails = () => {
         <div>
           <div className="flex items-center gap-1">
             <Link to={'/tests'}>
-              <span className="text-blue-900">Tests</span>
+              <span id="tests" className=" text-blue-900">
+                Tests
+              </span>
             </Link>
 
             <Icon
@@ -24,13 +26,16 @@ const TestDetails = () => {
           <div className="py-5">
             <Link to={'/tests'} className="flex items-center gap-4 ">
               <Icon icon="mdi:arrow-left"></Icon>
-              <span>Back to Tests</span>
+              <span id="backButton">Back to Tests</span>
             </Link>
           </div>
         </div>
         <div>
-          <h1 className="border-t-[1px] border-solid border-slate-300 pt-9 pb-3 text-3xl font-bold leading-9 ">
-            Fresher’s Pre Interview Assesment
+          <h1
+            id="title"
+            className="border-t-[1px] border-solid border-slate-300 pt-9 pb-3 text-3xl font-bold leading-9 "
+          >
+            {testPreview.name}
           </h1>
         </div>
       </header>

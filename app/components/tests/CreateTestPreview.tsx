@@ -54,13 +54,19 @@ const TestPreview = ({
         <h1 className="text-xl font-semibold">Test Details</h1>
         <div className="flex flex-col gap-4 text-base">
           <div className="flex">
-            <div className="w-50 min-w-[200px] font-semibold text-gray-500">
+            <div
+              id="name"
+              className="w-50 min-w-[200px] font-semibold text-gray-500"
+            >
               Name
             </div>
             <div className="flex-1 font-normal text-gray-700">{name}</div>
           </div>
           <div className="flex">
-            <div className="w-50 min-w-[200px] font-semibold text-gray-500">
+            <div
+              id="description"
+              className="w-50 min-w-[200px] font-semibold text-gray-500"
+            >
               Description
             </div>
             <div
@@ -69,7 +75,10 @@ const TestPreview = ({
             ></div>
           </div>
           <div className="flex">
-            <div className="w-50 min-w-[200px] font-semibold text-gray-500">
+            <div
+              id="totalTime"
+              className="w-50 min-w-[200px] font-semibold text-gray-500"
+            >
               Total Time
             </div>
             <div className="flex-1 font-normal text-gray-700">
@@ -77,7 +86,10 @@ const TestPreview = ({
             </div>
           </div>
           <div className="flex">
-            <div className="w-50 min-w-[200px] font-semibold text-gray-500">
+            <div
+              id="totalSection"
+              className="w-50 min-w-[200px] font-semibold text-gray-500"
+            >
               Total Sections
             </div>
             <div className="flex-1 font-normal text-gray-700">
