@@ -12,6 +12,7 @@ describe('Test for testPreview', () => {
     cy.findByRole('button').click()
     cy.get('a').find('#Tests').should('have.text', 'Tests').click()
   })
+
   let time = new Date().getTime()
   it('Verify if user able create the test and navigate to test list page', () => {
     cy.visit('/sign-in')
@@ -133,7 +134,6 @@ describe('Test for testPreview', () => {
     cy.get('a').find('#Tests').should('have.text', 'Tests').click()
     cy.get('#preview').should('have.text', 'Preview').click()
     cy.get('#name').should('have.text', 'Name').click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
   })
   it('test for description', () => {
     cy.visit('/sign-in')
@@ -149,7 +149,6 @@ describe('Test for testPreview', () => {
     cy.get('a').find('#Tests').should('have.text', 'Tests').click()
     cy.get('#preview').should('have.text', 'Preview').click()
     cy.get('#description').should('have.text', 'Description').click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
   })
   it('test for total time', () => {
     cy.visit('/sign-in')
@@ -165,7 +164,6 @@ describe('Test for testPreview', () => {
     cy.get('a').find('#Tests').should('have.text', 'Tests').click()
     cy.get('#preview').should('have.text', 'Preview').click()
     cy.get('#totalTime').should('have.text', 'Total Time').click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
   })
   it('test for Total Sections', () => {
     cy.visit('/sign-in')
@@ -181,6 +179,5 @@ describe('Test for testPreview', () => {
     cy.get('a').find('#Tests').should('have.text', 'Tests').click()
     cy.get('#preview').should('have.text', 'Preview').click()
     cy.get('#totalSection').should('have.text', 'Total Sections')
-    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
   })
 })

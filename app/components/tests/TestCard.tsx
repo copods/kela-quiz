@@ -35,7 +35,7 @@ const TestCard = ({
       ></div>
       <div>
         <Link to={`/tests/${id}`}>
-          <span id="preview" className="cursor-pointer text-xl text-primary">
+          <span id="preview" className="text-md cursor-pointer text-primary">
             Preview
           </span>
         </Link>
