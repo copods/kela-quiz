@@ -39,6 +39,9 @@ const TestDetails = ({
           <ClientOnly fallback={<div></div>}>
             {() => (
               <QuillEditor
+                id="testDescription"
+                fullAccess={true}
+                quillPlaceholder="Question"
                 onTextChange={(e) => {
                   onDescriptionChange(e)
                 }}

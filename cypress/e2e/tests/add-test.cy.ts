@@ -34,12 +34,13 @@ describe('Creating tests', () => {
     cy.get('a').find('#Sections').should('have.text', 'Sections').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('#add-section').click()
-    cy.get('#headlessui-dialog-panel-5', { timeout: 10000 }).should(
+    cy.get('form > div', { timeout: 10000 }).should(
       'be.visible'
-    )
-    cy.get('input').type(`Aptitude - ${new Date().getTime()}`)
-    cy.get('textarea').type('Aptitude')
-    cy.get('button#submitButton').should('have.text', 'Add').click()
+    ).within(() => {
+      cy.get('input').type(`Aptitude - ${new Date().getTime()}`)
+      cy.get('textarea').type('Aptitude')
+      cy.get('button#submitButton').should('have.text', 'Add').click()
+    })
   })
 
   it('Verify if add test page contains 3 tabs', () => {
