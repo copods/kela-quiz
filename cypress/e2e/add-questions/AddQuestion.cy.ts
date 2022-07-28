@@ -1,10 +1,12 @@
 describe('Test for Add Question', () => {
   it('Visiting Add Question Page', () => {
     cy.visit('/sign-in')
-    cy.get('#email').clear()
+    cy.get('#email')
+      .clear()
       .type('careers@copods.co')
       .should('have.value', 'careers@copods.co')
-    cy.get('#password').clear()
+    cy.get('#password')
+      .clear()
       .type('kQuiz@copods')
       .should('have.value', 'kQuiz@copods')
     cy.findByRole('button').click()
@@ -12,21 +14,28 @@ describe('Test for Add Question', () => {
     cy.get('a').find('#Sections').should('have.text', 'Sections').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('.px-5').click()
-    cy.get(".addSectionDilog", { timeout: 10000 }).should("be.visible")
-    cy.get("input#sectionName").type(`Aptitude - ${new Date().getTime()}`)
-    cy.get('textarea#sectionDescription').type(`Aptitude - ${new Date().getTime()} Description`)
-    cy.get("button#submitButton").should("have.text", "Add").click()
+    cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
+    cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
+    cy.get('textarea#sectionDescription').type(
+      `Aptitude - ${new Date().getTime()} Description`
+    )
+    cy.get('button#submitButton').should('have.text', 'Add').click()
     cy.get('#section-card').first().click()
     cy.get('#addQuestion').click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/add-question')
+    cy.location('pathname', { timeout: 60000 }).should(
+      'include',
+      '/add-question'
+    )
   })
 
   it('Visiting Sections after Reaching Add Question Page', () => {
     cy.visit('/sign-in')
-    cy.get('#email').clear()
+    cy.get('#email')
+      .clear()
       .type('careers@copods.co')
       .should('have.value', 'careers@copods.co')
-    cy.get('#password').clear()
+    cy.get('#password')
+      .clear()
       .type('kQuiz@copods')
       .should('have.value', 'kQuiz@copods')
     cy.findByRole('button').click()
@@ -34,23 +43,30 @@ describe('Test for Add Question', () => {
     cy.get('a').find('#Sections').should('have.text', 'Sections').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('.px-5').click()
-    cy.get(".addSectionDilog", { timeout: 10000 }).should("be.visible")
-    cy.get("input#sectionName").type(`Aptitude - ${new Date().getTime()}`)
-    cy.get('textarea#sectionDescription').type(`Aptitude - ${new Date().getTime()} Description`)
-    cy.get("button#submitButton").should("have.text", "Add").click()
+    cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
+    cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
+    cy.get('textarea#sectionDescription').type(
+      `Aptitude - ${new Date().getTime()} Description`
+    )
+    cy.get('button#submitButton').should('have.text', 'Add').click()
     cy.get('#section-card').first().click()
     cy.get('#addQuestion').should('have.text', '+ Add Question').click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/add-question')
+    cy.location('pathname', { timeout: 60000 }).should(
+      'include',
+      '/add-question'
+    )
     cy.get('#Section').should('have.text', 'Section').click()
     cy.location('pathname', { timeout: 6000 }).should('include', '/sections')
   })
 
   it('Visiting the Same Question Section after Reaching Add Question Page', () => {
     cy.visit('/sign-in')
-    cy.get('#email').clear()
+    cy.get('#email')
+      .clear()
       .type('careers@copods.co')
       .should('have.value', 'careers@copods.co')
-    cy.get('#password').clear()
+    cy.get('#password')
+      .clear()
       .type('kQuiz@copods')
       .should('have.value', 'kQuiz@copods')
     cy.findByRole('button').click()
@@ -58,24 +74,31 @@ describe('Test for Add Question', () => {
     cy.get('a').find('#Sections').should('have.text', 'Sections').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('.px-5').click()
-    cy.get(".addSectionDilog", { timeout: 10000 }).should("be.visible")
-    cy.get("input#sectionName").type(`Aptitude - ${new Date().getTime()}`)
-    cy.get('textarea#sectionDescription').type(`Aptitude - ${new Date().getTime()} Description`)
-    cy.get("button#submitButton").should("have.text", "Add").click()
+    cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
+    cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
+    cy.get('textarea#sectionDescription').type(
+      `Aptitude - ${new Date().getTime()} Description`
+    )
+    cy.get('button#submitButton').should('have.text', 'Add').click()
     cy.get('#section-card').first().click()
     cy.get('#addQuestion').should('have.text', '+ Add Question').click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/add-question')
+    cy.location('pathname', { timeout: 60000 }).should(
+      'include',
+      '/add-question'
+    )
     cy.get('#Question').should('have.text', 'Question').click()
-    cy.wait(2000);
+    cy.wait(2000)
     cy.get('a > div').should('have.class', 'border-l-8')
   })
 
   it('Verifying MCQ to have Check Box in options', () => {
     cy.visit('/sign-in')
-    cy.get('#email').clear()
+    cy.get('#email')
+      .clear()
       .type('careers@copods.co')
       .should('have.value', 'careers@copods.co')
-    cy.get('#password').clear()
+    cy.get('#password')
+      .clear()
       .type('kQuiz@copods')
       .should('have.value', 'kQuiz@copods')
     cy.findByRole('button').click()
@@ -83,38 +106,41 @@ describe('Test for Add Question', () => {
     cy.get('a').find('#Sections').should('have.text', 'Sections').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('.px-5').click()
-    cy.get(".addSectionDilog", { timeout: 10000 }).should("be.visible")
-    cy.get("input#sectionName").type(`Aptitude - ${new Date().getTime()}`)
-    cy.get('textarea#sectionDescription').type(`Aptitude - ${new Date().getTime()} Description`)
-    cy.get("button#submitButton").should("have.text", "Add").click()
+    cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
+    cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
+    cy.get('textarea#sectionDescription').type(
+      `Aptitude - ${new Date().getTime()} Description`
+    )
+    cy.get('button#submitButton').should('have.text', 'Add').click()
     cy.get('#section-card').first().click()
     cy.get('#addQuestion').should('have.text', '+ Add Question').click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/add-question')
-    cy.get('h1').wait(2000);
+    cy.location('pathname', { timeout: 60000 }).should(
+      'include',
+      '/add-question'
+    )
+    cy.get('h1').wait(2000)
     cy.get('#dropdown > button').click()
 
-    let flag = "";
+    let flag = ''
     cy.get('ul[role="listbox"]').within(() => {
-      cy.get("li").within(() => {
+      cy.get('li').within(() => {
         cy.get('div').then((el) => {
-          [...el].map((el) => {
-            if (el.innerText === "Multiple Choice") {
-              flag = "CheckBox"
+          ;[...el].map((el) => {
+            if (el.innerText === 'Multiple Choice') {
+              flag = 'CheckBox'
               el.click()
-            }
-            else if (el.innerText === 'Single Choice') {
-              flag = "RadioButton"
-            }
-            else if (el.innerText === 'Text') {
-              flag = "TextArea"
+            } else if (el.innerText === 'Single Choice') {
+              flag = 'RadioButton'
+            } else if (el.innerText === 'Text') {
+              flag = 'TextArea'
             }
             return null
           })
         })
       })
     })
-    if (flag === "CheckBox") {
-      cy.get('input[type="checkbox"]');
+    if (flag === 'CheckBox') {
+      cy.get('input[type="checkbox"]')
     } else if (flag === 'RadioButton') {
       cy.get('input[type="radioButton"]')
     } else if (flag === 'TextArea') {
@@ -124,10 +150,12 @@ describe('Test for Add Question', () => {
 
   it('Verifying Single Choice to have Radio Button in options', () => {
     cy.visit('/sign-in')
-    cy.get('#email').clear()
+    cy.get('#email')
+      .clear()
       .type('careers@copods.co')
       .should('have.value', 'careers@copods.co')
-    cy.get('#password').clear()
+    cy.get('#password')
+      .clear()
       .type('kQuiz@copods')
       .should('have.value', 'kQuiz@copods')
     cy.findByRole('button').click()
@@ -135,38 +163,41 @@ describe('Test for Add Question', () => {
     cy.get('a').find('#Sections').should('have.text', 'Sections').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('.px-5').click()
-    cy.get(".addSectionDilog", { timeout: 10000 }).should("be.visible")
-    cy.get("input#sectionName").type(`Aptitude - ${new Date().getTime()}`)
-    cy.get('textarea#sectionDescription').type(`Aptitude - ${new Date().getTime()} Description`)
-    cy.get("button#submitButton").should("have.text", "Add").click()
+    cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
+    cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
+    cy.get('textarea#sectionDescription').type(
+      `Aptitude - ${new Date().getTime()} Description`
+    )
+    cy.get('button#submitButton').should('have.text', 'Add').click()
     cy.get('#section-card').first().click()
     cy.get('#addQuestion').should('have.text', '+ Add Question').click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/add-question')
+    cy.location('pathname', { timeout: 60000 }).should(
+      'include',
+      '/add-question'
+    )
     cy.get('h1').wait(2000)
     cy.get('#dropdown > button').click()
 
-    let flag = "";
+    let flag = ''
     cy.get('ul').within(() => {
-      cy.get("li").within(() => {
+      cy.get('li').within(() => {
         cy.get('div').then((el) => {
-          [...el].map((el) => {
-            if (el.innerText === "Multiple Choice") {
-              flag = "CheckBox"
-            }
-            else if (el.innerText === 'Single Choice') {
-              flag = "RadioButton"
+          ;[...el].map((el) => {
+            if (el.innerText === 'Multiple Choice') {
+              flag = 'CheckBox'
+            } else if (el.innerText === 'Single Choice') {
+              flag = 'RadioButton'
               el.click()
-            }
-            else if (el.innerText === 'Text') {
-              flag = "TextArea"
+            } else if (el.innerText === 'Text') {
+              flag = 'TextArea'
             }
             return null
           })
         })
       })
     })
-    if (flag === "CheckBox") {
-      cy.get('input[type="checkbox"]');
+    if (flag === 'CheckBox') {
+      cy.get('input[type="checkbox"]')
     } else if (flag === 'RadioButton') {
       cy.get('input[type="radioButton"]')
     } else if (flag === 'TextArea') {
@@ -176,10 +207,12 @@ describe('Test for Add Question', () => {
 
   it('Verifying Text to have Textarea in options', () => {
     cy.visit('/sign-in')
-    cy.get('#email').clear()
+    cy.get('#email')
+      .clear()
       .type('careers@copods.co')
       .should('have.value', 'careers@copods.co')
-    cy.get('#password').clear()
+    cy.get('#password')
+      .clear()
       .type('kQuiz@copods')
       .should('have.value', 'kQuiz@copods')
     cy.findByRole('button').click()
@@ -187,29 +220,32 @@ describe('Test for Add Question', () => {
     cy.get('a').find('#Sections').should('have.text', 'Sections').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('.px-5').click()
-    cy.get(".addSectionDilog", { timeout: 10000 }).should("be.visible")
-    cy.get("input#sectionName").type(`Aptitude - ${new Date().getTime()}`)
-    cy.get('textarea#sectionDescription').type(`Aptitude - ${new Date().getTime()} Description`)
-    cy.get("button#submitButton").should("have.text", "Add").click()
+    cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
+    cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
+    cy.get('textarea#sectionDescription').type(
+      `Aptitude - ${new Date().getTime()} Description`
+    )
+    cy.get('button#submitButton').should('have.text', 'Add').click()
     cy.get('#section-card').first().click()
     cy.get('#addQuestion').should('have.text', '+ Add Question').click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/add-question')
-    cy.get('h1').wait(2000);
+    cy.location('pathname', { timeout: 60000 }).should(
+      'include',
+      '/add-question'
+    )
+    cy.get('h1').wait(2000)
     cy.get('#dropdown > button').click()
 
-    let flag = "";
+    let flag = ''
     cy.get('ul').within(() => {
-      cy.get("li").within(() => {
+      cy.get('li').within(() => {
         cy.get('div').then((el) => {
-          [...el].map((el) => {
-            if (el.innerText === "Multiple Choice") {
-              flag = "CheckBox"
-            }
-            else if (el.innerText === 'Single Choice') {
-              flag = "RadioButton"
-            }
-            else if (el.innerText === 'Text') {
-              flag = "TextArea"
+          ;[...el].map((el) => {
+            if (el.innerText === 'Multiple Choice') {
+              flag = 'CheckBox'
+            } else if (el.innerText === 'Single Choice') {
+              flag = 'RadioButton'
+            } else if (el.innerText === 'Text') {
+              flag = 'TextArea'
               el.click()
             }
             return null
@@ -217,8 +253,8 @@ describe('Test for Add Question', () => {
         })
       })
     })
-    if (flag === "CheckBox") {
-      cy.get('input[type="checkbox"]');
+    if (flag === 'CheckBox') {
+      cy.get('input[type="checkbox"]')
     } else if (flag === 'RadioButton') {
       cy.get('input[type="radioButton"]')
     } else if (flag === 'TextArea') {
@@ -226,14 +262,16 @@ describe('Test for Add Question', () => {
     }
   })
 
-  let lengthBefore: number;
+  let lengthBefore: number
 
   it('Verifying if Add Option functionality Working on Options', () => {
     cy.visit('/sign-in')
-    cy.get('#email').clear()
+    cy.get('#email')
+      .clear()
       .type('careers@copods.co')
       .should('have.value', 'careers@copods.co')
-    cy.get('#password').clear()
+    cy.get('#password')
+      .clear()
       .type('kQuiz@copods')
       .should('have.value', 'kQuiz@copods')
     cy.findByRole('button').click()
@@ -241,22 +279,27 @@ describe('Test for Add Question', () => {
     cy.get('a').find('#Sections').should('have.text', 'Sections').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('.px-5').click()
-    cy.get(".addSectionDilog", { timeout: 10000 }).should("be.visible")
-    cy.get("input#sectionName").type(`Aptitude - ${new Date().getTime()}`)
-    cy.get('textarea#sectionDescription').type(`Aptitude - ${new Date().getTime()} Description`)
-    cy.get("button#submitButton").should("have.text", "Add").click()
+    cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
+    cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
+    cy.get('textarea#sectionDescription').type(
+      `Aptitude - ${new Date().getTime()} Description`
+    )
+    cy.get('button#submitButton').should('have.text', 'Add').click()
     cy.get('#section-card').first().click()
     cy.get('#addQuestion').should('have.text', '+ Add Question').click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/add-question')
-    cy.get('h1').wait(2000);
+    cy.location('pathname', { timeout: 60000 }).should(
+      'include',
+      '/add-question'
+    )
+    cy.get('h1').wait(2000)
 
     cy.get('#dropdown > button').click()
 
     cy.get('ul').within(() => {
-      cy.get("li").within(() => {
+      cy.get('li').within(() => {
         cy.get('div').then((el) => {
-          [...el].forEach((el) => {
-            if (el.innerText === "Multiple Choice") {
+          ;[...el].forEach((el) => {
+            if (el.innerText === 'Multiple Choice') {
               el.click()
             }
           })
@@ -265,22 +308,28 @@ describe('Test for Add Question', () => {
     })
 
     cy.get('.h-40 > .gap-6').within(() => {
-      cy.get("#quillEditor").its('length').then((len) => {
-        lengthBefore = len;
-      })
+      cy.get('#quillEditor')
+        .its('length')
+        .then((len) => {
+          lengthBefore = len
+        })
       cy.get('.iconify--fluent').click()
-      cy.get("#quillEditor").its('length').then((len) => {
-        expect(lengthBefore + 1).to.equal(len)
-      })
+      cy.get('#quillEditor')
+        .its('length')
+        .then((len) => {
+          expect(lengthBefore + 1).to.equal(len)
+        })
     })
   })
 
   it('Verifying if Delete functionality Working on Options', () => {
     cy.visit('/sign-in')
-    cy.get('#email').clear()
+    cy.get('#email')
+      .clear()
       .type('careers@copods.co')
       .should('have.value', 'careers@copods.co')
-    cy.get('#password').clear()
+    cy.get('#password')
+      .clear()
       .type('kQuiz@copods')
       .should('have.value', 'kQuiz@copods')
     cy.findByRole('button').click()
@@ -288,22 +337,27 @@ describe('Test for Add Question', () => {
     cy.get('a').find('#Sections').should('have.text', 'Sections').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('.px-5').click()
-    cy.get(".addSectionDilog", { timeout: 10000 }).should("be.visible")
-    cy.get("input#sectionName").type(`Aptitude - ${new Date().getTime()}`)
-    cy.get('textarea#sectionDescription').type(`Aptitude - ${new Date().getTime()} Description`)
-    cy.get("button#submitButton").should("have.text", "Add").click()
+    cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
+    cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
+    cy.get('textarea#sectionDescription').type(
+      `Aptitude - ${new Date().getTime()} Description`
+    )
+    cy.get('button#submitButton').should('have.text', 'Add').click()
     cy.get('#section-card').first().click()
     cy.get('#addQuestion').should('have.text', '+ Add Question').click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/add-question')
-    cy.get('h1').wait(2000);
+    cy.location('pathname', { timeout: 60000 }).should(
+      'include',
+      '/add-question'
+    )
+    cy.get('h1').wait(2000)
 
     cy.get('#dropdown > button').click()
 
     cy.get('ul').within(() => {
-      cy.get("li").within(() => {
+      cy.get('li').within(() => {
         cy.get('div').then((el) => {
-          [...el].forEach((el) => {
-            if (el.innerText === "Multiple Choice") {
+          ;[...el].forEach((el) => {
+            if (el.innerText === 'Multiple Choice') {
               el.click()
             }
           })
@@ -312,22 +366,28 @@ describe('Test for Add Question', () => {
     })
 
     cy.get('.h-40 > .gap-6').within(() => {
-      cy.get("#quillEditor").its('length').then((len) => {
-        lengthBefore = len;
-      })
+      cy.get('#quillEditor')
+        .its('length')
+        .then((len) => {
+          lengthBefore = len
+        })
       cy.get('.iconify--fluent').click()
-      cy.get("#quillEditor").its('length').then((len) => {
-        expect(lengthBefore + 1).to.equal(len)
-      })
+      cy.get('#quillEditor')
+        .its('length')
+        .then((len) => {
+          expect(lengthBefore + 1).to.equal(len)
+        })
     })
   })
 
   it('On Save and Add More visit the Add Question Page', () => {
     cy.visit('/sign-in')
-    cy.get('#email').clear()
+    cy.get('#email')
+      .clear()
       .type('careers@copods.co')
       .should('have.value', 'careers@copods.co')
-    cy.get('#password').clear()
+    cy.get('#password')
+      .clear()
       .type('kQuiz@copods')
       .should('have.value', 'kQuiz@copods')
     cy.findByRole('button').click()
@@ -335,24 +395,34 @@ describe('Test for Add Question', () => {
     cy.get('a').find('#Sections').should('have.text', 'Sections').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('.px-5').click()
-    cy.get(".addSectionDilog", { timeout: 10000 }).should("be.visible")
-    cy.get("input#sectionName").type(`Aptitude - ${new Date().getTime()}`)
-    cy.get('textarea#sectionDescription').type(`Aptitude - ${new Date().getTime()} Description`)
-    cy.get("button#submitButton").should("have.text", "Add").click()
+    cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
+    cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
+    cy.get('textarea#sectionDescription').type(
+      `Aptitude - ${new Date().getTime()} Description`
+    )
+    cy.get('button#submitButton').should('have.text', 'Add').click()
     cy.get('#section-card').first().click()
     cy.get('#addQuestion').should('have.text', '+ Add Question').click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/add-question')
+    cy.location('pathname', { timeout: 60000 }).should(
+      'include',
+      '/add-question'
+    )
 
-    cy.get("#saveAndAddMore").click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/add-question')
+    cy.get('#saveAndAddMore').click()
+    cy.location('pathname', { timeout: 60000 }).should(
+      'include',
+      '/add-question'
+    )
   })
 
   it('On Save and Continue visit the Sections Page', () => {
     cy.visit('/sign-in')
-    cy.get('#email').clear()
+    cy.get('#email')
+      .clear()
       .type('careers@copods.co')
       .should('have.value', 'careers@copods.co')
-    cy.get('#password').clear()
+    cy.get('#password')
+      .clear()
       .type('kQuiz@copods')
       .should('have.value', 'kQuiz@copods')
     cy.findByRole('button').click()
@@ -360,24 +430,31 @@ describe('Test for Add Question', () => {
     cy.get('a').find('#Sections').should('have.text', 'Sections').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('.px-5').click()
-    cy.get(".addSectionDilog", { timeout: 10000 }).should("be.visible")
-    cy.get("input#sectionName").type(`Aptitude - ${new Date().getTime()}`)
-    cy.get('textarea#sectionDescription').type(`Aptitude - ${new Date().getTime()} Description`)
-    cy.get("button#submitButton").should("have.text", "Add").click()
+    cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
+    cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
+    cy.get('textarea#sectionDescription').type(
+      `Aptitude - ${new Date().getTime()} Description`
+    )
+    cy.get('button#submitButton').should('have.text', 'Add').click()
     cy.get('#section-card').first().click()
     cy.get('#addQuestion').should('have.text', '+ Add Question').click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/add-question')
+    cy.location('pathname', { timeout: 60000 }).should(
+      'include',
+      '/add-question'
+    )
 
-    cy.get("#saveAndContinue").click()
+    cy.get('#saveAndContinue').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
   })
 
-  it("Verifying if Question is Empty or not", () => {
+  it('Verifying if Question is Empty or not', () => {
     cy.visit('/sign-in')
-    cy.get('#email').clear()
+    cy.get('#email')
+      .clear()
       .type('careers@copods.co')
       .should('have.value', 'careers@copods.co')
-    cy.get('#password').clear()
+    cy.get('#password')
+      .clear()
       .type('kQuiz@copods')
       .should('have.value', 'kQuiz@copods')
     cy.findByRole('button').click()
@@ -385,24 +462,33 @@ describe('Test for Add Question', () => {
     cy.get('a').find('#Sections').should('have.text', 'Sections').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('.px-5').click()
-    cy.get(".addSectionDilog", { timeout: 10000 }).should("be.visible")
-    cy.get("input#sectionName").type(`Aptitude - ${new Date().getTime()}`)
-    cy.get('textarea#sectionDescription').type(`Aptitude - ${new Date().getTime()} Description`)
-    cy.get("button#submitButton").should("have.text", "Add").click()
+    cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
+    cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
+    cy.get('textarea#sectionDescription').type(
+      `Aptitude - ${new Date().getTime()} Description`
+    )
+    cy.get('button#submitButton').should('have.text', 'Add').click()
     cy.get('#section-card').first().click()
     cy.get('#addQuestion').should('have.text', '+ Add Question').click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/add-question')
-    cy.get("#questionEditor > .rounded-lg > .ql-container > .ql-editor").type('{backspace}').should('have.value', "")
+    cy.location('pathname', { timeout: 60000 }).should(
+      'include',
+      '/add-question'
+    )
+    cy.get('#questionEditor > .rounded-lg > .ql-container > .ql-editor')
+      .type('{backspace}')
+      .should('have.value', '')
     cy.get('#saveAndAddMore').should('have.text', 'Save & Add More').click()
-    cy.get('.Toastify__toast').should('have.text', "Enter the Question")
+    cy.get('.Toastify__toast').should('have.text', 'Enter the Question')
   })
 
   it('Verifying if any Option is empty or not', () => {
     cy.visit('/sign-in')
-    cy.get('#email').clear()
+    cy.get('#email')
+      .clear()
       .type('careers@copods.co')
       .should('have.value', 'careers@copods.co')
-    cy.get('#password').clear()
+    cy.get('#password')
+      .clear()
       .type('kQuiz@copods')
       .should('have.value', 'kQuiz@copods')
     cy.findByRole('button').click()
@@ -410,23 +496,28 @@ describe('Test for Add Question', () => {
     cy.get('a').find('#Sections').should('have.text', 'Sections').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('.px-5').click()
-    cy.get(".addSectionDilog", { timeout: 10000 }).should("be.visible")
-    cy.get("input#sectionName").type(`Aptitude - ${new Date().getTime()}`)
-    cy.get('textarea#sectionDescription').type(`Aptitude - ${new Date().getTime()} Description`)
-    cy.get("button#submitButton").should("have.text", "Add").click()
+    cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
+    cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
+    cy.get('textarea#sectionDescription').type(
+      `Aptitude - ${new Date().getTime()} Description`
+    )
+    cy.get('button#submitButton').should('have.text', 'Add').click()
     cy.get('#section-card').first().click()
     cy.get('#addQuestion').should('have.text', '+ Add Question').click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/add-question')
-    cy.get('h1').wait(2000);
-    let flag = 0;
+    cy.location('pathname', { timeout: 60000 }).should(
+      'include',
+      '/add-question'
+    )
+    cy.get('h1').wait(2000)
+    let flag = 0
 
     cy.get('#dropdown > button').click()
 
     cy.get('ul').within(() => {
-      cy.get("li").within(() => {
+      cy.get('li').within(() => {
         cy.get('div').then((el) => {
-          [...el].forEach((el) => {
-            if (el.innerText === "Multiple Choice") {
+          ;[...el].forEach((el) => {
+            if (el.innerText === 'Multiple Choice') {
               el.click()
             }
           })
@@ -434,11 +525,11 @@ describe('Test for Add Question', () => {
       })
     })
 
-    cy.get(".h-40 > .gap-6 > .flex-col").within(() => {
-      cy.get(" #quillEditor ").then((el) => {
-        [...el].forEach((element) => {
-          if (element.innerText === "") {
-            flag = 1;
+    cy.get('.h-40 > .gap-6 > .flex-col').within(() => {
+      cy.get(' #quillEditor ').then((el) => {
+        ;[...el].forEach((element) => {
+          if (element.innerText === '') {
+            flag = 1
           }
         })
       })
