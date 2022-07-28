@@ -76,7 +76,7 @@ describe('Test for testPreview', () => {
       .should('have.value', 'kQuiz@copods')
     cy.findByRole('button').click()
     cy.get('a').find('#Tests').should('have.text', 'Tests').click()
-    cy.get('.testList').each((item) => {
+    cy.get('#testList').each((item) => {
       cy.contains(`${time}`)
         .parent()
         .parent()

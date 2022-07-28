@@ -67,10 +67,7 @@ const TestList = ({ tests }: { tests: Array<Test> }) => {
         onSortChange={onSortChange}
         totalItems={tests?.length}
       />
-      <div
-        className="testList flex flex-col gap-6 overflow-auto "
-        id="testList"
-      >
+      <div className="flex flex-col gap-6 overflow-auto " id="testList">
         {tests.map((test, i) => {
           return (
             <TestCard
