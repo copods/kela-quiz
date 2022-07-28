@@ -70,7 +70,7 @@ export default function QuillEditor({
     if (quill && text) {
       quill.clipboard.dangerouslyPasteHTML(text)
     }
-  }, [quill, text])
+  }, [quill])
 
   useEffect(() => {
     if (quill) {

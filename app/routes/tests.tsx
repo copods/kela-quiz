@@ -63,7 +63,7 @@ export const action: ActionFunction = async ({ request }) => {
 }
 
 export default function Results() {
-  const data = useLoaderData() as LoaderData
+  const testData = useLoaderData() as LoaderData
   const actionData = useActionData()
 
   useEffect(() => {
@@ -77,12 +77,12 @@ export default function Results() {
     }
   }, [actionData])
 
-  if (data.status != 'Success') {
+  if (testData.status != 'Success') {
     toast.success('Something went wrong..!')
   }
   return (
     <AdminLayout>
-      <TestList tests={data.tests} />
+      <TestList tests={testData.tests} />
     </AdminLayout>
   )
 }

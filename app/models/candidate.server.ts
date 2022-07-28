@@ -89,8 +89,8 @@ export async function getTestById(id: string) {
   })
 }
 
-export async function sendMailToCandidate(email: string, name: string, link: string) {
-  sendTestInviteMail(email, name, link)
+export async function sendMailToCandidate(email: string, link: string) {
+  sendTestInviteMail(email, link)
 }
 
 async function createCandidateData({
@@ -117,7 +117,7 @@ async function createCandidateData({
     }
   }
 
-  await sendMailToCandidate(user.email, `${user.firstName} ${user.lastName}`, updatedCandidateTest.link as string)
+  await sendMailToCandidate(user.email, updatedCandidateTest.link as string)
 
 }
 

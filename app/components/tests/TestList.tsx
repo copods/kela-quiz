@@ -82,6 +82,11 @@ const TestList = ({ tests }: { tests: Array<Test> }) => {
           )
         })}
       </div>
+      {tests.length < 1 && (
+        <div className="flex flex-col items-center justify-center gap-6 overflow-auto">
+          No test found. Add your first test
+        </div>
+      )}
     </div>
   )
 }

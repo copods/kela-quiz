@@ -90,7 +90,6 @@ export async function sendMail(
 
 export async function sendTestInviteMail(
   email: string,
-  name: string,
   link: string,
 ) {
   const to = email
@@ -115,7 +114,7 @@ export async function sendTestInviteMail(
             <div style="background:#fff;margin:0 auto;padding:20px;max-width: 350px">
           <p style="text-align:center;font-size:20px;line-height:28px;color:#4B5563;margin:0;margin-bottom:13px"><span>Welcome !</span></p>
           <div style="font-size:16px; line-height:24px;margin-bottom:16px">
-            <p style="text-align:left;color:#4B5563;margin:0;"><span>Hi ${name},</span>
+            <p style="text-align:left;color:#4B5563;margin:0;"><span>Hi ${email},</span>
             </p>
             <br>
             <p style="text-align:left;color:#4B5563;margin:0;">You test link is ${link} on K - Quiz.
@@ -123,13 +122,13 @@ export async function sendTestInviteMail(
             <br>
 
             <p style="text-align:left;color:#4B5563;margin:0;font-family:'Poppins', sans-serif;">
-              Please use the following credentials to access your account
+              Please click on the link or 'Start Test' button to access the test.
             </p>
             <br>
 
           </div>
           <div style="text-align:center;padding:10px" >
-          <a href="${env.PUBLIC_URL}" style="text-decoration:none"><span style="padding: 10px 38px;background:#353988;color:#fff;font-family:'Poppins', sans-serif;">Head to K - Quiz</span></a>
+          <a href="${link}" style="text-decoration:none"><span style="padding: 10px 38px;background:#353988;color:#fff;font-family:'Poppins', sans-serif;">Start Test</span></a>
           </div>
         </div>
         </td>
