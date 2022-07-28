@@ -117,7 +117,7 @@ const TestPreview = ({
                       Questions
                     </span>
                     <span>
-                      {section.time ? section.time : section.timeInSeconds} Mins
+                      {section.time ? section.time : section.timeInSeconds} Min
                     </span>
                   </div>
                 </div>
