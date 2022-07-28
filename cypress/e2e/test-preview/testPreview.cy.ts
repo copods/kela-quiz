@@ -88,22 +88,7 @@ describe('Test for testPreview', () => {
     cy.get('#title').should('have.text', `Test - ${time}`)
   })
 
-  it('test for tests button-header', () => {
-    cy.visit('/sign-in')
-    cy.get('#email')
-      .clear()
-      .type('careers@copods.co')
-      .should('have.value', 'careers@copods.co')
-    cy.get('#password')
-      .clear()
-      .type('kQuiz@copods')
-      .should('have.value', 'kQuiz@copods')
-    cy.findByRole('button').click()
-    cy.get('a').find('#Tests').should('have.text', 'Tests').click()
-    cy.get('#preview').should('have.text', 'Preview').click()
-    cy.get('#tests').should('have.text', 'Tests').click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-  })
+
   it('test for tests back-button', () => {
     cy.visit('/sign-in')
     cy.get('#email')
