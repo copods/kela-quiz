@@ -18,6 +18,7 @@ const SectionDetails = () => {
       <hr className="-mt-2 h-px w-full border-0 bg-gray-300" />
       <div className="flex items-center justify-between">
         <input
+          id="sectionSearch"
           type="text"
           name="search"
           className="h-9 w-48 rounded-lg border border-gray-200 px-3 text-sm"

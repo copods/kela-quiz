@@ -42,7 +42,7 @@ describe('Test for Section Details', () => {
       '/add-question'
     )
   })
-  it('Visiting Sections after Reaching Add Question Page', () => {
+  it('Visiting Sections which added', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -61,25 +61,49 @@ describe('Test for Section Details', () => {
       cy.contains(`Aptitude - ${time}`).click()
     })
   })
-  // it('Visiting Sections after Reaching Add Question Page', () => {
-  //   cy.visit('/sign-in')
-  //   cy.get('#email')
-  //     .clear()
-  //     .type('careers@copods.co')
-  //     .should('have.value', 'careers@copods.co')
-  //   cy.get('#password')
-  //     .clear()
-  //     .type('kQuiz@copods')
-  //     .should('have.value', 'kQuiz@copods')
-  //   cy.findByRole('button').click()
+  it('Visiting Sections from add question page', () => {
+    cy.visit('/sign-in')
+    cy.get('#email')
+      .clear()
+      .type('careers@copods.co')
+      .should('have.value', 'careers@copods.co')
+    cy.get('#password')
+      .clear()
+      .type('kQuiz@copods')
+      .should('have.value', 'kQuiz@copods')
+    cy.findByRole('button').click()
 
-  //   cy.get('a').find('#Sections').should('have.text', 'Sections').click()
-  //   cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
+    cy.get('a').find('#Sections').should('have.text', 'Sections').click()
+    cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
 
-  //   cy.get('#section-cards').each((item) => {
-  //     cy.contains(`Aptitude - ${time}`)
-  //       .contains('#sectionDate')
+    cy.get('#section-cards').each((item) => {
+      cy.contains(`Aptitude - ${time}`).click()
+    })
+    cy.get('#addQuestion').should('have.text', '+ Add Question').click()
+    cy.location('pathname', { timeout: 60000 }).should(
+      'include',
+      '/add-question'
+    )
+    cy.get('#Section').should('have.text', 'Section').click()
+  })
+  it('Visiting Sections search input', () => {
+    cy.visit('/sign-in')
+    cy.get('#email')
+      .clear()
+      .type('careers@copods.co')
+      .should('have.value', 'careers@copods.co')
+    cy.get('#password')
+      .clear()
+      .type('kQuiz@copods')
+      .should('have.value', 'kQuiz@copods')
+    cy.findByRole('button').click()
 
-  //   })
-  // })
+    cy.get('a').find('#Sections').should('have.text', 'Sections').click()
+    cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
+
+    cy.get('#section-cards').each((item) => {
+      cy.contains(`Aptitude - ${time}`).click()
+    })
+    cy.get('#sectionSearch').type(`${time}`)
+  })
 })
