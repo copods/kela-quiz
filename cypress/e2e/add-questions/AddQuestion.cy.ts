@@ -1,5 +1,5 @@
-describe('Test for Add Question', () => {
-  it('Visiting Add Question Page', () => {
+describe('Test for section-details', () => {
+  it('Visiting section-details  Page', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -28,7 +28,7 @@ describe('Test for Add Question', () => {
     )
   })
 
-  it('Visiting Sections after Reaching Add Question Page', () => {
+  it('Test for adding new section', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -59,7 +59,7 @@ describe('Test for Add Question', () => {
     cy.location('pathname', { timeout: 6000 }).should('include', '/sections')
   })
 
-  it('Visiting the Same Question Section after Reaching Add Question Page', () => {
+  it('Visiting the Same section which created', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()

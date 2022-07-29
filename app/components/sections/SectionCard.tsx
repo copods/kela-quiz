@@ -33,7 +33,7 @@ const SectionCard = ({
       </div>
       <div className="flex text-xs text-gray-400">
         <span>By {createdBy}</span>
-        <span className="created-by-date flex">
+        <span id="sectionDate" className="created-by-date flex">
           <Icon className="text-base" icon={'mdi:circle-small'} />
           {moment(createdAt).format('DD MMM YY')}
         </span>
