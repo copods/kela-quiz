@@ -23,12 +23,14 @@ const SortFilter = ({
       <div className="flex items-center gap-2.5" id="sort-filter-body">
         {sortDirection == 'asc' ? (
           <Icon
+            id="ascend"
             icon="ph:sort-ascending-bold"
             onClick={() => onSortDirectionChange('desc')}
             className="cursor-pointer text-2xl"
           />
         ) : (
           <Icon
+            id="descend"
             icon="ph:sort-descending-bold"
             onClick={() => onSortDirectionChange('asc')}
             className="cursor-pointer text-2xl"
