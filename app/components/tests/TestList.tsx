@@ -47,7 +47,7 @@ const TestList = ({ tests }: { tests: Array<Test> }) => {
         <Link to={'/tests/add-test'}>
           <button
             id="addTest"
-            className="h-9 rounded-lg bg-primary px-5 text-xs text-whiteShadeOne"
+            className="h-9 rounded-lg bg-primary px-5 text-xs text-white"
           >
             + Add Test
           </button>
@@ -66,9 +66,9 @@ const TestList = ({ tests }: { tests: Array<Test> }) => {
       </div>
 
       <div className="flex h-5/6 flex-col ">
-        <div className="rounded-b-0 flex items-center rounded-t-md border border-b-0 border-solid border-borderColor bg-tableHeader px-2 py-3 font-semibold ">
+        <div className="rounded-b-0 flex items-center rounded-t-md border border-b-0 border-solid border-borderColor bg-tableHeader px-9 py-3 font-semibold ">
           {showCheckBox && (
-            <div className=" w-1/12 pl-8">
+            <div className=" w-1/12 pl-2.5">
               <input type="checkbox"></input>
             </div>
           )}
@@ -81,11 +81,13 @@ const TestList = ({ tests }: { tests: Array<Test> }) => {
           <div className="w-2/12 text-sm leading-5 text-gray-500">
             Created By
           </div>
-          <div className="w-1/12 text-sm leading-5 text-gray-500">Actions</div>
+          <div className="flex w-1/12 justify-end text-sm leading-5 text-gray-500">
+            Actions
+          </div>
         </div>
         <div
           id="testList"
-          className=" rounded-t-0 flex flex-1 flex-col overflow-auto rounded-md border-t-0 border-solid border-borderColor bg-white"
+          className=" rounded-t-0 flex flex-1 flex-col overflow-auto rounded-md border-t-0 border-solid border-borderColor bg-white px-9"
         >
           {tests.map((test, i) => (
             <TestTableItem

@@ -27,10 +27,10 @@ const TestTableItem = ({
       <div
         key={index}
         id="test-table-list"
-        className="flex items-center border-b border-t-0 border-gray-200 px-2 py-3 "
+        className="flex items-center border-b border-t-0 border-gray-200  py-3 "
       >
         {showCheckBox && (
-          <div className="w-1/12 pl-8 text-base font-medium leading-6 text-gray-700">
+          <div className="w-1/12 pl-2.5 text-base font-medium leading-6 text-gray-700">
             <input type="checkbox"></input>
           </div>
         )}
@@ -57,7 +57,7 @@ const TestTableItem = ({
         <div className="w-2/12 truncate text-base font-medium leading-6 text-gray-700">
           {createdBy}
         </div>
-        <div className="flex w-1/12 items-center gap-3 truncate text-xl font-medium leading-6 text-gray-700">
+        <div className="flex w-1/12 items-center justify-end gap-3 truncate text-xl font-medium  leading-6  text-gray-700">
           <div>
             <Icon
               className="cursor-pointer text-primary"
