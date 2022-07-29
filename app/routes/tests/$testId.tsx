@@ -12,7 +12,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 export default function TestDetails() {
   return (
     <AdminLayout>
-      <div>
+      <div id="test-details">
         <div>Hey testDetails</div>
       </div>
     </AdminLayout>

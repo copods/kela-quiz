@@ -8,6 +8,7 @@ const SortFilter = ({
   sortBy,
   onSortChange,
   totalItems,
+  showSelected,
 }: {
   filterData: Array<any>
   sortDirection: string
@@ -15,10 +16,11 @@ const SortFilter = ({
   sortBy: string
   onSortChange: (e: string) => void
   totalItems: number
+  showSelected: boolean
 }) => {
   return (
-    <div className="flex items-center justify-between ">
-      <div className="flex items-center gap-2.5">
+    <div className="flex items-center" id="sort-filter">
+      <div className="flex items-center gap-2.5" id="sort-filter-body">
         {sortDirection == 'asc' ? (
           <Icon
             icon="ph:sort-ascending-bold"
@@ -40,10 +42,17 @@ const SortFilter = ({
           setValue={onSortChange}
         />
       </div>
-      <span className="flex items-center pl-4 text-sm font-normal  text-[#4B5563]  ">
-        <span className="pr-3">Total Counts: {totalItems}</span>{' '}
-        <Icon icon="ci:line-m" className="text-[#ACBBAC]" />
-        <span className="pl-3 ">Selected: 0/{totalItems}</span>
+      <span
+        className="flex items-center pl-4 text-sm font-normal text-totalCount"
+        id="total-items-value"
+      >
+        <span className="pr-3">Total Counts: {totalItems}</span>
+        {showSelected && (
+          <>
+            <Icon icon="ci:line-m" />
+            <span className="pl-3 ">Selected: 0/{totalItems}</span>
+          </>
+        )}
       </span>
     </div>
   )
