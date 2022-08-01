@@ -1,20 +1,30 @@
-import AdminLayout from '~/components/layouts/AdminLayout'
-import { getUserId } from '~/session.server'
-import { redirect } from '@remix-run/node'
-import type { LoaderFunction } from '@remix-run/node'
+import type { LoaderFunction } from '@remix-run/server-runtime'
+import { json } from '@remix-run/node'
 
-export const loader: LoaderFunction = async ({ request }) => {
-  const userId = await getUserId(request)
-  if (!userId) return redirect('/sign-in')
-  return null
+import invariant from 'tiny-invariant'
+import { getTestById } from '~/models/tests.server'
+
+import TestDetails from '~/components/tests/TestDetails'
+import AdminLayout from '~/components/layouts/AdminLayout'
+
+type LoaderData = {
+  testPreview: Awaited<ReturnType<typeof getTestById>>
 }
 
-export default function TestDetails() {
+export const loader: LoaderFunction = async ({ request, params }) => {
+  invariant(params.testId, 'testId not found')
+  const testPreview = await getTestById({ id: params.testId })
+  if (!testPreview) {
+    throw new Response('Not Found', { status: 404 })
+  }
+
+  return json<LoaderData>({ testPreview })
+}
+
+export default function TestsDetailsRoute() {
   return (
     <AdminLayout>
-      <div id="test-details">
-        <div>Hey testDetails</div>
-      </div>
+      <TestDetails />
     </AdminLayout>
   )
 }

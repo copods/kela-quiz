@@ -39,8 +39,8 @@ export const loader: LoaderFunction = async ({ request }) => {
   return json<LoaderData>({ tests, status })
 }
 
-export default function Results() {
-  const data = useLoaderData() as unknown as LoaderData
+export default function Tests() {
+  const data = useLoaderData() as LoaderData
   if (data.status != 'Success') {
     toast.success('Something went wrong..!')
   }
