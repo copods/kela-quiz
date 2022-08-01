@@ -2,7 +2,7 @@ import { prisma } from '~/db.server'
 import type { CandidateTest, Candidate } from '@prisma/client'
 
 export async function checkIfTestLinkIsValid(id: CandidateTest['id']) {
-  return prisma.candidateTest.findFirst({
+  return prisma.candidateTest.findUnique({
     where: { id },
     select: { candidateStep: true },
   })

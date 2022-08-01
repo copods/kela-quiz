@@ -1,9 +1,9 @@
 import CandidateLayout from '~/components/layouts/CandidateLayout'
 
-export default function CandidateAssessment() {
+export default function AssessmentSection() {
   return (
     <CandidateLayout>
-      <div>Assessment Candidate Works.....!</div>
+      <h1>Assessment for particular section !!</h1>
     </CandidateLayout>
   )
 }
