@@ -1,5 +1,5 @@
 describe('Visiting Tests', () => {
-  it('Visiting Test Page', () => {
+  xit('Visiting Test Page', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -17,7 +17,7 @@ describe('Visiting Tests', () => {
 
   let value: any
   let strings: any
-  it('Total Count of Test of Table', () => {
+  xit('Total Count of Test of Table', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -45,7 +45,7 @@ describe('Visiting Tests', () => {
         expect(strings.length).to.deep.equal(parseInt(value))
       })
   })
-  it('sort by name in ascending order ', () => {
+  xit('sort by name in ascending order ', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -73,7 +73,7 @@ describe('Visiting Tests', () => {
         }
       })
   })
-  it('sort by name in descending order ', () => {
+  xit('sort by name in descending order ', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -102,7 +102,7 @@ describe('Visiting Tests', () => {
         }
       })
   })
-  it('sort by created date in ascending order ', () => {
+  xit('sort by created date in ascending order ', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -136,7 +136,7 @@ describe('Visiting Tests', () => {
         }
       })
   })
-  it('sort by created date in descending order', () => {
+  xit('sort by created date in descending order', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -173,7 +173,7 @@ describe('Visiting Tests', () => {
       })
   })
 
-  it('By Clicking test name it should navigate to test details page', () => {
+  xit('By Clicking test name it should navigate to test details page', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -209,17 +209,13 @@ describe('Visiting Tests', () => {
     cy.get('a').find('#Tests').should('have.text', 'Tests').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('#section-count-button').click()
-
-    cy.get('#section-count-button')
-      .invoke('text')
-      .then((el) => {
-        cy.wait(1000)
-        cy.get('.section-menu').then(($elements) => {
-          var strings = [...$elements].map(($el) => {
-            return $el.innerText
-          })
-          expect(strings).to.deep.equal([...strings])
+    cy.get('#section-count-button').then((el) => {
+      cy.get('.section-menu').then(($elements) => {
+        var strings = [...$elements].map(($el) => {
+          return $el.innerText
         })
+        expect(strings).to.deep.equal([...strings])
       })
+    })
   })
 })

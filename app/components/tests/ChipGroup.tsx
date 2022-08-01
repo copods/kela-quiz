@@ -11,7 +11,7 @@ const ChipGroup = ({ sections }: { sections: Array<SectionInTest> }) => {
           <Menu.Button>
             <span
               id="section-count-button"
-              className=" ml-2 cursor-pointer rounded-[52px] bg-bgcolor py-1 px-2 pl-2 text-xs"
+              className="  ml-2 cursor-pointer rounded-[52px] bg-bgcolor py-1 px-2 pl-2 text-xs"
             >
               + {sections.length - 1}
             </span>
