@@ -1,5 +1,5 @@
 describe('Visiting Tests', () => {
-  xit('Visiting Test Page', () => {
+  it('Visiting Test Page', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -17,7 +17,7 @@ describe('Visiting Tests', () => {
 
   let value: any
   let strings: any
-  xit('Total Count of Test of Table', () => {
+  it('Total Count of Test of Table', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -45,7 +45,7 @@ describe('Visiting Tests', () => {
         expect(strings.length).to.deep.equal(parseInt(value))
       })
   })
-  xit('sort by name in ascending order ', () => {
+  it('sort by name in ascending order ', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -73,7 +73,7 @@ describe('Visiting Tests', () => {
         }
       })
   })
-  xit('sort by name in descending order ', () => {
+  it('sort by name in descending order ', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -102,7 +102,7 @@ describe('Visiting Tests', () => {
         }
       })
   })
-  xit('sort by created date in ascending order ', () => {
+  it('sort by created date in ascending order ', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -136,7 +136,7 @@ describe('Visiting Tests', () => {
         }
       })
   })
-  xit('sort by created date in descending order', () => {
+  it('sort by created date in descending order', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -173,7 +173,7 @@ describe('Visiting Tests', () => {
       })
   })
 
-  xit('By Clicking test name it should navigate to test details page', () => {
+  it('By Clicking test name it should navigate to test details page', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
