@@ -48,7 +48,7 @@ const TestTableItem = ({
             {testName}
           </NavLink>
         </div>
-        <div className="w-2/12  text-xs leading-6 ">
+        <div id="chip-group-id" className="w-2/12  text-xs leading-6 ">
           <ChipGroup sections={sections} />
         </div>
         <div className="w-2/12 truncate pr-0 text-base font-medium leading-6 text-gray-700">
