@@ -20,7 +20,7 @@ const QuestionCard = ({
       key={question.id}
       className="flex flex-col  rounded-lg border border-gray-300 bg-gray-50 px-6 py-7"
     >
-      <div className="flex items-center justify-between text-base text-gray-600 ">
+      <div className="flex items-center justify-between overflow-ellipsis break-all text-base text-gray-600">
         <div className="ql-editor flex-1">
           <div dangerouslySetInnerHTML={{ __html: question.question }}></div>
         </div>
