@@ -16,7 +16,7 @@ function MenuItems({ iconClass, itemName, itemRoute }: tabProps) {
         to={`/${itemRoute}`}
         className={({ isActive }) =>
           `flex flex-row items-start gap-2 rounded-lg p-3.5 ${
-            isActive ? 'active_nav_link bg-blue-50' : ''
+            isActive ? 'active_nav_link bg-blue-50' : ' '
           }`
         }
       >
