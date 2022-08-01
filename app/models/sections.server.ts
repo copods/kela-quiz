@@ -8,7 +8,7 @@ export async function getSectionById({ id }: Pick<Section, 'id'>) {
       id,
     },
     include: {
-      questions: true
+      questions: true,
     },
   })
 }
@@ -45,33 +45,50 @@ export async function deleteSectionById(id: string) {
 }
 
 export async function getQuestionType() {
-  return prisma.questionType.findMany();
+  return prisma.questionType.findMany()
 }
 
-export async function addQuestion(question: string, options: Array<{ id: string, option: string, isCorrect: boolean }>, correctAnswer: Array<{ id: string, answer: string, order: number }>, questionTypeId: string, sectionId: string, createdById: string, checkOrder: boolean) {
+export async function addQuestion(
+  question: string,
+  options: Array<{ id: string; option: string; isCorrect: boolean }>,
+  correctAnswer: Array<{ id: string; answer: string; order: number }>,
+  questionTypeId: string,
+  sectionId: string,
+  createdById: string,
+  checkOrder: boolean
+) {
   let questionId = cuid()
-  await prisma.question.create({
-    data: {
-      id: questionId,
-      question,
-      sectionId,
-      createdById,
-      questionTypeId,
-      checkOrder,
-      options: {
-        createMany: {
-          data: options.map(option => ({ option: option.option, id: option.id, coInQuestionId: option.isCorrect ? questionId : null, createdById }))
-        }
+  await prisma.question
+    .create({
+      data: {
+        id: questionId,
+        question,
+        sectionId,
+        createdById,
+        questionTypeId,
+        checkOrder,
+        options: {
+          createMany: {
+            data: options.map((option) => ({
+              option: option.option,
+              id: option.id,
+              coInQuestionId: option.isCorrect ? questionId : null,
+              createdById,
+            })),
+          },
+        },
+        correctAnswer: {
+          createMany: {
+            data: correctAnswer,
+          },
+        },
       },
-      correctAnswer: {
-        createMany: {
-          data: correctAnswer
-        }
-      }
-    }
-  }).then(() => { return true })
+    })
+    .then(() => {
+      return true
+    })
     .catch((err) => {
       console.log(err)
-      return err;
+      return err
     })
 }

@@ -92,6 +92,8 @@ const AddSection = ({
                   <button
                     type="submit"
                     id="submitButton"
+                    name="add-section"
+                    value={JSON.stringify({ action: 'add' })}
                     className={`h-9 rounded-md bg-primary px-4 text-sm text-[#F0FDF4] disabled:opacity-80  ${
                       transition.state === 'submitting' ? 'disabled' : ''
                     }`}

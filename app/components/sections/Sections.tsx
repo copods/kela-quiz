@@ -5,7 +5,15 @@ import type { Section } from '~/interface/Interface'
 import { useResolvedPath, useLocation, NavLink } from '@remix-run/react'
 import {} from '@remix-run/react'
 
-const SectionLink = ({ section }: { section: any }) => {
+const SectionLink = ({
+  section,
+  actionStatusData,
+  err,
+}: {
+  section: any
+  actionStatusData: string | undefined
+  err: string | undefined
+}) => {
   const path = `/sections/${section.id}`
   const location = useLocation() // to get current location
   const resolvedPath = useResolvedPath(path) // to get resolved path which would match with current location
@@ -17,6 +25,9 @@ const SectionLink = ({ section }: { section: any }) => {
         createdBy={`${section?.createdBy?.firstName} ${section?.createdBy?.lastName}`}
         questionsCount={section?._count?.questions}
         createdAt={section.createdAt}
+        id={section?.id}
+        actionStatusData={actionStatusData}
+        err={err}
       />
     </NavLink>
   )
@@ -30,6 +41,8 @@ type SectionType = {
   setSortBy: (e: string) => void
   order: string
   setOrder: Function
+  err: any
+  actionStatusData: any
   setSelectedSection: Function
   sortByDetails: Array<{ name: string; id: string }>
 }
@@ -42,6 +55,8 @@ const Sections = ({
   filters,
   setSelectedSection,
   sortByDetails,
+  err,
+  actionStatusData,
 }: SectionType) => {
   return (
     <div className="flex h-full w-96 flex-col gap-6">
@@ -80,7 +95,12 @@ const Sections = ({
         id="section-cards"
       >
         {sections?.map((section: any) => (
-          <SectionLink key={section.id} section={section} />
+          <SectionLink
+            key={section.id}
+            section={section}
+            actionStatusData={actionStatusData}
+            err={err}
+          />
         ))}
         {sections.length === 0 && (
           <div className="flex justify-center p-7">No Record Found</div>

@@ -8,7 +8,11 @@ import {
   useLoaderData,
   useSubmit,
 } from '@remix-run/react'
-import { createSection, getAllSections } from '~/models/sections.server'
+import {
+  createSection,
+  deleteSectionById,
+  getAllSections,
+} from '~/models/sections.server'
 import { useState, useEffect } from 'react'
 import { Icon } from '@iconify/react'
 import { getUserId, requireUserId } from '~/session.server'
@@ -23,6 +27,14 @@ export type ActionData = {
   errors?: {
     title?: string
     body?: string
+    status?: string
+    check?: Date
+    name?: string
+    description?: string
+  }
+  resp?: {
+    status?: string
+    check?: Date
   }
 }
 
@@ -58,42 +70,88 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 export const action: ActionFunction = async ({ request }) => {
   const createdById = await requireUserId(request)
   const formData = await request.formData()
-  const name = formData.get('name')
-  const description = formData.get('description')
+  const action = JSON.parse(formData.get('add-section') as string)
+    ? JSON.parse(formData.get('add-section') as string)
+    : formData.get('deleteSection')
 
-  if (typeof name !== 'string' || name.length === 0) {
-    return json<ActionData>(
-      { errors: { title: 'Name is required' } },
-      { status: 400 }
-    )
+  if (action.action === 'add') {
+    const name = formData.get('name')
+    const description = formData.get('description')
+    if (typeof name !== 'string' || name.length === 0) {
+      return json<ActionData>(
+        { errors: { title: 'Name is required' } },
+        { status: 400 }
+      )
+    }
+    if (typeof description !== 'string' || description.length === 0) {
+      return json<ActionData>(
+        { errors: { title: 'description is required' } },
+        { status: 400 }
+      )
+    }
+
+    let addHandle = null
+    await createSection({ name, description, createdById })
+      .then((res) => {
+        addHandle = json<ActionData>(
+          {
+            resp: {
+              status: 'Section Added Successfully..!',
+              check: new Date(),
+            },
+          },
+          { status: 200 }
+        )
+      })
+      .catch((err) => {
+        addHandle = json<ActionData>(
+          { errors: { status: err, check: new Date() } },
+          { status: 400 }
+        )
+      })
+    return addHandle
   }
-  if (typeof description !== 'string' || description.length === 0) {
-    return json<ActionData>(
-      { errors: { title: 'Description is required' } },
-      { status: 400 }
-    )
+  let deleteHandle = null
+  if (action === 'sectionDelete') {
+    await deleteSectionById(formData.get('id') as string)
+      .then((res) => {
+        deleteHandle = json<ActionData>(
+          { resp: { status: 'Deleted Successfully..!' } },
+          { status: 201 }
+        )
+      })
+      .catch((err) => {
+        deleteHandle = json<ActionData>(
+          { errors: { status: err, check: new Date() } },
+          { status: 400 }
+        )
+      })
+    return deleteHandle
   }
-  const section = await createSection({ name, description, createdById })
-  return redirect(`/sections/${section.id}${new URL(request.url).search}`)
+  console.log(deleteHandle, 'status')
+  if (deleteHandle) {
+    return redirect('/sections')
+  }
 }
 
 export default function SectionPage() {
   const data = useLoaderData() as LoaderData
   const fetcher = useFetcher()
   const action = useActionData as ActionData
-
+  useEffect(() => {
+    if (action) {
+      console.log(action?.resp?.status)
+      if (action?.resp?.status) {
+        toast.success(action?.resp?.status)
+      } else if (action?.errors?.status) {
+        toast.error('Something went wrong...!')
+      }
+    }
+  }, [action])
   const [sectionDetailFull, setSectionDetailFull] = useState(false)
   const [open, setOpen] = useState(false)
 
-  if (action.errors?.title) {
-    toast.error('Something went wrong..!')
-  }
-
   let navigate = useNavigate()
-  if (data.status != 'Success') {
-    toast.error('Something went wrong..!')
-  }
-
   const submit = useSubmit()
 
   const [order, setOrder] = useState('asc')
@@ -170,9 +228,10 @@ export default function SectionPage() {
               setOrder={setOrder}
               setSelectedSection={setSelectedSection}
               sortByDetails={sortByDetails}
+              actionStatusData={action?.resp?.status}
+              err={action?.resp?.status}
             />
           </div>
-
           {/* section details */}
           <div className={`z-10 flex flex-1 items-center `}>
             <span
