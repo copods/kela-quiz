@@ -48,7 +48,6 @@ const SectionCard = ({
       <div className="flex items-center justify-between break-all">
         <h2 className="text-xl font-semibold text-gray-700">{name}</h2>
         <div className="flex">
-          {/* <Icon className="text-2xl text-gray-600" icon={'mdi:dots-vertical'} /> */}
           <Menu as="div" className=" relative inline-block text-left">
             <Menu.Button>
               <Icon
