@@ -115,9 +115,12 @@ describe('Visiting Tests', () => {
     cy.findByRole('button').click()
     cy.get('a').find('#Tests').should('have.text', 'Tests').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.get('#headlessui-listbox-button-1')
+    cy.get('.dropdown')
+      .get('.dropdownButton')
       .click()
-      .get('#headlessui-listbox-option-17')
+      .get('li div')
+      .get('.dropdown-option')
+      .get('.not-selected')
       .click()
     cy.get('#headlessui-listbox-button-1 span span')
       .invoke('text')
@@ -125,11 +128,9 @@ describe('Visiting Tests', () => {
         if (el === 'Created Date') {
           cy.wait(1000)
           cy.get('.border-b')
-            .get('.pr-0')
+            .get('.pr-4')
             .then(($elements) => {
-              var strings = [...$elements].map(($el) => {
-                return $el.innerText
-              })
+              var strings = [...$elements].map(($el) => $el.innerText)
               expect(strings).to.deep.equal([...strings])
             })
         }
@@ -148,22 +149,24 @@ describe('Visiting Tests', () => {
     cy.findByRole('button').click()
     cy.get('a').find('#Tests').should('have.text', 'Tests').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.get('#headlessui-listbox-button-1')
-      .click()
-      .get('#headlessui-listbox-option-17')
-      .click()
     cy.get('#sort-filter-body').get('#ascend').click()
+    cy.get('.dropdown')
+      .get('.dropdownButton')
+      .click()
+      .get('li div')
+      .get('.dropdown-option')
+      .get('.not-selected')
+      .click()
     cy.get('#headlessui-listbox-button-1 span span')
       .invoke('text')
       .then((el) => {
         if (el === 'Created Date') {
           cy.wait(1000)
           cy.get('.border-b')
-            .get('.pr-0')
+            .get('.pr-4')
             .then(($elements) => {
-              var strings = [...$elements].map(($el) => {
-                return $el.innerText
-              })
+              var strings = [...$elements].map(($el) => $el.innerText)
+
               expect(strings).to.deep.equal([...strings])
             })
         }
