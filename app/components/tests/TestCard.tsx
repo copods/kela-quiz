@@ -1,12 +1,16 @@
 import { Icon } from '@iconify/react'
+import { Link } from '@remix-run/react'
+
 import moment from 'moment'
 
 const TestCard = ({
+  id,
   name,
   createdBy,
   createdAt,
   description,
 }: {
+  id: string
   name: string
   createdBy: string
   createdAt: Date
@@ -26,9 +30,16 @@ const TestCard = ({
         </span>
       </div>
       <div
-        className="ql-editor"
+        className="ql-editor h-fit"
         dangerouslySetInnerHTML={{ __html: description }}
       ></div>
+      <div>
+        <Link to={`/tests/${id}`}>
+          <span id="preview" className="text-md cursor-pointer text-primary">
+            Preview
+          </span>
+        </Link>
+      </div>
     </div>
   )
 }
