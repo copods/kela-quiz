@@ -151,6 +151,7 @@ model CandidateTest {
   testId          String
   link            String?
   candidate       Candidate                @relation(fields: [candidateId], references: [id])
+  candidateStep   Json                     @default("{ \"nextRoute\": \"register\", \"isSection\": false, \"currentSectionID\": null }")
   candidateId     String
   candidateResult CandidateResult[]
   startedAt       DateTime?
