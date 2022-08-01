@@ -18,11 +18,15 @@ export async function getTestById({ id }: Pick<Section, 'id'>) {
 
 export async function getAllTests(obj: any) {
   var filter = obj ? obj : {}
-
   return await prisma.test.findMany({
     ...filter,
     include: {
       createdBy: true,
+      sections: {
+        select: {
+          section: true,
+        },
+      },
     },
   })
 }
