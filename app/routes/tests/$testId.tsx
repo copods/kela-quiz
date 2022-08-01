@@ -18,7 +18,6 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   if (!testPreview) {
     throw new Response('Not Found', { status: 404 })
   }
-  console.log('tt', testPreview)
 
   return json<LoaderData>({ testPreview })
 }
