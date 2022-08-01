@@ -6,11 +6,13 @@ const TestPreview = ({
   description,
   onSelectedSectionChange,
   selectedSections,
+  isPreviewEditable = true,
 }: {
   name: string
   description: string
   selectedSections: Array<TestSection>
   onSelectedSectionChange: (e: any) => void
+  isPreviewEditable: boolean
 }) => {
   const moveSection = (index: number, action: string) => {
     if (action == 'up') {
@@ -39,8 +41,10 @@ const TestPreview = ({
   const getTotalTime = () => {
     let time = 0
 
-    selectedSections.forEach((section) => (time += section?.time || 0))
-
+    selectedSections.forEach(
+      (section) =>
+        (time += (section?.time ? section.time : section.timeInSeconds) || 0)
+    )
     return time
   }
 
@@ -50,13 +54,19 @@ const TestPreview = ({
         <h1 className="text-xl font-semibold">Test Details</h1>
         <div className="flex flex-col gap-4 text-base">
           <div className="flex">
-            <div className="w-50 min-w-[200px] font-semibold text-gray-500">
+            <div
+              id="name"
+              className="w-50 min-w-[200px] font-semibold text-gray-500"
+            >
               Name
             </div>
             <div className="flex-1 font-normal text-gray-700">{name}</div>
           </div>
           <div className="flex">
-            <div className="w-50 min-w-[200px] font-semibold text-gray-500">
+            <div
+              id="description"
+              className="w-50 min-w-[200px] font-semibold text-gray-500"
+            >
               Description
             </div>
             <div
@@ -65,7 +75,10 @@ const TestPreview = ({
             ></div>
           </div>
           <div className="flex">
-            <div className="w-50 min-w-[200px] font-semibold text-gray-500">
+            <div
+              id="totalTime"
+              className="w-50 min-w-[200px] font-semibold text-gray-500"
+            >
               Total Time
             </div>
             <div className="flex-1 font-normal text-gray-700">
@@ -73,7 +86,10 @@ const TestPreview = ({
             </div>
           </div>
           <div className="flex">
-            <div className="w-50 min-w-[200px] font-semibold text-gray-500">
+            <div
+              id="totalSection"
+              className="w-50 min-w-[200px] font-semibold text-gray-500"
+            >
               Total Sections
             </div>
             <div className="flex-1 font-normal text-gray-700">
@@ -93,28 +109,32 @@ const TestPreview = ({
                 </div>
                 <div className=" flex max-w-2xl flex-1 items-center justify-between gap-6 rounded-lg border border-gray-300	py-3 px-4 font-normal text-gray-700">
                   <div className="text-base font-semibold text-gray-700">
-                    {section.name}
+                    {section.name ? section.name : section.section?.name}
                   </div>
                   <div className="flex gap-6 text-sm font-normal text-gray-700">
                     <span>
                       {section.totalQuestions ? section.totalQuestions : 0}{' '}
                       Questions
                     </span>
-                    <span>{section.time ? section.time : 0} Mins</span>
+                    <span>
+                      {section.time ? section.time : section.timeInSeconds} Mins
+                    </span>
                   </div>
                 </div>
-                <div className="flex gap-2">
-                  <Icon
-                    icon="fa:long-arrow-up"
-                    className="cursor-pointer"
-                    onClick={() => moveSection(i, 'up')}
-                  />
-                  <Icon
-                    icon="fa:long-arrow-down"
-                    className="cursor-pointer"
-                    onClick={() => moveSection(i, 'down')}
-                  />
-                </div>
+                {isPreviewEditable && (
+                  <div className="flex gap-2">
+                    <Icon
+                      icon="fa:long-arrow-up"
+                      className="cursor-pointer"
+                      onClick={() => moveSection(i, 'up')}
+                    />
+                    <Icon
+                      icon="fa:long-arrow-down"
+                      className="cursor-pointer"
+                      onClick={() => moveSection(i, 'down')}
+                    />
+                  </div>
+                )}
               </div>
             )
           })}
