@@ -2,7 +2,7 @@ import type { SectionInTest } from '~/interface/Interface'
 import { Menu } from '@headlessui/react'
 const ChipGroup = ({ sections }: { sections: Array<SectionInTest> }) => {
   return (
-    <>
+    <div className="chip-group">
       <span className=" rounded-[52px] bg-bgcolor py-1 px-2">
         {sections[0].section.name}
       </span>
@@ -35,7 +35,7 @@ const ChipGroup = ({ sections }: { sections: Array<SectionInTest> }) => {
           </Menu.Items>
         </Menu>
       )}
-    </>
+    </div>
   )
 }
 

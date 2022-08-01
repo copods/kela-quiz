@@ -205,17 +205,18 @@ describe('Visiting Tests', () => {
       .type('kQuiz@copods')
       .should('have.value', 'kQuiz@copods')
     cy.findByRole('button').click()
-
     cy.get('a').find('#Tests').should('have.text', 'Tests').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.get('#section-count-button').click()
-    cy.get('#section-count-button').then((el) => {
-      cy.get('.section-menu').then(($elements) => {
-        var strings = [...$elements].map(($el) => {
-          return $el.innerText
+    cy.get('.chip-group').get('#section-count-button').click()
+    cy.get('.chip-group')
+      .get('#section-count-button')
+      .then((el) => {
+        cy.get('.section-menu').then(($elements) => {
+          var strings = [...$elements].map(($el) => {
+            return $el.innerText
+          })
+          expect(strings).to.deep.equal([...strings])
         })
-        expect(strings).to.deep.equal([...strings])
       })
-    })
   })
 })
