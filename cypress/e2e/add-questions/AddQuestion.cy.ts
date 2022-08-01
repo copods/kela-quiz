@@ -368,7 +368,7 @@ describe('Test for Add Question', () => {
     cy.get('#addQuestion').should('have.text', '+ Add Question').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/add-question')
 
-    cy.get("#saveAndContinue").click()
+    cy.get("#saveAndExit").click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
   })
 
