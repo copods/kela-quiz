@@ -23,6 +23,13 @@ module.exports = {
         1: '1px',
         52: '52px',
       },
+      boxShadow: {
+        table:
+          '0px 1px 3px rgba(0, 0, 0, 0.1), 0px 1px 2px rgba(0, 0, 0, 0.06)',
+      },
+      maxHeight: {
+        83: '83.3%',
+      },
     },
   },
   plugins: [],

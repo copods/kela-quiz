@@ -65,7 +65,7 @@ const TestList = ({ tests }: { tests: Array<Test> }) => {
         />
       </div>
 
-      <div className="flex h-5/6 flex-col ">
+      <div className="flex max-h-83 flex-col rounded-lg shadow-table ">
         <div className="rounded-b-0 flex items-center rounded-t-md border border-b-0 border-solid border-borderColor bg-tableHeader px-9 py-3 font-semibold ">
           {showCheckBox && (
             <div className=" w-1/12 pl-2.5">
@@ -85,23 +85,23 @@ const TestList = ({ tests }: { tests: Array<Test> }) => {
           <div className="w-3/12 text-sm leading-5 text-gray-500">
             Created By
           </div>
-          <div className="flex w-1/12 justify-end pr-8 text-sm leading-5 text-gray-500">
+          <div className="flex w-1/12 justify-end pr-4 text-sm leading-5 text-gray-500">
             Actions
           </div>
         </div>
         <div
           id="testList"
-          className=" rounded-t-0 flex flex-1 flex-col overflow-auto rounded-md border-t-0 border-solid border-borderColor bg-white px-9"
+          className=" rounded-t-0 flex flex-1 flex-col overflow-auto rounded-md border-t-0 border-solid border-borderColor  "
         >
           {tests.map((test, i) => (
             <TestTableItem
               key={i}
               id={test?.id}
               index={i + 1}
+              totalCount={tests.length}
               testName={test?.name}
               createdAt={test?.createdAt}
               createdBy={`${test?.createdBy?.firstName} ${test?.createdBy?.lastName}`}
-              description={test?.description}
               sections={test?.sections}
               showCheckBox={showCheckBox}
             />
