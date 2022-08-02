@@ -55,29 +55,21 @@ export const action: ActionFunction = async ({ request }) => {
   const action = formData.get('deleteTest')
   let deleteHandle = null
   if (action === 'testDelete') {
-    console.log(formData.get('id'), 'test route')
     await deleteTestById(formData.get('id') as string)
       .then((res) => {
-        console.log(res, 'res')
         deleteHandle = json<ActionData>(
           { resp: { status: 'Deleted Successfully..!' } },
           { status: 200 }
         )
       })
       .catch((err) => {
-        console.log(err, 'err')
         deleteHandle = json<ActionData>(
           { errors: { status: err, check: new Date() } },
           { status: 400 }
         )
       })
-    console.log(deleteHandle, 'status')
     return deleteHandle
   }
-
-  // if (deleteHandle) {
-  //   return redirect('/sections')
-  // }
 }
 
 export default function Tests() {

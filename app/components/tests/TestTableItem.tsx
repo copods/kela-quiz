@@ -87,6 +87,7 @@ const TestTableItem = ({
                 <Icon
                   className="text-2xl text-gray-600"
                   icon={'mdi:dots-vertical'}
+                  id="vertical-icon"
                 />
               </Menu.Button>
               <Menu.Items className="absolute top-0 right-[7%]   mt-2 w-56 origin-top-left divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
@@ -94,10 +95,10 @@ const TestTableItem = ({
                   <Menu.Item>
                     {({ active }) => (
                       <button
-                        name="deleteSection"
+                        name="deleteTest"
                         className={`${
                           active ? 'bg-primary text-white' : 'text-gray-900'
-                        } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                        } delete-test group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                         onClick={() => {
                           setIsDelete(true)
                         }}

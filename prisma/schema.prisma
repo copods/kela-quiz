@@ -125,7 +125,7 @@ model SectionInTest {
   totalQuestions Int
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
-  test           Test     @relation(fields: [testId], references: [id])
+  test           Test     @relation(fields: [testId], references: [id], onDelete:Cascade)
   testId         String
 }
 

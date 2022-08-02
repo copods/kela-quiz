@@ -311,11 +311,54 @@ describe('Visiting Tests', () => {
       .get('.chip-group')
       .get('#section-count-button')
       .then((el) => {
+        cy.wait(1000)
         cy.get('.section-menu').then(($elements) => {
           var strings = [...$elements].map(($el) => {
             return $el.innerText
           })
           expect(strings).to.deep.equal([...strings])
+        })
+      })
+  })
+  let deletedItem: any
+  it('On Clicking delete it should delete the test', () => {
+    cy.visit('/sign-in')
+    cy.get('#email')
+      .clear()
+      .type('careers@copods.co')
+      .should('have.value', 'careers@copods.co')
+    cy.get('#password')
+      .clear()
+      .type('kQuiz@copods')
+      .should('have.value', 'kQuiz@copods')
+    cy.findByRole('button').click()
+    cy.get('a').find('#Tests').should('have.text', 'Tests').click()
+    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
+    cy.wait(2000)
+    cy.get('#test-table-list')
+      .invoke('text')
+      .then((el) => {
+        cy.wait(1000)
+        cy.get('#test-name-navigation').then(($elements) => {
+          var strings = [...$elements].map(($el) => {
+            deletedItem = $el.innerText
+            return $el.innerText
+          })
+          expect(deletedItem).to.deep.equal(strings.toString())
+        })
+      })
+    cy.get('#vertical-icon').click()
+    cy.get('.delete-test').click()
+    cy.get('.confirm-delete').click()
+    cy.get('#test-table-list')
+      .invoke('text')
+      .then((el) => {
+        cy.wait(1000)
+        cy.get('#test-name-navigation').then(($elements) => {
+          var strings = [...$elements].map(($el) => {
+            return $el.innerText
+          })
+          expect(deletedItem).to.not.equal(strings.toString())
         })
       })
   })
