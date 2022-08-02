@@ -8,6 +8,7 @@ const SortFilter = ({
   sortBy,
   onSortChange,
   totalItems,
+  showSelected,
 }: {
   filterData: Array<any>
   sortDirection: string
@@ -15,18 +16,21 @@ const SortFilter = ({
   sortBy: string
   onSortChange: (e: string) => void
   totalItems: number
+  showSelected: boolean
 }) => {
   return (
-    <div className="flex items-center justify-between ">
-      <div className="flex items-center gap-2.5">
+    <div className="flex items-center" id="sort-filter">
+      <div className="flex items-center gap-2.5" id="sort-filter-body">
         {sortDirection == 'asc' ? (
           <Icon
+            id="ascend"
             icon="ph:sort-ascending-bold"
             onClick={() => onSortDirectionChange('desc')}
             className="cursor-pointer text-2xl"
           />
         ) : (
           <Icon
+            id="descend"
             icon="ph:sort-descending-bold"
             onClick={() => onSortDirectionChange('asc')}
             className="cursor-pointer text-2xl"
@@ -40,8 +44,17 @@ const SortFilter = ({
           setValue={onSortChange}
         />
       </div>
-      <span className="flex h-11 w-11 items-center justify-center rounded-lg border border-gray-200 bg-white">
-        {totalItems}
+      <span
+        className="flex items-center pl-4 text-sm font-normal text-totalCount"
+        id="total-items-value"
+      >
+        <span className="pr-3">Total Counts: {totalItems}</span>
+        {showSelected && (
+          <>
+            <Icon icon="ci:line-m" />
+            <span className="pl-3 ">Selected: 0/{totalItems}</span>
+          </>
+        )}
       </span>
     </div>
   )
