@@ -84,6 +84,7 @@ const SelectSections = ({
         sortBy={sortBy}
         onSortChange={onSortChange}
         totalItems={sections?.length}
+        showSelected={false}
       />
 
       {/* Sections list */}

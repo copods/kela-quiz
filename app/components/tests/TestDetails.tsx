@@ -15,36 +15,30 @@ const TestDetails = () => {
     },
   ]
   return (
-    <div>
-      <header className="mb-8  ">
-        <div>
+    <div id="test-details" className="h-full">
+      <header className="mb-8">
+        <div className="border-b border-solid border-slate-300">
           <BreadCrumb data={breadCrumbArray} />
 
-          <div className="py-5">
+          <div className="flex gap-2 py-5">
             <Link to={'/tests'} className="flex items-center gap-4 ">
-              <Icon icon="mdi:arrow-left"></Icon>
-              <span id="backButton">Back to Tests</span>
+              <Icon id="backButton" icon="mdi:arrow-left"></Icon>
             </Link>
+            <span id="title">{testPreview.name}</span>
           </div>
         </div>
-        <div>
-          <h1
-            id="title"
-            className="border-t-[1px] border-solid border-slate-300 pt-9 pb-3 text-3xl font-bold leading-9 "
-          >
-            {testPreview.name}
-          </h1>
-        </div>
       </header>
-      <TestPreview
-        name={testPreview.name}
-        description={testPreview.description}
-        selectedSections={testPreview.sections}
-        onSelectedSectionChange={function (e: any): void {
-          throw new Error('Function not implemented.')
-        }}
-        isPreviewEditable={false}
-      />
+      <div className="h-5/6 overflow-scroll">
+        <TestPreview
+          name={testPreview.name}
+          description={testPreview.description}
+          selectedSections={testPreview.sections}
+          onSelectedSectionChange={function (e: any): void {
+            throw new Error('Function not implemented.')
+          }}
+          isPreviewEditable={false}
+        />
+      </div>
     </div>
   )
 }
