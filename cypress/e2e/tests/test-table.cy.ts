@@ -34,13 +34,6 @@ describe('Visiting Tests', () => {
         cy.get('textarea').type('Aptitude')
         cy.get("button[type='submit']", { timeout: 10000 }).click()
       })
-    // cy.get('section-card')
-    //   .get('.border-l-8')
-    //   .find('h2')
-    //   .invoke('text')
-    //   .should((someValue) => {
-    //     expect(someValue).to.deep.equal(secondSectionName)
-    //   })
   })
 
   it('Verify if user able create the test and navigate to test list page', () => {
