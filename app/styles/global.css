@@ -9,6 +9,10 @@
 .ql-container {
   height: 100% !important;
   flex: 1 1 0% !important;
+  /* display: block !important; */
+  /* overflow-y: auto !important; */
+  display: table !important;
+  word-break: break-all !important;
 }
 
 .Toastify__close-button {
