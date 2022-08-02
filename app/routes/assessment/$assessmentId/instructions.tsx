@@ -1,7 +1,8 @@
-import type { LoaderFunction } from '@remix-run/node'
+import { json, LoaderFunction } from '@remix-run/node'
 import { redirect } from '@remix-run/node'
 import CandidateInstruction from '~/components/assessment/CandidateInstruction'
 import CandidateLayout from '~/components/layouts/CandidateLayout'
+import { getTestInstructionForCandidate } from '~/models/candidate.server'
 import { checkIfTestLinkIsValidAndRedirect } from '~/utils'
 
 export const loader: LoaderFunction = async ({ params, request }) => {
@@ -15,7 +16,10 @@ export const loader: LoaderFunction = async ({ params, request }) => {
   } else if (candidateNextRoute === null) {
     throw new Response('Not Found', { status: 404 })
   }
-  return null
+  const instructions = await getTestInstructionForCandidate(
+    params.assessmentId as string
+  )
+  return json({ ...instructions })
 }
 
 export default function TestInstructions() {

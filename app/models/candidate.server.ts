@@ -36,3 +36,17 @@ export async function updateNextCandidateStep(
     select: { id: true },
   })
 }
+
+export async function getTestInstructionForCandidate(
+  id: CandidateTest['id']
+) {
+  return prisma.candidateTest.findUnique({
+    where: {id},
+    include: {
+    test : true,
+    sections: {
+      
+    }
+  },
+  })
+}
