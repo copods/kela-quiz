@@ -61,7 +61,7 @@ const TestList = ({ tests }: { tests: Array<Test> }) => {
           sortBy={sortBy}
           onSortChange={onSortChange}
           totalItems={tests?.length}
-          showSelected={true}
+          showSelected={false}
         />
       </div>
 
