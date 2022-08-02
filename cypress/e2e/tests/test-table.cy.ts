@@ -34,13 +34,13 @@ describe('Visiting Tests', () => {
         cy.get('textarea').type('Aptitude')
         cy.get("button[type='submit']", { timeout: 10000 }).click()
       })
-    cy.wait(1600)
-    cy.get('.border-l-8')
-      .find('h2')
-      .invoke('text')
-      .should((someValue) => {
-        expect(someValue).to.deep.equal(secondSectionName)
-      })
+    // cy.get('section-card')
+    //   .get('.border-l-8')
+    //   .find('h2')
+    //   .invoke('text')
+    //   .should((someValue) => {
+    //     expect(someValue).to.deep.equal(secondSectionName)
+    //   })
   })
 
   it('Verify if user able create the test and navigate to test list page', () => {
@@ -196,7 +196,6 @@ describe('Visiting Tests', () => {
       .invoke('text')
       .then((el) => {
         if (el === 'Name') {
-          cy.wait(1000)
           cy.get('.border-b')
             .get('.pr-4')
             .then(($elements) => {
@@ -265,7 +264,6 @@ describe('Visiting Tests', () => {
       .invoke('text')
       .then((el) => {
         if (el === 'Created Date') {
-          cy.wait(1000)
           cy.get('.border-b')
             .get('.pr-4')
             .then(($elements) => {
