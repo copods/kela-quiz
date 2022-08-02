@@ -5,7 +5,7 @@ import BreadCrumb from '../../BreadCrumb'
 import QuestionEditor from './QuestionEditor'
 import OptionForQuestion from './OptionForQuestion'
 import cuid from 'cuid'
-import { useSubmit, useTransition } from '@remix-run/react'
+import { Link, useSubmit, useTransition } from '@remix-run/react'
 import { toast } from 'react-toastify'
 
 const AddQuestionInSection = ({
@@ -199,30 +199,47 @@ const AddQuestionInSection = ({
           setCheckOrder={setCheckOrder}
         />
       </div>
-      <div className="flex-end justify flex items-center justify-between">
-        <button
-          id="saveAndContinue"
-          disabled={transition.state === 'submitting'}
-          className={`flex h-9 items-center gap-1 rounded-lg bg-primary px-5 text-xs text-white ${
-            transition.state === 'submitting' && 'disabled:opacity-75'
-          }`}
-          onClick={() => saveQuestion(false)}
-        >
-          <Icon icon="ic:round-save" className="mr-1"></Icon>
-          {transition.state === 'submitting' ? 'Saving...' : 'Save & Continue'}
-        </button>
+      <div className="flex items-center justify-between">
+        <div className="flex">
+          <Link to={`/sections/${sectionDetails?.id}`}>
+            <button
+              id="cancel"
+              disabled={transition.state === 'submitting'}
+              className={`flex h-9 items-center gap-1 rounded-lg bg-red-600 px-5 text-xs text-white ${
+                transition.state === 'submitting' && 'disabled:opacity-75'
+              }`}
+            >
+              {transition.state === 'submitting' ? 'Canceling...' : 'Cancel'}
+            </button>
+          </Link>
+        </div>
+        <div className="flex gap-2">
+          <button
+            id="saveAndExit"
+            disabled={transition.state === 'submitting'}
+            className={`flex h-9 items-center gap-1 rounded-lg bg-primary px-5 text-xs text-white ${
+              transition.state === 'submitting' && 'disabled:opacity-75'
+            }`}
+            onClick={() => saveQuestion(false)}
+          >
+            <Icon icon="ic:round-save" className="mr-1"></Icon>
+            {transition.state === 'submitting' ? 'Saving...' : 'Save & Exit'}
+          </button>
 
-        <button
-          id="saveAndAddMore"
-          disabled={transition.state === 'submitting'}
-          className={`flex h-9 items-center gap-1 rounded-lg bg-primary px-5 text-xs text-white ${
-            transition.state === 'submitting' && 'disabled:opacity-75'
-          }`}
-          onClick={() => saveQuestion(true)}
-        >
-          <Icon icon="ic:round-save" className="mr-1"></Icon>
-          {transition.state === 'submitting' ? 'Saving...' : 'Save & Add More'}
-        </button>
+          <button
+            id="saveAndAddMore"
+            disabled={transition.state === 'submitting'}
+            className={`flex h-9 items-center gap-1 rounded-lg bg-primary px-5 text-xs text-white ${
+              transition.state === 'submitting' && 'disabled:opacity-75'
+            }`}
+            onClick={() => saveQuestion(true)}
+          >
+            <Icon icon="ic:round-save" className="mr-1"></Icon>
+            {transition.state === 'submitting'
+              ? 'Saving...'
+              : 'Save & Add More'}
+          </button>
+        </div>
       </div>
     </div>
   )
