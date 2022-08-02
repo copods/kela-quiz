@@ -136,10 +136,10 @@ model Candidate {
   firstName   String?
   lastName    String?
   isQualified Boolean?
-  createdBy   User              @relation(fields: [createdById], references: [id])
-  createdById String
   tests       CandidateTest[]
   results     CandidateResult[]
+  createdBy   User              @relation(fields: [createdById], references: [id])
+  createdById String
   createdAt   DateTime          @default(now())
   updatedAt   DateTime          @updatedAt
 }
@@ -151,9 +151,9 @@ model CandidateTest {
   testId          String
   link            String?
   candidate       Candidate                @relation(fields: [candidateId], references: [id])
-  candidateStep   Json                     @default("{ \"nextRoute\": \"register\", \"isSection\": false, \"currentSectionID\": null }")
   candidateId     String
   candidateResult CandidateResult[]
+  candidateStep   Json                     @default("{ \"nextRoute\": \"register\", \"isSection\": false, \"currentSectionID\": null }")
   startedAt       DateTime?
   endAt           DateTime?
   createdAt       DateTime                 @default(now())

@@ -104,7 +104,7 @@ async function createCandidateData({
   let candidateTest = await createCandidateTest({ testId, candidateId: user.id })
 
   // generating random link
-  const candidateLink = env.PUBLIC_URL + '/assesment/' + candidateTest.id
+  const candidateLink = env.PUBLIC_URL + '/assessment/' + candidateTest.id
 
   let updatedCandidateTest = await updateTestLink({ id: candidateTest.id, link: candidateLink })
 
