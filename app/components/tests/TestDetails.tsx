@@ -1,53 +1,44 @@
 import { Icon } from '@iconify/react'
 import { Link, useLoaderData } from '@remix-run/react'
+import BreadCrumb from '../BreadCrumb'
 import TestPreview from './CreateTestPreview'
 const TestDetails = () => {
   const { testPreview } = useLoaderData()
-
+  const breadCrumbArray = [
+    {
+      tabName: 'Tests',
+      route: '/tests',
+    },
+    {
+      tabName: testPreview.name,
+      route: '',
+    },
+  ]
   return (
-    <div>
-      <header className="mb-8  ">
-        <div>
-          <div className="flex items-center gap-1">
-            <Link to={'/tests'}>
-              <span id="tests" className=" text-blue-900">
-                Tests
-              </span>
-            </Link>
+    <div id="test-details" className="h-full">
+      <header className="mb-8">
+        <div className="border-b border-solid border-slate-300">
+          <BreadCrumb data={breadCrumbArray} />
 
-            <Icon
-              icon={'ic:round-keyboard-arrow-right'}
-              className="text-blue-900"
-            ></Icon>
-            <p className="text-sm font-normal leading-5 text-gray-400">
-              Fresher’s Pre Interview Assesment
-            </p>
-          </div>
-          <div className="py-5">
+          <div className="flex gap-2 py-5">
             <Link to={'/tests'} className="flex items-center gap-4 ">
-              <Icon icon="mdi:arrow-left"></Icon>
-              <span id="backButton">Back to Tests</span>
+              <Icon id="backButton" icon="mdi:arrow-left"></Icon>
             </Link>
+            <span id="title">{testPreview.name}</span>
           </div>
-        </div>
-        <div>
-          <h1
-            id="title"
-            className="border-t-[1px] border-solid border-slate-300 pt-9 pb-3 text-3xl font-bold leading-9 "
-          >
-            {testPreview.name}
-          </h1>
         </div>
       </header>
-      <TestPreview
-        name={testPreview.name}
-        description={testPreview.description}
-        selectedSections={testPreview.sections}
-        onSelectedSectionChange={function (e: any): void {
-          throw new Error('Function not implemented.')
-        }}
-        isPreviewEditable={false}
-      />
+      <div className="h-5/6 overflow-scroll">
+        <TestPreview
+          name={testPreview.name}
+          description={testPreview.description}
+          selectedSections={testPreview.sections}
+          onSelectedSectionChange={function (e: any): void {
+            throw new Error('Function not implemented.')
+          }}
+          isPreviewEditable={false}
+        />
+      </div>
     </div>
   )
 }

@@ -17,7 +17,11 @@ const BreadCrumb = ({
             }`}
             title={breadCrumb.tabName}
           >
-            <Link to={breadCrumb.route} className="cursor-pointer">
+            <Link
+              to={breadCrumb.route}
+              className="cursor-pointer"
+              id={breadCrumb.tabName}
+            >
               {breadCrumb.tabName}
             </Link>
             {i != data.length - 1 && (

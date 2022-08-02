@@ -13,12 +13,10 @@ type LoaderData = {
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   invariant(params.testId, 'testId not found')
-  console.log(params)
   const testPreview = await getTestById({ id: params.testId })
   if (!testPreview) {
     throw new Response('Not Found', { status: 404 })
   }
-  console.log('tt', testPreview)
 
   return json<LoaderData>({ testPreview })
 }

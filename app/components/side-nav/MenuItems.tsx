@@ -1,6 +1,5 @@
 import { Icon } from '@iconify/react'
-import { NavLink } from '@remix-run/react'
-
+import { NavLink, useLocation } from '@remix-run/react'
 export interface tabProps {
   iconClass: string
   itemName: string
@@ -8,13 +7,16 @@ export interface tabProps {
 }
 
 function MenuItems({ iconClass, itemName, itemRoute }: tabProps) {
+  // const resolvedPath = useResolvedPath(itemRoute) // to get resolved path which would match with current location
+  const location = useLocation() // to get current location
+
   return (
     <div id="menuItem">
       <NavLink
         to={`/${itemRoute}`}
         className={({ isActive }) =>
           `flex flex-row items-start gap-2 rounded-lg p-3.5 ${
-            isActive ? 'active_nav_link bg-blue-50' : ''
+            isActive ? 'active_nav_link bg-blue-50' : ' '
           }`
         }
       >
@@ -22,12 +24,20 @@ function MenuItems({ iconClass, itemName, itemRoute }: tabProps) {
           <Icon
             id="tabIcon"
             icon={iconClass}
-            className="order-none flex-none grow-0 text-2xl text-gray-400"
+            className={`order-none flex-none grow-0 text-2xl  ${
+              location.pathname === `/${itemRoute}`
+                ? 'text-primary'
+                : 'text-gray-400'
+            }`}
           ></Icon>
           <span>
             <p
               id={itemName}
-              className="non-italic text-base font-semibold leading-6 text-gray-500"
+              className={`non-italic text-base font-semibold leading-6 ${
+                location.pathname === `/${itemRoute}`
+                  ? 'text-primary'
+                  : 'text-gray-500'
+              }`}
             >
               {itemName}
             </p>

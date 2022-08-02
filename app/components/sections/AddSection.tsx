@@ -1,18 +1,27 @@
-import { Form } from '@remix-run/react'
+import { Form, useTransition } from '@remix-run/react'
 import { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
+import type { ActionData } from '~/routes/sections'
 
 const AddSection = ({
   open,
   setOpen,
+  showErrorMessage,
 }: {
   open: boolean
   setOpen: (e: boolean) => void
+  showErrorMessage: ActionData
 }) => {
+  const transition = useTransition()
   return (
     <Transition.Root show={open} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={setOpen}>
+      <Dialog
+        as="div"
+        className="relative z-10"
+        onClose={setOpen}
+        id="modal-dialogue"
+      >
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -40,7 +49,7 @@ const AddSection = ({
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
               <Dialog.Panel className="relative transform overflow-hidden rounded-2xl bg-white p-6 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                <div className="flex items-center justify-between pt-1">
+                <div className="addSectionDilog flex items-center justify-between pt-1">
                   <h2 className="text-2xl font-bold text-gray-700">
                     Add Section
                   </h2>
@@ -55,6 +64,7 @@ const AddSection = ({
                   <input
                     type="text"
                     name="name"
+                    id="sectionName"
                     className="h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
                     placeholder="Enter Section Name"
                   />
@@ -62,7 +72,9 @@ const AddSection = ({
                 <div className="pb-6">
                   <textarea
                     name="description"
-                    className="h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
+                    id="sectionDescription"
+                    rows={4}
+                    className="w-full rounded-lg border border-gray-200 px-3 py-4 text-base"
                     placeholder="Enter Section Description"
                   />
                 </div>
@@ -71,17 +83,24 @@ const AddSection = ({
                   <button
                     type="button"
                     className="h-9 rounded-md px-4 text-sm text-gray-500"
-                    onClick={() => setOpen(false)}
+                    onClick={() => {
+                      setOpen(false)
+                    }}
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
                     id="submitButton"
-                    className="h-9 rounded-md bg-primary px-4 text-sm text-[#F0FDF4]"
-                    onClick={() => setOpen(false)}
+                    className={`h-9 rounded-md bg-primary px-4 text-sm text-[#F0FDF4] disabled:opacity-80  ${
+                      transition.state === 'submitting' ? 'disabled' : ''
+                    }`}
+                    onClick={() => {
+                      setOpen(false)
+                    }}
+                    disabled={transition.state === 'submitting'}
                   >
-                    Add
+                    {transition.state === 'submitting' ? 'Adding...' : 'Add'}
                   </button>
                 </div>
               </Dialog.Panel>
@@ -92,5 +111,4 @@ const AddSection = ({
     </Transition.Root>
   )
 }
-
 export default AddSection
