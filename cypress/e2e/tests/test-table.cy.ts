@@ -25,7 +25,6 @@ describe('Visiting Tests', () => {
         cy.get('textarea').type('Aptitude')
         cy.get("button[type='submit']", { timeout: 10000 }).click()
       })
-    cy.wait(1600)
     cy.get('.border-l-8')
       .find('h2')
       .invoke('text')
@@ -175,7 +174,6 @@ describe('Visiting Tests', () => {
       .invoke('text')
       .then((el) => {
         if (el === 'Name') {
-          cy.wait(1000)
           cy.get('.border-b')
             .get('.pr-4')
             .then(($elements) => {
@@ -239,7 +237,6 @@ describe('Visiting Tests', () => {
       .invoke('text')
       .then((el) => {
         if (el === 'Created Date') {
-          cy.wait(1000)
           cy.get('.border-b')
             .get('.pr-4')
             .then(($elements) => {
@@ -321,7 +318,6 @@ describe('Visiting Tests', () => {
     cy.findByRole('button').click()
     cy.get('a').find('#Tests').should('have.text', 'Tests').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.wait(2000)
     cy.get('#chip-group-id')
       .get('.chip-group')
       .get('#section-count-button')

@@ -35,7 +35,7 @@ const TestList = ({ tests }: { tests: Array<Test> }) => {
     }
     submit({ data: JSON.stringify(filter) }, { method: 'get' })
   }, [sortDirection, sortBy, submit])
-  const showCheckBox = true
+  const showCheckBox = false
   return (
     <div className="flex h-full flex-col gap-6 pb-8">
       {/* header */}
@@ -72,16 +72,20 @@ const TestList = ({ tests }: { tests: Array<Test> }) => {
               <input type="checkbox"></input>
             </div>
           )}
-          <div className="w-1/12 text-sm leading-5 text-gray-500">S No.</div>
-          <div className="w-3/12 text-sm leading-5 text-gray-500">Test</div>
+          <div className="w-1/12 pl-2.5 text-sm leading-5 text-gray-500">
+            S No.
+          </div>
+          <div className="w-4/12 pl-3 text-sm leading-5 text-gray-500">
+            Test
+          </div>
           <div className="w-2/12 text-sm leading-5 text-gray-500">Sections</div>
           <div className="w-2/12 text-sm leading-5 text-gray-500">
             Created on
           </div>
-          <div className="w-2/12 text-sm leading-5 text-gray-500">
+          <div className="w-3/12 text-sm leading-5 text-gray-500">
             Created By
           </div>
-          <div className="flex w-1/12 justify-end text-sm leading-5 text-gray-500">
+          <div className="flex w-1/12 justify-end pr-8 text-sm leading-5 text-gray-500">
             Actions
           </div>
         </div>

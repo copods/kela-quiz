@@ -35,12 +35,12 @@ const TestTableItem = ({
           </div>
         )}
         <div
-          className="w-1/12 text-base font-medium leading-6 text-gray-700"
+          className="w-1/12 pl-2.5 text-base font-medium leading-6 text-gray-700"
           id="unique-id"
         >
           {index}
         </div>
-        <div className="w-3/12 cursor-pointer truncate pr-4 text-base font-semibold leading-6 text-primary underline underline-offset-2 ">
+        <div className="w-4/12 cursor-pointer truncate pl-3 pr-4 text-base font-semibold leading-6 text-primary underline underline-offset-2 ">
           <NavLink to={`/tests/${id}`} key={index}>
             <span id="test-name-navigation">{testName}</span>
           </NavLink>
@@ -51,10 +51,10 @@ const TestTableItem = ({
         <div className="w-2/12 truncate pr-0 text-base font-medium leading-6 text-gray-700">
           {moment(createdAt).format('DD MMMM YY')}
         </div>
-        <div className="w-2/12 truncate text-base font-medium leading-6 text-gray-700">
+        <div className="w-3/12 truncate text-base font-medium leading-6 text-gray-700">
           {createdBy}
         </div>
-        <div className="flex w-1/12 items-center justify-end gap-3 truncate text-xl font-medium  leading-6  text-gray-700">
+        <div className="flex w-1/12 items-center justify-end gap-3 truncate pr-8 text-xl font-medium  leading-6  text-gray-700">
           <div>
             <Icon
               className="cursor-pointer text-primary"
