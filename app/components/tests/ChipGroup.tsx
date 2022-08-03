@@ -1,7 +1,6 @@
 import type { SectionInTest } from '~/interface/Interface'
 import { Menu } from '@headlessui/react'
 const ChipGroup = ({ sections }: { sections: Array<SectionInTest> }) => {
-  console.log('sections', sections)
   return (
     <div className="chip-group">
       <span className=" rounded-[52px] bg-bgcolor py-1 px-2">
