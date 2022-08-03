@@ -443,7 +443,7 @@ describe('Test for section-details', () => {
       '/add-question'
     )
 
-    cy.get('#saveAndContinue').click()
+    cy.get('#saveAndExit').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
   })
 

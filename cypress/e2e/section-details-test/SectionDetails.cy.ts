@@ -13,7 +13,6 @@ describe('Test for Section Details', () => {
 
     cy.get('a').find('#Sections').should('have.text', 'Sections').click()
   })
-
   let time = new Date().getTime()
 
   it('Visiting Add Question Page', () => {
@@ -27,7 +26,6 @@ describe('Test for Section Details', () => {
       .type('kQuiz@copods')
       .should('have.value', 'kQuiz@copods')
     cy.findByRole('button').click()
-
     cy.get('a').find('#Sections').should('have.text', 'Sections').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('.px-5').click()
@@ -56,7 +54,6 @@ describe('Test for Section Details', () => {
 
     cy.get('a').find('#Sections').should('have.text', 'Sections').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
-
     cy.get('#section-cards').each((item) => {
       cy.contains(`Aptitude - ${time}`).click()
     })
@@ -72,10 +69,8 @@ describe('Test for Section Details', () => {
       .type('kQuiz@copods')
       .should('have.value', 'kQuiz@copods')
     cy.findByRole('button').click()
-
     cy.get('a').find('#Sections').should('have.text', 'Sections').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
-
     cy.get('#section-cards').each((item) => {
       cy.contains(`Aptitude - ${time}`).click()
     })
@@ -97,10 +92,8 @@ describe('Test for Section Details', () => {
       .type('kQuiz@copods')
       .should('have.value', 'kQuiz@copods')
     cy.findByRole('button').click()
-
     cy.get('a').find('#Sections').should('have.text', 'Sections').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
-
     cy.get('#section-cards').each((item) => {
       cy.contains(`Aptitude - ${time}`).click()
     })
