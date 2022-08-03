@@ -103,6 +103,7 @@ export interface Test {
 }
 
 export interface SectionInTest {
+  id?: string
   section: Section
   order: number
   timeInSeconds: number

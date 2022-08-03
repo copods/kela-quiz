@@ -1,8 +1,12 @@
-import { json, LoaderFunction } from '@remix-run/node'
+import { ActionFunction, json, LoaderFunction } from '@remix-run/node'
 import { redirect } from '@remix-run/node'
 import CandidateInstruction from '~/components/assessment/CandidateInstruction'
 import CandidateLayout from '~/components/layouts/CandidateLayout'
-import { getTestInstructionForCandidate } from '~/models/candidate.server'
+import {
+  candidateTestStart,
+  getTestInstructionForCandidate,
+  updateNextCandidateStep,
+} from '~/models/candidate.server'
 import { checkIfTestLinkIsValidAndRedirect } from '~/utils'
 
 export const loader: LoaderFunction = async ({ params, request }) => {
@@ -20,6 +24,21 @@ export const loader: LoaderFunction = async ({ params, request }) => {
     params.assessmentId as string
   )
   return json({ ...instructions })
+}
+
+export const action: ActionFunction = async ({ request, params }) => {
+  const formData = await request.formData()
+  const proceed = formData.get('proceedToTest')
+  const firstSectionId = formData.get('firstSectionId') as string
+  if (proceed) {
+    await updateNextCandidateStep(params.assessmentId as string, {
+      nextRoute: 'section',
+      isSection: true,
+      currentSectionId: firstSectionId,
+    })
+    await candidateTestStart(params.assessmentId as string)
+    return redirect(`/assessment/${params.assessmentId}/${firstSectionId}`)
+  }
 }
 
 export default function TestInstructions() {

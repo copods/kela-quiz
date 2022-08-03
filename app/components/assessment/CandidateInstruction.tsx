@@ -1,8 +1,21 @@
-import { useLoaderData } from '@remix-run/react'
+import { useLoaderData, useSubmit } from '@remix-run/react'
+import type { SectionInTest } from '~/interface/Interface'
 
 export default function CandidateInstruction() {
   const candidateInstrution = useLoaderData()
-  console.log(candidateInstrution)
+
+  const submit = useSubmit()
+
+  const startTestForCandidate = () => {
+    submit(
+      {
+        proceedToTest: 'true',
+        firstSectionId: candidateInstrution.test.sections[0].id,
+      },
+      { method: 'post' }
+    )
+  }
+  console.log(candidateInstrution.test)
   return (
     <div className="h-full flex-col overflow-y-auto">
       <div className=" px-8">
@@ -22,45 +35,24 @@ export default function CandidateInstruction() {
         </h1>
         {/* Sections */}
         <div className="flex flex-col gap-4">
-          <div className=" flex max-w-2xl flex-1 items-center justify-between gap-6 rounded-lg border border-gray-300	py-3 px-4 font-normal text-gray-700">
-            <div className="text-base font-semibold text-gray-700">
-              1. Aptitude
-            </div>
-            <div className="flex gap-6 text-sm font-normal text-gray-700">
-              <span>10 Questions</span>
-              <span>15 Mins</span>
-            </div>
-          </div>
-
-          <div className=" flex max-w-2xl flex-1 items-center justify-between gap-6 rounded-lg border border-gray-300	py-3 px-4 font-normal text-gray-700">
-            <div className="text-base font-semibold text-gray-700">
-              1. Aptitude
-            </div>
-            <div className="flex gap-6 text-sm font-normal text-gray-700">
-              <span>10 Questions</span>
-              <span>15 Mins</span>
-            </div>
-          </div>
-
-          <div className=" flex max-w-2xl flex-1 items-center justify-between gap-6 rounded-lg border border-gray-300	py-3 px-4 font-normal text-gray-700">
-            <div className="text-base font-semibold text-gray-700">
-              1. Aptitude
-            </div>
-            <div className="flex gap-6 text-sm font-normal text-gray-700">
-              <span>10 Questions</span>
-              <span>15 Mins</span>
-            </div>
-          </div>
-
-          <div className=" flex max-w-2xl flex-1 items-center justify-between gap-6 rounded-lg border border-gray-300	py-3 px-4 font-normal text-gray-700">
-            <div className="text-base font-semibold text-gray-700">
-              1. Aptitude
-            </div>
-            <div className="flex gap-6 text-sm font-normal text-gray-700">
-              <span>10 Questions</span>
-              <span>15 Mins</span>
-            </div>
-          </div>
+          {candidateInstrution?.test?.sections.map(
+            (section: SectionInTest, index: number) => {
+              return (
+                <div
+                  key={section?.id}
+                  className=" flex max-w-2xl flex-1 items-center justify-between gap-6 rounded-lg border border-gray-300	py-3 px-4 font-normal text-gray-700"
+                >
+                  <div className="text-base font-semibold text-gray-700">
+                    {index + 1}. {section.section.name}
+                  </div>
+                  <div className="flex gap-6 text-sm font-normal text-gray-700">
+                    <span>{section.totalQuestions} Questions</span>
+                    <span>{section.timeInSeconds / 60} Mins</span>
+                  </div>
+                </div>
+              )
+            }
+          )}
         </div>
         {/* Instruction */}
         <div className="flex flex-col gap-4">
@@ -90,7 +82,10 @@ export default function CandidateInstruction() {
             </li>
           </ol>
           <div className="flex">
-            <button className="text-md mt-8 h-12 w-52 rounded-md bg-primary  text-gray-50">
+            <button
+              className="text-md mt-8 h-12 w-52 rounded-md bg-primary text-gray-50"
+              onClick={() => startTestForCandidate()}
+            >
               Begin Assessment
             </button>
           </div>

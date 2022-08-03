@@ -10,7 +10,7 @@ const DEFAULT_REDIRECT = '/'
 export type CandidateStep = {
   nextRoute: string
   isSection: boolean
-  currentSectionID: string | null
+  currentSectionId: string | null
 }
 
 /**
@@ -98,7 +98,8 @@ export async function checkIfTestLinkIsValidAndRedirect(
         case 'instructions':
           return `/assessment/${assessmentID}/${candidateStepObj.nextRoute}`
         case 'section':
-          return `/assessment/${assessmentID}/${candidateStepObj.currentSectionID}`
+          console.log('sss', candidateStepObj.currentSectionId)
+          return `/assessment/${assessmentID}/${candidateStepObj.currentSectionId}`
       }
     }
   } else {
