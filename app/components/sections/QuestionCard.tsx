@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 
 import type { Question, Option } from '~/interface/Interface'
-import OptionCard from './OptionsCard'
+import OptionCard from './OptionCard'
 
 const QuestionCard = ({
   question,
