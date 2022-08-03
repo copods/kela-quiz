@@ -97,7 +97,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
       sendData.sections.push({
         sectionId: section.id,
         totalQuestions: section.totalQuestions as number,
-        timeInSeconds: section.time as number,
+        timeInSeconds: (section.time as number) * 60,
         order: index + 1,
       })
     })
