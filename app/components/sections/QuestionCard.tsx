@@ -64,10 +64,10 @@ const QuestionCard = ({
       <div
         className={
           'overflow-scroll text-base text-gray-600 transition-all ' +
-          (isExpanded === index ? 'max-h-96' : 'max-h-0')
+          (isExpanded === index ? 'h-full' : 'max-h-0')
         }
       >
-        <div className="grid grid-cols-1 gap-4 pt-6">
+        <div className="grid grid-cols-1 gap-4 pt-6 ">
           {question.options?.map((options: Option, index: number) => {
             return (
               <div key={options.id}>
