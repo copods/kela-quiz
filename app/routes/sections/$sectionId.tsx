@@ -6,7 +6,6 @@ import SectionDetails from '~/components/sections/SectionDetails'
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   invariant(params.sectionId, 'sectionId not found')
-  console.log(params.sectionId)
   const sectionDetails = await getSectionById({ id: params.sectionId })
   if (!sectionDetails) {
     throw new Response('Not Found', { status: 404 })

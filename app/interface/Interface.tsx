@@ -49,6 +49,8 @@ export interface TestSection {
   totalQuestions?: number
   time?: number
   order?: number
+  timeInSeconds?: number
+  section?: Section
 }
 
 export interface Section {
@@ -99,6 +101,17 @@ export interface Test {
   createdById: string
   createdAt: Date
   updatedAt: Date
+  sections: Array<SectionInTest>
+}
+
+export interface SectionInTest {
+  section: Section
+  order: number
+  timeInSeconds: number
+  totalQuestions: number
+  createdAt: Date
+  updatedAt: Date
+  test: Test
 }
 
 export interface Option {

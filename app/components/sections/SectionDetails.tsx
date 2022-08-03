@@ -11,12 +11,12 @@ const SectionDetails = () => {
   const [searchText, setSearchText] = useState('')
 
   return (
-    <div className="flex h-full w-full flex-col gap-6 overflow-auto rounded-lg border border-gray-200 bg-white px-9 py-6">
+    <div className="flex h-full w-full flex-col gap-6 overflow-auto break-all rounded-lg border border-gray-200 bg-white px-9 py-6">
       <h2 className="text-2xl font-semibold text-gray-700">
         {sectionDetails?.name}
       </h2>
       <hr className="-mt-2 h-px w-full border-0 bg-gray-300" />
-      <div className="flex items-center justify-between">
+      <div className="flex items-start justify-between gap-2 md:flex-col xl:flex-row xl:items-center">
         <input
           id="sectionSearch"
           type="text"

@@ -41,7 +41,7 @@ const QuestionCard = ({
       </div>
       <div
         className={
-          'overflow-hidden text-base text-gray-600 transition-all ' +
+          'overflow-scroll text-base text-gray-600 transition-all ' +
           (isExpanded === index ? 'max-h-96' : 'max-h-0')
         }
       >
@@ -49,7 +49,7 @@ const QuestionCard = ({
           {question.options?.map((options: Option, index: number) => {
             return (
               <div key={options.id}>
-                <OptionsCard options={options} index={index + 1} />
+                <OptionsCard options={options} />
               </div>
             )
           })}

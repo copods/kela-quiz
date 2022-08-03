@@ -32,7 +32,7 @@ export default function QuillEditor({
         blotFormatter: {},
       }
     : {
-        toolbar: [['bold', 'italic', 'underline']],
+        toolbar: [['bold', 'italic', 'underline'], ['image']],
         clipboard: {
           matchVisual: false,
         },
