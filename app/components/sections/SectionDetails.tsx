@@ -6,7 +6,7 @@ import QuestionCard from './QuestionCard'
 
 const SectionDetails = () => {
   const sectionDetails = useLoaderData()
-  console.log(sectionDetails)
+
   const [currentAccordian, setCurrentAccordian] = useState(-1)
   const [searchText, setSearchText] = useState('')
 
