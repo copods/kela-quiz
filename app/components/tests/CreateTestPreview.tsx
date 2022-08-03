@@ -79,7 +79,7 @@ const TestPreview = ({
           <div className="flex">
             <div
               id="totalTime"
-              className="w-50 font-mediumleading-6 min-w-[200px]  text-base text-gray-500"
+              className="w-50 min-w-[200px] text-base font-medium  leading-6 text-gray-500"
             >
               Total Time
             </div>
@@ -94,7 +94,7 @@ const TestPreview = ({
             >
               Total Sections
             </div>
-            <div className="flex-1 text-base font-normal font-normal leading-6 text-gray-700">
+            <div className="flex-1 text-base font-normal leading-6 text-gray-700">
               {selectedSections.length}
             </div>
           </div>

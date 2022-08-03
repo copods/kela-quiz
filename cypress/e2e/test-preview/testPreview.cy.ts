@@ -31,7 +31,6 @@ describe('Test for testPreview', () => {
       'include',
       '/tests/add-test'
     )
-
     cy.get('#name').clear().type(`${time}`)
     cy.get('#quillEditor').within(() => {
       cy.get('.ql-editor').type(`Test Description`)
@@ -77,7 +76,6 @@ describe('Test for testPreview', () => {
           cy.get('#test-name-navigation').click()
         })
     })
-
     cy.get('#title').should('have.text', `${time}`)
   })
 
@@ -93,9 +91,7 @@ describe('Test for testPreview', () => {
       .should('have.value', 'kQuiz@copods')
     cy.findByRole('button').click()
     cy.get('a').find('#Tests').should('have.text', 'Tests').click()
-
     cy.get('#test-name-navigation').click()
-
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
   })
   it('test for tests name', () => {
@@ -110,7 +106,6 @@ describe('Test for testPreview', () => {
       .should('have.value', 'kQuiz@copods')
     cy.findByRole('button').click()
     cy.get('a').find('#Tests').should('have.text', 'Tests').click()
-
     cy.get('#test-name-navigation').click()
     cy.get('#name').should('have.text', 'Name').click()
   })
@@ -142,7 +137,6 @@ describe('Test for testPreview', () => {
       .should('have.value', 'kQuiz@copods')
     cy.findByRole('button').click()
     cy.get('a').find('#Tests').should('have.text', 'Tests').click()
-
     cy.get('#test-name-navigation').click()
     cy.get('#totalTime').should('have.text', 'Total Time').click()
   })
@@ -158,7 +152,6 @@ describe('Test for testPreview', () => {
       .should('have.value', 'kQuiz@copods')
     cy.findByRole('button').click()
     cy.get('a').find('#Tests').should('have.text', 'Tests').click()
-
     cy.get('#test-name-navigation').click()
     cy.get('#totalSection').should('have.text', 'Total Sections')
   })
