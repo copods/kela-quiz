@@ -1,5 +1,5 @@
 import { prisma } from '~/db.server'
-import type { CandidateTest, Candidate } from '@prisma/client'
+import type { CandidateTest, Candidate, Test, Section, SectionInCandidateTest, CandidateQuestion } from '@prisma/client'
 
 export async function checkIfTestLinkIsValid(id: CandidateTest['id']) {
   return await prisma.candidateTest.findUnique({
@@ -42,17 +42,24 @@ export async function getTestInstructionForCandidate(
 ) {
   return await prisma.candidateTest.findUnique({
     where: { id },
-    include: {
+    select: {
+      candidateId: true,
       test: {
-        include: {
+        select: {
+          id: true,
+          description: true,
           sections: {
-            include: {
+            select: {
+              id: true,
+              order: true,
+              totalQuestions: true,
+              timeInSeconds: true,
               section: true
             }
           }
         }
-      },
-    },
+      }
+    }
   })
 }
 
@@ -62,4 +69,137 @@ export async function candidateTestStart(id: CandidateTest['id']) {
     data: { startedAt: new Date() },
     select: { candidateStep: true }
   })
+}
+
+export async function getFirstSectionToStartAssessment(testId: Test['id']) {
+  return await prisma.sectionInTest.findFirst({
+    where: { testId, order: 1 }
+  })
+}
+
+
+
+export async function getTestSectionDetails(id: CandidateTest['id']) {
+  return await prisma.sectionInTest.findUnique({
+    where: {
+      id
+    },
+    select: {
+      section: true,
+      sectionId: true,
+      timeInSeconds: true,
+      totalQuestions: true,
+    }
+  })
+}
+
+export async function getCandidateSectionDetails(sectionId: Section['id']) {
+  return await prisma.sectionInCandidateTest.findFirst({
+    where: {
+      sectionId
+    },
+    select: {
+      id: true,
+      startedAt: true,
+      endAt: true,
+      sectionId: true
+    }
+  })
+}
+
+export async function startCandidateSection(id: SectionInCandidateTest['id']) {
+  const section = await prisma.sectionInCandidateTest.findUnique({ where: { id } })
+  if (section?.startedAt) {
+    return await prisma.sectionInCandidateTest.findUnique({
+      where: {
+        id
+      },
+      select: {
+        id: true,
+        startedAt: true,
+        endAt: true,
+        sectionId: true
+      }
+    })
+  } else {
+    return await prisma.sectionInCandidateTest.update({
+      where: {
+        id
+      },
+      data: {
+        startedAt: new Date()
+      },
+      select: {
+        id: true,
+        startedAt: true,
+        endAt: true,
+        sectionId: true
+      }
+    })
+  }
+}
+
+async function getAllQuestions(sectionInCandidateTestId: SectionInCandidateTest['id']) {
+  return prisma.candidateQuestion.findMany({
+    where: { sectionInCandidateTestId },
+    select: {
+      id: true,
+      answeredAt: true,
+      status: true,
+      question: {
+        select: {
+          id: true
+        }
+      }
+    }
+  })
+}
+
+export async function getFirstQuestionId(id: SectionInCandidateTest['id']) {
+  const questions = await getAllQuestions(id)
+  return questions[0]
+}
+
+export async function startAndGetQuestion(id: CandidateQuestion['id']) {
+  return prisma.candidateQuestion.update({
+    where: { id },
+    data: {
+      status: 'VIEWED'
+    },
+    select: {
+      id: true,
+      question: {
+        select: {
+          question: true,
+          options: {
+            select: {
+              id: true,
+              option: true
+            }
+          },
+          questionType: true
+        }
+      },
+      status: true,
+      answeredAt: true
+    }
+  })
+}
+
+
+export async function saveSkipAndNextQuestion(sectionId: SectionInCandidateTest['id'], currentQuestionId: CandidateQuestion['id']) {
+  const questions = await getAllQuestions(sectionId)
+  console.log(questions)
+  // find current question index
+  let index = 0;
+  for (let i = 0; i < questions.length; i++) {
+    if (questions[i].id == currentQuestionId) {
+      index = i
+      break
+    }
+  }
+  if (index == questions.length) {
+    return 'gotoNextSection'
+  }
+  return questions[index + 1]
 }

@@ -96,6 +96,7 @@ export async function checkIfTestLinkIsValidAndRedirect(
       switch (candidateStepObj.nextRoute) {
         case 'register':
         case 'instructions':
+          console.log('iii', candidateStepObj)
           return `/assessment/${assessmentID}/${candidateStepObj.nextRoute}`
         case 'section':
           console.log('sss', candidateStepObj.currentSectionId)

@@ -8,7 +8,7 @@ export default function CandidateLayout({
       <div className="w-2/12 min-w-260 bg-gray-500  p-5 drop-shadow-md">
         Side Navigation..
       </div>
-      <div className="flex-1 bg-slate-50 p-12">{children}</div>
+      <div className="flex-1 bg-slate-50 p-9">{children}</div>
     </main>
   )
 }

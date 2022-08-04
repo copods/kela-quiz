@@ -1,9 +1,11 @@
-import { ActionFunction, json, LoaderFunction } from '@remix-run/node'
+import type { ActionFunction, LoaderFunction } from '@remix-run/node'
+import { json } from '@remix-run/node'
 import { redirect } from '@remix-run/node'
 import CandidateInstruction from '~/components/assessment/CandidateInstruction'
 import CandidateLayout from '~/components/layouts/CandidateLayout'
 import {
   candidateTestStart,
+  getFirstSectionToStartAssessment,
   getTestInstructionForCandidate,
   updateNextCandidateStep,
 } from '~/models/candidate.server'
@@ -14,7 +16,6 @@ export const loader: LoaderFunction = async ({ params, request }) => {
     params.assessmentId as string,
     'instructions'
   )
-  console.log(candidateNextRoute)
   if (typeof candidateNextRoute === 'string') {
     return redirect(candidateNextRoute)
   } else if (candidateNextRoute === null) {
@@ -23,7 +24,10 @@ export const loader: LoaderFunction = async ({ params, request }) => {
   const instructions = await getTestInstructionForCandidate(
     params.assessmentId as string
   )
-  return json({ ...instructions })
+  const firstSection = await getFirstSectionToStartAssessment(
+    instructions?.test.id as string
+  )
+  return json({ instructions, firstSection })
 }
 
 export const action: ActionFunction = async ({ request, params }) => {
