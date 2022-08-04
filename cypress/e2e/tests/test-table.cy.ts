@@ -348,4 +348,48 @@ describe('Visiting Tests', () => {
     })
     return false
   })
+  let time = new Date().getTime()
+  it('verify soft delete issue ', () => {
+    cy.visit('/sign-in')
+    cy.get('#email')
+      .clear()
+      .type('careers@copods.co')
+      .should('have.value', 'careers@copods.co')
+    cy.get('#password')
+      .clear()
+      .type('kQuiz@copods')
+      .should('have.value', 'kQuiz@copods')
+    cy.findByRole('button').click()
+    cy.get('a').find('#Tests').should('have.text', 'Tests').click()
+    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
+    cy.get('#addTest').click()
+    cy.location('pathname', { timeout: 60000 }).should(
+      'include',
+      '/tests/add-test'
+    )
+    cy.get('#name').clear().type(`${time}`)
+    cy.get('#quillEditor').within(() => {
+      cy.get('.ql-editor').type(`Test Description`)
+    })
+    cy.get('button#nextButton').should('have.text', 'Next').click()
+    cy.get('#0').find('hr').should('have.class', 'bg-primary')
+    cy.get('#1').find('hr').should('have.class', 'bg-primary')
+    // user reached to step 2
+    cy.get('div#section')
+      .first()
+      .within(() => {
+        cy.get('input#noOfQu').should('have.disabled', true)
+        cy.get('input#time').should('have.disabled', true)
+        cy.get('button').should('have.text', 'Add').click()
+        cy.get('button').should('have.text', 'Remove')
+        cy.get('input#noOfQu').clear().type('2')
+        cy.get('input#time').clear().type('2')
+      })
+    cy.get('button#nextButton').should('have.text', 'Next').click()
+    cy.get('#0').find('hr').should('have.class', 'bg-primary')
+    cy.get('#1').find('hr').should('have.class', 'bg-primary')
+    cy.get('#2').find('hr').should('have.class', 'bg-primary')
+    cy.get('button#submitButton').should('have.text', 'Submit').click()
+    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
+  })
 })
