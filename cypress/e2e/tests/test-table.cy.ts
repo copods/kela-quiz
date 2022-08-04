@@ -284,7 +284,6 @@ describe('Visiting Tests', () => {
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('#test-table-list')
       .get('#test-name-navigation')
-
       .click()
       .location('pathname', { timeout: 60000 })
       .should('include', '/tests')

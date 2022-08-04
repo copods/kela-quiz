@@ -12,7 +12,6 @@ describe('Test for testPreview', () => {
     cy.findByRole('button').click()
     cy.get('a').find('#Tests').should('have.text', 'Tests').click()
   })
-
   let time = new Date().getTime()
   it('Verify if user able create the test and navigate to test list page', () => {
     cy.visit('/sign-in')
@@ -25,7 +24,6 @@ describe('Test for testPreview', () => {
       .type('kQuiz@copods')
       .should('have.value', 'kQuiz@copods')
     cy.findByRole('button').click()
-
     cy.get('a').find('#Tests').should('have.text', 'Tests').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('#addTest').click()
@@ -33,17 +31,14 @@ describe('Test for testPreview', () => {
       'include',
       '/tests/add-test'
     )
-
     cy.get('#name').clear().type(`${time}`)
     cy.get('#quillEditor').within(() => {
       cy.get('.ql-editor').type(`Test Description`)
     })
-
     cy.get('button#nextButton').should('have.text', 'Next').click()
     cy.get('#0').find('hr').should('have.class', 'bg-primary')
     cy.get('#1').find('hr').should('have.class', 'bg-primary')
     // user reached to step 2
-
     cy.get('div#section')
       .first()
       .within(() => {
@@ -51,7 +46,6 @@ describe('Test for testPreview', () => {
         cy.get('input#time').should('have.disabled', true)
         cy.get('button').should('have.text', 'Add').click()
         cy.get('button').should('have.text', 'Remove')
-
         cy.get('input#noOfQu').clear().type('2')
         cy.get('input#time').clear().type('2')
       })
@@ -59,9 +53,7 @@ describe('Test for testPreview', () => {
     cy.get('#0').find('hr').should('have.class', 'bg-primary')
     cy.get('#1').find('hr').should('have.class', 'bg-primary')
     cy.get('#2').find('hr').should('have.class', 'bg-primary')
-
     cy.get('button#submitButton').should('have.text', 'Submit').click()
-
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
   })
   it('test for check preview data match selected test', () => {
@@ -84,7 +76,6 @@ describe('Test for testPreview', () => {
           cy.get('#test-name-navigation').click()
         })
     })
-
     cy.get('#title').should('have.text', `${time}`)
   })
 
@@ -101,7 +92,6 @@ describe('Test for testPreview', () => {
     cy.findByRole('button').click()
     cy.get('a').find('#Tests').should('have.text', 'Tests').click()
     cy.get('#test-name-navigation').click()
-    cy.get('#backButton').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
   })
   it('test for tests name', () => {
@@ -131,6 +121,7 @@ describe('Test for testPreview', () => {
       .should('have.value', 'kQuiz@copods')
     cy.findByRole('button').click()
     cy.get('a').find('#Tests').should('have.text', 'Tests').click()
+
     cy.get('#test-name-navigation').click()
     cy.get('#description').should('have.text', 'Description').click()
   })
