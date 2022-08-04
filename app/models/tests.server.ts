@@ -34,14 +34,26 @@ export async function getAllTests(obj: any) {
     where: {
       deleted: false,
     },
-    include: {
-      createdBy: true,
+    select: {
+      id: true,
+      name: true,
+      createdAt: true,
+      createdBy: {
+        select: {
+          firstName: true,
+          lastName: true
+        }
+      },
       sections: {
         select: {
-          section: true,
+          section: {
+            select: {
+              name: true
+            }
+          },
         },
       },
-    },
+    }
   })
 }
 
