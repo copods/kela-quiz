@@ -1,22 +1,32 @@
 import { Icon } from '@iconify/react'
-import type { Section, QuestionType, Question } from '~/interface/Interface'
 import { useState } from 'react'
 import BreadCrumb from '../../BreadCrumb'
 import QuestionEditor from './QuestionEditor'
 import OptionForQuestion from './OptionForQuestion'
 import cuid from 'cuid'
-import { Link, useSubmit, useTransition } from '@remix-run/react'
+import { Link, useLoaderData, useSubmit, useTransition } from '@remix-run/react'
 import { toast } from 'react-toastify'
 
-const AddQuestionInSection = ({
-  sectionDetails,
-  questionTypeList,
-}: {
-  sectionDetails: (Section & { questions: Question[] }) | null
-  questionTypeList: QuestionType[]
-}) => {
+// const AddQuestionInSection = ({
+//   sectionDetails,
+//   questionTypeList,
+// }: {
+//   sectionDetails:
+//     | (Section & {
+//         questions: (Question & {
+//           correctOptions: Option[]
+//           options: Option[]
+//           correctAnswer: CorrectAnswer[]
+//         })[]
+//       })
+//     | null
+//   questionTypeList: QuestionType[]
+// }) => {
+const AddQuestionInSection = () => {
+  const { sectionDetails, questionTypes } = useLoaderData()
+
   const [selectedTypeOfQuestion, onQuestionTypeChange] = useState(
-    questionTypeList[0].id
+    questionTypes[0].id
   )
   const [question, setQuestion] = useState('')
   const [singleChoiceAnswer, setSingleChoiceAnswer] = useState('')
@@ -68,7 +78,7 @@ const AddQuestionInSection = ({
   ]
   const getQuestionType = (id: string) => {
     let quesValue = ''
-    for (let quesType of questionTypeList) {
+    for (let quesType of questionTypes) {
       if (quesType.id == id) {
         quesValue = quesType?.value as string
       }
@@ -181,7 +191,7 @@ const AddQuestionInSection = ({
         <QuestionEditor
           question={question}
           setQuestion={setQuestion}
-          questionTypeList={questionTypeList}
+          questionTypeList={questionTypes}
           selectedTypeOfQuestion={selectedTypeOfQuestion}
           onQuestionTypeChange={onQuestionTypeChange}
         />
@@ -194,7 +204,7 @@ const AddQuestionInSection = ({
           options={options}
           setOptions={setOptions}
           selectedTypeOfQuestion={selectedTypeOfQuestion}
-          questionTypeList={questionTypeList}
+          questionTypeList={questionTypes}
           checkOrder={checkOrder}
           setCheckOrder={setCheckOrder}
         />
