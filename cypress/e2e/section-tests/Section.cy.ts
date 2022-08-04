@@ -38,7 +38,6 @@ describe('Test for Section', () => {
         cy.get('textarea').type('Aptitude')
         cy.get("button[type='submit']", { timeout: 10000 }).click()
       })
-    cy.wait(1600)
     cy.get('.border-l-8')
       .find('h2')
       .invoke('text')
@@ -80,7 +79,6 @@ describe('Test for Section', () => {
       .should('have.value', 'kQuiz@copods')
     cy.findByRole('button').click()
     cy.get('a').find('#Sections').should('have.text', 'Sections').click()
-    cy.wait(1000)
     cy.location().then((loc) => {
       cy.location('search').should('include', loc.search)
     })
@@ -111,13 +109,11 @@ describe('Test for Section', () => {
             .invoke('text')
             .then((el) => {
               if (el === 'Name') {
-                cy.wait(1000)
                 cy.get('h2').then(($elements) => {
                   var strings = [...$elements].map(($el) => $el.innerText)
                   expect(strings).to.deep.equal([...strings].sort())
                 })
               } else if (el === 'Created Date') {
-                cy.wait(1000)
                 cy.get('.created-by-date').then(($elements) => {
                   var strings = [...$elements].map(($el) => {
                     return new Date($el.innerText).toLocaleDateString

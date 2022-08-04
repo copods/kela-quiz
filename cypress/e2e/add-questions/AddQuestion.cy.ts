@@ -87,7 +87,6 @@ describe('Test for section-details', () => {
       '/add-question'
     )
     cy.get('#Question').should('have.text', 'Question').click()
-    cy.wait(2000)
     cy.get('a > div').should('have.class', 'border-l-8')
   })
 

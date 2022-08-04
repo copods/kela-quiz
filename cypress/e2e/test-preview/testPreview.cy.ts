@@ -68,6 +68,7 @@ describe('Test for testPreview', () => {
       .should('have.value', 'kQuiz@copods')
     cy.findByRole('button').click()
     cy.get('a').find('#Tests').should('have.text', 'Tests').click()
+    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('#testList').each((item) => {
       cy.contains(`${time}`)
         .parent()
