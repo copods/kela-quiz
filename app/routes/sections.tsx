@@ -17,18 +17,24 @@ import AdminLayout from '~/components/layouts/AdminLayout'
 import AddSection from '~/components/sections/AddSection'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import type { Section } from '@prisma/client'
+import type { Section } from '~/interface/Interface'
 
 export type ActionData = {
   errors?: {
     title?: string
     body?: string
+    status: number
+  }
+  resp?: {
+    title?: string
+    status: number
+    data?: Section
   }
 }
 
 export type LoaderData = {
   sections: Awaited<ReturnType<typeof getAllSections>>
-  selectedSectionId: string
+  selectedSectionId?: string
   filters: string
   status: string
 }
@@ -50,7 +56,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   if (!userId) return redirect('/sign-in')
   const selectedSectionId = params.sectionId
     ? params.sectionId?.toString()
-    : 'NA'
+    : undefined
   const filters = new URL(request.url).search
   return json<LoaderData>({ sections, selectedSectionId, filters, status })
 }
@@ -63,57 +69,81 @@ export const action: ActionFunction = async ({ request }) => {
 
   if (typeof name !== 'string' || name.length === 0) {
     return json<ActionData>(
-      { errors: { title: 'Name is required' } },
+      { errors: { title: 'Name is required', status: 400 } },
       { status: 400 }
     )
   }
   if (typeof description !== 'string' || description.length === 0) {
     return json<ActionData>(
-      { errors: { title: 'Description is required' } },
+      { errors: { title: 'Description is required', status: 400 } },
       { status: 400 }
     )
   }
+
   const section = await createSection({ name, description, createdById })
-  return redirect(`/sections/${section.id}${new URL(request.url).search}`)
+    .then((res) => {
+      return json<ActionData>(
+        {
+          resp: {
+            title: 'Member Added Successfully..!',
+            status: 200,
+            data: res,
+          },
+        },
+        { status: 200 }
+      )
+    })
+    .catch((err) => {
+      let title = 'Something went wrong..!'
+      if (err.code === 'P2002') {
+        title = 'Duplicate Title'
+      }
+      return json<ActionData>(
+        { errors: { title, status: 400 } },
+        { status: 400 }
+      )
+    })
+  return section
 }
 
 export default function SectionPage() {
   const data = useLoaderData() as LoaderData
   const fetcher = useFetcher()
-  const action = useActionData as ActionData
+  const action = useActionData() as ActionData
+  let navigate = useNavigate()
+  const submit = useSubmit()
+  const sortByDetails = [
+    {
+      name: 'Name',
+      value: 'name',
+    },
+    {
+      name: 'Created Date',
+      value: 'createdAt',
+    },
+  ]
 
   const [sectionDetailFull, setSectionDetailFull] = useState(false)
   const [open, setOpen] = useState(false)
+  const [order, setOrder] = useState('asc')
+  const [sortBy, setSortBy] = useState(sortByDetails[1].value)
+  const [selectedSection, setSelectedSection] = useState(
+    data.selectedSectionId || data.sections[0].id || 'NA'
+  )
+  const toastId = 'toastId'
 
-  if (action.errors?.title) {
-    toast.error('Something went wrong..!')
-  }
-
-  let navigate = useNavigate()
   if (data.status != 'Success') {
     toast.error('Something went wrong..!')
   }
 
-  const submit = useSubmit()
-
-  const [order, setOrder] = useState('asc')
-  const sortByDetails = [
-    {
-      name: 'Name',
-      id: 'name',
-    },
-    {
-      name: 'Created Date',
-      id: 'createdAt',
-    },
-  ]
   useEffect(() => {
-    if (data.sections.length && data.selectedSectionId === 'NA') {
-      navigate(`/sections/${data.sections[0].id}`, { replace: true })
+    if (data.sections.length && !data.selectedSectionId) {
+      navigate(`/sections/${selectedSection}${data?.filters}`, {
+        replace: true,
+      })
     }
-  }, [data, navigate])
+  }, [data.sections, data.selectedSectionId, navigate])
 
-  const [sortBy, setSortBy] = useState(sortByDetails[1].id)
   useEffect(() => {
     if (data.sections.length > 0) {
       const formData = new FormData()
@@ -131,13 +161,20 @@ export default function SectionPage() {
     }
   }, [order, sortBy])
 
-  const [selectedSection, setSelectedSection] = useState(
-    data.selectedSectionId != 'NA'
-      ? data.selectedSectionId
-      : data.sections[0]?.id
-      ? data.sections[0].id
-      : 'NA'
-  )
+  useEffect(() => {
+    if (action) {
+      if (action.resp?.status === 200) {
+        setOpen(false)
+        toast.success('Section added successfully..!')
+        navigate(`/sections/${action?.resp?.data?.id}`, { replace: false })
+      } else if (action.errors?.status === 400) {
+        toast.error(action.errors?.title, {
+          toastId,
+        })
+      }
+    }
+  }, [action])
+
   return (
     <AdminLayout>
       <div className="flex h-full flex-col gap-12 overflow-hidden">
@@ -198,8 +235,11 @@ export default function SectionPage() {
             <Outlet />
           </div>
         </div>
-
-        <AddSection showErrorMessage={action} open={open} setOpen={setOpen} />
+        <AddSection
+          open={open}
+          setOpen={setOpen}
+          showErrorMessage={action?.errors?.status === 400}
+        />
       </div>
     </AdminLayout>
   )
