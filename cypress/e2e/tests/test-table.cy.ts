@@ -343,15 +343,9 @@ describe('Visiting Tests', () => {
     cy.get('#vertical-icon').click()
     cy.get('.delete-test').click()
     cy.get('.confirm-delete').click()
-    cy.get('#test-table-list')
-      .invoke('text')
-      .then((el) => {
-        cy.get('#test-name-navigation').then(($elements) => {
-          var strings = [...$elements].map(($el) => {
-            return $el.innerText
-          })
-          expect(deletedItem).to.not.equal(strings.toString())
-        })
-      })
+    cy.get('#test-table-list').each((item) => {
+      cy.contains(deletedItem).should('not.exist')
+    })
+    return false
   })
 })
