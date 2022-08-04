@@ -124,7 +124,7 @@ export default function SectionPage() {
   ]
 
   const [sectionDetailFull, setSectionDetailFull] = useState(false)
-  const [open, setOpen] = useState(false)
+  const [showAddSectionModal, setShowAddSectionModal] = useState(false)
   const [order, setOrder] = useState('asc')
   const [sortBy, setSortBy] = useState(sortByDetails[1].value)
   const [selectedSection, setSelectedSection] = useState(
@@ -142,7 +142,7 @@ export default function SectionPage() {
         replace: true,
       })
     }
-  }, [data.sections, data.selectedSectionId, navigate])
+  }, [data, navigate, selectedSection])
 
   useEffect(() => {
     if (data.sections.length > 0) {
@@ -164,7 +164,7 @@ export default function SectionPage() {
   useEffect(() => {
     if (action) {
       if (action.resp?.status === 200) {
-        setOpen(false)
+        setShowAddSectionModal(false)
         toast.success('Section added successfully..!')
         navigate(`/sections/${action?.resp?.data?.id}`, { replace: false })
       } else if (action.errors?.status === 400) {
@@ -173,7 +173,7 @@ export default function SectionPage() {
         })
       }
     }
-  }, [action])
+  }, [action, navigate])
 
   return (
     <AdminLayout>
@@ -184,7 +184,7 @@ export default function SectionPage() {
           <button
             className="h-9 rounded-lg bg-primary px-5 text-xs text-[#F0FDF4]"
             id="add-section"
-            onClick={() => setOpen(!open)}
+            onClick={() => setShowAddSectionModal(!showAddSectionModal)}
           >
             + Add Section
           </button>
@@ -236,8 +236,8 @@ export default function SectionPage() {
           </div>
         </div>
         <AddSection
-          open={open}
-          setOpen={setOpen}
+          open={showAddSectionModal}
+          setOpen={setShowAddSectionModal}
           showErrorMessage={action?.errors?.status === 400}
         />
       </div>
