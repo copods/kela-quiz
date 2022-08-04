@@ -1,17 +1,6 @@
 import type { Section } from '@prisma/client'
 import { prisma } from '~/db.server'
 
-export async function main() {
-  prisma.$use(async (params, next) => {
-    if (params.model === 'Test') {
-      if (params.action === 'delete') {
-        params.action = 'update'
-        params.args['data'] = { deleted: true }
-      }
-    }
-    return next(params)
-  })
-}
 export async function getTestById({ id }: Pick<Section, 'id'>) {
   return prisma.test.findUnique({
     where: {
@@ -71,7 +60,11 @@ export async function createTest(
 }
 
 export async function deleteTestById(id: string) {
-  return prisma.test.delete({ where: { id } })
+  return prisma.test.update({
+    where: { id },
+    data: {
+      deleted: true,
+      deletedAt: new Date().toString(),
+    },
+  })
 }
-
-main()

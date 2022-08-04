@@ -103,6 +103,7 @@ export interface Test {
   updatedAt: Date
   sections: Array<SectionInTest>
   deleted: boolean
+  deletedAt: string
 }
 
 export interface SectionInTest {

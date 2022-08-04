@@ -74,13 +74,13 @@ const TestTableItem = ({
         <div className="w-3/12 truncate text-base font-normal leading-6 text-gray-700">
           {createdBy}
         </div>
-        <div className="  flex w-1/12 items-center justify-end gap-3 truncate pr-4 text-xl font-normal  leading-6  text-gray-700">
-          <div>
+        <div className="flex w-1/12 items-center justify-start gap-3 truncate pr-4 text-xl font-normal  leading-6  text-gray-700">
+          {/* <div>
             <Icon
               className="cursor-pointer text-primary"
               icon={'ant-design:user-add-outlined'}
             />
-          </div>
+          </div> */}
           <div>
             <Menu as="div" className="  inline-block text-left">
               <Menu.Button>
