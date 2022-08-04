@@ -100,6 +100,7 @@ export interface Test {
   createdAt: Date
   updatedAt: Date
   sections: Array<SectionInTest>
+  deleted: boolean
 }
 
 export interface SectionInTest {

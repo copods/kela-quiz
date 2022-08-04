@@ -15,27 +15,24 @@ const ChipGroup = ({
         {sections[0].section.name}
       </span>
       {sections.length > 1 && (
-        <Menu as="div" className=" relative inline-block text-left">
+        <Menu as="div" className="inline-block text-left">
           <Menu.Button>
             <span
               id="section-count-button"
-              className="  ml-2 cursor-pointer rounded-[52px] bg-bgcolor py-1 px-2 pl-2 text-xs"
+              className="ml-2 cursor-pointer rounded-[52px] bg-bgcolor py-1 px-2 pl-2 text-xs"
             >
               + {sections.length - 1}
             </span>
           </Menu.Button>
           <Menu.Items
-            className={`absolute z-40  max-h-52  overflow-auto rounded-md bg-white py-4 px-4 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none ${
+            id="menu-items"
+            className={`absolute z-40 max-h-52 overflow-auto rounded-md bg-white py-4 px-4 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none ${
               totalCount === index ||
               totalCount - 1 === index ||
               totalCount - 2 === index ||
               totalCount - 3 === index
-                ? `${
-                    sections.length > 3
-                      ? 'left-4 top-[-200px]'
-                      : 'left-4 top-[-100px]'
-                  }`
-                : 'right-0'
+                ? `${totalCount > 5 ? 'translate-y-[-100%]' : ''}`
+                : ''
             } `}
           >
             {sections.map((sect, i) => {

@@ -307,18 +307,14 @@ describe('Visiting Tests', () => {
       .get('.chip-group')
       .get('#section-count-button')
       .click()
-    cy.get('#chip-group-id')
-      .get('.chip-group')
-      .get('#section-count-button')
-      .then((el) => {
-        cy.wait(1000)
-        cy.get('.section-menu').then(($elements) => {
-          var strings = [...$elements].map(($el) => {
-            return $el.innerText
-          })
-          expect(strings).to.deep.equal([...strings])
+    cy.get('#chip-group-id').then((el) => {
+      cy.get('.section-menu').then(($elements) => {
+        var strings = [...$elements].map(($el) => {
+          return $el.innerText
         })
+        expect(strings).to.deep.equal([...strings])
       })
+    })
   })
   let deletedItem: any
   it('On Clicking delete it should delete the test', () => {
@@ -334,11 +330,9 @@ describe('Visiting Tests', () => {
     cy.findByRole('button').click()
     cy.get('a').find('#Tests').should('have.text', 'Tests').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.wait(2000)
     cy.get('#test-table-list')
       .invoke('text')
       .then((el) => {
-        cy.wait(1000)
         cy.get('#test-name-navigation').then(($elements) => {
           var strings = [...$elements].map(($el) => {
             deletedItem = $el.innerText
@@ -353,7 +347,6 @@ describe('Visiting Tests', () => {
     cy.get('#test-table-list')
       .invoke('text')
       .then((el) => {
-        cy.wait(1000)
         cy.get('#test-name-navigation').then(($elements) => {
           var strings = [...$elements].map(($el) => {
             return $el.innerText

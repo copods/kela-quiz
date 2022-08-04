@@ -43,7 +43,7 @@ const TestTableItem = ({
       <div
         key={index}
         id="test-table-list"
-        className="relative flex items-center border-b border-t-0 border-gray-200 bg-white  py-3 px-9 "
+        className="flex items-center border-b border-t-0 border-gray-200 bg-white py-3 px-9 "
       >
         {showCheckBox && (
           <div className="w-1/12 pl-2.5 text-base font-normal leading-6 text-gray-700">
@@ -61,7 +61,7 @@ const TestTableItem = ({
             <span id="test-name-navigation">{testName}</span>
           </NavLink>
         </div>
-        <div id="chip-group-id" className="w-2/12  text-xs leading-6 ">
+        <div id="chip-group-id" className="w-2/12 text-xs leading-6 ">
           <ChipGroup
             sections={sections}
             totalCount={totalCount}
@@ -90,7 +90,7 @@ const TestTableItem = ({
                   id="vertical-icon"
                 />
               </Menu.Button>
-              <Menu.Items className="absolute top-0 right-[7%]   mt-2 w-56 origin-top-left divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+              <Menu.Items className="absolute right-[7%] w-56 origin-top-left translate-y-[-45px] divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                 <div className="px-1 py-1 ">
                   <Menu.Item>
                     {({ active }) => (
@@ -98,7 +98,7 @@ const TestTableItem = ({
                         name="deleteTest"
                         className={`${
                           active ? 'bg-primary text-white' : 'text-gray-900'
-                        } delete-test group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                        }  delete-test group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                         onClick={() => {
                           setIsDelete(true)
                         }}
