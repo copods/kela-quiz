@@ -56,6 +56,29 @@ describe('Test for testPreview', () => {
     cy.get('button#submitButton').should('have.text', 'Submit').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
   })
+  it('test for check preview data match selected test', () => {
+    cy.visit('/sign-in')
+    cy.get('#email')
+      .clear()
+      .type('careers@copods.co')
+      .should('have.value', 'careers@copods.co')
+    cy.get('#password')
+      .clear()
+      .type('kQuiz@copods')
+      .should('have.value', 'kQuiz@copods')
+    cy.findByRole('button').click()
+    cy.get('a').find('#Tests').should('have.text', 'Tests').click()
+    cy.get('#testList').each((item) => {
+      cy.contains(`${time}`)
+        .parent()
+        .parent()
+        .within(() => {
+          cy.get('#test-name-navigation').click()
+        })
+    })
+    cy.get('#title').should('have.text', `${time}`)
+  })
+
   it('test for tests back-button', () => {
     cy.visit('/sign-in')
     cy.get('#email')
@@ -68,7 +91,7 @@ describe('Test for testPreview', () => {
       .should('have.value', 'kQuiz@copods')
     cy.findByRole('button').click()
     cy.get('a').find('#Tests').should('have.text', 'Tests').click()
-    cy.get('#test-name-navigation', { timeout: 60000 }).click()
+    cy.get('#test-name-navigation').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
   })
   it('test for tests name', () => {
@@ -83,7 +106,7 @@ describe('Test for testPreview', () => {
       .should('have.value', 'kQuiz@copods')
     cy.findByRole('button').click()
     cy.get('a').find('#Tests').should('have.text', 'Tests').click()
-    cy.get('#test-name-navigation', { timeout: 60000 }).click()
+    cy.get('#test-name-navigation').click()
     cy.get('#name').should('have.text', 'Name').click()
   })
   it('test for description', () => {
@@ -99,7 +122,7 @@ describe('Test for testPreview', () => {
     cy.findByRole('button').click()
     cy.get('a').find('#Tests').should('have.text', 'Tests').click()
 
-    cy.get('#test-name-navigation', { timeout: 60000 }).click()
+    cy.get('#test-name-navigation').click()
     cy.get('#description').should('have.text', 'Description').click()
   })
   it('test for total time', () => {
@@ -114,7 +137,7 @@ describe('Test for testPreview', () => {
       .should('have.value', 'kQuiz@copods')
     cy.findByRole('button').click()
     cy.get('a').find('#Tests').should('have.text', 'Tests').click()
-    cy.get('#test-name-navigation', { timeout: 60000 }).click()
+    cy.get('#test-name-navigation').click()
     cy.get('#totalTime').should('have.text', 'Total Time').click()
   })
   it('test for Total Sections', () => {
@@ -129,7 +152,7 @@ describe('Test for testPreview', () => {
       .should('have.value', 'kQuiz@copods')
     cy.findByRole('button').click()
     cy.get('a').find('#Tests').should('have.text', 'Tests').click()
-    cy.get('#test-name-navigation', { timeout: 60000 }).click()
+    cy.get('#test-name-navigation').click()
     cy.get('#totalSection').should('have.text', 'Total Sections')
   })
 })
