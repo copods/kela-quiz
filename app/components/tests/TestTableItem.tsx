@@ -81,7 +81,7 @@ const TestTableItem = ({
               icon={'ant-design:user-add-outlined'}
             />
           </div> */}
-          <div>
+          <div className="flex w-full justify-end">
             <Menu as="div" className="  inline-block text-left">
               <Menu.Button>
                 <Icon

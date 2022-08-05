@@ -56,30 +56,6 @@ describe('Test for testPreview', () => {
     cy.get('button#submitButton').should('have.text', 'Submit').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
   })
-  it('test for check preview data match selected test', () => {
-    cy.visit('/sign-in')
-    cy.get('#email')
-      .clear()
-      .type('careers@copods.co')
-      .should('have.value', 'careers@copods.co')
-    cy.get('#password')
-      .clear()
-      .type('kQuiz@copods')
-      .should('have.value', 'kQuiz@copods')
-    cy.findByRole('button').click()
-    cy.get('a').find('#Tests').should('have.text', 'Tests').click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.get('#testList').each((item) => {
-      cy.contains(`${time}`)
-        .parent()
-        .parent()
-        .within(() => {
-          cy.get('#test-name-navigation').click()
-        })
-    })
-    cy.get('#title').should('have.text', `${time}`)
-  })
-
   it('test for tests back-button', () => {
     cy.visit('/sign-in')
     cy.get('#email')

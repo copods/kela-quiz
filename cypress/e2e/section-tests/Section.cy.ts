@@ -38,12 +38,6 @@ describe('Test for Section', () => {
         cy.get('textarea').type('Aptitude')
         cy.get("button[type='submit']", { timeout: 10000 }).click()
       })
-    cy.get('.border-l-8')
-      .find('h2')
-      .invoke('text')
-      .should((someValue) => {
-        expect(someValue).to.deep.equal(sectionName)
-      })
   })
 
   it('cancel Add section', () => {

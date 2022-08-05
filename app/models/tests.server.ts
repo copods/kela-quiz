@@ -17,7 +17,9 @@ export async function getTestById({ id }: Pick<Section, 'id'>) {
 }
 
 export async function getAllTests(obj: any) {
-  var filter = obj ? obj : '{"orderBy":{"createdAt":"asc"}}'
+  var filter = obj?.orderby ? obj : { orderBy: { name: "asc" } }
+  console.log("obj", obj)
+  console.log("filter", filter)
   return await prisma.test.findMany({
     ...filter,
     where: {
