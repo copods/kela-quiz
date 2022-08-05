@@ -423,7 +423,7 @@ describe('Creating tests', () => {
     cy.get('#2').find('hr').should('have.class', 'bg-primary')
 
     cy.get('button#submitButton').should('have.text', 'Submit').click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
+    cy.location('pathname', { timeout: 10000 }).should('include', '/tests')
     cy.wait(2000)
     cy.get('#testList')
       .get('.border-gray-200')
