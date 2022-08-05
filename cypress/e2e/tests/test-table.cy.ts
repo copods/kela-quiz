@@ -17,7 +17,7 @@ describe('Visiting Tests', () => {
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
 
     cy.get('#add-section').click()
-    const sectionName = `Aptitude - ${new Date().getTime()}`
+    const sectionName = `Aptitude - ${time}`
     cy.get('form > div', { timeout: 10000 })
       .should('be.visible')
       .within((el) => {
@@ -26,7 +26,7 @@ describe('Visiting Tests', () => {
         cy.get("button[type='submit']", { timeout: 10000 }).click()
       })
     cy.get('#add-section').click()
-    const secondSectionName = `Aptitude - ${new Date().getTime()}`
+    const secondSectionName = `Aptitude - ${time}`
     cy.get('form > div', { timeout: 10000 })
       .should('be.visible')
       .within((el) => {
@@ -35,7 +35,9 @@ describe('Visiting Tests', () => {
         cy.get("button[type='submit']", { timeout: 10000 }).click()
       })
   })
-
+  const time = new Date().getTime()
+  new Date().getTime()
+  new Date().getTime()
   it('Verify if user able create the test and navigate to test list page', () => {
     cy.visit('/sign-in')
     cy.get('#email')
@@ -56,7 +58,7 @@ describe('Visiting Tests', () => {
       '/tests/add-test'
     )
 
-    cy.get('#name').clear().type(`Test - ${new Date().getTime()}`)
+    cy.get('#name').clear().type(`Test - ${time}`)
     cy.get('#quillEditor').within(() => {
       cy.get('.ql-editor').type(`Test Description`)
     })
