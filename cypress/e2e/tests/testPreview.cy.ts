@@ -68,7 +68,7 @@ describe('Test for testPreview', () => {
       .should('have.value', 'kQuiz@copods')
     cy.findByRole('button').click()
     cy.get('a').find('#Tests').should('have.text', 'Tests').click()
-    cy.get('#test-name-navigation').click()
+    cy.get('#test-name-navigation', { timeout: 60000 }).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
   })
   it('test for tests name', () => {
@@ -83,7 +83,7 @@ describe('Test for testPreview', () => {
       .should('have.value', 'kQuiz@copods')
     cy.findByRole('button').click()
     cy.get('a').find('#Tests').should('have.text', 'Tests').click()
-    cy.get('#test-name-navigation').click()
+    cy.get('#test-name-navigation', { timeout: 60000 }).click()
     cy.get('#name').should('have.text', 'Name').click()
   })
   it('test for description', () => {
@@ -99,7 +99,7 @@ describe('Test for testPreview', () => {
     cy.findByRole('button').click()
     cy.get('a').find('#Tests').should('have.text', 'Tests').click()
 
-    cy.get('#test-name-navigation').click()
+    cy.get('#test-name-navigation', { timeout: 60000 }).click()
     cy.get('#description').should('have.text', 'Description').click()
   })
   it('test for total time', () => {
@@ -114,7 +114,7 @@ describe('Test for testPreview', () => {
       .should('have.value', 'kQuiz@copods')
     cy.findByRole('button').click()
     cy.get('a').find('#Tests').should('have.text', 'Tests').click()
-    cy.get('#test-name-navigation').click()
+    cy.get('#test-name-navigation', { timeout: 60000 }).click()
     cy.get('#totalTime').should('have.text', 'Total Time').click()
   })
   it('test for Total Sections', () => {
@@ -129,7 +129,7 @@ describe('Test for testPreview', () => {
       .should('have.value', 'kQuiz@copods')
     cy.findByRole('button').click()
     cy.get('a').find('#Tests').should('have.text', 'Tests').click()
-    cy.get('#test-name-navigation').click()
+    cy.get('#test-name-navigation', { timeout: 60000 }).click()
     cy.get('#totalSection').should('have.text', 'Total Sections')
   })
 })
