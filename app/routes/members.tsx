@@ -127,25 +127,25 @@ export const action: ActionFunction = async ({ request }) => {
   }
 }
 export default function Members() {
-  const MembersActionData = useActionData() as ActionData
+  const membersActionData = useActionData() as ActionData
   useEffect(() => {
-    if (MembersActionData) {
-      if (MembersActionData.resp?.status) {
-        toast.success(MembersActionData.resp?.status)
-      } else if (MembersActionData.errors?.status) {
+    if (membersActionData) {
+      if (membersActionData.resp?.status) {
+        toast.success(membersActionData.resp?.status)
+      } else if (membersActionData.errors?.status) {
         toast.error('Something went wrong...!')
       }
     }
-  }, [MembersActionData])
+  }, [membersActionData])
 
   return (
     <AdminLayout>
       <div>
         <MembersHeader
-          actionStatus={MembersActionData?.resp?.check}
-          err={MembersActionData?.errors?.check}
+          actionStatus={membersActionData?.resp?.check}
+          err={membersActionData?.errors?.check}
         />
-        <MembersList actionStatus={MembersActionData?.resp?.status} />
+        <MembersList actionStatus={membersActionData?.resp?.status} />
       </div>
     </AdminLayout>
   )
