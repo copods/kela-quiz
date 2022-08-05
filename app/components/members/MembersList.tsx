@@ -1,15 +1,15 @@
 import type { User, Role } from '~/interface/Interface'
 import MemberListItem from './MemberListItem'
 import { CommonMembersConstants } from '~/constants/common.constants'
+import { useLoaderData } from '@remix-run/react'
 export default function MembersList({
-  data,
-  loggedInUser,
   actionStatus,
 }: {
-  data: User[]
-  loggedInUser: string | undefined
   actionStatus: string | undefined
 }) {
+  const membersData = useLoaderData()
+  const users = membersData.users
+  const loggedInUser = membersData.userId
   return (
     <div className="grid grid-cols-12  bg-[#F9FAFB] ">
       <div className="col-span-full grid grid-cols-10 rounded-lg border-[1px] border-solid border-[#E5E7EB] bg-white">
@@ -30,7 +30,7 @@ export default function MembersList({
             {CommonMembersConstants.Action}
           </h1>
         </div>
-        {data.map((user: User & { role?: Role }) => (
+        {users.map((user: User & { role?: Role }) => (
           <div key={user.id} className="memberRow col-span-10 grid">
             <MemberListItem
               user={user}
