@@ -3,7 +3,7 @@ import { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import type { ActionData } from '~/routes/sections'
-
+import { sectionsFolder } from '~/constants/common.constants'
 const AddSection = ({
   open,
   setOpen,
@@ -51,7 +51,7 @@ const AddSection = ({
               <Dialog.Panel className="relative transform overflow-hidden rounded-2xl bg-white p-6 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
                 <div className="addSectionDilog flex items-center justify-between pt-1">
                   <h2 className="text-2xl font-bold text-gray-700">
-                    Add Section
+                    {sectionsFolder.addSection}
                   </h2>
                   <Icon
                     className="cursor-pointer text-2xl text-gray-600"
@@ -87,7 +87,7 @@ const AddSection = ({
                       setOpen(false)
                     }}
                   >
-                    Cancel
+                    {sectionsFolder.cancelAddingSection}
                   </button>
                   <button
                     type="submit"

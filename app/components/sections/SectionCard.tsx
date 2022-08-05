@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 import moment from 'moment'
-
+import { sectionsFolder } from '~/constants/common.constants'
 const SectionCard = ({
   name,
   isActive,
@@ -39,7 +39,7 @@ const SectionCard = ({
         </span>
       </div>
       <div className="flex text-xs text-gray-400">
-        Total Questions: {questionsCount}
+        {sectionsFolder.totalQuestions} {questionsCount}
       </div>
     </div>
   )

@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 import type { TestSection } from '~/interface/Interface'
-
+import { testsFolderConstants } from '~/constants/common.constants'
 const TestPreview = ({
   name,
   description,
@@ -51,14 +51,16 @@ const TestPreview = ({
   return (
     <div className="flex flex-1 flex-col gap-9 overflow-scroll rounded-lg bg-white p-6 ">
       <div className="flex flex-col gap-6">
-        <h1 className="text-xl font-semibold">Test Details</h1>
+        <h1 className="text-xl font-semibold">
+          {testsFolderConstants.testDetailsText}
+        </h1>
         <div className="flex flex-col gap-4 text-base">
           <div className="flex">
             <div
               id="name"
               className="w-50 min-w-[200px] text-base font-medium leading-6  text-gray-500"
             >
-              Name
+              {testsFolderConstants.nameText}
             </div>
             <div className="flex-1 text-base font-normal leading-6 text-gray-700">
               {name}
@@ -69,7 +71,7 @@ const TestPreview = ({
               id="description"
               className="w-50 min-w-[200px] text-base font-medium leading-6 text-gray-500"
             >
-              Description
+              {testsFolderConstants.descriptionText}
             </div>
             <div
               className="flex-1 text-base font-normal leading-6 text-gray-700"
@@ -81,7 +83,7 @@ const TestPreview = ({
               id="totalTime"
               className="w-50 min-w-[200px] text-base font-medium  leading-6 text-gray-500"
             >
-              Total Time
+              {testsFolderConstants.totalTimeText}
             </div>
             <div className="flex-1 text-base font-normal leading-6 text-gray-700">
               {getTotalTime()}
@@ -92,7 +94,7 @@ const TestPreview = ({
               id="totalSection"
               className="w-50 min-w-[200px] text-base font-medium leading-6 text-gray-500"
             >
-              Total Sections
+              {testsFolderConstants.totalSectionsText}
             </div>
             <div className="flex-1 text-base font-normal leading-6 text-gray-700">
               {selectedSections.length}
@@ -101,13 +103,15 @@ const TestPreview = ({
         </div>
       </div>
       <div className="flex flex-col gap-6">
-        <h1 className="text-xl font-semibold leading-7">Selected Sections</h1>
+        <h1 className="text-xl font-semibold leading-7">
+          {testsFolderConstants.selectedSctionText}
+        </h1>
         <div className="flex flex-col gap-4 text-base">
           {selectedSections.map((section, i) => {
             return (
               <div className="flex items-center gap-4" key={section.id}>
                 <div className="w-44 min-w-[184px] text-base leading-6 text-gray-500">
-                  Section {i + 1}
+                  {testsFolderConstants.sectionText} {i + 1}
                 </div>
                 <div className=" flex max-w-2xl flex-1 items-center justify-between gap-6 rounded-lg border border-gray-300	py-3 px-4 font-normal text-gray-700">
                   <div className="text-base font-semibold leading-6  text-gray-700">
@@ -116,7 +120,7 @@ const TestPreview = ({
                   <div className="flex gap-5 text-sm  text-gray-700">
                     <span>
                       {section.totalQuestions ? section.totalQuestions : 0}{' '}
-                      Questions
+                      {testsFolderConstants.questions}
                     </span>
                     <span>
                       {section.time ? section.time : section.timeInSeconds} Min
