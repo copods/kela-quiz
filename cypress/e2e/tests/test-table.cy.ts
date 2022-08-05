@@ -162,7 +162,7 @@ describe('Visiting Tests', () => {
       .invoke('text')
       .then((el) => {
         if (el === 'Name') {
-          cy.get('.border-b')
+          cy.get('.border-b', { timeout: 60000 })
             .get('.pr-4')
             .then(($elements) => {
               var strings = [...$elements].map(($el) => $el.innerText)
@@ -190,7 +190,7 @@ describe('Visiting Tests', () => {
       .invoke('text')
       .then((el) => {
         if (el === 'Name') {
-          cy.get('.border-b')
+          cy.get('.border-b', { timeout: 60000 })
             .get('.pr-4')
             .then(($elements) => {
               var strings = [...$elements].map(($el) => $el.innerText)
@@ -258,7 +258,7 @@ describe('Visiting Tests', () => {
       .invoke('text')
       .then((el) => {
         if (el === 'Created Date') {
-          cy.get('.border-b')
+          cy.get('.border-b', { timeout: 60000 })
             .get('.pr-4')
             .then(($elements) => {
               var strings = [...$elements].map(($el) => $el.innerText)
@@ -283,7 +283,7 @@ describe('Visiting Tests', () => {
 
     cy.get('a').find('#Tests').should('have.text', 'Tests').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.get('#test-table-list')
+    cy.get('#test-table-list', { timeout: 60000 })
       .get('#test-name-navigation')
       .click()
       .location('pathname', { timeout: 60000 })
@@ -303,11 +303,11 @@ describe('Visiting Tests', () => {
     cy.findByRole('button').click()
     cy.get('a').find('#Tests').should('have.text', 'Tests').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.get('#chip-group-id')
-      .get('.chip-group')
-      .get('#section-count-button')
+    cy.get('#chip-group-id', { timeout: 60000 })
+      .get('.chip-group', { timeout: 60000 })
+      .get('#section-count-button', { timeout: 60000 })
       .click()
-    cy.get('#chip-group-id').then((el) => {
+    cy.get('#chip-group-id', { timeout: 60000 }).then((el) => {
       cy.get('.section-menu').then(($elements) => {
         var strings = [...$elements].map(($el) => {
           return $el.innerText
@@ -330,7 +330,7 @@ describe('Visiting Tests', () => {
     cy.findByRole('button').click()
     cy.get('a').find('#Tests').should('have.text', 'Tests').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.get('#test-table-list')
+    cy.get('#test-table-list', { timeout: 60000 })
       .invoke('text')
       .then((el) => {
         cy.get('#test-name-navigation').then(($elements) => {
@@ -341,7 +341,7 @@ describe('Visiting Tests', () => {
           expect(deletedItem).to.deep.equal(strings.toString())
         })
       })
-    cy.get('#vertical-icon').click()
+    cy.get('#vertical-icon', { timeout: 60000 }).click()
     cy.get('.delete-test').click()
     cy.get('.confirm-delete').click()
     cy.get('#test-table-list').each((item) => {
