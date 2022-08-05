@@ -28,7 +28,11 @@ const SectionCard = ({
           {name}
         </h2>
         <div className="flex">
-          <Icon className="text-2xl text-gray-600" icon={'mdi:dots-vertical'} />
+          <Icon
+            tabIndex={0}
+            className="text-2xl text-gray-600"
+            icon={'mdi:dots-vertical'}
+          />
         </div>
       </div>
       <div className="flex text-xs text-gray-400">

@@ -56,6 +56,7 @@ export default function MemberListItem({
         </div>
         <div className="col-span-1">
           <button
+            tabIndex={0}
             id="deleteButton"
             name="deleteMember"
             disabled={loggedInUser}

@@ -13,7 +13,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 export default function Index() {
   return (
     <main className="relative min-h-screen bg-white sm:flex sm:items-center sm:justify-center">
-      <Link to={'/dashboard'}>
+      <Link tabIndex={0} to={'/dashboard'}>
         <Logo width="192" height="192" />
       </Link>
     </main>

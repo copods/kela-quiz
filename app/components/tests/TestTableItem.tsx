@@ -31,7 +31,7 @@ const TestTableItem = ({
       >
         {showCheckBox && (
           <div className="w-1/12 pl-2.5 text-base font-medium leading-6 text-gray-700">
-            <input type="checkbox"></input>
+            <input name="checkbox" tabIndex={0} type="checkbox"></input>
           </div>
         )}
         <div
@@ -41,7 +41,7 @@ const TestTableItem = ({
           {index}
         </div>
         <div className="w-3/12 cursor-pointer truncate pr-4 text-base font-semibold leading-6 text-primary underline underline-offset-2 ">
-          <NavLink to={`/tests/${id}`} key={index}>
+          <NavLink to={`/tests/${id}`} key={index} tabIndex={0}>
             <span id="test-name-navigation">{testName}</span>
           </NavLink>
         </div>
@@ -63,6 +63,7 @@ const TestTableItem = ({
           </div>
           <div>
             <Icon
+              tabIndex={0}
               className="cursor-pointer"
               icon={'akar-icons:more-vertical'}
             />

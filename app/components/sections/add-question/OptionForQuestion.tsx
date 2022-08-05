@@ -115,6 +115,7 @@ export default function OptionForQuestion({
         )}
 
         <button
+          tabIndex={0}
           className="flex h-9 items-center  rounded-lg bg-primary px-5 text-xs text-white"
           onClick={addOptionArea}
         >
@@ -132,6 +133,8 @@ export default function OptionForQuestion({
                 {getQuestionType(selectedTypeOfQuestion) ===
                 'MULTIPLE_CHOICE' ? (
                   <input
+                    name="checkbox"
+                    tabIndex={0}
                     id="checkBox"
                     type="checkbox"
                     value={option.id}
@@ -144,6 +147,7 @@ export default function OptionForQuestion({
                   getQuestionType(selectedTypeOfQuestion) ===
                     'SINGLE_CHOICE' && (
                     <input
+                      tabIndex={0}
                       id="radioButton"
                       type="radio"
                       name="radioChoice"
@@ -189,6 +193,7 @@ export default function OptionForQuestion({
                 <div className="flex items-center gap-2.5" key={option.id}>
                   <div className="flex-1" id="optionEditor">
                     <input
+                      tabIndex={0}
                       className="h-20 w-full rounded-lg border border-gray-300 bg-white p-4"
                       value={option.answer}
                       onChange={(e) => {

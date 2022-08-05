@@ -72,7 +72,12 @@ function Login({ actionData, redirectTo }: LoginProps) {
             </div>
           </div> */}
           <div className="mt-6">
-            <input type="hidden" name="redirectTo" value={redirectTo} />
+            <input
+              tabIndex={0}
+              type="hidden"
+              name="redirectTo"
+              value={redirectTo}
+            />
             <Button buttonText="Sign in" type="submit" />
           </div>
         </Form>

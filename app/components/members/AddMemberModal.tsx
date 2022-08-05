@@ -65,6 +65,7 @@ export default function AddMemberModal({
                         {CommonMembersConstants.FirstName}
                       </label>
                       <input
+                        tabIndex={0}
                         id="firstName"
                         type="text"
                         name="firstName"
@@ -77,6 +78,7 @@ export default function AddMemberModal({
                         {CommonMembersConstants.LastName}
                       </label>
                       <input
+                        tabIndex={0}
                         id="lastName"
                         type="text"
                         name="lastName"
@@ -90,6 +92,7 @@ export default function AddMemberModal({
                       {CommonMembersConstants.Email}
                     </label>
                     <input
+                      tabIndex={0}
                       id="email"
                       type="email"
                       name="email"
@@ -105,12 +108,13 @@ export default function AddMemberModal({
                     </div>
                     <div className="my-1.5 rounded-lg border border-gray-200 px-4">
                       <select
+                        tabIndex={0}
                         name="roleId"
                         className="test-base h-11 w-full focus:outline-none"
                       >
                         {roles.map((role) => {
                           return (
-                            <option key={role.id} value={role?.id}>
+                            <option tabIndex={0} key={role.id} value={role?.id}>
                               {role?.name}
                             </option>
                           )
@@ -120,6 +124,7 @@ export default function AddMemberModal({
                   </div>
                   <div className="flex justify-end gap-2">
                     <button
+                      tabIndex={0}
                       id="cancelAddButton"
                       type="button"
                       className="h-9 rounded-md px-4 text-sm text-gray-500"
@@ -128,6 +133,7 @@ export default function AddMemberModal({
                       {CommonMembersConstants.Cancel}
                     </button>
                     <button
+                      tabIndex={0}
                       id="addbutton"
                       type="submit"
                       name="addMember"

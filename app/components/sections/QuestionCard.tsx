@@ -36,11 +36,13 @@ const QuestionCard = ({
           </div>
           {isExpanded === index ? (
             <Icon
+              tabIndex={0}
               icon={'akar-icons:circle-chevron-up'}
               className="cursor-pointer text-xl text-gray-400"
             />
           ) : (
             <Icon
+              tabIndex={0}
               icon={'akar-icons:circle-chevron-down'}
               className="cursor-pointer text-xl text-gray-400"
             />

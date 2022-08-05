@@ -19,9 +19,10 @@ const TestDetails = ({
           Name
         </label>
         <input
+          tabIndex={0}
           type="text"
           id="name"
-          name="name"
+          name="testName"
           value={name}
           onChange={(e) => onNameChange(e.target.value)}
           className="test-base mt-1 h-11 w-full rounded-lg border border-gray-200 px-3"

@@ -46,6 +46,7 @@ const TestList = ({ tests }: { tests: Array<Test> }) => {
         </h2>
         <Link to={'/tests/add-test'}>
           <button
+            tabIndex={0}
             id="addTest"
             className="h-9 rounded-lg bg-primary px-5 text-xs text-white"
           >
@@ -69,7 +70,7 @@ const TestList = ({ tests }: { tests: Array<Test> }) => {
         <div className="rounded-b-0 flex items-center rounded-t-md border border-b-0 border-solid border-borderColor bg-tableHeader px-9 py-3 font-semibold ">
           {showCheckBox && (
             <div className=" w-1/12 pl-2.5">
-              <input type="checkbox"></input>
+              <input name="checkbox" tabIndex={0} type="checkbox"></input>
             </div>
           )}
           <div className="w-1/12 text-sm leading-5 text-gray-500">S No.</div>

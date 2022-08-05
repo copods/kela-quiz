@@ -13,6 +13,7 @@ function MenuItems({ iconClass, itemName, itemRoute }: tabProps) {
   return (
     <div id="menuItem">
       <NavLink
+        tabIndex={0}
         to={`/${itemRoute}`}
         className={({ isActive }) =>
           `flex flex-row items-start gap-2 rounded-lg p-3.5 ${

@@ -47,7 +47,7 @@ const Sections = ({
     <div className="flex h-full w-96 flex-col gap-6">
       {/* filters */}
       <div className="flex items-center justify-between ">
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-center gap-2.5" tabIndex={0}>
           {order === 'asc' ? (
             <Icon
               icon="ph:sort-descending-bold"
