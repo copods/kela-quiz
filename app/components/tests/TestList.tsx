@@ -91,7 +91,10 @@ const TestList = ({ tests }: { tests: Array<Test> }) => {
               Actions
             </div>
           </div>
-          <div className="testList rounded-t-0 flex flex-1 flex-col overflow-auto rounded-md border-t-0 border-solid border-borderColor  ">
+          <div
+            id="testList"
+            className="rounded-t-0 flex flex-1 flex-col overflow-auto rounded-md border-t-0 border-solid border-borderColor  "
+          >
             {tests.map((test, i) => (
               <TestTableItem
                 key={i}
