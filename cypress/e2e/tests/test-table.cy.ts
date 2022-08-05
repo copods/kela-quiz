@@ -136,6 +136,7 @@ describe('Visiting Tests', () => {
       .then(($ele) => {
         value = $ele[0].innerText.split(':')[1]
       })
+    cy.wait(2000)
     cy.get('.testList')
       .get('.border-b')
       .then(($elements) => {
