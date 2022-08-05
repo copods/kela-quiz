@@ -1,5 +1,5 @@
 describe('Test for section-details', () => {
-  it('Visiting section-details  Page', () => {
+   it('Visiting section-details  Page', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -28,7 +28,7 @@ describe('Test for section-details', () => {
     )
   })
 
-  it('Test for adding new section', () => {
+   it('Test for adding new section', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -59,7 +59,73 @@ describe('Test for section-details', () => {
     cy.location('pathname', { timeout: 6000 }).should('include', '/sections')
   })
 
-  it('Visiting the Same section which created', () => {
+  it('Test for valid error message while adding new section without Title', () => {
+    cy.visit('/sign-in')
+    cy.get('#email')
+      .clear()
+      .type('careers@copods.co')
+      .should('have.value', 'careers@copods.co')
+    cy.get('#password')
+      .clear()
+      .type('kQuiz@copods')
+      .should('have.value', 'kQuiz@copods')
+    cy.findByRole('button').click()
+
+    cy.get('a').find('#Sections').should('have.text', 'Sections').click()
+    cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
+    cy.get('.px-5').click()
+    cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
+
+    cy.get('#submitButton').click()
+    cy.get('.Toastify__toast').should('have.text', 'Name is required')
+  })
+
+  it('Test for valid error message while adding new section without Description', () => {
+    cy.visit('/sign-in')
+    cy.get('#email')
+      .clear()
+      .type('careers@copods.co')
+      .should('have.value', 'careers@copods.co')
+    cy.get('#password')
+      .clear()
+      .type('kQuiz@copods')
+      .should('have.value', 'kQuiz@copods')
+    cy.findByRole('button').click()
+
+    cy.get('a').find('#Sections').should('have.text', 'Sections').click()
+    cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
+    cy.get('.px-5').click()
+    cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
+    cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
+    cy.get('#submitButton').click()
+    cy.get('.Toastify__toast').should('have.text', 'Description is required')
+  })
+
+  it('Test for valid error message while adding new section with duplicate Title', () => {
+    cy.visit('/sign-in')
+    cy.get('#email')
+      .clear()
+      .type('careers@copods.co')
+      .should('have.value', 'careers@copods.co')
+    cy.get('#password')
+      .clear()
+      .type('kQuiz@copods')
+      .should('have.value', 'kQuiz@copods')
+    cy.findByRole('button').click()
+
+    cy.get('a').find('#Sections').should('have.text', 'Sections').click()
+    cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
+    cy.get('.px-5').click()
+    cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
+    cy.get('input#sectionName').type('Aptitude')
+    cy.get('textarea#sectionDescription').type(
+      `Aptitude - ${new Date().getTime()} Description`
+    )
+    cy.get('#submitButton').click()
+    cy.get('.Toastify__toast').should('have.text', 'Duplicate Title')
+  })
+
+   it('Visiting the Same section which created', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -86,12 +152,13 @@ describe('Test for section-details', () => {
       'include',
       '/add-question'
     )
+    cy.get('.Toastify__close-button').click()
     cy.get('#Question').should('have.text', 'Question').click()
     cy.wait(2000)
     cy.get('a > div').should('have.class', 'border-l-8')
   })
 
-  it('Verifying MCQ to have Check Box in options', () => {
+   it('Verifying MCQ to have Check Box in options', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -148,7 +215,7 @@ describe('Test for section-details', () => {
     }
   })
 
-  it('Verifying Single Choice to have Radio Button in options', () => {
+   it('Verifying Single Choice to have Radio Button in options', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -205,7 +272,7 @@ describe('Test for section-details', () => {
     }
   })
 
-  it('Verifying Text to have Textarea in options', () => {
+   it('Verifying Text to have Textarea in options', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -264,7 +331,7 @@ describe('Test for section-details', () => {
 
   let lengthBefore: number
 
-  it('Verifying if Add Option functionality Working on Options', () => {
+   it('Verifying if Add Option functionality Working on Options', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -322,7 +389,7 @@ describe('Test for section-details', () => {
     })
   })
 
-  it('Verifying if Delete functionality Working on Options', () => {
+   it('Verifying if Delete functionality Working on Options', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -380,7 +447,7 @@ describe('Test for section-details', () => {
     })
   })
 
-  it('On Save and Add More visit the Add Question Page', () => {
+   it('On Save and Add More visit the Add Question Page', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -415,7 +482,7 @@ describe('Test for section-details', () => {
     )
   })
 
-  it('On Save and Continue visit the Sections Page', () => {
+   it('On Save and Continue visit the Sections Page', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -447,7 +514,7 @@ describe('Test for section-details', () => {
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
   })
 
-  it('Verifying if Question is Empty or not', () => {
+   it('Verifying if Question is Empty or not', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -478,10 +545,11 @@ describe('Test for section-details', () => {
       .type('{backspace}')
       .should('have.value', '')
     cy.get('#saveAndAddMore').should('have.text', 'Save & Add More').click()
+    cy.get('.Toastify__close-button').click({ multiple: true })
     cy.get('.Toastify__toast').should('have.text', 'Enter the Question')
   })
 
-  it('Verifying if any Option is empty or not', () => {
+   it('Verifying if any Option is empty or not', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
