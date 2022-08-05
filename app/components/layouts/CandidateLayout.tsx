@@ -7,7 +7,7 @@ export default function CandidateLayout({
 }) {
   return (
     <main className="flex max-h-screen min-h-screen">
-      <div className="w-2/12 min-w-301   p-6 ">
+      <div className="w-2/12 min-w-301   ">
         <CandidateSideNav />
       </div>
       <div className="flex-1 bg-slate-50 p-12">{children}</div>

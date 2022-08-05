@@ -1,23 +1,40 @@
-export interface tabProps {
-  itemName: string
-}
+import { Icon } from '@iconify/react'
 
-const CandidateSideNavItems = ({ itemName }: tabProps) => {
+const CandidateSideNavItems = ({
+  isExpanded,
+  onAccordianToggle,
+  index,
+}: {
+  isExpanded: number
+  onAccordianToggle: (e: number) => void
+  index: number
+}) => {
   return (
     <div>
-      <div id="menuItem">
-        <div className="flex flex-row items-start gap-2 rounded-lg bg-blue-50 p-3.5 ">
-          <div className="flex flex-row items-center gap-2">
-            <span>
-              <p
-                id={itemName}
-                className="non-italic text-sm font-bold	 leading-6 
-                text-primary"
-              >
-                {itemName}
-              </p>
-            </span>
-          </div>
+      <div className="">
+        <div className="flex items-center justify-between py-3 text-sm font-medium leading-5 text-gray-800 ">
+          Section 1
+          {isExpanded === index ? (
+            <Icon
+              icon={'bytesize:lock'}
+              className="cursor-pointer text-xl text-gray-800"
+              onClick={() => onAccordianToggle(-1)}
+            />
+          ) : (
+            <Icon
+              icon={'teenyicons:tick-circle-outline'}
+              className="cursor-pointer text-xl text-green-800"
+              onClick={() => onAccordianToggle(index)}
+            />
+          )}
+        </div>
+        <div
+          className={
+            'overflow-hidden  text-sm leading-5 text-gray-400 transition-all ' +
+            (isExpanded === index ? 'max-h-96' : 'max-h-0')
+          }
+        >
+          <p className="p-3 text-sm leading-5 text-gray-400">Question</p>
         </div>
       </div>
     </div>

@@ -1,7 +1,8 @@
 import CandidateNavFooter from '../CandidateNavFooter'
-import Header from '../SideNavHeader'
-import CandidateSideNavItems from './CandidateSideNavItems'
 
+import logo from '~/../public/assets/logo.svg'
+import CandidateSideNavItems from './CandidateSideNavItems'
+import { useState } from 'react'
 let sideNavGuide = [
   {
     navGuide: 'Assessment Details',
@@ -10,23 +11,22 @@ let sideNavGuide = [
         itemName: 'Overview',
         // itemRoute: 'Overview',
       },
-      {
-        itemName: 'Rules',
-        // itemRoute: 'results',
-      },
     ],
   },
 ]
 const CandidateSideNav = () => {
-  const title = 'Assessment'
+  const [currentAccordian, setCurrentAccordian] = useState(-1)
   return (
     <div className="flex h-full flex-col justify-between overflow-auto ">
       <div>
-        <div className="mb-14 px-1">
-          <Header title={title} />
+        <div className="  p-5  ">
+          <div className="flex items-center gap-4">
+            <img src={logo} alt="logo" />
+            <span className="text-3xl font-bold leading-9">Assessment</span>
+          </div>
         </div>
-        <div className="pb-9">
-          <div className="flex flex-col gap-2">
+        <div className="border-t-2-gray-300 border border-t-2 border-x-transparent  border-b-gray-300 px-5 py-5">
+          <div className="flex flex-col gap-2 ">
             <p className="text-xl font-semibold leading-7 text-gray-600">
               Pre-Interview Assessment
             </p>
@@ -35,40 +35,38 @@ const CandidateSideNav = () => {
             </p>
           </div>
         </div>
-        <div className="flex flex-col gap-8">
+        <div className="flex flex-col gap-8 px-5 pt-6">
           {sideNavGuide.map((guide, index) => {
             return (
-              <div className="10px flex flex-col gap-4" key={index}>
-                <p className="non-italic  px-2 pb-2 text-left text-sm font-semibold leading-5 text-gray-500">
+              <div className="10px flex flex-col gap-2.5" key={index}>
+                <p className="non-italic  text-left text-sm font-medium leading-5 text-gray-900">
                   {guide.navGuide}
                 </p>
                 <div className="flex flex-col gap-1">
-                  {guide.subItem.map((item, index) => {
-                    return (
-                      <CandidateSideNavItems
-                        key={index}
-                        itemName={item.itemName}
-                      />
-                    )
-                  })}
+                  <div className="flex flex-row items-center gap-2">
+                    <span>
+                      <p
+                        className="non-italic py-3 text-sm font-medium	 leading-5
+                text-gray-800"
+                      >
+                        Section 1
+                      </p>
+                    </span>
+                  </div>
                 </div>
               </div>
             )
           })}
-          <div>
-            <p className="non-italic  px-2 pb-2 text-left text-sm font-semibold leading-5 text-gray-500">
-              Assignment
+          <div className="flex flex-col gap-6">
+            <p className="non-italic   text-left text-sm font-medium leading-5 text-gray-900">
+              Assessment Tests
             </p>
             <div className="flex flex-col gap-1">
-              <div className="flex items-center gap-1.5">
-                <input
-                  className="h-3.5 w-3.5 rounded-[100%] border"
-                  type="checkbox"
-                />
-                <p className="text-base font-bold leading-5 text-primary">
-                  Section 1
-                </p>
-              </div>
+              <CandidateSideNavItems
+                isExpanded={currentAccordian}
+                onAccordianToggle={setCurrentAccordian}
+                index={1}
+              />
             </div>
           </div>
         </div>
