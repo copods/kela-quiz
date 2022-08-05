@@ -26,12 +26,7 @@ describe('Visiting Tests', () => {
         cy.get("button[type='submit']", { timeout: 10000 }).click()
       })
     cy.wait(1600)
-    cy.get('.border-l-8')
-      .find('h2')
-      .invoke('text')
-      .should((someValue) => {
-        expect(someValue).to.deep.equal(sectionName)
-      })
+    cy.get('#section-card').click()
     cy.get('#add-section').click()
     const secondSectionName = `Aptitude - ${new Date().getTime()}`
     cy.get('form > div', { timeout: 10000 })
@@ -40,13 +35,6 @@ describe('Visiting Tests', () => {
         cy.get('input').type(secondSectionName)
         cy.get('textarea').type('Aptitude')
         cy.get("button[type='submit']", { timeout: 10000 }).click()
-      })
-    cy.wait(1600)
-    cy.get('.border-l-8')
-      .find('h2')
-      .invoke('text')
-      .should((someValue) => {
-        expect(someValue).to.deep.equal(secondSectionName)
       })
   })
 

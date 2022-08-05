@@ -4,7 +4,7 @@ const ChipGroup = ({ sections }: { sections: Array<SectionInTest> }) => {
   return (
     <div className="chip-group">
       <span className=" rounded-[52px] bg-bgcolor py-1 px-2">
-        {sections[0].section.name}
+        {sections[0]?.section.name}
       </span>
       {sections.length > 1 && (
         <Menu as="div" className=" relative inline-block text-left">
