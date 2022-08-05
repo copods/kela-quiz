@@ -19,7 +19,6 @@ export async function createIndividualCandidate({ email, createdById }: { email:
     }
     return user
   } catch (error) {
-    console.log(error)
     throw new Error('Candidate Create Error..!')
   }
 }
@@ -35,7 +34,6 @@ export async function createCandidateTest({ testId, candidateId }: { testId: str
     })
     return candidateTest
   } catch (error) {
-    console.log(error)
     throw new Error('Candidate Test Create Error..!')
   }
 }
@@ -52,7 +50,6 @@ export async function updateTestLink({ id, link }: { id: string, link: string })
     })
     return candidateTest
   } catch (error) {
-    console.log(error)
     throw new Error('Error updating test link..!')
   }
 }
@@ -77,7 +74,6 @@ export async function createSectionInTest({ sectionId, candidateTestId, totalQue
     }
     return 'done'
   } catch (error) {
-    console.log(error)
     throw new Error('Error creating section in test ..!')
   }
 }

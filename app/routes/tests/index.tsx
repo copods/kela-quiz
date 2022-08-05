@@ -49,7 +49,6 @@ export const action: ActionFunction = async ({ request }) => {
 
   let emails: any = []
   await formData.forEach((fd) => {
-    console.log(fd)
     emails.push(fd)
   })
   const candidateInviteStatus = await createCandidate({
@@ -57,8 +56,6 @@ export const action: ActionFunction = async ({ request }) => {
     createdById,
     testId,
   })
-  console.log('asadsdasda:', candidateInviteStatus)
-
   return json({ candidateInviteStatus })
 }
 
@@ -67,7 +64,6 @@ export default function Results() {
   const actionData = useActionData()
 
   useEffect(() => {
-    console.log('Actiondata:', actionData)
     if (actionData?.candidateInviteStatus == 'created') {
       toast.success('Candidates Invited')
     } else {
@@ -76,7 +72,6 @@ export default function Results() {
       }
     }
   }, [actionData])
-
   if (testData.status != 'Success') {
     toast.success('Something went wrong..!')
   }

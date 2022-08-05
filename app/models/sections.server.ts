@@ -71,7 +71,6 @@ export async function addQuestion(question: string, options: Array<{ id: string,
     }
   }).then(() => { return true })
     .catch((err) => {
-      console.log(err)
       return err;
     })
 }
