@@ -99,7 +99,7 @@ export default function OptionForQuestion({
 
   return (
     <div className="flex flex-1 flex-col gap-6">
-      <div className="flex flex-row items-center justify-between">
+      <div className="mb-2 flex flex-row items-center justify-between">
         {getQuestionType(selectedTypeOfQuestion) === 'MULTIPLE_CHOICE' ||
         getQuestionType(selectedTypeOfQuestion) === 'SINGLE_CHOICE' ? (
           <div className="text-base font-medium leading-6 text-gray-600">

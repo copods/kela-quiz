@@ -117,14 +117,14 @@ export async function sendTestInviteMail(
           <p style="text-align:left;color:#4B5563;margin:0;"><span>Hi,</span>
           </p>
           <br>
-          <p style="text-align:left;color:#4B5563;margin:0;">You have been invited by Copods Design Technology Solutions LLP to take a K - Quiz Test.
+          <p style="text-align:left;color:#4B5563;margin:0;">You have been invited by Copods Design Technology Solutions LLP for an online pre interview assessment test.
           </p>
           
 
 
         </div>
         <div style="text-align:center;padding:10px" >
-        <a href="${link}" style="text-decoration:none"><span style="padding: 10px 38px;background:#353988;color:#fff;font-family:'Poppins', sans-serif;">Go to K - Quiz Test</span></a>
+        <a href="${link}" style="text-decoration:none"><span style="padding: 10px 38px;background:#353988;color:#fff;font-family:'Poppins', sans-serif;">Click here to take the test</span></a>
         </div>
         <br>
         
