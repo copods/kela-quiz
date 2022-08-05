@@ -30,13 +30,17 @@ export type ActionData = {
     check?: Date
   }
 }
-
+type LoaderData = {
+  users: Awaited<ReturnType<typeof getAllUsers>>
+  userId: Awaited<ReturnType<typeof getUserId>>
+  roles: Awaited<ReturnType<typeof getAllRoles>>
+}
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await getUserId(request)
   const roles = await getAllRoles()
   if (!userId) return redirect('/sign-in')
   const users = await getAllUsers()
-  return json({ users, roles, userId })
+  return json<LoaderData>({ users, roles, userId })
 }
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
@@ -123,25 +127,25 @@ export const action: ActionFunction = async ({ request }) => {
   }
 }
 export default function Members() {
-  const actData = useActionData() as ActionData
+  const MembersActionData = useActionData() as ActionData
   useEffect(() => {
-    if (actData) {
-      if (actData.resp?.status) {
-        toast.success(actData.resp?.status)
-      } else if (actData.errors?.status) {
+    if (MembersActionData) {
+      if (MembersActionData.resp?.status) {
+        toast.success(MembersActionData.resp?.status)
+      } else if (MembersActionData.errors?.status) {
         toast.error('Something went wrong...!')
       }
     }
-  }, [actData])
+  }, [MembersActionData])
 
   return (
     <AdminLayout>
       <div>
         <MembersHeader
-          actionStatus={actData?.resp?.check}
-          er={actData?.errors?.check}
+          actionStatus={MembersActionData?.resp?.check}
+          err={MembersActionData?.errors?.check}
         />
-        <MembersList actionStatus={actData?.resp?.status} />
+        <MembersList actionStatus={MembersActionData?.resp?.status} />
       </div>
     </AdminLayout>
   )
