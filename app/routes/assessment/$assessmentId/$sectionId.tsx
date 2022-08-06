@@ -2,7 +2,11 @@ import { Outlet, useLoaderData } from '@remix-run/react'
 import type { LoaderFunction } from '@remix-run/server-runtime'
 import { redirect } from '@remix-run/server-runtime'
 import CandidateLayout from '~/components/layouts/CandidateLayout'
-import { getTestSectionDetails } from '~/models/candidate.server'
+import {
+  getCandidate,
+  getCandidateTestForSideNav,
+  getTestSectionDetails,
+} from '~/models/candidate.server'
 import { checkIfTestLinkIsValidAndRedirect } from '~/utils'
 
 export const loader: LoaderFunction = async ({ params, request }) => {
@@ -18,13 +22,17 @@ export const loader: LoaderFunction = async ({ params, request }) => {
   }
 
   const section = await getTestSectionDetails(params.sectionId as string)
-  return { ...section }
+  const candidateTets = await getCandidateTestForSideNav(
+    params.assessmentId as string
+  )
+  const candidate = await getCandidate(params.assessmentId as string)
+  return { section, candidateTets, candidate }
 }
 
 export default function AssessmentSection() {
-  const section = useLoaderData()
+  const { section, candidateTets, candidate } = useLoaderData()
   return (
-    <CandidateLayout>
+    <CandidateLayout candidate={candidate} candidateTest={candidateTets}>
       <div className="flex flex-col gap-9">
         <div className="flex flex-row items-center justify-between">
           <h1 className="text-2xl font-semibold text-gray-800">

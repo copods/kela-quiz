@@ -138,6 +138,7 @@ export default function SectionPage() {
       ? data.sections[0].id
       : 'NA'
   )
+
   return (
     <AdminLayout>
       <div className="flex h-full flex-col gap-12 overflow-hidden">

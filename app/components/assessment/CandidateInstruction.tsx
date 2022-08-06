@@ -2,12 +2,11 @@ import { useLoaderData, useSubmit } from '@remix-run/react'
 import type { SectionInTest } from '~/interface/Interface'
 
 export default function CandidateInstruction() {
-  const candidateInstrution = useLoaderData()
+  const { firstSection, instructions } = useLoaderData()
 
-  const candidateSections =
-    candidateInstrution.instructions?.test?.sections.sort((a: any, b: any) =>
-      a.order > b.order ? 1 : b.order > a.order ? -1 : 0
-    )
+  const candidateSections = instructions?.test?.sections.sort(
+    (a: any, b: any) => (a.order > b.order ? 1 : b.order > a.order ? -1 : 0)
+  )
 
   const submit = useSubmit()
 
@@ -15,12 +14,11 @@ export default function CandidateInstruction() {
     submit(
       {
         proceedToTest: 'true',
-        firstSectionId: candidateInstrution.firstSection.id,
+        firstSectionId: firstSection.id,
       },
       { method: 'post' }
     )
   }
-  console.log(candidateInstrution)
   return (
     <div className="h-full flex-col overflow-y-auto">
       <div className=" px-8">
@@ -30,7 +28,7 @@ export default function CandidateInstruction() {
         <div
           className="pb-9 text-base font-normal leading-6 text-gray-700"
           dangerouslySetInnerHTML={{
-            __html: candidateInstrution.instructions?.test?.description,
+            __html: instructions?.test?.description,
           }}
         ></div>
       </div>

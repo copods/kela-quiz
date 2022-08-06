@@ -37,6 +37,33 @@ export async function updateNextCandidateStep(
   })
 }
 
+export async function getCandidateTestForSideNav(
+  id: CandidateTest['id'],
+) {
+  return await prisma.candidateTest.findUnique({
+    where: { id }
+  })
+}
+
+export async function getCandidate(
+  id: CandidateTest['id'],
+) {
+  return await prisma.candidate.findFirst({
+    where: {
+      tests: {
+        some: {
+          id
+        }
+      }
+    },
+    select: {
+      firstName: true,
+      lastName: true,
+      email: true
+    }
+  })
+}
+
 export async function getTestInstructionForCandidate(
   id: CandidateTest['id']
 ) {
