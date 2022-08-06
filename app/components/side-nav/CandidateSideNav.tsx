@@ -44,14 +44,20 @@ const CandidateSideNav = () => {
                 </p>
                 <div className="flex flex-col gap-1">
                   <div className="flex flex-row items-center gap-2">
-                    <span>
-                      <p
-                        className="non-italic py-3 text-sm font-medium	 leading-5
-                text-gray-800"
-                      >
-                        Section 1
-                      </p>
-                    </span>
+                    <div className="flex flex-col gap-1">
+                      {guide.subItem.map((item, index) => {
+                        return (
+                          <div key={index}>
+                            <p
+                              className="non-italic py-3 text-sm font-medium	 leading-5
+                              text-gray-800"
+                            >
+                              {item.itemName}
+                            </p>
+                          </div>
+                        )
+                      })}
+                    </div>
                   </div>
                 </div>
               </div>
