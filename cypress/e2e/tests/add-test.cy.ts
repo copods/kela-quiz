@@ -425,8 +425,8 @@ describe('Creating tests', () => {
     cy.get('button#submitButton').should('have.text', 'Submit').click()
 
     cy.location('pathname', { timeout: 100000 }).should('include', '/tests')
-    cy.get('#test-list')
-      .get('.border-gray-200')
+    // cy.get('#test-list')
+    cy.get('.test-table-list')
       .last()
       .within(() => {
         cy.get('.text-primary').should('have.text', testName)

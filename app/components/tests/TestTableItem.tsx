@@ -43,7 +43,7 @@ const TestTableItem = ({
       <div
         key={index}
         id="test-table-list"
-        className="flex items-center border-b border-t-0 border-gray-200 bg-white py-3 px-9 "
+        className="test-table-list flex items-center border-b border-t-0 border-gray-200 bg-white py-3 px-9 "
       >
         {showCheckBox && (
           <div className="w-1/12 pl-2.5 text-base font-normal leading-6 text-gray-700">

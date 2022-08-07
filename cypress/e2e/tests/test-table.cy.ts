@@ -139,13 +139,12 @@ describe('Visiting Tests', () => {
         value = $ele[0].innerText.split(':')[1]
       })
     cy.wait(2000)
-    cy.get('#testList')
-      .get('.border-b')
-      .then(($elements) => {
-        strings = [...$elements].map(($el) => $el.innerText)
-        expect(strings).to.deep.equal([...strings])
-        expect(strings.length).to.deep.equal(parseInt(value))
-      })
+    // cy.get('#testList')
+    cy.get('.test-table-list').then(($elements) => {
+      strings = [...$elements].map(($el) => $el.innerText)
+      expect(strings).to.deep.equal([...strings])
+      expect(strings.length).to.deep.equal(parseInt(value))
+    })
   })
   it('sort by name in ascending order ', () => {
     cy.visit('/sign-in')
