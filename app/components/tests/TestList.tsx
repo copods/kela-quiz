@@ -64,55 +64,53 @@ const TestList = ({ tests }: { tests: Array<Test> }) => {
           showSelected={false}
         />
       </div>
-      {tests?.length !== 0 ? (
-        <div className="flex max-h-83 flex-col rounded-lg shadow-table ">
-          <div className="rounded-b-0 flex items-center rounded-t-md border border-b-0 border-solid border-borderColor bg-tableHeader px-9 py-3 font-semibold ">
-            {showCheckBox && (
-              <div className=" w-1/12 pl-2.5">
-                <input type="checkbox"></input>
-              </div>
-            )}
-            <div className="w-1/12 pl-2.5 text-sm leading-5 text-gray-500">
-              S No.
+      {/* {tests?.length !== 0 ? ( */}
+      <div className="flex max-h-83 flex-col rounded-lg shadow-table ">
+        <div className="rounded-b-0 flex items-center rounded-t-md border border-b-0 border-solid border-borderColor bg-tableHeader px-9 py-3 font-semibold ">
+          {showCheckBox && (
+            <div className=" w-1/12 pl-2.5">
+              <input type="checkbox"></input>
             </div>
-            <div className="w-4/12 pl-3 text-sm leading-5 text-gray-500">
-              Test
-            </div>
-            <div className="w-2/12 text-sm leading-5 text-gray-500">
-              Sections
-            </div>
-            <div className="w-2/12 text-sm leading-5 text-gray-500">
-              Created on
-            </div>
-            <div className="w-3/12 text-sm leading-5 text-gray-500">
-              Created By
-            </div>
-            <div className="flex w-1/12 justify-end pr-4 text-sm leading-5 text-gray-500">
-              Actions
-            </div>
+          )}
+          <div className="w-1/12 pl-2.5 text-sm leading-5 text-gray-500">
+            S No.
           </div>
-          <div
-            id="test-list"
-            className="testList rounded-t-0 flex flex-1 flex-col overflow-auto rounded-md border-t-0 border-solid border-borderColor  "
-          >
-            {tests.map((test, i) => (
-              <TestTableItem
-                key={i}
-                id={test?.id}
-                index={i + 1}
-                totalCount={tests.length}
-                testName={test?.name}
-                createdAt={test?.createdAt}
-                createdBy={`${test?.createdBy?.firstName} ${test?.createdBy?.lastName}`}
-                sections={test?.sections}
-                showCheckBox={showCheckBox}
-              />
-            ))}
+          <div className="w-4/12 pl-3 text-sm leading-5 text-gray-500">
+            Test
+          </div>
+          <div className="w-2/12 text-sm leading-5 text-gray-500">Sections</div>
+          <div className="w-2/12 text-sm leading-5 text-gray-500">
+            Created on
+          </div>
+          <div className="w-3/12 text-sm leading-5 text-gray-500">
+            Created By
+          </div>
+          <div className="flex w-1/12 justify-end pr-4 text-sm leading-5 text-gray-500">
+            Actions
           </div>
         </div>
-      ) : (
+        <div
+          id="test-list"
+          className="testList rounded-t-0 flex flex-1 flex-col overflow-auto rounded-md border-t-0 border-solid border-borderColor  "
+        >
+          {tests.map((test, i) => (
+            <TestTableItem
+              key={i}
+              id={test?.id}
+              index={i + 1}
+              totalCount={tests.length}
+              testName={test?.name}
+              createdAt={test?.createdAt}
+              createdBy={`${test?.createdBy?.firstName} ${test?.createdBy?.lastName}`}
+              sections={test?.sections}
+              showCheckBox={showCheckBox}
+            />
+          ))}
+        </div>
+      </div>
+      {/* ) : (
         <div>No Test Found</div>
-      )}
+      )} */}
     </div>
   )
 }
