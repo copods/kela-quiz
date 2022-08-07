@@ -426,6 +426,7 @@ describe('Creating tests', () => {
 
     cy.location('pathname', { timeout: 100000 }).should('include', '/tests')
     // cy.get('#test-list')
+    cy.wait(2000)
     cy.get('.test-table-list')
       .last()
       .within(() => {
