@@ -1,23 +1,14 @@
 import { useLoaderData, useSubmit } from '@remix-run/react'
 
 function SectionDetails() {
-  const { section, candidateSection, candidateTest } = useLoaderData()
+  const { section, candidateSection } = useLoaderData()
   const submit = useSubmit()
   const startSection = async () => {
     //getting first test of this section
-    let firstQuestionId = null
-    for (let sec of candidateTest.sections) {
-      console.log('compare', sec, candidateSection)
-      if (sec.section.id == candidateSection.section.id) {
-        firstQuestionId = sec.questions[0].id
-      }
-    }
-    console.log('firstQuestionId', firstQuestionId)
 
     submit(
       {
         candidateSectionId: candidateSection.id,
-        firstQuestionId: firstQuestionId,
       },
       { method: 'post' }
     )

@@ -1,8 +1,8 @@
 import { useLoaderData } from '@remix-run/react'
 
 function Question() {
-  const { question, candidateTest } = useLoaderData()
-  console.log('aa', candidateTest)
+  const { question, section } = useLoaderData()
+  console.log(section)
   return (
     <form method="post" className="flex flex-wrap">
       <div
@@ -22,17 +22,31 @@ function Question() {
           value="prev"
           type="submit"
           className="rounded bg-primary px-7 py-2 text-white"
+          disabled={question.order == 1}
         >
           Prev
         </button>
-        <button
-          name="next"
-          value="next"
-          type="submit"
-          className="rounded bg-primary px-7 py-2 text-white"
-        >
-          Next
-        </button>
+        {question.order != section.totalQuestions ? (
+          <button
+            name="next"
+            value="next"
+            type="submit"
+            className="rounded bg-primary px-7 py-2 text-white"
+            disabled={question.order == section.totalQuestions}
+          >
+            Next
+          </button>
+        ) : (
+          <button
+            name="nextSection"
+            value={section.order}
+            type="submit"
+            className="rounded bg-primary px-7 py-2 text-white"
+            disabled={question.order != section.totalQuestions}
+          >
+            Next Section
+          </button>
+        )}
       </div>
     </form>
   )

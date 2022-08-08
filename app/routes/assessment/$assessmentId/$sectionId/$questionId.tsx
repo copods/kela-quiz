@@ -1,32 +1,70 @@
 import type { ActionFunction, LoaderFunction } from '@remix-run/server-runtime'
+import { redirect } from '@remix-run/server-runtime'
 import Question from '~/components/assessment/Question'
 import {
-  getCandidateTestForSideNav,
+  getOrderedSection,
+  getTestInstructionForCandidate,
+  getTestSectionDetails,
   skipAndNextQuestion,
   startAndGetQuestion,
+  updateNextCandidateStep,
 } from '~/models/candidate.server'
 
 export const loader: LoaderFunction = async ({ params, request }) => {
   const question = await startAndGetQuestion(params.questionId as string)
-  const candidateTest = await getCandidateTestForSideNav(
-    params.assessmentId as string
-  )
-  return { question, candidateTest }
+  const section = await getTestSectionDetails(params.sectionId as string)
+
+  return { question, section }
 }
 
 export const action: ActionFunction = async ({ params, request }) => {
   const formData = await request.formData()
-  console.log('params', params)
-  // need to write script for submiting answers
-  // currently it only has navigations
-  const next = await skipAndNextQuestion(
-    params.sectionId as string,
-    params.questionId as string
-  )
-  console.log('next', next)
+  const next = formData.get('next')
+  const previous = formData.get('previous')
+  const nextSection = formData.get('nextSection')
 
-  console.log(...formData)
-  return null
+  let nextQuestionId = null
+  if (next) {
+    // need to write script for submiting answers
+    // currently it only has navigations
+    nextQuestionId = await skipAndNextQuestion(
+      params.sectionId as string,
+      params.questionId as string,
+      'next'
+    )
+  }
+  if (previous) {
+    // need to write script for submiting answers
+    // currently it only has navigations
+    nextQuestionId = await skipAndNextQuestion(
+      params.sectionId as string,
+      params.questionId as string,
+      'prev'
+    )
+  }
+
+  if (nextSection) {
+    const candidateTest = await getTestInstructionForCandidate(
+      params.assessmentId as string
+    )
+    const nextSectionObject = await getOrderedSection(
+      candidateTest?.test.id as string,
+      parseInt(nextSection as string) + 1
+    )
+    await updateNextCandidateStep(params.assessmentId as string, {
+      nextRoute: 'section',
+      isSection: true,
+      currentSectionId: nextSectionObject?.id,
+    })
+
+    return redirect(
+      `/assessment/${params.assessmentId}/${nextSectionObject?.id}`
+    )
+  }
+
+  return redirect(
+    `/assessment/${params.assessmentId}/${params.sectionId}/${nextQuestionId}`
+  )
 }
 
 export default function AssessmentQuestionForSection() {

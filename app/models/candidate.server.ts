@@ -1,5 +1,5 @@
 import { prisma } from '~/db.server'
-import type { CandidateTest, Candidate, Test, Section, SectionInCandidateTest, CandidateQuestion } from '@prisma/client'
+import type { CandidateTest, Candidate, Test, Section, SectionInCandidateTest, CandidateQuestion, SectionInTest } from '@prisma/client'
 
 export async function checkIfTestLinkIsValid(id: CandidateTest['id']) {
   return await prisma.candidateTest.findUnique({
@@ -56,7 +56,8 @@ export async function getCandidateTestForSideNav(
           questions: {
             select: {
               id: true,
-              status: true
+              status: true,
+              order: true
             }
           },
           timeInCandidateQuestion: true,
@@ -129,7 +130,7 @@ export async function candidateTestStart(id: CandidateTest['id']) {
   })
 }
 
-export async function getOrderedSectionToStartAssessment(testId: Test['id'], order: number) {
+export async function getOrderedSection(testId: Test['id'], order: number) {
   return await prisma.sectionInTest.findFirst({
     where: { testId, order }
   })
@@ -143,6 +144,7 @@ export async function getTestSectionDetails(id: CandidateTest['id']) {
       id
     },
     select: {
+      order: true,
       section: true,
       sectionId: true,
       timeInSeconds: true,
@@ -182,7 +184,18 @@ export async function startCandidateSection(id: SectionInCandidateTest['id']) {
         id: true,
         startedAt: true,
         endAt: true,
-        sectionId: true
+        sectionId: true,
+        questions: {
+          where: {
+            order: 1
+          },
+          select: {
+            id: true,
+            selectedOptions: true,
+            answers: true,
+            answeredAt: true,
+          }
+        }
       }
     })
   } else {
@@ -197,27 +210,38 @@ export async function startCandidateSection(id: SectionInCandidateTest['id']) {
         id: true,
         startedAt: true,
         endAt: true,
-        sectionId: true
+        sectionId: true,
+        questions: {
+          where: {
+            order: 1
+          },
+          select: {
+            id: true,
+            selectedOptions: true,
+            answers: true,
+            answeredAt: true,
+          }
+        }
       }
     })
   }
 }
 
-async function getAllQuestions(sectionInCandidateTestId: SectionInCandidateTest['id']) {
-  return prisma.candidateQuestion.findMany({
-    where: { sectionInCandidateTestId },
-    select: {
-      id: true,
-      answeredAt: true,
-      status: true,
-      question: {
-        select: {
-          id: true
-        }
-      }
-    }
-  })
-}
+// async function getAllQuestions(sectionInCandidateTestId: SectionInCandidateTest['id']) {
+//   return prisma.candidateQuestion.findMany({
+//     where: { sectionInCandidateTestId },
+//     select: {
+//       id: true,
+//       answeredAt: true,
+//       status: true,
+//       question: {
+//         select: {
+//           id: true
+//         }
+//       }
+//     }
+//   })
+// }
 
 // export async function getFirstQuestionId(id: SectionInCandidateTest['id']) {
 //   const questions = await getAllQuestions(id)
@@ -232,6 +256,7 @@ export async function startAndGetQuestion(id: CandidateQuestion['id']) {
     },
     select: {
       id: true,
+      order: true,
       question: {
         select: {
           question: true,
@@ -251,31 +276,55 @@ export async function startAndGetQuestion(id: CandidateQuestion['id']) {
 }
 
 
-export async function skipAndNextQuestion(sectionId: SectionInCandidateTest['id'], currentQuestionId: CandidateQuestion['id']) {
-  const section = await prisma.sectionInCandidateTest.findFirst({
+export async function skipAndNextQuestion(sectionId: SectionInTest['id'], currentQuestionId: CandidateQuestion['id'], nextOrPrev: string) {
+
+  // write script for save question answer
+  // write script for last question
+
+  //getting currentQuestionOrder
+  const currentQuestion = await prisma.candidateQuestion.findFirst({
     where: {
-      section: {
-        sectionInCandidateTest: {
-          some: {
-            id: sectionId
-          }
-        }
-      }
+      id: currentQuestionId
+    },
+    select: {
+      sectionInCandidateTestId: true,
+      order: true
     }
   })
-  const questions = await getAllQuestions(section?.id as SectionInCandidateTest['id'])
-  console.log(questions)
-  // find current question index
-  let index = 0;
-  for (let i = 0; i < questions.length; i++) {
-    if (questions[i].id == currentQuestionId) {
-      index = i
-      break
+
+  //getting section to check last question
+  const section = await prisma.sectionInTest.findFirst({
+    where: {
+      id: sectionId
+    },
+    select: {
+      totalQuestions: true
     }
+  })
+
+  // checking first question
+  if (currentQuestion?.order == 1 && nextOrPrev == 'prev') {
+    return currentQuestionId
   }
-  console.log(index, questions.length)
-  if (index == questions.length) {
-    return 'gotoNextSection'
+  // checking last question
+  if (currentQuestion?.order == section?.totalQuestions && nextOrPrev == 'next') {
+    return currentQuestionId
   }
-  return questions[index + 1]
+
+  // getting nextQuestionId
+  const netxQuestion = await prisma.candidateQuestion.findFirst({
+    where: {
+      sectionInCandidateTestId: (currentQuestion?.sectionInCandidateTestId || ''),
+      order: (currentQuestion?.order || 0) + (nextOrPrev == 'next' ? 1 : -1)
+    },
+    select: {
+      id: true,
+      order: true
+    }
+  })
+  return netxQuestion?.id
 }
+
+// export async function getNextSection(sectionId: SectionInTest['id'], currentSectionOrder: number) {
+//   const section = await prisma.section
+// }
