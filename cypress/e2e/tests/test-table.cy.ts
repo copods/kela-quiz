@@ -138,8 +138,7 @@ describe('Visiting Tests', () => {
       .then(($ele) => {
         value = $ele[0].innerText.split(':')[1]
       })
-
-    // cy.get('#testList')
+    cy.wait(4000)
     cy.get('.test-list-container')
       .get('#test-list')
       .get('.test-table-list')
