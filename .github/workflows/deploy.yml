@@ -117,12 +117,12 @@ jobs:
       - name: 🌳 Cypress run
         uses: cypress-io/github-action@v4
         with:
-          start: npm run start:mocks
-          wait-on: 'http://localhost:8811'
           browser: chrome
           headed: true
+          start: npm run start:mocks
+          wait-on: 'http://localhost:8812'
         env:
-          PORT: '8811'
+          PORT: '8812'
 
   build:
     name: 🐳 Build
