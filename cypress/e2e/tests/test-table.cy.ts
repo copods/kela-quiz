@@ -140,7 +140,8 @@ describe('Visiting Tests', () => {
       })
 
     // cy.get('#testList')
-    cy.get('#test-list')
+    cy.get('.test-list-container')
+      .get('#test-list')
       .get('.test-table-list')
       .then(($elements) => {
         strings = [...$elements].map(($el) => $el.innerText)
