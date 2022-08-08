@@ -12,10 +12,9 @@ describe('Test for section-details', () => {
     cy.findByRole('button').click()
 
     cy.get('a').find('#Sections').should('have.text', 'Sections').click()
-    cy.location('pathname').should('include', '/sections')
-    cy.wait(60000)
+    cy.url().should('include','/sections')
+    // cy.location('pathname').should('include', '/sections')
     cy.get('header.flex > .text-3xl').should('have.text', 'Sections')
-    // cy.wait(60000)
     cy.get('#add-section').click()
     cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
     cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
