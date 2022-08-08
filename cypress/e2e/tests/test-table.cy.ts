@@ -138,7 +138,12 @@ describe('Visiting Tests', () => {
       .then(($ele) => {
         value = $ele[0].innerText.split(':')[1]
       })
-    cy.get('#test-list')
+    cy.get('a')
+      .find('#Tests', { timeout: 6000 })
+      .should('have.text', 'Tests')
+      .click()
+    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
+    cy.get('#test-list', { timeout: 6000 })
       .get('.text-primary')
       .then(($elements) => {
         strings = [...$elements].map(($el) => $el.innerText)

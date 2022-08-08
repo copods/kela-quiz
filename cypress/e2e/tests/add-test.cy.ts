@@ -434,6 +434,8 @@ describe('Creating tests', () => {
     cy.get('#test-list', { timeout: 6000 })
       .get('.text-primary')
       .last()
-      .should('have.text', testName)
+      .within(() => {
+        cy.get('.text-primary').should('have.text', testName)
+      })
   })
 })
