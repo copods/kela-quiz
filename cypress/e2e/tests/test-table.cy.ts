@@ -138,10 +138,8 @@ describe('Visiting Tests', () => {
       .then(($ele) => {
         value = $ele[0].innerText.split(':')[1]
       })
-    cy.wait(4000)
-    cy.get('.test-list-container', { timeout: 100000 })
-      .get('#test-list')
-      .get('.test-table-list')
+    cy.get('#test-list')
+      .get('.text-primary')
       .then(($elements) => {
         strings = [...$elements].map(($el) => $el.innerText)
         expect(strings).to.deep.equal([...strings])

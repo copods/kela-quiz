@@ -374,7 +374,7 @@ describe('Creating tests', () => {
 
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
   })
-
+  let testName: any
   it('Verify if user able create the test and navigate to test list page and see added test there', () => {
     cy.visit('/sign-in')
     cy.get('#email')
@@ -389,24 +389,20 @@ describe('Creating tests', () => {
 
     cy.get('a').find('#Tests').should('have.text', 'Tests').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-
     cy.get('#addTest').click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/tests/add-test'
     )
-
-    var testName = `Test - ${new Date().getTime()}`
+    testName = `Test - ${new Date().getTime()}`
     cy.get('#name').clear().type(testName)
     cy.get('#quillEditor').within(() => {
       cy.get('.ql-editor').type(`Test Description`)
     })
-
     cy.get('button#nextButton').should('have.text', 'Next').click()
     cy.get('#0').find('hr').should('have.class', 'bg-primary')
     cy.get('#1').find('hr').should('have.class', 'bg-primary')
-    // user reached to step 2
-
+    // // user reached to step 2
     cy.get('div#section')
       .first()
       .within(() => {
@@ -424,10 +420,7 @@ describe('Creating tests', () => {
     cy.get('#2').find('hr').should('have.class', 'bg-primary')
     cy.get('button#submitButton').should('have.text', 'Submit').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.wait(4000)
-    cy.get('.test-list-container', { timeout: 100000 })
-      .get('#test-list')
-      .get('.test-table-list')
+    cy.get('#test-list')
       .get('.text-primary')
       .last()
       .should('have.text', testName)
