@@ -105,7 +105,7 @@ model Option {
 
 model Test {
   id              String            @id @default(cuid())
-  name            String
+  name            String            @unique
   description     String
   sections        SectionInTest[]
   createdBy       User              @relation(fields: [createdById], references: [id])

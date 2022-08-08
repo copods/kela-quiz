@@ -389,6 +389,7 @@ describe('Creating tests', () => {
 
     cy.get('a').find('#Tests').should('have.text', 'Tests').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
+
     cy.get('#addTest').click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
