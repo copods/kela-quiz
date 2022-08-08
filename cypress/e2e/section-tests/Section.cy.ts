@@ -29,6 +29,7 @@ describe('Test for Section', () => {
 
     cy.get('a').find('#Sections').should('have.text', 'Sections').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
+    cy.log('' + document.getElementById('#add-section')?.innerHTML)
     cy.get('button#add-section', { timeout: 60000 }).click()
     const sectionName = `Aptitude - ${new Date().getTime()}`
     cy.get('form > div', { timeout: 10000 })
