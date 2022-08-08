@@ -13,11 +13,12 @@ describe('Test for section-details', () => {
 
     cy.get('a', { timeout: 60000 }).find('#Sections').should('have.text', 'Sections').click()
 
-    cy.visit('/section')
-
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
 
-    cy.get('#add-section', { withinSubject: null }).click()
+    cy.get('#add-section', { timeout: 10000 })
+      .should('be.visible')
+      .click()
+
     cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
     cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
     cy.get('textarea#sectionDescription').type(
