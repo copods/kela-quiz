@@ -58,7 +58,7 @@ export const testsConstants = {
   created: 'Created',
   actionsText: 'Actions',
 }
-export const componentFolderGlobalFiles = {
+export const componentGlobalConstants = {
   totalCounts: 'Total Counts',
   selected: 'Selected',
 }

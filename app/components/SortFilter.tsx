@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 import DropdownField from './form/Dropdown'
-import { componentFolderGlobalFiles } from '~/constants/common.constants'
+import { componentGlobalConstants } from '~/constants/common.constants'
 const SortFilter = ({
   filterData,
   sortDirection,
@@ -49,13 +49,13 @@ const SortFilter = ({
         id="total-items-value"
       >
         <span className="pr-3">
-          {componentFolderGlobalFiles.totalCounts}: {totalItems}
+          {componentGlobalConstants.totalCounts}: {totalItems}
         </span>
         {showSelected && (
           <>
             <Icon icon="ci:line-m" />
             <span className="pl-3 ">
-              {componentFolderGlobalFiles.selected}: 0/
+              {componentGlobalConstants.selected}: 0/
               {totalItems}
             </span>
           </>
