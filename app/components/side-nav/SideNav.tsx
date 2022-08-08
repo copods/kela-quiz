@@ -49,13 +49,14 @@ let sideNavGuide = [
     ],
   },
 ]
+const title = 'Quiz'
 
 function SideNav() {
   return (
     <div className="flex h-full flex-col justify-between overflow-auto p-5">
       <div>
         <div className="mb-14 px-1">
-          <Header />
+          <Header title={title} />
         </div>
         <div className="flex flex-col gap-8">
           {sideNavGuide.map((guide, index) => {
