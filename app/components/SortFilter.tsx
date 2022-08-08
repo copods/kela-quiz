@@ -26,6 +26,9 @@ const SortFilter = ({
             tabIndex={0}
             id="ascend"
             icon="ph:sort-ascending-bold"
+            onKeyUp={(e) => {
+              if (e.key === 'Enter') onSortDirectionChange('desc')
+            }}
             onClick={() => onSortDirectionChange('desc')}
             className="cursor-pointer text-2xl"
           />
@@ -34,6 +37,9 @@ const SortFilter = ({
             tabIndex={0}
             id="descend"
             icon="ph:sort-descending-bold"
+            onKeyUp={(e) => {
+              if (e.key === 'Enter') onSortDirectionChange('asc')
+            }}
             onClick={() => onSortDirectionChange('asc')}
             className="cursor-pointer text-2xl"
           />

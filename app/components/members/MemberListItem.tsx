@@ -56,6 +56,9 @@ export default function MemberListItem({
         </div>
         <div className="col-span-1">
           <button
+            onKeyUp={(e) => {
+              if (e.key === 'Enter') openPopUp()
+            }}
             id="deleteButton"
             tabIndex={0}
             name="deleteMember"

@@ -1,5 +1,6 @@
 import { Icon } from '@iconify/react'
 import moment from 'moment'
+import { useEffect } from 'react'
 
 const SectionCard = ({
   name,
@@ -14,6 +15,14 @@ const SectionCard = ({
   createdBy: string
   createdAt: string
 }) => {
+  // shift + alt + Tab combination key for get back focus to selected section card
+  useEffect(() => {
+    window.addEventListener('keydown', function (event) {
+      if (event.shiftKey && event.altKey && event.key === 'Tab') {
+        window.location.href = '#section-card'
+      }
+    })
+  }, [])
   return (
     <div
       className={`flex flex-col gap-2 rounded-lg p-6 ${

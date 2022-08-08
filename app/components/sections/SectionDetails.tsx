@@ -1,6 +1,6 @@
 import { useLoaderData } from '@remix-run/react'
 import { Link } from '@remix-run/react'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import type { Question } from '~/interface/Interface'
 import QuestionCard from './QuestionCard'
 
@@ -8,14 +8,13 @@ const SectionDetails = () => {
   const sectionDetails = useLoaderData()
   const [currentAccordian, setCurrentAccordian] = useState(-1)
   const [searchText, setSearchText] = useState('')
-  useEffect(() => {
-    window.addEventListener('keydown', function (event) {
-      if (event.shiftKey && event.altKey) {
-        window.location.href = '#sectionSearch'
-        console.log(window.Location)
-      }
-    })
-  }, [])
+  // useEffect(() => {
+  //   window.addEventListener('keydown', function (event) {
+  //     if (event.shiftKey && event.altKey) {
+  //       window.location.href = '#sectionSearch'
+  //     }
+  //   })
+  // }, [])
 
   return (
     <div className="flex h-full w-full flex-col gap-6 overflow-auto break-all rounded-lg border border-gray-200 bg-white px-9 py-6">
