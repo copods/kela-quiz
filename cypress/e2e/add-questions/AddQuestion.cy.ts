@@ -13,17 +13,17 @@ describe('Test for section-details', () => {
 
     cy.get('a', { timeout: 60000 }).find('#Sections').should('have.text', 'Sections').click()
 
-    // cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
+    cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
 
-    cy.get('#add-section', { timeout: 60000 }).click()
-    cy.get('.addSectionDilog', { timeout: 60000 }).should('be.visible')
-    cy.get('input#sectionName', { timeout: 60000 }).type(`Aptitude - ${new Date().getTime()}`)
-    cy.get('textarea#sectionDescription', { timeout: 60000 }).type(
+    cy.get('#add-section', { withinSubject: null }).click()
+    cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
+    cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
+    cy.get('textarea#sectionDescription').type(
       `Aptitude - ${new Date().getTime()} Description`
     )
-    cy.get('button#submitButton', { timeout: 60000 }).should('have.text', 'Add').click()
-    cy.get('#section-card', { timeout: 60000 }).first().click()
-    cy.get('#addQuestion', { timeout: 60000 }).click()
+    cy.get('button#submitButton').should('have.text', 'Add').click()
+    cy.get('#section-card').first().click()
+    cy.get('#addQuestion').click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -32,166 +32,166 @@ describe('Test for section-details', () => {
 
   it.skip('Test for adding new section', () => {
     cy.visit('/sign-in')
-    cy.get('#email', { timeout: 60000 })
+    cy.get('#email')
       .clear()
       .type('careers@copods.co')
       .should('have.value', 'careers@copods.co')
-    cy.get('#password', { timeout: 60000 })
+    cy.get('#password')
       .clear()
       .type('kQuiz@copods')
       .should('have.value', 'kQuiz@copods')
     cy.findByRole('button').click()
 
-    cy.get('a', { timeout: 60000 }).find('#Sections').should('have.text', 'Sections').click()
+    cy.get('a').find('#Sections').should('have.text', 'Sections').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
-    cy.get('#add-section', { timeout: 60000 }).click()
-    cy.get('.addSectionDilog', { timeout: 60000 }).should('be.visible')
-    cy.get('input#sectionName', { timeout: 60000 }).type(`Aptitude - ${new Date().getTime()}`)
-    cy.get('textarea#sectionDescription', { timeout: 60000 }).type(
+    cy.get('#add-section').click()
+    cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
+    cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
+    cy.get('textarea#sectionDescription').type(
       `Aptitude - ${new Date().getTime()} Description`
     )
-    cy.get('button#submitButton', { timeout: 60000 }).should('have.text', 'Add').click()
-    cy.get('#section-card', { timeout: 60000 }).first().click()
-    cy.get('#addQuestion', { timeout: 60000 }).should('have.text', '+ Add Question').click()
+    cy.get('button#submitButton').should('have.text', 'Add').click()
+    cy.get('#section-card').first().click()
+    cy.get('#addQuestion').should('have.text', '+ Add Question').click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
     )
-    cy.get('#Section', { timeout: 60000 }).should('have.text', 'Section').click()
+    cy.get('#Section').should('have.text', 'Section').click()
     cy.location('pathname', { timeout: 6000 }).should('include', '/sections')
   })
 
   it.skip('Test for valid error message while adding new section without Title', () => {
     cy.visit('/sign-in')
-    cy.get('#email', { timeout: 60000 })
+    cy.get('#email')
       .clear()
       .type('careers@copods.co')
       .should('have.value', 'careers@copods.co')
-    cy.get('#password', { timeout: 60000 })
+    cy.get('#password')
       .clear()
       .type('kQuiz@copods')
       .should('have.value', 'kQuiz@copods')
-    cy.findByRole('button', { timeout: 60000 }).click()
+    cy.findByRole('button').click()
 
-    cy.get('a').find('#Sections', { timeout: 60000 }).should('have.text', 'Sections').click()
+    cy.get('a').find('#Sections').should('have.text', 'Sections').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
-    cy.get('#add-section', { timeout: 60000 }).click()
-    cy.get('.addSectionDilog', { timeout: 60000 }).should('be.visible')
+    cy.get('#add-section').click()
+    cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
 
-    cy.get('#submitButton', { timeout: 60000 }).click()
-    cy.get('.Toastify__toast', { timeout: 60000 }).should('have.text', 'Name is required')
+    cy.get('#submitButton').click()
+    cy.get('.Toastify__toast').should('have.text', 'Name is required')
   })
 
   it.skip('Test for valid error message while adding new section without Description', () => {
     cy.visit('/sign-in')
-    cy.get('#email', { timeout: 60000 })
+    cy.get('#email')
       .clear()
       .type('careers@copods.co')
       .should('have.value', 'careers@copods.co')
-    cy.get('#password', { timeout: 60000 })
+    cy.get('#password')
       .clear()
       .type('kQuiz@copods')
       .should('have.value', 'kQuiz@copods')
-    cy.findByRole('button', { timeout: 60000 }).click()
+    cy.findByRole('button').click()
 
-    cy.get('a', { timeout: 60000 }).find('#Sections').should('have.text', 'Sections').click()
+    cy.get('a').find('#Sections').should('have.text', 'Sections').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
-    cy.get('#add-section', { timeout: 60000 }).click()
-    cy.get('.addSectionDilog', { timeout: 60000 }).should('be.visible')
-    cy.get('input#sectionName', { timeout: 60000 }).type(`Aptitude - ${new Date().getTime()}`)
-    cy.get('#submitButton', { timeout: 60000 }).click()
-    cy.get('.Toastify__toast', { timeout: 60000 }).should('have.text', 'Description is required')
+    cy.get('#add-section').click()
+    cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
+    cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
+    cy.get('#submitButton').click()
+    cy.get('.Toastify__toast').should('have.text', 'Description is required')
   })
 
   it.skip('Test for valid error message while adding new section with duplicate Title', () => {
     cy.visit('/sign-in')
-    cy.get('#email', { timeout: 60000 })
+    cy.get('#email')
       .clear()
       .type('careers@copods.co')
       .should('have.value', 'careers@copods.co')
-    cy.get('#password', { timeout: 60000 })
+    cy.get('#password')
       .clear()
       .type('kQuiz@copods')
       .should('have.value', 'kQuiz@copods')
-    cy.findByRole('button', { timeout: 60000 }).click()
+    cy.findByRole('button').click()
 
-    cy.get('a', { timeout: 60000 }).find('#Sections').should('have.text', 'Sections').click()
+    cy.get('a').find('#Sections').should('have.text', 'Sections').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
-    cy.get('#add-section', { timeout: 60000 }).click()
-    cy.get('.addSectionDilog', { timeout: 60000 }).should('be.visible')
-    cy.get('input#sectionName', { timeout: 60000 }).type('Aptitude')
+    cy.get('#add-section').click()
+    cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
+    cy.get('input#sectionName').type('Aptitude')
     cy.get('textarea#sectionDescription').type(
       `Aptitude - ${new Date().getTime()} Description`
     )
-    cy.get('#submitButton', { timeout: 60000 }).click()
-    cy.get('.Toastify__toast', { timeout: 60000 }).should('have.text', 'Duplicate Title')
+    cy.get('#submitButton').click()
+    cy.get('.Toastify__toast').should('have.text', 'Duplicate Title')
   })
 
   it.skip('Visiting the Same section which created', () => {
     cy.visit('/sign-in')
-    cy.get('#email', { timeout: 60000 })
+    cy.get('#email')
       .clear()
       .type('careers@copods.co')
       .should('have.value', 'careers@copods.co')
-    cy.get('#password', { timeout: 60000 })
+    cy.get('#password')
       .clear()
       .type('kQuiz@copods')
       .should('have.value', 'kQuiz@copods')
-    cy.findByRole('button', { timeout: 60000 }).click()
+    cy.findByRole('button').click()
 
-    cy.get('a', { timeout: 60000 }).find('#Sections').should('have.text', 'Sections').click()
+    cy.get('a').find('#Sections').should('have.text', 'Sections').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
-    cy.get('#add-section', { timeout: 60000 }).click()
-    cy.get('.addSectionDilog', { timeout: 60000 }).should('be.visible')
-    cy.get('input#sectionName', { timeout: 60000 }).type(`Aptitude - ${new Date().getTime()}`)
-    cy.get('textarea#sectionDescription', { timeout: 60000 }).type(
+    cy.get('#add-section').click()
+    cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
+    cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
+    cy.get('textarea#sectionDescription').type(
       `Aptitude - ${new Date().getTime()} Description`
     )
-    cy.get('button#submitButton', { timeout: 60000 }).should('have.text', 'Add').click()
-    cy.get('#section-card', { timeout: 60000 }).first().click()
-    cy.get('#addQuestion', { timeout: 60000 }).should('have.text', '+ Add Question').click()
+    cy.get('button#submitButton').should('have.text', 'Add').click()
+    cy.get('#section-card').first().click()
+    cy.get('#addQuestion').should('have.text', '+ Add Question').click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
     )
-    cy.get('.Toastify__close-button', { timeout: 60000 }).click()
-    cy.get('#Question', { timeout: 60000 }).should('have.text', 'Question').click()
+    cy.get('.Toastify__close-button').click()
+    cy.get('#Question').should('have.text', 'Question').click()
     cy.wait(2000)
-    cy.get('a > div', { timeout: 60000 }).should('have.class', 'border-l-8')
+    cy.get('a > div').should('have.class', 'border-l-8')
   })
 
   it.skip('Verifying MCQ to have Check Box in options', () => {
     cy.visit('/sign-in')
-    cy.get('#email', { timeout: 60000 })
+    cy.get('#email')
       .clear()
       .type('careers@copods.co')
       .should('have.value', 'careers@copods.co')
-    cy.get('#password', { timeout: 60000 })
+    cy.get('#password')
       .clear()
       .type('kQuiz@copods')
       .should('have.value', 'kQuiz@copods')
-    cy.findByRole('button', { timeout: 60000 }).click()
+    cy.findByRole('button').click()
 
-    cy.get('a', { timeout: 60000 }).find('#Sections').should('have.text', 'Sections').click()
+    cy.get('a').find('#Sections').should('have.text', 'Sections').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
-    cy.get('#add-section', { timeout: 60000 }).click()
-    cy.get('.addSectionDilog', { timeout: 60000 }).should('be.visible')
-    cy.get('input#sectionName', { timeout: 60000 }).type(`Aptitude - ${new Date().getTime()}`)
-    cy.get('textarea#sectionDescription', { timeout: 60000 }).type(
+    cy.get('#add-section').click()
+    cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
+    cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
+    cy.get('textarea#sectionDescription').type(
       `Aptitude - ${new Date().getTime()} Description`
     )
-    cy.get('button#submitButton', { timeout: 60000 }).should('have.text', 'Add').click()
-    cy.get('#section-card', { timeout: 60000 }).first().click()
-    cy.get('#addQuestion', { timeout: 60000 }).should('have.text', '+ Add Question').click()
+    cy.get('button#submitButton').should('have.text', 'Add').click()
+    cy.get('#section-card').first().click()
+    cy.get('#addQuestion').should('have.text', '+ Add Question').click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
     )
-    cy.get('h1', { timeout: 60000 }).wait(2000)
-    cy.get('#dropdown > button', { timeout: 60000 }).click()
+    cy.get('h1').wait(2000)
+    cy.get('#dropdown > button').click()
 
     let flag = ''
-    cy.get('ul[role="listbox"]', { timeout: 60000 }).within(() => {
+    cy.get('ul[role="listbox"]').within(() => {
       cy.get('li').within(() => {
         cy.get('div').then((el) => {
           ;[...el].map((el) => {
@@ -209,48 +209,48 @@ describe('Test for section-details', () => {
       })
     })
     if (flag === 'CheckBox') {
-      cy.get('input[type="checkbox"]', { timeout: 60000 })
+      cy.get('input[type="checkbox"]')
     } else if (flag === 'RadioButton') {
-      cy.get('input[type="radioButton"]', { timeout: 60000 })
+      cy.get('input[type="radioButton"]')
     } else if (flag === 'TextArea') {
-      cy.get('input[type="textarea"]', { timeout: 60000 })
+      cy.get('input[type="textarea"]')
     }
   })
 
   it.skip('Verifying Single Choice to have Radio Button in options', () => {
     cy.visit('/sign-in')
-    cy.get('#email', { timeout: 60000 })
+    cy.get('#email')
       .clear()
       .type('careers@copods.co')
       .should('have.value', 'careers@copods.co')
-    cy.get('#password', { timeout: 60000 })
+    cy.get('#password')
       .clear()
       .type('kQuiz@copods')
       .should('have.value', 'kQuiz@copods')
-    cy.findByRole('button', { timeout: 60000 }).click()
+    cy.findByRole('button').click()
 
-    cy.get('a', { timeout: 60000 }).find('#Sections').should('have.text', 'Sections').click()
+    cy.get('a').find('#Sections').should('have.text', 'Sections').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
-    cy.get('#add-section', { timeout: 60000 }).click()
-    cy.get('.addSectionDilog', { timeout: 60000 }).should('be.visible')
-    cy.get('input#sectionName', { timeout: 60000 }).type(`Aptitude - ${new Date().getTime()}`)
+    cy.get('#add-section').click()
+    cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
+    cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
     cy.get('textarea#sectionDescription').type(
       `Aptitude - ${new Date().getTime()} Description`
     )
-    cy.get('button#submitButton', { timeout: 60000 }).should('have.text', 'Add').click()
-    cy.get('#section-card', { timeout: 60000 }).first().click()
-    cy.get('#addQuestion', { timeout: 60000 }).should('have.text', '+ Add Question').click()
+    cy.get('button#submitButton').should('have.text', 'Add').click()
+    cy.get('#section-card').first().click()
+    cy.get('#addQuestion').should('have.text', '+ Add Question').click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
     )
-    cy.get('h1', { timeout: 60000 }).wait(2000)
-    cy.get('#dropdown > button', { timeout: 60000 }).click()
+    cy.get('h1').wait(2000)
+    cy.get('#dropdown > button').click()
 
     let flag = ''
-    cy.get('ul', { timeout: 60000 }).within(() => {
-      cy.get('li', { timeout: 60000 }).within(() => {
-        cy.get('div', { timeout: 60000 }).then((el) => {
+    cy.get('ul').within(() => {
+      cy.get('li').within(() => {
+        cy.get('div').then((el) => {
           ;[...el].map((el) => {
             if (el.innerText === 'Multiple Choice') {
               flag = 'CheckBox'
@@ -266,48 +266,48 @@ describe('Test for section-details', () => {
       })
     })
     if (flag === 'CheckBox') {
-      cy.get('input[type="checkbox"]', { timeout: 60000 })
+      cy.get('input[type="checkbox"]')
     } else if (flag === 'RadioButton') {
-      cy.get('input[type="radioButton"]', { timeout: 60000 })
+      cy.get('input[type="radioButton"]')
     } else if (flag === 'TextArea') {
-      cy.get('input[type="textarea"]', { timeout: 60000 })
+      cy.get('input[type="textarea"]')
     }
   })
 
   it.skip('Verifying Text to have Textarea in options', () => {
     cy.visit('/sign-in')
-    cy.get('#email', { timeout: 60000 })
+    cy.get('#email')
       .clear()
       .type('careers@copods.co')
       .should('have.value', 'careers@copods.co')
-    cy.get('#password', { timeout: 60000 })
+    cy.get('#password')
       .clear()
       .type('kQuiz@copods')
       .should('have.value', 'kQuiz@copods')
-    cy.findByRole('button', { timeout: 60000 }).click()
+    cy.findByRole('button').click()
 
-    cy.get('a', { timeout: 60000 }).find('#Sections').should('have.text', 'Sections').click()
+    cy.get('a').find('#Sections').should('have.text', 'Sections').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
-    cy.get('#add-section', { timeout: 60000 }).click()
-    cy.get('.addSectionDilog', { timeout: 60000 }).should('be.visible')
-    cy.get('input#sectionName', { timeout: 60000 }).type(`Aptitude - ${new Date().getTime()}`)
-    cy.get('textarea#sectionDescription', { timeout: 60000 }).type(
+    cy.get('#add-section').click()
+    cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
+    cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
+    cy.get('textarea#sectionDescription').type(
       `Aptitude - ${new Date().getTime()} Description`
     )
-    cy.get('button#submitButton', { timeout: 60000 }).should('have.text', 'Add').click()
-    cy.get('#section-card', { timeout: 60000 }).first().click()
-    cy.get('#addQuestion', { timeout: 60000 }).should('have.text', '+ Add Question').click()
+    cy.get('button#submitButton').should('have.text', 'Add').click()
+    cy.get('#section-card').first().click()
+    cy.get('#addQuestion').should('have.text', '+ Add Question').click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
     )
-    cy.get('h1', { timeout: 60000 }).wait(2000)
-    cy.get('#dropdown > button', { timeout: 60000 }).click()
+    cy.get('h1').wait(2000)
+    cy.get('#dropdown > button').click()
 
     let flag = ''
-    cy.get('ul', { timeout: 60000 }).within(() => {
-      cy.get('li', { timeout: 60000 }).within(() => {
-        cy.get('div', { timeout: 60000 }).then((el) => {
+    cy.get('ul').within(() => {
+      cy.get('li').within(() => {
+        cy.get('div').then((el) => {
           ;[...el].map((el) => {
             if (el.innerText === 'Multiple Choice') {
               flag = 'CheckBox'
@@ -348,7 +348,7 @@ describe('Test for section-details', () => {
     cy.get('a').find('#Sections').should('have.text', 'Sections').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('#add-section').click()
-    cy.get('.addSectionDilog', { timeout: 60000 }).should('be.visible')
+    cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
     cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
     cy.get('textarea#sectionDescription').type(
       `Aptitude - ${new Date().getTime()} Description`
@@ -406,7 +406,7 @@ describe('Test for section-details', () => {
     cy.get('a').find('#Sections').should('have.text', 'Sections').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('#add-section').click()
-    cy.get('.addSectionDilog', { timeout: 60000 }).should('be.visible')
+    cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
     cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
     cy.get('textarea#sectionDescription').type(
       `Aptitude - ${new Date().getTime()} Description`
@@ -464,7 +464,7 @@ describe('Test for section-details', () => {
     cy.get('a').find('#Sections').should('have.text', 'Sections').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('#add-section').click()
-    cy.get('.addSectionDilog', { timeout: 60000 }).should('be.visible')
+    cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
     cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
     cy.get('textarea#sectionDescription').type(
       `Aptitude - ${new Date().getTime()} Description`
@@ -499,7 +499,7 @@ describe('Test for section-details', () => {
     cy.get('a').find('#Sections').should('have.text', 'Sections').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('#add-section').click()
-    cy.get('.addSectionDilog', { timeout: 60000 }).should('be.visible')
+    cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
     cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
     cy.get('textarea#sectionDescription').type(
       `Aptitude - ${new Date().getTime()} Description`
@@ -531,7 +531,7 @@ describe('Test for section-details', () => {
     cy.get('a').find('#Sections').should('have.text', 'Sections').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('#add-section').click()
-    cy.get('.addSectionDilog', { timeout: 60000 }).should('be.visible')
+    cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
     cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
     cy.get('textarea#sectionDescription').type(
       `Aptitude - ${new Date().getTime()} Description`
@@ -566,7 +566,7 @@ describe('Test for section-details', () => {
     cy.get('a').find('#Sections').should('have.text', 'Sections').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('#add-section').click()
-    cy.get('.addSectionDilog', { timeout: 60000 }).should('be.visible')
+    cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
     cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
     cy.get('textarea#sectionDescription').type(
       `Aptitude - ${new Date().getTime()} Description`
