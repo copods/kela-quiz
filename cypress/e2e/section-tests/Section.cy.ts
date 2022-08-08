@@ -29,7 +29,7 @@ describe('Test for Section', () => {
 
     cy.get('a').find('#Sections').should('have.text', 'Sections').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
-    cy.get('#add-section', { timeout: 60000 }).click()
+    cy.get('button#add-section', { timeout: 60000 }).click()
     const sectionName = `Aptitude - ${new Date().getTime()}`
     cy.get('form > div', { timeout: 10000 })
       .should('be.visible')
@@ -38,6 +38,7 @@ describe('Test for Section', () => {
         cy.get('textarea').type('Aptitude')
         cy.get("button[type='submit']", { timeout: 10000 }).click()
       })
+    cy.wait(3000)
     cy.get('.border-l-8', { timeout: 60000 })
       .find('h2')
       .invoke('text')
