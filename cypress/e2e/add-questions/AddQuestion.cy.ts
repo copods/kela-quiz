@@ -10,12 +10,11 @@ describe('Test for section-details', () => {
       .type('kQuiz@copods')
       .should('have.value', 'kQuiz@copods')
     cy.findByRole('button').click()
-
+    cy.wait(6000)
     cy.get('a').find('#Sections',{timeout:6000}).should('have.text', 'Sections').click()
     // cy.url().should('include','/sections')
-    cy.wait(6000)
      cy.location('pathname',{timeout:6000}).should('include', '/sections')
-     cy.wait(6000)
+      cy.wait(6000)
     // cy.get('header.flex > .text-3xl').should('have.text', 'Sections')
     cy.get('#add-section').click()
     cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
@@ -43,10 +42,12 @@ describe('Test for section-details', () => {
       .type('kQuiz@copods')
       .should('have.value', 'kQuiz@copods')
     cy.findByRole('button').click()
+    cy.wait(4000)
 
     cy.get('a').find('#Sections').should('have.text', 'Sections').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
-    cy.get('.px-5').click()
+    cy.wait(4000)
+    cy.get('#add-section').click()
     cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
     cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
     cy.get('textarea#sectionDescription').type(

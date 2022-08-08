@@ -128,7 +128,7 @@ export default function SectionPage() {
   const [order, setOrder] = useState('asc')
   const [sortBy, setSortBy] = useState(sortByDetails[1].value)
   const [selectedSection, setSelectedSection] = useState(
-    data.selectedSectionId || data.sections[0].id || 'NA'
+    data.selectedSectionId || data.sections[0]?.id || 'NA'
   )
   const toastId = 'toastId'
 
