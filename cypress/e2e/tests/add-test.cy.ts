@@ -425,7 +425,7 @@ describe('Creating tests', () => {
     cy.get('button#submitButton').should('have.text', 'Submit').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.wait(4000)
-    cy.get('.test-list-container')
+    cy.get('.test-list-container', { timeout: 100000 })
       .get('#test-list')
       .get('.test-table-list')
       .get('.text-primary')

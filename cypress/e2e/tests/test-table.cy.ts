@@ -139,7 +139,7 @@ describe('Visiting Tests', () => {
         value = $ele[0].innerText.split(':')[1]
       })
     cy.wait(4000)
-    cy.get('.test-list-container')
+    cy.get('.test-list-container', { timeout: 100000 })
       .get('#test-list')
       .get('.test-table-list')
       .then(($elements) => {
