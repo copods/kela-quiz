@@ -12,8 +12,8 @@ describe('Test for section-details', () => {
     cy.findByRole('button').click()
 
     cy.get('a').find('#Sections').should('have.text', 'Sections').click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
-    cy.wait(4000)
+    cy.location('pathname').should('include', '/sections')
+    cy.wait(6000)
     cy.get('#add-section').click()
     cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
     cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
