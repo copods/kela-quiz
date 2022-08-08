@@ -13,7 +13,9 @@ describe('Test for section-details', () => {
 
     cy.get('a').find('#Sections').should('have.text', 'Sections').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
+    alert("hey")
     console.log("Add-Section", document.getElementById('#add-section'))
+    cy.wait(10000)
     cy.get('#add-section').click()
     cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
     cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
