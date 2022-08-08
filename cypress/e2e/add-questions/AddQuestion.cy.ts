@@ -15,7 +15,7 @@ describe('Test for section-details', () => {
 
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
 
-    cy.get('#add-section', { timeout: 10000 })
+    cy.get('.add-section', { timeout: 10000 })
       .should('be.visible')
       .click()
 
