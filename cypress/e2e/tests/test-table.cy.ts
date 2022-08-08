@@ -360,12 +360,6 @@ describe('Visiting Tests', () => {
     cy.get('#vertical-icon', { timeout: 60000 }).click()
     cy.get('.delete-test').click()
     cy.get('.confirm-delete').click()
-    cy.get('a')
-      .find('#Tests', { timeout: 6000 })
-      .should('have.text', 'Tests')
-      .click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.wait(4000)
     cy.get('#test-table-list').each((item) => {
       cy.contains(deletedItem).should('not.exist')
     })
