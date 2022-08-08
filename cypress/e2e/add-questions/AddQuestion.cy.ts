@@ -1,5 +1,5 @@
 describe('Test for section-details', () => {
-   it('Visiting section-details  Page', () => {
+  it('Visiting section-details  Page', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -14,8 +14,6 @@ describe('Test for section-details', () => {
     cy.get('a').find('#Sections').should('have.text', 'Sections').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     alert("hey")
-    console.log("Add-Section", document.getElementById('#add-section'))
-    cy.wait(10000)
     cy.get('#add-section').click()
     cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
     cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
@@ -31,7 +29,7 @@ describe('Test for section-details', () => {
     )
   })
 
-   it('Test for adding new section', () => {
+  it('Test for adding new section', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -128,7 +126,7 @@ describe('Test for section-details', () => {
     cy.get('.Toastify__toast').should('have.text', 'Duplicate Title')
   })
 
-   it('Visiting the Same section which created', () => {
+  it('Visiting the Same section which created', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -161,7 +159,7 @@ describe('Test for section-details', () => {
     cy.get('a > div').should('have.class', 'border-l-8')
   })
 
-   it('Verifying MCQ to have Check Box in options', () => {
+  it('Verifying MCQ to have Check Box in options', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -218,7 +216,7 @@ describe('Test for section-details', () => {
     }
   })
 
-   it('Verifying Single Choice to have Radio Button in options', () => {
+  it('Verifying Single Choice to have Radio Button in options', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -275,7 +273,7 @@ describe('Test for section-details', () => {
     }
   })
 
-   it('Verifying Text to have Textarea in options', () => {
+  it('Verifying Text to have Textarea in options', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -334,7 +332,7 @@ describe('Test for section-details', () => {
 
   let lengthBefore: number
 
-   it('Verifying if Add Option functionality Working on Options', () => {
+  it('Verifying if Add Option functionality Working on Options', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -392,7 +390,7 @@ describe('Test for section-details', () => {
     })
   })
 
-   it('Verifying if Delete functionality Working on Options', () => {
+  it('Verifying if Delete functionality Working on Options', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -450,7 +448,7 @@ describe('Test for section-details', () => {
     })
   })
 
-   it('On Save and Add More visit the Add Question Page', () => {
+  it('On Save and Add More visit the Add Question Page', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -485,7 +483,7 @@ describe('Test for section-details', () => {
     )
   })
 
-   it('On Save and Continue visit the Sections Page', () => {
+  it('On Save and Continue visit the Sections Page', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -517,7 +515,7 @@ describe('Test for section-details', () => {
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
   })
 
-   it('Verifying if Question is Empty or not', () => {
+  it('Verifying if Question is Empty or not', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -552,7 +550,7 @@ describe('Test for section-details', () => {
     cy.get('.Toastify__toast').should('have.text', 'Enter the Question')
   })
 
-   it('Verifying if any Option is empty or not', () => {
+  it('Verifying if any Option is empty or not', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
