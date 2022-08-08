@@ -143,6 +143,7 @@ describe('Visiting Tests', () => {
       .should('have.text', 'Tests')
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
+    cy.wait(4000)
     cy.get('#test-list', { timeout: 6000 })
       .get('.text-primary')
       .then(($elements) => {
