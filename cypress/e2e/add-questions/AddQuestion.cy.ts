@@ -1,3 +1,5 @@
+const duplicateTitle = `Aptitude - ${new Date().getTime()}`;
+
 describe('Test for section-details', () => {
   it('Visiting section-details  Page', () => {
     cy.visit('/sign-in')
@@ -23,6 +25,7 @@ describe('Test for section-details', () => {
       `Aptitude - ${new Date().getTime()} Description`
     )
     cy.get('button#submitButton').should('have.text', 'Add').click()
+    cy.wait(4000)
     cy.get('#section-card').first().click()
     cy.get('#addQuestion').click()
     cy.location('pathname', { timeout: 60000 }).should(
@@ -122,12 +125,23 @@ describe('Test for section-details', () => {
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('#add-section').click()
     cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
-    cy.get('input#sectionName').type('Aptitude')
+    cy.get('input#sectionName').type(duplicateTitle)
+    cy.get('textarea#sectionDescription').type(
+      `Aptitude - ${new Date().getTime()} Description`
+    )
+    cy.get('#submitButton').click()
+    cy.get('.Toastify__toast').should('have.text', 'Section added successfully..!')
+    cy.get('.Toastify__close-button').click()
+
+    cy.get('#add-section').click()
+    cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
+    cy.get('input#sectionName').type(duplicateTitle)
     cy.get('textarea#sectionDescription').type(
       `Aptitude - ${new Date().getTime()} Description`
     )
     cy.get('#submitButton').click()
     cy.get('.Toastify__toast').should('have.text', 'Duplicate Title')
+    cy.get('.Toastify__close-button').click()
   })
 
   it('Visiting the Same section which created', () => {
