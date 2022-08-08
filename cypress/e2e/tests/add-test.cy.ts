@@ -422,11 +422,8 @@ describe('Creating tests', () => {
     cy.get('#0').find('hr').should('have.class', 'bg-primary')
     cy.get('#1').find('hr').should('have.class', 'bg-primary')
     cy.get('#2').find('hr').should('have.class', 'bg-primary')
-
     cy.get('button#submitButton').should('have.text', 'Submit').click()
-
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    // cy.get('#test-list')
     cy.get('#test-list')
       .get('.test-table-list')
       .last()
