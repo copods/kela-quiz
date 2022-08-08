@@ -425,7 +425,7 @@ describe('Creating tests', () => {
     cy.get('button#submitButton').should('have.text', 'Submit').click()
 
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-
+    cy.log('cypress test')
     cy.get('#testList')
       .get('.border-gray-200')
       .last()
