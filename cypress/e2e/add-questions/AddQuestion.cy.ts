@@ -59,6 +59,72 @@ describe('Test for section-details', () => {
     cy.location('pathname', { timeout: 6000 }).should('include', '/sections')
   })
 
+  it('Test for valid error message while adding new section without Title', () => {
+    cy.visit('/sign-in')
+    cy.get('#email')
+      .clear()
+      .type('careers@copods.co')
+      .should('have.value', 'careers@copods.co')
+    cy.get('#password')
+      .clear()
+      .type('kQuiz@copods')
+      .should('have.value', 'kQuiz@copods')
+    cy.findByRole('button').click()
+
+    cy.get('a').find('#Sections').should('have.text', 'Sections').click()
+    cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
+    cy.get('#add-section').click()
+    cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
+
+    cy.get('#submitButton').click()
+    cy.get('.Toastify__toast').should('have.text', 'Name is required')
+  })
+
+  it('Test for valid error message while adding new section without Description', () => {
+    cy.visit('/sign-in')
+    cy.get('#email')
+      .clear()
+      .type('careers@copods.co')
+      .should('have.value', 'careers@copods.co')
+    cy.get('#password')
+      .clear()
+      .type('kQuiz@copods')
+      .should('have.value', 'kQuiz@copods')
+    cy.findByRole('button').click()
+
+    cy.get('a').find('#Sections').should('have.text', 'Sections').click()
+    cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
+    cy.get('#add-section').click()
+    cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
+    cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
+    cy.get('#submitButton').click()
+    cy.get('.Toastify__toast').should('have.text', 'Description is required')
+  })
+
+  it('Test for valid error message while adding new section with duplicate Title', () => {
+    cy.visit('/sign-in')
+    cy.get('#email')
+      .clear()
+      .type('careers@copods.co')
+      .should('have.value', 'careers@copods.co')
+    cy.get('#password')
+      .clear()
+      .type('kQuiz@copods')
+      .should('have.value', 'kQuiz@copods')
+    cy.findByRole('button').click()
+
+    cy.get('a').find('#Sections').should('have.text', 'Sections').click()
+    cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
+    cy.get('#add-section').click()
+    cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
+    cy.get('input#sectionName').type('Aptitude')
+    cy.get('textarea#sectionDescription').type(
+      `Aptitude - ${new Date().getTime()} Description`
+    )
+    cy.get('#submitButton').click()
+    cy.get('.Toastify__toast').should('have.text', 'Duplicate Title')
+  })
+
   it('Visiting the Same section which created', () => {
     cy.visit('/sign-in')
     cy.get('#email')
@@ -86,6 +152,7 @@ describe('Test for section-details', () => {
       'include',
       '/add-question'
     )
+    cy.get('.Toastify__close-button').click()
     cy.get('#Question').should('have.text', 'Question').click()
     cy.wait(2000)
     cy.get('a > div').should('have.class', 'border-l-8')
@@ -478,6 +545,7 @@ describe('Test for section-details', () => {
       .type('{backspace}')
       .should('have.value', '')
     cy.get('#saveAndAddMore').should('have.text', 'Save & Add More').click()
+    cy.get('.Toastify__close-button').click({ multiple: true })
     cy.get('.Toastify__toast').should('have.text', 'Enter the Question')
   })
 

@@ -2,7 +2,6 @@ import { Form, useTransition } from '@remix-run/react'
 import { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
-import type { ActionData } from '~/routes/sections'
 
 const AddSection = ({
   open,
@@ -11,7 +10,7 @@ const AddSection = ({
 }: {
   open: boolean
   setOpen: (e: boolean) => void
-  showErrorMessage: ActionData
+  showErrorMessage: boolean
 }) => {
   const transition = useTransition()
   return (
@@ -93,12 +92,16 @@ const AddSection = ({
                     type="submit"
                     id="submitButton"
                     className={`h-9 rounded-md bg-primary px-4 text-sm text-[#F0FDF4] disabled:opacity-80  ${
-                      transition.state === 'submitting' ? 'disabled' : ''
+                      transition.state === 'submitting' || showErrorMessage
+                        ? 'disabled bg-gray-600'
+                        : ''
                     }`}
                     onClick={() => {
                       setOpen(false)
                     }}
-                    disabled={transition.state === 'submitting'}
+                    disabled={
+                      transition.state === 'submitting' || showErrorMessage
+                    }
                   >
                     {transition.state === 'submitting' ? 'Adding...' : 'Add'}
                   </button>
