@@ -305,8 +305,6 @@ describe('Visiting Tests', () => {
       .type('kQuiz@copods')
       .should('have.value', 'kQuiz@copods')
     cy.findByRole('button').click()
-    cy.get('a').find('#Tests').should('have.text', 'Tests').click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('a')
       .find('#Tests', { timeout: 6000 })
       .should('have.text', 'Tests')
