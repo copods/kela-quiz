@@ -56,8 +56,8 @@ export default function MemberListItem({
         </div>
         <div className="col-span-1">
           <button
-            tabIndex={0}
             id="deleteButton"
+            tabIndex={0}
             name="deleteMember"
             disabled={loggedInUser}
             value={JSON.stringify({ action: 'delete', id: user.id })}

@@ -22,6 +22,7 @@ const QuestionCard = ({
       <div className="items-top break flex justify-between text-base text-gray-600">
         <div
           className="items-top flex flex-1 justify-between"
+          tabIndex={0}
           onClick={() => {
             onAccordianToggle(
               isExpanded == -1 ? index : isExpanded == index ? -1 : index
@@ -36,13 +37,11 @@ const QuestionCard = ({
           </div>
           {isExpanded === index ? (
             <Icon
-              tabIndex={0}
               icon={'akar-icons:circle-chevron-up'}
               className="cursor-pointer text-xl text-gray-400"
             />
           ) : (
             <Icon
-              tabIndex={0}
               icon={'akar-icons:circle-chevron-down'}
               className="cursor-pointer text-xl text-gray-400"
             />

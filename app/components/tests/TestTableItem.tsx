@@ -57,6 +57,7 @@ const TestTableItem = ({
         <div className="flex w-1/12 items-center justify-end gap-3 truncate text-xl font-medium  leading-6  text-gray-700">
           <div>
             <Icon
+              tabIndex={0}
               className="cursor-pointer text-primary"
               icon={'ant-design:user-add-outlined'}
             />

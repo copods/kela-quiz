@@ -53,6 +53,7 @@ export default function AddMemberModal({
                       {CommonMembersConstants.AddMember}
                     </h2>
                     <Icon
+                      tabIndex={0}
                       className="cursor-pointer text-2xl text-gray-600"
                       icon={'carbon:close'}
                       onClick={() => setOpen(false)}
