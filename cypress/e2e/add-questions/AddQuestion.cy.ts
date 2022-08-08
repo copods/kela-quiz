@@ -13,6 +13,8 @@ describe('Test for section-details', () => {
 
     cy.get('a', { timeout: 60000 }).find('#Sections').should('have.text', 'Sections').click()
 
+    cy.visit('/section')
+
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
 
     cy.get('#add-section', { withinSubject: null }).click()
