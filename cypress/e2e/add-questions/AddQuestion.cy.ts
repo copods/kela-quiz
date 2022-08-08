@@ -13,8 +13,9 @@ describe('Test for section-details', () => {
 
     cy.get('a').find('#Sections',{timeout:6000}).should('have.text', 'Sections').click()
     // cy.url().should('include','/sections')
-    cy.wait(4000)
-     cy.location('pathname').should('include', '/sections')
+    cy.wait(6000)
+     cy.location('pathname',{timeout:6000}).should('include', '/sections')
+     cy.wait(6000)
     // cy.get('header.flex > .text-3xl').should('have.text', 'Sections')
     cy.get('#add-section').click()
     cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
