@@ -64,11 +64,12 @@ export async function createSectionInTest({ sectionId, candidateTestId, totalQue
     })
     let randomQuestionsOfSections: Array<Question> = await prisma.$queryRaw`SELECT * FROM "Question" WHERE "sectionId" = ${sectionId} ORDER BY RANDOM() LIMIT ${totalQuestions};`
 
-    for (const question of randomQuestionsOfSections) {
+    for (let i = 0; i < randomQuestionsOfSections.length; i++) {
       await prisma.candidateQuestion.create({
         data: {
-          questionId: question.id,
-          sectionInCandidateTestId: sectioInTest.id
+          questionId: randomQuestionsOfSections[i].id,
+          sectionInCandidateTestId: sectioInTest.id,
+          order: i + 1
         }
       })
     }

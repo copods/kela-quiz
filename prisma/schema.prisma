@@ -181,6 +181,7 @@ model CandidateQuestion {
   status                   String                    @default("NOT_VIEWED") // NOT_VIEWED, VIEWED, SKIPPED, ANSWERED
   selectedOptions          Option[]
   answers                  String[]
+  order                    Int
   sectionInCandidateTest   SectionInCandidateTest    @relation(fields: [sectionInCandidateTestId], references: [id])
   sectionInCandidateTestId String
   timeInCandidateQuestion  TimeInCandidateQuestion[]
