@@ -5,7 +5,7 @@ import type { Test } from '~/interface/Interface'
 import BreadCrumb from '../BreadCrumb'
 import SortFilter from '../SortFilter'
 import TestTableItem from './TestTableItem'
-import { testsFolderConstants } from '~/constants/common.constants'
+import { commonConstants, testsConstants } from '~/constants/common.constants'
 const TestList = ({ tests }: { tests: Array<Test> }) => {
   const [sortDirection, onSortDirectionChange] = useState('asc')
   const [sortBy, onSortChange] = useState('name')
@@ -42,14 +42,14 @@ const TestList = ({ tests }: { tests: Array<Test> }) => {
       <BreadCrumb data={breadCrumbData} />
       <header className="flex items-center justify-between">
         <h2 title="Tests" className="text-3xl font-bold text-black">
-          {testsFolderConstants.breadCrumbTestsTitle}
+          {testsConstants.breadCrumbTestsTitle}
         </h2>
         <Link to={'/tests/add-test'}>
           <button
             id="addTest"
             className="h-9 rounded-lg bg-primary px-5 text-xs text-white"
           >
-            + {testsFolderConstants.addTestbutton}
+            + {testsConstants.addTestbutton}
           </button>
         </Link>
       </header>
@@ -73,22 +73,22 @@ const TestList = ({ tests }: { tests: Array<Test> }) => {
             </div>
           )}
           <div className="w-1/12 text-sm leading-5 text-gray-500">
-            {testsFolderConstants.srNoText}
+            {testsConstants.srNoText}
           </div>
           <div className="w-3/12 text-sm leading-5 text-gray-500">
-            {testsFolderConstants.testListColumnLable}
+            {testsConstants.testListColumnLable}
           </div>
           <div className="w-2/12 text-sm leading-5 text-gray-500">
-            {testsFolderConstants.sectionText}
+            {testsConstants.sectionText}
           </div>
           <div className="w-2/12 text-sm leading-5 text-gray-500">
-            {testsFolderConstants.CreatedOn}
+            {testsConstants.createdOn}
           </div>
           <div className="w-2/12 text-sm leading-5 text-gray-500">
-            {testsFolderConstants.CreatedBy}
+            {testsConstants.created} {commonConstants.byText}
           </div>
           <div className="flex w-1/12 justify-end text-sm leading-5 text-gray-500">
-            {testsFolderConstants.actionsText}
+            {testsConstants.actionsText}
           </div>
         </div>
         <div

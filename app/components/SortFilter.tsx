@@ -55,7 +55,7 @@ const SortFilter = ({
           <>
             <Icon icon="ci:line-m" />
             <span className="pl-3 ">
-              {componentFolderGlobalFiles.selected}
+              {componentFolderGlobalFiles.selected}:: 0/
               {totalItems}
             </span>
           </>

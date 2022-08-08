@@ -184,7 +184,7 @@ const AddQuestionInSection = () => {
         title={sectionDetails?.name}
         className="text-3xl font-bold leading-9 text-gray-900"
       >
-        {sectionDetails?.name} {addQuestion.addQuestion}
+        {sectionDetails?.name} - {addQuestion.addQuestion}
       </h1>
 
       <div className="flex h-40 flex-1 flex-row gap-6">

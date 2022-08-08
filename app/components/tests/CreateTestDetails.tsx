@@ -1,6 +1,6 @@
 import { ClientOnly } from 'remix-utils'
 import QuillEditor from '../QuillEditor.client'
-import { testsFolderConstants } from '~/constants/common.constants'
+import { commonConstants, testsConstants } from '~/constants/common.constants'
 
 const TestDetails = ({
   name,
@@ -17,7 +17,7 @@ const TestDetails = ({
     <div className="flex h-full w-full flex-col gap-6  rounded-lg bg-white p-6 shadow">
       <div>
         <label htmlFor="name" className="text-base font-medium text-gray-800">
-          {testsFolderConstants.createTestName}
+          {commonConstants.name}
         </label>
         <input
           type="text"
@@ -34,7 +34,7 @@ const TestDetails = ({
           htmlFor="description"
           className="text-base font-medium text-gray-800"
         >
-          {testsFolderConstants.createTestDescription}
+          {testsConstants.createTestDescription}
         </label>
         <div className="h-full pt-2 pb-4">
           <ClientOnly fallback={<div></div>}>

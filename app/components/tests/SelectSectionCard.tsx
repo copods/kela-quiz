@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 import Moment from 'moment'
 import type { TestSection } from '~/interface/Interface'
-import { testsFolderConstants } from '~/constants/common.constants'
+import { commonConstants, testsConstants } from '~/constants/common.constants'
 const SelectSectionCard = ({
   section,
   updateSection,
@@ -63,7 +63,7 @@ const SelectSectionCard = ({
               updateThisSection('isSelected', '', false)
             }}
           >
-            {testsFolderConstants.removeButton}
+            {commonConstants.removeButton}
           </button>
         ) : (
           <button
@@ -72,13 +72,13 @@ const SelectSectionCard = ({
               updateThisSection('isSelected', '', true)
             }}
           >
-            {testsFolderConstants.addButton}
+            {commonConstants.addButton}
           </button>
         )}
       </div>
       <div className="flex text-xs text-gray-400">
         <span>
-          {testsFolderConstants.byText} {section?.createdBy?.firstName}{' '}
+          {commonConstants.byText} {section?.createdBy?.firstName}{' '}
           {section?.createdBy?.lastName}
         </span>
         <span className="flex">
@@ -87,7 +87,7 @@ const SelectSectionCard = ({
         </span>
       </div>
       <div className="flex text-xs text-gray-400">
-        {testsFolderConstants.totalQuestionsText}: {section?._count?.questions}
+        {testsConstants.totalQuestionsText}: {section?._count?.questions}
       </div>
       <hr className="h-px w-full border-0 bg-gray-300" />
       <div className="flex gap-4 pt-1">
@@ -96,7 +96,7 @@ const SelectSectionCard = ({
             htmlFor="noOfQuestion"
             className="text-xs font-medium text-gray-600"
           >
-            {testsFolderConstants.totalQuestionsText}
+            {testsConstants.totalQuestionsText}
           </label>
           <input
             type="number"
@@ -118,7 +118,7 @@ const SelectSectionCard = ({
             htmlFor="totalTime"
             className="text-xs font-medium text-gray-600"
           >
-            {testsFolderConstants.totalTimeText}
+            {testsConstants.totalTimeText}
           </label>
           <input
             type="number"

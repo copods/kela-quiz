@@ -4,7 +4,7 @@ import DropdownField from '../form/Dropdown'
 import type { Section } from '~/interface/Interface'
 import { useResolvedPath, useLocation, NavLink } from '@remix-run/react'
 import {} from '@remix-run/react'
-import { sectionsFolder } from '~/constants/common.constants'
+import { sectionsConstants } from '~/constants/common.constants'
 const SectionLink = ({ section }: { section: any }) => {
   const path = `/sections/${section.id}`
   const location = useLocation() // to get current location
@@ -84,7 +84,7 @@ const Sections = ({
         ))}
         {sections.length === 0 && (
           <div className="flex justify-center p-7">
-            {sectionsFolder.noRecordFound}
+            {sectionsConstants.noRecordFound}
           </div>
         )}
       </div>
