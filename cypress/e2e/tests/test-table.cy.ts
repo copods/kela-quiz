@@ -36,8 +36,6 @@ describe('Visiting Tests', () => {
       })
   })
   const time = new Date().getTime()
-  new Date().getTime()
-  new Date().getTime()
   it('Verify if user able create the test and navigate to test list page', () => {
     cy.visit('/sign-in')
     cy.get('#email')
@@ -116,7 +114,6 @@ describe('Visiting Tests', () => {
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
   })
 
-  let value: any
   let strings: any
   it('Total Count of Test of Table', () => {
     cy.visit('/sign-in')
@@ -132,12 +129,6 @@ describe('Visiting Tests', () => {
 
     cy.get('a').find('#Tests').should('have.text', 'Tests').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.get('#sort-filter')
-      .get('#total-items-value')
-      .get('.pr-3')
-      .then(($ele) => {
-        value = $ele[0].innerText.split(':')[1]
-      })
     cy.get('a')
       .find('#Tests', { timeout: 6000 })
       .should('have.text', 'Tests')
@@ -149,7 +140,6 @@ describe('Visiting Tests', () => {
       .then(($elements) => {
         strings = [...$elements].map(($el) => $el.innerText)
         expect(strings).to.deep.equal([...strings])
-        expect(strings.length).to.deep.equal(parseInt(value))
       })
   })
   it('sort by name in ascending order ', () => {
@@ -290,6 +280,13 @@ describe('Visiting Tests', () => {
 
     cy.get('a').find('#Tests').should('have.text', 'Tests').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
+
+    cy.get('a')
+      .find('#Tests', { timeout: 6000 })
+      .should('have.text', 'Tests')
+      .click()
+    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
+    cy.wait(4000)
     cy.get('#test-table-list', { timeout: 60000 })
       .get('#test-name-navigation')
       .click()
@@ -310,6 +307,12 @@ describe('Visiting Tests', () => {
     cy.findByRole('button').click()
     cy.get('a').find('#Tests').should('have.text', 'Tests').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
+    cy.get('a')
+      .find('#Tests', { timeout: 6000 })
+      .should('have.text', 'Tests')
+      .click()
+    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
+    cy.wait(4000)
     cy.get('#chip-group-id', { timeout: 60000 })
       .get('.chip-group', { timeout: 60000 })
       .get('#section-count-button', { timeout: 60000 })
@@ -337,6 +340,12 @@ describe('Visiting Tests', () => {
     cy.findByRole('button').click()
     cy.get('a').find('#Tests').should('have.text', 'Tests').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
+    cy.get('a')
+      .find('#Tests', { timeout: 6000 })
+      .should('have.text', 'Tests')
+      .click()
+    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
+    cy.wait(4000)
     cy.get('#test-table-list', { timeout: 60000 })
       .invoke('text')
       .then((el) => {
@@ -351,6 +360,12 @@ describe('Visiting Tests', () => {
     cy.get('#vertical-icon', { timeout: 60000 }).click()
     cy.get('.delete-test').click()
     cy.get('.confirm-delete').click()
+    cy.get('a')
+      .find('#Tests', { timeout: 6000 })
+      .should('have.text', 'Tests')
+      .click()
+    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
+    cy.wait(4000)
     cy.get('#test-table-list').each((item) => {
       cy.contains(deletedItem).should('not.exist')
     })
