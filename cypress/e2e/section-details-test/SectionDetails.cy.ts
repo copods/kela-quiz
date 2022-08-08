@@ -29,7 +29,7 @@ describe('Test for Section Details', () => {
     cy.get('a').find('#Sections').should('have.text', 'Sections').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     // cy.get('.px-5').should('contain', '+ Add Section' ).click()
-    cy.get('.px-5').should('be.visible')
+    cy.get('.px-5', { timeout: 10000 }).should('be.visible')
     cy.get('.px-5').click()
     cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
     cy.get('input#sectionName').type(`Aptitude - ${time}`)
