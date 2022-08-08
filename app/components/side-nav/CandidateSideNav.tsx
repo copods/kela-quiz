@@ -1,11 +1,14 @@
-import Header from '~/components/SideNavHeader'
+import logo from '~/../public/assets/logo.svg'
 
 function CandidateSideNav({ candidate, candidateTest }: any) {
   return (
     <div className="flex h-full flex-col justify-between overflow-auto p-5">
       <div>
         <div className="mb-14 px-1">
-          <Header />
+          <div className="flex items-center gap-4">
+            <img src={logo} alt="logo" />
+            <span className="text-3xl font-bold leading-9">Assessment</span>
+          </div>
         </div>
       </div>
       <div>Candidate Sidenav</div>

@@ -8,7 +8,7 @@ import {
   candidateTestStart,
   getCandidate,
   getCandidateTestForSideNav,
-  getFirstSectionToStartAssessment,
+  getOrderedSectionToStartAssessment,
   getTestInstructionForCandidate,
   updateNextCandidateStep,
 } from '~/models/candidate.server'
@@ -27,8 +27,9 @@ export const loader: LoaderFunction = async ({ params, request }) => {
   const instructions = await getTestInstructionForCandidate(
     params.assessmentId as string
   )
-  const firstSection = await getFirstSectionToStartAssessment(
-    instructions?.test.id as string
+  const firstSection = await getOrderedSectionToStartAssessment(
+    instructions?.test.id as string,
+    1
   )
   const candidateTets = await getCandidateTestForSideNav(
     params.assessmentId as string

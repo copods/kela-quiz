@@ -41,7 +41,38 @@ export async function getCandidateTestForSideNav(
   id: CandidateTest['id'],
 ) {
   return await prisma.candidateTest.findUnique({
-    where: { id }
+    where: { id },
+    select: {
+      sections: {
+        select: {
+          id: true,
+          section: {
+            select: {
+              id: true,
+              name: true,
+              description: true
+            }
+          },
+          questions: {
+            select: {
+              id: true,
+              status: true
+            }
+          },
+          timeInCandidateQuestion: true,
+          startedAt: true,
+          endAt: true
+        }
+      },
+      test: {
+        select: {
+          name: true,
+          description: true
+        }
+      },
+      startedAt: true,
+      endAt: true
+    }
   })
 }
 
@@ -98,9 +129,9 @@ export async function candidateTestStart(id: CandidateTest['id']) {
   })
 }
 
-export async function getFirstSectionToStartAssessment(testId: Test['id']) {
+export async function getOrderedSectionToStartAssessment(testId: Test['id'], order: number) {
   return await prisma.sectionInTest.findFirst({
-    where: { testId, order: 1 }
+    where: { testId, order }
   })
 }
 
@@ -128,6 +159,12 @@ export async function getCandidateSectionDetails(sectionId: Section['id']) {
     select: {
       id: true,
       startedAt: true,
+      section: {
+        select: {
+          id: true,
+          name: true
+        }
+      },
       endAt: true,
       sectionId: true
     }
@@ -182,10 +219,10 @@ async function getAllQuestions(sectionInCandidateTestId: SectionInCandidateTest[
   })
 }
 
-export async function getFirstQuestionId(id: SectionInCandidateTest['id']) {
-  const questions = await getAllQuestions(id)
-  return questions[0]
-}
+// export async function getFirstQuestionId(id: SectionInCandidateTest['id']) {
+//   const questions = await getAllQuestions(id)
+//   return questions[0]
+// }
 
 export async function startAndGetQuestion(id: CandidateQuestion['id']) {
   return prisma.candidateQuestion.update({
@@ -214,8 +251,19 @@ export async function startAndGetQuestion(id: CandidateQuestion['id']) {
 }
 
 
-export async function saveSkipAndNextQuestion(sectionId: SectionInCandidateTest['id'], currentQuestionId: CandidateQuestion['id']) {
-  const questions = await getAllQuestions(sectionId)
+export async function skipAndNextQuestion(sectionId: SectionInCandidateTest['id'], currentQuestionId: CandidateQuestion['id']) {
+  const section = await prisma.sectionInCandidateTest.findFirst({
+    where: {
+      section: {
+        sectionInCandidateTest: {
+          some: {
+            id: sectionId
+          }
+        }
+      }
+    }
+  })
+  const questions = await getAllQuestions(section?.id as SectionInCandidateTest['id'])
   console.log(questions)
   // find current question index
   let index = 0;
@@ -225,6 +273,7 @@ export async function saveSkipAndNextQuestion(sectionId: SectionInCandidateTest[
       break
     }
   }
+  console.log(index, questions.length)
   if (index == questions.length) {
     return 'gotoNextSection'
   }
