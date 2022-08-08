@@ -424,10 +424,11 @@ describe('Creating tests', () => {
 
     cy.get('button#submitButton').should('have.text', 'Submit').click()
 
-    cy.location('pathname', { timeout: 100000 }).should('include', '/tests')
+    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     // cy.get('#test-list')
-    cy.wait(2000)
-    cy.get('.test-table-list')
+    cy.get('.test-list-container')
+      .get('#test-list')
+      .get('.test-table-list')
       .last()
       .within(() => {
         cy.get('.text-primary').should('have.text', testName)
