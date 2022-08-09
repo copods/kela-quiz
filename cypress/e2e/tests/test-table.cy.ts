@@ -355,7 +355,7 @@ describe('Visiting Tests', () => {
     cy.get('#test-table-list', { timeout: 60000 })
       .invoke('text')
       .then((el) => {
-        cy.get('#test-name-navigation').then(($elements) => {
+        cy.get('#test-name-navigation', { timeout: 6000 }).then(($elements) => {
           var strings = [...$elements].map(($el) => {
             deletedItem = $el.innerText
             return $el.innerText
@@ -364,9 +364,9 @@ describe('Visiting Tests', () => {
         })
       })
     cy.get('#vertical-icon', { timeout: 60000 }).click()
-    cy.get('.delete-test').click()
-    cy.get('.confirm-delete').click()
-    cy.get('#test-table-list').each((item) => {
+    cy.get('.delete-test', { timeout: 6000 }).click()
+    cy.get('.confirm-delete', { timeout: 6000 }).click()
+    cy.get('#test-table-list', { timeout: 6000 }).each((item) => {
       cy.contains(deletedItem).should('not.exist')
     })
     return false
