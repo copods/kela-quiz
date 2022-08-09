@@ -22,7 +22,7 @@ describe('Test for section-details', () => {
       `Aptitude - ${new Date().getTime()} Description`
     )
     cy.get('button#submitButton').should('have.text', 'Add').click()
-    cy.get('#section-card', {timeout: 6000}).first().should('be.visible')
+    cy.get('#section-cards', {timeout: 10000}).should('be.visible')
     cy.get('#section-card').first().click()
     cy.get('#addQuestion').click()
     cy.location('pathname', { timeout: 60000 }).should(
