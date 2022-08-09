@@ -28,10 +28,7 @@ describe('Test for section-details', () => {
     cy.get('button#submitButton', { timeout: 6000 })
       .should('have.text', 'Add')
       .click()
-    cy.get('#section-cards', { timeout: 10000 })
-      .children()
-      .first()
-      .should('be.visible')
+    cy.get('#section-cards').children().first().should('be.visible')
     cy.get('#section-cards').children().first().click()
     cy.get('#addQuestion').click()
     cy.location('pathname', { timeout: 60000 }).should(
@@ -591,6 +588,9 @@ describe('Test for section-details', () => {
     cy.get('#questionEditor > .rounded-lg > .ql-container > .ql-editor')
       .type('{backspace}')
       .should('have.value', '')
+    cy.get('.Toastify__close-button', { timeout: 6000 }).click({
+      multiple: true,
+    })
     cy.get('#saveAndAddMore', { timeout: 6000 })
       .should('have.text', 'Save & Add More')
       .click()
