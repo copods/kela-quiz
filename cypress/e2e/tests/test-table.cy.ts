@@ -235,34 +235,4 @@ describe('Visiting Tests', () => {
       .should('include', '/tests')
   })
 
-  it('By Clicking count in sections it should open menu with all sections', () => {
-    cy.visit('/sign-in')
-    cy.get('#email')
-      .clear()
-      .type('careers@copods.co')
-      .should('have.value', 'careers@copods.co')
-    cy.get('#password')
-      .clear()
-      .type('kQuiz@copods')
-      .should('have.value', 'kQuiz@copods')
-    cy.findByRole('button').click()
-    cy.get('a').find('#Tests').should('have.text', 'Tests').click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.wait(2000)
-    cy.get('#chip-group-id')
-      .get('.chip-group')
-      .get('#section-count-button')
-      .click()
-    cy.get('#chip-group-id')
-      .get('.chip-group')
-      .get('#section-count-button')
-      .then((el) => {
-        cy.get('.section-menu').then(($elements) => {
-          var strings = [...$elements].map(($el) => {
-            return $el.innerText
-          })
-          expect(strings).to.deep.equal([...strings])
-        })
-      })
-  })
 })
