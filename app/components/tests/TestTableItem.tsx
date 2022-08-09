@@ -1,12 +1,13 @@
 import moment from 'moment'
-import { Icon } from '@iconify/react'
+// import { Icon } from '@iconify/react'
 import { NavLink } from '@remix-run/react'
 import ChipGroup from './ChipGroup'
 import type { SectionInTest } from '~/interface/Interface'
-import { Menu } from '@headlessui/react'
+// import { Menu } from '@headlessui/react'
 import DeletePopUp from '../DeletePopUp'
 import { useState } from 'react'
 import { useSubmit } from '@remix-run/react'
+import MenuItem from '../MenuItem'
 const TestTableItem = ({
   testName,
   createdBy,
@@ -16,6 +17,7 @@ const TestTableItem = ({
   sections,
   showCheckBox,
   totalCount,
+  status,
 }: {
   index: number
   testName: string
@@ -25,6 +27,7 @@ const TestTableItem = ({
   sections: Array<SectionInTest>
   showCheckBox: boolean
   totalCount: number
+  status: string
 }) => {
   const [isDelete, setIsDelete] = useState(false)
   const submit = useSubmit()
@@ -82,47 +85,12 @@ const TestTableItem = ({
             />
           </div> */}
           <div className="flex w-full justify-end">
-            <Menu as="div" className="  inline-block text-left">
-              <Menu.Button>
-                <Icon
-                  className="text-2xl text-gray-600"
-                  icon={'mdi:dots-vertical'}
-                  id="vertical-icon"
-                />
-              </Menu.Button>
-              <Menu.Items className="absolute right-[7%] w-56 origin-top-left translate-y-[-45px] divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                <div className="px-1 py-1 ">
-                  <Menu.Item>
-                    {({ active }) => (
-                      <button
-                        name="deleteTest"
-                        className={`${
-                          active ? 'bg-primary text-white' : 'text-gray-900'
-                        }  delete-test group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                        onClick={() => {
-                          setIsDelete(true)
-                        }}
-                      >
-                        {active ? (
-                          <Icon
-                            icon={'ic:outline-delete-outline'}
-                            className="mr-2 h-5 w-5 "
-                            aria-hidden="true"
-                          />
-                        ) : (
-                          <Icon
-                            icon={'ic:outline-delete-outline'}
-                            className="mr-2 h-5 w-5 text-[#EF4444]"
-                            aria-hidden="true"
-                          />
-                        )}
-                        Delete
-                      </button>
-                    )}
-                  </Menu.Item>
-                </div>
-              </Menu.Items>
-            </Menu>
+            <MenuItem
+              menuIcon={'mdi:dots-vertical'}
+              setIsDelete={setIsDelete}
+              menuListIcon={'ic:outline-delete-outline'}
+              menuListText={'Delete'}
+            />
           </div>
         </div>
       </div>
@@ -130,6 +98,7 @@ const TestTableItem = ({
         setOpen={setIsDelete}
         open={isDelete}
         onDelete={deleteTest}
+        status={status}
       />
     </>
   )

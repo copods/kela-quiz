@@ -79,7 +79,7 @@ export default function Tests() {
   }
   return (
     <AdminLayout>
-      <TestList tests={data.tests as Test[]} />
+      <TestList tests={data.tests as Test[]} status={data.status} />
     </AdminLayout>
   )
 }

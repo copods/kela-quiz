@@ -7,10 +7,12 @@ export default function DeletePopUp({
   setOpen,
   open,
   onDelete,
+  status,
 }: {
   open: boolean
   setOpen: (e: boolean) => void
   onDelete: () => void
+  status?: string | null
 }) {
   const cancelButtonRef = useRef(null)
 
@@ -72,7 +74,9 @@ export default function DeletePopUp({
                     method="post"
                     onClick={() => {
                       onDelete()
-                      setOpen(false)
+                      if (status === 'Success') {
+                        setOpen(false)
+                      }
                     }}
                   >
                     <button

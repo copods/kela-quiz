@@ -6,7 +6,13 @@ import BreadCrumb from '../BreadCrumb'
 import SortFilter from '../SortFilter'
 import TestTableItem from './TestTableItem'
 
-const TestList = ({ tests }: { tests: Array<Test> }) => {
+const TestList = ({
+  tests,
+  status,
+}: {
+  tests: Array<Test>
+  status: string
+}) => {
   const [sortDirection, onSortDirectionChange] = useState('asc')
   const [sortBy, onSortChange] = useState('name')
   const filterByType = [
@@ -36,6 +42,7 @@ const TestList = ({ tests }: { tests: Array<Test> }) => {
     submit({ data: JSON.stringify(filter) }, { method: 'get' })
   }, [sortDirection, sortBy, submit])
   const showCheckBox = false
+  // console.log(tests?.status, 'sdfsdfd')
   return (
     <div className="test-list-container relative flex h-full flex-col gap-6 pb-8">
       {/* header */}
@@ -106,6 +113,7 @@ const TestList = ({ tests }: { tests: Array<Test> }) => {
                 createdBy={`${test?.createdBy?.firstName} ${test?.createdBy?.lastName}`}
                 sections={test?.sections}
                 showCheckBox={showCheckBox}
+                status={status}
               />
             ))}
           </div>
