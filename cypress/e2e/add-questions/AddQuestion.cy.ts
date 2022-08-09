@@ -12,6 +12,7 @@ describe('Test for section-details', () => {
       .type('kQuiz@copods')
       .should('have.value', 'kQuiz@copods')
     cy.findByRole('button').click()
+
     cy.get('a').find('#Sections',{timeout:6000}).should('have.text', 'Sections').click()
     cy.location('pathname',{timeout:6000}).should('include', '/sections')
     cy.get('#add-section', {timeout: 6000}).should('be.visible')
@@ -42,11 +43,9 @@ describe('Test for section-details', () => {
       .type('kQuiz@copods')
       .should('have.value', 'kQuiz@copods')
     cy.findByRole('button').click()
-    cy.wait(4000)
 
     cy.get('a').find('#Sections').should('have.text', 'Sections').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
-    cy.wait(4000)
     cy.get('#add-section').click()
     cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
     cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)

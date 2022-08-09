@@ -130,7 +130,6 @@ export default function SectionPage() {
   const [selectedSection, setSelectedSection] = useState(
     data.selectedSectionId || data.sections[0]?.id || 'NA'
   )
-  const toastId = 'toastId'
 
   if (data.status != 'Success') {
     toast.error('Something went wrong..!')
@@ -169,7 +168,7 @@ export default function SectionPage() {
         navigate(`/sections/${action?.resp?.data?.id}`, { replace: false })
       } else if (action.errors?.status === 400) {
         toast.error(action.errors?.title, {
-          toastId,
+          toastId: action.errors?.title,
         })
       }
     }
