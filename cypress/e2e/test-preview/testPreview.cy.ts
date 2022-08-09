@@ -72,7 +72,7 @@ describe('Test for testPreview', () => {
       .should('have.text', 'Tests')
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.wait(4000)
+    cy.get('#test-list', { timeout: 4000 }).should("be.visible")
     cy.get('#test-list').each((item) => {
       cy.contains(`${time}`)
         .parent()

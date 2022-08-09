@@ -134,7 +134,7 @@ describe('Visiting Tests', () => {
       .should('have.text', 'Tests')
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.wait(4000)
+    cy.get('#test-list', { timeout: 4000 }).should("be.visible")
     cy.get('#test-list', { timeout: 6000 })
       .get('.text-primary')
       .then(($elements) => {
@@ -286,7 +286,8 @@ describe('Visiting Tests', () => {
       .should('have.text', 'Tests')
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.wait(4000)
+    cy.get('#test-table-list', { timeout: 60000 }).should("be.visible")
+
     cy.get('#test-table-list', { timeout: 60000 })
       .get('#test-name-navigation')
       .click()
@@ -310,7 +311,8 @@ describe('Visiting Tests', () => {
       .should('have.text', 'Tests')
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.wait(4000)
+    cy.get('#chip-group-id', { timeout: 60000 }).should("be.visible")
+
     cy.get('#chip-group-id', { timeout: 60000 })
       .get('.chip-group', { timeout: 60000 })
       .get('#section-count-button', { timeout: 60000 })
@@ -343,7 +345,7 @@ describe('Visiting Tests', () => {
       .should('have.text', 'Tests')
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.wait(4000)
+    cy.get('#test-table-list', { timeout: 60000 }).should("be.visible")
     cy.get('#test-table-list', { timeout: 60000 })
       .invoke('text')
       .then((el) => {
