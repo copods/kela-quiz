@@ -32,9 +32,11 @@ describe('Test for Section Details', () => {
     cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
     cy.get('input#sectionName').type(`Aptitude - ${time}`)
     cy.get('textarea#sectionDescription').type(`Aptitude - ${time} Description`)
-    cy.get('button#submitButton').should('have.text', 'Add').click()
-    cy.get('#section-card').first().click()
-    cy.get('#addQuestion').click()
+    cy.get('button#submitButton', { timeout: 6000 })
+      .should('have.text', 'Add')
+      .click()
+    cy.get('#section-card', { timeout: 6000 }).first().click()
+    cy.get('#addQuestion', { timeout: 6000 }).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
