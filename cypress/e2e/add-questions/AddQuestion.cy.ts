@@ -407,6 +407,27 @@ describe('Test for section-details', () => {
       'include',
       '/add-question'
     )
+    cy.get('h1', { timeout: 2000 }).should("be.visible")
+    cy.get('#dropdown > button').click()
+
+    cy.get('ul').within(() => {
+      cy.get('li').within(() => {
+        cy.get('div').then((el) => {
+          ;[...el].map((el) => {
+            if (el.innerText === 'Text') {
+              el.click()
+            }
+            return null
+          })
+        })
+      })
+    })
+
+    cy.get("#questionEditor #quillEditor").within(() => {
+      cy.get('.ql-editor').type(`What is your Test Question ?`)
+    })
+
+    cy.get("#optionEditor input").clear().type("Option of question")
 
     cy.get('#saveAndAddMore').click()
     cy.location('pathname', { timeout: 60000 }).should(
@@ -442,6 +463,28 @@ describe('Test for section-details', () => {
       'include',
       '/add-question'
     )
+
+    cy.get('h1', { timeout: 2000 }).should("be.visible")
+    cy.get('#dropdown > button').click()
+
+    cy.get('ul').within(() => {
+      cy.get('li').within(() => {
+        cy.get('div').then((el) => {
+          ;[...el].map((el) => {
+            if (el.innerText === 'Text') {
+              el.click()
+            }
+            return null
+          })
+        })
+      })
+    })
+
+    cy.get("#questionEditor #quillEditor").within(() => {
+      cy.get('.ql-editor').type(`What is your Test Question ?`)
+    })
+
+    cy.get("#optionEditor input").clear().type("Option of question")
 
     cy.get("#saveAndExit").click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
