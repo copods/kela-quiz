@@ -60,8 +60,10 @@ describe('Test for section-details', () => {
     cy.get('textarea#sectionDescription').type(
       `Aptitude - ${new Date().getTime()} Description`
     )
-    cy.get('button#submitButton').should('have.text', 'Add').click()
-    cy.get('#section-card').first().click()
+    cy.get('button#submitButton', { timeout: 6000 })
+      .should('have.text', 'Add')
+      .click()
+    cy.get('#section-cards').children().first().click()
     cy.get('#addQuestion').should('have.text', '+ Add Question').click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
@@ -171,8 +173,10 @@ describe('Test for section-details', () => {
     cy.get('textarea#sectionDescription').type(
       `Aptitude - ${new Date().getTime()} Description`
     )
-    cy.get('button#submitButton').should('have.text', 'Add').click()
-    cy.get('#section-card').first().click()
+    cy.get('button#submitButton', { timeout: 6000 })
+      .should('have.text', 'Add')
+      .click()
+    cy.get('#section-cards').children().first().click()
     cy.get('#addQuestion').should('have.text', '+ Add Question').click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
@@ -205,8 +209,10 @@ describe('Test for section-details', () => {
     cy.get('textarea#sectionDescription').type(
       `Aptitude - ${new Date().getTime()} Description`
     )
-    cy.get('button#submitButton').should('have.text', 'Add').click()
-    cy.get('#section-card').first().click()
+    cy.get('button#submitButton', { timeout: 6000 })
+      .should('have.text', 'Add')
+      .click()
+    cy.get('#section-cards').children().first().click()
     cy.get('#addQuestion').should('have.text', '+ Add Question').click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
@@ -262,8 +268,10 @@ describe('Test for section-details', () => {
     cy.get('textarea#sectionDescription').type(
       `Aptitude - ${new Date().getTime()} Description`
     )
-    cy.get('button#submitButton').should('have.text', 'Add').click()
-    cy.get('#section-card').first().click()
+    cy.get('button#submitButton', { timeout: 6000 })
+      .should('have.text', 'Add')
+      .click()
+    cy.get('#section-cards').children().first().click()
     cy.get('#addQuestion').should('have.text', '+ Add Question').click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
@@ -319,8 +327,10 @@ describe('Test for section-details', () => {
     cy.get('textarea#sectionDescription').type(
       `Aptitude - ${new Date().getTime()} Description`
     )
-    cy.get('button#submitButton').should('have.text', 'Add').click()
-    cy.get('#section-card').first().click()
+    cy.get('button#submitButton', { timeout: 6000 })
+      .should('have.text', 'Add')
+      .click()
+    cy.get('#section-cards').children().first().click()
     cy.get('#addQuestion').should('have.text', '+ Add Question').click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
@@ -378,8 +388,10 @@ describe('Test for section-details', () => {
     cy.get('textarea#sectionDescription').type(
       `Aptitude - ${new Date().getTime()} Description`
     )
-    cy.get('button#submitButton').should('have.text', 'Add').click()
-    cy.get('#section-card').first().click()
+    cy.get('button#submitButton', { timeout: 6000 })
+      .should('have.text', 'Add')
+      .click()
+    cy.get('#section-cards').children().first().click()
     cy.get('#addQuestion').should('have.text', '+ Add Question').click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
@@ -436,8 +448,10 @@ describe('Test for section-details', () => {
     cy.get('textarea#sectionDescription').type(
       `Aptitude - ${new Date().getTime()} Description`
     )
-    cy.get('button#submitButton').should('have.text', 'Add').click()
-    cy.get('#section-card').first().click()
+    cy.get('button#submitButton', { timeout: 6000 })
+      .should('have.text', 'Add')
+      .click()
+    cy.get('#section-cards').children().first().click()
     cy.get('#addQuestion').should('have.text', '+ Add Question').click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
@@ -494,8 +508,10 @@ describe('Test for section-details', () => {
     cy.get('textarea#sectionDescription').type(
       `Aptitude - ${new Date().getTime()} Description`
     )
-    cy.get('button#submitButton').should('have.text', 'Add').click()
-    cy.get('#section-card').first().click()
+    cy.get('button#submitButton', { timeout: 6000 })
+      .should('have.text', 'Add')
+      .click()
+    cy.get('#section-cards').children().first().click()
     cy.get('#addQuestion').should('have.text', '+ Add Question').click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
@@ -529,8 +545,10 @@ describe('Test for section-details', () => {
     cy.get('textarea#sectionDescription').type(
       `Aptitude - ${new Date().getTime()} Description`
     )
-    cy.get('button#submitButton').should('have.text', 'Add').click()
-    cy.get('#section-card').first().click()
+    cy.get('button#submitButton', { timeout: 6000 })
+      .should('have.text', 'Add')
+      .click()
+    cy.get('#section-cards').children().first().click()
     cy.get('#addQuestion').should('have.text', '+ Add Question').click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
@@ -561,8 +579,10 @@ describe('Test for section-details', () => {
     cy.get('textarea#sectionDescription').type(
       `Aptitude - ${new Date().getTime()} Description`
     )
-    cy.get('button#submitButton').should('have.text', 'Add').click()
-    cy.get('#section-card').first().click()
+    cy.get('button#submitButton', { timeout: 6000 })
+      .should('have.text', 'Add')
+      .click()
+    cy.get('#section-cards').children().first().click()
     cy.get('#addQuestion').should('have.text', '+ Add Question').click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
@@ -574,9 +594,9 @@ describe('Test for section-details', () => {
     cy.get('#saveAndAddMore', { timeout: 6000 })
       .should('have.text', 'Save & Add More')
       .click()
-    cy.get('.Toastify__close-button', { timeout: 6000 }).click({
-      multiple: true,
-    })
+    // cy.get('.Toastify__close-button', { timeout: 6000 }).click({
+    //   multiple: true,
+    // })
     cy.get('.Toastify__toast').should('have.text', 'Enter the Question')
   })
 
@@ -600,8 +620,10 @@ describe('Test for section-details', () => {
     cy.get('textarea#sectionDescription').type(
       `Aptitude - ${new Date().getTime()} Description`
     )
-    cy.get('button#submitButton').should('have.text', 'Add').click()
-    cy.get('#section-card').first().click()
+    cy.get('button#submitButton', { timeout: 6000 })
+      .should('have.text', 'Add')
+      .click()
+    cy.get('#section-cards').children().first().click()
     cy.get('#addQuestion').should('have.text', '+ Add Question').click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
