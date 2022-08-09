@@ -3,7 +3,7 @@ import { Link } from '@remix-run/react'
 import { useState } from 'react'
 import type { Question } from '~/interface/Interface'
 import QuestionCard from './QuestionCard'
-
+import { addQuestion, sectionsConstants } from '~/constants/common.constants'
 const SectionDetails = () => {
   const sectionDetails = useLoaderData()
   const [currentAccordian, setCurrentAccordian] = useState(-1)
@@ -31,7 +31,7 @@ const SectionDetails = () => {
             id="addQuestion"
             className="h-9 rounded-lg bg-primary px-5 text-xs text-[#F0FDF4]"
           >
-            + Add Question
+            + {addQuestion.addQuestion}
           </button>
         </Link>
       </div>
@@ -58,7 +58,7 @@ const SectionDetails = () => {
 
       {sectionDetails.sectionDetails?.questions.length === 0 && (
         <div className="flex justify-center p-7">
-          No questions found. Add your first question
+          {sectionsConstants.noQuestionAlert}
         </div>
       )}
     </div>
