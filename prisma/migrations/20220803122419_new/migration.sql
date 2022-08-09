@@ -9,8 +9,6 @@
 -- DropForeignKey
 ALTER TABLE "SectionInTest" DROP CONSTRAINT "SectionInTest_testId_fkey";
 
--- AlterTable
-ALTER TABLE "Option" DROP COLUMN "order";
 
 -- AlterTable
 ALTER TABLE "Test" ADD COLUMN     "deleted" BOOLEAN NOT NULL DEFAULT false;

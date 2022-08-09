@@ -1,4 +1,4 @@
-const duplicateTitle = `Aptitude - ${new Date().getTime()}`;
+const duplicateTitle = `Aptitude - ${new Date().getTime()}`
 
 describe('Test for section-details', () => {
   it('Visiting section-details  Page', () => {
@@ -13,17 +13,25 @@ describe('Test for section-details', () => {
       .should('have.value', 'kQuiz@copods')
     cy.findByRole('button').click()
 
-    cy.get('a').find('#Sections',{timeout:6000}).should('have.text', 'Sections').click()
-    cy.location('pathname',{timeout:6000}).should('include', '/sections')
-    cy.get('#add-section', {timeout: 6000}).should('be.visible')
+    cy.get('a')
+      .find('#Sections', { timeout: 6000 })
+      .should('have.text', 'Sections')
+      .click()
+    cy.location('pathname', { timeout: 6000 }).should('include', '/sections')
+    cy.get('#add-section', { timeout: 6000 }).should('be.visible')
     cy.get('#add-section').click()
     cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
     cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
     cy.get('textarea#sectionDescription').type(
       `Aptitude - ${new Date().getTime()} Description`
     )
-    cy.get('button#submitButton').should('have.text', 'Add').click()
-    cy.get('#section-cards', {timeout: 10000}).children().first().should('be.visible')
+    cy.get('button#submitButton', { timeout: 6000 })
+      .should('have.text', 'Add')
+      .click()
+    cy.get('#section-cards', { timeout: 10000 })
+      .children()
+      .first()
+      .should('be.visible')
     cy.get('#section-cards').children().first().click()
     cy.get('#addQuestion').click()
     cy.location('pathname', { timeout: 60000 }).should(
@@ -126,7 +134,10 @@ describe('Test for section-details', () => {
       `Aptitude - ${new Date().getTime()} Description`
     )
     cy.get('#submitButton').click()
-    cy.get('.Toastify__toast').should('have.text', 'Section added successfully..!')
+    cy.get('.Toastify__toast').should(
+      'have.text',
+      'Section added successfully..!'
+    )
     cy.get('.Toastify__close-button').click()
 
     cy.get('#add-section').click()
@@ -168,7 +179,9 @@ describe('Test for section-details', () => {
       '/add-question'
     )
     cy.get('.Toastify__close-button').click()
-    cy.get('#Question').should('have.text', 'Question').click()
+    cy.get('#Question', { timeout: 6000 })
+      .should('have.text', 'Question')
+      .click()
     cy.get('a > div').should('have.class', 'border-l-8')
   })
 
