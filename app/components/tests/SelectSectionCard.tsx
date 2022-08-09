@@ -95,7 +95,8 @@ const SelectSectionCard = ({
         </span>
       </div>
       <div className="flex text-xs text-gray-400">
-        Total Questions: {section?._count?.questions}
+        Total Questions:{' '}
+        <span className="count">{section?._count?.questions}</span>
       </div>
       <hr className="h-px w-full border-0 bg-gray-300" />
       <div className="flex gap-4 pt-1">
