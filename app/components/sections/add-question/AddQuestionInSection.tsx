@@ -24,7 +24,6 @@ import { addQuestion } from '~/constants/common.constants'
 // }) => {
 const AddQuestionInSection = () => {
   const { sectionDetails, questionTypes } = useLoaderData()
-
   const [selectedTypeOfQuestion, onQuestionTypeChange] = useState(
     questionTypes[0].id
   )
