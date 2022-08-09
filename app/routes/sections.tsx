@@ -1,6 +1,7 @@
 import type { ActionFunction, LoaderFunction } from '@remix-run/server-runtime'
 import { redirect } from '@remix-run/server-runtime'
 import { json } from '@remix-run/node'
+import { routeFiles } from '~/constants/common.constants'
 import {
   Outlet,
   useActionData,
@@ -143,13 +144,15 @@ export default function SectionPage() {
       <div className="flex h-full flex-col gap-12 overflow-hidden">
         {/* header */}
         <header className="flex items-center justify-between">
-          <h2 className="text-3xl font-bold text-black">Sections</h2>
+          <h2 className="text-3xl font-bold text-black">
+            + {routeFiles.sections}
+          </h2>
           <button
             className="h-9 rounded-lg bg-primary px-5 text-xs text-[#F0FDF4]"
             id="add-section"
             onClick={() => setOpen(!open)}
           >
-            + Add Section
+            {routeFiles.addSection}
           </button>
         </header>
 

@@ -4,7 +4,7 @@ import Button from '~/components/form/Button'
 import InputField from '~/components/form/InputField'
 import Logo from '~/components/Logo'
 import type { LoginProps } from '~/interface/Interface'
-
+import { logIn } from '~/constants/common.constants'
 function Login({ actionData, redirectTo }: LoginProps) {
   const [email, setEmail] = useState('careers@copods.co')
   const [password, setPassword] = useState('kQuiz@copods')
@@ -45,7 +45,7 @@ function Login({ actionData, redirectTo }: LoginProps) {
       </div>
       <div className="w-full">
         <h1 className="text-3xl font-bold text-gray-900">
-          Sign in to your account
+          {logIn.signInMessage}
         </h1>
         <div className="flex justify-center">
           <hr className="mt-7 mb-5 h-px w-6/12 border-none bg-gray-500 text-center" />

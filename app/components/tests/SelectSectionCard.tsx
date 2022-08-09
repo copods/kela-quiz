@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react'
 import Moment from 'moment'
 import { toast } from 'react-toastify'
 import type { TestSection } from '~/interface/Interface'
-
+import { commonConstants, testsConstants } from '~/constants/common.constants'
 const SelectSectionCard = ({
   section,
   updateSection,
@@ -72,7 +72,7 @@ const SelectSectionCard = ({
               updateThisSection('isSelected', '', false)
             }}
           >
-            Remove
+            {commonConstants.removeButton}
           </button>
         ) : (
           <button
@@ -81,13 +81,14 @@ const SelectSectionCard = ({
               updateThisSection('isSelected', '', true)
             }}
           >
-            Add
+            {commonConstants.addButton}
           </button>
         )}
       </div>
       <div className="flex text-xs text-gray-400">
         <span>
-          By {section?.createdBy?.firstName} {section?.createdBy?.lastName}
+          {commonConstants.byText} {section?.createdBy?.firstName}{' '}
+          {section?.createdBy?.lastName}
         </span>
         <span className="flex">
           <Icon className="text-base" icon={'mdi:circle-small'} />
@@ -95,7 +96,7 @@ const SelectSectionCard = ({
         </span>
       </div>
       <div className="flex text-xs text-gray-400">
-        Total Questions:{' '}
+        {testsConstants.totalQuestionsText}:{' '}
         <span className="count">{section?._count?.questions}</span>
       </div>
       <hr className="h-px w-full border-0 bg-gray-300" />
@@ -105,7 +106,7 @@ const SelectSectionCard = ({
             htmlFor="noOfQuestion"
             className="text-xs font-medium text-gray-600"
           >
-            Total Questions
+            {testsConstants.totalQuestionsText}
           </label>
           <input
             type="number"
@@ -127,7 +128,7 @@ const SelectSectionCard = ({
             htmlFor="totalTime"
             className="text-xs font-medium text-gray-600"
           >
-            Total Time
+            {testsConstants.totalTimeText}
           </label>
           <input
             type="number"

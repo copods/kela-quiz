@@ -5,7 +5,7 @@ import QuillEditor from '~/components/QuillEditor.client'
 import { ClientOnly } from 'remix-utils'
 import Toggle from '~/components/form/Toggle'
 import type { SetStateAction } from 'react'
-
+import { addQuestion } from '~/constants/common.constants'
 interface textAnswerType {
   id: string
   answer: string
@@ -103,11 +103,11 @@ export default function OptionForQuestion({
         {getQuestionType(selectedTypeOfQuestion) === 'MULTIPLE_CHOICE' ||
         getQuestionType(selectedTypeOfQuestion) === 'SINGLE_CHOICE' ? (
           <div className="text-base font-medium leading-6 text-gray-600">
-            Select Correct Option
+            {addQuestion.selectCoOption}
           </div>
         ) : (
           <div className="flex items-center justify-center gap-2 text-base font-medium leading-6 text-gray-600">
-            Check Order
+            {addQuestion.checkOrder}
             <span>
               <Toggle toggle={checkOrder} onToggleChange={setCheckOrder} />
             </span>
@@ -119,7 +119,7 @@ export default function OptionForQuestion({
           onClick={addOptionArea}
         >
           <Icon icon="fluent:add-16-filled"></Icon>
-          <span>Add Options</span>
+          <span>{addQuestion.addOptions}</span>
         </button>
       </div>
 

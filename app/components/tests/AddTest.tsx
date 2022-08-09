@@ -8,7 +8,7 @@ import SelectSections from './CreateSelectSections'
 import TestDetails from './CreateTestDetails'
 import TestPreview from './CreateTestPreview'
 import StepsTabComponent from './StepsTab'
-
+import { commonConstants, testsConstants } from '~/constants/common.constants'
 const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
   const transition = useTransition()
   const submit = useSubmit()
@@ -117,7 +117,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
       {/* header */}
       <header className="flex items-center justify-between">
         <h2 title="Add Test" className="text-3xl font-bold text-black">
-          Add Test
+          {testsConstants.addTestbutton}
         </h2>
       </header>
       <div>
@@ -168,7 +168,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
                   : 'bg-gray-6000 bg-red-500'
               }`}
             >
-              Cancel
+              {commonConstants.cancel}
             </button>
           </Link>
         </div>
@@ -182,7 +182,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
             onClick={() => setCurrentTab(currentTab - 1)}
             disabled={currentTab === tabs[0].id}
           >
-            Back
+            {commonConstants.backButton}
           </button>
           {currentTab != 2 ? (
             <button
@@ -196,7 +196,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
               onClick={() => setCurrentTab(currentTab + 1)}
               disabled={!(name && description) || currentTab == 2}
             >
-              Next
+              {commonConstants.nextButton}
             </button>
           ) : (
             <button
