@@ -6,7 +6,7 @@ import OptionForQuestion from './OptionForQuestion'
 import cuid from 'cuid'
 import { Link, useLoaderData, useSubmit, useTransition } from '@remix-run/react'
 import { toast } from 'react-toastify'
-
+import { addQuestion } from '~/constants/common.constants'
 // const AddQuestionInSection = ({
 //   sectionDetails,
 //   questionTypeList,
@@ -184,7 +184,7 @@ const AddQuestionInSection = () => {
         title={sectionDetails?.name}
         className="text-3xl font-bold leading-9 text-gray-900"
       >
-        {sectionDetails?.name} - Add Question
+        {sectionDetails?.name} - {addQuestion.addQuestion}
       </h1>
 
       <div className="flex h-40 flex-1 flex-row gap-6">
