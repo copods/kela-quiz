@@ -4,7 +4,7 @@ import { redirect } from '@remix-run/node'
 import type { LoaderFunction, ActionFunction } from '@remix-run/node'
 import MembersList from '~/components/members/MembersList'
 import { json } from '@remix-run/node'
-import { useActionData, useLoaderData } from '@remix-run/react'
+import { useActionData } from '@remix-run/react'
 import {
   createNewUser,
   deleteUserById,
@@ -35,7 +35,6 @@ type LoaderData = {
   userId: Awaited<ReturnType<typeof getUserId>>
   roles: Awaited<ReturnType<typeof getAllRoles>>
 }
-
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await getUserId(request)
   const roles = await getAllRoles()
@@ -128,31 +127,25 @@ export const action: ActionFunction = async ({ request }) => {
   }
 }
 export default function Members() {
-  const data = useLoaderData() as LoaderData
-  const actData = useActionData() as ActionData
+  const membersActionData = useActionData() as ActionData
   useEffect(() => {
-    if (actData) {
-      if (actData.resp?.status) {
-        toast.success(actData.resp?.status)
-      } else if (actData.errors?.status) {
+    if (membersActionData) {
+      if (membersActionData.resp?.status) {
+        toast.success(membersActionData.resp?.status)
+      } else if (membersActionData.errors?.status) {
         toast.error('Something went wrong...!')
       }
     }
-  }, [actData])
+  }, [membersActionData])
 
   return (
     <AdminLayout>
       <div>
         <MembersHeader
-          roles={data.roles}
-          actionStatus={actData?.resp?.check}
-          er={actData?.errors?.check}
+          actionStatus={membersActionData?.resp?.check}
+          err={membersActionData?.errors?.check}
         />
-        <MembersList
-          data={data.users}
-          actionStatus={actData?.resp?.status}
-          loggedInUser={data.userId}
-        />
+        <MembersList actionStatus={membersActionData?.resp?.status} />
       </div>
     </AdminLayout>
   )
