@@ -125,7 +125,7 @@ describe('Visiting Tests', () => {
       .clear()
       .type('kQuiz@copods')
       .should('have.value', 'kQuiz@copods')
-    cy.findByRole('button', { timeout: 6000 }).click()
+    cy.findByRole('button', { timeout: 6000 }).click({ force: true })
 
     cy.get('a')
       .find('#Tests', { timeout: 6000 })
@@ -340,7 +340,7 @@ describe('Visiting Tests', () => {
       .clear()
       .type('kQuiz@copods')
       .should('have.value', 'kQuiz@copods')
-    cy.findByRole('button', { timeout: 6000 }).click()
+    cy.findByRole('button', { timeout: 6000 }).click({ force: true })
     cy.get('a')
       .find('#Tests', { timeout: 6000 })
       .should('have.text', 'Tests')
