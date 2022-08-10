@@ -78,14 +78,14 @@ const TestTableItem = ({
         <div className="w-3/12 truncate text-base font-normal leading-6 text-gray-700">
           {createdBy}
         </div>
-        <div className="flex w-1/12  justify-start">
+        <div className="flex w-1/12">
           <div>
             <Icon
-              className="cursor-pointer text-lg text-primary"
+              className="cursor-pointer text-2xl text-primary"
               icon={'ant-design:user-add-outlined'}
             />
           </div>
-          <div className="flex w-full ">
+          <div>
             <TestListActionMenu
               menuIcon={'mdi:dots-vertical'}
               onClick={setIsDelete}
