@@ -10,12 +10,12 @@ const ChipGroup = ({
   index: number
 }) => {
   return (
-    <div className="chip-group">
-      <span className=" rounded-[52px] bg-bgcolor py-1 px-2">
+    <div className="chip-group ">
+      <span className=" truncate rounded-[52px] bg-bgcolor py-1 px-2">
         {sections[0]?.section.name}
       </span>
       {sections.length > 1 && (
-        <Menu as="div" className="inline-block text-left">
+        <Menu as="div" className="relative inline-block text-left">
           <Menu.Button>
             <span
               id="section-count-button"
@@ -26,14 +26,7 @@ const ChipGroup = ({
           </Menu.Button>
           <Menu.Items
             id="menu-items"
-            className={`absolute z-40 max-h-52 overflow-auto rounded-md bg-white py-4 px-4 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none ${
-              totalCount === index ||
-              totalCount - 1 === index ||
-              totalCount - 2 === index ||
-              totalCount - 3 === index
-                ? `${totalCount > 5 ? 'translate-y-[-100%]' : ''}`
-                : ''
-            } `}
+            className="absolute z-40 max-h-52 overflow-auto rounded-md bg-white py-4 px-4 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
           >
             {sections.map((sect, i) => {
               return (

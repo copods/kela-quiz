@@ -41,9 +41,8 @@ const TestList = ({
     submit({ data: JSON.stringify(filter) }, { method: 'get' })
   }, [sortDirection, sortBy, submit])
   const showCheckBox = false
-  // console.log(tests?.status, 'sdfsdfd')
   return (
-    <div className="test-list-container relative flex h-full flex-col gap-6 pb-8">
+    <div className="test-list-container flex h-full flex-col gap-6 ">
       {/* header */}
       <BreadCrumb data={breadCrumbData} />
       <header className="flex items-center justify-between">
@@ -71,8 +70,8 @@ const TestList = ({
         />
       </div>
       {tests?.length !== 0 ? (
-        <div className="flex max-h-83 flex-col rounded-lg shadow-table ">
-          <div className="rounded-b-0 flex items-center rounded-t-md border border-b-0 border-solid border-borderColor bg-tableHeader px-9 py-3 font-semibold ">
+        <div className="flex flex-1 flex-col rounded-lg  pb-6 ">
+          <div className="rounded-b-0 flex items-center rounded-t-md border border-b-0 border-solid border-borderColor bg-tableHeader px-9 py-3 font-semibold shadow-table ">
             {showCheckBox && (
               <div className=" w-1/12 pl-2.5">
                 <input type="checkbox"></input>
@@ -99,7 +98,7 @@ const TestList = ({
           </div>
           <div
             id="test-list"
-            className="rounded-t-0 flex flex-1 flex-col overflow-auto rounded-md border-t-0 border-solid border-borderColor  "
+            className="rounded-t-0 flex flex-col rounded-md border-t-0 border-solid border-borderColor shadow-table  "
           >
             {tests.map((test, i) => (
               <TestTableItem

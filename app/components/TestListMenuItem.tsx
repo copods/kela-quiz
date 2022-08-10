@@ -1,20 +1,20 @@
 import { Menu } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 
-const MenuItem = ({
+const TestListMenuItem = ({
   menuIcon,
-  setIsDelete,
+  onClick,
   menuListIcon,
   menuListText,
 }: {
   menuIcon: string
-  setIsDelete: Function
+  onClick: Function
   menuListIcon: string
   menuListText: string
 }) => {
   return (
     <>
-      <Menu as="div" className="  inline-block text-left">
+      <Menu as="div" className="relative">
         <Menu.Button>
           <Icon
             className="text-2xl text-gray-600"
@@ -22,7 +22,7 @@ const MenuItem = ({
             id="vertical-icon"
           />
         </Menu.Button>
-        <Menu.Items className="absolute right-[7%] w-56 origin-top-left translate-y-[-45px] divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+        <Menu.Items className="absolute right-0 z-40 w-56 origin-bottom-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
           <div className="px-1 py-1 ">
             <Menu.Item>
               {({ active }) => (
@@ -32,7 +32,7 @@ const MenuItem = ({
                     active ? 'bg-primary text-white' : 'text-gray-900'
                   }  delete-test group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                   onClick={() => {
-                    setIsDelete(true)
+                    onClick(true)
                   }}
                 >
                   {active ? (
@@ -59,4 +59,4 @@ const MenuItem = ({
   )
 }
 
-export default MenuItem
+export default TestListMenuItem

@@ -1,5 +1,5 @@
 import moment from 'moment'
-// import { Icon } from '@iconify/react'
+import { Icon } from '@iconify/react'
 import { NavLink } from '@remix-run/react'
 import ChipGroup from './ChipGroup'
 import type { SectionInTest } from '~/interface/Interface'
@@ -7,7 +7,7 @@ import type { SectionInTest } from '~/interface/Interface'
 import DeletePopUp from '../DeletePopUp'
 import { useState } from 'react'
 import { useSubmit } from '@remix-run/react'
-import MenuItem from '../MenuItem'
+import TestListMenuItem from '../TestListMenuItem'
 
 const TestTableItem = ({
   testName,
@@ -65,7 +65,7 @@ const TestTableItem = ({
             <span id="test-name-navigation">{testName}</span>
           </NavLink>
         </div>
-        <div id="chip-group-id" className="w-2/12 text-xs leading-6 ">
+        <div id="chip-group-id" className="mr-4 flex w-2/12 text-xs leading-6 ">
           <ChipGroup
             sections={sections}
             totalCount={totalCount}
@@ -78,17 +78,17 @@ const TestTableItem = ({
         <div className="w-3/12 truncate text-base font-normal leading-6 text-gray-700">
           {createdBy}
         </div>
-        <div className="flex w-1/12 items-center justify-start gap-3 truncate pr-4 text-xl font-normal  leading-6  text-gray-700">
-          {/* <div>
+        <div className="flex w-1/12  justify-start">
+          <div>
             <Icon
-              className="cursor-pointer text-primary"
+              className="cursor-pointer text-lg text-primary"
               icon={'ant-design:user-add-outlined'}
             />
-          </div> */}
-          <div className="flex w-full justify-end">
-            <MenuItem
+          </div>
+          <div className="flex w-full ">
+            <TestListMenuItem
               menuIcon={'mdi:dots-vertical'}
-              setIsDelete={setIsDelete}
+              onClick={setIsDelete}
               menuListIcon={'ic:outline-delete-outline'}
               menuListText={'Delete'}
             />
