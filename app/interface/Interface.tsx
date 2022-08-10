@@ -102,6 +102,7 @@ export interface Test {
   createdAt: Date
   updatedAt: Date
   sections: Array<SectionInTest>
+  candidateTest?: Array<Option>
 }
 
 export interface SectionInTest {
@@ -152,4 +153,16 @@ export interface QuestionType {
   questions?: Question[]
   createdAt?: Date
   updatedAt?: Date
+}
+export interface CandidateTest {
+  id: string
+  sections: Array<SectionInTest>
+  test: Test
+  testId: String
+  link: String
+  candidateId: String
+  startedAt: Date
+  endAt: Date
+  createdAt: Date
+  updatedAt: Date
 }

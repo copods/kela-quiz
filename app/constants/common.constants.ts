@@ -7,6 +7,7 @@ export const commonConstants = {
   removeButton: 'Remove',
   addButton: 'Add',
   byText: 'By',
+  total: 'Total',
 }
 export const sideNav = {
   sideNavHeading: 'Quiz',
@@ -39,6 +40,12 @@ export const sectionsConstants = {
   addQuestion: 'Add Question',
   noQuestionAlert: 'No questions found. Add your first question',
   noRecordFound: 'No Record Found',
+}
+export const resultConstants = {
+  order: 'Order',
+  test: 'Test',
+  totalInvited: 'Invited',
+  totalAttended: 'Attended',
 }
 export const testsConstants = {
   addTestbutton: 'Add Test',
