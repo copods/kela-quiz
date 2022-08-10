@@ -7,6 +7,7 @@ export const commonConstants = {
   removeButton: 'Remove',
   addButton: 'Add',
   byText: 'By',
+  total: 'Total',
 }
 export const sideNav = {
   sideNavHeading: 'Quiz',
@@ -65,4 +66,10 @@ export const componentGlobalConstants = {
 export const routeFiles = {
   sections: 'Sections',
   addSection: 'Add Section',
+}
+export const resultConstants = {
+  order: 'Order',
+  test: 'Test',
+  totalInvited: 'Invited',
+  totalAttended: 'Attended',
 }
