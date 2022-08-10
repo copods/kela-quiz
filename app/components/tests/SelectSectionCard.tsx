@@ -15,7 +15,7 @@ const SelectSectionCard = ({
     value?: string,
     selected?: boolean
   ) => {
-    if (section._count?.questions == 0) {
+    if (section?._count?.questions == 0) {
       toast.error('Cannot add section with 0 questions')
       return
     }

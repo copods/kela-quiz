@@ -19,6 +19,7 @@ export async function createIndividualCandidate({ email, createdById }: { email:
     }
     return user
   } catch (error) {
+    console.log(error)
     throw new Error('Candidate Create Error..!')
   }
 }
@@ -114,7 +115,7 @@ async function createCandidateData({
     }
   }
 
-  await sendMailToCandidate(user.email, updatedCandidateTest.link as string)
+  await sendMailToCandidate(user?.email, updatedCandidateTest?.link as string)
 
 }
 

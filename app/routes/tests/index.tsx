@@ -5,11 +5,11 @@ import type { LoaderFunction, ActionFunction } from '@remix-run/node'
 import TestList from '~/components/tests/TestList'
 import { getAllTests } from '~/models/tests.server'
 import { json } from '@remix-run/node'
-import { useActionData, useLoaderData } from '@remix-run/react'
+import { useLoaderData } from '@remix-run/react'
 import { toast } from 'react-toastify'
 import type { Test } from '~/interface/Interface'
 import { createCandidate } from '~/models/candidate.server'
-import { useEffect } from 'react'
+// import { useEffect } from 'react'
 
 type LoaderData = {
   tests: Awaited<ReturnType<typeof getAllTests>>
@@ -47,10 +47,15 @@ export const action: ActionFunction = async ({ request }) => {
   const testId = formData.get('inviteCandidates') as string
   formData.delete('inviteCandidates')
 
-  let emails: any = []
+  let emails: Array<string> = []
   await formData.forEach((fd) => {
-    emails.push(fd)
+    if (fd != '') {
+      emails.push(fd as string)
+    }
   })
+  if (emails.length == 0) {
+    return json({ status: 401, message: 'No emails to invite' })
+  }
   const candidateInviteStatus = await createCandidate({
     emails,
     createdById,
@@ -61,17 +66,17 @@ export const action: ActionFunction = async ({ request }) => {
 
 export default function Results() {
   const testData = useLoaderData() as LoaderData
-  const actionData = useActionData()
+  // const actionData = useActionData()
 
-  useEffect(() => {
-    if (actionData?.candidateInviteStatus == 'created') {
-      toast.success('Candidates Invited')
-    } else {
-      if (actionData?.candidateInviteStatus) {
-        toast.error('Candidate Invite Error')
-      }
-    }
-  }, [actionData])
+  // useEffect(() => {
+  //   if (actionData?.candidateInviteStatus == 'created') {
+  //     toast.success('Candidates Invited')
+  //   } else {
+  //     if (actionData?.candidateInviteStatus) {
+  //       toast.error('Candidate Invite Error')
+  //     }
+  //   }
+  // }, [actionData])
   if (testData.status != 'Success') {
     toast.success('Something went wrong..!')
   }

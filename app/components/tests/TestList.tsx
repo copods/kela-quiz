@@ -2,7 +2,6 @@ import { useSubmit } from '@remix-run/react'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import type { Test } from '~/interface/Interface'
-// import BreadCrumb from '../BreadCrumb'
 import SortFilter from '../SortFilter'
 import TestTableItem from './TestTableItem'
 import { commonConstants, testsConstants } from '~/constants/common.constants'
@@ -20,12 +19,6 @@ const TestList = ({ tests }: { tests: Array<Test> }) => {
     },
   ]
 
-  // const breadCrumbData = [
-  //   {
-  //     tabName: 'Tests',
-  //     route: '/tests',
-  //   },
-  // ]
   const submit = useSubmit()
   useEffect(() => {
     var filter = {
@@ -108,13 +101,14 @@ const TestList = ({ tests }: { tests: Array<Test> }) => {
               showCheckBox={showCheckBox}
             />
           ))}
+
+          {tests.length < 1 && (
+            <div className="flex h-full flex-col items-center justify-center gap-6 overflow-auto">
+              No test found. Add your first test
+            </div>
+          )}
         </div>
       </div>
-      {tests.length < 1 && (
-        <div className="flex flex-col items-center justify-center gap-6 overflow-auto">
-          No test found. Add your first test
-        </div>
-      )}
     </div>
   )
 }

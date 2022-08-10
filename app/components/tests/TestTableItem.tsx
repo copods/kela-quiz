@@ -24,7 +24,7 @@ const TestTableItem = ({
   sections: Array<SectionInTest>
   showCheckBox: boolean
 }) => {
-  const [candidatePopupOpen, onPopupToggle] = useState(false)
+  const [candidatePopupOpen, setCandidatePopupOpen] = useState<boolean>(false)
 
   return (
     <>
@@ -59,7 +59,7 @@ const TestTableItem = ({
           {createdBy}
         </div>
         <div className="flex w-1/12 items-center justify-end gap-3 truncate text-xl font-medium  leading-6  text-gray-700">
-          <div onClick={() => onPopupToggle(true)}>
+          <div onClick={() => setCandidatePopupOpen(true)}>
             <Icon
               className="cursor-pointer text-primary"
               icon={'ant-design:user-add-outlined'}
@@ -74,8 +74,8 @@ const TestTableItem = ({
         </div>
       </div>
       <InviteCandidatePopup
-        open={candidatePopupOpen}
-        setOpen={onPopupToggle}
+        openInvitePopup={candidatePopupOpen}
+        setOpenInvitePopup={setCandidatePopupOpen}
         testName={testName}
         testId={id}
       />
