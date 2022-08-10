@@ -177,7 +177,9 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
             title="Previous Tab"
             id="backButton"
             className={`h-9 rounded-lg px-7 text-xs text-white ${
-              currentTab != tabs[0].id ? 'bg-primary' : 'bg-gray-600'
+              currentTab != tabs[0].id
+                ? 'bg-primary'
+                : 'cursor-not-allowed bg-gray-600'
             }`}
             onClick={() => setCurrentTab(currentTab - 1)}
             disabled={currentTab === tabs[0].id}
@@ -190,7 +192,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
               id="nextButton"
               className={`h-9 rounded-lg px-7 text-xs text-white ${
                 !(name && description) || currentTab == 2
-                  ? 'bg-gray-600'
+                  ? 'cursor-not-allowed bg-gray-600'
                   : 'bg-primary'
               }`}
               onClick={() => setCurrentTab(currentTab + 1)}
@@ -203,7 +205,9 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
               title="Next Tab"
               id="submitButton"
               className={`h-9 rounded-lg px-7 text-xs text-white ${
-                currentTab == 2 ? 'bg-primary' : 'bg-gray-600'
+                currentTab == 2
+                  ? 'bg-primary'
+                  : 'cursor-not-allowed bg-gray-600'
               }`}
               onClick={() => submitAddTest()}
               disabled={currentTab != 2}

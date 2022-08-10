@@ -64,19 +64,9 @@ export const action: ActionFunction = async ({ request }) => {
   return json({ candidateInviteStatus })
 }
 
-export default function Results() {
-  const testData = useLoaderData() as LoaderData
-  // const actionData = useActionData()
+export default function Tests() {
+  const testData = useLoaderData() as unknown as LoaderData
 
-  // useEffect(() => {
-  //   if (actionData?.candidateInviteStatus == 'created') {
-  //     toast.success('Candidates Invited')
-  //   } else {
-  //     if (actionData?.candidateInviteStatus) {
-  //       toast.error('Candidate Invite Error')
-  //     }
-  //   }
-  // }, [actionData])
   if (testData.status != 'Success') {
     toast.success('Something went wrong..!')
   }
