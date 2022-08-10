@@ -1,5 +1,6 @@
 import type { SectionInTest } from '~/interface/Interface'
-import { Menu } from '@headlessui/react'
+import { Menu, Transition } from '@headlessui/react'
+import { Fragment } from 'react'
 const ChipGroup = ({
   sections,
   totalCount,
@@ -24,26 +25,36 @@ const ChipGroup = ({
               + {sections.length - 1}
             </span>
           </Menu.Button>
-          <Menu.Items
-            id="menu-items"
-            className="absolute z-40 max-h-52 overflow-auto rounded-md bg-white py-4 px-4 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+          <Transition
+            as={Fragment}
+            enter="transition ease-out duration-100"
+            enterFrom="transform opacity-0 scale-95"
+            enterTo="transform opacity-100 scale-100"
+            leave="transition ease-in duration-75"
+            leaveFrom="transform opacity-100 scale-100"
+            leaveTo="transform opacity-0 scale-95"
           >
-            {sections.map((sect, i) => {
-              return (
-                <>
-                  <div className="section-menu flex flex-col px-2 py-2">
-                    <Menu.Item>
-                      <span className="text-sm">
-                        <span className="truncate rounded-[52px] bg-bgcolor px-2 py-1 ">
-                          {sect?.section?.name}
+            <Menu.Items
+              id="menu-items"
+              className="absolute z-40 max-h-52 overflow-auto rounded-md bg-white py-4 px-4 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+            >
+              {sections.map((sect, i) => {
+                return (
+                  <>
+                    <div className="section-menu flex flex-col px-2 py-2">
+                      <Menu.Item>
+                        <span className="text-sm">
+                          <span className="truncate rounded-[52px] bg-bgcolor px-2 py-1 ">
+                            {sect?.section?.name}
+                          </span>
                         </span>
-                      </span>
-                    </Menu.Item>
-                  </div>
-                </>
-              )
-            })}
-          </Menu.Items>
+                      </Menu.Item>
+                    </div>
+                  </>
+                )
+              })}
+            </Menu.Items>
+          </Transition>
         </Menu>
       )}
     </div>
