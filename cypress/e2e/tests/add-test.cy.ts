@@ -269,18 +269,21 @@ describe('Creating tests', () => {
     cy.get('#1').find('hr').should('have.class', 'bg-primary')
     // user reached to step 2
 
-    cy.get('div#section')
-      .first()
-      .within(() => {
-        cy.get('input#noOfQu').should('have.disabled', true)
-        cy.get('input#time').should('have.disabled', true)
-        cy.get('button').should('have.text', 'Add').click()
+    cy.get('div#section', { timeout: 60000 }).each(el => {
+      cy.wrap(el).within(() => {
+        if (el.find('.count')[0].innerText != '0') {
+          cy.get('input#noOfQu').should('have.disabled', true)
+          cy.get('input#time').should('have.disabled', true)
+          cy.get('button').should('have.text', 'Add').click()
+          cy.get('button').should('have.text', 'Remove')
 
-        cy.get('button').should('have.text', 'Remove').click()
-
-        cy.get('input#noOfQu').should('have.disabled', true)
-        cy.get('input#time').should('have.disabled', true)
+          cy.get('input#noOfQu').clear().type('1')
+          cy.get('input#time').clear().type('1')
+          cy.get('input#noOfQu').should('have.value', '1')
+          cy.get('input#time').should('have.value', '1')
+        }
       })
+    })
   })
 
   it('Verify if user able to move to preview tab after selecting sections', () => {
