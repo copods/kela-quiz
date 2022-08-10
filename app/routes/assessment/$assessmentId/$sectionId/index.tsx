@@ -10,7 +10,8 @@ import {
 export const loader: LoaderFunction = async ({ params, request }) => {
   const section = await getTestSectionDetails(params.sectionId as string)
   const candidateSection = await getCandidateSectionDetails(
-    section?.sectionId as string
+    section?.sectionId as string,
+    params.assessmentId as string
   )
   return { section, candidateSection }
 }

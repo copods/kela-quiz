@@ -2,6 +2,7 @@ import type { ActionFunction, LoaderFunction } from '@remix-run/server-runtime'
 import { redirect } from '@remix-run/server-runtime'
 import Question from '~/components/assessment/Question'
 import {
+  endCurrentSection,
   getOrderedSection,
   getTestInstructionForCandidate,
   getTestSectionDetails,
@@ -22,7 +23,12 @@ export const action: ActionFunction = async ({ params, request }) => {
   const next = formData.get('next')
   const previous = formData.get('previous')
   const nextSection = formData.get('nextSection')
+  const options = formData.get('option')
 
+  console.log(...formData)
+  console.log('op', options)
+
+  return
   let nextQuestionId = null
   if (next) {
     // need to write script for submiting answers
@@ -46,6 +52,11 @@ export const action: ActionFunction = async ({ params, request }) => {
   if (nextSection) {
     const candidateTest = await getTestInstructionForCandidate(
       params.assessmentId as string
+    )
+
+    await endCurrentSection(
+      params.assessmentId as string,
+      params.sectionId as string
     )
     const nextSectionObject = await getOrderedSection(
       candidateTest?.test.id as string,

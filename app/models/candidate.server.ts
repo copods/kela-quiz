@@ -153,10 +153,10 @@ export async function getTestSectionDetails(id: CandidateTest['id']) {
   })
 }
 
-export async function getCandidateSectionDetails(sectionId: Section['id']) {
+export async function getCandidateSectionDetails(sectionId: Section['id'], candidateTestId: SectionInCandidateTest['candidateTestId']) {
   return await prisma.sectionInCandidateTest.findFirst({
     where: {
-      sectionId
+      sectionId, candidateTestId
     },
     select: {
       id: true,
@@ -270,6 +270,8 @@ export async function startAndGetQuestion(id: CandidateQuestion['id']) {
         }
       },
       status: true,
+      selectedOptions: true,
+      answers: true,
       answeredAt: true
     }
   })
@@ -328,3 +330,28 @@ export async function skipAndNextQuestion(sectionId: SectionInTest['id'], curren
 // export async function getNextSection(sectionId: SectionInTest['id'], currentSectionOrder: number) {
 //   const section = await prisma.section
 // }
+
+
+
+export async function endCurrentSection(candidateTestId: SectionInCandidateTest['candidateTestId'], id: SectionInTest['id']) {
+  const testSection = await prisma.sectionInTest.findUnique({ where: { id } })
+  console.log('testSection', testSection)
+
+  const section = await prisma.sectionInCandidateTest.findFirst({
+    where: { candidateTestId, sectionId: testSection?.sectionId },
+    select: {
+      id: true, startedAt: true, endAt: true
+    }
+  })
+
+  if (section?.endAt) {
+    return { msg: "Section already ended" }
+  }
+  console.log("sect:", section)
+
+  return await prisma.sectionInCandidateTest.updateMany({
+    where: { candidateTestId, sectionId: testSection?.sectionId },
+    data: { endAt: new Date() }
+  })
+
+}
