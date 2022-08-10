@@ -7,7 +7,7 @@ import type { SectionInTest } from '~/interface/Interface'
 import DeletePopUp from '../DeletePopUp'
 import { useState } from 'react'
 import { useSubmit } from '@remix-run/react'
-import TestListMenuItem from '../TestListMenuItem'
+import TestListActionMenu from '../TestListActionMenu'
 
 const TestTableItem = ({
   testName,
@@ -86,7 +86,7 @@ const TestTableItem = ({
             />
           </div>
           <div className="flex w-full ">
-            <TestListMenuItem
+            <TestListActionMenu
               menuIcon={'mdi:dots-vertical'}
               onClick={setIsDelete}
               menuListIcon={'ic:outline-delete-outline'}
