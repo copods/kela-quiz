@@ -395,7 +395,7 @@ describe('Test for section-details', () => {
         .then((len) => {
           lengthBefore = len
         })
-      cy.get('.iconify--fluent').click()
+        cy.get('button.flex').should('have.text', '+ Add Options').click()
       cy.get('#quillEditor')
         .its('length')
         .then((len) => {
@@ -453,11 +453,11 @@ describe('Test for section-details', () => {
         .then((len) => {
           lengthBefore = len
         })
-      cy.get('.iconify--fluent').click()
+      cy.get('svg.h-6').first().click()
       cy.get('#quillEditor')
         .its('length')
         .then((len) => {
-          expect(lengthBefore + 1).to.equal(len)
+          expect(lengthBefore - 1).to.equal(len)
         })
     })
   })
