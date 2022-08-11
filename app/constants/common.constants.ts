@@ -64,7 +64,6 @@ export const componentGlobalConstants = {
 }
 export const routeFiles = {
   sections: 'Sections',
-  addSection: 'Add Section',
 }
 
 export enum QuestionTypes {
