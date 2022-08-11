@@ -1,6 +1,5 @@
-import { NavLink } from '@remix-run/react'
+import { Link } from '@remix-run/react'
 import type { CandidateTest, Test } from '~/interface/Interface'
-
 const GroupByTestItems = ({
   candidateTests,
   index,
@@ -8,8 +7,7 @@ const GroupByTestItems = ({
   candidateTests: Test & { candidateTest?: CandidateTest }
   index: number
 }) => {
-  console.log(candidateTests.candidateTest)
-
+  console.log(candidateTests.candidateTest?.endAt)
   return (
     <div className="col-span-full grid grid-cols-10">
       <div
@@ -17,15 +15,16 @@ const GroupByTestItems = ({
         className="col-span-full grid grid-cols-10 border-t-[1px] border-solid border-[#E5E7EB] px-12 py-4"
       >
         <div className=" col-span-2 truncate">
-          <span className=" text-base leading-6 text-gray-700">{index}</span>
+          <span className=" text-base leading-6 text-gray-700">
+            {index + 1}
+          </span>
         </div>
-
-        <div className="col-span-4 truncate">
-          <NavLink to={'/'}>
+        <div className="col-span-3 truncate">
+          <Link to={'/'}>
             <span className="  text-base font-semibold   text-primary">
               {candidateTests.name}
             </span>
-          </NavLink>
+          </Link>
         </div>
         <div className="col-span-2 truncate">
           <span className=" text-base leading-6 text-gray-700">

@@ -4,7 +4,6 @@ import type { LoaderFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import GroupByTests from '~/components/results/GroupByTests'
 import { getAllCandidateTests } from '~/models/result.server'
-
 // export type ActionData = {
 //   errors?: {
 //     firstName?: string
@@ -22,7 +21,6 @@ import { getAllCandidateTests } from '~/models/result.server'
 // }
 type LoaderData = {
   candidateTest: Awaited<ReturnType<typeof getAllCandidateTests>>
-
   userId: Awaited<ReturnType<typeof getUserId>>
 }
 export const loader: LoaderFunction = async ({ request }) => {
@@ -34,12 +32,9 @@ export const loader: LoaderFunction = async ({ request }) => {
         Object.fromEntries(new URL(request.url).searchParams.entries()).data
       )
     : {}
-
   const candidateTest = await getAllCandidateTests(filter)
-
   return json<LoaderData>({ candidateTest, userId })
 }
-
 export default function ResultsIndex() {
   return <GroupByTests />
 }

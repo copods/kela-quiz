@@ -181,14 +181,14 @@ export default function SectionPage() {
         {/* header */}
         <header className="flex items-center justify-between">
           <h2 className="text-3xl font-bold text-black">
-            + {routeFiles.sections}
+            {routeFiles.sections}
           </h2>
           <button
             className="h-9 rounded-lg bg-primary px-5 text-xs text-[#F0FDF4]"
             id="add-section"
             onClick={() => setShowAddSectionModal(!showAddSectionModal)}
           >
-            {routeFiles.addSection}
+            + {routeFiles.addSection}
           </button>
         </header>
 

@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import SortFilter from '../SortFilter'
 import { resultConstants, commonConstants } from '~/constants/common.constants'
 import { useLoaderData, useSubmit } from '@remix-run/react'
-
 import GroupByTestItems from './GroupByTestItems'
 import type { CandidateTest, Test } from '~/interface/Interface'
 const GroupByTests = () => {
@@ -19,7 +18,6 @@ const GroupByTests = () => {
     },
   ]
   const candidateTestData = useLoaderData()
-
   const candidateTests = candidateTestData.candidateTest
   const submit = useSubmit()
   useEffect(() => {
@@ -47,11 +45,11 @@ const GroupByTests = () => {
         </div>
         <div className="grid grid-cols-12  bg-[#F9FAFB] ">
           <div className="col-span-full grid grid-cols-10 rounded-lg border-[1px] border-solid border-[#E5E7EB] bg-white">
-            <div className="col-span-full grid grid-cols-10 bg-tableHeader py-4 px-12">
+            <div className="col-span-full grid grid-cols-10 py-4 px-12">
               <span className="col-span-2 text-sm  font-semibold  text-gray-500">
                 {resultConstants.order}
               </span>
-              <span className="col-span-4 text-sm  font-semibold  text-gray-500">
+              <span className="col-span-3 text-sm  font-semibold  text-gray-500">
                 {resultConstants.test}
               </span>
               <span className="col-span-2 text-sm  font-semibold  text-gray-500">
@@ -67,13 +65,10 @@ const GroupByTests = () => {
                 i: number
               ) => (
                 <div
-                  key={candidateTests.id}
-                  className="memberRow col-span-10 grid "
+                  key={candidateTestData.id}
+                  className="memberRow col-span-10 grid"
                 >
-                  <GroupByTestItems
-                    candidateTests={candidateTests}
-                    index={i + 1}
-                  />
+                  <GroupByTestItems candidateTests={candidateTests} index={i} />
                 </div>
               )
             )}
