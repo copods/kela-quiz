@@ -83,7 +83,6 @@ CREATE TABLE "Option" (
     "option" TEXT,
     "questionId" TEXT NOT NULL,
     "coInQuestionId" TEXT NOT NULL,
-    "order" INTEGER NOT NULL,
     "createdById" TEXT NOT NULL,
     "candidateQuestionId" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,

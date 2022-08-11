@@ -13,9 +13,9 @@ describe('Test for section-details', () => {
       .should('have.value', 'kQuiz@copods')
     cy.findByRole('button').click()
 
-    cy.get('a').find('#Sections',{timeout:6000}).should('have.text', 'Sections').click()
-    cy.location('pathname',{timeout:6000}).should('include', '/sections')
-    cy.get('#add-section', {timeout: 6000}).should('be.visible')
+    cy.get('a').find('#Sections', { timeout: 6000 }).should('have.text', 'Sections').click()
+    cy.location('pathname', { timeout: 6000 }).should('include', '/sections')
+    cy.get('#add-section', { timeout: 6000 }).should('be.visible')
     cy.get('#add-section').click()
     cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
     cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
@@ -23,7 +23,7 @@ describe('Test for section-details', () => {
       `Aptitude - ${new Date().getTime()} Description`
     )
     cy.get('button#submitButton').should('have.text', 'Add').click()
-    cy.get('#section-cards', {timeout: 10000}).children().first().should('be.visible')
+    cy.get('#section-cards', { timeout: 10000 }).children().first().should('be.visible')
     cy.get('#section-cards').children().first().click()
     cy.get('#addQuestion').click()
     cy.location('pathname', { timeout: 60000 }).should(
@@ -560,6 +560,7 @@ describe('Test for section-details', () => {
       .type('{backspace}')
       .should('have.value', '')
     cy.get('#saveAndAddMore').should('have.text', 'Save & Add More').click()
+    cy.get('.Toastify__close-button', { timeout: 6000 }).should("be.visible")
     cy.get('.Toastify__close-button').click({ multiple: true })
     cy.get('.Toastify__toast').should('have.text', 'Enter the Question')
   })
