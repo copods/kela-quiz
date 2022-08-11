@@ -82,7 +82,7 @@ export interface Role {
 export interface Question {
   id: string
   question: string
-  correctAnswer?: string[]
+  correctAnswer?: Array<CorrectAnswer>
   marks?: number
   questionTypeId?: string
   sectionId?: string
@@ -90,7 +90,7 @@ export interface Question {
   createdAt?: Date
   updatedAt?: Date
   options?: Array<Option>
-  correctOptions?: Array<CorrectOptions>
+  correctOptions?: Array<Option>
 }
 
 export interface Test {
@@ -116,18 +116,7 @@ export interface SectionInTest {
 
 export interface Option {
   id: string
-  option: String
-  coInQuestionId?: string
-  createdById?: string
-  questionId?: string
-  order: number
-  updatedAt?: Date
-  createdAt?: Date
-  candidateQuestionId?: string
-}
-export interface CorrectOptions {
-  id: string
-  option: String
+  option: string
   coInQuestionId?: string
   createdById?: string
   questionId?: string
@@ -137,8 +126,8 @@ export interface CorrectOptions {
   candidateQuestionId?: string
 }
 export interface CorrectAnswer {
-  id: String
-  answer: String
+  id: string
+  answer: string
   order: number
   question?: string
   questionId?: string
