@@ -71,7 +71,7 @@ const GroupByTests = () => {
                 >
                   <GroupByTestItems
                     candidateTests={candidateTests}
-                    index={i}
+                    index={i + 1}
                     id={candidateTests?.id}
                   />
                 </div>
