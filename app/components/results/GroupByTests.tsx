@@ -45,7 +45,7 @@ const GroupByTests = () => {
         </div>
         <div className="grid grid-cols-12  bg-[#F9FAFB] ">
           <div className="col-span-full grid grid-cols-10 rounded-lg border-[1px] border-solid border-[#E5E7EB] bg-white">
-            <div className="col-span-full grid grid-cols-10 py-4 px-12">
+            <div className="col-span-full grid grid-cols-10 bg-tableHeader py-4 px-12">
               <span className="col-span-2 text-sm  font-semibold  text-gray-500">
                 {resultConstants.order}
               </span>
@@ -59,19 +59,24 @@ const GroupByTests = () => {
                 {commonConstants.total} {resultConstants.totalAttended}
               </span>
             </div>
-            {candidateTests.map(
-              (
-                candidateTests: Test & { candidateTest?: CandidateTest },
-                i: number
-              ) => (
-                <div
-                  key={candidateTestData.id}
-                  className="memberRow col-span-10 grid"
-                >
-                  <GroupByTestItems candidateTests={candidateTests} index={i} />
-                </div>
-              )
-            )}
+            <div id="GroupByTestItems" className="col-span-10 grid">
+              {candidateTests.map(
+                (
+                  candidateTests: Test & { candidateTest?: CandidateTest },
+                  i: number
+                ) => (
+                  <div
+                    key={candidateTestData.id}
+                    className="GroupByTestRow col-span-10 grid"
+                  >
+                    <GroupByTestItems
+                      candidateTests={candidateTests}
+                      index={i}
+                    />
+                  </div>
+                )
+              )}
+            </div>
           </div>
         </div>
       </div>
