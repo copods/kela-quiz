@@ -3,7 +3,6 @@ import { Icon } from '@iconify/react'
 import { NavLink } from '@remix-run/react'
 import ChipGroup from './ChipGroup'
 import type { SectionInTest } from '~/interface/Interface'
-// import { Menu } from '@headlessui/react'
 import DeletePopUp from '../DeletePopUp'
 import { useState } from 'react'
 import { useSubmit } from '@remix-run/react'
@@ -22,13 +21,13 @@ const TestTableItem = ({
 }: {
   index: number
   testName: string
-  createdBy: any
+  createdBy: string
   createdAt: Date
   id: any
   sections: Array<SectionInTest>
   showCheckBox: boolean
   totalCount: number
-  status: string
+  status: string | undefined
 }) => {
   const [isDelete, setIsDelete] = useState(false)
   const submit = useSubmit()
@@ -88,7 +87,7 @@ const TestTableItem = ({
           <div>
             <TestListActionMenu
               menuIcon={'mdi:dots-vertical'}
-              onClick={setIsDelete}
+              onItemClick={setIsDelete}
               menuListIcon={'ic:outline-delete-outline'}
               menuListText={'Delete'}
             />

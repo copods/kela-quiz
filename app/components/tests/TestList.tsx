@@ -11,7 +11,7 @@ const TestList = ({
   status,
 }: {
   tests: Array<Test>
-  status: string
+  status: string | undefined
 }) => {
   const [sortDirection, onSortDirectionChange] = useState('asc')
   const [sortBy, onSortChange] = useState('name')
@@ -74,7 +74,7 @@ const TestList = ({
           <div className="rounded-b-0 flex items-center rounded-t-md border border-b-0 border-solid border-borderColor bg-tableHeader px-9 py-3 font-semibold shadow-table ">
             {showCheckBox && (
               <div className=" w-1/12 pl-2.5">
-                <input type="checkbox"></input>
+                <input type="checkbox" />
               </div>
             )}
             <div className="w-1/12 pl-2.5 text-sm leading-5 text-gray-500">

@@ -9,10 +9,11 @@ import { useLoaderData } from '@remix-run/react'
 import { deleteTestById } from '~/models/tests.server'
 import { toast } from 'react-toastify'
 import type { Test } from '~/interface/Interface'
+import { statusCheck } from '~/constants/common.constants'
 
 type LoaderData = {
   tests: Awaited<ReturnType<typeof getAllTests>>
-  status: string
+  status?: string | undefined
 }
 export type ActionData = {
   errors?: {
@@ -58,7 +59,7 @@ export const action: ActionFunction = async ({ request }) => {
     await deleteTestById(formData.get('id') as string)
       .then((res) => {
         deleteHandle = json<ActionData>(
-          { resp: { status: 'Deleted Successfully..!' } },
+          { resp: { status: statusCheck.deletedSuccess + '...!' } },
           { status: 200 }
         )
       })
@@ -74,8 +75,8 @@ export const action: ActionFunction = async ({ request }) => {
 
 export default function Tests() {
   const data = useLoaderData() as unknown as LoaderData
-  if (data.status != 'Success') {
-    toast.success('Something went wrong..!')
+  if (data.status != statusCheck.success) {
+    toast.success(statusCheck.wentWrong)
   }
   return (
     <AdminLayout>

@@ -66,3 +66,8 @@ export const routeFiles = {
   sections: 'Sections',
   addSection: 'Add Section',
 }
+export enum statusCheck {
+  success = 'Success',
+  wentWrong = 'Something Went Wrong',
+  deletedSuccess = 'Deleted Successfully',
+}

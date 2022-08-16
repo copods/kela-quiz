@@ -12,7 +12,7 @@ export default function DeletePopUp({
   open: boolean
   setOpen: (e: boolean) => void
   onDelete: () => void
-  status?: string | null
+  status?: string | undefined
 }) {
   const cancelButtonRef = useRef(null)
   const deleteFunc = () => {

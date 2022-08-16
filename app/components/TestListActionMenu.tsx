@@ -4,12 +4,12 @@ import { Fragment } from 'react'
 
 const TestListMenuItem = ({
   menuIcon,
-  onClick,
+  onItemClick,
   menuListIcon,
   menuListText,
 }: {
   menuIcon: string
-  onClick: Function
+  onItemClick: Function
   menuListIcon: string
   menuListText: string
 }) => {
@@ -42,7 +42,7 @@ const TestListMenuItem = ({
                       active ? 'bg-primary text-white' : 'text-gray-900'
                     }  delete-test group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                     onClick={() => {
-                      onClick(true)
+                      onItemClick(true)
                     }}
                   >
                     {active ? (

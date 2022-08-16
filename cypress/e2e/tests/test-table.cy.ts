@@ -1,6 +1,6 @@
+const time = new Date().getTime()
 describe('Visiting Tests', () => {
   // creating data to test Test list page
-
   it('Create Section', () => {
     cy.visit('/sign-in')
     cy.get('#email')
@@ -35,7 +35,7 @@ describe('Visiting Tests', () => {
         cy.get("button[type='submit']", { timeout: 10000 }).click()
       })
   })
-  const time = new Date().getTime()
+
   it('Verify if user able create the test and navigate to test list page', () => {
     cy.visit('/sign-in')
     cy.get('#email')
@@ -66,7 +66,7 @@ describe('Visiting Tests', () => {
     cy.get('#1').find('hr').should('have.class', 'bg-primary')
     // user reached to step 2
 
-    cy.get('div#section')
+    cy.get('div#section', { timeout: 6000 })
       .first()
       .within(() => {
         cy.get('input#noOfQu').should('have.disabled', true)
