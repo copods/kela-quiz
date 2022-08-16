@@ -28,7 +28,7 @@ export const logIn = {
   signInMessage: 'Sign in to your account',
 }
 export const addQuestion = {
-  selectCoOption: 'Select Correct Option',
+  createOptions: 'Create Options',
   checkOrder: 'Check Order',
   addOptions: 'Add Options',
   addQuestion: 'Add Question',
@@ -64,5 +64,10 @@ export const componentGlobalConstants = {
 }
 export const routeFiles = {
   sections: 'Sections',
-  addSection: 'Add Section',
+}
+
+export enum QuestionTypes {
+  multipleChoice= "MULTIPLE_CHOICE",
+  singleChoice= "SINGLE_CHOICE",
+  text= "TEXT"
 }
