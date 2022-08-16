@@ -32,6 +32,13 @@ const TestList = ({
       },
     }
     submit({ data: JSON.stringify(filter) }, { method: 'get' })
+    return () => {
+      if (filter) {
+        filter = {
+          orderBy: {},
+        }
+      }
+    }
   }, [sortDirection, sortBy])
 
   const showCheckBox = false
