@@ -76,21 +76,23 @@ export const action: ActionFunction = async ({ request }) => {
     return deleteHandle
   }
 
-  let emails: Array<string> = []
-  await formData.forEach((fd) => {
-    if (fd != '') {
-      emails.push(fd as string)
+  if (testId !== null) {
+    let emails: Array<string> = []
+    await formData.forEach((fd) => {
+      if (fd != '') {
+        emails.push(fd as string)
+      }
+    })
+    if (emails.length == 0) {
+      return json({ status: 401, message: 'No emails to invite' })
     }
-  })
-  if (emails.length == 0) {
-    return json({ status: 401, message: 'No emails to invite' })
+    const candidateInviteStatus = await createCandidate({
+      emails,
+      createdById,
+      testId,
+    })
+    return json({ candidateInviteStatus })
   }
-  const candidateInviteStatus = await createCandidate({
-    emails,
-    createdById,
-    testId,
-  })
-  return json({ candidateInviteStatus })
 }
 
 export default function Tests() {

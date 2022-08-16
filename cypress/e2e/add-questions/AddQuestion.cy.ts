@@ -417,7 +417,7 @@ describe('Test for section-details', () => {
         .then((len) => {
           lengthBefore = len
         })
-        cy.get('button.flex').should('have.text', '+ Add Options').click()
+      cy.get('button.flex').should('have.text', '+ Add Options').click()
       cy.get('#quillEditor')
         .its('length')
         .then((len) => {
@@ -515,7 +515,7 @@ describe('Test for section-details', () => {
       'include',
       '/add-question'
     )
-    cy.get('h1', { timeout: 2000 }).should("be.visible")
+    cy.get('h1', { timeout: 2000 }).should('be.visible')
     cy.get('#dropdown > button').click()
 
     cy.get('ul').within(() => {
@@ -531,11 +531,11 @@ describe('Test for section-details', () => {
       })
     })
 
-    cy.get("#questionEditor #quillEditor").within(() => {
+    cy.get('#questionEditor #quillEditor').within(() => {
       cy.get('.ql-editor').type(`What is your Test Question ?`)
     })
 
-    cy.get("#optionEditor input").clear().type("Option of question")
+    cy.get('#optionEditor input').clear().type('Option of question')
 
     cy.get('#saveAndAddMore').click()
     cy.location('pathname', { timeout: 60000 }).should(
@@ -574,7 +574,7 @@ describe('Test for section-details', () => {
       '/add-question'
     )
 
-    cy.get('h1', { timeout: 2000 }).should("be.visible")
+    cy.get('h1', { timeout: 2000 }).should('be.visible')
     cy.get('#dropdown > button').click()
 
     cy.get('ul').within(() => {
@@ -590,13 +590,13 @@ describe('Test for section-details', () => {
       })
     })
 
-    cy.get("#questionEditor #quillEditor").within(() => {
+    cy.get('#questionEditor #quillEditor').within(() => {
       cy.get('.ql-editor').type(`What is your Test Question ?`)
     })
 
-    cy.get("#optionEditor input").clear().type("Option of question")
+    cy.get('#optionEditor input').clear().type('Option of question')
 
-    cy.get("#saveAndExit").click()
+    cy.get('#saveAndExit').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
   })
 
@@ -638,9 +638,6 @@ describe('Test for section-details', () => {
     cy.get('#saveAndAddMore', { timeout: 6000 })
       .should('have.text', 'Save & Add More')
       .click()
-    // cy.get('.Toastify__close-button', { timeout: 6000 }).click({
-    //   multiple: true,
-    // })
     cy.get('.Toastify__toast').should('have.text', 'Enter the Question')
   })
 
