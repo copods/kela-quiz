@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 
-import type { Question, Option } from '~/interface/Interface'
+import type { Question, Option, CorrectAnswer } from '~/interface/Interface'
 import OptionCard from './OptionCard'
 
 const QuestionCard = ({
@@ -53,15 +53,26 @@ const QuestionCard = ({
           (isExpanded === index ? 'h-full' : 'max-h-0')
         }
       >
-        <div className="grid grid-cols-1 gap-4 pt-6 ">
-          {question.options?.map((option: Option) => {
-            return (
-              <div key={option.id}>
-                <OptionCard option={option} />
+        {question?.options && (
+          <div className="grid grid-cols-1 gap-4 pt-6 ">
+            {question.options?.map((option: Option) => {
+              return (
+                <div key={option.id}>
+                  <OptionCard option={option} />
+                </div>
+              )
+            })}
+          </div>
+        )}
+        {question?.correctAnswer && (
+          <div className="grid grid-cols-1 gap-4 pt-6 ">
+            {question.correctAnswer?.map((answer: CorrectAnswer) => (
+              <div key={answer.id}>
+                <OptionCard option={answer} />
               </div>
-            )
-          })}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   )

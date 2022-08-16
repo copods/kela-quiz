@@ -4,10 +4,10 @@ import { NavLink } from '@remix-run/react'
 import ChipGroup from './ChipGroup'
 import type { SectionInTest } from '~/interface/Interface'
 import DeletePopUp from '../DeletePopUp'
-import { useState } from 'react'
 import { useSubmit } from '@remix-run/react'
 import TestListActionMenu from '../TestListActionMenu'
-
+import { useState } from 'react'
+import InviteCandidatePopup from './InviteCandidatePopup'
 const TestTableItem = ({
   testName,
   createdBy,
@@ -40,6 +40,7 @@ const TestTableItem = ({
       { method: 'post' }
     )
   }
+  const [candidatePopupOpen, setCandidatePopupOpen] = useState<boolean>(false)
 
   return (
     <>
@@ -77,8 +78,8 @@ const TestTableItem = ({
         <div className="w-3/12 truncate text-base font-normal leading-6 text-gray-700">
           {createdBy}
         </div>
-        <div className="flex w-1/12">
-          <div>
+        <div className="flex w-1/12 ">
+          <div onClick={() => setCandidatePopupOpen(true)}>
             <Icon
               className="cursor-pointer text-2xl text-primary"
               icon={'ant-design:user-add-outlined'}
@@ -99,6 +100,12 @@ const TestTableItem = ({
         open={isDelete}
         onDelete={deleteTest}
         status={status}
+      />
+      <InviteCandidatePopup
+        openInvitePopup={candidatePopupOpen}
+        setOpenInvitePopup={setCandidatePopupOpen}
+        testName={testName}
+        testId={id}
       />
     </>
   )

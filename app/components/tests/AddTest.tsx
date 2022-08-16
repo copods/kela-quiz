@@ -91,17 +91,26 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
     } = {
       name,
       description,
-      sections: selectedSections.map((section, index) => ({
+      sections: [],
+    }
+    selectedSections.forEach((section, index) => {
+      sendData.sections.push({
         sectionId: section.id,
         totalQuestions: section.totalQuestions as number,
-        timeInSeconds: section.time as number,
+        timeInSeconds: (section.time as number) * 60,
         order: index + 1,
-      })),
-    }
+      })
+    })
 
     submit({ data: JSON.stringify(sendData) }, { method: 'post' })
     // fetcher.submit({ data: JSON.stringify(sendData) }, { method: "post" });
   }
+
+  useEffect(() => {
+    if (!name || !description) {
+      setCurrentTab(0)
+    }
+  }, [currentTab, setCurrentTab, name, description])
 
   return (
     <div className="flex h-full flex-col gap-6 overflow-hidden">

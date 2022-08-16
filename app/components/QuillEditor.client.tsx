@@ -3,11 +3,13 @@ import { useQuill } from 'react-quilljs'
 import BlotFormatter from 'quill-blot-formatter'
 
 export default function QuillEditor({
+  text,
   onTextChange,
   fullAccess,
   quillPlaceholder,
   id,
 }: {
+  text: string
   onTextChange: (e: string) => void
   fullAccess: boolean
   quillPlaceholder: string
@@ -63,6 +65,12 @@ export default function QuillEditor({
   if (Quill && !quill) {
     Quill.register('modules/blotFormatter', BlotFormatter)
   }
+
+  useEffect(() => {
+    if (quill && text) {
+      quill.clipboard.dangerouslyPasteHTML(text)
+    }
+  }, [quill])
 
   useEffect(() => {
     if (quill) {

@@ -417,7 +417,7 @@ describe('Test for section-details', () => {
         .then((len) => {
           lengthBefore = len
         })
-      cy.get('.iconify--fluent').click()
+        cy.get('button.flex').should('have.text', '+ Add Options').click()
       cy.get('#quillEditor')
         .its('length')
         .then((len) => {
@@ -477,11 +477,11 @@ describe('Test for section-details', () => {
         .then((len) => {
           lengthBefore = len
         })
-      cy.get('.iconify--fluent').click()
+      cy.get('svg.h-6').first().click()
       cy.get('#quillEditor')
         .its('length')
         .then((len) => {
-          expect(lengthBefore + 1).to.equal(len)
+          expect(lengthBefore - 1).to.equal(len)
         })
     })
   })
@@ -515,6 +515,27 @@ describe('Test for section-details', () => {
       'include',
       '/add-question'
     )
+    cy.get('h1', { timeout: 2000 }).should("be.visible")
+    cy.get('#dropdown > button').click()
+
+    cy.get('ul').within(() => {
+      cy.get('li').within(() => {
+        cy.get('div').then((el) => {
+          ;[...el].map((el) => {
+            if (el.innerText === 'Text') {
+              el.click()
+            }
+            return null
+          })
+        })
+      })
+    })
+
+    cy.get("#questionEditor #quillEditor").within(() => {
+      cy.get('.ql-editor').type(`What is your Test Question ?`)
+    })
+
+    cy.get("#optionEditor input").clear().type("Option of question")
 
     cy.get('#saveAndAddMore').click()
     cy.location('pathname', { timeout: 60000 }).should(
@@ -553,7 +574,29 @@ describe('Test for section-details', () => {
       '/add-question'
     )
 
-    cy.get('#saveAndExit').click()
+    cy.get('h1', { timeout: 2000 }).should("be.visible")
+    cy.get('#dropdown > button').click()
+
+    cy.get('ul').within(() => {
+      cy.get('li').within(() => {
+        cy.get('div').then((el) => {
+          ;[...el].map((el) => {
+            if (el.innerText === 'Text') {
+              el.click()
+            }
+            return null
+          })
+        })
+      })
+    })
+
+    cy.get("#questionEditor #quillEditor").within(() => {
+      cy.get('.ql-editor').type(`What is your Test Question ?`)
+    })
+
+    cy.get("#optionEditor input").clear().type("Option of question")
+
+    cy.get("#saveAndExit").click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
   })
 

@@ -2,7 +2,6 @@ import { useSubmit } from '@remix-run/react'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import type { Test } from '~/interface/Interface'
-import BreadCrumb from '../BreadCrumb'
 import SortFilter from '../SortFilter'
 import TestTableItem from './TestTableItem'
 import { commonConstants, testsConstants } from '~/constants/common.constants'
@@ -25,12 +24,6 @@ const TestList = ({
       value: 'createdAt',
     },
   ]
-  const breadCrumbData = [
-    {
-      tabName: 'Tests',
-      route: '/tests',
-    },
-  ]
   const submit = useSubmit()
   useEffect(() => {
     var filter = {
@@ -39,12 +32,13 @@ const TestList = ({
       },
     }
     submit({ data: JSON.stringify(filter) }, { method: 'get' })
-  }, [sortDirection, sortBy, submit])
+  }, [sortDirection, sortBy])
+
   const showCheckBox = false
   return (
     <div className="test-list-container flex h-full flex-col gap-6 ">
       {/* header */}
-      <BreadCrumb data={breadCrumbData} />
+      {/* <BreadCrumb data={breadCrumbData} /> */}
       <header className="flex items-center justify-between">
         <h2 title="Tests" className="text-3xl font-bold text-black">
           {testsConstants.breadCrumbTestsTitle}
