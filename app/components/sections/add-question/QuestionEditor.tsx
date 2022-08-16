@@ -40,6 +40,7 @@ export default function QuestionEditor({
           {() => (
             <QuillEditor
               id="editorQuill"
+              text={question}
               quillPlaceholder={'question'}
               fullAccess={true}
               onTextChange={(e) => {

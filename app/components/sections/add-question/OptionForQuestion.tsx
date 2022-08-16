@@ -114,7 +114,7 @@ export default function OptionForQuestion({
 
   return (
     <div className="flex flex-1 flex-col gap-6">
-      <div className="flex h-11 flex-row items-end justify-between">
+      <div className="mb-2 flex h-11 flex-row items-end justify-between">
         {getQuestionType(selectedTypeOfQuestion) ===
           QuestionTypes.multipleChoice ||
         getQuestionType(selectedTypeOfQuestion) ===
@@ -177,6 +177,7 @@ export default function OptionForQuestion({
                     <ClientOnly fallback={<div></div>}>
                       {() => (
                         <QuillEditor
+                          text={option.option}
                           id={index + ''}
                           quillPlaceholder={'option'}
                           fullAccess={false}

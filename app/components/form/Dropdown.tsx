@@ -74,7 +74,6 @@ function DropdownField({
                             )}
                             id="option"
                           >
-                            {/* {console.log(el, 'el')} */}
                             {el[displayKey]}
                           </span>
                         </div>
