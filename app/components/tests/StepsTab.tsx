@@ -15,7 +15,9 @@ const StepsTabComponent = ({
             key={tab.id}
             id={tab.id.toString()}
             className="flex-1 cursor-pointer"
-            onClick={() => setCurrentTab(tab.id)}
+            onClick={() => {
+              setCurrentTab(tab.id)
+            }}
           >
             <hr
               className={`mb-3 h-1 w-full rounded-1 border-0 ${

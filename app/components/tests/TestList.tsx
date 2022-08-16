@@ -2,10 +2,9 @@ import { useSubmit } from '@remix-run/react'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import type { Test } from '~/interface/Interface'
-import BreadCrumb from '../BreadCrumb'
 import SortFilter from '../SortFilter'
 import TestTableItem from './TestTableItem'
-
+import { commonConstants, testsConstants } from '~/constants/common.constants'
 const TestList = ({ tests }: { tests: Array<Test> }) => {
   const [sortDirection, onSortDirectionChange] = useState('asc')
   const [sortBy, onSortChange] = useState('name')
@@ -20,12 +19,6 @@ const TestList = ({ tests }: { tests: Array<Test> }) => {
     },
   ]
 
-  const breadCrumbData = [
-    {
-      tabName: 'Tests',
-      route: '/tests',
-    },
-  ]
   const submit = useSubmit()
   useEffect(() => {
     var filter = {
@@ -39,17 +32,17 @@ const TestList = ({ tests }: { tests: Array<Test> }) => {
   return (
     <div className="flex h-full flex-col gap-6 pb-8">
       {/* header */}
-      <BreadCrumb data={breadCrumbData} />
+      {/* <BreadCrumb data={breadCrumbData} /> */}
       <header className="flex items-center justify-between">
         <h2 title="Tests" className="text-3xl font-bold text-black">
-          Tests
+          {testsConstants.breadCrumbTestsTitle}
         </h2>
         <Link to={'/tests/add-test'}>
           <button
             id="addTest"
             className="h-9 rounded-lg bg-primary px-5 text-xs text-white"
           >
-            + Add Test
+            + {testsConstants.addTestbutton}
           </button>
         </Link>
       </header>
@@ -72,17 +65,23 @@ const TestList = ({ tests }: { tests: Array<Test> }) => {
               <input type="checkbox"></input>
             </div>
           )}
-          <div className="w-1/12 text-sm leading-5 text-gray-500">S No.</div>
-          <div className="w-3/12 text-sm leading-5 text-gray-500">Test</div>
-          <div className="w-2/12 text-sm leading-5 text-gray-500">Sections</div>
-          <div className="w-2/12 text-sm leading-5 text-gray-500">
-            Created on
+          <div className="w-1/12 text-sm leading-5 text-gray-500">
+            {testsConstants.srNoText}
+          </div>
+          <div className="w-3/12 text-sm leading-5 text-gray-500">
+            {testsConstants.testListColumnLable}
           </div>
           <div className="w-2/12 text-sm leading-5 text-gray-500">
-            Created By
+            {testsConstants.sectionText}
+          </div>
+          <div className="w-2/12 text-sm leading-5 text-gray-500">
+            {testsConstants.createdOn}
+          </div>
+          <div className="w-2/12 text-sm leading-5 text-gray-500">
+            {testsConstants.created} {commonConstants.byText}
           </div>
           <div className="flex w-1/12 justify-end text-sm leading-5 text-gray-500">
-            Actions
+            {testsConstants.actionsText}
           </div>
         </div>
         <div
@@ -102,6 +101,12 @@ const TestList = ({ tests }: { tests: Array<Test> }) => {
               showCheckBox={showCheckBox}
             />
           ))}
+
+          {tests.length < 1 && (
+            <div className="flex h-full flex-col items-center justify-center gap-6 overflow-auto">
+              No test found. Add your first test
+            </div>
+          )}
         </div>
       </div>
     </div>

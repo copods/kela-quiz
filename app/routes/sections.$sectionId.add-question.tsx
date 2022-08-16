@@ -78,30 +78,25 @@ export const action: ActionFunction = async ({ request }) => {
 }
 
 export default function AddQuestion() {
-  const data = useLoaderData() as LoaderData
+  const sectionDetail = useLoaderData() as unknown as LoaderData
   const actionData = useActionData()
   const navigate = useNavigate()
   const [addQuestionKey, setAddQuestionKey] = useState(0)
   useEffect(() => {
     if (actionData?.success) {
-      console.log('Action Data', actionData)
       toast.success(actionData?.success?.data)
       if (actionData.success.addMoreQuestion) {
         setAddQuestionKey((prev) => (prev += 1))
       } else {
-        navigate(`/sections/${data.sectionDetails?.id}`)
+        navigate(`/sections/${sectionDetail.sectionDetails?.id}`)
       }
     } else if (actionData?.error) {
       toast.error(actionData?.data)
     }
-  }, [actionData, navigate, data.sectionDetails?.id])
+  }, [actionData, navigate, sectionDetail.sectionDetails?.id])
   return (
     <AdminLayout>
-      <AddQuestionInSection
-        key={addQuestionKey}
-        sectionDetails={data.sectionDetails}
-        questionTypeList={data.questionTypes}
-      />
+      <AddQuestionInSection key={addQuestionKey} />
     </AdminLayout>
   )
 }
