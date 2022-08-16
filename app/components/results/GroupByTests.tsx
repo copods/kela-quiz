@@ -47,17 +47,17 @@ const GroupByTests = () => {
         </div>
         <div className="grid grid-cols-12 rounded-lg  bg-[#F9FAFB] shadow-table">
           <div className="col-span-full grid grid-cols-10 rounded-lg border-[1px] border-solid border-[#E5E7EB] bg-white">
-            <div className="col-span-full grid grid-cols-10 bg-tableHeader py-4 px-12">
+            <div className="col-span-full grid grid-cols-10 gap-3 bg-tableHeader py-4 px-12">
               <span className="col-span-2 text-sm  font-semibold  text-gray-500">
                 {resultConstants.order}
               </span>
-              <span className="col-span-4 text-sm  font-semibold  text-gray-500">
+              <span className="col-span-3 text-sm  font-semibold  text-gray-500">
                 {resultConstants.test}
               </span>
               <span className="col-span-2 text-sm  font-semibold  text-gray-500">
                 {commonConstants.total} {resultConstants.totalInvited}
               </span>
-              <span className="col-span-2 text-sm  font-semibold  text-gray-500">
+              <span className="col-span-3 text-sm  font-semibold  text-gray-500">
                 {commonConstants.total} {resultConstants.totalAttended}
               </span>
             </div>
