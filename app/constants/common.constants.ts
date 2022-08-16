@@ -12,6 +12,7 @@ export const commonConstants = {
 export const sideNav = {
   sideNavHeading: 'Quiz',
 }
+
 export const commonMembers = {
   addMember: 'Add Member',
   firstName: 'First Name',
@@ -46,6 +47,7 @@ export const resultConstants = {
   test: 'Test',
   totalInvited: 'Invited',
   totalAttended: 'Attended',
+  noTestAlert: 'no test found. Add your test first',
 }
 export const testsConstants = {
   addTestbutton: 'Add Test',

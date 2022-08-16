@@ -1,8 +1,12 @@
 import { prisma } from '~/db.server'
+import type { CandidateTest } from '~/interface/Interface'
+
 export async function getAllCandidateTests(obj: any) {
   var filter = obj ? obj : {}
-  const res = await prisma.test.findMany({
+  let count = 0
+  var res = await prisma.test.findMany({
     ...filter,
+
     include: {
       _count: {
         select: {
@@ -11,9 +15,32 @@ export async function getAllCandidateTests(obj: any) {
           sections: true,
         },
       },
-      candidateTest: true,
+      candidateTest: {
+        select: {
+          id: true,
+          endAt: true,
+          testId: true,
+        },
+      },
+      candidateResult: {
+        select: {
+          id: true,
+        },
+      },
     },
   })
-  console.log(res)
+  if (res) {
+    res.map((test: any) => {
+      console.log('test:', test)
+      test?.candidateTest?.map((candidateTest: CandidateTest) => {
+        if (candidateTest?.endAt !== null) {
+          count = count + 1
+        }
+      })
+      test.count = count
+      return count
+    })
+  }
+
   return res
 }

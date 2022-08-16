@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import SortFilter from '../SortFilter'
 import { resultConstants, commonConstants } from '~/constants/common.constants'
+
 import { useLoaderData, useSubmit } from '@remix-run/react'
 import GroupByTestItems from './GroupByTestItems'
 import type { CandidateTest, Test } from '~/interface/Interface'
@@ -18,6 +19,7 @@ const GroupByTests = () => {
     },
   ]
   const candidateTestData = useLoaderData()
+  console.log(candidateTestData)
   const candidateTests = candidateTestData.candidateTest
   const submit = useSubmit()
   useEffect(() => {
@@ -43,13 +45,13 @@ const GroupByTests = () => {
             showSelected={false}
           />
         </div>
-        <div className="grid grid-cols-12  bg-[#F9FAFB] ">
+        <div className="grid grid-cols-12 rounded-lg  bg-[#F9FAFB] shadow-table">
           <div className="col-span-full grid grid-cols-10 rounded-lg border-[1px] border-solid border-[#E5E7EB] bg-white">
             <div className="col-span-full grid grid-cols-10 bg-tableHeader py-4 px-12">
               <span className="col-span-2 text-sm  font-semibold  text-gray-500">
                 {resultConstants.order}
               </span>
-              <span className="col-span-3 text-sm  font-semibold  text-gray-500">
+              <span className="col-span-4 text-sm  font-semibold  text-gray-500">
                 {resultConstants.test}
               </span>
               <span className="col-span-2 text-sm  font-semibold  text-gray-500">
@@ -75,6 +77,11 @@ const GroupByTests = () => {
                     />
                   </div>
                 )
+              )}
+              {candidateTests.length === 0 && (
+                <div className="flex items-center justify-center p-7">
+                  <span>{resultConstants.noTestAlert}</span>
+                </div>
               )}
             </div>
           </div>
