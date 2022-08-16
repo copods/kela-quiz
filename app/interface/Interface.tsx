@@ -89,6 +89,7 @@ export interface Question {
   createdById?: string
   createdAt?: Date
   updatedAt?: Date
+  options: Array<Option>
 }
 
 export interface Test {
@@ -113,6 +114,36 @@ export interface SectionInTest {
   test: Test
 }
 
+export interface Option {
+  id: string
+  option: String
+  coInQuestionId?: string
+  createdById?: string
+  questionId?: string
+  updatedAt?: Date
+  createdAt?: Date
+  candidateQuestionId?: string
+}
+export interface CorrectOptions {
+  id: string
+  option: String
+  coInQuestionId?: string
+  createdById?: string
+  questionId?: string
+  order: number
+  updatedAt?: Date
+  createdAt?: Date
+  candidateQuestionId?: string
+}
+export interface CorrectAnswer {
+  id: String
+  answer: String
+  order: number
+  question?: string
+  questionId?: string
+  createdAt: Date
+  updatedAt: Date
+}
 export interface QuestionType {
   id: string
   value: string

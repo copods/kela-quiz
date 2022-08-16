@@ -15,7 +15,7 @@ describe('Test for members', () => {
     cy.get('a').find('#Members').should('have.text', 'Members').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/members')
   })
-
+  //
   it('Test for adding a new member', () => {
     cy.visit('/sign-in')
     cy.get('#email')
