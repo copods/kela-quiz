@@ -66,7 +66,7 @@ export const action: ActionFunction = async ({ request }) => {
 }
 
 const AddTest = () => {
-  const data = useLoaderData() as unknown as LoaderData
+  const testData = useLoaderData() as unknown as LoaderData
   const actionData = useActionData() as any
   const navigate = useNavigate()
   useEffect(() => {
@@ -74,18 +74,20 @@ const AddTest = () => {
       toast.success('Test added successfully..')
       navigate('/tests')
     } else if (actionData) {
-      toast.error('Something went wrong..!')
+      if (actionData?.test.code == 'P2002') {
+        toast.error('Test name already exist.')
+      } else {
+        toast.error('Something went wrong..!')
+      }
     }
   }, [actionData, navigate])
-
-  if (data.status != 'success') {
+  if (testData.status != 'success') {
     toast.success('Something went wrong..!')
   }
 
   return (
     <AdminLayout>
-      <AddTestComponent sections={data.sections} />
-      {/* <div>hi</div>  */}
+      <AddTestComponent sections={testData.sections} />
     </AdminLayout>
   )
 }
