@@ -1,10 +1,10 @@
 const CandidtateListOfTestItem = ({
   email,
-  // invitedBy,
+  invitedBy,
   index,
 }: {
   email: string
-  // invitedBy: string
+  invitedBy: string
   index: number
 }) => {
   return (
@@ -20,7 +20,9 @@ const CandidtateListOfTestItem = ({
         </div>
         <div className="col-span-3 truncate">{email}</div>
         <div className="col-span-2 truncate">
-          <span className=" text-base leading-6 text-gray-700">Arpita</span>
+          <span className=" text-base leading-6 text-gray-700">
+            {invitedBy}
+          </span>
         </div>
       </div>
     </div>

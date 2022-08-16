@@ -19,6 +19,7 @@ const ResultTab = ({
                 onClick={() => setCurrentTab(tab.id)}
               >
                 <div
+                  id="tab-title"
                   title={tab.title}
                   className={`${
                     tab.id === currentTab

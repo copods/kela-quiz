@@ -9,8 +9,6 @@ const GroupByTestItems = ({
   index: number
   id: string
 }) => {
-  console.log(candidateTests.candidateTest?.endAt)
-
   return (
     <div className="col-span-full grid grid-cols-10">
       <div
@@ -21,8 +19,11 @@ const GroupByTestItems = ({
           <span className=" text-base leading-6 text-gray-700">{index}</span>
         </div>
         <div className="col-span-3 truncate">
-          <NavLink to={`/results/${id}`} key={index}>
-            <span className="  text-base font-semibold text-primary">
+          <NavLink to={`/results/groupByTests/${id}`} key={index}>
+            <span
+              className="  text-base font-semibold text-primary"
+              id="group-by-item-test"
+            >
               {candidateTests.name}
             </span>
           </NavLink>
@@ -33,7 +34,7 @@ const GroupByTestItems = ({
           </span>
         </div>
         <div className="col-span-2 truncate">
-          <span className=" text-base leading-6 text-gray-700">hola</span>
+          <span className=" text-base leading-6 text-gray-700">0</span>
         </div>
       </div>
     </div>

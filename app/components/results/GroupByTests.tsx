@@ -30,7 +30,7 @@ const GroupByTests = () => {
     submit({ data: JSON.stringify(filter) }, { method: 'get' })
   }, [sortDirection, sortBy, submit])
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-6" id="group-by-test-container">
       <h1 className="text-3xl font-bold text-gray-900 ">Group by tests</h1>
       <div className="flex flex-col gap-10">
         <div id="sort-filter-container">
@@ -68,6 +68,7 @@ const GroupByTests = () => {
                 <div
                   key={candidateTestData.id}
                   className="memberRow col-span-10 grid"
+                  id="group-by-items-container"
                 >
                   <GroupByTestItems
                     candidateTests={candidateTests}

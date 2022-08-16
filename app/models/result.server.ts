@@ -16,6 +16,7 @@ export async function getCandidateEmailById({ id }: Pick<CandidateTest, 'id'>) {
           candidate: {
             select: {
               email: true,
+              createdBy: true,
             },
           },
         },
