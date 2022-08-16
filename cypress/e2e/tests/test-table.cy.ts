@@ -38,67 +38,6 @@ describe('Visiting Tests', () => {
       })
   })
 
-  it('Verify if user able create the test and navigate to test list page', () => {
-    cy.visit('/sign-in')
-    cy.get('#email')
-      .clear()
-      .type('careers@copods.co')
-      .should('have.value', 'careers@copods.co')
-    cy.get('#password')
-      .clear()
-      .type('kQuiz@copods')
-      .should('have.value', 'kQuiz@copods')
-    cy.findByRole('button').click()
-
-    cy.get('a').find('#Tests').should('have.text', 'Tests').click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.get('#addTest').click()
-    cy.location('pathname', { timeout: 60000 }).should(
-      'include',
-      '/tests/add-test'
-    )
-
-    cy.get('#name').clear().type(`Test - ${new Date().getTime()}`)
-    cy.get('#quillEditor').within(() => {
-      cy.get('.ql-editor').type(`Test Description`)
-    })
-
-    cy.get('button#nextButton').should('have.text', 'Next').click()
-    cy.get('#0').find('hr').should('have.class', 'bg-primary')
-    cy.get('#1').find('hr').should('have.class', 'bg-primary')
-    // user reached to step 2
-
-    cy.get('div#section')
-      .first()
-      .within(() => {
-        cy.get('input#noOfQu').should('have.disabled', true)
-        cy.get('input#time').should('have.disabled', true)
-        cy.get('button').should('have.text', 'Add').click()
-        cy.get('button').should('have.text', 'Remove')
-
-        cy.get('input#noOfQu').clear().type('2')
-        cy.get('input#time').clear().type('2')
-      })
-    cy.get('div#section')
-      .last()
-      .within(() => {
-        cy.get('input#noOfQu').should('have.disabled', true)
-        cy.get('input#time').should('have.disabled', true)
-        cy.get('button').should('have.text', 'Add').click()
-        cy.get('button').should('have.text', 'Remove')
-
-        cy.get('input#noOfQu').clear().type('2')
-        cy.get('input#time').clear().type('2')
-      })
-    cy.get('button#nextButton').should('have.text', 'Next').click()
-    cy.get('#0').find('hr').should('have.class', 'bg-primary')
-    cy.get('#1').find('hr').should('have.class', 'bg-primary')
-    cy.get('#2').find('hr').should('have.class', 'bg-primary')
-
-    cy.get('button#submitButton').should('have.text', 'Submit').click()
-
-    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-  })
 
   it('Visiting Test Page', () => {
     cy.visit('/sign-in')
@@ -296,34 +235,4 @@ describe('Visiting Tests', () => {
       .should('include', '/tests')
   })
 
-  it('By Clicking count in sections it should open menu with all sections', () => {
-    cy.visit('/sign-in')
-    cy.get('#email')
-      .clear()
-      .type('careers@copods.co')
-      .should('have.value', 'careers@copods.co')
-    cy.get('#password')
-      .clear()
-      .type('kQuiz@copods')
-      .should('have.value', 'kQuiz@copods')
-    cy.findByRole('button').click()
-    cy.get('a').find('#Tests').should('have.text', 'Tests').click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.wait(2000)
-    cy.get('#chip-group-id')
-      .get('.chip-group')
-      .get('#section-count-button')
-      .click()
-    cy.get('#chip-group-id')
-      .get('.chip-group')
-      .get('#section-count-button')
-      .then((el) => {
-        cy.get('.section-menu').then(($elements) => {
-          var strings = [...$elements].map(($el) => {
-            return $el.innerText
-          })
-          expect(strings).to.deep.equal([...strings])
-        })
-      })
-  })
 })

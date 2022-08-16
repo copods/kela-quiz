@@ -120,7 +120,6 @@ export interface Option {
   coInQuestionId?: string
   createdById?: string
   questionId?: string
-  order: number
   updatedAt?: Date
   createdAt?: Date
   candidateQuestionId?: string
