@@ -23,30 +23,31 @@ export const action: ActionFunction = async ({ params, request }) => {
   const next = formData.get('next')
   const previous = formData.get('previous')
   const nextSection = formData.get('nextSection')
-  const options = formData.get('option')
+  const options: any = formData.get('option')
 
-  console.log(...formData)
-  console.log('op', options)
-
+  console.log(...formData, options)
+  console.log('op', JSON.parse(options))
   return
   let nextQuestionId = null
   if (next) {
     // need to write script for submiting answers
     // currently it only has navigations
-    nextQuestionId = await skipAndNextQuestion(
-      params.sectionId as string,
-      params.questionId as string,
-      'next'
-    )
+    nextQuestionId = await skipAndNextQuestion({
+      selectedOptions: [options],
+      sectionId: params.sectionId as string,
+      currentQuestionId: params.questionId as string,
+      nextOrPrev: 'next',
+    })
   }
   if (previous) {
     // need to write script for submiting answers
     // currently it only has navigations
-    nextQuestionId = await skipAndNextQuestion(
-      params.sectionId as string,
-      params.questionId as string,
-      'prev'
-    )
+    nextQuestionId = await skipAndNextQuestion({
+      selectedOptions: [options],
+      sectionId: params.sectionId as string,
+      currentQuestionId: params.questionId as string,
+      nextOrPrev: 'prev',
+    })
   }
 
   if (nextSection) {

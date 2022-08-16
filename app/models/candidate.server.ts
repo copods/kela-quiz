@@ -1,5 +1,5 @@
 import { prisma } from '~/db.server'
-import type { CandidateTest, Candidate, Test, Section, SectionInCandidateTest, CandidateQuestion, SectionInTest } from '@prisma/client'
+import type { CandidateTest, Candidate, Test, Section, SectionInCandidateTest, CandidateQuestion, SectionInTest, Option } from '@prisma/client'
 
 export async function checkIfTestLinkIsValid(id: CandidateTest['id']) {
   return await prisma.candidateTest.findUnique({
@@ -278,19 +278,25 @@ export async function startAndGetQuestion(id: CandidateQuestion['id']) {
 }
 
 
-export async function skipAndNextQuestion(sectionId: SectionInTest['id'], currentQuestionId: CandidateQuestion['id'], nextOrPrev: string) {
+export async function skipAndNextQuestion({ selectedOptions, sectionId, currentQuestionId, nextOrPrev }: { selectedOptions: Array<Option>, sectionId: SectionInTest['id'], currentQuestionId: CandidateQuestion['id'], nextOrPrev: string }) {
 
   // write script for save question answer
   // write script for last question
 
   //getting currentQuestionOrder
-  const currentQuestion = await prisma.candidateQuestion.findFirst({
+  const currentQuestion = await prisma.candidateQuestion.update({
     where: {
       id: currentQuestionId
     },
+    data: {
+      selectedOptions: {
+        create: selectedOptions
+      }
+    },
     select: {
       sectionInCandidateTestId: true,
-      order: true
+      order: true,
+      id: true
     }
   })
 
@@ -335,7 +341,6 @@ export async function skipAndNextQuestion(sectionId: SectionInTest['id'], curren
 
 export async function endCurrentSection(candidateTestId: SectionInCandidateTest['candidateTestId'], id: SectionInTest['id']) {
   const testSection = await prisma.sectionInTest.findUnique({ where: { id } })
-  console.log('testSection', testSection)
 
   const section = await prisma.sectionInCandidateTest.findFirst({
     where: { candidateTestId, sectionId: testSection?.sectionId },
@@ -347,7 +352,6 @@ export async function endCurrentSection(candidateTestId: SectionInCandidateTest[
   if (section?.endAt) {
     return { msg: "Section already ended" }
   }
-  console.log("sect:", section)
 
   return await prisma.sectionInCandidateTest.updateMany({
     where: { candidateTestId, sectionId: testSection?.sectionId },

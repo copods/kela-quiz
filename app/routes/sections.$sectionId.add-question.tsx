@@ -78,7 +78,7 @@ export const action: ActionFunction = async ({ request }) => {
 }
 
 export default function AddQuestion() {
-  const data = useLoaderData() as LoaderData
+  const data = useLoaderData() as unknown as LoaderData
   const actionData = useActionData()
   const navigate = useNavigate()
   const [addQuestionKey, setAddQuestionKey] = useState(0)

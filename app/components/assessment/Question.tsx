@@ -1,5 +1,5 @@
 import { useLoaderData } from '@remix-run/react'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 function Question() {
   const { question, section } = useLoaderData()
@@ -8,7 +8,7 @@ function Question() {
   const questionType = question.question.questionType.value
 
   const [userAnswer, setUserAnswer] = useState(
-    questionType === 'SINGLE_CHOICE' ? question.selectedOptions[0] : ''
+    questionType === 'SINGLE_CHOICE' ? question.selectedOptions[0] : {}
   )
 
   if (questionType === 'MULTIPLE_CHOICE') {
@@ -18,7 +18,7 @@ function Question() {
     }
   }
 
-  const onChangeHandle = (option: string) => {
+  const onChangeHandle = (option: any) => {
     if (questionType == 'SINGLE_CHOICE') {
       setUserAnswer(option)
     }
@@ -35,9 +35,9 @@ function Question() {
     }
   }
 
-  useEffect(() => {
-    console.log(userAnswer)
-  }, [userAnswer])
+  // useEffect(() => {
+  //   console.log(userAnswer)
+  // }, [userAnswer])
 
   return (
     <form method="post" className="flex h-full flex-col gap-9">
@@ -92,10 +92,10 @@ function Question() {
                       <input
                         type="radio"
                         name="option"
-                        value={option.id}
-                        checked={option.id == userAnswer}
+                        value={option.toString()}
+                        checked={option == userAnswer}
                         onChange={() => {
-                          onChangeHandle(option.id)
+                          onChangeHandle(option)
                         }}
                       />
                     ) : (

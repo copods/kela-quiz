@@ -128,7 +128,7 @@ export const action: ActionFunction = async ({ request }) => {
   }
 }
 export default function Members() {
-  const data = useLoaderData() as LoaderData
+  const data = useLoaderData() as unknown as LoaderData
   const actData = useActionData() as ActionData
   useEffect(() => {
     if (actData) {

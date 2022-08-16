@@ -51,7 +51,6 @@ export const loader: LoaderFunction = async ({ params, request }) => {
       `/assessment/${params.assessmentId}/${nextSectionObject?.id}`
     )
   }
-  console.log('section====', candidateSection)
 
   const candidateTest = await getCandidateTestForSideNav(
     params.assessmentId as string
