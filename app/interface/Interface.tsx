@@ -16,6 +16,7 @@ export interface ButtonProps {
   type: 'submit' | 'reset' | 'button'
   buttonText: string
   handleClick?: React.MouseEventHandler<HTMLButtonElement>
+  isDisabled?: boolean
 }
 
 export interface LoginProps {
@@ -31,7 +32,7 @@ export interface ActionData {
 }
 
 export interface CheckboxProps {
-  handleChange: React.Dispatch<React.SetStateAction<boolean>>
+  handleChange: React.MouseEventHandler<HTMLInputElement>
   name?: string
   isChecked?: boolean
 }
@@ -52,7 +53,6 @@ export interface TestSection {
   timeInSeconds?: number
   section?: Section
 }
-
 export interface Section {
   id: string
   name: string
@@ -89,8 +89,7 @@ export interface Question {
   createdById?: string
   createdAt?: Date
   updatedAt?: Date
-  options?: Array<Option>
-  correctOptions?: Array<CorrectOptions>
+  options: Array<Option>
 }
 
 export interface Test {
