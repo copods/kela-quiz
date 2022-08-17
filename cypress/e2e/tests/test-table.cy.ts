@@ -1,7 +1,7 @@
 const time = new Date().getTime()
 describe('Visiting Tests', () => {
   // creating data to test Test list page
-  xit('Create Section', () => {
+  it('Create Section', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -36,7 +36,7 @@ describe('Visiting Tests', () => {
       })
   })
 
-  xit('Verify if user able create the test and navigate to test list page', () => {
+  it('Verify if user able create the test and navigate to test list page', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -91,7 +91,7 @@ describe('Visiting Tests', () => {
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
   })
 
-  xit('Visiting Test Page', () => {
+  it('Visiting Test Page', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -108,7 +108,7 @@ describe('Visiting Tests', () => {
   })
 
   let strings: any
-  xit('Total Count of Test of Table', () => {
+  it('Total Count of Test of Table', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -133,7 +133,7 @@ describe('Visiting Tests', () => {
         expect(strings).to.deep.equal([...strings])
       })
   })
-  xit('sort by name in ascending order ', () => {
+  it('sort by name in ascending order ', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -160,7 +160,7 @@ describe('Visiting Tests', () => {
         }
       })
   })
-  xit('sort by name in descending order ', () => {
+  it('sort by name in descending order ', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -188,7 +188,7 @@ describe('Visiting Tests', () => {
         }
       })
   })
-  xit('sort by created date in ascending order ', () => {
+  it('sort by created date in ascending order ', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -221,7 +221,7 @@ describe('Visiting Tests', () => {
         }
       })
   })
-  xit('sort by created date in descending order', () => {
+  it('sort by created date in descending order', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -257,7 +257,7 @@ describe('Visiting Tests', () => {
       })
   })
 
-  xit('By Clicking test name it should navigate to test details page', () => {
+  it('By Clicking test name it should navigate to test details page', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -331,7 +331,7 @@ describe('Visiting Tests', () => {
     })
   })
   let deletedItem: any
-  xit('On Clicking delete it should delete the test', () => {
+  it('On Clicking delete it should delete the test', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
