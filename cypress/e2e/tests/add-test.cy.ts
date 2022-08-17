@@ -458,27 +458,4 @@ describe('Creating tests', () => {
       .last()
       .should('have.text', testName)
   })
-
-  it('Verify if user able create the test and navigate to test list page and see added test there', () => {
-    cy.visit('/sign-in')
-    cy.get('#email')
-      .clear()
-      .type('careers@copods.co')
-      .should('have.value', 'careers@copods.co')
-    cy.get('#password')
-      .clear()
-      .type('kQuiz@copods')
-      .should('have.value', 'kQuiz@copods')
-    cy.findByRole('button').click()
-
-    cy.get('a').find('#Tests').should('have.text', 'Tests').click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    // cy.get('#addTest').click()
-    // cy.location('pathname', { timeout: 60000 }).should('include', '/tests/add-test')
-    cy.get('button#headlessui-listbox-button-1',{timeout:6000}).click()
-    // cy.get("#headlessui-listbox-option-13").click()
-    cy.get('ul').within(() => {
-      cy.get('li').last().click()
-    })
-  })
 })
