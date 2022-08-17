@@ -475,7 +475,7 @@ describe('Creating tests', () => {
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     // cy.get('#addTest').click()
     // cy.location('pathname', { timeout: 60000 }).should('include', '/tests/add-test')
-    cy.get('button#headlessui-listbox-button-1').click()
+    cy.get('button#headlessui-listbox-button-1',{timeout:6000}).click()
     // cy.get("#headlessui-listbox-option-13").click()
     cy.get('ul').within(() => {
       cy.get('li').last().click()
