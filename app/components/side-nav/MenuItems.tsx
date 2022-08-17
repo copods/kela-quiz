@@ -25,7 +25,7 @@ function MenuItems({ iconClass, itemName, itemRoute }: tabProps) {
             id="tabIcon"
             icon={iconClass}
             className={`order-none flex-none grow-0 text-2xl  ${
-              location.pathname === `/${itemRoute}`
+              location.pathname.includes(`/${itemRoute}`)
                 ? 'text-primary'
                 : 'text-gray-400'
             }`}
@@ -34,7 +34,7 @@ function MenuItems({ iconClass, itemName, itemRoute }: tabProps) {
             <p
               id={itemName}
               className={`non-italic text-base font-semibold leading-6 ${
-                location.pathname === `/${itemRoute}`
+                location.pathname.includes(`/${itemRoute}`)
                   ? 'text-primary'
                   : 'text-gray-500'
               }`}

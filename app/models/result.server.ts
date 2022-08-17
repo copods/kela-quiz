@@ -1,10 +1,11 @@
+import type { Test } from '@prisma/client'
 import { prisma } from '~/db.server'
 import type { CandidateTest } from '~/interface/Interface'
 
 export async function getAllCandidateTests(obj: any) {
   var filter = obj ? obj : {}
   let count = 0
-  var res = await prisma.test.findMany({
+  var res: Array<Test> = await prisma.test.findMany({
     ...filter,
 
     include: {
@@ -30,16 +31,18 @@ export async function getAllCandidateTests(obj: any) {
     },
   })
   if (res) {
-    res.map((test: any) => {
-      console.log('test:', test)
-      test?.candidateTest?.map((candidateTest: CandidateTest) => {
-        if (candidateTest?.endAt !== null) {
-          count = count + 1
-        }
-      })
-      test.count = count
-      return count
-    })
+    res.forEach(
+      (
+        test: Test & { count?: number; candidateTest?: Array<CandidateTest> }
+      ) => {
+        test?.candidateTest?.forEach((candidateTest: CandidateTest) => {
+          if (candidateTest?.endAt !== null) {
+            count = count + 1
+          }
+        })
+        test['count'] = count
+      }
+    )
   }
 
   return res

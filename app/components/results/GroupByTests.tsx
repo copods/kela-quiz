@@ -65,7 +65,10 @@ const GroupByTests = () => {
             <div id="GroupByTestItems" className="col-span-10 grid">
               {candidateTests.map(
                 (
-                  candidateTests: Test & { candidateTest?: CandidateTest },
+                  candidateTests: Test & {
+                    count?: number
+                    candidateTest?: CandidateTest
+                  },
                   i: number
                 ) => (
                   <div

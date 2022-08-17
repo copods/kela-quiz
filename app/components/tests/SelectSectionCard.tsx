@@ -1,5 +1,6 @@
 import { Icon } from '@iconify/react'
 import Moment from 'moment'
+import { toast } from 'react-toastify'
 import type { TestSection } from '~/interface/Interface'
 import { commonConstants, testsConstants } from '~/constants/common.constants'
 const SelectSectionCard = ({
@@ -14,6 +15,10 @@ const SelectSectionCard = ({
     value?: string,
     selected?: boolean
   ) => {
+    if (section?._count?.questions == 0) {
+      toast.error('Cannot add section with 0 questions')
+      return
+    }
     var temp = {
       isSelected: section.isSelected,
       totalQuestions: section.totalQuestions
@@ -32,6 +37,10 @@ const SelectSectionCard = ({
         temp.isSelected = selected
         break
       case 'totalQuestions':
+        if (parseInt(value || '') > (section?._count?.questions || 0)) {
+          toast.error('Cannot add more than available questions')
+          return
+        }
         temp.totalQuestions = parseInt(value || '')
         break
       case 'time':
@@ -87,7 +96,8 @@ const SelectSectionCard = ({
         </span>
       </div>
       <div className="flex text-xs text-gray-400">
-        {testsConstants.totalQuestionsText}: {section?._count?.questions}
+        {testsConstants.totalQuestionsText}:{' '}
+        <span className="count">{section?._count?.questions}</span>
       </div>
       <hr className="h-px w-full border-0 bg-gray-300" />
       <div className="flex gap-4 pt-1">

@@ -1,7 +1,7 @@
 import type { ActionFunction, LoaderFunction } from '@remix-run/server-runtime'
 import { redirect } from '@remix-run/server-runtime'
 import { json } from '@remix-run/node'
-import { routeFiles } from '~/constants/common.constants'
+import { routeFiles, sectionsConstants } from '~/constants/common.constants'
 import {
   Outlet,
   useActionData,
@@ -107,7 +107,7 @@ export const action: ActionFunction = async ({ request }) => {
 }
 
 export default function SectionPage() {
-  const data = useLoaderData() as LoaderData
+  const data = useLoaderData() as unknown as LoaderData
   const fetcher = useFetcher()
   const action = useActionData() as ActionData
 
@@ -188,7 +188,7 @@ export default function SectionPage() {
             id="add-section"
             onClick={() => setShowAddSectionModal(!showAddSectionModal)}
           >
-            + {routeFiles.addSection}
+            + {sectionsConstants.addSection}
           </button>
         </header>
 

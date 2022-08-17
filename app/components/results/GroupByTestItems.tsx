@@ -4,7 +4,7 @@ const GroupByTestItems = ({
   candidateTests,
   index,
 }: {
-  candidateTests: (Test & { candidateTest?: CandidateTest }) | any
+  candidateTests: Test & { count?: number; candidateTest?: CandidateTest }
   index: number
 }) => {
   return (
@@ -32,7 +32,7 @@ const GroupByTestItems = ({
         </div>
         <div className="col-span-3 truncate">
           <span className=" text-base leading-6 text-gray-700">
-            {candidateTests.count}
+            {candidateTests?.count}
           </span>
         </div>
       </div>

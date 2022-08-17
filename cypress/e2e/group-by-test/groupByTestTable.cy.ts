@@ -10,7 +10,6 @@ describe('Test for GroupByTestTable, Result', () => {
       .type('kQuiz@copods')
       .should('have.value', 'kQuiz@copods')
     cy.findByRole('button').click()
-
     cy.get('a').find('#Results').should('have.text', 'Results').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')
   })
@@ -26,7 +25,6 @@ describe('Test for GroupByTestTable, Result', () => {
       .type('kQuiz@copods')
       .should('have.value', 'kQuiz@copods')
     cy.findByRole('button').click()
-
     cy.get('a').find('#Sections').should('have.text', 'Sections').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('#add-section').click()
@@ -38,6 +36,30 @@ describe('Test for GroupByTestTable, Result', () => {
         cy.get('textarea').type('Aptitude')
         cy.get("button[type='submit']", { timeout: 10000 }).click()
       })
+    cy.get('#addQuestion').should('have.text', '+ Add Question').click()
+    cy.location('pathname', { timeout: 60000 }).should(
+      'include',
+      '/add-question'
+    )
+    cy.get('h1', { timeout: 2000 }).should('be.visible')
+    cy.get('#dropdown > button').click()
+    cy.get('ul').within(() => {
+      cy.get('li').within(() => {
+        cy.get('div').then((el) => {
+          ;[...el].map((el) => {
+            if (el.innerText === 'Text') {
+              el.click()
+            }
+            return null
+          })
+        })
+      })
+    })
+    cy.get('#questionEditor #quillEditor').within(() => {
+      cy.get('.ql-editor').type(`What is your Test Question ?`)
+    })
+    cy.get('#optionEditor input').clear().type('Option of question')
+    cy.get('#saveAndExit').click()
     cy.get('a').find('#Tests').should('have.text', 'Tests').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('#addTest').click()
@@ -45,7 +67,6 @@ describe('Test for GroupByTestTable, Result', () => {
       'include',
       '/tests/add-test'
     )
-    cy.wait(2000)
     cy.get('#name').clear().type(`Test - ${time}`)
     cy.get('#quillEditor').within(() => {
       cy.get('.ql-editor').type(`Test Description`)
@@ -71,9 +92,7 @@ describe('Test for GroupByTestTable, Result', () => {
     cy.get('#0').find('hr').should('have.class', 'bg-primary')
     cy.get('#1').find('hr').should('have.class', 'bg-primary')
     cy.get('#2').find('hr').should('have.class', 'bg-primary')
-
     cy.get('button#submitButton').should('have.text', 'Submit').click()
-
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('a').find('#Results').should('have.text', 'Results').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')
@@ -91,7 +110,6 @@ describe('Test for GroupByTestTable, Result', () => {
       .type('kQuiz@copods')
       .should('have.value', 'kQuiz@copods')
     cy.findByRole('button').click()
-
     cy.get('a').find('#Results').should('have.text', 'Results').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')
     cy.get('#sort-filter')
@@ -125,7 +143,6 @@ describe('Test for GroupByTestTable, Result', () => {
       .invoke('text')
       .then((el) => {
         if (el === 'Name') {
-          cy.wait(1000)
           cy.get('.border-t')
             .get('.text-primary')
             .then(($elements) => {
@@ -154,7 +171,6 @@ describe('Test for GroupByTestTable, Result', () => {
       .invoke('text')
       .then((el) => {
         if (el === 'Name') {
-          cy.wait(1000)
           cy.get('.border-t')
             .get('.text-primary')
             .then(($elements) => {
@@ -189,7 +205,6 @@ describe('Test for GroupByTestTable, Result', () => {
       .invoke('text')
       .then((el) => {
         if (el === 'Created Date') {
-          cy.wait(1000)
           cy.get('.border-t')
             .get('.text-primary')
             .then(($elements) => {
@@ -224,7 +239,6 @@ describe('Test for GroupByTestTable, Result', () => {
       .invoke('text')
       .then((el) => {
         if (el === 'Created Date') {
-          cy.wait(1000)
           cy.get('.border-t')
             .get('.text-primary')
             .then(($elements) => {
