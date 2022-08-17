@@ -48,7 +48,10 @@ describe('Visiting Tests', () => {
       .should('have.value', 'kQuiz@copods')
     cy.findByRole('button').click()
 
-    cy.get('a').find('#Tests').should('have.text', 'Tests').click()
+    cy.get('a', { timeout: 6000 })
+      .find('#Tests')
+      .should('have.text', 'Tests')
+      .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('#addTest').click()
     cy.location('pathname', { timeout: 60000 }).should(
@@ -269,7 +272,10 @@ describe('Visiting Tests', () => {
       .should('have.value', 'kQuiz@copods')
     cy.findByRole('button').click()
 
-    cy.get('a').find('#Tests').should('have.text', 'Tests').click()
+    cy.get('a', { timeout: 6000 })
+      .find('#Tests')
+      .should('have.text', 'Tests')
+      .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
 
     cy.get('a')
@@ -302,14 +308,15 @@ describe('Visiting Tests', () => {
       .should('have.text', 'Tests')
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.get('#sort-filter-body').get('#ascend').click()
-    cy.get('.dropdown', { timeout: 6000 })
+
+    cy.get('.dropdown')
       .get('.dropdownButton')
       .click()
       .get('li div')
       .get('.dropdown-option')
       .get('.not-selected')
       .click()
+    cy.get('#sort-filter-body').get('#ascend').click()
     cy.get('.chip-group', { timeout: 6000 }).should('be.visible')
     cy.get('.chip-group', { timeout: 6000 })
       .find('#section-count-button', { timeout: 6000 })
