@@ -303,11 +303,12 @@ describe('Visiting Tests', () => {
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('#chip-group-id', { timeout: 60000 }).should('be.visible')
-
     cy.get('#chip-group-id', { timeout: 60000 }).should('be.visible')
-    cy.get('.chip-group', { timeout: 60000 }).should('be.visible')
-    cy.get('#section-count-button', { timeout: 60000 }).should('be.visible')
-    cy.get('#section-count-button').click()
+    cy.get('.chip-group', { timeout: 60000 })
+      .first()
+      .get('#section-count-button', { timeout: 6000 })
+      .click()
+
     cy.get('#chip-group-id', { timeout: 60000 }).then((el) => {
       cy.get('.section-menu').then(($elements) => {
         var strings = [...$elements].map(($el) => {
