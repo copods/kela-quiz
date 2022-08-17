@@ -277,12 +277,6 @@ describe('Visiting Tests', () => {
       .should('have.text', 'Tests')
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-
-    cy.get('a')
-      .find('#Tests', { timeout: 6000 })
-      .should('have.text', 'Tests')
-      .click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('#test-table-list', { timeout: 60000 }).should('be.visible')
 
     cy.get('#test-table-list', { timeout: 60000 })
@@ -318,9 +312,8 @@ describe('Visiting Tests', () => {
       .click()
     cy.wait(4000)
     cy.get('.chip-group', { timeout: 6000 })
-      .children()
-      .get('.section-count-button')
       .first()
+      .get('#section-count-button', { timeout: 6000 })
       .click()
     cy.get('#chip-group-id', { timeout: 60000 }).then((el) => {
       cy.get('.section-menu').then(($elements) => {
