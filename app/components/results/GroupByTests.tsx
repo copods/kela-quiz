@@ -6,24 +6,25 @@ import { useLoaderData, useSubmit } from '@remix-run/react'
 import GroupByTestItems from './GroupByTestItems'
 import type { CandidateTest, Test } from '~/interface/Interface'
 const GroupByTests = () => {
-  const [sortDirection, onSortDirectionChange] = useState('asc')
-  const [sortBy, onSortChange] = useState('name')
+  const [sortDirection, onSortDirectionChange] = useState(
+    commonConstants.ascending
+  )
+  const [sortBy, onSortChange] = useState(commonConstants.nameSmallEach)
   const filterByType = [
     {
-      name: 'Name',
-      value: 'name',
+      name: commonConstants.name,
+      value: commonConstants.nameSmallEach,
     },
     {
-      name: 'Created Date',
-      value: 'createdAt',
+      name: commonConstants.createdDate,
+      value: commonConstants.createdAt,
     },
   ]
   const candidateTestData = useLoaderData()
-  console.log(candidateTestData)
   const candidateTests = candidateTestData.candidateTest
   const submit = useSubmit()
   useEffect(() => {
-    var filter = {
+    const filter = {
       orderBy: {
         [sortBy]: sortDirection,
       },

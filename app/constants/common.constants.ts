@@ -8,6 +8,10 @@ export const commonConstants = {
   addButton: 'Add',
   byText: 'By',
   total: 'Total',
+  ascending: 'asc',
+  nameSmallEach: 'name',
+  createdAt: 'createdAt',
+  createdDate: 'Created Date',
 }
 export const sideNav = {
   sideNavHeading: 'Quiz',
