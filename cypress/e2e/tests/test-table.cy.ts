@@ -302,6 +302,7 @@ describe('Visiting Tests', () => {
       .should('have.text', 'Tests')
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
+    cy.get('#sort-filter-body').get('#ascend').click()
     cy.get('.dropdown', { timeout: 6000 })
       .get('.dropdownButton')
       .click()
