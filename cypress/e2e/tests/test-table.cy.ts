@@ -302,25 +302,21 @@ describe('Visiting Tests', () => {
       .should('have.text', 'Tests')
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.get('.dropdown')
+    cy.get('.dropdown', { timeout: 6000 })
       .get('.dropdownButton')
       .click()
       .get('li div')
       .get('.dropdown-option')
       .get('.not-selected')
       .click()
-    cy.get('#chip-group-id', { timeout: 60000 }).should('be.visible')
-    cy.get('#chip-group-id', { timeout: 60000 }).should('be.visible')
-    cy.get('.chip-group', { timeout: 60000 })
-      .first()
-      .get('#section-count-button', { timeout: 6000 })
+    cy.get('.chip-group', { timeout: 6000 }).should('be.visible')
+    cy.get('.chip-group', { timeout: 6000 })
+      .find('#section-count-button', { timeout: 6000 })
       .should('be.visible')
-
-    cy.get('.chip-group', { timeout: 60000 })
+    cy.get('.chip-group', { timeout: 6000 })
+      .find('#section-count-button', { timeout: 6000 })
       .first()
-      .get('#section-count-button', { timeout: 6000 })
       .click()
-
     cy.get('#chip-group-id', { timeout: 60000 }).then((el) => {
       cy.get('.section-menu').then(($elements) => {
         var strings = [...$elements].map(($el) => {
