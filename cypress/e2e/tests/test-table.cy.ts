@@ -309,6 +309,7 @@ describe('Visiting Tests', () => {
       .get('.chip-group', { timeout: 60000 })
       .should('be.visible')
       .get('#section-count-button', { timeout: 60000 })
+      .should('be.visible')
       .click()
     cy.get('#chip-group-id', { timeout: 60000 }).then((el) => {
       cy.get('.section-menu').then(($elements) => {
