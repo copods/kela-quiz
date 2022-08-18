@@ -1,5 +1,5 @@
 describe('Test for GroupByTestTable, Result', () => {
-  xit('Test for Routing and Active Tab for Results', () => {
+  it('Test for Routing and Active Tab for Results', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -217,7 +217,7 @@ describe('Test for GroupByTestTable, Result', () => {
         }
       })
   })
-  xit('sort by created date in descending order', () => {
+  it('sort by created date in descending order', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
