@@ -11,7 +11,7 @@ const ChipGroup = ({
   index: number
 }) => {
   return (
-    <div className="chip-group ">
+    <div className="chip-group">
       <span className=" truncate rounded-[52px] bg-bgcolor py-1 px-2">
         {sections[0]?.section.name}
       </span>
