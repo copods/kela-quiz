@@ -1,11 +1,11 @@
 const StepsTabComponent = ({
   tabs,
-  isEmpty,
+  isDisabled,
   currentTab,
   setCurrentTab,
 }: {
   tabs: Array<{ id: number; name: string; description: string }>
-  isEmpty: boolean
+  isDisabled: boolean
   currentTab: number
   setCurrentTab: (e: number) => void
 }) => {
@@ -16,7 +16,7 @@ const StepsTabComponent = ({
           <div
           key={tab.id}
           id={tab.id.toString()}
-          className={`flex-1 ${isEmpty ? 'pointer-events-none' : 'cursor-pointer'}`} 
+          className={`flex-1 ${isDisabled ? 'pointer-events-none' : 'cursor-pointer'}`} 
           onClick={() => {
             setCurrentTab(tab.id)
           }}

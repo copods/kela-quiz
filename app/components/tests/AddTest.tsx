@@ -125,7 +125,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
       </div>
       <StepsTabComponent
         tabs={tabs}
-        isEmpty={!name || !description}
+        isDisabled={!name || !description}
         currentTab={currentTab}
         setCurrentTab={setCurrentTab}
       />
