@@ -36,12 +36,14 @@ describe('Test for GroupByTestTable, Result', () => {
         cy.get('textarea').type('Aptitude')
         cy.get("button[type='submit']", { timeout: 10000 }).click()
       })
-    cy.get('#addQuestion').should('have.text', '+ Add Question').click()
+    cy.get('#addQuestion', { timeout: 60000 })
+      .should('have.text', '+ Add Question')
+      .click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
     )
-    cy.get('h1', { timeout: 2000 }).should('be.visible')
+    cy.get('h1', { timeout: 6000 }).should('be.visible')
     cy.get('#dropdown > button').click()
     cy.get('ul').within(() => {
       cy.get('li').within(() => {
@@ -67,7 +69,7 @@ describe('Test for GroupByTestTable, Result', () => {
       'include',
       '/tests/add-test'
     )
-    cy.get('#name').clear().type(`Test - ${time}`)
+    cy.get('#name', { timeout: 60000 }).clear().type(`Test - ${time}`)
     cy.get('#quillEditor').within(() => {
       cy.get('.ql-editor').type(`Test Description`)
     })
@@ -84,7 +86,6 @@ describe('Test for GroupByTestTable, Result', () => {
         cy.get('input#time').should('have.disabled', true)
         cy.get('button').should('have.text', 'Add').click()
         cy.get('button').should('have.text', 'Remove')
-
         cy.get('input#noOfQu').clear().type('2')
         cy.get('input#time').clear().type('2')
       })
@@ -137,17 +138,19 @@ describe('Test for GroupByTestTable, Result', () => {
       .type('kQuiz@copods')
       .should('have.value', 'kQuiz@copods')
     cy.findByRole('button').click()
-    cy.get('a').find('#Results').should('have.text', 'Results').click()
+    cy.get('a', { timeout: 50000 })
+      .find('#Results')
+      .should('have.text', 'Results')
+      .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')
     cy.get('#headlessui-listbox-button-1 span span')
       .invoke('text')
       .then((el) => {
         if (el === 'Name') {
-          cy.get('.border-t')
+          cy.get('.border-t', { timeout: 60000 })
             .get('.text-primary')
             .then(($elements) => {
               var strings = [...$elements].map(($el) => $el.innerText)
-
               expect(strings).to.deep.equal([...strings])
             })
         }
@@ -171,11 +174,10 @@ describe('Test for GroupByTestTable, Result', () => {
       .invoke('text')
       .then((el) => {
         if (el === 'Name') {
-          cy.get('.border-t')
+          cy.get('.border-t', { timeout: 60000 })
             .get('.text-primary')
             .then(($elements) => {
               var strings = [...$elements].map(($el) => $el.innerText)
-
               expect(strings).to.deep.equal([...strings])
             })
         }
@@ -205,7 +207,7 @@ describe('Test for GroupByTestTable, Result', () => {
       .invoke('text')
       .then((el) => {
         if (el === 'Created Date') {
-          cy.get('.border-t')
+          cy.get('.border-t', { timeout: 60000 })
             .get('.text-primary')
             .then(($elements) => {
               var strings = [...$elements].map(($el) => $el.innerText)
@@ -239,11 +241,10 @@ describe('Test for GroupByTestTable, Result', () => {
       .invoke('text')
       .then((el) => {
         if (el === 'Created Date') {
-          cy.get('.border-t')
+          cy.get('.border-t', { timeout: 60000 })
             .get('.text-primary')
             .then(($elements) => {
               var strings = [...$elements].map(($el) => $el.innerText)
-
               expect(strings).to.deep.equal([...strings])
             })
         }
