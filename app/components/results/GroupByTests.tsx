@@ -72,7 +72,7 @@ const GroupByTests = () => {
                   i: number
                 ) => (
                   <div
-                    key={candidateTestData.id}
+                    key={candidateTests.id}
                     className="GroupByTestRow col-span-10 grid"
                   >
                     <GroupByTestItems
