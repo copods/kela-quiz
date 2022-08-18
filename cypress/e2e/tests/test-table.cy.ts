@@ -311,10 +311,10 @@ describe('Visiting Tests', () => {
       .get('#ascend', { timeout: 6000 })
       .click()
     cy.wait(4000)
-    cy.get('.chip-group', { timeout: 6000 })
-      .first()
-      .get('#section-count-button', { timeout: 6000 })
-      .click()
+    cy.get('#chip-group-id', { timeout: 6000 }).then((el) => {
+      cy.get('#section-count-button', { timeout: 6000 }).click()
+    })
+
     cy.get('#chip-group-id', { timeout: 60000 }).then((el) => {
       cy.get('.section-menu').then(($elements) => {
         var strings = [...$elements].map(($el) => {
