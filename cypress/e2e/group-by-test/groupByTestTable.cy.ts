@@ -1,5 +1,5 @@
 describe('Test for GroupByTestTable, Result', () => {
-  it('Test for Routing and Active Tab for Results', () => {
+  xit('Test for Routing and Active Tab for Results', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -27,7 +27,7 @@ describe('Test for GroupByTestTable, Result', () => {
     cy.findByRole('button').click()
     cy.get('a').find('#Sections').should('have.text', 'Sections').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
-    cy.get('#add-section').click()
+    cy.get('#add-section', { timeout: 60000 }).click()
     const sectionName = `Aptitude - ${time}`
     cy.get('form > div', { timeout: 10000 })
       .should('be.visible')
@@ -74,16 +74,21 @@ describe('Test for GroupByTestTable, Result', () => {
     cy.get('#1').find('hr').should('have.class', 'bg-primary')
     // user reached to step 2
 
-    cy.get('div#section', { timeout: 60000 })
-      .first()
-      .within(() => {
-        cy.get('input#noOfQu').should('have.disabled', true)
-        cy.get('input#time').should('have.disabled', true)
-        cy.get('button', { timeout: 60000 }).should('have.text', 'Add').click()
-        cy.get('button', { timeout: 60000 }).should('have.text', 'Remove')
-        cy.get('input#noOfQu').clear().type('2')
-        cy.get('input#time').clear().type('2')
+    cy.get('div#section', { timeout: 60000 }).each((el) => {
+      cy.wrap(el).within(() => {
+        if (el.find('.count')[0].innerText != '0') {
+          cy.get('input#noOfQu').should('have.disabled', true)
+          cy.get('input#time').should('have.disabled', true)
+          cy.get('button').should('have.text', 'Add').click()
+          cy.get('button').should('have.text', 'Remove')
+
+          cy.get('input#noOfQu').clear().type('1')
+          cy.get('input#time').clear().type('1')
+          cy.get('input#noOfQu').should('have.value', '1')
+          cy.get('input#time').should('have.value', '1')
+        }
       })
+    })
     cy.get('button#nextButton').should('have.text', 'Next').click()
     cy.get('#0').find('hr').should('have.class', 'bg-primary')
     cy.get('#1').find('hr').should('have.class', 'bg-primary')
@@ -114,13 +119,18 @@ describe('Test for GroupByTestTable, Result', () => {
       .then(($ele) => {
         value = $ele[0].innerText.split(':')[1]
       })
-    cy.get('#GroupByTestItems')
-      .get('.border-t')
-      .then(($elements) => {
-        strings = [...$elements].map(($el) => $el.innerText)
-        expect(strings).to.deep.equal([...strings])
-        expect(strings.length).to.deep.equal(parseInt(value))
-      })
+    cy.get('#GroupByTestItems').each(($el) => {
+      cy.wrap($el)
+        .children()
+        .children()
+        .within((el) => {
+          cy.get('.border-t').then(($elements) => {
+            strings = [...$elements].map(($el) => $el.innerText)
+            expect(strings).to.deep.equal([...strings])
+            expect(strings.length).to.deep.equal(parseInt(value))
+          })
+        })
+    })
   })
   it('sort by name in ascending order ', () => {
     cy.visit('/sign-in')
@@ -139,13 +149,16 @@ describe('Test for GroupByTestTable, Result', () => {
       .invoke('text')
       .then((el) => {
         if (el === 'Name') {
-          cy.get('#GroupByTestItems').each((item) => {
-            cy.get('.GroupByTestRow').children().children()
-            cy.get('.border-t', { timeout: 60000 })
-              .get('.text-primary')
-              .then(($elements) => {
-                var strings = [...$elements].map(($el) => $el.innerText)
-                expect(strings).to.deep.equal([...strings])
+          cy.get('#GroupByTestItems').each(($el) => {
+            cy.wrap($el)
+              .children()
+              .children()
+              .within((el) => {
+                cy.get('.border-t').then(($elements) => {
+                  strings = [...$elements].map(($el) => $el.innerText)
+                  expect(strings).to.deep.equal([...strings])
+                  expect(strings.length).to.deep.equal(parseInt(value))
+                })
               })
           })
         }
@@ -169,13 +182,16 @@ describe('Test for GroupByTestTable, Result', () => {
       .invoke('text')
       .then((el) => {
         if (el === 'Name') {
-          cy.get('#GroupByTestItems').each((item) => {
-            cy.get('.GroupByTestRow').children().children()
-            cy.get('.border-t', { timeout: 60000 })
-              .get('.text-primary')
-              .then(($elements) => {
-                var strings = [...$elements].map(($el) => $el.innerText)
-                expect(strings).to.deep.equal([...strings])
+          cy.get('#GroupByTestItems').each(($el) => {
+            cy.wrap($el)
+              .children()
+              .children()
+              .within((el) => {
+                cy.get('.border-t').then(($elements) => {
+                  strings = [...$elements].map(($el) => $el.innerText)
+                  expect(strings).to.deep.equal([...strings])
+                  expect(strings.length).to.deep.equal(parseInt(value))
+                })
               })
           })
         }
@@ -205,13 +221,16 @@ describe('Test for GroupByTestTable, Result', () => {
       .invoke('text')
       .then((el) => {
         if (el === 'Created Date') {
-          cy.get('#GroupByTestItems').each((item) => {
-            cy.get('.GroupByTestRow').children().children()
-            cy.get('.border-t', { timeout: 60000 })
-              .get('.text-primary')
-              .then(($elements) => {
-                var strings = [...$elements].map(($el) => $el.innerText)
-                expect(strings).to.deep.equal([...strings])
+          cy.get('#GroupByTestItems').each(($el) => {
+            cy.wrap($el)
+              .children()
+              .children()
+              .within((el) => {
+                cy.get('.border-t').then(($elements) => {
+                  strings = [...$elements].map(($el) => $el.innerText)
+                  expect(strings).to.deep.equal([...strings])
+                  expect(strings.length).to.deep.equal(parseInt(value))
+                })
               })
           })
         }
@@ -242,13 +261,16 @@ describe('Test for GroupByTestTable, Result', () => {
       .invoke('text')
       .then((el) => {
         if (el === 'Created Date') {
-          cy.get('#GroupByTestItems').each((item) => {
-            cy.get('.GroupByTestRow').children().children()
-            cy.get('.border-t', { timeout: 60000 })
-              .get('.text-primary')
-              .then(($elements) => {
-                var strings = [...$elements].map(($el) => $el.innerText)
-                expect(strings).to.deep.equal([...strings])
+          cy.get('#GroupByTestItems').each(($el) => {
+            cy.wrap($el)
+              .children()
+              .children()
+              .within((el) => {
+                cy.get('.border-t').then(($elements) => {
+                  strings = [...$elements].map(($el) => $el.innerText)
+                  expect(strings).to.deep.equal([...strings])
+                  expect(strings.length).to.deep.equal(parseInt(value))
+                })
               })
           })
         }
