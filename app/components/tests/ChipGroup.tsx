@@ -17,14 +17,13 @@ const ChipGroup = ({
       </span>
       {sections.length > 1 && (
         <Menu as="div" className="relative inline-block text-left">
-          <Menu.Button>
-            <span
-              id="section-count-button"
-              className="ml-2 cursor-pointer rounded-[52px] bg-bgcolor py-1 px-2 pl-2 text-xs"
-            >
-              + {sections.length - 1}
-            </span>
-          </Menu.Button>
+          <div id="section-count-button">
+            <Menu.Button>
+              <span className="ml-2 cursor-pointer rounded-[52px] bg-bgcolor py-1 px-2 pl-2 text-xs">
+                + {sections.length - 1}
+              </span>
+            </Menu.Button>
+          </div>
           <Transition
             as={Fragment}
             enter="transition ease-out duration-100"
