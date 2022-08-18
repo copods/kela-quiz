@@ -18,7 +18,7 @@ const StepsTabComponent = ({
           id={tab.id.toString()}
           className={`flex-1 ${isDisabled ? 'pointer-events-none' : 'cursor-pointer'}`} 
           onClick={() => {
-            !isDisabled && setCurrentTab(tab.id)
+            setCurrentTab(tab.id)
           }}
           >
             <hr
