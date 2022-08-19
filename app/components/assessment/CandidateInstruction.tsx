@@ -1,4 +1,5 @@
 import { useLoaderData, useSubmit } from '@remix-run/react'
+import { candidateExam } from '~/constants/common.constants'
 import type { SectionInTest } from '~/interface/Interface'
 
 export default function CandidateInstruction() {
@@ -23,7 +24,7 @@ export default function CandidateInstruction() {
     <div className="h-full flex-col overflow-y-auto">
       <div className=" px-8">
         <div className="pb-4 text-2xl font-semibold leading-8 text-gray-800">
-          Pre-Interview Assessment
+          {candidateExam.examTitle}
         </div>
         <div
           className="pb-9 text-base font-normal leading-6 text-gray-700"
@@ -48,8 +49,12 @@ export default function CandidateInstruction() {
                   {section.order}. {section.section.name}
                 </div>
                 <div className="flex gap-6 text-sm font-normal text-gray-700">
-                  <span>{section.totalQuestions} Questions</span>
-                  <span>{section.timeInSeconds / 60} Mins</span>
+                  <span>
+                    {section.totalQuestions} {candidateExam.questions}
+                  </span>
+                  <span>
+                    {section.timeInSeconds / 60} {candidateExam.minuets}
+                  </span>
                 </div>
               </div>
             )
@@ -58,36 +63,18 @@ export default function CandidateInstruction() {
         {/* Instruction */}
         <div className="flex flex-col gap-4">
           <h1 className="mt-8 text-2xl font-semibold leading-8 text-gray-800">
-            Instructions
+            {candidateExam.instructions}
           </h1>
-          <ol>
-            <li>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
-              vulputate libero et velit interdum.
-            </li>
-            <li>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
-              vulputate libero et velit interdum.
-            </li>
-            <li>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
-              vulputate libero et velit interdum.
-            </li>
-            <li>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
-              vulputate libero et velit interdum.
-            </li>
-            <li>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
-              vulputate libero et velit interdum.
-            </li>
-          </ol>
+          <ul className="list-disc">
+            <li>You cannot traverse the sections.</li>
+            <li>You can traverse the questions in particular section</li>
+          </ul>
           <div className="flex">
             <button
               className="text-md mt-8 h-12 w-52 rounded-md bg-primary text-gray-50"
               onClick={() => startTestForCandidate()}
             >
-              Begin Assessment
+              {candidateExam.beginAssesment}
             </button>
           </div>
         </div>

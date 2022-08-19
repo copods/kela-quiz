@@ -13,7 +13,8 @@ export const loader: LoaderFunction = async ({ params, request }) => {
     section?.sectionId as string,
     params.assessmentId as string
   )
-  return { section, candidateSection }
+
+  return { section, candidateSection, params }
 }
 
 export const action: ActionFunction = async ({ request, params }) => {

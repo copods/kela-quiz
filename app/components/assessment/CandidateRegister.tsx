@@ -4,6 +4,7 @@ import Button from '~/components/form/Button'
 import InputField from '~/components/form/InputField'
 import Logo from '~/components/Logo'
 import Checkbox from '../form/CheckBox'
+import { candidateExam, commonConstants } from '~/constants/common.constants'
 
 function CandidateRegister() {
   const [firstName, setFirstName] = useState('')
@@ -70,13 +71,12 @@ function CandidateRegister() {
           <div className="mt-5 flex flex-row">
             <Checkbox {...checkBoxProps} />
             <span className="ml-2 text-xs text-slate-500">
-              I understand that once I begin the assessment I cannot leave and
-              return to this assessment at a later time.
+              {candidateExam.candidateAcceptance}
             </span>
           </div>
           <div className="mt-6">
             <Button
-              buttonText="Continue"
+              buttonText={commonConstants.continue}
               type="submit"
               isDisabled={!canSubmitBtnBeEnabled()}
             />

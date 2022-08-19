@@ -105,3 +105,10 @@ export async function checkIfTestLinkIsValidAndRedirect(
     return null
   }
 }
+
+export function getTimeLeftInSeconds({ totalTimeInSeconds, startTime }: { totalTimeInSeconds: number, startTime: any }) {
+  const diffrenceInSeconds = Math.abs(new Date().getTime() / 1000) - Math.abs(new Date(startTime).getTime() / 1000)
+  return totalTimeInSeconds - Math.floor(diffrenceInSeconds) > -1 ? totalTimeInSeconds - Math.floor(diffrenceInSeconds) : 0
+}
+
+

@@ -2,7 +2,9 @@ import type { ActionFunction, LoaderFunction } from '@remix-run/server-runtime'
 import { redirect } from '@remix-run/server-runtime'
 import Question from '~/components/assessment/Question'
 import {
+  endAssessment,
   endCurrentSection,
+  getCandidateTestForSideNav,
   getOrderedSection,
   getTestInstructionForCandidate,
   getTestSectionDetails,
@@ -14,8 +16,12 @@ import {
 export const loader: LoaderFunction = async ({ params, request }) => {
   const question = await startAndGetQuestion(params.questionId as string)
   const section = await getTestSectionDetails(params.sectionId as string)
+  const candidateTest = await getCandidateTestForSideNav(
+    params.assessmentId as string
+  )
+  const lastSection = candidateTest?.sections.length == section?.order
 
-  return { question, section }
+  return { question, section, lastSection }
 }
 
 export const action: ActionFunction = async ({ params, request }) => {
@@ -23,27 +29,32 @@ export const action: ActionFunction = async ({ params, request }) => {
   const next = formData.get('next')
   const previous = formData.get('previous')
   const nextSection = formData.get('nextSection')
-  const options: any = formData.get('option')
+  const endExam = formData.get('endExam')
+  const options: any = formData.getAll('option')
+  const answers: any = formData.getAll('answer')
 
-  console.log(...formData, options)
-  console.log('op', JSON.parse(options))
-  return
+  console.log(...formData, '=====', options, answers)
   let nextQuestionId = null
-  if (next) {
-    // need to write script for submiting answers
-    // currently it only has navigations
+  console.log(
+    '================',
+    options && (typeof options == 'string' ? [options] : options)
+  )
+
+  if (next || nextSection) {
     nextQuestionId = await skipAndNextQuestion({
-      selectedOptions: [options],
+      selectedOptions:
+        options && (typeof options == 'string' ? [options] : options),
+      answers: answers,
       sectionId: params.sectionId as string,
       currentQuestionId: params.questionId as string,
       nextOrPrev: 'next',
     })
   }
   if (previous) {
-    // need to write script for submiting answers
-    // currently it only has navigations
     nextQuestionId = await skipAndNextQuestion({
-      selectedOptions: [options],
+      selectedOptions:
+        options && (typeof options == 'string' ? [options] : options),
+      answers: answers,
       sectionId: params.sectionId as string,
       currentQuestionId: params.questionId as string,
       nextOrPrev: 'prev',
@@ -72,6 +83,14 @@ export const action: ActionFunction = async ({ params, request }) => {
     return redirect(
       `/assessment/${params.assessmentId}/${nextSectionObject?.id}`
     )
+  }
+  if (endExam) {
+    await endCurrentSection(
+      params.assessmentId as string,
+      params.sectionId as string
+    )
+    await endAssessment(params.assessmentId as string)
+    return redirect(`/assessment/${params.assessmentId}/end-assessment`)
   }
 
   return redirect(

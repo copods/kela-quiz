@@ -4,9 +4,11 @@ export const commonConstants = {
   delete: 'Delete',
   backButton: 'Back',
   nextButton: 'Next',
+  prevoiusButton: 'Previous',
   removeButton: 'Remove',
   addButton: 'Add',
   byText: 'By',
+  continue: "Continue"
 }
 export const sideNav = {
   sideNavHeading: 'Quiz',
@@ -65,4 +67,26 @@ export const componentGlobalConstants = {
 export const routeFiles = {
   sections: 'Sections',
   addSection: 'Add Section',
+}
+
+
+export const candidateExam = {
+  time: "Time",
+  timeRemaining: "Time Remaning",
+  minuets: "Mins",
+  description: "Description",
+  total: "Total",
+  questions: "Questions",
+  endTest: 'End Test',
+  nextSection: "Next Section",
+  candidateAcceptance: "I understand that once I begin the assessment I cannot leave and  return to this assessment at a later time.",
+  beginAssesment: "Begin Assesment",
+  instructions: "Instructions",
+  examTitle: "Pre-Interview Assessment"
+}
+
+export enum typeOfQuestion {
+  singleChoice = 'SINGLE_CHOICE',
+  multipleChoice = 'MULTIPLE_CHOICE',
+  text = 'TEXT'
 }

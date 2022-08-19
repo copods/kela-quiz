@@ -1,7 +1,7 @@
 import type { Question, User } from '@prisma/client'
 import { env } from 'process'
 import { prisma } from '~/db.server'
-import type { CandidateTest, Candidate, Test, Section, SectionInCandidateTest, CandidateQuestion, SectionInTest, Option } from '@prisma/client'
+import type { CandidateTest, Candidate, Test, Section, SectionInCandidateTest, CandidateQuestion, SectionInTest } from '@prisma/client'
 import { sendTestInviteMail } from './sendgrid.servers'
 
 
@@ -61,12 +61,13 @@ export async function updateTestLink({ id, link }: { id: string, link: string })
   }
 }
 
-export async function createSectionInTest({ sectionId, candidateTestId, totalQuestions }: { sectionId: string, candidateTestId: string, totalQuestions: number }) {
+export async function createSectionInTest({ sectionId, candidateTestId, order, totalQuestions }: { sectionId: string, candidateTestId: string, order: number, totalQuestions: number }) {
   try {
     let sectioInTest = await prisma.sectionInCandidateTest.create({
       data: {
         sectionId,
         candidateTestId,
+        order
       }
     })
     let randomQuestionsOfSections: Array<Question> = await prisma.$queryRaw`SELECT * FROM "Question" WHERE "sectionId" = ${sectionId} ORDER BY RANDOM() LIMIT ${totalQuestions};`
@@ -82,6 +83,7 @@ export async function createSectionInTest({ sectionId, candidateTestId, totalQue
     }
     return 'done'
   } catch (error) {
+    console.log(error)
     throw new Error('Error creating section in test ..!')
   }
 }
@@ -117,7 +119,7 @@ async function createCandidateData({
   // creating section in test
   if (test?.sections) {
     for (const section of test.sections) {
-      await createSectionInTest({ sectionId: section.sectionId, candidateTestId: candidateTest.id, totalQuestions: section.totalQuestions })
+      await createSectionInTest({ sectionId: section.sectionId, candidateTestId: candidateTest.id, order: section.order, totalQuestions: section.totalQuestions })
     }
   }
 
@@ -136,6 +138,7 @@ export async function createCandidate({
   }
   return "created"
 }
+
 
 
 
@@ -199,17 +202,29 @@ export async function getCandidateTestForSideNav(
               id: true,
               status: true,
               order: true
+            },
+            orderBy: {
+              order: 'asc'
             }
           },
           timeInCandidateQuestion: true,
           startedAt: true,
           endAt: true
+        },
+        orderBy: {
+          order: 'asc'
         }
       },
+      testId: true,
       test: {
         select: {
           name: true,
-          description: true
+          description: true,
+          sections: {
+            select: {
+              timeInSeconds: true
+            }
+          }
         }
       },
       startedAt: true,
@@ -294,6 +309,21 @@ export async function getTestSectionDetails(id: CandidateTest['id']) {
   })
 }
 
+
+export async function getSectionInTestFronCandidateSection({
+  id,
+}: { id: string }) {
+  console.log("======", id)
+  return await prisma.sectionInTest.findUnique({
+    where: {
+      id
+    },
+    select: {
+      section: true
+    }
+  })
+}
+
 export async function getCandidateSectionDetails(sectionId: Section['id'], candidateTestId: SectionInCandidateTest['candidateTestId']) {
   return await prisma.sectionInCandidateTest.findFirst({
     where: {
@@ -302,6 +332,7 @@ export async function getCandidateSectionDetails(sectionId: Section['id'], candi
     select: {
       id: true,
       startedAt: true,
+      order: true,
       section: {
         select: {
           id: true,
@@ -390,21 +421,35 @@ export async function startCandidateSection(id: SectionInCandidateTest['id']) {
 // }
 
 export async function startAndGetQuestion(id: CandidateQuestion['id']) {
+  const question = await prisma.candidateQuestion.findUnique({
+    where: {
+      id
+    },
+    select: {
+      status: true
+    }
+  })
   return prisma.candidateQuestion.update({
     where: { id },
     data: {
-      status: 'VIEWED'
+      status: question?.status == 'NOT_VIEWED' ? 'VIEWED' : question?.status
     },
     select: {
       id: true,
       order: true,
       question: {
         select: {
+          id: true,
           question: true,
           options: {
             select: {
               id: true,
               option: true
+            }
+          },
+          correctAnswer: {
+            select: {
+              id: true
             }
           },
           questionType: true
@@ -419,20 +464,59 @@ export async function startAndGetQuestion(id: CandidateQuestion['id']) {
 }
 
 
-export async function skipAndNextQuestion({ selectedOptions, sectionId, currentQuestionId, nextOrPrev }: { selectedOptions: Array<Option>, sectionId: SectionInTest['id'], currentQuestionId: CandidateQuestion['id'], nextOrPrev: string }) {
+export async function skipAndNextQuestion({ selectedOptions, sectionId, currentQuestionId, nextOrPrev, answers }: { selectedOptions: Array<string>, sectionId: SectionInTest['id'], currentQuestionId: CandidateQuestion['id'], nextOrPrev: string, answers: Array<string> }) {
 
   // write script for save question answer
   // write script for last question
 
   //getting currentQuestionOrder
+  console.log("selectedOptions", selectedOptions)
+
+  // // clearing any previous answer
+  // await prisma.candidateQuestion.update({
+  //   where: {
+  //     id: currentQuestionId
+  //   },
+  //   data: {
+  //     selectedOptions: undefined,
+  //   }
+  // })
+  const question = await prisma.candidateQuestion.findUnique({
+    where: {
+      id: currentQuestionId
+    },
+    select: {
+      selectedOptions: {
+        select: {
+          id: true
+        }
+      }
+    }
+  })
+
+  //filtering current answers from old answers
+  let oldAnswers: Array<string> = []
+  question?.selectedOptions?.forEach((option: { id: string }) => {
+    if (!selectedOptions.includes(option.id)) {
+      oldAnswers.push(option.id)
+    }
+  })
+  console.log("oldA", oldAnswers)
+
+
+  console.log("oldAnswer", question)
   const currentQuestion = await prisma.candidateQuestion.update({
     where: {
       id: currentQuestionId
     },
     data: {
       selectedOptions: {
-        create: selectedOptions
-      }
+        connect: selectedOptions?.map(option => ({ id: option })),
+        disconnect: oldAnswers?.map(option => ({ id: option }))
+      },
+      answers,
+      status: selectedOptions?.length || answers?.length ? 'ANSWERED' : 'SKIPPED',
+      answeredAt: new Date()
     },
     select: {
       sectionInCandidateTestId: true,
@@ -479,7 +563,6 @@ export async function skipAndNextQuestion({ selectedOptions, sectionId, currentQ
 // }
 
 
-
 export async function endCurrentSection(candidateTestId: SectionInCandidateTest['candidateTestId'], id: SectionInTest['id']) {
   const testSection = await prisma.sectionInTest.findUnique({ where: { id } })
 
@@ -499,4 +582,29 @@ export async function endCurrentSection(candidateTestId: SectionInCandidateTest[
     data: { endAt: new Date() }
   })
 
+}
+
+export async function endAssessment(id: string) {
+  const candidateTest = await prisma.candidateTest.findUnique({
+    where: {
+      id
+    },
+    select: {
+      id: true,
+      startedAt: true,
+      endAt: true
+    }
+  })
+  console.log('cds===', candidateTest)
+  if (candidateTest?.endAt) {
+    return { msg: "Exam already ended" }
+  }
+  return await prisma.candidateTest.update({
+    where: {
+      id
+    },
+    data: {
+      endAt: new Date()
+    }
+  })
 }

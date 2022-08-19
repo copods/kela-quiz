@@ -1,4 +1,5 @@
 import { useLoaderData, useSubmit } from '@remix-run/react'
+import { candidateExam } from '~/constants/common.constants'
 
 function SectionDetails() {
   const { section, candidateSection } = useLoaderData()
@@ -13,14 +14,26 @@ function SectionDetails() {
       { method: 'post' }
     )
   }
+  console.log(section)
 
   return (
     <div>
-      <h1>{section.section.name}</h1>
-
+      <div className="flex flex-col gap-4">
+        <div className="flex flex-row">
+          <div className="w-52 font-semibold">{candidateExam.description}</div>
+          <div className="flex-1">{section.section.description}</div>
+        </div>
+        <div className="flex flex-row">
+          <div className="w-52 font-semibold">{`${candidateExam.total} ${candidateExam.time}`}</div>
+          <div className="flex-1">{section.timeInSeconds / 60} Mins</div>
+        </div>
+        <div className="flex flex-row">
+          <div className="w-52 font-semibold">{`${candidateExam.total} ${candidateExam.questions}`}</div>
+          <div className="flex-1">{section.totalQuestions}</div>
+        </div>
+      </div>
       <br />
-      <p>this id section description</p>
-      <p>{section.section.description}</p>
+
       <button
         className="rounded-full bg-primary py-2 px-5 text-white"
         onClick={() => startSection()}
