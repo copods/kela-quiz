@@ -51,7 +51,7 @@ const TestTableItem = ({
       >
         {showCheckBox && (
           <div className="w-1/12 pl-2.5 text-base font-normal leading-6 text-gray-700">
-            <input type="checkbox"></input>
+            <input type="checkbox" />
           </div>
         )}
         <div

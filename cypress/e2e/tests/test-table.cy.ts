@@ -1,7 +1,7 @@
 const time = new Date().getTime()
 describe('Visiting Tests', () => {
   // creating data to test Test list page
-  it('Create Section', () => {
+  it('Create Section and  test', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -12,11 +12,9 @@ describe('Visiting Tests', () => {
       .type('kQuiz@copods')
       .should('have.value', 'kQuiz@copods')
     cy.findByRole('button').click()
-
     cy.get('a').find('#Sections').should('have.text', 'Sections').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
-
-    cy.get('#add-section').click()
+    cy.get('#add-section', { timeout: 60000 }).click()
     const sectionName = `Aptitude - ${time}`
     cy.get('form > div', { timeout: 10000 })
       .should('be.visible')
@@ -25,50 +23,42 @@ describe('Visiting Tests', () => {
         cy.get('textarea').type('Aptitude')
         cy.get("button[type='submit']", { timeout: 10000 }).click()
       })
-    cy.get('#add-section').click()
-    const secondSectionName = `Aptitude - ${time}`
-    cy.get('form > div', { timeout: 10000 })
-      .should('be.visible')
-      .within((el) => {
-        cy.get('input').type(secondSectionName)
-        cy.get('textarea').type('Aptitude')
-        cy.get("button[type='submit']", { timeout: 10000 }).click()
+    cy.get('#addQuestion').should('have.text', '+ Add Question').click()
+    cy.location('pathname').should('include', '/add-question')
+    cy.get('h1', { timeout: 6000 }).should('be.visible')
+    cy.get('#dropdown > button').click()
+    cy.get('ul').within(() => {
+      cy.get('li').within(() => {
+        cy.get('div').then((el) => {
+          ;[...el].map((el) => {
+            if (el.innerText === 'Text') {
+              el.click()
+            }
+            return null
+          })
+        })
       })
-  })
-
-  it('Verify if user able create the test and navigate to test list page', () => {
-    cy.visit('/sign-in')
-    cy.get('#email')
-      .clear()
-      .type('careers@copods.co')
-      .should('have.value', 'careers@copods.co')
-    cy.get('#password')
-      .clear()
-      .type('kQuiz@copods')
-      .should('have.value', 'kQuiz@copods')
-    cy.findByRole('button').click()
-
-    cy.get('a', { timeout: 6000 })
-      .find('#Tests')
-      .should('have.text', 'Tests')
-      .click()
+    })
+    cy.get('#questionEditor #quillEditor').within(() => {
+      cy.get('.ql-editor').type(`What is your Test Question ?`)
+    })
+    cy.get('#optionEditor input').clear().type('Option of question')
+    cy.get('#saveAndExit').click()
+    cy.get('a').find('#Tests').should('have.text', 'Tests').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.get('#addTest').click()
+    cy.get('#addTest', { timeout: 6000 }).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/tests/add-test'
     )
-
-    cy.get('#name').clear().type(`Test - ${time}`)
+    cy.get('#name', { timeout: 60000 }).clear().type(`Test - ${time}`)
     cy.get('#quillEditor').within(() => {
       cy.get('.ql-editor').type(`Test Description`)
     })
-
     cy.get('button#nextButton').should('have.text', 'Next').click()
     cy.get('#0').find('hr').should('have.class', 'bg-primary')
     cy.get('#1').find('hr').should('have.class', 'bg-primary')
     // user reached to step 2
-
     cy.get('div#section', { timeout: 60000 }).each((el) => {
       cy.wrap(el).within(() => {
         if (el.find('.count')[0].innerText != '0') {
@@ -76,7 +66,6 @@ describe('Visiting Tests', () => {
           cy.get('input#time').should('have.disabled', true)
           cy.get('button').should('have.text', 'Add').click()
           cy.get('button').should('have.text', 'Remove')
-
           cy.get('input#noOfQu').clear().type('1')
           cy.get('input#time').clear().type('1')
           cy.get('input#noOfQu').should('have.value', '1')
@@ -88,9 +77,9 @@ describe('Visiting Tests', () => {
     cy.get('#0').find('hr').should('have.class', 'bg-primary')
     cy.get('#1').find('hr').should('have.class', 'bg-primary')
     cy.get('#2').find('hr').should('have.class', 'bg-primary')
-
     cy.get('button#submitButton').should('have.text', 'Submit').click()
-
+    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
+    cy.get('a').find('#Tests').should('have.text', 'Tests').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
   })
 
@@ -302,25 +291,21 @@ describe('Visiting Tests', () => {
       .should('have.text', 'Tests')
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.get('.dropdown', { timeout: 6000 })
-    cy.get('.dropdownButton', { timeout: 6000 }).click()
-    cy.get('li div', { timeout: 6000 })
-    cy.get('.dropdown-option', { timeout: 6000 })
-    cy.get('.not-selected', { timeout: 6000 }).click()
-    cy.get('#sort-filter-body', { timeout: 6000 })
-      .get('#ascend', { timeout: 6000 })
-      .click()
-    cy.wait(4000)
+    var strings: any
     cy.get('#chip-group-id', { timeout: 6000 }).then((el) => {
-      cy.get('#section-count-button', { timeout: 6000 }).click()
-    })
-
-    cy.get('#chip-group-id', { timeout: 60000 }).then((el) => {
-      cy.get('.section-menu').then(($elements) => {
-        var strings = [...$elements].map(($el) => {
-          return $el.innerText
+      cy.get('.chip-group').then(($elements) => {
+        strings = [...$elements].map(($el) => {
+          cy.log(strings)
+          if ($el.innerText.includes('\n')) {
+            cy.get('#section-count-button', { timeout: 6000 }).click()
+            cy.get('.section-menu').then(($elements) => {
+              var str = [...$elements].map(($el) => {
+                return $el.innerText
+              })
+              expect(str).to.deep.equal([...str])
+            })
+          }
         })
-        expect(strings).to.deep.equal([...strings])
       })
     })
   })
