@@ -48,8 +48,9 @@ const SortFilter = ({
         className="flex items-center pl-4 text-sm font-normal text-totalCount"
         id="total-items-value"
       >
-        <span className="pr-3">
-          {componentGlobalConstants.totalCounts}: {totalItems}
+        <span>
+          {componentGlobalConstants.totalCounts}:{' '}
+          <span id="total-count-value">{totalItems}</span>
         </span>
         {showSelected && (
           <>

@@ -11,17 +11,17 @@ const ChipGroup = ({
   index: number
 }) => {
   return (
-    <div className="chip-group">
-      <span className=" truncate rounded-[52px] bg-bgcolor py-1 px-2">
+    <div className="chip-group mr-3 flex items-center gap-2 ">
+      <div className="truncate rounded-[52px] bg-bgcolor px-1 py-1 ">
         {sections[0]?.section.name}
-      </span>
+      </div>
       {sections.length > 1 && (
         <Menu as="div" className="relative inline-block text-left">
           <div id="section-count-button">
             <Menu.Button>
-              <span className="ml-2 cursor-pointer rounded-[52px] bg-bgcolor py-1 px-2 pl-2 text-xs">
+              <div className="cursor-pointer rounded-[52px] bg-bgcolor px-1 py-1 text-xs">
                 + {sections.length - 1}
-              </span>
+              </div>
             </Menu.Button>
           </div>
           <Transition

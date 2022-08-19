@@ -1,4 +1,5 @@
 const time = new Date().getTime()
+let totalCount: any
 describe('Visiting Tests', () => {
   // creating data to test Test list page
   it('Create Section and  test', () => {
@@ -133,12 +134,20 @@ describe('Visiting Tests', () => {
       .should('have.text', 'Tests')
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
+    cy.get('#total-items-value')
+      .get('#total-count-value')
+      .then(($ele) => {
+        totalCount = [...$ele].map(($el) => {
+          return $el.innerText
+        })
+      })
+
     cy.get('#test-list', { timeout: 4000 }).should('be.visible')
     cy.get('#test-list', { timeout: 6000 })
-      .get('.text-primary')
+      .get('.test-name-navigation')
       .then(($elements) => {
         strings = [...$elements].map(($el) => $el.innerText)
-        expect(strings).to.deep.equal([...strings])
+        expect(parseInt(totalCount)).to.deep.equal(parseInt(strings.length))
       })
   })
   it('sort by name in ascending order ', () => {
@@ -162,8 +171,7 @@ describe('Visiting Tests', () => {
             .get('.pr-4')
             .then(($elements) => {
               var strings = [...$elements].map(($el) => $el.innerText)
-
-              expect(strings).to.deep.equal([...strings])
+              expect(strings).to.deep.equal(strings.sort())
             })
         }
       })
@@ -190,8 +198,7 @@ describe('Visiting Tests', () => {
             .get('.pr-4')
             .then(($elements) => {
               var strings = [...$elements].map(($el) => $el.innerText)
-
-              expect(strings).to.deep.equal([...strings])
+              expect(strings).to.deep.equal(strings.reverse())
             })
         }
       })
@@ -224,7 +231,7 @@ describe('Visiting Tests', () => {
             .get('.pr-4')
             .then(($elements) => {
               var strings = [...$elements].map(($el) => $el.innerText)
-              expect(strings).to.deep.equal([...strings])
+              expect(strings).to.deep.equal(strings.sort())
             })
         }
       })
@@ -258,8 +265,7 @@ describe('Visiting Tests', () => {
             .get('.pr-4')
             .then(($elements) => {
               var strings = [...$elements].map(($el) => $el.innerText)
-
-              expect(strings).to.deep.equal([...strings])
+              expect(strings).to.deep.equal(strings.reverse())
             })
         }
       })
@@ -289,6 +295,7 @@ describe('Visiting Tests', () => {
       .click()
       .location('pathname', { timeout: 60000 })
       .should('include', '/tests')
+    cy.get('#title').should('have.exist')
   })
 
   it('By Clicking count in sections it should open menu with all sections', () => {
@@ -314,11 +321,11 @@ describe('Visiting Tests', () => {
           cy.log(strings)
           if ($el.innerText.includes('\n')) {
             cy.get('#section-count-button', { timeout: 6000 }).click()
-            cy.get('.section-menu').then(($elements) => {
+            cy.get('.section-menu', { timeout: 6000 }).then(($elements) => {
               var str = [...$elements].map(($el) => {
                 return $el.innerText
               })
-              expect(str).to.deep.equal([...str])
+              expect(str.length > 0).to.deep.equal(true)
             })
           }
         })
