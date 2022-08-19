@@ -44,7 +44,10 @@ describe('Visiting Tests', () => {
     })
     cy.get('#optionEditor input').clear().type('Option of question')
     cy.get('#saveAndExit').click()
-    cy.get('a').find('#Tests').should('have.text', 'Tests').click()
+    cy.get('a')
+      .find('#Tests', { timeout: 6000 })
+      .should('have.text', 'Tests')
+      .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('#addTest', { timeout: 6000 }).click()
     cy.location('pathname', { timeout: 60000 }).should(
@@ -79,7 +82,10 @@ describe('Visiting Tests', () => {
     cy.get('#2').find('hr').should('have.class', 'bg-primary')
     cy.get('button#submitButton').should('have.text', 'Submit').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.get('a').find('#Tests').should('have.text', 'Tests').click()
+    cy.get('a')
+      .find('#Tests', { timeout: 6000 })
+      .should('have.text', 'Tests')
+      .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
   })
 
