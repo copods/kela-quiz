@@ -2,24 +2,22 @@ import type { ActionFunction, LoaderFunction } from '@remix-run/server-runtime'
 import { redirect } from '@remix-run/server-runtime'
 import Question from '~/components/assessment/Question'
 import {
-  endAssessment,
-  endCurrentSection,
-  getCandidateTestForSideNav,
-  getOrderedSection,
-  getTestInstructionForCandidate,
-  getTestSectionDetails,
-  skipAndNextQuestion,
-  startAndGetQuestion,
-  updateNextCandidateStep,
-} from '~/models/candidate.server'
+  candidateTest,
+  getQuestion,
+  getSectionInTest,
+  moveToNextSection,
+  saveAnswerSkipAndNext,
+  endCandidateAssessment,
+} from '~/utils/assessment.utils'
 
 export const loader: LoaderFunction = async ({ params, request }) => {
-  const question = await startAndGetQuestion(params.questionId as string)
-  const section = await getTestSectionDetails(params.sectionId as string)
-  const candidateTest = await getCandidateTestForSideNav(
-    params.assessmentId as string
-  )
-  const lastSection = candidateTest?.sections.length == section?.order
+  const question = await getQuestion(params.questionId as string)
+
+  const section = await getSectionInTest(params.sectionId as string)
+
+  const candidateTests = await candidateTest(params.assessmentId as string)
+
+  const lastSection = candidateTests?.sections.length == section?.order
 
   return { question, section, lastSection }
 }
@@ -33,64 +31,40 @@ export const action: ActionFunction = async ({ params, request }) => {
   const options: any = formData.getAll('option')
   const answers: any = formData.getAll('answer')
 
-  console.log(...formData, '=====', options, answers)
   let nextQuestionId = null
-  console.log(
-    '================',
-    options && (typeof options == 'string' ? [options] : options)
-  )
 
-  if (next || nextSection) {
-    nextQuestionId = await skipAndNextQuestion({
-      selectedOptions:
-        options && (typeof options == 'string' ? [options] : options),
-      answers: answers,
-      sectionId: params.sectionId as string,
-      currentQuestionId: params.questionId as string,
-      nextOrPrev: 'next',
-    })
+  if (next || nextSection || endExam) {
+    nextQuestionId = await saveAnswerSkipAndNext(
+      options,
+      answers,
+      params.sectionId as string,
+      params.questionId as string,
+      'next'
+    )
   }
   if (previous) {
-    nextQuestionId = await skipAndNextQuestion({
-      selectedOptions:
-        options && (typeof options == 'string' ? [options] : options),
-      answers: answers,
-      sectionId: params.sectionId as string,
-      currentQuestionId: params.questionId as string,
-      nextOrPrev: 'prev',
-    })
+    nextQuestionId = await saveAnswerSkipAndNext(
+      options,
+      answers,
+      params.sectionId as string,
+      params.questionId as string,
+      'prev'
+    )
   }
 
   if (nextSection) {
-    const candidateTest = await getTestInstructionForCandidate(
-      params.assessmentId as string
-    )
-
-    await endCurrentSection(
-      params.assessmentId as string,
-      params.sectionId as string
-    )
-    const nextSectionObject = await getOrderedSection(
-      candidateTest?.test.id as string,
-      parseInt(nextSection as string) + 1
-    )
-    await updateNextCandidateStep(params.assessmentId as string, {
-      nextRoute: 'section',
-      isSection: true,
-      currentSectionId: nextSectionObject?.id,
+    await moveToNextSection({
+      assessmentId: params.assessmentId as string,
+      order: parseInt(nextSection as string),
+      sectionId: params.sectionId as string,
     })
-
-    return redirect(
-      `/assessment/${params.assessmentId}/${nextSectionObject?.id}`
-    )
   }
+
   if (endExam) {
-    await endCurrentSection(
+    await endCandidateAssessment(
       params.assessmentId as string,
       params.sectionId as string
     )
-    await endAssessment(params.assessmentId as string)
-    return redirect(`/assessment/${params.assessmentId}/end-assessment`)
   }
 
   return redirect(

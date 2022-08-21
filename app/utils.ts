@@ -2,16 +2,9 @@ import { useMatches } from '@remix-run/react'
 import { useMemo } from 'react'
 
 import type { User } from '~/models/user.server'
-import { checkIfTestLinkIsValid } from './models/candidate.server'
 
 const DEFAULT_REDIRECT = '/'
 
-// Type of candidateStep field in CandidateTest schema
-export type CandidateStep = {
-  nextRoute: string
-  isSection: boolean
-  currentSectionId: string | null
-}
 
 /**
  * This should be used any time the redirect path is user-provided
@@ -77,38 +70,3 @@ export function useUser(): User {
 export function validateEmail(email: unknown): email is string {
   return typeof email === 'string' && email.length > 3 && email.includes('@')
 }
-
-/**
- * Functions checks if the given assessment link is valid. If true, it will return the url to redirect the user to (only if current route does not match the next route in DB)
- * If false, it will return null and this will result in a 404 Not Found
- * @param assessmentID
- * @param currentRoute
- * @returns nextRoute or null
- */
-export async function checkIfTestLinkIsValidAndRedirect(
-  assessmentID: string,
-  currentRoute: string
-) {
-  const currentCandidateStep = await checkIfTestLinkIsValid(assessmentID)
-  const candidateStepObj = currentCandidateStep?.candidateStep as CandidateStep
-  if (candidateStepObj && candidateStepObj.nextRoute) {
-    if (currentRoute !== candidateStepObj.nextRoute) {
-      switch (candidateStepObj.nextRoute) {
-        case 'register':
-        case 'instructions':
-          return `/assessment/${assessmentID}/${candidateStepObj.nextRoute}`
-        case 'section':
-          return `/assessment/${assessmentID}/${candidateStepObj.currentSectionId}`
-      }
-    }
-  } else {
-    return null
-  }
-}
-
-export function getTimeLeftInSeconds({ totalTimeInSeconds, startTime }: { totalTimeInSeconds: number, startTime: any }) {
-  const diffrenceInSeconds = Math.abs(new Date().getTime() / 1000) - Math.abs(new Date(startTime).getTime() / 1000)
-  return totalTimeInSeconds - Math.floor(diffrenceInSeconds) > -1 ? totalTimeInSeconds - Math.floor(diffrenceInSeconds) : 0
-}
-
-

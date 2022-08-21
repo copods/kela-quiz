@@ -14,7 +14,7 @@ function SectionDetails() {
       { method: 'post' }
     )
   }
-  console.log(section)
+  section
 
   return (
     <div>

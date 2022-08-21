@@ -69,9 +69,9 @@ export const routeFiles = {
 }
 
 export enum QuestionTypes {
-  multipleChoice= "MULTIPLE_CHOICE",
-  singleChoice= "SINGLE_CHOICE",
-  text= "TEXT"
+  multipleChoice = "MULTIPLE_CHOICE",
+  singleChoice = "SINGLE_CHOICE",
+  text = "TEXT"
 }
 
 
@@ -88,10 +88,4 @@ export const candidateExam = {
   beginAssesment: "Begin Assesment",
   instructions: "Instructions",
   examTitle: "Pre-Interview Assessment"
-}
-
-export enum typeOfQuestion {
-  singleChoice = 'SINGLE_CHOICE',
-  multipleChoice = 'MULTIPLE_CHOICE',
-  text = 'TEXT'
 }

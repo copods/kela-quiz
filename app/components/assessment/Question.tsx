@@ -3,7 +3,7 @@ import { useState } from 'react'
 import {
   candidateExam,
   commonConstants,
-  typeOfQuestion,
+  QuestionTypes,
 } from '~/constants/common.constants'
 
 function Question() {
@@ -12,14 +12,14 @@ function Question() {
   const questionType = question.question.questionType.value
 
   const [userAnswer, setUserAnswer] = useState(
-    questionType === typeOfQuestion.singleChoice
+    questionType === QuestionTypes.singleChoice
       ? question.selectedOptions[0]?.id
       : questionType == 'TEXT'
       ? question?.answers
       : {}
   )
 
-  if (questionType === typeOfQuestion.multipleChoice) {
+  if (questionType === QuestionTypes.multipleChoice) {
     // for (let option of question.question.options) {
     //   question.selectedOptions.forEach((selOption: any) => {
     //     if (selOption.id == option.id) {
@@ -35,10 +35,10 @@ function Question() {
   }
 
   const onChangeHandle = (event: any, index?: number) => {
-    if (questionType == typeOfQuestion.singleChoice) {
+    if (questionType == QuestionTypes.singleChoice) {
       setUserAnswer(event.id)
     }
-    if (questionType == typeOfQuestion.multipleChoice) {
+    if (questionType == QuestionTypes.multipleChoice) {
       // question.options.forEach((opt: any) => {
       //   if (option.id == opt.id) {
       //     opt.rightAnswer = !opt.rightAnswer
@@ -48,13 +48,12 @@ function Question() {
       // for (let opt of questionData.question.options) {
       //   if (opt.id == option) {
       //     opt.rightAnswer = opt.rightAnswer == 'true' ? 'false' : 'true'
-      //     console.log(opt.rightAnswer)
+      //     (opt.rightAnswer)
       //   }
       // }
-      // console.log(questionData.question.options, selectedOption)
       // setUserAnswer(selectedOption)
     }
-    if (questionType == typeOfQuestion.text) {
+    if (questionType == QuestionTypes.text) {
       setUserAnswer((oldval: Array<string>) => {
         oldval[index || 0] = event.target.value
         return [...oldval]
@@ -62,9 +61,6 @@ function Question() {
     }
   }
 
-  // useEffect(() => {
-  //   console.log(userAnswer)
-  // }, [userAnswer])
   return (
     <form method="post" className="flex h-full flex-col gap-9">
       <div className="flex max-h-full flex-1 gap-9 overflow-auto">

@@ -2,11 +2,11 @@ import type { LoaderFunction, ActionFunction } from '@remix-run/node'
 import { redirect } from '@remix-run/node'
 import CandidateRegister from '~/components/assessment/CandidateRegister'
 import {
-  getCandidateIDFromAssessmentID,
-  updateCandidateFirstLastName,
-  updateNextCandidateStep,
-} from '~/models/candidate.server'
-import { checkIfTestLinkIsValidAndRedirect } from '~/utils'
+  checkIfTestLinkIsValidAndRedirect,
+  getCandidateIDFromAssessmentId,
+  updateCandidateDetail,
+  updateNextStep,
+} from '~/utils/assessment.utils'
 
 export const loader: LoaderFunction = async ({ params, request }) => {
   const candidateNextRoute = await checkIfTestLinkIsValidAndRedirect(
@@ -25,17 +25,19 @@ export const action: ActionFunction = async ({ params, request }) => {
   const formData = await request.formData()
   const firstName = formData.get('firstName') as string
   const lastName = formData.get('lastName') as string
-  const candidateID = await getCandidateIDFromAssessmentID(
+  const candidateID = await getCandidateIDFromAssessmentId(
     params.assessmentId as string
   )
   if (candidateID?.candidateId) {
-    const updatedCandidate = await updateCandidateFirstLastName(
-      candidateID?.candidateId,
+    const updatedCandidate = await updateCandidateDetail({
+      candidateId: candidateID?.candidateId,
       firstName,
-      lastName
-    )
+      lastName,
+    })
+
     if (updatedCandidate) {
-      await updateNextCandidateStep(params.assessmentId as string, {
+      await updateNextStep({
+        assessmentId: params.assessmentId as string,
         nextRoute: 'instructions',
         isSection: false,
         currentSectionId: null,

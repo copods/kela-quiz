@@ -1,7 +1,7 @@
 import { Outlet, useSubmit } from '@remix-run/react'
 import { useEffect, useState } from 'react'
 import { candidateExam } from '~/constants/common.constants'
-import { getTimeLeftInSeconds } from '~/utils'
+import { getTimeLeftInSeconds } from '~/utils/assessment.utils'
 
 export default function SectionQuestionPage({
   section,
@@ -13,9 +13,6 @@ export default function SectionQuestionPage({
   candidateTest: any
 }) {
   const [time, setTimer] = useState(-1)
-  // const [timer, setTimer2] = useState<any>(null)
-
-  // find currest section in candidateTest
   let candidateSection: any = {}
   for (let sec of candidateTest?.sections) {
     if (section?.section?.id == sec?.section?.id) {
@@ -28,14 +25,12 @@ export default function SectionQuestionPage({
   useEffect(() => {
     if (candidateSection?.startedAt) {
       if (!timer) {
-        console.log('tnslasdas', section?.timeInSeconds)
         // eslint-disable-next-line react-hooks/exhaustive-deps
         timer = setInterval(() => {
           let timeLeft = getTimeLeftInSeconds({
             totalTimeInSeconds: section?.timeInSeconds,
             startTime: candidateSection?.startedAt,
           })
-          console.log('tl', timeLeft)
           setTimer(timeLeft)
           if (timeLeft == 0) {
             submit({ order: section.order }, { method: 'post' })
