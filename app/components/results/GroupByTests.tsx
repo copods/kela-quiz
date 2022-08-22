@@ -11,9 +11,9 @@ import GroupByTestItems from './GroupByTestItems'
 import type { CandidateTest, Test } from '~/interface/Interface'
 const GroupByTests = () => {
   const [sortDirection, onSortDirectionChange] = useState(
-    SortByOrder.ascending as string
+    SortByOrder.ASCENDING as string
   )
-  const [sortBy, onSortChange] = useState(SortByOrder.name as string)
+  const [sortBy, onSortChange] = useState(SortByOrder.NAME as string)
   const filterByType = [
     {
       name: 'Name',
