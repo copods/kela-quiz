@@ -71,10 +71,10 @@ const TestList = ({
         />
       </div>
       {tests?.length !== 0 ? (
-        <div className="flex flex-1 flex-col rounded-lg  pb-6 ">
-          <div className="rounded-b-0 flex items-center rounded-t-md border border-b-0 border-solid border-borderColor bg-tableHeader px-9 py-3 font-semibold shadow-table ">
+        <div className="flex flex-1 flex-col rounded-lg pb-6 ">
+          <div className="rounded-b-0 flex items-center rounded-t-md border border-b-0 border-solid border-borderColor bg-tableHeader px-9 py-3 font-semibold shadow-table">
             {showCheckBox && (
-              <div className="w-1/12 ">
+              <div className="w-1/12">
                 <input type="checkbox" />
               </div>
             )}
@@ -93,13 +93,13 @@ const TestList = ({
             <div className="w-2/12 text-sm leading-5 text-gray-500">
               {testsConstants.created} {commonConstants.byText}
             </div>
-            <div className="flex w-1/12 justify-end pr-4 text-sm leading-5 text-gray-500">
+            <div className="flex w-1/12 text-sm leading-5 text-gray-500">
               {testsConstants.actionsText}
             </div>
           </div>
           <div
             id="test-list"
-            className="rounded-t-0 flex flex-col rounded-md border-t-0 border-solid border-borderColor shadow-table "
+            className="rounded-t-0 flex flex-col rounded-md border-t-0 border-solid border-borderColor shadow-table"
           >
             {tests.map((test, i) => (
               <TestTableItem
@@ -118,7 +118,7 @@ const TestList = ({
           </div>
         </div>
       ) : (
-        <div>No Test Found</div>
+        <div>{testsConstants.noTestFound}</div>
       )}
     </div>
   )

@@ -1,3 +1,4 @@
+import { cypress } from '~/constants/common.constants'
 const duplicateTitle = `Aptitude - ${new Date().getTime()}`
 
 describe('Test for section-details', () => {
@@ -6,16 +7,16 @@ describe('Test for section-details', () => {
     cy.get('#email')
       .clear()
       .type('careers@copods.co')
-      .should('have.value', 'careers@copods.co')
+      .should('have.value', cypress.email)
     cy.get('#password')
       .clear()
       .type('kQuiz@copods')
-      .should('have.value', 'kQuiz@copods')
+      .should('have.value', cypress.password)
     cy.findByRole('button').click()
 
     cy.get('a')
       .find('#Sections', { timeout: 6000 })
-      .should('have.text', 'Sections')
+      .should('have.text', cypress.Sections)
       .click()
     cy.location('pathname', { timeout: 6000 }).should('include', '/sections')
     cy.get('#add-section', { timeout: 6000 }).should('be.visible')
@@ -25,7 +26,7 @@ describe('Test for section-details', () => {
     cy.get('textarea#sectionDescription').type(
       `Aptitude - ${new Date().getTime()} Description`
     )
-    cy.get('button#submitButton').should('have.text', 'Add').click()
+    cy.get('button#submitButton').should('have.text', cypress.Add).click()
     cy.get('#section-cards', { timeout: 10000 })
       .children()
       .first()
@@ -43,14 +44,14 @@ describe('Test for section-details', () => {
     cy.get('#email')
       .clear()
       .type('careers@copods.co')
-      .should('have.value', 'careers@copods.co')
+      .should('have.value', cypress.email)
     cy.get('#password')
       .clear()
       .type('kQuiz@copods')
-      .should('have.value', 'kQuiz@copods')
+      .should('have.value', cypress.password)
     cy.findByRole('button').click()
 
-    cy.get('a').find('#Sections').should('have.text', 'Sections').click()
+    cy.get('a').find('#Sections').should('have.text', cypress.Sections).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('#add-section').click()
     cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
@@ -59,10 +60,10 @@ describe('Test for section-details', () => {
       `Aptitude - ${new Date().getTime()} Description`
     )
     cy.get('button#submitButton', { timeout: 6000 })
-      .should('have.text', 'Add')
+      .should('have.text', cypress.Add)
       .click()
     cy.get('#section-cards').children().first().click()
-    cy.get('#addQuestion').should('have.text', '+ Add Question').click()
+    cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -76,20 +77,20 @@ describe('Test for section-details', () => {
     cy.get('#email')
       .clear()
       .type('careers@copods.co')
-      .should('have.value', 'careers@copods.co')
+      .should('have.value', cypress.email)
     cy.get('#password')
       .clear()
       .type('kQuiz@copods')
-      .should('have.value', 'kQuiz@copods')
+      .should('have.value', cypress.password)
     cy.findByRole('button').click()
 
-    cy.get('a').find('#Sections').should('have.text', 'Sections').click()
+    cy.get('a').find('#Sections').should('have.text', cypress.Sections).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('#add-section').click()
     cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
 
     cy.get('#submitButton').click()
-    cy.get('.Toastify__toast').should('have.text', 'Name is required')
+    cy.get('.Toastify__toast').should('have.text', cypress.nameIsReq)
   })
 
   it('Test for valid error message while adding new section without Description', () => {
@@ -97,20 +98,20 @@ describe('Test for section-details', () => {
     cy.get('#email')
       .clear()
       .type('careers@copods.co')
-      .should('have.value', 'careers@copods.co')
+      .should('have.value', cypress.email)
     cy.get('#password')
       .clear()
       .type('kQuiz@copods')
-      .should('have.value', 'kQuiz@copods')
+      .should('have.value', cypress.password)
     cy.findByRole('button').click()
 
-    cy.get('a').find('#Sections').should('have.text', 'Sections').click()
+    cy.get('a').find('#Sections').should('have.text', cypress.Sections).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('#add-section').click()
     cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
     cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
     cy.get('#submitButton').click()
-    cy.get('.Toastify__toast').should('have.text', 'Description is required')
+    cy.get('.Toastify__toast').should('have.text', cypress.descIsReq)
   })
 
   it('Test for valid error message while adding new section with duplicate Title', () => {
@@ -118,14 +119,14 @@ describe('Test for section-details', () => {
     cy.get('#email')
       .clear()
       .type('careers@copods.co')
-      .should('have.value', 'careers@copods.co')
+      .should('have.value', cypress.email)
     cy.get('#password')
       .clear()
       .type('kQuiz@copods')
-      .should('have.value', 'kQuiz@copods')
+      .should('have.value', cypress.password)
     cy.findByRole('button').click()
 
-    cy.get('a').find('#Sections').should('have.text', 'Sections').click()
+    cy.get('a').find('#Sections').should('have.text', cypress.Sections).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('#add-section').click()
     cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
@@ -134,10 +135,7 @@ describe('Test for section-details', () => {
       `Aptitude - ${new Date().getTime()} Description`
     )
     cy.get('#submitButton').click()
-    cy.get('.Toastify__toast').should(
-      'have.text',
-      'Section added successfully..!'
-    )
+    cy.get('.Toastify__toast').should('have.text', cypress.sectionAdded)
     cy.get('.Toastify__close-button').click()
 
     cy.get('#add-section').click()
@@ -147,7 +145,7 @@ describe('Test for section-details', () => {
       `Aptitude - ${new Date().getTime()} Description`
     )
     cy.get('#submitButton').click()
-    cy.get('.Toastify__toast').should('have.text', 'Duplicate Title')
+    cy.get('.Toastify__toast').should('have.text', cypress.duplicateTitle)
     cy.get('.Toastify__close-button').click()
   })
 
@@ -156,14 +154,14 @@ describe('Test for section-details', () => {
     cy.get('#email')
       .clear()
       .type('careers@copods.co')
-      .should('have.value', 'careers@copods.co')
+      .should('have.value', cypress.email)
     cy.get('#password')
       .clear()
       .type('kQuiz@copods')
-      .should('have.value', 'kQuiz@copods')
+      .should('have.value', cypress.password)
     cy.findByRole('button').click()
 
-    cy.get('a').find('#Sections').should('have.text', 'Sections').click()
+    cy.get('a').find('#Sections').should('have.text', cypress.Sections).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('.px-5').click()
     cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
@@ -172,17 +170,17 @@ describe('Test for section-details', () => {
       `Aptitude - ${new Date().getTime()} Description`
     )
     cy.get('button#submitButton', { timeout: 6000 })
-      .should('have.text', 'Add')
+      .should('have.text', cypress.Add)
       .click()
     cy.get('#section-cards').children().first().click()
-    cy.get('#addQuestion').should('have.text', '+ Add Question').click()
+    cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
     )
     cy.get('.Toastify__close-button').click()
     cy.get('#Question', { timeout: 6000 })
-      .should('have.text', 'Question')
+      .should('have.text', cypress.question)
       .click()
     cy.get('a > div').should('have.class', 'border-l-8')
   })
@@ -192,14 +190,14 @@ describe('Test for section-details', () => {
     cy.get('#email')
       .clear()
       .type('careers@copods.co')
-      .should('have.value', 'careers@copods.co')
+      .should('have.value', cypress.email)
     cy.get('#password')
       .clear()
       .type('kQuiz@copods')
-      .should('have.value', 'kQuiz@copods')
+      .should('have.value', cypress.password)
     cy.findByRole('button').click()
 
-    cy.get('a').find('#Sections').should('have.text', 'Sections').click()
+    cy.get('a').find('#Sections').should('have.text', cypress.Sections).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('.px-5').click()
     cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
@@ -208,10 +206,10 @@ describe('Test for section-details', () => {
       `Aptitude - ${new Date().getTime()} Description`
     )
     cy.get('button#submitButton', { timeout: 6000 })
-      .should('have.text', 'Add')
+      .should('have.text', cypress.Add)
       .click()
     cy.get('#section-cards').children().first().click()
-    cy.get('#addQuestion').should('have.text', '+ Add Question').click()
+    cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -251,14 +249,14 @@ describe('Test for section-details', () => {
     cy.get('#email')
       .clear()
       .type('careers@copods.co')
-      .should('have.value', 'careers@copods.co')
+      .should('have.value', cypress.email)
     cy.get('#password')
       .clear()
       .type('kQuiz@copods')
-      .should('have.value', 'kQuiz@copods')
+      .should('have.value', cypress.password)
     cy.findByRole('button').click()
 
-    cy.get('a').find('#Sections').should('have.text', 'Sections').click()
+    cy.get('a').find('#Sections').should('have.text', cypress.Sections).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('.px-5').click()
     cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
@@ -267,10 +265,10 @@ describe('Test for section-details', () => {
       `Aptitude - ${new Date().getTime()} Description`
     )
     cy.get('button#submitButton', { timeout: 6000 })
-      .should('have.text', 'Add')
+      .should('have.text', cypress.Add)
       .click()
     cy.get('#section-cards').children().first().click()
-    cy.get('#addQuestion').should('have.text', '+ Add Question').click()
+    cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -310,14 +308,14 @@ describe('Test for section-details', () => {
     cy.get('#email')
       .clear()
       .type('careers@copods.co')
-      .should('have.value', 'careers@copods.co')
+      .should('have.value', cypress.email)
     cy.get('#password')
       .clear()
       .type('kQuiz@copods')
-      .should('have.value', 'kQuiz@copods')
+      .should('have.value', cypress.password)
     cy.findByRole('button').click()
 
-    cy.get('a').find('#Sections').should('have.text', 'Sections').click()
+    cy.get('a').find('#Sections').should('have.text', cypress.Sections).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('.px-5').click()
     cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
@@ -326,10 +324,10 @@ describe('Test for section-details', () => {
       `Aptitude - ${new Date().getTime()} Description`
     )
     cy.get('button#submitButton', { timeout: 6000 })
-      .should('have.text', 'Add')
+      .should('have.text', cypress.Add)
       .click()
     cy.get('#section-cards').children().first().click()
-    cy.get('#addQuestion').should('have.text', '+ Add Question').click()
+    cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -371,14 +369,14 @@ describe('Test for section-details', () => {
     cy.get('#email')
       .clear()
       .type('careers@copods.co')
-      .should('have.value', 'careers@copods.co')
+      .should('have.value', cypress.email)
     cy.get('#password')
       .clear()
       .type('kQuiz@copods')
-      .should('have.value', 'kQuiz@copods')
+      .should('have.value', cypress.password)
     cy.findByRole('button').click()
 
-    cy.get('a').find('#Sections').should('have.text', 'Sections').click()
+    cy.get('a').find('#Sections').should('have.text', cypress.Sections).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('.px-5').click()
     cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
@@ -387,10 +385,10 @@ describe('Test for section-details', () => {
       `Aptitude - ${new Date().getTime()} Description`
     )
     cy.get('button#submitButton', { timeout: 6000 })
-      .should('have.text', 'Add')
+      .should('have.text', cypress.Add)
       .click()
     cy.get('#section-cards').children().first().click()
-    cy.get('#addQuestion').should('have.text', '+ Add Question').click()
+    cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -431,14 +429,14 @@ describe('Test for section-details', () => {
     cy.get('#email')
       .clear()
       .type('careers@copods.co')
-      .should('have.value', 'careers@copods.co')
+      .should('have.value', cypress.email)
     cy.get('#password')
       .clear()
       .type('kQuiz@copods')
-      .should('have.value', 'kQuiz@copods')
+      .should('have.value', cypress.password)
     cy.findByRole('button').click()
 
-    cy.get('a').find('#Sections').should('have.text', 'Sections').click()
+    cy.get('a').find('#Sections').should('have.text', cypress.Sections).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('.px-5').click()
     cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
@@ -447,10 +445,10 @@ describe('Test for section-details', () => {
       `Aptitude - ${new Date().getTime()} Description`
     )
     cy.get('button#submitButton', { timeout: 6000 })
-      .should('have.text', 'Add')
+      .should('have.text', cypress.Add)
       .click()
     cy.get('#section-cards').children().first().click()
-    cy.get('#addQuestion').should('have.text', '+ Add Question').click()
+    cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -491,14 +489,14 @@ describe('Test for section-details', () => {
     cy.get('#email')
       .clear()
       .type('careers@copods.co')
-      .should('have.value', 'careers@copods.co')
+      .should('have.value', cypress.email)
     cy.get('#password')
       .clear()
       .type('kQuiz@copods')
-      .should('have.value', 'kQuiz@copods')
+      .should('have.value', cypress.password)
     cy.findByRole('button').click()
 
-    cy.get('a').find('#Sections').should('have.text', 'Sections').click()
+    cy.get('a').find('#Sections').should('have.text', cypress.Sections).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('.px-5').click()
     cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
@@ -507,10 +505,10 @@ describe('Test for section-details', () => {
       `Aptitude - ${new Date().getTime()} Description`
     )
     cy.get('button#submitButton', { timeout: 6000 })
-      .should('have.text', 'Add')
+      .should('have.text', cypress.Add)
       .click()
     cy.get('#section-cards').children().first().click()
-    cy.get('#addQuestion').should('have.text', '+ Add Question').click()
+    cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -549,14 +547,14 @@ describe('Test for section-details', () => {
     cy.get('#email')
       .clear()
       .type('careers@copods.co')
-      .should('have.value', 'careers@copods.co')
+      .should('have.value', cypress.email)
     cy.get('#password')
       .clear()
       .type('kQuiz@copods')
-      .should('have.value', 'kQuiz@copods')
+      .should('have.value', cypress.password)
     cy.findByRole('button').click()
 
-    cy.get('a').find('#Sections').should('have.text', 'Sections').click()
+    cy.get('a').find('#Sections').should('have.text', cypress.Sections).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('.px-5').click()
     cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
@@ -565,10 +563,10 @@ describe('Test for section-details', () => {
       `Aptitude - ${new Date().getTime()} Description`
     )
     cy.get('button#submitButton', { timeout: 6000 })
-      .should('have.text', 'Add')
+      .should('have.text', cypress.Add)
       .click()
     cy.get('#section-cards').children().first().click()
-    cy.get('#addQuestion').should('have.text', '+ Add Question').click()
+    cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -605,14 +603,14 @@ describe('Test for section-details', () => {
     cy.get('#email')
       .clear()
       .type('careers@copods.co')
-      .should('have.value', 'careers@copods.co')
+      .should('have.value', cypress.email)
     cy.get('#password')
       .clear()
       .type('kQuiz@copods')
-      .should('have.value', 'kQuiz@copods')
+      .should('have.value', cypress.password)
     cy.findByRole('button').click()
 
-    cy.get('a').find('#Sections').should('have.text', 'Sections').click()
+    cy.get('a').find('#Sections').should('have.text', cypress.Sections).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('.px-5').click()
     cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
@@ -621,10 +619,10 @@ describe('Test for section-details', () => {
       `Aptitude - ${new Date().getTime()} Description`
     )
     cy.get('button#submitButton', { timeout: 6000 })
-      .should('have.text', 'Add')
+      .should('have.text', cypress.Add)
       .click()
     cy.get('#section-cards').children().first().click()
-    cy.get('#addQuestion').should('have.text', '+ Add Question').click()
+    cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -636,7 +634,7 @@ describe('Test for section-details', () => {
       multiple: true,
     })
     cy.get('#saveAndAddMore', { timeout: 6000 })
-      .should('have.text', 'Save & Add More')
+      .should('have.text', cypress.saveAndAddMore)
       .click()
     cy.get('.Toastify__toast').should('have.text', 'Enter the Question')
   })
@@ -646,14 +644,14 @@ describe('Test for section-details', () => {
     cy.get('#email')
       .clear()
       .type('careers@copods.co')
-      .should('have.value', 'careers@copods.co')
+      .should('have.value', cypress.email)
     cy.get('#password')
       .clear()
       .type('kQuiz@copods')
-      .should('have.value', 'kQuiz@copods')
+      .should('have.value', cypress.password)
     cy.findByRole('button').click()
 
-    cy.get('a').find('#Sections').should('have.text', 'Sections').click()
+    cy.get('a').find('#Sections').should('have.text', cypress.Sections).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('.px-5').click()
     cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
@@ -662,10 +660,10 @@ describe('Test for section-details', () => {
       `Aptitude - ${new Date().getTime()} Description`
     )
     cy.get('button#submitButton', { timeout: 6000 })
-      .should('have.text', 'Add')
+      .should('have.text', cypress.Add)
       .click()
     cy.get('#section-cards').children().first().click()
-    cy.get('#addQuestion').should('have.text', '+ Add Question').click()
+    cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -697,8 +695,10 @@ describe('Test for section-details', () => {
       })
     })
     if (flag == 1) {
-      cy.get('#saveAndAddMore').should('have.text', 'Save & Add More').click()
-      cy.get('.Toastify__toast').should('have.text', 'Enter all the Options')
+      cy.get('#saveAndAddMore')
+        .should('have.text', cypress.saveAndAddMore)
+        .click()
+      cy.get('.Toastify__toast').should('have.text', cypress.enterAllOptions)
     }
   })
 })

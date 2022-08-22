@@ -63,7 +63,7 @@ export const action: ActionFunction = async ({ request }) => {
     await deleteTestById(formData.get('id') as string)
       .then((res) => {
         deleteHandle = json<ActionData>(
-          { resp: { status: statusCheck.deletedSuccess + '...!' } },
+          { resp: { status: statusCheck.deletedSuccess } },
           { status: 200 }
         )
       })
@@ -83,8 +83,8 @@ export const action: ActionFunction = async ({ request }) => {
         emails.push(fd as string)
       }
     })
-    if (emails.length == 0) {
-      return json({ status: 401, message: 'No emails to invite' })
+    if (emails.length === 0) {
+      return json({ status: 401, message: statusCheck.noEmailsInvite })
     }
     const candidateInviteStatus = await createCandidate({
       emails,
@@ -98,7 +98,7 @@ export const action: ActionFunction = async ({ request }) => {
 export default function Tests() {
   const data = useLoaderData() as unknown as LoaderData
   if (data.status != statusCheck.success) {
-    toast.success(statusCheck.wentWrong)
+    toast.success(statusCheck.commonError)
   }
   return (
     <AdminLayout>

@@ -57,6 +57,7 @@ export const testsConstants = {
   createdOn: 'Created on',
   created: 'Created',
   actionsText: 'Actions',
+  noTestFound: 'No Test Found',
 }
 export const componentGlobalConstants = {
   totalCounts: 'Total Counts',
@@ -67,12 +68,48 @@ export const routeFiles = {
 }
 
 export enum QuestionTypes {
-  multipleChoice= "MULTIPLE_CHOICE",
-  singleChoice= "SINGLE_CHOICE",
-  text= "TEXT"
+  multipleChoice = 'MULTIPLE_CHOICE',
+  singleChoice = 'SINGLE_CHOICE',
+  text = 'TEXT',
 }
-export enum statusCheck {
-  success = 'Success',
-  wentWrong = 'Something Went Wrong',
-  deletedSuccess = 'Deleted Successfully',
+export const statusCheck = {
+  success: 'Success',
+  commonError: 'Something Went Wrong',
+  deletedSuccess: 'Deleted Successfully...!',
+  noEmailsInvite: 'No emails to invite',
+}
+export const cypress = {
+  Tests: 'Tests',
+  Sections: 'Sections',
+  Add: 'Add',
+  email: 'careers@copods.co',
+  password: 'kQuiz@copods',
+  step1: 'Step 1',
+  step2: 'Step 2',
+  step3: 'Step 3',
+  testDetails: 'Test Details',
+  selectSections: 'Select Sections',
+  preview: 'Preview',
+  next: 'Next',
+  Remove: 'Remove',
+  addQuest: '+ Add Question',
+  back: 'Back',
+  submit: 'Submit',
+  nameIsReq: 'Name is required',
+  descIsReq: 'Description is required',
+  sectionAdded: 'Section added successfully..!',
+  duplicateTitle: 'Duplicate Title',
+  question: 'Question',
+  saveAndAddMore: 'Save & Add More',
+  enterAllOptions: 'Enter all the Options',
+  groupByTest: 'Group By Tests',
+  members: 'Members',
+  addMember: '+ Add Member',
+  cancel: 'Cancel',
+  delete: 'Delete',
+  results: 'Results',
+  name: 'Name',
+  description: 'Description',
+  totalTime: 'Total Time',
+  totalSections: 'Total Sections',
 }

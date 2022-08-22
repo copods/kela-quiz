@@ -23,13 +23,13 @@ const TestTableItem = ({
   testName: string
   createdBy: string
   createdAt: Date
-  id: any
+  id: string
   sections: Array<SectionInTest>
   showCheckBox: boolean
   totalCount: number
   status: string | undefined
 }) => {
-  const [isDelete, setIsDelete] = useState(false)
+  const [showDeletePopup, setShowDeletePopup] = useState(false)
   const submit = useSubmit()
   const deleteTest = () => {
     submit(
@@ -46,7 +46,7 @@ const TestTableItem = ({
       <div
         key={index}
         id="test-table-list"
-        className="test-table-list flex border-b border-t-0 border-gray-200 bg-white py-3 px-9 "
+        className="test-table-list flex border-b border-t-0 border-gray-200 bg-white py-3 px-9"
       >
         {showCheckBox && (
           <div className="w-1/12 text-base font-normal leading-6 text-gray-700">
@@ -86,15 +86,15 @@ const TestTableItem = ({
 
           <TestListActionMenu
             menuIcon={'mdi:dots-vertical'}
-            onItemClick={setIsDelete}
+            onItemClick={setShowDeletePopup}
             menuListIcon={'ic:outline-delete-outline'}
             menuListText={'Delete'}
           />
         </div>
       </div>
       <DeletePopUp
-        setOpen={setIsDelete}
-        open={isDelete}
+        setOpen={setShowDeletePopup}
+        open={showDeletePopup}
         onDelete={deleteTest}
         status={status}
       />

@@ -1,17 +1,19 @@
+import { cypress } from './../../../app/constants/common.constants'
+
 describe('Creating tests', () => {
   it('Visiting Add Test Page', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
       .type('careers@copods.co')
-      .should('have.value', 'careers@copods.co')
+      .should('have.value', cypress.email)
     cy.get('#password')
       .clear()
       .type('kQuiz@copods')
-      .should('have.value', 'kQuiz@copods')
+      .should('have.value', cypress.password)
     cy.findByRole('button').click()
 
-    cy.get('a').find('#Tests').should('have.text', 'Tests').click()
+    cy.get('a').find('#Tests').should('have.text', cypress.Tests).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('#addTest').click()
     cy.location('pathname', { timeout: 60000 }).should(
@@ -25,14 +27,14 @@ describe('Creating tests', () => {
     cy.get('#email')
       .clear()
       .type('careers@copods.co')
-      .should('have.value', 'careers@copods.co')
+      .should('have.value', cypress.email)
     cy.get('#password')
       .clear()
       .type('kQuiz@copods')
-      .should('have.value', 'kQuiz@copods')
+      .should('have.value', cypress.password)
     cy.findByRole('button').click()
 
-    cy.get('a').find('#Sections').should('have.text', 'Sections').click()
+    cy.get('a').find('#Sections').should('have.text', cypress.Sections).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('.px-5').click()
     cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
@@ -40,9 +42,9 @@ describe('Creating tests', () => {
     cy.get('textarea#sectionDescription').type(
       `Aptitude - ${new Date().getTime()} Description`
     )
-    cy.get('button#submitButton').should('have.text', 'Add').click()
+    cy.get('button#submitButton').should('have.text', cypress.Add).click()
     cy.get('#section-card').first().click()
-    cy.get('#addQuestion').should('have.text', '+ Add Question').click()
+    cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -79,14 +81,14 @@ describe('Creating tests', () => {
     cy.get('#email')
       .clear()
       .type('careers@copods.co')
-      .should('have.value', 'careers@copods.co')
+      .should('have.value', cypress.email)
     cy.get('#password')
       .clear()
       .type('kQuiz@copods')
-      .should('have.value', 'kQuiz@copods')
+      .should('have.value', cypress.password)
     cy.findByRole('button').click()
 
-    cy.get('a').find('#Tests').should('have.text', 'Tests').click()
+    cy.get('a').find('#Tests').should('have.text', cypress.Tests).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('#addTest').click()
     cy.location('pathname', { timeout: 60000 }).should(
@@ -94,12 +96,14 @@ describe('Creating tests', () => {
       '/tests/add-test'
     )
 
-    cy.get('#0').find('.mb-1').should('have.text', 'Step 1')
-    cy.get('#1').find('.mb-1').should('have.text', 'Step 2')
-    cy.get('#2').find('.mb-1').should('have.text', 'Step 3')
-    cy.get('#0').find('.text-gray-500').should('have.text', 'Test Details')
-    cy.get('#1').find('.text-gray-500').should('have.text', 'Select Sections')
-    cy.get('#2').find('.text-gray-500').should('have.text', 'Preview')
+    cy.get('#0').find('.mb-1').should('have.text', cypress.step1)
+    cy.get('#1').find('.mb-1').should('have.text', cypress.step2)
+    cy.get('#2').find('.mb-1').should('have.text', cypress.step3)
+    cy.get('#0').find('.text-gray-500').should('have.text', cypress.testDetails)
+    cy.get('#1')
+      .find('.text-gray-500')
+      .should('have.text', cypress.selectSections)
+    cy.get('#2').find('.text-gray-500').should('have.text', cypress.preview)
   })
 
   it('Verify if next button is disabled if user do not provide name and description', () => {
@@ -107,14 +111,14 @@ describe('Creating tests', () => {
     cy.get('#email')
       .clear()
       .type('careers@copods.co')
-      .should('have.value', 'careers@copods.co')
+      .should('have.value', cypress.email)
     cy.get('#password')
       .clear()
       .type('kQuiz@copods')
-      .should('have.value', 'kQuiz@copods')
+      .should('have.value', cypress.password)
     cy.findByRole('button').click()
 
-    cy.get('a').find('#Tests').should('have.text', 'Tests').click()
+    cy.get('a').find('#Tests').should('have.text', cypress.Tests).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('#addTest').click()
     cy.location('pathname', { timeout: 60000 }).should(
@@ -132,14 +136,14 @@ describe('Creating tests', () => {
     cy.get('#email')
       .clear()
       .type('careers@copods.co')
-      .should('have.value', 'careers@copods.co')
+      .should('have.value', cypress.email)
     cy.get('#password')
       .clear()
       .type('kQuiz@copods')
-      .should('have.value', 'kQuiz@copods')
+      .should('have.value', cypress.password)
     cy.findByRole('button').click()
 
-    cy.get('a').find('#Tests').should('have.text', 'Tests').click()
+    cy.get('a').find('#Tests').should('have.text', cypress.Tests).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('#addTest').click()
     cy.location('pathname', { timeout: 60000 }).should(
@@ -152,7 +156,7 @@ describe('Creating tests', () => {
       cy.get('.ql-editor').type(`Test Description`)
     })
 
-    cy.get('button#nextButton').should('have.text', 'Next').click()
+    cy.get('button#nextButton').should('have.text', cypress.next).click()
     cy.get('#0').find('hr').should('have.class', 'bg-primary')
     cy.get('#1').find('hr').should('have.class', 'bg-primary')
   })
@@ -162,14 +166,14 @@ describe('Creating tests', () => {
     cy.get('#email')
       .clear()
       .type('careers@copods.co')
-      .should('have.value', 'careers@copods.co')
+      .should('have.value', cypress.email)
     cy.get('#password')
       .clear()
       .type('kQuiz@copods')
-      .should('have.value', 'kQuiz@copods')
+      .should('have.value', cypress.password)
     cy.findByRole('button').click()
 
-    cy.get('a').find('#Tests').should('have.text', 'Tests').click()
+    cy.get('a').find('#Tests').should('have.text', cypress.Tests).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('#addTest').click()
     cy.location('pathname', { timeout: 60000 }).should(
@@ -186,7 +190,7 @@ describe('Creating tests', () => {
     cy.get('#0').find('hr').should('have.class', 'bg-primary')
     cy.get('#1').find('hr').should('have.class', 'bg-primary')
 
-    cy.get('button#backButton').should('have.text', 'Back').click()
+    cy.get('button#backButton').should('have.text', cypress.back).click()
 
     cy.get('#0').find('hr').should('have.class', 'bg-primary')
     cy.get('#1').find('hr').should('have.class', 'bg-gray-200')
@@ -197,14 +201,14 @@ describe('Creating tests', () => {
     cy.get('#email')
       .clear()
       .type('careers@copods.co')
-      .should('have.value', 'careers@copods.co')
+      .should('have.value', cypress.email)
     cy.get('#password')
       .clear()
       .type('kQuiz@copods')
-      .should('have.value', 'kQuiz@copods')
+      .should('have.value', cypress.password)
     cy.findByRole('button').click()
 
-    cy.get('a').find('#Tests').should('have.text', 'Tests').click()
+    cy.get('a').find('#Tests').should('have.text', cypress.Tests).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('#addTest').click()
     cy.location('pathname', { timeout: 60000 }).should(
@@ -216,7 +220,7 @@ describe('Creating tests', () => {
     cy.get('#quillEditor').within(() => {
       cy.get('.ql-editor').type(`Test Description`)
     })
-    cy.get('button#nextButton').should('have.text', 'Next').click()
+    cy.get('button#nextButton').should('have.text', cypress.next).click()
     cy.get('#0').find('hr').should('have.class', 'bg-primary')
     cy.get('#1').find('hr').should('have.class', 'bg-primary')
     // user reached to step 2
@@ -226,8 +230,8 @@ describe('Creating tests', () => {
         if (el.find('.count')[0].innerText != '0') {
           cy.get('input#noOfQu').should('have.disabled', true)
           cy.get('input#time').should('have.disabled', true)
-          cy.get('button').should('have.text', 'Add').click()
-          cy.get('button').should('have.text', 'Remove')
+          cy.get('button').should('have.text', cypress.Add).click()
+          cy.get('button').should('have.text', cypress.Remove)
 
           cy.get('input#noOfQu').clear().type('1')
           cy.get('input#time').clear().type('1')
@@ -243,14 +247,14 @@ describe('Creating tests', () => {
     cy.get('#email')
       .clear()
       .type('careers@copods.co')
-      .should('have.value', 'careers@copods.co')
+      .should('have.value', cypress.email)
     cy.get('#password')
       .clear()
       .type('kQuiz@copods')
-      .should('have.value', 'kQuiz@copods')
+      .should('have.value', cypress.password)
     cy.findByRole('button').click()
 
-    cy.get('a').find('#Tests').should('have.text', 'Tests').click()
+    cy.get('a').find('#Tests').should('have.text', cypress.Tests).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('#addTest').click()
     cy.location('pathname', { timeout: 60000 }).should(
@@ -263,7 +267,7 @@ describe('Creating tests', () => {
       cy.get('.ql-editor').type(`Test Description`)
     })
 
-    cy.get('button#nextButton').should('have.text', 'Next').click()
+    cy.get('button#nextButton').should('have.text', cypress.next).click()
     cy.get('#0').find('hr').should('have.class', 'bg-primary')
     cy.get('#1').find('hr').should('have.class', 'bg-primary')
     // user reached to step 2
@@ -273,8 +277,8 @@ describe('Creating tests', () => {
         if (el.find('.count')[0].innerText != '0') {
           cy.get('input#noOfQu').should('have.disabled', true)
           cy.get('input#time').should('have.disabled', true)
-          cy.get('button').should('have.text', 'Add').click()
-          cy.get('button').should('have.text', 'Remove')
+          cy.get('button').should('have.text', cypress.Add).click()
+          cy.get('button').should('have.text', cypress.Remove)
 
           cy.get('input#noOfQu').clear().type('1')
           cy.get('input#time').clear().type('1')
@@ -290,14 +294,14 @@ describe('Creating tests', () => {
     cy.get('#email')
       .clear()
       .type('careers@copods.co')
-      .should('have.value', 'careers@copods.co')
+      .should('have.value', cypress.email)
     cy.get('#password')
       .clear()
       .type('kQuiz@copods')
-      .should('have.value', 'kQuiz@copods')
+      .should('have.value', cypress.password)
     cy.findByRole('button').click()
 
-    cy.get('a').find('#Tests').should('have.text', 'Tests').click()
+    cy.get('a').find('#Tests').should('have.text', cypress.Tests).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('#addTest').click()
     cy.location('pathname', { timeout: 60000 }).should(
@@ -310,7 +314,7 @@ describe('Creating tests', () => {
       cy.get('.ql-editor').type(`Test Description`)
     })
 
-    cy.get('button#nextButton').should('have.text', 'Next').click()
+    cy.get('button#nextButton').should('have.text', cypress.next).click()
     cy.get('#0').find('hr').should('have.class', 'bg-primary')
     cy.get('#1').find('hr').should('have.class', 'bg-primary')
     // user reached to step 2
@@ -320,8 +324,8 @@ describe('Creating tests', () => {
         if (el.find('.count')[0].innerText != '0') {
           cy.get('input#noOfQu').should('have.disabled', true)
           cy.get('input#time').should('have.disabled', true)
-          cy.get('button').should('have.text', 'Add').click()
-          cy.get('button').should('have.text', 'Remove')
+          cy.get('button').should('have.text', cypress.Add).click()
+          cy.get('button').should('have.text', cypress.Remove)
 
           cy.get('input#noOfQu').clear().type('1')
           cy.get('input#time').clear().type('1')
@@ -330,7 +334,7 @@ describe('Creating tests', () => {
         }
       })
     })
-    cy.get('button#nextButton').should('have.text', 'Next').click()
+    cy.get('button#nextButton').should('have.text', cypress.next).click()
     cy.get('#0').find('hr').should('have.class', 'bg-primary')
     cy.get('#1').find('hr').should('have.class', 'bg-primary')
     cy.get('#2').find('hr').should('have.class', 'bg-primary')
@@ -341,14 +345,14 @@ describe('Creating tests', () => {
     cy.get('#email')
       .clear()
       .type('careers@copods.co')
-      .should('have.value', 'careers@copods.co')
+      .should('have.value', cypress.email)
     cy.get('#password')
       .clear()
       .type('kQuiz@copods')
-      .should('have.value', 'kQuiz@copods')
+      .should('have.value', cypress.password)
     cy.findByRole('button').click()
 
-    cy.get('a').find('#Tests').should('have.text', 'Tests').click()
+    cy.get('a').find('#Tests').should('have.text', cypress.Tests).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('#addTest').click()
     cy.location('pathname', { timeout: 60000 }).should(
@@ -361,7 +365,7 @@ describe('Creating tests', () => {
       cy.get('.ql-editor').type(`Test Description`)
     })
 
-    cy.get('button#nextButton').should('have.text', 'Next').click()
+    cy.get('button#nextButton').should('have.text', cypress.next).click()
     cy.get('#0').find('hr').should('have.class', 'bg-primary')
     cy.get('#1').find('hr').should('have.class', 'bg-primary')
     // user reached to step 2
@@ -371,8 +375,8 @@ describe('Creating tests', () => {
         if (el.find('.count')[0].innerText != '0') {
           cy.get('input#noOfQu').should('have.disabled', true)
           cy.get('input#time').should('have.disabled', true)
-          cy.get('button').should('have.text', 'Add').click()
-          cy.get('button').should('have.text', 'Remove')
+          cy.get('button').should('have.text', cypress.Add).click()
+          cy.get('button').should('have.text', cypress.Remove)
 
           cy.get('input#noOfQu').clear().type('1')
           cy.get('input#time').clear().type('1')
@@ -381,31 +385,31 @@ describe('Creating tests', () => {
         }
       })
     })
-    cy.get('button#nextButton').should('have.text', 'Next').click()
+    cy.get('button#nextButton').should('have.text', cypress.next).click()
     cy.get('#0').find('hr').should('have.class', 'bg-primary')
     cy.get('#1').find('hr').should('have.class', 'bg-primary')
     cy.get('#2').find('hr').should('have.class', 'bg-primary')
 
-    cy.get('button#submitButton').should('have.text', 'Submit').click()
+    cy.get('button#submitButton').should('have.text', cypress.submit).click()
 
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
   })
   let testName: any
-  it('Verify if user able create the test and navigate to test list page and see added test there', () => {
+  it('Verify if user is able to create a test and navigates to Tests Page where can see added test', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
       .type('careers@copods.co')
-      .should('have.value', 'careers@copods.co')
+      .should('have.value', cypress.email)
     cy.get('#password')
       .clear()
       .type('kQuiz@copods')
-      .should('have.value', 'kQuiz@copods')
+      .should('have.value', cypress.password)
     cy.findByRole('button').click()
 
     cy.get('a')
       .find('#Tests', { timeout: 6000 })
-      .should('have.text', 'Tests')
+      .should('have.text', cypress.Tests)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('#addTest', { timeout: 6000 }).click()
@@ -427,8 +431,8 @@ describe('Creating tests', () => {
         if (el.find('.count')[0].innerText != '0') {
           cy.get('input#noOfQu').should('have.disabled', true)
           cy.get('input#time').should('have.disabled', true)
-          cy.get('button').should('have.text', 'Add').click()
-          cy.get('button').should('have.text', 'Remove')
+          cy.get('button').should('have.text', cypress.Add).click()
+          cy.get('button').should('have.text', cypress.Remove)
 
           cy.get('input#noOfQu').clear().type('1')
           cy.get('input#time').clear().type('1')
@@ -437,7 +441,7 @@ describe('Creating tests', () => {
         }
       })
     })
-    cy.get('button#nextButton').should('have.text', 'Next').click()
+    cy.get('button#nextButton').should('have.text', cypress.next).click()
     cy.get('#0').find('hr').should('have.class', 'bg-primary')
     cy.get('#1').find('hr').should('have.class', 'bg-primary')
     cy.get('#2').find('hr').should('have.class', 'bg-primary')
@@ -447,7 +451,7 @@ describe('Creating tests', () => {
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('a')
       .find('#Tests', { timeout: 6000 })
-      .should('have.text', 'Tests')
+      .should('have.text', cypress.Tests)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('#sort-filter-body').get('#ascend').click()

@@ -9,7 +9,7 @@ const TestListMenuItem = ({
   menuListText,
 }: {
   menuIcon: string
-  onItemClick: Function
+  onItemClick: (e: boolean) => void
   menuListIcon: string
   menuListText: string
 }) => {
@@ -33,7 +33,7 @@ const TestListMenuItem = ({
           leaveTo="transform opacity-0 scale-95"
         >
           <Menu.Items className="absolute right-0 z-40 w-56 origin-bottom-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-            <div className="px-1 py-1 ">
+            <div className="px-1 py-1">
               <Menu.Item>
                 {({ active }) => (
                   <button
@@ -45,19 +45,13 @@ const TestListMenuItem = ({
                       onItemClick(true)
                     }}
                   >
-                    {active ? (
-                      <Icon
-                        icon={menuListIcon}
-                        className="mr-2 h-5 w-5 "
-                        aria-hidden="true"
-                      />
-                    ) : (
-                      <Icon
-                        icon={menuListIcon}
-                        className="mr-2 h-5 w-5 text-[#EF4444]"
-                        aria-hidden="true"
-                      />
-                    )}
+                    <Icon
+                      icon={menuListIcon}
+                      className={`${
+                        !active && 'text-deleteColor'
+                      } mr-2 h-5 w-5`}
+                      aria-hidden="true"
+                    />
                     {menuListText}
                   </button>
                 )}

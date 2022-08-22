@@ -49,8 +49,10 @@ const SortFilter = ({
         id="total-items-value"
       >
         <span>
-          {componentGlobalConstants.totalCounts}:{' '}
-          <span id="total-count-value">{totalItems}</span>
+          {componentGlobalConstants.totalCounts}:
+          <span id="total-count-value" className="pl-1">
+            {totalItems}
+          </span>
         </span>
         {showSelected && (
           <>
