@@ -18,7 +18,10 @@ describe('Creating tests', () => {
       .should('have.value', cypress.password)
     cy.findByRole('button').click()
 
-    cy.get('a').find('#Tests').should('have.text', testsConstants.Tests).click()
+    cy.get('a')
+      .find('#Tests', { timeout: 6000 })
+      .should('have.text', testsConstants.Tests)
+      .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('#addTest').click()
     cy.location('pathname', { timeout: 60000 }).should(
@@ -39,12 +42,12 @@ describe('Creating tests', () => {
       .should('have.value', cypress.password)
     cy.findByRole('button', { timeout: 6000 }).click()
 
-    cy.get('a')
+    cy.get('a', { timeout: 10000 })
       .find('#Sections', { timeout: 10000 })
       .should('have.text', routeFiles.sections)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
-    cy.get('.px-5', { timeout: 6000 }).click()
+    cy.get('.px-5', { timeout: 10000 }).click()
     cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
     cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
     cy.get('textarea#sectionDescription').type(
@@ -61,7 +64,7 @@ describe('Creating tests', () => {
       .find('#Sections')
       .should('have.text', routeFiles.sections)
       .click()
-    cy.get('#section-card').first().click()
+    cy.get('#section-card', { timeout: 6000 }).first().click()
     cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
