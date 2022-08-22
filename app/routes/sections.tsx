@@ -108,7 +108,6 @@ export const action: ActionFunction = async ({ request }) => {
 
 export default function SectionPage() {
   const data = useLoaderData() as unknown as LoaderData
-  console.log(data)
   const fetcher = useFetcher()
   const action = useActionData() as ActionData
 
