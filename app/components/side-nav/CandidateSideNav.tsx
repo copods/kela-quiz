@@ -57,7 +57,7 @@ const CandidateSideNav = ({
         {/* sidenav menu group */}
         <div className="flex flex-col gap-2.5">
           <div className="px-5 text-sm font-semibold text-gray-900">
-            {candidateExam}
+            {candidateExam.assessmentDetails}
           </div>
           <div
             className={`flex h-11 items-center text-sm ${
@@ -72,7 +72,7 @@ const CandidateSideNav = ({
 
         <div className="flex flex-col gap-2.5">
           <div className="px-5 text-sm font-semibold text-gray-900">
-            Assessment Tests
+            {candidateExam.assessmentTests}
           </div>
           <div>
             {candidateTest?.sections.map((section: SectionInCandidateTest) => {
@@ -83,7 +83,7 @@ const CandidateSideNav = ({
                       routeData?.currentSectionInTest?.section.id ==
                         section.section.id && !routeData.params?.questionId
                         ? 'border border-0 border-l-4 border-primary bg-blue-50 px-4 font-semibold text-primary'
-                        : 'px-5 font-medium text-gray-800 '
+                        : 'px-5 font-medium text-gray-800'
                     }`}
                   >
                     <span>{section?.section?.name}</span>
@@ -110,21 +110,21 @@ const CandidateSideNav = ({
                         <div
                           key={question.id}
                           className={`flex h-11 items-center justify-between gap-2 text-sm ${
-                            routeData.params?.questionId == question?.id
+                            routeData.params?.questionId === question?.id
                               ? 'border border-0 border-l-4 border-primary bg-blue-50 pl-7 pr-8 font-semibold text-primary'
-                              : 'px-8 font-medium text-gray-800 '
+                              : 'px-8 font-medium text-gray-800'
                           }`}
                         >
                           <span>
                             {candidateExam.question} {question?.order}
                           </span>
-                          {question.status == QuestionStatus.skipped && (
+                          {question.status === QuestionStatus.skipped && (
                             <Icon
                               icon={'bi:dash-circle'}
                               className="text-lg text-red-800"
                             />
                           )}
-                          {question.status == QuestionStatus.answered && (
+                          {question.status === QuestionStatus.answered && (
                             <Icon
                               icon={'teenyicons:tick-circle-outline'}
                               className="text-lg text-green-800"

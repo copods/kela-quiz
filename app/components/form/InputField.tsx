@@ -19,7 +19,7 @@ function InputField({
         id={name}
         name={name}
         {...props}
-        className="h-11 w-full  rounded-lg border border-gray-200 px-3.5 py-2.5 text-lg"
+        className="h-11 w-full rounded-lg border border-gray-200 px-3.5 py-2.5 text-lg"
         title={props.placeholder}
       />
 

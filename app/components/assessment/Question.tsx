@@ -118,7 +118,7 @@ const Question = () => {
             name="previous"
             value="prev"
             type="submit"
-            disabled={question.order == 1}
+            disabled={question.order === 1}
           >
             {commonConstants.prevoiusButton}
           </button>
@@ -128,7 +128,7 @@ const Question = () => {
               name="next"
               value="next"
               type="submit"
-              disabled={question.order == section.totalQuestions}
+              disabled={question.order === section.totalQuestions}
             >
               {commonConstants.nextButton}
             </button>

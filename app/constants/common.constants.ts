@@ -87,6 +87,7 @@ export const candidateExam = {
   timeRemaining: "Time Remaining",
   timeLimit: "Time Limit",
   assessmentDetails: "Assessment Details",
+  assessmentTests: "Assessment Tests",
   minutes: "Mins",
   description: "Description",
   total: "Total",
