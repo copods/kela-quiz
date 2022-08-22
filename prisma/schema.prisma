@@ -216,9 +216,8 @@ model CandidateResult {
   unanswered      Int
 
   // easier access of test and results
-  test   Test   @relation(fields: [testId], references: [id])
-  testId String
-
+  test        Test     @relation(fields: [testId], references: [id])
+  testId      String
   isQualified Boolean
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
