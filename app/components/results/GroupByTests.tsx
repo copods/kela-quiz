@@ -32,9 +32,9 @@ const GroupByTests = () => {
     submit({ data: JSON.stringify(filter) }, { method: 'get' })
   }, [sortDirection, sortBy, submit])
   return (
-    <div className="flex flex-col gap-6">
-      <h1 className="text-3xl font-bold text-gray-900">Group by tests</h1>
-      <div className="flex flex-col gap-10">
+    <div className="flex flex-col gap-6" id="group-by-test-container">
+      <h1 className="text-3xl font-bold text-gray-900 ">Group by tests</h1>
+      <div className="flex flex-col gap-6">
         <div id="sort-filter-container">
           <SortFilter
             filterData={filterByType}
@@ -46,13 +46,14 @@ const GroupByTests = () => {
             showSelected={false}
           />
         </div>
-        <div className="grid grid-cols-12 rounded-lg  bg-[#F9FAFB] shadow-table">
+
+        <div className="rounded-lg  bg-[#F9FAFB] shadow-table">
           <div className="col-span-full grid grid-cols-10 rounded-lg border-[1px] border-solid border-borderColor bg-white">
             <div className="col-span-full grid grid-cols-10 gap-3 bg-tableHeader py-4 px-12">
-              <span className="col-span-2 text-sm font-semibold  text-gray-500">
-                {resultConstants.order}
+              <span className="col-span-1 text-sm font-semibold  text-gray-500">
+                {resultConstants.srno}
               </span>
-              <span className="col-span-3 text-sm font-semibold  text-gray-500">
+              <span className="col-span-4 text-sm font-semibold  text-gray-500">
                 {resultConstants.test}
               </span>
               <span className="col-span-2 text-sm font-semibold  text-gray-500">
@@ -74,10 +75,12 @@ const GroupByTests = () => {
                   <div
                     key={candidateTests.id}
                     className="GroupByTestRow col-span-10 grid"
+                    id="group-by-items-container"
                   >
                     <GroupByTestItems
                       candidateTests={candidateTests}
                       index={index + 1}
+                      id={candidateTests?.id}
                     />
                   </div>
                 )
