@@ -40,7 +40,7 @@ describe('Creating tests', () => {
       .clear()
       .type('kQuiz@copods')
       .should('have.value', cypress.password)
-    cy.findByRole('button', { timeout: 6000 }).click()
+    cy.findByRole('button', { timeout: 10000 }).click()
     cy.get('a', { timeout: 10000 })
       .find('#Sections', { timeout: 10000 })
       .should('have.text', routeFiles.sections)
@@ -59,11 +59,11 @@ describe('Creating tests', () => {
       .find('#Tests', { timeout: 6000 })
       .should('have.text', testsConstants.Tests)
       .click()
-    cy.get('a', { timeout: 6000 })
-      .find('#Sections', { timeout: 6000 })
+    cy.get('a', { timeout: 10000 })
+      .find('#Sections', { timeout: 10000 })
       .should('have.text', routeFiles.sections)
       .click()
-    cy.get('#section-card', { timeout: 6000 }).first().click()
+    cy.get('#section-card', { timeout: 20000 }).first().click()
     cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
