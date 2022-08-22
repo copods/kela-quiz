@@ -8,7 +8,13 @@ export async function getSectionById({ id }: Pick<Section, 'id'>) {
       id,
     },
     include: {
-      questions: true,
+      questions: {
+        include: {
+          correctOptions: true,
+          options: true,
+          correctAnswer: true,
+        },
+      },
     },
   })
 }
@@ -88,7 +94,6 @@ export async function addQuestion(
       return true
     })
     .catch((err) => {
-      console.log(err)
       return err
     })
 }

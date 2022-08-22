@@ -1,7 +1,8 @@
 import { Icon } from '@iconify/react'
 import Moment from 'moment'
+import { toast } from 'react-toastify'
 import type { TestSection } from '~/interface/Interface'
-
+import { commonConstants, testsConstants } from '~/constants/common.constants'
 const SelectSectionCard = ({
   section,
   updateSection,
@@ -14,6 +15,10 @@ const SelectSectionCard = ({
     value?: string,
     selected?: boolean
   ) => {
+    if (section?._count?.questions == 0) {
+      toast.error('Cannot add section with 0 questions')
+      return
+    }
     var temp = {
       isSelected: section.isSelected,
       totalQuestions: section.totalQuestions
@@ -32,6 +37,10 @@ const SelectSectionCard = ({
         temp.isSelected = selected
         break
       case 'totalQuestions':
+        if (parseInt(value || '') > (section?._count?.questions || 0)) {
+          toast.error('Cannot add more than available questions')
+          return
+        }
         temp.totalQuestions = parseInt(value || '')
         break
       case 'time':
@@ -63,7 +72,7 @@ const SelectSectionCard = ({
               updateThisSection('isSelected', '', false)
             }}
           >
-            Remove
+            {commonConstants.removeButton}
           </button>
         ) : (
           <button
@@ -72,13 +81,14 @@ const SelectSectionCard = ({
               updateThisSection('isSelected', '', true)
             }}
           >
-            Add
+            {commonConstants.addButton}
           </button>
         )}
       </div>
       <div className="flex text-xs text-gray-400">
         <span>
-          By {section?.createdBy?.firstName} {section?.createdBy?.lastName}
+          {commonConstants.byText} {section?.createdBy?.firstName}{' '}
+          {section?.createdBy?.lastName}
         </span>
         <span className="flex">
           <Icon className="text-base" icon={'mdi:circle-small'} />
@@ -86,7 +96,8 @@ const SelectSectionCard = ({
         </span>
       </div>
       <div className="flex text-xs text-gray-400">
-        Total Questions: {section?._count?.questions}
+        {testsConstants.totalQuestionsText}:{' '}
+        <span className="count">{section?._count?.questions}</span>
       </div>
       <hr className="h-px w-full border-0 bg-gray-300" />
       <div className="flex gap-4 pt-1">
@@ -95,7 +106,7 @@ const SelectSectionCard = ({
             htmlFor="noOfQuestion"
             className="text-xs font-medium text-gray-600"
           >
-            Total Questions
+            {testsConstants.totalQuestionsText}
           </label>
           <input
             type="number"
@@ -117,7 +128,7 @@ const SelectSectionCard = ({
             htmlFor="totalTime"
             className="text-xs font-medium text-gray-600"
           >
-            Total Time
+            {testsConstants.totalTimeText}
           </label>
           <input
             type="number"

@@ -1,6 +1,7 @@
 import type { ActionFunction, LoaderFunction } from '@remix-run/server-runtime'
 import { redirect } from '@remix-run/server-runtime'
 import { json } from '@remix-run/node'
+import { routeFiles, sectionsConstants } from '~/constants/common.constants'
 import {
   Outlet,
   useActionData,
@@ -21,13 +22,13 @@ import AdminLayout from '~/components/layouts/AdminLayout'
 import AddSection from '~/components/sections/AddSection'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import type { Section } from '@prisma/client'
+import type { Section } from '~/interface/Interface'
 
 export type ActionData = {
   errors?: {
     title?: string
     body?: string
-    status?: string
+    status?: any
     check?: Date
     name?: string
     description?: string
@@ -35,12 +36,14 @@ export type ActionData = {
   resp?: {
     status?: string
     check?: Date
+    title?: string
+    data?: Section
   }
 }
 
 export type LoaderData = {
   sections: Awaited<ReturnType<typeof getAllSections>>
-  selectedSectionId: string
+  selectedSectionId?: string
   filters: string
   status: string
 }
@@ -62,7 +65,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   if (!userId) return redirect('/sign-in')
   const selectedSectionId = params.sectionId
     ? params.sectionId?.toString()
-    : 'NA'
+    : undefined
   const filters = new URL(request.url).search
   return json<LoaderData>({ sections, selectedSectionId, filters, status })
 }
@@ -103,12 +106,18 @@ export const action: ActionFunction = async ({ request }) => {
           { status: 200 }
         )
       })
+
       .catch((err) => {
+        let title = 'Something went wrong..!'
+        if (err.code === 'P2002') {
+          title = 'Duplicate Title'
+        }
         addHandle = json<ActionData>(
-          { errors: { status: err, check: new Date() } },
+          { errors: { title, status: err, check: new Date() } },
           { status: 400 }
         )
       })
+
     return addHandle
   }
   let deleteHandle = null
@@ -128,50 +137,50 @@ export const action: ActionFunction = async ({ request }) => {
       })
     return deleteHandle
   }
-  console.log(deleteHandle, 'status')
+
   if (deleteHandle) {
     return redirect('/sections')
   }
 }
 
 export default function SectionPage() {
-  const data = useLoaderData() as LoaderData
+  const data = useLoaderData() as unknown as LoaderData
   const fetcher = useFetcher()
-  const action = useActionData as ActionData
-  useEffect(() => {
-    if (action) {
-      console.log(action?.resp?.status)
-      if (action?.resp?.status) {
-        toast.success(action?.resp?.status)
-      } else if (action?.errors?.status) {
-        toast.error('Something went wrong...!')
-      }
-    }
-  }, [action])
-  const [sectionDetailFull, setSectionDetailFull] = useState(false)
-  const [open, setOpen] = useState(false)
+  const sectionActionData = useActionData() as ActionData
 
   let navigate = useNavigate()
   const submit = useSubmit()
-
-  const [order, setOrder] = useState('asc')
   const sortByDetails = [
     {
       name: 'Name',
-      id: 'name',
+      value: 'name',
     },
     {
       name: 'Created Date',
-      id: 'createdAt',
+      value: 'createdAt',
     },
   ]
-  useEffect(() => {
-    if (data.sections.length && data.selectedSectionId === 'NA') {
-      navigate(`/sections/${data.sections[0].id}`, { replace: true })
-    }
-  }, [data, navigate])
 
-  const [sortBy, setSortBy] = useState(sortByDetails[1].id)
+  const [sectionDetailFull, setSectionDetailFull] = useState(false)
+  const [showAddSectionModal, setShowAddSectionModal] = useState(false)
+  const [order, setOrder] = useState('asc')
+  const [sortBy, setSortBy] = useState(sortByDetails[1].value)
+  const [selectedSection, setSelectedSection] = useState(
+    data.selectedSectionId || data.sections[0]?.id || 'NA'
+  )
+
+  if (data.status != 'Success') {
+    toast.error('Something went wrong..!')
+  }
+
+  useEffect(() => {
+    if (data.sections.length && !data.selectedSectionId) {
+      navigate(`/sections/${selectedSection}${data?.filters}`, {
+        replace: true,
+      })
+    }
+  }, [data, navigate, selectedSection])
+
   useEffect(() => {
     if (data.sections.length > 0) {
       const formData = new FormData()
@@ -189,35 +198,46 @@ export default function SectionPage() {
     }
   }, [order, sortBy])
 
-  const [selectedSection, setSelectedSection] = useState(
-    data.selectedSectionId != 'NA'
-      ? data.selectedSectionId
-      : data.sections[0]?.id
-      ? data.sections[0].id
-      : 'NA'
-  )
+  useEffect(() => {
+    if (sectionActionData) {
+      if (sectionActionData.resp?.status) {
+        setShowAddSectionModal(false)
+        toast.success(sectionActionData.resp?.status)
+        // navigate(`/sections/${sectionActionData?.resp?.data?.id}`, {
+        //   replace: false,
+        // })
+      } else if (sectionActionData.errors?.status === 400) {
+        toast.error(sectionActionData.errors?.title, {
+          toastId: sectionActionData.errors?.title,
+        })
+      }
+    }
+  }, [sectionActionData])
+
   return (
     <AdminLayout>
       <div className="flex h-full flex-col gap-12 overflow-hidden">
         {/* header */}
         <header className="flex items-center justify-between">
-          <h2 className="text-3xl font-bold text-black">Sections</h2>
+          <h2 className="text-3xl font-bold text-black">
+            {routeFiles.sections}
+          </h2>
           <button
             className="h-9 rounded-lg bg-primary px-5 text-xs text-[#F0FDF4]"
             id="add-section"
-            onClick={() => setOpen(!open)}
+            onClick={() => setShowAddSectionModal(!showAddSectionModal)}
           >
-            + Add Section
+            + {sectionsConstants.addSection}
           </button>
         </header>
 
         <div
           className={`flex flex-1 overflow-hidden ${
-            sectionDetailFull ? '' : 'gap-12'
+            !sectionDetailFull && 'gap-12'
           }`}
         >
           {/* section list */}
-          <div className={`${sectionDetailFull ? 'hidden' : ''}`}>
+          <div className={`${sectionDetailFull && 'hidden'}`}>
             <Sections
               sections={data.sections}
               selectedSection={selectedSection}
@@ -228,8 +248,8 @@ export default function SectionPage() {
               setOrder={setOrder}
               setSelectedSection={setSelectedSection}
               sortByDetails={sortByDetails}
-              actionStatusData={action?.resp?.status}
-              err={action?.resp?.status}
+              actionStatusData={sectionActionData?.resp?.status}
+              err={sectionActionData?.resp?.status}
             />
           </div>
           {/* section details */}
@@ -258,7 +278,11 @@ export default function SectionPage() {
           </div>
         </div>
 
-        <AddSection showErrorMessage={action} open={open} setOpen={setOpen} />
+        <AddSection
+          open={showAddSectionModal}
+          setOpen={setShowAddSectionModal}
+          showErrorMessage={sectionActionData?.errors?.status === 400}
+        />
       </div>
     </AdminLayout>
   )

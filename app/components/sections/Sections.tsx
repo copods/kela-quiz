@@ -1,9 +1,9 @@
-import { Icon } from '@iconify/react'
 import SectionCard from './SectionCard'
-import DropdownField from '../form/Dropdown'
 import type { Section } from '~/interface/Interface'
 import { useResolvedPath, useLocation, NavLink } from '@remix-run/react'
 import {} from '@remix-run/react'
+import SortFilter from '../SortFilter'
+import { sectionsConstants } from '~/constants/common.constants'
 
 const SectionLink = ({
   section,
@@ -40,11 +40,11 @@ type SectionType = {
   filters: string
   setSortBy: (e: string) => void
   order: string
-  setOrder: Function
   err: any
   actionStatusData: any
+  setOrder: (e: string) => void
   setSelectedSection: Function
-  sortByDetails: Array<{ name: string; id: string }>
+  sortByDetails: Array<{ name: string; value: string }>
 }
 const Sections = ({
   sections,
@@ -52,8 +52,6 @@ const Sections = ({
   setSortBy,
   order,
   setOrder,
-  filters,
-  setSelectedSection,
   sortByDetails,
   err,
   actionStatusData,
@@ -62,31 +60,17 @@ const Sections = ({
     <div className="flex h-full w-96 flex-col gap-6">
       {/* filters */}
       <div className="flex items-center justify-between ">
-        <div className="flex items-center gap-2.5">
-          {order === 'asc' ? (
-            <Icon
-              icon="ph:sort-descending-bold"
-              onClick={() => setOrder('desc')}
-              className="icon-desc cursor-pointer text-2xl"
-            />
-          ) : (
-            <Icon
-              icon="ph:sort-ascending-bold"
-              onClick={() => setOrder('asc')}
-              className="icon-asc cursor-pointer text-2xl"
-            />
-          )}
-          <DropdownField
-            data={sortByDetails}
-            displayKey={'name'}
-            valueKey={'id'}
-            value={sortBy}
-            setValue={setSortBy}
+        <div id="sort-filter-container">
+          <SortFilter
+            filterData={sortByDetails}
+            sortDirection={order}
+            onSortDirectionChange={setOrder}
+            sortBy={sortBy}
+            onSortChange={setSortBy}
+            totalItems={sections?.length}
+            showSelected={false}
           />
         </div>
-        <span className="flex h-11 w-11 items-center justify-center rounded-lg border border-gray-200 bg-white">
-          {sections?.length}
-        </span>
       </div>
 
       {/* list */}
@@ -103,7 +87,9 @@ const Sections = ({
           />
         ))}
         {sections.length === 0 && (
-          <div className="flex justify-center p-7">No Record Found</div>
+          <div className="flex justify-center p-7">
+            {sectionsConstants.noRecordFound}
+          </div>
         )}
       </div>
     </div>

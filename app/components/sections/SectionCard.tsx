@@ -5,6 +5,7 @@ import { useSubmit } from '@remix-run/react'
 import DeletePopUp from '../DeletePopUp'
 import { useState, useEffect } from 'react'
 
+import { sectionsConstants } from '~/constants/common.constants'
 const SectionCard = ({
   name,
   isActive,
@@ -45,8 +46,10 @@ const SectionCard = ({
       }`}
       id="section-card"
     >
-      <div className="flex items-center justify-between break-all">
-        <h2 className="text-xl font-semibold text-gray-700">{name}</h2>
+      <div className="flex items-center justify-between">
+        <h2 id="sctionName" className="text-xl font-semibold text-gray-700">
+          {name}
+        </h2>
         <div className="flex">
           <Menu as="div" className=" relative inline-block text-left">
             <Menu.Button>
@@ -92,13 +95,13 @@ const SectionCard = ({
       </div>
       <div className="flex text-xs text-gray-400">
         <span>By {createdBy}</span>
-        <span className="created-by-date flex">
+        <span id="sectionDate" className="created-by-date flex">
           <Icon className="text-base" icon={'mdi:circle-small'} />
           {moment(createdAt).format('DD MMM YY')}
         </span>
       </div>
       <div className="flex text-xs text-gray-400">
-        Total Questions: {questionsCount}
+        {sectionsConstants.totalQuestions} {questionsCount}
       </div>
       <DeletePopUp
         setOpen={setIsDelete}
