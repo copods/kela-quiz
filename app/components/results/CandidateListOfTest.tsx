@@ -85,7 +85,7 @@ const CandidateListOfTest = () => {
           )}
         </>
       )}
-      {currentTab === tabs[1].id && <div>attended</div>}
+      {currentTab === tabs[1].id && <div>Attended List</div>}
     </div>
   )
 }

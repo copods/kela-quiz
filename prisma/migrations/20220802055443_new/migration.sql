@@ -14,7 +14,3 @@ ALTER TABLE "Candidate" DROP CONSTRAINT "Candidate_createdById_fkey";
 ALTER TABLE "Candidate" DROP COLUMN "createdById",
 ALTER COLUMN "firstName" SET NOT NULL,
 ALTER COLUMN "lastName" SET NOT NULL;
-
--- AlterTable
-ALTER TABLE "CandidateTest" ADD COLUMN     "candidateStep" JSONB NOT NULL DEFAULT '{ "nextRoute": "register", "isSection": false, "currentSectionID": null }',
-ALTER COLUMN "link" SET NOT NULL;

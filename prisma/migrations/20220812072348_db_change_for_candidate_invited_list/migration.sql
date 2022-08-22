@@ -11,11 +11,11 @@ ALTER COLUMN "firstName" DROP NOT NULL,
 ALTER COLUMN "lastName" DROP NOT NULL;
 
 -- AlterTable
-ALTER TABLE "CandidateQuestion" ADD COLUMN     "order" INTEGER NOT NULL;
+-- ALTER TABLE "CandidateQuestion" ADD COLUMN     "order" INTEGER NOT NULL;
 
 -- AlterTable
-ALTER TABLE "CandidateTest" ADD COLUMN     "candidateStep" JSONB NOT NULL DEFAULT '{ "nextRoute": "register", "isSection": false, "currentSectionID": null }',
-ALTER COLUMN "link" DROP NOT NULL;
+-- ALTER TABLE "CandidateTest" ADD COLUMN     "candidateStep" JSONB NOT NULL DEFAULT '{ "nextRoute": "register", "isSection": false, "currentSectionID": null }',
+-- ALTER COLUMN "link" DROP NOT NULL;
 
 -- AddForeignKey
 ALTER TABLE "Candidate" ADD CONSTRAINT "Candidate_createdById_fkey" FOREIGN KEY ("createdById") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

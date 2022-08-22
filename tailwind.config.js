@@ -14,6 +14,7 @@ module.exports = {
       },
       minWidth: {
         260: '260px',
+        301: '320px',
         sectionCard: '330px',
       },
       width: {
