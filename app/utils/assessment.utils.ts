@@ -170,7 +170,7 @@ export async function getSectionInTest(testSectionId: string) {
  * @param sectionId
  * @returns sectionInCandidateTest
  */
-export async function getSectionInCandidateTest(assessmentId: string, sectionId: string) {
+export async function getSectionInCandidateTest(sectionId: string, assessmentId: string) {
   return await getCandidateSectionDetails(
     sectionId,
     assessmentId
@@ -227,6 +227,8 @@ export async function moveToNextSection({ assessmentId, order, sectionId }: { as
     candidateTest?.test.id as string,
     order + 1
   )
+  console.log("heeiosfjk", nextSectionObject)
+
 
   await updateNextStep({
     assessmentId: assessmentId as string,
@@ -236,6 +238,7 @@ export async function moveToNextSection({ assessmentId, order, sectionId }: { as
   })
 
   if (nextSectionObject) {
+    console.log("asda", `/assessment/${assessmentId}/${nextSectionObject?.id}`)
     return redirect(
       `/assessment/${assessmentId}/${nextSectionObject?.id}`
     )

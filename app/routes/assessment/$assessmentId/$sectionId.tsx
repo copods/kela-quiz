@@ -27,8 +27,8 @@ export const loader: LoaderFunction = async ({ params, request }) => {
 
   // getting candidate section for time validation
   const candidateSection = await getSectionInCandidateTest(
-    params.assessmentId as string,
-    section?.section.id as string
+    section?.section.id as string,
+    params.assessmentId as string
   )
 
   if (candidateSection?.endAt) {
@@ -85,13 +85,12 @@ export const loader: LoaderFunction = async ({ params, request }) => {
 
 export default function AssessmentSection() {
   const { section, candidateTests, candidate, params } = useLoaderData()
-
   return (
     <CandidateLayout candidate={candidate} candidateTest={candidateTests}>
       <SectionQuestionPage
         section={section}
         params={params}
-        candidateTest={candidateTest}
+        candidateTest={candidateTests}
       />
     </CandidateLayout>
   )

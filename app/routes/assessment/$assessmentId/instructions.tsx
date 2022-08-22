@@ -61,10 +61,10 @@ export const action: ActionFunction = async ({ request, params }) => {
 }
 
 export default function TestInstructions() {
-  const { candidateTets, candidate } = useLoaderData()
+  const { candidateTests, candidate } = useLoaderData()
 
   return (
-    <CandidateLayout candidate={candidate} candidateTest={candidateTets}>
+    <CandidateLayout candidate={candidate} candidateTest={candidateTests}>
       <CandidateInstruction />
     </CandidateLayout>
   )

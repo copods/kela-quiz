@@ -14,7 +14,6 @@ function SectionDetails() {
       { method: 'post' }
     )
   }
-  section
 
   return (
     <div>

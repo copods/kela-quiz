@@ -450,6 +450,7 @@ export async function endAssessment(id: string) {
   if (candidateTest?.endAt) {
     return { msg: "Exam already ended" }
   }
+  calculateResult(id)
   return await prisma.candidateTest.update({
     where: {
       id
@@ -458,4 +459,139 @@ export async function endAssessment(id: string) {
       endAt: new Date()
     }
   })
+}
+
+async function calculateResult(id: CandidateTest['id']) {
+  const candidateTest = await prisma.candidateTest.findUnique({
+    where: {
+      id
+    },
+    select: {
+      id: true,
+      testId: true,
+      sections: true,
+      candidateId: true
+    }
+  })
+  let totalQuestionInTest = 0
+  let unansweredInTest = 0
+  let correctInTest = 0
+
+  if (candidateTest) {
+
+    for (let sec of candidateTest?.sections || []) {
+      const section = await prisma.sectionInCandidateTest.findUnique({
+        where: {
+          id: sec.id
+        },
+        select: {
+          id: true,
+          questions: {
+            select: {
+              id: true,
+              questionId: true,
+              status: true,
+              answers: true,
+              selectedOptions: true,
+              question: {
+                select: {
+                  correctAnswer: true,
+                  correctOptions: true,
+                  questionType: true
+                }
+              }
+            }
+          },
+        }
+      })
+      if (section) {
+        const totalQuestion = section?.questions?.length ? section?.questions?.length : 0
+        let unanswered = 0
+        let correct = 0
+        for (let question of section?.questions || []) {
+          // counting unanswered questions
+          if (question?.answers.length == 0 && question?.selectedOptions?.length == 0) {
+            unanswered += 1
+            continue
+          }
+
+          if (question?.question?.questionType?.value == 'TEXT') {
+            const correctAnswers = (question?.question?.correctAnswer?.flatMap((opt) => opt?.answer.toLowerCase())).sort()
+            const userAnswers = (question?.answers?.flatMap((opt) => opt.toLowerCase())).sort()
+            if (correctAnswers?.length == userAnswers?.length) {
+              let correctFlag = true
+              for (let i = 0; i < correctAnswers?.length; i++) {
+                if (correctAnswers[i].localeCompare(userAnswers[i]) != 0) {
+                  correctFlag = false
+                  break
+                }
+              }
+              if (correctFlag) {
+                correct += 1
+              }
+            }
+          } else if (question?.question?.questionType?.value == 'SINGLE_CHOICE') {
+            if (question?.selectedOptions[0].id === question?.question?.correctOptions[0].id) {
+              correct += 1
+            }
+          } else if (question?.question?.questionType?.value
+            == 'MULTIPLE_CHOICE') {
+            const correctOptionsId = (question?.question?.correctOptions?.flatMap((opt) => opt?.id)).sort()
+            const userAnswers = (question.selectedOptions?.flatMap((opt) => opt.id)).sort()
+            if (correctOptionsId?.length == userAnswers?.length) {
+              let correctFlag = true
+              for (let i = 0; i < correctOptionsId?.length; i++) {
+                if (correctOptionsId[i].localeCompare(userAnswers[i]) != 0) {
+                  correctFlag = false
+                  break
+                }
+              }
+              if (correctFlag) {
+                correct += 1
+              }
+            }
+          }
+        }
+
+        totalQuestionInTest += totalQuestion
+        unansweredInTest += unanswered
+        correctInTest += correct
+
+        const sectionResult = await prisma.candidateResult.findFirst({
+          where: {
+            candidateId: candidateTest?.candidateId,
+            testId: candidateTest?.testId,
+          }
+        })
+        !sectionResult && await prisma.sectionWiseResult.create({
+          data: {
+            sectionInCandidateTestId: section?.id,
+            totalQuestion,
+            correctQuestion: correct,
+            unanswered,
+            testId: candidateTest?.testId
+          }
+        })
+      }
+    }
+
+    const candidateResult = await prisma.candidateResult.findFirst({
+      where: {
+        candidateId: candidateTest?.candidateId,
+        testId: candidateTest?.testId,
+      }
+    })
+    !candidateResult && await prisma.candidateResult.create({
+      data: {
+        candidateId: candidateTest?.candidateId,
+        candidateTestId: id,
+        totalQuestion: totalQuestionInTest,
+        correctQuestion: correctInTest,
+        unanswered: unansweredInTest,
+        testId: candidateTest?.testId,
+        isQualified: false
+      }
+    })
+  }
+
 }
