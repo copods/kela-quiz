@@ -5,17 +5,25 @@ import {} from '@remix-run/react'
 import SortFilter from '../SortFilter'
 import { sectionsConstants } from '~/constants/common.constants'
 
-const SectionLink = ({ section }: { section: any }) => {
+const SectionLink = ({ section, filter, setSelectedSection }: { section: any, filter: string, setSelectedSection:(e:string) => void }) => {
   const path = `/sections/${section.id}`
   const location = useLocation() // to get current location
   const resolvedPath = useResolvedPath(path) // to get resolved path which would match with current location
+
+  const getSectionId = (id:string) => {
+      setSelectedSection(id);
+  }
+
   return (
-    <NavLink to={path} key={section.id}>
+    <NavLink 
+       onClick={()=> getSectionId(section.id)}
+       to={path}
+       key={section.id}>
       <SectionCard
         isActive={location.pathname === resolvedPath.pathname}
         name={section?.name}
         createdBy={`${section?.createdBy?.firstName} ${section?.createdBy?.lastName}`}
-        questionsCount={section?._count?.questions}
+        questionsCount={section?._count?.questions as number}
         createdAt={section.createdAt}
       />
     </NavLink>
@@ -30,16 +38,18 @@ type SectionType = {
   setSortBy: (e: string) => void
   order: string
   setOrder: (e: string) => void
-  setSelectedSection: Function
+  setSelectedSection: (e: string) => void,
   sortByDetails: Array<{ name: string; value: string }>
 }
 const Sections = ({
   sections,
   sortBy,
+  filters,
   setSortBy,
   order,
   setOrder,
   sortByDetails,
+  setSelectedSection
 }: SectionType) => {
   return (
     <div className="flex h-full w-96 flex-col gap-6">
@@ -64,7 +74,11 @@ const Sections = ({
         id="section-cards"
       >
         {sections?.map((section: any) => (
-          <SectionLink key={section.id} section={section} />
+          <SectionLink 
+              key={section.id}
+              section={section}
+              filter={filters}
+              setSelectedSection={setSelectedSection} />
         ))}
         {sections.length === 0 && (
           <div className="flex justify-center p-7">

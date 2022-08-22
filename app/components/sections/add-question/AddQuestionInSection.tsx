@@ -74,7 +74,7 @@ const AddQuestionInSection = () => {
 
   const submit = useSubmit()
   const saveQuestion = (addMoreQuestion: boolean) => {
-    if (question.length === 0) {
+    if (!question.length) {
       toast.error('Enter the Question', { toastId: 'questionRequired' })
       return
     }
@@ -85,7 +85,7 @@ const AddQuestionInSection = () => {
       getQuestionType(selectedTypeOfQuestion) === QuestionTypes.singleChoice
     ) {
       for (let option of options) {
-        if (option.option.length === 0) {
+        if (!option.option.length) {
           toast.error('Enter all the Options', { toastId: 'optionsRequired' })
           return
         }
@@ -146,7 +146,7 @@ const AddQuestionInSection = () => {
       getQuestionType(selectedTypeOfQuestion) === QuestionTypes.multipleChoice
     ) {
       options.forEach((option) => {
-        var optionForQuestion = {
+        let optionForQuestion = {
           id: option.id,
           option: option.option,
           isCorrect: option.isCorrect,
@@ -158,7 +158,7 @@ const AddQuestionInSection = () => {
     ) {
       options.forEach(
         (option: { option: string; isCorrect: boolean; id: string }) => {
-          var optionForQuestion = {
+          let optionForQuestion = {
             id: option.id,
             option: option.option,
             isCorrect: singleChoiceAnswer === option.id ? true : false,
@@ -169,7 +169,7 @@ const AddQuestionInSection = () => {
     } else if (getQuestionType(selectedTypeOfQuestion) === QuestionTypes.text) {
       testQuestion.checkOrder = checkOrder
       textCorrectAnswer.forEach((correctAnswer, index) => {
-        var optionForQuestion = {
+        let optionForQuestion = {
           id: correctAnswer.id,
           answer: correctAnswer.answer,
           order: index,

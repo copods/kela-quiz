@@ -138,15 +138,15 @@ export default function SectionPage() {
   }
 
   useEffect(() => {
-    if (data.sections.length && !data.selectedSectionId) {
+    if (selectedSection !== 'NA') {
       navigate(`/sections/${selectedSection}${data?.filters}`, {
         replace: true,
       })
     }
-  }, [data, navigate, selectedSection])
+  }, [navigate, selectedSection])
 
   useEffect(() => {
-    if (data.sections.length > 0) {
+    if (data.sections.length) {
       const formData = new FormData()
       var filter = {
         orderBy: {
@@ -167,14 +167,14 @@ export default function SectionPage() {
       if (action.resp?.status === 200) {
         setShowAddSectionModal(false)
         toast.success('Section added successfully..!')
-        navigate(`/sections/${action?.resp?.data?.id}`, { replace: false })
+        setSelectedSection(action?.resp?.data?.id as string)
       } else if (action.errors?.status === 400) {
         toast.error(action.errors?.title, {
           toastId: action.errors?.title,
         })
       }
     }
-  }, [action, navigate])
+  }, [action])
 
   return (
     <AdminLayout>
