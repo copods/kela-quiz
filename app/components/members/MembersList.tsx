@@ -1,6 +1,6 @@
 import type { User, Role } from '~/interface/Interface'
 import MemberListItem from './MemberListItem'
-import { commonConstants, commonMembers } from '~/constants/common.constants'
+import { commonConstants, members } from '~/constants/common.constants'
 import { useLoaderData } from '@remix-run/react'
 
 export default function MembersList({
@@ -19,16 +19,16 @@ export default function MembersList({
             {commonConstants.name}
           </h1>
           <h1 className="col-span-3 text-sm leading-4 text-gray-500">
-            {commonMembers.email}
+            {members.email}
           </h1>
           <h1 className="col-span-2 text-sm leading-4 text-gray-500">
-            {commonMembers.role}
+            {members.role}
           </h1>
           <h1 className="col-span-2 text-sm leading-4 text-gray-500">
-            {commonMembers.addedOn}
+            {members.addedOn}
           </h1>
           <h1 className="col-span-1 text-sm leading-4 text-gray-500">
-            {commonMembers.action}
+            {members.action}
           </h1>
         </div>
         {users.map((user: User & { role?: Role }) => (

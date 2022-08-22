@@ -8,16 +8,19 @@ export const commonConstants = {
   addButton: 'Add',
   byText: 'By',
   total: 'Total',
-  ascending: 'asc',
-  nameSmallEach: 'name',
+
   createdAt: 'createdAt',
   createdDate: 'Created Date',
+}
+export enum SortByOrder {
+  ascending = 'asc',
+  name = 'name',
 }
 export const sideNav = {
   sideNavHeading: 'Quiz',
 }
 
-export const commonMembers = {
+export const members = {
   addMember: 'Add Member',
   firstName: 'First Name',
   lastName: ' Last Name',
@@ -83,4 +86,39 @@ export enum QuestionTypes {
   multipleChoice = 'MULTIPLE_CHOICE',
   singleChoice = 'SINGLE_CHOICE',
   text = 'TEXT',
+}
+export const cypress = {
+  Tests: 'Tests',
+  Sections: 'Sections',
+  Add: 'Add',
+  email: 'careers@copods.co',
+  password: 'kQuiz@copods',
+  step1: 'Step 1',
+  step2: 'Step 2',
+  step3: 'Step 3',
+  testDetails: 'Test Details',
+  selectSections: 'Select Sections',
+  preview: 'Preview',
+  next: 'Next',
+  Remove: 'Remove',
+  addQuest: '+ Add Question',
+  back: 'Back',
+  submit: 'Submit',
+  nameIsReq: 'Name is required',
+  descIsReq: 'Description is required',
+  sectionAdded: 'Section added successfully..!',
+  duplicateTitle: 'Duplicate Title',
+  question: 'Question',
+  saveAndAddMore: 'Save & Add More',
+  enterAllOptions: 'Enter all the Options',
+  groupByTest: 'Group By Tests',
+  members: 'Members',
+  addMember: '+ Add Member',
+  cancel: 'Cancel',
+  delete: 'Delete',
+  results: 'Results',
+  name: 'Name',
+  description: 'Description',
+  totalTime: 'Total Time',
+  totalSections: 'Total Sections',
 }

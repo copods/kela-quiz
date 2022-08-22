@@ -1,23 +1,27 @@
 import { useEffect, useState } from 'react'
 import SortFilter from '../SortFilter'
-import { resultConstants, commonConstants } from '~/constants/common.constants'
+import {
+  resultConstants,
+  commonConstants,
+  SortByOrder,
+} from '~/constants/common.constants'
 
 import { useLoaderData, useSubmit } from '@remix-run/react'
 import GroupByTestItems from './GroupByTestItems'
 import type { CandidateTest, Test } from '~/interface/Interface'
 const GroupByTests = () => {
   const [sortDirection, onSortDirectionChange] = useState(
-    commonConstants.ascending
+    SortByOrder.ascending as string
   )
-  const [sortBy, onSortChange] = useState(commonConstants.nameSmallEach)
+  const [sortBy, onSortChange] = useState(SortByOrder.name as string)
   const filterByType = [
     {
-      name: commonConstants.name,
-      value: commonConstants.nameSmallEach,
+      name: 'Name',
+      value: 'name',
     },
     {
-      name: commonConstants.createdDate,
-      value: commonConstants.createdAt,
+      name: 'Created Date',
+      value: 'createdAt',
     },
   ]
   const candidateTestData = useLoaderData()
@@ -33,7 +37,7 @@ const GroupByTests = () => {
   }, [sortDirection, sortBy, submit])
   return (
     <div className="flex flex-col gap-6">
-      <h1 className="text-3xl font-bold text-gray-900 ">Group by tests</h1>
+      <h1 className="text-3xl font-bold text-gray-900">Group by tests</h1>
       <div className="flex flex-col gap-10">
         <div id="sort-filter-container">
           <SortFilter
@@ -49,16 +53,16 @@ const GroupByTests = () => {
         <div className="grid grid-cols-12 rounded-lg  bg-[#F9FAFB] shadow-table">
           <div className="col-span-full grid grid-cols-10 rounded-lg border-[1px] border-solid border-[#E5E7EB] bg-white">
             <div className="col-span-full grid grid-cols-10 gap-3 bg-tableHeader py-4 px-12">
-              <span className="col-span-2 text-sm  font-semibold  text-gray-500">
+              <span className="col-span-2 text-sm font-semibold  text-gray-500">
                 {resultConstants.order}
               </span>
-              <span className="col-span-3 text-sm  font-semibold  text-gray-500">
+              <span className="col-span-3 text-sm font-semibold  text-gray-500">
                 {resultConstants.test}
               </span>
-              <span className="col-span-2 text-sm  font-semibold  text-gray-500">
+              <span className="col-span-2 text-sm font-semibold  text-gray-500">
                 {commonConstants.total} {resultConstants.totalInvited}
               </span>
-              <span className="col-span-3 text-sm  font-semibold  text-gray-500">
+              <span className="col-span-3 text-sm font-semibold  text-gray-500">
                 {commonConstants.total} {resultConstants.totalAttended}
               </span>
             </div>

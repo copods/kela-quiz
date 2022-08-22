@@ -2,7 +2,7 @@ import type { Test } from '@prisma/client'
 import { prisma } from '~/db.server'
 import type { CandidateTest } from '~/interface/Interface'
 
-export async function getAllCandidateTests(obj: string) {
+export async function getAllCandidateTests(obj: object) {
   const filter = obj ? obj : {}
   let count = 0
   const res: Array<Test> = await prisma.test.findMany({
