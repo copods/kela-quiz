@@ -59,7 +59,7 @@ describe('Creating tests', () => {
       .find('#Tests', { timeout: 6000 })
       .should('have.text', testsConstants.Tests)
       .click()
-    cy.get('a')
+    cy.get('a',{timeout:6000})
       .find('#Sections')
       .should('have.text', routeFiles.sections)
       .click()

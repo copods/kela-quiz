@@ -13,7 +13,7 @@ const GroupByTestItems = ({
         <div className=" col-span-2 truncate">
           <span className=" text-base leading-6 text-gray-700">{index}</span>
         </div>
-        <div className="col-span-3 truncate">
+        <div className="candidate-name col-span-3 truncate">
           <Link
             tabIndex={0}
             to={`/results/${candidateTests.id}`}
