@@ -1,10 +1,27 @@
-import type { Test } from '@prisma/client'
+import type { CandidateTest } from '@prisma/client'
 import { prisma } from '~/db.server'
-import type { CandidateTest } from '~/interface/Interface'
+import type { Test } from '@prisma/client'
+
+export async function getCandidateEmailById({ id }: Pick<CandidateTest, 'id'>) {
+  return prisma.test.findUnique({
+    where: { id },
+    include: {
+      candidateTest: {
+        include: {
+          candidate: {
+            select: {
+              email: true,
+              createdBy: true,
+            },
+          },
+        },
+      },
+    },
+  })
+}
 
 export async function getAllCandidateTests(obj: object) {
   const filter = obj ? obj : {}
-  let count = 0
   const res: Array<Test> = await prisma.test.findMany({
     ...filter,
 
@@ -29,6 +46,7 @@ export async function getAllCandidateTests(obj: object) {
       (
         test: Test & { count?: number; candidateTest?: Array<CandidateTest> }
       ) => {
+        let count = 0
         test?.candidateTest?.forEach((candidateTest: CandidateTest) => {
           if (candidateTest?.endAt !== null) {
             count = count + 1
