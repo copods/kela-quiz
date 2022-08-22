@@ -45,7 +45,7 @@ const SortFilter = ({
         />
       </div>
       <span
-        className="flex items-center pl-4 text-sm font-normal text-totalCount"
+        className="flex items-center pl-4 text-sm text-totalCount"
         id="total-items-value"
       >
         <span>

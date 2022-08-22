@@ -32,7 +32,7 @@ const TestList = ({
   ]
   const submit = useSubmit()
   useEffect(() => {
-    var filter = {
+    let filter = {
       orderBy: {
         [sortBy]: sortDirection,
       },
