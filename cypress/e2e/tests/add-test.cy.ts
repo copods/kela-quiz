@@ -37,7 +37,7 @@ describe('Creating tests', () => {
       .clear()
       .type('kQuiz@copods')
       .should('have.value', cypress.password)
-    cy.findByRole('button').click()
+    cy.findByRole('button', { timeout: 6000 }).click()
 
     cy.get('a')
       .find('#Sections', { timeout: 10000 })
@@ -50,7 +50,7 @@ describe('Creating tests', () => {
     cy.get('textarea#sectionDescription').type(
       `Aptitude - ${new Date().getTime()} Description`
     )
-    cy.get('button#submitButton')
+    cy.get('button#submitButton', { timeout: 6000 })
       .should('have.text', commonConstants.addButton)
       .click()
     cy.get('a')
