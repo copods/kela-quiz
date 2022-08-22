@@ -17,15 +17,15 @@ const GroupByTestItems = ({
   //     >
 
   return (
-    <div className="col-span-full grid grid-cols-10">
+    <div className="col-span-full">
       <div
         id="groupByTestRow"
         className="col-span-full grid grid-cols-10 gap-3 border-t border-solid border-borderColor px-12 py-4"
       >
-        <div className=" col-span-2 truncate">
+        <div className=" col-span-1 truncate">
           <span className=" text-base leading-6 text-gray-700">{index}</span>
         </div>
-        <div className="col-span-3 truncate">
+        <div className="col-span-4 truncate">
           <Link
             tabIndex={0}
             to={`/results/groupByTests/${id}`}

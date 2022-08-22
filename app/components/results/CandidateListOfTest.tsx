@@ -1,8 +1,6 @@
-import { NavLink } from '@remix-run/react'
+import { NavLink, Outlet } from '@remix-run/react'
 import { Icon } from '@iconify/react'
 import ResultTab from './ResultTab'
-import { useState } from 'react'
-import CandidtateListOfTestItem from './CandidtateListOfTestItem'
 import { useLoaderData } from '@remix-run/react'
 
 const CandidateListOfTest = () => {
@@ -10,15 +8,15 @@ const CandidateListOfTest = () => {
     {
       id: 0,
       title: 'Exam Pending',
+      route: 'exam-pending',
     },
     {
       id: 1,
       title: 'Attended',
+      route: 'attended',
     },
   ]
-  const [currentTab, setCurrentTab] = useState(0)
-  const { testPreview } = useLoaderData()
-  const testData = testPreview?.candidateTest
+  const { testPreview, params } = useLoaderData()
   return (
     <div id="test-details" className=" h-full ">
       <header className="mb-8">
@@ -44,48 +42,9 @@ const CandidateListOfTest = () => {
         </div>
       </header>
       <div id="results-test-candidate-list-tab" className="pb-5">
-        <ResultTab
-          tabs={tabs}
-          currentTab={currentTab}
-          setCurrentTab={setCurrentTab}
-        />
+        <ResultTab tabs={tabs} resultsId={params.resultsId} />
       </div>
-      {currentTab === tabs[0].id && (
-        <>
-          {testData.length !== 0 ? (
-            <div className="grid grid-cols-12  bg-[#F9FAFB] pb-4  ">
-              <div className="col-span-full grid grid-cols-10 rounded-lg border border-solid border-[#E5E7EB] bg-tableHeader shadow-table">
-                <div className="col-span-full grid grid-cols-10 py-4 px-12">
-                  <span className="col-span-1 text-sm  font-semibold  text-gray-500">
-                    Sr.No
-                  </span>
-                  <span className="col-span-3 text-sm  font-semibold  text-gray-500">
-                    Email
-                  </span>
-                  <span className="col-span-2 text-sm  font-semibold  text-gray-500">
-                    Invited By
-                  </span>
-                </div>
-                {testData?.map((data: any, i: any) => (
-                  <div
-                    key={data.id}
-                    className="memberRow col-span-10 grid  rounded-lg"
-                  >
-                    <CandidtateListOfTestItem
-                      email={data?.candidate?.email}
-                      invitedBy={`${data?.candidate?.createdBy?.firstName} ${data?.candidate?.createdBy?.lastName}`}
-                      index={i}
-                    />
-                  </div>
-                ))}
-              </div>
-            </div>
-          ) : (
-            <div>No Candidate for this Test</div>
-          )}
-        </>
-      )}
-      {currentTab === tabs[1].id && <div>Attended List</div>}
+      <Outlet />
     </div>
   )
 }

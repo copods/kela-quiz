@@ -4,17 +4,17 @@ import Footer from '~/components/SideNavFooter'
 import { sideNav } from '~/constants/common.constants'
 
 let sideNavGuide = [
-  {
-    navGuide: 'Main Menu',
-    subItem: [
-      {
-        id: 'Dashboard',
-        iconClass: 'mdi:view-dashboard',
-        itemName: 'Dashboard',
-        itemRoute: 'dashboard',
-      },
-    ],
-  },
+  // {
+  //   navGuide: 'Main Menu',
+  //   subItem: [
+  //     {
+  //       id: 'Dashboard',
+  //       iconClass: 'mdi:view-dashboard',
+  //       itemName: 'Dashboard',
+  //       itemRoute: 'dashboard',
+  //     },
+  //   ],
+  // },
   {
     navGuide: 'Results',
     subItem: [
@@ -24,12 +24,12 @@ let sideNavGuide = [
         itemName: 'Group By Tests',
         itemRoute: 'results/groupByTests',
       },
-      {
-        id: 'Group_By_Candidate',
-        iconClass: 'mdi:chart-box-outline',
-        itemName: 'Group By Candidate',
-        itemRoute: 'groupByCandidate',
-      },
+      // {
+      //   id: 'Group_By_Candidate',
+      //   iconClass: 'mdi:chart-box-outline',
+      //   itemName: 'Group By Candidate',
+      //   itemRoute: 'groupByCandidate',
+      // },
     ],
   },
   {
@@ -58,12 +58,12 @@ let sideNavGuide = [
         itemName: 'Members',
         itemRoute: 'members',
       },
-      {
-        id: 'Settings',
-        iconClass: 'mdi:cog',
-        itemName: 'Settings',
-        itemRoute: 'settings',
-      },
+      // {
+      //   id: 'Settings',
+      //   iconClass: 'mdi:cog',
+      //   itemName: 'Settings',
+      //   itemRoute: 'settings',
+      // },
     ],
   },
 ]

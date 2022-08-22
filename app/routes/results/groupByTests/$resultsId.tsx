@@ -9,6 +9,7 @@ import { getCandidateEmailById } from '~/models/result.server'
 
 type LoaderData = {
   testPreview: Awaited<ReturnType<typeof getCandidateEmailById>>
+  params: any
 }
 
 export const loader: LoaderFunction = async ({ request, params }) => {
@@ -18,7 +19,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     throw new Response('Not Found', { status: 404 })
   }
 
-  return json<LoaderData>({ testPreview })
+  return json<LoaderData>({ testPreview, params })
 }
 function CandidateListRoute() {
   return (

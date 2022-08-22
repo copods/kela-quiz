@@ -1,35 +1,29 @@
+import { NavLink } from '@remix-run/react'
+
 const ResultTab = ({
   tabs,
-  currentTab,
-  setCurrentTab,
+  resultsId,
 }: {
-  tabs: Array<{ id: number; title: string }>
-  currentTab: number
-  setCurrentTab: (e: number) => void
+  tabs: Array<{ id: number; title: string; route: string }>
+  resultsId: string
 }) => {
   return (
     <div className="flex gap-8">
       {tabs.map((tab) => {
         return (
-          <div
+          <NavLink
             key={tab.id}
-            className={`${
-              tab.id === currentTab ? 'border-b-4 border-primary' : ''
-            } "  cursor-pointer `}
-            onClick={() => setCurrentTab(tab.id)}
+            to={`/results/groupByTests/${resultsId}/${tab?.route}`}
+            id="tab-title"
+            title={tab.title}
+            className={({ isActive }) =>
+              isActive
+                ? 'cursor-pointer border-b-4 border-primary pb-3 text-base font-semibold text-primary'
+                : 'cursor-pointer pb-3 text-base font-normal text-totalCount'
+            }
           >
-            <div
-              id="tab-title"
-              title={tab.title}
-              className={`${
-                tab.id === currentTab
-                  ? 'font-semibold text-primary'
-                  : 'font-normal text-totalCount'
-              } mb-3 text-base`}
-            >
-              {tab.title}
-            </div>
-          </div>
+            {tab.title}
+          </NavLink>
         )
       })}
     </div>

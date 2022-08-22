@@ -86,6 +86,8 @@ export const resultConstants = {
   totalInvited: 'Invited',
   totalAttended: 'Attended',
   noTestAlert: 'No test found. Add your test first',
+  srno: 'Sr.No',
+  invitedBy: "Invited By"
 }
 
 export enum QuestionStatus {

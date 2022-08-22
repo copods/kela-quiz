@@ -22,7 +22,6 @@ export async function getCandidateEmailById({ id }: Pick<CandidateTest, 'id'>) {
 
 export async function getAllCandidateTests(obj: object) {
   const filter = obj ? obj : {}
-  let count = 0
   const res: Array<Test> = await prisma.test.findMany({
     ...filter,
 
@@ -47,6 +46,7 @@ export async function getAllCandidateTests(obj: object) {
       (
         test: Test & { count?: number; candidateTest?: Array<CandidateTest> }
       ) => {
+        let count = 0
         test?.candidateTest?.forEach((candidateTest: CandidateTest) => {
           if (candidateTest?.endAt !== null) {
             count = count + 1
