@@ -1,7 +1,7 @@
 import type { ActionFunction, LoaderFunction } from '@remix-run/server-runtime'
 import { redirect } from '@remix-run/server-runtime'
 import { json } from '@remix-run/node'
-import { routeFiles } from '~/constants/common.constants'
+import { routeFiles, sectionsConstants } from '~/constants/common.constants'
 import {
   Outlet,
   useActionData,
@@ -107,7 +107,8 @@ export const action: ActionFunction = async ({ request }) => {
 }
 
 export default function SectionPage() {
-  const data = useLoaderData() as LoaderData
+  const data = useLoaderData() as unknown as LoaderData
+  console.log(data)
   const fetcher = useFetcher()
   const action = useActionData() as ActionData
 
@@ -181,24 +182,24 @@ export default function SectionPage() {
         {/* header */}
         <header className="flex items-center justify-between">
           <h2 className="text-3xl font-bold text-black">
-            + {routeFiles.sections}
+            {routeFiles.sections}
           </h2>
           <button
             className="h-9 rounded-lg bg-primary px-5 text-xs text-[#F0FDF4]"
             id="add-section"
             onClick={() => setShowAddSectionModal(!showAddSectionModal)}
           >
-            {routeFiles.addSection}
+            + {sectionsConstants.addSection}
           </button>
         </header>
 
         <div
           className={`flex flex-1 overflow-hidden ${
-            sectionDetailFull ? '' : 'gap-12'
+            !sectionDetailFull && 'gap-12'
           }`}
         >
           {/* section list */}
-          <div className={`${sectionDetailFull ? 'hidden' : ''}`}>
+          <div className={`${sectionDetailFull && 'hidden'}`}>
             <Sections
               sections={data.sections}
               selectedSection={selectedSection}

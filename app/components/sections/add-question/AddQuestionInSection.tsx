@@ -6,22 +6,8 @@ import OptionForQuestion from './OptionForQuestion'
 import cuid from 'cuid'
 import { Link, useLoaderData, useSubmit, useTransition } from '@remix-run/react'
 import { toast } from 'react-toastify'
-import { addQuestion } from '~/constants/common.constants'
-// const AddQuestionInSection = ({
-//   sectionDetails,
-//   questionTypeList,
-// }: {
-//   sectionDetails:
-//     | (Section & {
-//         questions: (Question & {
-//           correctOptions: Option[]
-//           options: Option[]
-//           correctAnswer: CorrectAnswer[]
-//         })[]
-//       })
-//     | null
-//   questionTypeList: QuestionType[]
-// }) => {
+import { addQuestion, QuestionTypes } from '~/constants/common.constants'
+
 const AddQuestionInSection = () => {
   const { sectionDetails, questionTypes } = useLoaderData()
 
@@ -89,17 +75,18 @@ const AddQuestionInSection = () => {
   const submit = useSubmit()
   const saveQuestion = (addMoreQuestion: boolean) => {
     if (question.length === 0) {
-      toast.error('Enter the Question')
+      toast.error('Enter the Question', { toastId: 'questionRequired' })
       return
     }
 
     if (
-      getQuestionType(selectedTypeOfQuestion) === 'MULTIPLE_CHOICE' ||
-      getQuestionType(selectedTypeOfQuestion) === 'SINGLE_CHOICE'
+      getQuestionType(selectedTypeOfQuestion) ===
+        QuestionTypes.multipleChoice ||
+      getQuestionType(selectedTypeOfQuestion) === QuestionTypes.singleChoice
     ) {
       for (let option of options) {
         if (option.option.length === 0) {
-          toast.error('Enter all the Options')
+          toast.error('Enter all the Options', { toastId: 'optionsRequired' })
           return
         }
       }
@@ -112,18 +99,29 @@ const AddQuestionInSection = () => {
       }
       if (
         flag == 0 &&
-        getQuestionType(selectedTypeOfQuestion) === 'MULTIPLE_CHOICE'
+        getQuestionType(selectedTypeOfQuestion) === QuestionTypes.multipleChoice
       ) {
-        toast.error('Select the Option')
+        toast.error('Select the Option', { toastId: 'correctOptionRequired' })
         return
       }
       if (
         flag === 0 &&
-        getQuestionType(selectedTypeOfQuestion) === 'SINGLE_CHOICE' &&
+        getQuestionType(selectedTypeOfQuestion) ===
+          QuestionTypes.singleChoice &&
         !singleChoiceAnswer
       ) {
-        toast.error('Select the Option')
+        toast.error('Select the Option', { toastId: 'correctOptionsRequired' })
         return
+      }
+    }
+
+    if (getQuestionType(selectedTypeOfQuestion) === QuestionTypes.text) {
+      console.log('text', textCorrectAnswer)
+      for (let answer of textCorrectAnswer) {
+        if (answer.answer.length === 0) {
+          toast.error('Enter all the Options', { toastId: 'optionsRequired' })
+          return
+        }
       }
     }
 
@@ -144,7 +142,9 @@ const AddQuestionInSection = () => {
       addMoreQuestion,
       checkOrder: false,
     }
-    if (getQuestionType(selectedTypeOfQuestion) === 'MULTIPLE_CHOICE') {
+    if (
+      getQuestionType(selectedTypeOfQuestion) === QuestionTypes.multipleChoice
+    ) {
       options.forEach((option) => {
         var optionForQuestion = {
           id: option.id,
@@ -153,7 +153,9 @@ const AddQuestionInSection = () => {
         }
         testQuestion.options.push(optionForQuestion)
       })
-    } else if (getQuestionType(selectedTypeOfQuestion) === 'SINGLE_CHOICE') {
+    } else if (
+      getQuestionType(selectedTypeOfQuestion) === QuestionTypes.singleChoice
+    ) {
       options.forEach(
         (option: { option: string; isCorrect: boolean; id: string }) => {
           var optionForQuestion = {
@@ -164,7 +166,7 @@ const AddQuestionInSection = () => {
           testQuestion.options.push(optionForQuestion)
         }
       )
-    } else if (getQuestionType(selectedTypeOfQuestion) === 'TEXT') {
+    } else if (getQuestionType(selectedTypeOfQuestion) === QuestionTypes.text) {
       testQuestion.checkOrder = checkOrder
       textCorrectAnswer.forEach((correctAnswer, index) => {
         var optionForQuestion = {
@@ -232,7 +234,7 @@ const AddQuestionInSection = () => {
             }`}
             onClick={() => saveQuestion(false)}
           >
-            <Icon icon="ic:round-save" className="mr-1"></Icon>
+            <Icon icon="ic:round-save" className="mr-1" />
             {transition.state === 'submitting' ? 'Saving...' : 'Save & Exit'}
           </button>
 
@@ -244,7 +246,7 @@ const AddQuestionInSection = () => {
             }`}
             onClick={() => saveQuestion(true)}
           >
-            <Icon icon="ic:round-save" className="mr-1"></Icon>
+            <Icon icon="ic:round-save" className="mr-1" />
             {transition.state === 'submitting'
               ? 'Saving...'
               : 'Save & Add More'}

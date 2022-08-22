@@ -3,7 +3,8 @@ import { Icon } from '@iconify/react'
 import { NavLink } from '@remix-run/react'
 import ChipGroup from './ChipGroup'
 import type { SectionInTest } from '~/interface/Interface'
-
+import { useState } from 'react'
+import InviteCandidatePopup from './InviteCandidatePopup'
 const TestTableItem = ({
   testName,
   createdBy,
@@ -23,6 +24,8 @@ const TestTableItem = ({
   sections: Array<SectionInTest>
   showCheckBox: boolean
 }) => {
+  const [candidatePopupOpen, setCandidatePopupOpen] = useState<boolean>(false)
+
   return (
     <>
       <div
@@ -56,7 +59,7 @@ const TestTableItem = ({
           {createdBy}
         </div>
         <div className="flex w-1/12 items-center justify-end gap-3 truncate text-xl font-medium  leading-6  text-gray-700">
-          <div>
+          <div onClick={() => setCandidatePopupOpen(true)}>
             <Icon
               className="cursor-pointer text-primary"
               icon={'ant-design:user-add-outlined'}
@@ -70,6 +73,12 @@ const TestTableItem = ({
           </div>
         </div>
       </div>
+      <InviteCandidatePopup
+        openInvitePopup={candidatePopupOpen}
+        setOpenInvitePopup={setCandidatePopupOpen}
+        testName={testName}
+        testId={id}
+      />
     </>
   )
 }

@@ -16,8 +16,12 @@ export default function QuestionEditor({
   question: string
   setQuestion: (e: string) => void
 }) {
-  function setEditorQuestion(e: string) {
-    setQuestion(e)
+  function setEditorQuestion(question: string) {
+    if (question === '<p><br></p>') {
+      setQuestion('')
+    } else {
+      setQuestion(question)
+    }
   }
   return (
     <div className="flex flex-1 flex-col gap-6">
@@ -36,6 +40,7 @@ export default function QuestionEditor({
           {() => (
             <QuillEditor
               id="editorQuill"
+              text={question}
               quillPlaceholder={'question'}
               fullAccess={true}
               onTextChange={(e) => {
