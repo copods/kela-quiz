@@ -9,11 +9,16 @@ export const commonConstants = {
   addButton: 'Add',
   byText: 'By',
   continue: 'Continue',
+  total: 'Total',
+  createdAt: 'createdAt',
+  createdDate: 'Created Date',
 }
+
 export const sideNav = {
   sideNavHeading: 'Quiz',
 }
-export const commonMembers = {
+
+export const members = {
   addMember: 'Add Member',
   firstName: 'First Name',
   lastName: ' Last Name',
@@ -41,6 +46,13 @@ export const sectionsConstants = {
   addQuestion: 'Add Question',
   noQuestionAlert: 'No questions found. Add your first question',
   noRecordFound: 'No Record Found',
+}
+export const resultConstants = {
+  order: 'Order',
+  test: 'Test',
+  totalInvited: 'Invited',
+  totalAttended: 'Attended',
+  noTestAlert: 'No test found. Add your test first',
 }
 export const testsConstants = {
   addTestbutton: 'Add Test',
