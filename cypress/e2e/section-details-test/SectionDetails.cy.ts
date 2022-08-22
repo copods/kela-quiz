@@ -41,7 +41,7 @@ describe('Test for Section Details', () => {
       '/add-question'
     )
   })
-  it('Visiting Sections which added', () => {
+  it('after adding a new section visiting section page', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -59,7 +59,7 @@ describe('Test for Section Details', () => {
       cy.contains(`Aptitude - ${time}`).click()
     })
   })
-  it('Visiting Sections from add question page', () => {
+  it('Visiting Sections page after visiting add question page', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
