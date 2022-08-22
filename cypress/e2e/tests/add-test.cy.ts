@@ -36,12 +36,11 @@ describe('Creating tests', () => {
       .clear()
       .type('careers@copods.co')
       .should('have.value', cypress.email)
-    cy.get('#password')
+    cy.get('#password', { timeout: 6000 })
       .clear()
       .type('kQuiz@copods')
       .should('have.value', cypress.password)
     cy.findByRole('button', { timeout: 6000 }).click()
-
     cy.get('a', { timeout: 10000 })
       .find('#Sections', { timeout: 10000 })
       .should('have.text', routeFiles.sections)
