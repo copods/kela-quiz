@@ -81,7 +81,10 @@ describe('Visiting group by test of results page', () => {
     cy.get('#2').find('hr').should('have.class', 'bg-primary')
     cy.get('button#submitButton').should('have.text', cypress.submit).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.get('a').find('#Results').should('have.text', cypress.results).click()
+    cy.get('a')
+      .find('#Group_By_Tests')
+      .should('have.text', 'Group By Tests')
+      .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')
   })
 

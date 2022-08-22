@@ -54,7 +54,7 @@ export const testsConstants = {
   sectionText: 'Section',
   questions: 'Questions',
   totalQuestionsText: 'Total Questions',
-  breadCrumbTestsTitle: 'Tests',
+  Tests: 'Tests',
   srNoText: 'S No.',
   testListColumnLable: 'Test',
   createdOn: 'Created on',
