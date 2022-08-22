@@ -1,9 +1,11 @@
 const StepsTabComponent = ({
   tabs,
+  isDisabled,
   currentTab,
   setCurrentTab,
 }: {
   tabs: Array<{ id: number; name: string; description: string }>
+  isDisabled: boolean
   currentTab: number
   setCurrentTab: (e: number) => void
 }) => {
@@ -12,12 +14,12 @@ const StepsTabComponent = ({
       {tabs.map((tab, i) => {
         return (
           <div
-            key={tab.id}
-            id={tab.id.toString()}
-            className="flex-1 cursor-pointer"
-            onClick={() => {
-              setCurrentTab(tab.id)
-            }}
+          key={tab.id}
+          id={tab.id.toString()}
+          className={`flex-1 ${isDisabled ? 'pointer-events-none' : 'cursor-pointer'}`} 
+          onClick={() => {
+            setCurrentTab(tab.id)
+          }}
           >
             <hr
               className={`mb-3 h-1 w-full rounded-1 border-0 ${

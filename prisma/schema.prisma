@@ -90,31 +90,31 @@ model QuestionType {
 }
 
 model Option {
-  id                  String             @id @default(cuid())
-  option              String
-  question            Question           @relation("options_in_question", fields: [questionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  questionId          String
-  coInQuestion        Question?          @relation("correct_options_in_question", fields: [coInQuestionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  coInQuestionId      String?
-  createdBy           User               @relation(fields: [createdById], references: [id])
-  createdById         String
-  candidateQuestion   CandidateQuestion? @relation(fields: [candidateQuestionId], references: [id])
-  candidateQuestionId String?
-  createdAt           DateTime           @default(now())
-  updatedAt           DateTime           @updatedAt
+  id                String              @id @default(cuid())
+  option            String
+  question          Question            @relation("options_in_question", fields: [questionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  questionId        String
+  coInQuestion      Question?           @relation("correct_options_in_question", fields: [coInQuestionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  coInQuestionId    String?
+  createdBy         User                @relation(fields: [createdById], references: [id])
+  createdById       String
+  candidateQuestion CandidateQuestion[]
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
 }
 
 model Test {
-  id              String            @id @default(cuid())
-  name            String            @unique
-  description     String
-  sections        SectionInTest[]
-  createdBy       User              @relation(fields: [createdById], references: [id])
-  createdById     String
-  candidateTest   CandidateTest[]
-  candidateResult CandidateResult[]
-  createdAt       DateTime          @default(now())
-  updatedAt       DateTime          @updatedAt
+  id                String              @id @default(cuid())
+  name              String              @unique
+  description       String
+  sections          SectionInTest[]
+  createdBy         User                @relation(fields: [createdById], references: [id])
+  createdById       String
+  candidateTest     CandidateTest[]
+  candidateResult   CandidateResult[]
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  SectionWiseResult SectionWiseResult[]
 }
 
 model SectionInTest {
@@ -153,7 +153,7 @@ model CandidateTest {
   candidate       Candidate                @relation(fields: [candidateId], references: [id])
   candidateId     String
   candidateResult CandidateResult[]
-  candidateStep   Json                     @default("{ \"nextRoute\": \"register\", \"isSection\": false, \"currentSectionID\": null }")
+  candidateStep   Json                     @default("{ \"nextRoute\": \"register\", \"isSection\": false, \"currentSectionID\": null }") // register || instructions || section
   startedAt       DateTime?
   endAt           DateTime?
   createdAt       DateTime                 @default(now())
@@ -168,10 +168,12 @@ model SectionInCandidateTest {
   candidateTest           CandidateTest             @relation(fields: [candidateTestId], references: [id])
   candidateTestId         String
   timeInCandidateQuestion TimeInCandidateQuestion[]
+  order                   Int
   startedAt               DateTime?
   endAt                   DateTime?
   createdAt               DateTime                  @default(now())
   updatedAt               DateTime                  @updatedAt
+  SectionWiseResult       SectionWiseResult[]
 }
 
 model CandidateQuestion {
@@ -209,10 +211,30 @@ model CandidateResult {
   candidateTest   CandidateTest @relation(fields: [candidateTestId], references: [id])
   candidateTestId String
 
+  totalQuestion   Int
+  correctQuestion Int
+  unanswered      Int
+
   // easier access of test and results
   test        Test     @relation(fields: [testId], references: [id])
   testId      String
   isQualified Boolean
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+model SectionWiseResult {
+  id                       String                 @id @default(cuid())
+  section                  SectionInCandidateTest @relation(fields: [sectionInCandidateTestId], references: [id])
+  sectionInCandidateTestId String
+  totalQuestion            Int
+  correctQuestion          Int
+  unanswered               Int
+
+  // easier access of test and results
+  test   Test   @relation(fields: [testId], references: [id])
+  testId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

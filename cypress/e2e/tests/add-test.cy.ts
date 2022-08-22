@@ -41,6 +41,7 @@ describe('Creating tests', () => {
       `Aptitude - ${new Date().getTime()} Description`
     )
     cy.get('button#submitButton').should('have.text', 'Add').click()
+    cy.get('#section-card', { timeout: 6000 }).should("be.visible")
     cy.get('#section-card').first().click()
     cy.get('#addQuestion').should('have.text', '+ Add Question').click()
     cy.location('pathname', { timeout: 60000 }).should(

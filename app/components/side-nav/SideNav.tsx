@@ -1,6 +1,7 @@
 import MenuItems from './MenuItems'
 import Header from '~/components/SideNavHeader'
 import Footer from '~/components/SideNavFooter'
+import { sideNav } from '~/constants/common.constants'
 
 let sideNavGuide = [
   {
@@ -49,13 +50,14 @@ let sideNavGuide = [
     ],
   },
 ]
+const title = sideNav.sideNavHeading
 
-function SideNav() {
+const SideNav = () => {
   return (
     <div className="flex h-full flex-col justify-between overflow-auto p-5">
       <div>
         <div className="mb-14 px-1">
-          <Header />
+          <Header title={title} />
         </div>
         <div className="flex flex-col gap-8">
           {sideNavGuide.map((guide, index) => {
