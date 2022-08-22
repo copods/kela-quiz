@@ -1,19 +1,13 @@
 import { useEffect, useState } from 'react'
 import SortFilter from '../SortFilter'
-import {
-  resultConstants,
-  commonConstants,
-  SortByOrder,
-} from '~/constants/common.constants'
+import { resultConstants, commonConstants } from '~/constants/common.constants'
 
 import { useLoaderData, useSubmit } from '@remix-run/react'
 import GroupByTestItems from './GroupByTestItems'
 import type { CandidateTest, Test } from '~/interface/Interface'
 const GroupByTests = () => {
-  const [sortDirection, onSortDirectionChange] = useState(
-    SortByOrder.ASCENDING as string
-  )
-  const [sortBy, onSortChange] = useState(SortByOrder.NAME as string)
+  const [sortDirection, onSortDirectionChange] = useState('asc')
+  const [sortBy, onSortChange] = useState('name')
   const filterByType = [
     {
       name: 'Name',
@@ -26,7 +20,9 @@ const GroupByTests = () => {
   ]
   const candidateTestData = useLoaderData()
   const candidateTests = candidateTestData.candidateTest
+  console.log('candidateTests', candidateTests)
   const submit = useSubmit()
+
   useEffect(() => {
     const filter = {
       orderBy: {
@@ -51,7 +47,7 @@ const GroupByTests = () => {
           />
         </div>
         <div className="grid grid-cols-12 rounded-lg  bg-[#F9FAFB] shadow-table">
-          <div className="col-span-full grid grid-cols-10 rounded-lg border-[1px] border-solid border-[#E5E7EB] bg-white">
+          <div className="col-span-full grid grid-cols-10 rounded-lg border-[1px] border-solid border-borderColor bg-white">
             <div className="col-span-full grid grid-cols-10 gap-3 bg-tableHeader py-4 px-12">
               <span className="col-span-2 text-sm font-semibold  text-gray-500">
                 {resultConstants.order}

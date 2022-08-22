@@ -13,19 +13,13 @@ export async function getAllCandidateTests(obj: object) {
         select: {
           candidateResult: true,
           candidateTest: true,
-          sections: true,
+          // sections: true,
         },
       },
       candidateTest: {
         select: {
           id: true,
           endAt: true,
-          testId: true,
-        },
-      },
-      candidateResult: {
-        select: {
-          id: true,
         },
       },
     },

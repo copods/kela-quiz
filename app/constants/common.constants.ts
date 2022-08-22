@@ -13,10 +13,7 @@ export const commonConstants = {
   createdAt: 'createdAt',
   createdDate: 'Created Date',
 }
-export enum SortByOrder {
-  ASCENDING = 'asc',
-  NAME = 'name',
-}
+
 export const sideNav = {
   sideNavHeading: 'Quiz',
 }

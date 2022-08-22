@@ -21,7 +21,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   const candidateTest = await getAllCandidateTests(filter)
   return json<LoaderData>({ candidateTest, userId })
 }
-const ResultsIndex = () => {
+const ResultsRoute = () => {
   return <GroupByTests />
 }
-export default ResultsIndex
+export default ResultsRoute

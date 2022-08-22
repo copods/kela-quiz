@@ -100,8 +100,10 @@ describe('Test for GroupByTestTable, Result', () => {
     cy.get('a').find('#Results').should('have.text', cypress.results).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')
   })
+
   let value: string
   let strings: string[]
+
   it('Total Count of Test of groupByTable', () => {
     cy.visit('/sign-in')
     cy.get('#email')
@@ -157,9 +159,13 @@ describe('Test for GroupByTestTable, Result', () => {
               .children()
               .within((el) => {
                 cy.get('.border-t').then(($elements) => {
-                  strings = [...$elements].map(($el) => $el.innerText)
-                  expect(strings).to.deep.equal([...strings])
-                  expect(strings.length).to.deep.equal(parseInt(value))
+                  // strings = [...$elements].map(($el) => $el.innerText)
+                  // expect(strings).to.deep.equal([...strings])
+                  // expect(strings.length).to.deep.equal(parseInt(value))
+
+
+                  var strings = [...$elements].map(($el) => $el.innerText)
+                  expect(strings).to.deep.equal(strings.sort().reverse())
                 })
               })
           })
@@ -190,9 +196,12 @@ describe('Test for GroupByTestTable, Result', () => {
               .children()
               .within((el) => {
                 cy.get('.border-t').then(($elements) => {
-                  strings = [...$elements].map(($el) => $el.innerText)
-                  expect(strings).to.deep.equal([...strings])
-                  expect(strings.length).to.deep.equal(parseInt(value))
+                  // strings = [...$elements].map(($el) => $el.innerText)
+                  // expect(strings).to.deep.equal([...strings])
+                  // expect(strings.length).to.deep.equal(parseInt(value))
+
+                  var strings = [...$elements].map(($el) => $el.innerText)
+                  expect(strings).to.deep.equal(strings.sort().reverse())
                 })
               })
           })
