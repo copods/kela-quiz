@@ -429,19 +429,19 @@ describe('Creating tests', () => {
       .clear()
       .type('careers@copods.co')
       .should('have.value', cypress.email)
-    cy.get('#password')
+    cy.get('#password', { timeout: 6000 })
       .clear()
       .type('kQuiz@copods')
       .should('have.value', cypress.password)
     cy.findByRole('button').click()
 
-    cy.get('a')
-      .find('#Tests', { timeout: 6000 })
+    cy.get('a', { timeout: 10000 })
+      .find('#Tests', { timeout: 10000 })
       .should('have.text', testsConstants.Tests)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.get('#addTest', { timeout: 6000 }).click()
-    cy.location('pathname', { timeout: 60000 }).should(
+    cy.get('#addTest', { timeout: 10000 }).click()
+    cy.location('pathname', { timeout: 100000 }).should(
       'include',
       '/tests/add-test'
     )
