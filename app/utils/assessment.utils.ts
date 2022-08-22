@@ -6,7 +6,7 @@ import { candidateSectionStart, candidateTestStart, checkIfTestLinkIsValid, endA
 export type CandidateStep = {
   nextRoute: string
   isSection: boolean
-  currentSectionId: string | null
+  currentSectionId?: string
 }
 
 
@@ -88,7 +88,7 @@ export async function updateCandidateDetail({ candidateId, firstName, lastName }
  * @param currentSectionId
  * @returns candidateTestId
  */
-export async function updateNextStep({ assessmentId, nextRoute, isSection, currentSectionId }: { assessmentId: string, nextRoute: string, isSection: boolean, currentSectionId: string | null }) {
+export async function updateNextStep({ assessmentId, nextRoute, isSection, currentSectionId }: { assessmentId: string, nextRoute: string, isSection: boolean, currentSectionId?: string }) {
   await updateNextCandidateStep(assessmentId, {
     nextRoute,
     isSection,
@@ -234,7 +234,7 @@ export async function moveToNextSection({ assessmentId, order, sectionId }: { as
     assessmentId: assessmentId as string,
     nextRoute: 'section',
     isSection: true,
-    currentSectionId: nextSectionObject?.id || null,
+    currentSectionId: nextSectionObject?.id,
   })
 
   if (nextSectionObject) {

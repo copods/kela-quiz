@@ -143,3 +143,53 @@ export interface QuestionType {
   createdAt?: Date
   updatedAt?: Date
 }
+
+export interface CandidateTest {
+  id: string
+  testId: string
+  link: string | null
+  sections: Array<SectionInCandidateTest>
+  test: Test
+  candidateId: string
+  candidateStep: JSON
+  startedAt: Date | null
+  endAt: Date | null
+  createdAt: Date
+  updatedAt: Date
+}
+
+export interface SectionInCandidateTest {
+  id: string
+  sectionId: string
+  section: Section
+  candidateTestId: string
+  order: number
+  questions: Array<CandidateQuestion>
+  startedAt: Date | null
+  endAt: Date | null
+  createdAt: Date
+  updatedAt: Date
+}
+
+export interface Candidate {
+  id: string
+  email: string
+  firstName: string | null
+  lastName: string | null
+  isQualified: boolean | null
+  createdById: string
+  createdAt: Date
+  updatedAt: Date
+}
+
+export interface CandidateQuestion {
+  id: string
+  questionId: string
+  status: string
+  answers: string[]
+  order: number
+  sectionInCandidateTestId: string
+  answeredAt: Date | null
+  createdAt: Date
+  updatedAt: Date
+}

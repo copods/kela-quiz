@@ -1,3 +1,4 @@
+import type { Candidate, CandidateTest } from '~/interface/Interface'
 import CandidateSideNav from '../side-nav/CandidateSideNav'
 
 export default function CandidateLayout({
@@ -6,8 +7,8 @@ export default function CandidateLayout({
   candidateTest,
 }: {
   children: JSX.Element
-  candidate: any
-  candidateTest: any
+  candidate: Candidate
+  candidateTest: CandidateTest
 }) {
   return (
     <main className="flex max-h-screen min-h-screen">

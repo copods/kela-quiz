@@ -19,7 +19,7 @@ const SelectSectionCard = ({
       toast.error('Cannot add section with 0 questions')
       return
     }
-    var tempSection = {
+    let tempSection = {
       isSelected: section.isSelected,
       totalQuestions: section.totalQuestions
         ? section.totalQuestions

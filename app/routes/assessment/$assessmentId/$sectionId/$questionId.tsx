@@ -72,6 +72,8 @@ export const action: ActionFunction = async ({ params, request }) => {
   )
 }
 
-export default function AssessmentQuestionForSection() {
+const AssessmentQuestionForSection = () => {
   return <Question />
 }
+
+export default AssessmentQuestionForSection

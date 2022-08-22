@@ -1,7 +1,7 @@
 import { useLoaderData, useSubmit } from '@remix-run/react'
 import { candidateExam } from '~/constants/common.constants'
 
-function SectionDetails() {
+const SectionDetails = () => {
   const { section, candidateSection } = useLoaderData()
   const submit = useSubmit()
   const startSection = async () => {
@@ -37,7 +37,7 @@ function SectionDetails() {
         className="rounded-full bg-primary py-2 px-5 text-white"
         onClick={() => startSection()}
       >
-        Start Section
+        {candidateExam.startSection}
       </button>
     </div>
   )

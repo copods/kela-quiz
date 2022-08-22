@@ -1,19 +1,24 @@
 import { Outlet, useSubmit } from '@remix-run/react'
 import { useEffect, useState } from 'react'
 import { candidateExam } from '~/constants/common.constants'
+import type {
+  CandidateTest,
+  SectionInCandidateTest,
+  SectionInTest,
+} from '~/interface/Interface'
 import { getTimeLeftInSeconds } from '~/utils/assessment.utils'
 
-export default function SectionQuestionPage({
+const SectionQuestionPage = ({
   section,
   params,
   candidateTest,
 }: {
-  section: any
-  params: any
-  candidateTest: any
-}) {
+  section: SectionInTest
+  params: { assessmentId: string; sectionId?: string; questionId?: string }
+  candidateTest: CandidateTest
+}) => {
   const [time, setTimer] = useState(-1)
-  let candidateSection: any = {}
+  let candidateSection: SectionInCandidateTest
   for (let sec of candidateTest?.sections) {
     if (section?.section?.id == sec?.section?.id) {
       candidateSection = sec
@@ -21,7 +26,7 @@ export default function SectionQuestionPage({
     }
   }
   const submit = useSubmit()
-  let timer: any = null
+  let timer: ReturnType<typeof setTimeout>
   useEffect(() => {
     if (candidateSection?.startedAt) {
       if (!timer) {
@@ -33,7 +38,7 @@ export default function SectionQuestionPage({
           })
           setTimer(timeLeft)
           if (timeLeft == 0) {
-            submit({ order: section.order }, { method: 'post' })
+            submit({ order: section.order.toString() }, { method: 'post' })
             // setTimer2(null)
             setTimer(0)
             clearInterval(timer)
@@ -71,3 +76,5 @@ export default function SectionQuestionPage({
     </div>
   )
 }
+
+export default SectionQuestionPage

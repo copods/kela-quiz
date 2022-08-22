@@ -40,7 +40,6 @@ export const action: ActionFunction = async ({ params, request }) => {
         assessmentId: params.assessmentId as string,
         nextRoute: 'instructions',
         isSection: false,
-        currentSectionId: null,
       })
       return redirect(`/assessment/${params.assessmentId}/instructions`)
     }
@@ -48,10 +47,12 @@ export const action: ActionFunction = async ({ params, request }) => {
   return null
 }
 
-export default function CandidateOnboard() {
+const CandidateOnboard = () => {
   return (
     <div className="flex min-h-full items-center justify-center bg-gray-50">
       <CandidateRegister />
     </div>
   )
 }
+
+export default CandidateOnboard

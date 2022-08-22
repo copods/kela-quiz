@@ -58,32 +58,7 @@ export const loader: LoaderFunction = async ({ params, request }) => {
   }
 }
 
-// export const action: ActionFunction = async ({ params, request }) => {
-//   const formData = await request.formData()
-//   const order = formData.get('order')
-
-//   const candidateTests = await candidateTest(params.assessmentId as string)
-
-//   await endCurrentSection(
-//     params.assessmentId as string,
-//     params.sectionId as string
-//   )
-
-//   const nextSectionObject = await getOrderedSection(
-//     candidateTests?.testId as string,
-//     parseInt(order as string) + 1
-//   )
-//   await updateNextCandidateStep(params.assessmentId as string, {
-//     nextRoute: 'section',
-//     isSection: true,
-//     currentSectionId: nextSectionObject?.id,
-//   })
-
-//   // return redirect(`/assessment/cl70h88f265421bk272f15zgj`)
-//   return redirect(`/assessment/${params.assessmentId}/${nextSectionObject?.id}`)
-// }
-
-export default function AssessmentSection() {
+const AssessmentSection = () => {
   const { section, candidateTests, candidate, params } = useLoaderData()
   return (
     <CandidateLayout candidate={candidate} candidateTest={candidateTests}>
@@ -95,3 +70,5 @@ export default function AssessmentSection() {
     </CandidateLayout>
   )
 }
+
+export default AssessmentSection

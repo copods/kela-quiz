@@ -1,6 +1,7 @@
 import MenuItems from './MenuItems'
 import Header from '~/components/SideNavHeader'
 import Footer from '~/components/SideNavFooter'
+import { sideNav } from '~/constants/common.constants'
 
 let sideNavGuide = [
   {
@@ -49,9 +50,9 @@ let sideNavGuide = [
     ],
   },
 ]
-const title = 'Quiz'
+const title = sideNav.sideNavHeading
 
-function SideNav() {
+const SideNav = () => {
   return (
     <div className="flex h-full flex-col justify-between overflow-auto p-5">
       <div>

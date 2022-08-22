@@ -1,5 +1,7 @@
 import { Outlet } from '@remix-run/react'
 
-export default function CandidateAssessment() {
+const CandidateAssessment = () => {
   return <Outlet />
 }
+
+export default CandidateAssessment

@@ -1,4 +1,4 @@
-function EndAssesment() {
+const EndAssesment = () => {
   return (
     <div className="flex flex h-screen items-center justify-center">
       Your assesment is ended
