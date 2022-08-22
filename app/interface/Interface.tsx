@@ -102,7 +102,9 @@ export interface Test {
   createdAt: Date
   updatedAt: Date
   sections: Array<SectionInTest>
-  candidateTest?: Array<CandidateTest>
+  deleted: boolean
+  deletedAt: string
+  candidateTest?: Array<Option>
 }
 
 export interface SectionInTest {

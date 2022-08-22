@@ -47,13 +47,6 @@ export const sectionsConstants = {
   noQuestionAlert: 'No questions found. Add your first question',
   noRecordFound: 'No Record Found',
 }
-export const resultConstants = {
-  order: 'Order',
-  test: 'Test',
-  totalInvited: 'Invited',
-  totalAttended: 'Attended',
-  noTestAlert: 'No test found. Add your test first',
-}
 export const testsConstants = {
   addTestbutton: 'Add Test',
   createTestDescription: 'Description',
@@ -65,7 +58,7 @@ export const testsConstants = {
   sectionText: 'Section',
   questions: 'Questions',
   totalQuestionsText: 'Total Questions',
-  breadCrumbTestsTitle: 'Tests',
+  Tests: 'Tests',
   srNoText: 'S No.',
   testListColumnLable: 'Test',
   createdOn: 'Created on',
@@ -85,6 +78,45 @@ export enum QuestionTypes {
   multipleChoice = 'MULTIPLE_CHOICE',
   singleChoice = 'SINGLE_CHOICE',
   text = 'TEXT',
+}
+
+export const resultConstants = {
+  order: 'Order',
+  test: 'Test',
+  totalInvited: 'Invited',
+  totalAttended: 'Attended',
+  noTestAlert: 'No test found. Add your test first',
+  srno: 'Sr.No',
+  invitedBy: "Invited By"
+}
+
+export enum QuestionStatus {
+  notViewed = 'NOT_VIEWED',
+  viewed = 'VIEWED',
+  skipped = 'SKIPPED',
+  answered = 'ANSWERED',
+}
+
+export const candidateExam = {
+  time: 'Time',
+  timeRemaining: 'Time Remaining',
+  timeLimit: 'Time Limit',
+  assessmentDetails: 'Assessment Details',
+  assessmentTests: 'Assessment Tests',
+  minutes: 'Mins',
+  description: 'Description',
+  total: 'Total',
+  question: 'Question',
+  questions: 'Questions',
+  endTest: 'End Test',
+  nextSection: 'Next Section',
+  candidateAcceptance:
+    'I understand that once I begin the assessment I cannot leave and  return to this assessment at a later time.',
+  beginAssesment: 'Begin Assesment',
+  instructions: 'Instructions',
+  startSection: 'Start Section',
+  examTitle: 'Pre-Interview Assessment',
+  info: 'Info',
 }
 export const cypress = {
   Tests: 'Tests',
@@ -115,38 +147,9 @@ export const cypress = {
   addMember: '+ Add Member',
   cancel: 'Cancel',
   delete: 'Delete',
-  results: 'Results',
+  results: 'Group By Tests',
   name: 'Name',
   description: 'Description',
   totalTime: 'Total Time',
   totalSections: 'Total Sections',
-}
-
-export enum QuestionStatus {
-  notViewed = 'NOT_VIEWED',
-  viewed = 'VIEWED',
-  skipped = 'SKIPPED',
-  answered = 'ANSWERED',
-}
-
-export const candidateExam = {
-  time: 'Time',
-  timeRemaining: 'Time Remaining',
-  timeLimit: 'Time Limit',
-  assessmentDetails: 'Assessment Details',
-  assessmentTests: 'Assessment Tests',
-  minutes: 'Mins',
-  description: 'Description',
-  total: 'Total',
-  question: 'Question',
-  questions: 'Questions',
-  endTest: 'End Test',
-  nextSection: 'Next Section',
-  candidateAcceptance:
-    'I understand that once I begin the assessment I cannot leave and  return to this assessment at a later time.',
-  beginAssesment: 'Begin Assesment',
-  instructions: 'Instructions',
-  startSection: 'Start Section',
-  examTitle: 'Pre-Interview Assessment',
-  info: 'Info',
 }
