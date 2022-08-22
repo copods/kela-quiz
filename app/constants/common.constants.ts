@@ -147,7 +147,7 @@ export const cypress = {
   addMember: '+ Add Member',
   cancel: 'Cancel',
   delete: 'Delete',
-  results: 'Results',
+  results: 'Group By Tests',
   name: 'Name',
   description: 'Description',
   totalTime: 'Total Time',

@@ -159,7 +159,7 @@ describe('Visiting group by test of results page', () => {
       .get('#group-by-items-container', { timeout: 6000 })
       .get('#group-by-item-test', { timeout: 6000 })
       .click()
-    cy.get('#results-test-candidate-list-tab', { timeout: 6000 })
+    cy.get('#Group_By_Tests-test-candidate-list-tab', { timeout: 6000 })
       .get('#tab-title')
       .invoke('text')
       .then((el) => {

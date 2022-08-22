@@ -29,6 +29,7 @@ const GroupByTestItems = ({
           <Link
             tabIndex={0}
             to={`/results/groupByTests/${id}`}
+            id="group-by-item-test"
             className="text-base font-semibold text-primary"
           >
             {candidateTests.name}
