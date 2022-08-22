@@ -1,4 +1,4 @@
-const duplicateTitle = `Aptitude - ${new Date().getTime()}`;
+const duplicateTitle = `Aptitude - ${new Date().getTime()}`
 
 describe('Test for section-details', () => {
   it('Visiting section-details  Page', () => {
@@ -13,7 +13,10 @@ describe('Test for section-details', () => {
       .should('have.value', 'kQuiz@copods')
     cy.findByRole('button').click()
 
-    cy.get('a').find('#Sections', { timeout: 6000 }).should('have.text', 'Sections').click()
+    cy.get('a')
+      .find('#Sections', { timeout: 6000 })
+      .should('have.text', 'Sections')
+      .click()
     cy.location('pathname', { timeout: 6000 }).should('include', '/sections')
     cy.get('#add-section', { timeout: 6000 }).should('be.visible')
     cy.get('#add-section').click()
@@ -23,7 +26,10 @@ describe('Test for section-details', () => {
       `Aptitude - ${new Date().getTime()} Description`
     )
     cy.get('button#submitButton').should('have.text', 'Add').click()
-    cy.get('#section-cards', { timeout: 10000 }).children().first().should('be.visible')
+    cy.get('#section-cards', { timeout: 10000 })
+      .children()
+      .first()
+      .should('be.visible')
     cy.get('#section-cards').children().first().click()
     cy.get('#addQuestion').click()
     cy.location('pathname', { timeout: 60000 }).should(
@@ -126,7 +132,10 @@ describe('Test for section-details', () => {
       `Aptitude - ${new Date().getTime()} Description`
     )
     cy.get('#submitButton').click()
-    cy.get('.Toastify__toast').should('have.text', 'Section added successfully..!')
+    cy.get('.Toastify__toast').should(
+      'have.text',
+      'Section added successfully..!'
+    )
     cy.get('.Toastify__close-button').click()
 
     cy.get('#add-section').click()
@@ -395,7 +404,7 @@ describe('Test for section-details', () => {
         .then((len) => {
           lengthBefore = len
         })
-        cy.get('button.flex').should('have.text', '+ Add Options').click()
+      cy.get('button.flex').should('have.text', '+ Add Options').click()
       cy.get('#quillEditor')
         .its('length')
         .then((len) => {
@@ -489,7 +498,7 @@ describe('Test for section-details', () => {
       'include',
       '/add-question'
     )
-    cy.get('h1', { timeout: 2000 }).should("be.visible")
+    cy.get('h1', { timeout: 2000 }).should('be.visible')
     cy.get('#dropdown > button').click()
 
     cy.get('ul').within(() => {
@@ -505,11 +514,11 @@ describe('Test for section-details', () => {
       })
     })
 
-    cy.get("#questionEditor #quillEditor").within(() => {
+    cy.get('#questionEditor #quillEditor').within(() => {
       cy.get('.ql-editor').type(`What is your Test Question ?`)
     })
 
-    cy.get("#optionEditor input").clear().type("Option of question")
+    cy.get('#optionEditor input').clear().type('Option of question')
 
     cy.get('#saveAndAddMore').click()
     cy.location('pathname', { timeout: 60000 }).should(
@@ -546,7 +555,7 @@ describe('Test for section-details', () => {
       '/add-question'
     )
 
-    cy.get('h1', { timeout: 2000 }).should("be.visible")
+    cy.get('h1', { timeout: 2000 }).should('be.visible')
     cy.get('#dropdown > button').click()
 
     cy.get('ul').within(() => {
@@ -562,13 +571,13 @@ describe('Test for section-details', () => {
       })
     })
 
-    cy.get("#questionEditor #quillEditor").within(() => {
+    cy.get('#questionEditor #quillEditor').within(() => {
       cy.get('.ql-editor').type(`What is your Test Question ?`)
     })
 
-    cy.get("#optionEditor input").clear().type("Option of question")
+    cy.get('#optionEditor input').clear().type('Option of question')
 
-    cy.get("#saveAndExit").click()
+    cy.get('#saveAndExit').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
   })
 
@@ -602,8 +611,10 @@ describe('Test for section-details', () => {
     cy.get('#questionEditor > .rounded-lg > .ql-container > .ql-editor')
       .type('{backspace}')
       .should('have.value', '')
-    cy.get('#saveAndAddMore').should('have.text', 'Save & Add More').click()
-    cy.get('.Toastify__close-button', { timeout: 6000 }).should("be.visible")
+    cy.get('#saveAndAddMore', { timeout: 6000 })
+      .should('have.text', 'Save & Add More')
+      .click()
+    cy.get('.Toastify__close-button', { timeout: 6000 }).should('be.visible')
     cy.get('.Toastify__close-button').click({ multiple: true })
     cy.get('.Toastify__toast').should('have.text', 'Enter the Question')
   })
