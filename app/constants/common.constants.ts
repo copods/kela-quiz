@@ -51,7 +51,7 @@ export const resultConstants = {
   test: 'Test',
   totalInvited: 'Invited',
   totalAttended: 'Attended',
-  noTestAlert: 'no test found. Add your test first',
+  noTestAlert: 'No test found. Add your test first',
 }
 export const testsConstants = {
   addTestbutton: 'Add Test',
@@ -80,7 +80,7 @@ export const routeFiles = {
 }
 
 export enum QuestionTypes {
-  multipleChoice= "MULTIPLE_CHOICE",
-  singleChoice= "SINGLE_CHOICE",
-  text= "TEXT"
+  multipleChoice = 'MULTIPLE_CHOICE',
+  singleChoice = 'SINGLE_CHOICE',
+  text = 'TEXT',
 }

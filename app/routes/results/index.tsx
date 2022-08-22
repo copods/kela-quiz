@@ -4,21 +4,7 @@ import type { LoaderFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import GroupByTests from '~/components/results/GroupByTests'
 import { getAllCandidateTests } from '~/models/result.server'
-// export type ActionData = {
-//   errors?: {
-//     firstName?: string
-//     lastName?: string
-//     email?: string
-//     roleId?: string
-//     title?: string
-//     status?: string
-//     check?: Date
-//   }
-//   resp?: {
-//     status?: string
-//     check?: Date
-//   }
-// }
+
 type LoaderData = {
   candidateTest: Awaited<ReturnType<typeof getAllCandidateTests>>
   userId: Awaited<ReturnType<typeof getUserId>>

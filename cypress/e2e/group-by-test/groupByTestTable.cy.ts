@@ -1,5 +1,5 @@
 describe('Test for GroupByTestTable, Result', () => {
-  xit('Test for Routing and Active Tab for Results', () => {
+  it('Test for Routing and Active Tab for Results', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -13,7 +13,7 @@ describe('Test for GroupByTestTable, Result', () => {
     cy.get('a').find('#Results').should('have.text', 'Results').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')
   })
-  let time = new Date().getTime()
+  const time = new Date().getTime()
   it('Create Section and  test', () => {
     cy.visit('/sign-in')
     cy.get('#email')
@@ -98,8 +98,8 @@ describe('Test for GroupByTestTable, Result', () => {
     cy.get('a').find('#Results').should('have.text', 'Results').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')
   })
-  let value: any
-  let strings: any
+  let value: string
+  let strings: string[]
   it('Total Count of Test of groupByTable', () => {
     cy.visit('/sign-in')
     cy.get('#email')

@@ -69,7 +69,7 @@ const GroupByTests = () => {
                     count?: number
                     candidateTest?: CandidateTest
                   },
-                  i: number
+                  index: number
                 ) => (
                   <div
                     key={candidateTests.id}
@@ -77,7 +77,7 @@ const GroupByTests = () => {
                   >
                     <GroupByTestItems
                       candidateTests={candidateTests}
-                      index={i}
+                      index={index + 1}
                     />
                   </div>
                 )

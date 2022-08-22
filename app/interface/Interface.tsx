@@ -144,12 +144,12 @@ export interface QuestionType {
   updatedAt?: Date
 }
 export interface CandidateTest {
-  id?: string
+  id: string
   sections: Array<SectionInTest>
   test: Test
-  testId?: String
-  link: String
-  candidateId?: String
+  testId: string
+  link: string
+  candidateId?: string
   startedAt?: Date
   endAt?: Date
   createdAt?: Date
