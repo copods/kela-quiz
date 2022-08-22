@@ -113,3 +113,9 @@ export const cypress = {
   totalTime: 'Total Time',
   totalSections: 'Total Sections',
 }
+
+export enum sortByOrder {
+  ascending = 'asc',
+  name = 'name',
+  descending = 'descending',
+}

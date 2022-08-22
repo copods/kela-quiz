@@ -2,7 +2,6 @@ import {
   cypress,
   testsConstants,
   routeFiles,
-  sectionsConstants,
   commonConstants,
 } from '~/constants/common.constants'
 
@@ -36,7 +35,7 @@ describe('Visiting Tests', () => {
         cy.get("button[type='submit']", { timeout: 10000 }).click()
       })
     cy.get('#addQuestion', { timeout: 6000 })
-      .should('have.text', sectionsConstants.addQuestion)
+      .should('have.text', cypress.addQuest)
       .click()
     cy.location('pathname', { timeout: 6000 }).should(
       'include',

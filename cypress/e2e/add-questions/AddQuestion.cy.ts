@@ -2,7 +2,6 @@ import {
   cypress,
   routeFiles,
   commonConstants,
-  sectionsConstants,
 } from '~/constants/common.constants'
 const duplicateTitle = `Aptitude - ${new Date().getTime()}`
 
@@ -73,9 +72,7 @@ describe('Test for section-details', () => {
       .should('have.text', commonConstants.addButton)
       .click()
     cy.get('#section-cards').children().first().click()
-    cy.get('#addQuestion')
-      .should('have.text', sectionsConstants.addQuestion)
-      .click()
+    cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -197,9 +194,7 @@ describe('Test for section-details', () => {
       .should('have.text', commonConstants.addButton)
       .click()
     cy.get('#section-cards').children().first().click()
-    cy.get('#addQuestion')
-      .should('have.text', sectionsConstants.addQuestion)
-      .click()
+    cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -238,9 +233,7 @@ describe('Test for section-details', () => {
       .should('have.text', commonConstants.addButton)
       .click()
     cy.get('#section-cards').children().first().click()
-    cy.get('#addQuestion')
-      .should('have.text', sectionsConstants.addQuestion)
-      .click()
+    cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -302,9 +295,7 @@ describe('Test for section-details', () => {
       .should('have.text', commonConstants.addButton)
       .click()
     cy.get('#section-cards').children().first().click()
-    cy.get('#addQuestion')
-      .should('have.text', sectionsConstants.addQuestion)
-      .click()
+    cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -366,9 +357,7 @@ describe('Test for section-details', () => {
       .should('have.text', commonConstants.addButton)
       .click()
     cy.get('#section-cards').children().first().click()
-    cy.get('#addQuestion')
-      .should('have.text', sectionsConstants.addQuestion)
-      .click()
+    cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -432,9 +421,7 @@ describe('Test for section-details', () => {
       .should('have.text', commonConstants.addButton)
       .click()
     cy.get('#section-cards').children().first().click()
-    cy.get('#addQuestion')
-      .should('have.text', sectionsConstants.addQuestion)
-      .click()
+    cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -497,9 +484,7 @@ describe('Test for section-details', () => {
       .should('have.text', commonConstants.addButton)
       .click()
     cy.get('#section-cards').children().first().click()
-    cy.get('#addQuestion')
-      .should('have.text', sectionsConstants.addQuestion)
-      .click()
+    cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -562,9 +547,7 @@ describe('Test for section-details', () => {
       .should('have.text', commonConstants.addButton)
       .click()
     cy.get('#section-cards').children().first().click()
-    cy.get('#addQuestion')
-      .should('have.text', sectionsConstants.addQuestion)
-      .click()
+    cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -625,9 +608,7 @@ describe('Test for section-details', () => {
       .should('have.text', commonConstants.addButton)
       .click()
     cy.get('#section-cards').children().first().click()
-    cy.get('#addQuestion')
-      .should('have.text', sectionsConstants.addQuestion)
-      .click()
+    cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -686,9 +667,7 @@ describe('Test for section-details', () => {
       .should('have.text', commonConstants.addButton)
       .click()
     cy.get('#section-cards').children().first().click()
-    cy.get('#addQuestion')
-      .should('have.text', sectionsConstants.addQuestion)
-      .click()
+    cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -732,9 +711,7 @@ describe('Test for section-details', () => {
       .should('have.text', commonConstants.addButton)
       .click()
     cy.get('#section-cards').children().first().click()
-    cy.get('#addQuestion')
-      .should('have.text', sectionsConstants.addQuestion)
-      .click()
+    cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'

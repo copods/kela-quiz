@@ -4,7 +4,11 @@ import { Link } from 'react-router-dom'
 import type { Test } from '~/interface/Interface'
 import SortFilter from '../SortFilter'
 import TestTableItem from './TestTableItem'
-import { commonConstants, testsConstants } from '~/constants/common.constants'
+import {
+  commonConstants,
+  sortByOrder,
+  testsConstants,
+} from '~/constants/common.constants'
 const TestList = ({
   tests,
   status,
@@ -12,8 +16,10 @@ const TestList = ({
   tests: Array<Test>
   status: string | undefined
 }) => {
-  const [sortDirection, onSortDirectionChange] = useState('asc')
-  const [sortBy, onSortChange] = useState('name')
+  const [sortDirection, onSortDirectionChange] = useState(
+    sortByOrder.ascending as string
+  )
+  const [sortBy, onSortChange] = useState(sortByOrder.name as string)
   const filterByType = [
     {
       name: 'Name',

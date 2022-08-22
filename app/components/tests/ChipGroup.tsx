@@ -39,7 +39,7 @@ const ChipGroup = ({
             >
               {sections.map((sect, i) => {
                 return (
-                  <div className="section-menu flex flex-col px-2 py-2">
+                  <div className="section-menu flex flex-col px-2 py-2" key={i}>
                     <Menu.Item>
                       <span className="text-sm">
                         <span className="truncate rounded-52 bg-bgcolor px-2 py-1">

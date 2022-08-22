@@ -30,7 +30,7 @@ describe('Test for members', () => {
       .should('have.value', cypress.password)
     cy.findByRole('button').click()
     cy.get('a').find('#Members').should('have.text', cypress.members).click()
-    cy.get('#addMember').should('have.text', cypress.members).click()
+    cy.get('#addMember').should('have.text', cypress.addMember).click()
     cy.get('#AddPopUpModel').should('be.visible')
     cy.get('#firstName').clear().type('hinata').should('have.value', 'hinata')
     cy.get('#lastName').clear().type('hyuga').should('have.value', 'hyuga')
@@ -59,7 +59,7 @@ describe('Test for members', () => {
       .should('have.value', cypress.password)
     cy.findByRole('button').click()
     cy.get('a').find('#Members').should('have.text', cypress.members).click()
-    cy.get('#addMember').should('have.text', cypress.members).click()
+    cy.get('#addMember').should('have.text', cypress.addMember).click()
     cy.get('#cancelAddButton').should('have.text', 'Cancel').click()
   })
   it('Test for Delete member popup cancel button', () => {
