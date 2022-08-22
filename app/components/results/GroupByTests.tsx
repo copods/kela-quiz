@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import SortFilter from '../SortFilter'
 import { resultConstants, commonConstants } from '~/constants/common.constants'
+
 import { useLoaderData, useSubmit } from '@remix-run/react'
 import GroupByTestItems from './GroupByTestItems'
 import type { CandidateTest, Test } from '~/interface/Interface'
@@ -18,11 +19,12 @@ const GroupByTests = () => {
     },
   ]
   const candidateTestData = useLoaderData()
-  console.log(candidateTestData, 'fdshsjkdf')
   const candidateTests = candidateTestData.candidateTest
+  console.log('candidateTests', candidateTests)
   const submit = useSubmit()
+
   useEffect(() => {
-    var filter = {
+    const filter = {
       orderBy: {
         [sortBy]: sortDirection,
       },
@@ -44,40 +46,51 @@ const GroupByTests = () => {
             showSelected={false}
           />
         </div>
-        <div className="grid grid-cols-12  bg-[#F9FAFB] ">
-          <div className="col-span-full grid grid-cols-10 rounded-lg border-[1px] border-solid border-[#E5E7EB] bg-white">
-            <div className="col-span-full grid grid-cols-10 py-4 px-12">
-              <span className="col-span-2 text-sm  font-semibold  text-gray-500">
+
+        <div className="grid grid-cols-12 rounded-lg  bg-[#F9FAFB] shadow-table">
+          <div className="col-span-full grid grid-cols-10 rounded-lg border-[1px] border-solid border-borderColor bg-white">
+            <div className="col-span-full grid grid-cols-10 gap-3 bg-tableHeader py-4 px-12">
+              <span className="col-span-2 text-sm font-semibold  text-gray-500">
                 {resultConstants.order}
               </span>
-              <span className="col-span-3 text-sm  font-semibold  text-gray-500">
+              <span className="col-span-3 text-sm font-semibold  text-gray-500">
                 {resultConstants.test}
               </span>
-              <span className="col-span-2 text-sm  font-semibold  text-gray-500">
+              <span className="col-span-2 text-sm font-semibold  text-gray-500">
                 {commonConstants.total} {resultConstants.totalInvited}
               </span>
-              <span className="col-span-2 text-sm  font-semibold  text-gray-500">
+              <span className="col-span-3 text-sm font-semibold  text-gray-500">
                 {commonConstants.total} {resultConstants.totalAttended}
               </span>
             </div>
-            {candidateTests.map(
-              (
-                candidateTests: Test & { candidateTest?: CandidateTest },
-                i: number
-              ) => (
-                <div
-                  key={candidateTestData.id}
-                  className="memberRow col-span-10 grid"
-                  id="group-by-items-container"
-                >
-                  <GroupByTestItems
-                    candidateTests={candidateTests}
-                    index={i + 1}
-                    id={candidateTests?.id}
-                  />
+            <div id="GroupByTestItems" className="col-span-10 grid">
+              {candidateTests.map(
+                (
+                  candidateTests: Test & {
+                    count?: number
+                    candidateTest?: CandidateTest
+                  },
+                  index: number
+                ) => (
+                  <div
+                    key={candidateTests.id}
+                    className="GroupByTestRow col-span-10 grid"
+                    id="group-by-items-container"
+                  >
+                    <GroupByTestItems
+                      candidateTests={candidateTests}
+                      index={index + 1}
+                      id={candidateTests?.id}
+                    />
+                  </div>
+                )
+              )}
+              {candidateTests.length === 0 && (
+                <div className="flex items-center justify-center p-7">
+                  <span>{resultConstants.noTestAlert}</span>
                 </div>
-              )
-            )}
+              )}
+            </div>
           </div>
         </div>
       </div>

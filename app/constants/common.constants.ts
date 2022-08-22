@@ -10,11 +10,15 @@ export const commonConstants = {
   byText: 'By',
   total: 'Total',
   continue: 'Continue',
+  createdAt: 'createdAt',
+  createdDate: 'Created Date',
 }
+
 export const sideNav = {
   sideNavHeading: 'Quiz',
 }
-export const commonMembers = {
+
+export const members = {
   addMember: 'Add Member',
   firstName: 'First Name',
   lastName: ' Last Name',
@@ -75,11 +79,13 @@ export enum QuestionTypes {
   singleChoice = 'SINGLE_CHOICE',
   text = 'TEXT',
 }
+
 export const resultConstants = {
   order: 'Order',
   test: 'Test',
   totalInvited: 'Invited',
   totalAttended: 'Attended',
+  noTestAlert: 'No test found. Add your test first',
 }
 
 export enum QuestionStatus {

@@ -14,7 +14,7 @@ const TestDetails = ({
   onDescriptionChange: (e: string) => void
 }) => {
   return (
-    <div className="flex h-full w-full flex-col gap-6  rounded-lg bg-white p-6 shadow">
+    <div className="flex h-full w-full flex-col gap-6 rounded-lg bg-white p-6 shadow">
       <div>
         <label htmlFor="name" className="text-base font-medium text-gray-800">
           {commonConstants.name}
