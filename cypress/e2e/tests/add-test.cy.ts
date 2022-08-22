@@ -1,4 +1,10 @@
-import { cypress } from './../../../app/constants/common.constants'
+import {
+  cypress,
+  testsConstants,
+  routeFiles,
+  sectionsConstants,
+  commonConstants,
+} from '~/constants/common.constants'
 
 describe('Creating tests', () => {
   it('Visiting Add Test Page', () => {
@@ -13,7 +19,7 @@ describe('Creating tests', () => {
       .should('have.value', cypress.password)
     cy.findByRole('button').click()
 
-    cy.get('a').find('#Tests').should('have.text', cypress.Tests).click()
+    cy.get('a').find('#Tests').should('have.text', testsConstants.Tests).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('#addTest').click()
     cy.location('pathname', { timeout: 60000 }).should(
@@ -34,7 +40,10 @@ describe('Creating tests', () => {
       .should('have.value', cypress.password)
     cy.findByRole('button').click()
 
-    cy.get('a').find('#Sections').should('have.text', cypress.Sections).click()
+    cy.get('a')
+      .find('#Sections')
+      .should('have.text', routeFiles.sections)
+      .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('.px-5').click()
     cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
@@ -42,11 +51,18 @@ describe('Creating tests', () => {
     cy.get('textarea#sectionDescription').type(
       `Aptitude - ${new Date().getTime()} Description`
     )
-    cy.get('button#submitButton').should('have.text', cypress.Add).click()
-    cy.get('a').find('#Tests').should('have.text', cypress.Tests).click()
-    cy.get('a').find('#Sections').should('have.text', cypress.Sections).click()
+    cy.get('button#submitButton')
+      .should('have.text', commonConstants.addButton)
+      .click()
+    cy.get('a').find('#Tests').should('have.text', testsConstants.Tests).click()
+    cy.get('a')
+      .find('#Sections')
+      .should('have.text', routeFiles.sections)
+      .click()
     cy.get('#section-card').first().click()
-    cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
+    cy.get('#addQuestion')
+      .should('have.text', sectionsConstants.addQuestion)
+      .click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -90,7 +106,7 @@ describe('Creating tests', () => {
       .should('have.value', cypress.password)
     cy.findByRole('button').click()
 
-    cy.get('a').find('#Tests').should('have.text', cypress.Tests).click()
+    cy.get('a').find('#Tests').should('have.text', testsConstants.Tests).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('#addTest').click()
     cy.location('pathname', { timeout: 60000 }).should(
@@ -120,7 +136,7 @@ describe('Creating tests', () => {
       .should('have.value', cypress.password)
     cy.findByRole('button').click()
 
-    cy.get('a').find('#Tests').should('have.text', cypress.Tests).click()
+    cy.get('a').find('#Tests').should('have.text', testsConstants.Tests).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('#addTest').click()
     cy.location('pathname', { timeout: 60000 }).should(
@@ -145,7 +161,7 @@ describe('Creating tests', () => {
       .should('have.value', cypress.password)
     cy.findByRole('button').click()
 
-    cy.get('a').find('#Tests').should('have.text', cypress.Tests).click()
+    cy.get('a').find('#Tests').should('have.text', testsConstants.Tests).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('#addTest').click()
     cy.location('pathname', { timeout: 60000 }).should(
@@ -175,7 +191,7 @@ describe('Creating tests', () => {
       .should('have.value', cypress.password)
     cy.findByRole('button').click()
 
-    cy.get('a').find('#Tests').should('have.text', cypress.Tests).click()
+    cy.get('a').find('#Tests').should('have.text', testsConstants.Tests).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('#addTest').click()
     cy.location('pathname', { timeout: 60000 }).should(
@@ -210,7 +226,7 @@ describe('Creating tests', () => {
       .should('have.value', cypress.password)
     cy.findByRole('button').click()
 
-    cy.get('a').find('#Tests').should('have.text', cypress.Tests).click()
+    cy.get('a').find('#Tests').should('have.text', testsConstants.Tests).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('#addTest').click()
     cy.location('pathname', { timeout: 60000 }).should(
@@ -232,7 +248,9 @@ describe('Creating tests', () => {
         if (el.find('.count')[0].innerText != '0') {
           cy.get('input#noOfQu').should('have.disabled', true)
           cy.get('input#time').should('have.disabled', true)
-          cy.get('button').should('have.text', cypress.Add).click()
+          cy.get('button')
+            .should('have.text', commonConstants.addButton)
+            .click()
           cy.get('button').should('have.text', cypress.Remove)
 
           cy.get('input#noOfQu').clear().type('1')
@@ -256,7 +274,7 @@ describe('Creating tests', () => {
       .should('have.value', cypress.password)
     cy.findByRole('button').click()
 
-    cy.get('a').find('#Tests').should('have.text', cypress.Tests).click()
+    cy.get('a').find('#Tests').should('have.text', testsConstants.Tests).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('#addTest').click()
     cy.location('pathname', { timeout: 60000 }).should(
@@ -279,7 +297,9 @@ describe('Creating tests', () => {
         if (el.find('.count')[0].innerText != '0') {
           cy.get('input#noOfQu').should('have.disabled', true)
           cy.get('input#time').should('have.disabled', true)
-          cy.get('button').should('have.text', cypress.Add).click()
+          cy.get('button')
+            .should('have.text', commonConstants.addButton)
+            .click()
           cy.get('button').should('have.text', cypress.Remove)
 
           cy.get('input#noOfQu').clear().type('1')
@@ -303,7 +323,7 @@ describe('Creating tests', () => {
       .should('have.value', cypress.password)
     cy.findByRole('button').click()
 
-    cy.get('a').find('#Tests').should('have.text', cypress.Tests).click()
+    cy.get('a').find('#Tests').should('have.text', testsConstants.Tests).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('#addTest').click()
     cy.location('pathname', { timeout: 60000 }).should(
@@ -326,7 +346,9 @@ describe('Creating tests', () => {
         if (el.find('.count')[0].innerText != '0') {
           cy.get('input#noOfQu').should('have.disabled', true)
           cy.get('input#time').should('have.disabled', true)
-          cy.get('button').should('have.text', cypress.Add).click()
+          cy.get('button')
+            .should('have.text', commonConstants.addButton)
+            .click()
           cy.get('button').should('have.text', cypress.Remove)
 
           cy.get('input#noOfQu').clear().type('1')
@@ -354,7 +376,7 @@ describe('Creating tests', () => {
       .should('have.value', cypress.password)
     cy.findByRole('button').click()
 
-    cy.get('a').find('#Tests').should('have.text', cypress.Tests).click()
+    cy.get('a').find('#Tests').should('have.text', testsConstants.Tests).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('#addTest').click()
     cy.location('pathname', { timeout: 60000 }).should(
@@ -377,7 +399,9 @@ describe('Creating tests', () => {
         if (el.find('.count')[0].innerText != '0') {
           cy.get('input#noOfQu').should('have.disabled', true)
           cy.get('input#time').should('have.disabled', true)
-          cy.get('button').should('have.text', cypress.Add).click()
+          cy.get('button')
+            .should('have.text', commonConstants.addButton)
+            .click()
           cy.get('button').should('have.text', cypress.Remove)
 
           cy.get('input#noOfQu').clear().type('1')
@@ -411,7 +435,7 @@ describe('Creating tests', () => {
 
     cy.get('a')
       .find('#Tests', { timeout: 6000 })
-      .should('have.text', cypress.Tests)
+      .should('have.text', testsConstants.Tests)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('#addTest', { timeout: 6000 }).click()
@@ -433,7 +457,9 @@ describe('Creating tests', () => {
         if (el.find('.count')[0].innerText != '0') {
           cy.get('input#noOfQu').should('have.disabled', true)
           cy.get('input#time').should('have.disabled', true)
-          cy.get('button').should('have.text', cypress.Add).click()
+          cy.get('button')
+            .should('have.text', commonConstants.addButton)
+            .click()
           cy.get('button').should('have.text', cypress.Remove)
 
           cy.get('input#noOfQu').clear().type('1')
@@ -453,7 +479,7 @@ describe('Creating tests', () => {
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('a')
       .find('#Tests', { timeout: 6000 })
-      .should('have.text', cypress.Tests)
+      .should('have.text', testsConstants.Tests)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('#sort-filter-body').get('#ascend').click()

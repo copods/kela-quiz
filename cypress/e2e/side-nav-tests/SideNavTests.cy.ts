@@ -1,4 +1,4 @@
-import { cypress } from '~/constants/common.constants'
+import { cypress, testsConstants } from '~/constants/common.constants'
 
 describe('Test for Logout, SideNav', () => {
   it('Sample Login', () => {
@@ -57,7 +57,7 @@ describe('Test for Logout, SideNav', () => {
       .should('have.value', cypress.password)
     cy.findByRole('button').click()
 
-    cy.get('a').find('#Tests').should('have.text', cypress.Tests).click()
+    cy.get('a').find('#Tests').should('have.text', testsConstants.Tests).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
   })
 

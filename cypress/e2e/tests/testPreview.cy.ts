@@ -1,4 +1,8 @@
-import { cypress } from '~/constants/common.constants'
+import {
+  cypress,
+  testsConstants,
+  commonConstants,
+} from '~/constants/common.constants'
 
 describe('Test for testPreview', () => {
   it('test for login an redirect to tests route', () => {
@@ -12,7 +16,7 @@ describe('Test for testPreview', () => {
       .type('kQuiz@copods')
       .should('have.value', cypress.password)
     cy.findByRole('button').click()
-    cy.get('a').find('#Tests').should('have.text', cypress.Tests).click()
+    cy.get('a').find('#Tests').should('have.text', testsConstants.Tests).click()
   })
   let time = new Date().getTime()
   it('Verify if user is able to create test and gets navigated to Tests List Page', () => {
@@ -26,7 +30,7 @@ describe('Test for testPreview', () => {
       .type('kQuiz@copods')
       .should('have.value', cypress.password)
     cy.findByRole('button').click()
-    cy.get('a').find('#Tests').should('have.text', cypress.Tests).click()
+    cy.get('a').find('#Tests').should('have.text', testsConstants.Tests).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('#addTest').click()
     cy.location('pathname', { timeout: 60000 }).should(
@@ -46,7 +50,9 @@ describe('Test for testPreview', () => {
         if (el.find('.count')[0].innerText != '0') {
           cy.get('input#noOfQu').should('have.disabled', true)
           cy.get('input#time').should('have.disabled', true)
-          cy.get('button').should('have.text', cypress.Add).click()
+          cy.get('button')
+            .should('have.text', commonConstants.addButton)
+            .click()
           cy.get('button').should('have.text', cypress.Remove)
 
           cy.get('input#noOfQu').clear().type('1')
@@ -76,7 +82,7 @@ describe('Test for testPreview', () => {
     cy.findByRole('button').click()
     cy.get('a')
       .find('#Tests', { timeout: 6000 })
-      .should('have.text', cypress.Tests)
+      .should('have.text', testsConstants.Tests)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('#test-list', { timeout: 4000 }).should('be.visible')
@@ -102,7 +108,7 @@ describe('Test for testPreview', () => {
       .type('kQuiz@copods')
       .should('have.value', cypress.password)
     cy.findByRole('button').click()
-    cy.get('a').find('#Tests').should('have.text', cypress.Tests).click()
+    cy.get('a').find('#Tests').should('have.text', testsConstants.Tests).click()
     cy.wait(2000)
     cy.get('#test-name-navigation').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
@@ -118,7 +124,7 @@ describe('Test for testPreview', () => {
       .type('kQuiz@copods')
       .should('have.value', cypress.password)
     cy.findByRole('button').click()
-    cy.get('a').find('#Tests').should('have.text', cypress.Tests).click()
+    cy.get('a').find('#Tests').should('have.text', testsConstants.Tests).click()
     cy.wait(2000)
     cy.get('#test-name-navigation').click()
     cy.get('#name').should('have.text', cypress.name).click()
@@ -134,7 +140,7 @@ describe('Test for testPreview', () => {
       .type('kQuiz@copods')
       .should('have.value', cypress.password)
     cy.findByRole('button').click()
-    cy.get('a').find('#Tests').should('have.text', cypress.Tests).click()
+    cy.get('a').find('#Tests').should('have.text', testsConstants.Tests).click()
     cy.wait(2000)
 
     cy.get('#test-name-navigation').click()
@@ -151,7 +157,7 @@ describe('Test for testPreview', () => {
       .type('kQuiz@copods')
       .should('have.value', cypress.password)
     cy.findByRole('button').click()
-    cy.get('a').find('#Tests').should('have.text', cypress.Tests).click()
+    cy.get('a').find('#Tests').should('have.text', testsConstants.Tests).click()
     cy.wait(2000)
     cy.get('#test-name-navigation').click()
     cy.get('#totalTime').should('have.text', cypress.totalTime).click()
@@ -167,7 +173,7 @@ describe('Test for testPreview', () => {
       .type('kQuiz@copods')
       .should('have.value', cypress.password)
     cy.findByRole('button').click()
-    cy.get('a').find('#Tests').should('have.text', cypress.Tests).click()
+    cy.get('a').find('#Tests').should('have.text', testsConstants.Tests).click()
     cy.wait(2000)
     cy.get('#test-name-navigation').click()
     cy.get('#totalSection').should('have.text', cypress.totalSections)

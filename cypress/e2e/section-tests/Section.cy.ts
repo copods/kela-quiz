@@ -1,4 +1,4 @@
-import { cypress } from '~/constants/common.constants'
+import { cypress, routeFiles } from '~/constants/common.constants'
 
 /// <reference types="Cypress">
 describe('Test for Section', () => {
@@ -13,7 +13,10 @@ describe('Test for Section', () => {
       .type('kQuiz@copods')
       .should('have.value', cypress.password)
     cy.findByRole('button').click()
-    cy.get('a').find('#Sections').should('have.text', cypress.Sections).click()
+    cy.get('a')
+      .find('#Sections')
+      .should('have.text', routeFiles.sections)
+      .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
   })
 
@@ -29,7 +32,10 @@ describe('Test for Section', () => {
       .should('have.value', cypress.password)
     cy.findByRole('button').click()
 
-    cy.get('a').find('#Sections').should('have.text', cypress.Sections).click()
+    cy.get('a')
+      .find('#Sections')
+      .should('have.text', routeFiles.sections)
+      .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('#add-section').click()
     const sectionName = `Aptitude - ${new Date().getTime()}`
@@ -53,7 +59,10 @@ describe('Test for Section', () => {
       .type('kQuiz@copods')
       .should('have.value', cypress.password)
     cy.findByRole('button').click()
-    cy.get('a').find('#Sections').should('have.text', cypress.Sections).click()
+    cy.get('a')
+      .find('#Sections')
+      .should('have.text', routeFiles.sections)
+      .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('#add-section').click()
     cy.get('form > div', { timeout: 10000 })
@@ -74,7 +83,10 @@ describe('Test for Section', () => {
       .type('kQuiz@copods')
       .should('have.value', cypress.password)
     cy.findByRole('button').click()
-    cy.get('a').find('#Sections').should('have.text', cypress.Sections).click()
+    cy.get('a')
+      .find('#Sections')
+      .should('have.text', routeFiles.sections)
+      .click()
     cy.location().then((loc) => {
       cy.location('search').should('include', loc.search)
     })
@@ -91,7 +103,10 @@ describe('Test for Section', () => {
       .type('kQuiz@copods')
       .should('have.value', cypress.password)
     cy.findByRole('button').click()
-    cy.get('a').find('#Sections').should('have.text', cypress.Sections).click()
+    cy.get('a')
+      .find('#Sections')
+      .should('have.text', routeFiles.sections)
+      .click()
     cy.location().then((loc) => {
       cy.location('search').should('include', loc.search)
     })

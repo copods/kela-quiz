@@ -1,4 +1,10 @@
-import { cypress } from '~/constants/common.constants'
+import {
+  cypress,
+  testsConstants,
+  routeFiles,
+  sectionsConstants,
+  commonConstants,
+} from '~/constants/common.constants'
 
 const time = new Date().getTime()
 let totalCount: any
@@ -17,7 +23,7 @@ describe('Visiting Tests', () => {
     cy.findByRole('button').click()
     cy.get('a')
       .find('#Sections', { timeout: 6000 })
-      .should('have.text', cypress.Sections)
+      .should('have.text', routeFiles.sections)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('#add-section', { timeout: 60000 }).click()
@@ -30,7 +36,7 @@ describe('Visiting Tests', () => {
         cy.get("button[type='submit']", { timeout: 10000 }).click()
       })
     cy.get('#addQuestion', { timeout: 6000 })
-      .should('have.text', cypress.addQuest)
+      .should('have.text', sectionsConstants.addQuestion)
       .click()
     cy.location('pathname', { timeout: 6000 }).should(
       'include',
@@ -57,7 +63,7 @@ describe('Visiting Tests', () => {
     cy.get('#saveAndExit', { timeout: 6000 }).click()
     cy.get('a', { timeout: 6000 })
       .find('#Tests', { timeout: 60000 })
-      .should('have.text', cypress.Tests)
+      .should('have.text', testsConstants.Tests)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('#addTest', { timeout: 6000 }).click()
@@ -78,7 +84,9 @@ describe('Visiting Tests', () => {
         if (el.find('.count')[0].innerText != '0') {
           cy.get('input#noOfQu').should('have.disabled', true)
           cy.get('input#time').should('have.disabled', true)
-          cy.get('button').should('have.text', cypress.Add).click()
+          cy.get('button')
+            .should('have.text', commonConstants.addButton)
+            .click()
           cy.get('button').should('have.text', cypress.Remove)
           cy.get('input#noOfQu').clear().type('1')
           cy.get('input#time').clear().type('1')
@@ -97,7 +105,7 @@ describe('Visiting Tests', () => {
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('a', { timeout: 60000 })
       .find('#Tests', { timeout: 60000 })
-      .should('have.text', cypress.Tests)
+      .should('have.text', testsConstants.Tests)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
   })
@@ -114,7 +122,7 @@ describe('Visiting Tests', () => {
       .should('have.value', cypress.password)
     cy.findByRole('button').click()
 
-    cy.get('a').find('#Tests').should('have.text', cypress.Tests).click()
+    cy.get('a').find('#Tests').should('have.text', testsConstants.Tests).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
   })
 
@@ -133,7 +141,7 @@ describe('Visiting Tests', () => {
 
     cy.get('a')
       .find('#Tests', { timeout: 6000 })
-      .should('have.text', cypress.Tests)
+      .should('have.text', testsConstants.Tests)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('#total-items-value')
@@ -163,7 +171,7 @@ describe('Visiting Tests', () => {
       .type('kQuiz@copods')
       .should('have.value', cypress.password)
     cy.findByRole('button').click()
-    cy.get('a').find('#Tests').should('have.text', cypress.Tests).click()
+    cy.get('a').find('#Tests').should('have.text', testsConstants.Tests).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('#headlessui-listbox-button-1 span span')
       .invoke('text')
@@ -189,7 +197,7 @@ describe('Visiting Tests', () => {
       .type('kQuiz@copods')
       .should('have.value', cypress.password)
     cy.findByRole('button').click()
-    cy.get('a').find('#Tests').should('have.text', cypress.Tests).click()
+    cy.get('a').find('#Tests').should('have.text', testsConstants.Tests).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('#sort-filter-body').get('#ascend').click()
     cy.get('#headlessui-listbox-button-1 span span')
@@ -216,7 +224,7 @@ describe('Visiting Tests', () => {
       .type('kQuiz@copods')
       .should('have.value', cypress.password)
     cy.findByRole('button').click()
-    cy.get('a').find('#Tests').should('have.text', cypress.Tests).click()
+    cy.get('a').find('#Tests').should('have.text', testsConstants.Tests).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('.dropdown')
       .get('.dropdownButton')
@@ -249,7 +257,7 @@ describe('Visiting Tests', () => {
       .type('kQuiz@copods')
       .should('have.value', cypress.password)
     cy.findByRole('button').click()
-    cy.get('a').find('#Tests').should('have.text', cypress.Tests).click()
+    cy.get('a').find('#Tests').should('have.text', testsConstants.Tests).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('#sort-filter-body').get('#ascend').click()
     cy.get('.dropdown')
@@ -287,7 +295,7 @@ describe('Visiting Tests', () => {
 
     cy.get('a', { timeout: 6000 })
       .find('#Tests')
-      .should('have.text', cypress.Tests)
+      .should('have.text', testsConstants.Tests)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('#test-table-list', { timeout: 60000 }).should('be.visible')
@@ -313,7 +321,7 @@ describe('Visiting Tests', () => {
     cy.findByRole('button', { timeout: 6000 }).click()
     cy.get('a', { timeout: 6000 })
       .find('#Tests', { timeout: 6000 })
-      .should('have.text', cypress.Tests)
+      .should('have.text', testsConstants.Tests)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     var strings: any
@@ -346,7 +354,7 @@ describe('Visiting Tests', () => {
       .type('kQuiz@copods')
       .should('have.value', cypress.password)
     cy.findByRole('button', { timeout: 6000 }).click({ force: true })
-    cy.get('a').find('#Tests').should('have.text', cypress.Tests).click()
+    cy.get('a').find('#Tests').should('have.text', testsConstants.Tests).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('#test-table-list', { timeout: 60000 }).should('be.visible')
     cy.get('#test-table-list', { timeout: 60000 })

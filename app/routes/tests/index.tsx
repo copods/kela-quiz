@@ -49,6 +49,7 @@ export const loader: LoaderFunction = async ({ request }) => {
     .catch((err) => {
       status = err
     })
+
   return json<LoaderData>({ tests, status })
 }
 
