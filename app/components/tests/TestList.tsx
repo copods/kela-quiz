@@ -50,13 +50,9 @@ const TestList = ({
         <h2 title="Tests" className="text-3xl font-bold text-black">
           {testsConstants.breadCrumbTestsTitle}
         </h2>
-        <Link to={'/tests/add-test'}>
-          <button
-            id="addTest"
-            className="h-9 rounded-lg bg-primary px-5 text-xs text-white"
-          >
+        <Link to={'/tests/add-test'}  id="addTest"
+            className="h-9 rounded-lg bg-primary px-5 text-xs text-white flex items-center">
             + {testsConstants.addTestbutton}
-          </button>
         </Link>
       </header>
       <div id="sort-filter-container">

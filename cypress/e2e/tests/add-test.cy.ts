@@ -43,6 +43,8 @@ describe('Creating tests', () => {
       `Aptitude - ${new Date().getTime()} Description`
     )
     cy.get('button#submitButton').should('have.text', cypress.Add).click()
+    cy.get('a').find('#Tests').should('have.text', cypress.Tests).click()
+    cy.get('a').find('#Sections').should('have.text', cypress.Sections).click()
     cy.get('#section-card').first().click()
     cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
     cy.location('pathname', { timeout: 60000 }).should(

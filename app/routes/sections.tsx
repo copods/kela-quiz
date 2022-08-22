@@ -195,11 +195,11 @@ export default function SectionPage() {
 
         <div
           className={`flex flex-1 overflow-hidden ${
-            sectionDetailFull ? '' : 'gap-12'
+            !sectionDetailFull && 'gap-12'
           }`}
         >
           {/* section list */}
-          <div className={`${sectionDetailFull ? 'hidden' : ''}`}>
+          <div className={`${sectionDetailFull && 'hidden'}`}>
             <Sections
               sections={data.sections}
               selectedSection={selectedSection}
