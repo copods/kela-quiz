@@ -49,7 +49,9 @@ export async function getAllCandidateTests(obj: object) {
   const filter = obj ? obj : {}
   const res: Array<Test> = await prisma.test.findMany({
     ...filter,
-
+    where: {
+      deleted: false
+    },
     include: {
       _count: {
         select: {
