@@ -45,6 +45,29 @@ export async function getResultsOfCandidatesByTestId({ testId }: Pick<CandidateR
   })
 }
 
+export async function getResultsOfIndividualCandidates({ id }: { id: string }) {
+  return await prisma.candidateResult.findUnique({
+    where: {
+      id
+    },
+    select: {
+      candidate: true
+    }
+  })
+}
+
+
+export async function updateCandidateStatus({ id, candidateStatus }: { id: string, candidateStatus: string }) {
+  return await prisma.candidateResult.update({
+    where: {
+      id
+    },
+    data: {
+      isQualified: candidateStatus == 'true' ? true : false
+    }
+  })
+}
+
 export async function getAllCandidateTests(obj: object) {
   const filter = obj ? obj : {}
   const res: Array<Test> = await prisma.test.findMany({

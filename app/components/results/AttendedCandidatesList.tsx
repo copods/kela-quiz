@@ -8,7 +8,7 @@ import { Candidate, CandidateResult, User } from '~/interface/Interface'
 import AttendedCandidateListItem from './AttendedCandidateListItem'
 
 const ExamAttendedCandidatesComponent = () => {
-  const { attendedCandidateForTest } = useLoaderData()
+  const { attendedCandidateForTest, params } = useLoaderData()
   const testData = attendedCandidateForTest
 
   return (
@@ -48,12 +48,14 @@ const ExamAttendedCandidatesComponent = () => {
                   className="memberRow col-span-10 grid  rounded-lg"
                 >
                   <AttendedCandidateListItem
+                    id={result.id}
                     email={result?.candidate?.email}
                     invitedBy={`${result?.candidate?.createdBy?.firstName}`}
                     name={`${result?.candidate?.firstName} ${result?.candidate?.lastName}`}
                     result={
                       (result?.correctQuestion / result?.totalQuestion) * 100
                     }
+                    testId={params?.testId}
                     review={result?.isQualified}
                     index={i}
                   />

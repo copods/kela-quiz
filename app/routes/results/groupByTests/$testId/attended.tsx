@@ -13,7 +13,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     throw new Response('Not Found', { status: 404 })
   }
 
-  return json({ attendedCandidateForTest })
+  return json({ attendedCandidateForTest, params })
 }
 
 const Attended = () => {
