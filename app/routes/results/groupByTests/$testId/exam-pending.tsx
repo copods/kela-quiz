@@ -5,8 +5,8 @@ import ExamPendingComponent from '~/components/results/ExamPending'
 import { getCandidateEmailById } from '~/models/result.server'
 
 export const loader: LoaderFunction = async ({ request, params }) => {
-  invariant(params.resultsId, 'resultId not found')
-  const testPreview = await getCandidateEmailById({ id: params.resultsId })
+  invariant(params.testId, 'resultId not found')
+  const testPreview = await getCandidateEmailById({ id: params.testId })
   if (!testPreview) {
     throw new Response('Not Found', { status: 404 })
   }

@@ -21,7 +21,7 @@ let sideNavGuide = [
       {
         id: 'Group_By_Tests',
         iconClass: 'mdi:chart-box-outline',
-        itemName: 'Group By Tests',
+        itemName: 'Results',
         itemRoute: 'results/groupByTests',
       },
       // {

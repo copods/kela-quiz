@@ -64,7 +64,11 @@ const TestInstructions = () => {
   const { candidateTests, candidate } = useLoaderData()
 
   return (
-    <CandidateLayout candidate={candidate} candidateTest={candidateTests}>
+    <CandidateLayout
+      candidate={candidate}
+      candidateTest={candidateTests}
+      heading="Pre-Interview Assessment"
+    >
       <CandidateInstruction />
     </CandidateLayout>
   )

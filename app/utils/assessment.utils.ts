@@ -22,6 +22,9 @@ export async function checkIfTestLinkIsValidAndRedirect(
   currentRoute: string
 ) {
   const currentCandidateStep = await checkIfTestLinkIsValid(assessmentID)
+  if (!currentCandidateStep) {
+    return `/assessment/invalid-link`
+  }
   const candidateStepObj = currentCandidateStep?.candidateStep as CandidateStep
   if (candidateStepObj && candidateStepObj.nextRoute && !currentCandidateStep?.endAt) {
     if (currentRoute !== candidateStepObj.nextRoute) {
@@ -227,7 +230,6 @@ export async function moveToNextSection({ assessmentId, order, sectionId }: { as
     candidateTest?.test.id as string,
     order + 1
   )
-  console.log("heeiosfjk", nextSectionObject)
 
 
   await updateNextStep({
@@ -238,7 +240,6 @@ export async function moveToNextSection({ assessmentId, order, sectionId }: { as
   })
 
   if (nextSectionObject) {
-    console.log("asda", `/assessment/${assessmentId}/${nextSectionObject?.id}`)
     return redirect(
       `/assessment/${assessmentId}/${nextSectionObject?.id}`
     )

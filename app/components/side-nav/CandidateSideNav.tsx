@@ -1,6 +1,6 @@
 // import logo from '~/../public/assets/logo.svg'
 import { Icon } from '@iconify/react'
-import { useLoaderData, useLocation } from '@remix-run/react'
+import { NavLink, useLoaderData, useLocation } from '@remix-run/react'
 import candidateLogo from '~/../public/assets/candidateLogo.svg'
 import { candidateExam, QuestionStatus } from '~/constants/common.constants'
 import type {
@@ -107,13 +107,14 @@ const CandidateSideNav = ({
                     routeData.params?.questionId &&
                     section?.questions.map((question: CandidateQuestion) => {
                       return (
-                        <div
+                        <NavLink
                           key={question.id}
-                          className={`flex h-11 items-center justify-between gap-2 text-sm ${
-                            routeData.params?.questionId === question?.id
-                              ? 'border border-0 border-l-4 border-primary bg-blue-50 pl-7 pr-8 font-semibold text-primary'
-                              : 'px-8 font-medium text-gray-800'
-                          }`}
+                          to={`/assessment/${routeData?.params?.assessmentId}/${routeData?.params?.sectionId}/${question?.id}`}
+                          className={({ isActive }) =>
+                            isActive
+                              ? 'flex h-11 items-center justify-between gap-2 border border-0 border-l-4 border-primary bg-blue-50 pl-7 pr-8 text-sm font-semibold text-primary'
+                              : 'flex h-11 items-center justify-between gap-2 px-8 text-sm font-medium text-gray-800'
+                          }
                         >
                           <span>
                             {candidateExam.question} {question?.order}
@@ -130,7 +131,7 @@ const CandidateSideNav = ({
                               className="text-lg text-green-800"
                             />
                           )}
-                        </div>
+                        </NavLink>
                       )
                     })}
                 </div>

@@ -23,10 +23,7 @@ const CandidateInstruction = () => {
   }
   return (
     <div className="h-full flex-col overflow-y-auto">
-      <div className="px-8">
-        <div className="pb-4 text-2xl font-semibold leading-8 text-gray-800">
-          {candidateExam.examTitle}
-        </div>
+      <div>
         <div
           className="pb-9 text-base leading-6 text-gray-700"
           dangerouslySetInnerHTML={{
@@ -34,7 +31,7 @@ const CandidateInstruction = () => {
           }}
         />
       </div>
-      <div className="px-8">
+      <div>
         <h1 className=" pb-4 text-2xl font-semibold leading-8 text-gray-800">
           {routeFiles.sections}
         </h1>

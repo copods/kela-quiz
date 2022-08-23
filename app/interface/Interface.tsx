@@ -196,3 +196,16 @@ export interface CandidateQuestion {
   createdAt: Date
   updatedAt: Date
 }
+
+export interface CandidateResult {
+  id: string
+  candidateId: string
+  candidateTestId: string
+  totalQuestion: number
+  correctQuestion: number
+  unanswered: number
+  testId: string
+  isQualified: boolean
+  createdAt: Date
+  updatedAt: Date
+}
