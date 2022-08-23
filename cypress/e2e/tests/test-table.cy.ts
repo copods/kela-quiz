@@ -15,7 +15,7 @@ describe('Visiting Tests', () => {
       .clear()
       .type('careers@copods.co')
       .should('have.value', cypress.email)
-    cy.get('#password')
+    cy.get('#password', { timeout: 600 })
       .clear()
       .type('kQuiz@copods')
       .should('have.value', cypress.password)
@@ -324,7 +324,7 @@ describe('Visiting Tests', () => {
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     var strings: any
-    cy.get('#chip-group-id', { timeout: 6000 }).then((el) => {
+    cy.get('#chip-group-id', { timeout: 10000 }).then((el) => {
       cy.get('.chip-group').then(($elements) => {
         strings = [...$elements].map(($el) => {
           cy.log(strings)
