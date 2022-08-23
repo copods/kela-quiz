@@ -28,6 +28,9 @@ module.exports = {
         table:
           '0px 1px 3px rgba(0, 0, 0, 0.1), 0px 1px 2px rgba(0, 0, 0, 0.06)',
       },
+      gridTemplateColumns: {
+        18: 'repeat(18, minmax(0, 1fr))'
+      }
     },
   },
   plugins: [],

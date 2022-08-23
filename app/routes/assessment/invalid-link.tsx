@@ -1,5 +1,7 @@
 import InvalidLinkComponent from '~/components/assessment/InvalidLink'
 
-export default function CandidateAssessment() {
+const InvalidLink = () => {
   return <InvalidLinkComponent />
 }
+
+export default InvalidLink

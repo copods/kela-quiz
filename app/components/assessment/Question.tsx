@@ -34,7 +34,7 @@ const Question = () => {
 
   return (
     <form method="post" className="flex h-full flex-col gap-9">
-      <div className="flex max-h-full flex-1 gap-9 overflow-auto">
+      <div className="flex h-full max-h-full flex-1 flex-1 gap-9 overflow-auto">
         <div className="flex h-full w-1/2 flex-col gap-3">
           <div className="flex h-10 items-center justify-between">
             <div className="flex gap-5 text-lg font-semibold">
@@ -58,7 +58,7 @@ const Question = () => {
               {routeFiles.options}
             </div>
           </div>
-          <div className="shadow-base flex h-full flex-1 flex-col gap-6 overflow-auto rounded-lg border border-gray-200 bg-white p-4">
+          <div className="shadow-base flex h-full flex-1 flex-col gap-6 overflow-auto">
             {question?.question?.options?.map(
               (option: {
                 id: string
@@ -87,7 +87,11 @@ const Question = () => {
                         }}
                       />
                     )}
-                    <div dangerouslySetInnerHTML={{ __html: option?.option }} />
+                    <div className="w-full rounded-lg border border-gray-200 bg-white p-5">
+                      <div
+                        dangerouslySetInnerHTML={{ __html: option?.option }}
+                      />
+                    </div>
                   </div>
                 )
               }
@@ -102,7 +106,7 @@ const Question = () => {
                       value={userAnswer[index]}
                       rows={4}
                       onChange={() => onChangeHandle(event, index)}
-                      className="w-full bg-gray-100 p-5"
+                      className="w-full rounded-lg border border-gray-200 bg-white p-5"
                     />
                   </div>
                 )
