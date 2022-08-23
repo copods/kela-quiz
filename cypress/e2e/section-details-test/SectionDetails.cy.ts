@@ -100,7 +100,7 @@ describe('Test for Section Details', () => {
       'include',
       '/add-question'
     )
-    cy.get('#Section').should('have.text', 'Section').click()
+    cy.get('#Section', { timeout: 6000 }).should('have.text', 'Section').click()
   })
   it('Visiting Sections search input', () => {
     cy.visit('/sign-in')
