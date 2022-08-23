@@ -3,6 +3,9 @@ import { env } from 'process'
 import { prisma } from '~/db.server'
 import { sendTestInviteMail } from './sendgrid.servers'
 
+
+// inviting candidate
+
 export async function createIndividualCandidate({ email, createdById }: { email: string, createdById: string }) {
   try {
     // checkig if candidate already exists
@@ -55,12 +58,13 @@ export async function updateTestLink({ id, link }: { id: string, link: string })
   }
 }
 
-export async function createSectionInTest({ sectionId, candidateTestId, totalQuestions }: { sectionId: string, candidateTestId: string, totalQuestions: number }) {
+export async function createSectionInTest({ sectionId, candidateTestId, order, totalQuestions }: { sectionId: string, candidateTestId: string, order: number, totalQuestions: number }) {
   try {
     let sectioInTest = await prisma.sectionInCandidateTest.create({
       data: {
         sectionId,
         candidateTestId,
+        order
       }
     })
     let randomQuestionsOfSections: Array<Question> = await prisma.$queryRaw`SELECT * FROM "Question" WHERE "sectionId" = ${sectionId} ORDER BY RANDOM() LIMIT ${totalQuestions};`
@@ -76,6 +80,7 @@ export async function createSectionInTest({ sectionId, candidateTestId, totalQue
     }
     return 'done'
   } catch (error) {
+    console.log(error)
     throw new Error('Error creating section in test ..!')
   }
 }
@@ -111,7 +116,7 @@ async function createCandidateData({
   // creating section in test
   if (test?.sections) {
     for (const section of test.sections) {
-      await createSectionInTest({ sectionId: section.sectionId, candidateTestId: candidateTest.id, totalQuestions: section.totalQuestions })
+      await createSectionInTest({ sectionId: section.sectionId, candidateTestId: candidateTest.id, order: section.order, totalQuestions: section.totalQuestions })
     }
   }
 

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import AddMemberModal from './AddMemberModal'
-import { commonMembers } from '~/constants/common.constants'
+import { members } from '~/constants/common.constants'
 import { useLoaderData } from '@remix-run/react'
 
 export default function MembersHeader({
@@ -21,15 +21,13 @@ export default function MembersHeader({
   return (
     <>
       <div className="flex items-center justify-between pb-12">
-        <h1 className="text-3xl font-bold leading-9">
-          {commonMembers.members}
-        </h1>
+        <h1 className="text-3xl font-bold leading-9">{members.members}</h1>
         <button
           id="addMember"
           className="h-9 rounded-lg bg-blue-900 px-4 text-xs font-medium leading-4 text-[#F0FDF4]"
           onClick={() => setOpen(true)}
         >
-          + {commonMembers.addMember}
+          + {members.addMember}
         </button>
       </div>
       <AddMemberModal roles={membersData.roles} open={open} setOpen={setOpen} />

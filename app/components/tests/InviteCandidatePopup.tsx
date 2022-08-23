@@ -33,6 +33,11 @@ const InviteCandidatePopup = ({
     }
   }, [actionData, setOpenInvitePopup])
 
+  const updatePopupAndEmailState = () => {
+    setOpenInvitePopup(false)
+    setEmails([''])
+  }
+
   return (
     <Transition.Root show={openInvitePopup} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={setOpenInvitePopup}>
@@ -70,7 +75,7 @@ const InviteCandidatePopup = ({
                   <Icon
                     className="cursor-pointer text-2xl text-gray-600"
                     icon={'carbon:close'}
-                    onClick={() => setOpenInvitePopup(false)}
+                    onClick={updatePopupAndEmailState}
                   />
                 </div>
                 <hr className="mt-4 mb-6 h-px w-full border-0 bg-gray-300" />
@@ -108,7 +113,7 @@ const InviteCandidatePopup = ({
                   <button
                     type="button"
                     className="h-9 rounded-md px-4 text-sm text-gray-500"
-                    onClick={() => setOpenInvitePopup(false)}
+                    onClick={updatePopupAndEmailState}
                   >
                     Cancel
                   </button>

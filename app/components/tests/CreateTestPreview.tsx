@@ -62,7 +62,7 @@ const TestPreview = ({
             >
               {commonConstants.name}
             </div>
-            <div className="flex-1 text-base font-normal leading-6 text-gray-700">
+            <div className="flex-1 text-base leading-6 text-gray-700">
               {name}
             </div>
           </div>
@@ -74,7 +74,7 @@ const TestPreview = ({
               {testsConstants.descriptionText}
             </div>
             <div
-              className="flex-1 text-base font-normal leading-6 text-gray-700"
+              className="flex-1 text-base leading-6 text-gray-700"
               dangerouslySetInnerHTML={{ __html: description }}
             ></div>
           </div>
@@ -85,7 +85,7 @@ const TestPreview = ({
             >
               {testsConstants.totalTimeText}
             </div>
-            <div className="flex-1 text-base font-normal leading-6 text-gray-700">
+            <div className="flex-1 text-base leading-6 text-gray-700">
               {getTotalTime()}
             </div>
           </div>
@@ -96,7 +96,7 @@ const TestPreview = ({
             >
               {testsConstants.totalSectionsText}
             </div>
-            <div className="flex-1 text-base font-normal leading-6 text-gray-700">
+            <div className="flex-1 text-base leading-6 text-gray-700">
               {selectedSections.length}
             </div>
           </div>
@@ -113,7 +113,7 @@ const TestPreview = ({
                 <div className="w-44 min-w-[184px] text-base leading-6 text-gray-500">
                   {testsConstants.sectionText} {i + 1}
                 </div>
-                <div className=" flex max-w-2xl flex-1 items-center justify-between gap-6 rounded-lg border border-gray-300	py-3 px-4 font-normal text-gray-700">
+                <div className=" flex max-w-2xl flex-1 items-center justify-between gap-6 rounded-lg border border-gray-300	py-3 px-4 text-gray-700">
                   <div className="text-base font-semibold leading-6  text-gray-700">
                     {section.name ? section.name : section.section?.name}
                   </div>

@@ -16,6 +16,7 @@ export interface ButtonProps {
   type: 'submit' | 'reset' | 'button'
   buttonText: string
   handleClick?: React.MouseEventHandler<HTMLButtonElement>
+  isDisabled?: boolean
 }
 
 export interface LoginProps {
@@ -31,7 +32,7 @@ export interface ActionData {
 }
 
 export interface CheckboxProps {
-  handleChange: React.Dispatch<React.SetStateAction<boolean>>
+  handleChange: React.MouseEventHandler<HTMLInputElement>
   name?: string
   isChecked?: boolean
 }
@@ -52,7 +53,6 @@ export interface TestSection {
   timeInSeconds?: number
   section?: Section
 }
-
 export interface Section {
   id: string
   name: string
@@ -102,9 +102,13 @@ export interface Test {
   createdAt: Date
   updatedAt: Date
   sections: Array<SectionInTest>
+  deleted: boolean
+  deletedAt: string
+  candidateTest?: Array<Option>
 }
 
 export interface SectionInTest {
+  id?: string
   section: Section
   order: number
   timeInSeconds: number
@@ -141,4 +145,54 @@ export interface QuestionType {
   questions?: Question[]
   createdAt?: Date
   updatedAt?: Date
+}
+
+export interface CandidateTest {
+  id: string
+  testId: string
+  link: string | null
+  sections: Array<SectionInCandidateTest>
+  test: Test
+  candidateId: string
+  candidateStep: JSON
+  startedAt: Date | null
+  endAt: Date | null
+  createdAt: Date
+  updatedAt: Date
+}
+
+export interface SectionInCandidateTest {
+  id: string
+  sectionId: string
+  section: Section
+  candidateTestId: string
+  order: number
+  questions: Array<CandidateQuestion>
+  startedAt: Date | null
+  endAt: Date | null
+  createdAt: Date
+  updatedAt: Date
+}
+
+export interface Candidate {
+  id: string
+  email: string
+  firstName: string | null
+  lastName: string | null
+  isQualified: boolean | null
+  createdById: string
+  createdAt: Date
+  updatedAt: Date
+}
+
+export interface CandidateQuestion {
+  id: string
+  questionId: string
+  status: string
+  answers: string[]
+  order: number
+  sectionInCandidateTestId: string
+  answeredAt: Date | null
+  createdAt: Date
+  updatedAt: Date
 }

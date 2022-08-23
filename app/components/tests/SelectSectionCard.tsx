@@ -19,7 +19,7 @@ const SelectSectionCard = ({
       toast.error('Cannot add section with 0 questions')
       return
     }
-    var temp = {
+    let tempSection = {
       isSelected: section.isSelected,
       totalQuestions: section.totalQuestions
         ? section.totalQuestions
@@ -34,20 +34,20 @@ const SelectSectionCard = ({
     }
     switch (target) {
       case 'isSelected':
-        temp.isSelected = selected
+        tempSection.isSelected = selected
         break
       case 'totalQuestions':
         if (parseInt(value || '') > (section?._count?.questions || 0)) {
           toast.error('Cannot add more than available questions')
           return
         }
-        temp.totalQuestions = parseInt(value || '')
+        tempSection.totalQuestions = parseInt(value || '')
         break
       case 'time':
-        temp.time = parseInt(value || '')
+        tempSection.time = parseInt(value || '')
         break
     }
-    updateSection(temp)
+    updateSection(tempSection)
   }
   return (
     <div
