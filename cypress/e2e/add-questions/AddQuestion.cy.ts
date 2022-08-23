@@ -30,14 +30,14 @@ describe('Test for section-details', () => {
     cy.get('textarea#sectionDescription').type(
       `Aptitude - ${new Date().getTime()} Description`
     )
-    cy.get('button#submitButton')
+    cy.get('button#submitButton', { timeout: 6000 })
       .should('have.text', commonConstants.addButton)
       .click()
     cy.get('#section-cards', { timeout: 10000 })
       .children()
       .first()
       .should('be.visible')
-    cy.get('#section-cards').children().first().click()
+    cy.get('#section-cards', { timeout: 6000 }).children().first().click()
     cy.get('#addQuestion').click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
