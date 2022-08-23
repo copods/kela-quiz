@@ -77,7 +77,7 @@ const TestTableItem = ({
         <div className="w-2/12 truncate text-base font-normal leading-6 text-gray-700">
           {createdBy}
         </div>
-        <div className="flex w-1/12">
+        <div className="flex w-1/12 gap-2">
           <Icon
             className="cursor-pointer text-2xl text-primary"
             icon={'ant-design:user-add-outlined'}

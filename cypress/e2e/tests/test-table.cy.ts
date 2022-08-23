@@ -125,7 +125,7 @@ describe('Visiting Tests', () => {
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
   })
 
-  let strings: any
+  let strings: Array<string>
   it('Total Count of Test of Table', () => {
     cy.visit('/sign-in')
     cy.get('#email')
@@ -156,7 +156,7 @@ describe('Visiting Tests', () => {
       .get('.test-name-navigation')
       .then(($elements) => {
         strings = [...$elements].map(($el) => $el.innerText)
-        expect(parseInt(totalCount)).to.deep.equal(parseInt(strings.length))
+        expect(parseInt(totalCount)).to.deep.equal((strings.length))
       })
   })
   it('sort by name in ascending order ', () => {
