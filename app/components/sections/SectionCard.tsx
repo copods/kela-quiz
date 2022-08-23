@@ -20,7 +20,7 @@ const SectionCard = ({
   isActive: boolean
   questionsCount: number
   createdBy: string
-  createdAt: string
+  createdAt: Date
   id: string
   err: any
   actionStatusData: any

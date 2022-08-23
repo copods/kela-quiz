@@ -134,7 +134,7 @@ describe('Test for section-details', () => {
     cy.get('#submitButton').click()
     cy.get('.Toastify__toast').should(
       'have.text',
-      'Section Added Successfully..!'
+      'Section added successfully..!'
     )
     cy.get('.Toastify__close-button').click()
 
@@ -149,7 +149,7 @@ describe('Test for section-details', () => {
     cy.get('.Toastify__close-button').click()
   })
 
-  xit('Visiting the Same section which created', () => {
+  it('Visiting the Same section which created', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -182,7 +182,7 @@ describe('Test for section-details', () => {
     cy.get('a > div').should('have.class', 'border-l-8')
   })
 
-  xit('Verifying MCQ to have Check Box in options', () => {
+  it('Verifying MCQ to have Check Box in options', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -239,7 +239,7 @@ describe('Test for section-details', () => {
     }
   })
 
-  xit('Verifying Single Choice to have Radio Button in options', () => {
+  it('Verifying Single Choice to have Radio Button in options', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -296,7 +296,7 @@ describe('Test for section-details', () => {
     }
   })
 
-  xit('Verifying Text to have Textarea in options', () => {
+  it('Verifying Text to have Textarea in options', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -355,7 +355,7 @@ describe('Test for section-details', () => {
 
   let lengthBefore: number
 
-  xit('Verifying if Add Option functionality Working on Options', () => {
+  it('Verifying if Add Option functionality Working on Options', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -413,7 +413,7 @@ describe('Test for section-details', () => {
     })
   })
 
-  xit('Verifying if Delete functionality Working on Options', () => {
+  it('Verifying if Delete functionality Working on Options', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -471,7 +471,7 @@ describe('Test for section-details', () => {
     })
   })
 
-  xit('On Save and Add More visit the Add Question Page', () => {
+  it('On Save and Add More visit the Add Question Page', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -527,7 +527,7 @@ describe('Test for section-details', () => {
     )
   })
 
-  xit('On Save and Continue visit the Sections Page', () => {
+  it('On Save and Continue visit the Sections Page', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()

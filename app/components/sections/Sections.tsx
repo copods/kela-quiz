@@ -9,16 +9,27 @@ const SectionLink = ({
   section,
   actionStatusData,
   err,
+  filter,
+  setSelectedSection,
 }: {
   section: any
   actionStatusData: string | undefined
   err: string | undefined
+  filter: string
+  setSelectedSection: (e: string) => void
 }) => {
   const path = `/sections/${section.id}`
   const location = useLocation() // to get current location
   const resolvedPath = useResolvedPath(path) // to get resolved path which would match with current location
+  const getSectionId = (id: string) => {
+    setSelectedSection(id)
+  }
   return (
-    <NavLink to={path} key={section.id}>
+    <NavLink
+      onClick={() => getSectionId(section.id)}
+      to={path}
+      key={section.id}
+    >
       <SectionCard
         isActive={location.pathname === resolvedPath.pathname}
         name={section?.name}
@@ -43,15 +54,17 @@ type SectionType = {
   err: any
   actionStatusData: any
   setOrder: (e: string) => void
-  setSelectedSection: Function
+  setSelectedSection: (e: string) => void
   sortByDetails: Array<{ name: string; value: string }>
 }
 const Sections = ({
   sections,
   sortBy,
+  filters,
   setSortBy,
   order,
   setOrder,
+  setSelectedSection,
   sortByDetails,
   err,
   actionStatusData,
@@ -82,6 +95,8 @@ const Sections = ({
           <SectionLink
             key={section.id}
             section={section}
+            filter={filters}
+            setSelectedSection={setSelectedSection}
             actionStatusData={actionStatusData}
             err={err}
           />

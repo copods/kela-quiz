@@ -28,7 +28,7 @@ export type ActionData = {
   errors?: {
     title?: string
     body?: string
-    status?: any
+    status?: number
     check?: Date
     name?: string
     description?: string
@@ -82,13 +82,13 @@ export const action: ActionFunction = async ({ request }) => {
     const description = formData.get('description')
     if (typeof name !== 'string' || name.length === 0) {
       return json<ActionData>(
-        { errors: { title: 'Name is required' } },
+        { errors: { title: 'Name is required', status: 400 } },
         { status: 400 }
       )
     }
     if (typeof description !== 'string' || description.length === 0) {
       return json<ActionData>(
-        { errors: { title: 'description is required' } },
+        { errors: { title: 'description is required', status: 400 } },
         { status: 400 }
       )
     }
@@ -100,6 +100,7 @@ export const action: ActionFunction = async ({ request }) => {
           {
             resp: {
               status: 'Section Added Successfully..!',
+              data: res,
               check: new Date(),
             },
           },
@@ -113,7 +114,7 @@ export const action: ActionFunction = async ({ request }) => {
           title = 'Duplicate Title'
         }
         addHandle = json<ActionData>(
-          { errors: { title, status: err, check: new Date() } },
+          { errors: { title, status: 400, check: new Date() } },
           { status: 400 }
         )
       })
@@ -126,12 +127,13 @@ export const action: ActionFunction = async ({ request }) => {
       .then((res) => {
         deleteHandle = json<ActionData>(
           { resp: { status: 'Deleted Successfully..!' } },
-          { status: 201 }
+
+          { status: 200 }
         )
       })
       .catch((err) => {
         deleteHandle = json<ActionData>(
-          { errors: { status: err, check: new Date() } },
+          { errors: { status: 400, check: new Date() } },
           { status: 400 }
         )
       })
@@ -174,15 +176,15 @@ export default function SectionPage() {
   }
 
   useEffect(() => {
-    if (data.sections.length && !data.selectedSectionId) {
+    if (selectedSection !== 'NA') {
       navigate(`/sections/${selectedSection}${data?.filters}`, {
         replace: true,
       })
     }
-  }, [data, navigate, selectedSection])
+  }, [navigate, selectedSection])
 
   useEffect(() => {
-    if (data.sections.length > 0) {
+    if (data.sections.length) {
       const formData = new FormData()
       var filter = {
         orderBy: {
@@ -200,19 +202,22 @@ export default function SectionPage() {
 
   useEffect(() => {
     if (sectionActionData) {
-      if (sectionActionData.resp?.status) {
+      if (sectionActionData.resp?.status === 'Section Added Successfully..!') {
         setShowAddSectionModal(false)
         toast.success(sectionActionData.resp?.status)
-        // navigate(`/sections/${sectionActionData?.resp?.data?.id}`, {
-        //   replace: false,
-        // })
+        setSelectedSection(sectionActionData?.resp?.data?.id as string)
+      } else if (sectionActionData.resp?.status === 'Deleted Successfully..!') {
+        toast.success(sectionActionData.resp?.status)
+        setSelectedSection(
+          data.selectedSectionId || data.sections[0]?.id || 'NA'
+        )
       } else if (sectionActionData.errors?.status === 400) {
         toast.error(sectionActionData.errors?.title, {
           toastId: sectionActionData.errors?.title,
         })
       }
     }
-  }, [sectionActionData])
+  }, [sectionActionData, data, setSelectedSection])
 
   return (
     <AdminLayout>

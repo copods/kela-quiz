@@ -1,5 +1,5 @@
 describe('Test for Section', () => {
-  xit('Visit Section page', () => {
+  it('Visit Section page', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -39,7 +39,7 @@ describe('Test for Section', () => {
       })
   })
 
-  xit('cancel Add section', () => {
+  it('cancel Add section', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -60,7 +60,7 @@ describe('Test for Section', () => {
       })
   })
 
-  xit('Check Active State of Section', () => {
+  it('Check Active State of Section', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -78,7 +78,7 @@ describe('Test for Section', () => {
     })
   })
 
-  xit('SortBy Name or created Date', () => {
+  it('SortBy Name or created Date', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()

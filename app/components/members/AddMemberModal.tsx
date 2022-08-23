@@ -8,10 +8,12 @@ export default function AddMemberModal({
   roles,
   open,
   setOpen,
+  showErrorMessage,
 }: {
   roles: Role[]
   open: boolean
   setOpen: (e: boolean) => void
+  showErrorMessage: boolean
 }) {
   const transition = useTransition()
   return (
@@ -132,9 +134,9 @@ export default function AddMemberModal({
                       type="submit"
                       name="addMember"
                       value={JSON.stringify({ action: 'add' })}
-                      className={`h-9 rounded-md bg-primary px-4 text-sm text-[#F0FDF4]${
-                        transition.state === 'submitting'
-                          ? 'disabled:text-[#F0FDF4] disabled:opacity-75'
+                      className={`h-9 rounded-md bg-primary px-4 text-sm text-white${
+                        transition.state === 'submitting' || showErrorMessage
+                          ? 'disabled: text-white disabled:opacity-75'
                           : ''
                       }`}
                       disabled={transition.state === 'submitting'}

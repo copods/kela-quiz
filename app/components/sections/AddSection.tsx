@@ -101,7 +101,6 @@ const AddSection = ({
                         ? 'disabled bg-gray-600'
                         : ''
                     }`}
-                    onClick={() => setOpen(false)}
                     disabled={
                       transition.state === 'submitting' || showErrorMessage
                     }
