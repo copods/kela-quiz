@@ -6,14 +6,25 @@ import TestList from '~/components/tests/TestList'
 import { getAllTests } from '~/models/tests.server'
 import { json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
+import { deleteTestById } from '~/models/tests.server'
 import { toast } from 'react-toastify'
 import type { Test } from '~/interface/Interface'
+import { statusCheck } from '~/constants/common.constants'
 import { createCandidate } from '~/models/candidate.server'
-// import { useEffect } from 'react'
 
 type LoaderData = {
   tests: Awaited<ReturnType<typeof getAllTests>>
-  status: string
+  status?: string | undefined
+}
+export type ActionData = {
+  errors?: {
+    status?: string
+    check?: Date
+  }
+  resp?: {
+    status?: string
+    check?: Date
+  }
 }
 
 export const loader: LoaderFunction = async ({ request }) => {
@@ -38,41 +49,61 @@ export const loader: LoaderFunction = async ({ request }) => {
     .catch((err) => {
       status = err
     })
+
   return json<LoaderData>({ tests, status })
 }
 
 export const action: ActionFunction = async ({ request }) => {
-  const createdById = await requireUserId(request)
   const formData = await request.formData()
+  const action = formData.get('deleteTest')
+  const createdById = await requireUserId(request)
   const testId = formData.get('inviteCandidates') as string
   formData.delete('inviteCandidates')
-
-  let emails: Array<string> = []
-  await formData.forEach((fd) => {
-    if (fd != '') {
-      emails.push(fd as string)
-    }
-  })
-  if (emails.length == 0) {
-    return json({ status: 401, message: 'No emails to invite' })
+  let deleteHandle = null
+  if (action === 'testDelete') {
+    await deleteTestById(formData.get('id') as string)
+      .then((res) => {
+        deleteHandle = json<ActionData>(
+          { resp: { status: statusCheck.deletedSuccess } },
+          { status: 200 }
+        )
+      })
+      .catch((err) => {
+        deleteHandle = json<ActionData>(
+          { errors: { status: err, check: new Date() } },
+          { status: 400 }
+        )
+      })
+    return deleteHandle
   }
-  const candidateInviteStatus = await createCandidate({
-    emails,
-    createdById,
-    testId,
-  })
-  return json({ candidateInviteStatus })
+
+  if (testId !== null) {
+    let emails: Array<string> = []
+    await formData.forEach((fd) => {
+      if (fd != '') {
+        emails.push(fd as string)
+      }
+    })
+    if (emails.length === 0) {
+      return json({ status: 401, message: statusCheck.noEmailsInvite })
+    }
+    const candidateInviteStatus = await createCandidate({
+      emails,
+      createdById,
+      testId,
+    })
+    return json({ candidateInviteStatus, testId })
+  }
 }
 
 export default function Tests() {
-  const testData = useLoaderData() as unknown as LoaderData
-
-  if (testData.status != 'Success') {
-    toast.success('Something went wrong..!')
+  const data = useLoaderData() as unknown as LoaderData
+  if (data.status != statusCheck.success) {
+    toast.success(statusCheck.commonError)
   }
   return (
     <AdminLayout>
-      <TestList tests={testData.tests as Test[]} />
+      <TestList tests={data.tests as Test[]} status={data.status} />
     </AdminLayout>
   )
 }

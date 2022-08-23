@@ -10,7 +10,6 @@ import { addQuestion, QuestionTypes } from '~/constants/common.constants'
 
 const AddQuestionInSection = () => {
   const { sectionDetails, questionTypes } = useLoaderData()
-
   const [selectedTypeOfQuestion, onQuestionTypeChange] = useState(
     questionTypes[0].id
   )
@@ -116,7 +115,6 @@ const AddQuestionInSection = () => {
     }
 
     if (getQuestionType(selectedTypeOfQuestion) === QuestionTypes.text) {
-      console.log('text', textCorrectAnswer)
       for (let answer of textCorrectAnswer) {
         if (answer.answer.length === 0) {
           toast.error('Enter all the Options', { toastId: 'optionsRequired' })

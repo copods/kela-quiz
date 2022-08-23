@@ -3,16 +3,25 @@ import { Dialog, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import { Form } from '@remix-run/react'
 import { commonConstants, deletePopUp } from '~/constants/common.constants'
+import { statusCheck } from '~/constants/common.constants'
 export default function DeletePopUp({
   setOpen,
   open,
   onDelete,
+  status,
 }: {
   open: boolean
   setOpen: (e: boolean) => void
   onDelete: () => void
+  status?: string | undefined
 }) {
   const cancelButtonRef = useRef(null)
+  const handleDelete = () => {
+    onDelete()
+    if (status === statusCheck.success) {
+      setOpen(false)
+    }
+  }
 
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -67,19 +76,14 @@ export default function DeletePopUp({
                     </div>
                   </div>
                 </div>
-                <div className=" px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                  <Form
-                    method="post"
-                    onClick={async () => {
-                      await onDelete()
-                      setOpen(false)
-                    }}
-                  >
+                <div className="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                  <Form method="post">
                     <button
                       name="delete"
                       type="button"
                       className={` confirm-delete inline-flex w-full justify-center rounded-md border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto
                       sm:text-sm`}
+                      onClick={handleDelete}
                     >
                       {commonConstants.delete}
                     </button>

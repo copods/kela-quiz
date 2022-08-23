@@ -3,7 +3,7 @@ import { Icon } from '@iconify/react'
 import type { Role } from '~/interface/Interface'
 import { Form, useTransition } from '@remix-run/react'
 import { Fragment } from 'react'
-import { commonConstants, commonMembers } from '~/constants/common.constants'
+import { commonConstants, members } from '~/constants/common.constants'
 export default function AddMemberModal({
   roles,
   open,
@@ -52,7 +52,7 @@ export default function AddMemberModal({
                 <Dialog.Panel className="relative transform overflow-hidden rounded-2xl bg-white p-6 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
                   <div className="flex items-center justify-between pt-1">
                     <h2 className="text-2xl font-bold text-gray-700">
-                      {commonMembers.addMember}
+                      {members.addMember}
                     </h2>
                     <Icon
                       className="cursor-pointer text-2xl text-gray-600"
@@ -64,7 +64,7 @@ export default function AddMemberModal({
                   <div className="flex justify-between gap-4 pb-6">
                     <div>
                       <label htmlFor="" className="text-gray-800">
-                        {commonMembers.firstName}
+                        {members.firstName}
                       </label>
                       <input
                         id="firstName"
@@ -76,7 +76,7 @@ export default function AddMemberModal({
                     </div>
                     <div>
                       <label htmlFor="" className="text-gray-800">
-                        {commonMembers.lastName}
+                        {members.lastName}
                       </label>
                       <input
                         id="lastName"
@@ -89,7 +89,7 @@ export default function AddMemberModal({
                   </div>
                   <div className="pb-6 ">
                     <label htmlFor="" className="text-gray-800">
-                      {commonMembers.email}
+                      {members.email}
                     </label>
                     <input
                       id="email"
@@ -102,7 +102,7 @@ export default function AddMemberModal({
                   <div className="pb-6">
                     <div>
                       <label htmlFor="" className="text-gray-800">
-                        {commonMembers.role}
+                        {members.role}
                       </label>
                     </div>
                     <div className="my-1.5 rounded-lg border border-gray-200 px-4">

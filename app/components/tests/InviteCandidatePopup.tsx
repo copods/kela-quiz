@@ -24,14 +24,14 @@ const InviteCandidatePopup = ({
       toast.warn(actionData.message)
     }
     if (actionData?.candidateInviteStatus == 'created') {
-      toast.success('Candidates Invited')
+      if (actionData?.testId === testId) toast.success('Candidates Invited')
       setOpenInvitePopup(false)
     } else {
       if (actionData?.candidateInviteStatus) {
         toast.error('Candidate Invite Error')
       }
     }
-  }, [actionData, setOpenInvitePopup])
+  }, [actionData, testId, setOpenInvitePopup])
 
   const updatePopupAndEmailState = () => {
     setOpenInvitePopup(false)

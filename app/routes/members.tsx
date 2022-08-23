@@ -55,25 +55,25 @@ export const action: ActionFunction = async ({ request }) => {
 
     if (typeof firstName !== 'string' || firstName.length === 0) {
       return json<ActionData>(
-        { errors: { title: 'firstName is required', status: 400 } },
+        { errors: { title: 'First Name is required', status: 400 } },
         { status: 400 }
       )
     }
     if (typeof lastName !== 'string' || lastName.length === 0) {
       return json<ActionData>(
-        { errors: { title: 'lastName is required', status: 400 } },
+        { errors: { title: 'Last Name is required', status: 400 } },
         { status: 400 }
       )
     }
     if (typeof email !== 'string' || email.length === 0) {
       return json<ActionData>(
-        { errors: { title: 'email is required', status: 400 } },
+        { errors: { title: 'Email is required', status: 400 } },
         { status: 400 }
       )
     }
     if (typeof roleId !== 'string' || roleId.length === 0) {
       return json<ActionData>(
-        { errors: { title: 'roleId is required', status: 400 } },
+        { errors: { title: 'Role is required', status: 400 } },
         { status: 400 }
       )
     }

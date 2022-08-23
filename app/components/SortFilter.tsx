@@ -45,11 +45,14 @@ const SortFilter = ({
         />
       </div>
       <span
-        className="flex items-center pl-4 text-sm font-normal text-totalCount"
+        className="flex items-center pl-4 text-sm text-totalCount"
         id="total-items-value"
       >
-        <span className="pr-3">
-          {componentGlobalConstants.totalCounts}: {totalItems}
+        <span>
+          {componentGlobalConstants.totalCounts}:
+          <span id="total-count-value" className="pl-1">
+            {totalItems}
+          </span>
         </span>
         {showSelected && (
           <>
