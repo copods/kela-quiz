@@ -128,7 +128,7 @@ describe('Visiting group by test of results page', () => {
       .should('have.value', 'kQuiz@copods')
     cy.findByRole('button').click()
 
-    cy.get('a')
+    cy.get('a', { timeout: 6000 })
       .find('#Group_By_Tests', { timeout: 6000 })
       .should('have.text', 'Results')
       .click()

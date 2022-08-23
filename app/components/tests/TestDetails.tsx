@@ -26,7 +26,7 @@ const TestDetails = () => {
           </div>
         </div>
       </header>
-      <div className="h-5/6 overflow-scroll">
+      <div className="max-h-83 overflow-scroll rounded-md shadow-table">
         <TestPreview
           name={testPreview.name}
           description={testPreview.description}

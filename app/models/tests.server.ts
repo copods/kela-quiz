@@ -1,3 +1,4 @@
+import { sortByOrder } from './../constants/common.constants'
 import type { Section } from '@prisma/client'
 import { prisma } from '~/db.server'
 
@@ -17,14 +18,29 @@ export async function getTestById({ id }: Pick<Section, 'id'>) {
 }
 
 export async function getAllTests(obj: any) {
-  var filter = obj ? obj : {}
+  var filter = obj.orderBy ? obj : { orderBy: { name: sortByOrder.ascending } }
   return await prisma.test.findMany({
     ...filter,
-    include: {
-      createdBy: true,
+    where: {
+      deleted: false,
+    },
+    select: {
+      id: true,
+      name: true,
+      createdAt: true,
+      createdBy: {
+        select: {
+          firstName: true,
+          lastName: true,
+        },
+      },
       sections: {
         select: {
-          section: true,
+          section: {
+            select: {
+              name: true,
+            },
+          },
         },
       },
     },
@@ -57,5 +73,11 @@ export async function createTest(
 }
 
 export async function deleteTestById(id: string) {
-  return prisma.test.delete({ where: { id } })
+  return prisma.test.update({
+    where: { id },
+    data: {
+      deleted: true,
+      deletedAt: new Date().toString(),
+    },
+  })
 }

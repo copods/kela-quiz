@@ -104,7 +104,7 @@ export interface Test {
   sections: Array<SectionInTest>
   deleted: boolean
   deletedAt: string
-  candidateTest?: Array<Option>
+  candidateTest?: Array<CandidateTest>
 }
 
 export interface SectionInTest {
