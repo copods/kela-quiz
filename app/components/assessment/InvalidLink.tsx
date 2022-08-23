@@ -1,4 +1,4 @@
-import InvalidLink from '../../../public/assets/InvalidLink.svg'
+import InvalidLink from '../../../public/assets/invalidLink.svg'
 import Logo from '~/components/Logo'
 
 const InvalidLinkComponent = () => {
