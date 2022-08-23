@@ -605,7 +605,7 @@ describe('Test for section-details', () => {
     cy.get('#saveAndAddMore',{timeout:6000}).should('have.text', 'Save & Add More').click()
     cy.get('.Toastify__close-button', { timeout: 6000 }).should("be.visible")
     cy.get('.Toastify__close-button').click({ multiple: true })
-    cy.get('.Toastify__toast').should('have.text', 'Enter the Question')
+    cy.get('.Toastify__toast',{timeout:60000}).should('have.text', 'Enter the Question')
   })
 
   it('Verifying if any Option is empty or not', () => {
