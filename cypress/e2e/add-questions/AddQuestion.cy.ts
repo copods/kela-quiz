@@ -640,7 +640,7 @@ describe('Test for section-details', () => {
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
   })
 
-  xit('Verifying if Question is Empty or not', () => {
+  it('Verifying if Question is Empty or not', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -684,7 +684,7 @@ describe('Test for section-details', () => {
     cy.get('.Toastify__toast').should('have.text', 'Enter the Question')
   })
 
-  xit('Verifying if any Option is empty or not', () => {
+  it('Verifying if any Option is empty or not', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
