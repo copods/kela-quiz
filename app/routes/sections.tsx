@@ -132,8 +132,9 @@ export const action: ActionFunction = async ({ request }) => {
         )
       })
       .catch((err) => {
+        let title = 'Something went wrong..!'
         deleteHandle = json<ActionData>(
-          { errors: { status: 400, check: new Date() } },
+          { errors: { title, status: 400, check: new Date() } },
           { status: 400 }
         )
       })
@@ -198,7 +199,7 @@ export default function SectionPage() {
         action: `/sections/${selectedSection}`,
       })
     }
-  }, [order, sortBy])
+  }, [order, sortBy, data.sections.length])
 
   useEffect(() => {
     if (sectionActionData) {
@@ -217,7 +218,7 @@ export default function SectionPage() {
         })
       }
     }
-  }, [sectionActionData, data, setSelectedSection])
+  }, [sectionActionData, data])
 
   return (
     <AdminLayout>

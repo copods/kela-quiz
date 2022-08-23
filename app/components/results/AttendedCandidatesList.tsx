@@ -16,7 +16,7 @@ const ExamAttendedCandidatesComponent = () => {
       {testData?.length !== 0 ? (
         <div className="bg-[#F9FAFB] pb-4  ">
           <div className="rounded-lg border border-solid border-[#E5E7EB] bg-tableHeader shadow-table">
-            <div className=" grid grid-cols-12 py-4 px-12">
+            <div className=" grid grid-cols-12 gap-3 py-4 px-12">
               <span className="col-span-1 text-sm  font-semibold  text-gray-500">
                 {resultConstants.srno}
               </span>
@@ -49,7 +49,7 @@ const ExamAttendedCandidatesComponent = () => {
                 >
                   <AttendedCandidateListItem
                     email={result?.candidate?.email}
-                    invitedBy={`${result?.candidate?.createdBy?.firstName}`}
+                    invitedBy={`${result?.candidate?.createdBy?.firstName} ${result?.candidate?.createdBy?.lastName}`}
                     name={`${result?.candidate?.firstName} ${result?.candidate?.lastName}`}
                     result={
                       (result?.correctQuestion / result?.totalQuestion) * 100

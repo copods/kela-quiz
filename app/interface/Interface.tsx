@@ -85,6 +85,7 @@ export interface Question {
   correctAnswer?: Array<CorrectAnswer>
   marks?: number
   questionTypeId?: string
+  questionType: QuestionType
   sectionId?: string
   createdById?: string
   createdAt?: Date

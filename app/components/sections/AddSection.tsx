@@ -101,9 +101,7 @@ const AddSection = ({
                         ? 'disabled bg-gray-600'
                         : ''
                     }`}
-                    disabled={
-                      transition.state === 'submitting' || showErrorMessage
-                    }
+                    disabled={transition.state === 'submitting'}
                   >
                     {transition.state === 'submitting' ? 'Adding...' : 'Add'}
                   </button>
