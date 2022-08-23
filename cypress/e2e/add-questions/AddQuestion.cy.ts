@@ -18,7 +18,7 @@ describe('Test for section-details', () => {
       .should('have.value', cypress.password)
     cy.findByRole('button').click()
 
-    cy.get('a')
+    cy.get('a', { timeout: 6000 })
       .find('#Sections', { timeout: 6000 })
       .should('have.text', routeFiles.sections)
       .click()
@@ -57,7 +57,7 @@ describe('Test for section-details', () => {
       .should('have.value', cypress.password)
     cy.findByRole('button').click()
 
-    cy.get('a')
+    cy.get('a', { timeout: 6000 })
       .find('#Sections')
       .should('have.text', routeFiles.sections)
       .click()
@@ -93,7 +93,7 @@ describe('Test for section-details', () => {
       .should('have.value', cypress.password)
     cy.findByRole('button').click()
 
-    cy.get('a')
+    cy.get('a', { timeout: 6000 })
       .find('#Sections')
       .should('have.text', routeFiles.sections)
       .click()
@@ -117,7 +117,7 @@ describe('Test for section-details', () => {
       .should('have.value', cypress.password)
     cy.findByRole('button').click()
 
-    cy.get('a')
+    cy.get('a', { timeout: 6000 })
       .find('#Sections')
       .should('have.text', routeFiles.sections)
       .click()
@@ -141,7 +141,7 @@ describe('Test for section-details', () => {
       .should('have.value', cypress.password)
     cy.findByRole('button').click()
 
-    cy.get('a')
+    cy.get('a', { timeout: 6000 })
       .find('#Sections')
       .should('have.text', routeFiles.sections)
       .click()
@@ -179,7 +179,7 @@ describe('Test for section-details', () => {
       .should('have.value', cypress.password)
     cy.findByRole('button').click()
 
-    cy.get('a')
+    cy.get('a', { timeout: 6000 })
       .find('#Sections')
       .should('have.text', routeFiles.sections)
       .click()
@@ -218,7 +218,7 @@ describe('Test for section-details', () => {
       .should('have.value', cypress.password)
     cy.findByRole('button').click()
 
-    cy.get('a')
+    cy.get('a', { timeout: 6000 })
       .find('#Sections')
       .should('have.text', routeFiles.sections)
       .click()
@@ -280,7 +280,7 @@ describe('Test for section-details', () => {
       .should('have.value', cypress.password)
     cy.findByRole('button').click()
 
-    cy.get('a')
+    cy.get('a', { timeout: 6000 })
       .find('#Sections')
       .should('have.text', routeFiles.sections)
       .click()
@@ -342,7 +342,7 @@ describe('Test for section-details', () => {
       .should('have.value', cypress.password)
     cy.findByRole('button').click()
 
-    cy.get('a')
+    cy.get('a', { timeout: 6000 })
       .find('#Sections')
       .should('have.text', routeFiles.sections)
       .click()
@@ -406,7 +406,7 @@ describe('Test for section-details', () => {
       .should('have.value', cypress.password)
     cy.findByRole('button').click()
 
-    cy.get('a')
+    cy.get('a', { timeout: 6000 })
       .find('#Sections')
       .should('have.text', routeFiles.sections)
       .click()
@@ -469,7 +469,7 @@ describe('Test for section-details', () => {
       .should('have.value', cypress.password)
     cy.findByRole('button').click()
 
-    cy.get('a')
+    cy.get('a', { timeout: 6000 })
       .find('#Sections')
       .should('have.text', routeFiles.sections)
       .click()
@@ -532,7 +532,7 @@ describe('Test for section-details', () => {
       .should('have.value', cypress.password)
     cy.findByRole('button').click()
 
-    cy.get('a')
+    cy.get('a', { timeout: 6000 })
       .find('#Sections')
       .should('have.text', routeFiles.sections)
       .click()
@@ -593,7 +593,7 @@ describe('Test for section-details', () => {
       .should('have.value', cypress.password)
     cy.findByRole('button').click()
 
-    cy.get('a')
+    cy.get('a', { timeout: 6000 })
       .find('#Sections')
       .should('have.text', routeFiles.sections)
       .click()
@@ -652,7 +652,7 @@ describe('Test for section-details', () => {
       .should('have.value', cypress.password)
     cy.findByRole('button').click()
 
-    cy.get('a')
+    cy.get('a', { timeout: 6000 })
       .find('#Sections')
       .should('have.text', routeFiles.sections)
       .click()
@@ -696,7 +696,7 @@ describe('Test for section-details', () => {
       .should('have.value', cypress.password)
     cy.findByRole('button').click()
 
-    cy.get('a')
+    cy.get('a', { timeout: 6000 })
       .find('#Sections')
       .should('have.text', routeFiles.sections)
       .click()
