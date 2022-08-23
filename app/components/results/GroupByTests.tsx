@@ -20,7 +20,6 @@ const GroupByTests = () => {
   ]
   const candidateTestData = useLoaderData()
   const candidateTests = candidateTestData.candidateTest
-  console.log('candidateTests', candidateTests)
   const submit = useSubmit()
 
   useEffect(() => {

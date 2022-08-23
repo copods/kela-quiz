@@ -23,6 +23,7 @@ export const members = {
   firstName: 'First Name',
   lastName: ' Last Name',
   email: 'Email',
+  name: 'Name',
   role: 'Role',
   members: 'Members',
   addedOn: 'Added On',
@@ -87,7 +88,9 @@ export const resultConstants = {
   totalAttended: 'Attended',
   noTestAlert: 'No test found. Add your test first',
   srno: 'Sr.No',
-  invitedBy: "Invited By"
+  invitedBy: "Invited By",
+  result: 'Result',
+  review: 'Review',
 }
 
 export enum QuestionStatus {
@@ -114,9 +117,10 @@ export const candidateExam = {
     'I understand that once I begin the assessment I cannot leave and  return to this assessment at a later time.',
   beginAssesment: 'Begin Assesment',
   instructions: 'Instructions',
-  startSection: 'Start Section',
+  startSection: 'Start Now',
   examTitle: 'Pre-Interview Assessment',
   info: 'Info',
+  noOfQuestions: "No. of Questions"
 }
 export const cypress = {
   Tests: 'Tests',

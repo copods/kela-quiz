@@ -61,7 +61,13 @@ export const loader: LoaderFunction = async ({ params, request }) => {
 const AssessmentSection = () => {
   const { section, candidateTests, candidate, params } = useLoaderData()
   return (
-    <CandidateLayout candidate={candidate} candidateTest={candidateTests}>
+    <CandidateLayout
+      candidate={candidate}
+      candidateTest={candidateTests}
+      heading="Section Detail"
+      params={params}
+      section={section}
+    >
       <SectionQuestionPage
         section={section}
         params={params}

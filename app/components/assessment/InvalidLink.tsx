@@ -1,7 +1,7 @@
-import EndAssessmentIcon from '../../../public/assets/endAssessment.svg'
+import InvalidLink from '../../../public/assets/InvalidLink.svg'
 import Logo from '~/components/Logo'
 
-const EndAssessment = () => {
+const InvalidLinkComponent = () => {
   return (
     <div className="flex h-screen w-screen flex-col bg-gray-50">
       <div className="flex h-20 w-full flex-row items-center gap-3 bg-white px-5 shadow">
@@ -9,11 +9,11 @@ const EndAssessment = () => {
         <span className="text-3xl font-bold text-gray-900">Quiz</span>
       </div>
       <div className="mt-[-80px] flex h-full w-full flex-col items-center justify-center gap-4">
-        <img src={EndAssessmentIcon} alt="end assessment" />
-        <p className="text-5xl font-bold text-gray-900">Assessment Ended</p>
+        <img src={InvalidLink} alt="invalidLink" />
+        <p className="text-5xl font-bold text-gray-900">Wrong Link</p>
       </div>
     </div>
   )
 }
 
-export default EndAssessment
+export default InvalidLinkComponent

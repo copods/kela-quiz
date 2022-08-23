@@ -1,4 +1,4 @@
-import type { CandidateTest } from '@prisma/client'
+import type { CandidateResult, CandidateTest } from '@prisma/client'
 import { prisma } from '~/db.server'
 import type { Test } from '@prisma/client'
 
@@ -17,6 +17,32 @@ export async function getCandidateEmailById({ id }: Pick<CandidateTest, 'id'>) {
         },
       },
     },
+  })
+}
+export async function getResultsOfCandidatesByTestId({ testId }: Pick<CandidateResult, 'testId'>) {
+  return prisma.candidateResult.findMany({
+    where: { testId },
+    select: {
+      id: true,
+      totalQuestion: true,
+      correctQuestion: true,
+      unanswered: true,
+      isQualified: true,
+      candidate: {
+        select: {
+          lastName: true,
+          firstName: true,
+          email: true,
+          createdBy: {
+            select: {
+              firstName: true,
+              lastName: true
+            }
+          }
+        }
+      },
+
+    }
   })
 }
 

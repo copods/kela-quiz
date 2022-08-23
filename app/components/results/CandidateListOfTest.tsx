@@ -42,7 +42,7 @@ const CandidateListOfTest = () => {
         </div>
       </header>
       <div id="results-test-candidate-list-tab" className="pb-5">
-        <ResultTab tabs={tabs} resultsId={params.resultsId} />
+        <ResultTab tabs={tabs} testId={params.testId} />
       </div>
       <Outlet />
     </div>

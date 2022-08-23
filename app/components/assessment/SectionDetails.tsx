@@ -1,3 +1,4 @@
+import { Icon } from '@iconify/react'
 import { useLoaderData, useSubmit } from '@remix-run/react'
 import { candidateExam } from '~/constants/common.constants'
 
@@ -16,25 +17,28 @@ const SectionDetails = () => {
   }
 
   return (
-    <div>
+    <div className="flex flex-col gap-8">
       <div className="flex flex-col gap-4">
-        <div className="flex flex-row">
-          <div className="w-52 font-semibold">{candidateExam.description}</div>
-          <div className="flex-1">{section.section.description}</div>
+        <div className="text-base text-gray-700">
+          {section.section.description}
         </div>
-        <div className="flex flex-row">
-          <div className="w-52 font-semibold">{`${candidateExam.total} ${candidateExam.time}`}</div>
-          <div className="flex-1">{section.timeInSeconds / 60} Mins</div>
-        </div>
-        <div className="flex flex-row">
-          <div className="w-52 font-semibold">{`${candidateExam.total} ${candidateExam.questions}`}</div>
-          <div className="flex-1">{section.totalQuestions}</div>
+        <div className="flex flex-row items-center gap-4">
+          <div className="flex gap-2 text-lg text-gray-600">
+            {`${candidateExam.noOfQuestions}`}:
+            <span className="font-medium">{section.totalQuestions}</span>
+          </div>
+          <Icon icon="ci:line-m" className="text-2xl text-gray-600" />
+          <div className="flex gap-2 text-lg text-gray-600">
+            {`${candidateExam.total} ${candidateExam.time}`}:
+            <span className="font-medium">
+              {section.timeInSeconds / 60} Mins
+            </span>
+          </div>
         </div>
       </div>
-      <br />
 
       <button
-        className="rounded-full bg-primary py-2 px-5 text-white"
+        className="w-fit rounded-md bg-primary py-3 px-11 text-white"
         onClick={() => startSection()}
       >
         {candidateExam.startSection}
