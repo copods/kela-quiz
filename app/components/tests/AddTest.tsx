@@ -49,7 +49,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
 
   const [currentTab, setCurrentTab] = useState(0) // testDetails  ||  selectSections  ||  preview
   const [name, onNameChange] = useState('')
-  const [description, onDescriptionChange] = useState('')
+  const [description, setDescription] = useState('')
   const [selectedSections, onSelectedSectionChange] = useState<TestSection[]>(
     []
   )
@@ -135,7 +135,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
           name={name}
           onNameChange={onNameChange}
           description={description}
-          onDescriptionChange={onDescriptionChange}
+          onDescriptionChange={setDescription}
         />
       ) : currentTab === tabs[1].id ? (
         <SelectSections

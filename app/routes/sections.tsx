@@ -22,12 +22,11 @@ import type { Section } from '~/interface/Interface'
 
 export type ActionData = {
   errors?: {
-    title?: string
-    body?: string
+    title: string
     status: number
   }
   resp?: {
-    title?: string
+    title: string
     status: number
     data?: Section
   }
@@ -85,7 +84,7 @@ export const action: ActionFunction = async ({ request }) => {
       return json<ActionData>(
         {
           resp: {
-            title: 'Member Added Successfully..!',
+            title: 'Section Added Successfully..!',
             status: 200,
             data: res,
           },
@@ -108,7 +107,6 @@ export const action: ActionFunction = async ({ request }) => {
 
 export default function SectionPage() {
   const data = useLoaderData() as unknown as LoaderData
-  console.log(data)
   const fetcher = useFetcher()
   const action = useActionData() as ActionData
 
@@ -139,6 +137,7 @@ export default function SectionPage() {
 
   useEffect(() => {
     if (data.sections.length && !data.selectedSectionId) {
+      console.log('1', data?.filters)
       navigate(`/sections/${selectedSection}${data?.filters}`, {
         replace: true,
       })
@@ -153,6 +152,7 @@ export default function SectionPage() {
           [sortBy]: order,
         },
       }
+      console.log('2', data?.filters)
       fetcher.submit({ filter: JSON.stringify(filter) }, { method: 'get' })
       formData.append('filter', JSON.stringify(filter))
       submit(formData, {
@@ -166,7 +166,8 @@ export default function SectionPage() {
     if (action) {
       if (action.resp?.status === 200) {
         setShowAddSectionModal(false)
-        toast.success('Section added successfully..!')
+        toast.success(action?.resp?.title)
+        console.log('3', data?.filters)
         navigate(`/sections/${action?.resp?.data?.id}`, { replace: false })
       } else if (action.errors?.status === 400) {
         toast.error(action.errors?.title, {
@@ -193,51 +194,58 @@ export default function SectionPage() {
           </button>
         </header>
 
-        <div
-          className={`flex flex-1 overflow-hidden ${
-            sectionDetailFull ? '' : 'gap-12'
-          }`}
-        >
-          {/* section list */}
-          <div className={`${sectionDetailFull ? 'hidden' : ''}`}>
-            <Sections
-              sections={data.sections}
-              selectedSection={selectedSection}
-              filters={data.filters}
-              sortBy={sortBy}
-              setSortBy={setSortBy}
-              order={order}
-              setOrder={setOrder}
-              setSelectedSection={setSelectedSection}
-              sortByDetails={sortByDetails}
-            />
-          </div>
+        {data.sections.length > 0 ? (
+          <div
+            className={`flex flex-1 overflow-hidden ${
+              sectionDetailFull ? '' : 'gap-12'
+            }`}
+          >
+            {/* section list */}
+            <div className={`${sectionDetailFull ? 'hidden' : ''}`}>
+              <Sections
+                sections={data.sections}
+                selectedSection={selectedSection}
+                filters={data.filters}
+                sortBy={sortBy}
+                setSortBy={setSortBy}
+                order={order}
+                setOrder={setOrder}
+                setSelectedSection={setSelectedSection}
+                sortByDetails={sortByDetails}
+              />
+            </div>
 
-          {/* section details */}
-          <div className={`z-10 flex flex-1 items-center `}>
-            <span
-              className="z-20 -mr-5"
-              tabIndex={0}
-              onClick={() => setSectionDetailFull(!sectionDetailFull)}
-              onKeyUp={(e) => {
-                if (e.key === 'Enter') setSectionDetailFull(!sectionDetailFull)
-              }}
-            >
-              {sectionDetailFull ? (
-                <Icon
-                  icon={'akar-icons:circle-chevron-right-fill'}
-                  className="cursor-pointer text-4xl text-primary"
-                />
-              ) : (
-                <Icon
-                  icon={'akar-icons:circle-chevron-left-fill'}
-                  className="cursor-pointer text-4xl text-primary"
-                />
-              )}
-            </span>
-            <Outlet />
+            {/* section details */}
+            <div className={`z-10 flex flex-1 items-center `}>
+              <span
+                className="z-20 -mr-5"
+                tabIndex={0}
+                onClick={() => setSectionDetailFull(!sectionDetailFull)}
+                onKeyUp={(e) => {
+                  if (e.key === 'Enter')
+                    setSectionDetailFull(!sectionDetailFull)
+                }}
+              >
+                {sectionDetailFull ? (
+                  <Icon
+                    icon={'akar-icons:circle-chevron-right-fill'}
+                    className="cursor-pointer text-4xl text-primary"
+                  />
+                ) : (
+                  <Icon
+                    icon={'akar-icons:circle-chevron-left-fill'}
+                    className="cursor-pointer text-4xl text-primary"
+                  />
+                )}
+              </span>
+              <Outlet />
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className="p-7 text-center">
+            {sectionsConstants.noRecordFound}
+          </div>
+        )}
 
         <AddSection
           open={showAddSectionModal}

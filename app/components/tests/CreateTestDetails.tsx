@@ -45,7 +45,8 @@ const TestDetails = ({
                 fullAccess={true}
                 quillPlaceholder="Question"
                 onTextChange={(e) => {
-                  onDescriptionChange(e)
+                  if (e === '<p><br></p>') onDescriptionChange('')
+                  else onDescriptionChange(e)
                 }}
               />
             )}

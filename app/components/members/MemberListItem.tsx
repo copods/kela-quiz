@@ -67,7 +67,7 @@ export default function MemberListItem({
               className={`pointer-cursor h-6 w-6 text-red-500 ${
                 loggedInUser && 'cursor-not-allowed text-red-300'
               }`}
-            ></Icon>
+            />
           </button>
         </div>
         <DeletePopUp setOpen={setOpen} open={open} onDelete={deleteUser} />

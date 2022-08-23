@@ -5,33 +5,34 @@ import { useLoaderData } from '@remix-run/react'
 
 export default function MembersHeader({
   actionStatus,
-  err,
 }: {
-  actionStatus: Date | undefined
-  err: Date | undefined
+  actionStatus: boolean
 }) {
-  const [open, setOpen] = useState(false)
-  useEffect(() => {
-    err ? setOpen(true) : setOpen(false)
-  }, [actionStatus, err])
   const membersData = useLoaderData()
+
+  const [open, setOpen] = useState(false)
+
+  useEffect(() => {
+    if (actionStatus) {
+      setOpen(false)
+    }
+  }, [actionStatus])
+
   return (
-    <div className="grid grid-cols-12 pb-12">
-      <div className="col-span-full grid">
-        <div className="flex items-center justify-between">
-          <h1 className="text-3xl font-bold leading-9">
-            {commonMembers.members}
-          </h1>
-          <button
-            id="addMember"
-            className="h-9 rounded-lg bg-blue-900  px-4  text-xs font-medium leading-4 text-[#F0FDF4]"
-            onClick={() => setOpen(!open)}
-          >
-            + {commonMembers.addMember}
-          </button>
-        </div>
+    <>
+      <div className="flex items-center justify-between pb-12">
+        <h1 className="text-3xl font-bold leading-9">
+          {commonMembers.members}
+        </h1>
+        <button
+          id="addMember"
+          className="h-9 rounded-lg bg-blue-900 px-4 text-xs font-medium leading-4 text-[#F0FDF4]"
+          onClick={() => setOpen(true)}
+        >
+          + {commonMembers.addMember}
+        </button>
       </div>
       <AddMemberModal roles={membersData.roles} open={open} setOpen={setOpen} />
-    </div>
+    </>
   )
 }

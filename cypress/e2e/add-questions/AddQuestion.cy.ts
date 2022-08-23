@@ -126,7 +126,7 @@ describe('Test for section-details', () => {
       `Aptitude - ${new Date().getTime()} Description`
     )
     cy.get('#submitButton').click()
-    cy.get('.Toastify__toast').should('have.text', 'Section added successfully..!')
+    cy.get('.Toastify__toast').should('have.text', 'Section Added Successfully..!')
     cy.get('.Toastify__close-button').click()
 
     cy.get('#add-section').click()

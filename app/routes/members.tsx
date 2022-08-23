@@ -17,17 +17,12 @@ import { useEffect } from 'react'
 
 export type ActionData = {
   errors?: {
-    firstName?: string
-    lastName?: string
-    email?: string
-    roleId?: string
-    title?: string
-    status?: string
-    check?: Date
+    title: string
+    status: number
   }
   resp?: {
-    status?: string
-    check?: Date
+    title: string
+    status: number
   }
 }
 type LoaderData = {
@@ -44,9 +39,11 @@ export const loader: LoaderFunction = async ({ request }) => {
 }
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
+
   const action = JSON.parse(formData.get('addMember') as string)
     ? JSON.parse(formData.get('addMember') as string)
     : formData.get('deleteMember')
+
   if (action.action === 'add') {
     const firstName = formData.get('firstName')
     const lastName = formData.get('lastName')
@@ -55,25 +52,25 @@ export const action: ActionFunction = async ({ request }) => {
 
     if (typeof firstName !== 'string' || firstName.length === 0) {
       return json<ActionData>(
-        { errors: { firstName: 'firstName is required' } },
+        { errors: { title: 'FirstName is required', status: 400 } },
         { status: 400 }
       )
     }
     if (typeof lastName !== 'string' || lastName.length === 0) {
       return json<ActionData>(
-        { errors: { lastName: 'lastName is required' } },
+        { errors: { title: 'LastName is required', status: 400 } },
         { status: 400 }
       )
     }
     if (typeof email !== 'string' || email.length === 0) {
       return json<ActionData>(
-        { errors: { email: 'email is required' } },
+        { errors: { title: 'Email is required', status: 400 } },
         { status: 400 }
       )
     }
     if (typeof roleId !== 'string' || roleId.length === 0) {
       return json<ActionData>(
-        { errors: { roleId: 'roleId is required' } },
+        { errors: { title: 'Role is required', status: 400 } },
         { status: 400 }
       )
     }
@@ -85,16 +82,25 @@ export const action: ActionFunction = async ({ request }) => {
         addHandle = json<ActionData>(
           {
             resp: {
-              status: 'Member Added Successfully..!',
-              check: new Date(),
+              title: 'Member Added Successfully..!',
+              status: 200,
             },
           },
           { status: 200 }
         )
       })
       .catch((err) => {
+        let title = 'Something went wrong. Please try again.'
+        if (err.code === 'P2002') {
+          title = 'Member with this email id already exists!'
+        }
         addHandle = json<ActionData>(
-          { errors: { status: err, check: new Date() } },
+          {
+            errors: {
+              title,
+              status: 400,
+            },
+          },
           { status: 400 }
         )
       })
@@ -104,7 +110,7 @@ export const action: ActionFunction = async ({ request }) => {
   if (action === 'delete') {
     if (typeof formData.get('id') !== 'string') {
       return json<ActionData>(
-        { errors: { title: 'Description is required' } },
+        { errors: { title: 'Description is required', status: 400 } },
         { status: 400 }
       )
     }
@@ -112,13 +118,18 @@ export const action: ActionFunction = async ({ request }) => {
     await deleteUserById(formData.get('id') as string)
       .then((res) => {
         deleteHandle = json<ActionData>(
-          { resp: { status: 'Deleted Successfully..!' } },
+          { resp: { title: 'Deleted Successfully..!', status: 200 } },
           { status: 200 }
         )
       })
       .catch((err) => {
         deleteHandle = json<ActionData>(
-          { errors: { status: err, check: new Date() } },
+          {
+            errors: {
+              title: 'Something went wrong. Please try again',
+              status: 400,
+            },
+          },
           { status: 400 }
         )
       })
@@ -126,27 +137,28 @@ export const action: ActionFunction = async ({ request }) => {
     return deleteHandle
   }
 }
-export default function Members() {
+const Members = () => {
   const membersActionData = useActionData() as ActionData
   useEffect(() => {
     if (membersActionData) {
-      if (membersActionData.resp?.status) {
-        toast.success(membersActionData.resp?.status)
-      } else if (membersActionData.errors?.status) {
-        toast.error('Something went wrong...!')
+      if (membersActionData.resp?.status === 200) {
+        toast.success(membersActionData.resp?.title)
+      } else if (membersActionData.errors?.status === 400) {
+        toast.error(membersActionData.errors?.title, {
+          toastId: membersActionData.errors?.title,
+        })
       }
     }
   }, [membersActionData])
 
   return (
     <AdminLayout>
-      <div>
-        <MembersHeader
-          actionStatus={membersActionData?.resp?.check}
-          err={membersActionData?.errors?.check}
-        />
-        <MembersList actionStatus={membersActionData?.resp?.status} />
-      </div>
+      <>
+        <MembersHeader actionStatus={membersActionData?.resp?.status === 200} />
+        <MembersList actionStatus={membersActionData?.resp?.title} />
+      </>
     </AdminLayout>
   )
 }
+
+export default Members

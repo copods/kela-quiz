@@ -17,7 +17,11 @@ export default function AddMemberModal({
   return (
     <div>
       <Transition.Root show={open} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={setOpen}>
+        <Dialog
+          as="div"
+          className="relative z-10"
+          onClose={() => setOpen(false)}
+        >
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -132,7 +136,7 @@ export default function AddMemberModal({
                       type="submit"
                       name="addMember"
                       value={JSON.stringify({ action: 'add' })}
-                      className={`h-9 rounded-md bg-primary px-4 text-sm text-[#F0FDF4]${
+                      className={`h-9 rounded-md bg-primary px-4 text-sm text-[#F0FDF4] ${
                         transition.state === 'submitting'
                           ? 'disabled:text-[#F0FDF4] disabled:opacity-75'
                           : ''
