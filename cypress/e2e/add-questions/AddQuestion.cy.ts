@@ -117,7 +117,7 @@ describe('Test for section-details', () => {
       .should('have.value', 'kQuiz@copods')
     cy.findByRole('button').click()
 
-    cy.get('a').find('#Sections').should('have.text', 'Sections').click()
+    cy.get('a').find('#Sections',{timeout:60000}).should('have.text', 'Sections').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('#add-section').click()
     cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
