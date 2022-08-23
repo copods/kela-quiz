@@ -1,32 +1,48 @@
 import MenuItems from './MenuItems'
 import Header from '~/components/SideNavHeader'
 import Footer from '~/components/SideNavFooter'
+import { sideNav } from '~/constants/common.constants'
 
 let sideNavGuide = [
+  // {
+  //   navGuide: 'Main Menu',
+  //   subItem: [
+  //     {
+  //       id: 'Dashboard',
+  //       iconClass: 'mdi:view-dashboard',
+  //       itemName: 'Dashboard',
+  //       itemRoute: 'dashboard',
+  //     },
+  //   ],
+  // },
   {
-    navGuide: 'Main Menu',
+    navGuide: 'Results',
     subItem: [
       {
-        iconClass: 'mdi:view-dashboard',
-        itemName: 'Dashboard',
-        itemRoute: 'dashboard',
-      },
-      {
+        id: 'Group_By_Tests',
         iconClass: 'mdi:chart-box-outline',
         itemName: 'Results',
-        itemRoute: 'results',
+        itemRoute: 'results/groupByTests',
       },
+      // {
+      //   id: 'Group_By_Candidate',
+      //   iconClass: 'mdi:chart-box-outline',
+      //   itemName: 'Group By Candidate',
+      //   itemRoute: 'groupByCandidate',
+      // },
     ],
   },
   {
     navGuide: 'Assessments',
     subItem: [
       {
+        id: 'Tests',
         iconClass: 'carbon:result',
         itemName: 'Tests',
         itemRoute: 'tests',
       },
       {
+        id: 'Sections',
         iconClass: 'ci:list-checklist-alt',
         itemName: 'Sections',
         itemRoute: 'sections',
@@ -37,25 +53,28 @@ let sideNavGuide = [
     navGuide: 'General',
     subItem: [
       {
+        id: 'Members',
         iconClass: 'mdi:account-group',
         itemName: 'Members',
         itemRoute: 'members',
       },
-      {
-        iconClass: 'mdi:cog',
-        itemName: 'Settings',
-        itemRoute: 'settings',
-      },
+      // {
+      //   id: 'Settings',
+      //   iconClass: 'mdi:cog',
+      //   itemName: 'Settings',
+      //   itemRoute: 'settings',
+      // },
     ],
   },
 ]
+const title = sideNav.sideNavHeading
 
-function SideNav() {
+const SideNav = () => {
   return (
     <div className="flex h-full flex-col justify-between overflow-auto p-5">
       <div>
         <div className="mb-14 px-1">
-          <Header />
+          <Header title={title} />
         </div>
         <div className="flex flex-col gap-8">
           {sideNavGuide.map((guide, index) => {
@@ -68,6 +87,7 @@ function SideNav() {
                   return (
                     <MenuItems
                       key={index}
+                      id={item.id}
                       iconClass={item.iconClass}
                       itemName={item.itemName}
                       itemRoute={item.itemRoute}

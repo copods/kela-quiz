@@ -21,7 +21,7 @@ const TestList = ({ tests }: { tests: Array<Test> }) => {
 
   const submit = useSubmit()
   useEffect(() => {
-    var filter = {
+    let filter = {
       orderBy: {
         [sortBy]: sortDirection,
       },
@@ -35,11 +35,14 @@ const TestList = ({ tests }: { tests: Array<Test> }) => {
       {/* <BreadCrumb data={breadCrumbData} /> */}
       <header className="flex items-center justify-between">
         <h2 title="Tests" className="text-3xl font-bold text-black">
-          {testsConstants.breadCrumbTestsTitle}
+          {testsConstants.Tests}
         </h2>
-        <Link to={'/tests/add-test'}  id="addTest"
-            className="h-9 rounded-lg bg-primary px-5 text-xs text-white flex items-center">
-            + {testsConstants.addTestbutton}
+        <Link
+          to={'/tests/add-test'}
+          id="addTest"
+          className="flex h-9 items-center rounded-lg bg-primary px-5 text-xs text-white"
+        >
+          + {testsConstants.addTestbutton}
         </Link>
       </header>
       <div id="sort-filter-container">
@@ -50,11 +53,11 @@ const TestList = ({ tests }: { tests: Array<Test> }) => {
           sortBy={sortBy}
           onSortChange={onSortChange}
           totalItems={tests?.length}
-          showSelected={true}
+          showSelected={false}
         />
       </div>
 
-      <div className="flex h-5/6 flex-col ">
+      <div className="flex h-5/6 flex-col shadow-table">
         <div className="rounded-b-0 flex items-center rounded-t-md border border-b-0 border-solid border-borderColor bg-tableHeader px-9 py-3 font-semibold ">
           {showCheckBox && (
             <div className=" w-1/12 pl-2.5">

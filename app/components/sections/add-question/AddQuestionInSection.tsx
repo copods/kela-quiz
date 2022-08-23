@@ -116,7 +116,6 @@ const AddQuestionInSection = () => {
     }
 
     if (getQuestionType(selectedTypeOfQuestion) === QuestionTypes.text) {
-      console.log('text', textCorrectAnswer)
       for (let answer of textCorrectAnswer) {
         if (answer.answer.length === 0) {
           toast.error('Enter all the Options', { toastId: 'optionsRequired' })

@@ -4,18 +4,26 @@ export const commonConstants = {
   delete: 'Delete',
   backButton: 'Back',
   nextButton: 'Next',
+  prevoiusButton: 'Previous',
   removeButton: 'Remove',
   addButton: 'Add',
   byText: 'By',
+  total: 'Total',
+  continue: 'Continue',
+  createdAt: 'createdAt',
+  createdDate: 'Created Date',
 }
+
 export const sideNav = {
   sideNavHeading: 'Quiz',
 }
-export const commonMembers = {
+
+export const members = {
   addMember: 'Add Member',
   firstName: 'First Name',
   lastName: ' Last Name',
   email: 'Email',
+  name: 'Name',
   role: 'Role',
   members: 'Members',
   addedOn: 'Added On',
@@ -51,12 +59,13 @@ export const testsConstants = {
   sectionText: 'Section',
   questions: 'Questions',
   totalQuestionsText: 'Total Questions',
-  breadCrumbTestsTitle: 'Tests',
+  Tests: 'Tests',
   srNoText: 'S No.',
   testListColumnLable: 'Test',
   createdOn: 'Created on',
   created: 'Created',
   actionsText: 'Actions',
+  noCandidateForTest: "No Candidate for this Test"
 }
 export const componentGlobalConstants = {
   totalCounts: 'Total Counts',
@@ -64,10 +73,90 @@ export const componentGlobalConstants = {
 }
 export const routeFiles = {
   sections: 'Sections',
+  options: 'Options',
 }
 
 export enum QuestionTypes {
-  multipleChoice= "MULTIPLE_CHOICE",
-  singleChoice= "SINGLE_CHOICE",
-  text= "TEXT"
+  multipleChoice = 'MULTIPLE_CHOICE',
+  singleChoice = 'SINGLE_CHOICE',
+  text = 'TEXT',
+}
+
+export const resultConstants = {
+  order: 'Order',
+  test: 'Test',
+  totalInvited: 'Invited',
+  totalAttended: 'Attended',
+  noTestAlert: 'No test found. Add your test first',
+  srno: 'Sr.No',
+  invitedBy: "Invited By",
+  result: 'Result',
+  review: 'Review',
+}
+
+export enum QuestionStatus {
+  notViewed = 'NOT_VIEWED',
+  viewed = 'VIEWED',
+  skipped = 'SKIPPED',
+  answered = 'ANSWERED',
+}
+
+export const candidateExam = {
+  time: 'Time',
+  timeRemaining: 'Time Remaining',
+  timeLimit: 'Time Limit',
+  assessmentDetails: 'Assessment Details',
+  assessmentTests: 'Assessment Tests',
+  assessmentEnd: 'Assessment Ended',
+  wrongLink: "Wrong Link",
+  minutes: 'Mins',
+  description: 'Description',
+  total: 'Total',
+  question: 'Question',
+  questions: 'Questions',
+  endTest: 'End Test',
+  nextSection: 'Next Section',
+  candidateAcceptance:
+    'I understand that once I begin the assessment I cannot leave and  return to this assessment at a later time.',
+  beginAssesment: 'Begin Assesment',
+  instructions: 'Instructions',
+  startSection: 'Start Now',
+  examTitle: 'Pre-Interview Assessment',
+  info: 'Info',
+  noOfQuestions: "No. of Questions"
+}
+export const cypress = {
+  Tests: 'Tests',
+  Sections: 'Sections',
+  Add: 'Add',
+  email: 'careers@copods.co',
+  password: 'kQuiz@copods',
+  step1: 'Step 1',
+  step2: 'Step 2',
+  step3: 'Step 3',
+  testDetails: 'Test Details',
+  selectSections: 'Select Sections',
+  preview: 'Preview',
+  next: 'Next',
+  Remove: 'Remove',
+  addQuest: '+ Add Question',
+  back: 'Back',
+  submit: 'Submit',
+  nameIsReq: 'Name is required',
+  descIsReq: 'Description is required',
+  sectionAdded: 'Section added successfully..!',
+  duplicateTitle: 'Duplicate Title',
+  question: 'Question',
+  saveAndAddMore: 'Save & Add More',
+  enterAllOptions: 'Enter all the Options',
+  groupByTest: 'Results',
+  members: 'Members',
+  addMember: '+ Add Member',
+  cancel: 'Cancel',
+  delete: 'Delete',
+  results: 'Results',
+  name: 'Name',
+  description: 'Description',
+  totalTime: 'Total Time',
+  totalSections: 'Total Sections',
 }

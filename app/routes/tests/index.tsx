@@ -61,7 +61,7 @@ export const action: ActionFunction = async ({ request }) => {
     createdById,
     testId,
   })
-  return json({ candidateInviteStatus })
+  return json({ candidateInviteStatus, testId })
 }
 
 export default function Tests() {

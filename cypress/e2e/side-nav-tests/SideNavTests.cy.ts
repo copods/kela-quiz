@@ -38,8 +38,10 @@ describe('Test for Logout, SideNav', () => {
       .type('kQuiz@copods')
       .should('have.value', 'kQuiz@copods')
     cy.findByRole('button').click()
-
-    cy.get('a').find('#Results').should('have.text', 'Results').click()
+    cy.get('a')
+      .find('#Group_By_Tests')
+      .should('have.text', 'Results')
+      .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')
   })
 
