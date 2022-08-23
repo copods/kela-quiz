@@ -93,7 +93,7 @@ describe('Visiting group by test of results page', () => {
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('a', { timeout: 6000 })
       .find('#Group_By_Tests', { timeout: 6000 })
-      .should('have.text', 'Group By Tests')
+      .should('have.text', 'Results')
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')
   })
@@ -112,7 +112,7 @@ describe('Visiting group by test of results page', () => {
 
     cy.get('a', { timeout: 6000 })
       .find('#Group_By_Tests', { timeout: 6000 })
-      .should('have.text', 'Group By Tests')
+      .should('have.text', 'Results')
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')
   })
@@ -128,9 +128,9 @@ describe('Visiting group by test of results page', () => {
       .should('have.value', 'kQuiz@copods')
     cy.findByRole('button').click()
 
-    cy.get('a')
+    cy.get('a', { timeout: 6000 })
       .find('#Group_By_Tests', { timeout: 6000 })
-      .should('have.text', 'Group By Tests')
+      .should('have.text', 'Results')
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')
     cy.get('#group-by-test-container', { timeout: 6000 })
@@ -152,7 +152,7 @@ describe('Visiting group by test of results page', () => {
 
     cy.get('a')
       .find('#Group_By_Tests', { timeout: 6000 })
-      .should('have.text', 'Group By Tests')
+      .should('have.text', 'Results')
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')
     cy.get('#group-by-test-container', { timeout: 6000 })

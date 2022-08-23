@@ -1,6 +1,10 @@
 import { useLoaderData } from '@remix-run/react'
 import CandidtateListOfTestItem from '~/components/results/CandidtateListOfTestItem'
-import { members, resultConstants } from '~/constants/common.constants'
+import {
+  members,
+  resultConstants,
+  testsConstants,
+} from '~/constants/common.constants'
 
 const ExamPendingComponent = () => {
   const { testPreview } = useLoaderData()
@@ -9,8 +13,8 @@ const ExamPendingComponent = () => {
   return (
     <>
       {testData.length !== 0 ? (
-        <div className="grid grid-cols-12  bg-[#F9FAFB] pb-4  ">
-          <div className="col-span-full grid grid-cols-10 rounded-lg border border-solid border-[#E5E7EB] bg-tableHeader shadow-table">
+        <div className="bg-[#F9FAFB] pb-4  ">
+          <div className="col-span-full rounded-lg border border-solid border-[#E5E7EB] bg-tableHeader shadow-table">
             <div className="col-span-full grid grid-cols-10 py-4 px-12">
               <span className="col-span-1 text-sm  font-semibold  text-gray-500">
                 {resultConstants.srno}
@@ -37,7 +41,7 @@ const ExamPendingComponent = () => {
           </div>
         </div>
       ) : (
-        <div>No Candidate for this Test</div>
+        <div>{testsConstants.noCandidateForTest}</div>
       )}
     </>
   )

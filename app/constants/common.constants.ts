@@ -8,8 +8,8 @@ export const commonConstants = {
   removeButton: 'Remove',
   addButton: 'Add',
   byText: 'By',
-  total: 'Total',
   continue: 'Continue',
+  total: 'Total',
   createdAt: 'createdAt',
   createdDate: 'Created Date',
 }
@@ -23,6 +23,7 @@ export const members = {
   firstName: 'First Name',
   lastName: ' Last Name',
   email: 'Email',
+  name: 'Name',
   role: 'Role',
   members: 'Members',
   addedOn: 'Added On',
@@ -64,6 +65,8 @@ export const testsConstants = {
   createdOn: 'Created on',
   created: 'Created',
   actionsText: 'Actions',
+  noTestFound: 'No Test Found',
+  noCandidateForTest: "No Candidate for this Test"
 }
 export const componentGlobalConstants = {
   totalCounts: 'Total Counts',
@@ -79,7 +82,12 @@ export enum QuestionTypes {
   singleChoice = 'SINGLE_CHOICE',
   text = 'TEXT',
 }
-
+export const statusCheck = {
+  success: 'Success',
+  commonError: 'Something Went Wrong',
+  deletedSuccess: 'Deleted Successfully...!',
+  noEmailsInvite: 'No emails to invite',
+}
 export const resultConstants = {
   order: 'Order',
   test: 'Test',
@@ -87,7 +95,9 @@ export const resultConstants = {
   totalAttended: 'Attended',
   noTestAlert: 'No test found. Add your test first',
   srno: 'Sr.No',
-  invitedBy: "Invited By"
+  invitedBy: "Invited By",
+  result: 'Result',
+  review: 'Review',
 }
 
 export enum QuestionStatus {
@@ -103,6 +113,8 @@ export const candidateExam = {
   timeLimit: 'Time Limit',
   assessmentDetails: 'Assessment Details',
   assessmentTests: 'Assessment Tests',
+  assessmentEnd: 'Assessment Ended',
+  wrongLink: "Wrong Link",
   minutes: 'Mins',
   description: 'Description',
   total: 'Total',
@@ -114,9 +126,10 @@ export const candidateExam = {
     'I understand that once I begin the assessment I cannot leave and  return to this assessment at a later time.',
   beginAssesment: 'Begin Assesment',
   instructions: 'Instructions',
-  startSection: 'Start Section',
+  startSection: 'Start Now',
   examTitle: 'Pre-Interview Assessment',
   info: 'Info',
+  noOfQuestions: "No. of Questions"
 }
 export const cypress = {
   Tests: 'Tests',
@@ -142,14 +155,23 @@ export const cypress = {
   question: 'Question',
   saveAndAddMore: 'Save & Add More',
   enterAllOptions: 'Enter all the Options',
-  groupByTest: 'Group By Tests',
+  groupByTest: 'Results',
   members: 'Members',
   addMember: '+ Add Member',
   cancel: 'Cancel',
   delete: 'Delete',
-  results: 'Group By Tests',
+  results: 'Results',
   name: 'Name',
   description: 'Description',
   totalTime: 'Total Time',
   totalSections: 'Total Sections',
+}
+
+export enum sortByOrder {
+  ascending = 'asc',
+  name = 'name',
+  descending = 'descending',
+  multipleChoice = 'MULTIPLE_CHOICE',
+  singleChoice = 'SINGLE_CHOICE',
+  text = 'TEXT',
 }

@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await getUserId(request)
-  if (userId) return redirect('/dashboard')
+  if (userId) return redirect('/members')
   return redirect('/sign-in')
 }
 

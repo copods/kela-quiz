@@ -1,18 +1,20 @@
 /// <reference types="Cypress"/>
 
+import { cypress } from '~/constants/common.constants'
+
 describe('Test for members', () => {
   it('Test for recdirect to members page', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
       .type('careers@copods.co')
-      .should('have.value', 'careers@copods.co')
+      .should('have.value', cypress.email)
     cy.get('#password')
       .clear()
       .type('kQuiz@copods')
-      .should('have.value', 'kQuiz@copods')
+      .should('have.value', cypress.password)
     cy.findByRole('button').click()
-    cy.get('a').find('#Members').should('have.text', 'Members').click()
+    cy.get('a').find('#Members').should('have.text', cypress.members).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/members')
   })
   //
@@ -21,14 +23,14 @@ describe('Test for members', () => {
     cy.get('#email')
       .clear()
       .type('careers@copods.co')
-      .should('have.value', 'careers@copods.co')
+      .should('have.value', cypress.email)
     cy.get('#password')
       .clear()
       .type('kQuiz@copods')
-      .should('have.value', 'kQuiz@copods')
+      .should('have.value', cypress.password)
     cy.findByRole('button').click()
-    cy.get('a').find('#Members').should('have.text', 'Members').click()
-    cy.get('#addMember').should('have.text', '+ Add Member').click()
+    cy.get('a').find('#Members').should('have.text', cypress.members).click()
+    cy.get('#addMember').should('have.text', cypress.addMember).click()
     cy.get('#AddPopUpModel').should('be.visible')
     cy.get('#firstName').clear().type('hinata').should('have.value', 'hinata')
     cy.get('#lastName').clear().type('hyuga').should('have.value', 'hyuga')
@@ -50,14 +52,14 @@ describe('Test for members', () => {
     cy.get('#email')
       .clear()
       .type('careers@copods.co')
-      .should('have.value', 'careers@copods.co')
+      .should('have.value', cypress.email)
     cy.get('#password')
       .clear()
       .type('kQuiz@copods')
-      .should('have.value', 'kQuiz@copods')
+      .should('have.value', cypress.password)
     cy.findByRole('button').click()
-    cy.get('a').find('#Members').should('have.text', 'Members').click()
-    cy.get('#addMember').should('have.text', '+ Add Member').click()
+    cy.get('a').find('#Members').should('have.text', cypress.members).click()
+    cy.get('#addMember').should('have.text', cypress.addMember).click()
     cy.get('#cancelAddButton').should('have.text', 'Cancel').click()
   })
   it('Test for Delete member popup cancel button', () => {
@@ -65,13 +67,13 @@ describe('Test for members', () => {
     cy.get('#email')
       .clear()
       .type('careers@copods.co')
-      .should('have.value', 'careers@copods.co')
+      .should('have.value', cypress.email)
     cy.get('#password')
       .clear()
       .type('kQuiz@copods')
-      .should('have.value', 'kQuiz@copods')
+      .should('have.value', cypress.password)
     cy.findByRole('button').click()
-    cy.get('a').find('#Members').should('have.text', 'Members').click()
+    cy.get('a').find('#Members').should('have.text', cypress.members).click()
 
     cy.get('.memberRow').each((item) => {
       cy.contains('hinata hyuga')
@@ -84,7 +86,7 @@ describe('Test for members', () => {
         })
 
       cy.get('#deleteDialog').should('be.visible')
-      cy.get('#cancelDeletePopUp').should('have.text', 'Cancel').click()
+      cy.get('#cancelDeletePopUp').should('have.text', cypress.cancel).click()
     })
   })
 
@@ -93,13 +95,13 @@ describe('Test for members', () => {
     cy.get('#email')
       .clear()
       .type('careers@copods.co')
-      .should('have.value', 'careers@copods.co')
+      .should('have.value', cypress.email)
     cy.get('#password')
       .clear()
       .type('kQuiz@copods')
-      .should('have.value', 'kQuiz@copods')
+      .should('have.value', cypress.password)
     cy.findByRole('button').click()
-    cy.get('a').find('#Members').should('have.text', 'Members').click()
+    cy.get('a').find('#Members').should('have.text', cypress.members).click()
 
     cy.get('.memberRow').each((item) => {
       cy.contains('hinata hyuga')
@@ -110,7 +112,7 @@ describe('Test for members', () => {
             .should('be.visible')
             .click()
         })
-      cy.get('.confirm-delete').should('have.text', 'Delete').click()
+      cy.get('.confirm-delete').should('have.text', cypress.delete).click()
       cy.get('.Toastify__toast').find('.Toastify__close-button  ').click()
       cy.intercept('/members').as('membersPage')
       cy.get('.memberRow').each((item) => {

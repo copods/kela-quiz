@@ -104,7 +104,7 @@ export interface Test {
   sections: Array<SectionInTest>
   deleted: boolean
   deletedAt: string
-  candidateTest?: Array<Option>
+  candidateTest?: Array<CandidateTest>
 }
 
 export interface SectionInTest {
@@ -193,6 +193,19 @@ export interface CandidateQuestion {
   order: number
   sectionInCandidateTestId: string
   answeredAt: Date | null
+  createdAt: Date
+  updatedAt: Date
+}
+
+export interface CandidateResult {
+  id: string
+  candidateId: string
+  candidateTestId: string
+  totalQuestion: number
+  correctQuestion: number
+  unanswered: number
+  testId: string
+  isQualified: boolean
   createdAt: Date
   updatedAt: Date
 }

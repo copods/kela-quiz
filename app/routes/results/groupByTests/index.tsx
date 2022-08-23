@@ -24,9 +24,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 export default function Results() {
   return (
     <AdminLayout>
-      <div>
-        <GroupByTests />
-      </div>
+      <GroupByTests />
     </AdminLayout>
   )
 }
