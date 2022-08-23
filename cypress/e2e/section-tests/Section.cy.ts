@@ -1,3 +1,5 @@
+import { cypress, routeFiles } from '~/constants/common.constants'
+
 /// <reference types="Cypress">
 describe('Test for Section', () => {
   it('Visit Section page', () => {
@@ -5,13 +7,16 @@ describe('Test for Section', () => {
     cy.get('#email')
       .clear()
       .type('careers@copods.co')
-      .should('have.value', 'careers@copods.co')
+      .should('have.value', cypress.email)
     cy.get('#password')
       .clear()
       .type('kQuiz@copods')
-      .should('have.value', 'kQuiz@copods')
+      .should('have.value', cypress.password)
     cy.findByRole('button').click()
-    cy.get('a').find('#Sections').should('have.text', 'Sections').click()
+    cy.get('a')
+      .find('#Sections')
+      .should('have.text', routeFiles.sections)
+      .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
   })
 
@@ -20,14 +25,17 @@ describe('Test for Section', () => {
     cy.get('#email')
       .clear()
       .type('careers@copods.co')
-      .should('have.value', 'careers@copods.co')
+      .should('have.value', cypress.email)
     cy.get('#password')
       .clear()
       .type('kQuiz@copods')
-      .should('have.value', 'kQuiz@copods')
+      .should('have.value', cypress.password)
     cy.findByRole('button').click()
 
-    cy.get('a').find('#Sections').should('have.text', 'Sections').click()
+    cy.get('a')
+      .find('#Sections')
+      .should('have.text', routeFiles.sections)
+      .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('#add-section').click()
     const sectionName = `Aptitude - ${new Date().getTime()}`
@@ -38,13 +46,6 @@ describe('Test for Section', () => {
         cy.get('textarea').type('Aptitude')
         cy.get("button[type='submit']", { timeout: 10000 }).click()
       })
-    cy.wait(1600)
-    cy.get('.border-l-8')
-      .find('h2')
-      .invoke('text')
-      .should((someValue) => {
-        expect(someValue).to.deep.equal(sectionName)
-      })
   })
 
   it('cancel Add section', () => {
@@ -52,13 +53,16 @@ describe('Test for Section', () => {
     cy.get('#email')
       .clear()
       .type('careers@copods.co')
-      .should('have.value', 'careers@copods.co')
+      .should('have.value', cypress.email)
     cy.get('#password')
       .clear()
       .type('kQuiz@copods')
-      .should('have.value', 'kQuiz@copods')
+      .should('have.value', cypress.password)
     cy.findByRole('button').click()
-    cy.get('a').find('#Sections').should('have.text', 'Sections').click()
+    cy.get('a')
+      .find('#Sections')
+      .should('have.text', routeFiles.sections)
+      .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('#add-section').click()
     cy.get('form > div', { timeout: 10000 })
@@ -73,14 +77,16 @@ describe('Test for Section', () => {
     cy.get('#email')
       .clear()
       .type('careers@copods.co')
-      .should('have.value', 'careers@copods.co')
+      .should('have.value', cypress.email)
     cy.get('#password')
       .clear()
       .type('kQuiz@copods')
-      .should('have.value', 'kQuiz@copods')
+      .should('have.value', cypress.password)
     cy.findByRole('button').click()
-    cy.get('a').find('#Sections').should('have.text', 'Sections').click()
-    cy.wait(1000)
+    cy.get('a')
+      .find('#Sections')
+      .should('have.text', routeFiles.sections)
+      .click()
     cy.location().then((loc) => {
       cy.location('search').should('include', loc.search)
     })
@@ -91,13 +97,16 @@ describe('Test for Section', () => {
     cy.get('#email')
       .clear()
       .type('careers@copods.co')
-      .should('have.value', 'careers@copods.co')
+      .should('have.value', cypress.email)
     cy.get('#password')
       .clear()
       .type('kQuiz@copods')
-      .should('have.value', 'kQuiz@copods')
+      .should('have.value', cypress.password)
     cy.findByRole('button').click()
-    cy.get('a').find('#Sections').should('have.text', 'Sections').click()
+    cy.get('a')
+      .find('#Sections')
+      .should('have.text', routeFiles.sections)
+      .click()
     cy.location().then((loc) => {
       cy.location('search').should('include', loc.search)
     })
@@ -111,13 +120,11 @@ describe('Test for Section', () => {
             .invoke('text')
             .then((el) => {
               if (el === 'Name') {
-                cy.wait(1000)
                 cy.get('h2').then(($elements) => {
                   var strings = [...$elements].map(($el) => $el.innerText)
                   expect(strings).to.deep.equal([...strings].sort())
                 })
               } else if (el === 'Created Date') {
-                cy.wait(1000)
                 cy.get('.created-by-date').then(($elements) => {
                   var strings = [...$elements].map(($el) => {
                     return new Date($el.innerText).toLocaleDateString

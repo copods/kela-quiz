@@ -8,8 +8,8 @@ export const commonConstants = {
   removeButton: 'Remove',
   addButton: 'Add',
   byText: 'By',
-  total: 'Total',
   continue: 'Continue',
+  total: 'Total',
   createdAt: 'createdAt',
   createdDate: 'Created Date',
 }
@@ -65,6 +65,7 @@ export const testsConstants = {
   createdOn: 'Created on',
   created: 'Created',
   actionsText: 'Actions',
+  noTestFound: 'No Test Found',
   noCandidateForTest: "No Candidate for this Test"
 }
 export const componentGlobalConstants = {
@@ -81,7 +82,12 @@ export enum QuestionTypes {
   singleChoice = 'SINGLE_CHOICE',
   text = 'TEXT',
 }
-
+export const statusCheck = {
+  success: 'Success',
+  commonError: 'Something Went Wrong',
+  deletedSuccess: 'Deleted Successfully...!',
+  noEmailsInvite: 'No emails to invite',
+}
 export const resultConstants = {
   order: 'Order',
   test: 'Test',
@@ -159,4 +165,13 @@ export const cypress = {
   description: 'Description',
   totalTime: 'Total Time',
   totalSections: 'Total Sections',
+}
+
+export enum sortByOrder {
+  ascending = 'asc',
+  name = 'name',
+  descending = 'descending',
+  multipleChoice = 'MULTIPLE_CHOICE',
+  singleChoice = 'SINGLE_CHOICE',
+  text = 'TEXT',
 }
