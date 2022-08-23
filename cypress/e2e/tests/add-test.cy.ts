@@ -108,7 +108,10 @@ describe('Creating tests', () => {
       .should('have.value', cypress.password)
     cy.findByRole('button').click()
 
-    cy.get('a').find('#Tests').should('have.text', testsConstants.Tests).click()
+    cy.get('a', { timeout: 6000 })
+      .find('#Tests')
+      .should('have.text', testsConstants.Tests)
+      .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('#addTest').click()
     cy.location('pathname', { timeout: 60000 }).should(
