@@ -69,6 +69,7 @@ const AddSection = ({
                     id="sectionName"
                     className="h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
                     placeholder="Enter Section Name"
+                    maxLength={52}
                   />
                 </div>
                 <div className="pb-6">

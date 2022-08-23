@@ -602,7 +602,7 @@ describe('Test for section-details', () => {
     cy.get('#questionEditor > .rounded-lg > .ql-container > .ql-editor')
       .type('{backspace}')
       .should('have.value', '')
-    cy.get('#saveAndAddMore').should('have.text', 'Save & Add More').click()
+    cy.get('#saveAndAddMore',{timeout:6000}).should('have.text', 'Save & Add More').click()
     cy.get('.Toastify__close-button', { timeout: 6000 }).should("be.visible")
     cy.get('.Toastify__close-button').click({ multiple: true })
     cy.get('.Toastify__toast').should('have.text', 'Enter the Question')
