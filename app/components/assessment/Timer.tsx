@@ -4,6 +4,7 @@ import { candidateExam } from '~/constants/common.constants'
 import type {
   CandidateTest,
   SectionInCandidateTest,
+  SectionInTest,
 } from '~/interface/Interface'
 import { getTimeLeftInSeconds } from '~/utils/assessment.utils'
 
@@ -12,7 +13,7 @@ const TimerComponent = ({
   section,
 }: {
   candidateTest: CandidateTest
-  section: any
+  section: SectionInTest
 }) => {
   const [time, setTimer] = useState(-1)
   let candidateSection: SectionInCandidateTest
@@ -36,7 +37,6 @@ const TimerComponent = ({
           setTimer(timeLeft)
           if (timeLeft == 0) {
             submit({ order: section.order.toString() }, { method: 'post' })
-            // setTimer2(null)
             setTimer(0)
             clearInterval(timer)
           }
@@ -62,7 +62,7 @@ const TimerComponent = ({
       </span>
       <span className="text-sm font-medium text-gray-500">
         {candidateExam.timeRemaining}
-      </span>{' '}
+      </span>
     </div>
   )
 }

@@ -65,6 +65,7 @@ export const testsConstants = {
   createdOn: 'Created on',
   created: 'Created',
   actionsText: 'Actions',
+  noCandidateForTest: "No Candidate for this Test"
 }
 export const componentGlobalConstants = {
   totalCounts: 'Total Counts',
@@ -106,6 +107,8 @@ export const candidateExam = {
   timeLimit: 'Time Limit',
   assessmentDetails: 'Assessment Details',
   assessmentTests: 'Assessment Tests',
+  assessmentEnd: 'Assessment Ended',
+  wrongLink: "Wrong Link",
   minutes: 'Mins',
   description: 'Description',
   total: 'Total',
@@ -146,12 +149,12 @@ export const cypress = {
   question: 'Question',
   saveAndAddMore: 'Save & Add More',
   enterAllOptions: 'Enter all the Options',
-  groupByTest: 'Group By Tests',
+  groupByTest: 'Results',
   members: 'Members',
   addMember: '+ Add Member',
   cancel: 'Cancel',
   delete: 'Delete',
-  results: 'Group By Tests',
+  results: 'Results',
   name: 'Name',
   description: 'Description',
   totalTime: 'Total Time',

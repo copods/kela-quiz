@@ -41,7 +41,6 @@ export async function getResultsOfCandidatesByTestId({ testId }: Pick<CandidateR
           }
         }
       },
-
     }
   })
 }

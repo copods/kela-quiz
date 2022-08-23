@@ -24,9 +24,6 @@ const CandidateInstruction = () => {
   return (
     <div className="h-full flex-col overflow-y-auto">
       <div>
-        {/* <div className="pb-4 text-2xl font-semibold leading-8 text-gray-800">
-          {candidateExam.examTitle}
-        </div> */}
         <div
           className="pb-9 text-base leading-6 text-gray-700"
           dangerouslySetInnerHTML={{

@@ -40,7 +40,7 @@ describe('Test for Logout, SideNav', () => {
     cy.findByRole('button').click()
     cy.get('a')
       .find('#Group_By_Tests')
-      .should('have.text', 'Group By Tests')
+      .should('have.text', 'Results')
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')
   })

@@ -1,6 +1,10 @@
 import { useLoaderData } from '@remix-run/react'
 import CandidtateListOfTestItem from '~/components/results/CandidtateListOfTestItem'
-import { members, resultConstants } from '~/constants/common.constants'
+import {
+  members,
+  resultConstants,
+  testsConstants,
+} from '~/constants/common.constants'
 
 const ExamPendingComponent = () => {
   const { testPreview } = useLoaderData()
@@ -37,7 +41,7 @@ const ExamPendingComponent = () => {
           </div>
         </div>
       ) : (
-        <div>No Candidate for this Test</div>
+        <div>{testsConstants.noCandidateForTest}</div>
       )}
     </>
   )

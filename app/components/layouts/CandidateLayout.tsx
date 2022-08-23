@@ -32,7 +32,10 @@ export default function CandidateLayout({
         <div className="flex h-20 items-center justify-between bg-white px-9 text-2xl font-semibold leading-8 text-gray-800">
           {params?.questionId ? (
             <>
-              <TimerComponent candidateTest={candidateTest} section={section} />
+              <TimerComponent
+                candidateTest={candidateTest}
+                section={section as SectionInTest}
+              />
               <form className="flex gap-5" method="post">
                 <button
                   className="h-11 w-40 rounded-md border border-primary bg-white text-base font-medium text-primary shadow-sm"

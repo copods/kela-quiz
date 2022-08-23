@@ -24,12 +24,12 @@ const SectionDetails = () => {
         </div>
         <div className="flex flex-row items-center gap-4">
           <div className="flex gap-2 text-lg text-gray-600">
-            {`${candidateExam.noOfQuestions}`}:
+            {candidateExam.noOfQuestions}:
             <span className="font-medium">{section.totalQuestions}</span>
           </div>
           <Icon icon="ci:line-m" className="text-2xl text-gray-600" />
           <div className="flex gap-2 text-lg text-gray-600">
-            {`${candidateExam.total} ${candidateExam.time}`}:
+            {candidateExam.total} {candidateExam.time}:
             <span className="font-medium">
               {section.timeInSeconds / 60} Mins
             </span>
@@ -39,7 +39,7 @@ const SectionDetails = () => {
 
       <button
         className="w-fit rounded-md bg-primary py-3 px-11 text-white"
-        onClick={() => startSection()}
+        onClick={startSection}
       >
         {candidateExam.startSection}
       </button>
