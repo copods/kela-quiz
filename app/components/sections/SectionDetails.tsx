@@ -8,13 +8,6 @@ const SectionDetails = () => {
   const sectionDetails = useLoaderData()
   const [currentAccordian, setCurrentAccordian] = useState(-1)
   const [searchText, setSearchText] = useState('')
-  // useEffect(() => {
-  //   window.addEventListener('keydown', function (event) {
-  //     if (event.shiftKey && event.altKey) {
-  //       window.location.href = '#sectionSearch'
-  //     }
-  //   })
-  // }, [])
 
   return (
     <div className="flex h-full w-full flex-col gap-6 overflow-auto break-all rounded-lg border border-gray-200 bg-white px-9 py-6">
