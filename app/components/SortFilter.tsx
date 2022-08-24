@@ -27,6 +27,10 @@ const SortFilter = ({
             icon="ph:sort-ascending-bold"
             onClick={() => onSortDirectionChange('desc')}
             className="cursor-pointer text-2xl"
+            tabIndex={0}
+            onKeyUp={(e) => {
+              if (e.key === 'Enter') onSortDirectionChange('desc')
+            }}
           />
         ) : (
           <Icon
@@ -34,6 +38,10 @@ const SortFilter = ({
             icon="ph:sort-descending-bold"
             onClick={() => onSortDirectionChange('asc')}
             className="cursor-pointer text-2xl"
+            tabIndex={0}
+            onKeyUp={(e) => {
+              if (e.key === 'Enter') onSortDirectionChange('asc')
+            }}
           />
         )}
         <DropdownField

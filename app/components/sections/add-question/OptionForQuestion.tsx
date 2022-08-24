@@ -114,7 +114,7 @@ export default function OptionForQuestion({
 
   return (
     <div className="flex flex-1 flex-col gap-6">
-      <div className="mb-2 flex h-11 flex-row items-end justify-between">
+      <div className="flex h-11 flex-row items-end justify-between">
         {getQuestionType(selectedTypeOfQuestion) ===
           QuestionTypes.multipleChoice ||
         getQuestionType(selectedTypeOfQuestion) ===
@@ -123,7 +123,8 @@ export default function OptionForQuestion({
             {addQuestion.createOptions}
           </div>
         ) : (
-          <div className="flex items-center justify-center gap-2 text-base font-medium leading-6 text-gray-600">
+          <div
+            className={`flex items-center justify-center gap-2 text-base font-medium leading-6 text-gray-600 ${textCorrectAnswer.length < 2 && 'pointer-events-none' }`}>
             {addQuestion.checkOrder}
             <span>
               <Toggle toggle={checkOrder} onToggleChange={setCheckOrder} />

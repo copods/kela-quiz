@@ -17,17 +17,15 @@ const QuestionCard = ({
   return (
     <div
       key={question.id}
-      className="flex flex-col rounded-lg border border-gray-300 bg-gray-50 px-6 py-7"
+      className="flex flex-col rounded-lg border border-gray-300 bg-gray-50 px-6 py-7 cursor-pointer"
+      onClick={() => {
+       onAccordianToggle(
+         isExpanded == -1 ? index : isExpanded == index ? -1 : index
+       )
+     }}
     >
       <div className="items-top break flex justify-between text-base text-gray-600">
-        <div
-          className="items-top flex flex-1 justify-between"
-          onClick={() => {
-            onAccordianToggle(
-              isExpanded == -1 ? index : isExpanded == index ? -1 : index
-            )
-          }}
-        >
+        <div className="items-top flex flex-1 justify-between" >
           <div className="ql-editor flex-1 p-0 pr-4">
             <div
               className="cursor-pointer"

@@ -31,6 +31,9 @@ module.exports = {
       },
       gridTemplateColumns: {
         18: 'repeat(18, minmax(0, 1fr))'
+      },
+      padding:{
+        "2-px":'2px'
       }
     },
   },

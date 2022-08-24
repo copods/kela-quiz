@@ -10,7 +10,7 @@ const SectionLink = ({ section }: { section: any }) => {
   const location = useLocation() // to get current location
   const resolvedPath = useResolvedPath(path) // to get resolved path which would match with current location
   return (
-    <NavLink to={path} key={section.id}>
+    <NavLink to={path} key={section.id} className="rounded-lg"> 
       <SectionCard
         isActive={location.pathname === resolvedPath.pathname}
         name={section?.name}
@@ -44,7 +44,7 @@ const Sections = ({
   return (
     <div className="flex h-full w-96 flex-col gap-6">
       {/* filters */}
-      <div className="flex items-center justify-between ">
+      <div className="flex items-center justify-between p-2-px">
         <div id="sort-filter-container">
           <SortFilter
             filterData={sortByDetails}
@@ -60,7 +60,7 @@ const Sections = ({
 
       {/* list */}
       <div
-        className="flex flex-1 flex-col gap-6 overflow-auto"
+        className="flex flex-1 flex-col gap-6 overflow-auto p-2-px"
         id="section-cards"
       >
         {sections?.map((section: any) => (
