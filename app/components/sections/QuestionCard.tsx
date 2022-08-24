@@ -25,7 +25,22 @@ const QuestionCard = ({
      }}
     >
       <div className="items-top break flex justify-between text-base text-gray-600">
-        <div className="items-top flex flex-1 justify-between" >
+
+        <div
+          className="items-top flex flex-1 justify-between"
+          tabIndex={0}
+          onKeyUp={(e) => {
+            if (e.key === 'Enter')
+              onAccordianToggle(
+                isExpanded == -1 ? index : isExpanded == index ? -1 : index
+              )
+          }}
+          onClick={() => {
+            onAccordianToggle(
+              isExpanded == -1 ? index : isExpanded == index ? -1 : index
+            )
+          }}
+        >
           <div className="ql-editor flex-1 p-0 pr-4">
             <div
               className="cursor-pointer"

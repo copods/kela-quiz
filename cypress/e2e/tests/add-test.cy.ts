@@ -457,7 +457,9 @@ describe('Creating tests', () => {
       .clear()
       .type('kQuiz@copods')
       .should('have.value', cypress.password)
-    cy.findByRole('button' ,{ timeout: 6000 }).click()
+
+    cy.findByRole('button', { timeout: 6000 }).click()
+
 
     cy.get('a', { timeout: 10000 })
       .find('#Tests', { timeout: 10000 })
@@ -503,12 +505,12 @@ describe('Creating tests', () => {
       .should('have.text', 'Submit', { timeout: 6000 })
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.get('a', { timeout: 6000 })
-      .find('#Tests', { timeout: 6000 })
+    cy.get('a', { timeout: 10000 })
+      .find('#Tests', { timeout: 10000 })
       .should('have.text', testsConstants.Tests)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.get('#sort-filter-body').get('#ascend').click()
+    cy.get('#sort-filter-body').get('#ascend', { timeout: 6000 }).click()
     cy.get('#test-list', { timeout: 6000 }).should('be.visible')
     cy.get('#test-list', { timeout: 6000 })
       .get('#test-name-navigation')
