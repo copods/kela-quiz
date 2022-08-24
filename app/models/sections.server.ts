@@ -13,11 +13,6 @@ export async function getSectionById({ id }: Pick<Section, 'id'>) {
           correctOptions: true,
           options: true,
           correctAnswer: true,
-          questionType: {
-            select: {
-              value: true,
-            },
-          },
         },
       },
     },
