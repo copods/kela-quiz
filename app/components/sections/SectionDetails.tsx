@@ -17,6 +17,7 @@ const SectionDetails = () => {
       <hr className="-mt-2 h-px w-full bg-gray-300" />
       <div className="flex items-start justify-between gap-2 md:flex-col xl:flex-row xl:items-center">
         <input
+          tabIndex={0}
           id="sectionSearch"
           type="text"
           name="search"
@@ -29,6 +30,8 @@ const SectionDetails = () => {
             className="h-9 rounded-lg bg-primary px-5 text-xs text-[#F0FDF4] flex items-center"
           to={`/sections/${sectionDetails.sectionDetails?.id}/add-question`}
         >
+
+
             + {addQuestion.addQuestion}
         </Link>
       </div>
