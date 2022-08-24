@@ -1,6 +1,7 @@
 import { useLoaderData, useSubmit } from '@remix-run/react'
 import { candidateExam, routeFiles } from '~/constants/common.constants'
 import type { SectionInTest, TestSection } from '~/interface/Interface'
+import Button from '../form/Button'
 
 const CandidateInstruction = () => {
   const { firstSection, instructions } = useLoaderData()
@@ -68,12 +69,12 @@ const CandidateInstruction = () => {
             <li>You can traverse the questions in particular section</li>
           </ul>
           <div className="flex">
-            <button
-              className="text-md mt-8 h-12 w-52 rounded-md bg-primary text-gray-50"
-              onClick={() => startTestForCandidate()}
-            >
-              {candidateExam.beginAssesment}
-            </button>
+            <Button 
+            className='h-12 w-52 mt-8'
+            varient='primary-solid'
+            buttonText={candidateExam.beginAssesment}
+            onClick={startTestForCandidate}
+            />
           </div>
         </div>
       </div>

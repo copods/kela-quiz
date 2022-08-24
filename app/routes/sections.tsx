@@ -19,6 +19,7 @@ import AddSection from '~/components/sections/AddSection'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import type { Section } from '~/interface/Interface'
+import Button from '~/components/form/Button'
 
 export type ActionData = {
   errors?: {
@@ -183,13 +184,9 @@ export default function SectionPage() {
           <h2 className="text-3xl font-bold text-black">
             {routeFiles.sections}
           </h2>
-          <button
-            className="h-9 rounded-lg bg-primary px-5 text-xs text-[#F0FDF4]"
-            id="add-section"
-            onClick={() => setShowAddSectionModal(!showAddSectionModal)}
-          >
-            + {sectionsConstants.addSection}
-          </button>
+          <Button id='add-section' className='px-5 h-9' varient='primary-solid' onClick={() => setShowAddSectionModal(!showAddSectionModal)} buttonText={
+            `+ ${sectionsConstants.addSection}`
+          } />
         </header>
 
         <div

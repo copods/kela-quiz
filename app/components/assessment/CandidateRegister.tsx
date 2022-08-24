@@ -79,6 +79,7 @@ function CandidateRegister() {
               buttonText={commonConstants.continue}
               type="submit"
               isDisabled={!canSubmitBtnBeEnabled()}
+              varient='primary-solid'
             />
           </div>
         </Form>

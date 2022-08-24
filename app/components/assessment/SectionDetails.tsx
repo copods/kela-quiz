@@ -1,6 +1,7 @@
 import { Icon } from '@iconify/react'
 import { useLoaderData, useSubmit } from '@remix-run/react'
 import { candidateExam } from '~/constants/common.constants'
+import Button from '../form/Button'
 
 const SectionDetails = () => {
   const { section, candidateSection } = useLoaderData()
@@ -37,12 +38,12 @@ const SectionDetails = () => {
         </div>
       </div>
 
-      <button
-        className="w-fit rounded-md bg-primary py-3 px-11 text-white"
-        onClick={startSection}
-      >
-        {candidateExam.startSection}
-      </button>
+      <Button 
+      className='px-11'
+      onClick={startSection}
+      buttonText={candidateExam.startSection}
+      varient='primary-solid'
+      />
     </div>
   )
 }

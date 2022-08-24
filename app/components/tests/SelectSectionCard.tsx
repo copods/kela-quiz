@@ -3,6 +3,7 @@ import Moment from 'moment'
 import { toast } from 'react-toastify'
 import type { TestSection } from '~/interface/Interface'
 import { commonConstants, testsConstants } from '~/constants/common.constants'
+import Button from '../form/Button'
 const SelectSectionCard = ({
   section,
   updateSection,
@@ -66,23 +67,17 @@ const SelectSectionCard = ({
           {section.name}
         </h3>
         {section.isSelected ? (
-          <button
-            className="h-6 rounded bg-red-500 px-4 text-[9px] text-white"
-            onClick={() => {
-              updateThisSection('isSelected', '', false)
-            }}
-          >
-            {commonConstants.removeButton}
-          </button>
+          <Button 
+          className='px-4 h-7' 
+          varient='secondary-solid' 
+          onClick={() => updateThisSection('isSelected', '', false)} 
+          buttonText={commonConstants.removeButton} />
         ) : (
-          <button
-            className="h-6 rounded bg-primary px-4 text-[9px] text-white"
-            onClick={() => {
-              updateThisSection('isSelected', '', true)
-            }}
-          >
-            {commonConstants.addButton}
-          </button>
+          <Button 
+          className='h-7 px-4' 
+          onClick={() => updateThisSection('isSelected', '', true)} 
+          varient='primary-solid' 
+          buttonText={commonConstants.addButton} />
         )}
       </div>
       <div className="flex text-xs text-gray-400">

@@ -55,20 +55,13 @@ export default function MemberListItem({
           </span>
         </div>
         <div className="col-span-1">
-          <button
-            id="deleteButton"
-            name="deleteMember"
-            disabled={loggedInUser}
-            value={JSON.stringify({ action: 'delete', id: user.id })}
-          >
-            <Icon
-              onClick={openPopUp}
-              icon="ic:outline-delete-outline"
-              className={`pointer-cursor h-6 w-6 text-red-500 ${
-                loggedInUser && 'cursor-not-allowed text-red-300'
-              }`}
-            ></Icon>
-          </button>
+              <Icon
+                onClick={openPopUp}
+                icon="ic:outline-delete-outline"
+                className={`cursor-pointer h-6 w-6 text-red-500 ${
+                  loggedInUser && 'cursor-not-allowed text-red-300'
+                }`}
+              />
         </div>
         <DeletePopUp setOpen={setOpen} open={open} onDelete={deleteUser} />
       </div>

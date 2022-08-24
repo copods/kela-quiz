@@ -7,6 +7,7 @@ import cuid from 'cuid'
 import { Link, useLoaderData, useSubmit, useTransition } from '@remix-run/react'
 import { toast } from 'react-toastify'
 import { addQuestion, QuestionTypes } from '~/constants/common.constants'
+import Button from '~/components/form/Button'
 
 const AddQuestionInSection = () => {
   const { sectionDetails, questionTypes } = useLoaderData()
@@ -212,43 +213,45 @@ const AddQuestionInSection = () => {
       <div className="flex items-center justify-between">
         <div className="flex">
           <Link to={`/sections/${sectionDetails?.id}`}>
-            <button
-              id="cancel"
-              disabled={transition.state === 'submitting'}
-              className={`flex h-9 items-center gap-1 rounded-lg bg-red-600 px-5 text-xs text-white ${
-                transition.state === 'submitting' && 'disabled:opacity-75'
-              }`}
-            >
-              {transition.state === 'submitting' ? 'Canceling...' : 'Cancel'}
-            </button>
+            <Button 
+            id='cancel'
+            isDisabled={transition.state === 'submitting'}
+            className='h-9 px-5'
+            buttonText={transition.state === 'submitting' ? 'Canceling...' : 'Cancel'}
+            varient='secondary-solid'
+            />
           </Link>
         </div>
         <div className="flex gap-2">
-          <button
-            id="saveAndExit"
-            disabled={transition.state === 'submitting'}
-            className={`flex h-9 items-center gap-1 rounded-lg bg-primary px-5 text-xs text-white ${
-              transition.state === 'submitting' && 'disabled:opacity-75'
-            }`}
-            onClick={() => saveQuestion(false)}
-          >
+          <Button 
+          id='saveAndExit'
+          isDisabled={transition.state === 'submitting'}
+          className='h-9 px-5'
+          onClick={() => saveQuestion(false)}
+          varient='primary-solid'
+          buttonText={
+            <>
             <Icon icon="ic:round-save" className="mr-1" />
             {transition.state === 'submitting' ? 'Saving...' : 'Save & Exit'}
-          </button>
+            </>
+          }
+          />
 
-          <button
-            id="saveAndAddMore"
-            disabled={transition.state === 'submitting'}
-            className={`flex h-9 items-center gap-1 rounded-lg bg-primary px-5 text-xs text-white ${
-              transition.state === 'submitting' && 'disabled:opacity-75'
-            }`}
-            onClick={() => saveQuestion(true)}
-          >
+          <Button 
+          id='saveAndAddMore'
+          isDisabled={transition.state === 'submitting'}
+          className='h-9 px-5'
+          onClick={() => saveQuestion(true)}
+          varient='primary-solid'
+          buttonText={
+            <>
             <Icon icon="ic:round-save" className="mr-1" />
             {transition.state === 'submitting'
               ? 'Saving...'
               : 'Save & Add More'}
-          </button>
+            </>
+          }
+          />
         </div>
       </div>
     </div>

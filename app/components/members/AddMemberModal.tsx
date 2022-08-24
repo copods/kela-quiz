@@ -4,6 +4,7 @@ import type { Role } from '~/interface/Interface'
 import { Form, useTransition } from '@remix-run/react'
 import { Fragment } from 'react'
 import { commonConstants, members } from '~/constants/common.constants'
+import Button from '../form/Button'
 export default function AddMemberModal({
   roles,
   open,
@@ -119,28 +120,24 @@ export default function AddMemberModal({
                     </div>
                   </div>
                   <div className="flex justify-end gap-2">
-                    <button
-                      id="cancelAddButton"
-                      type="button"
-                      className="h-9 rounded-md px-4 text-sm text-gray-500"
-                      onClick={() => setOpen(false)}
-                    >
-                      {commonConstants.cancel}
-                    </button>
-                    <button
-                      id="addbutton"
-                      type="submit"
-                      name="addMember"
-                      value={JSON.stringify({ action: 'add' })}
-                      className={`h-9 rounded-md bg-primary px-4 text-sm text-[#F0FDF4]${
-                        transition.state === 'submitting'
-                          ? 'disabled:text-[#F0FDF4] disabled:opacity-75'
-                          : ''
-                      }`}
-                      disabled={transition.state === 'submitting'}
-                    >
-                      {transition.state === 'submitting' ? 'Adding...' : 'Add'}
-                    </button>
+                    <Button 
+                    id='cancelAddButton'
+                    type='button'
+                    className='h-9 px-4'
+                    onClick={() => setOpen(false)}
+                    varient='primary-outlined'
+                    buttonText={commonConstants.cancel}
+                    />
+                    <Button  
+                    id='addButton'
+                    type='submit'
+                    name='addMember'
+                    value={JSON.stringify({ action: 'add' })}
+                    className='h-9 px-4'
+                    isDisabled={transition.state === 'submitting'}
+                    buttonText={transition.state === 'submitting' ? 'Adding...' : 'Add'}
+                    varient='primary-solid'
+                    />
                   </div>
                 </Dialog.Panel>
               </Transition.Child>

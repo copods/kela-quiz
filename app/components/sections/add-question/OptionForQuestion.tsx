@@ -7,6 +7,7 @@ import Toggle from '~/components/form/Toggle'
 import type { SetStateAction } from 'react'
 import { addQuestion, QuestionTypes } from '~/constants/common.constants'
 import { toast } from 'react-toastify'
+import Button from '~/components/form/Button'
 interface textAnswerType {
   id: string
   answer: string
@@ -131,12 +132,11 @@ export default function OptionForQuestion({
           </div>
         )}
 
-        <button
-          className="flex h-9 items-center  rounded-lg bg-primary px-5 text-xs text-white"
-          onClick={addOptionArea}
-        >
-          + {addQuestion.addOptions}
-        </button>
+        <Button 
+        className='h-9 px-5' 
+        varient='primary-solid' 
+        onClick={addOptionArea} 
+        buttonText={`+ ${addQuestion.addOptions}`} />
       </div>
 
       <div className="flex h-full flex-1 flex-col gap-5  overflow-auto">

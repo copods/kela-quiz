@@ -3,6 +3,7 @@ import { Fragment, useEffect, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import { toast } from 'react-toastify'
+import Button from '../form/Button'
 
 const InviteCandidatePopup = ({
   openInvitePopup,
@@ -110,23 +111,22 @@ const InviteCandidatePopup = ({
                 })}
 
                 <div className="flex justify-end gap-2 pt-4">
-                  <button
-                    type="button"
-                    className="h-9 rounded-md px-4 text-sm text-gray-500"
-                    onClick={updatePopupAndEmailState}
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="submit"
-                    name="inviteCandidates"
-                    value={testId}
-                    id="submitButton"
-                    className="h-9 rounded-md bg-primary px-4 text-sm text-[#F0FDF4]"
-                    // onClick={() => setOpen(false)}
-                  >
-                    Invite
-                  </button>
+                  <Button 
+                  type='button'
+                  className='h-9 px-4'
+                  varient='primary-outlined'
+                  buttonText='Cancel'
+                  onClick={updatePopupAndEmailState}
+                  />
+                  <Button 
+                  type='submit'
+                  name='inviteCandidates'
+                  value={testId}
+                  id='submitButton'
+                  className='h-9 px-4'
+                  varient='primary-solid'
+                  buttonText='Invite'
+                  />
                 </div>
               </Dialog.Panel>
             </Transition.Child>

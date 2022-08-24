@@ -4,6 +4,7 @@ import { useState } from 'react'
 import type { Question } from '~/interface/Interface'
 import QuestionCard from './QuestionCard'
 import { addQuestion, sectionsConstants } from '~/constants/common.constants'
+import Button from '../form/Button'
 const SectionDetails = () => {
   const sectionDetails = useLoaderData()
   const [currentAccordian, setCurrentAccordian] = useState(-1)
@@ -27,12 +28,12 @@ const SectionDetails = () => {
         <Link
           to={`/sections/${sectionDetails.sectionDetails?.id}/add-question`}
         >
-          <button
-            id="addQuestion"
-            className="h-9 rounded-lg bg-primary px-5 text-xs text-[#F0FDF4]"
-          >
-            + {addQuestion.addQuestion}
-          </button>
+          <Button
+          id='addQuestion'
+          className='h-9 px-5'
+          buttonText={`+ ${addQuestion.addQuestion}`}
+          varient='primary-solid'
+          />
         </Link>
       </div>
 
