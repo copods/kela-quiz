@@ -56,6 +56,7 @@ export default function MemberListItem({
         </div>
         <div className="col-span-1">
               <Icon
+                tabIndex={0}
                 onClick={openPopUp}
                 icon="ic:outline-delete-outline"
                 className={`cursor-pointer h-6 w-6 text-red-500 ${

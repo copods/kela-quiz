@@ -79,21 +79,22 @@ export default function DeletePopUp({
                 <div className="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                   <Form method="post">
                     <Button 
-                    varient='secondary-solid'
-                    type='button' 
-                    name='delete' 
-                    className='px-5'
-                    buttonText={commonConstants.delete} 
-                    onClick={handleDelete} />
+                      tabIndex={0}
+                      varient='secondary-solid'
+                      type='button' 
+                      name='delete' 
+                      className='px-5'
+                      buttonText={commonConstants.delete} 
+                      onClick={handleDelete} />
                   </Form>
                   <Button 
-                  type='button' 
-                  id="cancelDeletePopUp"
-                  varient='primary-outlined'
-                  className='px-5'
-                  onClick={() => setOpen(false)}
-                  buttonText={commonConstants.cancel}
-                   />
+                    tabIndex={0}
+                    type='button' 
+                    id="cancelDeletePopUp"
+                    varient='primary-outlined'
+                    className='px-5'
+                    onClick={() => setOpen(false)}
+                    buttonText={commonConstants.cancel} />
                 </div>
               </Dialog.Panel>
             </Transition.Child>

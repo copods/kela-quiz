@@ -74,10 +74,11 @@ function Login({ actionData, redirectTo }: LoginProps) {
           <div className="mt-6 flex items-center justify-center">
             <input type="hidden" name="redirectTo" value={redirectTo} />
             <Button 
-            buttonText="Sign in" 
-            type="submit"
-            varient='primary-solid'
-            className='w-full'
+              tabIndex={0}
+              buttonText="Sign in" 
+              type="submit"
+              varient='primary-solid'
+              className='w-full'
             />
           </div>
         </Form>

@@ -84,21 +84,21 @@ const AddSection = ({
 
                 <div className="flex justify-end gap-2">
                     <Button 
-                    type='button'
-                    className='h-9 px-4'
-                    onClick={() => setOpen(false)}
-                    varient="primary-outlined"
-                    buttonText={commonConstants.cancel}
-                    />
+                      tabIndex={0}
+                      type='button'
+                      className='h-9 px-4'
+                      onClick={() => setOpen(false)}
+                      varient="primary-outlined"
+                      buttonText={commonConstants.cancel} />
                     <Button 
-                    type='submit'
-                    id='submitButton'
-                    className='h-9 px-4'
-                    onClick={() => setOpen(false)}
-                    isDisabled={transition.state === 'submitting' || showErrorMessage}
-                    varient="primary-solid"
-                    buttonText={transition.state === 'submitting' ? 'Adding...' : 'Add'}
-                    />
+                      tabIndex={0}
+                      type='submit'
+                      id='submitButton'
+                      className='h-9 px-4'
+                      onClick={() => setOpen(false)}
+                      isDisabled={transition.state === 'submitting' || showErrorMessage}
+                      varient="primary-solid"
+                      buttonText={transition.state === 'submitting' ? 'Adding...' : 'Add'} />
                 </div>
               </Dialog.Panel>
             </Transition.Child>

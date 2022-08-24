@@ -18,6 +18,7 @@ export interface ButtonProps {
   className?: string
   title?: string
   value?: string
+  tabIndex?: number
   type?: "button" | "submit" | "reset"
   varient: 'primary-solid' | 'primary-outlined' | 'secondary-solid'
   buttonText: string | JSX.Element

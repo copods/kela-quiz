@@ -121,23 +121,23 @@ export default function AddMemberModal({
                   </div>
                   <div className="flex justify-end gap-2">
                     <Button 
-                    id='cancelAddButton'
-                    type='button'
-                    className='h-9 px-4'
-                    onClick={() => setOpen(false)}
-                    varient='primary-outlined'
-                    buttonText={commonConstants.cancel}
-                    />
+                      tabIndex={0}
+                      id='cancelAddButton'
+                      type='button'
+                      className='h-9 px-4'
+                      onClick={() => setOpen(false)}
+                      varient='primary-outlined'
+                      buttonText={commonConstants.cancel} />
                     <Button  
-                    id='addButton'
-                    type='submit'
-                    name='addMember'
-                    value={JSON.stringify({ action: 'add' })}
-                    className='h-9 px-4'
-                    isDisabled={transition.state === 'submitting'}
-                    buttonText={transition.state === 'submitting' ? 'Adding...' : 'Add'}
-                    varient='primary-solid'
-                    />
+                      tabIndex={0}
+                      id='addButton'
+                      type='submit'
+                      name='addMember'
+                      value={JSON.stringify({ action: 'add' })}
+                      className='h-9 px-4'
+                      isDisabled={transition.state === 'submitting'}
+                      buttonText={transition.state === 'submitting' ? 'Adding...' : 'Add'}
+                      varient='primary-solid' />
                   </div>
                 </Dialog.Panel>
               </Transition.Child>

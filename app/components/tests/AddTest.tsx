@@ -163,54 +163,41 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
         <div>
           <Link to={'/tests'}>
             <Button 
-            title='Cancel Add Test' 
-            className='h-9 px-7' 
-            varient='secondary-solid'
-            buttonText={commonConstants.cancel} 
-             />
+              tabIndex={0}
+              title='Cancel Add Test' 
+              className='h-9 px-7' 
+              varient='secondary-solid'
+              buttonText={commonConstants.cancel} />
           </Link>
         </div>
         <div className="flex gap-4">
-          {/* <button
-            title="Previous Tab"
-            id="backButton"
-            className={`h-9 rounded-lg px-7 text-xs text-white ${
-              currentTab != tabs[0].id
-                ? 'bg-primary'
-                : 'cursor-not-allowed bg-gray-600'
-            }`}
-            onClick={() => setCurrentTab(currentTab - 1)}
-            disabled={currentTab === tabs[0].id}
-          >
-            {commonConstants.backButton}
-          </button> */}
           <Button 
+            tabIndex={0}
             title='Previous Tab' 
             className='h-9 px-7' 
             varient='primary-solid'
             buttonText={commonConstants.backButton} 
             isDisabled={currentTab === tabs[0].id}
-            onClick={() => setCurrentTab(currentTab - 1)}
-             />
+            onClick={() => setCurrentTab(currentTab - 1)} />
           {currentTab != 2 ? (
             <Button 
-            title='Next Tab' 
-            className='h-9 px-7' 
-            varient='primary-solid'
-            buttonText={commonConstants.nextButton} 
-            isDisabled={!(name && description) || currentTab == 2}
-            onClick={() => setCurrentTab(currentTab + 1)}
-             />
+              tabIndex={0}
+              title='Next Tab' 
+              className='h-9 px-7' 
+              varient='primary-solid'
+              buttonText={commonConstants.nextButton} 
+              isDisabled={!(name && description) || currentTab == 2}
+              onClick={() => setCurrentTab(currentTab + 1)} />
           ) : (
             <Button 
-            title='Next Tab' 
-            id='submitButton'
-            className='h-9 px-7' 
-            varient='primary-solid'
-            buttonText={transition.state === 'submitting' ? 'Creating Test' : 'Submit'} 
-            isDisabled={currentTab != 2}
-            onClick={() => submitAddTest()}
-             />
+              tabIndex={0}
+              title='Next Tab' 
+              id='submitButton'
+              className='h-9 px-7' 
+              varient='primary-solid'
+              buttonText={transition.state === 'submitting' ? 'Creating Test' : 'Submit'} 
+              isDisabled={currentTab != 2}
+              onClick={() => submitAddTest()} />
           )}
         </div>
       </div>

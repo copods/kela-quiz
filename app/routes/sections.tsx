@@ -184,9 +184,14 @@ export default function SectionPage() {
           <h2 className="text-3xl font-bold text-black">
             {routeFiles.sections}
           </h2>
-          <Button id='add-section' className='px-5 h-9' varient='primary-solid' onClick={() => setShowAddSectionModal(!showAddSectionModal)} buttonText={
-            `+ ${sectionsConstants.addSection}`
-          } />
+          <Button 
+            id='add-section' 
+            className='px-5 h-9' 
+            varient='primary-solid' 
+            onClick={() => setShowAddSectionModal(!showAddSectionModal)} 
+            buttonText={
+              `+ ${sectionsConstants.addSection}`
+            } />
         </header>
 
         <div

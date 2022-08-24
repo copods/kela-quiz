@@ -22,12 +22,12 @@ export default function MembersHeader({
         <div className="flex items-center justify-between">
           <h1 className="text-3xl font-bold leading-9">{members.members}</h1>
           <Button
-          id='addMember'
-          className='h-9 px-4'
-          onClick={() => setOpen(!open)}
-          varient='primary-solid'
-          buttonText={`+ ${members.addMember}`}
-          />
+            tabIndex={0}
+            id='addMember'
+            className='h-9 px-4'
+            onClick={() => setOpen(!open)}
+            varient='primary-solid'
+            buttonText={`+ ${members.addMember}`} />
         </div>
       </div>
       <AddMemberModal roles={membersData.roles} open={open} setOpen={setOpen} />

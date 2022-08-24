@@ -133,10 +133,11 @@ export default function OptionForQuestion({
         )}
 
         <Button 
-        className='h-9 px-5' 
-        varient='primary-solid' 
-        onClick={addOptionArea} 
-        buttonText={`+ ${addQuestion.addOptions}`} />
+          tabIndex={0}
+          className='h-9 px-5' 
+          varient='primary-solid' 
+          onClick={addOptionArea} 
+          buttonText={`+ ${addQuestion.addOptions}`} />
       </div>
 
       <div className="flex h-full flex-1 flex-col gap-5  overflow-auto">

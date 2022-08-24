@@ -214,44 +214,42 @@ const AddQuestionInSection = () => {
         <div className="flex">
           <Link to={`/sections/${sectionDetails?.id}`}>
             <Button 
-            id='cancel'
-            isDisabled={transition.state === 'submitting'}
-            className='h-9 px-5'
-            buttonText={transition.state === 'submitting' ? 'Canceling...' : 'Cancel'}
-            varient='secondary-solid'
-            />
+              tabIndex={0}
+              id='cancel'
+              isDisabled={transition.state === 'submitting'}
+              className='h-9 px-5'
+              buttonText={transition.state === 'submitting' ? 'Canceling...' : 'Cancel'}
+              varient='secondary-solid' />
           </Link>
         </div>
         <div className="flex gap-2">
           <Button 
-          id='saveAndExit'
-          isDisabled={transition.state === 'submitting'}
-          className='h-9 px-5'
-          onClick={() => saveQuestion(false)}
-          varient='primary-solid'
-          buttonText={
-            <>
-            <Icon icon="ic:round-save" className="mr-1" />
-            {transition.state === 'submitting' ? 'Saving...' : 'Save & Exit'}
-            </>
-          }
-          />
+            tabIndex={0}
+            id='saveAndExit'
+            isDisabled={transition.state === 'submitting'}
+            className='h-9 px-5'
+            onClick={() => saveQuestion(false)}
+            varient='primary-solid'
+            buttonText={
+              <>
+              <Icon icon="ic:round-save" className="mr-1" />
+              {transition.state === 'submitting' ? 'Saving...' : 'Save & Exit'}
+              </>
+            } />
 
           <Button 
-          id='saveAndAddMore'
-          isDisabled={transition.state === 'submitting'}
-          className='h-9 px-5'
-          onClick={() => saveQuestion(true)}
-          varient='primary-solid'
-          buttonText={
-            <>
-            <Icon icon="ic:round-save" className="mr-1" />
-            {transition.state === 'submitting'
-              ? 'Saving...'
-              : 'Save & Add More'}
-            </>
-          }
-          />
+            tabIndex={0}
+            id='saveAndAddMore'
+            isDisabled={transition.state === 'submitting'}
+            className='h-9 px-5'
+            onClick={() => saveQuestion(true)}
+            varient='primary-solid'
+            buttonText={
+              <>
+              <Icon icon="ic:round-save" className="mr-1" />
+              {transition.state === 'submitting' ? 'Saving...' : 'Save & Add More'}
+              </>
+            } />
         </div>
       </div>
     </div>

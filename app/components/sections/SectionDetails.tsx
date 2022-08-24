@@ -29,10 +29,11 @@ const SectionDetails = () => {
           to={`/sections/${sectionDetails.sectionDetails?.id}/add-question`}
         >
           <Button
-          id='addQuestion'
-          className='h-9 px-5'
-          buttonText={`+ ${addQuestion.addQuestion}`}
-          varient='primary-solid'
+            tabIndex={0}
+            id='addQuestion'
+            className='h-9 px-5'
+            buttonText={`+ ${addQuestion.addQuestion}`}
+            varient='primary-solid'
           />
         </Link>
       </div>
