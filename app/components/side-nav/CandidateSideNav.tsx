@@ -62,7 +62,7 @@ const CandidateSideNav = ({
           <div
             className={`flex h-11 items-center text-sm ${
               location.pathname.includes('/instructions')
-                ? 'border border-0 border-l-4 border-primary bg-blue-50 px-4 font-semibold text-primary'
+                ? 'border-0 border-l-4 border-primary bg-blue-50 px-4 font-semibold text-primary'
                 : 'px-5 font-medium text-gray-800 '
             }`}
           >
@@ -82,7 +82,7 @@ const CandidateSideNav = ({
                     className={`flex h-11 items-center justify-between gap-2 text-sm ${
                       routeData?.currentSectionInTest?.section.id ==
                         section.section.id && !routeData.params?.questionId
-                        ? 'border border-0 border-l-4 border-primary bg-blue-50 px-4 font-semibold text-primary'
+                        ? 'border-0 border-l-4 border-primary bg-blue-50 px-4 font-semibold text-primary'
                         : 'px-5 font-medium text-gray-800'
                     }`}
                   >
@@ -112,7 +112,7 @@ const CandidateSideNav = ({
                           to={`/assessment/${routeData?.params?.assessmentId}/${routeData?.params?.sectionId}/${question?.id}`}
                           className={({ isActive }) =>
                             isActive
-                              ? 'flex h-11 items-center justify-between gap-2 border border-0 border-l-4 border-primary bg-blue-50 pl-7 pr-8 text-sm font-semibold text-primary'
+                              ? 'flex h-11 items-center justify-between gap-2 border-0 border-l-4 border-primary bg-blue-50 pl-7 pr-8 text-sm font-semibold text-primary'
                               : 'flex h-11 items-center justify-between gap-2 px-8 text-sm font-medium text-gray-800'
                           }
                         >

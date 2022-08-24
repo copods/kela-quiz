@@ -2,27 +2,31 @@ import { useSubmit } from '@remix-run/react'
 import { useEffect, useState } from 'react'
 import { candidateExam } from '~/constants/common.constants'
 import type {
-  CandidateTest,
   SectionInCandidateTest,
   SectionInTest,
 } from '~/interface/Interface'
 import { getTimeLeftInSeconds } from '~/utils/assessment.utils'
 
 const TimerComponent = ({
-  candidateTest,
+  candidateSection,
   section,
 }: {
-  candidateTest: CandidateTest
+  candidateSection: SectionInCandidateTest
   section: SectionInTest
 }) => {
-  const [time, setTimer] = useState(-1)
-  let candidateSection: SectionInCandidateTest
-  for (let sec of candidateTest?.sections) {
-    if (section?.section?.id == sec?.section?.id) {
-      candidateSection = sec
-      break
-    }
-  }
+  // let candidateSection: SectionInCandidateTest
+  // for (let sec of candidateTest?.sections) {
+  //   if (section?.section?.id == sec?.section?.id) {
+  //     candidateSection = sec
+  //     break
+  //   }
+  // }
+  const [time, setTimer] = useState(
+    getTimeLeftInSeconds({
+      totalTimeInSeconds: section?.timeInSeconds,
+      startTime: candidateSection?.startedAt,
+    })
+  )
   const submit = useSubmit()
   let timer: ReturnType<typeof setTimeout>
   useEffect(() => {

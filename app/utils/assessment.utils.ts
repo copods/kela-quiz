@@ -1,4 +1,4 @@
-import { redirect } from "@remix-run/server-runtime"
+import { redirect } from "@remix-run/node"
 import { candidateSectionStart, candidateTestStart, checkIfTestLinkIsValid, endAssessment, endCurrentSection, getCandidate, getCandidateIDFromAssessmentID, getCandidateSectionDetails, getCandidateTest, getOrderedSection, getTestInstructionForCandidate, getTestSectionDetails, skipAnswerAndNextQuestion, startAndGetQuestion, updateCandidateFirstLastName, updateNextCandidateStep } from "~/models/assessment.server"
 
 
@@ -92,6 +92,11 @@ export async function updateCandidateDetail({ candidateId, firstName, lastName }
  * @returns candidateTestId
  */
 export async function updateNextStep({ assessmentId, nextRoute, isSection, currentSectionId }: { assessmentId: string, nextRoute: string, isSection: boolean, currentSectionId?: string }) {
+  console.log('asd', assessmentId, {
+    nextRoute,
+    isSection,
+    currentSectionId,
+  })
   await updateNextCandidateStep(assessmentId, {
     nextRoute,
     isSection,
@@ -231,8 +236,13 @@ export async function moveToNextSection({ assessmentId, order, sectionId }: { as
     order + 1
   )
 
-
   await updateNextStep({
+    assessmentId: assessmentId as string,
+    nextRoute: 'section',
+    isSection: true,
+    currentSectionId: nextSectionObject?.id,
+  })
+  console.log({
     assessmentId: assessmentId as string,
     nextRoute: 'section',
     isSection: true,
@@ -240,11 +250,9 @@ export async function moveToNextSection({ assessmentId, order, sectionId }: { as
   })
 
   if (nextSectionObject) {
-    return redirect(
-      `/assessment/${assessmentId}/${nextSectionObject?.id}`
-    )
+    return `/assessment/${assessmentId}/${nextSectionObject?.id}`
   } else {
-    return redirect(`/assessment/${assessmentId}/end-assessment`)
+    return `/assessment/${assessmentId}/end-assessment`
   }
 }
 

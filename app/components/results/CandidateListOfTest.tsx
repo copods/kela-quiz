@@ -15,6 +15,11 @@ const CandidateListOfTest = () => {
       title: 'Attended',
       route: 'attended',
     },
+    {
+      id: 2,
+      title: 'Completed',
+      route: 'completed',
+    },
   ]
   const { testPreview, params } = useLoaderData()
   return (
