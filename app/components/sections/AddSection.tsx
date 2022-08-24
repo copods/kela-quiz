@@ -56,6 +56,7 @@ const AddSection = ({
                     {sectionsConstants.addSection}
                   </h2>
                   <Icon
+                    tabIndex={0}
                     className="cursor-pointer text-2xl text-gray-600"
                     icon={'carbon:close'}
                     onClick={() => setOpen(false)}
@@ -64,6 +65,7 @@ const AddSection = ({
                 <hr className="mt-4 mb-6 h-px w-full border-0 bg-gray-300" />
                 <div className="pb-6">
                   <input
+                    tabIndex={0}
                     type="text"
                     name="name"
                     id="sectionName"
@@ -73,6 +75,7 @@ const AddSection = ({
                 </div>
                 <div className="pb-6">
                   <textarea
+                    tabIndex={0}
                     name="description"
                     id="sectionDescription"
                     rows={4}
@@ -83,6 +86,7 @@ const AddSection = ({
 
                 <div className="flex justify-end gap-2">
                   <button
+                    tabIndex={0}
                     type="button"
                     className="h-9 rounded-md px-4 text-sm text-gray-500"
                     onClick={() => {
@@ -92,6 +96,7 @@ const AddSection = ({
                     {commonConstants.cancel}
                   </button>
                   <button
+                    tabIndex={0}
                     type="submit"
                     id="submitButton"
                     name="add-section"

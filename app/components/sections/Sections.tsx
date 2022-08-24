@@ -29,6 +29,10 @@ const SectionLink = ({
       onClick={() => getSectionId(section.id)}
       to={path}
       key={section.id}
+      onKeyUp={(e) => {
+        if (e.key === 'Tab' && e.altKey) window.location.href = '#sectionSearch'
+        // alt + Tab combination key for moving focus to section detail
+      }}
     >
       <SectionCard
         isActive={location.pathname === resolvedPath.pathname}
@@ -69,6 +73,7 @@ const Sections = ({
   err,
   actionStatusData,
 }: SectionType) => {
+  console.log(sections, 'sectionss')
   return (
     <div className="flex h-full w-96 flex-col gap-6">
       {/* filters */}

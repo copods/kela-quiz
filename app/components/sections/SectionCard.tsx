@@ -37,6 +37,14 @@ const SectionCard = ({
     }
   }, [actionStatusData])
 
+  // shift + alt + Tab combination key for get back focus to selected section card
+  useEffect(() => {
+    window.addEventListener('keydown', function (event) {
+      if (event.shiftKey && event.altKey && event.key === 'Tab') {
+        window.location.href = '#section-card'
+      }
+    })
+  }, [])
   return (
     <div
       className={`section-card flex flex-col gap-2 rounded-lg p-6 ${

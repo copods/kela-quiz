@@ -55,7 +55,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   var status: string = ''
   await getAllSections(obj)
     .then((res) => {
-      sections = res
+      sections = res as Section[]
       status = 'Success'
     })
     .catch((err) => {
@@ -100,7 +100,7 @@ export const action: ActionFunction = async ({ request }) => {
           {
             resp: {
               status: 'Section Added Successfully..!',
-              data: res,
+              data: res as Section,
               check: new Date(),
             },
           },
@@ -140,14 +140,11 @@ export const action: ActionFunction = async ({ request }) => {
       })
     return deleteHandle
   }
-
-  if (deleteHandle) {
-    return redirect('/sections')
-  }
 }
 
 export default function SectionPage() {
   const data = useLoaderData() as unknown as LoaderData
+  console.log(data, 'data')
   const fetcher = useFetcher()
   const sectionActionData = useActionData() as ActionData
 
@@ -229,6 +226,7 @@ export default function SectionPage() {
             {routeFiles.sections}
           </h2>
           <button
+            tabIndex={0}
             className="h-9 rounded-lg bg-primary px-5 text-xs text-[#F0FDF4]"
             id="add-section"
             onClick={() => setShowAddSectionModal(!showAddSectionModal)}
@@ -245,7 +243,7 @@ export default function SectionPage() {
           {/* section list */}
           <div className={`${sectionDetailFull && 'hidden'}`}>
             <Sections
-              sections={data.sections}
+              sections={data.sections as Section[]}
               selectedSection={selectedSection}
               filters={data.filters}
               sortBy={sortBy}
