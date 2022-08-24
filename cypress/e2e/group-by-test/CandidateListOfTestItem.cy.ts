@@ -56,6 +56,7 @@ describe('Visiting group by test of results page', () => {
       .should('have.text', cypress.Tests)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
+    cy.get('#addTest', { timeout: 6000 }).should('be.visible')
     cy.get('#addTest', { timeout: 6000 }).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',

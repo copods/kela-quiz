@@ -11,11 +11,12 @@ describe('Test for GroupByTestTable, Result', () => {
       .clear()
       .type(cypress.password)
       .should('have.value', cypress.password)
-    cy.findByRole('button').click()
+    cy.findByRole('button',{timeout:6000}).click()
     cy.get('a').find('#Group_By_Tests').should('have.text', cypress.results).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')
   })
   const time = new Date().getTime()
+
   it('Create Section and  test', () => {
     cy.visit('/sign-in')
     cy.get('#email')
@@ -27,7 +28,8 @@ describe('Test for GroupByTestTable, Result', () => {
       .type(cypress.password)
       .should('have.value', cypress.password)
     cy.findByRole('button').click()
-    cy.get('a').find('#Sections').should('have.text', cypress.Sections).click()
+
+    cy.get('a').find('#Sections',{timeout:6000}).should('have.text', cypress.Sections).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('#add-section', { timeout: 60000 }).click()
     const sectionName = `Aptitude - ${time}`
@@ -59,7 +61,8 @@ describe('Test for GroupByTestTable, Result', () => {
     })
     cy.get('#optionEditor input').clear().type('Option of question')
     cy.get('#saveAndExit').click()
-    cy.get('a').find('#Tests').should('have.text', cypress.Tests).click()
+    cy.get('a').find('#Tests',{timeout:6000}).should("be.visible")
+    cy.get('a').find('#Tests',{timeout:6000}).should('have.text', cypress.Tests).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('#addTest', { timeout: 6000 }).click()
     cy.location('pathname', { timeout: 60000 }).should(
@@ -97,8 +100,6 @@ describe('Test for GroupByTestTable, Result', () => {
     cy.get('#2').find('hr').should('have.class', 'bg-primary')
     cy.get('button#submitButton').should('have.text', cypress.submit).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.get('a').find('#Group_By_Tests').should('have.text', cypress.results).click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/results')
   })
 
   let value: any
