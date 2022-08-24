@@ -348,7 +348,7 @@ describe('Creating tests', () => {
       .should('have.text', testsConstants.Tests)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.get('#addTest').click()
+    cy.get('#addTest',{ timeout: 6000 }).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/tests/add-test'
