@@ -13,7 +13,7 @@ import {
 } from '~/models/user.server'
 import MembersHeader from '~/components/members/MembersHeader'
 import { toast } from 'react-toastify'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 
 export type ActionData = {
   errors?: {
@@ -22,7 +22,7 @@ export type ActionData = {
     email?: string
     roleId?: string
     title?: string
-    status?: number
+    status?: string
     check?: Date
   }
   resp?: {
@@ -55,25 +55,25 @@ export const action: ActionFunction = async ({ request }) => {
 
     if (typeof firstName !== 'string' || firstName.length === 0) {
       return json<ActionData>(
-        { errors: { title: 'First Name is required', status: 400 } },
+        { errors: { firstName: 'firstName is required' } },
         { status: 400 }
       )
     }
     if (typeof lastName !== 'string' || lastName.length === 0) {
       return json<ActionData>(
-        { errors: { title: 'Last Name is required', status: 400 } },
+        { errors: { lastName: 'lastName is required' } },
         { status: 400 }
       )
     }
     if (typeof email !== 'string' || email.length === 0) {
       return json<ActionData>(
-        { errors: { title: 'Email is required', status: 400 } },
+        { errors: { email: 'email is required' } },
         { status: 400 }
       )
     }
     if (typeof roleId !== 'string' || roleId.length === 0) {
       return json<ActionData>(
-        { errors: { title: 'Role is required', status: 400 } },
+        { errors: { roleId: 'roleId is required' } },
         { status: 400 }
       )
     }
@@ -93,12 +93,8 @@ export const action: ActionFunction = async ({ request }) => {
         )
       })
       .catch((err) => {
-        let title = 'Something went wrong..!'
-        if (err.code === 'P2002') {
-          title = 'Duplicate Title'
-        }
         addHandle = json<ActionData>(
-          { errors: { title, status: 400, check: new Date() } },
+          { errors: { status: err, check: new Date() } },
           { status: 400 }
         )
       })
@@ -132,16 +128,12 @@ export const action: ActionFunction = async ({ request }) => {
 }
 export default function Members() {
   const membersActionData = useActionData() as ActionData
-  const [open, setOpen] = useState(false)
   useEffect(() => {
     if (membersActionData) {
       if (membersActionData.resp?.status) {
-        setOpen(false)
         toast.success(membersActionData.resp?.status)
-      } else if (membersActionData.errors?.status === 400) {
-        toast.error(membersActionData.errors?.title, {
-          toastId: membersActionData.errors?.title,
-        })
+      } else if (membersActionData.errors?.status) {
+        toast.error('Something went wrong...!')
       }
     }
   }, [membersActionData])
@@ -150,9 +142,8 @@ export default function Members() {
     <AdminLayout>
       <div>
         <MembersHeader
-          open={open}
-          setOpen={setOpen}
-          showErrorMessage={membersActionData?.errors?.status === 400}
+          actionStatus={membersActionData?.resp?.check}
+          err={membersActionData?.errors?.check}
         />
         <MembersList actionStatus={membersActionData?.resp?.status} />
       </div>

@@ -1,16 +1,19 @@
+import { useEffect, useState } from 'react'
 import AddMemberModal from './AddMemberModal'
 import { members } from '~/constants/common.constants'
 import { useLoaderData } from '@remix-run/react'
 
 export default function MembersHeader({
-  open,
-  setOpen,
-  showErrorMessage,
+  actionStatus,
+  err,
 }: {
-  open: boolean
-  setOpen: (e: boolean) => void
-  showErrorMessage: boolean
+  actionStatus: Date | undefined
+  err: Date | undefined
 }) {
+  const [open, setOpen] = useState(false)
+  useEffect(() => {
+    err ? setOpen(true) : setOpen(false)
+  }, [actionStatus, err])
   const membersData = useLoaderData()
   return (
     <div className="grid grid-cols-12 pb-12">
@@ -26,12 +29,7 @@ export default function MembersHeader({
           </button>
         </div>
       </div>
-      <AddMemberModal
-        roles={membersData.roles}
-        open={open}
-        setOpen={setOpen}
-        showErrorMessage={showErrorMessage}
-      />
+      <AddMemberModal roles={membersData.roles} open={open} setOpen={setOpen} />
     </div>
   )
 }
