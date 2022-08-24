@@ -50,14 +50,10 @@ const AddQuestionInSection = () => {
   const breadCrumbArray = [
     {
       tabName: 'Section',
-      route: '/sections',
-    },
-    {
-      tabName: 'Question',
       route: `/sections/${sectionDetails?.id}`,
     },
     {
-      tabName: 'AddQuestion',
+      tabName: 'Add Question',
       route: `/sections/${sectionDetails?.id}/add-question`,
     },
   ]
@@ -100,7 +96,9 @@ const AddQuestionInSection = () => {
         flag == 0 &&
         getQuestionType(selectedTypeOfQuestion) === QuestionTypes.multipleChoice
       ) {
-        toast.error('Select the Option', { toastId: 'correctOptionRequired' })
+        toast.error('Select the Correct Option', {
+          toastId: 'correctOptionRequired',
+        })
         return
       }
       if (
@@ -109,7 +107,9 @@ const AddQuestionInSection = () => {
           QuestionTypes.singleChoice &&
         !singleChoiceAnswer
       ) {
-        toast.error('Select the Option', { toastId: 'correctOptionsRequired' })
+        toast.error('Select the Correct Option', {
+          toastId: 'correctOptionRequired',
+        })
         return
       }
     }
