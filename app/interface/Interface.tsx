@@ -35,6 +35,7 @@ export interface CheckboxProps {
   handleChange: React.MouseEventHandler<HTMLInputElement>
   name?: string
   isChecked?: boolean
+  value?: string
 }
 
 export interface TestSection {

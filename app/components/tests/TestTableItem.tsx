@@ -8,6 +8,7 @@ import { useSubmit } from '@remix-run/react'
 import TestListActionMenu from '../TestListActionMenu'
 import { useState } from 'react'
 import InviteCandidatePopup from './InviteCandidatePopup'
+// import Checkbox from '../form/CheckBox'
 const TestTableItem = ({
   testName,
   createdBy,
@@ -51,6 +52,7 @@ const TestTableItem = ({
         {showCheckBox && (
           <div className="w-1/12 text-base font-normal leading-6 text-gray-700">
             <input type="checkbox" />
+            {/* <Checkbox handleChange={() => console.log('')} /> */}
           </div>
         )}
         <div

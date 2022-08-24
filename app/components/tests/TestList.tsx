@@ -5,6 +5,7 @@ import type { Test } from '~/interface/Interface'
 import SortFilter from '../SortFilter'
 import TestTableItem from './TestTableItem'
 import { commonConstants, testsConstants } from '~/constants/common.constants'
+// import Checkbox from '../form/CheckBox'
 const TestList = ({
   tests,
   status,
@@ -75,6 +76,7 @@ const TestList = ({
             {showCheckBox && (
               <div className="w-1/12">
                 <input type="checkbox" />
+                {/* <Checkbox handleChange={() => console.log('')} */}
               </div>
             )}
             <div className="w-1/12 text-sm leading-5 text-gray-500">

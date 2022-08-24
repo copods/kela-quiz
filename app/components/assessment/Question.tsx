@@ -6,6 +6,7 @@ import {
   QuestionTypes,
   routeFiles,
 } from '~/constants/common.constants'
+import Checkbox from '../form/CheckBox'
 
 const Question = () => {
   const { question, section, lastSection } = useLoaderData()
@@ -78,14 +79,7 @@ const Question = () => {
                         }}
                       />
                     ) : (
-                      <input
-                        type="checkbox"
-                        value={option.id}
-                        name="option"
-                        onChange={() => {
-                          onChangeHandle(option.id)
-                        }}
-                      />
+                      <Checkbox value={option.id} name="option" handleChange={() => onChangeHandle(option.id)} />
                     )}
                     <div className="w-full rounded-lg border border-gray-200 bg-white p-5">
                       <div
