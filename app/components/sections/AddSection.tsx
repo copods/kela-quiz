@@ -2,8 +2,10 @@ import { Form, useTransition } from '@remix-run/react'
 import { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
-import type { ActionData } from '~/routes/sections'
-
+import {
+  commonConstants,
+  sectionsConstants,
+} from '~/constants/common.constants'
 const AddSection = ({
   open,
   setOpen,
@@ -11,7 +13,7 @@ const AddSection = ({
 }: {
   open: boolean
   setOpen: (e: boolean) => void
-  showErrorMessage: ActionData
+  showErrorMessage: boolean
 }) => {
   const transition = useTransition()
   return (
@@ -51,7 +53,7 @@ const AddSection = ({
               <Dialog.Panel className="relative transform overflow-hidden rounded-2xl bg-white p-6 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
                 <div className="addSectionDilog flex items-center justify-between pt-1">
                   <h2 className="text-2xl font-bold text-gray-700">
-                    Add Section
+                    {sectionsConstants.addSection}
                   </h2>
                   <Icon
                     tabIndex={0}
@@ -91,19 +93,20 @@ const AddSection = ({
                       setOpen(false)
                     }}
                   >
-                    Cancel
+                    {commonConstants.cancel}
                   </button>
                   <button
                     tabIndex={0}
                     type="submit"
                     id="submitButton"
                     className={`h-9 rounded-md bg-primary px-4 text-sm text-[#F0FDF4] disabled:opacity-80  ${
-                      transition.state === 'submitting' ? 'disabled' : ''
+                      transition.state === 'submitting' || showErrorMessage
+                        ? 'disabled bg-gray-600'
+                        : ''
                     }`}
-                    onClick={() => {
-                      setOpen(false)
-                    }}
-                    disabled={transition.state === 'submitting'}
+                    disabled={
+                      transition.state === 'submitting' || showErrorMessage
+                    }
                   >
                     {transition.state === 'submitting' ? 'Adding...' : 'Add'}
                   </button>

@@ -16,6 +16,7 @@ export interface ButtonProps {
   type: 'submit' | 'reset' | 'button'
   buttonText: string
   handleClick?: React.MouseEventHandler<HTMLButtonElement>
+  isDisabled?: boolean
 }
 
 export interface LoginProps {
@@ -31,7 +32,7 @@ export interface ActionData {
 }
 
 export interface CheckboxProps {
-  handleChange: React.Dispatch<React.SetStateAction<boolean>>
+  handleChange: React.MouseEventHandler<HTMLInputElement>
   name?: string
   isChecked?: boolean
 }
@@ -52,7 +53,6 @@ export interface TestSection {
   timeInSeconds?: number
   section?: Section
 }
-
 export interface Section {
   id: string
   name: string
@@ -82,7 +82,7 @@ export interface Role {
 export interface Question {
   id: string
   question: string
-  correctAnswer?: string[]
+  correctAnswer?: Array<CorrectAnswer>
   marks?: number
   questionTypeId?: string
   sectionId?: string
@@ -90,7 +90,7 @@ export interface Question {
   createdAt?: Date
   updatedAt?: Date
   options?: Array<Option>
-  correctOptions?: Array<CorrectOptions>
+  correctOptions?: Array<Option>
 }
 
 export interface Test {
@@ -102,9 +102,13 @@ export interface Test {
   createdAt: Date
   updatedAt: Date
   sections: Array<SectionInTest>
+  deleted: boolean
+  deletedAt: string
+  candidateTest?: Array<CandidateTest>
 }
 
 export interface SectionInTest {
+  id?: string
   section: Section
   order: number
   timeInSeconds: number
@@ -116,18 +120,7 @@ export interface SectionInTest {
 
 export interface Option {
   id: string
-  option: String
-  coInQuestionId?: string
-  createdById?: string
-  questionId?: string
-  order: number
-  updatedAt?: Date
-  createdAt?: Date
-  candidateQuestionId?: string
-}
-export interface CorrectOptions {
-  id: string
-  option: String
+  option: string
   coInQuestionId?: string
   createdById?: string
   questionId?: string
@@ -137,8 +130,8 @@ export interface CorrectOptions {
   candidateQuestionId?: string
 }
 export interface CorrectAnswer {
-  id: String
-  answer: String
+  id: string
+  answer: string
   order: number
   question?: string
   questionId?: string
@@ -152,4 +145,67 @@ export interface QuestionType {
   questions?: Question[]
   createdAt?: Date
   updatedAt?: Date
+}
+
+export interface CandidateTest {
+  id: string
+  testId: string
+  link: string | null
+  sections: Array<SectionInCandidateTest>
+  test: Test
+  candidateId: string
+  candidateStep: JSON
+  startedAt: Date | null
+  endAt: Date | null
+  createdAt: Date
+  updatedAt: Date
+}
+
+export interface SectionInCandidateTest {
+  id: string
+  sectionId: string
+  section: Section
+  candidateTestId: string
+  order: number
+  questions: Array<CandidateQuestion>
+  startedAt: Date | null
+  endAt: Date | null
+  createdAt: Date
+  updatedAt: Date
+}
+
+export interface Candidate {
+  id: string
+  email: string
+  firstName: string | null
+  lastName: string | null
+  isQualified: boolean | null
+  createdById: string
+  createdAt: Date
+  updatedAt: Date
+}
+
+export interface CandidateQuestion {
+  id: string
+  questionId: string
+  status: string
+  answers: string[]
+  order: number
+  sectionInCandidateTestId: string
+  answeredAt: Date | null
+  createdAt: Date
+  updatedAt: Date
+}
+
+export interface CandidateResult {
+  id: string
+  candidateId: string
+  candidateTestId: string
+  totalQuestion: number
+  correctQuestion: number
+  unanswered: number
+  testId: string
+  isQualified: boolean
+  createdAt: Date
+  updatedAt: Date
 }

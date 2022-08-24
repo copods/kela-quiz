@@ -16,7 +16,7 @@ export default function Toggle({
         className={`${
           toggle
             ? 'border-blue-900 bg-blue-900'
-            : 'border-gray-600 bg-slate-200'
+            : 'border-slate-300 bg-slate-300'
         }
           relative inline-flex h-[28px] w-[64px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2  focus-visible:ring-white focus-visible:ring-opacity-75`}
       >

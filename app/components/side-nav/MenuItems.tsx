@@ -4,9 +4,10 @@ export interface tabProps {
   iconClass: string
   itemName: string
   itemRoute: string
+  id: string
 }
 
-function MenuItems({ iconClass, itemName, itemRoute }: tabProps) {
+function MenuItems({ iconClass, itemName, itemRoute, id }: tabProps) {
   // const resolvedPath = useResolvedPath(itemRoute) // to get resolved path which would match with current location
   const location = useLocation() // to get current location
 
@@ -26,16 +27,16 @@ function MenuItems({ iconClass, itemName, itemRoute }: tabProps) {
             id="tabIcon"
             icon={iconClass}
             className={`order-none flex-none grow-0 text-2xl  ${
-              location.pathname === `/${itemRoute}`
+              location.pathname.includes(`/${itemRoute}`)
                 ? 'text-primary'
                 : 'text-gray-400'
             }`}
           ></Icon>
           <span>
             <p
-              id={itemName}
+              id={id}
               className={`non-italic text-base font-semibold leading-6 ${
-                location.pathname === `/${itemRoute}`
+                location.pathname.includes(`/${itemRoute}`)
                   ? 'text-primary'
                   : 'text-gray-500'
               }`}

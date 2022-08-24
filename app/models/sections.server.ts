@@ -94,7 +94,6 @@ export async function addQuestion(
       return true
     })
     .catch((err) => {
-      console.log(err)
-      return err
+      return err;
     })
 }

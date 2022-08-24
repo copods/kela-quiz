@@ -20,7 +20,7 @@ function Footer() {
             <p className="w-32 truncate text-xs font-semibold leading-4 text-gray-900">
               {user.firstName} {user.lastName}
             </p>
-            <p className="w-32 truncate text-xs font-normal leading-4 text-gray-500">
+            <p className="w-32 truncate text-xs leading-4 text-gray-500">
               {user.email}
             </p>
           </div>

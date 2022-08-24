@@ -8,7 +8,7 @@ import SelectSections from './CreateSelectSections'
 import TestDetails from './CreateTestDetails'
 import TestPreview from './CreateTestPreview'
 import StepsTabComponent from './StepsTab'
-
+import { commonConstants, testsConstants } from '~/constants/common.constants'
 const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
   const transition = useTransition()
   const submit = useSubmit()
@@ -91,24 +91,33 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
     } = {
       name,
       description,
-      sections: selectedSections.map((section, index) => ({
+      sections: [],
+    }
+    selectedSections.forEach((section, index) => {
+      sendData.sections.push({
         sectionId: section.id,
         totalQuestions: section.totalQuestions as number,
-        timeInSeconds: section.time as number,
+        timeInSeconds: (section.time as number) * 60,
         order: index + 1,
-      })),
-    }
+      })
+    })
 
     submit({ data: JSON.stringify(sendData) }, { method: 'post' })
     // fetcher.submit({ data: JSON.stringify(sendData) }, { method: "post" });
   }
+
+  useEffect(() => {
+    if (!name || !description) {
+      setCurrentTab(0)
+    }
+  }, [currentTab, setCurrentTab, name, description])
 
   return (
     <div className="flex h-full flex-col gap-6 overflow-hidden">
       {/* header */}
       <header className="flex items-center justify-between">
         <h2 title="Add Test" className="text-3xl font-bold text-black">
-          Add Test
+          {testsConstants.addTestbutton}
         </h2>
       </header>
       <div>
@@ -116,6 +125,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
       </div>
       <StepsTabComponent
         tabs={tabs}
+        isDisabled={!name || !description}
         currentTab={currentTab}
         setCurrentTab={setCurrentTab}
       />
@@ -160,7 +170,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
                   : 'bg-gray-6000 bg-red-500'
               }`}
             >
-              Cancel
+              {commonConstants.cancel}
             </button>
           </Link>
         </div>
@@ -170,12 +180,14 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
             title="Previous Tab"
             id="backButton"
             className={`h-9 rounded-lg px-7 text-xs text-white ${
-              currentTab != tabs[0].id ? 'bg-primary' : 'bg-gray-600'
+              currentTab != tabs[0].id
+                ? 'bg-primary'
+                : 'cursor-not-allowed bg-gray-600'
             }`}
             onClick={() => setCurrentTab(currentTab - 1)}
             disabled={currentTab === tabs[0].id}
           >
-            Back
+            {commonConstants.backButton}
           </button>
           {currentTab != 2 ? (
             <button
@@ -184,13 +196,13 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
               id="nextButton"
               className={`h-9 rounded-lg px-7 text-xs text-white ${
                 !(name && description) || currentTab == 2
-                  ? 'bg-gray-600'
+                  ? 'cursor-not-allowed bg-gray-600'
                   : 'bg-primary'
               }`}
               onClick={() => setCurrentTab(currentTab + 1)}
               disabled={!(name && description) || currentTab == 2}
             >
-              Next
+              {commonConstants.nextButton}
             </button>
           ) : (
             <button
@@ -198,7 +210,9 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
               title="Next Tab"
               id="submitButton"
               className={`h-9 rounded-lg px-7 text-xs text-white ${
-                currentTab == 2 ? 'bg-primary' : 'bg-gray-600'
+                currentTab == 2
+                  ? 'bg-primary'
+                  : 'cursor-not-allowed bg-gray-600'
               }`}
               onClick={() => submitAddTest()}
               disabled={currentTab != 2}

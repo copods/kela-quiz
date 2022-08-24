@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 import DropdownField from './form/Dropdown'
-
+import { componentGlobalConstants } from '~/constants/common.constants'
 const SortFilter = ({
   filterData,
   sortDirection,
@@ -53,14 +53,22 @@ const SortFilter = ({
         />
       </div>
       <span
-        className="flex items-center pl-4 text-sm font-normal text-totalCount"
+        className="flex items-center pl-4 text-sm text-totalCount"
         id="total-items-value"
       >
-        <span className="pr-3">Total Counts: {totalItems}</span>
+        <span>
+          {componentGlobalConstants.totalCounts}:
+          <span id="total-count-value" className="pl-1">
+            {totalItems}
+          </span>
+        </span>
         {showSelected && (
           <>
             <Icon icon="ci:line-m" />
-            <span className="pl-3 ">Selected: 0/{totalItems}</span>
+            <span className="pl-3 ">
+              {componentGlobalConstants.selected}: 0/
+              {totalItems}
+            </span>
           </>
         )}
       </span>

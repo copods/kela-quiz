@@ -1,9 +1,13 @@
 import logo from '~/../public/assets/logo.svg'
-function Header() {
+import { sideNav } from '~/constants/common.constants'
+
+const Header = ({ title }: { title: string }) => {
   return (
     <div className="flex items-center gap-4">
       <img src={logo} alt="logo" />
-      <span className="text-3xl font-bold leading-9">Quiz</span>
+      <span className="text-3xl font-bold leading-9">
+        {sideNav.sideNavHeading}
+      </span>
     </div>
   )
 }

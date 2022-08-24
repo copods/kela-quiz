@@ -3,7 +3,7 @@ import { Icon } from '@iconify/react'
 import type { Role } from '~/interface/Interface'
 import { Form, useTransition } from '@remix-run/react'
 import { Fragment } from 'react'
-import { CommonMembersConstants } from '~/constants/common.constants'
+import { commonConstants, members } from '~/constants/common.constants'
 export default function AddMemberModal({
   roles,
   open,
@@ -50,7 +50,7 @@ export default function AddMemberModal({
                 <Dialog.Panel className="relative transform overflow-hidden rounded-2xl bg-white p-6 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
                   <div className="flex items-center justify-between pt-1">
                     <h2 className="text-2xl font-bold text-gray-700">
-                      {CommonMembersConstants.AddMember}
+                      {members.addMember}
                     </h2>
                     <Icon
                       tabIndex={0}
@@ -63,7 +63,7 @@ export default function AddMemberModal({
                   <div className="flex justify-between gap-4 pb-6">
                     <div>
                       <label htmlFor="" className="text-gray-800">
-                        {CommonMembersConstants.FirstName}
+                        {members.firstName}
                       </label>
                       <input
                         tabIndex={0}
@@ -76,7 +76,7 @@ export default function AddMemberModal({
                     </div>
                     <div>
                       <label htmlFor="" className="text-gray-800">
-                        {CommonMembersConstants.LastName}
+                        {members.lastName}
                       </label>
                       <input
                         tabIndex={0}
@@ -90,7 +90,7 @@ export default function AddMemberModal({
                   </div>
                   <div className="pb-6 ">
                     <label htmlFor="" className="text-gray-800">
-                      {CommonMembersConstants.Email}
+                      {members.email}
                     </label>
                     <input
                       tabIndex={0}
@@ -104,7 +104,7 @@ export default function AddMemberModal({
                   <div className="pb-6">
                     <div>
                       <label htmlFor="" className="text-gray-800">
-                        {CommonMembersConstants.Role}
+                        {members.role}
                       </label>
                     </div>
                     <div className="my-1.5 rounded-lg border border-gray-200 px-4">
@@ -131,7 +131,7 @@ export default function AddMemberModal({
                       className="h-9 rounded-md px-4 text-sm text-gray-500"
                       onClick={() => setOpen(false)}
                     >
-                      {CommonMembersConstants.Cancel}
+                      {commonConstants.cancel}
                     </button>
                     <button
                       tabIndex={0}

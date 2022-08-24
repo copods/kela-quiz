@@ -1,7 +1,8 @@
 import type { User, Role } from '~/interface/Interface'
 import MemberListItem from './MemberListItem'
-import { CommonMembersConstants } from '~/constants/common.constants'
+import { commonConstants, members } from '~/constants/common.constants'
 import { useLoaderData } from '@remix-run/react'
+
 export default function MembersList({
   actionStatus,
 }: {
@@ -11,23 +12,23 @@ export default function MembersList({
   const users = membersData.users
   const loggedInUser = membersData.userId
   return (
-    <div className="grid grid-cols-12  bg-[#F9FAFB] ">
+    <div className="grid grid-cols-12 rounded-lg  bg-[#F9FAFB] shadow-table ">
       <div className="col-span-full grid grid-cols-10 rounded-lg border-[1px] border-solid border-[#E5E7EB] bg-white">
-        <div className="col-span-full grid grid-cols-10 py-4 px-12">
+        <div className="col-span-full grid grid-cols-10 bg-tableHeader py-4 px-12">
           <h1 className="col-span-2 text-sm  leading-4 text-gray-500">
-            {CommonMembersConstants.name}
+            {commonConstants.name}
           </h1>
           <h1 className="col-span-3 text-sm leading-4 text-gray-500">
-            {CommonMembersConstants.Email}
+            {members.email}
           </h1>
           <h1 className="col-span-2 text-sm leading-4 text-gray-500">
-            {CommonMembersConstants.Role}
+            {members.role}
           </h1>
           <h1 className="col-span-2 text-sm leading-4 text-gray-500">
-            {CommonMembersConstants.AddedOn}
+            {members.addedOn}
           </h1>
           <h1 className="col-span-1 text-sm leading-4 text-gray-500">
-            {CommonMembersConstants.Action}
+            {members.action}
           </h1>
         </div>
         {users.map((user: User & { role?: Role }) => (
