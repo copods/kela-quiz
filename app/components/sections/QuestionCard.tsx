@@ -29,9 +29,9 @@ const QuestionCard = ({
           }}
         >
           <div className="ql-editor flex-1 p-0 pr-4">
-            <div className="cursor-pointer">
+            {/* <div className="cursor-pointer">
               Question Type : {question.questionType.value}
-            </div>
+            </div> */}
             <div
               className="cursor-pointer"
               dangerouslySetInnerHTML={{ __html: question.question }}
