@@ -101,8 +101,8 @@ describe('Test for GroupByTestTable, Result', () => {
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')
   })
 
-  let value: string
-  let strings: string[]
+  let value: any
+  let strings: any
 
   it('Total Count of Test of groupByTable', () => {
     cy.visit('/sign-in')
@@ -117,21 +117,21 @@ describe('Test for GroupByTestTable, Result', () => {
     cy.findByRole('button').click()
     cy.get('a').find('#Group_By_Tests').should('have.text', cypress.results).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')
-    cy.get('#sort-filter')
-      .get('#total-items-value')
-      .get('.pr-3')
+    cy.get('#total-items-value')
+      .get('#total-count-value')
       .then(($ele) => {
-        value = $ele[0].innerText.split(':')[1]
+        value = [...$ele].map(($el) => {
+          return $el.innerText
+        })
       })
     cy.get('#GroupByTestItems').each(($el) => {
       cy.wrap($el)
         .children()
         .children()
         .within((el) => {
-          cy.get('.border-t').then(($elements) => {
+          cy.get('.candidate-name').then(($elements) => {
             strings = [...$elements].map(($el) => $el.innerText)
-            expect(strings).to.deep.equal([...strings])
-            expect(strings.length).to.deep.equal(parseInt(value))
+            expect(parseInt(value)).to.deep.equal(parseInt(strings.length))
           })
         })
     })
@@ -158,12 +158,7 @@ describe('Test for GroupByTestTable, Result', () => {
               .children()
               .children()
               .within((el) => {
-                cy.get('.border-t').then(($elements) => {
-                  // strings = [...$elements].map(($el) => $el.innerText)
-                  // expect(strings).to.deep.equal([...strings])
-                  // expect(strings.length).to.deep.equal(parseInt(value))
-
-
+                cy.get('.candidate-name').then(($elements) => {
                   var strings = [...$elements].map(($el) => $el.innerText)
                   expect(strings).to.deep.equal(strings.sort().reverse())
                 })
@@ -195,11 +190,7 @@ describe('Test for GroupByTestTable, Result', () => {
               .children()
               .children()
               .within((el) => {
-                cy.get('.border-t').then(($elements) => {
-                  // strings = [...$elements].map(($el) => $el.innerText)
-                  // expect(strings).to.deep.equal([...strings])
-                  // expect(strings.length).to.deep.equal(parseInt(value))
-
+                cy.get('.candidate-name').then(($elements) => {
                   var strings = [...$elements].map(($el) => $el.innerText)
                   expect(strings).to.deep.equal(strings.sort().reverse())
                 })
@@ -237,10 +228,9 @@ describe('Test for GroupByTestTable, Result', () => {
               .children()
               .children()
               .within((el) => {
-                cy.get('.border-t').then(($elements) => {
-                  strings = [...$elements].map(($el) => $el.innerText)
-                  expect(strings).to.deep.equal([...strings])
-                  expect(strings.length).to.deep.equal(parseInt(value))
+                cy.get('.candidate-name').then(($elements) => {
+                  var strings = [...$elements].map(($el) => $el.innerText)
+                  expect(strings).to.deep.equal(strings.sort())
                 })
               })
           })
@@ -277,10 +267,9 @@ describe('Test for GroupByTestTable, Result', () => {
               .children()
               .children()
               .within((el) => {
-                cy.get('.border-t').then(($elements) => {
-                  strings = [...$elements].map(($el) => $el.innerText)
-                  expect(strings).to.deep.equal([...strings])
-                  expect(strings.length).to.deep.equal(parseInt(value))
+                cy.get('.candidate-name').then(($elements) => {
+                  var strings = [...$elements].map(($el) => $el.innerText)
+                  expect(strings).to.deep.equal(strings.reverse())
                 })
               })
           })
