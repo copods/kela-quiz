@@ -16,7 +16,7 @@ describe('Creating tests', () => {
       .clear()
       .type('kQuiz@copods')
       .should('have.value', cypress.password)
-    cy.findByRole('button').click()
+    cy.findByRole('button' ,{ timeout: 6000 }).click()
 
     cy.get('a', { timeout: 6000 })
       .find('#Tests', { timeout: 6000 })
@@ -36,7 +36,7 @@ describe('Creating tests', () => {
       .clear()
       .type('careers@copods.co')
       .should('have.value', cypress.email)
-    cy.get('#password', { timeout: 6000 })
+    cy.get('#password', { timeout: 10000 })
       .clear()
       .type('kQuiz@copods')
       .should('have.value', cypress.password)
@@ -106,7 +106,7 @@ describe('Creating tests', () => {
       .clear()
       .type('kQuiz@copods')
       .should('have.value', cypress.password)
-    cy.findByRole('button').click()
+    cy.findByRole('button',{timeout:6000}).click()
 
     cy.get('a', { timeout: 6000 })
       .find('#Tests')
@@ -139,7 +139,7 @@ describe('Creating tests', () => {
       .clear()
       .type('kQuiz@copods')
       .should('have.value', cypress.password)
-    cy.findByRole('button').click()
+    cy.findByRole('button', { timeout: 6000 }).click()
 
     cy.get('a', { timeout: 6000 })
       .find('#Tests')
@@ -167,7 +167,7 @@ describe('Creating tests', () => {
       .clear()
       .type('kQuiz@copods')
       .should('have.value', cypress.password)
-    cy.findByRole('button').click()
+    cy.findByRole('button', { timeout: 6000 }).click()
 
     cy.get('a', { timeout: 6000 })
       .find('#Tests')
@@ -200,7 +200,7 @@ describe('Creating tests', () => {
       .clear()
       .type('kQuiz@copods')
       .should('have.value', cypress.password)
-    cy.findByRole('button').click()
+    cy.findByRole('button' ,{ timeout: 6000 }).click()
 
     cy.get('a', { timeout: 6000 })
       .find('#Tests')
@@ -238,7 +238,7 @@ describe('Creating tests', () => {
       .clear()
       .type('kQuiz@copods')
       .should('have.value', cypress.password)
-    cy.findByRole('button').click()
+    cy.findByRole('button' ,{ timeout: 6000 }).click()
 
     cy.get('a', { timeout: 6000 })
       .find('#Tests')
@@ -289,7 +289,7 @@ describe('Creating tests', () => {
       .clear()
       .type('kQuiz@copods')
       .should('have.value', cypress.password)
-    cy.findByRole('button').click()
+    cy.findByRole('button' ,{ timeout: 6000 }).click()
 
     cy.get('a', { timeout: 6000 })
       .find('#Tests')
@@ -341,7 +341,7 @@ describe('Creating tests', () => {
       .clear()
       .type('kQuiz@copods')
       .should('have.value', cypress.password)
-    cy.findByRole('button').click()
+    cy.findByRole('button' ,{ timeout: 6000 }).click()
 
     cy.get('a', { timeout: 6000 })
       .find('#Tests')
@@ -397,7 +397,7 @@ describe('Creating tests', () => {
       .clear()
       .type('kQuiz@copods')
       .should('have.value', cypress.password)
-    cy.findByRole('button').click()
+    cy.findByRole('button' ,{ timeout: 6000 }).click()
 
     cy.get('a', { timeout: 6000 })
       .find('#Tests')
@@ -457,7 +457,7 @@ describe('Creating tests', () => {
       .clear()
       .type('kQuiz@copods')
       .should('have.value', cypress.password)
-    cy.findByRole('button').click()
+    cy.findByRole('button' ,{ timeout: 6000 }).click()
 
     cy.get('a', { timeout: 10000 })
       .find('#Tests', { timeout: 10000 })

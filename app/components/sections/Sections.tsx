@@ -10,7 +10,10 @@ const SectionLink = ({ section }: { section: any }) => {
   const location = useLocation() // to get current location
   const resolvedPath = useResolvedPath(path) // to get resolved path which would match with current location
   return (
-    <NavLink to={path} key={section.id} className="rounded-lg"> 
+    <NavLink 
+         to={path} 
+         key={section.id} 
+         className="rounded-lg"> 
       <SectionCard
         isActive={location.pathname === resolvedPath.pathname}
         name={section?.name}
