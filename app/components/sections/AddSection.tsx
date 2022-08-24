@@ -57,6 +57,7 @@ const AddSection = ({
                     {sectionsConstants.addSection}
                   </h2>
                   <Icon
+                    tabIndex={0}
                     className="cursor-pointer text-2xl text-gray-600"
                     icon={'carbon:close'}
                     onClick={() => setOpen(false)}
@@ -65,6 +66,7 @@ const AddSection = ({
                 <hr className="mt-4 mb-6 h-px w-full border-0 bg-gray-300" />
                 <div className="pb-6">
                   <input
+                    tabIndex={0}
                     type="text"
                     name="name"
                     id="sectionName"
@@ -74,6 +76,7 @@ const AddSection = ({
                 </div>
                 <div className="pb-6">
                   <textarea
+                    tabIndex={0}
                     name="description"
                     id="sectionDescription"
                     rows={4}

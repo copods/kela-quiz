@@ -18,6 +18,7 @@ const SectionDetails = () => {
       <hr className="-mt-2 h-px w-full border-0 bg-gray-300" />
       <div className="flex items-start justify-between gap-2 md:flex-col xl:flex-row xl:items-center">
         <input
+          tabIndex={0}
           id="sectionSearch"
           type="text"
           name="search"

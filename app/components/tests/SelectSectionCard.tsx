@@ -104,6 +104,7 @@ const SelectSectionCard = ({
             {testsConstants.totalQuestionsText}
           </label>
           <input
+            tabIndex={0}
             type="number"
             id="noOfQu"
             name="noOfQuestion"
@@ -126,6 +127,7 @@ const SelectSectionCard = ({
             {testsConstants.totalTimeText}
           </label>
           <input
+            tabIndex={0}
             type="number"
             id="time"
             name="totalTime"
