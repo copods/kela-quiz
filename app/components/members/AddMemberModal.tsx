@@ -54,6 +54,7 @@ export default function AddMemberModal({
                       {members.addMember}
                     </h2>
                     <Icon
+                      tabIndex={0}
                       className="cursor-pointer text-2xl text-gray-600"
                       icon={'carbon:close'}
                       onClick={() => setOpen(false)}
@@ -66,6 +67,7 @@ export default function AddMemberModal({
                         {members.firstName}
                       </label>
                       <input
+                        tabIndex={0}
                         id="firstName"
                         type="text"
                         name="firstName"
@@ -78,6 +80,7 @@ export default function AddMemberModal({
                         {members.lastName}
                       </label>
                       <input
+                        tabIndex={0}
                         id="lastName"
                         type="text"
                         name="lastName"
@@ -91,6 +94,7 @@ export default function AddMemberModal({
                       {members.email}
                     </label>
                     <input
+                      tabIndex={0}
                       id="email"
                       type="email"
                       name="email"
@@ -106,12 +110,13 @@ export default function AddMemberModal({
                     </div>
                     <div className="my-1.5 rounded-lg border border-gray-200 px-4">
                       <select
+                        tabIndex={0}
                         name="roleId"
                         className="test-base h-11 w-full focus:outline-none"
                       >
                         {roles.map((role) => {
                           return (
-                            <option key={role.id} value={role?.id}>
+                            <option tabIndex={0} key={role.id} value={role?.id}>
                               {role?.name}
                             </option>
                           )
