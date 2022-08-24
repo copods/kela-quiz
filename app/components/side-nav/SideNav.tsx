@@ -8,7 +8,7 @@ let sideNavGuide = [
   //   navGuide: 'Main Menu',
   //   subItem: [
   //     {
-  //       id: 'Dashboard',
+  //       id: 'dashboard',
   //       iconClass: 'mdi:view-dashboard',
   //       itemName: 'Dashboard',
   //       itemRoute: 'dashboard',
@@ -19,13 +19,13 @@ let sideNavGuide = [
     navGuide: 'Results',
     subItem: [
       {
-        id: 'Group_By_Tests',
+        id: 'group_By_Tests',
         iconClass: 'mdi:chart-box-outline',
         itemName: 'Results',
         itemRoute: 'results/groupByTests',
       },
       // {
-      //   id: 'Group_By_Candidate',
+      //   id: 'group_By_Candidate',
       //   iconClass: 'mdi:chart-box-outline',
       //   itemName: 'Group By Candidate',
       //   itemRoute: 'groupByCandidate',
@@ -36,13 +36,13 @@ let sideNavGuide = [
     navGuide: 'Assessments',
     subItem: [
       {
-        id: 'Tests',
+        id: 'tests',
         iconClass: 'carbon:result',
         itemName: 'Tests',
         itemRoute: 'tests',
       },
       {
-        id: 'Sections',
+        id: 'sections',
         iconClass: 'ci:list-checklist-alt',
         itemName: 'Sections',
         itemRoute: 'sections',
@@ -53,13 +53,13 @@ let sideNavGuide = [
     navGuide: 'General',
     subItem: [
       {
-        id: 'Members',
+        id: 'members',
         iconClass: 'mdi:account-group',
         itemName: 'Members',
         itemRoute: 'members',
       },
       // {
-      //   id: 'Settings',
+      //   id: 'settings',
       //   iconClass: 'mdi:cog',
       //   itemName: 'Settings',
       //   itemRoute: 'settings',
