@@ -10,7 +10,7 @@ const Logo = ({ height, width, styleClass }: LogoProps) => {
       src="../../assets/logo.svg"
       height={height}
       width={width}
-      alt="logo"
+      alt="k-quiz logo"
       className={styleClass}
     />
   )
