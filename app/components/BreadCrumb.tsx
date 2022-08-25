@@ -18,6 +18,7 @@ const BreadCrumb = ({
             title={breadCrumb.tabName}
           >
             <Link
+              tabIndex={1}
               to={breadCrumb.route}
               className="cursor-pointer"
               id={breadCrumb.tabName}

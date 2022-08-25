@@ -53,6 +53,7 @@ const TestList = ({
         <Link
           to={'/tests/add-test'}
           id="addTest"
+          tabIndex={0}
           className="flex h-9 items-center rounded-lg bg-primary px-5 text-xs text-white"
         >
           + {testsConstants.addTestbutton}
