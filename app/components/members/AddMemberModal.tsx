@@ -135,7 +135,7 @@ export default function AddMemberModal({
                       buttonText={commonConstants.cancel} />
                     <Button  
                       tabIndex={0}
-                      id='addButton'
+                      id='addbutton'
                       type='submit'
                       name='addMember'
                       value={JSON.stringify({ action: 'add' })}

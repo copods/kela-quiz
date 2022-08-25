@@ -112,7 +112,7 @@ describe('Test for members', () => {
             .should('be.visible')
             .click()
         })
-      cy.get('.confirm-delete').should('have.text', cypress.delete).click()
+      cy.get('#confirm-delete').should('have.text', cypress.delete).click()
       cy.get('.Toastify__toast').find('.Toastify__close-button  ').click()
       cy.intercept('/members').as('membersPage')
       cy.get('.memberRow').each((item) => {

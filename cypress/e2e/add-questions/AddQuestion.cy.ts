@@ -448,7 +448,7 @@ describe('Test for section-details', () => {
         .then((len) => {
           lengthBefore = len
         })
-      cy.get('button.flex').should('have.text', '+ Add Options').click()
+      cy.get('button.px-5').should('have.text', '+ Add Options').click()
       cy.get('#quillEditor')
         .its('length')
         .then((len) => {

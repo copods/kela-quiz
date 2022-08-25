@@ -80,6 +80,7 @@ export default function DeletePopUp({
                   <Form method="post">
                     <Button 
                       tabIndex={0}
+                      id='confirm-delete'
                       varient='secondary-solid'
                       type='button' 
                       name='delete' 

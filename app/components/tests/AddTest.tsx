@@ -176,6 +176,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
             title='Previous Tab' 
             className='h-9 px-7' 
             varient='primary-solid'
+            id='backButton'
             buttonText={commonConstants.backButton} 
             isDisabled={currentTab === tabs[0].id}
             onClick={() => setCurrentTab(currentTab - 1)} />
@@ -185,6 +186,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
               title='Next Tab' 
               className='h-9 px-7' 
               varient='primary-solid'
+              id='nextButton'
               buttonText={commonConstants.nextButton} 
               isDisabled={!(name && description) || currentTab == 2}
               onClick={() => setCurrentTab(currentTab + 1)} />

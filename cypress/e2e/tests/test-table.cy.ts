@@ -387,7 +387,7 @@ describe('Visiting Tests', () => {
       })
     cy.get('#vertical-icon', { timeout: 60000 }).click()
     cy.get('.delete-test', { timeout: 6000 }).click()
-    cy.get('.confirm-delete', { timeout: 6000 }).click()
+    cy.get('#confirm-delete', { timeout: 6000 }).click()
     cy.get('#test-table-list', { timeout: 6000 }).each((item) => {
       cy.contains(deletedItem).should('not.exist')
     })
