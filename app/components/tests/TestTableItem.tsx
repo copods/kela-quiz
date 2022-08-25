@@ -61,7 +61,9 @@ const TestTableItem = ({
         </div>
         <div className="test-name-navigation w-4/12 cursor-pointer truncate  text-base font-medium leading-6 text-primary  ">
           <NavLink to={`/tests/${id}`} key={index}>
-            <span id="test-name-navigation">{testName}</span>
+            <span className="test-name-navigation" id="test-name-navigation">
+              {testName}
+            </span>
           </NavLink>
         </div>
         <div id="chip-group-id" className="flex w-3/12 text-xs leading-6">

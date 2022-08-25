@@ -182,7 +182,7 @@ const AddQuestionInSection = () => {
       <BreadCrumb data={breadCrumbArray} />
       <h1
         title={sectionDetails?.name}
-        className="text-3xl font-bold leading-9 text-gray-900"
+        className="addQuestionQuestionHeading text-3xl font-bold leading-9 text-gray-900"
       >
         {sectionDetails?.name} - {addQuestion.addQuestion}
       </h1>

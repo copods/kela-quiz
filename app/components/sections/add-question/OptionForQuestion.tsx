@@ -211,6 +211,7 @@ export default function OptionForQuestion({
                   <div className="flex-1" id="optionEditor">
                     <input
                       className="h-20 w-full rounded-lg border border-gray-300 bg-white p-4"
+                      placeholder="Write your option here"
                       value={option.answer}
                       onChange={(e) => {
                         updateTextAnswer(e.target.value, index)

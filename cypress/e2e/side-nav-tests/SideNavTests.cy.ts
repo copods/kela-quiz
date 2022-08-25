@@ -1,106 +1,38 @@
 import { cypress, testsConstants } from '~/constants/common.constants'
-
 describe('Test for Logout, SideNav', () => {
-  it('Sample Login', () => {
+  beforeEach('sign-in', () => {
     cy.visit('/sign-in')
-    cy.get('#email')
+    cy.get('input[name="email"]')
       .clear()
-      .type('careers@copods.co')
-      .should('have.value', cypress.email)
-    cy.get('#password')
+      .type(Cypress.env('email'))
+      .should('have.focus')
+      .should('have.value', Cypress.env('email'))
+    cy.get('input[name="password"]')
       .clear()
-      .type('kQuiz@copods')
-      .should('have.value', cypress.password)
-    cy.findByRole('button').click()
+      .type(Cypress.env('password'))
+      .should('have.focus')
+      .should('have.value', Cypress.env('password'))
+    cy.get('[data-cy="submit"]').click()
+    cy.location('pathname').should('include', '/dashboard')
   })
-
-  it('Test to Direct to Dashboard after Login', () => {
-    cy.visit('/sign-in')
-    cy.get('#email')
-      .clear()
-      .type('careers@copods.co')
-      .should('have.value', cypress.email)
-    cy.get('#password')
-      .clear()
-      .type('kQuiz@copods')
-      .should('have.value', cypress.password)
-    cy.findByRole('button').click()
-
-    cy.location('pathname', { timeout: 60000 }).should('include', '/dashboard')
+  afterEach(() => {
+    cy.get('#logoutButton').click()
   })
+  it('click all links with loop', () => {
+    // result page
+    cy.get('a').find('#Group_By_Tests').should('have.text', 'Results').click()
+    cy.location('pathname').should('include', '/results/groupByTests')
 
-  it('Test for Routing and Active Tab for Results', () => {
-    cy.visit('/sign-in')
-    cy.get('#email')
-      .clear()
-      .type('careers@copods.co')
-      .should('have.value', cypress.email)
-    cy.get('#password')
-      .clear()
-      .type('kQuiz@copods')
-      .should('have.value', cypress.password)
-    cy.findByRole('button').click()
-    cy.get('a')
-      .find('#Group_By_Tests')
-      .should('have.text', 'Results')
-      .click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/results')
-  })
-
-  it('Test for Routing and Active Tab for Tests', () => {
-    cy.visit('/sign-in')
-    cy.get('#email')
-      .clear()
-      .type('careers@copods.co')
-      .should('have.value', cypress.email)
-    cy.get('#password')
-      .clear()
-      .type('kQuiz@copods')
-      .should('have.value', cypress.password)
-    cy.findByRole('button').click()
-
+    // tests page
     cy.get('a').find('#Tests').should('have.text', testsConstants.Tests).click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-  })
+    cy.location('pathname').should('eq', '/tests')
 
-  it('Test for Routing and Active Tab for Members', () => {
-    cy.visit('/sign-in')
-    cy.get('#email')
-      .clear()
-      .type('careers@copods.co')
-      .should('have.value', cypress.email)
-    cy.get('#password')
-      .clear()
-      .type('kQuiz@copods')
-      .should('have.value', cypress.password)
-    cy.findByRole('button').click()
+    // sections page
+    cy.get('a').find('#Sections').should('have.text', cypress.Sections).click()
+    cy.location('pathname').should('eq', '/sections')
 
+    // members page
     cy.get('a').find('#Members').should('have.text', cypress.members).click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/members')
-  })
-
-  it('Test for Active Tab Color', () => {
-    cy.visit('/sign-in')
-    cy.get('#email')
-      .clear()
-      .type('careers@copods.co')
-      .should('have.value', cypress.email)
-    cy.get('#password')
-      .clear()
-      .type('kQuiz@copods')
-      .should('have.value', cypress.password)
-    cy.findByRole('button').click()
-
-    cy.get('a').find('#Members').should('have.text', cypress.members).click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/members')
-    cy.get('a').should('have.class', 'bg-blue-50')
-  })
-
-  it('Test to redirect to the login page on log out', () => {
-    cy.get('form')
-      .get('#logoutButton', { timeout: 6000 })
-      .click()
-      .url()
-      .should('includes', '/sign-in')
+    cy.location('pathname').should('eq', '/members')
   })
 })

@@ -60,7 +60,7 @@ const Sections = ({
 
       {/* list */}
       <div
-        className="flex flex-1 flex-col gap-6 overflow-auto"
+        className="section-cards flex flex-1 flex-col gap-6 overflow-auto"
         id="section-cards"
       >
         {sections?.map((section: any) => (

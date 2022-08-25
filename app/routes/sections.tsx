@@ -69,6 +69,7 @@ export const action: ActionFunction = async ({ request }) => {
   const description = formData.get('description')
 
   if (typeof name !== 'string' || name.length === 0) {
+    console.log('asdjkhajsdhkashdjhaksd', ...formData)
     return json<ActionData>(
       { errors: { title: 'Name is required', status: 400 } },
       { status: 400 }

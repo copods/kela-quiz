@@ -116,7 +116,11 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
     <div className="flex h-full flex-col gap-6 overflow-hidden">
       {/* header */}
       <header className="flex items-center justify-between">
-        <h2 title="Add Test" className="text-3xl font-bold text-black">
+        <h2
+          title="Add Test"
+          id="Add Test"
+          className="text-3xl font-bold text-black"
+        >
           {testsConstants.addTestbutton}
         </h2>
       </header>

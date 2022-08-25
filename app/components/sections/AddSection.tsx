@@ -92,6 +92,7 @@ const AddSection = ({
                     {commonConstants.cancel}
                   </button>
                   <button
+                    data-cy="submit"
                     type="submit"
                     id="submitButton"
                     className={`h-9 rounded-md bg-primary px-4 text-sm text-[#F0FDF4] disabled:opacity-80  ${
