@@ -92,11 +92,6 @@ export async function updateCandidateDetail({ candidateId, firstName, lastName }
  * @returns candidateTestId
  */
 export async function updateNextStep({ assessmentId, nextRoute, isSection, currentSectionId }: { assessmentId: string, nextRoute: string, isSection: boolean, currentSectionId?: string }) {
-  console.log('asd', assessmentId, {
-    nextRoute,
-    isSection,
-    currentSectionId,
-  })
   await updateNextCandidateStep(assessmentId, {
     nextRoute,
     isSection,
@@ -237,12 +232,6 @@ export async function moveToNextSection({ assessmentId, order, sectionId }: { as
   )
 
   await updateNextStep({
-    assessmentId: assessmentId as string,
-    nextRoute: 'section',
-    isSection: true,
-    currentSectionId: nextSectionObject?.id,
-  })
-  console.log({
     assessmentId: assessmentId as string,
     nextRoute: 'section',
     isSection: true,

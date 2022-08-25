@@ -59,7 +59,7 @@ const TestTableItem = ({
         >
           {index}
         </div>
-        <div className="test-name-navigation w-4/12 cursor-pointer truncate  text-base font-medium leading-6 text-primary  ">
+        <div className="test-name-navigation truncatetext-base w-4/12 cursor-pointer font-medium leading-6 text-primary">
           <NavLink to={`/tests/${id}`} key={index}>
             <span id="test-name-navigation">{testName}</span>
           </NavLink>

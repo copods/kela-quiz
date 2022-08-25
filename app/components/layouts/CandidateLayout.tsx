@@ -26,7 +26,7 @@ export default function CandidateLayout({
 }) {
   let candidateSection: SectionInCandidateTest | null = null
   for (let sec of candidateTest?.sections) {
-    if (section?.section?.id == sec?.section?.id) {
+    if (section?.section?.id === sec?.section?.id) {
       candidateSection = sec
       break
     }

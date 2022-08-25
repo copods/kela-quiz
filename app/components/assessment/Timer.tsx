@@ -14,13 +14,6 @@ const TimerComponent = ({
   candidateSection: SectionInCandidateTest
   section: SectionInTest
 }) => {
-  // let candidateSection: SectionInCandidateTest
-  // for (let sec of candidateTest?.sections) {
-  //   if (section?.section?.id == sec?.section?.id) {
-  //     candidateSection = sec
-  //     break
-  //   }
-  // }
   const [time, setTimer] = useState(
     getTimeLeftInSeconds({
       totalTimeInSeconds: section?.timeInSeconds,

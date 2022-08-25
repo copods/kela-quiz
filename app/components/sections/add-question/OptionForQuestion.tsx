@@ -132,14 +132,14 @@ export default function OptionForQuestion({
         )}
 
         <button
-          className="flex h-9 items-center  rounded-lg bg-primary px-5 text-xs text-white"
+          className="flex h-9 items-center rounded-lg bg-primary px-5 text-xs text-white"
           onClick={addOptionArea}
         >
           + {addQuestion.addOptions}
         </button>
       </div>
 
-      <div className="flex h-full flex-1 flex-col gap-5  overflow-auto">
+      <div className="flex h-full flex-1 flex-col gap-5 overflow-auto">
         {(getQuestionType(selectedTypeOfQuestion) ===
           QuestionTypes.multipleChoice ||
           getQuestionType(selectedTypeOfQuestion) ===

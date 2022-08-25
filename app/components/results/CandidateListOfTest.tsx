@@ -12,8 +12,8 @@ const CandidateListOfTest = () => {
     },
     {
       id: 1,
-      title: 'Attended',
-      route: 'attended',
+      title: 'Attempted',
+      route: 'attempted',
     },
     {
       id: 2,
