@@ -20,9 +20,9 @@ describe('Creating tests', () => {
     cy.get('[data-cy="submit"]').click()
     cy.location('pathname').should('include', '/dashboard')
   })
-  afterEach(() => {
-    cy.get('#logoutButton', { timeout: 60000 }).click()
-  })
+  // afterEach(() => {
+  //   cy.get('#logoutButton', { timeout: 60000 }).click()
+  // })
   it('Visiting Add Test Page', () => {
     cy.get('a').find('#Tests').should('have.text', testsConstants.Tests).click()
     cy.get('#addTest', { timeout: 6000 })
