@@ -177,7 +177,7 @@ export default function SectionPage() {
 
   return (
     <AdminLayout>
-      <div className="flex h-full flex-col gap-12 overflow-hidden">
+      <div className="flex h-full flex-col gap-12 overflow-hidden p-1">
         {/* header */}
         <header className="flex items-center justify-between">
           <h2 className="text-3xl font-bold text-black">
@@ -188,6 +188,7 @@ export default function SectionPage() {
             className="h-9 rounded-lg bg-primary px-5 text-xs text-[#F0FDF4]"
             id="add-section"
             onClick={() => setShowAddSectionModal(!showAddSectionModal)}
+            title={sectionsConstants.addSection}
           >
             + {sectionsConstants.addSection}
           </button>

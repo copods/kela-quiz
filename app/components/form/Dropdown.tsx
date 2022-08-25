@@ -1,6 +1,7 @@
 import { Fragment } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
+import { sectionsConstants } from '~/constants/common.constants'
 
 function DropdownField({
   data,
@@ -30,7 +31,7 @@ function DropdownField({
     <Listbox value={value} onChange={setValue}>
       {({ open }) => (
         <>
-          <div className="dropdown relative w-48" id="dropdown">
+          <div className="dropdown relative w-48" id="dropdown" title={sectionsConstants.dropdown}>
             <Listbox.Button
               id="dropdownButton"
               className=" dropdownButton relative h-11 w-full cursor-pointer rounded-md border border-gray-200 bg-white px-3 py-3 text-left shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"

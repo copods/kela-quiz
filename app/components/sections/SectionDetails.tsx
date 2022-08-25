@@ -4,6 +4,7 @@ import { useState } from 'react'
 import type { Question } from '~/interface/Interface'
 import QuestionCard from './QuestionCard'
 import { addQuestion, sectionsConstants } from '~/constants/common.constants'
+import { setTheFocus } from '~/utils/assessment.utils'
 const SectionDetails = () => {
   const sectionDetails = useLoaderData()
   const [currentAccordian, setCurrentAccordian] = useState(-1)
@@ -27,6 +28,10 @@ const SectionDetails = () => {
         />
         <Link
           to={`/sections/${sectionDetails.sectionDetails?.id}/add-question`}
+          onKeyUp={(e) => {
+            setTheFocus(e,'#Section')
+          }}
+          title={addQuestion.addQuestion}
         >
           <button
             tabIndex={0}

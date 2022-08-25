@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 import DropdownField from './form/Dropdown'
-import { componentGlobalConstants } from '~/constants/common.constants'
+import { componentGlobalConstants, sectionsConstants } from '~/constants/common.constants'
 const SortFilter = ({
   filterData,
   sortDirection,
@@ -20,7 +20,7 @@ const SortFilter = ({
 }) => {
   return (
     <div className="flex items-center" id="sort-filter">
-      <div className="flex items-center gap-2.5" id="sort-filter-body">
+      <div className="flex items-center gap-2.5" id="sort-filter-body" title={sectionsConstants.sort}>
         {sortDirection == 'asc' ? (
           <Icon
             tabIndex={0}

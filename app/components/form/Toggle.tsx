@@ -7,10 +7,21 @@ export default function Toggle({
   toggle: boolean
   onToggleChange: (e: boolean) => void
 }) {
+  console.log(toggle);
+  
   return (
-    <div>
+    <div 
+       className='flex' 
+       tabIndex={0}
+       onKeyDown={(e)=>{
+        if(e.key === 'Enter'){
+          toggle = !toggle;
+          console.log(toggle);
+          
+          onToggleChange;
+        }
+       }}>
       <Switch
-        tabIndex={0}
         checked={toggle}
         onChange={onToggleChange}
         className={`${

@@ -47,6 +47,13 @@ export const sectionsConstants = {
   addQuestion: 'Add Question',
   noQuestionAlert: 'No questions found. Add your first question',
   noRecordFound: 'No Record Found',
+  cancel:'Cancel',
+  saveAndExit:'Save & Exit',
+  saveAndAddMore:'Save & Add More',
+  saving:'Saving...',
+  cancelling:'Cancelling...',
+  sort:'Sort',
+  dropdown:'Select'
 }
 export const testsConstants = {
   addTestbutton: 'Add Test',

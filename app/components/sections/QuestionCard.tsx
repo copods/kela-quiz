@@ -18,11 +18,12 @@ const QuestionCard = ({
     <div
       key={question.id}
       className="flex flex-col rounded-lg border border-gray-300 bg-gray-50 px-6 py-7"
+      tabIndex={0}
+      aria-lable="Question"
     >
       <div className="items-top break flex justify-between text-base text-gray-600">
         <div
           className="items-top flex flex-1 justify-between"
-          tabIndex={0}
           onKeyUp={(e) => {
             if (e.key === 'Enter')
               onAccordianToggle(

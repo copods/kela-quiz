@@ -6,7 +6,7 @@ import OptionForQuestion from './OptionForQuestion'
 import cuid from 'cuid'
 import { Link, useLoaderData, useSubmit, useTransition } from '@remix-run/react'
 import { toast } from 'react-toastify'
-import { addQuestion, QuestionTypes } from '~/constants/common.constants'
+import { addQuestion, QuestionTypes, sectionsConstants } from '~/constants/common.constants'
 
 const AddQuestionInSection = () => {
   const { sectionDetails, questionTypes } = useLoaderData()
@@ -180,12 +180,14 @@ const AddQuestionInSection = () => {
   return (
     <div className="flex h-full flex-col gap-6">
       <BreadCrumb data={breadCrumbArray} />
+      <div className="flex">
       <h1
         title={sectionDetails?.name}
-        className="text-3xl font-bold leading-9 text-gray-900"
+        className="text-3xl font-bold leading-9 text-gray-900 inline-block"
       >
         {sectionDetails?.name} - {addQuestion.addQuestion}
       </h1>
+      </div>
 
       <div className="flex h-40 flex-1 flex-row gap-6">
         <QuestionEditor
@@ -211,17 +213,16 @@ const AddQuestionInSection = () => {
       </div>
       <div className="flex items-center justify-between">
         <div className="flex">
-          <Link to={`/sections/${sectionDetails?.id}`}>
-            <button
-              tabIndex={0}
-              id="cancel"
-              disabled={transition.state === 'submitting'}
-              className={`flex h-9 items-center gap-1 rounded-lg bg-red-600 px-5 text-xs text-white ${
-                transition.state === 'submitting' && 'disabled:opacity-75'
-              }`}
-            >
-              {transition.state === 'submitting' ? 'Canceling...' : 'Cancel'}
-            </button>
+          <Link 
+             to={`/sections/${sectionDetails?.id}`}
+             tabIndex={0}
+             id="cancel"
+             className={`flex h-9 items-center gap-1 rounded-lg bg-red-600 px-5 text-xs text-white ${
+               transition.state === 'submitting' && 'disabled:opacity-75'
+             }`}
+             title={sectionsConstants.cancel}
+          >
+              {transition.state === 'loading' ? sectionsConstants.cancelling : sectionsConstants.cancel}
           </Link>
         </div>
         <div className="flex gap-2">
@@ -233,9 +234,10 @@ const AddQuestionInSection = () => {
               transition.state === 'submitting' && 'disabled:opacity-75'
             }`}
             onClick={() => saveQuestion(false)}
+            title={sectionsConstants.saveAndExit}
           >
             <Icon icon="ic:round-save" className="mr-1" />
-            {transition.state === 'submitting' ? 'Saving...' : 'Save & Exit'}
+            {transition.state === 'submitting' ? sectionsConstants.saving : sectionsConstants.saveAndExit}
           </button>
 
           <button
@@ -246,11 +248,12 @@ const AddQuestionInSection = () => {
               transition.state === 'submitting' && 'disabled:opacity-75'
             }`}
             onClick={() => saveQuestion(true)}
+            title={sectionsConstants.saveAndAddMore}
           >
             <Icon icon="ic:round-save" className="mr-1" />
             {transition.state === 'submitting'
-              ? 'Saving...'
-              : 'Save & Add More'}
+              ? sectionsConstants.saving
+              : sectionsConstants.saveAndAddMore}
           </button>
         </div>
       </div>

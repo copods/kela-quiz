@@ -53,6 +53,9 @@ export default function OptionForQuestion({
     }
   }
 
+  console.log(singleChoiceAnswer);
+  
+
   const deleteOption = (index: number, id?: string) => {
     if (
       getQuestionType(selectedTypeOfQuestion) ===
@@ -135,6 +138,7 @@ export default function OptionForQuestion({
           tabIndex={0}
           className="flex h-9 items-center  rounded-lg bg-primary px-5 text-xs text-white"
           onClick={addOptionArea}
+          title="Add Option"
         >
           + {addQuestion.addOptions}
         </button>
@@ -147,7 +151,7 @@ export default function OptionForQuestion({
             QuestionTypes.singleChoice) &&
           options.map((option, index) => {
             return (
-              <div className="flex items-center gap-2.5" key={option.id}>
+              <div className="flex items-center gap-2.5 px-1" key={option.id}>
                 {getQuestionType(selectedTypeOfQuestion) ===
                 QuestionTypes.multipleChoice ? (
                   <input
@@ -205,6 +209,7 @@ export default function OptionForQuestion({
                       ? 'cursor-not-allowed text-red-400'
                       : 'cursor-pointer text-red-600'
                   }`}
+                  aria-label="Delete"
                 ></Icon>
               </div>
             )
