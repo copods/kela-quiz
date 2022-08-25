@@ -50,7 +50,7 @@ const TestTableItem = ({
       >
         {showCheckBox && (
           <div className="w-1/12 text-base font-normal leading-6 text-gray-700">
-            <input type="checkbox" />
+            <input name="checkbox" tabIndex={0} type="checkbox" />
           </div>
         )}
         <div
@@ -60,7 +60,7 @@ const TestTableItem = ({
           {index}
         </div>
         <div className="test-name-navigation w-4/12 cursor-pointer truncate  text-base font-medium leading-6 text-primary  ">
-          <NavLink to={`/tests/${id}`} key={index}>
+          <NavLink to={`/tests/${id}`} tabIndex={0} key={index}>
             <span className="test-name-navigation" id="test-name-navigation">
               {testName}
             </span>
@@ -81,6 +81,7 @@ const TestTableItem = ({
         </div>
         <div className="flex w-1/12 gap-2">
           <Icon
+            tabIndex={0}
             className="cursor-pointer text-2xl text-primary"
             icon={'ant-design:user-add-outlined'}
             onClick={() => setCandidatePopupOpen(true)}
