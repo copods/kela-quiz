@@ -10,6 +10,7 @@ export default function Toggle({
   return (
     <div>
       <Switch
+        tabIndex={0}
         checked={toggle}
         onChange={onToggleChange}
         className={`${

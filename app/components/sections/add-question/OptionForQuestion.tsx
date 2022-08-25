@@ -132,6 +132,7 @@ export default function OptionForQuestion({
         )}
 
         <button
+          tabIndex={0}
           className="flex h-9 items-center rounded-lg bg-primary px-5 text-xs text-white"
           onClick={addOptionArea}
         >
@@ -150,6 +151,8 @@ export default function OptionForQuestion({
                 {getQuestionType(selectedTypeOfQuestion) ===
                 QuestionTypes.multipleChoice ? (
                   <input
+                    name="checkbox"
+                    tabIndex={0}
                     id="checkBox"
                     type="checkbox"
                     value={option.id}
@@ -163,6 +166,7 @@ export default function OptionForQuestion({
                   getQuestionType(selectedTypeOfQuestion) ===
                     QuestionTypes.singleChoice && (
                     <input
+                      tabIndex={0}
                       id="radioButton"
                       type="radio"
                       name="radioChoice"
@@ -191,6 +195,9 @@ export default function OptionForQuestion({
                 </div>
                 <Icon
                   onClick={() => deleteOption(index, option?.id)}
+                  onKeyUp={(e) => {
+                    if (e.key === 'Enter') deleteOption(index, option?.id)
+                  }}
                   tabIndex={0}
                   icon="ic:outline-delete-outline"
                   className={`h-6 w-6 ${index} ${
@@ -210,6 +217,7 @@ export default function OptionForQuestion({
                 <div className="flex items-center gap-2.5" key={option.id}>
                   <div className="flex-1" id="optionEditor">
                     <input
+                      tabIndex={0}
                       className="h-20 w-full rounded-lg border border-gray-300 bg-white p-4"
                       value={option.answer}
                       onChange={(e) => {

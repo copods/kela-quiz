@@ -67,6 +67,7 @@ const SelectSectionCard = ({
         </h3>
         {section.isSelected ? (
           <button
+            tabIndex={0}
             className="h-6 rounded bg-red-500 px-4 text-[9px] text-white"
             onClick={() => {
               updateThisSection('isSelected', '', false)
@@ -76,6 +77,7 @@ const SelectSectionCard = ({
           </button>
         ) : (
           <button
+            tabIndex={0}
             className="h-6 rounded bg-primary px-4 text-[9px] text-white"
             onClick={() => {
               updateThisSection('isSelected', '', true)
@@ -109,6 +111,7 @@ const SelectSectionCard = ({
             {testsConstants.totalQuestionsText}
           </label>
           <input
+            tabIndex={0}
             type="number"
             id="noOfQu"
             name="noOfQuestion"
@@ -131,6 +134,7 @@ const SelectSectionCard = ({
             {testsConstants.totalTimeText}
           </label>
           <input
+            tabIndex={0}
             type="number"
             id="time"
             name="totalTime"

@@ -16,6 +16,7 @@ function InputField({
         {label}
       </label>
       <input
+        tabIndex={0}
         id={name}
         name={name}
         {...props}

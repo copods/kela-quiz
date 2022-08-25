@@ -10,7 +10,11 @@ const TestDetails = () => {
       <header className="mb-8">
         <div className="border-b border-solid border-slate-300">
           <div className="flex gap-2 pb-6">
-            <Link to={'/tests'} className="flex items-center gap-4 ">
+            <Link
+              to={'/tests'}
+              className="flex items-center gap-4 "
+              tabIndex={0}
+            >
               <Icon
                 className="text-3xl font-semibold leading-9 text-gray-900"
                 id="backButton"

@@ -21,6 +21,7 @@ export default function MembersHeader({
         <div className="flex items-center justify-between">
           <h1 className="text-3xl font-bold leading-9">{members.members}</h1>
           <button
+            tabIndex={0}
             id="addMember"
             className="h-9 rounded-lg bg-blue-900 px-4 text-xs font-medium leading-4 text-[#F0FDF4]"
             onClick={() => setOpen(!open)}
