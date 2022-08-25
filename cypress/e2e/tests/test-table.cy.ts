@@ -345,8 +345,8 @@ describe('Visiting Tests', () => {
           cy.log(strings)
           if ($el.innerText.includes('\n')) {
             cy.get('#section-count-button', { timeout: 6000 }).click()
-            cy.get('.section-menu', { timeout: 6000 }).should("be.visible")
-            cy.get('.section-menu', { timeout: 6000 }).then(($elements) => {
+            cy.get('.sectionMenu', { timeout: 6000 }).should("be.visible")
+            cy.get('.sectionMenu', { timeout: 6000 }).then(($elements) => {
               var str = [...$elements].map(($el) => {
                 return $el.innerText
               })
