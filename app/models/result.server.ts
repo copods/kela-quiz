@@ -19,7 +19,9 @@ export async function getCandidateEmailById({ id }: Pick<CandidateTest, 'id'>) {
     },
   })
 }
-export async function getResultsOfCandidatesByTestId({ testId }: Pick<CandidateResult, 'testId'>) {
+export async function getResultsOfCandidatesByTestId({
+  testId,
+}: Pick<CandidateResult, 'testId'>) {
   return prisma.candidateResult.findMany({
     where: { testId },
     select: {
@@ -36,12 +38,12 @@ export async function getResultsOfCandidatesByTestId({ testId }: Pick<CandidateR
           createdBy: {
             select: {
               firstName: true,
-              lastName: true
-            }
-          }
-        }
+              lastName: true,
+            },
+          },
+        },
       },
-    }
+    },
   })
 }
 
@@ -49,7 +51,6 @@ export async function getAllCandidateTests(obj: object) {
   const filter = obj ? obj : {}
   const res: Array<Test> = await prisma.test.findMany({
     ...filter,
-
     include: {
       _count: {
         select: {

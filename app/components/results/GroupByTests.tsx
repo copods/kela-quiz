@@ -21,7 +21,6 @@ const GroupByTests = () => {
   const candidateTestData = useLoaderData()
   const candidateTests = candidateTestData.candidateTest
   const submit = useSubmit()
-
   useEffect(() => {
     const filter = {
       orderBy: {
@@ -52,14 +51,17 @@ const GroupByTests = () => {
               <span className="col-span-1 text-sm font-semibold  text-gray-500">
                 {resultConstants.srno}
               </span>
-              <span className="col-span-4 text-sm font-semibold  text-gray-500">
+              <span className="col-span-3 text-sm font-semibold text-gray-500">
                 {resultConstants.test}
               </span>
-              <span className="col-span-2 text-sm font-semibold  text-gray-500">
+              <span className="col-span-2 text-sm font-semibold text-gray-500">
                 {commonConstants.total} {resultConstants.totalInvited}
               </span>
-              <span className="col-span-3 text-sm font-semibold  text-gray-500">
+              <span className="col-span-2 text-sm font-semibold text-gray-500">
                 {commonConstants.total} {resultConstants.totalAttended}
+              </span>
+              <span className="col-span-1 text-sm font-semibold text-gray-500">
+                {resultConstants.status}
               </span>
             </div>
             <div id="GroupByTestItems" className="col-span-10 grid">
