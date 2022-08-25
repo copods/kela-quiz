@@ -59,8 +59,8 @@ const TestTableItem = ({
         >
           {index}
         </div>
-        <div className="test-name-navigation w-4/12 cursor-pointer truncate  text-base font-medium leading-6 text-primary  ">
-          <NavLink to={`/tests/${id}`} tabIndex={0} key={index}>
+        <div className="test-name-navigation p-1 w-4/12 cursor-pointer truncate  text-base font-medium leading-6 text-primary  ">
+          <NavLink aria-label={testName} title={testName} to={`/tests/${id}`} tabIndex={0} key={index}>
             <span id="test-name-navigation">{testName}</span>
           </NavLink>
         </div>
@@ -83,6 +83,9 @@ const TestTableItem = ({
             className="cursor-pointer text-2xl text-primary"
             icon={'ant-design:user-add-outlined'}
             onClick={() => setCandidatePopupOpen(true)}
+            onKeyUp={(e) => {
+              if (e.key === 'Enter') setCandidatePopupOpen(true)
+            }}
           />
 
           <TestListActionMenu

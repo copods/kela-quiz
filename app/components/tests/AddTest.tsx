@@ -120,9 +120,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
           {testsConstants.addTestbutton}
         </h2>
       </header>
-      <div>
-        <BreadCrumb data={breadCrumbData} />
-      </div>
+      <BreadCrumb data={breadCrumbData} />
       <StepsTabComponent
         tabs={tabs}
         isDisabled={!name || !description}
@@ -159,10 +157,10 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
       )}
       {/* Buttons */}
       <div className="flex w-full items-center justify-between">
-        <div>
-          <Link to={'/tests'}>
+          <Link tabIndex={1} to={'/tests'}>
             <button
               tabIndex={0}
+              aria-label='Cancel'
               title="Cancel Add Test"
               className={`h-9 rounded-lg px-7 text-xs text-white ${
                 currentTab != tabs[0].id
@@ -173,7 +171,6 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
               {commonConstants.cancel}
             </button>
           </Link>
-        </div>
         <div className="flex gap-4">
           <button
             tabIndex={0}
@@ -186,6 +183,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
             }`}
             onClick={() => setCurrentTab(currentTab - 1)}
             disabled={currentTab === tabs[0].id}
+            aria-label="Back"
           >
             {commonConstants.backButton}
           </button>
@@ -201,6 +199,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
               }`}
               onClick={() => setCurrentTab(currentTab + 1)}
               disabled={!(name && description) || currentTab == 2}
+              aria-label='Next'
             >
               {commonConstants.nextButton}
             </button>
@@ -216,6 +215,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
               }`}
               onClick={() => submitAddTest()}
               disabled={currentTab != 2}
+              aria-label='Next'
             >
               {transition.state === 'submitting' ? 'Creating Test' : 'Submit'}
             </button>

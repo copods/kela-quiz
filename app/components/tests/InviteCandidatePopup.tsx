@@ -38,6 +38,7 @@ const InviteCandidatePopup = ({
     setEmails([''])
   }
 
+
   return (
     <Transition.Root show={openInvitePopup} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={setOpenInvitePopup}>
@@ -73,9 +74,14 @@ const InviteCandidatePopup = ({
                     Invite Candidate
                   </h2>
                   <Icon
+                  tabIndex={0}
                     className="cursor-pointer text-2xl text-gray-600"
                     icon={'carbon:close'}
                     onClick={updatePopupAndEmailState}
+                    onKeyUp={(e) => {
+                      if (e.key === 'Enter') updatePopupAndEmailState()
+                    }}
+                    aria-label='Close'
                   />
                 </div>
                 <hr className="mt-4 mb-6 h-px w-full border-0 bg-gray-300" />
@@ -89,8 +95,14 @@ const InviteCandidatePopup = ({
                     Candidate Email
                   </span>
                   <span
-                    className="cursor-pointer text-sm font-normal text-primary"
+                  tabIndex={0}
+                    className="cursor-pointer text-sm font-normal text-primary px-0.5"
                     onClick={() => setEmails([...emails, ''])}
+                    onKeyUp={(e) => {
+                      if (e.key === 'Enter') setEmails([...emails, ''])
+                    }}
+                    title='Invite More'
+                    aria-label='Invite More Button'
                   >
                     Invite More +
                   </span>
@@ -100,10 +112,13 @@ const InviteCandidatePopup = ({
                   return (
                     <div className="pb-2" key={i}>
                       <input
+                      tabIndex={0}
                         type="email"
                         name={`email`}
                         className="h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
                         placeholder="johndoe@example.com"
+                        title='Email'
+                        aria-label='Email'
                       />
                     </div>
                   )
@@ -111,18 +126,24 @@ const InviteCandidatePopup = ({
 
                 <div className="flex justify-end gap-2 pt-4">
                   <button
+                  tabIndex={0}
                     type="button"
                     className="h-9 rounded-md px-4 text-sm text-gray-500"
                     onClick={updatePopupAndEmailState}
+                    title='Cancel'
+                    aria-label='Cancel'
                   >
                     Cancel
                   </button>
                   <button
+                  tabIndex={0}
                     type="submit"
                     name="inviteCandidates"
                     value={testId}
                     id="submitButton"
                     className="h-9 rounded-md bg-primary px-4 text-sm text-[#F0FDF4]"
+                    title='Invite'
+                    aria-label='Invite'
                     // onClick={() => setOpen(false)}
                   >
                     Invite

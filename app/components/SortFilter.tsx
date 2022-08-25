@@ -31,6 +31,7 @@ const SortFilter = ({
             }}
             onClick={() => onSortDirectionChange('desc')}
             className="cursor-pointer text-2xl"
+            aria-label='Sort Ascending'
           />
         ) : (
           <Icon
@@ -42,6 +43,7 @@ const SortFilter = ({
             }}
             onClick={() => onSortDirectionChange('asc')}
             className="cursor-pointer text-2xl"
+            aria-label='Sort Descending'
           />
         )}
         <DropdownField
