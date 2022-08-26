@@ -8,7 +8,11 @@ const ResultTab = ({
   testId: string
 }) => {
   return (
-    <div className="flex gap-8" id="Group_By_Tests-test-candidate-list-tab">
+    <div
+      className="flex gap-8"
+      id="Group_By_Tests-test-candidate-list-tab"
+      data-cy="Group_By_Tests-test-candidate-list-tab"
+    >
       {tabs.map((tab) => {
         return (
           <NavLink
