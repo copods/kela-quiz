@@ -17,22 +17,22 @@ const ExamAttendedCandidatesComponent = () => {
         <div className="bg-[#F9FAFB] pb-4  ">
           <div className="rounded-lg border border-solid border-[#E5E7EB] bg-tableHeader shadow-table">
             <div className=" grid grid-cols-12 py-4 px-12">
-              <span className="col-span-1 text-sm  font-semibold  text-gray-500">
+              <span className="col-span-1 text-sm font-semibold text-gray-500">
                 {resultConstants.srNo}
               </span>
-              <span className="col-span-3 text-sm  font-semibold  text-gray-500">
+              <span className="col-span-3 text-sm font-semibold text-gray-500">
                 {members.name}
               </span>
-              <span className="col-span-4 text-sm  font-semibold  text-gray-500">
+              <span className="col-span-4 text-sm font-semibold text-gray-500">
                 {members.email}
               </span>
-              <span className="col-span-2 text-sm  font-semibold  text-gray-500">
+              <span className="col-span-2 text-sm font-semibold text-gray-500">
                 {resultConstants.invitedBy}
               </span>
-              <span className="col-span-1 text-sm  font-semibold  text-gray-500">
+              <span className="col-span-1 text-sm font-semibold text-gray-500">
                 {resultConstants.result}
               </span>
-              <span className="col-span-1 text-sm  font-semibold  text-gray-500">
+              <span className="col-span-1 text-sm font-semibold text-gray-500">
                 {resultConstants.review}
               </span>
             </div>
