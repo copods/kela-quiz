@@ -86,6 +86,7 @@ const TestTableItem = ({
             onKeyUp={(e) => {
               if (e.key === 'Enter') setCandidatePopupOpen(true)
             }}
+            aria-label='Invite Member'
           />
 
           <TestListActionMenu
@@ -93,9 +94,9 @@ const TestTableItem = ({
             onItemClick={setShowDeletePopup}
             menuListIcon={'ic:outline-delete-outline'}
             menuListText={'Delete'}
+            aria-label='Menu'
           />
         </div>
-      </div>
       <DeletePopUp
         setOpen={setShowDeletePopup}
         open={showDeletePopup}
@@ -108,6 +109,7 @@ const TestTableItem = ({
         testName={testName}
         testId={id}
       />
+      </div>
     </>
   )
 }

@@ -44,10 +44,11 @@ const TestDetails = ({
                 text={description}
                 id="testDescription"
                 fullAccess={true}
-                quillPlaceholder="Question"
+                quillPlaceholder="Description"
                 onTextChange={(e) => {
                   onDescriptionChange(e)
                 }}
+                aria-label='Write description of test'
               />
             )}
           </ClientOnly>

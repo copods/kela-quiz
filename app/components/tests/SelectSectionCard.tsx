@@ -72,6 +72,8 @@ const SelectSectionCard = ({
             onClick={() => {
               updateThisSection('isSelected', '', false)
             }}
+            title='Remove'
+            aria-label='Remove section'
           >
             {commonConstants.removeButton}
           </button>
@@ -82,6 +84,8 @@ const SelectSectionCard = ({
             onClick={() => {
               updateThisSection('isSelected', '', true)
             }}
+            title='Add'
+            aria-label='Select section'
           >
             {commonConstants.addButton}
           </button>

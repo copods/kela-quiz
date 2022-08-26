@@ -32,6 +32,8 @@ function Footer() {
             type="submit"
             id="logoutButton"
             className="flex h-10 w-10 items-center justify-center rounded-lg bg-red-500"
+            aria-label='Log out'
+            title='Log out'
           >
             <Icon
               icon="mdi:logout-variant"
