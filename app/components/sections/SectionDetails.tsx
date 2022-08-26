@@ -23,7 +23,8 @@ const SectionDetails = () => {
           type="text"
           name="search"
           className="h-9 w-48 rounded-lg border border-gray-200 px-3 text-sm"
-          placeholder="Search"
+          placeholder={sectionsConstants.search}
+          title={sectionsConstants.search}
           onChange={(e) => setSearchText(e.target.value)}
         />
         <Link
@@ -32,6 +33,7 @@ const SectionDetails = () => {
             setTheFocus(e,'#Section')
           }}
           title={addQuestion.addQuestion}
+          aria-label={addQuestion.addQuestion}
         >
           <button
             tabIndex={0}

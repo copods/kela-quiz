@@ -138,13 +138,14 @@ export default function OptionForQuestion({
           tabIndex={0}
           className="flex h-9 items-center  rounded-lg bg-primary px-5 text-xs text-white"
           onClick={addOptionArea}
-          title="Add Option"
+          title={addQuestion.addOptions}
+          aria-label={addQuestion.addOptions}
         >
           + {addQuestion.addOptions}
         </button>
       </div>
 
-      <div className="flex h-full flex-1 flex-col gap-5  overflow-auto">
+      <div className="flex h-full flex-1 flex-col gap-5  overflow-auto px-1">
         {(getQuestionType(selectedTypeOfQuestion) ===
           QuestionTypes.multipleChoice ||
           getQuestionType(selectedTypeOfQuestion) ===
@@ -199,7 +200,7 @@ export default function OptionForQuestion({
                 </div>
                 <Icon
                   onClick={() => deleteOption(index, option?.id)}
-                  onKeyUp={(e) => {
+                  onKeyDown={(e) => {
                     if (e.key === 'Enter') deleteOption(index, option?.id)
                   }}
                   tabIndex={0}
@@ -239,6 +240,9 @@ export default function OptionForQuestion({
                         ? 'cursor-not-allowed text-red-400'
                         : 'cursor-pointer text-red-600'
                     }`}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') deleteOption(index, option?.id)
+                    }}
                   ></Icon>
                 </div>
               )

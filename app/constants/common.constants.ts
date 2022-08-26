@@ -39,7 +39,7 @@ export const addQuestion = {
   createOptions: 'Create Options',
   checkOrder: 'Check Order',
   addOptions: 'Add Options',
-  addQuestion: 'Add Question',
+  addQuestion: 'Add Question'
 }
 export const sectionsConstants = {
   addSection: 'Add Section',
@@ -53,7 +53,9 @@ export const sectionsConstants = {
   saving:'Saving...',
   cancelling:'Cancelling...',
   sort:'Sort',
-  dropdown:'Select'
+  dropdown:'Select',
+  expand:'Expand',
+  search:'Search Question'
 }
 export const testsConstants = {
   addTestbutton: 'Add Test',

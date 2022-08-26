@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import { sectionsConstants } from '~/constants/common.constants'
 
 import type { Question, Option, CorrectAnswer } from '~/interface/Interface'
 import OptionCard from './OptionCard'
@@ -19,17 +20,18 @@ const QuestionCard = ({
       key={question.id}
       className="flex flex-col rounded-lg border border-gray-300 bg-gray-50 px-6 py-7"
       tabIndex={0}
-      aria-lable="Question"
+      title={sectionsConstants.expand}
+      aria-label={sectionsConstants.expand}
+      onKeyUp={(e) => {
+        if (e.key === 'Enter')
+          onAccordianToggle(
+            isExpanded == -1 ? index : isExpanded == index ? -1 : index
+          )
+      }}
     >
       <div className="items-top break flex justify-between text-base text-gray-600">
         <div
           className="items-top flex flex-1 justify-between"
-          onKeyUp={(e) => {
-            if (e.key === 'Enter')
-              onAccordianToggle(
-                isExpanded == -1 ? index : isExpanded == index ? -1 : index
-              )
-          }}
           onClick={() => {
             onAccordianToggle(
               isExpanded == -1 ? index : isExpanded == index ? -1 : index

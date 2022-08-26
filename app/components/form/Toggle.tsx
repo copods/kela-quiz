@@ -12,7 +12,6 @@ export default function Toggle({
   return (
     <div 
        className='flex' 
-       tabIndex={0}
        onKeyDown={(e)=>{
         if(e.key === 'Enter'){
           toggle = !toggle;
@@ -24,12 +23,13 @@ export default function Toggle({
       <Switch
         checked={toggle}
         onChange={onToggleChange}
+        tabIndex={0}
         className={`${
           toggle
             ? 'border-blue-900 bg-blue-900'
             : 'border-slate-300 bg-slate-300'
         }
-          relative inline-flex h-[28px] w-[64px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2  focus-visible:ring-white focus-visible:ring-opacity-75`}
+          relative inline-flex h-[28px] w-[64px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out`}
       >
         <span className="sr-only">Use setting</span>
         <span

@@ -223,6 +223,8 @@ export default function SectionPage() {
               onKeyUp={(e) => {
                 if (e.key === 'Enter') setSectionDetailFull(!sectionDetailFull)
               }}
+              title={sectionsConstants.expand}
+              aria-label={sectionsConstants.expand}
             >
               {sectionDetailFull ? (
                 <Icon

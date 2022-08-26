@@ -221,6 +221,7 @@ const AddQuestionInSection = () => {
                transition.state === 'submitting' && 'disabled:opacity-75'
              }`}
              title={sectionsConstants.cancel}
+             aria-label={sectionsConstants.cancel}
           >
               {transition.state === 'loading' ? sectionsConstants.cancelling : sectionsConstants.cancel}
           </Link>
@@ -235,6 +236,7 @@ const AddQuestionInSection = () => {
             }`}
             onClick={() => saveQuestion(false)}
             title={sectionsConstants.saveAndExit}
+            aria-label={sectionsConstants.saveAndExit}
           >
             <Icon icon="ic:round-save" className="mr-1" />
             {transition.state === 'submitting' ? sectionsConstants.saving : sectionsConstants.saveAndExit}
@@ -249,6 +251,7 @@ const AddQuestionInSection = () => {
             }`}
             onClick={() => saveQuestion(true)}
             title={sectionsConstants.saveAndAddMore}
+            aria-label={sectionsConstants.saveAndAddMore}
           >
             <Icon icon="ic:round-save" className="mr-1" />
             {transition.state === 'submitting'
