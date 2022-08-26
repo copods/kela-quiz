@@ -8,8 +8,16 @@ const SectionLink = ({ section }: { section: any }) => {
   const path = `/sections/${section.id}`
   const location = useLocation() // to get current location
   const resolvedPath = useResolvedPath(path) // to get resolved path which would match with current location
+
   return (
-    <NavLink to={path} key={section.id}>
+    <NavLink
+      to={path}
+      key={section.id}
+      onKeyUp={(e) => {
+        if (e.key === 'Tab' && e.altKey) window.location.href = '#sectionSearch'
+        // alt + Tab combination key for moving focus to section detail
+      }}
+    >
       <SectionCard
         isActive={location.pathname === resolvedPath.pathname}
         name={section?.name}

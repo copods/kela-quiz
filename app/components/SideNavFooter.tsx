@@ -28,6 +28,7 @@ function Footer() {
 
         <Form action="/logout" method="post">
           <button
+            tabIndex={0}
             type="submit"
             id="logoutButton"
             className="flex h-10 w-10 items-center justify-center rounded-lg bg-red-500"

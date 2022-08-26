@@ -162,6 +162,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
         <div>
           <Link to={'/tests'}>
             <button
+              tabIndex={0}
               title="Cancel Add Test"
               className={`h-9 rounded-lg px-7 text-xs text-white ${
                 currentTab != tabs[0].id
@@ -175,6 +176,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
         </div>
         <div className="flex gap-4">
           <button
+            tabIndex={0}
             title="Previous Tab"
             id="backButton"
             className={`h-9 rounded-lg px-7 text-xs text-white ${
@@ -189,6 +191,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
           </button>
           {currentTab != 2 ? (
             <button
+              tabIndex={0}
               title="Next Tab"
               id="nextButton"
               className={`h-9 rounded-lg px-7 text-xs text-white ${
@@ -203,6 +206,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
             </button>
           ) : (
             <button
+              tabIndex={0}
               title="Next Tab"
               id="submitButton"
               className={`h-9 rounded-lg px-7 text-xs text-white ${
