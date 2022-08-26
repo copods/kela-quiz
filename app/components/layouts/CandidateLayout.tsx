@@ -1,4 +1,4 @@
-import { candidateExam } from '~/constants/common.constants'
+import { candidateExamConstants } from '~/constants/common.constants'
 import type {
   Candidate,
   CandidateTest,
@@ -43,7 +43,7 @@ export default function CandidateLayout({
                   value={section?.order}
                   type="submit"
                 >
-                  {candidateExam.endTest}
+                  {candidateExamConstants.endTest}
                 </button>
                 <button
                   className="h-11 w-40 rounded-md border border-primary bg-primary text-base font-medium text-gray-50 shadow-sm"
@@ -51,7 +51,7 @@ export default function CandidateLayout({
                   value={section?.order}
                   type="submit"
                 >
-                  {candidateExam.nextSection}
+                  {candidateExamConstants.nextSection}
                 </button>
               </form>
             </>

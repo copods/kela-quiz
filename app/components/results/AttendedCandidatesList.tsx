@@ -18,7 +18,7 @@ const ExamAttendedCandidatesComponent = () => {
           <div className="rounded-lg border border-solid border-[#E5E7EB] bg-tableHeader shadow-table">
             <div className=" grid grid-cols-12 py-4 px-12">
               <span className="col-span-1 text-sm  font-semibold  text-gray-500">
-                {resultConstants.srno}
+                {resultConstants.srNo}
               </span>
               <span className="col-span-3 text-sm  font-semibold  text-gray-500">
                 {members.name}

@@ -3,7 +3,10 @@ import { Fragment, useEffect, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import { toast } from 'react-toastify'
-import { candidateExam, testsConstants } from '~/constants/common.constants'
+import {
+  candidateExamConstants,
+  testsConstants,
+} from '~/constants/common.constants'
 
 const InviteCandidatePopup = ({
   openInvitePopup,
@@ -25,13 +28,14 @@ const InviteCandidatePopup = ({
       toast.warn(actionData.message)
     }
     if (
-      actionData?.candidateInviteStatus == candidateExam.candidateTestCreated
+      actionData?.candidateInviteStatus ===
+      candidateExamConstants.candidateTestCreated
     ) {
       if (actionData?.testId === testId)
         toast.success(testsConstants.candidateInvited)
       setOpenInvitePopup(false)
     } else {
-      if (actionData?.candidateInviteStatus === candidateExam.error) {
+      if (actionData?.candidateInviteStatus === candidateExamConstants.error) {
         if (actionData?.testId === testId) {
           toast.error(testsConstants.candidateAlreadyInvited)
         }

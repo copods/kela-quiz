@@ -12,7 +12,10 @@ describe('Test for GroupByTestTable, Result', () => {
       .type(cypress.password)
       .should('have.value', cypress.password)
     cy.findByRole('button').click()
-    cy.get('a').find('#Group_By_Tests').should('have.text', cypress.results).click()
+    cy.get('a')
+      .find('#Group_By_Tests')
+      .should('have.text', cypress.results)
+      .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')
   })
   const time = new Date().getTime()
@@ -97,7 +100,10 @@ describe('Test for GroupByTestTable, Result', () => {
     cy.get('#2').find('hr').should('have.class', 'bg-primary')
     cy.get('button#submitButton').should('have.text', cypress.submit).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.get('a').find('#Group_By_Tests').should('have.text', cypress.results).click()
+    cy.get('a')
+      .find('#Group_By_Tests')
+      .should('have.text', cypress.results)
+      .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')
   })
 
@@ -115,7 +121,10 @@ describe('Test for GroupByTestTable, Result', () => {
       .type(cypress.password)
       .should('have.value', cypress.password)
     cy.findByRole('button').click()
-    cy.get('a').find('#Group_By_Tests').should('have.text', cypress.results).click()
+    cy.get('a')
+      .find('#Group_By_Tests')
+      .should('have.text', cypress.results)
+      .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')
     cy.get('#total-items-value')
       .get('#total-count-value')
@@ -124,7 +133,7 @@ describe('Test for GroupByTestTable, Result', () => {
           return $el.innerText
         })
       })
-    cy.get('#GroupByTestItems').each(($el) => {
+    cy.get('#group-by-test-items').each(($el) => {
       cy.wrap($el)
         .children()
         .children()
@@ -147,13 +156,16 @@ describe('Test for GroupByTestTable, Result', () => {
       .type(cypress.password)
       .should('have.value', cypress.password)
     cy.findByRole('button').click()
-    cy.get('a').find('#Group_By_Tests').should('have.text', cypress.results).click()
+    cy.get('a')
+      .find('#Group_By_Tests')
+      .should('have.text', cypress.results)
+      .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')
     cy.get('#headlessui-listbox-button-1 span span')
       .invoke('text')
       .then((el) => {
         if (el === 'Name') {
-          cy.get('#GroupByTestItems').each(($el) => {
+          cy.get('#group-by-test-items').each(($el) => {
             cy.wrap($el)
               .children()
               .children()
@@ -178,14 +190,17 @@ describe('Test for GroupByTestTable, Result', () => {
       .type(cypress.password)
       .should('have.value', cypress.password)
     cy.findByRole('button').click()
-    cy.get('a').find('#Group_By_Tests').should('have.text', cypress.results).click()
+    cy.get('a')
+      .find('#Group_By_Tests')
+      .should('have.text', cypress.results)
+      .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')
     cy.get('#sort-filter-body').get('#ascend').click()
     cy.get('#headlessui-listbox-button-1 span span')
       .invoke('text')
       .then((el) => {
         if (el === 'Name') {
-          cy.get('#GroupByTestItems').each(($el) => {
+          cy.get('#group-by-test-items').each(($el) => {
             cy.wrap($el)
               .children()
               .children()
@@ -210,7 +225,10 @@ describe('Test for GroupByTestTable, Result', () => {
       .type(cypress.password)
       .should('have.value', cypress.password)
     cy.findByRole('button').click()
-    cy.get('a').find('#Group_By_Tests').should('have.text', cypress.results).click()
+    cy.get('a')
+      .find('#Group_By_Tests')
+      .should('have.text', cypress.results)
+      .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')
     cy.get('.dropdown')
       .get('.dropdownButton')
@@ -223,7 +241,7 @@ describe('Test for GroupByTestTable, Result', () => {
       .invoke('text')
       .then((el) => {
         if (el === 'Created Date') {
-          cy.get('#GroupByTestItems').each(($el) => {
+          cy.get('#group-by-test-items').each(($el) => {
             cy.wrap($el)
               .children()
               .children()
@@ -248,7 +266,10 @@ describe('Test for GroupByTestTable, Result', () => {
       .type(cypress.password)
       .should('have.value', cypress.password)
     cy.findByRole('button').click()
-    cy.get('a').find('#Group_By_Tests').should('have.text', cypress.results).click()
+    cy.get('a')
+      .find('#Group_By_Tests')
+      .should('have.text', cypress.results)
+      .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')
     cy.get('#sort-filter-body').get('#ascend').click()
     cy.get('.dropdown')
@@ -262,7 +283,7 @@ describe('Test for GroupByTestTable, Result', () => {
       .invoke('text')
       .then((el) => {
         if (el === 'Created Date') {
-          cy.get('#GroupByTestItems').each(($el) => {
+          cy.get('#group-by-test-items').each(($el) => {
             cy.wrap($el)
               .children()
               .children()

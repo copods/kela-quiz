@@ -1,4 +1,4 @@
-import { candidateExam } from './../constants/common.constants'
+import { candidateExamConstants } from './../constants/common.constants'
 import type { Question, User } from '@prisma/client'
 import { env } from 'process'
 import { prisma } from '~/db.server'
@@ -28,7 +28,7 @@ export async function createIndividualCandidate({
     }
     return user
   } catch (error) {
-    throw new Error('Candidate Create Error..!')
+    throw new Error(candidateExamConstants.candidateCreateError)
   }
 }
 
@@ -49,7 +49,7 @@ export async function createCandidateTest({
     })
     return candidateTest
   } catch (error) {
-    throw new Error('Candidate Test Create Error..!')
+    throw new Error(candidateExamConstants.candidateTestCreateError)
   }
 }
 
@@ -71,7 +71,7 @@ export async function updateTestLink({
     })
     return candidateTest
   } catch (error) {
-    throw new Error('Error updating test link..!')
+    throw new Error(candidateExamConstants.errorUpdatingTestLink)
   }
 }
 
@@ -108,7 +108,7 @@ export async function createSectionInTest({
     }
     return 'done'
   } catch (error) {
-    throw new Error('Error creating section in test ..!')
+    throw new Error(candidateExamConstants.errorCreatingSectionInTest)
   }
 }
 
@@ -177,8 +177,8 @@ export async function createCandidate({
     for (const email of emails) {
       await createCandidateData({ email, createdById, testId })
     }
-    return candidateExam.candidateTestCreated
+    return candidateExamConstants.candidateTestCreated
   } catch (error) {
-    return candidateExam.error
+    return candidateExamConstants.error
   }
 }
