@@ -1,6 +1,5 @@
-import { cypress } from '~/constants/common.constants'
-
 describe('Visiting group by test of results page', () => {
+  // creating data to test Test list page
   beforeEach('sign-in', () => {
     cy.visit('/sign-in')
     cy.get('input[name="email"]')
@@ -17,25 +16,23 @@ describe('Visiting group by test of results page', () => {
     cy.location('pathname').should('include', '/dashboard')
   })
 
-  // creating data to test Test list page
-
+  it('Check if that test is coming on group by test page or not', () => {
+    cy.get('a', { timeout: 6000 })
+      .find('#Group_By_Tests', { timeout: 6000 })
+      .should('have.text', 'Results')
+      .click()
+    cy.location('pathname', { timeout: 60000 }).should('include', '/results')
+  })
   it('Check  that if list of candidate is coming after clicking a test in group byt test in results page ', () => {
     cy.get('a', { timeout: 6000 })
-      .find('#Group_By_Tests')
+      .find('#Group_By_Tests', { timeout: 6000 })
       .should('have.text', 'Results')
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')
     cy.get('#group-by-test-container', { timeout: 6000 })
-    cy.get('#group-by-test-container').each(($el) => {
-      cy.wrap($el).within((el) => {
-        if (
-          el[0].getElementsByClassName('groupByItemTest')[0].innerHTML ===
-          cypress.test1
-        ) {
-          cy.get('.groupByItemTest').contains(cypress.test1)
-        }
-      })
-    })
+      .get('#group-by-items-container', { timeout: 6000 })
+      .get('#group-by-item-test', { timeout: 6000 })
+      .click()
   })
   it('Check  that if list of attended candidate is coming after clicking a test in group byt test in results page ', () => {
     cy.get('a')
@@ -44,15 +41,16 @@ describe('Visiting group by test of results page', () => {
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')
     cy.get('#group-by-test-container', { timeout: 6000 })
-    cy.get('#group-by-test-container').each(($el) => {
-      cy.wrap($el).within((el) => {
-        if (
-          el[0].getElementsByClassName('groupByItemTest')[0].innerHTML ===
-          cypress.test1
-        ) {
-          cy.get('.groupByItemTest').contains(cypress.test1).click()
+      .get('#group-by-items-container', { timeout: 6000 })
+      .get('#group-by-item-test', { timeout: 6000 })
+      .click()
+    cy.get('#Group_By_Tests-test-candidate-list-tab', { timeout: 6000 })
+      .get('#tab-title')
+      .invoke('text')
+      .then((el) => {
+        if (el === 'attending') {
+          console.log(el, 'el')
         }
       })
-    })
   })
 })

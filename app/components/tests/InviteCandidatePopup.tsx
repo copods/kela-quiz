@@ -102,7 +102,7 @@ const InviteCandidatePopup = ({
                       <input
                         type="email"
                         name={`email`}
-                        className="h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
+                        className="inviteInput h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
                         placeholder="johndoe@example.com"
                       />
                     </div>

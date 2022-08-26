@@ -32,7 +32,7 @@ describe('Visiting Tests', () => {
       .invoke('text')
       .then((el) => {
         if (el === 'Name') {
-          cy.get('.border-b', { timeout: 6000 })
+          cy.get('.border-b', { timeout: 10000 })
             .get('.test-name-navigation')
             .then(($elements) => {
               var strings = [...$elements].map(($el) => $el.innerText)
@@ -49,7 +49,7 @@ describe('Visiting Tests', () => {
       .invoke('text')
       .then((el) => {
         if (el === 'Name') {
-          cy.get('.border-b', { timeout: 6000 })
+          cy.get('.border-b', { timeout: 10000 })
             .get('.test-name-navigation')
             .then(($elements) => {
               var strings = [...$elements].map(($el) => $el.innerText)
@@ -72,7 +72,7 @@ describe('Visiting Tests', () => {
       .invoke('text')
       .then((el) => {
         if (el === 'Created Date') {
-          cy.get('.border-b')
+          cy.get('.border-b', { timeout: 10000 })
             .get('.test-name-navigation')
             .then(($elements) => {
               var strings = [...$elements].map(($el) => $el.innerText)
@@ -96,7 +96,7 @@ describe('Visiting Tests', () => {
       .invoke('text')
       .then((el) => {
         if (el === 'Created Date') {
-          cy.get('.border-b', { timeout: 6000 })
+          cy.get('.border-b', { timeout: 10000 })
             .get('.test-name-navigation')
             .then(($elements) => {
               var strings = [...$elements].map(($el) => $el.innerText)
@@ -124,23 +124,7 @@ describe('Visiting Tests', () => {
       .location('pathname', { timeout: 60000 })
       .should('include', '/tests')
   })
-  it('By Clicking on invite candidate user is able to send a mail', () => {
-    cy.get('a').find('#Tests').should('have.text', testsConstants.Tests).click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.get('.test-table-list', { timeout: 6000 }).should('be.visible')
-    cy.get('.test-table-list').each(($el) => {
-      cy.wrap($el).within((el) => {
-        if (
-          el[0].getElementsByClassName('test-name-navigation')[0].innerHTML ===
-          cypress.test1
-        ) {
-          cy.get('.candidateInviteIcon').click()
-        }
-      })
-    })
-    cy.get('input[name="email"]').clear().type('yash.thakur@copods.co')
-    cy.get('[data-cy="submit"]').click()
-  })
+
   var strings: any
   it('On click of count in sections, menu with all sections should open', () => {
     cy.get('a').find('#Tests').should('have.text', testsConstants.Tests).click()
@@ -151,13 +135,11 @@ describe('Visiting Tests', () => {
           cy.log(strings)
           if ($el.innerText.includes('\n')) {
             cy.get('#section-count-button').click()
-            cy.get('.section-menu')
           }
         })
       })
     })
   })
-  let deletedItem: string
 
   it('On click of delete, test should be deleted', () => {
     cy.get('a').find('#Tests').should('have.text', testsConstants.Tests).click()
@@ -182,7 +164,7 @@ describe('Visiting Tests', () => {
           el[0].getElementsByClassName('test-name-navigation')[0].innerHTML ===
           cypress.deleteTest1
         ) {
-          cy.contains(deletedItem).should('not.exist')
+          cy.contains(cypress.deleteTest1).should('not.exist')
         }
       })
     })

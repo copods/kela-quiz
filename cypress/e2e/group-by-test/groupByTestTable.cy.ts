@@ -26,7 +26,7 @@ describe('Test for GroupByTestTable, Result', () => {
       .should('have.text', cypress.results)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')
-    cy.get('#total-items-value')
+    cy.get('#total-items-value', { timeout: 60000 })
       .get('#total-count-value')
       .then(($ele) => {
         value = [...$ele].map(($el) => {
@@ -38,7 +38,7 @@ describe('Test for GroupByTestTable, Result', () => {
         .children()
         .children()
         .within((el) => {
-          cy.get('.candidate-name').then(($elements) => {
+          cy.get('.candidate-name', { timeout: 60000 }).then(($elements) => {
             strings = [...$elements].map(($el) => $el.innerText)
             expect(parseInt(value)).to.deep.equal(parseInt(strings.length))
           })
@@ -51,7 +51,7 @@ describe('Test for GroupByTestTable, Result', () => {
       .should('have.text', cypress.results)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')
-    cy.get('#headlessui-listbox-button-1 span span')
+    cy.get('#headlessui-listbox-button-1 span span', { timeout: 60000 })
       .invoke('text')
       .then((el) => {
         if (el === 'Name') {
@@ -75,7 +75,7 @@ describe('Test for GroupByTestTable, Result', () => {
       .should('have.text', cypress.results)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')
-    cy.get('#sort-filter-body').get('#ascend').click()
+    cy.get('#sort-filter-body', { timeout: 60000 }).get('#ascend').click()
     cy.get('#headlessui-listbox-button-1 span span')
       .invoke('text')
       .then((el) => {
@@ -85,10 +85,12 @@ describe('Test for GroupByTestTable, Result', () => {
               .children()
               .children()
               .within((el) => {
-                cy.get('.candidate-name').then(($elements) => {
-                  var strings = [...$elements].map(($el) => $el.innerText)
-                  expect(strings).to.deep.equal(strings.sort().reverse())
-                })
+                cy.get('.candidate-name', { timeout: 60000 }).then(
+                  ($elements) => {
+                    var strings = [...$elements].map(($el) => $el.innerText)
+                    expect(strings).to.deep.equal(strings.sort().reverse())
+                  }
+                )
               })
           })
         }
@@ -116,10 +118,12 @@ describe('Test for GroupByTestTable, Result', () => {
               .children()
               .children()
               .within((el) => {
-                cy.get('.candidate-name').then(($elements) => {
-                  var strings = [...$elements].map(($el) => $el.innerText)
-                  expect(strings).to.deep.equal(strings.sort())
-                })
+                cy.get('.candidate-name', { timeout: 10000 }).then(
+                  ($elements) => {
+                    var strings = [...$elements].map(($el) => $el.innerText)
+                    expect(strings).to.deep.equal(strings.sort())
+                  }
+                )
               })
           })
         }
@@ -148,10 +152,12 @@ describe('Test for GroupByTestTable, Result', () => {
               .children()
               .children()
               .within((el) => {
-                cy.get('.candidate-name').then(($elements) => {
-                  var strings = [...$elements].map(($el) => $el.innerText)
-                  expect(strings).to.deep.equal(strings.reverse())
-                })
+                cy.get('.candidate-name', { timeout: 10000 }).then(
+                  ($elements) => {
+                    var strings = [...$elements].map(($el) => $el.innerText)
+                    expect(strings).to.deep.equal(strings.reverse())
+                  }
+                )
               })
           })
         }

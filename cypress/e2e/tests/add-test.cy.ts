@@ -271,7 +271,7 @@ describe('Creating tests', () => {
     cy.get('a').find('#Tests').should('have.text', testsConstants.Tests).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('#sort-filter-body').get('#ascend').click()
-    cy.get('#test-list').should('be.visible')
+    cy.get('.test-table-list').should('be.visible')
     cy.get('.test-table-list').each(($el) => {
       cy.wrap($el).within((el) => {
         if (

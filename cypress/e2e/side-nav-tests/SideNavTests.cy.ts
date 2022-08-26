@@ -15,9 +15,7 @@ describe('Test for Logout, SideNav', () => {
     cy.get('[data-cy="submit"]').click()
     cy.location('pathname').should('include', '/dashboard')
   })
-  afterEach(() => {
-    cy.get('#logoutButton').click()
-  })
+  //
   it('click all links with loop', () => {
     // result page
     cy.get('a').find('#Group_By_Tests').should('have.text', 'Results').click()
