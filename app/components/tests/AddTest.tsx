@@ -118,7 +118,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
       <header className="flex items-center justify-between">
         <h2
           title="Add Test"
-          id="Add Test"
+          id="add-test"
           className="text-3xl font-bold text-black"
         >
           {testsConstants.addTestbutton}

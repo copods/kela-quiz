@@ -50,7 +50,7 @@ const Sections = ({
   sortByDetails,
 }: SectionType) => {
   return (
-    <div className="flex h-full w-96 flex-col gap-6">
+    <div className="sectionLSWrapper flex h-full w-96 flex-col gap-6">
       {/* filters */}
       <div className="flex items-center justify-between ">
         <div id="sort-filter-container">

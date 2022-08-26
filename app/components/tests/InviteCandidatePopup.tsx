@@ -118,6 +118,7 @@ const InviteCandidatePopup = ({
                     Cancel
                   </button>
                   <button
+                    data-cy="submit"
                     type="submit"
                     name="inviteCandidates"
                     value={testId}

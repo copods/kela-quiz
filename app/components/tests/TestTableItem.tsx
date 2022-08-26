@@ -45,7 +45,6 @@ const TestTableItem = ({
     <>
       <div
         key={index}
-        id="test-table-list"
         className="test-table-list flex border-b border-t-0 border-gray-200 bg-white py-3 px-9"
       >
         {showCheckBox && (
@@ -59,11 +58,9 @@ const TestTableItem = ({
         >
           {index}
         </div>
-        <div className="test-name-navigation w-4/12 cursor-pointer truncate  text-base font-medium leading-6 text-primary  ">
+        <div className=" w-4/12 cursor-pointer truncate  text-base font-medium leading-6 text-primary  ">
           <NavLink to={`/tests/${id}`} tabIndex={0} key={index}>
-            <span className="test-name-navigation" id="test-name-navigation">
-              {testName}
-            </span>
+            <span className="test-name-navigation">{testName}</span>
           </NavLink>
         </div>
         <div id="chip-group-id" className="flex w-3/12 text-xs leading-6">
@@ -82,7 +79,7 @@ const TestTableItem = ({
         <div className="flex w-1/12 gap-2">
           <Icon
             tabIndex={0}
-            className="cursor-pointer text-2xl text-primary"
+            className="candidateInviteIcon cursor-pointer text-2xl text-primary"
             icon={'ant-design:user-add-outlined'}
             onClick={() => setCandidatePopupOpen(true)}
           />

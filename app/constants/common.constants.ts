@@ -12,6 +12,7 @@ export const commonConstants = {
   total: 'Total',
   createdAt: 'createdAt',
   createdDate: 'Created Date',
+  placeholderForOptionInput: 'Write your option here',
 }
 
 export const sideNav = {
@@ -66,7 +67,7 @@ export const testsConstants = {
   created: 'Created',
   actionsText: 'Actions',
   noTestFound: 'No Test Found',
-  noCandidateForTest: "No Candidate for this Test"
+  noCandidateForTest: 'No Candidate for this Test',
 }
 export const componentGlobalConstants = {
   totalCounts: 'Total Counts',
@@ -95,7 +96,7 @@ export const resultConstants = {
   totalAttended: 'Attended',
   noTestAlert: 'No test found. Add your test first',
   srno: 'Sr.No',
-  invitedBy: "Invited By",
+  invitedBy: 'Invited By',
   result: 'Result',
   review: 'Review',
 }
@@ -114,7 +115,7 @@ export const candidateExam = {
   assessmentDetails: 'Assessment Details',
   assessmentTests: 'Assessment Tests',
   assessmentEnd: 'Assessment Ended',
-  wrongLink: "Wrong Link",
+  wrongLink: 'Wrong Link',
   minutes: 'Mins',
   description: 'Description',
   total: 'Total',
@@ -129,9 +130,20 @@ export const candidateExam = {
   startSection: 'Start Now',
   examTitle: 'Pre-Interview Assessment',
   info: 'Info',
-  noOfQuestions: "No. of Questions"
+  noOfQuestions: 'No. of Questions',
 }
 export const cypress = {
+  section1: `Aptitude - section1`,
+  test1: `Aptitude - section1`,
+  deleteTest1: `Aptitude - Detete test`,
+  section2: `Aptitude - section2`,
+  test2: `Aptitude - section2`,
+  deleteTest2: `Aptitude - Detete test2`,
+  memberFirstName: 'hinata',
+  memberLastName: 'hyuga',
+  memberEmail: 'hinatahyuga@konoha.co',
+  //
+  //
   Tests: 'Tests',
   Sections: 'Sections',
   Add: 'Add',

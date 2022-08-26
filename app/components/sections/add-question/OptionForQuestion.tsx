@@ -5,7 +5,11 @@ import QuillEditor from '~/components/QuillEditor.client'
 import { ClientOnly } from 'remix-utils'
 import Toggle from '~/components/form/Toggle'
 import type { SetStateAction } from 'react'
-import { addQuestion, QuestionTypes } from '~/constants/common.constants'
+import {
+  addQuestion,
+  commonConstants,
+  QuestionTypes,
+} from '~/constants/common.constants'
 import { toast } from 'react-toastify'
 interface textAnswerType {
   id: string
@@ -219,7 +223,7 @@ export default function OptionForQuestion({
                     <input
                       tabIndex={0}
                       className="h-20 w-full rounded-lg border border-gray-300 bg-white p-4"
-                      placeholder="Write your option here"
+                      placeholder={commonConstants.placeholderForOptionInput}
                       value={option.answer}
                       onChange={(e) => {
                         updateTextAnswer(e.target.value, index)
