@@ -1,4 +1,4 @@
-import { cypress } from '~/constants/common.constants'
+import { cypress, sectionsConstants } from '~/constants/common.constants'
 
 describe('Test for GroupByTestTable, Result', () => {
   it('Test for Routing and Active Tab for Results', () => {
@@ -38,7 +38,7 @@ describe('Test for GroupByTestTable, Result', () => {
         cy.get('textarea').type('Aptitude')
         cy.get(`button[type=${cypress.submit}]`, { timeout: 10000 }).click()
       })
-    cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
+    cy.get('#addQuestion').should('have.text', `+ ${sectionsConstants.addQuestion}`).click()
     cy.location('pathname').should('include', '/add-question')
     cy.get('h1', { timeout: 6000 }).should('be.visible')
     cy.get('#dropdown > button').click()

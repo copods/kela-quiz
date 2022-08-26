@@ -6,7 +6,8 @@ import OptionForQuestion from './OptionForQuestion'
 import cuid from 'cuid'
 import { Link, useLoaderData, useSubmit, useTransition } from '@remix-run/react'
 import { toast } from 'react-toastify'
-import { addQuestion, QuestionTypes } from '~/constants/common.constants'
+import { addQuestion } from '~/constants/common.constants'
+import { QuestionTypes } from '~/interface/Interface'
 
 const AddQuestionInSection = () => {
   const { sectionDetails, questionTypes } = useLoaderData()
@@ -74,7 +75,7 @@ const AddQuestionInSection = () => {
   const submit = useSubmit()
   const saveQuestion = (addMoreQuestion: boolean) => {
     if (question.length === 0) {
-      toast.error('Enter the Question', { toastId: 'questionRequired' })
+      toast.error(addQuestion.enterQuesMsg, { toastId: 'questionRequired' })
       return
     }
 
@@ -85,7 +86,9 @@ const AddQuestionInSection = () => {
     ) {
       for (let option of options) {
         if (option.option.length === 0) {
-          toast.error('Enter all the Options', { toastId: 'optionsRequired' })
+          toast.error(addQuestion.enterAllOptionsMsg, {
+            toastId: 'optionsRequired',
+          })
           return
         }
       }
@@ -227,7 +230,7 @@ const AddQuestionInSection = () => {
           <button
             id="saveAndExit"
             disabled={transition.state === 'submitting'}
-            className={`flex h-9 items-center gap-1 rounded-lg bg-primary px-5 text-xs text-white ${
+            className={`flex h-9 items-center gap-1    rounded-lg bg-primary px-5 text-xs text-white ${
               transition.state === 'submitting' && 'disabled:opacity-75'
             }`}
             onClick={() => saveQuestion(false)}

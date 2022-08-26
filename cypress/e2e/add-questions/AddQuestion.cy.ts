@@ -2,6 +2,8 @@ import {
   cypress,
   routeFiles,
   commonConstants,
+  sectionsConstants,
+  addQuestion,
 } from '~/constants/common.constants'
 const duplicateTitle = `Aptitude - ${new Date().getTime()}`
 
@@ -72,7 +74,7 @@ describe('Test for section-details', () => {
       .should('have.text', commonConstants.addButton)
       .click()
     cy.get('#section-cards').children().first().click()
-    cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
+    cy.get('#addQuestion').should('have.text', `+ ${sectionsConstants.addQuestion}`).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -102,7 +104,7 @@ describe('Test for section-details', () => {
     cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
 
     cy.get('#submitButton').click()
-    cy.get('.Toastify__toast').should('have.text', cypress.nameIsReq)
+    cy.get('.Toastify__toast').should('have.text', sectionsConstants.sectionNameIsRequiredMsg)
   })
 
   it('Test for valid error message while adding new section without Description', () => {
@@ -126,7 +128,7 @@ describe('Test for section-details', () => {
     cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
     cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
     cy.get('#submitButton').click()
-    cy.get('.Toastify__toast').should('have.text', cypress.descIsReq)
+    cy.get('.Toastify__toast').should('have.text', sectionsConstants.sectionDescIsRequiredMsg)
   })
 
   it('Test for valid error message while adding new section with duplicate Title', () => {
@@ -153,7 +155,7 @@ describe('Test for section-details', () => {
       `Aptitude - ${new Date().getTime()} Description`
     )
     cy.get('#submitButton').click()
-    cy.get('.Toastify__toast').should('have.text', cypress.sectionAdded)
+    cy.get('.Toastify__toast').should('have.text', sectionsConstants.sectionAdditionMsg)
     cy.get('.Toastify__close-button').click()
 
     cy.get('#add-section').click()
@@ -163,7 +165,7 @@ describe('Test for section-details', () => {
       `Aptitude - ${new Date().getTime()} Description`
     )
     cy.get('#submitButton').click()
-    cy.get('.Toastify__toast').should('have.text', cypress.duplicateTitle)
+    cy.get('.Toastify__toast').should('have.text', sectionsConstants.duplicateTitleMsg)
     cy.get('.Toastify__close-button').click()
   })
 
@@ -194,7 +196,7 @@ describe('Test for section-details', () => {
       .should('have.text', commonConstants.addButton)
       .click()
     cy.get('#section-cards').children().first().click()
-    cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
+    cy.get('#addQuestion').should('have.text', `+ ${sectionsConstants.addQuestion}`).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -233,7 +235,7 @@ describe('Test for section-details', () => {
       .should('have.text', commonConstants.addButton)
       .click()
     cy.get('#section-cards').children().first().click()
-    cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
+    cy.get('#addQuestion').should('have.text', `+ ${sectionsConstants.addQuestion}`).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -295,7 +297,7 @@ describe('Test for section-details', () => {
       .should('have.text', commonConstants.addButton)
       .click()
     cy.get('#section-cards').children().first().click()
-    cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
+    cy.get('#addQuestion').should('have.text', `+ ${sectionsConstants.addQuestion}`).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -357,7 +359,7 @@ describe('Test for section-details', () => {
       .should('have.text', commonConstants.addButton)
       .click()
     cy.get('#section-cards').children().first().click()
-    cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
+    cy.get('#addQuestion').should('have.text', `+ ${sectionsConstants.addQuestion}`).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -421,7 +423,7 @@ describe('Test for section-details', () => {
       .should('have.text', commonConstants.addButton)
       .click()
     cy.get('#section-cards').children().first().click()
-    cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
+    cy.get('#addQuestion').should('have.text', `+ ${sectionsConstants.addQuestion}`).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -448,7 +450,7 @@ describe('Test for section-details', () => {
         .then((len) => {
           lengthBefore = len
         })
-      cy.get('button.flex').should('have.text', '+ Add Options').click()
+      cy.get('button.flex').should('have.text', `+ ${addQuestion.addOptions}`).click()
       cy.get('#quillEditor')
         .its('length')
         .then((len) => {
@@ -484,7 +486,7 @@ describe('Test for section-details', () => {
       .should('have.text', commonConstants.addButton)
       .click()
     cy.get('#section-cards').children().first().click()
-    cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
+    cy.get('#addQuestion').should('have.text', `+ ${sectionsConstants.addQuestion}`).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -547,7 +549,7 @@ describe('Test for section-details', () => {
       .should('have.text', commonConstants.addButton)
       .click()
     cy.get('#section-cards').children().first().click()
-    cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
+    cy.get('#addQuestion').should('have.text', `+ ${sectionsConstants.addQuestion}`).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -608,7 +610,7 @@ describe('Test for section-details', () => {
       .should('have.text', commonConstants.addButton)
       .click()
     cy.get('#section-cards').children().first().click()
-    cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
+    cy.get('#addQuestion').should('have.text', `+ ${sectionsConstants.addQuestion}`).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -667,7 +669,7 @@ describe('Test for section-details', () => {
       .should('have.text', commonConstants.addButton)
       .click()
     cy.get('#section-cards').children().first().click()
-    cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
+    cy.get('#addQuestion').should('have.text', `+ ${sectionsConstants.addQuestion}`).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -681,7 +683,7 @@ describe('Test for section-details', () => {
     cy.get('#saveAndAddMore', { timeout: 6000 })
       .should('have.text', cypress.saveAndAddMore)
       .click()
-    cy.get('.Toastify__toast').should('have.text', 'Enter the Question')
+    cy.get('.Toastify__toast').should('have.text', addQuestion.enterQuesMsg)
   })
 
   it('Verifying if any Option is empty or not', () => {
@@ -711,7 +713,7 @@ describe('Test for section-details', () => {
       .should('have.text', commonConstants.addButton)
       .click()
     cy.get('#section-cards').children().first().click()
-    cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
+    cy.get('#addQuestion').should('have.text', `+ ${sectionsConstants.addQuestion}`).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -746,7 +748,7 @@ describe('Test for section-details', () => {
       cy.get('#saveAndAddMore')
         .should('have.text', cypress.saveAndAddMore)
         .click()
-      cy.get('.Toastify__toast').should('have.text', cypress.enterAllOptions)
+      cy.get('.Toastify__toast').should('have.text', addQuestion.enterAllOptionsMsg)
     }
   })
 })

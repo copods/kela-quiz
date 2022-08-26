@@ -1,4 +1,4 @@
-import { cypress } from '~/constants/common.constants'
+import { cypress, sectionsConstants } from '~/constants/common.constants'
 const time = new Date().getTime()
 describe('Visiting group by test of results page', () => {
   // creating data to test Test list page
@@ -29,7 +29,7 @@ describe('Visiting group by test of results page', () => {
         cy.get(`button[type=${cypress.submit}]`, { timeout: 10000 }).click()
       })
     cy.get('#addQuestion', { timeout: 6000 })
-      .should('have.text', cypress.addQuest)
+      .should('have.text', `+ ${sectionsConstants.addQuestion}`)
       .click()
     cy.location('pathname').should('include', '/add-question')
     cy.get('h1', { timeout: 6000 }).should('be.visible')

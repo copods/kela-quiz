@@ -1,11 +1,12 @@
 import { Icon } from '@iconify/react'
 import type { QuestionType } from '~/interface/Interface'
+import { QuestionTypes } from '~/interface/Interface'
 import cuid from 'cuid'
 import QuillEditor from '~/components/QuillEditor.client'
 import { ClientOnly } from 'remix-utils'
 import Toggle from '~/components/form/Toggle'
 import type { SetStateAction } from 'react'
-import { addQuestion, QuestionTypes } from '~/constants/common.constants'
+import { addQuestion } from '~/constants/common.constants'
 import { toast } from 'react-toastify'
 interface textAnswerType {
   id: string

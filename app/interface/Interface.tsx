@@ -209,3 +209,9 @@ export interface CandidateResult {
   createdAt: Date
   updatedAt: Date
 }
+
+export enum QuestionTypes {
+  multipleChoice = 'MULTIPLE_CHOICE',
+  singleChoice = 'SINGLE_CHOICE',
+  text = 'TEXT',
+}

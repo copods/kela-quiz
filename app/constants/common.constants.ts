@@ -12,6 +12,7 @@ export const commonConstants = {
   total: 'Total',
   createdAt: 'createdAt',
   createdDate: 'Created Date',
+  somethingWentWrongMsg: 'Something went wrong..!',
 }
 
 export const sideNav = {
@@ -40,6 +41,8 @@ export const addQuestion = {
   checkOrder: 'Check Order',
   addOptions: 'Add Options',
   addQuestion: 'Add Question',
+  enterQuesMsg: 'Enter the Question',
+  enterAllOptionsMsg: 'Enter all the Options'
 }
 export const sectionsConstants = {
   addSection: 'Add Section',
@@ -47,6 +50,10 @@ export const sectionsConstants = {
   addQuestion: 'Add Question',
   noQuestionAlert: 'No questions found. Add your first question',
   noRecordFound: 'No Record Found',
+  sectionAdditionMsg: 'Section Added Successfully..!',
+  sectionNameIsRequiredMsg: 'Section name is required',
+  sectionDescIsRequiredMsg: 'Description is required',
+  duplicateTitleMsg: 'Duplicate Title',
 }
 export const testsConstants = {
   addTestbutton: 'Add Test',
@@ -77,11 +84,6 @@ export const routeFiles = {
   options: 'Options',
 }
 
-export enum QuestionTypes {
-  multipleChoice = 'MULTIPLE_CHOICE',
-  singleChoice = 'SINGLE_CHOICE',
-  text = 'TEXT',
-}
 export const statusCheck = {
   success: 'Success',
   commonError: 'Something Went Wrong',
@@ -145,16 +147,10 @@ export const cypress = {
   preview: 'Preview',
   next: 'Next',
   Remove: 'Remove',
-  addQuest: '+ Add Question',
   back: 'Back',
   submit: 'Submit',
-  nameIsReq: 'Name is required',
-  descIsReq: 'Description is required',
-  sectionAdded: 'Section added successfully..!',
-  duplicateTitle: 'Duplicate Title',
   question: 'Question',
   saveAndAddMore: 'Save & Add More',
-  enterAllOptions: 'Enter all the Options',
   groupByTest: 'Results',
   members: 'Members',
   addMember: '+ Add Member',

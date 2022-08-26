@@ -1,7 +1,11 @@
 import type { ActionFunction, LoaderFunction } from '@remix-run/server-runtime'
 import { redirect } from '@remix-run/server-runtime'
 import { json } from '@remix-run/node'
-import { routeFiles, sectionsConstants } from '~/constants/common.constants'
+import {
+  commonConstants,
+  routeFiles,
+  sectionsConstants,
+} from '~/constants/common.constants'
 import {
   Outlet,
   useActionData,
@@ -69,13 +73,23 @@ export const action: ActionFunction = async ({ request }) => {
 
   if (typeof name !== 'string' || name.length === 0) {
     return json<ActionData>(
-      { errors: { title: 'Name is required', status: 400 } },
+      {
+        errors: {
+          title: sectionsConstants.sectionNameIsRequiredMsg,
+          status: 400,
+        },
+      },
       { status: 400 }
     )
   }
   if (typeof description !== 'string' || description.length === 0) {
     return json<ActionData>(
-      { errors: { title: 'Description is required', status: 400 } },
+      {
+        errors: {
+          title: sectionsConstants.sectionDescIsRequiredMsg,
+          status: 400,
+        },
+      },
       { status: 400 }
     )
   }
@@ -84,7 +98,7 @@ export const action: ActionFunction = async ({ request }) => {
       return json<ActionData>(
         {
           resp: {
-            title: 'Section Added Successfully..!',
+            title: sectionsConstants.sectionAdditionMsg,
             status: 200,
             data: res,
           },
@@ -93,9 +107,9 @@ export const action: ActionFunction = async ({ request }) => {
       )
     })
     .catch((err) => {
-      let title = 'Something went wrong..!'
+      let title = commonConstants.somethingWentWrongMsg
       if (err.code === 'P2002') {
-        title = 'Duplicate Title'
+        title = sectionsConstants.duplicateTitleMsg
       }
       return json<ActionData>(
         { errors: { title, status: 400 } },

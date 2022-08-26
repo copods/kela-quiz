@@ -2,6 +2,7 @@ import {
   cypress,
   routeFiles,
   commonConstants,
+  sectionsConstants,
 } from '~/constants/common.constants'
 
 describe('Test for Section Details', () => {
@@ -95,7 +96,7 @@ describe('Test for Section Details', () => {
     cy.get('#section-cards').each((item) => {
       cy.contains(`Aptitude - ${time}`).click()
     })
-    cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
+    cy.get('#addQuestion').should('have.text', `+ ${sectionsConstants.addQuestion}`).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'

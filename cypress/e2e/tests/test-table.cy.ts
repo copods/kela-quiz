@@ -3,6 +3,7 @@ import {
   testsConstants,
   routeFiles,
   commonConstants,
+  sectionsConstants,
 } from '~/constants/common.constants'
 
 const time = new Date().getTime()
@@ -35,7 +36,7 @@ describe('Visiting Tests', () => {
         cy.get("button[type='submit']", { timeout: 10000 }).click()
       })
     cy.get('#addQuestion', { timeout: 6000 })
-      .should('have.text', cypress.addQuest)
+      .should('have.text', `+ ${sectionsConstants.addQuestion}`)
       .click()
     cy.location('pathname', { timeout: 6000 }).should(
       'include',

@@ -3,6 +3,7 @@ import {
   testsConstants,
   routeFiles,
   commonConstants,
+  sectionsConstants,
 } from '~/constants/common.constants'
 
 describe('Creating tests', () => {
@@ -63,8 +64,8 @@ describe('Creating tests', () => {
       .find('#Sections', { timeout: 10000 })
       .should('have.text', routeFiles.sections)
       .click()
-    cy.get('#section-card', { timeout: 20000 }).first().click()
-    cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
+    cy.get('#section-card', { timeout: 40000 }).first().click()
+    cy.get('#addQuestion').should('have.text', `+ ${sectionsConstants.addQuestion}`).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
