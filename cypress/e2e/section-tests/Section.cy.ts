@@ -48,7 +48,7 @@ describe('Test for Section', () => {
   })
   it('check new Added section', () => {
     cy.get('a')
-      .find('#Sections')
+      .find('#Sections', { timeout: 6000 })
       .should('have.text', routeFiles.sections)
       .click()
     cy.location('pathname', { timeout: 6000 }).should('include', '/sections')
