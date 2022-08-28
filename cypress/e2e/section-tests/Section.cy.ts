@@ -46,22 +46,46 @@ describe('Test for Section', () => {
       cy.location('search').should('include', loc.search)
     })
   })
-  it('check new Added section', () => {
+
+  it('Test for valid error message while adding new section without Title', () => {
     cy.get('a')
-      .find('#Sections', { timeout: 6000 })
+      .find('#Sections')
       .should('have.text', routeFiles.sections)
       .click()
-    cy.location('pathname', { timeout: 6000 }).should('include', '/sections')
-    cy.get('.section-card', { timeout: 8000 }).each(($el) => {
-      cy.wrap($el).within((el) => {
-        if (
-          el[0].getElementsByClassName('sectionName')[0].innerHTML ===
-          cypress.section1
-        ) {
-          cy.get('.sectionName').contains(cypress.section1)
-        }
-      })
-    })
+    cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
+    cy.get('#add-section').click()
+    cy.get('.addSectionDilog').should('be.visible')
+
+    cy.get('#submitButton').click()
+    cy.get('.Toastify__toast').should('have.text', cypress.nameIsReq)
+  })
+  it('Test for valid error message while adding new section without Description', () => {
+    cy.get('a')
+      .find('#Sections')
+      .should('have.text', routeFiles.sections)
+      .click()
+    cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
+    cy.get('#add-section').click()
+    cy.get('.addSectionDilog').should('be.visible')
+    cy.get('input#sectionName').type(
+      `${cypress.section1} ${new Date().getTime()}`
+    )
+    cy.get('#submitButton').click()
+    cy.get('.Toastify__toast').should('have.text', cypress.descIsReq)
+  })
+  it('Test for valid error message while adding new section with duplicate Title', () => {
+    cy.get('a')
+      .find('#Sections')
+      .should('have.text', routeFiles.sections)
+      .click()
+    cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
+    cy.get('#add-section').click()
+    cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
+    cy.get('input#sectionName').type(`${cypress.section1}`)
+    cy.get('textarea#sectionDescription').type(`Aptitude`)
+    cy.get('#submitButton').click()
+    cy.get('.Toastify__toast').should('have.text', cypress.duplicateTitle)
+    cy.get('.Toastify__close-button').click()
   })
   it('SortBy Name or created Date', () => {
     cy.get('a')

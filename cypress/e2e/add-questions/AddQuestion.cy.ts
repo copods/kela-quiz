@@ -1,238 +1,40 @@
-import {
-  cypress,
-  routeFiles,
-  commonConstants,
-} from '~/constants/common.constants'
-const duplicateTitle = `Aptitude - ${new Date().getTime()}`
+import { cypress, routeFiles } from '~/constants/common.constants'
 
 describe('Test for section-details', () => {
-  it('Visiting section-details  Page', () => {
+  beforeEach('sign-in', () => {
     cy.visit('/sign-in')
-    cy.get('#email')
+    cy.get('input[name="email"]')
       .clear()
-      .type('careers@copods.co')
-      .should('have.value', cypress.email)
-    cy.get('#password')
+      .type(Cypress.env('email'))
+      .should('have.focus')
+      .should('have.value', Cypress.env('email'))
+    cy.get('input[name="password"]')
       .clear()
-      .type('kQuiz@copods')
-      .should('have.value', cypress.password)
-    cy.findByRole('button').click()
-
-    cy.get('a')
-      .find('#Sections', { timeout: 6000 })
-      .should('have.text', routeFiles.sections)
-      .click()
-    cy.location('pathname', { timeout: 6000 }).should('include', '/sections')
-    cy.get('#add-section', { timeout: 6000 }).should('be.visible')
-    cy.get('#add-section').click()
-    cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
-    cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
-    cy.get('textarea#sectionDescription').type(
-      `Aptitude - ${new Date().getTime()} Description`
-    )
-    cy.get('button#submitButton')
-      .should('have.text', commonConstants.addButton)
-      .click()
-    cy.get('#section-cards', { timeout: 10000 })
-      .children()
-      .first()
-      .should('be.visible')
-    cy.get('#section-cards').children().first().click()
-    cy.get('#addQuestion').click()
-    cy.location('pathname', { timeout: 60000 }).should(
-      'include',
-      '/add-question'
-    )
-  })
-
-  it('Test for adding new section', () => {
-    cy.visit('/sign-in')
-    cy.get('#email')
-      .clear()
-      .type('careers@copods.co')
-      .should('have.value', cypress.email)
-    cy.get('#password')
-      .clear()
-      .type('kQuiz@copods')
-      .should('have.value', cypress.password)
-    cy.findByRole('button').click()
-
-    cy.get('a')
-      .find('#Sections')
-      .should('have.text', routeFiles.sections)
-      .click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
-    cy.get('#add-section').click()
-    cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
-    cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
-    cy.get('textarea#sectionDescription').type(
-      `Aptitude - ${new Date().getTime()} Description`
-    )
-    cy.get('button#submitButton', { timeout: 6000 })
-      .should('have.text', commonConstants.addButton)
-      .click()
-    cy.get('#section-cards').children().first().click()
-    cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
-    cy.location('pathname', { timeout: 60000 }).should(
-      'include',
-      '/add-question'
-    )
-    cy.get('#Section').should('have.text', 'Section').click()
-    cy.location('pathname', { timeout: 6000 }).should('include', '/sections')
-  })
-
-  it('Test for valid error message while adding new section without Title', () => {
-    cy.visit('/sign-in')
-    cy.get('#email')
-      .clear()
-      .type('careers@copods.co')
-      .should('have.value', cypress.email)
-    cy.get('#password')
-      .clear()
-      .type('kQuiz@copods')
-      .should('have.value', cypress.password)
-    cy.findByRole('button').click()
-
-    cy.get('a')
-      .find('#Sections')
-      .should('have.text', routeFiles.sections)
-      .click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
-    cy.get('#add-section').click()
-    cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
-
-    cy.get('#submitButton').click()
-    cy.get('.Toastify__toast').should('have.text', cypress.nameIsReq)
-  })
-
-  it('Test for valid error message while adding new section without Description', () => {
-    cy.visit('/sign-in')
-    cy.get('#email')
-      .clear()
-      .type('careers@copods.co')
-      .should('have.value', cypress.email)
-    cy.get('#password')
-      .clear()
-      .type('kQuiz@copods')
-      .should('have.value', cypress.password)
-    cy.findByRole('button').click()
-
-    cy.get('a')
-      .find('#Sections')
-      .should('have.text', routeFiles.sections)
-      .click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
-    cy.get('#add-section').click()
-    cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
-    cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
-    cy.get('#submitButton').click()
-    cy.get('.Toastify__toast').should('have.text', cypress.descIsReq)
-  })
-
-  it('Test for valid error message while adding new section with duplicate Title', () => {
-    cy.visit('/sign-in')
-    cy.get('#email')
-      .clear()
-      .type('careers@copods.co')
-      .should('have.value', cypress.email)
-    cy.get('#password')
-      .clear()
-      .type('kQuiz@copods')
-      .should('have.value', cypress.password)
-    cy.findByRole('button').click()
-
-    cy.get('a')
-      .find('#Sections')
-      .should('have.text', routeFiles.sections)
-      .click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
-    cy.get('#add-section').click()
-    cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
-    cy.get('input#sectionName').type(duplicateTitle)
-    cy.get('textarea#sectionDescription').type(
-      `Aptitude - ${new Date().getTime()} Description`
-    )
-    cy.get('#submitButton').click()
-    cy.get('.Toastify__toast').should('have.text', cypress.sectionAdded)
-    cy.get('.Toastify__close-button').click()
-
-    cy.get('#add-section').click()
-    cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
-    cy.get('input#sectionName').type(duplicateTitle)
-    cy.get('textarea#sectionDescription').type(
-      `Aptitude - ${new Date().getTime()} Description`
-    )
-    cy.get('#submitButton').click()
-    cy.get('.Toastify__toast').should('have.text', cypress.duplicateTitle)
-    cy.get('.Toastify__close-button').click()
-  })
-
-  it('Visiting the Same section which created', () => {
-    cy.visit('/sign-in')
-    cy.get('#email')
-      .clear()
-      .type('careers@copods.co')
-      .should('have.value', cypress.email)
-    cy.get('#password')
-      .clear()
-      .type('kQuiz@copods')
-      .should('have.value', cypress.password)
-    cy.findByRole('button').click()
-
-    cy.get('a')
-      .find('#Sections')
-      .should('have.text', routeFiles.sections)
-      .click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
-    cy.get('.px-5').click()
-    cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
-    cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
-    cy.get('textarea#sectionDescription').type(
-      `Aptitude - ${new Date().getTime()} Description`
-    )
-    cy.get('button#submitButton', { timeout: 6000 })
-      .should('have.text', commonConstants.addButton)
-      .click()
-    cy.get('#section-cards').children().first().click()
-    cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
-    cy.location('pathname', { timeout: 60000 }).should(
-      'include',
-      '/add-question'
-    )
-    cy.get('.Toastify__close-button').click()
-    cy.get('#Question', { timeout: 6000 })
-      .should('have.text', cypress.question)
-      .click()
-    cy.get('a > div').should('have.class', 'border-l-8')
+      .type(Cypress.env('password'))
+      .should('have.focus')
+      .should('have.value', Cypress.env('password'))
+    cy.get('[data-cy="submit"]').click()
+    cy.location('pathname').should('include', '/dashboard')
   })
 
   it('Verifying MCQ to have Check Box in options', () => {
-    cy.visit('/sign-in')
-    cy.get('#email')
-      .clear()
-      .type('careers@copods.co')
-      .should('have.value', cypress.email)
-    cy.get('#password')
-      .clear()
-      .type('kQuiz@copods')
-      .should('have.value', cypress.password)
-    cy.findByRole('button').click()
-
     cy.get('a')
       .find('#Sections')
       .should('have.text', routeFiles.sections)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
-    cy.get('.px-5').click()
-    cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
-    cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
-    cy.get('textarea#sectionDescription').type(
-      `Aptitude - ${new Date().getTime()} Description`
-    )
-    cy.get('button#submitButton', { timeout: 6000 })
-      .should('have.text', commonConstants.addButton)
-      .click()
-    cy.get('#section-cards').children().first().click()
+
+    cy.get('.section-card', { timeout: 8000 }).each(($el) => {
+      cy.wrap($el).within((el) => {
+        if (
+          el[0].getElementsByClassName('sectionName')[0].innerHTML ===
+          cypress.section1
+        ) {
+          cy.get('.sectionName').contains(cypress.section1).click()
+        }
+      })
+    })
+
     cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
@@ -269,32 +71,21 @@ describe('Test for section-details', () => {
   })
 
   it('Verifying Single Choice to have Radio Button in options', () => {
-    cy.visit('/sign-in')
-    cy.get('#email')
-      .clear()
-      .type('careers@copods.co')
-      .should('have.value', cypress.email)
-    cy.get('#password')
-      .clear()
-      .type('kQuiz@copods')
-      .should('have.value', cypress.password)
-    cy.findByRole('button').click()
-
     cy.get('a')
       .find('#Sections')
       .should('have.text', routeFiles.sections)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
-    cy.get('.px-5').click()
-    cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
-    cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
-    cy.get('textarea#sectionDescription').type(
-      `Aptitude - ${new Date().getTime()} Description`
-    )
-    cy.get('button#submitButton', { timeout: 6000 })
-      .should('have.text', commonConstants.addButton)
-      .click()
-    cy.get('#section-cards').children().first().click()
+    cy.get('.section-card', { timeout: 8000 }).each(($el) => {
+      cy.wrap($el).within((el) => {
+        if (
+          el[0].getElementsByClassName('sectionName')[0].innerHTML ===
+          cypress.section1
+        ) {
+          cy.get('.sectionName').contains(cypress.section1).click()
+        }
+      })
+    })
     cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
@@ -331,32 +122,21 @@ describe('Test for section-details', () => {
   })
 
   it('Verifying Text to have Textarea in options', () => {
-    cy.visit('/sign-in')
-    cy.get('#email')
-      .clear()
-      .type('careers@copods.co')
-      .should('have.value', cypress.email)
-    cy.get('#password')
-      .clear()
-      .type('kQuiz@copods')
-      .should('have.value', cypress.password)
-    cy.findByRole('button').click()
-
     cy.get('a')
       .find('#Sections')
       .should('have.text', routeFiles.sections)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
-    cy.get('.px-5').click()
-    cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
-    cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
-    cy.get('textarea#sectionDescription').type(
-      `Aptitude - ${new Date().getTime()} Description`
-    )
-    cy.get('button#submitButton', { timeout: 6000 })
-      .should('have.text', commonConstants.addButton)
-      .click()
-    cy.get('#section-cards').children().first().click()
+    cy.get('.section-card', { timeout: 8000 }).each(($el) => {
+      cy.wrap($el).within((el) => {
+        if (
+          el[0].getElementsByClassName('sectionName')[0].innerHTML ===
+          cypress.section1
+        ) {
+          cy.get('.sectionName').contains(cypress.section1).click()
+        }
+      })
+    })
     cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
@@ -395,32 +175,21 @@ describe('Test for section-details', () => {
   let lengthBefore: number
 
   it('Verifying if Add Option functionality Working on Options', () => {
-    cy.visit('/sign-in')
-    cy.get('#email')
-      .clear()
-      .type('careers@copods.co')
-      .should('have.value', cypress.email)
-    cy.get('#password')
-      .clear()
-      .type('kQuiz@copods')
-      .should('have.value', cypress.password)
-    cy.findByRole('button').click()
-
     cy.get('a')
       .find('#Sections')
       .should('have.text', routeFiles.sections)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
-    cy.get('.px-5').click()
-    cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
-    cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
-    cy.get('textarea#sectionDescription').type(
-      `Aptitude - ${new Date().getTime()} Description`
-    )
-    cy.get('button#submitButton', { timeout: 6000 })
-      .should('have.text', commonConstants.addButton)
-      .click()
-    cy.get('#section-cards').children().first().click()
+    cy.get('.section-card', { timeout: 8000 }).each(($el) => {
+      cy.wrap($el).within((el) => {
+        if (
+          el[0].getElementsByClassName('sectionName')[0].innerHTML ===
+          cypress.section1
+        ) {
+          cy.get('.sectionName').contains(cypress.section1).click()
+        }
+      })
+    })
     cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
@@ -458,32 +227,21 @@ describe('Test for section-details', () => {
   })
 
   it('Verifying if Delete functionality Working on Options', () => {
-    cy.visit('/sign-in')
-    cy.get('#email')
-      .clear()
-      .type('careers@copods.co')
-      .should('have.value', cypress.email)
-    cy.get('#password')
-      .clear()
-      .type('kQuiz@copods')
-      .should('have.value', cypress.password)
-    cy.findByRole('button').click()
-
     cy.get('a')
       .find('#Sections')
       .should('have.text', routeFiles.sections)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
-    cy.get('.px-5').click()
-    cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
-    cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
-    cy.get('textarea#sectionDescription').type(
-      `Aptitude - ${new Date().getTime()} Description`
-    )
-    cy.get('button#submitButton', { timeout: 6000 })
-      .should('have.text', commonConstants.addButton)
-      .click()
-    cy.get('#section-cards').children().first().click()
+    cy.get('.section-card', { timeout: 8000 }).each(($el) => {
+      cy.wrap($el).within((el) => {
+        if (
+          el[0].getElementsByClassName('sectionName')[0].innerHTML ===
+          cypress.section1
+        ) {
+          cy.get('.sectionName').contains(cypress.section1).click()
+        }
+      })
+    })
     cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
@@ -521,32 +279,21 @@ describe('Test for section-details', () => {
   })
 
   it('On Save and Add More visit the Add Question Page', () => {
-    cy.visit('/sign-in')
-    cy.get('#email')
-      .clear()
-      .type('careers@copods.co')
-      .should('have.value', cypress.email)
-    cy.get('#password')
-      .clear()
-      .type('kQuiz@copods')
-      .should('have.value', cypress.password)
-    cy.findByRole('button').click()
-
     cy.get('a')
       .find('#Sections')
       .should('have.text', routeFiles.sections)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
-    cy.get('.px-5').click()
-    cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
-    cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
-    cy.get('textarea#sectionDescription').type(
-      `Aptitude - ${new Date().getTime()} Description`
-    )
-    cy.get('button#submitButton', { timeout: 6000 })
-      .should('have.text', commonConstants.addButton)
-      .click()
-    cy.get('#section-cards').children().first().click()
+    cy.get('.section-card', { timeout: 8000 }).each(($el) => {
+      cy.wrap($el).within((el) => {
+        if (
+          el[0].getElementsByClassName('sectionName')[0].innerHTML ===
+          cypress.section1
+        ) {
+          cy.get('.sectionName').contains(cypress.section1).click()
+        }
+      })
+    })
     cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
@@ -582,32 +329,21 @@ describe('Test for section-details', () => {
   })
 
   it('On Save and Continue visit the Sections Page', () => {
-    cy.visit('/sign-in')
-    cy.get('#email')
-      .clear()
-      .type('careers@copods.co')
-      .should('have.value', cypress.email)
-    cy.get('#password')
-      .clear()
-      .type('kQuiz@copods')
-      .should('have.value', cypress.password)
-    cy.findByRole('button').click()
-
     cy.get('a')
       .find('#Sections')
       .should('have.text', routeFiles.sections)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
-    cy.get('.px-5').click()
-    cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
-    cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
-    cy.get('textarea#sectionDescription').type(
-      `Aptitude - ${new Date().getTime()} Description`
-    )
-    cy.get('button#submitButton', { timeout: 6000 })
-      .should('have.text', commonConstants.addButton)
-      .click()
-    cy.get('#section-cards').children().first().click()
+    cy.get('.section-card', { timeout: 8000 }).each(($el) => {
+      cy.wrap($el).within((el) => {
+        if (
+          el[0].getElementsByClassName('sectionName')[0].innerHTML ===
+          cypress.section1
+        ) {
+          cy.get('.sectionName').contains(cypress.section1).click()
+        }
+      })
+    })
     cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
@@ -641,32 +377,21 @@ describe('Test for section-details', () => {
   })
 
   it('Verifying if Question is Empty or not', () => {
-    cy.visit('/sign-in')
-    cy.get('#email')
-      .clear()
-      .type('careers@copods.co')
-      .should('have.value', cypress.email)
-    cy.get('#password')
-      .clear()
-      .type('kQuiz@copods')
-      .should('have.value', cypress.password)
-    cy.findByRole('button').click()
-
     cy.get('a')
       .find('#Sections')
       .should('have.text', routeFiles.sections)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
-    cy.get('.px-5').click()
-    cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
-    cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
-    cy.get('textarea#sectionDescription').type(
-      `Aptitude - ${new Date().getTime()} Description`
-    )
-    cy.get('button#submitButton', { timeout: 6000 })
-      .should('have.text', commonConstants.addButton)
-      .click()
-    cy.get('#section-cards').children().first().click()
+    cy.get('.section-card', { timeout: 8000 }).each(($el) => {
+      cy.wrap($el).within((el) => {
+        if (
+          el[0].getElementsByClassName('sectionName')[0].innerHTML ===
+          cypress.section1
+        ) {
+          cy.get('.sectionName').contains(cypress.section1).click()
+        }
+      })
+    })
     cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
@@ -675,9 +400,7 @@ describe('Test for section-details', () => {
     cy.get('#questionEditor > .rounded-lg > .ql-container > .ql-editor')
       .type('{backspace}')
       .should('have.value', '')
-    cy.get('.Toastify__close-button', { timeout: 6000 }).click({
-      multiple: true,
-    })
+
     cy.get('#saveAndAddMore', { timeout: 6000 })
       .should('have.text', cypress.saveAndAddMore)
       .click()
@@ -685,32 +408,21 @@ describe('Test for section-details', () => {
   })
 
   it('Verifying if any Option is empty or not', () => {
-    cy.visit('/sign-in')
-    cy.get('#email')
-      .clear()
-      .type('careers@copods.co')
-      .should('have.value', cypress.email)
-    cy.get('#password')
-      .clear()
-      .type('kQuiz@copods')
-      .should('have.value', cypress.password)
-    cy.findByRole('button').click()
-
     cy.get('a')
       .find('#Sections')
       .should('have.text', routeFiles.sections)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
-    cy.get('.px-5').click()
-    cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
-    cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
-    cy.get('textarea#sectionDescription').type(
-      `Aptitude - ${new Date().getTime()} Description`
-    )
-    cy.get('button#submitButton', { timeout: 6000 })
-      .should('have.text', commonConstants.addButton)
-      .click()
-    cy.get('#section-cards').children().first().click()
+    cy.get('.section-card', { timeout: 8000 }).each(($el) => {
+      cy.wrap($el).within((el) => {
+        if (
+          el[0].getElementsByClassName('sectionName')[0].innerHTML ===
+          cypress.section1
+        ) {
+          cy.get('.sectionName').contains(cypress.section1).click()
+        }
+      })
+    })
     cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
