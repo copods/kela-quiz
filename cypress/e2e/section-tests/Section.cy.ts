@@ -69,10 +69,8 @@ describe('Test for Section', () => {
       .should('have.text', routeFiles.sections)
       .click()
     cy.location('pathname', { timeout: 6000 }).should('include', '/sections')
-    cy.location().then((loc) => {
-      cy.location('search').should('include', loc.search)
-    })
-    cy.get('.sectionLSWrapper').within(() => {
+
+    cy.get('.sectionLSWrapper', { timeout: 6000 }).within(() => {
       cy.get('#section-cards')
         .get('a')
         .then((listing) => {
