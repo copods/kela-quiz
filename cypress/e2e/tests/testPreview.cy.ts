@@ -1,181 +1,126 @@
-import {
-  cypress,
-  testsConstants,
-  commonConstants,
-} from '~/constants/common.constants'
+import { cypress, testsConstants } from '~/constants/common.constants'
 
 describe('Test for testPreview', () => {
-  it('test for login an redirect to tests route', () => {
+  beforeEach('sign-in', () => {
     cy.visit('/sign-in')
-    cy.get('#email')
+    cy.get('input[name="email"]')
       .clear()
-      .type('careers@copods.co')
-      .should('have.value', cypress.email)
-    cy.get('#password')
+      .type(Cypress.env('email'))
+      .should('have.focus')
+      .should('have.value', Cypress.env('email'))
+    cy.get('input[name="password"]')
       .clear()
-      .type('kQuiz@copods')
-      .should('have.value', cypress.password)
-    cy.findByRole('button').click()
-    cy.get('a').find('#Tests').should('have.text', testsConstants.Tests).click()
+      .type(Cypress.env('password'))
+      .should('have.focus')
+      .should('have.value', Cypress.env('password'))
+    cy.get('[data-cy="submit"]').click()
+    cy.location('pathname').should('include', '/dashboard')
   })
-  let time = new Date().getTime()
-  it('Verify if user is able to create test and gets navigated to Tests List Page', () => {
-    cy.visit('/sign-in')
-    cy.get('#email')
-      .clear()
-      .type('careers@copods.co')
-      .should('have.value', cypress.email)
-    cy.get('#password')
-      .clear()
-      .type('kQuiz@copods')
-      .should('have.value', cypress.password)
-    cy.findByRole('button').click()
-    cy.get('a').find('#Tests').should('have.text', testsConstants.Tests).click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.get('#addTest').click()
-    cy.location('pathname', { timeout: 60000 }).should(
-      'include',
-      '/tests/add-test'
-    )
-    cy.get('#name').clear().type(`${time}`)
-    cy.get('#quillEditor').within(() => {
-      cy.get('.ql-editor').type(`Test Description`)
-    })
-    cy.get('button#nextButton').should('have.text', cypress.next).click()
-    cy.get('#0').find('hr').should('have.class', 'bg-primary')
-    cy.get('#1').find('hr').should('have.class', 'bg-primary')
-    // user reached to step 2
-    cy.get('div#section', { timeout: 60000 }).each((el) => {
-      cy.wrap(el).within(() => {
-        if (el.find('.count')[0].innerText != '0') {
-          cy.get('input#noOfQu').should('have.disabled', true)
-          cy.get('input#time').should('have.disabled', true)
-          cy.get('button')
-            .should('have.text', commonConstants.addButton)
-            .click()
-          cy.get('button').should('have.text', cypress.Remove)
 
-          cy.get('input#noOfQu').clear().type('1')
-          cy.get('input#time').clear().type('1')
-          cy.get('input#noOfQu').should('have.value', '1')
-          cy.get('input#time').should('have.value', '1')
-        }
-      })
-    })
-    cy.get('button#nextButton').should('have.text', cypress.next).click()
-    cy.get('#0').find('hr').should('have.class', 'bg-primary')
-    cy.get('#1').find('hr').should('have.class', 'bg-primary')
-    cy.get('#2').find('hr').should('have.class', 'bg-primary')
-    cy.get('button#submitButton').should('have.text', cypress.submit).click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-  })
-  it('test for check preview data match selected test', () => {
-    cy.visit('/sign-in')
-    cy.get('#email')
-      .clear()
-      .type('careers@copods.co')
-      .should('have.value', cypress.email)
-    cy.get('#password')
-      .clear()
-      .type('kQuiz@copods')
-      .should('have.value', cypress.password)
-    cy.findByRole('button').click()
+  it('test for check preview data match selected test and back button ', () => {
     cy.get('a')
       .find('#Tests', { timeout: 6000 })
       .should('have.text', testsConstants.Tests)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.get('#test-list', { timeout: 4000 }).should('be.visible')
-    cy.get('#test-list').each((item) => {
-      cy.contains(`${time}`)
-        .parent()
-        .parent()
-        .within(() => {
-          cy.get('.test-name-navigation').click()
-        })
+    cy.get('.test-table-list', { timeout: 6000 }).each(($el) => {
+      cy.wrap($el).within((el) => {
+        if (
+          el[0].getElementsByClassName('test-name-navigation')[0].innerHTML ===
+          cypress.test1
+        ) {
+          cy.get('.test-name-navigation').contains(cypress.test1)
+        }
+      })
     })
-    cy.get('#title').should('have.text', `${time}`)
+    cy.get('.test-name-navigation').contains(cypress.test1).click()
+    cy.get('#title', { timeout: 6000 }).should('have.text', cypress.test1)
+    cy.get('#backButton').click()
   })
 
-  it('test for tests back-button', () => {
-    cy.visit('/sign-in')
-    cy.get('#email')
-      .clear()
-      .type('careers@copods.co')
-      .should('have.value', cypress.email)
-    cy.get('#password')
-      .clear()
-      .type('kQuiz@copods')
-      .should('have.value', cypress.password)
-    cy.findByRole('button').click()
-    cy.get('a').find('#Tests').should('have.text', testsConstants.Tests).click()
-    cy.wait(2000)
-    cy.get('.test-name-navigation').click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-  })
   it('test for tests name', () => {
-    cy.visit('/sign-in')
-    cy.get('#email')
-      .clear()
-      .type('careers@copods.co')
-      .should('have.value', cypress.email)
-    cy.get('#password')
-      .clear()
-      .type('kQuiz@copods')
-      .should('have.value', cypress.password)
-    cy.findByRole('button').click()
-    cy.get('a').find('#Tests').should('have.text', testsConstants.Tests).click()
-    cy.wait(2000)
-    cy.get('.test-name-navigation').click()
+    cy.get('a')
+      .find('#Tests', { timeout: 6000 })
+      .should('have.text', testsConstants.Tests)
+      .click()
+    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
+
+    cy.get('.test-table-list', { timeout: 6000 }).each(($el) => {
+      cy.wrap($el).within((el) => {
+        if (
+          el[0].getElementsByClassName('test-name-navigation')[0].innerHTML ===
+          cypress.test1
+        ) {
+          cy.get('.test-name-navigation').contains(cypress.test1)
+        }
+      })
+    })
+    cy.get('.test-name-navigation', { timeout: 6000 })
+      .contains(cypress.test1)
+      .click()
     cy.get('#name').should('have.text', cypress.name).click()
   })
   it('test for description', () => {
-    cy.visit('/sign-in')
-    cy.get('#email')
-      .clear()
-      .type('careers@copods.co')
-      .should('have.value', cypress.email)
-    cy.get('#password')
-      .clear()
-      .type('kQuiz@copods')
-      .should('have.value', cypress.password)
-    cy.findByRole('button').click()
-    cy.get('a').find('#Tests').should('have.text', testsConstants.Tests).click()
-    cy.wait(2000)
-
-    cy.get('.test-name-navigation').click()
+    cy.get('a')
+      .find('#Tests', { timeout: 6000 })
+      .should('have.text', testsConstants.Tests)
+      .click()
+    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
+    cy.get('.test-table-list', { timeout: 6000 }).each(($el) => {
+      cy.wrap($el).within((el) => {
+        if (
+          el[0].getElementsByClassName('test-name-navigation')[0].innerHTML ===
+          cypress.test1
+        ) {
+          cy.get('.test-name-navigation').contains(cypress.test1)
+        }
+      })
+    })
+    cy.get('.test-name-navigation', { timeout: 6000 })
+      .contains(cypress.test1)
+      .click()
     cy.get('#description').should('have.text', cypress.description).click()
   })
   it('test for total time', () => {
-    cy.visit('/sign-in')
-    cy.get('#email')
-      .clear()
-      .type('careers@copods.co')
-      .should('have.value', cypress.email)
-    cy.get('#password')
-      .clear()
-      .type('kQuiz@copods')
-      .should('have.value', cypress.password)
-    cy.findByRole('button').click()
-    cy.get('a').find('#Tests').should('have.text', testsConstants.Tests).click()
-    cy.wait(2000)
-    cy.get('.test-name-navigation').click()
+    cy.get('a')
+      .find('#Tests', { timeout: 6000 })
+      .should('have.text', testsConstants.Tests)
+      .click()
+    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
+    cy.get('.test-table-list', { timeout: 6000 }).each(($el) => {
+      cy.wrap($el).within((el) => {
+        if (
+          el[0].getElementsByClassName('test-name-navigation')[0].innerHTML ===
+          cypress.test1
+        ) {
+          cy.get('.test-name-navigation').contains(cypress.test1)
+        }
+      })
+    })
+    cy.get('.test-name-navigation', { timeout: 6000 })
+      .contains(cypress.test1)
+      .click()
     cy.get('#totalTime').should('have.text', cypress.totalTime).click()
   })
   it('test for Total Sections', () => {
-    cy.visit('/sign-in')
-    cy.get('#email')
-      .clear()
-      .type('careers@copods.co')
-      .should('have.value', cypress.email)
-    cy.get('#password')
-      .clear()
-      .type('kQuiz@copods')
-      .should('have.value', cypress.password)
-    cy.findByRole('button').click()
-    cy.get('a').find('#Tests').should('have.text', testsConstants.Tests).click()
-    cy.wait(2000)
-    cy.get('.test-name-navigation').click()
+    cy.get('a')
+      .find('#Tests', { timeout: 6000 })
+      .should('have.text', testsConstants.Tests)
+      .click()
+    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
+    cy.get('.test-table-list', { timeout: 6000 }).each(($el) => {
+      cy.wrap($el).within((el) => {
+        if (
+          el[0].getElementsByClassName('test-name-navigation')[0].innerHTML ===
+          cypress.test1
+        ) {
+          cy.get('.test-name-navigation').contains(cypress.test1)
+        }
+      })
+    })
+    cy.get('.test-name-navigation', { timeout: 6000 })
+      .contains(cypress.test1)
+      .click()
     cy.get('#totalSection').should('have.text', cypress.totalSections)
   })
 })

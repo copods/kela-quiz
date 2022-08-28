@@ -35,30 +35,7 @@ describe('Test for Section', () => {
         cy.get("button[type='button']").click()
       })
   })
-  // let deletedItem: string
-  // xit('on click of delete, section should be deleted', () => {
-  //   cy.get('#section-cards')
-  //     .invoke('text')
-  //     .then((el) => {
-  //       cy.get('#sctionName').then(($elements) => {
-  //         var strings = [...$elements].map(($el) => {
-  //           deletedItem = $el.innerText
-  //           return $el.innerText
-  //         })
-  //         expect(deletedItem).to.deep.equal(strings.toString())
-  //       })
-  //     })
-  //     .parent()
-  //     .within(() => {
-  //       cy.get('.verticle-menu').click()
-  //     })
-  //   cy.get('.group').click()
-  //   cy.get('.confirm-delete').click()
-  //   cy.get('#section-cards').each((item) => {
-  //     cy.contains(deletedItem).should('not.exist')
-  //   })
-  //   return false
-  // })
+
   it('Check Active State of Section', () => {
     cy.get('a')
       .find('#Sections')
@@ -69,7 +46,23 @@ describe('Test for Section', () => {
       cy.location('search').should('include', loc.search)
     })
   })
-
+  it('check new Added section', () => {
+    cy.get('a')
+      .find('#Sections')
+      .should('have.text', routeFiles.sections)
+      .click()
+    cy.location('pathname', { timeout: 6000 }).should('include', '/sections')
+    cy.get('.section-card', { timeout: 8000 }).each(($el) => {
+      cy.wrap($el).within((el) => {
+        if (
+          el[0].getElementsByClassName('sectionName')[0].innerHTML ===
+          cypress.section1
+        ) {
+          cy.get('.sectionName').contains(cypress.section1)
+        }
+      })
+    })
+  })
   it('SortBy Name or created Date', () => {
     cy.get('a')
       .find('#Sections')

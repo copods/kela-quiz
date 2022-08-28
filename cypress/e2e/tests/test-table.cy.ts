@@ -15,6 +15,7 @@ describe('Visiting Tests', () => {
     cy.get('[data-cy="submit"]').click()
     cy.location('pathname').should('include', '/dashboard')
   })
+
   // creating data to test Test list page
   it('Visiting Add Test Page', () => {
     cy.get('a').find('#Tests').should('have.text', testsConstants.Tests).click()
@@ -32,12 +33,12 @@ describe('Visiting Tests', () => {
       .invoke('text')
       .then((el) => {
         if (el === 'Name') {
-          cy.get('.border-b', { timeout: 10000 })
-            .get('.test-name-navigation')
-            .then(($elements) => {
+          cy.get('.test-name-navigation', { timeout: 8000 }).then(
+            ($elements) => {
               var strings = [...$elements].map(($el) => $el.innerText)
               expect(strings).to.deep.equal(strings.sort())
-            })
+            }
+          )
         }
       })
   })
@@ -49,12 +50,12 @@ describe('Visiting Tests', () => {
       .invoke('text')
       .then((el) => {
         if (el === 'Name') {
-          cy.get('.border-b', { timeout: 10000 })
-            .get('.test-name-navigation')
-            .then(($elements) => {
+          cy.get('.test-name-navigation', { timeout: 8000 }).then(
+            ($elements) => {
               var strings = [...$elements].map(($el) => $el.innerText)
               expect(strings).to.deep.equal(strings.reverse())
-            })
+            }
+          )
         }
       })
   })
@@ -72,12 +73,12 @@ describe('Visiting Tests', () => {
       .invoke('text')
       .then((el) => {
         if (el === 'Created Date') {
-          cy.get('.border-b', { timeout: 10000 })
-            .get('.test-name-navigation')
-            .then(($elements) => {
+          cy.get('.test-name-navigation', { timeout: 8000 }).then(
+            ($elements) => {
               var strings = [...$elements].map(($el) => $el.innerText)
               expect(strings).to.deep.equal(strings.sort())
-            })
+            }
+          )
         }
       })
   })
@@ -96,12 +97,12 @@ describe('Visiting Tests', () => {
       .invoke('text')
       .then((el) => {
         if (el === 'Created Date') {
-          cy.get('.border-b', { timeout: 10000 })
-            .get('.test-name-navigation')
-            .then(($elements) => {
+          cy.get('.test-name-navigation', { timeout: 8000 }).then(
+            ($elements) => {
               var strings = [...$elements].map(($el) => $el.innerText)
               expect(strings).to.deep.equal(strings.reverse())
-            })
+            }
+          )
         }
       })
   })
@@ -144,8 +145,7 @@ describe('Visiting Tests', () => {
   it('On click of delete, test should be deleted', () => {
     cy.get('a').find('#Tests').should('have.text', testsConstants.Tests).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.get('.test-table-list', { timeout: 6000 }).should('be.visible')
-    cy.get('.test-table-list').each(($el) => {
+    cy.get('.test-table-list', { timeout: 8000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
           el[0].getElementsByClassName('test-name-navigation')[0].innerHTML ===

@@ -20,9 +20,7 @@ describe('Creating tests', () => {
     cy.get('[data-cy="submit"]').click()
     cy.location('pathname').should('include', '/dashboard')
   })
-  // afterEach(() => {
-  //   cy.get('#logoutButton', { timeout: 60000 }).click()
-  // })
+
   it('Visiting Add Test Page', () => {
     cy.get('a').find('#Tests').should('have.text', testsConstants.Tests).click()
     cy.get('#addTest', { timeout: 6000 })
@@ -270,9 +268,9 @@ describe('Creating tests', () => {
   it('Verify if user is able to create a test and navigates to Tests Page where can see added test', () => {
     cy.get('a').find('#Tests').should('have.text', testsConstants.Tests).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.get('#sort-filter-body').get('#ascend').click()
-    cy.get('.test-table-list').should('be.visible')
-    cy.get('.test-table-list').each(($el) => {
+    cy.get('#sort-filter-body').get('#ascend',{timeout:8000}).click()
+
+    cy.get('.test-table-list', { timeout: 6000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
           el[0].getElementsByClassName('test-name-navigation')[0].innerHTML ===
