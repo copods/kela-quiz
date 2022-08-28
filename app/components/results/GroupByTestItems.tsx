@@ -30,6 +30,7 @@ const GroupByTestItems = ({
             tabIndex={0}
             to={`/results/groupByTests/${id}`}
             id="group-by-item-test"
+            data-cy="group-by-item-test"
             className="groupByItemTest text-base font-semibold text-primary"
           >
             {candidateTests.name}

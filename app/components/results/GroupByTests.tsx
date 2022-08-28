@@ -75,6 +75,7 @@ const GroupByTests = () => {
                     key={candidateTests.id}
                     className="GroupByTestRow col-span-10 grid"
                     id="group-by-items-container"
+                    data-cy="group-by-items-container"
                   >
                     <GroupByTestItems
                       candidateTests={candidateTests}
