@@ -15,10 +15,6 @@ describe('Test for Section', () => {
       .type('kQuiz@copods')
       .should('have.value', cypress.password)
     cy.get('[data-cy="submit"]').click()
-    cy.get('a')
-      .find('#Sections')
-      .should('have.text', routeFiles.sections)
-      .click()
     cy.location('pathname').should('include', '/dashboard')
   })
 
