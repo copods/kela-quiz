@@ -49,41 +49,53 @@ describe('Test for Section', () => {
 
   it('Test for valid error message while adding new section without Title', () => {
     cy.get('a')
-      .find('#Sections', { timeout: 8000 })
+      .find('#Sections')
       .should('have.text', routeFiles.sections)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
+    cy.get('#add-section', { timeout: 6000 }).click()
+    cy.get('form > div')
+      .should('be.visible')
+      .within((el) => {
+        cy.get('[data-cy="submit"]').click()
+      })
 
-    cy.get('#add-section', { timeout: 10000 }).click()
-    cy.get('.addSectionDilog').should('be.visible')
-    cy.get('#submitButton', { timeout: 8000 }).click()
     cy.get('.Toastify__toast').should('have.text', cypress.nameIsReq)
   })
   it('Test for valid error message while adding new section without Description', () => {
     cy.get('a')
-      .find('#Sections', { timeout: 8000 })
+      .find('#Sections')
       .should('have.text', routeFiles.sections)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
-    cy.get('#add-section', { timeout: 10000 }).click()
-    cy.get('.addSectionDilog').should('be.visible')
-    cy.get('input#sectionName', { timeout: 8000 }).type(
-      `${cypress.section1} ${new Date().getTime()}`
-    )
-    cy.get('#submitButton').click()
+    cy.get('#add-section', { timeout: 6000 }).click()
+    cy.get('form > div')
+      .should('be.visible')
+      .within((el) => {
+        cy.get('input[placeholder="Enter Section Name"]').type(
+          `${cypress.section1} ${new Date().getTime()}`
+        )
+
+        cy.get('[data-cy="submit"]').click()
+      })
+
     cy.get('.Toastify__toast').should('have.text', cypress.descIsReq)
   })
   it('Test for valid error message while adding new section with duplicate Title', () => {
     cy.get('a')
-      .find('#Sections', { timeout: 8000 })
+      .find('#Sections')
       .should('have.text', routeFiles.sections)
       .click()
     cy.location('pathname', { timeout: 6000 }).should('include', '/sections')
-    cy.get('#add-section', { timeout: 10000 }).click()
-    cy.get('.addSectionDilog').should('be.visible')
-    cy.get('input#sectionName', { timeout: 10000 }).type(`${cypress.section1}`)
-    cy.get('textarea#sectionDescription').type(`Aptitude`)
-    cy.get('#submitButton').click()
+    cy.get('#add-section', { timeout: 6000 }).click()
+    cy.get('form > div')
+      .should('be.visible')
+      .within((el) => {
+        cy.get('input[placeholder="Enter Section Name"]').type(cypress.section1)
+        cy.get('textarea').type('Aptitude')
+        cy.get('[data-cy="submit"]').click()
+      })
+
     cy.get('.Toastify__toast').should('have.text', cypress.duplicateTitle)
     cy.get('.Toastify__close-button').click()
   })
