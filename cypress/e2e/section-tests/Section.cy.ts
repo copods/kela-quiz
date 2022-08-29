@@ -54,9 +54,9 @@ describe('Test for Section', () => {
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
 
-    cy.get('#add-section', { timeout: 8000 }).click()
+    cy.get('#add-section', { timeout: 10000 }).click()
     cy.get('.addSectionDilog').should('be.visible')
-    cy.get('#submitButton').click()
+    cy.get('#submitButton', { timeout: 8000 }).click()
     cy.get('.Toastify__toast').should('have.text', cypress.nameIsReq)
   })
   it('Test for valid error message while adding new section without Description', () => {
@@ -65,7 +65,7 @@ describe('Test for Section', () => {
       .should('have.text', routeFiles.sections)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
-    cy.get('#add-section', { timeout: 8000 }).click()
+    cy.get('#add-section', { timeout: 10000 }).click()
     cy.get('.addSectionDilog').should('be.visible')
     cy.get('input#sectionName', { timeout: 8000 }).type(
       `${cypress.section1} ${new Date().getTime()}`
@@ -79,11 +79,11 @@ describe('Test for Section', () => {
       .should('have.text', routeFiles.sections)
       .click()
     cy.location('pathname', { timeout: 6000 }).should('include', '/sections')
-    cy.get('#add-section', { timeout: 8000 }).click()
+    cy.get('#add-section', { timeout: 10000 }).click()
     cy.get('.addSectionDilog').should('be.visible')
-    cy.get('input#sectionName').type(`${cypress.section1}`)
+    cy.get('input#sectionName', { timeout: 10000 }).type(`${cypress.section1}`)
     cy.get('textarea#sectionDescription').type(`Aptitude`)
-    cy.get('#submitButton', { timeout: 8000 }).click()
+    cy.get('#submitButton').click()
     cy.get('.Toastify__toast').should('have.text', cypress.duplicateTitle)
     cy.get('.Toastify__close-button').click()
   })
