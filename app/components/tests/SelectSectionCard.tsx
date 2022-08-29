@@ -4,6 +4,7 @@ import { toast } from 'react-toastify'
 import type { TestSection } from '~/interface/Interface'
 import { commonConstants, testsConstants } from '~/constants/common.constants'
 import Button from '../form/Button'
+
 const SelectSectionCard = ({
   section,
   updateSection,

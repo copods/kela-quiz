@@ -12,8 +12,13 @@ const CandidateListOfTest = () => {
     },
     {
       id: 1,
-      title: 'Attended',
-      route: 'attended',
+      title: 'Attempted',
+      route: 'attempted',
+    },
+    {
+      id: 2,
+      title: 'Completed',
+      route: 'completed',
     },
   ]
   const { testPreview, params } = useLoaderData()
