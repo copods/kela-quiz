@@ -1,3 +1,5 @@
+import { time } from 'console'
+import { cypress } from '~/constants/common.constants'
 describe('Visiting group by test of results page', () => {
 
   // creating data to test Test list page
@@ -91,7 +93,7 @@ describe('Visiting group by test of results page', () => {
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('a', { timeout: 6000 })
-      .find('#group-by-tests', { timeout: 6000 })
+      .find('#group-by-tests', { timeout: 8000 })
       .should('have.text', 'Results')
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')
@@ -111,7 +113,7 @@ describe('Visiting group by test of results page', () => {
     cy.findByRole('button').click()
 
     cy.get('a', { timeout: 6000 })
-      .find('#group-by-tests', { timeout: 6000 })
+      .find('#group-by-tests', { timeout: 8000 })
       .should('have.text', 'Results')
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')
@@ -129,7 +131,7 @@ describe('Visiting group by test of results page', () => {
     cy.findByRole('button').click()
 
     cy.get('a', { timeout: 6000 })
-      .find('#group-by-tests', { timeout: 6000 })
+      .find('#group-by-tests', { timeout: 8000 })
       .should('have.text', 'Results')
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')
@@ -151,7 +153,7 @@ describe('Visiting group by test of results page', () => {
     cy.findByRole('button', { timeout: 6000 }).click()
 
     cy.get('a')
-      .find('#group-by-tests', { timeout: 6000 })
+      .find('#group-by-tests', { timeout: 8000 })
       .should('have.text', 'Results')
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')

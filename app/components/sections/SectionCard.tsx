@@ -26,7 +26,7 @@ const SectionCard = ({
   }, [])
   return (
     <div
-      className={`section-card flex flex-col gap-2 rounded-lg p-6 ${
+      className={`sectionCard flex flex-col gap-2 rounded-lg p-6 ${
         isActive
           ? 'border border-l-8 border-transparent border-l-primary bg-white pl-[17px] shadow-md'
           : 'border border-gray-300 bg-gray-100'

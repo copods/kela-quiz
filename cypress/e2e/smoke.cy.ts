@@ -46,7 +46,7 @@ describe('smoke tests', () => {
     cy.findByRole('button').click()
 
     cy.get('a')
-      .find('#Sections')
+      .find('#sections')
       .should('have.text', routeFiles.sections)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
@@ -74,7 +74,7 @@ describe('smoke tests', () => {
     cy.findByRole('button').click()
 
     cy.get('a')
-      .find('#Sections')
+      .find('#sections')
       .should('have.text', routeFiles.sections)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
@@ -134,7 +134,7 @@ describe('smoke tests', () => {
     cy.findByRole('button', { timeout: 6000 }).click()
 
     cy.get('a', { timeout: 10000 })
-      .find('#Tests', { timeout: 10000 })
+      .find('#tests', { timeout: 10000 })
       .should('have.text', testsConstants.Tests)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
@@ -178,7 +178,7 @@ describe('smoke tests', () => {
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('a', { timeout: 10000 })
-      .find('#Tests', { timeout: 10000 })
+      .find('#tests', { timeout: 10000 })
       .should('have.text', testsConstants.Tests)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
