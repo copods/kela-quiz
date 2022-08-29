@@ -1,4 +1,5 @@
 import { cypress, routeFiles } from '~/constants/common.constants'
+const section1 = `Aptitude - section1`
 
 describe('Test for section-details', () => {
   beforeEach('sign-in', () => {
@@ -19,7 +20,7 @@ describe('Test for section-details', () => {
 
   it('Verifying MCQ to have Check Box in options', () => {
     cy.get('a')
-      .find('#Sections')
+      .find('#sections')
       .should('have.text', routeFiles.sections)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
@@ -27,15 +28,14 @@ describe('Test for section-details', () => {
     cy.get('.section-card', { timeout: 8000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
-          el[0].getElementsByClassName('sectionName')[0].innerHTML ===
-          cypress.section1
+          el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
         ) {
-          cy.get('.sectionName').contains(cypress.section1).click()
+          cy.get('.sectionName').should('have.text', section1).click()
         }
       })
     })
 
-    cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
+    cy.get('#add-question').should('have.text', cypress.addQuest).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -72,21 +72,20 @@ describe('Test for section-details', () => {
 
   it('Verifying Single Choice to have Radio Button in options', () => {
     cy.get('a')
-      .find('#Sections')
+      .find('#sections')
       .should('have.text', routeFiles.sections)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('.section-card', { timeout: 8000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
-          el[0].getElementsByClassName('sectionName')[0].innerHTML ===
-          cypress.section1
+          el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
         ) {
-          cy.get('.sectionName').contains(cypress.section1).click()
+          cy.get('.sectionName').should('have.text', section1).click()
         }
       })
     })
-    cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
+    cy.get('#add-question').should('have.text', cypress.addQuest).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -123,21 +122,20 @@ describe('Test for section-details', () => {
 
   it('Verifying Text to have Textarea in options', () => {
     cy.get('a')
-      .find('#Sections')
+      .find('#sections')
       .should('have.text', routeFiles.sections)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('.section-card', { timeout: 8000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
-          el[0].getElementsByClassName('sectionName')[0].innerHTML ===
-          cypress.section1
+          el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
         ) {
-          cy.get('.sectionName').contains(cypress.section1).click()
+          cy.get('.sectionName').should('have.text', section1).click()
         }
       })
     })
-    cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
+    cy.get('#add-question').should('have.text', cypress.addQuest).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -176,21 +174,20 @@ describe('Test for section-details', () => {
 
   it('Verifying if Add Option functionality Working on Options', () => {
     cy.get('a')
-      .find('#Sections')
+      .find('#sections')
       .should('have.text', routeFiles.sections)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('.section-card', { timeout: 8000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
-          el[0].getElementsByClassName('sectionName')[0].innerHTML ===
-          cypress.section1
+          el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
         ) {
-          cy.get('.sectionName').contains(cypress.section1).click()
+          cy.get('.sectionName').should('have.text', section1).click()
         }
       })
     })
-    cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
+    cy.get('#add-question').should('have.text', cypress.addQuest).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -212,13 +209,13 @@ describe('Test for section-details', () => {
     })
 
     cy.get('.h-40 > .gap-6').within(() => {
-      cy.get('#quillEditor')
+      cy.get('#quill-editor')
         .its('length')
         .then((len) => {
           lengthBefore = len
         })
       cy.get('button.flex').should('have.text', '+ Add Options').click()
-      cy.get('#quillEditor')
+      cy.get('#quill-editor')
         .its('length')
         .then((len) => {
           expect(lengthBefore + 1).to.equal(len)
@@ -228,21 +225,20 @@ describe('Test for section-details', () => {
 
   it('Verifying if Delete functionality Working on Options', () => {
     cy.get('a')
-      .find('#Sections')
+      .find('#sections')
       .should('have.text', routeFiles.sections)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('.section-card', { timeout: 8000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
-          el[0].getElementsByClassName('sectionName')[0].innerHTML ===
-          cypress.section1
+          el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
         ) {
-          cy.get('.sectionName').contains(cypress.section1).click()
+          cy.get('.sectionName').should('have.text', section1).click()
         }
       })
     })
-    cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
+    cy.get('#add-question').should('have.text', cypress.addQuest).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -264,13 +260,13 @@ describe('Test for section-details', () => {
     })
 
     cy.get('.h-40 > .gap-6').within(() => {
-      cy.get('#quillEditor')
+      cy.get('#quill-editor')
         .its('length')
         .then((len) => {
           lengthBefore = len
         })
       cy.get('svg.h-6').first().click()
-      cy.get('#quillEditor')
+      cy.get('#quill-editor')
         .its('length')
         .then((len) => {
           expect(lengthBefore - 1).to.equal(len)
@@ -280,21 +276,20 @@ describe('Test for section-details', () => {
 
   it('On Save and Add More visit the Add Question Page', () => {
     cy.get('a')
-      .find('#Sections')
+      .find('#sections')
       .should('have.text', routeFiles.sections)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('.section-card', { timeout: 8000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
-          el[0].getElementsByClassName('sectionName')[0].innerHTML ===
-          cypress.section1
+          el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
         ) {
-          cy.get('.sectionName').contains(cypress.section1).click()
+          cy.get('.sectionName').should('have.text', section1).click()
         }
       })
     })
-    cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
+    cy.get('#add-question').should('have.text', cypress.addQuest).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -315,7 +310,7 @@ describe('Test for section-details', () => {
       })
     })
 
-    cy.get('#questionEditor #quillEditor').within(() => {
+    cy.get('#question-editor #quill-editor').within(() => {
       cy.get('.ql-editor').type(`What is your Test Question ?`)
     })
 
@@ -330,21 +325,20 @@ describe('Test for section-details', () => {
 
   it('On Save and Continue visit the Sections Page', () => {
     cy.get('a')
-      .find('#Sections')
+      .find('#sections')
       .should('have.text', routeFiles.sections)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('.section-card', { timeout: 8000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
-          el[0].getElementsByClassName('sectionName')[0].innerHTML ===
-          cypress.section1
+          el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
         ) {
-          cy.get('.sectionName').contains(cypress.section1).click()
+          cy.get('.sectionName').should('have.text', section1).click()
         }
       })
     })
-    cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
+    cy.get('#add-question').should('have.text', cypress.addQuest).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -366,38 +360,37 @@ describe('Test for section-details', () => {
       })
     })
 
-    cy.get('#questionEditor #quillEditor').within(() => {
+    cy.get('#question-editor #quill-editor').within(() => {
       cy.get('.ql-editor').type(`What is your Test Question ?`)
     })
 
     cy.get('#optionEditor input').clear().type('Option of question')
 
-    cy.get('#saveAndExit').click()
+    cy.get('#save-and-exit').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
   })
 
   it('Verifying if Question is Empty or not', () => {
     cy.get('a')
-      .find('#Sections')
+      .find('#sections')
       .should('have.text', routeFiles.sections)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('.section-card', { timeout: 8000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
-          el[0].getElementsByClassName('sectionName')[0].innerHTML ===
-          cypress.section1
+          el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
         ) {
-          cy.get('.sectionName').contains(cypress.section1).click()
+          cy.get('.sectionName').should('have.text', section1).click()
         }
       })
     })
-    cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
+    cy.get('#add-question').should('have.text', cypress.addQuest).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
     )
-    cy.get('#questionEditor > .rounded-lg > .ql-container > .ql-editor')
+    cy.get('#question-editor > .rounded-lg > .ql-container > .ql-editor')
       .type('{backspace}')
       .should('have.value', '')
 
@@ -409,21 +402,20 @@ describe('Test for section-details', () => {
 
   it('Verifying if any Option is empty or not', () => {
     cy.get('a')
-      .find('#Sections')
+      .find('#sections')
       .should('have.text', routeFiles.sections)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('.section-card', { timeout: 8000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
-          el[0].getElementsByClassName('sectionName')[0].innerHTML ===
-          cypress.section1
+          el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
         ) {
-          cy.get('.sectionName').contains(cypress.section1).click()
+          cy.get('.sectionName').should('have.text', section1).click()
         }
       })
     })
-    cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
+    cy.get('#add-question').should('have.text', cypress.addQuest).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -446,7 +438,7 @@ describe('Test for section-details', () => {
     })
 
     cy.get('.h-40 > .gap-6 > .flex-col').within(() => {
-      cy.get(' #quillEditor ').then((el) => {
+      cy.get(' #quill-editor ').then((el) => {
         ;[...el].forEach((element) => {
           if (element.innerText === '') {
             flag = 1

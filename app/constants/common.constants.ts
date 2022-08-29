@@ -151,15 +151,6 @@ export const candidateExam = {
   noOfQuestions: 'No. of Questions',
 }
 export const cypress = {
-  section1: `Aptitude - section1`,
-  test1: `Aptitude - test1`,
-  deleteTest1: `Aptitude - Detete test`,
-  section2: `Aptitude - section2`,
-  test2: `Aptitude - section2`,
-  deleteTest2: `Aptitude - Detete test2`,
-  memberFirstName: 'hinata',
-  memberLastName: 'hyuga',
-  memberEmail: 'hinatahyuga@konoha.co',
   //
   //
   Tests: 'Tests',

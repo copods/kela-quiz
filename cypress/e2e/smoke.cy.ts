@@ -5,6 +5,14 @@ import {
   cypress,
   testsConstants,
 } from '~/constants/common.constants'
+const section1 = `Aptitude - section1`
+const test1 = `Aptitude - test1`
+const deleteTest1 = `Aptitude - Detete test`
+const section2 = `Aptitude - section2`
+const memberFirstName = 'hinata'
+const memberLastName = 'hyuga'
+const memberEmail = 'hinatahyuga@konoha.co'
+
 describe('smoke tests', () => {
   it('Successfully Login', () => {
     cy.visit('/sign-in')
@@ -48,17 +56,17 @@ describe('smoke tests', () => {
       .should('have.value', Cypress.env('password'))
     cy.get('[data-cy="submit"]').click()
     cy.location('pathname').should('include', '/dashboard')
-    cy.get('a').find('#Sections').should('have.text', cypress.Sections).click()
+    cy.get('a').find('#sections').should('have.text', cypress.Sections).click()
     cy.get('#add-section').click()
     cy.get('form > div')
       .should('be.visible')
       .within((el) => {
-        cy.get('input[placeholder="Enter Section Name"]').type(cypress.section1)
+        cy.get('input[placeholder="Enter Section Name"]').type(section1)
         cy.get('textarea').type('Aptitude')
         cy.get('[data-cy="submit"]').click()
       })
   })
-  it('Adding a section 1 ', () => {
+  it('Adding a section 2 ', () => {
     cy.visit('/sign-in')
     cy.get('input[name="email"]')
       .clear()
@@ -72,12 +80,12 @@ describe('smoke tests', () => {
       .should('have.value', Cypress.env('password'))
     cy.get('[data-cy="submit"]').click()
     cy.location('pathname').should('include', '/dashboard')
-    cy.get('a').find('#Sections').should('have.text', cypress.Sections).click()
+    cy.get('a').find('#sections').should('have.text', cypress.Sections).click()
     cy.get('#add-section').click()
     cy.get('form > div')
       .should('be.visible')
       .within((el) => {
-        cy.get('input[placeholder="Enter Section Name"]').type(cypress.section2)
+        cy.get('input[placeholder="Enter Section Name"]').type(section2)
         cy.get('textarea').type('Aptitude')
         cy.get('[data-cy="submit"]').click()
       })
@@ -96,19 +104,18 @@ describe('smoke tests', () => {
       .should('have.value', Cypress.env('password'))
     cy.get('[data-cy="submit"]').click()
     cy.location('pathname').should('include', '/dashboard')
-    cy.get('a').find('#Sections').should('have.text', cypress.Sections).click()
+    cy.get('a').find('#sections').should('have.text', cypress.Sections).click()
     cy.get('.section-card').each(($el) => {
       cy.wrap($el).within((el) => {
         if (
-          el[0].getElementsByClassName('sectionName')[0].innerHTML ===
-          cypress.section1
+          el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
         ) {
-          cy.get('.sectionName').contains(cypress.section1).click()
+          cy.get('.sectionName').contains(section1).click()
         }
       })
     })
-    cy.get('.sectionName').contains(cypress.section1).click()
-    cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
+    cy.get('.sectionName').contains(section1).click()
+    cy.get('#add-question').should('have.text', cypress.addQuest).click()
     cy.location('pathname').should('include', '/add-question')
     cy.get('h1').should('be.visible')
     cy.get('#dropdown > button').click()
@@ -125,13 +132,13 @@ describe('smoke tests', () => {
       })
     })
 
-    cy.get('#questionEditor #quillEditor').within(() => {
+    cy.get('#question-editor #quill-editor').within(() => {
       cy.get('.ql-editor').type(`What is your Test Question ?`)
     })
     cy.get('input[placeholder="Write your option here"]')
       .clear()
       .type('Option of question')
-    cy.get('#saveAndExit').click()
+    cy.get('#save-and-exit').click()
   })
   it('Add question in created section2', () => {
     cy.visit('/sign-in')
@@ -147,19 +154,18 @@ describe('smoke tests', () => {
       .should('have.value', Cypress.env('password'))
     cy.get('[data-cy="submit"]').click()
     cy.location('pathname').should('include', '/dashboard')
-    cy.get('a').find('#Sections').should('have.text', cypress.Sections).click()
+    cy.get('a').find('#sections').should('have.text', cypress.Sections).click()
     cy.get('.section-card').each(($el) => {
       cy.wrap($el).within((el) => {
         if (
-          el[0].getElementsByClassName('sectionName')[0].innerHTML ===
-          cypress.section2
+          el[0].getElementsByClassName('sectionName')[0].innerHTML === section2
         ) {
-          cy.get('.sectionName').contains(cypress.section2)
+          cy.get('.sectionName').should('have.text', section2)
         }
       })
     })
-    cy.get('.sectionName').contains(cypress.section2).click()
-    cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
+    cy.get('.sectionName').contains(section2).click()
+    cy.get('#add-question').should('have.text', cypress.addQuest).click()
     cy.location('pathname').should('include', '/add-question')
     cy.get('h1').should('be.visible')
     cy.get('#dropdown > button').click()
@@ -176,16 +182,16 @@ describe('smoke tests', () => {
       })
     })
 
-    cy.get('#questionEditor #quillEditor').within(() => {
+    cy.get('#question-editor #quill-editor').within(() => {
       cy.get('.ql-editor').type(`What is your Test Question ?`)
     })
     cy.get('input[placeholder="Write your option here"]')
       .clear()
       .type('Option of question')
-    cy.get('#saveAndExit').click()
+    cy.get('#save-and-exit').click()
   })
 
-  it('Verify if user able create the test', () => {
+  it('Verify if user able create the test 1', () => {
     cy.visit('/sign-in')
     cy.get('input[name="email"]')
       .clear()
@@ -199,8 +205,8 @@ describe('smoke tests', () => {
       .should('have.value', Cypress.env('password'))
     cy.get('[data-cy="submit"]').click()
     cy.location('pathname').should('include', '/dashboard')
-    cy.get('a').find('#Tests').should('have.text', testsConstants.Tests).click()
-    cy.get('#addTest', { timeout: 6000 }).click()
+    cy.get('a').find('#tests').should('have.text', testsConstants.Tests).click()
+    cy.get('#add-test', { timeout: 6000 }).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/tests/add-test'
@@ -208,24 +214,24 @@ describe('smoke tests', () => {
 
     cy.get('input[placeholder="Enter test name"]', { timeout: 6000 })
       .clear()
-      .type(cypress.deleteTest1)
-    cy.get('#quillEditor').within(() => {
+      .type(deleteTest1)
+    cy.get('#quill-editor').within(() => {
       cy.get('.ql-editor').type(`Test Description`)
     })
 
-    cy.get('button#nextButton').should('have.text', cypress.next).click()
+    cy.get('button#next-button').should('have.text', cypress.next).click()
     cy.get('.stepsTab').each(($el) => {
       cy.wrap($el).within((el) => {
         if (
           el[0].getElementsByClassName('stepsName')[0].innerHTML ===
           cypress.step1
         ) {
-          cy.get('.stepsName').contains(cypress.step1)
+          cy.get('.stepsName').should('have.text', cypress.step1)
         } else if (
           el[0].getElementsByClassName('stepsName')[0].innerHTML ===
           cypress.step2
         ) {
-          cy.get('.stepsName').contains(cypress.step2)
+          cy.get('.stepsName').should('have.text', cypress.step2)
         }
       })
     })
@@ -234,45 +240,45 @@ describe('smoke tests', () => {
     cy.get('div#section', { timeout: 60000 }).each((el) => {
       cy.wrap(el).within(() => {
         if (el.find('.count')[0].innerText != '0') {
-          cy.get('input#noOfQu').should('have.disabled', true)
+          cy.get('input#no-of-qu').should('have.disabled', true)
           cy.get('input#time').should('have.disabled', true)
           cy.get('button')
             .should('have.text', commonConstants.addButton)
             .click()
           cy.get('button').should('have.text', cypress.Remove)
 
-          cy.get('input#noOfQu').clear().type('1')
+          cy.get('input#no-of-qu').clear().type('1')
           cy.get('input#time').clear().type('1')
-          cy.get('input#noOfQu').should('have.value', '1')
+          cy.get('input#no-of-qu').should('have.value', '1')
           cy.get('input#time').should('have.value', '1')
         }
       })
     })
-    cy.get('button#nextButton').should('have.text', cypress.next).click()
+    cy.get('button#next-button').should('have.text', cypress.next).click()
     cy.get('.stepsTab').each(($el) => {
       cy.wrap($el).within((el) => {
         if (
           el[0].getElementsByClassName('stepsName')[0].innerHTML ===
           cypress.step1
         ) {
-          cy.get('.stepsName').contains(cypress.step1)
+          cy.get('.stepsName').should('have.text', cypress.step1)
         } else if (
           el[0].getElementsByClassName('stepsName')[0].innerHTML ===
           cypress.step2
         ) {
-          cy.get('.stepsName').contains(cypress.step2)
+          cy.get('.stepsName').should('have.text', cypress.step2)
         } else if (
           el[0].getElementsByClassName('stepsName')[0].innerHTML ===
           cypress.step3
         ) {
-          cy.get('.stepsName').contains(cypress.step3)
+          cy.get('.stepsName').should('have.text', cypress.step3)
         }
       })
     })
 
-    cy.get('button#submitButton').should('have.text', cypress.submit).click()
+    cy.get('button#submit-button').should('have.text', cypress.submit).click()
   })
-  it('Verify if user able create the test1', () => {
+  it('Verify if user able create the test 2', () => {
     cy.visit('/sign-in')
     cy.get('input[name="email"]')
       .clear()
@@ -286,8 +292,8 @@ describe('smoke tests', () => {
       .should('have.value', Cypress.env('password'))
     cy.get('[data-cy="submit"]').click()
     cy.location('pathname').should('include', '/dashboard')
-    cy.get('a').find('#Tests').should('have.text', testsConstants.Tests).click()
-    cy.get('#addTest', { timeout: 6000 }).click()
+    cy.get('a').find('#tests').should('have.text', testsConstants.Tests).click()
+    cy.get('#add-test', { timeout: 6000 }).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/tests/add-test'
@@ -295,24 +301,24 @@ describe('smoke tests', () => {
 
     cy.get('input[placeholder="Enter test name"]', { timeout: 6000 })
       .clear()
-      .type(cypress.test1)
-    cy.get('#quillEditor').within(() => {
+      .type(test1)
+    cy.get('#quill-editor').within(() => {
       cy.get('.ql-editor').type(`Test Description`)
     })
 
-    cy.get('button#nextButton').should('have.text', cypress.next).click()
+    cy.get('button#next-button').should('have.text', cypress.next).click()
     cy.get('.stepsTab').each(($el) => {
       cy.wrap($el).within((el) => {
         if (
           el[0].getElementsByClassName('stepsName')[0].innerHTML ===
           cypress.step1
         ) {
-          cy.get('.stepsName').contains(cypress.step1)
+          cy.get('.stepsName').should('have.text', cypress.step1)
         } else if (
           el[0].getElementsByClassName('stepsName')[0].innerHTML ===
           cypress.step2
         ) {
-          cy.get('.stepsName').contains(cypress.step2)
+          cy.get('.stepsName').should('have.text', cypress.step2)
         }
       })
     })
@@ -321,43 +327,43 @@ describe('smoke tests', () => {
     cy.get('div#section', { timeout: 60000 }).each((el) => {
       cy.wrap(el).within(() => {
         if (el.find('.count')[0].innerText != '0') {
-          cy.get('input#noOfQu').should('have.disabled', true)
+          cy.get('input#no-of-qu').should('have.disabled', true)
           cy.get('input#time').should('have.disabled', true)
           cy.get('button')
             .should('have.text', commonConstants.addButton)
             .click()
           cy.get('button').should('have.text', cypress.Remove)
 
-          cy.get('input#noOfQu').clear().type('1')
+          cy.get('input#no-of-qu').clear().type('1')
           cy.get('input#time').clear().type('1')
-          cy.get('input#noOfQu').should('have.value', '1')
+          cy.get('input#no-of-qu').should('have.value', '1')
           cy.get('input#time').should('have.value', '1')
         }
       })
     })
-    cy.get('button#nextButton').should('have.text', cypress.next).click()
+    cy.get('button#next-button').should('have.text', cypress.next).click()
     cy.get('.stepsTab').each(($el) => {
       cy.wrap($el).within((el) => {
         if (
           el[0].getElementsByClassName('stepsName')[0].innerHTML ===
           cypress.step1
         ) {
-          cy.get('.stepsName').contains(cypress.step1)
+          cy.get('.stepsName').should('have.text', cypress.step1)
         } else if (
           el[0].getElementsByClassName('stepsName')[0].innerHTML ===
           cypress.step2
         ) {
-          cy.get('.stepsName').contains(cypress.step2)
+          cy.get('.stepsName').should('have.text', cypress.step2)
         } else if (
           el[0].getElementsByClassName('stepsName')[0].innerHTML ===
           cypress.step3
         ) {
-          cy.get('.stepsName').contains(cypress.step3)
+          cy.get('.stepsName').should('have.text', cypress.step3)
         }
       })
     })
 
-    cy.get('button#submitButton').should('have.text', cypress.submit).click()
+    cy.get('button#submit-button').should('have.text', cypress.submit).click()
   })
   it('Test for adding a new member', () => {
     cy.visit('/sign-in')
@@ -370,22 +376,22 @@ describe('smoke tests', () => {
       .type('kQuiz@copods')
       .should('have.value', cypress.password)
     cy.findByRole('button').click()
-    cy.get('a').find('#Members').should('have.text', cypress.members).click()
-    cy.get('#addMember').should('have.text', cypress.addMember).click()
-    cy.get('#AddPopUpModel').should('be.visible')
+    cy.get('a').find('#members').should('have.text', cypress.members).click()
+    cy.get('#add-member').should('have.text', cypress.addMember).click()
+    cy.get('#add-pop-up-model').should('be.visible')
     cy.get('input[name="firstName"]')
       .clear()
-      .type(cypress.memberFirstName)
-      .should('have.value', cypress.memberFirstName)
+      .type(memberFirstName)
+      .should('have.value', memberFirstName)
     cy.get('input[name="lastName"]')
       .clear()
-      .type(cypress.memberLastName)
-      .should('have.value', cypress.memberLastName)
+      .type(memberLastName)
+      .should('have.value', memberLastName)
     cy.get('input[name="email"]')
       .clear()
-      .type(cypress.memberEmail)
-      .should('have.value', cypress.memberEmail)
+      .type(memberEmail)
+      .should('have.value', memberEmail)
     cy.get('select').select('Recruiter')
-    cy.get('#addbutton').click()
+    cy.get('#add-button').click()
   })
 })

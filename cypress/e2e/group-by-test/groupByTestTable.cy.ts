@@ -22,7 +22,7 @@ describe('Test for GroupByTestTable, Result', () => {
 
   it('Total Count of Test of groupByTable', () => {
     cy.get('a')
-      .find('#Group_By_Tests')
+      .find('#group_by_tests')
       .should('have.text', cypress.results)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')
@@ -47,7 +47,7 @@ describe('Test for GroupByTestTable, Result', () => {
   })
   it('sort by name in ascending order ', () => {
     cy.get('a', { timeout: 6000 })
-      .find('#Group_By_Tests')
+      .find('#group_by_tests')
       .should('have.text', cypress.results)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')
@@ -71,7 +71,7 @@ describe('Test for GroupByTestTable, Result', () => {
   })
   it('sort by name in descending order ', () => {
     cy.get('a', { timeout: 6000 })
-      .find('#Group_By_Tests')
+      .find('#group_by_tests')
       .should('have.text', cypress.results)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')
@@ -98,7 +98,7 @@ describe('Test for GroupByTestTable, Result', () => {
   })
   it('sort by created date in ascending order ', () => {
     cy.get('a', { timeout: 6000 })
-      .find('#Group_By_Tests')
+      .find('#group_by_tests')
       .should('have.text', cypress.results)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')
@@ -131,7 +131,7 @@ describe('Test for GroupByTestTable, Result', () => {
   })
   it('sort by created date in descending order', () => {
     cy.get('a', { timeout: 6000 })
-      .find('#Group_By_Tests')
+      .find('#group_by_tests')
       .should('have.text', cypress.results)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')

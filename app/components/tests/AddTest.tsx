@@ -119,7 +119,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
         <h2
           role={testsConstants.addTestbutton}
           tabIndex={0}
-          title="Add Test"
+          title={testsConstants.addTestbutton}
           className="text-3xl font-bold text-black"
         >
           {testsConstants.addTestbutton}
@@ -196,7 +196,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
             <button
               tabIndex={0}
               title="Next Tab"
-              id="nextButton"
+              id="next-button"
               className={`h-9 rounded-lg px-7 text-xs text-white ${
                 !(name && description) || currentTab == 2
                   ? 'cursor-not-allowed bg-gray-600'
@@ -212,7 +212,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
             <button
               tabIndex={0}
               title="Next Tab"
-              id="submitButton"
+              id="submit-button"
               className={`h-9 rounded-lg px-7 text-xs text-white ${
                 currentTab == 2
                   ? 'bg-primary'

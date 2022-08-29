@@ -24,7 +24,7 @@ export default function MembersHeader({
           </h1>
           <button
             tabIndex={0}
-            id="addMember"
+            id="add-member"
             className="h-9 rounded-lg bg-blue-900 px-4 text-xs font-medium leading-4 text-[#F0FDF4]"
             onClick={() => setOpen(!open)}
           >

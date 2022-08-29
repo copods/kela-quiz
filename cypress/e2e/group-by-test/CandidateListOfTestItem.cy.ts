@@ -15,36 +15,39 @@ describe('Visiting group by test of results page', () => {
     cy.get('[data-cy="submit"]').click()
     cy.location('pathname').should('include', '/dashboard')
   })
-
-  it('Check if that test is coming on group by test page or not', () => {
-    cy.get('a', { timeout: 6000 })
-      .find('#Group_By_Tests', { timeout: 6000 })
-      .should('have.text', 'Results')
-      .click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/results')
-  })
+  const test1 = `Aptitude - test1`
   it('Check  that if list of candidate is coming after clicking a test in group byt test in results page ', () => {
-    cy.get('a', { timeout: 6000 })
-      .find('#Group_By_Tests', { timeout: 6000 })
-      .should('have.text', 'Results')
-      .click()
+    cy.get('a').find('#group_by_tests').should('have.text', 'Results').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')
-    cy.get('#group-by-test-container', { timeout: 6000 })
-      .get('#group-by-items-container', { timeout: 6000 })
-      .get('#group-by-item-test', { timeout: 6000 })
-      .click()
+    cy.get('h1', { timeout: 6000 }).should('have.text', 'Results')
+    cy.wait(6000)
+    cy.get('.groupTestRow').each(($el) => {
+      cy.wrap($el).within((el) => {
+        if (
+          el[0].getElementsByClassName('groupByItemTest')[0].innerHTML === test1
+        ) {
+          cy.get('.groupByItemTest').should('have.text', test1)
+        }
+      })
+    })
   })
   it('Check  that if list of attended candidate is coming after clicking a test in group byt test in results page ', () => {
-    cy.get('a')
-      .find('#Group_By_Tests', { timeout: 6000 })
-      .should('have.text', 'Results')
-      .click()
+    cy.get('a').find('#group_by_tests').should('have.text', 'Results').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')
-    cy.get('#group-by-test-container', { timeout: 6000 })
-      .get('#group-by-items-container', { timeout: 6000 })
-      .get('#group-by-item-test', { timeout: 6000 })
-      .click()
-    cy.get('#Group_By_Tests-test-candidate-list-tab', { timeout: 6000 })
+    cy.get('h1', { timeout: 6000 }).should('have.text', 'Results')
+
+    cy.wait(6000)
+    cy.get('.groupTestRow').each(($el) => {
+      cy.wrap($el).within((el) => {
+        if (
+          el[0].getElementsByClassName('groupByItemTest')[0].innerHTML === test1
+        ) {
+          cy.get('.groupByItemTest').should('have.text', test1).click()
+        }
+      })
+    })
+
+    cy.get('#test-candidate-list-tab', { timeout: 6000 })
       .get('#tab-title')
       .invoke('text')
       .then((el) => {

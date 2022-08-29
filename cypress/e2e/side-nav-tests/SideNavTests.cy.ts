@@ -19,19 +19,19 @@ describe('Test for Logout, SideNav', () => {
   //
   it('click all links with loop', () => {
     // result page
-    cy.get('a').find('#Group_By_Tests').should('have.text', 'Results').click()
+    cy.get('a').find('#group_by_tests').should('have.text', 'Results').click()
     cy.location('pathname').should('include', '/results/groupByTests')
 
     // tests page
-    cy.get('a').find('#Tests').should('have.text', testsConstants.Tests).click()
+    cy.get('a').find('#tests').should('have.text', testsConstants.Tests).click()
     cy.location('pathname').should('eq', '/tests')
 
     // sections page
-    cy.get('a').find('#Sections').should('have.text', cypress.Sections).click()
+    cy.get('a').find('#sections').should('have.text', cypress.Sections).click()
     cy.location('pathname').should('eq', '/sections')
 
     // members page
-    cy.get('a').find('#Members').should('have.text', cypress.members).click()
+    cy.get('a').find('#members').should('have.text', cypress.members).click()
     cy.location('pathname').should('eq', '/members')
   })
 })

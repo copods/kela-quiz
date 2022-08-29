@@ -1,4 +1,5 @@
 import { cypress, routeFiles } from '~/constants/common.constants'
+const section1 = `Aptitude - section1`
 
 /// <reference types="Cypress">
 describe('Test for Section', () => {
@@ -20,7 +21,7 @@ describe('Test for Section', () => {
 
   it('cancel Add section', () => {
     cy.get('a')
-      .find('#Sections', { timeout: 8000 })
+      .find('#sections', { timeout: 8000 })
       .should('have.text', routeFiles.sections)
       .click()
     cy.location('pathname', { timeout: 6000 }).should('include', '/sections')
@@ -34,7 +35,7 @@ describe('Test for Section', () => {
 
   it('Check Active State of Section', () => {
     cy.get('a')
-      .find('#Sections')
+      .find('#sections')
       .should('have.text', routeFiles.sections)
       .click()
     cy.location('pathname', { timeout: 6000 }).should('include', '/sections')
@@ -45,7 +46,7 @@ describe('Test for Section', () => {
 
   it('Test for valid error message while adding new section without Title', () => {
     cy.get('a')
-      .find('#Sections')
+      .find('#sections')
       .should('have.text', routeFiles.sections)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
@@ -60,7 +61,7 @@ describe('Test for Section', () => {
   })
   it('Test for valid error message while adding new section without Description', () => {
     cy.get('a')
-      .find('#Sections')
+      .find('#sections')
       .should('have.text', routeFiles.sections)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
@@ -69,7 +70,7 @@ describe('Test for Section', () => {
       .should('be.visible')
       .within((el) => {
         cy.get('input[placeholder="Enter Section Name"]').type(
-          `${cypress.section1} ${new Date().getTime()}`
+          `${section1} ${new Date().getTime()}`
         )
 
         cy.get('[data-cy="submit"]').click()
@@ -79,7 +80,7 @@ describe('Test for Section', () => {
   })
   it('Test for valid error message while adding new section with duplicate Title', () => {
     cy.get('a')
-      .find('#Sections')
+      .find('#sections')
       .should('have.text', routeFiles.sections)
       .click()
     cy.location('pathname', { timeout: 6000 }).should('include', '/sections')
@@ -87,7 +88,7 @@ describe('Test for Section', () => {
     cy.get('form > div')
       .should('be.visible')
       .within((el) => {
-        cy.get('input[placeholder="Enter Section Name"]').type(cypress.section1)
+        cy.get('input[placeholder="Enter Section Name"]').type(section1)
         cy.get('textarea').type('Aptitude')
         cy.get('[data-cy="submit"]').click()
       })
@@ -97,7 +98,7 @@ describe('Test for Section', () => {
   })
   it('SortBy Name or created Date', () => {
     cy.get('a')
-      .find('#Sections')
+      .find('#sections')
       .should('have.text', routeFiles.sections)
       .click()
     cy.location('pathname', { timeout: 6000 }).should('include', '/sections')

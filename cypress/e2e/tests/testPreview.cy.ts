@@ -1,5 +1,7 @@
 import { cypress, testsConstants } from '~/constants/common.constants'
 
+const test1 = `Aptitude - test1`
+
 describe('Test for testPreview', () => {
   beforeEach('sign-in', () => {
     cy.visit('/sign-in')
@@ -19,7 +21,7 @@ describe('Test for testPreview', () => {
 
   it('test for check preview data match selected test and back button ', () => {
     cy.get('a')
-      .find('#Tests', { timeout: 6000 })
+      .find('#tests', { timeout: 6000 })
       .should('have.text', testsConstants.Tests)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
@@ -27,20 +29,20 @@ describe('Test for testPreview', () => {
       cy.wrap($el).within((el) => {
         if (
           el[0].getElementsByClassName('test-name-navigation')[0].innerHTML ===
-          cypress.test1
+          test1
         ) {
-          cy.get('.test-name-navigation').contains(cypress.test1)
+          cy.get('.test-name-navigation').should('have.text', test1)
         }
       })
     })
-    cy.get('.test-name-navigation').contains(cypress.test1).click()
-    cy.get('#title', { timeout: 6000 }).should('have.text', cypress.test1)
+    cy.get('.test-name-navigation').contains(test1).click()
+    cy.get('#title', { timeout: 6000 }).should('have.text', test1)
     cy.get('#backButton').click()
   })
 
   it('test for tests name', () => {
     cy.get('a')
-      .find('#Tests', { timeout: 6000 })
+      .find('#tests', { timeout: 6000 })
       .should('have.text', testsConstants.Tests)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
@@ -49,20 +51,18 @@ describe('Test for testPreview', () => {
       cy.wrap($el).within((el) => {
         if (
           el[0].getElementsByClassName('test-name-navigation')[0].innerHTML ===
-          cypress.test1
+          test1
         ) {
-          cy.get('.test-name-navigation').contains(cypress.test1)
+          cy.get('.test-name-navigation').should('have.text', test1)
         }
       })
     })
-    cy.get('.test-name-navigation', { timeout: 6000 })
-      .contains(cypress.test1)
-      .click()
+    cy.get('.test-name-navigation', { timeout: 6000 }).contains(test1).click()
     cy.get('#name').should('have.text', cypress.name).click()
   })
   it('test for description', () => {
     cy.get('a')
-      .find('#Tests', { timeout: 6000 })
+      .find('#tests', { timeout: 6000 })
       .should('have.text', testsConstants.Tests)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
@@ -70,20 +70,18 @@ describe('Test for testPreview', () => {
       cy.wrap($el).within((el) => {
         if (
           el[0].getElementsByClassName('test-name-navigation')[0].innerHTML ===
-          cypress.test1
+          test1
         ) {
-          cy.get('.test-name-navigation').contains(cypress.test1)
+          cy.get('.test-name-navigation').should('have.text', test1)
         }
       })
     })
-    cy.get('.test-name-navigation', { timeout: 6000 })
-      .contains(cypress.test1)
-      .click()
+    cy.get('.test-name-navigation', { timeout: 6000 }).contains(test1).click()
     cy.get('#description').should('have.text', cypress.description).click()
   })
   it('test for total time', () => {
     cy.get('a')
-      .find('#Tests', { timeout: 6000 })
+      .find('#tests', { timeout: 6000 })
       .should('have.text', testsConstants.Tests)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
@@ -91,20 +89,18 @@ describe('Test for testPreview', () => {
       cy.wrap($el).within((el) => {
         if (
           el[0].getElementsByClassName('test-name-navigation')[0].innerHTML ===
-          cypress.test1
+          test1
         ) {
-          cy.get('.test-name-navigation').contains(cypress.test1)
+          cy.get('.test-name-navigation').should('have.text', test1)
         }
       })
     })
-    cy.get('.test-name-navigation', { timeout: 6000 })
-      .contains(cypress.test1)
-      .click()
+    cy.get('.test-name-navigation', { timeout: 6000 }).contains(test1).click()
     cy.get('#totalTime').should('have.text', cypress.totalTime).click()
   })
   it('test for Total Sections', () => {
     cy.get('a')
-      .find('#Tests', { timeout: 6000 })
+      .find('#tests', { timeout: 6000 })
       .should('have.text', testsConstants.Tests)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
@@ -112,15 +108,13 @@ describe('Test for testPreview', () => {
       cy.wrap($el).within((el) => {
         if (
           el[0].getElementsByClassName('test-name-navigation')[0].innerHTML ===
-          cypress.test1
+          test1
         ) {
-          cy.get('.test-name-navigation').contains(cypress.test1)
+          cy.get('.test-name-navigation').should('have.text', test1)
         }
       })
     })
-    cy.get('.test-name-navigation', { timeout: 6000 })
-      .contains(cypress.test1)
-      .click()
+    cy.get('.test-name-navigation', { timeout: 6000 }).contains(test1).click()
     cy.get('#totalSection').should('have.text', cypress.totalSections)
   })
 })

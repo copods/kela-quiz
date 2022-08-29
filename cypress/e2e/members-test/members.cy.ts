@@ -2,6 +2,8 @@
 
 import { cypress } from '~/constants/common.constants'
 
+const memberEmail = 'hinatahyuga@konoha.co'
+
 describe('Test for members', () => {
   beforeEach('sign-in', () => {
     cy.visit('/sign-in')
@@ -21,29 +23,29 @@ describe('Test for members', () => {
 
   //
   it('Test for conforming ,new member is added in a list or not', () => {
-    cy.get('a').find('#Members').should('have.text', cypress.members).click()
+    cy.get('a').find('#members').should('have.text', cypress.members).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/members')
 
     cy.get('.memberRows', { timeout: 8000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
           el[0].getElementsByClassName('memberMail')[0].innerHTML ===
-          cypress.memberEmail
+          memberEmail
         ) {
-          cy.get('.memberMail').contains(cypress.memberEmail)
+          cy.get('.memberMail').should('have.text', memberEmail)
         }
       })
     })
   })
 
   it('Test for add-members popUp cancel button', () => {
-    cy.get('a').find('#Members').should('have.text', cypress.members).click()
+    cy.get('a').find('#members').should('have.text', cypress.members).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/members')
-    cy.get('#addMember').should('have.text', cypress.addMember).click()
+    cy.get('#add-member').should('have.text', cypress.addMember).click()
     cy.get('#cancelAddButton').should('have.text', 'Cancel').click()
   })
   it('Test for Delete member popup cancel button', () => {
-    cy.get('a').find('#Members').should('have.text', cypress.members).click()
+    cy.get('a').find('#members').should('have.text', cypress.members).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/members')
     cy.get('.membersHeading').should('have.text', 'Members')
 
@@ -51,46 +53,46 @@ describe('Test for members', () => {
       cy.wrap($el).within((el) => {
         if (
           el[0].getElementsByClassName('memberMail')[0].innerHTML ===
-          cypress.memberEmail
+          memberEmail
         ) {
-          cy.get('.memberMail').contains(cypress.memberEmail)
+          cy.get('.memberMail').should('have.text', memberEmail)
         }
       })
     })
 
     cy.get('.memberMail')
-      .contains(cypress.memberEmail)
+      .contains(memberEmail)
       .parent()
       .parent()
       .within(() => {
-        cy.get('#deleteButton').click()
+        cy.get('#delete-button').click()
       })
-    cy.get('#deleteDialog').should('be.visible')
-    cy.get('#cancelDeletePopUp').should('have.text', cypress.cancel).click()
+    cy.get('#delete-dialog').should('be.visible')
+    cy.get('#cancel-delete-pop-up').should('have.text', cypress.cancel).click()
   })
 
   it('Test for Delete member ', () => {
-    cy.get('a').find('#Members').should('have.text', cypress.members).click()
+    cy.get('a').find('#members').should('have.text', cypress.members).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/members')
     cy.get('.memberRows', { timeout: 8000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
           el[0].getElementsByClassName('memberMail')[0].innerHTML ===
-          cypress.memberEmail
+          memberEmail
         ) {
-          cy.get('.memberMail').contains(cypress.memberEmail)
+          cy.get('.memberMail').should('have.text', memberEmail)
         }
       })
     })
 
     cy.get('.memberMail')
-      .contains(cypress.memberEmail)
+      .contains(memberEmail)
       .parent()
       .parent()
       .within(() => {
-        cy.get('#deleteButton').click()
+        cy.get('#delete-button').click()
       })
-    cy.get('#deleteDialog').should('be.visible')
+    cy.get('#delete-dialog').should('be.visible')
     cy.get('.confirm-delete').should('have.text', cypress.delete).click()
     cy.get('.Toastify__toast').find('.Toastify__close-button  ').click()
     cy.intercept('/members').as('membersPage')
@@ -98,10 +100,10 @@ describe('Test for members', () => {
       cy.wrap($el).within((el) => {
         if (
           el[0].getElementsByClassName('memberMail')[0].innerHTML ===
-          cypress.memberEmail
+          memberEmail
         ) {
           cy.get('.memberMail')
-            .contains(cypress.memberEmail)
+            .should('have.text', memberEmail)
             .should('not.exist')
         }
       })
