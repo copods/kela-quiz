@@ -35,7 +35,7 @@ const TestDetails = ({
           htmlFor="description"
           className="text-base font-medium text-gray-800"
         >
-          {testsConstants.createTestDescription}
+          {testsConstants.descriptionText}
         </label>
         <div className="h-full pt-2 pb-4">
           <ClientOnly fallback={<div></div>}>
@@ -44,10 +44,11 @@ const TestDetails = ({
                 text={description}
                 id="testDescription"
                 fullAccess={true}
-                quillPlaceholder="Question"
+                quillPlaceholder={testsConstants.descriptionText}
                 onTextChange={(e) => {
                   onDescriptionChange(e)
                 }}
+                aria-label={testsConstants.writeDescriptionOfTest}
               />
             )}
           </ClientOnly>

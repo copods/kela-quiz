@@ -12,7 +12,7 @@ const BreadCrumb = ({
         return (
           <div
             key={breadCrumb.route}
-            className={`flex text-sm font-medium ${
+            className={`flex px-1 text-sm font-medium ${
               breadCrumb.route ? 'text-primary' : 'text-gray-400'
             }`}
             title={breadCrumb.tabName}
@@ -22,6 +22,8 @@ const BreadCrumb = ({
               to={breadCrumb.route}
               className="cursor-pointer"
               id={breadCrumb.tabName}
+              title={breadCrumb.tabName}
+              aria-label={breadCrumb.tabName}
             >
               {breadCrumb.tabName}
             </Link>

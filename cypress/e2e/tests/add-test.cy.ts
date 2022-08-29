@@ -1,7 +1,7 @@
 import {
   cypress,
   testsConstants,
-  routeFiles,
+  // routeFiles,
   commonConstants,
 } from '~/constants/common.constants'
 
@@ -29,6 +29,7 @@ describe('Creating tests', () => {
       '/tests/add-test'
     )
   })
+
 
   it('Add section and question to section add test', () => {
     cy.visit('/sign-in')

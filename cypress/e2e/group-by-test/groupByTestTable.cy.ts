@@ -15,6 +15,7 @@ describe('Test for GroupByTestTable, Result', () => {
     cy.get('a').find('#group-by-tests').should('have.text', cypress.results).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')
   })
+
   const time = new Date().getTime()
   it('Create Section and  test', () => {
     cy.visit('/sign-in')
@@ -100,6 +101,7 @@ describe('Test for GroupByTestTable, Result', () => {
     cy.get('a').find('#group-by-tests').should('have.text', cypress.results).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')
   })
+
 
   let value: any
   let strings: any

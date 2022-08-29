@@ -223,7 +223,7 @@ export default function SectionPage() {
             <span
               className="z-20 -mr-5"
               tabIndex={0}
-              role={sectionsConstants.expand}
+              role={'button'}
               onClick={() => setSectionDetailFull(!sectionDetailFull)}
               onKeyUp={(e) => {
                 if (e.key === 'Enter') setSectionDetailFull(!sectionDetailFull)
