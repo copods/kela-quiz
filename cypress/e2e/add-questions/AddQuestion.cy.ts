@@ -28,7 +28,7 @@ describe('Test for section-details', () => {
     cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
     cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
     cy.get('textarea#sectionDescription').type(
-      `Aptitude - ${new Date().getTime()} Description`
+      `Aptitude - Description`
     )
     cy.get('button#submitButton')
       .should('have.text', commonConstants.addButton)
@@ -66,7 +66,7 @@ describe('Test for section-details', () => {
     cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
     cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
     cy.get('textarea#sectionDescription').type(
-      `Aptitude - ${new Date().getTime()} Description`
+      `Aptitude -  Description`
     )
     cy.get('button#submitButton', { timeout: 6000 })
       .should('have.text', commonConstants.addButton)
@@ -150,7 +150,7 @@ describe('Test for section-details', () => {
     cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
     cy.get('input#sectionName').type(duplicateTitle)
     cy.get('textarea#sectionDescription').type(
-      `Aptitude - ${new Date().getTime()} Description`
+      `Aptitude -  Description`
     )
     cy.get('#submitButton').click()
     cy.get('.Toastify__toast').should('have.text', cypress.sectionAdded)
@@ -160,7 +160,7 @@ describe('Test for section-details', () => {
     cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
     cy.get('input#sectionName').type(duplicateTitle)
     cy.get('textarea#sectionDescription').type(
-      `Aptitude - ${new Date().getTime()} Description`
+      `Aptitude -  Description`
     )
     cy.get('#submitButton').click()
     cy.get('.Toastify__toast').should('have.text', cypress.duplicateTitle)
@@ -188,7 +188,7 @@ describe('Test for section-details', () => {
     cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
     cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
     cy.get('textarea#sectionDescription').type(
-      `Aptitude - ${new Date().getTime()} Description`
+      `Aptitude -  Description`
     )
     cy.get('button#submitButton', { timeout: 6000 })
       .should('have.text', commonConstants.addButton)
@@ -227,7 +227,7 @@ describe('Test for section-details', () => {
     cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
     cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
     cy.get('textarea#sectionDescription').type(
-      `Aptitude - ${new Date().getTime()} Description`
+      `Aptitude -  Description`
     )
     cy.get('button#submitButton', { timeout: 6000 })
       .should('have.text', commonConstants.addButton)
@@ -289,7 +289,7 @@ describe('Test for section-details', () => {
     cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
     cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
     cy.get('textarea#sectionDescription').type(
-      `Aptitude - ${new Date().getTime()} Description`
+      `Aptitude -  Description`
     )
     cy.get('button#submitButton', { timeout: 6000 })
       .should('have.text', commonConstants.addButton)
@@ -351,7 +351,7 @@ describe('Test for section-details', () => {
     cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
     cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
     cy.get('textarea#sectionDescription').type(
-      `Aptitude - ${new Date().getTime()} Description`
+      `Aptitude -  Description`
     )
     cy.get('button#submitButton', { timeout: 6000 })
       .should('have.text', commonConstants.addButton)
@@ -415,7 +415,7 @@ describe('Test for section-details', () => {
     cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
     cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
     cy.get('textarea#sectionDescription').type(
-      `Aptitude - ${new Date().getTime()} Description`
+      `Aptitude -  Description`
     )
     cy.get('button#submitButton', { timeout: 6000 })
       .should('have.text', commonConstants.addButton)
@@ -478,7 +478,7 @@ describe('Test for section-details', () => {
     cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
     cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
     cy.get('textarea#sectionDescription').type(
-      `Aptitude - ${new Date().getTime()} Description`
+      `Aptitude -  Description`
     )
     cy.get('button#submitButton', { timeout: 6000 })
       .should('have.text', commonConstants.addButton)
@@ -541,7 +541,7 @@ describe('Test for section-details', () => {
     cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
     cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
     cy.get('textarea#sectionDescription').type(
-      `Aptitude - ${new Date().getTime()} Description`
+      `Aptitude -  Description`
     )
     cy.get('button#submitButton', { timeout: 6000 })
       .should('have.text', commonConstants.addButton)
@@ -602,7 +602,7 @@ describe('Test for section-details', () => {
     cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
     cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
     cy.get('textarea#sectionDescription').type(
-      `Aptitude - ${new Date().getTime()} Description`
+      `Aptitude -  Description`
     )
     cy.get('button#submitButton', { timeout: 6000 })
       .should('have.text', commonConstants.addButton)
@@ -661,7 +661,7 @@ describe('Test for section-details', () => {
     cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
     cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
     cy.get('textarea#sectionDescription').type(
-      `Aptitude - ${new Date().getTime()} Description`
+      `Aptitude -  Description`
     )
     cy.get('button#submitButton', { timeout: 6000 })
       .should('have.text', commonConstants.addButton)
@@ -705,7 +705,7 @@ describe('Test for section-details', () => {
     cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
     cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
     cy.get('textarea#sectionDescription').type(
-      `Aptitude - ${new Date().getTime()} Description`
+      `Aptitude -  Description`
     )
     cy.get('button#submitButton', { timeout: 6000 })
       .should('have.text', commonConstants.addButton)

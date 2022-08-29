@@ -4,58 +4,47 @@ import {
   resultConstants,
   testsConstants,
 } from '~/constants/common.constants'
-import { Candidate, CandidateResult, User } from '~/interface/Interface'
-import AttendedCandidateListItem from './AttendedCandidateListItem'
+import { Candidate, CandidateTest, User } from '~/interface/Interface'
+import CandidtateAttendedList from './CandidateListAttended'
 
 const ExamAttendedCandidatesComponent = () => {
   const { attendedCandidateForTest } = useLoaderData()
-  const testData = attendedCandidateForTest
-
+  const testData = attendedCandidateForTest?.candidateTest
   return (
     <>
       {testData?.length !== 0 ? (
-        <div className="bg-[#F9FAFB] pb-4  ">
-          <div className="rounded-lg border border-solid border-[#E5E7EB] bg-tableHeader shadow-table">
-            <div className=" grid grid-cols-12 py-4 px-12">
-              <span className="col-span-1 text-sm  font-semibold  text-gray-500">
+        <div className="bg-[#F9FAFB] pb-4 ">
+          <div className="col-span-full rounded-lg border border-solid border-[#E5E7EB] bg-tableHeader shadow-table">
+            <div className="col-span-full grid grid-cols-10 py-4 px-12">
+              <span className="col-span-1 text-sm font-semibold text-gray-500">
                 {resultConstants.srno}
               </span>
-              <span className="col-span-3 text-sm  font-semibold  text-gray-500">
-                {members.name}
-              </span>
-              <span className="col-span-4 text-sm  font-semibold  text-gray-500">
+              <span className="col-span-3 text-sm font-semibold text-gray-500">
                 {members.email}
               </span>
-              <span className="col-span-2 text-sm  font-semibold  text-gray-500">
+              <span className="col-span-2 text-sm font-semibold text-gray-500">
                 {resultConstants.invitedBy}
               </span>
-              <span className="col-span-1 text-sm  font-semibold  text-gray-500">
-                {resultConstants.result}
-              </span>
-              <span className="col-span-1 text-sm  font-semibold  text-gray-500">
-                {resultConstants.review}
+              <span className="col-span-2 text-sm font-semibold text-gray-500">
+                {resultConstants.startedAt}
               </span>
             </div>
             {testData?.map(
               (
-                result: CandidateResult & {
+                data: CandidateTest & {
                   candidate: Candidate & { createdBy: User }
                 },
-                i: any
+                i: number
               ) => (
                 <div
-                  key={result.id}
-                  className="memberRow col-span-10 grid  rounded-lg"
+                  key={data.id}
+                  className="memberRow col-span-10 grid rounded-lg"
                 >
-                  <AttendedCandidateListItem
-                    email={result?.candidate?.email}
-                    invitedBy={`${result?.candidate?.createdBy?.firstName}`}
-                    name={`${result?.candidate?.firstName} ${result?.candidate?.lastName}`}
-                    result={
-                      (result?.correctQuestion / result?.totalQuestion) * 100
-                    }
-                    review={result?.isQualified}
-                    index={i}
+                  <CandidtateAttendedList
+                    email={data?.candidate?.email}
+                    invitedBy={`${data?.candidate?.createdBy?.firstName} ${data?.candidate?.createdBy?.lastName}`}
+                    index={i + 1}
+                    startedAt={data?.startedAt as Date}
                   />
                 </div>
               )
