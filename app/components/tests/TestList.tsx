@@ -53,17 +53,6 @@ const TestList = ({
         <h2 tabIndex={0} role={testsConstants.Tests} title="Tests" className="text-3xl font-bold text-black">
           {testsConstants.Tests}
         </h2>
-        {/* <Link
-        role={'button'}
-          to={'/tests/add-test'}
-          id="addTest"
-          tabIndex={0}
-          className="flex h-9 items-center rounded-lg bg-primary px-5 text-xs text-white"
-          title={testsConstants.addTestbutton}
-          aria-label={testsConstants.addTestbutton}
-        >
-          + {testsConstants.addTestbutton}
-        </Link> */}
         <Button 
         className='px-5'
         onClick={() => navigate('/tests/add-test')}
