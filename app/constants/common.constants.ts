@@ -101,6 +101,7 @@ export const resultConstants = {
   invitedBy: "Invited By",
   result: 'Result',
   review: 'Review',
+  startedAt: "Started At"
 }
 
 export enum QuestionStatus {

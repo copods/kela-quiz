@@ -33,7 +33,7 @@ const CandidateSideNav = ({
   }
 
   return (
-    <div className="flex h-full flex-col  overflow-auto">
+    <div className="flex h-full flex-col overflow-auto">
       <div className="p-5">
         <div className="flex items-center gap-4">
           <img src={candidateLogo} alt="logo" height={'40px'} />
@@ -62,7 +62,7 @@ const CandidateSideNav = ({
           <div
             className={`flex h-11 items-center text-sm ${
               location.pathname.includes('/instructions')
-                ? 'border border-0 border-l-4 border-primary bg-blue-50 px-4 font-semibold text-primary'
+                ? 'border-0 border-l-4 border-primary bg-blue-50 px-4 font-semibold text-primary'
                 : 'px-5 font-medium text-gray-800 '
             }`}
           >
@@ -80,9 +80,9 @@ const CandidateSideNav = ({
                 <div key={section.id}>
                   <div
                     className={`flex h-11 items-center justify-between gap-2 text-sm ${
-                      routeData?.currentSectionInTest?.section.id ==
+                      routeData?.currentSectionInTest?.section.id ===
                         section.section.id && !routeData.params?.questionId
-                        ? 'border border-0 border-l-4 border-primary bg-blue-50 px-4 font-semibold text-primary'
+                        ? 'border-0 border-l-4 border-primary bg-blue-50 px-4 font-semibold text-primary'
                         : 'px-5 font-medium text-gray-800'
                     }`}
                   >
@@ -102,7 +102,7 @@ const CandidateSideNav = ({
                       />
                     )}
                   </div>
-                  {routeData?.currentSectionInTest?.section.id ==
+                  {routeData?.currentSectionInTest?.section.id ===
                     section.section.id &&
                     routeData.params?.questionId &&
                     section?.questions.map((question: CandidateQuestion) => {
@@ -112,7 +112,7 @@ const CandidateSideNav = ({
                           to={`/assessment/${routeData?.params?.assessmentId}/${routeData?.params?.sectionId}/${question?.id}`}
                           className={({ isActive }) =>
                             isActive
-                              ? 'flex h-11 items-center justify-between gap-2 border border-0 border-l-4 border-primary bg-blue-50 pl-7 pr-8 text-sm font-semibold text-primary'
+                              ? 'flex h-11 items-center justify-between gap-2 border-0 border-l-4 border-primary bg-blue-50 pl-7 pr-8 text-sm font-semibold text-primary'
                               : 'flex h-11 items-center justify-between gap-2 px-8 text-sm font-medium text-gray-800'
                           }
                         >
