@@ -3,7 +3,7 @@ import { Fragment, useEffect, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import { toast } from 'react-toastify'
-import { inviteMemeberPopUpConstants } from '~/constants/common.constants'
+import { commonConstants, inviteMemeberPopUpConstants, members } from '~/constants/common.constants'
 
 const InviteCandidatePopup = ({
   openInvitePopup,
@@ -82,18 +82,18 @@ const InviteCandidatePopup = ({
                     onKeyUp={(e) => {
                       if (e.key === 'Enter') updatePopupAndEmailState()
                     }}
-                    aria-label='Close popup'
+                    aria-label={inviteMemeberPopUpConstants.closePopUp}
                   />
                 </div>
                 <hr className="mt-4 mb-6 h-px w-full border-0 bg-gray-300" />
                 <p className="pb-4 text-base font-normal text-gray-700">
-                  Enter candidate’s email below to invite them for{' '}
+                  {inviteMemeberPopUpConstants.enterCandidatesEmail}{' '}
                   <span className="font-semibold">`{testName}`</span> Test.
                 </p>
 
                 <div className="flex flex-row justify-between pb-2">
                   <span className="text-sm font-medium text-gray-500">
-                    Candidate Email
+                    {inviteMemeberPopUpConstants.candidateEmail}
                   </span>
                   <span
                     role={'button'}
@@ -103,10 +103,10 @@ const InviteCandidatePopup = ({
                     onKeyUp={(e) => {
                       if (e.key === 'Enter') setEmails([...emails, ''])
                     }}
-                    title='Invite More'
-                    aria-label='Invite More'
+                    title={inviteMemeberPopUpConstants.inviteMore}
+                    aria-label={inviteMemeberPopUpConstants.inviteMore}
                   >
-                    Invite More +
+                    {inviteMemeberPopUpConstants.inviteMore} +
                   </span>
                 </div>
 
@@ -119,8 +119,8 @@ const InviteCandidatePopup = ({
                         name={`email`}
                         className="h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
                         placeholder="johndoe@example.com"
-                        title='Email'
-                        aria-label='Email'
+                        title={members.email}
+                        aria-label={members.email}
                       />
                     </div>
                   )
@@ -132,10 +132,10 @@ const InviteCandidatePopup = ({
                     type="button"
                     className="h-9 rounded-md px-4 text-sm text-gray-500"
                     onClick={updatePopupAndEmailState}
-                    title='Cancel'
-                    aria-label='Cancel'
+                    title={commonConstants.cancel}
+                    aria-label={commonConstants.cancel}
                   >
-                    Cancel
+                    {commonConstants.cancel}
                   </button>
                   <button
                   tabIndex={0}
@@ -144,11 +144,10 @@ const InviteCandidatePopup = ({
                     value={testId}
                     id="submitButton"
                     className="h-9 rounded-md bg-primary px-4 text-sm text-[#F0FDF4]"
-                    title='Invite'
-                    aria-label='Invite'
-                    // onClick={() => setOpen(false)}
+                    title={inviteMemeberPopUpConstants.invite}
+                    aria-label={inviteMemeberPopUpConstants.invite}
                   >
-                    Invite
+                    {inviteMemeberPopUpConstants.invite}
                   </button>
                 </div>
               </Dialog.Panel>

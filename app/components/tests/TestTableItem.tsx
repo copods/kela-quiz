@@ -8,6 +8,7 @@ import { useSubmit } from '@remix-run/react'
 import TestListActionMenu from '../TestListActionMenu'
 import { useState } from 'react'
 import InviteCandidatePopup from './InviteCandidatePopup'
+import { testTableItem } from '~/constants/common.constants'
 const TestTableItem = ({
   testName,
   createdBy,
@@ -59,7 +60,7 @@ const TestTableItem = ({
         >
           {index}
         </div>
-        <div className="test-name-navigation p-1 w-4/12 cursor-pointer truncate  text-base font-medium leading-6 text-primary  ">
+        <div className="test-name-navigation p-1 w-4/12 cursor-pointer truncate text-base font-medium leading-6 text-primary  ">
           <NavLink aria-label={testName} title={testName} to={`/tests/${id}`} tabIndex={0} key={index}>
             <span id="test-name-navigation">{testName}</span>
           </NavLink>
@@ -87,7 +88,7 @@ const TestTableItem = ({
             onKeyUp={(e) => {
               if (e.key === 'Enter') setCandidatePopupOpen(true)
             }}
-            aria-label='Invite Member'
+            aria-label={testTableItem.inviteMember}
           />
 
           <TestListActionMenu
@@ -95,7 +96,7 @@ const TestTableItem = ({
             onItemClick={setShowDeletePopup}
             menuListIcon={'ic:outline-delete-outline'}
             menuListText={'Delete'}
-            aria-label='Menu'
+            aria-label={testTableItem.menu}
           />
         </div>
       <DeletePopUp

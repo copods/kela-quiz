@@ -55,8 +55,8 @@ const TestList = ({
           id="addTest"
           tabIndex={0}
           className="flex h-9 items-center rounded-lg bg-primary px-5 text-xs text-white"
-          title='Add Test'
-          aria-label='Add Test'
+          title={testsConstants.addTestbutton}
+          aria-label={testsConstants.addTestbutton}
         >
           + {testsConstants.addTestbutton}
         </Link>

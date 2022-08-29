@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react'
 import Moment from 'moment'
 import { toast } from 'react-toastify'
 import type { TestSection } from '~/interface/Interface'
-import { commonConstants, testsConstants } from '~/constants/common.constants'
+import { commonConstants, selectSectionCard, testsConstants } from '~/constants/common.constants'
 const SelectSectionCard = ({
   section,
   updateSection,
@@ -72,8 +72,8 @@ const SelectSectionCard = ({
             onClick={() => {
               updateThisSection('isSelected', '', false)
             }}
-            title='Remove'
-            aria-label='Remove section'
+            title={commonConstants.removeButton}
+            aria-label={selectSectionCard.removeSection}
           >
             {commonConstants.removeButton}
           </button>
@@ -84,8 +84,8 @@ const SelectSectionCard = ({
             onClick={() => {
               updateThisSection('isSelected', '', true)
             }}
-            title='Add'
-            aria-label='Select section'
+            title={commonConstants.addButton}
+            aria-label={selectSectionCard.selectSection}
           >
             {commonConstants.addButton}
           </button>

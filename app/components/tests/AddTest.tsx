@@ -160,10 +160,10 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
           <Link tabIndex={0} to={'/tests'}>
             <button
               tabIndex={0}
-              aria-label='Cancel'
+              aria-label={commonConstants.cancel}
               title="Cancel Add Test"
               className={`h-9 rounded-lg px-7 text-xs text-white ${
-                currentTab != tabs[0].id
+                currentTab !== tabs[0].id
                   ? 'bg-red-500'
                   : 'bg-gray-6000 bg-red-500'
               }`}
@@ -183,7 +183,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
             }`}
             onClick={() => setCurrentTab(currentTab - 1)}
             disabled={currentTab === tabs[0].id}
-            aria-label="Back"
+            aria-label={commonConstants.backButton}
           >
             {commonConstants.backButton}
           </button>
@@ -198,7 +198,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
                   : 'bg-primary'
               }`}
               onClick={() => setCurrentTab(currentTab + 1)}
-              disabled={!(name && description) || currentTab == 2}
+              disabled={!(name && description) || currentTab === 2}
               aria-label='Next'
             >
               {commonConstants.nextButton}
@@ -214,8 +214,8 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
                   : 'cursor-not-allowed bg-gray-600'
               }`}
               onClick={() => submitAddTest()}
-              disabled={currentTab != 2}
-              aria-label='Next'
+              disabled={currentTab !== 2}
+              aria-label={commonConstants.nextButton}
             >
               {transition.state === 'submitting' ? 'Creating Test' : 'Submit'}
             </button>

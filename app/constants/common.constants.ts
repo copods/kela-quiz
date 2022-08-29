@@ -16,6 +16,7 @@ export const commonConstants = {
 
 export const sideNav = {
   sideNavHeading: 'Quiz',
+  signOut: 'Sign out'
 }
 
 export const members = {
@@ -30,7 +31,20 @@ export const members = {
   action: 'Action',
 }
 export const inviteMemeberPopUpConstants = {
-  inviteCandidate: 'Invite Candidate'
+  inviteCandidate: 'Invite Candidate',
+  closePopUp: 'Close Pop Up',
+  enterCandidatesEmail: 'Enter candidate’s email below to invite them for',
+  candidateEmail: 'Candidate Email',
+  inviteMore: 'Invite More',
+  invite: 'Invite'
+}
+export const testTableItem = {
+  inviteMember: 'Invite Member',
+  menu: 'Menu'
+}
+export const selectSectionCard = {
+  removeSection: 'Remove Section',
+  selectSection: 'Select Section'
 }
 export const deletePopUp = {
   alert: 'Do you want to delete',
@@ -53,7 +67,6 @@ export const sectionsConstants = {
 }
 export const testsConstants = {
   addTestbutton: 'Add Test',
-  createTestDescription: 'Description',
   testDetailsText: 'Test Details',
   descriptionText: 'Description',
   totalTimeText: 'Total Time',
@@ -69,7 +82,8 @@ export const testsConstants = {
   created: 'Created',
   actionsText: 'Actions',
   noTestFound: 'No Test Found',
-  noCandidateForTest: "No Candidate for this Test"
+  noCandidateForTest: "No Candidate for this Test",
+  writeDescriptionOfTest: 'Write Description of Test'
 }
 export const componentGlobalConstants = {
   totalCounts: 'Total Counts',
@@ -172,8 +186,10 @@ export const cypress = {
 
 export enum sortByOrder {
   ascending = 'asc',
+  sortAscending = 'Sort Ascending',
   name = 'name',
   descending = 'descending',
+  sortDescending = 'Sort Descending',
   multipleChoice = 'MULTIPLE_CHOICE',
   singleChoice = 'SINGLE_CHOICE',
   text = 'TEXT',
