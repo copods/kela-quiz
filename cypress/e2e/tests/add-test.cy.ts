@@ -1,7 +1,7 @@
 import {
   cypress,
   testsConstants,
-  routeFiles,
+  // routeFiles,
   commonConstants,
 } from '~/constants/common.constants'
 
@@ -97,6 +97,7 @@ describe('Creating tests', () => {
     cy.get('#saveAndExit').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
   })
+
 
   it('Verify if add test page contains 3 tabs', () => {
     cy.visit('/sign-in')

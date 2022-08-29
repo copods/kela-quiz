@@ -1,11 +1,10 @@
 import {
   cypress,
   testsConstants,
-  routeFiles,
-  commonConstants,
+  // routeFiles,
+  // commonConstants,
 } from '~/constants/common.constants'
 
-const time = new Date().getTime()
 let totalCount: any
 describe('Visiting Tests', () => {
   // creating data to test Test list page
