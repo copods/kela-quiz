@@ -1,6 +1,5 @@
-import { cypress } from '~/constants/common.constants'
-const time = new Date().getTime()
 describe('Visiting group by test of results page', () => {
+
   // creating data to test Test list page
 
   it('Create Section and  test', () => {
@@ -97,6 +96,7 @@ describe('Visiting group by test of results page', () => {
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')
   })
+
 
   it('Check if that test is coming on group by test page or not', () => {
     cy.visit('/sign-in')

@@ -19,7 +19,7 @@ const ChipGroup = ({
         <Menu as="div" className="relative inline-block text-left">
           <div id="section-count-button">
             <Menu.Button>
-              <div className="cursor-pointer rounded-52 bg-bgcolor px-1 py-1 text-xs">
+              <div aria-label={`+ ${sections.length - 1} Sections in Test`} className="cursor-pointer rounded-52 bg-bgcolor px-1 py-1 text-xs">
                 + {sections.length - 1}
               </div>
             </Menu.Button>

@@ -141,7 +141,7 @@ export default function OptionForQuestion({
 
         <button
           tabIndex={0}
-          className="flex h-9 items-center  rounded-lg bg-primary px-5 text-xs text-white"
+          className="flex h-9 items-center rounded-lg bg-primary px-5 text-xs text-white"
           onClick={addOptionArea}
           title={addQuestion.addOptions}
           aria-label={addQuestion.addOptions}
@@ -151,6 +151,7 @@ export default function OptionForQuestion({
       </div>
 
       <div className="flex h-full flex-1 flex-col gap-5  overflow-auto px-1">
+
         {(getQuestionType(selectedTypeOfQuestion) ===
           QuestionTypes.multipleChoice ||
           getQuestionType(selectedTypeOfQuestion) ===
@@ -209,6 +210,7 @@ export default function OptionForQuestion({
                     if (e.key === 'Enter') deleteOption(index, option?.id)
                   }}
                   tabIndex={0}
+                  aria-label="delete"
                   icon="ic:outline-delete-outline"
                   className={`h-6 w-6 ${index} ${
                     options.length < 2

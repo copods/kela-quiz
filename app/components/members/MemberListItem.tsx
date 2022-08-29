@@ -40,7 +40,7 @@ export default function MemberListItem({
           </span>
         </div>
         <div className="col-span-3 overflow-ellipsis break-all">
-          <span className="  text-base leading-6  text-gray-700">
+          <span className=" text-base leading-6 text-gray-700">
             {user.email}
           </span>
         </div>

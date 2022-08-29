@@ -4,6 +4,7 @@ import {
   componentGlobalConstants,
   sectionsConstants,
 } from '~/constants/common.constants'
+
 const SortFilter = ({
   filterData,
   sortDirection,
@@ -48,6 +49,7 @@ const SortFilter = ({
             />
           )}
         </div>
+
         <DropdownField
           data={filterData}
           displayKey={'name'}

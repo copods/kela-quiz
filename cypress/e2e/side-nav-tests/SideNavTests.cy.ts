@@ -98,7 +98,7 @@ describe('Test for Logout, SideNav', () => {
 
   it('Test to redirect to the login page on log out', () => {
     cy.get('form')
-      .get('#logoutButton', { timeout: 6000 })
+      .get('#logout-button', { timeout: 6000 })
       .click()
       .url()
       .should('includes', '/sign-in')

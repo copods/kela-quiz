@@ -8,6 +8,7 @@ import { useSubmit } from '@remix-run/react'
 import TestListActionMenu from '../TestListActionMenu'
 import { useState } from 'react'
 import InviteCandidatePopup from './InviteCandidatePopup'
+import { testTableItem } from '~/constants/common.constants'
 const TestTableItem = ({
   testName,
   createdBy,
@@ -59,8 +60,8 @@ const TestTableItem = ({
         >
           {index}
         </div>
-        <div className="test-name-navigation w-4/12 cursor-pointer truncate  text-base font-medium leading-6 text-primary  ">
-          <NavLink to={`/tests/${id}`} tabIndex={0} key={index}>
+        <div className="test-name-navigation p-1 w-4/12 cursor-pointer truncate text-base font-medium leading-6 text-primary  ">
+          <NavLink aria-label={testName} title={testName} to={`/tests/${id}`} tabIndex={0} key={index}>
             <span id="test-name-navigation">{testName}</span>
           </NavLink>
         </div>
@@ -79,10 +80,15 @@ const TestTableItem = ({
         </div>
         <div className="flex w-1/12 gap-2">
           <Icon
+          role={'button'}
             tabIndex={0}
             className="cursor-pointer text-2xl text-primary"
             icon={'ant-design:user-add-outlined'}
             onClick={() => setCandidatePopupOpen(true)}
+            onKeyUp={(e) => {
+              if (e.key === 'Enter') setCandidatePopupOpen(true)
+            }}
+            aria-label={testTableItem.inviteMember}
           />
 
           <TestListActionMenu
@@ -90,9 +96,9 @@ const TestTableItem = ({
             onItemClick={setShowDeletePopup}
             menuListIcon={'ic:outline-delete-outline'}
             menuListText={'Delete'}
+            aria-label={testTableItem.menu}
           />
         </div>
-      </div>
       <DeletePopUp
         setOpen={setShowDeletePopup}
         open={showDeletePopup}
@@ -105,6 +111,7 @@ const TestTableItem = ({
         testName={testName}
         testId={id}
       />
+      </div>
     </>
   )
 }
