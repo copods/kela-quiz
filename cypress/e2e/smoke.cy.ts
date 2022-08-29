@@ -183,6 +183,7 @@ describe('smoke tests', () => {
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('#sort-filter-body').get('#ascend', { timeout: 6000 }).click()
+    cy.wait(2000)
     cy.get('#test-list', { timeout: 6000 }).should('be.visible')
     cy.get('#test-list', { timeout: 6000 })
       .get('#test-name-navigation')
