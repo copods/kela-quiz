@@ -1,10 +1,11 @@
 import { useSubmit } from '@remix-run/react'
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import type { Test } from '~/interface/Interface'
 import SortFilter from '../SortFilter'
 import TestTableItem from './TestTableItem'
 import { commonConstants, testsConstants } from '~/constants/common.constants'
+import Button from '../form/Button'
 // import Checkbox from '../form/CheckBox'
 const TestList = ({
   tests,
@@ -15,6 +16,7 @@ const TestList = ({
 }) => {
   const [sortDirection, onSortDirectionChange] = useState('asc')
   const [sortBy, onSortChange] = useState('name')
+  const navigate = useNavigate()
   const filterByType = [
     {
       name: 'Name',
@@ -51,7 +53,8 @@ const TestList = ({
         <h2 tabIndex={0} role={testsConstants.Tests} title="Tests" className="text-3xl font-bold text-black">
           {testsConstants.Tests}
         </h2>
-        <Link
+        {/* <Link
+        role={'button'}
           to={'/tests/add-test'}
           id="addTest"
           tabIndex={0}
@@ -60,7 +63,16 @@ const TestList = ({
           aria-label={testsConstants.addTestbutton}
         >
           + {testsConstants.addTestbutton}
-        </Link>
+        </Link> */}
+        <Button 
+        className='px-5'
+        onClick={() => navigate('/tests/add-test')}
+        id='addTest' 
+        tabIndex={0} 
+        varient='primary-solid'
+        title={testsConstants.addTestbutton} 
+        aria-label={testsConstants.addTestbutton} 
+        buttonText={`+ ${testsConstants.addTestbutton}`}/>
       </header>
       <div id="sort-filter-container">
         <SortFilter

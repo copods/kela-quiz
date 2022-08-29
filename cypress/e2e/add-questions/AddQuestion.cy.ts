@@ -574,7 +574,7 @@ describe('Test for section-details', () => {
 
     cy.get('#optionEditor input').clear().type('Option of question')
 
-    cy.get('#saveAndAddMore').click()
+    cy.get('#save-and-add-more').click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -678,7 +678,7 @@ describe('Test for section-details', () => {
     cy.get('.Toastify__close-button', { timeout: 6000 }).click({
       multiple: true,
     })
-    cy.get('#saveAndAddMore', { timeout: 6000 })
+    cy.get('#save-and-add-more', { timeout: 6000 })
       .should('have.text', cypress.saveAndAddMore)
       .click()
     cy.get('.Toastify__toast').should('have.text', 'Enter the Question')
@@ -743,7 +743,7 @@ describe('Test for section-details', () => {
       })
     })
     if (flag == 1) {
-      cy.get('#saveAndAddMore')
+      cy.get('#save-and-add-more')
         .should('have.text', cypress.saveAndAddMore)
         .click()
       cy.get('.Toastify__toast').should('have.text', cypress.enterAllOptions)

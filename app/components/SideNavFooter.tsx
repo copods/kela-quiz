@@ -31,7 +31,7 @@ function Footer() {
             <Button 
               tabIndex={0}
               type='submit' 
-              id='logoutButton' 
+              id='logout-button' 
               varient='secondary-solid' 
               className='px-2' 
               buttonText={
