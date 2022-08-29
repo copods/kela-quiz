@@ -88,12 +88,13 @@ const InviteCandidatePopup = ({
                   <span className="text-sm font-medium text-gray-500">
                     Candidate Email
                   </span>
-                  <span
+                  <p
                     className="cursor-pointer text-sm font-normal text-primary"
                     onClick={() => setEmails([...emails, ''])}
+                    aria-hidden="true"
                   >
                     Invite More +
-                  </span>
+                  </p>
                 </div>
 
                 {emails.map((email, i) => {

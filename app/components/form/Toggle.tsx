@@ -10,20 +10,12 @@ export default function Toggle({
   console.log(toggle);
   
   return (
-    <div 
-       className='flex' 
-       onKeyDown={(e)=>{
-        if(e.key === 'Enter'){
-          toggle = !toggle;
-          console.log(toggle);
-          
-          onToggleChange;
-        }
-       }}>
+    <div className='flex' >
       <Switch
         checked={toggle}
-        onChange={onToggleChange}
         tabIndex={0}
+        role='Check Order'
+        onChange={onToggleChange}
         className={`${
           toggle
             ? 'border-blue-900 bg-blue-900'

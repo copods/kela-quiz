@@ -12,9 +12,16 @@ const SectionDetails = () => {
 
   return (
     <div className="flex h-full w-full flex-col gap-6 overflow-auto break-all rounded-lg border border-gray-200 bg-white px-9 py-6">
-      <h2 className="text-2xl font-semibold text-gray-700">
+      <div className='flex'>
+      <h2 className="text-2xl font-semibold text-gray-700 inline-block"
+         tabIndex={0}
+         role={sectionDetails.sectionDetails?.name}
+         title={sectionDetails.sectionDetails?.name}
+         aria-label={sectionDetails.sectionDetails?.name}
+      >
         {sectionDetails.sectionDetails?.name}
       </h2>
+      </div>
       <hr className="-mt-2 h-px w-full border-0 bg-gray-300" />
       <div className="flex items-start justify-between gap-2 md:flex-col xl:flex-row xl:items-center">
         <input
@@ -36,7 +43,6 @@ const SectionDetails = () => {
           aria-label={addQuestion.addQuestion}
         >
           <button
-            tabIndex={0}
             id="addQuestion"
             className="h-9 rounded-lg bg-primary px-5 text-xs text-[#F0FDF4]"
           >

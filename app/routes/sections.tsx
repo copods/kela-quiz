@@ -180,7 +180,11 @@ export default function SectionPage() {
       <div className="flex h-full flex-col gap-12 overflow-hidden p-1">
         {/* header */}
         <header className="flex items-center justify-between">
-          <h2 className="text-3xl font-bold text-black">
+          <h2 className="text-3xl font-bold text-black"
+          tabIndex={0}
+          role={routeFiles.sections}
+          title={routeFiles.sections}
+          aria-label={routeFiles.sections}>
             {routeFiles.sections}
           </h2>
           <button
@@ -219,6 +223,7 @@ export default function SectionPage() {
             <span
               className="z-20 -mr-5"
               tabIndex={0}
+              role={sectionsConstants.expand}
               onClick={() => setSectionDetailFull(!sectionDetailFull)}
               onKeyUp={(e) => {
                 if (e.key === 'Enter') setSectionDetailFull(!sectionDetailFull)

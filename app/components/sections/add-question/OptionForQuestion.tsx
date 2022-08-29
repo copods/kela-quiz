@@ -122,7 +122,12 @@ export default function OptionForQuestion({
           QuestionTypes.multipleChoice ||
         getQuestionType(selectedTypeOfQuestion) ===
           QuestionTypes.singleChoice ? (
-          <div className="ml-7 text-base font-medium leading-6 text-gray-600">
+          <div className="ml-7 text-base font-medium leading-6 text-gray-600"
+             role={addQuestion.createOptions}
+             tabIndex={0}
+             title={addQuestion.createOptions}
+             aria-label={addQuestion.createOptions}
+          >
             {addQuestion.createOptions}
           </div>
         ) : (
@@ -211,6 +216,7 @@ export default function OptionForQuestion({
                       : 'cursor-pointer text-red-600'
                   }`}
                   aria-label="Delete"
+                  role='button'
                 ></Icon>
               </div>
             )

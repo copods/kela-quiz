@@ -1,6 +1,9 @@
 import { Icon } from '@iconify/react'
 import DropdownField from './form/Dropdown'
-import { componentGlobalConstants, sectionsConstants } from '~/constants/common.constants'
+import {
+  componentGlobalConstants,
+  sectionsConstants,
+} from '~/constants/common.constants'
 const SortFilter = ({
   filterData,
   sortDirection,
@@ -20,30 +23,31 @@ const SortFilter = ({
 }) => {
   return (
     <div className="flex items-center" id="sort-filter">
-      <div className="flex items-center gap-2.5" id="sort-filter-body" title={sectionsConstants.sort} aria-label={sectionsConstants.sort} >
-        {sortDirection == 'asc' ? (
-          <Icon
-            tabIndex={0}
-            id="ascend"
-            icon="ph:sort-ascending-bold"
-            onKeyUp={(e) => {
+      <div className="flex items-center gap-2.5" id="sort-filter-body">
+        <div 
+             tabIndex={0}
+             role={sectionsConstants.sort}
+             title={sectionsConstants.sort}
+             aria-label={sectionsConstants.sort}
+             onKeyUp={(e) => {
               if (e.key === 'Enter') onSortDirectionChange('desc')
             }}
             onClick={() => onSortDirectionChange('desc')}
-            className="cursor-pointer text-2xl"
-          />
-        ) : (
-          <Icon
-            tabIndex={0}
-            id="descend"
-            icon="ph:sort-descending-bold"
-            onKeyUp={(e) => {
-              if (e.key === 'Enter') onSortDirectionChange('asc')
-            }}
-            onClick={() => onSortDirectionChange('asc')}
-            className="cursor-pointer text-2xl"
-          />
-        )}
+        >
+          {sortDirection == 'asc' ? (
+            <Icon
+              id="ascend"
+              icon="ph:sort-ascending-bold"
+              className="cursor-pointer text-2xl"
+            />
+          ) : (
+            <Icon
+              id="descend"
+              icon="ph:sort-descending-bold"
+              className="cursor-pointer text-2xl"
+            />
+          )}
+        </div>
         <DropdownField
           data={filterData}
           displayKey={'name'}
@@ -55,6 +59,9 @@ const SortFilter = ({
       <span
         className="flex items-center pl-4 text-sm text-totalCount"
         id="total-items-value"
+        tabIndex={0}
+        role={componentGlobalConstants.totalCounts}
+        title={componentGlobalConstants.totalCounts}
       >
         <span>
           {componentGlobalConstants.totalCounts}:

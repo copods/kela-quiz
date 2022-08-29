@@ -20,6 +20,7 @@ const StepsTabComponent = ({
           onClick={() => {
             setCurrentTab(tab.id)
           }}
+          aria-hidden="true"
           >
             <hr
               className={`mb-3 h-1 w-full rounded-1 border-0 ${

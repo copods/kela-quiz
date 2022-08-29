@@ -53,13 +53,9 @@ const AddQuestionInSection = () => {
       route: '/sections',
     },
     {
-      tabName: 'Question',
-      route: `/sections/${sectionDetails?.id}`,
-    },
-    {
       tabName: 'AddQuestion',
       route: `/sections/${sectionDetails?.id}/add-question`,
-    },
+    }
   ]
   const getQuestionType = (id: string) => {
     let quesValue = ''
@@ -183,6 +179,9 @@ const AddQuestionInSection = () => {
       <div className="flex">
       <h1
         title={sectionDetails?.name}
+        role={sectionDetails?.name}
+        aria-label={sectionDetails?.name}
+        tabIndex={0}
         className="text-3xl font-bold leading-9 text-gray-900 inline-block"
       >
         {sectionDetails?.name} - {addQuestion.addQuestion}
