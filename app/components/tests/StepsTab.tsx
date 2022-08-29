@@ -20,6 +20,7 @@ const StepsTabComponent = ({
         return (
           <div
           tabIndex={indexDisable()}
+          role={'button'}
           key={tab.id}
           id={tab.id.toString()}
           className={`flex-1 p-1 ${isDisabled ? 'pointer-events-none' : 'cursor-pointer'}`} 

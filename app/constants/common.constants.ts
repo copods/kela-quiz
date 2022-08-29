@@ -29,6 +29,9 @@ export const members = {
   addedOn: 'Added On',
   action: 'Action',
 }
+export const inviteMemeberPopUpConstants = {
+  inviteCandidate: 'Invite Candidate'
+}
 export const deletePopUp = {
   alert: 'Do you want to delete',
 }

@@ -23,6 +23,7 @@ const QuestionCard = ({
         <div
           className="items-top flex flex-1 justify-between"
           tabIndex={0}
+          role='button'
           onKeyUp={(e) => {
             if (e.key === 'Enter')
               onAccordianToggle(

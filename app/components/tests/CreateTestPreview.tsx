@@ -128,7 +128,7 @@ const TestPreview = ({
                   </div>
                 </div>
                 {isPreviewEditable && (
-                  <div className="flex gap-2" tabIndex={0}>
+                  <div className="flex gap-2" role={'button'} tabIndex={0}>
                     <Icon
                       icon="fa:long-arrow-up"
                       className="cursor-pointer"

@@ -3,6 +3,7 @@ import { Fragment, useEffect, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import { toast } from 'react-toastify'
+import { inviteMemeberPopUpConstants } from '~/constants/common.constants'
 
 const InviteCandidatePopup = ({
   openInvitePopup,
@@ -70,18 +71,18 @@ const InviteCandidatePopup = ({
             >
               <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white p-6 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
                 <div className="flex items-center justify-between pt-1">
-                  <h2 className="text-2xl font-bold text-gray-700">
-                    Invite Candidate
+                  <h2 role={inviteMemeberPopUpConstants.inviteCandidate} tabIndex={0} className="text-2xl font-bold text-gray-700">
+                    {inviteMemeberPopUpConstants.inviteCandidate}
                   </h2>
                   <Icon
-                  tabIndex={0}
+                    tabIndex={0}
                     className="cursor-pointer text-2xl text-gray-600"
                     icon={'carbon:close'}
                     onClick={updatePopupAndEmailState}
                     onKeyUp={(e) => {
                       if (e.key === 'Enter') updatePopupAndEmailState()
                     }}
-                    aria-label='Close'
+                    aria-label='Close popup'
                   />
                 </div>
                 <hr className="mt-4 mb-6 h-px w-full border-0 bg-gray-300" />
@@ -95,14 +96,15 @@ const InviteCandidatePopup = ({
                     Candidate Email
                   </span>
                   <span
-                  tabIndex={0}
+                    role={'button'}
+                    tabIndex={0}
                     className="cursor-pointer text-sm font-normal text-primary px-0.5"
                     onClick={() => setEmails([...emails, ''])}
                     onKeyUp={(e) => {
                       if (e.key === 'Enter') setEmails([...emails, ''])
                     }}
                     title='Invite More'
-                    aria-label='Invite More Button'
+                    aria-label='Invite More'
                   >
                     Invite More +
                   </span>

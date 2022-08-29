@@ -47,7 +47,7 @@ const TestList = ({
       {/* header */}
       {/* <BreadCrumb data={breadCrumbData} /> */}
       <header className="flex items-center justify-between">
-        <h2 title="Tests" className="text-3xl font-bold text-black">
+        <h2 tabIndex={0} role={testsConstants.Tests} title="Tests" className="text-3xl font-bold text-black">
           {testsConstants.Tests}
         </h2>
         <Link
