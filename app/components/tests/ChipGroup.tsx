@@ -35,7 +35,7 @@ const ChipGroup = ({
           >
             <Menu.Items
               id="menu-items"
-              className="section-menu absolute z-40 max-h-52 overflow-auto rounded-md bg-white py-4 px-4 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+              className="sectionMenu absolute z-40 max-h-52 overflow-auto rounded-md bg-white py-4 px-4 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
             >
               {sections.map((sect, i) => {
                 return (

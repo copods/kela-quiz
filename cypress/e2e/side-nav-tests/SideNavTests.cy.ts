@@ -41,7 +41,7 @@ describe('Test for Logout, SideNav', () => {
       .should('have.value', cypress.password)
     cy.findByRole('button').click()
     cy.get('a')
-      .find('#Group_By_Tests')
+      .find('##group-by-tests')
       .should('have.text', 'Results')
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')
@@ -59,7 +59,7 @@ describe('Test for Logout, SideNav', () => {
       .should('have.value', cypress.password)
     cy.findByRole('button').click()
 
-    cy.get('a').find('#Tests').should('have.text', testsConstants.Tests).click()
+    cy.get('a').find('#tests').should('have.text', testsConstants.Tests).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
   })
 
@@ -75,7 +75,7 @@ describe('Test for Logout, SideNav', () => {
       .should('have.value', cypress.password)
     cy.findByRole('button').click()
 
-    cy.get('a').find('#Members').should('have.text', cypress.members).click()
+    cy.get('a').find('#members').should('have.text', cypress.members).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/members')
   })
 
@@ -91,7 +91,7 @@ describe('Test for Logout, SideNav', () => {
       .should('have.value', cypress.password)
     cy.findByRole('button').click()
 
-    cy.get('a').find('#Members').should('have.text', cypress.members).click()
+    cy.get('a').find('#members').should('have.text', cypress.members).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/members')
     cy.get('a').should('have.class', 'bg-blue-50')
   })

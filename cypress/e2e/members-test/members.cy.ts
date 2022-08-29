@@ -14,7 +14,7 @@ describe('Test for members', () => {
       .type('kQuiz@copods')
       .should('have.value', cypress.password)
     cy.findByRole('button').click()
-    cy.get('a').find('#Members').should('have.text', cypress.members).click()
+    cy.get('a').find('#members').should('have.text', cypress.members).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/members')
   })
   //
@@ -29,7 +29,7 @@ describe('Test for members', () => {
       .type('kQuiz@copods')
       .should('have.value', cypress.password)
     cy.findByRole('button').click()
-    cy.get('a').find('#Members').should('have.text', cypress.members).click()
+    cy.get('a').find('#members').should('have.text', cypress.members).click()
     cy.get('#addMember').should('have.text', cypress.addMember).click()
     cy.get('#AddPopUpModel').should('be.visible')
     cy.get('#firstName').clear().type('hinata').should('have.value', 'hinata')
@@ -58,7 +58,7 @@ describe('Test for members', () => {
       .type('kQuiz@copods')
       .should('have.value', cypress.password)
     cy.findByRole('button').click()
-    cy.get('a').find('#Members').should('have.text', cypress.members).click()
+    cy.get('a').find('#members').should('have.text', cypress.members).click()
     cy.get('#addMember').should('have.text', cypress.addMember).click()
     cy.get('#cancelAddButton').should('have.text', 'Cancel').click()
   })
@@ -73,7 +73,7 @@ describe('Test for members', () => {
       .type('kQuiz@copods')
       .should('have.value', cypress.password)
     cy.findByRole('button').click()
-    cy.get('a').find('#Members').should('have.text', cypress.members).click()
+    cy.get('a').find('#members').should('have.text', cypress.members).click()
 
     cy.get('.memberRow').each((item) => {
       cy.contains('hinata hyuga')
@@ -101,7 +101,7 @@ describe('Test for members', () => {
       .type('kQuiz@copods')
       .should('have.value', cypress.password)
     cy.findByRole('button').click()
-    cy.get('a').find('#Members').should('have.text', cypress.members).click()
+    cy.get('a').find('#members').should('have.text', cypress.members).click()
 
     cy.get('.memberRow').each((item) => {
       cy.contains('hinata hyuga')

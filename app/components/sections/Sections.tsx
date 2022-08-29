@@ -15,7 +15,7 @@ const SectionLink = ({ section }: { section: any }) => {
       to={path}
       key={section.id}
       onKeyUp={(e) => {
-        if (e.key === 'Tab' && e.altKey) window.location.href = '#sectionSearch'
+        if (e.key === 'Tab' && e.altKey) window.location.href = '#sectionsearch'
         // alt + Tab combination key for moving focus to section detail
       }}
     >

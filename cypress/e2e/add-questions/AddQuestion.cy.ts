@@ -19,7 +19,7 @@ describe('Test for section-details', () => {
     cy.findByRole('button').click()
 
     cy.get('a')
-      .find('#Sections', { timeout: 6000 })
+      .find('#sections', { timeout: 6000 })
       .should('have.text', routeFiles.sections)
       .click()
     cy.location('pathname', { timeout: 6000 }).should('include', '/sections')
@@ -58,7 +58,7 @@ describe('Test for section-details', () => {
     cy.findByRole('button').click()
 
     cy.get('a')
-      .find('#Sections')
+      .find('#sections')
       .should('have.text', routeFiles.sections)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
@@ -94,7 +94,7 @@ describe('Test for section-details', () => {
     cy.findByRole('button').click()
 
     cy.get('a')
-      .find('#Sections')
+      .find('#sections')
       .should('have.text', routeFiles.sections)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
@@ -118,7 +118,7 @@ describe('Test for section-details', () => {
     cy.findByRole('button').click()
 
     cy.get('a')
-      .find('#Sections')
+      .find('#sections')
       .should('have.text', routeFiles.sections)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
@@ -142,7 +142,7 @@ describe('Test for section-details', () => {
     cy.findByRole('button').click()
 
     cy.get('a')
-      .find('#Sections')
+      .find('#sections')
       .should('have.text', routeFiles.sections)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
@@ -180,7 +180,7 @@ describe('Test for section-details', () => {
     cy.findByRole('button').click()
 
     cy.get('a')
-      .find('#Sections')
+      .find('#sections')
       .should('have.text', routeFiles.sections)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
@@ -219,7 +219,7 @@ describe('Test for section-details', () => {
     cy.findByRole('button').click()
 
     cy.get('a')
-      .find('#Sections')
+      .find('#sections')
       .should('have.text', routeFiles.sections)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
@@ -281,7 +281,7 @@ describe('Test for section-details', () => {
     cy.findByRole('button').click()
 
     cy.get('a')
-      .find('#Sections')
+      .find('#sections')
       .should('have.text', routeFiles.sections)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
@@ -343,7 +343,7 @@ describe('Test for section-details', () => {
     cy.findByRole('button').click()
 
     cy.get('a')
-      .find('#Sections')
+      .find('#sections')
       .should('have.text', routeFiles.sections)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
@@ -407,7 +407,7 @@ describe('Test for section-details', () => {
     cy.findByRole('button').click()
 
     cy.get('a')
-      .find('#Sections')
+      .find('#sections')
       .should('have.text', routeFiles.sections)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
@@ -470,7 +470,7 @@ describe('Test for section-details', () => {
     cy.findByRole('button').click()
 
     cy.get('a')
-      .find('#Sections')
+      .find('#sections')
       .should('have.text', routeFiles.sections)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
@@ -533,7 +533,7 @@ describe('Test for section-details', () => {
     cy.findByRole('button').click()
 
     cy.get('a')
-      .find('#Sections')
+      .find('#sections')
       .should('have.text', routeFiles.sections)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
@@ -594,7 +594,7 @@ describe('Test for section-details', () => {
     cy.findByRole('button').click()
 
     cy.get('a')
-      .find('#Sections')
+      .find('#sections')
       .should('have.text', routeFiles.sections)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
@@ -653,7 +653,7 @@ describe('Test for section-details', () => {
     cy.findByRole('button').click()
 
     cy.get('a')
-      .find('#Sections')
+      .find('#sections')
       .should('have.text', routeFiles.sections)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
@@ -697,7 +697,7 @@ describe('Test for section-details', () => {
     cy.findByRole('button').click()
 
     cy.get('a')
-      .find('#Sections')
+      .find('#sections')
       .should('have.text', routeFiles.sections)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
