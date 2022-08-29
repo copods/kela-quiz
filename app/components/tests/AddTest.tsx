@@ -145,7 +145,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
           }}
           updateSectionsList={setSectionsCopy}
         />
-      ) : currentTab === tabs[2].id ? (
+      ) : currentTab === tabs[2].id && (
         <TestPreview
           selectedSections={selectedSections}
           onSelectedSectionChange={onSelectedSectionChange}
@@ -153,8 +153,6 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
           description={description}
           isPreviewEditable
         />
-      ) : (
-        ''
       )}
       {/* Buttons */}
       <div className="flex w-full items-center justify-between">
@@ -177,7 +175,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
             buttonText={commonConstants.backButton} 
             isDisabled={currentTab === tabs[0].id}
             onClick={() => setCurrentTab(currentTab - 1)} />
-          {currentTab != 2 ? (
+          {currentTab !== 2 ? (
             <Button 
               tabIndex={0}
               title='Next Tab' 
@@ -201,6 +199,8 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
         </div>
       </div>
     </div>
+  </div>
   )
 }
+
 export default AddTestComponent
