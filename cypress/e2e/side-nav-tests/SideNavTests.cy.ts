@@ -41,7 +41,7 @@ describe('Test for Logout, SideNav', () => {
       .should('have.value', cypress.password)
     cy.findByRole('button').click()
     cy.get('a')
-      .find('##group-by-tests')
+      .find('#group-by-tests')
       .should('have.text', 'Results')
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')

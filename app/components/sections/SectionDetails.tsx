@@ -26,7 +26,7 @@ const SectionDetails = () => {
       <div className="flex items-start justify-between gap-2 md:flex-col xl:flex-row xl:items-center">
         <input
           tabIndex={0}
-          id="sectionSearch"
+          id="section-search"
           type="text"
           name="search"
           className="h-9 w-48 rounded-lg border border-gray-200 px-3 text-sm"

@@ -92,7 +92,7 @@ describe('Visiting group by test of results page', () => {
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('a', { timeout: 6000 })
-      .find('##group-by-tests', { timeout: 6000 })
+      .find('#group-by-tests', { timeout: 6000 })
       .should('have.text', 'Results')
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')
@@ -111,7 +111,7 @@ describe('Visiting group by test of results page', () => {
     cy.findByRole('button').click()
 
     cy.get('a', { timeout: 6000 })
-      .find('##group-by-tests', { timeout: 6000 })
+      .find('#group-by-tests', { timeout: 6000 })
       .should('have.text', 'Results')
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')
@@ -129,7 +129,7 @@ describe('Visiting group by test of results page', () => {
     cy.findByRole('button').click()
 
     cy.get('a', { timeout: 6000 })
-      .find('##group-by-tests', { timeout: 6000 })
+      .find('#group-by-tests', { timeout: 6000 })
       .should('have.text', 'Results')
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')
@@ -151,7 +151,7 @@ describe('Visiting group by test of results page', () => {
     cy.findByRole('button', { timeout: 6000 }).click()
 
     cy.get('a')
-      .find('##group-by-tests', { timeout: 6000 })
+      .find('#group-by-tests', { timeout: 6000 })
       .should('have.text', 'Results')
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')
@@ -159,7 +159,7 @@ describe('Visiting group by test of results page', () => {
       .get('#group-by-items-container', { timeout: 8000 })
       .get('#group-by-item-test', { timeout: 6000 })
       .click()
-    cy.get('##group-by-tests-test-candidate-list-tab', { timeout: 6000 })
+    cy.get('#group-by-tests-test-candidate-list-tab', { timeout: 6000 })
       .get('#tab-title')
       .invoke('text')
       .then((el) => {

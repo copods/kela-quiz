@@ -121,6 +121,6 @@ describe('Test for Section Details', () => {
     cy.get('#section-cards').each((item) => {
       cy.contains(`Aptitude - ${time}`).click()
     })
-    cy.get('#sectionsearch').type(`${time}`)
+    cy.get('#section-search').type(`${time}`)
   })
 })
