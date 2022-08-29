@@ -104,18 +104,18 @@ model Option {
 }
 
 model Test {
-  id              String            @id @default(cuid())
-  name            String            @unique
-  description     String
-  sections        SectionInTest[]
-  createdBy       User              @relation(fields: [createdById], references: [id])
-  createdById     String
-  candidateTest   CandidateTest[]
-  candidateResult CandidateResult[]
-  createdAt       DateTime          @default(now())
-  updatedAt       DateTime          @updatedAt
-  deleted         Boolean           @default(false)
-  deletedAt       String?           @default("na")
+  id                String              @id @default(cuid())
+  name              String              @unique
+  description       String
+  sections          SectionInTest[]
+  createdBy         User                @relation(fields: [createdById], references: [id])
+  createdById       String
+  candidateTest     CandidateTest[]
+  candidateResult   CandidateResult[]
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  deleted           Boolean             @default(false)
+  deletedAt         String?             @default("na")
   SectionWiseResult SectionWiseResult[]
 
   @@unique([name, deletedAt, deleted])

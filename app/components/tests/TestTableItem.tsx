@@ -8,6 +8,7 @@ import { useSubmit } from '@remix-run/react'
 import TestListActionMenu from '../TestListActionMenu'
 import { useState } from 'react'
 import InviteCandidatePopup from './InviteCandidatePopup'
+import { testTableItem } from '~/constants/common.constants'
 const TestTableItem = ({
   testName,
   createdBy,
@@ -58,14 +59,15 @@ const TestTableItem = ({
         >
           {index}
         </div>
-        <div className=" w-4/12 cursor-pointer truncate  text-base font-medium leading-6 text-primary  ">
+        <div className="test-name-navigation w-4/12 cursor-pointer truncate p-1 text-base font-medium leading-6 text-primary  ">
           <NavLink
-            className="test-name-navigation"
+            aria-label={testName}
+            title={testName}
             to={`/tests/${id}`}
             tabIndex={0}
             key={index}
           >
-            <span>{testName}</span>
+            <span id="test-name-navigation">{testName}</span>
           </NavLink>
         </div>
         <div id="chip-group-id" className="flex w-3/12 text-xs leading-6">
@@ -83,10 +85,15 @@ const TestTableItem = ({
         </div>
         <div className="flex w-1/12 gap-2">
           <Icon
+            role={'button'}
             tabIndex={0}
             className="candidateInviteIcon cursor-pointer text-2xl text-primary"
             icon={'ant-design:user-add-outlined'}
             onClick={() => setCandidatePopupOpen(true)}
+            onKeyUp={(e) => {
+              if (e.key === 'Enter') setCandidatePopupOpen(true)
+            }}
+            aria-label={testTableItem.inviteMember}
           />
 
           <TestListActionMenu
@@ -94,21 +101,22 @@ const TestTableItem = ({
             onItemClick={setShowDeletePopup}
             menuListIcon={'ic:outline-delete-outline'}
             menuListText={'Delete'}
+            aria-label={testTableItem.menu}
           />
         </div>
+        <DeletePopUp
+          setOpen={setShowDeletePopup}
+          open={showDeletePopup}
+          onDelete={deleteTest}
+          status={status}
+        />
+        <InviteCandidatePopup
+          openInvitePopup={candidatePopupOpen}
+          setOpenInvitePopup={setCandidatePopupOpen}
+          testName={testName}
+          testId={id}
+        />
       </div>
-      <DeletePopUp
-        setOpen={setShowDeletePopup}
-        open={showDeletePopup}
-        onDelete={deleteTest}
-        status={status}
-      />
-      <InviteCandidatePopup
-        openInvitePopup={candidatePopupOpen}
-        setOpenInvitePopup={setCandidatePopupOpen}
-        testName={testName}
-        testId={id}
-      />
     </>
   )
 }

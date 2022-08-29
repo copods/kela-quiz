@@ -268,7 +268,7 @@ describe('Creating tests', () => {
   it('Verify if user is able to create a test and navigates to Tests Page where can see added test', () => {
     cy.get('a').find('#Tests').should('have.text', testsConstants.Tests).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.get('#sort-filter-body').get('#ascend',{timeout:8000}).click()
+    cy.get('#sort-filter-body').get('#ascend', { timeout: 8000 }).click()
 
     cy.get('.test-table-list', { timeout: 6000 }).each(($el) => {
       cy.wrap($el).within((el) => {

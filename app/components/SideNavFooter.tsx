@@ -1,6 +1,7 @@
 import { Icon } from '@iconify/react'
 import { useUser } from '~/utils'
 import { Form } from '@remix-run/react'
+import { sideNav } from '~/constants/common.constants'
 
 function Footer() {
   const user = useUser()
@@ -30,8 +31,10 @@ function Footer() {
           <button
             tabIndex={0}
             type="submit"
-            id="logoutButton"
+            id="logout-button"
             className="flex h-10 w-10 items-center justify-center rounded-lg bg-red-500"
+            aria-label={sideNav.signOut}
+            title={sideNav.signOut}
           >
             <Icon
               icon="mdi:logout-variant"

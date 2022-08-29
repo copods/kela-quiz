@@ -106,8 +106,8 @@ describe('smoke tests', () => {
           cy.get('.sectionName').contains(cypress.section1).click()
         }
       })
-    }) 
-     cy.get('.sectionName').contains(cypress.section1).click()
+    })
+    cy.get('.sectionName').contains(cypress.section1).click()
     cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
     cy.location('pathname').should('include', '/add-question')
     cy.get('h1').should('be.visible')
