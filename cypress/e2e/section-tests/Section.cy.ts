@@ -19,12 +19,12 @@ describe('Test for Section', () => {
       .find('#Sections')
       .should('have.text', routeFiles.sections)
       .click()
-    cy.location('pathname', { timeout: 6000 }).should('include', '/sections')
+    cy.location('pathname').should('include', '/dashboard')
   })
 
   it('cancel Add section', () => {
     cy.get('a')
-      .find('#Sections')
+      .find('#Sections', { timeout: 8000 })
       .should('have.text', routeFiles.sections)
       .click()
     cy.location('pathname', { timeout: 6000 }).should('include', '/sections')
