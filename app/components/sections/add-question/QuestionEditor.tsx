@@ -24,7 +24,7 @@ export default function QuestionEditor({
     }
   }
   return (
-    <div className="flex flex-1 flex-col gap-6">
+    <div className="flex flex-1 flex-col gap-6" id='Question'>
       <div className=" flex">
         <DropdownField
           value={selectedTypeOfQuestion}

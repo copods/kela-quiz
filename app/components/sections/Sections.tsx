@@ -54,7 +54,7 @@ const Sections = ({
   return (
     <div className="flex h-full w-96 flex-col gap-6">
       {/* filters */}
-      <div className="flex items-center justify-between p-2-px">
+      <div className="flex items-center justify-between p-0.5">
         <div id="sort-filter-container">
           <SortFilter
             filterData={sortByDetails}
@@ -70,7 +70,7 @@ const Sections = ({
 
       {/* list */}
       <div
-        className="flex flex-1 flex-col gap-6 overflow-auto p-2-px"
+        className="flex flex-1 flex-col gap-6 overflow-auto p-0.5"
         id="section-cards"
       >
         {sections?.map((section: any) => (
