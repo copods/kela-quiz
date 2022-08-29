@@ -32,11 +32,12 @@ export const loader: LoaderFunction = async ({ params, request }) => {
   )
 
   if (candidateSection?.endAt) {
-    await moveToNextSection({
+    const nextSecRoute = await moveToNextSection({
       assessmentId: params.assessmentId as string,
       order: section?.order || 0,
       sectionId: '',
     })
+    if (typeof nextSecRoute === 'string') return redirect(nextSecRoute)
   }
 
   const candidateTests = await candidateTest(params.assessmentId as string)

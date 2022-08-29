@@ -53,11 +53,12 @@ export const action: ActionFunction = async ({ params, request }) => {
   }
 
   if (nextSection) {
-    await moveToNextSection({
+    const nextSecRoute = await moveToNextSection({
       assessmentId: params.assessmentId as string,
       order: parseInt(nextSection as string),
       sectionId: params.sectionId as string,
     })
+    if (typeof nextSecRoute === 'string') return redirect(nextSecRoute)
   }
 
   if (endExam) {

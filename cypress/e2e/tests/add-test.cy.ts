@@ -1,7 +1,7 @@
 import {
   cypress,
   testsConstants,
-  routeFiles,
+  // routeFiles,
   commonConstants,
 } from '~/constants/common.constants'
 
@@ -28,72 +28,6 @@ describe('Creating tests', () => {
       'include',
       '/tests/add-test'
     )
-  })
-
-  it('Add section and question to section add test', () => {
-    cy.visit('/sign-in')
-    cy.get('#email')
-      .clear()
-      .type('careers@copods.co')
-      .should('have.value', cypress.email)
-    cy.get('#password', { timeout: 6000 })
-      .clear()
-      .type('kQuiz@copods')
-      .should('have.value', cypress.password)
-    cy.findByRole('button', { timeout: 10000 }).click()
-    cy.get('a', { timeout: 10000 })
-      .find('#Sections', { timeout: 10000 })
-      .should('have.text', routeFiles.sections)
-      .click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
-    cy.get('.px-5', { timeout: 10000 }).click()
-    cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
-    cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
-    cy.get('textarea#sectionDescription').type(
-      `Aptitude - ${new Date().getTime()} Description`
-    )
-    cy.get('button#submitButton', { timeout: 6000 })
-      .should('have.text', commonConstants.addButton)
-      .click()
-    cy.get('a', { timeout: 6000 })
-      .find('#Tests', { timeout: 6000 })
-      .should('have.text', testsConstants.Tests)
-      .click()
-    cy.get('a', { timeout: 10000 })
-      .find('#Sections', { timeout: 10000 })
-      .should('have.text', routeFiles.sections)
-      .click()
-    cy.get('#section-card', { timeout: 20000 }).first().click()
-    cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
-    cy.location('pathname', { timeout: 60000 }).should(
-      'include',
-      '/add-question'
-    )
-
-    cy.get('h1', { timeout: 2000 }).should('be.visible')
-    cy.get('#dropdown > button').click()
-
-    cy.get('ul').within(() => {
-      cy.get('li').within(() => {
-        cy.get('div').then((el) => {
-          ;[...el].map((el) => {
-            if (el.innerText === 'Text') {
-              el.click()
-            }
-            return null
-          })
-        })
-      })
-    })
-
-    cy.get('#questionEditor #quillEditor').within(() => {
-      cy.get('.ql-editor').type(`What is your Test Question ?`)
-    })
-
-    cy.get('#optionEditor input').clear().type('Option of question')
-
-    cy.get('#saveAndExit').click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
   })
 
   it('Verify if add test page contains 3 tabs', () => {
