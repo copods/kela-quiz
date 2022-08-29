@@ -23,7 +23,7 @@ export default function MembersHeader({
           <h1 className="text-3xl font-bold leading-9">{members.members}</h1>
           <Button
             tabIndex={0}
-            id='addMember'
+            id='add-member'
             className='h-9 px-4'
             onClick={() => setOpen(!open)}
             varient='primary-solid'

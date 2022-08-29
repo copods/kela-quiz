@@ -170,7 +170,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
             title='Previous Tab' 
             className='h-9 px-7' 
             varient='primary-solid'
-            id='backButton'
+            id='back-button'
             buttonText={commonConstants.backButton} 
             isDisabled={currentTab === tabs[0].id}
             onClick={() => setCurrentTab(currentTab - 1)} />
@@ -180,7 +180,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
               title='Next Tab' 
               className='h-9 px-7' 
               varient='primary-solid'
-              id='nextButton'
+              id='next-button'
               buttonText={commonConstants.nextButton} 
               isDisabled={!(name && description) || currentTab == 2}
               onClick={() => setCurrentTab(currentTab + 1)} />
@@ -188,7 +188,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
             <Button 
               tabIndex={0}
               title='Next Tab' 
-              id='submitButton'
+              id='submit-button'
               className='h-9 px-7' 
               varient='primary-solid'
               buttonText={transition.state === 'submitting' ? 'Creating Test' : 'Submit'} 

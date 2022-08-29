@@ -56,7 +56,7 @@ const TestList = ({
         <Button 
         className='px-5'
         onClick={() => navigate('/tests/add-test')}
-        id='addTest' 
+        id='add-test' 
         tabIndex={0} 
         varient='primary-solid'
         title={testsConstants.addTestbutton} 

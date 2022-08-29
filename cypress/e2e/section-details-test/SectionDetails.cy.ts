@@ -45,11 +45,11 @@ describe('Test for Section Details', () => {
     cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
     cy.get('input#sectionName').type(`Aptitude - ${time}`)
     cy.get('textarea#sectionDescription').type(`Aptitude - ${time} Description`)
-    cy.get('button#submitButton', { timeout: 6000 })
+    cy.get('button#submit-button', { timeout: 6000 })
       .should('have.text', commonConstants.addButton)
       .click()
     cy.get('#section-card', { timeout: 6000 }).first().click()
-    cy.get('#addQuestion', { timeout: 6000 }).click()
+    cy.get('#add-question', { timeout: 6000 }).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -95,7 +95,7 @@ describe('Test for Section Details', () => {
     cy.get('#section-cards').each((item) => {
       cy.contains(`Aptitude - ${time}`).click()
     })
-    cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
+    cy.get('#add-question').should('have.text', cypress.addQuest).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'

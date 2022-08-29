@@ -31,7 +31,7 @@ const SectionDetails = () => {
         >
           <Button
             tabIndex={0}
-            id='addQuestion'
+            id='add-question'
             className='h-9 px-5'
             buttonText={`+ ${addQuestion.addQuestion}`}
             varient='primary-solid'

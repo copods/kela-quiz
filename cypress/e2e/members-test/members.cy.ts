@@ -30,7 +30,7 @@ describe('Test for members', () => {
       .should('have.value', cypress.password)
     cy.findByRole('button').click()
     cy.get('a').find('#Members').should('have.text', cypress.members).click()
-    cy.get('#addMember').should('have.text', cypress.addMember).click()
+    cy.get('#add-member').should('have.text', cypress.addMember).click()
     cy.get('#AddPopUpModel').should('be.visible')
     cy.get('#firstName').clear().type('hinata').should('have.value', 'hinata')
     cy.get('#lastName').clear().type('hyuga').should('have.value', 'hyuga')
@@ -39,7 +39,7 @@ describe('Test for members', () => {
       .type('hinatahyuga@konoha.co')
       .should('have.value', 'hinatahyuga@konoha.co')
     cy.get('select').select('Recruiter')
-    cy.get('#addbutton').click()
+    cy.get('#add-button').click()
     cy.get('.Toastify__toast').find('.Toastify__close-button').click()
 
     cy.get('.memberRow').each((item) => {
@@ -59,8 +59,8 @@ describe('Test for members', () => {
       .should('have.value', cypress.password)
     cy.findByRole('button').click()
     cy.get('a').find('#Members').should('have.text', cypress.members).click()
-    cy.get('#addMember').should('have.text', cypress.addMember).click()
-    cy.get('#cancelAddButton').should('have.text', 'Cancel').click()
+    cy.get('#add-member').should('have.text', cypress.addMember).click()
+    cy.get('#cancel-add-button').should('have.text', 'Cancel').click()
   })
   it('Test for Delete member popup cancel button', () => {
     cy.visit('/sign-in')
@@ -80,7 +80,7 @@ describe('Test for members', () => {
         .parent()
         .parent()
         .within(() => {
-          cy.get('#deleteButton', { timeout: 60000 })
+          cy.get('#delete-button', { timeout: 60000 })
             .should('be.visible')
             .click()
         })
@@ -108,7 +108,7 @@ describe('Test for members', () => {
         .parent()
         .parent()
         .within(() => {
-          cy.get('#deleteButton', { timeout: 60000 })
+          cy.get('#delete-button', { timeout: 60000 })
             .should('be.visible')
             .click()
         })

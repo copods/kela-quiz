@@ -30,7 +30,7 @@ describe('Test for section-details', () => {
     cy.get('textarea#sectionDescription').type(
       `Aptitude - Description`
     )
-    cy.get('button#submitButton')
+    cy.get('button#submit-button')
       .should('have.text', commonConstants.addButton)
       .click()
     cy.get('#section-cards', { timeout: 10000 })
@@ -38,7 +38,7 @@ describe('Test for section-details', () => {
       .first()
       .should('be.visible')
     cy.get('#section-cards').children().first().click()
-    cy.get('#addQuestion').click()
+    cy.get('#add-question').click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -68,11 +68,11 @@ describe('Test for section-details', () => {
     cy.get('textarea#sectionDescription').type(
       `Aptitude -  Description`
     )
-    cy.get('button#submitButton', { timeout: 6000 })
+    cy.get('button#submit-button', { timeout: 6000 })
       .should('have.text', commonConstants.addButton)
       .click()
     cy.get('#section-cards').children().first().click()
-    cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
+    cy.get('#add-question').should('have.text', cypress.addQuest).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -101,7 +101,7 @@ describe('Test for section-details', () => {
     cy.get('#add-section').click()
     cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
 
-    cy.get('#submitButton').click()
+    cy.get('#submit-button').click()
     cy.get('.Toastify__toast').should('have.text', cypress.nameIsReq)
   })
 
@@ -125,7 +125,7 @@ describe('Test for section-details', () => {
     cy.get('#add-section').click()
     cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
     cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
-    cy.get('#submitButton').click()
+    cy.get('#submit-button').click()
     cy.get('.Toastify__toast').should('have.text', cypress.descIsReq)
   })
 
@@ -152,7 +152,7 @@ describe('Test for section-details', () => {
     cy.get('textarea#sectionDescription').type(
       `Aptitude -  Description`
     )
-    cy.get('#submitButton').click()
+    cy.get('#submit-button').click()
     cy.get('.Toastify__toast').should('have.text', cypress.sectionAdded)
     cy.get('.Toastify__close-button').click()
 
@@ -162,7 +162,7 @@ describe('Test for section-details', () => {
     cy.get('textarea#sectionDescription').type(
       `Aptitude -  Description`
     )
-    cy.get('#submitButton').click()
+    cy.get('#submit-button').click()
     cy.get('.Toastify__toast').should('have.text', cypress.duplicateTitle)
     cy.get('.Toastify__close-button').click()
   })
@@ -190,11 +190,11 @@ describe('Test for section-details', () => {
     cy.get('textarea#sectionDescription').type(
       `Aptitude -  Description`
     )
-    cy.get('button#submitButton', { timeout: 6000 })
+    cy.get('button#submit-button', { timeout: 6000 })
       .should('have.text', commonConstants.addButton)
       .click()
     cy.get('#section-cards').children().first().click()
-    cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
+    cy.get('#add-question').should('have.text', cypress.addQuest).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -229,11 +229,11 @@ describe('Test for section-details', () => {
     cy.get('textarea#sectionDescription').type(
       `Aptitude -  Description`
     )
-    cy.get('button#submitButton', { timeout: 6000 })
+    cy.get('button#submit-button', { timeout: 6000 })
       .should('have.text', commonConstants.addButton)
       .click()
     cy.get('#section-cards').children().first().click()
-    cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
+    cy.get('#add-question').should('have.text', cypress.addQuest).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -291,11 +291,11 @@ describe('Test for section-details', () => {
     cy.get('textarea#sectionDescription').type(
       `Aptitude -  Description`
     )
-    cy.get('button#submitButton', { timeout: 6000 })
+    cy.get('button#submit-button', { timeout: 6000 })
       .should('have.text', commonConstants.addButton)
       .click()
     cy.get('#section-cards').children().first().click()
-    cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
+    cy.get('#add-question').should('have.text', cypress.addQuest).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -353,11 +353,11 @@ describe('Test for section-details', () => {
     cy.get('textarea#sectionDescription').type(
       `Aptitude -  Description`
     )
-    cy.get('button#submitButton', { timeout: 6000 })
+    cy.get('button#submit-button', { timeout: 6000 })
       .should('have.text', commonConstants.addButton)
       .click()
     cy.get('#section-cards').children().first().click()
-    cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
+    cy.get('#add-question').should('have.text', cypress.addQuest).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -417,11 +417,11 @@ describe('Test for section-details', () => {
     cy.get('textarea#sectionDescription').type(
       `Aptitude -  Description`
     )
-    cy.get('button#submitButton', { timeout: 6000 })
+    cy.get('button#submit-button', { timeout: 6000 })
       .should('have.text', commonConstants.addButton)
       .click()
     cy.get('#section-cards').children().first().click()
-    cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
+    cy.get('#add-question').should('have.text', cypress.addQuest).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -448,7 +448,7 @@ describe('Test for section-details', () => {
         .then((len) => {
           lengthBefore = len
         })
-      cy.get('button.px-5').should('have.text', '+ Add Options').click()
+      cy.get('button#add-option').should('have.text', '+ Add Options').click()
       cy.get('#quillEditor')
         .its('length')
         .then((len) => {
@@ -480,11 +480,11 @@ describe('Test for section-details', () => {
     cy.get('textarea#sectionDescription').type(
       `Aptitude -  Description`
     )
-    cy.get('button#submitButton', { timeout: 6000 })
+    cy.get('button#submit-button', { timeout: 6000 })
       .should('have.text', commonConstants.addButton)
       .click()
     cy.get('#section-cards').children().first().click()
-    cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
+    cy.get('#add-question').should('have.text', cypress.addQuest).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -543,11 +543,11 @@ describe('Test for section-details', () => {
     cy.get('textarea#sectionDescription').type(
       `Aptitude -  Description`
     )
-    cy.get('button#submitButton', { timeout: 6000 })
+    cy.get('button#submit-button', { timeout: 6000 })
       .should('have.text', commonConstants.addButton)
       .click()
     cy.get('#section-cards').children().first().click()
-    cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
+    cy.get('#add-question').should('have.text', cypress.addQuest).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -604,11 +604,11 @@ describe('Test for section-details', () => {
     cy.get('textarea#sectionDescription').type(
       `Aptitude -  Description`
     )
-    cy.get('button#submitButton', { timeout: 6000 })
+    cy.get('button#submit-button', { timeout: 6000 })
       .should('have.text', commonConstants.addButton)
       .click()
     cy.get('#section-cards').children().first().click()
-    cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
+    cy.get('#add-question').should('have.text', cypress.addQuest).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -663,11 +663,11 @@ describe('Test for section-details', () => {
     cy.get('textarea#sectionDescription').type(
       `Aptitude -  Description`
     )
-    cy.get('button#submitButton', { timeout: 6000 })
+    cy.get('button#submit-button', { timeout: 6000 })
       .should('have.text', commonConstants.addButton)
       .click()
     cy.get('#section-cards').children().first().click()
-    cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
+    cy.get('#add-question').should('have.text', cypress.addQuest).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -707,11 +707,11 @@ describe('Test for section-details', () => {
     cy.get('textarea#sectionDescription').type(
       `Aptitude -  Description`
     )
-    cy.get('button#submitButton', { timeout: 6000 })
+    cy.get('button#submit-button', { timeout: 6000 })
       .should('have.text', commonConstants.addButton)
       .click()
     cy.get('#section-cards').children().first().click()
-    cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
+    cy.get('#add-question').should('have.text', cypress.addQuest).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'

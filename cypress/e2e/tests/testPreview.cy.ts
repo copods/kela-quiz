@@ -32,7 +32,7 @@ describe('Test for testPreview', () => {
     cy.findByRole('button').click()
     cy.get('a').find('#Tests').should('have.text', testsConstants.Tests).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.get('#addTest').click()
+    cy.get('#add-test').click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/tests/add-test'
@@ -41,7 +41,7 @@ describe('Test for testPreview', () => {
     cy.get('#quillEditor').within(() => {
       cy.get('.ql-editor').type(`Test Description`)
     })
-    cy.get('button#nextButton').should('have.text', cypress.next).click()
+    cy.get('button#next-button').should('have.text', cypress.next).click()
     cy.get('#0').find('hr').should('have.class', 'bg-primary')
     cy.get('#1').find('hr').should('have.class', 'bg-primary')
     // user reached to step 2
@@ -62,11 +62,11 @@ describe('Test for testPreview', () => {
         }
       })
     })
-    cy.get('button#nextButton').should('have.text', cypress.next).click()
+    cy.get('button#next-button').should('have.text', cypress.next).click()
     cy.get('#0').find('hr').should('have.class', 'bg-primary')
     cy.get('#1').find('hr').should('have.class', 'bg-primary')
     cy.get('#2').find('hr').should('have.class', 'bg-primary')
-    cy.get('button#submitButton').should('have.text', cypress.submit).click()
+    cy.get('button#submit-button').should('have.text', cypress.submit).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
   })
   it('test for check preview data match selected test', () => {

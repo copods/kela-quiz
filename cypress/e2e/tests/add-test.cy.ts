@@ -23,7 +23,7 @@ describe('Creating tests', () => {
       .should('have.text', testsConstants.Tests)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.get('#addTest').click()
+    cy.get('#add-test').click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/tests/add-test'
@@ -47,7 +47,7 @@ describe('Creating tests', () => {
       .should('have.text', testsConstants.Tests)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.get('#addTest').click()
+    cy.get('#add-test').click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/tests/add-test'
@@ -80,13 +80,13 @@ describe('Creating tests', () => {
       .should('have.text', testsConstants.Tests)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.get('#addTest').click()
+    cy.get('#add-test').click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/tests/add-test'
     )
 
-    cy.get('button#nextButton')
+    cy.get('button#next-button')
       .should('have.text', 'Next')
       .should('have.disabled', true)
   })
@@ -108,7 +108,7 @@ describe('Creating tests', () => {
       .should('have.text', testsConstants.Tests)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.get('#addTest').click()
+    cy.get('#add-test').click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/tests/add-test'
@@ -119,7 +119,7 @@ describe('Creating tests', () => {
       cy.get('.ql-editor').type(`Test Description`)
     })
 
-    cy.get('button#nextButton').should('have.text', cypress.next).click()
+    cy.get('button#next-button').should('have.text', cypress.next).click()
     cy.get('#0').find('hr').should('have.class', 'bg-primary')
     cy.get('#1').find('hr').should('have.class', 'bg-primary')
   })
@@ -141,7 +141,7 @@ describe('Creating tests', () => {
       .should('have.text', testsConstants.Tests)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.get('#addTest').click()
+    cy.get('#add-test').click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/tests/add-test'
@@ -156,7 +156,7 @@ describe('Creating tests', () => {
     cy.get('#0').find('hr').should('have.class', 'bg-primary')
     cy.get('#1').find('hr').should('have.class', 'bg-primary')
 
-    cy.get('button#backButton').should('have.text', cypress.back).click()
+    cy.get('button#back-button').should('have.text', cypress.back).click()
 
     cy.get('#0').find('hr').should('have.class', 'bg-primary')
     cy.get('#1').find('hr').should('have.class', 'bg-gray-200')
@@ -179,7 +179,7 @@ describe('Creating tests', () => {
       .should('have.text', testsConstants.Tests)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.get('#addTest').click()
+    cy.get('#add-test').click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/tests/add-test'
@@ -189,7 +189,7 @@ describe('Creating tests', () => {
     cy.get('#quillEditor').within(() => {
       cy.get('.ql-editor').type(`Test Description`)
     })
-    cy.get('button#nextButton').should('have.text', cypress.next).click()
+    cy.get('button#next-button').should('have.text', cypress.next).click()
     cy.get('#0').find('hr').should('have.class', 'bg-primary')
     cy.get('#1').find('hr').should('have.class', 'bg-primary')
     // user reached to step 2
@@ -230,7 +230,7 @@ describe('Creating tests', () => {
       .should('have.text', testsConstants.Tests)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.get('#addTest').click()
+    cy.get('#add-test').click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/tests/add-test'
@@ -241,7 +241,7 @@ describe('Creating tests', () => {
       cy.get('.ql-editor').type(`Test Description`)
     })
 
-    cy.get('button#nextButton').should('have.text', cypress.next).click()
+    cy.get('button#next-button').should('have.text', cypress.next).click()
     cy.get('#0').find('hr').should('have.class', 'bg-primary')
     cy.get('#1').find('hr').should('have.class', 'bg-primary')
     // user reached to step 2
@@ -282,7 +282,7 @@ describe('Creating tests', () => {
       .should('have.text', testsConstants.Tests)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.get('#addTest').click()
+    cy.get('#add-test').click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/tests/add-test'
@@ -293,7 +293,7 @@ describe('Creating tests', () => {
       cy.get('.ql-editor').type(`Test Description`)
     })
 
-    cy.get('button#nextButton').should('have.text', cypress.next).click()
+    cy.get('button#next-button').should('have.text', cypress.next).click()
     cy.get('#0').find('hr').should('have.class', 'bg-primary')
     cy.get('#1').find('hr').should('have.class', 'bg-primary')
     // user reached to step 2
@@ -315,7 +315,7 @@ describe('Creating tests', () => {
         }
       })
     })
-    cy.get('button#nextButton').should('have.text', cypress.next).click()
+    cy.get('button#next-button').should('have.text', cypress.next).click()
     cy.get('#0').find('hr').should('have.class', 'bg-primary')
     cy.get('#1').find('hr').should('have.class', 'bg-primary')
     cy.get('#2').find('hr').should('have.class', 'bg-primary')
@@ -338,7 +338,7 @@ describe('Creating tests', () => {
       .should('have.text', testsConstants.Tests)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.get('#addTest').click()
+    cy.get('#add-test').click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/tests/add-test'
@@ -349,7 +349,7 @@ describe('Creating tests', () => {
       cy.get('.ql-editor').type(`Test Description`)
     })
 
-    cy.get('button#nextButton').should('have.text', cypress.next).click()
+    cy.get('button#next-button').should('have.text', cypress.next).click()
     cy.get('#0').find('hr').should('have.class', 'bg-primary')
     cy.get('#1').find('hr').should('have.class', 'bg-primary')
     // user reached to step 2
@@ -371,12 +371,12 @@ describe('Creating tests', () => {
         }
       })
     })
-    cy.get('button#nextButton').should('have.text', cypress.next).click()
+    cy.get('button#next-button').should('have.text', cypress.next).click()
     cy.get('#0').find('hr').should('have.class', 'bg-primary')
     cy.get('#1').find('hr').should('have.class', 'bg-primary')
     cy.get('#2').find('hr').should('have.class', 'bg-primary')
 
-    cy.get('button#submitButton').should('have.text', cypress.submit).click()
+    cy.get('button#submit-button').should('have.text', cypress.submit).click()
 
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
   })
@@ -398,7 +398,7 @@ describe('Creating tests', () => {
       .should('have.text', testsConstants.Tests)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.get('#addTest', { timeout: 10000 }).click()
+    cy.get('#add-test', { timeout: 10000 }).click()
     cy.location('pathname', { timeout: 100000 }).should(
       'include',
       '/tests/add-test'
@@ -408,7 +408,7 @@ describe('Creating tests', () => {
     cy.get('#quillEditor').within(() => {
       cy.get('.ql-editor').type(`Test Description`)
     })
-    cy.get('button#nextButton').should('have.text', 'Next').click()
+    cy.get('button#next-button').should('have.text', 'Next').click()
     cy.get('#0').find('hr').should('have.class', 'bg-primary')
     cy.get('#1').find('hr').should('have.class', 'bg-primary')
     // user reached to step 2
@@ -429,11 +429,11 @@ describe('Creating tests', () => {
         }
       })
     })
-    cy.get('button#nextButton').should('have.text', cypress.next).click()
+    cy.get('button#next-button').should('have.text', cypress.next).click()
     cy.get('#0').find('hr').should('have.class', 'bg-primary')
     cy.get('#1').find('hr').should('have.class', 'bg-primary')
     cy.get('#2').find('hr').should('have.class', 'bg-primary')
-    cy.get('button#submitButton', { timeout: 6000 })
+    cy.get('button#submit-button', { timeout: 6000 })
       .should('have.text', 'Submit', { timeout: 6000 })
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')

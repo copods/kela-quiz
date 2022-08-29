@@ -96,7 +96,7 @@ const AddSection = ({
                     <Button 
                       tabIndex={0}
                       type='submit'
-                      id='submitButton'
+                      id='submit-button'
                       className='h-9 px-4'
                       onClick={() => setOpen(false)}
                       isDisabled={transition.state === 'submitting' || showErrorMessage}

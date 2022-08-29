@@ -127,7 +127,7 @@ export default function AddMemberModal({
                   <div className="flex justify-end gap-2">
                     <Button 
                       tabIndex={0}
-                      id='cancelAddButton'
+                      id='cancel-add-button'
                       type='button'
                       className='h-9 px-4'
                       onClick={() => setOpen(false)}
@@ -135,7 +135,7 @@ export default function AddMemberModal({
                       buttonText={commonConstants.cancel} />
                     <Button  
                       tabIndex={0}
-                      id='addbutton'
+                      id='add-button'
                       type='submit'
                       name='addMember'
                       value={JSON.stringify({ action: 'add' })}
