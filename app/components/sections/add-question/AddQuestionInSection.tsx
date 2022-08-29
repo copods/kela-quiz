@@ -239,7 +239,7 @@ const AddQuestionInSection = () => {
 
           <Button 
             tabIndex={0}
-            id='saveAndAddMore'
+            id='save-and-add-more'
             isDisabled={transition.state === 'submitting'}
             className='h-9 px-5'
             onClick={() => saveQuestion(true)}

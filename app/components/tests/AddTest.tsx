@@ -156,7 +156,6 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
       )}
       {/* Buttons */}
       <div className="flex w-full items-center justify-between">
-        <div>
           <Link to={'/tests'}>
             <Button 
               tabIndex={0}
@@ -199,7 +198,6 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
         </div>
       </div>
     </div>
-  </div>
   )
 }
 

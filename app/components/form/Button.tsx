@@ -6,27 +6,23 @@ const Button = ({ buttonText, className, onClick, ...props }: ButtonProps) => {
     return 'py-2.5 rounded-md items-center inline-flex justify-center shadow-sm text-xs font-medium'
   }
 
-  const getPrimarySolidClasses = () => {
-    return 'bg-primary text-gray-50'
-  }
+  const getButtonVarient = () => {
+    switch(props.varient) {
+      case 'primary-solid':
+        return `bg-primary text-gray-50 hover:bg-primaryHover ${props.isDisabled && 'disabled:bg-primaryDisabled'}`
 
-  const getPrimaryOutlinedClasses = () => {
-    return 'text-gray-primary rounded-md border border-primary bg-white text-primary'
-  }
+      case 'primary-outlined':
+        return `text-gray-primary rounded-md border border-primary bg-white text-primary hover:border-primaryOutlined ${props.isDisabled && 'disabled:border-primaryOutlinedDisabled text-primaryOutlinedDisabled'}`
 
-  const getSecondarySolidClasses = () => {
-    return 'border border-transparent bg-red-600 text-white'
+      case 'secondary-solid': 
+        return `border border-transparent bg-red-600 text-white hover:bg-deleteColorHover ${props.isDisabled && 'disabled:bg-deleteColorDisabled'}`
+    }
   }
 
   return (
     <button
     className= {
-      `${getCommonClasses()} 
-      ${props.varient === 'primary-solid' && getPrimarySolidClasses()} 
-      ${props.varient === 'primary-outlined' && getPrimaryOutlinedClasses()} 
-      ${props.varient === 'secondary-solid' && getSecondarySolidClasses()} 
-      ${className} 
-      ${props?.isDisabled && 'disabled:opacity-50'} `      
+      `${getCommonClasses()} ${getButtonVarient()} ${className}`      
     }
       disabled={props?.isDisabled}
       onClick={onClick}

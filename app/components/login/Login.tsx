@@ -75,7 +75,7 @@ function Login({ actionData, redirectTo }: LoginProps) {
             <input type="hidden" name="redirectTo" value={redirectTo} />
             <Button 
               tabIndex={0}
-              buttonText="Sign in" 
+              buttonText={logIn.signIn}
               type="submit"
               varient='primary-solid'
               className='w-full'

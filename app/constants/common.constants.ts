@@ -42,6 +42,9 @@ export const testTableItem = {
   inviteMember: 'Invite Member',
   menu: 'Menu'
 }
+export const logo = {
+  kQuizLogo: 'K-Quiz Logo'
+}
 export const selectSectionCard = {
   removeSection: 'Remove Section',
   selectSection: 'Select Section'
@@ -51,6 +54,7 @@ export const deletePopUp = {
 }
 export const logIn = {
   signInMessage: 'Sign in to your account',
+  signIn: 'Sign In'
 }
 export const addQuestion = {
   createOptions: 'Create Options',
