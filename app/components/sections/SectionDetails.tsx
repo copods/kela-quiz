@@ -5,6 +5,7 @@ import type { Question } from '~/interface/Interface'
 import QuestionCard from './QuestionCard'
 import { addQuestion, sectionsConstants } from '~/constants/common.constants'
 import { setTheFocus } from '~/utils/assessment.utils'
+import { routes } from '~/constants/route.constants'
 const SectionDetails = () => {
   const sectionDetails = useLoaderData()
   const [currentAccordian, setCurrentAccordian] = useState(-1)
@@ -35,7 +36,7 @@ const SectionDetails = () => {
           onChange={(e) => setSearchText(e.target.value)}
         />
         <Link
-          to={`/sections/${sectionDetails.sectionDetails?.id}/add-question`}
+          to={`${routes.sections}/${sectionDetails.sectionDetails?.id}${routes.addQuestion}`}
           onKeyUp={(e) => {
             setTheFocus(e,'#Section')
           }}

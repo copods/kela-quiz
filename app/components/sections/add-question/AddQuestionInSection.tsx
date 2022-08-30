@@ -214,7 +214,7 @@ const AddQuestionInSection = () => {
       <div className="flex items-center justify-between">
         <div className="flex">
           <Link 
-             to={`/sections/${sectionDetails?.id}`}
+             to={`${routes.sections}/${sectionDetails?.id}`}
              tabIndex={0}
              id="cancel"
              className={`flex h-9 items-center gap-1 rounded-lg bg-red-600 px-5 text-xs text-white ${
