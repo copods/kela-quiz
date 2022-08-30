@@ -144,7 +144,7 @@ export const action: ActionFunction = async ({ request }) => {
 
 export default function SectionPage() {
   const data = useLoaderData() as unknown as LoaderData
-  console.log(data, 'data')
+
   const fetcher = useFetcher()
   const sectionActionData = useActionData() as ActionData
 
@@ -205,7 +205,9 @@ export default function SectionPage() {
         toast.success(sectionActionData.resp?.status)
         setSelectedSection(sectionActionData?.resp?.data?.id as string)
       } else if (sectionActionData.resp?.status === 'Deleted Successfully..!') {
-        toast.success(sectionActionData.resp?.status)
+        toast.success(sectionActionData.resp?.status, {
+          toastId: sectionActionData.resp?.status,
+        })
         setSelectedSection(
           data.selectedSectionId || data.sections[0]?.id || 'NA'
         )
