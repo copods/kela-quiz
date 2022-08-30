@@ -2,7 +2,7 @@
 
 import { cypress } from '~/constants/common.constants'
 
-const memberEmail = 'hinatahyuga@konoha.co'
+const memberEmail = 'john@dow.co'
 
 describe('Test for members', () => {
   beforeEach('sign-in', () => {

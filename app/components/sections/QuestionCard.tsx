@@ -17,13 +17,14 @@ const QuestionCard = ({
   return (
     <div
       key={question.id}
+      data-cy="question-row"
       className="flex flex-col rounded-lg border border-gray-300 bg-gray-50 px-6 py-7"
     >
       <div className="items-top break flex justify-between text-base text-gray-600">
         <div
           className="items-top flex flex-1 justify-between"
           tabIndex={0}
-          role='button'
+          role="button"
           onKeyUp={(e) => {
             if (e.key === 'Enter')
               onAccordianToggle(

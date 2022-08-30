@@ -32,7 +32,16 @@ describe('Test for Section', () => {
         cy.get("button[type='button']").click()
       })
   })
-
+  it('allows users to search questions', () => {
+    cy.get('a')
+      .find('#sections', { timeout: 8000 })
+      .should('have.text', routeFiles.sections)
+      .click()
+    cy.location('pathname', { timeout: 6000 }).should('include', '/sections')
+    cy.get('input[name="search"]').clear().type('What is your Test Question ?')
+    cy.get("[data-cy='question-row']").should('have.length', 1)
+    cy.contains('What is your Test Question ?')
+  })
   it('Check Active State of Section', () => {
     cy.get('a')
       .find('#sections')

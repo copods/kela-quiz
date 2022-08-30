@@ -9,9 +9,9 @@ const section1 = `Aptitude - section1`
 const test1 = `Aptitude - test1`
 const deleteTest1 = `Aptitude - Detete test`
 const section2 = `Aptitude - section2`
-const memberFirstName = 'hinata'
-const memberLastName = 'hyuga'
-const memberEmail = 'hinatahyuga@konoha.co'
+const memberFirstName = 'john'
+const memberLastName = 'dow'
+const memberEmail = 'john@dow.co'
 
 describe('smoke tests', () => {
   it('Successfully Login', () => {

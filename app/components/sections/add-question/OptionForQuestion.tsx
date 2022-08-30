@@ -157,30 +157,28 @@ export default function OptionForQuestion({
                   <input
                     name="checkbox"
                     tabIndex={0}
-                    id="checkBox"
                     type="checkbox"
                     value={option.id}
                     onChange={() => {
                       checkBoxToggle(index)
                     }}
                     checked={option.isCorrect}
-                    className="h-5 w-5"
+                    className="checkBox h-5 w-5"
                   />
                 ) : (
                   getQuestionType(selectedTypeOfQuestion) ===
                     QuestionTypes.singleChoice && (
                     <input
                       tabIndex={0}
-                      id="radioButton"
                       type="radio"
                       name="radioChoice"
                       value={option.id}
                       onChange={(e) => setSingleChoiceAnswer(e.target.value)}
-                      className="h-5 w-5"
+                      className="radioButton h-5 w-5"
                     />
                   )
                 )}
-                <div className="h-32 flex-1" id="optionEditor">
+                <div className="textOption h-32 flex-1" id="optionEditor">
                   {
                     <ClientOnly fallback={<div></div>}>
                       {() => (

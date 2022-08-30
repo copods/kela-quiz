@@ -40,8 +40,8 @@ describe('Test for section-details', () => {
       'include',
       '/add-question'
     )
-    cy.get('h1').wait(2000)
-    cy.get('#dropdown > button').click()
+    cy.get('h1', { timeout: 2000 }).should('be.visible')
+    cy.get('#dropdown > button', { timeout: 6000 }).click()
 
     let flag = ''
     cy.get('ul[role="listbox"]').within(() => {
@@ -62,11 +62,7 @@ describe('Test for section-details', () => {
       })
     })
     if (flag === 'CheckBox') {
-      cy.get('input[type="checkbox"]')
-    } else if (flag === 'RadioButton') {
-      cy.get('input[type="radioButton"]')
-    } else if (flag === 'TextArea') {
-      cy.get('input[type="textarea"]')
+      cy.get('input[type="checkbox"]').should('have.class', 'checkBox')
     }
   })
 
@@ -90,8 +86,8 @@ describe('Test for section-details', () => {
       'include',
       '/add-question'
     )
-    cy.get('h1').wait(2000)
-    cy.get('#dropdown > button').click()
+    cy.get('h1', { timeout: 2000 }).should('be.visible')
+    cy.get('#dropdown > button', { timeout: 6000 }).click()
 
     let flag = ''
     cy.get('ul').within(() => {
@@ -111,12 +107,8 @@ describe('Test for section-details', () => {
         })
       })
     })
-    if (flag === 'CheckBox') {
-      cy.get('input[type="checkbox"]')
-    } else if (flag === 'RadioButton') {
-      cy.get('input[type="radioButton"]')
-    } else if (flag === 'TextArea') {
-      cy.get('input[type="textarea"]')
+    if (flag === 'RadioButton') {
+      cy.get('input').should('have.class', 'radioButton')
     }
   })
 
@@ -140,8 +132,8 @@ describe('Test for section-details', () => {
       'include',
       '/add-question'
     )
-    cy.get('h1').wait(2000)
-    cy.get('#dropdown > button').click()
+    cy.get('h1', { timeout: 2000 }).should('be.visible')
+    cy.get('#dropdown > button', { timeout: 6000 }).click()
 
     let flag = ''
     cy.get('ul').within(() => {
@@ -161,12 +153,8 @@ describe('Test for section-details', () => {
         })
       })
     })
-    if (flag === 'CheckBox') {
-      cy.get('input[type="checkbox"]')
-    } else if (flag === 'RadioButton') {
-      cy.get('input[type="radioButton"]')
-    } else if (flag === 'TextArea') {
-      cy.get('input[type="textarea"]')
+    if (flag === 'TextArea') {
+      cy.get('input[type="textarea"]').should('have.class', 'textOption')
     }
   })
 
@@ -192,9 +180,8 @@ describe('Test for section-details', () => {
       'include',
       '/add-question'
     )
-    cy.get('h1').wait(2000)
-
-    cy.get('#dropdown > button').click()
+    cy.get('h1', { timeout: 2000 }).should('be.visible')
+    cy.get('#dropdown > button', { timeout: 6000 }).click()
 
     cy.get('ul').within(() => {
       cy.get('li').within(() => {
@@ -243,8 +230,7 @@ describe('Test for section-details', () => {
       'include',
       '/add-question'
     )
-    cy.get('h1').wait(2000)
-
+    cy.get('h1', { timeout: 2000 }).should('be.visible')
     cy.get('#dropdown > button').click()
 
     cy.get('ul').within(() => {
@@ -420,7 +406,7 @@ describe('Test for section-details', () => {
       'include',
       '/add-question'
     )
-    cy.get('h1').wait(2000)
+    cy.get('h1', { timeout: 2000 }).should('be.visible')
     let flag = 0
 
     cy.get('#dropdown > button').click()
