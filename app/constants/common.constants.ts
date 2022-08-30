@@ -13,6 +13,8 @@ export const commonConstants = {
   createdAt: 'createdAt',
   createdDate: 'Created Date',
   placeholderForOptionInput: 'Write your option here',
+  sortAscending: 'Sort Ascending',
+  sortDescending: 'Sort Descending',
 }
 
 export const sideNav = {
@@ -191,8 +193,9 @@ export const cypress = {
 
 export enum sortByOrder {
   ascending = 'asc',
-  sortAscending = 'Sort Ascending',
   name = 'name',
-  descending = 'desc',
-  sortDescending = 'Sort Descending',
+  descending = 'descending',
+  multipleChoice = 'MULTIPLE_CHOICE',
+  singleChoice = 'SINGLE_CHOICE',
+  text = 'TEXT',
 }
