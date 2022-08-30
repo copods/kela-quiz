@@ -40,7 +40,7 @@ const ResultDetailsComponent = () => {
         <div className="border-b border-solid border-slate-300 ">
           <div className="flex gap-2 pb-6">
             <NavLink
-              to={`/results/groupByTests/${params?.testId}/attended`}
+              to={`/results/groupByTests/${params?.testId}/completed`}
               className="flex items-center gap-4 "
             >
               <Icon

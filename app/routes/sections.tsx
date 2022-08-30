@@ -184,6 +184,7 @@ export default function SectionPage() {
             {routeFiles.sections}
           </h2>
           <button
+            tabIndex={0}
             className="h-9 rounded-lg bg-primary px-5 text-xs text-[#F0FDF4]"
             id="add-section"
             onClick={() => setShowAddSectionModal(!showAddSectionModal)}
@@ -217,6 +218,7 @@ export default function SectionPage() {
             <span
               className="z-20 -mr-5"
               tabIndex={0}
+              role={'button'}
               onClick={() => setSectionDetailFull(!sectionDetailFull)}
               onKeyUp={(e) => {
                 if (e.key === 'Enter') setSectionDetailFull(!sectionDetailFull)

@@ -5,7 +5,11 @@ import QuillEditor from '~/components/QuillEditor.client'
 import { ClientOnly } from 'remix-utils'
 import Toggle from '~/components/form/Toggle'
 import type { SetStateAction } from 'react'
-import { addQuestion, QuestionTypes } from '~/constants/common.constants'
+import {
+  addQuestion,
+  commonConstants,
+  QuestionTypes,
+} from '~/constants/common.constants'
 import { toast } from 'react-toastify'
 interface textAnswerType {
   id: string
@@ -132,14 +136,15 @@ export default function OptionForQuestion({
         )}
 
         <button
-          className="flex h-9 items-center  rounded-lg bg-primary px-5 text-xs text-white"
+          tabIndex={0}
+          className="flex h-9 items-center rounded-lg bg-primary px-5 text-xs text-white"
           onClick={addOptionArea}
         >
           + {addQuestion.addOptions}
         </button>
       </div>
 
-      <div className="flex h-full flex-1 flex-col gap-5  overflow-auto">
+      <div className="flex h-full flex-1 flex-col gap-5 overflow-auto">
         {(getQuestionType(selectedTypeOfQuestion) ===
           QuestionTypes.multipleChoice ||
           getQuestionType(selectedTypeOfQuestion) ===
@@ -150,29 +155,30 @@ export default function OptionForQuestion({
                 {getQuestionType(selectedTypeOfQuestion) ===
                 QuestionTypes.multipleChoice ? (
                   <input
-                    id="checkBox"
+                    name="checkbox"
+                    tabIndex={0}
                     type="checkbox"
                     value={option.id}
                     onChange={() => {
                       checkBoxToggle(index)
                     }}
                     checked={option.isCorrect}
-                    className="h-5 w-5"
+                    className="checkBox h-5 w-5"
                   />
                 ) : (
                   getQuestionType(selectedTypeOfQuestion) ===
                     QuestionTypes.singleChoice && (
                     <input
-                      id="radioButton"
+                      tabIndex={0}
                       type="radio"
                       name="radioChoice"
                       value={option.id}
                       onChange={(e) => setSingleChoiceAnswer(e.target.value)}
-                      className="h-5 w-5"
+                      className="radioButton h-5 w-5"
                     />
                   )
                 )}
-                <div className="h-32 flex-1" id="optionEditor">
+                <div className="textOption h-32 flex-1" id="optionEditor">
                   {
                     <ClientOnly fallback={<div></div>}>
                       {() => (
@@ -191,7 +197,11 @@ export default function OptionForQuestion({
                 </div>
                 <Icon
                   onClick={() => deleteOption(index, option?.id)}
+                  onKeyUp={(e) => {
+                    if (e.key === 'Enter') deleteOption(index, option?.id)
+                  }}
                   tabIndex={0}
+                  aria-label="delete"
                   icon="ic:outline-delete-outline"
                   className={`h-6 w-6 ${index} ${
                     options.length < 2
@@ -210,7 +220,9 @@ export default function OptionForQuestion({
                 <div className="flex items-center gap-2.5" key={option.id}>
                   <div className="flex-1" id="optionEditor">
                     <input
+                      tabIndex={0}
                       className="h-20 w-full rounded-lg border border-gray-300 bg-white p-4"
+                      placeholder={commonConstants.placeholderForOptionInput}
                       value={option.answer}
                       onChange={(e) => {
                         updateTextAnswer(e.target.value, index)

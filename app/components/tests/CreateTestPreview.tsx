@@ -49,7 +49,7 @@ const TestPreview = ({
   }
 
   return (
-    <div className="flex flex-1 flex-col gap-9 overflow-scroll rounded-lg bg-white p-6 ">
+    <div className="flex flex-1 flex-col gap-9 overflow-scroll rounded-lg bg-white p-6 shadow-table">
       <div className="flex flex-col gap-6">
         <h1 className="text-xl font-semibold">
           {testsConstants.testDetailsText}
@@ -58,7 +58,7 @@ const TestPreview = ({
           <div className="flex">
             <div
               id="name"
-              className="w-50 min-w-[200px] text-base font-medium leading-6  text-gray-500"
+              className="w-50 min-w-[200px] text-base font-medium leading-6 text-gray-500"
             >
               {commonConstants.name}
             </div>
@@ -81,7 +81,7 @@ const TestPreview = ({
           <div className="flex">
             <div
               id="totalTime"
-              className="w-50 min-w-[200px] text-base font-medium  leading-6 text-gray-500"
+              className="w-50 min-w-[200px] text-base font-medium leading-6 text-gray-500"
             >
               {testsConstants.totalTimeText}
             </div>
@@ -114,10 +114,10 @@ const TestPreview = ({
                   {testsConstants.sectionText} {i + 1}
                 </div>
                 <div className=" flex max-w-2xl flex-1 items-center justify-between gap-6 rounded-lg border border-gray-300	py-3 px-4 text-gray-700">
-                  <div className="text-base font-semibold leading-6  text-gray-700">
+                  <div className="text-base font-semibold leading-6 text-gray-700">
                     {section.name ? section.name : section.section?.name}
                   </div>
-                  <div className="flex gap-5 text-sm  text-gray-700">
+                  <div className="flex gap-5 text-sm text-gray-700">
                     <span>
                       {section.totalQuestions ? section.totalQuestions : 0}{' '}
                       {testsConstants.questions}
@@ -128,7 +128,7 @@ const TestPreview = ({
                   </div>
                 </div>
                 {isPreviewEditable && (
-                  <div className="flex gap-2">
+                  <div className="flex gap-2" role={'button'} tabIndex={0}>
                     <Icon
                       icon="fa:long-arrow-up"
                       className="cursor-pointer"

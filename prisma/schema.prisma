@@ -114,7 +114,11 @@ model Test {
   candidateResult   CandidateResult[]
   createdAt         DateTime            @default(now())
   updatedAt         DateTime            @updatedAt
+  deleted           Boolean             @default(false)
+  deletedAt         String?             @default("na")
   SectionWiseResult SectionWiseResult[]
+
+  @@unique([name, deletedAt, deleted])
 }
 
 model SectionInTest {

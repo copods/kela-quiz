@@ -21,5 +21,9 @@ export default defineConfig({
 
       return { ...config, ...configOverrides }
     },
+    env: {
+      email: 'careers@copods.co',
+      password: 'kQuiz@copods',
+    },
   },
 })

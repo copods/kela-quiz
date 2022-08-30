@@ -26,12 +26,10 @@ const AttendedCandidateListItem = ({
         className="col-span-full grid grid-cols-12 border-t-[1px] border-solid border-[#E5E7EB] bg-white px-12 py-4"
       >
         <div className=" col-span-1 truncate">
-          <span className=" text-base leading-6 text-gray-700">
-            {index + 1}
-          </span>
+          <span className=" text-base leading-6 text-gray-700">{index}</span>
         </div>
         <Link
-          to={`/results/groupByTests/${testId}/attended/${id}`}
+          to={`/results/groupByTests/${testId}/attempted/${id}`}
           className="col-span-3 truncate font-semibold text-primary"
         >
           {name}

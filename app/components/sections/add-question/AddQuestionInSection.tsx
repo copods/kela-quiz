@@ -10,7 +10,6 @@ import { addQuestion, QuestionTypes } from '~/constants/common.constants'
 
 const AddQuestionInSection = () => {
   const { sectionDetails, questionTypes } = useLoaderData()
-
   const [selectedTypeOfQuestion, onQuestionTypeChange] = useState(
     questionTypes[0].id
   )
@@ -214,6 +213,7 @@ const AddQuestionInSection = () => {
         <div className="flex">
           <Link to={`/sections/${sectionDetails?.id}`}>
             <button
+              tabIndex={0}
               id="cancel"
               disabled={transition.state === 'submitting'}
               className={`flex h-9 items-center gap-1 rounded-lg bg-red-600 px-5 text-xs text-white ${
@@ -226,7 +226,8 @@ const AddQuestionInSection = () => {
         </div>
         <div className="flex gap-2">
           <button
-            id="saveAndExit"
+            tabIndex={0}
+            id="save-and-exit"
             disabled={transition.state === 'submitting'}
             className={`flex h-9 items-center gap-1 rounded-lg bg-primary px-5 text-xs text-white ${
               transition.state === 'submitting' && 'disabled:opacity-75'
@@ -238,6 +239,7 @@ const AddQuestionInSection = () => {
           </button>
 
           <button
+            tabIndex={0}
             id="saveAndAddMore"
             disabled={transition.state === 'submitting'}
             className={`flex h-9 items-center gap-1 rounded-lg bg-primary px-5 text-xs text-white ${

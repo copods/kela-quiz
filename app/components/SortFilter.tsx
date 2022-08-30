@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 import DropdownField from './form/Dropdown'
-import { componentGlobalConstants } from '~/constants/common.constants'
+import { commonConstants, componentGlobalConstants} from '~/constants/common.constants'
 const SortFilter = ({
   filterData,
   sortDirection,
@@ -23,17 +23,27 @@ const SortFilter = ({
       <div className="flex items-center gap-2.5" id="sort-filter-body">
         {sortDirection == 'asc' ? (
           <Icon
+            tabIndex={0}
             id="ascend"
             icon="ph:sort-ascending-bold"
+            onKeyUp={(e) => {
+              if (e.key === 'Enter') onSortDirectionChange('desc')
+            }}
             onClick={() => onSortDirectionChange('desc')}
             className="cursor-pointer text-2xl"
+            aria-label={commonConstants.sortAscending}
           />
         ) : (
           <Icon
+            tabIndex={0}
             id="descend"
             icon="ph:sort-descending-bold"
+            onKeyUp={(e) => {
+              if (e.key === 'Enter') onSortDirectionChange('asc')
+            }}
             onClick={() => onSortDirectionChange('asc')}
             className="cursor-pointer text-2xl"
+            aria-label={commonConstants.sortDescending}
           />
         )}
         <DropdownField
@@ -48,8 +58,11 @@ const SortFilter = ({
         className="flex items-center pl-4 text-sm text-totalCount"
         id="total-items-value"
       >
-        <span className="pr-3">
-          {componentGlobalConstants.totalCounts}: {totalItems}
+        <span>
+          {componentGlobalConstants.totalCounts}:
+          <span id="total-count-value" className="pl-1">
+            {totalItems}
+          </span>
         </span>
         {showSelected && (
           <>

@@ -2,7 +2,11 @@ import { Icon } from '@iconify/react'
 import Moment from 'moment'
 import { toast } from 'react-toastify'
 import type { TestSection } from '~/interface/Interface'
-import { commonConstants, testsConstants } from '~/constants/common.constants'
+import {
+  commonConstants,
+  selectSectionCard,
+  testsConstants,
+} from '~/constants/common.constants'
 const SelectSectionCard = ({
   section,
   updateSection,
@@ -67,19 +71,25 @@ const SelectSectionCard = ({
         </h3>
         {section.isSelected ? (
           <button
+            tabIndex={0}
             className="h-6 rounded bg-red-500 px-4 text-[9px] text-white"
             onClick={() => {
               updateThisSection('isSelected', '', false)
             }}
+            title={commonConstants.removeButton}
+            aria-label={selectSectionCard.removeSection}
           >
             {commonConstants.removeButton}
           </button>
         ) : (
           <button
+            tabIndex={0}
             className="h-6 rounded bg-primary px-4 text-[9px] text-white"
             onClick={() => {
               updateThisSection('isSelected', '', true)
             }}
+            title={commonConstants.addButton}
+            aria-label={selectSectionCard.selectSection}
           >
             {commonConstants.addButton}
           </button>
@@ -109,8 +119,9 @@ const SelectSectionCard = ({
             {testsConstants.totalQuestionsText}
           </label>
           <input
+            tabIndex={0}
             type="number"
-            id="noOfQu"
+            id="no-of-qu"
             name="noOfQuestion"
             value={section.totalQuestions}
             onChange={(e) =>
@@ -131,6 +142,7 @@ const SelectSectionCard = ({
             {testsConstants.totalTimeText}
           </label>
           <input
+            tabIndex={0}
             type="number"
             id="time"
             name="totalTime"

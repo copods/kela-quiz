@@ -1,159 +1,70 @@
+import { testsConstants } from '~/constants/common.constants'
+
+const test1 = `Aptitude - test1`
+const deleteTest1 = `Aptitude - Detete test`
+
 describe('Visiting Tests', () => {
+  beforeEach('sign-in', () => {
+    cy.visit('/sign-in')
+    cy.get('input[name="email"]')
+      .clear()
+      .type(Cypress.env('email'))
+      .should('have.focus')
+      .should('have.value', Cypress.env('email'))
+    cy.get('input[name="password"]')
+      .clear()
+      .type(Cypress.env('password'))
+      .should('have.focus')
+      .should('have.value', Cypress.env('password'))
+    cy.get('[data-cy="submit"]').click()
+    cy.location('pathname').should('include', '/dashboard')
+  })
+
   // creating data to test Test list page
-
-  it('Create Section', () => {
-    cy.visit('/sign-in')
-    cy.get('#email')
-      .clear()
-      .type('careers@copods.co')
-      .should('have.value', 'careers@copods.co')
-    cy.get('#password')
-      .clear()
-      .type('kQuiz@copods')
-      .should('have.value', 'kQuiz@copods')
-    cy.findByRole('button').click()
-
-    cy.get('a').find('#Sections').should('have.text', 'Sections').click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
-
-    cy.get('#add-section').click()
-    const sectionName = `Aptitude - ${new Date().getTime()}`
-    cy.get('form > div', { timeout: 10000 })
-      .should('be.visible')
-      .within((el) => {
-        cy.get('input').type(sectionName)
-        cy.get('textarea').type('Aptitude')
-        cy.get("button[type='submit']", { timeout: 10000 }).click()
-      })
-    cy.wait(1600)
-    cy.get('#section-card').click()
-    cy.get('#add-section').click()
-    const secondSectionName = `Aptitude - ${new Date().getTime()}`
-    cy.get('form > div', { timeout: 10000 })
-      .should('be.visible')
-      .within((el) => {
-        cy.get('input').type(secondSectionName)
-        cy.get('textarea').type('Aptitude')
-        cy.get("button[type='submit']", { timeout: 10000 }).click()
-      })
-  })
-
-
-  it('Visiting Test Page', () => {
-    cy.visit('/sign-in')
-    cy.get('#email')
-      .clear()
-      .type('careers@copods.co')
-      .should('have.value', 'careers@copods.co')
-    cy.get('#password')
-      .clear()
-      .type('kQuiz@copods')
-      .should('have.value', 'kQuiz@copods')
-    cy.findByRole('button').click()
-
-    cy.get('a').find('#Tests').should('have.text', 'Tests').click()
+  it('Visiting Add Test Page', () => {
+    cy.get('a').find('#tests').should('have.text', testsConstants.Tests).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
+    cy.get('#add-test', { timeout: 6000 })
+      .should('have.text', `+ ${testsConstants.addTestbutton}`)
+      .click()
+    cy.location('pathname').should('include', '/tests/add-test')
   })
 
-  let value: any
-  let strings: any
-  it('Total Count of Test of Table', () => {
-    cy.visit('/sign-in')
-    cy.get('#email')
-      .clear()
-      .type('careers@copods.co')
-      .should('have.value', 'careers@copods.co')
-    cy.get('#password')
-      .clear()
-      .type('kQuiz@copods')
-      .should('have.value', 'kQuiz@copods')
-    cy.findByRole('button').click()
-
-    cy.get('a').find('#Tests').should('have.text', 'Tests').click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.get('#sort-filter')
-      .get('#total-items-value')
-      .get('.pr-3')
-      .then(($ele) => {
-        value = $ele[0].innerText.split(':')[1]
-      })
-    cy.get('#testList')
-      .get('.border-b')
-      .then(($elements) => {
-        strings = [...$elements].map(($el) => $el.innerText)
-        expect(strings).to.deep.equal([...strings])
-        expect(strings.length).to.deep.equal(parseInt(value))
-      })
-  })
   it('sort by name in ascending order ', () => {
-    cy.visit('/sign-in')
-    cy.get('#email')
-      .clear()
-      .type('careers@copods.co')
-      .should('have.value', 'careers@copods.co')
-    cy.get('#password')
-      .clear()
-      .type('kQuiz@copods')
-      .should('have.value', 'kQuiz@copods')
-    cy.findByRole('button').click()
-    cy.get('a').find('#Tests').should('have.text', 'Tests').click()
+    cy.get('a').find('#tests').should('have.text', testsConstants.Tests).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('#headlessui-listbox-button-1 span span')
       .invoke('text')
       .then((el) => {
         if (el === 'Name') {
-          cy.wait(1000)
-          cy.get('.border-b')
-            .get('.pr-4')
-            .then(($elements) => {
+          cy.get('.test-name-navigation', { timeout: 8000 }).then(
+            ($elements) => {
               var strings = [...$elements].map(($el) => $el.innerText)
-
-              expect(strings).to.deep.equal([...strings])
-            })
+              expect(strings).to.deep.equal(strings.sort())
+            }
+          )
         }
       })
   })
   it('sort by name in descending order ', () => {
-    cy.visit('/sign-in')
-    cy.get('#email')
-      .clear()
-      .type('careers@copods.co')
-      .should('have.value', 'careers@copods.co')
-    cy.get('#password')
-      .clear()
-      .type('kQuiz@copods')
-      .should('have.value', 'kQuiz@copods')
-    cy.findByRole('button').click()
-    cy.get('a').find('#Tests').should('have.text', 'Tests').click()
+    cy.get('a').find('#tests').should('have.text', testsConstants.Tests).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('#sort-filter-body').get('#ascend').click()
     cy.get('#headlessui-listbox-button-1 span span')
       .invoke('text')
       .then((el) => {
         if (el === 'Name') {
-          cy.wait(1000)
-          cy.get('.border-b')
-            .get('.pr-4')
-            .then(($elements) => {
+          cy.get('.test-name-navigation', { timeout: 8000 }).then(
+            ($elements) => {
               var strings = [...$elements].map(($el) => $el.innerText)
-
-              expect(strings).to.deep.equal([...strings])
-            })
+              expect(strings).to.deep.equal(strings.reverse())
+            }
+          )
         }
       })
   })
   it('sort by created date in ascending order ', () => {
-    cy.visit('/sign-in')
-    cy.get('#email')
-      .clear()
-      .type('careers@copods.co')
-      .should('have.value', 'careers@copods.co')
-    cy.get('#password')
-      .clear()
-      .type('kQuiz@copods')
-      .should('have.value', 'kQuiz@copods')
-    cy.findByRole('button').click()
-    cy.get('a').find('#Tests').should('have.text', 'Tests').click()
+    cy.get('a').find('#tests').should('have.text', testsConstants.Tests).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('.dropdown')
       .get('.dropdownButton')
@@ -166,28 +77,17 @@ describe('Visiting Tests', () => {
       .invoke('text')
       .then((el) => {
         if (el === 'Created Date') {
-          cy.wait(1000)
-          cy.get('.border-b')
-            .get('.pr-4')
-            .then(($elements) => {
+          cy.get('.test-name-navigation', { timeout: 8000 }).then(
+            ($elements) => {
               var strings = [...$elements].map(($el) => $el.innerText)
-              expect(strings).to.deep.equal([...strings])
-            })
+              expect(strings).to.deep.equal(strings.sort())
+            }
+          )
         }
       })
   })
   it('sort by created date in descending order', () => {
-    cy.visit('/sign-in')
-    cy.get('#email')
-      .clear()
-      .type('careers@copods.co')
-      .should('have.value', 'careers@copods.co')
-    cy.get('#password')
-      .clear()
-      .type('kQuiz@copods')
-      .should('have.value', 'kQuiz@copods')
-    cy.findByRole('button').click()
-    cy.get('a').find('#Tests').should('have.text', 'Tests').click()
+    cy.get('a').find('#tests').should('have.text', testsConstants.Tests).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('#sort-filter-body').get('#ascend').click()
     cy.get('.dropdown')
@@ -201,38 +101,76 @@ describe('Visiting Tests', () => {
       .invoke('text')
       .then((el) => {
         if (el === 'Created Date') {
-          cy.wait(1000)
-          cy.get('.border-b')
-            .get('.pr-4')
-            .then(($elements) => {
+          cy.get('.test-name-navigation', { timeout: 8000 }).then(
+            ($elements) => {
               var strings = [...$elements].map(($el) => $el.innerText)
-
-              expect(strings).to.deep.equal([...strings])
-            })
+              expect(strings).to.deep.equal(strings.reverse())
+            }
+          )
         }
       })
   })
 
   it('By Clicking test name it should navigate to test details page', () => {
-    cy.visit('/sign-in')
-    cy.get('#email')
-      .clear()
-      .type('careers@copods.co')
-      .should('have.value', 'careers@copods.co')
-    cy.get('#password')
-      .clear()
-      .type('kQuiz@copods')
-      .should('have.value', 'kQuiz@copods')
-    cy.findByRole('button').click()
-
-    cy.get('a').find('#Tests').should('have.text', 'Tests').click()
+    cy.get('a').find('#tests').should('have.text', testsConstants.Tests).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.get('#test-table-list')
-      .get('#test-name-navigation')
-
-      .click()
+    cy.get('.test-table-list', { timeout: 6000 }).should('be.visible')
+    cy.get('.test-table-list')
+      .each(($el) => {
+        cy.wrap($el).within((el) => {
+          if (
+            el[0].getElementsByClassName('test-name-navigation')[0]
+              .innerHTML === test1
+          ) {
+            cy.get('.test-name-navigation').should('have.text', test1).click()
+          }
+        })
+      })
       .location('pathname', { timeout: 60000 })
       .should('include', '/tests')
   })
 
+  var strings: any
+  it('On click of count in sections, menu with all sections should open', () => {
+    cy.get('a').find('#tests').should('have.text', testsConstants.Tests).click()
+    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
+    cy.get('#chip-group-id', { timeout: 10000 }).then((el) => {
+      cy.get('.chip-group').then(($elements) => {
+        strings = [...$elements].map(($el) => {
+          cy.log(strings)
+          if ($el.innerText.includes('\n')) {
+            cy.get('#section-count-button').click()
+          }
+        })
+      })
+    })
+  })
+
+  it('On click of delete, test should be deleted', () => {
+    cy.get('a').find('#tests').should('have.text', testsConstants.Tests).click()
+    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
+    cy.get('.test-table-list', { timeout: 8000 }).each(($el) => {
+      cy.wrap($el).within((el) => {
+        if (
+          el[0].getElementsByClassName('test-name-navigation')[0].innerHTML ===
+          deleteTest1
+        ) {
+          cy.get('.test-name-navigation').should('have.text', deleteTest1)
+        }
+      })
+    })
+    cy.get('#vertical-icon', { timeout: 6000 }).click()
+    cy.get('.delete-test').click()
+    cy.get('.confirm-delete').click()
+    cy.get('.test-table-list').each(($el) => {
+      cy.wrap($el).within((el) => {
+        if (
+          el[0].getElementsByClassName('test-name-navigation')[0].innerHTML ===
+          deleteTest1
+        ) {
+          cy.contains(deleteTest1).should('not.exist')
+        }
+      })
+    })
+  })
 })
