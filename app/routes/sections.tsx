@@ -1,7 +1,7 @@
 import type { ActionFunction, LoaderFunction } from '@remix-run/server-runtime'
 import { redirect } from '@remix-run/server-runtime'
 import { json } from '@remix-run/node'
-import { routeFiles, sectionsConstants } from '~/constants/common.constants'
+import { routeFiles, sectionsConstants, sortByOrder } from '~/constants/common.constants'
 import {
   Outlet,
   useActionData,
@@ -127,7 +127,7 @@ export default function SectionPage() {
 
   const [sectionDetailFull, setSectionDetailFull] = useState(false)
   const [showAddSectionModal, setShowAddSectionModal] = useState(false)
-  const [order, setOrder] = useState('asc')
+  const [order, setOrder] = useState(sortByOrder.ascending as string)
   const [sortBy, setSortBy] = useState(sortByDetails[1].value)
   const [selectedSection, setSelectedSection] = useState(
     data.selectedSectionId || data.sections[0]?.id || 'NA'

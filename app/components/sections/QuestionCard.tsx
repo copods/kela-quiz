@@ -18,7 +18,7 @@ const QuestionCard = ({
   return (
     <div
       key={question.id}
-      className="flex flex-col rounded-lg border border-gray-300 bg-gray-50 px-6 py-7"
+      className="flex flex-col rounded-lg border border-gray-300 bg-gray-50 px-6 py-7 cursor-pointer"
       tabIndex={0}
       title={sectionsConstants?.expand}
       aria-label={sectionsConstants?.expand}

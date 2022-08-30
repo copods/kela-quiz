@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import type { Test } from '~/interface/Interface'
 import SortFilter from '../SortFilter'
 import TestTableItem from './TestTableItem'
-import { commonConstants, testsConstants } from '~/constants/common.constants'
+import { commonConstants, sortByOrder, testsConstants } from '~/constants/common.constants'
 import { routes } from '~/constants/route.constants'
 const TestList = ({
   tests,
@@ -13,7 +13,7 @@ const TestList = ({
   tests: Array<Test>
   status: string | undefined
 }) => {
-  const [sortDirection, onSortDirectionChange] = useState('asc')
+  const [sortDirection, onSortDirectionChange] = useState(sortByOrder.ascending as string)
   const [sortBy, onSortChange] = useState('name')
   const filterByType = [
     {
@@ -90,7 +90,7 @@ const TestList = ({
               {testsConstants.srNoText}
             </div>
             <div className="w-4/12 text-sm leading-5 text-gray-500">
-              {testsConstants.testListColumnLable}
+              {testsConstants.testListColumnLabel}
             </div>
             <div className="w-3/12 text-sm leading-5 text-gray-500">
               {testsConstants.sectionText}

@@ -6,5 +6,7 @@ export const routes = {
      sections:'/sections',
      addQuestion:'/add-question',
      addTest:'/tests/add-test',
-     resultGroupTest:'/results/groupByTests'
+     resultGroupTest:'/results/groupByTests',
+     members:'/members',
+     settings:'/settings'
 }

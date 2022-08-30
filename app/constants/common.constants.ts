@@ -15,6 +15,10 @@ export const commonConstants = {
   placeholderForOptionInput: 'Write your option here',
   sortAscending: 'Sort Ascending',
   sortDescending: 'Sort Descending',
+  useSetting:"Use setting",
+  settings:'Settings',
+  groupByCandidate:'Group By Candidate',
+  results:'Results'
 }
 
 export const sideNav = {
@@ -89,7 +93,7 @@ export const testsConstants = {
   totalQuestionsText: 'Total Questions',
   Tests: 'Tests',
   srNoText: 'S No.',
-  testListColumnLable: 'Test',
+  testListColumnLabel: 'Test',
   createdOn: 'Created on',
   created: 'Created',
   actionsText: 'Actions',
@@ -207,5 +211,4 @@ export enum sortByOrder {
   name = 'name',
   descending = 'dsc',
   desc = 'desc',
-  asc = 'asc'
 }

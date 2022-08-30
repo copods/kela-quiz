@@ -1,7 +1,8 @@
 import MenuItems from './MenuItems'
 import Header from '~/components/SideNavHeader'
 import Footer from '~/components/SideNavFooter'
-import { sideNav } from '~/constants/common.constants'
+import { commonConstants, members, routeFiles, sideNav, testsConstants } from '~/constants/common.constants'
+import { routes } from '~/constants/route.constants'
 
 let sideNavGuide = [
   // {
@@ -11,7 +12,7 @@ let sideNavGuide = [
   //       id: 'Dashboard',
   //       iconClass: 'mdi:view-dashboard',
   //       itemName: 'Dashboard',
-  //       itemRoute: 'dashboard',
+  //       itemRoute: routes.dashboard,
   //     },
   //   ],
   // },
@@ -21,13 +22,13 @@ let sideNavGuide = [
       {
         id: 'group-by-tests',
         iconClass: 'mdi:chart-box-outline',
-        itemName: 'Results',
-        itemRoute: 'results/groupByTests',
+        itemName: commonConstants.results,
+        itemRoute: routes.resultGroupTest,
       },
       // {
       //   id: 'Group_By_Candidate',
       //   iconClass: 'mdi:chart-box-outline',
-      //   itemName: 'Group By Candidate',
+      //   itemName: commonConstants.groupByCandidate,
       //   itemRoute: 'groupByCandidate',
       // },
     ],
@@ -38,14 +39,14 @@ let sideNavGuide = [
       {
         id: 'tests',
         iconClass: 'carbon:result',
-        itemName: 'Tests',
-        itemRoute: 'tests',
+        itemName: testsConstants.Tests,
+        itemRoute: routes.tests,
       },
       {
         id: 'sections',
         iconClass: 'ci:list-checklist-alt',
-        itemName: 'Sections',
-        itemRoute: 'sections',
+        itemName: routeFiles.sections,
+        itemRoute: routes.sections,
       },
     ],
   },
@@ -55,13 +56,13 @@ let sideNavGuide = [
       {
         id: 'members',
         iconClass: 'mdi:account-group',
-        itemName: 'Members',
-        itemRoute: 'members',
+        itemName: members.members,
+        itemRoute: routes.members,
       },
       // {
       //   id: 'Settings',
       //   iconClass: 'mdi:cog',
-      //   itemName: 'Settings',
+      //  itemName: commonConstants.settings,
       //   itemRoute: 'settings',
       // },
     ],

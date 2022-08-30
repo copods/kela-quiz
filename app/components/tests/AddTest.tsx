@@ -21,11 +21,11 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
 
   const breadCrumbData = [
     {
-      tabName: 'Test',
+      tabName: testsConstants.testListColumnLabel,
       route: routes.tests,
     },
     {
-      tabName: 'Add Test',
+      tabName: testsConstants.addTestbutton,
       route: routes.addTest,
     },
   ]

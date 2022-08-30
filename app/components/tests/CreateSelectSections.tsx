@@ -1,5 +1,6 @@
 import type { SetStateAction } from 'react'
 import { useEffect, useState } from 'react'
+import { sortByOrder } from '~/constants/common.constants'
 import type { TestSection } from '~/interface/Interface'
 import SortFilter from '../SortFilter'
 import SelectSectionCard from './SelectSectionCard'
@@ -13,7 +14,7 @@ const SelectSections = ({
   setSections: (e: Array<TestSection>, i: number) => void
   updateSectionsList: (e: SetStateAction<Array<TestSection>>) => void
 }) => {
-  const [sortDirection, onSortDirectionChange] = useState('asc')
+  const [sortDirection, onSortDirectionChange] = useState(sortByOrder.ascending as string)
   const [sortBy, onSortChange] = useState('name')
   const [pseudoDivs, setPseudoDivs] = useState([1])
 
@@ -46,11 +47,11 @@ const SelectSections = ({
 
   const sortData = () => {
     updateSectionsList((e: Array<TestSection>) => {
-      if (sortBy == 'name' && sortDirection == 'asc')
+      if (sortBy === 'name' && sortDirection === sortByOrder.ascending )
         e.sort((a, b) => (a.name > b.name ? 1 : b.name > a.name ? -1 : 0))
-      if (sortBy == 'name' && sortDirection == 'desc')
+      if (sortBy === 'name' && sortDirection === sortByOrder.desc)
         e.sort((a, b) => (b.name > a.name ? 1 : a.name > b.name ? -1 : 0))
-      if (sortBy == 'createdAt' && sortDirection == 'asc')
+      if (sortBy === 'createdAt' && sortDirection === sortByOrder.ascending)
         e.sort((a, b) =>
           new Date(a.createdAt).getTime() > new Date(b.createdAt).getTime()
             ? 1
@@ -58,7 +59,7 @@ const SelectSections = ({
             ? -1
             : 0
         )
-      if (sortBy == 'createdAt' && sortDirection == 'desc')
+      if (sortBy === 'createdAt' && sortDirection === sortByOrder.desc)
         e.sort((a, b) =>
           new Date(b.createdAt).getTime() > new Date(a.createdAt).getTime()
             ? 1

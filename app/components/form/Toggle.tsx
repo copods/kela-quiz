@@ -1,4 +1,5 @@
 import { Switch } from '@headlessui/react'
+import { commonConstants } from '~/constants/common.constants'
 
 export default function Toggle({
   toggle,
@@ -19,10 +20,10 @@ export default function Toggle({
             ? 'border-blue-900 bg-blue-900'
             : 'border-slate-300 bg-slate-300'
         }
-          relative inline-flex h-[28px] w-[64px] shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out`}
+          relative inline-flex h-28 w-64 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out`}
 
       >
-        <span className="sr-only">Use setting</span>
+        <span className="sr-only">{commonConstants.useSetting}</span>
         <span
           aria-hidden="true"
           className={`${toggle ? 'translate-x-9' : 'translate-x-0'}

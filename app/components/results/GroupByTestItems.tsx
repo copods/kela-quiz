@@ -9,13 +9,6 @@ const GroupByTestItems = ({
   index: number
   id: string
 }) => {
-  // return (
-  //   <div className="col-span-full grid grid-cols-10">
-  //     <div
-  //       id="groupByTestRow"
-  //       className="col-span-full grid grid-cols-10 border-t-[1px] border-solid border-[#E5E7EB] px-12 py-4"
-  //     >
-
   return (
     <div className="col-span-full">
       <div

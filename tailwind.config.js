@@ -18,8 +18,12 @@ module.exports = {
         301: '320px',
         sectionCard: '330px',
       },
+      height: {
+        28: `28px`,
+      },
       width: {
         sectionCard: `30%`,
+        64: '64px'
       },
       borderRadius: {
         1: '1px',
