@@ -52,7 +52,6 @@ describe('Visiting group by test of results page', () => {
       .invoke('text')
       .then((el) => {
         if (el === 'attending') {
-          console.log(el, 'el')
         }
       })
   })

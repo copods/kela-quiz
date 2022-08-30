@@ -4,6 +4,7 @@ import invariant from 'tiny-invariant'
 import AdminLayout from '~/components/layouts/AdminLayout'
 import {
   getResultsOfIndividualCandidates,
+  getSectionWiseResultsOfIndividualCandidate,
   updateCandidateStatus,
 } from '~/models/result.server'
 import ResultDetailsComponent from '~/components/results/ResultDetails'
@@ -13,18 +14,20 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const candidateResult = await getResultsOfIndividualCandidates({
     id: params.candidateResultId as string,
   })
+  const sectionWiseResult = await getSectionWiseResultsOfIndividualCandidate({
+    testId: candidateResult?.testId as string,
+  })
   if (!candidateResult) {
     throw new Response('Not Found', { status: 404 })
   }
 
-  return json({ candidateResult, params })
+  return json({ candidateResult, params, sectionWiseResult })
 }
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
   const candidateStatus = formData.get('candidateStatus')
   const resultId = formData.get('resultId')
-  console.log('formdata', ...formData)
   const updateStatus = await updateCandidateStatus({
     id: resultId as string,
     candidateStatus: candidateStatus as string,

@@ -47,7 +47,6 @@ const ExamCompletedCandidatesComponent = () => {
                   key={result.id}
                   className="memberRow col-span-10 grid rounded-lg"
                 >
-                  {console.log(result)}
                   <AttendedCandidateListItem
                     id={result?.id}
                     testId={params.testId}

@@ -29,7 +29,7 @@ const AttendedCandidateListItem = ({
           <span className=" text-base leading-6 text-gray-700">{index}</span>
         </div>
         <Link
-          to={`/results/groupByTests/${testId}/attempted/${id}`}
+          to={`/results/groupByTests/${testId}/attended/${id}`}
           className="col-span-3 truncate font-semibold text-primary"
         >
           {name}

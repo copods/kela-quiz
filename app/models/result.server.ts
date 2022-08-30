@@ -81,7 +81,31 @@ export async function getResultsOfIndividualCandidates({ id }: { id: string }) {
       id
     },
     select: {
-      candidate: true
+      candidate: true,
+      testId: true
+    }
+  })
+}
+
+export async function getSectionWiseResultsOfIndividualCandidate({ testId }: { testId: string }) {
+  return await prisma.sectionWiseResult.findMany({
+    where: {
+      testId
+    },
+    select: {
+      id: true,
+      section: {
+        select: {
+          section: {
+            select: {
+              name: true
+            }
+          }
+        }
+      },
+      totalQuestion: true,
+      correctQuestion: true,
+      unanswered: true,
     }
   })
 }

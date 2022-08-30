@@ -149,19 +149,20 @@ model Candidate {
 }
 
 model CandidateTest {
-  id              String                   @id @default(cuid())
-  sections        SectionInCandidateTest[]
-  test            Test                     @relation(fields: [testId], references: [id])
-  testId          String
-  link            String?
-  candidate       Candidate                @relation(fields: [candidateId], references: [id])
-  candidateId     String
-  candidateResult CandidateResult[]
-  candidateStep   Json                     @default("{ \"nextRoute\": \"register\", \"isSection\": false, \"currentSectionID\": null }") // register || instructions || section
-  startedAt       DateTime?
-  endAt           DateTime?
-  createdAt       DateTime                 @default(now())
-  updatedAt       DateTime                 @updatedAt
+  id                String                   @id @default(cuid())
+  sections          SectionInCandidateTest[]
+  test              Test                     @relation(fields: [testId], references: [id])
+  testId            String
+  link              String?
+  candidate         Candidate                @relation(fields: [candidateId], references: [id])
+  candidateId       String
+  candidateResult   CandidateResult[]
+  candidateStep     Json                     @default("{ \"nextRoute\": \"register\", \"isSection\": false, \"currentSectionID\": null }") // register || instructions || section
+  startedAt         DateTime?
+  endAt             DateTime?
+  createdAt         DateTime                 @default(now())
+  updatedAt         DateTime                 @updatedAt
+  SectionWiseResult SectionWiseResult[]
 }
 
 model SectionInCandidateTest {
@@ -238,6 +239,9 @@ model SectionWiseResult {
   // easier access of test and results
   test   Test   @relation(fields: [testId], references: [id])
   testId String
+
+  candidateTest   CandidateTest @relation(fields: [candidateTestId], references: [id])
+  candidateTestId String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

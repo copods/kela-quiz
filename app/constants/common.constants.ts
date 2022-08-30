@@ -120,6 +120,9 @@ export const resultConstants = {
   result: 'Result',
   review: 'Review',
   startedAt: 'Started At',
+  correct: "Correct",
+  skipped: "Skipped",
+  total: "Total"
 }
 
 export enum QuestionStatus {

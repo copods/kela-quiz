@@ -4,10 +4,13 @@ import { Icon } from '@iconify/react'
 import { NavLink } from '@remix-run/react'
 import { useState } from 'react'
 import DropdownField from '../form/Dropdown'
+import SectionCardForResultDetail from './SectionCardForResultDetail'
+import Divider from '../divider'
 
 const ResultDetailsComponent = () => {
-  const { candidateResult, params } = useLoaderData()
+  const { candidateResult, params, sectionWiseResult } = useLoaderData()
   console.log('candidateResult', candidateResult)
+  console.log('sec', sectionWiseResult)
 
   const dropdownData = [
     {
@@ -35,31 +38,43 @@ const ResultDetailsComponent = () => {
   }
 
   return (
-    <div id="test-details" className=" h-full ">
-      <header className="mb-8">
-        <div className="border-b border-solid border-slate-300 ">
-          <div className="flex gap-2 pb-6">
-            <NavLink
-              to={`/results/groupByTests/${params?.testId}/completed`}
-              className="flex items-center gap-4 "
-            >
-              <Icon
-                className="text-3xl font-semibold leading-9 text-gray-900"
-                id="backButton"
-                icon="mdi:arrow-left"
-              ></Icon>
-            </NavLink>
-            <span
+    <div id="test-details" className="flex h-full flex-col gap-6">
+      <header>
+        <div className="flex gap-2">
+          <NavLink
+            to={`/results/groupByTests/${params?.testId}/completed`}
+            className="flex items-center gap-4 "
+          >
+            <Icon
               className="text-3xl font-semibold leading-9 text-gray-900"
-              id="title"
-            >
-              {candidateResult?.candidate?.firstName}{' '}
-              {candidateResult?.candidate?.lastName}
-            </span>
-          </div>
+              id="backButton"
+              icon="mdi:arrow-left"
+            ></Icon>
+          </NavLink>
+          <span
+            className="text-3xl font-semibold leading-9 text-gray-900"
+            id="title"
+          >
+            {candidateResult?.candidate?.firstName}&nbsp;
+            {candidateResult?.candidate?.lastName}
+          </span>
         </div>
       </header>
-      <div id="results-test-candidate-list-tab" className="pb-5"></div>
+      <Divider height="1px" />
+      <div id="results-test-candidate-list-tab" className="flex flex-col gap-6">
+        {sectionWiseResult.map((section: any) => {
+          return (
+            <SectionCardForResultDetail
+              key={section?.id}
+              name={section?.section?.section?.name}
+              totalQuestions={section?.totalQuestion}
+              correctQuestions={section?.correctQuestion}
+              skippedQuestions={section?.unanswered}
+            />
+          )
+        })}
+      </div>
+      <Divider height="1px" />
       <div className="flex gap-4">
         <DropdownField
           data={dropdownData}
