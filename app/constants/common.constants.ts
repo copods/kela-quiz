@@ -194,8 +194,5 @@ export const cypress = {
 export enum sortByOrder {
   ascending = 'asc',
   name = 'name',
-  descending = 'descending',
-  multipleChoice = 'MULTIPLE_CHOICE',
-  singleChoice = 'SINGLE_CHOICE',
-  text = 'TEXT',
+  descending = 'dsc',
 }
