@@ -227,7 +227,7 @@ const AddQuestionInSection = () => {
         <div className="flex gap-2">
           <button
             tabIndex={0}
-            id="saveAndExit"
+            id="save-and-exit"
             disabled={transition.state === 'submitting'}
             className={`flex h-9 items-center gap-1 rounded-lg bg-primary px-5 text-xs text-white ${
               transition.state === 'submitting' && 'disabled:opacity-75'

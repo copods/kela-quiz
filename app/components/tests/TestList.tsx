@@ -47,14 +47,21 @@ const TestList = ({
       {/* header */}
       {/* <BreadCrumb data={breadCrumbData} /> */}
       <header className="flex items-center justify-between">
-        <h2 title="Tests" className="text-3xl font-bold text-black">
+        <h2
+          tabIndex={0}
+          role={testsConstants.Tests}
+          title="Tests"
+          className="text-3xl font-bold text-black"
+        >
           {testsConstants.Tests}
         </h2>
         <Link
           to={'/tests/add-test'}
-          id="addTest"
+          id="add-test"
           tabIndex={0}
           className="flex h-9 items-center rounded-lg bg-primary px-5 text-xs text-white"
+          title={testsConstants.addTestbutton}
+          aria-label={testsConstants.addTestbutton}
         >
           + {testsConstants.addTestbutton}
         </Link>

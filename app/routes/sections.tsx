@@ -47,7 +47,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   var status: string = ''
   await getAllSections(obj)
     .then((res) => {
-      sections = res
+      sections = res as Section[]
       status = 'Success'
     })
     .catch((err) => {
@@ -87,7 +87,7 @@ export const action: ActionFunction = async ({ request }) => {
           resp: {
             title: 'Member Added Successfully..!',
             status: 200,
-            data: res,
+            data: res as Section,
           },
         },
         { status: 200 }
@@ -218,6 +218,7 @@ export default function SectionPage() {
             <span
               className="z-20 -mr-5"
               tabIndex={0}
+              role={'button'}
               onClick={() => setSectionDetailFull(!sectionDetailFull)}
               onKeyUp={(e) => {
                 if (e.key === 'Enter') setSectionDetailFull(!sectionDetailFull)
