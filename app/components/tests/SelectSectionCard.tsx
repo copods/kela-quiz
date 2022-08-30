@@ -109,7 +109,7 @@ const SelectSectionCard = ({
           <input
             tabIndex={0}
             type="number"
-            id="noOfQu"
+            id="no-of-qu"
             name="noOfQuestion"
             value={section.totalQuestions}
             onChange={(e) =>

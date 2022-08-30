@@ -21,9 +21,11 @@ const Button = ({ buttonText, className, onClick, ...props }: ButtonProps) => {
 
   return (
     <button
-    className= {
+      className= {
       `${getCommonClasses()} ${getButtonVarient()} ${className}`      
-    }
+      }
+      data-cy={props?.dataCy}
+      tabIndex={props?.tabIndex}
       disabled={props?.isDisabled}
       onClick={onClick}
       {...props}

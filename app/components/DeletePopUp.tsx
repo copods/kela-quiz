@@ -56,7 +56,7 @@ export default function DeletePopUp({
             >
               <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
                 <div
-                  id="deleteDialog"
+                  id="delete-dialog"
                   className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4"
                 >
                   <div className="sm:flex sm:items-center ">
@@ -68,9 +68,9 @@ export default function DeletePopUp({
                       />
                     </div>
                     <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                        <p className="text-sm text-gray-500">
-                          {deletePopUp.alert}
-                        </p>
+                      <p className="text-sm text-gray-500">
+                        {deletePopUp.alert}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -89,7 +89,7 @@ export default function DeletePopUp({
                   <Button 
                     tabIndex={0}
                     type='button' 
-                    id="cancelDeletePopUp"
+                    id="cancel-delete-pop-up"
                     varient='primary-outlined'
                     className='px-5'
                     onClick={() => setOpen(false)}

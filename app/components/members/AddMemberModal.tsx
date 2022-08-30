@@ -33,7 +33,7 @@ export default function AddMemberModal({
 
           <div
             className="fixed inset-0 z-10 overflow-y-auto"
-            id="AddPopUpModel"
+            id="add-pop-up-model"
           >
             <Form
               method="post"

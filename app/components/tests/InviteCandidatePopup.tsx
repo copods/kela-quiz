@@ -6,7 +6,6 @@ import { toast } from 'react-toastify'
 import { inviteMemeberPopUpConstants, members } from '~/constants/common.constants'
 import Button from '../form/Button'
 
-
 const InviteCandidatePopup = ({
   openInvitePopup,
   setOpenInvitePopup,
@@ -41,7 +40,6 @@ const InviteCandidatePopup = ({
     setEmails([''])
   }
 
-
   return (
     <Transition.Root show={openInvitePopup} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={setOpenInvitePopup}>
@@ -73,7 +71,11 @@ const InviteCandidatePopup = ({
             >
               <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white p-6 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
                 <div className="flex items-center justify-between pt-1">
-                  <h2 role={inviteMemeberPopUpConstants.inviteCandidate} tabIndex={0} className="text-2xl font-bold text-gray-700">
+                  <h2
+                    role={inviteMemeberPopUpConstants.inviteCandidate}
+                    tabIndex={0}
+                    className="text-2xl font-bold text-gray-700"
+                  >
                     {inviteMemeberPopUpConstants.inviteCandidate}
                   </h2>
                   <Icon
@@ -100,7 +102,7 @@ const InviteCandidatePopup = ({
                   <span
                     role={'button'}
                     tabIndex={0}
-                    className="cursor-pointer text-sm font-normal text-primary px-0.5"
+                    className="cursor-pointer px-0.5 text-sm font-normal text-primary"
                     onClick={() => setEmails([...emails, ''])}
                     onKeyUp={(e) => {
                       if (e.key === 'Enter') setEmails([...emails, ''])
@@ -116,10 +118,10 @@ const InviteCandidatePopup = ({
                   return (
                     <div className="pb-2" key={i}>
                       <input
-                      tabIndex={0}
+                        tabIndex={0}
                         type="email"
                         name={`email`}
-                        className="h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
+                        className="inviteInput h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
                         placeholder="johndoe@example.com"
                         title={members.email}
                         aria-label={members.email}
@@ -130,20 +132,21 @@ const InviteCandidatePopup = ({
 
                 <div className="flex justify-end gap-2 pt-4">
                   <Button 
-                  type='button'
-                  className='h-9 px-4'
-                  varient='primary-outlined'
-                  buttonText='Cancel'
-                  onClick={updatePopupAndEmailState}
+                    type='button'
+                    className='h-9 px-4'
+                    varient='primary-outlined'
+                    buttonText='Cancel'
+                    onClick={updatePopupAndEmailState}
                   />
                   <Button 
-                  type='submit'
-                  name='inviteCandidates'
-                  value={testId}
-                  id='submit-button'
-                  className='h-9 px-4'
-                  varient='primary-solid'
-                  buttonText='Invite'
+                    type='submit'
+                    name='inviteCandidates'
+                    value={testId}
+                    id='submit-button'
+                    className='h-9 px-4'
+                    varient='primary-solid'
+                    buttonText='Invite'
+                    dataCy='submit'
                   />
                 </div>
               </Dialog.Panel>

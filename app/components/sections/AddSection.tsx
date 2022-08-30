@@ -69,7 +69,6 @@ const AddSection = ({
                     tabIndex={0}
                     type="text"
                     name="name"
-                    id="sectionName"
                     className="h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
                     placeholder="Enter Section Name"
                   />

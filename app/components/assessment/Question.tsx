@@ -36,7 +36,7 @@ const Question = () => {
 
   return (
     <form method="post" className="flex h-full flex-col gap-9">
-      <div className="flex h-full max-h-full flex-1 flex-1 gap-9 overflow-auto">
+      <div className="flex h-full max-h-full flex-1 gap-9 overflow-auto">
         <div className="flex h-full w-1/2 flex-col gap-3">
           <div className="flex h-10 items-center justify-between">
             <div className="flex gap-5 text-lg font-semibold">

@@ -50,18 +50,23 @@ const TestList = ({
       {/* header */}
       {/* <BreadCrumb data={breadCrumbData} /> */}
       <header className="flex items-center justify-between">
-        <h2 tabIndex={0} role={testsConstants.Tests} title="Tests" className="text-3xl font-bold text-black">
+        <h2
+          tabIndex={0}
+          role={testsConstants.Tests}
+          title="Tests"
+          className="text-3xl font-bold text-black"
+        >
           {testsConstants.Tests}
         </h2>
         <Button 
-        className='px-5'
-        onClick={() => navigate('/tests/add-test')}
-        id='add-test' 
-        tabIndex={0} 
-        varient='primary-solid'
-        title={testsConstants.addTestbutton} 
-        aria-label={testsConstants.addTestbutton} 
-        buttonText={`+ ${testsConstants.addTestbutton}`}/>
+          className='px-5'
+          onClick={() => navigate('/tests/add-test')}
+          id='add-test' 
+          tabIndex={0} 
+          varient='primary-solid'
+          title={testsConstants.addTestbutton} 
+          aria-label={testsConstants.addTestbutton} 
+          buttonText={`+ ${testsConstants.addTestbutton}`}/>
       </header>
       <div id="sort-filter-container">
         <SortFilter

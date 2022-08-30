@@ -1,67 +1,53 @@
 describe('Visiting group by test of results page', () => {
-
-  it('Check if that test is coming on group by test page or not', () => {
+  // creating data to test Test list page
+  beforeEach('sign-in', () => {
     cy.visit('/sign-in')
-    cy.get('#email', { timeout: 6000 })
+    cy.get('input[name="email"]')
       .clear()
-      .type('careers@copods.co')
-      .should('have.value', 'careers@copods.co')
-    cy.get('#password', { timeout: 6000 })
+      .type(Cypress.env('email'))
+      .should('have.focus')
+      .should('have.value', Cypress.env('email'))
+    cy.get('input[name="password"]')
       .clear()
-      .type('kQuiz@copods')
-      .should('have.value', 'kQuiz@copods')
-    cy.findByRole('button').click()
-
-    cy.get('a', { timeout: 6000 })
-      .find('#Group_By_Tests', { timeout: 6000 })
-      .should('have.text', 'Results')
-      .click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/results')
+      .type(Cypress.env('password'))
+      .should('have.focus')
+      .should('have.value', Cypress.env('password'))
+    cy.get('[data-cy="submit"]').click()
+    cy.location('pathname').should('include', '/dashboard')
   })
+  const test1 = `Aptitude - test1`
   it('Check  that if list of candidate is coming after clicking a test in group byt test in results page ', () => {
-    cy.visit('/sign-in')
-    cy.get('#email', { timeout: 6000 })
-      .clear()
-      .type('careers@copods.co')
-      .should('have.value', 'careers@copods.co')
-    cy.get('#password', { timeout: 6000 })
-      .clear()
-      .type('kQuiz@copods')
-      .should('have.value', 'kQuiz@copods')
-    cy.findByRole('button').click()
-
-    cy.get('a', { timeout: 6000 })
-      .find('#Group_By_Tests', { timeout: 6000 })
-      .should('have.text', 'Results')
-      .click()
+    cy.get('a').find('#group-by-tests').should('have.text', 'Results').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')
-    cy.get('#group-by-test-container', { timeout: 6000 })
-      .get('#group-by-items-container', { timeout: 6000 })
-      .get('#group-by-item-test', { timeout: 6000 })
-      .click()
+    cy.get('h1', { timeout: 6000 }).should('have.text', 'Results')
+    cy.wait(6000)
+    cy.get('.groupTestRow').each(($el) => {
+      cy.wrap($el).within((el) => {
+        if (
+          el[0].getElementsByClassName('groupByItemTest')[0].innerHTML === test1
+        ) {
+          cy.get('.groupByItemTest').should('have.text', test1)
+        }
+      })
+    })
   })
   it('Check  that if list of attended candidate is coming after clicking a test in group byt test in results page ', () => {
-    cy.visit('/sign-in')
-    cy.get('#email', { timeout: 6000 })
-      .clear()
-      .type('careers@copods.co')
-      .should('have.value', 'careers@copods.co')
-    cy.get('#password', { timeout: 6000 })
-      .clear()
-      .type('kQuiz@copods')
-      .should('have.value', 'kQuiz@copods')
-    cy.findByRole('button', { timeout: 6000 }).click()
-
-    cy.get('a')
-      .find('#Group_By_Tests', { timeout: 6000 })
-      .should('have.text', 'Results')
-      .click()
+    cy.get('a').find('#group-by-tests').should('have.text', 'Results').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')
-    cy.get('#group-by-test-container', { timeout: 6000 })
-      .get('#group-by-items-container', { timeout: 6000 })
-      .get('#group-by-item-test', { timeout: 6000 })
-      .click()
-    cy.get('#Group_By_Tests-test-candidate-list-tab', { timeout: 6000 })
+    cy.get('h1', { timeout: 6000 }).should('have.text', 'Results')
+
+    cy.wait(6000)
+    cy.get('.groupTestRow').each(($el) => {
+      cy.wrap($el).within((el) => {
+        if (
+          el[0].getElementsByClassName('groupByItemTest')[0].innerHTML === test1
+        ) {
+          cy.get('.groupByItemTest').should('have.text', test1).click()
+        }
+      })
+    })
+
+    cy.get('#test-candidate-list-tab', { timeout: 6000 })
       .get('#tab-title')
       .invoke('text')
       .then((el) => {

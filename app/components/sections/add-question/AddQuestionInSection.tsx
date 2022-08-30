@@ -225,7 +225,7 @@ const AddQuestionInSection = () => {
         <div className="flex gap-2">
           <Button 
             tabIndex={0}
-            id='saveAndExit'
+            id="save-and-exit"
             isDisabled={transition.state === 'submitting'}
             className='h-9 px-5'
             onClick={() => saveQuestion(false)}
