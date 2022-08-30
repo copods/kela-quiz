@@ -87,7 +87,7 @@ export const action: ActionFunction = async ({ request }) => {
           resp: {
             title: 'Member Added Successfully..!',
             status: 200,
-            data: res as Section,
+            data: res,
           },
         },
         { status: 200 }
