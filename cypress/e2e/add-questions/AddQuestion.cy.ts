@@ -27,9 +27,7 @@ describe('Test for section-details', () => {
     cy.get('#add-section').click()
     cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
     cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
-    cy.get('textarea#sectionDescription').type(
-      `Aptitude - Description`
-    )
+    cy.get('textarea#sectionDescription').type(`Aptitude - Description`)
     cy.get('button#submitButton')
       .should('have.text', commonConstants.addButton)
       .click()
@@ -65,9 +63,7 @@ describe('Test for section-details', () => {
     cy.get('#add-section').click()
     cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
     cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
-    cy.get('textarea#sectionDescription').type(
-      `Aptitude -  Description`
-    )
+    cy.get('textarea#sectionDescription').type(`Aptitude -  Description`)
     cy.get('button#submitButton', { timeout: 6000 })
       .should('have.text', commonConstants.addButton)
       .click()
@@ -149,9 +145,7 @@ describe('Test for section-details', () => {
     cy.get('#add-section').click()
     cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
     cy.get('input#sectionName').type(duplicateTitle)
-    cy.get('textarea#sectionDescription').type(
-      `Aptitude -  Description`
-    )
+    cy.get('textarea#sectionDescription').type(`Aptitude -  Description`)
     cy.get('#submitButton').click()
     cy.get('.Toastify__toast').should('have.text', cypress.sectionAdded)
     cy.get('.Toastify__close-button').click()
@@ -159,9 +153,7 @@ describe('Test for section-details', () => {
     cy.get('#add-section').click()
     cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
     cy.get('input#sectionName').type(duplicateTitle)
-    cy.get('textarea#sectionDescription').type(
-      `Aptitude -  Description`
-    )
+    cy.get('textarea#sectionDescription').type(`Aptitude -  Description`)
     cy.get('#submitButton').click()
     cy.get('.Toastify__toast').should('have.text', cypress.duplicateTitle)
     cy.get('.Toastify__close-button').click()
@@ -185,25 +177,22 @@ describe('Test for section-details', () => {
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
     cy.get('.px-5').click()
+    const sectionName = `Aptitude - ${new Date().getTime()}`
     cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
-    cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
-    cy.get('textarea#sectionDescription').type(
-      `Aptitude -  Description`
-    )
+    cy.get('input#sectionName').type(sectionName)
+    cy.get('textarea#sectionDescription').type(`Aptitude -  Description`)
     cy.get('button#submitButton', { timeout: 6000 })
       .should('have.text', commonConstants.addButton)
       .click()
-    cy.get('#section-cards').children().first().click()
-    cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
-    cy.location('pathname', { timeout: 60000 }).should(
-      'include',
-      '/add-question'
-    )
-    cy.get('.Toastify__close-button').click()
-    cy.get('#Question', { timeout: 6000 })
-      .should('have.text', cypress.question)
-      .click()
-    cy.get('a > div').should('have.class', 'border-l-8')
+    cy.wait(5000)
+    cy.get('.sectionCard', { timeout: 8000 }).each(($el: any) => {
+      // console.log($el[0].getElementsByClassName('sectionName')[0])
+      cy.wrap($el).within(() => {
+        if ($el[0].getElementsByClassName('sectionName')[0].innerText === sectionName ) {
+          cy.contains(sectionName)
+        }
+      })
+    })
   })
 
   it('Verifying MCQ to have Check Box in options', () => {
@@ -226,9 +215,7 @@ describe('Test for section-details', () => {
     cy.get('.px-5').click()
     cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
     cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
-    cy.get('textarea#sectionDescription').type(
-      `Aptitude -  Description`
-    )
+    cy.get('textarea#sectionDescription').type(`Aptitude -  Description`)
     cy.get('button#submitButton', { timeout: 6000 })
       .should('have.text', commonConstants.addButton)
       .click()
@@ -288,9 +275,7 @@ describe('Test for section-details', () => {
     cy.get('.px-5').click()
     cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
     cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
-    cy.get('textarea#sectionDescription').type(
-      `Aptitude -  Description`
-    )
+    cy.get('textarea#sectionDescription').type(`Aptitude -  Description`)
     cy.get('button#submitButton', { timeout: 6000 })
       .should('have.text', commonConstants.addButton)
       .click()
@@ -350,9 +335,7 @@ describe('Test for section-details', () => {
     cy.get('.px-5').click()
     cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
     cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
-    cy.get('textarea#sectionDescription').type(
-      `Aptitude -  Description`
-    )
+    cy.get('textarea#sectionDescription').type(`Aptitude -  Description`)
     cy.get('button#submitButton', { timeout: 6000 })
       .should('have.text', commonConstants.addButton)
       .click()
@@ -414,9 +397,7 @@ describe('Test for section-details', () => {
     cy.get('.px-5').click()
     cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
     cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
-    cy.get('textarea#sectionDescription').type(
-      `Aptitude -  Description`
-    )
+    cy.get('textarea#sectionDescription').type(`Aptitude -  Description`)
     cy.get('button#submitButton', { timeout: 6000 })
       .should('have.text', commonConstants.addButton)
       .click()
@@ -477,9 +458,7 @@ describe('Test for section-details', () => {
     cy.get('.px-5').click()
     cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
     cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
-    cy.get('textarea#sectionDescription').type(
-      `Aptitude -  Description`
-    )
+    cy.get('textarea#sectionDescription').type(`Aptitude -  Description`)
     cy.get('button#submitButton', { timeout: 6000 })
       .should('have.text', commonConstants.addButton)
       .click()
@@ -540,9 +519,7 @@ describe('Test for section-details', () => {
     cy.get('.px-5').click()
     cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
     cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
-    cy.get('textarea#sectionDescription').type(
-      `Aptitude -  Description`
-    )
+    cy.get('textarea#sectionDescription').type(`Aptitude -  Description`)
     cy.get('button#submitButton', { timeout: 6000 })
       .should('have.text', commonConstants.addButton)
       .click()
@@ -601,9 +578,7 @@ describe('Test for section-details', () => {
     cy.get('.px-5').click()
     cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
     cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
-    cy.get('textarea#sectionDescription').type(
-      `Aptitude -  Description`
-    )
+    cy.get('textarea#sectionDescription').type(`Aptitude -  Description`)
     cy.get('button#submitButton', { timeout: 6000 })
       .should('have.text', commonConstants.addButton)
       .click()
@@ -660,9 +635,7 @@ describe('Test for section-details', () => {
     cy.get('.px-5').click()
     cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
     cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
-    cy.get('textarea#sectionDescription').type(
-      `Aptitude -  Description`
-    )
+    cy.get('textarea#sectionDescription').type(`Aptitude -  Description`)
     cy.get('button#submitButton', { timeout: 6000 })
       .should('have.text', commonConstants.addButton)
       .click()
@@ -704,9 +677,7 @@ describe('Test for section-details', () => {
     cy.get('.px-5').click()
     cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
     cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
-    cy.get('textarea#sectionDescription').type(
-      `Aptitude -  Description`
-    )
+    cy.get('textarea#sectionDescription').type(`Aptitude -  Description`)
     cy.get('button#submitButton', { timeout: 6000 })
       .should('have.text', commonConstants.addButton)
       .click()

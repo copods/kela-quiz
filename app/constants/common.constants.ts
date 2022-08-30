@@ -192,6 +192,7 @@ export const cypress = {
   description: 'Description',
   totalTime: 'Total Time',
   totalSections: 'Total Sections',
+  borderExist:'border-l-8'
 }
 
 export enum sortByOrder {

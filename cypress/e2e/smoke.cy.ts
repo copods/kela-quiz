@@ -154,7 +154,7 @@ describe('smoke tests', () => {
     // user reached to step 2
     cy.get('div#section', { timeout: 60000 }).each((el) => {
       cy.wrap(el).within(() => {
-        if (el.find('.count')[0].innerText != '0') {
+        if (el.find('.count')[0].innerText !== '0') {
           cy.get('input#noOfQu').should('have.disabled', true)
           cy.get('input#time').should('have.disabled', true)
           cy.get('button')
