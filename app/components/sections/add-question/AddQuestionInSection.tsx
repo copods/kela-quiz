@@ -99,7 +99,7 @@ const AddQuestionInSection = () => {
         }
       }
       if (
-        flag == 0 &&
+        flag === 0 &&
         getQuestionType(selectedTypeOfQuestion) === QuestionTypes.multipleChoice
       ) {
         toast.error(statusCheck.selectCorrOption, {

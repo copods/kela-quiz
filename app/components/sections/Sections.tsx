@@ -1,5 +1,5 @@
 import SectionCard from './SectionCard'
-import type { Section } from '~/interface/Interface'
+import type { Section, User } from '~/interface/Interface'
 import { useResolvedPath, useLocation, NavLink } from '@remix-run/react'
 import {} from '@remix-run/react'
 import SortFilter from '../SortFilter'
@@ -12,9 +12,9 @@ const SectionLink = ({
   filter,
   setSelectedSection,
 }: {
-  section: any
-  actionStatusData: string | undefined
-  err: string | undefined
+  section: Section & { _count?: { questions: number }; createdBy?: User }
+  actionStatusData?: string
+  err?: string
   filter: string
   setSelectedSection: (e: string) => void
 }) => {
@@ -55,8 +55,8 @@ type SectionType = {
   filters: string
   setSortBy: (e: string) => void
   order: string
-  err: string | undefined
-  actionStatusData: any
+  err?: string
+  actionStatusData?: string
   setOrder: (e: string) => void
   setSelectedSection: (e: string) => void
   sortByDetails: Array<{ name: string; value: string }>
@@ -73,7 +73,6 @@ const Sections = ({
   err,
   actionStatusData,
 }: SectionType) => {
-  console.log(sections, 'sectionss')
   return (
     <div className="sectionLSWrapper flex h-full w-96 flex-col gap-6">
       {/* filters */}
@@ -96,7 +95,7 @@ const Sections = ({
         className="section-cards flex flex-1 flex-col gap-6 overflow-auto"
         id="section-cards"
       >
-        {sections?.map((section: any) => (
+        {sections?.map((section: Section) => (
           <SectionLink
             key={section.id}
             section={section}

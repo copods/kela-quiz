@@ -184,6 +184,13 @@ export default function SectionPage() {
       })
     }
   }, [navigate, selectedSection])
+  useEffect(() => {
+    if (selectedSection == 'NA') {
+      navigate(`/sections`, {
+        replace: true,
+      })
+    }
+  }, [navigate, selectedSection])
 
   useEffect(() => {
     if (data.sections.length) {
@@ -214,7 +221,9 @@ export default function SectionPage() {
         toast.success(sectionActionData.resp?.status, {
           toastId: sectionActionData.resp?.status,
         })
-        setSelectedSection('NA')
+        setSelectedSection(
+          data.selectedSectionId || data.sections[0]?.id || 'NA'
+        )
       } else if (sectionActionData.errors?.status === 400) {
         toast.error(sectionActionData.errors?.title, {
           toastId: sectionActionData.errors?.title,

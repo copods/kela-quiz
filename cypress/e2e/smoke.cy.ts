@@ -13,6 +13,7 @@ const deleteSection = `Aptitude - delete-Section`
 const memberFirstName = 'john'
 const memberLastName = 'dow'
 const memberEmail = 'johndoe@example.com'
+const secNamePlaceholder = 'Enter Section Name'
 
 describe('smoke tests', () => {
   it('Successfully Login', () => {
@@ -45,7 +46,7 @@ describe('smoke tests', () => {
 
   // creating test data
 
-  it('Adding a section 1 ', () => {
+  it('Adding a first section', () => {
     cy.visit('/sign-in')
     cy.get('input[name="email"]')
       .clear()
@@ -69,7 +70,7 @@ describe('smoke tests', () => {
         cy.get('[data-cy="submit"]').click()
       })
   })
-  it('Adding a section 2 ', () => {
+  it('Adding a second section', () => {
     cy.visit('/sign-in')
     cy.get('input[name="email"]')
       .clear()
@@ -88,7 +89,7 @@ describe('smoke tests', () => {
     cy.get('form > div')
       .should('be.visible')
       .within((el) => {
-        cy.get('input[placeholder="Enter Section Name"]').type(section2)
+        cy.get(`input[placeholder=${secNamePlaceholder}]`).type(section2)
         cy.get('textarea').type('Aptitude')
         cy.get('[data-cy="submit"]').click()
       })
@@ -117,7 +118,7 @@ describe('smoke tests', () => {
         cy.get('[data-cy="submit"]').click()
       })
   })
-  it('Add question in created section1', () => {
+  it('Add question to the first section', () => {
     cy.visit('/sign-in')
     cy.get('input[name="email"]')
       .clear()
@@ -167,7 +168,7 @@ describe('smoke tests', () => {
       .type('Option of question')
     cy.get('#save-and-exit').click()
   })
-  it('Add question in created section2', () => {
+  it('Add question to the second section', () => {
     cy.visit('/sign-in')
     cy.get('input[name="email"]')
       .clear()

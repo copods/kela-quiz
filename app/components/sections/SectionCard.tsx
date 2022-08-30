@@ -18,12 +18,12 @@ const SectionCard = ({
 }: {
   name: string
   isActive: boolean
-  questionsCount: number
+  questionsCount?: number
   createdBy: string
   createdAt: Date
   id: string
-  err: string | undefined
-  actionStatusData: any
+  err?: string
+  actionStatusData?: string
 }) => {
   const [isDelete, setIsDelete] = useState(false)
   const submit = useSubmit()
@@ -69,7 +69,7 @@ const SectionCard = ({
               />
             </Menu.Button>
             <Menu.Items className="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-              <div className="px-1 py-1 ">
+              <div className="px-1 py-1">
                 <Menu.Item>
                   {({ active }) => (
                     <button
@@ -82,19 +82,13 @@ const SectionCard = ({
                         setIsDelete(true)
                       }}
                     >
-                      {active ? (
-                        <Icon
-                          icon={'ic:outline-delete-outline'}
-                          className="mr-2 h-5 w-5"
-                          aria-hidden="true"
-                        />
-                      ) : (
-                        <Icon
-                          icon={'ic:outline-delete-outline'}
-                          className="mr-2 h-5 w-5 text-red-500"
-                          aria-hidden="true"
-                        />
-                      )}
+                      <Icon
+                        icon={'ic:outline-delete-outline'}
+                        className={`mr-2 h-5 w-5 ${
+                          active ? 'text-gray-900' : 'text-red-500'
+                        }`}
+                        aria-hidden="true"
+                      />
                       Delete
                     </button>
                   )}
