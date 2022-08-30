@@ -12,6 +12,8 @@ export const commonConstants = {
   total: 'Total',
   createdAt: 'createdAt',
   createdDate: 'Created Date',
+  sortAscending: 'Sort Ascending',
+  sortDescending: 'Sort Descending',
 }
 
 export const sideNav = {
@@ -191,10 +193,8 @@ export const cypress = {
 
 export enum sortByOrder {
   ascending = 'asc',
-  sortAscending = 'Sort Ascending',
   name = 'name',
   descending = 'descending',
-  sortDescending = 'Sort Descending',
   multipleChoice = 'MULTIPLE_CHOICE',
   singleChoice = 'SINGLE_CHOICE',
   text = 'TEXT',
