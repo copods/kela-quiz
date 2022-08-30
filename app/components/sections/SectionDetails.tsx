@@ -42,8 +42,8 @@ const SectionDetails = () => {
           title={addQuestion.addQuestion}
           aria-label={addQuestion.addQuestion}
         >
-          <button
-            id="addQuestion"
+          <button tabIndex={0}
+            id="add-question"
             className="h-9 rounded-lg bg-primary px-5 text-xs text-[#F0FDF4]"
           >
             + {addQuestion.addQuestion}

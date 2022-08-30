@@ -30,7 +30,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   let status: string = ''
   await getAllSections(filter)
     .then((res) => {
-      sections = res
+      sections = res as Section[]
       status = 'success'
     })
     .catch((err) => {

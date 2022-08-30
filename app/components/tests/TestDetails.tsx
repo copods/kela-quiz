@@ -12,7 +12,7 @@ const TestDetails = () => {
           <div className="flex gap-2 pb-6">
             <Link
               to={'/tests'}
-              className="flex items-center gap-4 "
+              className="testPreviewBackButton flex items-center gap-4 "
               tabIndex={0}
             >
               <Icon

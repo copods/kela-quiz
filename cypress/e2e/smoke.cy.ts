@@ -1,6 +1,17 @@
 /// <reference types="Cypress"/>
 
-import { commonConstants, cypress, routeFiles, testsConstants } from "~/constants/common.constants"
+import {
+  commonConstants,
+  cypress,
+  testsConstants,
+} from '~/constants/common.constants'
+const section1 = `Aptitude - section1`
+const test1 = `Aptitude - test1`
+const deleteTest1 = `Aptitude - Detete test`
+const section2 = `Aptitude - section2`
+const memberFirstName = 'john'
+const memberLastName = 'dow'
+const memberEmail = 'johndoe@example.com'
 
 describe('smoke tests', () => {
   it('Successfully Login', () => {
@@ -31,72 +42,85 @@ describe('smoke tests', () => {
     cy.get('#password-error').should('have.text', 'Password is invalid')
   })
 
+  // creating test data
 
-  //creating test data
-  it('Create Section', () => {
+  it('Adding a section 1 ', () => {
     cy.visit('/sign-in')
-    cy.get('#email')
+    cy.get('input[name="email"]')
       .clear()
-      .type('careers@copods.co')
-      .should('have.value', cypress.email)
-    cy.get('#password')
+      .type(Cypress.env('email'))
+      .should('have.focus')
+      .should('have.value', Cypress.env('email'))
+    cy.get('input[name="password"]')
       .clear()
-      .type('kQuiz@copods')
-      .should('have.value', cypress.password)
-    cy.findByRole('button').click()
-
-    cy.get('a')
-      .find('#sections')
-      .should('have.text', routeFiles.sections)
-      .click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
+      .type(Cypress.env('password'))
+      .should('have.focus')
+      .should('have.value', Cypress.env('password'))
+    cy.get('[data-cy="submit"]').click()
+    cy.location('pathname').should('include', '/dashboard')
+    cy.get('a').find('#sections').should('have.text', cypress.Sections).click()
     cy.get('#add-section').click()
-    const sectionName = `Aptitude - ${new Date().getTime()}`
-    cy.get('form > div', { timeout: 10000 })
+    cy.get('form > div')
       .should('be.visible')
       .within((el) => {
-        cy.get('input').type(sectionName)
+        cy.get('input[placeholder="Enter Section Name"]').type(section1)
         cy.get('textarea').type('Aptitude')
-        cy.get("button[type='submit']", { timeout: 10000 }).click()
+        cy.get('[data-cy="submit"]').click()
       })
   })
-
-  it('Create Question', () => {
+  it('Adding a section 2 ', () => {
     cy.visit('/sign-in')
-    cy.get('#email')
+    cy.get('input[name="email"]')
       .clear()
-      .type('careers@copods.co')
-      .should('have.value', cypress.email)
-    cy.get('#password')
+      .type(Cypress.env('email'))
+      .should('have.focus')
+      .should('have.value', Cypress.env('email'))
+    cy.get('input[name="password"]')
       .clear()
-      .type('kQuiz@copods')
-      .should('have.value', cypress.password)
-    cy.findByRole('button').click()
-
-    cy.get('a')
-      .find('#sections')
-      .should('have.text', routeFiles.sections)
-      .click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
-    cy.get('.px-5').click()
-    cy.get('.addSectionDilog', { timeout: 10000 }).should('be.visible')
-    cy.get('input#sectionName').type(`Aptitude - ${new Date().getTime()}`)
-    cy.get('textarea#sectionDescription').type(
-      `Aptitude -  Description`
-    )
-    cy.get('button#submitButton', { timeout: 6000 })
-      .should('have.text', commonConstants.addButton)
-      .click()
-    cy.get('#section-cards').children().first().click()
-    cy.get('#addQuestion').should('have.text', cypress.addQuest).click()
-    cy.location('pathname', { timeout: 60000 }).should(
-      'include',
-      '/add-question'
-    )
-
-    cy.get('h1', { timeout: 2000 }).should('be.visible')
+      .type(Cypress.env('password'))
+      .should('have.focus')
+      .should('have.value', Cypress.env('password'))
+    cy.get('[data-cy="submit"]').click()
+    cy.location('pathname').should('include', '/dashboard')
+    cy.get('a').find('#sections').should('have.text', cypress.Sections).click()
+    cy.get('#add-section').click()
+    cy.get('form > div')
+      .should('be.visible')
+      .within((el) => {
+        cy.get('input[placeholder="Enter Section Name"]').type(section2)
+        cy.get('textarea').type('Aptitude')
+        cy.get('[data-cy="submit"]').click()
+      })
+  })
+  it('Add question in created section1', () => {
+    cy.visit('/sign-in')
+    cy.get('input[name="email"]')
+      .clear()
+      .type(Cypress.env('email'))
+      .should('have.focus')
+      .should('have.value', Cypress.env('email'))
+    cy.get('input[name="password"]')
+      .clear()
+      .type(Cypress.env('password'))
+      .should('have.focus')
+      .should('have.value', Cypress.env('password'))
+    cy.get('[data-cy="submit"]').click()
+    cy.location('pathname').should('include', '/dashboard')
+    cy.get('a').find('#sections').should('have.text', cypress.Sections).click()
+    cy.get('.section-card').each(($el) => {
+      cy.wrap($el).within((el) => {
+        if (
+          el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
+        ) {
+          cy.get('.sectionName').contains(section1).click()
+        }
+      })
+    })
+    cy.get('.sectionName').contains(section1).click()
+    cy.get('#add-question').should('have.text', cypress.addQuest).click()
+    cy.location('pathname').should('include', '/add-question')
+    cy.get('h1').should('be.visible')
     cy.get('#dropdown > button').click()
-
     cy.get('ul').within(() => {
       cy.get('li').within(() => {
         cy.get('div').then((el) => {
@@ -110,79 +134,266 @@ describe('smoke tests', () => {
       })
     })
 
-    cy.get('#questionEditor #quillEditor').within(() => {
+    cy.get('#question-editor #quill-editor').within(() => {
       cy.get('.ql-editor').type(`What is your Test Question ?`)
     })
+    cy.get('input[placeholder="Write your option here"]')
+      .clear()
+      .type('Option of question')
+    cy.get('#save-and-exit').click()
+  })
+  it('Add question in created section2', () => {
+    cy.visit('/sign-in')
+    cy.get('input[name="email"]')
+      .clear()
+      .type(Cypress.env('email'))
+      .should('have.focus')
+      .should('have.value', Cypress.env('email'))
+    cy.get('input[name="password"]')
+      .clear()
+      .type(Cypress.env('password'))
+      .should('have.focus')
+      .should('have.value', Cypress.env('password'))
+    cy.get('[data-cy="submit"]').click()
+    cy.location('pathname').should('include', '/dashboard')
+    cy.get('a').find('#sections').should('have.text', cypress.Sections).click()
+    cy.get('.section-card').each(($el) => {
+      cy.wrap($el).within((el) => {
+        if (
+          el[0].getElementsByClassName('sectionName')[0].innerHTML === section2
+        ) {
+          cy.get('.sectionName').should('have.text', section2)
+        }
+      })
+    })
+    cy.get('.sectionName').contains(section2).click()
+    cy.get('#add-question').should('have.text', cypress.addQuest).click()
+    cy.location('pathname').should('include', '/add-question')
+    cy.get('h1').should('be.visible')
+    cy.get('#dropdown > button').click()
+    cy.get('ul').within(() => {
+      cy.get('li').within(() => {
+        cy.get('div').then((el) => {
+          ;[...el].map((el) => {
+            if (el.innerText === 'Text') {
+              el.click()
+            }
+            return null
+          })
+        })
+      })
+    })
 
-    cy.get('#optionEditor input').clear().type('Option of question')
-
-    cy.get('#saveAndExit').click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
+    cy.get('#question-editor #quill-editor').within(() => {
+      cy.get('.ql-editor').type(`What is your Test Question ?`)
+    })
+    cy.get('input[placeholder="Write your option here"]')
+      .clear()
+      .type('Option of question')
+    cy.get('#save-and-exit').click()
   })
 
-  let testName: any
-  it('Create Test', () => {
+  it('Verify if user able create the test 1', () => {
     cy.visit('/sign-in')
-    cy.get('#email')
+    cy.get('input[name="email"]')
       .clear()
-      .type('careers@copods.co')
-      .should('have.value', cypress.email)
-    cy.get('#password', { timeout: 6000 })
+      .type(Cypress.env('email'))
+      .should('have.focus')
+      .should('have.value', Cypress.env('email'))
+    cy.get('input[name="password"]')
       .clear()
-      .type('kQuiz@copods')
-      .should('have.value', cypress.password)
-    cy.findByRole('button', { timeout: 6000 }).click()
-
-    cy.get('a', { timeout: 10000 })
-      .find('#tests', { timeout: 10000 })
-      .should('have.text', testsConstants.Tests)
-      .click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.get('#addTest', { timeout: 10000 }).click()
-    cy.location('pathname', { timeout: 100000 }).should(
+      .type(Cypress.env('password'))
+      .should('have.focus')
+      .should('have.value', Cypress.env('password'))
+    cy.get('[data-cy="submit"]').click()
+    cy.location('pathname').should('include', '/dashboard')
+    cy.get('a').find('#tests').should('have.text', testsConstants.Tests).click()
+    cy.get('#add-test', { timeout: 6000 }).click()
+    cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/tests/add-test'
     )
-    testName = `Test - ${new Date().getTime()}`
-    cy.get('#name', { timeout: 6000 }).clear().type(testName)
-    cy.get('#quillEditor').within(() => {
+
+    cy.get('input[placeholder="Enter test name"]', { timeout: 6000 })
+      .clear()
+      .type(deleteTest1)
+    cy.get('#quill-editor').within(() => {
       cy.get('.ql-editor').type(`Test Description`)
     })
-    cy.get('button#nextButton').should('have.text', 'Next').click()
-    cy.get('#0').find('hr').should('have.class', 'bg-primary')
-    cy.get('#1').find('hr').should('have.class', 'bg-primary')
+
+    cy.get('button#next-button').should('have.text', cypress.next).click()
+    cy.get('.stepsTab').each(($el) => {
+      cy.wrap($el).within((el) => {
+        if (
+          el[0].getElementsByClassName('stepsName')[0].innerHTML ===
+          cypress.step1
+        ) {
+          cy.get('.stepsName').should('have.text', cypress.step1)
+        } else if (
+          el[0].getElementsByClassName('stepsName')[0].innerHTML ===
+          cypress.step2
+        ) {
+          cy.get('.stepsName').should('have.text', cypress.step2)
+        }
+      })
+    })
     // user reached to step 2
+
     cy.get('div#section', { timeout: 60000 }).each((el) => {
       cy.wrap(el).within(() => {
-        if (el.find('.count')[0].innerText !== '0') {
-          cy.get('input#noOfQu').should('have.disabled', true)
+        if (el.find('.count')[0].innerText != '0') {
+          cy.get('input#no-of-qu').should('have.disabled', true)
           cy.get('input#time').should('have.disabled', true)
           cy.get('button')
             .should('have.text', commonConstants.addButton)
             .click()
           cy.get('button').should('have.text', cypress.Remove)
 
-          cy.get('input#noOfQu').clear().type('1')
+          cy.get('input#no-of-qu').clear().type('1')
           cy.get('input#time').clear().type('1')
-          cy.get('input#noOfQu').should('have.value', '1')
+          cy.get('input#no-of-qu').should('have.value', '1')
           cy.get('input#time').should('have.value', '1')
         }
       })
     })
-    cy.get('button#nextButton').should('have.text', cypress.next).click()
-    cy.get('#0').find('hr').should('have.class', 'bg-primary')
-    cy.get('#1').find('hr').should('have.class', 'bg-primary')
-    cy.get('#2').find('hr').should('have.class', 'bg-primary')
-    cy.get('button#submitButton', { timeout: 6000 })
-      .should('have.text', 'Submit', { timeout: 6000 })
-      .click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.get('a', { timeout: 10000 })
-      .find('#tests', { timeout: 10000 })
-      .should('have.text', testsConstants.Tests)
-      .click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.get('#sort-filter-body').get('#ascend', { timeout: 6000 }).click()
-  })
+    cy.get('button#next-button').should('have.text', cypress.next).click()
+    cy.get('.stepsTab').each(($el) => {
+      cy.wrap($el).within((el) => {
+        if (
+          el[0].getElementsByClassName('stepsName')[0].innerHTML ===
+          cypress.step1
+        ) {
+          cy.get('.stepsName').should('have.text', cypress.step1)
+        } else if (
+          el[0].getElementsByClassName('stepsName')[0].innerHTML ===
+          cypress.step2
+        ) {
+          cy.get('.stepsName').should('have.text', cypress.step2)
+        } else if (
+          el[0].getElementsByClassName('stepsName')[0].innerHTML ===
+          cypress.step3
+        ) {
+          cy.get('.stepsName').should('have.text', cypress.step3)
+        }
+      })
+    })
 
+    cy.get('button#submit-button').should('have.text', cypress.submit).click()
+  })
+  it('Verify if user able create the test 2', () => {
+    cy.visit('/sign-in')
+    cy.get('input[name="email"]')
+      .clear()
+      .type(Cypress.env('email'))
+      .should('have.focus')
+      .should('have.value', Cypress.env('email'))
+    cy.get('input[name="password"]')
+      .clear()
+      .type(Cypress.env('password'))
+      .should('have.focus')
+      .should('have.value', Cypress.env('password'))
+    cy.get('[data-cy="submit"]').click()
+    cy.location('pathname').should('include', '/dashboard')
+    cy.get('a').find('#tests').should('have.text', testsConstants.Tests).click()
+    cy.get('#add-test', { timeout: 6000 }).click()
+    cy.location('pathname', { timeout: 60000 }).should(
+      'include',
+      '/tests/add-test'
+    )
+
+    cy.get('input[placeholder="Enter test name"]', { timeout: 6000 })
+      .clear()
+      .type(test1)
+    cy.get('#quill-editor').within(() => {
+      cy.get('.ql-editor').type(`Test Description`)
+    })
+
+    cy.get('button#next-button').should('have.text', cypress.next).click()
+    cy.get('.stepsTab').each(($el) => {
+      cy.wrap($el).within((el) => {
+        if (
+          el[0].getElementsByClassName('stepsName')[0].innerHTML ===
+          cypress.step1
+        ) {
+          cy.get('.stepsName').should('have.text', cypress.step1)
+        } else if (
+          el[0].getElementsByClassName('stepsName')[0].innerHTML ===
+          cypress.step2
+        ) {
+          cy.get('.stepsName').should('have.text', cypress.step2)
+        }
+      })
+    })
+    // user reached to step 2
+
+    cy.get('div#section', { timeout: 60000 }).each((el) => {
+      cy.wrap(el).within(() => {
+        if (el.find('.count')[0].innerText != '0') {
+          cy.get('input#no-of-qu').should('have.disabled', true)
+          cy.get('input#time').should('have.disabled', true)
+          cy.get('button')
+            .should('have.text', commonConstants.addButton)
+            .click()
+          cy.get('button').should('have.text', cypress.Remove)
+
+          cy.get('input#no-of-qu').clear().type('1')
+          cy.get('input#time').clear().type('1')
+          cy.get('input#no-of-qu').should('have.value', '1')
+          cy.get('input#time').should('have.value', '1')
+        }
+      })
+    })
+    cy.get('button#next-button').should('have.text', cypress.next).click()
+    cy.get('.stepsTab').each(($el) => {
+      cy.wrap($el).within((el) => {
+        if (
+          el[0].getElementsByClassName('stepsName')[0].innerHTML ===
+          cypress.step1
+        ) {
+          cy.get('.stepsName').should('have.text', cypress.step1)
+        } else if (
+          el[0].getElementsByClassName('stepsName')[0].innerHTML ===
+          cypress.step2
+        ) {
+          cy.get('.stepsName').should('have.text', cypress.step2)
+        } else if (
+          el[0].getElementsByClassName('stepsName')[0].innerHTML ===
+          cypress.step3
+        ) {
+          cy.get('.stepsName').should('have.text', cypress.step3)
+        }
+      })
+    })
+
+    cy.get('button#submit-button').should('have.text', cypress.submit).click()
+  })
+  it('Test for adding a new member', () => {
+    cy.visit('/sign-in')
+    cy.get('#email')
+      .clear()
+      .type('careers@copods.co')
+      .should('have.value', cypress.email)
+    cy.get('#password')
+      .clear()
+      .type('kQuiz@copods')
+      .should('have.value', cypress.password)
+    cy.findByRole('button').click()
+    cy.get('a').find('#members').should('have.text', cypress.members).click()
+    cy.get('#add-member').should('have.text', cypress.addMember).click()
+    cy.get('#add-pop-up-model').should('be.visible')
+    cy.get('input[name="firstName"]')
+      .clear()
+      .type(memberFirstName)
+      .should('have.value', memberFirstName)
+    cy.get('input[name="lastName"]')
+      .clear()
+      .type(memberLastName)
+      .should('have.value', memberLastName)
+    cy.get('input[name="email"]')
+      .clear()
+      .type(memberEmail)
+      .should('have.value', memberEmail)
+    cy.get('select').select('Recruiter')
+    cy.get('#add-button').click()
+  })
 })
