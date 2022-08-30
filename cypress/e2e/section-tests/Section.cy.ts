@@ -38,8 +38,22 @@ describe('Test for Section', () => {
       .should('have.text', routeFiles.sections)
       .click()
     cy.location('pathname', { timeout: 6000 }).should('include', '/sections')
-    cy.get('input[name="search"]').clear().type('What is your Test Question ?')
-    cy.get('.question').should('have.text', 'What is your Test Question ?')
+    cy.get('input[name="search"]', { timeout: 6000 })
+      .clear()
+      .type('What is your Test Question ?')
+    cy.get('.ql-editor').each(($el) => {
+      cy.wrap($el).within((el) => {
+        if (
+          el[0].getElementsByClassName('question')[0].innerHTML ===
+          'What is your Test Question ?'
+        ) {
+          cy.get('.question').should(
+            'have.text',
+            'What is your Test Question ?'
+          )
+        }
+      })
+    })
   })
   it('Check Active State of Section', () => {
     cy.get('a')
