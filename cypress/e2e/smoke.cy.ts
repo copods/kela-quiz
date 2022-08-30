@@ -11,7 +11,7 @@ const deleteTest1 = `Aptitude - Detete test`
 const section2 = `Aptitude - section2`
 const memberFirstName = 'john'
 const memberLastName = 'dow'
-const memberEmail = 'john@dow.co'
+const memberEmail = 'johndoe@example.com'
 
 describe('smoke tests', () => {
   it('Successfully Login', () => {

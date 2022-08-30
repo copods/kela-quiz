@@ -39,8 +39,7 @@ describe('Test for Section', () => {
       .click()
     cy.location('pathname', { timeout: 6000 }).should('include', '/sections')
     cy.get('input[name="search"]').clear().type('What is your Test Question ?')
-    cy.get("[data-cy='question-row']").should('have.length', 1)
-    cy.contains('What is your Test Question ?')
+    cy.get('.question').should('have.text', 'What is your Test Question ?')
   })
   it('Check Active State of Section', () => {
     cy.get('a')
