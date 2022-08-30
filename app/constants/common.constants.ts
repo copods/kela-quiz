@@ -201,7 +201,6 @@ export const cypress = {
   name: 'Name',
   description: 'Description',
   totalTime: 'Total Time',
-  totalSections: 'Total Sections',
   borderExist:'border-l-8'
 }
 

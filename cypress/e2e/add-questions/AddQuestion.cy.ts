@@ -297,7 +297,7 @@ describe('Test for section-details', () => {
     })
 
     cy.get('#question-editor #quill-editor').within(() => {
-      cy.get('.ql-editor').type(`What is your Test Question ?`)
+      cy.get('.ql-editor').type(`What is useRef() ?`)
     })
 
     cy.get('#optionEditor input').clear().type('Option of question')
@@ -347,7 +347,7 @@ describe('Test for section-details', () => {
     })
 
     cy.get('#question-editor #quill-editor').within(() => {
-      cy.get('.ql-editor').type(`What is your Test Question ?`)
+      cy.get('.ql-editor').type(`What is useMemo() ?`)
     })
 
     cy.get('#optionEditor input').clear().type('Option of question')
