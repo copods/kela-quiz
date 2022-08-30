@@ -40,7 +40,7 @@ describe('Test for section-details', () => {
       'include',
       '/add-question'
     )
-    cy.get('h1', { timeout: 2000 }).should('be.visible')
+    cy.get('h1', { timeout: 6000 }).should('be.visible')
     cy.get('#dropdown > button', { timeout: 6000 }).click()
 
     let flag = ''
@@ -86,7 +86,7 @@ describe('Test for section-details', () => {
       'include',
       '/add-question'
     )
-    cy.get('h1', { timeout: 2000 }).should('be.visible')
+    cy.get('h1', { timeout: 6000 }).should('be.visible')
     cy.get('#dropdown > button', { timeout: 6000 }).click()
 
     let flag = ''
@@ -132,7 +132,7 @@ describe('Test for section-details', () => {
       'include',
       '/add-question'
     )
-    cy.get('h1', { timeout: 2000 }).should('be.visible')
+    cy.get('h1', { timeout: 6000 }).should('be.visible')
     cy.get('#dropdown > button', { timeout: 6000 }).click()
 
     let flag = ''
@@ -180,7 +180,7 @@ describe('Test for section-details', () => {
       'include',
       '/add-question'
     )
-    cy.get('h1', { timeout: 2000 }).should('be.visible')
+    cy.get('h1', { timeout: 6000 }).should('be.visible')
     cy.get('#dropdown > button', { timeout: 6000 }).click()
 
     cy.get('ul').within(() => {
@@ -230,7 +230,7 @@ describe('Test for section-details', () => {
       'include',
       '/add-question'
     )
-    cy.get('h1', { timeout: 2000 }).should('be.visible')
+    cy.get('h1', { timeout: 6000 }).should('be.visible')
     cy.get('#dropdown > button').click()
 
     cy.get('ul').within(() => {
@@ -280,7 +280,7 @@ describe('Test for section-details', () => {
       'include',
       '/add-question'
     )
-    cy.get('h1', { timeout: 2000 }).should('be.visible')
+    cy.get('h1', { timeout: 6000 }).should('be.visible')
     cy.get('#dropdown > button').click()
 
     cy.get('ul').within(() => {
@@ -330,7 +330,7 @@ describe('Test for section-details', () => {
       '/add-question'
     )
 
-    cy.get('h1', { timeout: 2000 }).should('be.visible')
+    cy.get('h1', { timeout: 6000 }).should('be.visible')
     cy.get('#dropdown > button').click()
 
     cy.get('ul').within(() => {
@@ -406,7 +406,7 @@ describe('Test for section-details', () => {
       'include',
       '/add-question'
     )
-    cy.get('h1', { timeout: 2000 }).should('be.visible')
+    cy.get('h1', { timeout: 6000 }).should('be.visible')
     let flag = 0
 
     cy.get('#dropdown > button').click()
