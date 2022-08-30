@@ -5,6 +5,7 @@ import type { Test } from '~/interface/Interface'
 import SortFilter from '../SortFilter'
 import TestTableItem from './TestTableItem'
 import { commonConstants, testsConstants } from '~/constants/common.constants'
+import { routes } from '~/constants/route.constants'
 const TestList = ({
   tests,
   status,
@@ -56,7 +57,7 @@ const TestList = ({
           {testsConstants.Tests}
         </h2>
         <Link
-          to={'/tests/add-test'}
+          to={routes.addTest}
           id="add-test"
           tabIndex={0}
           className="flex h-9 items-center rounded-lg bg-primary px-5 text-xs text-white"

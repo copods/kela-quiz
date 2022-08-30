@@ -19,6 +19,7 @@ import AddSection from '~/components/sections/AddSection'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import type { Section } from '~/interface/Interface'
+import { routes } from '~/constants/route.constants'
 
 export type ActionData = {
   errors?: {
@@ -54,7 +55,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
       status = err
     })
   const userId = await getUserId(request)
-  if (!userId) return redirect('/sign-in')
+  if (!userId) return redirect(routes.signIn)
   const selectedSectionId = params.sectionId
     ? params.sectionId?.toString()
     : undefined

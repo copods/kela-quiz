@@ -57,9 +57,7 @@ export default function OptionForQuestion({
     }
   }
 
-  console.log(singleChoiceAnswer);
   
-
   const deleteOption = (index: number, id?: string) => {
     if (
       getQuestionType(selectedTypeOfQuestion) ===

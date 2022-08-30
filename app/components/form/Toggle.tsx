@@ -7,8 +7,6 @@ export default function Toggle({
   toggle: boolean
   onToggleChange: (e: boolean) => void
 }) {
-  console.log(toggle);
-  
   return (
     <div className='flex' >
       <Switch

@@ -9,6 +9,7 @@ import TestDetails from './CreateTestDetails'
 import TestPreview from './CreateTestPreview'
 import StepsTabComponent from './StepsTab'
 import { commonConstants, testsConstants } from '~/constants/common.constants'
+import { routes } from '~/constants/route.constants'
 const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
   const transition = useTransition()
   const submit = useSubmit()
@@ -21,11 +22,11 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
   const breadCrumbData = [
     {
       tabName: 'Test',
-      route: '/tests',
+      route: routes.tests,
     },
     {
       tabName: 'Add Test',
-      route: '/tests/add-test',
+      route: routes.addTest,
     },
   ]
 
@@ -162,7 +163,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
       )}
       {/* Buttons */}
       <div className="flex w-full items-center justify-between">
-        <Link tabIndex={0} to={'/tests'}>
+        <Link tabIndex={0} to={routes.tests}>
           <button
             tabIndex={0}
             aria-label={commonConstants.cancel}

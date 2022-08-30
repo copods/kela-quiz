@@ -1,5 +1,6 @@
 import { Icon } from '@iconify/react'
 import { Link, useLoaderData } from '@remix-run/react'
+import { routes } from '~/constants/route.constants'
 
 import TestPreview from './CreateTestPreview'
 const TestDetails = () => {
@@ -11,7 +12,7 @@ const TestDetails = () => {
         <div className="border-b border-solid border-slate-300">
           <div className="flex gap-2 pb-6">
             <Link
-              to={'/tests'}
+              to={routes.tests}
               className="testPreviewBackButton flex items-center gap-4 "
               tabIndex={0}
             >

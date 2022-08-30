@@ -90,8 +90,6 @@ const SelectSections = ({
       {/* Sections list */}
       <div className="flex flex-wrap gap-6">
         {sections.map((section: TestSection, i) => {
-          console.log(section);
-          
           return (
             <SelectSectionCard
               section={section}

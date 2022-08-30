@@ -1,12 +1,13 @@
 import { Link } from '@remix-run/react'
 import logo from '~/../public/assets/logo.svg'
 import { sideNav } from '~/constants/common.constants'
+import { routes } from '~/constants/route.constants'
 
 const Header = ({ title }: { title: string }) => {
   return (
     <div className="flex items-center gap-4">
       <Link
-         to={'/dashboard'}
+         to={routes.dashboard}
          tabIndex={0}
          aria-label="Go to Dashboard"
          title='logo'>

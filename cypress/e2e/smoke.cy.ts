@@ -107,7 +107,7 @@ describe('smoke tests', () => {
     cy.get('[data-cy="submit"]').click()
     cy.location('pathname').should('include', '/dashboard')
     cy.get('a').find('#sections').should('have.text', cypress.Sections).click()
-    cy.get('.section-card').each(($el) => {
+    cy.get('#section-card').each(($el) => {
       cy.wrap($el).within((el) => {
         if (
           el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
@@ -157,7 +157,7 @@ describe('smoke tests', () => {
     cy.get('[data-cy="submit"]').click()
     cy.location('pathname').should('include', '/dashboard')
     cy.get('a').find('#sections').should('have.text', cypress.Sections).click()
-    cy.get('.section-card').each(($el) => {
+    cy.get('#section-card').each(($el) => {
       cy.wrap($el).within((el) => {
         if (
           el[0].getElementsByClassName('sectionName')[0].innerHTML === section2

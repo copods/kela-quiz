@@ -7,6 +7,7 @@ import cuid from 'cuid'
 import { Link, useLoaderData, useSubmit, useTransition } from '@remix-run/react'
 import { toast } from 'react-toastify'
 import { addQuestion, QuestionTypes, sectionsConstants } from '~/constants/common.constants'
+import { routes } from '~/constants/route.constants'
 
 const AddQuestionInSection = () => {
   const { sectionDetails, questionTypes } = useLoaderData()
@@ -50,11 +51,11 @@ const AddQuestionInSection = () => {
   const breadCrumbArray = [
     {
       tabName: 'Section',
-      route: '/sections',
+      route: routes.sections,
     },
     {
       tabName: 'AddQuestion',
-      route: `/sections/${sectionDetails?.id}/add-question`,
+      route: `${routes.sections}/${sectionDetails?.id}${routes.addQuestion}`,
     }
   ]
   const getQuestionType = (id: string) => {

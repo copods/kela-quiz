@@ -205,5 +205,7 @@ export enum sortByOrder {
   ascending = 'asc',
   sortAscending = 'Sort Ascending',
   name = 'name',
-  descending = 'dsc'
+  descending = 'dsc',
+  desc = 'desc',
+  asc = 'asc'
 }

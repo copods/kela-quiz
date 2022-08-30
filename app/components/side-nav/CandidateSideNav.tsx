@@ -3,6 +3,7 @@ import { Icon } from '@iconify/react'
 import { NavLink, useLoaderData, useLocation } from '@remix-run/react'
 import candidateLogo from '~/../public/assets/candidateLogo.svg'
 import { candidateExam, QuestionStatus } from '~/constants/common.constants'
+import { routes } from '~/constants/route.constants'
 import type {
   Candidate,
   CandidateQuestion,
@@ -61,7 +62,7 @@ const CandidateSideNav = ({
           </div>
           <div
             className={`flex h-11 items-center text-sm ${
-              location.pathname.includes('/instructions')
+              location.pathname.includes(routes.instructions)
                 ? 'border-0 border-l-4 border-primary bg-blue-50 px-4 font-semibold text-primary'
                 : 'px-5 font-medium text-gray-800 '
             }`}
