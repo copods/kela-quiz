@@ -116,7 +116,12 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
     <div className="flex h-full flex-col gap-6 overflow-hidden">
       {/* header */}
       <header className="flex items-center justify-between">
-        <h2 role={testsConstants.addTestbutton} tabIndex={0} title="Add Test" className="text-3xl font-bold text-black">
+        <h2
+          role={testsConstants.addTestbutton}
+          tabIndex={0}
+          title={testsConstants.addTestbutton}
+          className="text-3xl font-bold text-black"
+        >
           {testsConstants.addTestbutton}
         </h2>
       </header>
@@ -157,20 +162,20 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
       )}
       {/* Buttons */}
       <div className="flex w-full items-center justify-between">
-          <Link tabIndex={0} to={'/tests'}>
-            <button
-              tabIndex={0}
-              aria-label={commonConstants.cancel}
-              title="Cancel Add Test"
-              className={`h-9 rounded-lg px-7 text-xs text-white ${
-                currentTab !== tabs[0].id
-                  ? 'bg-red-500'
-                  : 'bg-gray-6000 bg-red-500'
-              }`}
-            >
-              {commonConstants.cancel}
-            </button>
-          </Link>
+        <Link tabIndex={0} to={'/tests'}>
+          <button
+            tabIndex={0}
+            aria-label={commonConstants.cancel}
+            title="Cancel Add Test"
+            className={`h-9 rounded-lg px-7 text-xs text-white ${
+              currentTab !== tabs[0].id
+                ? 'bg-red-500'
+                : 'bg-gray-6000 bg-red-500'
+            }`}
+          >
+            {commonConstants.cancel}
+          </button>
+        </Link>
         <div className="flex gap-4">
           <button
             tabIndex={0}
@@ -191,7 +196,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
             <button
               tabIndex={0}
               title="Next Tab"
-              id="nextButton"
+              id="next-button"
               className={`h-9 rounded-lg px-7 text-xs text-white ${
                 !(name && description) || currentTab == 2
                   ? 'cursor-not-allowed bg-gray-600'
@@ -199,7 +204,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
               }`}
               onClick={() => setCurrentTab(currentTab + 1)}
               disabled={!(name && description) || currentTab === 2}
-              aria-label='Next'
+              aria-label="Next"
             >
               {commonConstants.nextButton}
             </button>
@@ -207,7 +212,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
             <button
               tabIndex={0}
               title="Next Tab"
-              id="submitButton"
+              id="submit-button"
               className={`h-9 rounded-lg px-7 text-xs text-white ${
                 currentTab == 2
                   ? 'bg-primary'
