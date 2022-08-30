@@ -5,7 +5,12 @@ import QuillEditor from '~/components/QuillEditor.client'
 import { ClientOnly } from 'remix-utils'
 import Toggle from '~/components/form/Toggle'
 import type { SetStateAction } from 'react'
-import { addQuestion, QuestionTypes } from '~/constants/common.constants'
+import {
+  addQuestion,
+  commonConstants,
+  QuestionTypes,
+  statusCheck,
+} from '~/constants/common.constants'
 import { toast } from 'react-toastify'
 interface textAnswerType {
   id: string
@@ -47,8 +52,8 @@ export default function OptionForQuestion({
         QuestionTypes.multipleChoice ||
       getQuestionType(selectedTypeOfQuestion) === QuestionTypes.singleChoice
     ) {
-      if (options.length > 9) {
-        return toast.error('you can add maximum ten options.', { toastId })
+      if (options.length > 5) {
+        return toast.error(statusCheck.maxOptions, { toastId })
       }
       setOptions([...options, { option: '', isCorrect: false, id: cuid() }])
     } else if (getQuestionType(selectedTypeOfQuestion) === QuestionTypes.text) {
@@ -136,16 +141,14 @@ export default function OptionForQuestion({
 
         <button
           tabIndex={0}
-          className={`flex h-9 items-center  rounded-lg bg-primary px-5 text-xs text-white ${
-            options.length === 10 ? 'cursor-not-allowed opacity-75' : ''
-          }`}
+          className="flex h-9 items-center rounded-lg bg-primary px-5 text-xs text-white"
           onClick={addOptionArea}
         >
           + {addQuestion.addOptions}
         </button>
       </div>
 
-      <div className="flex h-full flex-1 flex-col gap-5  overflow-auto">
+      <div className="flex h-full flex-1 flex-col gap-5 overflow-auto">
         {(getQuestionType(selectedTypeOfQuestion) ===
           QuestionTypes.multipleChoice ||
           getQuestionType(selectedTypeOfQuestion) ===
@@ -158,30 +161,28 @@ export default function OptionForQuestion({
                   <input
                     name="checkbox"
                     tabIndex={0}
-                    id="checkBox"
                     type="checkbox"
                     value={option.id}
                     onChange={() => {
                       checkBoxToggle(index)
                     }}
                     checked={option.isCorrect}
-                    className="h-5 w-5"
+                    className="checkBox h-5 w-5"
                   />
                 ) : (
                   getQuestionType(selectedTypeOfQuestion) ===
                     QuestionTypes.singleChoice && (
                     <input
                       tabIndex={0}
-                      id="radioButton"
                       type="radio"
                       name="radioChoice"
                       value={option.id}
                       onChange={(e) => setSingleChoiceAnswer(e.target.value)}
-                      className="h-5 w-5"
+                      className="radioButton h-5 w-5"
                     />
                   )
                 )}
-                <div className="h-32 flex-1" id="optionEditor">
+                <div className="textOption h-32 flex-1" id="optionEditor">
                   {
                     <ClientOnly fallback={<div></div>}>
                       {() => (
@@ -204,6 +205,7 @@ export default function OptionForQuestion({
                     if (e.key === 'Enter') deleteOption(index, option?.id)
                   }}
                   tabIndex={0}
+                  aria-label="delete"
                   icon="ic:outline-delete-outline"
                   className={`h-6 w-6 ${index} ${
                     options.length < 2
@@ -224,6 +226,7 @@ export default function OptionForQuestion({
                     <input
                       tabIndex={0}
                       className="h-20 w-full rounded-lg border border-gray-300 bg-white p-4"
+                      placeholder={commonConstants.placeholderForOptionInput}
                       value={option.answer}
                       onChange={(e) => {
                         updateTextAnswer(e.target.value, index)

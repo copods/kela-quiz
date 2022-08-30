@@ -2,11 +2,41 @@ import type { CandidateResult, CandidateTest } from '@prisma/client'
 import { prisma } from '~/db.server'
 import type { Test } from '@prisma/client'
 
-export async function getCandidateEmailById({ id }: Pick<CandidateTest, 'id'>) {
-  return prisma.test.findUnique({
-    where: { id },
+export async function getPendingExamCandidateByTestId({ id }: Pick<CandidateTest, 'id'>) {
+  return prisma.test.findFirst({
+    where: {
+      id,
+    },
     include: {
       candidateTest: {
+        where: {
+          startedAt: null
+        },
+        include: {
+          candidate: {
+            select: {
+              email: true,
+              createdBy: true,
+            },
+          },
+        },
+      },
+    },
+  })
+}
+export async function getTestAttendedCandiated({ id }: Pick<CandidateResult, 'id'>) {
+  return prisma.test.findFirst({
+    where: {
+      id,
+    },
+    include: {
+      candidateTest: {
+        where: {
+          NOT: {
+            startedAt: null
+          },
+          endAt: null
+        },
         include: {
           candidate: {
             select: {

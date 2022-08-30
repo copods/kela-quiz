@@ -23,6 +23,7 @@ const QuestionCard = ({
         <div
           className="items-top flex flex-1 justify-between"
           tabIndex={0}
+          role="button"
           onKeyUp={(e) => {
             if (e.key === 'Enter')
               onAccordianToggle(
@@ -37,7 +38,7 @@ const QuestionCard = ({
         >
           <div className="ql-editor flex-1 p-0 pr-4">
             <div
-              className="cursor-pointer"
+              className="question cursor-pointer"
               dangerouslySetInnerHTML={{ __html: question.question }}
             ></div>
           </div>

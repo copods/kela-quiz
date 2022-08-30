@@ -6,7 +6,13 @@ import OptionForQuestion from './OptionForQuestion'
 import cuid from 'cuid'
 import { Link, useLoaderData, useSubmit, useTransition } from '@remix-run/react'
 import { toast } from 'react-toastify'
-import { addQuestion, QuestionTypes } from '~/constants/common.constants'
+import {
+  addQuestion,
+  QuestionTypes,
+  testsConstants,
+  sectionsConstants,
+  statusCheck,
+} from '~/constants/common.constants'
 
 const AddQuestionInSection = () => {
   const { sectionDetails, questionTypes } = useLoaderData()
@@ -48,16 +54,12 @@ const AddQuestionInSection = () => {
   const transition = useTransition()
 
   const breadCrumbArray = [
-    // {
-    //   tabName: 'Section',
-    //   route: '/sections',
-    // },
     {
-      tabName: 'Section',
+      tabName: testsConstants.sectionText,
       route: `/sections/${sectionDetails?.id}`,
     },
     {
-      tabName: 'Add Question',
+      tabName: sectionsConstants.addQuestion,
       route: `/sections/${sectionDetails?.id}/add-question`,
     },
   ]
@@ -100,7 +102,7 @@ const AddQuestionInSection = () => {
         flag == 0 &&
         getQuestionType(selectedTypeOfQuestion) === QuestionTypes.multipleChoice
       ) {
-        toast.error('Select the Correct Option', {
+        toast.error(statusCheck.selectCorrOption, {
           toastId: 'correctOptionRequired',
         })
         return
@@ -111,7 +113,7 @@ const AddQuestionInSection = () => {
           QuestionTypes.singleChoice &&
         !singleChoiceAnswer
       ) {
-        toast.error('Select the Correct Option', {
+        toast.error(statusCheck.selectCorrOption, {
           toastId: 'correctOptionsRequired',
         })
         return
@@ -231,7 +233,7 @@ const AddQuestionInSection = () => {
         <div className="flex gap-2">
           <button
             tabIndex={0}
-            id="saveAndExit"
+            id="save-and-exit"
             disabled={transition.state === 'submitting'}
             className={`flex h-9 items-center gap-1 rounded-lg bg-primary px-5 text-xs text-white ${
               transition.state === 'submitting' && 'disabled:opacity-75'

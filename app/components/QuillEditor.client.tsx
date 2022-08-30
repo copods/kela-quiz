@@ -83,7 +83,7 @@ export default function QuillEditor({
   return (
     <div
       className="flex h-full w-full flex-col rounded-lg bg-white"
-      id="quillEditor"
+      id="quill-editor"
       ref={editorRef}
     >
       <div ref={quillRef} />

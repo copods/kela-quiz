@@ -1,7 +1,11 @@
 import type { ActionFunction, LoaderFunction } from '@remix-run/server-runtime'
 import { redirect } from '@remix-run/server-runtime'
 import { json } from '@remix-run/node'
-import { routeFiles, sectionsConstants } from '~/constants/common.constants'
+import {
+  routeFiles,
+  sectionsConstants,
+  statusCheck,
+} from '~/constants/common.constants'
 import {
   Outlet,
   useActionData,
@@ -82,13 +86,13 @@ export const action: ActionFunction = async ({ request }) => {
     const description = formData.get('description')
     if (typeof name !== 'string' || name.length === 0) {
       return json<ActionData>(
-        { errors: { title: 'Name is required', status: 400 } },
+        { errors: { title: statusCheck.nameIsReq, status: 400 } },
         { status: 400 }
       )
     }
     if (typeof description !== 'string' || description.length === 0) {
       return json<ActionData>(
-        { errors: { title: 'description is required', status: 400 } },
+        { errors: { title: statusCheck.descIsReq, status: 400 } },
         { status: 400 }
       )
     }
@@ -99,7 +103,7 @@ export const action: ActionFunction = async ({ request }) => {
         addHandle = json<ActionData>(
           {
             resp: {
-              status: 'Section Added Successfully..!',
+              status: statusCheck.sectionAddedSuccess,
               data: res as Section,
               check: new Date(),
             },
@@ -109,7 +113,7 @@ export const action: ActionFunction = async ({ request }) => {
       })
 
       .catch((err) => {
-        let title = 'Something went wrong..!'
+        let title = statusCheck.commonError
         if (err.code === 'P2002') {
           title = 'Duplicate Title'
         }
@@ -126,13 +130,13 @@ export const action: ActionFunction = async ({ request }) => {
     await deleteSectionById(formData.get('id') as string)
       .then((res) => {
         deleteHandle = json<ActionData>(
-          { resp: { status: 'Deleted Successfully..!' } },
+          { resp: { status: statusCheck.deletedSuccess } },
 
           { status: 200 }
         )
       })
       .catch((err) => {
-        let title = 'Something went wrong..!'
+        let title = statusCheck.commonError
         deleteHandle = json<ActionData>(
           { errors: { title, status: 400, check: new Date() } },
           { status: 400 }
@@ -170,7 +174,7 @@ export default function SectionPage() {
   )
 
   if (data.status != 'Success') {
-    toast.error('Something went wrong..!')
+    toast.error(statusCheck.commonError)
   }
 
   useEffect(() => {
@@ -200,11 +204,13 @@ export default function SectionPage() {
 
   useEffect(() => {
     if (sectionActionData) {
-      if (sectionActionData.resp?.status === 'Section Added Successfully..!') {
+      if (sectionActionData.resp?.status === statusCheck.sectionAddedSuccess) {
         setShowAddSectionModal(false)
         toast.success(sectionActionData.resp?.status)
         setSelectedSection(sectionActionData?.resp?.data?.id as string)
-      } else if (sectionActionData.resp?.status === 'Deleted Successfully..!') {
+      } else if (
+        sectionActionData.resp?.status === statusCheck.deletedSuccess
+      ) {
         toast.success(sectionActionData.resp?.status, {
           toastId: sectionActionData.resp?.status,
         })
@@ -263,6 +269,7 @@ export default function SectionPage() {
             <span
               className="z-20 -mr-5"
               tabIndex={0}
+              role={'button'}
               onClick={() => setSectionDetailFull(!sectionDetailFull)}
               onKeyUp={(e) => {
                 if (e.key === 'Enter') setSectionDetailFull(!sectionDetailFull)

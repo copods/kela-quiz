@@ -5,7 +5,7 @@ import { useSubmit } from '@remix-run/react'
 import DeletePopUp from '../DeletePopUp'
 import { useState, useEffect } from 'react'
 
-import { sectionsConstants } from '~/constants/common.constants'
+import { sectionsConstants, statusCheck } from '~/constants/common.constants'
 const SectionCard = ({
   name,
   isActive,
@@ -22,17 +22,16 @@ const SectionCard = ({
   createdBy: string
   createdAt: Date
   id: string
-  err: any
+  err: string | undefined
   actionStatusData: any
 }) => {
-  // console.log(id, 'id')
   const [isDelete, setIsDelete] = useState(false)
   const submit = useSubmit()
   const deleteSection = () => {
     submit({ deleteSection: 'sectionDelete', id: id }, { method: 'post' })
   }
   useEffect(() => {
-    if (actionStatusData == 'Deleted Successfully..!') {
+    if (actionStatusData == statusCheck.deletedSuccess) {
       setIsDelete(false)
     }
   }, [actionStatusData])
@@ -55,11 +54,14 @@ const SectionCard = ({
       id="section-card"
     >
       <div className="flex items-center justify-between">
-        <h2 id="sctionName" className="text-xl font-semibold text-gray-700">
+        <h2 className="sectionName text-xl font-semibold text-gray-700">
           {name}
         </h2>
         <div className="flex">
-          <Menu as="div" className=" relative inline-block text-left">
+          <Menu
+            as="div"
+            className="verticalDots relative inline-block text-left"
+          >
             <Menu.Button>
               <Icon
                 className="text-2xl text-gray-600"
@@ -71,6 +73,7 @@ const SectionCard = ({
                 <Menu.Item>
                   {({ active }) => (
                     <button
+                      data-cy="deleteSection"
                       name="deleteSection"
                       className={`${
                         active ? 'bg-primary text-white' : 'text-gray-900'
@@ -82,13 +85,13 @@ const SectionCard = ({
                       {active ? (
                         <Icon
                           icon={'ic:outline-delete-outline'}
-                          className="mr-2 h-5 w-5 "
+                          className="mr-2 h-5 w-5"
                           aria-hidden="true"
                         />
                       ) : (
                         <Icon
                           icon={'ic:outline-delete-outline'}
-                          className="mr-2 h-5 w-5 text-[#EF4444]"
+                          className="mr-2 h-5 w-5 text-red-500"
                           aria-hidden="true"
                         />
                       )}
