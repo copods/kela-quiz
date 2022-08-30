@@ -100,6 +100,7 @@ export enum QuestionTypes {
   singleChoice = 'SINGLE_CHOICE',
   text = 'TEXT',
 }
+
 export const statusCheck = {
   success: 'Success',
   commonError: 'Something Went Wrong',
@@ -192,9 +193,6 @@ export enum sortByOrder {
   ascending = 'asc',
   sortAscending = 'Sort Ascending',
   name = 'name',
-  descending = 'descending',
+  descending = 'desc',
   sortDescending = 'Sort Descending',
-  multipleChoice = 'MULTIPLE_CHOICE',
-  singleChoice = 'SINGLE_CHOICE',
-  text = 'TEXT',
 }

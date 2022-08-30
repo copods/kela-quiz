@@ -42,6 +42,8 @@ describe('smoke tests', () => {
     cy.get('#password-error').should('have.text', 'Password is invalid')
   })
 
+  // creating test data
+
   it('Adding a section 1 ', () => {
     cy.visit('/sign-in')
     cy.get('input[name="email"]')
