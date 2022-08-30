@@ -13,7 +13,6 @@ const deleteSection = `Aptitude - delete-Section`
 const memberFirstName = 'john'
 const memberLastName = 'dow'
 const memberEmail = 'johndoe@example.com'
-const secNamePlaceholder = 'Enter Section Name'
 
 describe('smoke tests', () => {
   it('Successfully Login', () => {
@@ -89,7 +88,7 @@ describe('smoke tests', () => {
     cy.get('form > div')
       .should('be.visible')
       .within((el) => {
-        cy.get(`input[placeholder=${secNamePlaceholder}]`).type(section2)
+        cy.get(`input[placeholder='Enter Section Name']`).type(section2)
         cy.get('textarea').type('Aptitude')
         cy.get('[data-cy="submit"]').click()
       })
