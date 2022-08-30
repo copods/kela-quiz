@@ -62,7 +62,7 @@ describe('Test for GroupByTestTable, Result', () => {
               .within((el) => {
                 cy.get('.candidate-name').then(($elements) => {
                   var strings = [...$elements].map(($el) => $el.innerText)
-                  expect(strings).to.deep.equal(strings.sort().reverse())
+                  expect(strings).to.deep.equal(strings.sort())
                 })
               })
           })
