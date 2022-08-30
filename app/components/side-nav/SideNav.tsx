@@ -19,7 +19,7 @@ let sideNavGuide = [
     navGuide: 'Results',
     subItem: [
       {
-        id: 'group_by_tests',
+        id: 'group-by-tests',
         iconClass: 'mdi:chart-box-outline',
         itemName: 'Results',
         itemRoute: 'results/groupByTests',

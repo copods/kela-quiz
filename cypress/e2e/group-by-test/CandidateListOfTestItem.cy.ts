@@ -17,7 +17,7 @@ describe('Visiting group by test of results page', () => {
   })
   const test1 = `Aptitude - test1`
   it('Check  that if list of candidate is coming after clicking a test in group byt test in results page ', () => {
-    cy.get('a').find('#group_by_tests').should('have.text', 'Results').click()
+    cy.get('a').find('#group-by-tests').should('have.text', 'Results').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')
     cy.get('h1', { timeout: 6000 }).should('have.text', 'Results')
     cy.wait(6000)
@@ -32,7 +32,7 @@ describe('Visiting group by test of results page', () => {
     })
   })
   it('Check  that if list of attended candidate is coming after clicking a test in group byt test in results page ', () => {
-    cy.get('a').find('#group_by_tests').should('have.text', 'Results').click()
+    cy.get('a').find('#group-by-tests').should('have.text', 'Results').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')
     cy.get('h1', { timeout: 6000 }).should('have.text', 'Results')
 

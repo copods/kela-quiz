@@ -19,7 +19,7 @@ describe('Test for Logout, SideNav', () => {
   //
   it('click all links with loop', () => {
     // result page
-    cy.get('a').find('#group_by_tests').should('have.text', 'Results').click()
+    cy.get('a').find('#group-by-tests').should('have.text', 'Results').click()
     cy.location('pathname').should('include', '/results/groupByTests')
 
     // tests page
