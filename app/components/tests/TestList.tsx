@@ -13,8 +13,10 @@ const TestList = ({
   tests: Array<Test>
   status: string | undefined
 }) => {
-  const [sortDirection, onSortDirectionChange] = useState(sortByOrder.ascending as string)
-  const [sortBy, onSortChange] = useState('name')
+  const [sortDirection, onSortDirectionChange] = useState(
+    sortByOrder.ascending as string
+  )
+  const [sortBy, onSortChange] = useState(sortByOrder.name as string)
   const filterByType = [
     {
       name: 'Name',
