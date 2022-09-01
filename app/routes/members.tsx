@@ -52,13 +52,13 @@ export const action: ActionFunction = async ({ request }) => {
 
     if (typeof firstName !== 'string' || firstName.length === 0) {
       return json<ActionData>(
-        { errors: { title: 'FirstName is required', status: 400 } },
+        { errors: { title: 'Firstname is required', status: 400 } },
         { status: 400 }
       )
     }
     if (typeof lastName !== 'string' || lastName.length === 0) {
       return json<ActionData>(
-        { errors: { title: 'LastName is required', status: 400 } },
+        { errors: { title: 'Lastname is required', status: 400 } },
         { status: 400 }
       )
     }

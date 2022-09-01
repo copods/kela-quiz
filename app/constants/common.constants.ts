@@ -70,7 +70,7 @@ export const sectionsConstants = {
   addQuestion: 'Add Question',
   noQuestionAlert: 'No questions found. Add your first question',
   noRecordFound: 'No Record Found',
-  sectionAdditionMsg: 'Section Added Successfully..!',
+  sectionAdditionMsg: 'Section added successfully..!',
   sectionNameIsRequiredMsg: 'Section name is required',
   sectionDescIsRequiredMsg: 'Description is required',
   duplicateTitleMsg: 'Duplicate Title',
@@ -102,12 +102,6 @@ export const componentGlobalConstants = {
 export const routeFiles = {
   sections: 'Sections',
   options: 'Options',
-}
-
-export enum QuestionTypes {
-  multipleChoice = 'MULTIPLE_CHOICE',
-  singleChoice = 'SINGLE_CHOICE',
-  text = 'TEXT',
 }
 
 export const statusCheck = {
@@ -166,8 +160,6 @@ export const candidateExam = {
   noOfQuestions: 'No. of Questions',
 }
 export const cypress = {
-  //
-  //
   Tests: 'Tests',
   Sections: 'Sections',
   Add: 'Add',
@@ -195,6 +187,13 @@ export const cypress = {
   description: 'Description',
   totalTime: 'Total Time',
   totalSections: 'Total Sections',
+
+  addQuest: '+ Add Question',
+  nameIsReq: 'Name is required',
+  descIsReq: 'Description is required',
+  sectionAdded: 'Section added successfully..!',
+  duplicateTitle: 'Duplicate Title',
+  enterAllOptions: 'Enter all the Options',
 }
 
 export enum sortByOrder {
