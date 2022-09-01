@@ -37,6 +37,7 @@ const TestListMenuItem = ({
               <Menu.Item>
                 {({ active }) => (
                   <button
+                  tabIndex={0}
                     name="deleteTest"
                     className={`${
                       active ? 'bg-primary text-white' : 'text-gray-900'

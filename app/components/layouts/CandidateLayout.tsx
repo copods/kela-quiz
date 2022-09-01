@@ -2,6 +2,7 @@ import { candidateExamConstants } from '~/constants/common.constants'
 import type {
   Candidate,
   CandidateTest,
+  SectionInCandidateTest,
   SectionInTest,
 } from '~/interface/Interface'
 import TimerComponent from '../assessment/Timer'
@@ -23,6 +24,14 @@ export default function CandidateLayout({
   section?: SectionInTest
   params?: { assessmentId?: string; sectionId?: string; questionId?: string }
 }) {
+  let candidateSection: SectionInCandidateTest | null = null
+  for (let sec of candidateTest?.sections) {
+    if (section?.section?.id === sec?.section?.id) {
+      candidateSection = sec
+      break
+    }
+  }
+
   return (
     <main className="flex max-h-screen min-h-screen">
       <div className="w-2/12 min-w-260 bg-white drop-shadow-md">
@@ -32,10 +41,12 @@ export default function CandidateLayout({
         <div className="flex h-20 items-center justify-between bg-white px-9 text-2xl font-semibold leading-8 text-gray-800">
           {params?.questionId ? (
             <>
-              <TimerComponent
-                candidateTest={candidateTest}
-                section={section as SectionInTest}
-              />
+              {candidateSection && (
+                <TimerComponent
+                  candidateSection={candidateSection}
+                  section={section as SectionInTest}
+                />
+              )}
               <form className="flex gap-5" method="post">
                 <button
                   className="h-11 w-40 rounded-md border border-primary bg-white text-base font-medium text-primary shadow-sm"

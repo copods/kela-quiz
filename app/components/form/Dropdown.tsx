@@ -33,7 +33,7 @@ function DropdownField({
           <div className="dropdown relative w-48" id="dropdown">
             <Listbox.Button
               id="dropdownButton"
-              className=" dropdownButton relative h-11 w-full cursor-pointer rounded-md border border-gray-200 bg-white px-3 py-3 text-left shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 sm:text-sm"
+              className=" dropdownButton relative h-11 w-full cursor-pointer rounded-md border border-gray-200 bg-white px-3 py-3 text-left shadow-sm sm:text-sm"
             >
               <span className="flex items-center">
                 <span className="block truncate">{getName(value)}</span>
@@ -64,7 +64,10 @@ function DropdownField({
                   >
                     {({ selected, active }) => (
                       <>
-                        <div className="flex items-center">
+                        <div
+                          title={el[displayKey]}
+                          className="flex items-center"
+                        >
                           <span
                             className={classNames(
                               selected

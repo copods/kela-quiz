@@ -15,14 +15,9 @@ const AttendedCandidateListItem = ({
 }) => {
   return (
     <div className="col-span-full">
-      <div
-        id="groupByTestRow"
-        className="col-span-full grid grid-cols-12 border-t-[1px] border-solid border-[#E5E7EB] bg-white px-12 py-4"
-      >
+      <div className="col-span-full grid grid-cols-12 gap-3 border-t border-solid border-gray-200 bg-white px-12 py-6">
         <div className=" col-span-1 truncate">
-          <span className=" text-base leading-6 text-gray-700">
-            {index + 1}
-          </span>
+          <span className=" text-base leading-6 text-gray-700">{index}</span>
         </div>
         <div className="col-span-3 truncate">{name}</div>
         <div className="col-span-4 truncate">{email}</div>

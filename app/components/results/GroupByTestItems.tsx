@@ -18,10 +18,7 @@ const GroupByTestItems = ({
 }) => {
   return (
     <div className="col-span-full">
-      <div
-        id="groupByTestRow"
-        className="col-span-full grid grid-cols-10 gap-3 border-t border-solid border-borderColor px-12 py-4"
-      >
+      <div className="groupTestRow  col-span-full grid grid-cols-10 gap-3 border-t border-solid border-borderColor px-12 py-6">
         <div className="col-span-1 truncate">
           <span className="text-base text-gray-700">{index}</span>
         </div>
@@ -30,7 +27,8 @@ const GroupByTestItems = ({
             tabIndex={0}
             to={`/results/groupByTests/${id}`}
             id="group-by-item-test"
-            className="text-base font-semibold text-primary"
+            data-cy="group-by-item-test"
+            className="groupByItemTest text-base font-semibold text-primary"
           >
             {candidateName}
           </Link>
