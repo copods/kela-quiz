@@ -193,7 +193,7 @@ const AddQuestionInSection = () => {
         role={sectionDetails?.name}
         aria-label={sectionDetails?.name}
         tabIndex={0}
-        className="text-3xl font-bold leading-9 text-gray-900 inline-block"
+        className="text-3xl font-bold text-gray-900 inline-block"
       >
         {sectionDetails?.name} - {addQuestion.addQuestion}
       </h1>

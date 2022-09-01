@@ -35,7 +35,7 @@ function MenuItems({ iconClass, itemName, itemRoute, id }: tabProps) {
           <span>
             <p
               id={id}
-              className={`non-italic text-base font-semibold leading-6 ${
+              className={`non-italic text-base font-semibold ${
                 location.pathname.includes(`/${itemRoute}`)
                   ? 'text-primary'
                   : 'text-gray-500'

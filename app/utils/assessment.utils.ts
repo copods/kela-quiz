@@ -292,10 +292,3 @@ export async function endCandidateAssessment(assessmentId: string, sectionId: st
   await endAssessment(assessmentId as string)
   return redirect(`/assessment/${assessmentId}/end-assessment`)
 }
-
-// export function setTheFocus(e:any, id:string){
-//     if(e.key === 'Enter'){
-//       return window.location.href = id;
-//     }
-//     return
-// }

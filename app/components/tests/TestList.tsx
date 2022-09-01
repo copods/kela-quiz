@@ -83,22 +83,22 @@ const TestList = ({
               <input type="checkbox" />
             </div>
           )}
-          <div className="w-1/12 text-sm leading-5 text-gray-500">
+          <div className="w-1/12 text-sm text-gray-500">
             {testsConstants.srNoText}
           </div>
-          <div className="w-4/12 text-sm leading-5 text-gray-500">
+          <div className="w-4/12 text-sm text-gray-500">
             {testsConstants.testListColumnLabel}
           </div>
-          <div className="w-3/12 text-sm leading-5 text-gray-500">
+          <div className="w-3/12 text-sm text-gray-500">
             {testsConstants.sectionText}
           </div>
-          <div className="w-2/12 text-sm leading-5 text-gray-500">
+          <div className="w-2/12 text-sm text-gray-500">
             {testsConstants.createdOn}
           </div>
-          <div className="w-2/12 text-sm leading-5 text-gray-500">
+          <div className="w-2/12 text-sm text-gray-500">
             {testsConstants.created} {commonConstants.byText}
           </div>
-          <div className="flex w-1/12 text-sm leading-5 text-gray-500">
+          <div className="flex w-1/12 text-sm text-gray-500">
             {testsConstants.actionsText}
           </div>
         </div>

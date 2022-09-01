@@ -19,14 +19,8 @@ module.exports = {
         301: '320px',
         sectionCard: '330px',
       },
-      height: {
-        24:'24px',
-        28: `28px`
-      },
       width: {
         sectionCard: `30%`,
-        24:'24px',
-        64: '64px'
       },
       borderRadius: {
         1: '1px',
@@ -38,6 +32,9 @@ module.exports = {
       },
       gridTemplateColumns: {
         18: 'repeat(18, minmax(0, 1fr))'
+      },
+      padding:{
+        17:'17px'
       }
     },
   },

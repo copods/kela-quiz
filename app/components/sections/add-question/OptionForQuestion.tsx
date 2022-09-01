@@ -128,7 +128,7 @@ export default function OptionForQuestion({
           QuestionTypes.multipleChoice ||
         getQuestionType(selectedTypeOfQuestion) ===
           QuestionTypes.singleChoice ? (
-          <div className="ml-7 text-base font-medium leading-6 text-gray-600"
+          <div className="ml-7 text-base font-medium text-gray-600"
              role={addQuestion.createOptions}
              tabIndex={0}
              title={addQuestion.createOptions}
@@ -137,7 +137,7 @@ export default function OptionForQuestion({
             {addQuestion.createOptions}
           </div>
         ) : (
-          <div className="flex items-center justify-center gap-2 text-base font-medium leading-6 text-gray-600">
+          <div className="flex items-center justify-center gap-2 text-base font-medium text-gray-600">
             {addQuestion.checkOrder}
               <Toggle toggle={checkOrder} onToggleChange={setCheckOrder} />
           </div>
