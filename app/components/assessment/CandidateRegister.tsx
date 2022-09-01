@@ -4,7 +4,10 @@ import Button from '~/components/form/Button'
 import InputField from '~/components/form/InputField'
 import Logo from '~/components/Logo'
 import Checkbox from '../form/CheckBox'
-import { candidateExam, commonConstants } from '~/constants/common.constants'
+import {
+  candidateExamConstants,
+  commonConstants,
+} from '~/constants/common.constants'
 
 function CandidateRegister() {
   const [firstName, setFirstName] = useState('')
@@ -71,7 +74,7 @@ function CandidateRegister() {
           <div className="mt-5 flex flex-row">
             <Checkbox {...checkBoxProps} />
             <span className="ml-2 text-xs text-slate-500">
-              {candidateExam.candidateAcceptance}
+              {candidateExamConstants.candidateAcceptance}
             </span>
           </div>
           <div className="mt-6">
