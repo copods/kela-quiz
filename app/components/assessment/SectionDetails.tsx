@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 import { useLoaderData, useSubmit } from '@remix-run/react'
-import { candidateExam } from '~/constants/common.constants'
+import { candidateExam, candidateExamConstants } from '~/constants/common.constants'
 import Button from '../form/Button'
 
 const SectionDetails = () => {
@@ -25,12 +25,12 @@ const SectionDetails = () => {
         </div>
         <div className="flex flex-row items-center gap-4">
           <div className="flex gap-2 text-lg text-gray-600">
-            {candidateExam.noOfQuestions}:
+            {candidateExamConstants.noOfQuestions}:
             <span className="font-medium">{section.totalQuestions}</span>
           </div>
           <Icon icon="ci:line-m" className="text-2xl text-gray-600" />
           <div className="flex gap-2 text-lg text-gray-600">
-            {candidateExam.total} {candidateExam.time}:
+            {candidateExamConstants.total} {candidateExamConstants.time}:
             <span className="font-medium">
               {section.timeInSeconds / 60} Mins
             </span>

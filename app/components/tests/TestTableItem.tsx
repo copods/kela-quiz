@@ -48,7 +48,7 @@ const TestTableItem = ({
     <>
       <div
         key={index}
-        className="test-table-list flex border-b border-t-0 border-gray-200 bg-white py-3 px-9"
+        className="test-table-list flex items-center border-b border-t border-gray-200 bg-white py-6 px-9"
       >
         {showCheckBox && (
           <div className="w-1/12 text-base font-normal leading-6 text-gray-700">

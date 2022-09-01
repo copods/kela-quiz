@@ -89,7 +89,9 @@ export const testsConstants = {
   created: 'Created',
   actionsText: 'Actions',
   noTestFound: 'No Test Found',
-  noCandidateForTest: 'No Candidate for this Test',
+  noCandidateForTest: 'No candidate has attempted this test',
+  candidateAlreadyInvited: 'Candidate has already been invited for this test',
+  candidateInvited: 'Candidates Invited',
   writeDescriptionOfTest: 'Write Description of Test',
 }
 export const componentGlobalConstants = {
@@ -124,10 +126,14 @@ export const resultConstants = {
   totalInvited: 'Invited',
   totalAttended: 'Attended',
   noTestAlert: 'No test found. Add your test first',
-  srno: 'Sr.No',
+  srNo: 'Sr.No',
   invitedBy: 'Invited By',
   result: 'Result',
   review: 'Review',
+  status: 'Status',
+  inactive: 'Inactive',
+  active: 'Active',
+
   startedAt: 'Started At',
 }
 
@@ -138,7 +144,7 @@ export enum QuestionStatus {
   answered = 'ANSWERED',
 }
 
-export const candidateExam = {
+export const candidateExamConstants = {
   time: 'Time',
   timeRemaining: 'Time Remaining',
   timeLimit: 'Time Limit',
@@ -158,9 +164,15 @@ export const candidateExam = {
   beginAssesment: 'Begin Assesment',
   instructions: 'Instructions',
   startSection: 'Start Now',
-  examTitle: 'Pre-Interview Assessment',
+
   info: 'Info',
   noOfQuestions: 'No. of Questions',
+  candidateTestCreated: 'created',
+  error: 'error',
+  candidateCreateError: 'Candidate Create Error..!',
+  candidateTestCreateError: 'Candidate Test Create Error..!',
+  errorUpdatingTestLink: 'Error updating test link..!',
+  errorCreatingSectionInTest: 'Error creating section in test ..',
 }
 export const cypress = {
   //

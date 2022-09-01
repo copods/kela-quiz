@@ -1,7 +1,7 @@
 import { useLoaderData } from '@remix-run/react'
 import { useState } from 'react'
 import {
-  candidateExam,
+  candidateExamConstants,
   commonConstants,
   QuestionTypes,
   routeFiles,
