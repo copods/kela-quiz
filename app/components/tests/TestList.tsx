@@ -49,7 +49,7 @@ const TestList = ({
         <h2
           tabIndex={0}
           role={testsConstants.Tests}
-          title="Tests"
+          title={testsConstants.Tests}
           className="text-3xl font-bold text-black"
         >
           {testsConstants.Tests}
