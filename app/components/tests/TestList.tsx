@@ -106,7 +106,7 @@ const TestList = ({
         </div>
         <div
           id="test-list"
-          className="rounded-t-0 flex flex-col gap-3 rounded-md border-t-0 border-solid border-borderColor shadow-table"
+          className="rounded-t-0 flex flex-col rounded-md border-t-0 border-solid border-borderColor shadow-table"
         >
           {tests.map((test, i) => (
             <TestTableItem
