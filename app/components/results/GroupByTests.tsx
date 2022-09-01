@@ -4,7 +4,9 @@ import { resultConstants, commonConstants } from '~/constants/common.constants'
 
 import { useLoaderData, useSubmit } from '@remix-run/react'
 import GroupByTestItems from './GroupByTestItems'
-import { CandidateTest, sortByOrder, Test } from '~/interface/Interface'
+import type { CandidateTest, Test } from '~/interface/Interface'
+import { sortByOrder } from '~/interface/Interface'
+
 const GroupByTests = () => {
   const [sortDirection, onSortDirectionChange] = useState(sortByOrder.ascending as string)
   const [sortBy, onSortChange] = useState('name')

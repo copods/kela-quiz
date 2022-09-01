@@ -20,10 +20,12 @@ module.exports = {
         sectionCard: '330px',
       },
       height: {
-        28: `28px`,
+        24:'24px',
+        28: `28px`
       },
       width: {
         sectionCard: `30%`,
+        24:'24px',
         64: '64px'
       },
       borderRadius: {

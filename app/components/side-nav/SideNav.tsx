@@ -39,7 +39,7 @@ let sideNavGuide = [
       {
         id: 'tests',
         iconClass: 'carbon:result',
-        itemName: testsConstants.Tests,
+        itemName: testsConstants.tests,
         itemRoute: routes.tests,
       },
       {

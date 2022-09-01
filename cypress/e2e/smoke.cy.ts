@@ -234,7 +234,7 @@ describe('smoke tests', () => {
       .should('have.value', Cypress.env('password'))
     cy.get('[data-cy="submit"]').click()
     cy.location('pathname').should('include', '/dashboard')
-    cy.get('a').find('#tests').should('have.text', testsConstants.Tests).click()
+    cy.get('a').find('#tests').should('have.text', testsConstants.tests).click()
     cy.get('#add-test', { timeout: 6000 }).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
@@ -274,7 +274,7 @@ describe('smoke tests', () => {
           cy.get('button')
             .should('have.text', commonConstants.addButton)
             .click()
-          cy.get('button').should('have.text', cypress.Remove)
+          cy.get('button').should('have.text', cypress.remove)
 
           cy.get('input#no-of-qu').clear().type('1')
           cy.get('input#time').clear().type('1')
@@ -321,7 +321,7 @@ describe('smoke tests', () => {
       .should('have.value', Cypress.env('password'))
     cy.get('[data-cy="submit"]').click()
     cy.location('pathname').should('include', '/dashboard')
-    cy.get('a').find('#tests').should('have.text', testsConstants.Tests).click()
+    cy.get('a').find('#tests').should('have.text', testsConstants.tests).click()
     cy.get('#add-test', { timeout: 6000 }).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
@@ -361,7 +361,7 @@ describe('smoke tests', () => {
           cy.get('button')
             .should('have.text', commonConstants.addButton)
             .click()
-          cy.get('button').should('have.text', cypress.Remove)
+          cy.get('button').should('have.text', cypress.remove)
 
           cy.get('input#no-of-qu').clear().type('1')
           cy.get('input#time').clear().type('1')

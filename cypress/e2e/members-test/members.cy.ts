@@ -21,7 +21,6 @@ describe('Test for members', () => {
     cy.location('pathname').should('include', '/dashboard')
   })
 
-  //
   it('Test for conforming ,new member is added in a list or not', () => {
     cy.get('a').find('#members').should('have.text', members.members).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/members')

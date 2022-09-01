@@ -41,7 +41,7 @@ const SectionDetails = () => {
         >
           <button tabIndex={0}
             id="add-question"
-            className="h-9 rounded-lg bg-primary px-5 text-xs text-addButton"
+            className="h-9 rounded-lg bg-primary px-5 text-xs text-primary-50"
           >
             + {addQuestion.addQuestion}
           </button>

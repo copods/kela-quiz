@@ -48,11 +48,11 @@ const TestList = ({
       <header className="flex items-center justify-between">
         <h2
           tabIndex={0}
-          role={testsConstants.Tests}
-          title={testsConstants.Tests}
+          role={testsConstants.tests}
+          title={testsConstants.tests}
           className="text-3xl font-bold text-black"
         >
-          {testsConstants.Tests}
+          {testsConstants.tests}
         </h2>
         <Link
           to={'/tests/add-test'}

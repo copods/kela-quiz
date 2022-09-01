@@ -98,7 +98,7 @@ export const testsConstants = {
   sectionText: 'Section',
   questions: 'Questions',
   totalQuestionsText: 'Total Questions',
-  Tests: 'Tests',
+  tests: 'Tests',
   srNoText: 'S No.',
   testListColumnLabel: 'Test',
   createdOn: 'Created on',
@@ -179,9 +179,6 @@ export const candidateExam = {
   noOfQuestions: 'No. of Questions',
 }
 export const cypress = {
-  //
-  //
-  Tests: 'Tests',
   email: 'careers@copods.co',
   password: 'kQuiz@copods',
   step1: 'Step 1',
@@ -191,7 +188,7 @@ export const cypress = {
   selectSections: 'Select Sections',
   preview: 'Preview',
   next: 'Next',
-  Remove: 'Remove',
+  remove: 'Remove',
   addQuest: '+ Add Question',
   back: 'Back',
   nameIsReq: 'Name is required',
