@@ -13,7 +13,7 @@ const GroupByTestItems = ({
     <div className="col-span-full">
       <div
         id="groupByTestRow"
-        className="groupTestRow  col-span-full grid grid-cols-10 gap-3 border-t border-solid border-borderColor px-12 py-4"
+        className="groupTestRow col-span-full grid grid-cols-10 gap-3 border-t border-solid border-borderColor px-12 py-4"
       >
         <div className=" col-span-1 truncate">
           <span className=" text-base leading-6 text-gray-700">{index}</span>
