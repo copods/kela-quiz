@@ -2,7 +2,7 @@
 import { Icon } from '@iconify/react'
 import { NavLink, useLoaderData, useLocation } from '@remix-run/react'
 import candidateLogo from '~/../public/assets/candidateLogo.svg'
-import { candidateExam, QuestionStatus } from '~/constants/common.constants'
+import { candidateExamConstants, QuestionStatus } from '~/constants/common.constants'
 import { routes } from '~/constants/route.constants'
 import type {
   Candidate,
