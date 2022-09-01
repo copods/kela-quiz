@@ -69,6 +69,8 @@ export interface Section {
   createdById: string
   createdAt: Date
   updatedAt: Date
+  deleted: boolean
+  deletedAt: string
 }
 
 export interface User {

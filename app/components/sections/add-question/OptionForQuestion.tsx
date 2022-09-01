@@ -9,6 +9,7 @@ import {
   addQuestion,
   commonConstants,
   QuestionTypes,
+  statusCheck,
 } from '~/constants/common.constants'
 import { toast } from 'react-toastify'
 import Button from '~/components/form/Button'
@@ -52,6 +53,9 @@ export default function OptionForQuestion({
         QuestionTypes.multipleChoice ||
       getQuestionType(selectedTypeOfQuestion) === QuestionTypes.singleChoice
     ) {
+      if (options.length > 5) {
+        return toast.error(statusCheck.maxOptions, { toastId })
+      }
       setOptions([...options, { option: '', isCorrect: false, id: cuid() }])
     } else if (getQuestionType(selectedTypeOfQuestion) === QuestionTypes.text) {
       setTextCorrectAnswer([...textCorrectAnswer, { id: cuid(), answer: '' }])

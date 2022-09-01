@@ -112,6 +112,11 @@ export const statusCheck = {
   commonError: 'Something Went Wrong',
   deletedSuccess: 'Deleted Successfully...!',
   noEmailsInvite: 'No emails to invite',
+  selectCorrOption: 'Select the Correct Option',
+  descIsReq: 'Description is required',
+  nameIsReq: 'Name is required',
+  sectionAddedSuccess: 'Section added successfully..!',
+  maxOptions: 'you can add maximum six options.',
 }
 export const resultConstants = {
   order: 'Order',
