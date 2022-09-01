@@ -12,7 +12,6 @@ import {
   addQuestion,
   QuestionTypes,
   testsConstants,
-  sectionsConstants,
   statusCheck,
 } from '~/constants/common.constants'
 

@@ -1,11 +1,10 @@
 import { useSubmit } from '@remix-run/react'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { sortByOrder, Test } from '~/interface/Interface'
+import type { Test } from '~/interface/Interface'
 import SortFilter from '../SortFilter'
 import TestTableItem from './TestTableItem'
 import { commonConstants, testsConstants } from '~/constants/common.constants'
-import { routes } from '~/constants/route.constants'
 const TestList = ({
   tests,
   status,
@@ -13,10 +12,8 @@ const TestList = ({
   tests: Array<Test>
   status: string | undefined
 }) => {
-  const [sortDirection, onSortDirectionChange] = useState(
-    sortByOrder.ascending as string
-  )
-  const [sortBy, onSortChange] = useState(sortByOrder.name as string)
+  const [sortDirection, onSortDirectionChange] = useState('asc')
+  const [sortBy, onSortChange] = useState('name')
   const filterByType = [
     {
       name: 'Name',
@@ -43,7 +40,6 @@ const TestList = ({
       }
     }
   }, [sortDirection, sortBy])
-
   const showCheckBox = false
   return (
     <div className="test-list-container flex h-full flex-col gap-6 ">
@@ -53,13 +49,13 @@ const TestList = ({
         <h2
           tabIndex={0}
           role={testsConstants.Tests}
-          title={testsConstants.Tests}
+          title="Tests"
           className="text-3xl font-bold text-black"
         >
           {testsConstants.Tests}
         </h2>
         <Link
-          to={routes.addTest}
+          to={'/tests/add-test'}
           id="add-test"
           tabIndex={0}
           className="flex h-9 items-center rounded-lg bg-primary px-5 text-xs text-white"
@@ -80,38 +76,18 @@ const TestList = ({
           showSelected={false}
         />
       </div>
-      {tests?.length !== 0 ? (
-        <div className="flex flex-1 flex-col rounded-lg pb-6 ">
-          <div className="rounded-b-0 flex items-center rounded-t-md border border-b-0 border-solid border-borderColor bg-tableHeader px-9 py-3 font-semibold shadow-table">
-            {showCheckBox && (
-              <div className="w-1/12">
-                <input type="checkbox" />
-              </div>
-            )}
-            <div className="w-1/12 text-sm leading-5 text-gray-500">
-              {testsConstants.srNoText}
-            </div>
-            <div className="w-4/12 text-sm leading-5 text-gray-500">
-              {testsConstants.testListColumnLabel}
-            </div>
-            <div className="w-3/12 text-sm leading-5 text-gray-500">
-              {testsConstants.sectionText}
-            </div>
-            <div className="w-2/12 text-sm leading-5 text-gray-500">
-              {testsConstants.createdOn}
-            </div>
-            <div className="w-2/12 text-sm leading-5 text-gray-500">
-              {testsConstants.created} {commonConstants.byText}
-            </div>
-            <div className="flex w-1/12 text-sm leading-5 text-gray-500">
-              {testsConstants.actionsText}
+      <div className="flex flex-1 flex-col rounded-lg pb-6 ">
+        <div className="rounded-b-0 flex items-center rounded-t-md border border-b-0 border-solid border-borderColor bg-tableHeader px-9 py-3 font-semibold shadow-table">
+          {showCheckBox && (
+            <div className="w-1/12">
+              <input type="checkbox" />
             </div>
           )}
           <div className="w-1/12 text-sm leading-5 text-gray-500">
             {testsConstants.srNoText}
           </div>
           <div className="w-4/12 text-sm leading-5 text-gray-500">
-            {testsConstants.testListColumnLable}
+            {testsConstants.testListColumnLabel}
           </div>
           <div className="w-3/12 text-sm leading-5 text-gray-500">
             {testsConstants.sectionText}
@@ -154,5 +130,4 @@ const TestList = ({
     </div>
   )
 }
-
 export default TestList

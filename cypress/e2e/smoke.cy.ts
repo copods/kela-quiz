@@ -109,7 +109,7 @@ describe('smoke tests', () => {
       .should('have.value', Cypress.env('password'))
     cy.get('[data-cy="submit"]').click()
     cy.location('pathname').should('include', '/dashboard')
-    cy.get('a').find('#sections').should('have.text', cypress.Sections).click()
+    cy.get('a').find('#sections').should('have.text', routeFiles.sections).click()
     cy.get('#add-section').click()
     cy.get('form > div')
       .should('be.visible')
