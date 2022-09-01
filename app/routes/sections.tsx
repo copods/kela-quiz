@@ -81,7 +81,7 @@ export const action: ActionFunction = async ({ request }) => {
   const action = JSON.parse(formData.get('add-section') as string)
     ? JSON.parse(formData.get('add-section') as string)
     : formData.get('deleteSection')
-
+    
   if (action.action === 'add') {
     const name = formData.get('name')
     const description = formData.get('description')

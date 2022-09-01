@@ -94,7 +94,7 @@ const AddSection = ({
                       buttonText={commonConstants.cancel} />
                     <Button 
                       tabIndex={0}
-                      type='submit'
+                      type="submit"
                       id='submit-button'
                       className='h-9 px-4'
                       onClick={() => setOpen(false)}
