@@ -16,7 +16,7 @@ const ExamCompletedCandidatesComponent = () => {
       {testData?.length !== 0 ? (
         <div className="bg-[#F9FAFB] pb-4">
           <div className="rounded-lg border border-solid border-gray-200 bg-tableHeader shadow-table">
-            <div className="grid grid-cols-12 gap-3 gap-3 py-4 px-12">
+            <div className="grid grid-cols-12 gap-3 py-4 px-12">
               <span className="col-span-1 text-sm font-semibold text-gray-500">
                 {resultConstants.srno}
               </span>
