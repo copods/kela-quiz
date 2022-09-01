@@ -9,7 +9,7 @@ const CandidtateListOfTestItem = ({
 }) => {
   return (
     <div className="col-span-full grid grid-cols-10 ">
-      <div className="col-span-full grid grid-cols-10 border-t-[1px] border-solid border-[#E5E7EB] bg-white px-12 py-6">
+      <div className="col-span-full grid grid-cols-10 border-t border-solid border-gray-200 bg-white px-12 py-6">
         <div className=" col-span-1 truncate">
           <span className=" text-base leading-6 text-gray-700">{index}</span>
         </div>
