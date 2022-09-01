@@ -40,15 +40,19 @@ model Role {
 
 model Section {
   id                     String                   @id @default(cuid())
-  name                   String                   @unique
+  name                   String
   description            String
   createdBy              User                     @relation(fields: [createdById], references: [id])
   createdById            String
   questions              Question[]
   sectionInCandidateTest SectionInCandidateTest[]
   sectionInTest          SectionInTest[]
+  deleted                Boolean                  @default(false)
+  deletedAt              String?                  @default("na")
   createdAt              DateTime                 @default(now())
   updatedAt              DateTime                 @updatedAt
+
+  @@unique([name, deletedAt, deleted])
 }
 
 model Question {
@@ -105,7 +109,7 @@ model Option {
 
 model Test {
   id                String              @id @default(cuid())
-  name              String              @unique
+  name              String
   description       String
   sections          SectionInTest[]
   createdBy         User                @relation(fields: [createdById], references: [id])
@@ -149,20 +153,22 @@ model Candidate {
 }
 
 model CandidateTest {
-  id                String                   @id @default(cuid())
-  sections          SectionInCandidateTest[]
-  test              Test                     @relation(fields: [testId], references: [id])
-  testId            String
-  link              String?
-  candidate         Candidate                @relation(fields: [candidateId], references: [id])
-  candidateId       String
-  candidateResult   CandidateResult[]
-  candidateStep     Json                     @default("{ \"nextRoute\": \"register\", \"isSection\": false, \"currentSectionID\": null }") // register || instructions || section
-  startedAt         DateTime?
-  endAt             DateTime?
-  createdAt         DateTime                 @default(now())
-  updatedAt         DateTime                 @updatedAt
-  SectionWiseResult SectionWiseResult[]
+  id              String                   @id @default(cuid())
+  sections        SectionInCandidateTest[]
+  test            Test                     @relation(fields: [testId], references: [id])
+  testId          String
+  link            String?
+  candidate       Candidate                @relation(fields: [candidateId], references: [id])
+  candidateId     String
+  candidateResult CandidateResult[]
+  candidateStep   Json                     @default("{ \"nextRoute\": \"register\", \"isSection\": false, \"currentSectionID\": null }") // register || instructions || section
+  startedAt       DateTime?
+  endAt           DateTime?
+  createdAt       DateTime                 @default(now())
+  updatedAt       DateTime                 @updatedAt
+  sectionWiseResults SectionWiseResult[]
+
+  @@unique([candidateId, testId])
 }
 
 model SectionInCandidateTest {

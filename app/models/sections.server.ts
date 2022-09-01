@@ -23,6 +23,9 @@ export async function getAllSections(obj: string) {
   var filter = obj ? obj : '{"orderBy":{"createdAt":"asc"}}'
   return await prisma.section.findMany({
     ...JSON.parse(filter),
+    where: {
+      deleted: false,
+    },
     include: {
       createdBy: true,
       _count: {
@@ -47,7 +50,13 @@ export async function createSection({
 }
 
 export async function deleteSectionById(id: string) {
-  return prisma.section.delete({ where: { id } })
+  return prisma.section.update({
+    where: { id },
+    data: {
+      deleted: true,
+      deletedAt: new Date().toString(),
+    },
+  })
 }
 
 export async function getQuestionType() {
@@ -94,6 +103,6 @@ export async function addQuestion(
       return true
     })
     .catch((err) => {
-      return err;
+      return err
     })
 }

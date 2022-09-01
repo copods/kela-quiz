@@ -9,6 +9,7 @@ import {
   addQuestion,
   commonConstants,
   QuestionTypes,
+  statusCheck,
 } from '~/constants/common.constants'
 import { toast } from 'react-toastify'
 interface textAnswerType {
@@ -51,6 +52,9 @@ export default function OptionForQuestion({
         QuestionTypes.multipleChoice ||
       getQuestionType(selectedTypeOfQuestion) === QuestionTypes.singleChoice
     ) {
+      if (options.length > 5) {
+        return toast.error(statusCheck.maxOptions, { toastId })
+      }
       setOptions([...options, { option: '', isCorrect: false, id: cuid() }])
     } else if (getQuestionType(selectedTypeOfQuestion) === QuestionTypes.text) {
       setTextCorrectAnswer([...textCorrectAnswer, { id: cuid(), answer: '' }])
@@ -137,7 +141,9 @@ export default function OptionForQuestion({
 
         <button
           tabIndex={0}
-          className="flex h-9 items-center rounded-lg bg-primary px-5 text-xs text-white"
+          className={`flex h-9 items-center  rounded-lg bg-primary px-5 text-xs text-white ${
+            options.length === 6 ? 'cursor-not-allowed opacity-75' : ''
+          }`}
           onClick={addOptionArea}
         >
           + {addQuestion.addOptions}
