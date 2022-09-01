@@ -75,7 +75,7 @@ const AddQuestionInSection = () => {
 
   const submit = useSubmit()
   const saveQuestion = (addMoreQuestion: boolean) => {
-    if (question.length === 0) {
+    if (question?.length === 0) {
       toast.error(addQuestion.enterQuesMsg, { toastId: 'questionRequired' })
       return
     }
@@ -86,7 +86,7 @@ const AddQuestionInSection = () => {
       getQuestionType(selectedTypeOfQuestion) === QuestionTypes.singleChoice
     ) {
       for (let option of options) {
-        if (option.option.length === 0) {
+        if (option.option?.length === 0) {
           toast.error(addQuestion.enterAllOptionsMsg, {
             toastId: 'optionsRequired',
           })
@@ -237,7 +237,7 @@ const AddQuestionInSection = () => {
             tabIndex={0}
             id="save-and-exit"
             disabled={transition.state === 'submitting'}
-            className={`flex h-9 items-center gap-1    rounded-lg bg-primary px-5 text-xs text-white ${
+            className={`flex h-9 items-center gap-1 rounded-lg bg-primary px-5 text-xs text-white ${
               transition.state === 'submitting' && 'disabled:opacity-75'
             }`}
             onClick={() => saveQuestion(false)}

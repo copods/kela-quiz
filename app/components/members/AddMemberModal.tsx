@@ -143,9 +143,9 @@ export default function AddMemberModal({
                       type="submit"
                       name="addMember"
                       value={JSON.stringify({ action: 'add' })}
-                      className={`h-9 rounded-md bg-primary px-4 text-sm text-[#F0FDF4] ${
+                      className={`h-9 rounded-md bg-primary px-4 text-sm text-whiteShadeOne ${
                         transition.state === 'submitting'
-                          ? 'disabled:text-[#F0FDF4] disabled:opacity-75'
+                          ? 'disabled:text-whiteShadeOne disabled:opacity-75'
                           : ''
                       }`}
                       disabled={transition.state === 'submitting'}
