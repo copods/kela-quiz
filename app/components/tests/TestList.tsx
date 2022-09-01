@@ -79,7 +79,7 @@ const TestList = ({
       </div>
 
       <div className="flex flex-1 flex-col rounded-lg pb-6 ">
-        <div className="rounded-b-0 flex items-center gap-3 rounded-t-md  border border-b-0 border-solid border-borderColor bg-tableHeader px-9 py-3 font-semibold shadow-table">
+        <div className="rounded-b-0 flex items-center gap-3 rounded-t-md border border-b border-solid border-borderColor bg-tableHeader px-9 py-3 font-semibold shadow-table">
           {showCheckBox && (
             <div className="w-1/12">
               <input type="checkbox" />
@@ -110,7 +110,7 @@ const TestList = ({
         >
           {tests.map((test, i) => (
             <TestTableItem
-              key={i}
+              key={test?.id}
               id={test?.id}
               index={i + 1}
               totalCount={tests.length}

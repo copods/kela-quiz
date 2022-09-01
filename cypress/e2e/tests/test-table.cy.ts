@@ -136,7 +136,7 @@ describe('Visiting Tests', () => {
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('#chip-group-id', { timeout: 10000 }).then((el) => {
       cy.get('.chip-group').then(($elements) => {
-        strings = [...$elements].map(($el) => {
+        strings = [...$elements].forEach(($el) => {
           cy.log(strings)
           if ($el.innerText.includes('\n')) {
             cy.get('#section-count-button').click()
