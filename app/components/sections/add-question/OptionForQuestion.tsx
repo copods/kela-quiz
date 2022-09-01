@@ -145,7 +145,9 @@ export default function OptionForQuestion({
 
         <button
           tabIndex={0}
-          className="flex h-9 items-center rounded-lg bg-primary px-5 text-xs text-white"
+          className={`flex h-9 items-center  rounded-lg bg-primary px-5 text-xs text-white ${
+            options.length === 6 ? 'cursor-not-allowed opacity-75' : ''
+          }`}
           onClick={addOptionArea}
           title={addQuestion.addOptions}
           aria-label={addQuestion.addOptions}

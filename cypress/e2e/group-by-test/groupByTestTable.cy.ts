@@ -31,7 +31,7 @@ describe('Test for GroupByTestTable, Result', () => {
       .then(($ele) => {
         value = $ele[0].innerText
       })
-    cy.get('#GroupByTestItems').each(($el) => {
+    cy.get('#group-by-test-items').each(($el) => {
       cy.wrap($el)
         .children()
         .children()
@@ -53,7 +53,7 @@ describe('Test for GroupByTestTable, Result', () => {
       .invoke('text')
       .then((el) => {
         if (el === 'Name') {
-          cy.get('#GroupByTestItems').each(($el) => {
+          cy.get('#group-by-test-items').each(($el) => {
             cy.wrap($el)
               .children()
               .children()
@@ -78,7 +78,7 @@ describe('Test for GroupByTestTable, Result', () => {
       .invoke('text')
       .then((el) => {
         if (el === 'Name') {
-          cy.get('#GroupByTestItems').each(($el) => {
+          cy.get('#group-by-test-items').each(($el) => {
             cy.wrap($el)
               .children()
               .children()
@@ -111,7 +111,7 @@ describe('Test for GroupByTestTable, Result', () => {
       .invoke('text')
       .then((el) => {
         if (el === 'Created Date') {
-          cy.get('#GroupByTestItems').each(($el) => {
+          cy.get('#group-by-test-items').each(($el) => {
             cy.wrap($el)
               .children()
               .children()
@@ -145,7 +145,7 @@ describe('Test for GroupByTestTable, Result', () => {
       .invoke('text')
       .then((el) => {
         if (el === 'Created Date') {
-          cy.get('#GroupByTestItems').each(($el) => {
+          cy.get('#group-by-test-items').each(($el) => {
             cy.wrap($el)
               .children()
               .children()

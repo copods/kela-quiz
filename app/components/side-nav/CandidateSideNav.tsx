@@ -47,7 +47,7 @@ const CandidateSideNav = ({
         </div>
         <div className="flex items-center gap-1 text-sm font-medium text-gray-600">
           <Icon icon={'ic:outline-access-time'} className="text-base" />
-          <span>{candidateExam.timeLimit}:</span>
+          <span>{candidateExamConstants.timeLimit}:</span>
           <span className="text-gray-800">{getTotalTime()} Mins</span>
         </div>
       </div>
@@ -58,7 +58,7 @@ const CandidateSideNav = ({
         {/* sidenav menu group */}
         <div className="flex flex-col gap-2.5">
           <div className="px-5 text-sm font-semibold text-gray-900">
-            {candidateExam.assessmentDetails}
+            {candidateExamConstants.assessmentDetails}
           </div>
           <div
             className={`flex h-11 items-center text-sm ${
@@ -67,13 +67,13 @@ const CandidateSideNav = ({
                 : 'px-5 font-medium text-gray-800 '
             }`}
           >
-            {candidateExam.info}
+            {candidateExamConstants.info}
           </div>
         </div>
 
         <div className="flex flex-col gap-2.5">
           <div className="px-5 text-sm font-semibold text-gray-900">
-            {candidateExam.assessmentTests}
+            {candidateExamConstants.assessmentTests}
           </div>
           <div>
             {candidateTest?.sections.map((section: SectionInCandidateTest) => {
@@ -118,7 +118,7 @@ const CandidateSideNav = ({
                           }
                         >
                           <span>
-                            {candidateExam.question} {question?.order}
+                            {candidateExamConstants.question} {question?.order}
                           </span>
                           {question.status === QuestionStatus.skipped && (
                             <Icon

@@ -4,6 +4,8 @@ import { Dialog, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import { toast } from 'react-toastify'
 import {
+  candidateExamConstants,
+  testsConstants,
   commonConstants,
   inviteMemeberPopUpConstants,
   members,
@@ -28,12 +30,19 @@ const InviteCandidatePopup = ({
     if (actionData?.status == 401) {
       toast.warn(actionData.message)
     }
-    if (actionData?.candidateInviteStatus == 'created') {
-      if (actionData?.testId === testId) toast.success('Candidates Invited')
+    if (
+      actionData?.candidateInviteStatus ===
+      candidateExamConstants.candidateTestCreated
+    ) {
+      if (actionData?.testId === testId)
+        toast.success(testsConstants.candidateInvited)
       setOpenInvitePopup(false)
     } else {
-      if (actionData?.candidateInviteStatus) {
-        toast.error('Candidate Invite Error')
+      if (actionData?.candidateInviteStatus === candidateExamConstants.error) {
+        if (actionData?.testId === testId) {
+          toast.error(testsConstants.candidateAlreadyInvited)
+        }
+        setOpenInvitePopup(false)
       }
     }
   }, [actionData, testId, setOpenInvitePopup])
