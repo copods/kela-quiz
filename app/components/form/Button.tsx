@@ -12,7 +12,7 @@ const Button = ({ buttonText, className, onClick, ...props }: ButtonProps) => {
         return `bg-primary text-gray-50 hover:bg-primaryHover transition ease-in-out delay-75 ${props.isDisabled && 'disabled:bg-primaryDisabled'}`
 
       case 'primary-outlined':
-        return `text-gray-primary rounded-md border border-primary bg-white text-primary hover:bg-gray-100 transition ease-in-out delay-75 ${props.isDisabled && 'disabled:border-primaryOutlinedDisabled text-primaryOutlinedDisabled'}`
+        return `text-gray-primary  rounded-md border border-primary bg-white text-primary hover:bg-gray-100 transition ease-in-out delay-75 ${props.isDisabled && 'disabled:border-primaryOutlinedDisabled text-primaryOutlinedDisabled'}`
 
       case 'secondary-solid': 
         return `border border-transparent bg-red-600 text-white hover:bg-deleteColorHover transition ease-in-out delay-75 ${props.isDisabled && 'disabled:bg-deleteColorDisabled'}`
