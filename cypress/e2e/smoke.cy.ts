@@ -3,6 +3,8 @@
 import {
   commonConstants,
   cypress,
+  members,
+  routeFiles,
   testsConstants,
 } from '~/constants/common.constants'
 const section1 = `Aptitude - section1`
@@ -58,7 +60,7 @@ describe('smoke tests', () => {
       .should('have.value', Cypress.env('password'))
     cy.get('[data-cy="submit"]').click()
     cy.location('pathname').should('include', '/dashboard')
-    cy.get('a').find('#sections').should('have.text', cypress.Sections).click()
+    cy.get('a').find('#sections').should('have.text', routeFiles.sections).click()
     cy.get('#add-section').click()
     cy.get('form > div')
       .should('be.visible')
@@ -82,7 +84,7 @@ describe('smoke tests', () => {
       .should('have.value', Cypress.env('password'))
     cy.get('[data-cy="submit"]').click()
     cy.location('pathname').should('include', '/dashboard')
-    cy.get('a').find('#sections').should('have.text', cypress.Sections).click()
+    cy.get('a').find('#sections').should('have.text', routeFiles.sections).click()
     cy.get('#add-section').click()
     cy.get('form > div')
       .should('be.visible')
@@ -106,7 +108,7 @@ describe('smoke tests', () => {
       .should('have.value', Cypress.env('password'))
     cy.get('[data-cy="submit"]').click()
     cy.location('pathname').should('include', '/dashboard')
-    cy.get('a').find('#sections').should('have.text', cypress.Sections).click()
+    cy.get('a').find('#sections').should('have.text', routeFiles.sections).click()
     cy.get('#section-card').each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -156,7 +158,7 @@ describe('smoke tests', () => {
       .should('have.value', Cypress.env('password'))
     cy.get('[data-cy="submit"]').click()
     cy.location('pathname').should('include', '/dashboard')
-    cy.get('a').find('#sections').should('have.text', cypress.Sections).click()
+    cy.get('a').find('#sections').should('have.text', routeFiles.sections).click()
     cy.get('#section-card').each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -278,7 +280,7 @@ describe('smoke tests', () => {
       })
     })
 
-    cy.get('button#submit-button').should('have.text', cypress.submit).click()
+    cy.get('button#submit-button').should('have.text', commonConstants.submit).click()
   })
   it('Verify if user able create the test 2', () => {
     cy.visit('/sign-in')
@@ -365,7 +367,7 @@ describe('smoke tests', () => {
       })
     })
 
-    cy.get('button#submit-button').should('have.text', cypress.submit).click()
+    cy.get('button#submit-button').should('have.text', commonConstants.submit).click()
   })
   it('Test for adding a new member', () => {
     cy.visit('/sign-in')
@@ -378,7 +380,7 @@ describe('smoke tests', () => {
       .type('kQuiz@copods')
       .should('have.value', cypress.password)
     cy.findByRole('button').click()
-    cy.get('a').find('#members').should('have.text', cypress.members).click()
+    cy.get('a').find('#members').should('have.text', members.members).click()
     cy.get('#add-member').should('have.text', cypress.addMember).click()
     cy.get('#add-pop-up-model').should('be.visible')
     cy.get('input[name="firstName"]')

@@ -1,3 +1,5 @@
+import { commonConstants } from "~/constants/common.constants"
+
 const AttendedCandidateListItem = ({
   email,
   invitedBy,
@@ -38,7 +40,7 @@ const AttendedCandidateListItem = ({
               review ? 'bg-green-200' : 'bg-yellow-200'
             }`}
           >
-            {review ? 'Complete' : 'Pending'}
+            {review ? commonConstants.complete : commonConstants.pending}
           </span>
         </div>
       </div>

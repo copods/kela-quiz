@@ -8,7 +8,7 @@ import SelectSections from './CreateSelectSections'
 import TestDetails from './CreateTestDetails'
 import TestPreview from './CreateTestPreview'
 import StepsTabComponent from './StepsTab'
-import { commonConstants, testsConstants } from '~/constants/common.constants'
+import { commonConstants, testsConstants, toastConstants } from '~/constants/common.constants'
 import { routes } from '~/constants/route.constants'
 const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
   const transition = useTransition()
@@ -69,15 +69,15 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
 
   const submitAddTest = () => {
     if (typeof name !== 'string' || name.length === 0) {
-      toast.error('Enter Name to add test')
+      toast.error(toastConstants.addTest)
       return
     }
     if (typeof description !== 'string' || description.length === 0) {
-      toast.error('Enter description to add test')
+      toast.error(toastConstants.enterDescription)
       return
     }
     if (selectedSections.length === 0) {
-      toast.error('Add sections to add test')
+      toast.error(toastConstants.addSection)
       return
     }
     var sendData: {
@@ -167,7 +167,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
           <button
             tabIndex={0}
             aria-label={commonConstants.cancel}
-            title="Cancel Add Test"
+            title={commonConstants.cancelAddTest}
             className={`h-9 rounded-lg px-7 text-xs text-white ${
               currentTab !== tabs[0].id
                 ? 'bg-red-500'
@@ -180,7 +180,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
         <div className="flex gap-4">
           <button
             tabIndex={0}
-            title="Previous Tab"
+            title={commonConstants.previousTab}
             id="backButton"
             className={`h-9 rounded-lg px-7 text-xs text-white ${
               currentTab != tabs[0].id
@@ -196,7 +196,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
           {currentTab != 2 ? (
             <button
               tabIndex={0}
-              title="Next Tab"
+              title={commonConstants.nextTab}
               id="next-button"
               className={`h-9 rounded-lg px-7 text-xs text-white ${
                 !(name && description) || currentTab == 2
@@ -205,14 +205,14 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
               }`}
               onClick={() => setCurrentTab(currentTab + 1)}
               disabled={!(name && description) || currentTab === 2}
-              aria-label="Next"
+              aria-label={commonConstants.nextButton}
             >
               {commonConstants.nextButton}
             </button>
           ) : (
             <button
               tabIndex={0}
-              title="Next Tab"
+              title={commonConstants.nextTab}
               id="submit-button"
               className={`h-9 rounded-lg px-7 text-xs text-white ${
                 currentTab == 2
@@ -223,7 +223,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
               disabled={currentTab !== 2}
               aria-label={commonConstants.nextButton}
             >
-              {transition.state === 'submitting' ? 'Creating Test' : 'Submit'}
+              {transition.state === 'submitting' ? commonConstants.createTest : commonConstants.submit}
             </button>
           )}
         </div>

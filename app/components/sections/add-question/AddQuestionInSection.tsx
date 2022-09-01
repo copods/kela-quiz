@@ -6,8 +6,9 @@ import OptionForQuestion from './OptionForQuestion'
 import cuid from 'cuid'
 import { Link, useLoaderData, useSubmit, useTransition } from '@remix-run/react'
 import { toast } from 'react-toastify'
-import { addQuestion, QuestionTypes, sectionsConstants, testsConstants } from '~/constants/common.constants'
+import { addQuestion, QuestionTypes, testsConstants } from '~/constants/common.constants'
 import { routes } from '~/constants/route.constants'
+import { sortByOrder } from '~/interface/Interface'
 
 const AddQuestionInSection = () => {
   const { sectionDetails, questionTypes } = useLoaderData()
@@ -220,10 +221,10 @@ const AddQuestionInSection = () => {
              className={`flex h-9 items-center gap-1 rounded-lg bg-red-600 px-5 text-xs text-white ${
                transition.state === 'submitting' && 'disabled:opacity-75'
              }`}
-             title={sectionsConstants.cancel}
-             aria-label={sectionsConstants.cancel}
+             title={sortByOrder.cancel}
+             aria-label={sortByOrder.cancel}
           >
-              {transition.state === 'loading' ? sectionsConstants.cancelling : sectionsConstants.cancel}
+              {transition.state === 'loading' ? sortByOrder.cancelling : sortByOrder.cancel}
           </Link>
         </div>
         <div className="flex gap-2">
@@ -235,11 +236,11 @@ const AddQuestionInSection = () => {
               transition.state === 'submitting' && 'disabled:opacity-75'
             }`}
             onClick={() => saveQuestion(false)}
-            title={sectionsConstants.saveAndExit}
-            aria-label={sectionsConstants.saveAndExit}
+            title={sortByOrder.saveAndExit}
+            aria-label={sortByOrder.saveAndExit}
           >
             <Icon icon="ic:round-save" className="mr-1" />
-            {transition.state === 'submitting' ? sectionsConstants.saving : sectionsConstants.saveAndExit}
+            {transition.state === 'submitting' ? sortByOrder.saving : sortByOrder.saveAndExit}
           </button>
 
           <button
@@ -250,13 +251,13 @@ const AddQuestionInSection = () => {
               transition.state === 'submitting' && 'disabled:opacity-75'
             }`}
             onClick={() => saveQuestion(true)}
-            title={sectionsConstants.saveAndAddMore}
-            aria-label={sectionsConstants.saveAndAddMore}
+            title={sortByOrder.saveAndAddMore}
+            aria-label={sortByOrder.saveAndAddMore}
           >
             <Icon icon="ic:round-save" className="mr-1" />
             {transition.state === 'submitting'
-              ? sectionsConstants.saving
-              : sectionsConstants.saveAndAddMore}
+              ? sortByOrder.saving
+              : sortByOrder.saveAndAddMore}
           </button>
         </div>
       </div>

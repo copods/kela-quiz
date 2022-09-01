@@ -1,7 +1,7 @@
 import type { ActionFunction, LoaderFunction } from '@remix-run/server-runtime'
 import { redirect } from '@remix-run/server-runtime'
 import { json } from '@remix-run/node'
-import { routeFiles, sectionsConstants, sortByOrder } from '~/constants/common.constants'
+import { routeFiles, sectionsConstants } from '~/constants/common.constants'
 import {
   Outlet,
   useActionData,
@@ -18,7 +18,7 @@ import AdminLayout from '~/components/layouts/AdminLayout'
 import AddSection from '~/components/sections/AddSection'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import type { Section } from '~/interface/Interface'
+import { Section, sortByOrder } from '~/interface/Interface'
 import { routes } from '~/constants/route.constants'
 
 export type ActionData = {
@@ -190,7 +190,7 @@ export default function SectionPage() {
           </h2>
           <button
             tabIndex={0}
-            className="h-9 rounded-lg bg-primary px-5 text-xs text-[#F0FDF4]"
+            className="h-9 rounded-lg bg-primary px-5 text-xs text-addButton"
             id="add-section"
             onClick={() => setShowAddSectionModal(!showAddSectionModal)}
             title={sectionsConstants.addSection}

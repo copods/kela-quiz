@@ -152,7 +152,7 @@ export default function OptionForQuestion({
         </button>
       </div>
 
-      <div className="flex h-full flex-1 flex-col gap-5  overflow-auto px-1">
+      <div className="flex h-full flex-1 flex-col gap-5 overflow-auto px-1">
 
         {(getQuestionType(selectedTypeOfQuestion) ===
           QuestionTypes.multipleChoice ||
@@ -210,7 +210,7 @@ export default function OptionForQuestion({
                     if (e.key === 'Enter') deleteOption(index, option?.id)
                   }}
                   tabIndex={0}
-                  aria-label="Delete"
+                  aria-label={commonConstants.delete}
                   icon="ic:outline-delete-outline"
                   className={`h-6 w-6 ${index} ${
                     options.length < 2
@@ -218,7 +218,7 @@ export default function OptionForQuestion({
                       : 'cursor-pointer text-red-600'
                   }`}
                   role='button'
-                ></Icon>
+                />
               </div>
             )
           })}
@@ -251,7 +251,7 @@ export default function OptionForQuestion({
                     onKeyDown={(e) => {
                       if (e.key === 'Enter') deleteOption(index, option?.id)
                     }}
-                  ></Icon>
+                  />
                 </div>
               )
             }

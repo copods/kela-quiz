@@ -13,7 +13,7 @@ export default function Toggle({
       <Switch
         checked={toggle}
         tabIndex={0}
-        role='Check Order'
+        role={commonConstants.checkOrder}
         onChange={onToggleChange}
         className={`${
           toggle

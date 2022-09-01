@@ -20,7 +20,7 @@ const TestDetails = () => {
                 className="text-3xl font-semibold leading-9 text-gray-900"
                 id="backButton"
                 icon="mdi:arrow-left"
-              ></Icon>
+              />
             </Link>
             <span
               className="text-3xl font-semibold leading-9 text-gray-900"

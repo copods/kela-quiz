@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
 import SortFilter from '../SortFilter'
-import { resultConstants, commonConstants, sortByOrder } from '~/constants/common.constants'
+import { resultConstants, commonConstants } from '~/constants/common.constants'
 
 import { useLoaderData, useSubmit } from '@remix-run/react'
 import GroupByTestItems from './GroupByTestItems'
-import type { CandidateTest, Test } from '~/interface/Interface'
+import { CandidateTest, sortByOrder, Test } from '~/interface/Interface'
 const GroupByTests = () => {
   const [sortDirection, onSortDirectionChange] = useState(sortByOrder.ascending as string)
   const [sortBy, onSortChange] = useState('name')

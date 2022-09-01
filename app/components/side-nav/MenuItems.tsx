@@ -31,7 +31,7 @@ function MenuItems({ iconClass, itemName, itemRoute, id }: tabProps) {
                 ? 'text-primary'
                 : 'text-gray-400'
             }`}
-          ></Icon>
+          />
           <span>
             <p
               id={id}

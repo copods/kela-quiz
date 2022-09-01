@@ -1,4 +1,5 @@
 import { NavLink } from '@remix-run/react'
+import { routes } from '~/constants/route.constants';
 
 const ResultTab = ({
   tabs,
@@ -18,7 +19,7 @@ const ResultTab = ({
         return (
           <NavLink
             key={tab.id}
-            to={`/results/groupByTests/${testId}/${tab?.route}`}
+            to={`${routes.resultGroupTest}/${testId}/${tab?.route}`}
             id="tab-title"
             title={tab.title}
             className={({ isActive }) =>

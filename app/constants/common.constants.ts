@@ -18,7 +18,19 @@ export const commonConstants = {
   useSetting:"Use setting",
   settings:'Settings',
   groupByCandidate:'Group By Candidate',
-  results:'Results'
+  results:'Results',
+  goToDashboard:'Go to Dashboard',
+  checkOrder:'Check Order',
+  complete:'Complete',
+  pending:'Pending',
+  createTest:'Creating Test',
+  submit:'Submit',
+  adding:"Adding...",
+  add:'Add',
+  cancelAddTest:'Cancel Add Test',
+  previousTab:'Previous Tab',
+  nextTab:'Next Tab',
+  logo:"logo",
 }
 
 export const sideNav = {
@@ -71,11 +83,6 @@ export const sectionsConstants = {
   addQuestion: 'Add Question',
   noQuestionAlert: 'No questions found. Add your first question',
   noRecordFound: 'No Record Found',
-  cancel:'Cancel',
-  saveAndExit:'Save & Exit',
-  saveAndAddMore:'Save & Add More',
-  saving:'Saving...',
-  cancelling:'Cancelling...',
   sort:'Sort',
   dropdown:'Select',
   expand:'Expand',
@@ -170,8 +177,6 @@ export const cypress = {
   //
   //
   Tests: 'Tests',
-  Sections: 'Sections',
-  Add: 'Add',
   email: 'careers@copods.co',
   password: 'kQuiz@copods',
   step1: 'Step 1',
@@ -184,7 +189,6 @@ export const cypress = {
   Remove: 'Remove',
   addQuest: '+ Add Question',
   back: 'Back',
-  submit: 'Submit',
   nameIsReq: 'Name is required',
   descIsReq: 'Description is required',
   sectionAdded: 'Section added successfully..!',
@@ -193,21 +197,22 @@ export const cypress = {
   saveAndAddMore: 'Save & Add More',
   enterAllOptions: 'Enter all the Options',
   groupByTest: 'Results',
-  members: 'Members',
   addMember: '+ Add Member',
   cancel: 'Cancel',
-  delete: 'Delete',
-  results: 'Results',
   name: 'Name',
   description: 'Description',
   totalTime: 'Total Time',
-  borderExist:'border-l-8'
+  borderExist:'border-l-8',
+  useRef:'What is useRef() ?',
+  useRefAns:'It allows you to persist values between renders.',
+  useMemo:'What is useMemo() ?',
+  useMemoAns:'The useMemo Hook can be used to keep expensive, resource intensive functions from needlessly running.',
 }
 
-export enum sortByOrder {
-  ascending = 'asc',
-  sortAscending = 'Sort Ascending',
-  name = 'name',
-  descending = 'dsc',
-  desc = 'desc',
+export const toastConstants ={
+  addTest:'Enter Name to add test',
+  enterDescription:'Enter description to add test',
+  addSection:'Add sections to add test',
 }
+
+

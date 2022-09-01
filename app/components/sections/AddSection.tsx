@@ -113,7 +113,7 @@ const AddSection = ({
                       transition.state === 'submitting' || showErrorMessage
                     }
                   >
-                    {transition.state === 'submitting' ? 'Adding...' : 'Add'}
+                    {transition.state === 'submitting' ? commonConstants.adding : commonConstants.add}
                   </button>
                 </div>
               </Dialog.Panel>

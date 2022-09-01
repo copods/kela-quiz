@@ -1,7 +1,6 @@
 import type { SetStateAction } from 'react'
 import { useEffect, useState } from 'react'
-import { sortByOrder } from '~/constants/common.constants'
-import type { TestSection } from '~/interface/Interface'
+import { sortByOrder, TestSection } from '~/interface/Interface'
 import SortFilter from '../SortFilter'
 import SelectSectionCard from './SelectSectionCard'
 
@@ -47,11 +46,11 @@ const SelectSections = ({
 
   const sortData = () => {
     updateSectionsList((e: Array<TestSection>) => {
-      if (sortBy === 'name' && sortDirection === sortByOrder.ascending )
+      if (sortBy === sortByOrder.name && sortDirection === sortByOrder.ascending )
         e.sort((a, b) => (a.name > b.name ? 1 : b.name > a.name ? -1 : 0))
-      if (sortBy === 'name' && sortDirection === sortByOrder.desc)
+      if (sortBy === sortByOrder.name && sortDirection === sortByOrder.desc)
         e.sort((a, b) => (b.name > a.name ? 1 : a.name > b.name ? -1 : 0))
-      if (sortBy === 'createdAt' && sortDirection === sortByOrder.ascending)
+      if (sortBy === sortByOrder.createdAt && sortDirection === sortByOrder.ascending)
         e.sort((a, b) =>
           new Date(a.createdAt).getTime() > new Date(b.createdAt).getTime()
             ? 1
@@ -59,7 +58,7 @@ const SelectSections = ({
             ? -1
             : 0
         )
-      if (sortBy === 'createdAt' && sortDirection === sortByOrder.desc)
+      if (sortBy === sortByOrder.createdAt && sortDirection === sortByOrder.desc)
         e.sort((a, b) =>
           new Date(b.createdAt).getTime() > new Date(a.createdAt).getTime()
             ? 1

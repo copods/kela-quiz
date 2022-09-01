@@ -4,7 +4,6 @@ import { useState } from 'react'
 import type { Question } from '~/interface/Interface'
 import QuestionCard from './QuestionCard'
 import { addQuestion, sectionsConstants } from '~/constants/common.constants'
-import { setTheFocus } from '~/utils/assessment.utils'
 import { routes } from '~/constants/route.constants'
 const SectionDetails = () => {
   const sectionDetails = useLoaderData()
@@ -37,15 +36,12 @@ const SectionDetails = () => {
         />
         <Link
           to={`${routes.sections}/${sectionDetails.sectionDetails?.id}${routes.addQuestion}`}
-          onKeyUp={(e) => {
-            setTheFocus(e,'#Section')
-          }}
           title={addQuestion.addQuestion}
           aria-label={addQuestion.addQuestion}
         >
           <button tabIndex={0}
             id="add-question"
-            className="h-9 rounded-lg bg-primary px-5 text-xs text-[#F0FDF4]"
+            className="h-9 rounded-lg bg-primary px-5 text-xs text-addButton"
           >
             + {addQuestion.addQuestion}
           </button>

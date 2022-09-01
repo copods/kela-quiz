@@ -1,10 +1,10 @@
 import { useSubmit } from '@remix-run/react'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import type { Test } from '~/interface/Interface'
+import { sortByOrder, Test } from '~/interface/Interface'
 import SortFilter from '../SortFilter'
 import TestTableItem from './TestTableItem'
-import { commonConstants, sortByOrder, testsConstants } from '~/constants/common.constants'
+import { commonConstants, testsConstants } from '~/constants/common.constants'
 import { routes } from '~/constants/route.constants'
 const TestList = ({
   tests,
@@ -51,7 +51,7 @@ const TestList = ({
         <h2
           tabIndex={0}
           role={testsConstants.Tests}
-          title="Tests"
+          title={testsConstants.Tests}
           className="text-3xl font-bold text-black"
         >
           {testsConstants.Tests}

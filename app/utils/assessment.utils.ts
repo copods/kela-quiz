@@ -293,9 +293,9 @@ export async function endCandidateAssessment(assessmentId: string, sectionId: st
   return redirect(`/assessment/${assessmentId}/end-assessment`)
 }
 
-export function setTheFocus(e:any, id:string){
-    if(e.key === 'Enter'){
-      return window.location.href = id;
-    }
-    return
-}
+// export function setTheFocus(e:any, id:string){
+//     if(e.key === 'Enter'){
+//       return window.location.href = id;
+//     }
+//     return
+// }

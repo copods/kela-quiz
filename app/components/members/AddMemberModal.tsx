@@ -146,7 +146,7 @@ export default function AddMemberModal({
                       }`}
                       disabled={transition.state === 'submitting'}
                     >
-                      {transition.state === 'submitting' ? 'Adding...' : 'Add'}
+                      {transition.state === 'submitting' ? commonConstants.adding : commonConstants.add}
                     </button>
                   </div>
                 </Dialog.Panel>

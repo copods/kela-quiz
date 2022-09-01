@@ -209,3 +209,15 @@ export interface CandidateResult {
   createdAt: Date
   updatedAt: Date
 }
+
+export enum sortByOrder {
+  ascending = 'asc',
+  name = 'name',
+  desc = 'desc',
+  saveAndExit = 'Save & Exit',
+  saveAndAddMore = 'Save & Add More',
+  saving = 'Saving...',
+  cancelling = 'Cancelling...',
+  cancel = 'Cancel',
+  createdAt = 'createdAt',
+}

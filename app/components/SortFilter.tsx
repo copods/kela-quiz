@@ -1,6 +1,7 @@
 import { Icon } from '@iconify/react'
 import DropdownField from './form/Dropdown'
-import { commonConstants, componentGlobalConstants, sortByOrder} from '~/constants/common.constants'
+import { commonConstants, componentGlobalConstants} from '~/constants/common.constants'
+import { sortByOrder } from '~/interface/Interface'
 
 
 const SortFilter = ({
