@@ -178,9 +178,9 @@ describe('Test for Section', () => {
         }
       })
     })
-    cy.get('[data-cy="deleteSection"]').should('have.text', 'Delete').click()
+    cy.get('[data-cy="delete-section"]').should('have.text', 'Delete').click()
     cy.get('#delete-dialog').should('be.visible')
-    cy.get('.confirm-delete')
+    cy.get('#confirm-delete')
       .should('have.text', commonConstants.delete)
       .click()
     cy.get('.Toastify__toast').should('have.text', statusCheck.deletedSuccess)

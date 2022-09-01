@@ -78,11 +78,11 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 export const action: ActionFunction = async ({ request }) => {
   const createdById = await requireUserId(request)
   const formData = await request.formData()
-  const action = JSON.parse(formData.get('add-section') as string)
-    ? JSON.parse(formData.get('add-section') as string)
-    : formData.get('deleteSection')
-    
-  if (action.action === 'add') {
+  const action = formData.get('add-section') 
+  ? formData.get('add-section') 
+  : formData.get('deleteSection')
+  console.log(formData.get('deleteSection'))
+  if (action === 'add') {
     const name = formData.get('name')
     const description = formData.get('description')
     if (typeof name !== 'string' || name.length === 0) {
@@ -243,7 +243,7 @@ export default function SectionPage() {
           </h2>
           <Button 
             id='add-section' 
-            dataCy='submit'
+            data-cy='submit'
             className='px-5 h-9' 
             varient='primary-solid'
             onClick={() => setShowAddSectionModal(!showAddSectionModal)} 

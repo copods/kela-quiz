@@ -3,7 +3,7 @@ import type { ButtonProps } from '~/interface/Interface'
 const Button = ({ buttonText, className, onClick, ...props }: ButtonProps) => {
 
   const getCommonClasses = () => {
-    return 'py-2.5 rounded-md items-center inline-flex justify-center shadow-sm text-xs font-medium'
+    return `py-2.5 rounded-md items-center inline-flex shadow-sm text-xs font-medium ${props.alignment ? props.alignment : 'justify-center'}`
   }
 
   const getButtonVarient = () => {
@@ -12,7 +12,7 @@ const Button = ({ buttonText, className, onClick, ...props }: ButtonProps) => {
         return `bg-primary text-gray-50 hover:bg-primaryHover transition ease-in-out delay-75 ${props.isDisabled && 'disabled:bg-primaryDisabled'}`
 
       case 'primary-outlined':
-        return `text-gray-primary rounded-md border border-primary bg-white text-primary hover:border-primaryOutlined transition ease-in-out delay-75 ${props.isDisabled && 'disabled:border-primaryOutlinedDisabled text-primaryOutlinedDisabled'}`
+        return `text-gray-primary rounded-md border border-primary bg-white text-primary hover:bg-gray-100 transition ease-in-out delay-75 ${props.isDisabled && 'disabled:border-primaryOutlinedDisabled text-primaryOutlinedDisabled'}`
 
       case 'secondary-solid': 
         return `border border-transparent bg-red-600 text-white hover:bg-deleteColorHover transition ease-in-out delay-75 ${props.isDisabled && 'disabled:bg-deleteColorDisabled'}`
@@ -24,7 +24,7 @@ const Button = ({ buttonText, className, onClick, ...props }: ButtonProps) => {
       className= {
       `${getCommonClasses()} ${getButtonVarient()} ${className}`      
       }
-      data-cy={props?.dataCy}
+      data-cy={props?.datacy}
       tabIndex={props?.tabIndex}
       disabled={props?.isDisabled}
       onClick={onClick}

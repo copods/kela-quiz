@@ -97,10 +97,12 @@ const AddSection = ({
                       type="submit"
                       id='submit-button'
                       className='h-9 px-4'
+                      name="add-section"
+                      value="add"
                       onClick={() => setOpen(false)}
                       isDisabled={transition.state === 'submitting' || showErrorMessage}
                       varient="primary-solid"
-                      dataCy="submit"
+                      datacy="submit"
                       buttonText={transition.state === 'submitting' ? 'Adding...' : 'Add'} />
                 </div>
               </Dialog.Panel>

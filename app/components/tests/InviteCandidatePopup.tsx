@@ -146,7 +146,7 @@ const InviteCandidatePopup = ({
                     className='h-9 px-4'
                     varient='primary-solid'
                     buttonText='Invite'
-                    dataCy="submit"
+                    datacy="submit"
                   />
                 </div>
               </Dialog.Panel>
