@@ -6,7 +6,13 @@ import OptionForQuestion from './OptionForQuestion'
 import cuid from 'cuid'
 import { Link, useLoaderData, useSubmit, useTransition } from '@remix-run/react'
 import { toast } from 'react-toastify'
-import { addQuestion, QuestionTypes } from '~/constants/common.constants'
+import {
+  addQuestion,
+  QuestionTypes,
+  testsConstants,
+  sectionsConstants,
+  statusCheck,
+} from '~/constants/common.constants'
 
 const AddQuestionInSection = () => {
   const { sectionDetails, questionTypes } = useLoaderData()
@@ -49,15 +55,11 @@ const AddQuestionInSection = () => {
 
   const breadCrumbArray = [
     {
-      tabName: 'Section',
-      route: '/sections',
-    },
-    {
-      tabName: 'Question',
+      tabName: testsConstants.sectionText,
       route: `/sections/${sectionDetails?.id}`,
     },
     {
-      tabName: 'AddQuestion',
+      tabName: sectionsConstants.addQuestion,
       route: `/sections/${sectionDetails?.id}/add-question`,
     },
   ]
@@ -97,10 +99,12 @@ const AddQuestionInSection = () => {
         }
       }
       if (
-        flag == 0 &&
+        flag === 0 &&
         getQuestionType(selectedTypeOfQuestion) === QuestionTypes.multipleChoice
       ) {
-        toast.error('Select the Option', { toastId: 'correctOptionRequired' })
+        toast.error(statusCheck.selectCorrOption, {
+          toastId: 'correctOptionRequired',
+        })
         return
       }
       if (
@@ -109,7 +113,9 @@ const AddQuestionInSection = () => {
           QuestionTypes.singleChoice &&
         !singleChoiceAnswer
       ) {
-        toast.error('Select the Option', { toastId: 'correctOptionsRequired' })
+        toast.error(statusCheck.selectCorrOption, {
+          toastId: 'correctOptionsRequired',
+        })
         return
       }
     }
