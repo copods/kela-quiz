@@ -3,6 +3,7 @@ import Logo from '~/components/Logo'
 import { candidateExamConstants, sideNav } from '~/constants/common.constants'
 
 const EndAssessment = () => {
+  console.log('')
   return (
     <div className="flex h-screen w-screen flex-col bg-gray-50">
       <div className="flex h-20 w-full flex-row items-center gap-3 bg-white px-5 shadow">
