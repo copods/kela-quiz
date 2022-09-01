@@ -136,7 +136,7 @@ describe('Creating tests', () => {
         }
       })
     })
-    cy.get('button#backButton').should('have.text', cypress.back).click()
+    cy.get('button#back-button').should('have.text', cypress.back).click()
   })
 
   it('Verify if user able to add section and able to input total questions and time', () => {

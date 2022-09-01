@@ -79,6 +79,7 @@ function Login({ actionData, redirectTo }: LoginProps) {
               type="submit"
               varient='primary-solid'
               className='w-full'
+              dataCy="submit"
             />
           </div>
         </Form>

@@ -138,6 +138,7 @@ export default function OptionForQuestion({
 
         <Button 
           tabIndex={0}
+          id='add-option'
           className='h-9 px-5' 
           varient='primary-solid' 
           onClick={addOptionArea} 

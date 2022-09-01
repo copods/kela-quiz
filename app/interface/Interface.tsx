@@ -19,6 +19,7 @@ export interface ButtonProps {
   title?: string
   value?: string
   tabIndex?: number
+  dataCy?: string
   type?: "button" | "submit" | "reset"
   varient: 'primary-solid' | 'primary-outlined' | 'secondary-solid'
   buttonText: string | JSX.Element

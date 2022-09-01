@@ -186,8 +186,9 @@ export default function SectionPage() {
           </h2>
           <Button 
             id='add-section' 
+            dataCy='submit'
             className='px-5 h-9' 
-            varient='primary-solid' 
+            varient='primary-solid'
             onClick={() => setShowAddSectionModal(!showAddSectionModal)} 
             buttonText={
               `+ ${sectionsConstants.addSection}`

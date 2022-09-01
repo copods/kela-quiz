@@ -100,6 +100,7 @@ const AddSection = ({
                       onClick={() => setOpen(false)}
                       isDisabled={transition.state === 'submitting' || showErrorMessage}
                       varient="primary-solid"
+                      dataCy="submit"
                       buttonText={transition.state === 'submitting' ? 'Adding...' : 'Add'} />
                 </div>
               </Dialog.Panel>

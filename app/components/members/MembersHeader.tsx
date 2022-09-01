@@ -20,7 +20,7 @@ export default function MembersHeader({
     <div className="grid grid-cols-12 pb-12">
       <div className="col-span-full grid">
         <div className="flex items-center justify-between">
-          <h1 className="text-3xl font-bold leading-9">{members.members}</h1>
+          <h1 className="membersHeading text-3xl font-bold leading-9">{members.members}</h1>
           <Button
             tabIndex={0}
             id='add-member'

@@ -42,7 +42,7 @@ describe('Test for members', () => {
     cy.get('a').find('#members').should('have.text', cypress.members).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/members')
     cy.get('#add-member').should('have.text', cypress.addMember).click()
-    cy.get('#cancelAddButton').should('have.text', 'Cancel').click()
+    cy.get('#cancel-add-button').should('have.text', 'Cancel').click()
   })
   it('Test for Delete member popup cancel button', () => {
     cy.get('a').find('#members').should('have.text', cypress.members).click()
@@ -93,7 +93,7 @@ describe('Test for members', () => {
         cy.get('#delete-button').click()
       })
     cy.get('#delete-dialog').should('be.visible')
-    cy.get('.confirm-delete').should('have.text', cypress.delete).click()
+    cy.get('#confirm-delete').should('have.text', cypress.delete).click()
     cy.get('.Toastify__toast').find('.Toastify__close-button  ').click()
     cy.intercept('/members').as('membersPage')
     cy.get('.memberRows').each(($el) => {
