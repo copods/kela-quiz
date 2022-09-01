@@ -1,21 +1,41 @@
 import { Icon } from '@iconify/react'
 import moment from 'moment'
-import { useEffect } from 'react'
+import { Menu } from '@headlessui/react'
+import { useSubmit } from '@remix-run/react'
+import DeletePopUp from '../DeletePopUp'
+import { useState, useEffect } from 'react'
 
-import { sectionsConstants } from '~/constants/common.constants'
+import { sectionsConstants, statusCheck } from '~/constants/common.constants'
 const SectionCard = ({
   name,
   isActive,
   questionsCount,
   createdBy,
   createdAt,
+  id,
+  err,
+  actionStatusData,
 }: {
   name: string
   isActive: boolean
-  questionsCount: number
+  questionsCount?: number
   createdBy: string
-  createdAt: string
+  createdAt: Date
+  id: string
+  err?: string
+  actionStatusData?: string
 }) => {
+  const [isDelete, setIsDelete] = useState(false)
+  const submit = useSubmit()
+  const deleteSection = () => {
+    submit({ deleteSection: 'sectionDelete', id: id }, { method: 'post' })
+  }
+  useEffect(() => {
+    if (actionStatusData == statusCheck.deletedSuccess) {
+      setIsDelete(false)
+    }
+  }, [actionStatusData])
+
   // shift + alt + Tab combination key for get back focus to selected section card
   useEffect(() => {
     window.addEventListener('keydown', function (event) {
@@ -38,11 +58,44 @@ const SectionCard = ({
           {name}
         </h2>
         <div className="flex">
-          <Icon
-            tabIndex={0}
-            className="text-2xl text-gray-600"
-            icon={'mdi:dots-vertical'}
-          />
+          <Menu
+            as="div"
+            className="verticalDots relative inline-block text-left"
+          >
+            <Menu.Button>
+              <Icon
+                className="text-2xl text-gray-600"
+                icon={'mdi:dots-vertical'}
+              />
+            </Menu.Button>
+            <Menu.Items className="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+              <div className="px-1 py-1">
+                <Menu.Item>
+                  {({ active }) => (
+                    <button
+                      data-cy="deleteSection"
+                      name="deleteSection"
+                      className={`${
+                        active ? 'bg-primary text-white' : 'text-gray-900'
+                      } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                      onClick={() => {
+                        setIsDelete(true)
+                      }}
+                    >
+                      <Icon
+                        icon={'ic:outline-delete-outline'}
+                        className={`mr-2 h-5 w-5 ${
+                          active ? 'text-gray-900' : 'text-red-500'
+                        }`}
+                        aria-hidden="true"
+                      />
+                      Delete
+                    </button>
+                  )}
+                </Menu.Item>
+              </div>
+            </Menu.Items>
+          </Menu>
         </div>
       </div>
       <div className="flex text-xs text-gray-400">
@@ -55,6 +108,11 @@ const SectionCard = ({
       <div className="flex text-xs text-gray-400">
         {sectionsConstants.totalQuestions} {questionsCount}
       </div>
+      <DeletePopUp
+        setOpen={setIsDelete}
+        open={isDelete}
+        onDelete={deleteSection}
+      />
     </div>
   )
 }
