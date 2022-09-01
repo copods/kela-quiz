@@ -40,15 +40,19 @@ model Role {
 
 model Section {
   id                     String                   @id @default(cuid())
-  name                   String                   @unique
+  name                   String
   description            String
   createdBy              User                     @relation(fields: [createdById], references: [id])
   createdById            String
   questions              Question[]
   sectionInCandidateTest SectionInCandidateTest[]
   sectionInTest          SectionInTest[]
+  deleted                Boolean                  @default(false)
+  deletedAt              String?                  @default("na")
   createdAt              DateTime                 @default(now())
   updatedAt              DateTime                 @updatedAt
+
+  @@unique([name, deletedAt, deleted])
 }
 
 model Question {
@@ -104,18 +108,18 @@ model Option {
 }
 
 model Test {
-  id              String            @id @default(cuid())
-  name            String            @unique
-  description     String
-  sections        SectionInTest[]
-  createdBy       User              @relation(fields: [createdById], references: [id])
-  createdById     String
-  candidateTest   CandidateTest[]
-  candidateResult CandidateResult[]
-  createdAt       DateTime          @default(now())
-  updatedAt       DateTime          @updatedAt
-  deleted         Boolean           @default(false)
-  deletedAt       String?           @default("na")
+  id                String              @id @default(cuid())
+  name              String              @unique
+  description       String
+  sections          SectionInTest[]
+  createdBy         User                @relation(fields: [createdById], references: [id])
+  createdById       String
+  candidateTest     CandidateTest[]
+  candidateResult   CandidateResult[]
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  deleted           Boolean             @default(false)
+  deletedAt         String?             @default("na")
   SectionWiseResult SectionWiseResult[]
 
   @@unique([name, deletedAt, deleted])

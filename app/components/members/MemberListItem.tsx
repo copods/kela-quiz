@@ -30,27 +30,24 @@ export default function MemberListItem({
   }
   return (
     <div className="col-span-full grid grid-cols-10">
-      <div
-        id="memberRow"
-        className="col-span-full grid grid-cols-10 border-t-[1px] border-solid border-[#E5E7EB] px-12 py-4"
-      >
+      <div className="memberRows col-span-full grid grid-cols-10 border-t border-solid border-gray-200 px-12 py-4">
         <div className=" col-span-2 overflow-ellipsis break-all">
-          <span className=" text-base leading-6 text-gray-700">
+          <span className="memberName text-base leading-6 text-gray-700">
             {user.firstName} {user.lastName}
           </span>
         </div>
-        <div className="col-span-3 overflow-ellipsis break-all">
-          <span className="  text-base leading-6  text-gray-700">
+        <div className="memberMail col-span-3 overflow-ellipsis break-all">
+          <span className="text-base leading-6 text-gray-700">
             {user.email}
           </span>
         </div>
         <div className="col-span-2 overflow-ellipsis break-all">
-          <span className=" text-base leading-6 text-gray-700">
+          <span className="text-base leading-6 text-gray-700">
             {user?.role?.name}
           </span>
         </div>
         <div className="col-span-2 overflow-ellipsis break-all">
-          <span className=" text-base leading-6 text-gray-700">
+          <span className="text-base leading-6 text-gray-700">
             {moment(user?.createdAt).format('DD MMMM YY')}
           </span>
         </div>
@@ -59,7 +56,7 @@ export default function MemberListItem({
             onKeyUp={(e) => {
               if (e.key === 'Enter') openPopUp()
             }}
-            id="deleteButton"
+            id="delete-button"
             tabIndex={0}
             name="deleteMember"
             disabled={loggedInUser}

@@ -5,16 +5,18 @@ import type { LoaderFunction } from '@remix-run/server-runtime'
 import { json } from '@remix-run/node'
 
 import invariant from 'tiny-invariant'
-import { getCandidateEmailById } from '~/models/result.server'
+import { getPendingExamCandidateByTestId } from '~/models/result.server'
 
 type LoaderData = {
-  testPreview: Awaited<ReturnType<typeof getCandidateEmailById>>
+  testPreview: Awaited<ReturnType<typeof getPendingExamCandidateByTestId>>
   params: any
 }
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   invariant(params.testId, 'resultId not found')
-  const testPreview = await getCandidateEmailById({ id: params.testId })
+  const testPreview = await getPendingExamCandidateByTestId({
+    id: params.testId,
+  })
   if (!testPreview) {
     throw new Response('Not Found', { status: 404 })
   }

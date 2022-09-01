@@ -1,11 +1,15 @@
-const CandidtateListOfTestItem = ({
+import moment from 'moment'
+
+const CandidtateAttendedList = ({
   email,
   invitedBy,
   index,
+  startedAt,
 }: {
   email: string
   invitedBy: string
   index: number
+  startedAt: Date
 }) => {
   return (
     <div className="col-span-full grid grid-cols-10 ">
@@ -22,9 +26,12 @@ const CandidtateListOfTestItem = ({
             {invitedBy}
           </span>
         </div>
+        <div className="col-span-2 truncate">
+          {moment(new Date(startedAt)).format('DD MMMM YY mm:ss a')}
+        </div>
       </div>
     </div>
   )
 }
 
-export default CandidtateListOfTestItem
+export default CandidtateAttendedList

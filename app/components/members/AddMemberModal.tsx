@@ -36,7 +36,7 @@ export default function AddMemberModal({
 
           <div
             className="fixed inset-0 z-10 overflow-y-auto"
-            id="AddPopUpModel"
+            id="add-pop-up-model"
           >
             <Form
               method="post"
@@ -139,7 +139,7 @@ export default function AddMemberModal({
                     </button>
                     <button
                       tabIndex={0}
-                      id="addbutton"
+                      id="add-button"
                       type="submit"
                       name="addMember"
                       value={JSON.stringify({ action: 'add' })}

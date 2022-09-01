@@ -6,8 +6,13 @@ import OptionForQuestion from './OptionForQuestion'
 import cuid from 'cuid'
 import { Link, useLoaderData, useSubmit, useTransition } from '@remix-run/react'
 import { toast } from 'react-toastify'
-import { addQuestion } from '~/constants/common.constants'
 import { QuestionTypes } from '~/interface/Interface'
+import {
+  addQuestion,
+  testsConstants,
+  sectionsConstants,
+  statusCheck,
+} from '~/constants/common.constants'
 
 const AddQuestionInSection = () => {
   const { sectionDetails, questionTypes } = useLoaderData()
@@ -50,15 +55,11 @@ const AddQuestionInSection = () => {
 
   const breadCrumbArray = [
     {
-      tabName: 'Section',
-      route: '/sections',
-    },
-    {
-      tabName: 'Question',
+      tabName: testsConstants.sectionText,
       route: `/sections/${sectionDetails?.id}`,
     },
     {
-      tabName: 'AddQuestion',
+      tabName: sectionsConstants.addQuestion,
       route: `/sections/${sectionDetails?.id}/add-question`,
     },
   ]
@@ -100,10 +101,12 @@ const AddQuestionInSection = () => {
         }
       }
       if (
-        flag == 0 &&
+        flag === 0 &&
         getQuestionType(selectedTypeOfQuestion) === QuestionTypes.multipleChoice
       ) {
-        toast.error('Select the Option', { toastId: 'correctOptionRequired' })
+        toast.error(statusCheck.selectCorrOption, {
+          toastId: 'correctOptionRequired',
+        })
         return
       }
       if (
@@ -112,7 +115,9 @@ const AddQuestionInSection = () => {
           QuestionTypes.singleChoice &&
         !singleChoiceAnswer
       ) {
-        toast.error('Select the Option', { toastId: 'correctOptionsRequired' })
+        toast.error(statusCheck.selectCorrOption, {
+          toastId: 'correctOptionsRequired',
+        })
         return
       }
     }
@@ -230,7 +235,7 @@ const AddQuestionInSection = () => {
         <div className="flex gap-2">
           <button
             tabIndex={0}
-            id="saveAndExit"
+            id="save-and-exit"
             disabled={transition.state === 'submitting'}
             className={`flex h-9 items-center gap-1    rounded-lg bg-primary px-5 text-xs text-white ${
               transition.state === 'submitting' && 'disabled:opacity-75'

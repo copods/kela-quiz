@@ -19,7 +19,7 @@ let sideNavGuide = [
     navGuide: 'Results',
     subItem: [
       {
-        id: 'Group_By_Tests',
+        id: 'group-by-tests',
         iconClass: 'mdi:chart-box-outline',
         itemName: 'Results',
         itemRoute: 'results/groupByTests',
@@ -36,13 +36,13 @@ let sideNavGuide = [
     navGuide: 'Assessments',
     subItem: [
       {
-        id: 'Tests',
+        id: 'tests',
         iconClass: 'carbon:result',
         itemName: 'Tests',
         itemRoute: 'tests',
       },
       {
-        id: 'Sections',
+        id: 'sections',
         iconClass: 'ci:list-checklist-alt',
         itemName: 'Sections',
         itemRoute: 'sections',
@@ -53,7 +53,7 @@ let sideNavGuide = [
     navGuide: 'General',
     subItem: [
       {
-        id: 'Members',
+        id: 'members',
         iconClass: 'mdi:account-group',
         itemName: 'Members',
         itemRoute: 'members',
@@ -80,7 +80,7 @@ const SideNav = () => {
           {sideNavGuide.map((guide, index) => {
             return (
               <div className="10px flex flex-col gap-1" key={index}>
-                <p className="non-italic  px-2 pb-2 text-left text-xs font-semibold leading-4 text-gray-400">
+                <p className="non-italic px-2 pb-2 text-left text-xs font-semibold leading-4 text-gray-400">
                   {guide.navGuide}
                 </p>
                 {guide.subItem.map((item, index) => {

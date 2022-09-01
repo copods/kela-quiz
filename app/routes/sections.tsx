@@ -5,6 +5,7 @@ import {
   commonConstants,
   routeFiles,
   sectionsConstants,
+  statusCheck,
 } from '~/constants/common.constants'
 import {
   Outlet,
@@ -13,7 +14,11 @@ import {
   useLoaderData,
   useSubmit,
 } from '@remix-run/react'
-import { createSection, getAllSections } from '~/models/sections.server'
+import {
+  createSection,
+  deleteSectionById,
+  getAllSections,
+} from '~/models/sections.server'
 import { useState, useEffect } from 'react'
 import { Icon } from '@iconify/react'
 import { getUserId, requireUserId } from '~/session.server'
@@ -26,12 +31,17 @@ import type { Section } from '~/interface/Interface'
 
 export type ActionData = {
   errors?: {
-    title: string
-    status: number
+    title?: string
+    body?: string
+    status?: number | string
+    check?: Date
+    name?: string
+    description?: string
   }
   resp?: {
-    title: string
-    status: number
+    status?: string | number
+    check?: Date
+    title?: string
     data?: Section
   }
 }
@@ -50,7 +60,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   var status: string = ''
   await getAllSections(obj)
     .then((res) => {
-      sections = res
+      sections = res as Section[]
       status = 'Success'
     })
     .catch((err) => {
@@ -68,61 +78,90 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 export const action: ActionFunction = async ({ request }) => {
   const createdById = await requireUserId(request)
   const formData = await request.formData()
-  const name = formData.get('name')
-  const description = formData.get('description')
+  const action = JSON.parse(formData.get('add-section') as string)
+    ? JSON.parse(formData.get('add-section') as string)
+    : formData.get('deleteSection')
 
-  if (typeof name !== 'string' || name.length === 0) {
-    return json<ActionData>(
-      {
-        errors: {
-          title: sectionsConstants.sectionNameIsRequiredMsg,
-          status: 400,
-        },
-      },
-      { status: 400 }
-    )
-  }
-  if (typeof description !== 'string' || description.length === 0) {
-    return json<ActionData>(
-      {
-        errors: {
-          title: sectionsConstants.sectionDescIsRequiredMsg,
-          status: 400,
-        },
-      },
-      { status: 400 }
-    )
-  }
-  const section = await createSection({ name, description, createdById })
-    .then((res) => {
+  if (action.action === 'add') {
+    const name = formData.get('name')
+    const description = formData.get('description')
+    if (typeof name !== 'string' || name.length === 0) {
       return json<ActionData>(
         {
-          resp: {
-            title: sectionsConstants.sectionAdditionMsg,
-            status: 200,
-            data: res,
+          errors: {
+            title: sectionsConstants.sectionNameIsRequiredMsg,
+            status: 400,
           },
         },
-        { status: 200 }
-      )
-    })
-    .catch((err) => {
-      let title = commonConstants.somethingWentWrongMsg
-      if (err.code === 'P2002') {
-        title = sectionsConstants.duplicateTitleMsg
-      }
-      return json<ActionData>(
-        { errors: { title, status: 400 } },
         { status: 400 }
       )
-    })
-  return section
+    }
+    if (typeof description !== 'string' || description.length === 0) {
+      return json<ActionData>(
+        {
+          errors: {
+            title: sectionsConstants.sectionDescIsRequiredMsg,
+            status: 400,
+          },
+        },
+        { status: 400 }
+      )
+    }
+
+    let addHandle = null
+    await createSection({ name, description, createdById })
+      .then((res) => {
+        addHandle = json<ActionData>(
+          {
+            resp: {
+              title: sectionsConstants.sectionAdditionMsg,
+              status: 200,
+              data: res as Section,
+            },
+          },
+          { status: 200 }
+        )
+      })
+
+      .catch((err) => {
+        let title = commonConstants.somethingWentWrongMsg
+        if (err.code === 'P2002') {
+          title = sectionsConstants.duplicateTitleMsg
+        }
+        addHandle = json<ActionData>(
+          { errors: { title, status: 400, check: new Date() } },
+          { status: 400 }
+        )
+      })
+
+    return addHandle
+  }
+  let deleteHandle = null
+  if (action === 'sectionDelete') {
+    await deleteSectionById(formData.get('id') as string)
+      .then((res) => {
+        deleteHandle = json<ActionData>(
+          { resp: { status: statusCheck.deletedSuccess } },
+
+          { status: 200 }
+        )
+      })
+      .catch((err) => {
+        let title = statusCheck.commonError
+        deleteHandle = json<ActionData>(
+          { errors: { title, status: 400, check: new Date() } },
+          { status: 400 }
+        )
+      })
+    return deleteHandle
+  }
 }
 
 export default function SectionPage() {
   const data = useLoaderData() as unknown as LoaderData
+
   const fetcher = useFetcher()
-  const action = useActionData() as ActionData
+  const sectionActionData = useActionData() as ActionData
 
   let navigate = useNavigate()
   const submit = useSubmit()
@@ -146,27 +185,32 @@ export default function SectionPage() {
   )
 
   if (data.status != 'Success') {
-    toast.error('Something went wrong..!')
+    toast.error(statusCheck.commonError)
   }
 
   useEffect(() => {
-    if (data.sections.length && !data.selectedSectionId) {
-      console.log('1', data?.filters)
+    if (selectedSection !== 'NA') {
       navigate(`/sections/${selectedSection}${data?.filters}`, {
         replace: true,
       })
     }
-  }, [data, navigate, selectedSection])
+  }, [navigate, selectedSection])
+  useEffect(() => {
+    if (selectedSection === 'NA') {
+      navigate(`/sections`, {
+        replace: true,
+      })
+    }
+  }, [navigate, selectedSection])
 
   useEffect(() => {
-    if (data.sections.length > 0) {
+    if (data.sections.length) {
       const formData = new FormData()
       var filter = {
         orderBy: {
           [sortBy]: order,
         },
       }
-      console.log('2', data?.filters)
       fetcher.submit({ filter: JSON.stringify(filter) }, { method: 'get' })
       formData.append('filter', JSON.stringify(filter))
       submit(formData, {
@@ -174,22 +218,30 @@ export default function SectionPage() {
         action: `/sections/${selectedSection}`,
       })
     }
-  }, [order, sortBy])
+  }, [order, sortBy, data.sections.length])
 
   useEffect(() => {
-    if (action) {
-      if (action.resp?.status === 200) {
+      if (sectionActionData) {
+        if (sectionActionData.resp?.title === statusCheck.sectionAddedSuccess) {
         setShowAddSectionModal(false)
-        toast.success(action?.resp?.title)
-        console.log('3', data?.filters)
-        navigate(`/sections/${action?.resp?.data?.id}`, { replace: false })
-      } else if (action.errors?.status === 400) {
-        toast.error(action.errors?.title, {
-          toastId: action.errors?.title,
+        toast.success(sectionActionData.resp?.title)
+        setSelectedSection(sectionActionData?.resp?.data?.id as string)
+      } else if (
+        sectionActionData.resp?.status === statusCheck.deletedSuccess
+      ) {
+        toast.success(sectionActionData.resp?.status, {
+          toastId: sectionActionData.resp?.status,
+        })
+        setSelectedSection(
+          data.selectedSectionId || data.sections[0]?.id || 'NA'
+        )
+      } else if (sectionActionData.errors?.status === 400) {
+        toast.error(sectionActionData.errors?.title, {
+          toastId: sectionActionData.errors?.title,
         })
       }
     }
-  }, [action, navigate])
+  }, [sectionActionData, data])
 
   return (
     <AdminLayout>
@@ -217,17 +269,19 @@ export default function SectionPage() {
           >
             {/* section list */}
             <div className={`${sectionDetailFull ? 'hidden' : ''}`}>
-              <Sections
-                sections={data.sections}
-                selectedSection={selectedSection}
-                filters={data.filters}
-                sortBy={sortBy}
-                setSortBy={setSortBy}
-                order={order}
-                setOrder={setOrder}
-                setSelectedSection={setSelectedSection}
-                sortByDetails={sortByDetails}
-              />
+            <Sections
+              sections={data.sections as Section[]}
+              selectedSection={selectedSection}
+              filters={data.filters}
+              sortBy={sortBy}
+              setSortBy={setSortBy}
+              order={order}
+              setOrder={setOrder}
+              setSelectedSection={setSelectedSection}
+              sortByDetails={sortByDetails}
+              actionStatusData={sectionActionData?.resp?.status as string}
+              err={sectionActionData?.resp?.status as string}
+            />
             </div>
 
             {/* section details */}
@@ -235,6 +289,7 @@ export default function SectionPage() {
               <span
                 className="z-20 -mr-5"
                 tabIndex={0}
+                role="button"
                 onClick={() => setSectionDetailFull(!sectionDetailFull)}
                 onKeyUp={(e) => {
                   if (e.key === 'Enter')
@@ -265,7 +320,7 @@ export default function SectionPage() {
         <AddSection
           open={showAddSectionModal}
           setOpen={setShowAddSectionModal}
-          showErrorMessage={action?.errors?.status === 400}
+          showErrorMessage={sectionActionData?.errors?.status === 400}
         />
       </div>
     </AdminLayout>

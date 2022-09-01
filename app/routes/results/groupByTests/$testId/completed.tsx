@@ -1,7 +1,7 @@
 import type { LoaderFunction } from '@remix-run/server-runtime'
 import { json } from '@remix-run/server-runtime'
 import invariant from 'tiny-invariant'
-import ExamAttendedCandidatesComponent from '~/components/results/AttendedCandidatesList'
+import ExamCompletedCandidatesComponent from '~/components/results/ExamCompletedCandidatesList'
 import { getResultsOfCandidatesByTestId } from '~/models/result.server'
 
 export const loader: LoaderFunction = async ({ request, params }) => {
@@ -17,7 +17,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 }
 
 const Attended = () => {
-  return <ExamAttendedCandidatesComponent />
+  return <ExamCompletedCandidatesComponent />
 }
 
 export default Attended
