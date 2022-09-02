@@ -7,11 +7,12 @@ import cuid from 'cuid'
 import { Link, useLoaderData, useSubmit, useTransition } from '@remix-run/react'
 import { toast } from 'react-toastify'
 import Button from '~/components/form/Button'
+import { routes } from '~/constants/route.constants'
+
 import {
   addQuestion,
   QuestionTypes,
   testsConstants,
-  sectionsConstants,
   statusCheck,
 } from '~/constants/common.constants'
 
@@ -57,12 +58,12 @@ const AddQuestionInSection = () => {
   const breadCrumbArray = [
     {
       tabName: testsConstants.sectionText,
-      route: `/sections/${sectionDetails?.id}`,
+      route: routes.sections,
     },
     {
-      tabName: sectionsConstants.addQuestion,
-      route: `/sections/${sectionDetails?.id}/add-question`,
-    },
+      tabName: addQuestion.addQuestion,
+      route: `${routes.sections}/${sectionDetails?.id}${routes.addQuestion}`,
+    }
   ]
   const getQuestionType = (id: string) => {
     let quesValue = ''
@@ -187,12 +188,17 @@ const AddQuestionInSection = () => {
   return (
     <div className="flex h-full flex-col gap-6">
       <BreadCrumb data={breadCrumbArray} />
+      <div className="flex">
       <h1
         title={sectionDetails?.name}
-        className="text-3xl font-bold leading-9 text-gray-900"
+        role={sectionDetails?.name}
+        aria-label={sectionDetails?.name}
+        tabIndex={0}
+        className="text-3xl font-bold text-gray-900 inline-block"
       >
         {sectionDetails?.name} - {addQuestion.addQuestion}
       </h1>
+      </div>
 
       <div className="flex h-40 flex-1 flex-row gap-6">
         <QuestionEditor

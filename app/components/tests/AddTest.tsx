@@ -8,8 +8,10 @@ import SelectSections from './CreateSelectSections'
 import TestDetails from './CreateTestDetails'
 import TestPreview from './CreateTestPreview'
 import StepsTabComponent from './StepsTab'
-import { commonConstants, testsConstants } from '~/constants/common.constants'
 import Button from '../form/Button'
+import { commonConstants, testsConstants, toastConstants } from '~/constants/common.constants'
+import { routes } from '~/constants/route.constants'
+
 const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
   const transition = useTransition()
   const submit = useSubmit()
@@ -21,12 +23,12 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
 
   const breadCrumbData = [
     {
-      tabName: 'Test',
-      route: '/tests',
+      tabName: testsConstants.testListColumnLabel,
+      route: routes.tests,
     },
     {
-      tabName: 'Add Test',
-      route: '/tests/add-test',
+      tabName: testsConstants.addTestbutton,
+      route: routes.addTest,
     },
   ]
 
@@ -69,15 +71,15 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
 
   const submitAddTest = () => {
     if (typeof name !== 'string' || name.length === 0) {
-      toast.error('Enter Name to add test')
+      toast.error(toastConstants.addTest)
       return
     }
     if (typeof description !== 'string' || description.length === 0) {
-      toast.error('Enter description to add test')
+      toast.error(toastConstants.enterDescription)
       return
     }
     if (selectedSections.length === 0) {
-      toast.error('Add sections to add test')
+      toast.error(toastConstants.addSection)
       return
     }
     var sendData: {

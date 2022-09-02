@@ -29,7 +29,7 @@ const CandidateInstruction = () => {
     <div className="h-full flex-col overflow-y-auto">
       <div>
         <div
-          className="pb-9 text-base leading-6 text-gray-700"
+          className="pb-9 text-base text-gray-700"
           dangerouslySetInnerHTML={{
             __html: instructions?.test?.description,
           }}

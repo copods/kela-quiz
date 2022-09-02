@@ -1,6 +1,6 @@
 /// <reference types="Cypress"/>
 
-import { cypress } from '~/constants/common.constants'
+import { commonConstants, cypress, members } from '~/constants/common.constants'
 
 const memberEmail = 'johndoe@example.com'
 
@@ -21,9 +21,8 @@ describe('Test for members', () => {
     cy.location('pathname').should('include', '/dashboard')
   })
 
-  //
   it('Test for conforming ,new member is added in a list or not', () => {
-    cy.get('a').find('#members').should('have.text', cypress.members).click()
+    cy.get('a').find('#members').should('have.text', members.members).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/members')
 
     cy.get('.memberRows', { timeout: 8000 }).each(($el) => {
@@ -39,13 +38,13 @@ describe('Test for members', () => {
   })
 
   it('Test for add-members popUp cancel button', () => {
-    cy.get('a').find('#members').should('have.text', cypress.members).click()
+    cy.get('a').find('#members').should('have.text', members.members).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/members')
     cy.get('#add-member').should('have.text', cypress.addMember).click()
     cy.get('#cancel-add-button').should('have.text', 'Cancel').click()
   })
   it('Test for Delete member popup cancel button', () => {
-    cy.get('a').find('#members').should('have.text', cypress.members).click()
+    cy.get('a').find('#members').should('have.text', members.members).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/members')
     cy.get('.membersHeading').should('have.text', 'Members')
 
@@ -68,11 +67,11 @@ describe('Test for members', () => {
         cy.get('#delete-button').click()
       })
     cy.get('#delete-dialog').should('be.visible')
-    cy.get('#cancel-delete-pop-up').should('have.text', cypress.cancel).click()
+    cy.get('#cancel-delete-pop-up').should('have.text', commonConstants.cancel).click()
   })
 
   it('Test for Delete member ', () => {
-    cy.get('a').find('#members').should('have.text', cypress.members).click()
+    cy.get('a').find('#members').should('have.text', members.members).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/members')
     cy.get('.memberRows', { timeout: 8000 }).each(($el) => {
       cy.wrap($el).within((el) => {

@@ -51,18 +51,17 @@ const TestTableItem = ({
         className="test-table-list flex items-center border-b border-t border-gray-200 bg-white py-6 px-9"
       >
         {showCheckBox && (
-          <div className="w-1/12 text-base font-normal leading-6 text-gray-700">
-            <input type="checkbox" />
-            {/* <Checkbox handleChange={() => console.log('')} /> */}
+          <div className="w-1/12 text-base font-normal text-gray-700">
+            <input name="checkbox" tabIndex={0} type="checkbox" />
           </div>
         )}
         <div
-          className="w-1/12 text-base font-normal leading-6 text-gray-700"
+          className="w-1/12 text-base font-normal text-gray-700"
           id="unique-id"
         >
           {index}
         </div>
-        <div className="test-name-navigation w-4/12 cursor-pointer truncate p-1 text-base font-medium leading-6 text-primary  ">
+        <div className="test-name-navigation w-4/12 cursor-pointer truncate p-1 text-base font-medium text-primary  ">
           <NavLink
             aria-label={testName}
             title={testName}
@@ -73,17 +72,17 @@ const TestTableItem = ({
             <span id="test-name-navigation">{testName}</span>
           </NavLink>
         </div>
-        <div id="chip-group-id" className="flex w-3/12 text-xs leading-6">
+        <div id="chip-group-id" className="flex w-3/12 text-xs">
           <ChipGroup
             sections={sections}
             totalCount={totalCount}
             index={index}
           />
         </div>
-        <div className="w-2/12 truncate text-base font-normal leading-6 text-gray-700">
+        <div className="w-2/12 truncate text-base font-normal text-gray-700">
           {moment(createdAt).format('DD MMMM YY')}
         </div>
-        <div className="w-2/12 truncate text-base font-normal leading-6 text-gray-700">
+        <div className="w-2/12 truncate text-base font-normal text-gray-700">
           {createdBy}
         </div>
         <div className="flex w-1/12 gap-2">

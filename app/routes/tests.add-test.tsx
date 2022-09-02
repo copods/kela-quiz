@@ -9,6 +9,7 @@ import AddTestComponent from '~/components/tests/AddTest'
 import { getAllSections } from '~/models/sections.server'
 import { createTest } from '~/models/tests.server'
 import { getUserId, requireUserId } from '~/session.server'
+import { routes } from '~/constants/route.constants'
 
 type LoaderData = {
   sections: Awaited<ReturnType<typeof getAllSections>>
@@ -17,7 +18,7 @@ type LoaderData = {
 
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await getUserId(request)
-  if (!userId) return redirect('/sign-in')
+  if (!userId) return redirect(routes.signIn)
 
   const filter = Object.fromEntries(new URL(request.url).searchParams.entries())
     .data
@@ -72,7 +73,7 @@ const AddTest = () => {
   useEffect(() => {
     if (actionData?.test.id) {
       toast.success('Test added successfully..')
-      navigate('/tests')
+      navigate(routes.tests)
     } else if (actionData) {
       if (actionData?.test.code == 'P2002') {
         toast.error('Test name already exist.')

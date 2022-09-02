@@ -26,8 +26,9 @@ import AdminLayout from '~/components/layouts/AdminLayout'
 import AddSection from '~/components/sections/AddSection'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import type { Section } from '~/interface/Interface'
 import Button from '~/components/form/Button'
+import { Section, sortByOrder } from '~/interface/Interface'
+import { routes } from '~/constants/route.constants'
 
 export type ActionData = {
   errors?: {
@@ -67,7 +68,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
       status = err
     })
   const userId = await getUserId(request)
-  if (!userId) return redirect('/sign-in')
+  if (!userId) return redirect(routes.signIn)
   const selectedSectionId = params.sectionId
     ? params.sectionId?.toString()
     : undefined
@@ -168,7 +169,7 @@ export default function SectionPage() {
 
   const [sectionDetailFull, setSectionDetailFull] = useState(false)
   const [showAddSectionModal, setShowAddSectionModal] = useState(false)
-  const [order, setOrder] = useState('asc')
+  const [order, setOrder] = useState(sortByOrder.ascending as string)
   const [sortBy, setSortBy] = useState(sortByDetails[1].value)
   const [selectedSection, setSelectedSection] = useState(
     data.selectedSectionId || data.sections[0]?.id || 'NA'
@@ -235,10 +236,14 @@ export default function SectionPage() {
 
   return (
     <AdminLayout>
-      <div className="flex h-full flex-col gap-12 overflow-hidden">
+      <div className="flex h-full flex-col gap-12 overflow-hidden p-1">
         {/* header */}
         <header className="flex items-center justify-between">
-          <h2 className="text-3xl font-bold text-black">
+          <h2 className="text-3xl font-bold text-black"
+          tabIndex={0}
+          role={routeFiles.sections}
+          title={routeFiles.sections}
+          aria-label={routeFiles.sections}>
             {routeFiles.sections}
           </h2>
           <Button 
@@ -283,6 +288,8 @@ export default function SectionPage() {
               onKeyUp={(e) => {
                 if (e.key === 'Enter') setSectionDetailFull(!sectionDetailFull)
               }}
+              title={sectionsConstants.expand}
+              aria-label={sectionsConstants.expand}
             >
               {sectionDetailFull ? (
                 <Icon

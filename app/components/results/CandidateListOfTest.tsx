@@ -2,6 +2,7 @@ import { NavLink, Outlet } from '@remix-run/react'
 import { Icon } from '@iconify/react'
 import ResultTab from './ResultTab'
 import { useLoaderData } from '@remix-run/react'
+import { routes } from '~/constants/route.constants'
 
 const CandidateListOfTest = () => {
   const tabs = [
@@ -28,17 +29,17 @@ const CandidateListOfTest = () => {
         <div className="border-b border-solid border-slate-300 ">
           <div className="flex gap-2 pb-6">
             <NavLink
-              to={'/results/groupByTests'}
+              to={routes.resultGroupTest}
               className="flex items-center gap-4 "
             >
               <Icon
                 className="text-3xl font-semibold leading-9 text-gray-900"
                 id="back-button"
                 icon="mdi:arrow-left"
-              ></Icon>
+              />
             </NavLink>
             <span
-              className="text-3xl font-semibold leading-9 text-gray-900"
+              className="text-3xl font-semibold text-gray-900"
               id="title"
             >
               {testPreview?.name}

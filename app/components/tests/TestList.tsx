@@ -43,7 +43,6 @@ const TestList = ({
       }
     }
   }, [sortDirection, sortBy])
-
   const showCheckBox = false
   return (
     <div className="test-list-container flex h-full flex-col gap-6 ">
@@ -52,11 +51,11 @@ const TestList = ({
       <header className="flex items-center justify-between">
         <h2
           tabIndex={0}
-          role={testsConstants.Tests}
-          title="Tests"
+          role={testsConstants.tests}
+          title={testsConstants.tests}
           className="text-3xl font-bold text-black"
         >
-          {testsConstants.Tests}
+          {testsConstants.tests}
         </h2>
         <Button 
           className='px-5'
@@ -86,22 +85,22 @@ const TestList = ({
               <input type="checkbox" />
             </div>
           )}
-          <div className="w-1/12 text-sm leading-5 text-gray-500">
+          <div className="w-1/12 text-sm text-gray-500">
             {testsConstants.srNoText}
           </div>
-          <div className="w-4/12 text-sm leading-5 text-gray-500">
-            {testsConstants.testListColumnLable}
+          <div className="w-4/12 text-sm text-gray-500">
+            {testsConstants.testListColumnLabel}
           </div>
-          <div className="w-3/12 text-sm leading-5 text-gray-500">
+          <div className="w-3/12 text-sm text-gray-500">
             {testsConstants.sectionText}
           </div>
-          <div className="w-2/12 text-sm leading-5 text-gray-500">
+          <div className="w-2/12 text-sm text-gray-500">
             {testsConstants.createdOn}
           </div>
-          <div className="w-2/12 text-sm leading-5 text-gray-500">
+          <div className="w-2/12 text-sm text-gray-500">
             {testsConstants.created} {commonConstants.byText}
           </div>
-          <div className="flex w-1/12 text-sm leading-5 text-gray-500">
+          <div className="flex w-1/12 text-sm text-gray-500">
             {testsConstants.actionsText}
           </div>
         </div>
@@ -133,5 +132,4 @@ const TestList = ({
     </div>
   )
 }
-
 export default TestList

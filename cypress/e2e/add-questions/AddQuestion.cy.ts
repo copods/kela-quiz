@@ -297,10 +297,10 @@ describe('Test for section-details', () => {
     })
 
     cy.get('#question-editor #quill-editor').within(() => {
-      cy.get('.ql-editor').type(`What is your Test Question ?`)
+      cy.get('.ql-editor').type(cypress.useRef)
     })
 
-    cy.get('#optionEditor input').clear().type('Option of question')
+    cy.get('#optionEditor input').clear().type(cypress.useRefAns)
 
     cy.get('#save-and-add-more').click()
     cy.location('pathname', { timeout: 60000 }).should(
@@ -347,10 +347,10 @@ describe('Test for section-details', () => {
     })
 
     cy.get('#question-editor #quill-editor').within(() => {
-      cy.get('.ql-editor').type(`What is your Test Question ?`)
+      cy.get('.ql-editor').type(cypress.useMemo)
     })
 
-    cy.get('#optionEditor input').clear().type('Option of question')
+    cy.get('#optionEditor input').clear().type(cypress.useMemoAns)
 
     cy.get('#save-and-exit').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
