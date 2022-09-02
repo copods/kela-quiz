@@ -33,6 +33,8 @@ CREATE TABLE "Section" (
     "name" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "createdById" TEXT NOT NULL,
+    "deleted" BOOLEAN NOT NULL DEFAULT false,
+    "deletedAt" TEXT DEFAULT E'na',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -98,6 +100,8 @@ CREATE TABLE "Test" (
     "createdById" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
+    "deleted" BOOLEAN NOT NULL DEFAULT false,
+    "deletedAt" TEXT DEFAULT E'na',
 
     CONSTRAINT "Test_pkey" PRIMARY KEY ("id")
 );
@@ -211,6 +215,7 @@ CREATE TABLE "SectionWiseResult" (
     "correctQuestion" INTEGER NOT NULL,
     "unanswered" INTEGER NOT NULL,
     "testId" TEXT NOT NULL,
+    "candidateTestId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -233,16 +238,19 @@ CREATE UNIQUE INDEX "Password_userId_key" ON "Password"("userId");
 CREATE UNIQUE INDEX "Role_name_key" ON "Role"("name");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Section_name_key" ON "Section"("name");
+CREATE UNIQUE INDEX "Section_name_deletedAt_deleted_key" ON "Section"("name", "deletedAt", "deleted");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "QuestionType_value_key" ON "QuestionType"("value");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Test_name_key" ON "Test"("name");
+CREATE UNIQUE INDEX "Test_name_deletedAt_deleted_key" ON "Test"("name", "deletedAt", "deleted");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Candidate_email_key" ON "Candidate"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "CandidateTest_candidateId_testId_key" ON "CandidateTest"("candidateId", "testId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "_CandidateQuestionToOption_AB_unique" ON "_CandidateQuestionToOption"("A", "B");
@@ -327,6 +335,9 @@ ALTER TABLE "CandidateResult" ADD CONSTRAINT "CandidateResult_candidateTestId_fk
 
 -- AddForeignKey
 ALTER TABLE "SectionWiseResult" ADD CONSTRAINT "SectionWiseResult_testId_fkey" FOREIGN KEY ("testId") REFERENCES "Test"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "SectionWiseResult" ADD CONSTRAINT "SectionWiseResult_candidateTestId_fkey" FOREIGN KEY ("candidateTestId") REFERENCES "CandidateTest"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "SectionWiseResult" ADD CONSTRAINT "SectionWiseResult_sectionInCandidateTestId_fkey" FOREIGN KEY ("sectionInCandidateTestId") REFERENCES "SectionInCandidateTest"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

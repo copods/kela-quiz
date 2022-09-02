@@ -1,6 +1,6 @@
 import { useSubmit } from '@remix-run/react'
 import { useEffect, useState } from 'react'
-import { candidateExam } from '~/constants/common.constants'
+import { candidateExamConstants } from '~/constants/common.constants'
 import type {
   SectionInCandidateTest,
   SectionInTest,
@@ -58,7 +58,7 @@ const TimerComponent = ({
         {getFormattedTime(time)} mins
       </span>
       <span className="text-sm font-medium text-gray-500">
-        {candidateExam.timeRemaining}
+        {candidateExamConstants.timeRemaining}
       </span>
     </div>
   )

@@ -1,5 +1,12 @@
-import { cypress, routeFiles } from '~/constants/common.constants'
+
+import {
+  commonConstants,
+  cypress,
+  routeFiles,
+  statusCheck,
+} from '~/constants/common.constants'
 const section1 = `Aptitude - section1`
+const deleteSection = `Aptitude - delete-Section`
 
 /// <reference types="Cypress">
 describe('Test for Section', () => {
@@ -149,6 +156,48 @@ describe('Test for Section', () => {
               }
             })
         })
+    })
+  })
+  it('Test for deleting the section and check if it is deleted or not', () => {
+    cy.get('a')
+      .find('#sections')
+      .should('have.text', routeFiles.sections)
+      .click()
+    cy.location('pathname', { timeout: 6000 }).should('include', '/sections')
+    cy.get('.section-card ').each(($el) => {
+      cy.wrap($el).within((el) => {
+        if (
+          el[0].getElementsByClassName('sectionName')[0].innerHTML ===
+          deleteSection
+        ) {
+          cy.get('.sectionName')
+            .should('have.text', deleteSection)
+            .parent()
+            .within(() => {
+              cy.get('.verticalDots', { timeout: 6000 }).click()
+            })
+        }
+      })
+    })
+    cy.get('[data-cy="deleteSection"]').should('have.text', 'Delete').click()
+    cy.get('#delete-dialog').should('be.visible')
+    cy.get('.confirm-delete')
+      .should('have.text', commonConstants.delete)
+      .click()
+    cy.get('.Toastify__toast').should('have.text', statusCheck.deletedSuccess)
+    cy.get('.Toastify__close-button').click()
+    cy.location('pathname', { timeout: 6000 }).should('include', '/sections')
+    cy.get('.section-card', { timeout: 8000 }).each(($el) => {
+      cy.wrap($el).within((el) => {
+        if (
+          el[0].getElementsByClassName('sectionName')[0].innerHTML ===
+          deleteSection
+        ) {
+          cy.get('.sectionName')
+            .should('have.text', deleteSection)
+            .should('not.exist')
+        }
+      })
     })
   })
 })

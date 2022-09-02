@@ -40,15 +40,19 @@ model Role {
 
 model Section {
   id                     String                   @id @default(cuid())
-  name                   String                   @unique
+  name                   String
   description            String
   createdBy              User                     @relation(fields: [createdById], references: [id])
   createdById            String
   questions              Question[]
   sectionInCandidateTest SectionInCandidateTest[]
   sectionInTest          SectionInTest[]
+  deleted                Boolean                  @default(false)
+  deletedAt              String?                  @default("na")
   createdAt              DateTime                 @default(now())
   updatedAt              DateTime                 @updatedAt
+
+  @@unique([name, deletedAt, deleted])
 }
 
 model Question {
@@ -105,7 +109,7 @@ model Option {
 
 model Test {
   id                String              @id @default(cuid())
-  name              String              @unique
+  name              String
   description       String
   sections          SectionInTest[]
   createdBy         User                @relation(fields: [createdById], references: [id])
@@ -162,6 +166,9 @@ model CandidateTest {
   endAt           DateTime?
   createdAt       DateTime                 @default(now())
   updatedAt       DateTime                 @updatedAt
+  sectionWiseResults SectionWiseResult[]
+
+  @@unique([candidateId, testId])
 }
 
 model SectionInCandidateTest {
@@ -238,6 +245,9 @@ model SectionWiseResult {
   // easier access of test and results
   test   Test   @relation(fields: [testId], references: [id])
   testId String
+
+  candidateTest   CandidateTest @relation(fields: [candidateTestId], references: [id])
+  candidateTestId String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

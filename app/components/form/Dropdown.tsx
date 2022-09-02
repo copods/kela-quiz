@@ -64,7 +64,7 @@ function DropdownField({
                   >
                     {({ selected, active }) => (
                       <>
-                        <div title={el[displayKey]} className="flex items-center">
+                        <div className="flex items-center">
                           <span
                             className={classNames(
                               selected

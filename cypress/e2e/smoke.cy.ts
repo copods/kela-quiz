@@ -9,6 +9,7 @@ const section1 = `Aptitude - section1`
 const test1 = `Aptitude - test1`
 const deleteTest1 = `Aptitude - Detete test`
 const section2 = `Aptitude - section2`
+const deleteSection = `Aptitude - delete-Section`
 const memberFirstName = 'john'
 const memberLastName = 'dow'
 const memberEmail = 'johndoe@example.com'
@@ -44,7 +45,7 @@ describe('smoke tests', () => {
 
   // creating test data
 
-  it('Adding a section 1 ', () => {
+  it('Adding a first section', () => {
     cy.visit('/sign-in')
     cy.get('input[name="email"]')
       .clear()
@@ -68,7 +69,8 @@ describe('smoke tests', () => {
         cy.get('[data-cy="submit"]').click()
       })
   })
-  it('Adding a section 2 ', () => {
+
+  it('Adding a second section', () => {
     cy.visit('/sign-in')
     cy.get('input[name="email"]')
       .clear()
@@ -87,12 +89,37 @@ describe('smoke tests', () => {
     cy.get('form > div')
       .should('be.visible')
       .within((el) => {
-        cy.get('input[placeholder="Enter Section Name"]').type(section2)
+        cy.get(`input[placeholder='Enter Section Name']`).type(section2)
         cy.get('textarea').type('Aptitude')
         cy.get('[data-cy="submit"]').click()
       })
   })
-  it('Add question in created section1', () => {
+
+  it('Adding a deleteSection ', () => {
+    cy.visit('/sign-in')
+    cy.get('input[name="email"]')
+      .clear()
+      .type(Cypress.env('email'))
+      .should('have.focus')
+      .should('have.value', Cypress.env('email'))
+    cy.get('input[name="password"]')
+      .clear()
+      .type(Cypress.env('password'))
+      .should('have.focus')
+      .should('have.value', Cypress.env('password'))
+    cy.get('[data-cy="submit"]').click()
+    cy.location('pathname').should('include', '/dashboard')
+    cy.get('a').find('#sections').should('have.text', cypress.Sections).click()
+    cy.get('#add-section').click()
+    cy.get('form > div')
+      .should('be.visible')
+      .within((el) => {
+        cy.get('input[placeholder="Enter Section Name"]').type(deleteSection)
+        cy.get('textarea').type('Aptitude')
+        cy.get('[data-cy="submit"]').click()
+      })
+  })
+  it('Add question to the first section', () => {
     cy.visit('/sign-in')
     cy.get('input[name="email"]')
       .clear()
@@ -142,7 +169,8 @@ describe('smoke tests', () => {
       .type('Option of question')
     cy.get('#save-and-exit').click()
   })
-  it('Add question in created section2', () => {
+
+  it('Add question to the second section', () => {
     cy.visit('/sign-in')
     cy.get('input[name="email"]')
       .clear()

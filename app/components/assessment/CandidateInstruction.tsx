@@ -1,5 +1,8 @@
 import { useLoaderData, useSubmit } from '@remix-run/react'
-import { candidateExam, routeFiles } from '~/constants/common.constants'
+import {
+  candidateExamConstants,
+  routeFiles,
+} from '~/constants/common.constants'
 import type { SectionInTest, TestSection } from '~/interface/Interface'
 
 const CandidateInstruction = () => {
@@ -48,10 +51,11 @@ const CandidateInstruction = () => {
                 </div>
                 <div className="flex gap-6 text-sm text-gray-700">
                   <span>
-                    {section.totalQuestions} {candidateExam.questions}
+                    {section.totalQuestions} {candidateExamConstants.questions}
                   </span>
                   <span>
-                    {section.timeInSeconds / 60} {candidateExam.minutes}
+                    {section.timeInSeconds / 60}{' '}
+                    {candidateExamConstants.minutes}
                   </span>
                 </div>
               </div>
@@ -61,7 +65,7 @@ const CandidateInstruction = () => {
         {/* Instruction */}
         <div className="flex flex-col gap-4">
           <h1 className="mt-8 text-2xl font-semibold leading-8 text-gray-800">
-            {candidateExam.instructions}
+            {candidateExamConstants.instructions}
           </h1>
           <ul className="list-disc">
             <li>You cannot traverse the sections.</li>
@@ -72,7 +76,7 @@ const CandidateInstruction = () => {
               className="text-md mt-8 h-12 w-52 rounded-md bg-primary text-gray-50"
               onClick={() => startTestForCandidate()}
             >
-              {candidateExam.beginAssesment}
+              {candidateExamConstants.beginAssesment}
             </button>
           </div>
         </div>

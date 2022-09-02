@@ -8,17 +8,17 @@ import type { Candidate, CandidateResult, User } from '~/interface/Interface'
 import AttendedCandidateListItem from './AttendedCandidateListItem'
 
 const ExamCompletedCandidatesComponent = () => {
-  const { attendedCandidateForTest } = useLoaderData()
+  const { attendedCandidateForTest, params } = useLoaderData()
   const testData = attendedCandidateForTest
 
   return (
     <>
       {testData?.length !== 0 ? (
         <div className="bg-[#F9FAFB] pb-4">
-          <div className="rounded-lg border border-solid border-[#E5E7EB] bg-tableHeader shadow-table">
-            <div className=" grid grid-cols-12 py-4 px-12">
+          <div className="rounded-lg border border-solid border-gray-200 bg-tableHeader shadow-table">
+            <div className="grid grid-cols-12 gap-3 py-4 px-12">
               <span className="col-span-1 text-sm font-semibold text-gray-500">
-                {resultConstants.srno}
+                {resultConstants.srNo}
               </span>
               <span className="col-span-3 text-sm font-semibold text-gray-500">
                 {members.name}
@@ -48,6 +48,8 @@ const ExamCompletedCandidatesComponent = () => {
                   className="memberRow col-span-10 grid rounded-lg"
                 >
                   <AttendedCandidateListItem
+                    id={result?.id}
+                    testId={params.testId}
                     email={result?.candidate?.email}
                     invitedBy={`${result?.candidate?.createdBy?.firstName}`}
                     name={`${result?.candidate?.firstName} ${result?.candidate?.lastName}`}
