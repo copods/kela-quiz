@@ -25,7 +25,7 @@ describe('Test for section-details', () => {
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
 
-    cy.get('.section-card', { timeout: 8000 }).each(($el) => {
+    cy.get('#section-card', { timeout: 8000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
           el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
@@ -72,7 +72,7 @@ describe('Test for section-details', () => {
       .should('have.text', routeFiles.sections)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
-    cy.get('.section-card', { timeout: 8000 }).each(($el) => {
+    cy.get('#section-card', { timeout: 8000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
           el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
@@ -118,7 +118,7 @@ describe('Test for section-details', () => {
       .should('have.text', routeFiles.sections)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
-    cy.get('.section-card', { timeout: 8000 }).each(($el) => {
+    cy.get('#section-card', { timeout: 8000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
           el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
@@ -166,7 +166,7 @@ describe('Test for section-details', () => {
       .should('have.text', routeFiles.sections)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
-    cy.get('.section-card', { timeout: 8000 }).each(($el) => {
+    cy.get('#section-card', { timeout: 8000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
           el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
@@ -216,7 +216,7 @@ describe('Test for section-details', () => {
       .should('have.text', routeFiles.sections)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
-    cy.get('.section-card', { timeout: 8000 }).each(($el) => {
+    cy.get('#section-card', { timeout: 8000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
           el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
@@ -266,7 +266,7 @@ describe('Test for section-details', () => {
       .should('have.text', routeFiles.sections)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
-    cy.get('.section-card', { timeout: 8000 }).each(($el) => {
+    cy.get('#section-card', { timeout: 8000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
           el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
@@ -297,10 +297,10 @@ describe('Test for section-details', () => {
     })
 
     cy.get('#question-editor #quill-editor').within(() => {
-      cy.get('.ql-editor').type(`What is your Test Question ?`)
+      cy.get('.ql-editor').type(cypress.useRef)
     })
 
-    cy.get('#optionEditor input').clear().type('Option of question')
+    cy.get('#optionEditor input').clear().type(cypress.useRefAns)
 
     cy.get('#saveAndAddMore').click()
     cy.location('pathname', { timeout: 60000 }).should(
@@ -315,7 +315,7 @@ describe('Test for section-details', () => {
       .should('have.text', routeFiles.sections)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
-    cy.get('.section-card', { timeout: 8000 }).each(($el) => {
+    cy.get('#section-card', { timeout: 8000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
           el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
@@ -347,10 +347,10 @@ describe('Test for section-details', () => {
     })
 
     cy.get('#question-editor #quill-editor').within(() => {
-      cy.get('.ql-editor').type(`What is your Test Question ?`)
+      cy.get('.ql-editor').type(cypress.useMemo)
     })
 
-    cy.get('#optionEditor input').clear().type('Option of question')
+    cy.get('#optionEditor input').clear().type(cypress.useMemoAns)
 
     cy.get('#save-and-exit').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
@@ -362,7 +362,7 @@ describe('Test for section-details', () => {
       .should('have.text', routeFiles.sections)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
-    cy.get('.section-card', { timeout: 8000 }).each(($el) => {
+    cy.get('#section-card', { timeout: 8000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
           el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
@@ -392,7 +392,7 @@ describe('Test for section-details', () => {
       .should('have.text', routeFiles.sections)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
-    cy.get('.section-card', { timeout: 8000 }).each(($el) => {
+    cy.get('#section-card', { timeout: 8000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
           el[0].getElementsByClassName('sectionName')[0].innerHTML === section1

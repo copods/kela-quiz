@@ -6,11 +6,12 @@ import OptionForQuestion from './OptionForQuestion'
 import cuid from 'cuid'
 import { Link, useLoaderData, useSubmit, useTransition } from '@remix-run/react'
 import { toast } from 'react-toastify'
+import { routes } from '~/constants/route.constants'
+import { sortByOrder } from '~/interface/Interface'
 import {
   addQuestion,
   QuestionTypes,
   testsConstants,
-  sectionsConstants,
   statusCheck,
 } from '~/constants/common.constants'
 
@@ -56,12 +57,12 @@ const AddQuestionInSection = () => {
   const breadCrumbArray = [
     {
       tabName: testsConstants.sectionText,
-      route: `/sections/${sectionDetails?.id}`,
+      route: routes.sections,
     },
     {
-      tabName: sectionsConstants.addQuestion,
-      route: `/sections/${sectionDetails?.id}/add-question`,
-    },
+      tabName: addQuestion.addQuestion,
+      route: `${routes.sections}/${sectionDetails?.id}${routes.addQuestion}`,
+    }
   ]
   const getQuestionType = (id: string) => {
     let quesValue = ''
@@ -186,12 +187,17 @@ const AddQuestionInSection = () => {
   return (
     <div className="flex h-full flex-col gap-6">
       <BreadCrumb data={breadCrumbArray} />
+      <div className="flex">
       <h1
         title={sectionDetails?.name}
-        className="text-3xl font-bold leading-9 text-gray-900"
+        role={sectionDetails?.name}
+        aria-label={sectionDetails?.name}
+        tabIndex={0}
+        className="text-3xl font-bold text-gray-900 inline-block"
       >
         {sectionDetails?.name} - {addQuestion.addQuestion}
       </h1>
+      </div>
 
       <div className="flex h-40 flex-1 flex-row gap-6">
         <QuestionEditor
@@ -217,17 +223,17 @@ const AddQuestionInSection = () => {
       </div>
       <div className="flex items-center justify-between">
         <div className="flex">
-          <Link to={`/sections/${sectionDetails?.id}`}>
-            <button
-              tabIndex={0}
-              id="cancel"
-              disabled={transition.state === 'submitting'}
-              className={`flex h-9 items-center gap-1 rounded-lg bg-red-600 px-5 text-xs text-white ${
-                transition.state === 'submitting' && 'disabled:opacity-75'
-              }`}
-            >
-              {transition.state === 'submitting' ? 'Canceling...' : 'Cancel'}
-            </button>
+          <Link 
+             to={`${routes.sections}/${sectionDetails?.id}`}
+             tabIndex={0}
+             id="cancel"
+             className={`flex h-9 items-center gap-1 rounded-lg bg-red-600 px-5 text-xs text-white ${
+               transition.state === 'submitting' && 'disabled:opacity-75'
+             }`}
+             title={sortByOrder.cancel}
+             aria-label={sortByOrder.cancel}
+          >
+              {transition.state === 'loading' ? sortByOrder.cancelling : sortByOrder.cancel}
           </Link>
         </div>
         <div className="flex gap-2">
@@ -239,9 +245,11 @@ const AddQuestionInSection = () => {
               transition.state === 'submitting' && 'disabled:opacity-75'
             }`}
             onClick={() => saveQuestion(false)}
+            title={sortByOrder.saveAndExit}
+            aria-label={sortByOrder.saveAndExit}
           >
             <Icon icon="ic:round-save" className="mr-1" />
-            {transition.state === 'submitting' ? 'Saving...' : 'Save & Exit'}
+            {transition.state === 'submitting' ? sortByOrder.saving : sortByOrder.saveAndExit}
           </button>
 
           <button
@@ -252,11 +260,13 @@ const AddQuestionInSection = () => {
               transition.state === 'submitting' && 'disabled:opacity-75'
             }`}
             onClick={() => saveQuestion(true)}
+            title={sortByOrder.saveAndAddMore}
+            aria-label={sortByOrder.saveAndAddMore}
           >
             <Icon icon="ic:round-save" className="mr-1" />
             {transition.state === 'submitting'
-              ? 'Saving...'
-              : 'Save & Add More'}
+              ? sortByOrder.saving
+              : sortByOrder.saveAndAddMore}
           </button>
         </div>
       </div>
