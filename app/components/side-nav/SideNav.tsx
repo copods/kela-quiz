@@ -8,7 +8,7 @@ let sideNavGuide = [
   //   navGuide: 'Main Menu',
   //   subItem: [
   //     {
-  //       id: 'dashboard',
+  //       id: 'Dashboard',
   //       iconClass: 'mdi:view-dashboard',
   //       itemName: 'Dashboard',
   //       itemRoute: 'dashboard',
@@ -19,13 +19,13 @@ let sideNavGuide = [
     navGuide: 'Results',
     subItem: [
       {
-        id: 'group_By_Tests',
+        id: 'group-by-tests',
         iconClass: 'mdi:chart-box-outline',
         itemName: 'Results',
         itemRoute: 'results/groupByTests',
       },
       // {
-      //   id: 'group_By_Candidate',
+      //   id: 'Group_By_Candidate',
       //   iconClass: 'mdi:chart-box-outline',
       //   itemName: 'Group By Candidate',
       //   itemRoute: 'groupByCandidate',
@@ -59,7 +59,7 @@ let sideNavGuide = [
         itemRoute: 'members',
       },
       // {
-      //   id: 'settings',
+      //   id: 'Settings',
       //   iconClass: 'mdi:cog',
       //   itemName: 'Settings',
       //   itemRoute: 'settings',

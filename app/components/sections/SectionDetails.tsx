@@ -10,11 +10,11 @@ const SectionDetails = () => {
   const [searchText, setSearchText] = useState('')
 
   return (
-    <div className="flex h-full w-full flex-col gap-6 overflow-auto break-all rounded-lg border border-gray-200 bg-white px-9 py-6" id='sectionDetail'>
+    <div className="flex h-full w-full flex-col gap-6 overflow-auto break-all rounded-lg border border-gray-200 bg-white px-9 py-6">
       <h2 className="text-2xl font-semibold text-gray-700">
         {sectionDetails.sectionDetails?.name}
       </h2>
-      <hr className="-mt-2 h-px w-full bg-gray-300" />
+      <hr className="-mt-2 h-px w-full border-0 bg-gray-300" />
       <div className="flex items-start justify-between gap-2 md:flex-col xl:flex-row xl:items-center">
         <input
           tabIndex={0}
@@ -26,13 +26,15 @@ const SectionDetails = () => {
           onChange={(e) => setSearchText(e.target.value)}
         />
         <Link
-            id="addQuestion"
-            className="h-9 rounded-lg bg-primary px-5 text-xs text-[#F0FDF4] flex items-center"
           to={`/sections/${sectionDetails.sectionDetails?.id}/add-question`}
         >
-
-
+          <button
+            tabIndex={0}
+            id="add-question"
+            className="h-9 rounded-lg bg-primary px-5 text-xs text-[#F0FDF4]"
+          >
             + {addQuestion.addQuestion}
+          </button>
         </Link>
       </div>
 

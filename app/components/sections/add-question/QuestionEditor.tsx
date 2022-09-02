@@ -35,7 +35,7 @@ export default function QuestionEditor({
         />
       </div>
 
-      <div className="flex-1" id="questionEditor">
+      <div className="flex-1" id="question-editor">
         <ClientOnly fallback={<div></div>}>
           {() => (
             <QuillEditor

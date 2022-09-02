@@ -11,7 +11,6 @@ const SectionLink = ({ section }: { section: any }) => {
   const resolvedPath = useResolvedPath(path) // to get resolved path which would match with current location
 
   return (
-
     <NavLink
       to={path}
       key={section.id}
@@ -20,7 +19,6 @@ const SectionLink = ({ section }: { section: any }) => {
         // alt + Tab combination key for moving focus to section detail
       }}
     >
-
       <SectionCard
         isActive={location.pathname === resolvedPath.pathname}
         name={section?.name}
@@ -52,9 +50,9 @@ const Sections = ({
   sortByDetails,
 }: SectionType) => {
   return (
-    <div className="flex h-full w-96 flex-col gap-6">
+    <div className="sectionLSWrapper flex h-full w-96 flex-col gap-6">
       {/* filters */}
-      <div className="flex items-center justify-between p-0.5">
+      <div className="flex items-center justify-between ">
         <div id="sort-filter-container">
           <SortFilter
             filterData={sortByDetails}
@@ -70,7 +68,7 @@ const Sections = ({
 
       {/* list */}
       <div
-        className="flex flex-1 flex-col gap-6 overflow-auto p-0.5"
+        className="section-cards flex flex-1 flex-col gap-6 overflow-auto"
         id="section-cards"
       >
         {sections?.map((section: any) => (

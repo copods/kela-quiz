@@ -32,7 +32,7 @@
     "tabWidth": 2,
     "semi": false,
     "singleQuote": true,
-    "bracketSpacing":true
+    "bracketSpacing": true
   },
   "eslintIgnore": [
     "/node_modules",
@@ -90,8 +90,9 @@
     "cypress": "^10.0.3",
     "dotenv": "^16.0.1",
     "esbuild": "^0.14.43",
-    "eslint": "^8.17.0",
+    "eslint": "^8.22.0",
     "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-jsx-a11y": "^6.6.1",
     "happy-dom": "^5.2.0",
     "husky": "^8.0.0",
     "lint-staged": "^13.0.2",

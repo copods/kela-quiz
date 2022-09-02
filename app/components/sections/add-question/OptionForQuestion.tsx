@@ -5,7 +5,11 @@ import QuillEditor from '~/components/QuillEditor.client'
 import { ClientOnly } from 'remix-utils'
 import Toggle from '~/components/form/Toggle'
 import type { SetStateAction } from 'react'
-import { addQuestion, QuestionTypes } from '~/constants/common.constants'
+import {
+  addQuestion,
+  commonConstants,
+  QuestionTypes,
+} from '~/constants/common.constants'
 import { toast } from 'react-toastify'
 interface textAnswerType {
   id: string
@@ -154,30 +158,28 @@ export default function OptionForQuestion({
                   <input
                     name="checkbox"
                     tabIndex={0}
-                    id="checkBox"
                     type="checkbox"
                     value={option.id}
                     onChange={() => {
                       checkBoxToggle(index)
                     }}
                     checked={option.isCorrect}
-                    className="h-5 w-5"
+                    className="checkBox h-5 w-5"
                   />
                 ) : (
                   getQuestionType(selectedTypeOfQuestion) ===
                     QuestionTypes.singleChoice && (
                     <input
                       tabIndex={0}
-                      id="radioButton"
                       type="radio"
                       name="radioChoice"
                       value={option.id}
                       onChange={(e) => setSingleChoiceAnswer(e.target.value)}
-                      className="h-5 w-5"
+                      className="radioButton h-5 w-5"
                     />
                   )
                 )}
-                <div className="h-32 flex-1" id="optionEditor">
+                <div className="textOption h-32 flex-1" id="optionEditor">
                   {
                     <ClientOnly fallback={<div></div>}>
                       {() => (
@@ -221,6 +223,7 @@ export default function OptionForQuestion({
                     <input
                       tabIndex={0}
                       className="h-20 w-full rounded-lg border border-gray-300 bg-white p-4"
+                      placeholder={commonConstants.placeholderForOptionInput}
                       value={option.answer}
                       onChange={(e) => {
                         updateTextAnswer(e.target.value, index)
