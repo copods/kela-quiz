@@ -15,11 +15,13 @@ export const commonConstants = {
   placeholderForOptionInput: 'Write your option here',
   sortAscending: 'Sort Ascending',
   sortDescending: 'Sort Descending',
+  invalidLink: 'Invalid Link'
 }
 
 export const sideNav = {
   sideNavHeading: 'Quiz',
   signOut: 'Sign out',
+  kQuizLogo: 'K-Quiz Logo'
 }
 
 export const members = {
@@ -147,6 +149,7 @@ export const candidateExamConstants = {
   assessmentDetails: 'Assessment Details',
   assessmentTests: 'Assessment Tests',
   assessmentEnd: 'Assessment Ended',
+  endAssesment: "End Assesment SVG",
   wrongLink: 'Wrong Link',
   minutes: 'Mins',
   description: 'Description',
@@ -160,7 +163,7 @@ export const candidateExamConstants = {
   beginAssesment: 'Begin Assesment',
   instructions: 'Instructions',
   startSection: 'Start Now',
-
+  candidateLogo: 'Candidate Logo',
   info: 'Info',
   noOfQuestions: 'No. of Questions',
   candidateTestCreated: 'created',

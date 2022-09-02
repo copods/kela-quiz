@@ -1,6 +1,6 @@
 import InvalidLink from '../../../public/assets/invalidLink.svg'
 import Logo from '~/components/Logo'
-import { candidateExamConstants, sideNav } from '~/constants/common.constants'
+import { candidateExamConstants, commonConstants, sideNav } from '~/constants/common.constants'
 
 const InvalidLinkComponent = () => {
   return (
@@ -12,7 +12,7 @@ const InvalidLinkComponent = () => {
         </span>
       </div>
       <div className="mt-[-80px] flex h-full w-full flex-col items-center justify-center gap-4">
-        <img src={InvalidLink} alt="invalidLink" />
+        <img src={InvalidLink} alt={commonConstants.invalidLink} />
         <p className="text-5xl font-bold text-gray-900">
           {candidateExamConstants.wrongLink}
         </p>
