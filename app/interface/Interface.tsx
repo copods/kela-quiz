@@ -17,7 +17,7 @@ export interface ButtonProps {
   id?: string
   className?: string
   title?: string
-  value?: string
+  value?: string | number
   tabIndex?: number
   datacy?: string
   alignment?: string

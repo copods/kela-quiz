@@ -7,6 +7,8 @@ import DropdownField from '../form/Dropdown'
 import SectionCardForResultDetail from './SectionCardForResultDetail'
 import Divider from '../divider'
 import BarGraph from '../barGraph/barGraph'
+import { cypress } from '~/constants/common.constants'
+import Button from '../form/Button'
 
 const ResultDetailsComponent = () => {
   const { candidateResult, params, sectionWiseResult } = useLoaderData()
@@ -86,12 +88,11 @@ const ResultDetailsComponent = () => {
           value={candidateStatus}
           setValue={updateCandidateStatus}
         />
-        <button
-          className="rounded-md bg-primary py-2 px-8 text-sm text-white"
-          onClick={updateCandidateStatusToDB}
-        >
-          Submit
-        </button>
+        <Button
+        varient='primary-solid'
+        onClick={updateCandidateStatusToDB}
+        buttonText={cypress.submit}
+        />
       </div>
     </div>
   )

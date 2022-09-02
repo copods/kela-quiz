@@ -9,6 +9,7 @@ import {
   testsConstants,
   inviteMemeberPopUpConstants,
   members,
+  cypress,
 } from '~/constants/common.constants'
 
 const InviteCandidatePopup = ({
@@ -147,7 +148,7 @@ const InviteCandidatePopup = ({
                     type='button'
                     className='h-9 px-4'
                     varient='primary-outlined'
-                    buttonText='Cancel'
+                    buttonText={cypress.cancel}
                     onClick={updatePopupAndEmailState}
                   />
                   <Button 
@@ -157,7 +158,7 @@ const InviteCandidatePopup = ({
                     id='submit-button'
                     className='h-9 px-4'
                     varient='primary-solid'
-                    buttonText='Invite'
+                    buttonText={inviteMemeberPopUpConstants.invite}
                     datacy="submit"
                   />
                 </div>
