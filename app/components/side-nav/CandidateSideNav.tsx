@@ -2,10 +2,8 @@
 import { Icon } from '@iconify/react'
 import { NavLink, useLoaderData, useLocation } from '@remix-run/react'
 import candidateLogo from '~/../public/assets/candidateLogo.svg'
-import {
-  candidateExamConstants,
-  QuestionStatus,
-} from '~/constants/common.constants'
+import { candidateExamConstants, QuestionStatus } from '~/constants/common.constants'
+import { routes } from '~/constants/route.constants'
 import type {
   Candidate,
   CandidateQuestion,
@@ -64,7 +62,7 @@ const CandidateSideNav = ({
           </div>
           <div
             className={`flex h-11 items-center text-sm ${
-              location.pathname.includes('/instructions')
+              location.pathname.includes(routes.instructions)
                 ? 'border-0 border-l-4 border-primary bg-blue-50 px-4 font-semibold text-primary'
                 : 'px-5 font-medium text-gray-800 '
             }`}
@@ -150,17 +148,17 @@ const CandidateSideNav = ({
           <div className="flex items-center justify-between gap-1">
             <div className="flex items-center gap-1">
               <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary">
-                <span className="text-lg font-medium leading-7 text-white">
+                <span className="text-lg font-medium text-white">
                   {candidate?.firstName?.slice(0, 1)}
                   {candidate?.lastName?.slice(0, 1)}
                 </span>
               </div>
 
               <div className="flex-col gap-2">
-                <p className="w-full truncate text-xs font-semibold leading-4 text-gray-900">
+                <p className="w-full truncate text-xs font-semibold text-gray-900">
                   {candidate.firstName} {candidate.lastName}
                 </p>
-                <p className="w-full truncate text-xs leading-4 text-gray-500">
+                <p className="w-full truncate text-xs text-gray-500">
                   {candidate.email}
                 </p>
               </div>

@@ -19,12 +19,8 @@ const QuestionCard = ({
     <div
       key={question.id}
       className="flex flex-col rounded-lg border border-gray-300 bg-gray-50 px-6 py-7 cursor-pointer"
-      onClick={() => {
-       onAccordianToggle(
-         isExpanded == -1 ? index : isExpanded == index ? -1 : index
-       )
-     }}
-     title={sectionsConstants.expand}
+      title={sectionsConstants.expand}
+      tabIndex={0}
       aria-label={sectionsConstants?.expand}
       role={sectionsConstants?.expand}
       onKeyUp={(e) => {
@@ -32,6 +28,11 @@ const QuestionCard = ({
           onAccordianToggle(
             isExpanded === -1 ? index : isExpanded === index ? -1 : index
           )
+      }}
+      onClick={() => {
+        onAccordianToggle(
+          isExpanded === -1 ? index : isExpanded === index ? -1 : index
+        )
       }}
     >
       <div className="items-top break flex justify-between text-base text-gray-600">

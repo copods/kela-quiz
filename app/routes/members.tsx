@@ -14,6 +14,7 @@ import {
 import MembersHeader from '~/components/members/MembersHeader'
 import { toast } from 'react-toastify'
 import { useEffect } from 'react'
+import { routes } from '~/constants/route.constants'
 
 export type ActionData = {
   errors?: {
@@ -38,7 +39,7 @@ type LoaderData = {
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await getUserId(request)
   const roles = await getAllRoles()
-  if (!userId) return redirect('/sign-in')
+  if (!userId) return redirect(routes.signIn)
   const users = await getAllUsers()
   return json<LoaderData>({ users, roles, userId })
 }

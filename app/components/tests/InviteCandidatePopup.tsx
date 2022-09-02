@@ -111,6 +111,7 @@ const InviteCandidatePopup = ({
                   <span className="text-sm font-medium text-gray-500">
                     {inviteMemeberPopUpConstants.candidateEmail}
                   </span>
+
                   <span
                     role={'button'}
                     tabIndex={0}

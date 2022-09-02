@@ -39,7 +39,7 @@ function Footer() {
             <Icon
               icon="mdi:logout-variant"
               className="relative h-5 w-5 text-gray-50"
-            ></Icon>
+            />
           </button>
         </Form>
       </div>
