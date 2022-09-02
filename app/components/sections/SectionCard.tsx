@@ -5,7 +5,7 @@ import { useSubmit } from '@remix-run/react'
 import DeletePopUp from '../DeletePopUp'
 import { useState, useEffect } from 'react'
 
-import { cypress, sectionsConstants, statusCheck } from '~/constants/common.constants'
+import { commonConstants, sectionsConstants, statusCheck } from '~/constants/common.constants'
 import Button from '../form/Button'
 const SectionCard = ({
   name,
@@ -87,7 +87,7 @@ const SectionCard = ({
                         }`}
                         aria-hidden="true"
                         />
-                        {cypress.delete}
+                        {commonConstants.delete}
                       </>
                     }
                     />

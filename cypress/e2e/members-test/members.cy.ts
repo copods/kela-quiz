@@ -92,7 +92,7 @@ describe('Test for members', () => {
         cy.get('#delete-button').click()
       })
     cy.get('#delete-dialog').should('be.visible')
-    cy.get('#confirm-delete').should('have.text', cypress.delete).click()
+    cy.get('#confirm-delete').should('have.text', commonConstants.delete).click()
     cy.get('.Toastify__toast').find('.Toastify__close-button  ').click()
     cy.intercept('/members').as('membersPage')
     cy.get('.memberRows').each(($el) => {

@@ -7,7 +7,7 @@ import DropdownField from '../form/Dropdown'
 import SectionCardForResultDetail from './SectionCardForResultDetail'
 import Divider from '../divider'
 import BarGraph from '../barGraph/barGraph'
-import { cypress } from '~/constants/common.constants'
+import { commonConstants } from '~/constants/common.constants'
 import Button from '../form/Button'
 
 const ResultDetailsComponent = () => {
@@ -91,7 +91,7 @@ const ResultDetailsComponent = () => {
         <Button
         varient='primary-solid'
         onClick={updateCandidateStatusToDB}
-        buttonText={cypress.submit}
+        buttonText={commonConstants.submit}
         />
       </div>
     </div>
