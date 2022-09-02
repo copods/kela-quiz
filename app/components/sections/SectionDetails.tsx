@@ -1,5 +1,4 @@
-import { useLoaderData } from '@remix-run/react'
-import { Link } from '@remix-run/react'
+import { useLoaderData, useNavigate } from '@remix-run/react'
 import { useState } from 'react'
 import type { Question } from '~/interface/Interface'
 import QuestionCard from './QuestionCard'
@@ -11,15 +10,16 @@ const SectionDetails = () => {
   const sectionDetails = useLoaderData()
   const [currentAccordian, setCurrentAccordian] = useState(-1)
   const [searchText, setSearchText] = useState('')
+  const navigate = useNavigate()
 
   return (
     <div className="flex h-full w-full flex-col gap-6 overflow-auto break-all rounded-lg border border-gray-200 bg-white px-9 py-6">
       <div className='flex'>
       <h2 className="text-2xl font-semibold text-gray-700 inline-block"
-         tabIndex={0}
-         role={sectionDetails.sectionDetails?.name}
-         title={sectionDetails.sectionDetails?.name}
-         aria-label={sectionDetails.sectionDetails?.name}
+        tabIndex={0}
+        role={sectionDetails.sectionDetails?.name}
+        title={sectionDetails.sectionDetails?.name}
+        aria-label={sectionDetails.sectionDetails?.name}
       >
         {sectionDetails.sectionDetails?.name}
       </h2>
@@ -36,19 +36,16 @@ const SectionDetails = () => {
           title={sectionsConstants.search}
           onChange={(e) => setSearchText(e.target.value)}
         />
-        <Link
-          to={`${routes.sections}/${sectionDetails.sectionDetails?.id}${routes.addQuestion}`}
+        <Button
+          tabIndex={0}
+          onClick={() => navigate(`${routes.sections}/${sectionDetails.sectionDetails?.id}${routes.addQuestion}`)}
+          id='add-question'
+          className='h-9 px-5'
+          buttonText={`+ ${addQuestion.addQuestion}`}
+          varient='primary-solid'
           title={addQuestion.addQuestion}
           aria-label={addQuestion.addQuestion}
-        >
-          <Button
-            tabIndex={0}
-            id='add-question'
-            className='h-9 px-5'
-            buttonText={`+ ${addQuestion.addQuestion}`}
-            varient='primary-solid'
-          />
-        </Link>
+        />
       </div>
 
       {/* QUESTION LIST  */}

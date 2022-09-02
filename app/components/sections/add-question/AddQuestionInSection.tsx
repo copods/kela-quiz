@@ -4,7 +4,7 @@ import BreadCrumb from '../../BreadCrumb'
 import QuestionEditor from './QuestionEditor'
 import OptionForQuestion from './OptionForQuestion'
 import cuid from 'cuid'
-import { Link, useLoaderData, useSubmit, useTransition } from '@remix-run/react'
+import {useLoaderData, useNavigate, useSubmit, useTransition } from '@remix-run/react'
 import { toast } from 'react-toastify'
 import Button from '~/components/form/Button'
 import { routes } from '~/constants/route.constants'
@@ -54,6 +54,7 @@ const AddQuestionInSection = () => {
   ])
   const [checkOrder, setCheckOrder] = useState(false)
   const transition = useTransition()
+  const navigate = useNavigate()
 
   const breadCrumbArray = [
     {
@@ -224,15 +225,14 @@ const AddQuestionInSection = () => {
       </div>
       <div className="flex items-center justify-between">
         <div className="flex">
-          <Link to={`/sections/${sectionDetails?.id}`}>
-            <Button 
-              tabIndex={0}
-              id='cancel'
-              isDisabled={transition.state === 'submitting'}
-              className='h-9 px-5'
-              buttonText={transition.state === 'submitting' ? 'Canceling...' : 'Cancel'}
-              varient='secondary-solid' />
-          </Link>
+          <Button 
+            tabIndex={0}
+            id='cancel'
+            onClick={() => navigate(`/sections/${sectionDetails?.id}`)}
+            isDisabled={transition.state === 'submitting'}
+            className='h-9 px-5'
+            buttonText={transition.state === 'submitting' ? 'Canceling...' : 'Cancel'}
+            varient='secondary-solid' />
         </div>
         <div className="flex gap-2">
           <Button 

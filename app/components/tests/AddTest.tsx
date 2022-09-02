@@ -1,6 +1,5 @@
-import { useSubmit, useTransition } from '@remix-run/react'
+import { useNavigate, useSubmit, useTransition } from '@remix-run/react'
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import type { TestSection } from '~/interface/Interface'
 import BreadCrumb from '../BreadCrumb'
@@ -56,6 +55,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
   const [selectedSections, onSelectedSectionChange] = useState<TestSection[]>(
     []
   )
+  const navigate = useNavigate()
 
   const updateSection = (data: Array<TestSection>, i: number) => {
     setSectionsCopy((sec) => {
@@ -163,14 +163,13 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
       )}
       {/* Buttons */}
       <div className="flex w-full items-center justify-between">
-          <Link to={'/tests'}>
-            <Button 
-              tabIndex={0}
-              title='Cancel Add Test' 
-              className='h-9 px-7' 
-              varient='secondary-solid'
-              buttonText={commonConstants.cancel} />
-          </Link>
+          <Button 
+            tabIndex={0}
+            title='Cancel Add Test' 
+            onClick={() => navigate('/tests')}
+            className='h-9 px-7' 
+            varient='secondary-solid'
+            buttonText={commonConstants.cancel} />
         <div className="flex gap-4">
           <Button 
             tabIndex={0}
