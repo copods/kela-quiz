@@ -248,7 +248,7 @@ export default function SectionPage() {
           </h2>
           <Button 
             id='add-section' 
-            data-cy='submit'
+            data-cy="submit"
             className='px-5 h-9' 
             varient='primary-solid'
             onClick={() => setShowAddSectionModal(!showAddSectionModal)} 

@@ -139,7 +139,7 @@ describe('Test for section-details', () => {
     cy.get('ul').within(() => {
       cy.get('li').within(() => {
         cy.get('div').then((el) => {
-          ;[...el].map((el) => {
+          [...el].map((el) => {
             if (el.innerText === 'Multiple Choice') {
               flag = 'CheckBox'
             } else if (el.innerText === 'Single Choice') {
@@ -186,7 +186,7 @@ describe('Test for section-details', () => {
     cy.get('ul').within(() => {
       cy.get('li').within(() => {
         cy.get('div').then((el) => {
-          ;[...el].forEach((el) => {
+          [...el].forEach((el) => {
             if (el.innerText === 'Multiple Choice') {
               el.click()
             }
@@ -236,7 +236,7 @@ describe('Test for section-details', () => {
     cy.get('ul').within(() => {
       cy.get('li').within(() => {
         cy.get('div').then((el) => {
-          ;[...el].forEach((el) => {
+          [...el].forEach((el) => {
             if (el.innerText === 'Multiple Choice') {
               el.click()
             }
@@ -286,7 +286,7 @@ describe('Test for section-details', () => {
     cy.get('ul').within(() => {
       cy.get('li').within(() => {
         cy.get('div').then((el) => {
-          ;[...el].map((el) => {
+          [...el].map((el) => {
             if (el.innerText === 'Text') {
               el.click()
             }
@@ -336,7 +336,7 @@ describe('Test for section-details', () => {
     cy.get('ul').within(() => {
       cy.get('li').within(() => {
         cy.get('div').then((el) => {
-          ;[...el].map((el) => {
+          [...el].map((el) => {
             if (el.innerText === 'Text') {
               el.click()
             }
@@ -414,7 +414,7 @@ describe('Test for section-details', () => {
     cy.get('ul').within(() => {
       cy.get('li').within(() => {
         cy.get('div').then((el) => {
-          ;[...el].forEach((el) => {
+          [...el].forEach((el) => {
             if (el.innerText === 'Multiple Choice') {
               el.click()
             }

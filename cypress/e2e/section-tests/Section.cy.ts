@@ -38,6 +38,7 @@ describe('Test for Section', () => {
         cy.get("button[type='button']").click()
       })
   })
+  
   it('allows users to search questions', () => {
     cy.get('a')
       .find('#sections', { timeout: 8000 })
@@ -46,16 +47,17 @@ describe('Test for Section', () => {
     cy.location('pathname', { timeout: 6000 }).should('include', '/sections')
     cy.get('input[name="search"]', { timeout: 6000 })
       .clear()
-      .type('What is your Test Question ?')
+      .type(cypress.useMemo)
     cy.get('.ql-editor').each(($el) => {
+      console.log($el)
       cy.wrap($el).within((el) => {
         if (
           el[0].getElementsByClassName('question')[0].innerHTML ===
-          'What is your Test Question ?'
+          cypress.useMemo
         ) {
           cy.get('.question').should(
             'have.text',
-            'What is your Test Question ?'
+            cypress.useMemo
           )
         }
       })
