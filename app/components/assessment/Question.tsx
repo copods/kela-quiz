@@ -1,7 +1,7 @@
 import { useLoaderData } from '@remix-run/react'
 import { useState } from 'react'
 import {
-  candidateExam,
+  candidateExamConstants,
   commonConstants,
   routeFiles,
 } from '~/constants/common.constants'
@@ -144,7 +144,7 @@ const Question = () => {
               type="submit"
               disabled={question.order !== section.totalQuestions}
             >
-              {candidateExam.endTest}
+              {candidateExamConstants.endTest}
             </button>
           ) : (
             <button
@@ -154,7 +154,7 @@ const Question = () => {
               type="submit"
               disabled={question.order !== section.totalQuestions}
             >
-              {candidateExam.nextSection}
+              {candidateExamConstants.nextSection}
             </button>
           )}
         </div>
