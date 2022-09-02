@@ -136,6 +136,9 @@ export const resultConstants = {
   active: 'Active',
 
   startedAt: 'Started At',
+  correct: "Correct",
+  skipped: "Skipped",
+  total: "Total"
 }
 
 export enum QuestionStatus {

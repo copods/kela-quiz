@@ -77,6 +77,55 @@ export async function getResultsOfCandidatesByTestId({
   })
 }
 
+export async function getResultsOfIndividualCandidates({ id }: { id: string }) {
+  return await prisma.candidateResult.findUnique({
+    where: {
+      id
+    },
+    select: {
+      candidate: true,
+      testId: true,
+      candidateTestId:true
+    }
+  })
+}
+
+export async function getSectionWiseResultsOfIndividualCandidate({ testId , candidateTestId}: { testId: string,candidateTestId:string }) {
+  return await prisma.sectionWiseResult.findMany({
+    where: {
+      testId,
+      candidateTestId
+    },
+    select: {
+      id: true,
+      section: {
+        select: {
+          section: {
+            select: {
+              name: true
+            }
+          }
+        }
+      },
+      totalQuestion: true,
+      correctQuestion: true,
+      unanswered: true,
+    }
+  })
+}
+
+
+export async function updateCandidateStatus({ id, candidateStatus }: { id: string, candidateStatus: string }) {
+  return await prisma.candidateResult.update({
+    where: {
+      id
+    },
+    data: {
+      isQualified: candidateStatus == 'true' ? true : false
+    }
+  })
+}
+
 export async function getAllCandidateTests(obj: object) {
   const filter = obj ? obj : {}
   const res: Array<Test> = await prisma.test.findMany({
