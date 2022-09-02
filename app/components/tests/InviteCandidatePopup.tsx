@@ -52,6 +52,7 @@ const InviteCandidatePopup = ({
     setEmails([''])
   }
 
+
   return (
     <Transition.Root show={openInvitePopup} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={setOpenInvitePopup}>

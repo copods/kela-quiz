@@ -7,6 +7,7 @@ import {
   selectSectionCard,
   testsConstants,
 } from '~/constants/common.constants'
+
 const SelectSectionCard = ({
   section,
   updateSection,

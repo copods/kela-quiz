@@ -81,7 +81,6 @@ function DropdownField({
                             {el[displayKey]}
                           </span>
                         </div>
-
                         {selected ? (
                           <span
                             className={classNames(

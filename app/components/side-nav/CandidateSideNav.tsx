@@ -37,7 +37,7 @@ const CandidateSideNav = ({
     <div className="flex h-full flex-col overflow-auto">
       <div className="p-5">
         <div className="flex items-center gap-4">
-          <img src={candidateLogo} alt="logo" height={'40px'} />
+          <img src={candidateLogo} alt={candidateExamConstants.candidateLogo} height={'40px'} />
         </div>
       </div>
       <Divider height="2px" />

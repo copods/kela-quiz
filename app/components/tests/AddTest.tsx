@@ -222,6 +222,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
               onClick={() => submitAddTest()}
               disabled={currentTab !== 2}
               aria-label={commonConstants.nextButton}
+              data-cy="submit"
             >
               {transition.state === 'submitting' ? commonConstants.createTest : commonConstants.submit}
             </button>
