@@ -175,6 +175,7 @@ export const candidateExamConstants = {
   assessmentDetails: 'Assessment Details',
   assessmentTests: 'Assessment Tests',
   assessmentEnd: 'Assessment Ended',
+  endAssesment: "End Assesment SVG",
   wrongLink: 'Wrong Link',
   minutes: 'Mins',
   description: 'Description',
@@ -188,7 +189,7 @@ export const candidateExamConstants = {
   beginAssesment: 'Begin Assesment',
   instructions: 'Instructions',
   startSection: 'Start Now',
-
+  candidateLogo: 'Candidate Logo',
   info: 'Info',
   noOfQuestions: 'No. of Questions',
   candidateTestCreated: 'created',
@@ -231,6 +232,12 @@ export const cypress = {
   useMemoAns:'The useMemo Hook can be used to keep expensive, resource intensive functions from needlessly running.',
 }
 
+export enum sortByOrder {
+  ascending = 'asc',
+  sortAscending = 'Sort Ascending',
+  name = 'name',
+  descending = 'dsc',
+}
 export const toastConstants ={
   addTest:'Enter Name to add test',
   enterDescription:'Enter description to add test',

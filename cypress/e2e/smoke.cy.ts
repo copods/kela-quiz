@@ -305,7 +305,7 @@ describe('smoke tests', () => {
       })
     })
 
-    cy.get('button#submit-button').should('have.text', commonConstants.submit).click()
+    cy.get('[data-cy="submit"]').should('have.text', commonConstants.submit).click()
   })
   it('Verify if user able create the test 2', () => {
     cy.visit('/sign-in')
