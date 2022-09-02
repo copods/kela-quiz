@@ -3,7 +3,13 @@ import { Fragment, useEffect, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import { toast } from 'react-toastify'
-import { commonConstants, inviteMemeberPopUpConstants, members } from '~/constants/common.constants'
+import {
+  candidateExamConstants,
+  testsConstants,
+  commonConstants,
+  inviteMemeberPopUpConstants,
+  members,
+} from '~/constants/common.constants'
 
 const InviteCandidatePopup = ({
   openInvitePopup,
@@ -24,12 +30,19 @@ const InviteCandidatePopup = ({
     if (actionData?.status == 401) {
       toast.warn(actionData.message)
     }
-    if (actionData?.candidateInviteStatus == 'created') {
-      if (actionData?.testId === testId) toast.success('Candidates Invited')
+    if (
+      actionData?.candidateInviteStatus ===
+      candidateExamConstants.candidateTestCreated
+    ) {
+      if (actionData?.testId === testId)
+        toast.success(testsConstants.candidateInvited)
       setOpenInvitePopup(false)
     } else {
-      if (actionData?.candidateInviteStatus) {
-        toast.error('Candidate Invite Error')
+      if (actionData?.candidateInviteStatus === candidateExamConstants.error) {
+        if (actionData?.testId === testId) {
+          toast.error(testsConstants.candidateAlreadyInvited)
+        }
+        setOpenInvitePopup(false)
       }
     }
   }, [actionData, testId, setOpenInvitePopup])
@@ -71,7 +84,11 @@ const InviteCandidatePopup = ({
             >
               <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white p-6 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
                 <div className="flex items-center justify-between pt-1">
-                  <h2 role={inviteMemeberPopUpConstants.inviteCandidate} tabIndex={0} className="text-2xl font-bold text-gray-700">
+                  <h2
+                    role={inviteMemeberPopUpConstants.inviteCandidate}
+                    tabIndex={0}
+                    className="text-2xl font-bold text-gray-700"
+                  >
                     {inviteMemeberPopUpConstants.inviteCandidate}
                   </h2>
                   <Icon
@@ -98,7 +115,7 @@ const InviteCandidatePopup = ({
                   <span
                     role={'button'}
                     tabIndex={0}
-                    className="cursor-pointer text-sm font-normal text-primary px-0.5"
+                    className="cursor-pointer px-0.5 text-sm font-normal text-primary"
                     onClick={() => setEmails([...emails, ''])}
                     onKeyUp={(e) => {
                       if (e.key === 'Enter') setEmails([...emails, ''])
@@ -114,10 +131,10 @@ const InviteCandidatePopup = ({
                   return (
                     <div className="pb-2" key={i}>
                       <input
-                      tabIndex={0}
+                        tabIndex={0}
                         type="email"
                         name={`email`}
-                        className="h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
+                        className="inviteInput h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
                         placeholder="johndoe@example.com"
                         title={members.email}
                         aria-label={members.email}
@@ -128,7 +145,7 @@ const InviteCandidatePopup = ({
 
                 <div className="flex justify-end gap-2 pt-4">
                   <button
-                  tabIndex={0}
+                    tabIndex={0}
                     type="button"
                     className="h-9 rounded-md px-4 text-sm text-gray-500"
                     onClick={updatePopupAndEmailState}
@@ -138,11 +155,12 @@ const InviteCandidatePopup = ({
                     {commonConstants.cancel}
                   </button>
                   <button
-                  tabIndex={0}
+                    data-cy="submit"
+                    tabIndex={0}
                     type="submit"
                     name="inviteCandidates"
                     value={testId}
-                    id="submitButton"
+                    id="submit-button"
                     className="h-9 rounded-md bg-primary px-4 text-sm text-[#F0FDF4]"
                     title={inviteMemeberPopUpConstants.invite}
                     aria-label={inviteMemeberPopUpConstants.invite}

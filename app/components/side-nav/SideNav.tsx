@@ -19,7 +19,7 @@ let sideNavGuide = [
     navGuide: 'Results',
     subItem: [
       {
-        id: 'Group_By_Tests',
+        id: 'group-by-tests',
         iconClass: 'mdi:chart-box-outline',
         itemName: 'Results',
         itemRoute: 'results/groupByTests',
@@ -36,13 +36,13 @@ let sideNavGuide = [
     navGuide: 'Assessments',
     subItem: [
       {
-        id: 'Tests',
+        id: 'tests',
         iconClass: 'carbon:result',
         itemName: 'Tests',
         itemRoute: 'tests',
       },
       {
-        id: 'Sections',
+        id: 'sections',
         iconClass: 'ci:list-checklist-alt',
         itemName: 'Sections',
         itemRoute: 'sections',
@@ -53,7 +53,7 @@ let sideNavGuide = [
     navGuide: 'General',
     subItem: [
       {
-        id: 'Members',
+        id: 'members',
         iconClass: 'mdi:account-group',
         itemName: 'Members',
         itemRoute: 'members',

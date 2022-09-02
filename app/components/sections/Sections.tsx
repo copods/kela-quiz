@@ -1,17 +1,32 @@
 import SectionCard from './SectionCard'
-import type { Section } from '~/interface/Interface'
+import type { Section, User } from '~/interface/Interface'
 import { useResolvedPath, useLocation, NavLink } from '@remix-run/react'
 import {} from '@remix-run/react'
 import SortFilter from '../SortFilter'
 import { sectionsConstants } from '~/constants/common.constants'
 
-const SectionLink = ({ section }: { section: any }) => {
+const SectionLink = ({
+  section,
+  actionStatusData,
+  err,
+  filter,
+  setSelectedSection,
+}: {
+  section: Section & { _count?: { questions: number }; createdBy?: User }
+  actionStatusData?: string
+  err?: string
+  filter: string
+  setSelectedSection: (e: string) => void
+}) => {
   const path = `/sections/${section.id}`
   const location = useLocation() // to get current location
   const resolvedPath = useResolvedPath(path) // to get resolved path which would match with current location
-
+  const setSectionId = (id: string) => {
+    setSelectedSection(id)
+  }
   return (
     <NavLink
+      onClick={() => setSectionId(section.id)}
       to={path}
       key={section.id}
       onKeyUp={(e) => {
@@ -25,6 +40,9 @@ const SectionLink = ({ section }: { section: any }) => {
         createdBy={`${section?.createdBy?.firstName} ${section?.createdBy?.lastName}`}
         questionsCount={section?._count?.questions}
         createdAt={section.createdAt}
+        id={section?.id}
+        actionStatusData={actionStatusData}
+        err={err}
       />
     </NavLink>
   )
@@ -37,20 +55,26 @@ type SectionType = {
   filters: string
   setSortBy: (e: string) => void
   order: string
+  err?: string
+  actionStatusData?: string
   setOrder: (e: string) => void
-  setSelectedSection: Function
+  setSelectedSection: (e: string) => void
   sortByDetails: Array<{ name: string; value: string }>
 }
 const Sections = ({
   sections,
   sortBy,
+  filters,
   setSortBy,
   order,
   setOrder,
+  setSelectedSection,
   sortByDetails,
+  err,
+  actionStatusData,
 }: SectionType) => {
   return (
-    <div className="flex h-full w-96 flex-col gap-6">
+    <div className="sectionLSWrapper flex h-full w-96 flex-col gap-6">
       {/* filters */}
       <div className="flex items-center justify-between ">
         <div id="sort-filter-container">
@@ -68,11 +92,18 @@ const Sections = ({
 
       {/* list */}
       <div
-        className="flex flex-1 flex-col gap-6 overflow-auto"
+        className="section-cards flex flex-1 flex-col gap-6 overflow-auto"
         id="section-cards"
       >
-        {sections?.map((section: any) => (
-          <SectionLink key={section.id} section={section} />
+        {sections?.map((section: Section) => (
+          <SectionLink
+            key={section.id}
+            section={section}
+            filter={filters}
+            setSelectedSection={setSelectedSection}
+            actionStatusData={actionStatusData}
+            err={err}
+          />
         ))}
         {sections.length === 0 && (
           <div className="flex justify-center p-7">

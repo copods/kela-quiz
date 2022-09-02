@@ -1,6 +1,7 @@
 import { Icon } from '@iconify/react'
 import DropdownField from './form/Dropdown'
-import { componentGlobalConstants, sortByOrder } from '~/constants/common.constants'
+import { commonConstants, componentGlobalConstants} from '~/constants/common.constants'
+
 const SortFilter = ({
   filterData,
   sortDirection,
@@ -31,7 +32,7 @@ const SortFilter = ({
             }}
             onClick={() => onSortDirectionChange('desc')}
             className="cursor-pointer text-2xl"
-            aria-label={sortByOrder.sortAscending}
+            aria-label={commonConstants.sortAscending}
           />
         ) : (
           <Icon
@@ -43,7 +44,7 @@ const SortFilter = ({
             }}
             onClick={() => onSortDirectionChange('asc')}
             className="cursor-pointer text-2xl"
-            aria-label={sortByOrder.sortDescending}
+            aria-label={commonConstants.sortDescending}
           />
         )}
         <DropdownField

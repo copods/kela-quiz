@@ -68,7 +68,6 @@ const AddSection = ({
                     tabIndex={0}
                     type="text"
                     name="name"
-                    id="sectionName"
                     className="h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
                     placeholder="Enter Section Name"
                   />
@@ -96,17 +95,18 @@ const AddSection = ({
                     {commonConstants.cancel}
                   </button>
                   <button
+                    data-cy="submit"
                     tabIndex={0}
                     type="submit"
-                    id="submitButton"
+                    id="submit-button"
+                    name="add-section"
+                    value={JSON.stringify({ action: 'add' })}
                     className={`h-9 rounded-md bg-primary px-4 text-sm text-[#F0FDF4] disabled:opacity-80  ${
                       transition.state === 'submitting' || showErrorMessage
                         ? 'disabled bg-gray-600'
                         : ''
                     }`}
-                    disabled={
-                      transition.state === 'submitting' || showErrorMessage
-                    }
+                    disabled={transition.state === 'submitting'}
                   >
                     {transition.state === 'submitting' ? 'Adding...' : 'Add'}
                   </button>

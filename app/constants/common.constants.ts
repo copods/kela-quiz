@@ -12,11 +12,14 @@ export const commonConstants = {
   total: 'Total',
   createdAt: 'createdAt',
   createdDate: 'Created Date',
+  placeholderForOptionInput: 'Write your option here',
+  sortAscending: 'Sort Ascending',
+  sortDescending: 'Sort Descending',
 }
 
 export const sideNav = {
   sideNavHeading: 'Quiz',
-  signOut: 'Sign out'
+  signOut: 'Sign out',
 }
 
 export const members = {
@@ -36,15 +39,15 @@ export const inviteMemeberPopUpConstants = {
   enterCandidatesEmail: 'Enter candidate’s email below to invite them for',
   candidateEmail: 'Candidate Email',
   inviteMore: 'Invite More',
-  invite: 'Invite'
+  invite: 'Invite',
 }
 export const testTableItem = {
   inviteMember: 'Invite Member',
-  menu: 'Menu'
+  menu: 'Menu',
 }
 export const selectSectionCard = {
   removeSection: 'Remove Section',
-  selectSection: 'Select Section'
+  selectSection: 'Select Section',
 }
 export const deletePopUp = {
   alert: 'Do you want to delete',
@@ -82,8 +85,10 @@ export const testsConstants = {
   created: 'Created',
   actionsText: 'Actions',
   noTestFound: 'No Test Found',
-  noCandidateForTest: "No Candidate for this Test",
-  writeDescriptionOfTest: 'Write Description of Test'
+  noCandidateForTest: 'No candidate has attempted this test',
+  candidateAlreadyInvited: 'Candidate has already been invited for this test',
+  candidateInvited: 'Candidates Invited',
+  writeDescriptionOfTest: 'Write Description of Test',
 }
 export const componentGlobalConstants = {
   totalCounts: 'Total Counts',
@@ -99,11 +104,17 @@ export enum QuestionTypes {
   singleChoice = 'SINGLE_CHOICE',
   text = 'TEXT',
 }
+
 export const statusCheck = {
   success: 'Success',
   commonError: 'Something Went Wrong',
   deletedSuccess: 'Deleted Successfully...!',
   noEmailsInvite: 'No emails to invite',
+  selectCorrOption: 'Select the Correct Option',
+  descIsReq: 'Description is required',
+  nameIsReq: 'Name is required',
+  sectionAddedSuccess: 'Section added successfully..!',
+  maxOptions: 'you can add maximum six options.',
 }
 export const resultConstants = {
   order: 'Order',
@@ -111,11 +122,15 @@ export const resultConstants = {
   totalInvited: 'Invited',
   totalAttended: 'Attended',
   noTestAlert: 'No test found. Add your test first',
-  srno: 'Sr.No',
-  invitedBy: "Invited By",
+  srNo: 'Sr.No',
+  invitedBy: 'Invited By',
   result: 'Result',
   review: 'Review',
-  startedAt: "Started At"
+  status: 'Status',
+  inactive: 'Inactive',
+  active: 'Active',
+
+  startedAt: 'Started At',
 }
 
 export enum QuestionStatus {
@@ -125,14 +140,14 @@ export enum QuestionStatus {
   answered = 'ANSWERED',
 }
 
-export const candidateExam = {
+export const candidateExamConstants = {
   time: 'Time',
   timeRemaining: 'Time Remaining',
   timeLimit: 'Time Limit',
   assessmentDetails: 'Assessment Details',
   assessmentTests: 'Assessment Tests',
   assessmentEnd: 'Assessment Ended',
-  wrongLink: "Wrong Link",
+  wrongLink: 'Wrong Link',
   minutes: 'Mins',
   description: 'Description',
   total: 'Total',
@@ -145,11 +160,19 @@ export const candidateExam = {
   beginAssesment: 'Begin Assesment',
   instructions: 'Instructions',
   startSection: 'Start Now',
-  examTitle: 'Pre-Interview Assessment',
+
   info: 'Info',
-  noOfQuestions: "No. of Questions"
+  noOfQuestions: 'No. of Questions',
+  candidateTestCreated: 'created',
+  error: 'error',
+  candidateCreateError: 'Candidate Create Error..!',
+  candidateTestCreateError: 'Candidate Test Create Error..!',
+  errorUpdatingTestLink: 'Error updating test link..!',
+  errorCreatingSectionInTest: 'Error creating section in test ..',
 }
 export const cypress = {
+  //
+  //
   Tests: 'Tests',
   Sections: 'Sections',
   Add: 'Add',
@@ -189,9 +212,5 @@ export enum sortByOrder {
   ascending = 'asc',
   sortAscending = 'Sort Ascending',
   name = 'name',
-  descending = 'descending',
-  sortDescending = 'Sort Descending',
-  multipleChoice = 'MULTIPLE_CHOICE',
-  singleChoice = 'SINGLE_CHOICE',
-  text = 'TEXT',
+  descending = 'dsc',
 }

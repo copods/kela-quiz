@@ -46,8 +46,7 @@ const TestTableItem = ({
     <>
       <div
         key={index}
-        id="test-table-list"
-        className="test-table-list flex border-b border-t-0 border-gray-200 bg-white py-3 px-9"
+        className="test-table-list flex items-center border-b border-t border-gray-200 bg-white py-6 px-9"
       >
         {showCheckBox && (
           <div className="w-1/12 text-base font-normal leading-6 text-gray-700">
@@ -60,8 +59,14 @@ const TestTableItem = ({
         >
           {index}
         </div>
-        <div className="test-name-navigation p-1 w-4/12 cursor-pointer truncate text-base font-medium leading-6 text-primary  ">
-          <NavLink aria-label={testName} title={testName} to={`/tests/${id}`} tabIndex={0} key={index}>
+        <div className="test-name-navigation w-4/12 cursor-pointer truncate p-1 text-base font-medium leading-6 text-primary  ">
+          <NavLink
+            aria-label={testName}
+            title={testName}
+            to={`/tests/${id}`}
+            tabIndex={0}
+            key={index}
+          >
             <span id="test-name-navigation">{testName}</span>
           </NavLink>
         </div>
@@ -80,9 +85,9 @@ const TestTableItem = ({
         </div>
         <div className="flex w-1/12 gap-2">
           <Icon
-          role={'button'}
+            role={'button'}
             tabIndex={0}
-            className="cursor-pointer text-2xl text-primary"
+            className="candidateInviteIcon cursor-pointer text-2xl text-primary"
             icon={'ant-design:user-add-outlined'}
             onClick={() => setCandidatePopupOpen(true)}
             onKeyUp={(e) => {
@@ -99,18 +104,18 @@ const TestTableItem = ({
             aria-label={testTableItem.menu}
           />
         </div>
-      <DeletePopUp
-        setOpen={setShowDeletePopup}
-        open={showDeletePopup}
-        onDelete={deleteTest}
-        status={status}
-      />
-      <InviteCandidatePopup
-        openInvitePopup={candidatePopupOpen}
-        setOpenInvitePopup={setCandidatePopupOpen}
-        testName={testName}
-        testId={id}
-      />
+        <DeletePopUp
+          setOpen={setShowDeletePopup}
+          open={showDeletePopup}
+          onDelete={deleteTest}
+          status={status}
+        />
+        <InviteCandidatePopup
+          openInvitePopup={candidatePopupOpen}
+          setOpenInvitePopup={setCandidatePopupOpen}
+          testName={testName}
+          testId={id}
+        />
       </div>
     </>
   )
