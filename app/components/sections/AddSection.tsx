@@ -52,7 +52,12 @@ const AddSection = ({
             >
               <Dialog.Panel className="relative transform overflow-hidden rounded-2xl bg-white p-6 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
                 <div className="addSectionDilog flex items-center justify-between pt-1">
-                  <h2 className="text-2xl font-bold text-gray-700">
+                  <h2 
+                     className="text-2xl font-bold text-gray-700" 
+                     title={sectionsConstants.addSection}
+                     role={sectionsConstants.addSection}
+                     tabIndex={0}
+                     aria-label={sectionsConstants.addSection}>
                     {sectionsConstants.addSection}
                   </h2>
                   <Icon
@@ -108,7 +113,7 @@ const AddSection = ({
                     }`}
                     disabled={transition.state === 'submitting'}
                   >
-                    {transition.state === 'submitting' ? 'Adding...' : 'Add'}
+                    {transition.state === 'submitting' ? commonConstants.adding : commonConstants.add}
                   </button>
                 </div>
               </Dialog.Panel>

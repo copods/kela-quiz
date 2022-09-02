@@ -163,7 +163,7 @@ describe('Test for Section', () => {
       .should('have.text', routeFiles.sections)
       .click()
     cy.location('pathname', { timeout: 6000 }).should('include', '/sections')
-    cy.get('.section-card ').each(($el) => {
+    cy.get('#section-card ').each(($el) => {
       cy.wrap($el).within((el) => {
         if (
           el[0].getElementsByClassName('sectionName')[0].innerHTML ===
@@ -186,7 +186,7 @@ describe('Test for Section', () => {
     cy.get('.Toastify__toast').should('have.text', statusCheck.deletedSuccess)
     cy.get('.Toastify__close-button').click()
     cy.location('pathname', { timeout: 6000 }).should('include', '/sections')
-    cy.get('.section-card', { timeout: 8000 }).each(($el) => {
+    cy.get('#section-card', { timeout: 8000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
           el[0].getElementsByClassName('sectionName')[0].innerHTML ===

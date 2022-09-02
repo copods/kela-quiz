@@ -35,11 +35,11 @@ const ChipGroup = ({
           >
             <Menu.Items
               id="menu-items"
-              className="section-menu absolute z-40 max-h-52 overflow-auto rounded-md bg-white py-4 px-4 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+              className="sectionMenu absolute z-40 max-h-52 overflow-auto rounded-md bg-white py-4 px-4 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
             >
-              {sections.map((sect, i) => {
+              {sections.map((sect) => {
                 return (
-                  <div className=" flex flex-col px-2 py-2" key={i}>
+                  <div className=" flex flex-col px-2 py-2" key={sect?.section?.id}>
                     <Menu.Item>
                       <span className="text-sm">
                         <span className="truncate rounded-52 bg-bgcolor px-2 py-1">
