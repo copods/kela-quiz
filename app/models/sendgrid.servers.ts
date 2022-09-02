@@ -1,5 +1,6 @@
 import sendgrid from '@sendgrid/mail'
 import { env } from 'process'
+import { logo } from '~/constants/common.constants'
 
 export async function sendMail(
   email: string,
@@ -21,7 +22,7 @@ export async function sendMail(
   <body>
     <div style="min-height:200px;background: url('https://res.cloudinary.com/drpi0krkh/image/upload/v1656596230/User_Invitation_1_he7s2e.png');background-repeat:repeat-x;font-family:'Poppins', sans-serif;background-color:#F3F4F6">
     <div style="background:#353988;height:50px;text-align:center">
-      <img src="https://res.cloudinary.com/drpi0krkh/image/upload/c_scale,h_200/v1656065336/Logo_jtr0wl.png" alt="k-quiz" height="48" />
+      <img src="https://res.cloudinary.com/drpi0krkh/image/upload/c_scale,h_200/v1656065336/Logo_jtr0wl.png" alt=${logo.kQuizLogo} height="48" />
     </div>
     <div>
     <table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -105,7 +106,7 @@ export async function sendTestInviteMail(
   <body>
     <div style="min-height:200px;background: url('https://res.cloudinary.com/drpi0krkh/image/upload/v1656596230/User_Invitation_1_he7s2e.png');background-repeat:repeat-x;font-family:'Poppins', sans-serif;background-color:#F3F4F6">
     <div style="background:#353988;height:50px;text-align:center">
-      <img src="https://res.cloudinary.com/drpi0krkh/image/upload/c_scale,h_200/v1656065336/Logo_jtr0wl.png" alt="k-quiz logo" height="48" />
+      <img src="https://res.cloudinary.com/drpi0krkh/image/upload/c_scale,h_200/v1656065336/Logo_jtr0wl.png" alt=${logo.kQuizLogo} height="48" />
     </div>
     <div>
     <table width="100%" border="0" cellspacing="0" cellpadding="0">
