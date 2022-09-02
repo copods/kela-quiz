@@ -12,7 +12,7 @@ module.exports = {
         tableHeader: '#f3f4f6',
         totalCount: '#4B5563',
         deleteColor: '#EF4444',
-        addButton:'#F0FDF4'
+        primary50:'#F0FDF4'
       },
       minWidth: {
         260: '260px',

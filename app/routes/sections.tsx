@@ -247,7 +247,7 @@ export default function SectionPage() {
           </h2>
           <button
             tabIndex={0}
-            className="h-9 rounded-lg bg-primary px-5 text-xs text-primary-50"
+            className="h-9 rounded-lg bg-primary px-5 text-xs text-primary50"
             id="add-section"
             onClick={() => setShowAddSectionModal(!showAddSectionModal)}
             title={sectionsConstants.addSection}
