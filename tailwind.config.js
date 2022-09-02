@@ -15,9 +15,6 @@ module.exports = {
         borderColor: '#E5E7EB',
         tableHeader: '#f3f4f6',
         totalCount: '#4B5563',
-        deleteColor: '#EF4444',
-        deleteColorHover: '#B91C1C',
-        deleteColorDisabled: '#FECACA'
       },
       minWidth: {
         260: '260px',

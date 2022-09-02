@@ -15,6 +15,7 @@ export const commonConstants = {
   placeholderForOptionInput: 'Write your option here',
   sortAscending: 'Sort Ascending',
   sortDescending: 'Sort Descending',
+  invalidLinkSVG: 'Invalid Link SVG'
 }
 
 export const sideNav = {
