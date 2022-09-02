@@ -6,6 +6,7 @@ import { useState } from 'react'
 import DropdownField from '../form/Dropdown'
 import SectionCardForResultDetail from './SectionCardForResultDetail'
 import Divider from '../divider'
+import BarGraph from '../barGraph/barGraph'
 
 const ResultDetailsComponent = () => {
   const { candidateResult, params, sectionWiseResult } = useLoaderData()
@@ -60,6 +61,8 @@ const ResultDetailsComponent = () => {
           </span>
         </div>
       </header>
+      <Divider height="1px" />
+      <BarGraph />
       <Divider height="1px" />
       <div id="results-test-candidate-list-tab" className="flex flex-col gap-6">
         {sectionWiseResult.map((section: any) => {

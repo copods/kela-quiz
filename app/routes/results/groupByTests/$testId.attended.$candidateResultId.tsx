@@ -14,8 +14,11 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const candidateResult = await getResultsOfIndividualCandidates({
     id: params.candidateResultId as string,
   })
+  console.log("candidateResult",candidateResult)
   const sectionWiseResult = await getSectionWiseResultsOfIndividualCandidate({
     testId: candidateResult?.testId as string,
+    candidateTestId: candidateResult?.candidateTestId as string
+
   })
   if (!candidateResult) {
     throw new Response('Not Found', { status: 404 })
