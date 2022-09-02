@@ -166,6 +166,7 @@ model CandidateTest {
   endAt           DateTime?
   createdAt       DateTime                 @default(now())
   updatedAt       DateTime                 @updatedAt
+  sectionWiseResults SectionWiseResult[]
 
   @@unique([candidateId, testId])
 }
@@ -244,6 +245,9 @@ model SectionWiseResult {
   // easier access of test and results
   test   Test   @relation(fields: [testId], references: [id])
   testId String
+
+  candidateTest   CandidateTest @relation(fields: [candidateTestId], references: [id])
+  candidateTestId String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
