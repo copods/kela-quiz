@@ -6,6 +6,7 @@ import {
   commonConstants,
   sectionsConstants,
 } from '~/constants/common.constants'
+import Button from '../form/Button'
 const AddSection = ({
   open,
   setOpen,
@@ -89,32 +90,25 @@ const AddSection = ({
                 </div>
 
                 <div className="flex justify-end gap-2">
-                  <button
-                    tabIndex={0}
-                    type="button"
-                    className="h-9 rounded-md px-4 text-sm text-gray-500"
-                    onClick={() => {
-                      setOpen(false)
-                    }}
-                  >
-                    {commonConstants.cancel}
-                  </button>
-                  <button
-                    data-cy="submit"
-                    tabIndex={0}
-                    type="submit"
-                    id="submit-button"
-                    name="add-section"
-                    value={JSON.stringify({ action: 'add' })}
-                    className={`h-9 rounded-md bg-primary px-4 text-sm text-[#F0FDF4] disabled:opacity-80  ${
-                      transition.state === 'submitting' || showErrorMessage
-                        ? 'disabled bg-gray-600'
-                        : ''
-                    }`}
-                    disabled={transition.state === 'submitting'}
-                  >
-                    {transition.state === 'submitting' ? commonConstants.adding : commonConstants.add}
-                  </button>
+                    <Button 
+                      tabIndex={0}
+                      type='button'
+                      className='h-9 px-4'
+                      onClick={() => setOpen(false)}
+                      varient="primary-outlined"
+                      buttonText={commonConstants.cancel} />
+                    <Button 
+                      tabIndex={0}
+                      type="submit"
+                      id='submit-button'
+                      className='h-9 px-4'
+                      name="add-section"
+                      value="add"
+                      onClick={() => setOpen(false)}
+                      isDisabled={transition.state === 'submitting' || showErrorMessage}
+                      varient="primary-solid"
+                      datacy="submit"
+                      buttonText={transition.state === 'submitting' ? 'Adding...' : 'Add'} />
                 </div>
               </Dialog.Panel>
             </Transition.Child>

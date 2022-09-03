@@ -162,11 +162,11 @@ describe('smoke tests', () => {
     })
 
     cy.get('#question-editor #quill-editor').within(() => {
-      cy.get('.ql-editor').type(`What is your Test Question ?`)
+      cy.get('.ql-editor').type(cypress.useRef)
     })
     cy.get('input[placeholder="Write your option here"]')
       .clear()
-      .type('Option of question')
+      .type(cypress.useRefAns)
     cy.get('#save-and-exit').click()
   })
   it('Add question to the second section', () => {
@@ -212,11 +212,11 @@ describe('smoke tests', () => {
     })
 
     cy.get('#question-editor #quill-editor').within(() => {
-      cy.get('.ql-editor').type(`What is your Test Question ?`)
+      cy.get('.ql-editor').type(cypress.useMemo)
     })
     cy.get('input[placeholder="Write your option here"]')
       .clear()
-      .type('Option of question')
+      .type(cypress.useMemoAns)
     cy.get('#save-and-exit').click()
   })
 
@@ -305,7 +305,7 @@ describe('smoke tests', () => {
       })
     })
 
-    cy.get('[data-cy="submit"]').should('have.text', commonConstants.submit).click()
+    cy.get('button#submit-button').should('have.text', commonConstants.submit).click()
   })
   it('Verify if user able create the test 2', () => {
     cy.visit('/sign-in')

@@ -161,7 +161,7 @@ describe('Visiting Tests', () => {
     })
     cy.get('#vertical-icon', { timeout: 6000 }).click()
     cy.get('.delete-test').click()
-    cy.get('.confirm-delete').click()
+    cy.get('#confirm-delete').click()
     cy.get('.test-table-list').each(($el) => {
       cy.wrap($el).within((el) => {
         if (

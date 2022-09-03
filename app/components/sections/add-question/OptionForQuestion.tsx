@@ -12,6 +12,7 @@ import {
   statusCheck,
 } from '~/constants/common.constants'
 import { toast } from 'react-toastify'
+import Button from '~/components/form/Button'
 interface textAnswerType {
   id: string
   answer: string
@@ -143,17 +144,13 @@ export default function OptionForQuestion({
           </div>
         )}
 
-        <button
+        <Button 
           tabIndex={0}
-          className={`flex h-9 items-center  rounded-lg bg-primary px-5 text-xs text-white ${
-            options.length === 6 ? 'cursor-not-allowed opacity-75' : ''
-          }`}
-          onClick={addOptionArea}
-          title={addQuestion.addOptions}
-          aria-label={addQuestion.addOptions}
-        >
-          + {addQuestion.addOptions}
-        </button>
+          id='add-option'
+          className='h-9 px-5' 
+          varient='primary-solid' 
+          onClick={addOptionArea} 
+          buttonText={`+ ${addQuestion.addOptions}`} />
       </div>
 
       <div className="flex h-full flex-1 flex-col gap-5 overflow-auto px-1">

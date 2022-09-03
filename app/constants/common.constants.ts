@@ -15,7 +15,7 @@ export const commonConstants = {
   placeholderForOptionInput: 'Write your option here',
   sortAscending: 'Sort Ascending',
   sortDescending: 'Sort Descending',
-  invalidLink: 'Invalid Link',
+  invalidLinkSVG: 'Invalid Link SVG',
   useSetting:"Use setting",
   settings:'Settings',
   groupByCandidate:'Group By Candidate',
@@ -37,7 +37,6 @@ export const commonConstants = {
 export const sideNav = {
   sideNavHeading: 'Quiz',
   signOut: 'Sign out',
-  kQuizLogo: 'K-Quiz Logo'
 }
 
 export const members = {
@@ -63,6 +62,9 @@ export const testTableItem = {
   inviteMember: 'Invite Member',
   menu: 'Menu',
 }
+export const logo = {
+  kQuizLogo: 'K-Quiz Logo'
+}
 export const selectSectionCard = {
   removeSection: 'Remove Section',
   selectSection: 'Select Section',
@@ -72,6 +74,7 @@ export const deletePopUp = {
 }
 export const logIn = {
   signInMessage: 'Sign in to your account',
+  signIn: 'Sign In'
 }
 export const addQuestion = {
   createOptions: 'Create Options',

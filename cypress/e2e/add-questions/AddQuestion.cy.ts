@@ -139,7 +139,7 @@ describe('Test for section-details', () => {
     cy.get('ul').within(() => {
       cy.get('li').within(() => {
         cy.get('div').then((el) => {
-          ;[...el].map((el) => {
+          [...el].map((el) => {
             if (el.innerText === 'Multiple Choice') {
               flag = 'CheckBox'
             } else if (el.innerText === 'Single Choice') {
@@ -186,7 +186,7 @@ describe('Test for section-details', () => {
     cy.get('ul').within(() => {
       cy.get('li').within(() => {
         cy.get('div').then((el) => {
-          ;[...el].forEach((el) => {
+          [...el].forEach((el) => {
             if (el.innerText === 'Multiple Choice') {
               el.click()
             }
@@ -201,7 +201,7 @@ describe('Test for section-details', () => {
         .then((len) => {
           lengthBefore = len
         })
-      cy.get('button.flex').should('have.text', '+ Add Options').click()
+      cy.get('button#add-option').should('have.text', '+ Add Options').click()
       cy.get('#quill-editor')
         .its('length')
         .then((len) => {
@@ -236,7 +236,7 @@ describe('Test for section-details', () => {
     cy.get('ul').within(() => {
       cy.get('li').within(() => {
         cy.get('div').then((el) => {
-          ;[...el].forEach((el) => {
+          [...el].forEach((el) => {
             if (el.innerText === 'Multiple Choice') {
               el.click()
             }
@@ -286,7 +286,7 @@ describe('Test for section-details', () => {
     cy.get('ul').within(() => {
       cy.get('li').within(() => {
         cy.get('div').then((el) => {
-          ;[...el].map((el) => {
+          [...el].map((el) => {
             if (el.innerText === 'Text') {
               el.click()
             }
@@ -302,7 +302,7 @@ describe('Test for section-details', () => {
 
     cy.get('#optionEditor input').clear().type(cypress.useRefAns)
 
-    cy.get('#saveAndAddMore').click()
+    cy.get('#save-and-add-more').click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -336,7 +336,7 @@ describe('Test for section-details', () => {
     cy.get('ul').within(() => {
       cy.get('li').within(() => {
         cy.get('div').then((el) => {
-          ;[...el].map((el) => {
+          [...el].map((el) => {
             if (el.innerText === 'Text') {
               el.click()
             }
@@ -380,7 +380,7 @@ describe('Test for section-details', () => {
       .type('{backspace}')
       .should('have.value', '')
 
-    cy.get('#saveAndAddMore', { timeout: 6000 })
+    cy.get('#save-and-add-more', { timeout: 6000 })
       .should('have.text', cypress.saveAndAddMore)
       .click()
     cy.get('.Toastify__toast').should('have.text', 'Enter the Question')
@@ -414,7 +414,7 @@ describe('Test for section-details', () => {
     cy.get('ul').within(() => {
       cy.get('li').within(() => {
         cy.get('div').then((el) => {
-          ;[...el].forEach((el) => {
+          [...el].forEach((el) => {
             if (el.innerText === 'Multiple Choice') {
               el.click()
             }
@@ -433,7 +433,7 @@ describe('Test for section-details', () => {
       })
     })
     if (flag == 1) {
-      cy.get('#saveAndAddMore')
+      cy.get('#save-and-add-more')
         .should('have.text', cypress.saveAndAddMore)
         .click()
       cy.get('.Toastify__toast').should('have.text', cypress.enterAllOptions)

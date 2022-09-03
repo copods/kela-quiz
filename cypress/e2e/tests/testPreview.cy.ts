@@ -37,7 +37,7 @@ describe('Test for testPreview', () => {
     })
     cy.get('.test-name-navigation').contains(test1).click()
     cy.get('#title', { timeout: 6000 }).should('have.text', test1)
-    cy.get('#backButton').click()
+    cy.get('#back-button').click()
   })
 
   it('test for tests name', () => {

@@ -12,7 +12,7 @@ const InvalidLinkComponent = () => {
         </span>
       </div>
       <div className="mt-[-80px] flex h-full w-full flex-col items-center justify-center gap-4">
-        <img src={InvalidLink} alt={commonConstants.invalidLink} />
+        <img src={InvalidLink} alt={commonConstants.invalidLinkSVG} />
         <p className="text-5xl font-bold text-gray-900">
           {candidateExamConstants.wrongLink}
         </p>

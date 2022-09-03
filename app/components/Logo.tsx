@@ -1,4 +1,4 @@
-import { sideNav } from "~/constants/common.constants"
+import { logo } from "~/constants/common.constants"
 
 interface LogoProps {
   height?: string
@@ -12,7 +12,7 @@ const Logo = ({ height, width, styleClass }: LogoProps) => {
       src="../../assets/logo.svg"
       height={height}
       width={width}
-      alt={sideNav.kQuizLogo}
+      alt={logo.kQuizLogo}
       className={styleClass}
     />
   )

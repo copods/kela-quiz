@@ -3,12 +3,13 @@ import { Fragment, useEffect, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import { toast } from 'react-toastify'
+import Button from '../form/Button'
 import {
   candidateExamConstants,
   testsConstants,
-  commonConstants,
   inviteMemeberPopUpConstants,
   members,
+  cypress,
 } from '~/constants/common.constants'
 
 const InviteCandidatePopup = ({
@@ -145,29 +146,23 @@ const InviteCandidatePopup = ({
                 })}
 
                 <div className="flex justify-end gap-2 pt-4">
-                  <button
-                    tabIndex={0}
-                    type="button"
-                    className="h-9 rounded-md px-4 text-sm text-gray-500"
+                  <Button 
+                    type='button'
+                    className='h-9 px-4'
+                    varient='primary-outlined'
+                    buttonText={cypress.cancel}
                     onClick={updatePopupAndEmailState}
-                    title={commonConstants.cancel}
-                    aria-label={commonConstants.cancel}
-                  >
-                    {commonConstants.cancel}
-                  </button>
-                  <button
-                    data-cy="submit"
-                    tabIndex={0}
-                    type="submit"
-                    name="inviteCandidates"
+                  />
+                  <Button 
+                    type='submit'
+                    name='inviteCandidates'
                     value={testId}
-                    id="submit-button"
-                    className="h-9 rounded-md bg-primary px-4 text-sm text-[#F0FDF4]"
-                    title={inviteMemeberPopUpConstants.invite}
-                    aria-label={inviteMemeberPopUpConstants.invite}
-                  >
-                    {inviteMemeberPopUpConstants.invite}
-                  </button>
+                    id='submit-button'
+                    className='h-9 px-4'
+                    varient='primary-solid'
+                    buttonText={inviteMemeberPopUpConstants.invite}
+                    datacy="submit"
+                  />
                 </div>
               </Dialog.Panel>
             </Transition.Child>
