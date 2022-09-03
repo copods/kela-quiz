@@ -81,6 +81,7 @@ function CandidateRegister() {
             <Button
               buttonText={commonConstants.continue}
               type="submit"
+              className='w-full'
               isDisabled={!canSubmitBtnBeEnabled()}
               varient='primary-solid'
             />

@@ -13,7 +13,7 @@ const Header = ({ title }: { title: string }) => {
         title={commonConstants.logo}>
           <img src={logo} alt={commonConstants.logo} />
       </Link>
-      <span className="text-3xl font-bold leading-9">
+      <span className="text-3xl font-boldFc leading-9">
         {sideNav.sideNavHeading}
       </span>
     </div>

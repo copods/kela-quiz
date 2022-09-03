@@ -12,8 +12,6 @@ import Button from '../form/Button'
 
 const ResultDetailsComponent = () => {
   const { candidateResult, params, sectionWiseResult } = useLoaderData()
-  console.log('candidateResult', candidateResult)
-  console.log('sec', sectionWiseResult)
 
   const dropdownData = [
     {
@@ -90,6 +88,7 @@ const ResultDetailsComponent = () => {
         />
         <Button
         varient='primary-solid'
+        className='px-6'
         onClick={updateCandidateStatusToDB}
         buttonText={commonConstants.submit}
         />

@@ -82,7 +82,6 @@ export const action: ActionFunction = async ({ request }) => {
   const action = formData.get('add-section') 
   ? formData.get('add-section') 
   : formData.get('deleteSection')
-  console.log(formData.get('deleteSection'))
   if (action === 'add') {
     const name = formData.get('name')
     const description = formData.get('description')

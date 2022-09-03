@@ -49,7 +49,6 @@ describe('Test for Section', () => {
       .clear()
       .type(cypress.useMemo)
     cy.get('.ql-editor').each(($el) => {
-      console.log($el)
       cy.wrap($el).within((el) => {
         if (
           el[0].getElementsByClassName('question')[0].innerHTML ===
