@@ -47,7 +47,6 @@ const SectionLink = ({
     </NavLink>
   )
 }
-
 type SectionType = {
   sections: Section[]
   sortBy: string
@@ -89,7 +88,6 @@ const Sections = ({
           />
         </div>
       </div>
-
       {/* list */}
       <div
         className="section-cards flex flex-1 flex-col gap-6 overflow-auto p-1"

@@ -96,7 +96,6 @@ const TestTableItem = ({
             }}
             aria-label={testTableItem.inviteMember}
           />
-
           <TestListActionMenu
             menuIcon={'mdi:dots-vertical'}
             onItemClick={setShowDeletePopup}

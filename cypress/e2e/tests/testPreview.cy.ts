@@ -18,7 +18,6 @@ describe('Test for testPreview', () => {
     cy.get('[data-cy="submit"]').click()
     cy.location('pathname').should('include', '/dashboard')
   })
-
   it('test for check preview data match selected test and back button ', () => {
     cy.get('a')
       .find('#tests', { timeout: 6000 })
@@ -39,7 +38,6 @@ describe('Test for testPreview', () => {
     cy.get('#title', { timeout: 6000 }).should('have.text', test1)
     cy.get('#back-button').click()
   })
-
   it('test for tests name', () => {
     cy.get('a')
       .find('#tests', { timeout: 6000 })

@@ -1,4 +1,3 @@
-
 import {
   commonConstants,
   cypress,
@@ -25,7 +24,6 @@ describe('Test for Section', () => {
     cy.get('[data-cy="submit"]').click()
     cy.location('pathname').should('include', '/dashboard')
   })
-
   it('cancel Add section', () => {
     cy.get('a')
       .find('#sections', { timeout: 8000 })
@@ -39,7 +37,6 @@ describe('Test for Section', () => {
         cy.get("button[type='button']").click()
       })
   })
-  
   it('allows users to search questions', () => {
     cy.get('a')
       .find('#sections', { timeout: 8000 })
@@ -73,7 +70,6 @@ describe('Test for Section', () => {
       cy.location('search').should('include', loc.search)
     })
   })
-
   it('Test for valid error message while adding new section without Title', () => {
     cy.get('a')
       .find('#sections')
@@ -86,7 +82,6 @@ describe('Test for Section', () => {
       .within((el) => {
         cy.get('[data-cy="submit"]').click()
       })
-
     cy.get('.Toastify__toast').should('have.text', cypress.nameIsReq)
   })
   it('Test for valid error message while adding new section without Description', () => {
@@ -105,7 +100,6 @@ describe('Test for Section', () => {
 
         cy.get('[data-cy="submit"]').click()
       })
-
     cy.get('.Toastify__toast').should('have.text', cypress.descIsReq)
   })
   it('Test for valid error message while adding new section with duplicate Title', () => {
@@ -122,7 +116,6 @@ describe('Test for Section', () => {
         cy.get('textarea').type('Aptitude')
         cy.get('[data-cy="submit"]').click()
       })
-
     cy.get('.Toastify__toast').should('have.text', cypress.duplicateTitle)
     cy.get('.Toastify__close-button').click()
   })
@@ -132,7 +125,6 @@ describe('Test for Section', () => {
       .should('have.text', routeFiles.sections)
       .click()
     cy.location('pathname', { timeout: 6000 }).should('include', '/sections')
-
     cy.get('.sectionLSWrapper', { timeout: 6000 }).within(() => {
       cy.get('#section-cards')
         .get('a')

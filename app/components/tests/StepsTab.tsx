@@ -12,7 +12,6 @@ const StepsTabComponent = ({
   const indexDisable = () => {
     if (!isDisabled) return 0
   }
-
   return (
     <div className="flex w-full gap-4 rounded-lg bg-white p-3 shadow">
       {tabs.map((tab, i) => {

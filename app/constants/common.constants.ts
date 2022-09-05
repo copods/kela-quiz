@@ -33,12 +33,10 @@ export const commonConstants = {
   nextTab:'Next Tab',
   logo:"logo",
 }
-
 export const sideNav = {
   sideNavHeading: 'Quiz',
   signOut: 'Sign out',
 }
-
 export const members = {
   addMember: 'Add Member',
   firstName: 'First Name',
@@ -123,13 +121,11 @@ export const routeFiles = {
   sections: 'Sections',
   options: 'Options',
 }
-
 export enum QuestionTypes {
   multipleChoice = 'MULTIPLE_CHOICE',
   singleChoice = 'SINGLE_CHOICE',
   text = 'TEXT',
 }
-
 export const statusCheck = {
   success: 'Success',
   commonError: 'Something Went Wrong',
@@ -159,14 +155,12 @@ export const resultConstants = {
   skipped: "Skipped",
   total: "Total"
 }
-
 export enum QuestionStatus {
   notViewed = 'NOT_VIEWED',
   viewed = 'VIEWED',
   skipped = 'SKIPPED',
   answered = 'ANSWERED',
 }
-
 export const candidateExamConstants = {
   time: 'Time',
   timeRemaining: 'Time Remaining',
@@ -230,7 +224,6 @@ export const cypress = {
   useMemo:'What is useMemo() ?',
   useMemoAns:'The useMemo Hook can be used to keep expensive, resource intensive functions from needlessly running.',
 }
-
 export enum sortByOrder {
   ascending = 'asc',
   sortAscending = 'Sort Ascending',

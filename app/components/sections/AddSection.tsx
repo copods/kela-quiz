@@ -36,7 +36,6 @@ const AddSection = ({
         >
           <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
         </Transition.Child>
-
         <div className="fixed inset-0 z-10 overflow-y-auto">
           <Form
             method="post"
@@ -88,7 +87,6 @@ const AddSection = ({
                     placeholder="Enter Section Description"
                   />
                 </div>
-
                 <div className="flex justify-end gap-2">
                     <Button 
                       tabIndex={0}

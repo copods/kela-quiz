@@ -34,7 +34,6 @@ export default function QuestionEditor({
           valueKey={'id'}
         />
       </div>
-
       <div className="flex-1 py-1" id="question-editor">
         <ClientOnly fallback={<div></div>}>
           {() => (

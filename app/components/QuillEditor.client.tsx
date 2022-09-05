@@ -41,7 +41,7 @@ export default function QuillEditor({
         blotFormatter: {},
       }
   const placeholder = `Write your ${quillPlaceholder} here....`
-  var formats = [
+  let formats = [
     'bold',
     'italic',
     'underline',
@@ -53,7 +53,6 @@ export default function QuillEditor({
     'color',
     'background',
   ]
-
   const editorRef = useRef(null)
   const { quill, quillRef, Quill } = useQuill({
     theme,
@@ -61,17 +60,14 @@ export default function QuillEditor({
     formats,
     placeholder,
   })
-
   if (Quill && !quill) {
     Quill.register('modules/blotFormatter', BlotFormatter)
   }
-
   useEffect(() => {
     if (quill && text) {
       quill.clipboard.dangerouslyPasteHTML(text)
     }
   }, [quill])
-
   useEffect(() => {
     if (quill) {
       quill?.on('text-change', () => {
@@ -79,7 +75,6 @@ export default function QuillEditor({
       })
     }
   }, [quill, onTextChange])
-
   return (
     <div
       className="flex h-full w-full flex-col rounded-lg bg-white"
