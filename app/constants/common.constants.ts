@@ -86,7 +86,6 @@ export const addQuestion = {
 export const sectionsConstants = {
   addSection: 'Add Section',
   totalQuestions: 'Total Questions:',
-  addQuestion: 'Add Question',
   noQuestionAlert: 'No questions found. Add your first question',
   noRecordFound: 'No Record Found',
   sort:'Sort',
@@ -206,7 +205,6 @@ export const cypress = {
   preview: 'Preview',
   next: 'Next',
   remove: 'Remove',
-  addQuest: 'Add Question',
   back: 'Back',
   nameIsReq: 'Name is required',
   descIsReq: 'Description is required',

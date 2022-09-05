@@ -5,6 +5,7 @@ const Button = ({ buttonText , className, onClick, ...props }: ButtonProps) => {
   const getCommonClasses = () => {
     return `py-2.5 px-5 rounded-md items-center inline-flex shadow-sm text-xs font-medium ${props.alignment ? props.alignment : 'justify-center'}`
   }
+  console.log(buttonText);
   
   const getButtonVarient = () => {
     switch(props.varient) {
@@ -28,7 +29,7 @@ const Button = ({ buttonText , className, onClick, ...props }: ButtonProps) => {
       onClick={onClick}
       {...props}
     >
-      { buttonText }
+      {buttonText}
     </button>
   )
 }
