@@ -41,13 +41,11 @@ const TimerComponent = ({
       }
     }
   }, [section])
-
   const getFormattedTime = (time: number) => {
     let min = Math.floor(time / 60)
     let seconds = time - min * 60
     return `${min > 9 ? '' : '0'}${min}:${seconds > 9 ? '' : '0'}${seconds} `
   }
-
   return (
     <div className="flex items-center gap-4 text-lg font-medium text-gray-800">
       <span

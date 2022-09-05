@@ -73,7 +73,7 @@ export async function loginVerificationResponse(
 
   const isValid = await bcrypt.compare(password, userWithPassword.password.hash)
   if (!isValid) {
-    var error = new Error('invalidPassword')
+    let error = new Error('invalidPassword')
     return error
   }
 

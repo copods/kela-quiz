@@ -30,7 +30,6 @@ export default function AddMemberModal({
           >
             <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
           </Transition.Child>
-
           <div
             className="fixed inset-0 z-10 overflow-y-auto"
             id="add-pop-up-model"

@@ -11,9 +11,7 @@ import Checkbox from '../form/CheckBox'
 
 const Question = () => {
   const { question, section, lastSection } = useLoaderData()
-
   const questionType = question?.question?.questionType?.value
-
   const [userAnswer, setUserAnswer] = useState(
     questionType === QuestionTypes.singleChoice
       ? question.selectedOptions[0]?.id
@@ -21,7 +19,6 @@ const Question = () => {
       ? question?.answers
       : {}
   )
-
   const onChangeHandle = (event: any, index?: number) => {
     if (questionType === QuestionTypes.singleChoice) {
       setUserAnswer(event.id)
@@ -33,7 +30,6 @@ const Question = () => {
       })
     }
   }
-
   return (
     <form method="post" className="flex h-full flex-col gap-9">
       <div className="flex h-full max-h-full flex-1 gap-9 overflow-auto">

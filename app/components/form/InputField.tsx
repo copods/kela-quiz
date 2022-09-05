@@ -23,7 +23,6 @@ function InputField({
         className="h-11 w-full rounded-lg border border-gray-200 px-3.5 py-2.5 text-lg"
         title={props.placeholder}
       />
-
       {error && (
         <div className="pt-1 text-red-700" id={errorId}>
           {error}
