@@ -20,9 +20,7 @@ const CandidateSideNav = ({
   candidateTest: CandidateTest
 }) => {
   const location = useLocation() // to get current location
-
   const routeData = useLoaderData()
-
   const getTotalTime = () => {
     let totalTimeInSeconds = 0
     candidateTest?.test?.sections.forEach(
@@ -32,7 +30,6 @@ const CandidateSideNav = ({
     )
     return totalTimeInSeconds / 60
   }
-
   return (
     <div className="flex h-full flex-col overflow-auto">
       <div className="p-5">
@@ -52,7 +49,6 @@ const CandidateSideNav = ({
         </div>
       </div>
       <Divider height="1px" />
-
       {/* Candidate Sidenav */}
       <div className="flex flex-1 flex-col gap-6 py-6">
         {/* sidenav menu group */}
@@ -70,7 +66,6 @@ const CandidateSideNav = ({
             {candidateExamConstants.info}
           </div>
         </div>
-
         <div className="flex flex-col gap-2.5">
           <div className="px-5 text-sm font-semibold text-gray-900">
             {candidateExamConstants.assessmentTests}
@@ -141,7 +136,6 @@ const CandidateSideNav = ({
           </div>
         </div>
       </div>
-
       <div className="justify-end p-5">
         <div>
           <hr className="mb-3 mt-3 border border-solid border-gray-300" />
@@ -153,7 +147,6 @@ const CandidateSideNav = ({
                   {candidate?.lastName?.slice(0, 1)}
                 </span>
               </div>
-
               <div className="flex-col gap-2">
                 <p className="w-full truncate text-xs font-semibold text-gray-900">
                   {candidate.firstName} {candidate.lastName}

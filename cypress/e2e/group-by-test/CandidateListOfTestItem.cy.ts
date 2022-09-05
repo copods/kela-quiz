@@ -46,12 +46,12 @@ describe('Visiting group by test of results page', () => {
         }
       })
     })
-
     cy.get('#test-candidate-list-tab', { timeout: 6000 })
       .get('#tab-title')
       .invoke('text')
       .then((el) => {
         if (el === 'attending') {
+          cy.log(el)
         }
       })
   })

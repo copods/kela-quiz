@@ -32,7 +32,6 @@ export default function CandidateLayout({
       break
     }
   }
-
   return (
     <main className="flex max-h-screen min-h-screen">
       <div className="w-2/12 min-w-260 bg-white drop-shadow-md">

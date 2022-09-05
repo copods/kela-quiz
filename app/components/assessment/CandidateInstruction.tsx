@@ -8,14 +8,11 @@ import Button from '../form/Button'
 
 const CandidateInstruction = () => {
   const { firstSection, instructions } = useLoaderData()
-
   const candidateSections = instructions?.test?.sections.sort(
     (a: TestSection & { order: number }, b: TestSection & { order: number }) =>
       a.order > b.order ? 1 : b.order > a.order ? -1 : 0
   )
-
   const submit = useSubmit()
-
   const startTestForCandidate = () => {
     submit(
       {

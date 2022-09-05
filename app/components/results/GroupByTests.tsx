@@ -48,7 +48,6 @@ const GroupByTests = () => {
             showSelected={false}
           />
         </div>
-
         <div className="rounded-lg bg-[#F9FAFB] shadow-table">
           <div className="col-span-full grid grid-cols-10 rounded-lg border-[1px] border-solid border-borderColor bg-white">
             <div className="col-span-full grid grid-cols-10 gap-3 bg-tableHeader py-4 px-12">

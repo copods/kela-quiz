@@ -17,9 +17,6 @@ module.exports = {
         totalCount: '#4B5563',
         primary50: '#F0FDF4',
       },
-      borderWidth: {
-        3: '3px',
-      },
       minWidth: {
         200: '200px',
         260: '260px',
