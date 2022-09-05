@@ -15,15 +15,25 @@ module.exports = {
         borderColor: '#E5E7EB',
         tableHeader: '#f3f4f6',
         totalCount: '#4B5563',
-        primary50:'#F0FDF4'
+        primary50: '#F0FDF4',
+      },
+      borderWidth: {
+        3: '3px',
       },
       minWidth: {
+        200: '200px',
         260: '260px',
         301: '320px',
         sectionCard: '330px',
       },
       width: {
         sectionCard: `30%`,
+      },
+      maxWidth: {
+        554: '554px',
+      },
+      minHeight: {
+        480: '480px',
       },
       borderRadius: {
         1: '1px',
@@ -34,11 +44,11 @@ module.exports = {
           '0px 1px 3px rgba(0, 0, 0, 0.1), 0px 1px 2px rgba(0, 0, 0, 0.06)',
       },
       gridTemplateColumns: {
-        18: 'repeat(18, minmax(0, 1fr))'
+        18: 'repeat(18, minmax(0, 1fr))',
       },
-      padding:{
-        17:'17px'
-      }
+      padding: {
+        17: '17px',
+      },
     },
   },
   plugins: [],

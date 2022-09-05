@@ -18,18 +18,12 @@ export default function MembersList({
           <h1 className="col-span-2 text-sm text-gray-500">
             {commonConstants.name}
           </h1>
-          <h1 className="col-span-3 text-sm text-gray-500">
-            {members.email}
-          </h1>
-          <h1 className="col-span-2 text-sm text-gray-500">
-            {members.role}
-          </h1>
+          <h1 className="col-span-3 text-sm text-gray-500">{members.email}</h1>
+          <h1 className="col-span-2 text-sm text-gray-500">{members.role}</h1>
           <h1 className="col-span-2 text-sm text-gray-500">
             {members.addedOn}
           </h1>
-          <h1 className="col-span-1 text-sm text-gray-500">
-            {members.action}
-          </h1>
+          <h1 className="col-span-1 text-sm text-gray-500">{members.action}</h1>
         </div>
         {users.map((user: User & { role?: Role }) => (
           <div key={user.id} className="memberRow col-span-10 grid">

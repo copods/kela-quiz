@@ -8,7 +8,9 @@ import type { CandidateTest, Test } from '~/interface/Interface'
 import { sortByOrder } from '~/interface/Interface'
 
 const GroupByTests = () => {
-  const [sortDirection, onSortDirectionChange] = useState(sortByOrder.ascending as string)
+  const [sortDirection, onSortDirectionChange] = useState(
+    sortByOrder.ascending as string
+  )
   const [sortBy, onSortChange] = useState('name')
   const filterByType = [
     {

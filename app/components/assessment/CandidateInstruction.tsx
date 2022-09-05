@@ -36,7 +36,7 @@ const CandidateInstruction = () => {
         />
       </div>
       <div>
-        <h1 className=" pb-4 text-2xl font-semibold leading-8 text-gray-800">
+        <h1 className="pb-4 text-2xl font-semibold text-gray-800">
           {routeFiles.sections}
         </h1>
         {/* Sections */}
@@ -65,7 +65,7 @@ const CandidateInstruction = () => {
         </div>
         {/* Instruction */}
         <div className="flex flex-col gap-4">
-          <h1 className="mt-8 text-2xl font-semibold leading-8 text-gray-800">
+          <h1 className="mt-8 text-2xl font-semibold text-gray-800">
             {candidateExamConstants.instructions}
           </h1>
           <ul className="list-disc">
@@ -73,11 +73,11 @@ const CandidateInstruction = () => {
             <li>You can traverse the questions in particular section</li>
           </ul>
           <div className="flex">
-            <Button 
-            className='h-12 w-52 mt-8'
-            varient='primary-solid'
-            buttonText={candidateExamConstants.beginAssesment}
-            onClick={startTestForCandidate}
+            <Button
+              className="mt-8 h-12 w-52"
+              varient="primary-solid"
+              buttonText={candidateExamConstants.beginAssesment}
+              onClick={startTestForCandidate}
             />
           </div>
         </div>

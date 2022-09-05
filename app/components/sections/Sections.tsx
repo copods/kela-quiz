@@ -30,7 +30,8 @@ const SectionLink = ({
       to={path}
       key={section.id}
       onKeyUp={(e) => {
-        if (e.key === 'Tab' && e.altKey) window.location.href = '#section-search'
+        if (e.key === 'Tab' && e.altKey)
+          window.location.href = '#section-search'
         // alt + Tab combination key for moving focus to section detail
       }}
     >
@@ -74,7 +75,7 @@ const Sections = ({
   actionStatusData,
 }: SectionType) => {
   return (
-    <div className="sectionLSWrapper flex h-full w-96 flex-col gap-6">
+    <div className="sectionLSWrapper min-w-96 flex h-full flex-col gap-6">
       {/* filters */}
       <div className="flex items-center justify-between ">
         <div id="sort-filter-container">

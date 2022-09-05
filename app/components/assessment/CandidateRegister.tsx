@@ -54,7 +54,7 @@ function CandidateRegister() {
   ]
 
   return (
-    <div className="z-10 flex	min-h-[480px] w-full max-w-[554px] flex-col items-center justify-center rounded-2xl bg-white px-24 drop-shadow-xl">
+    <div className="z-10 flex	min-h-480 w-full max-w-554 flex-col items-center justify-center rounded-2xl bg-white px-24 drop-shadow-xl">
       <div className="z-20 -mt-24 mb-6">
         <Logo height="64" width="64" />
       </div>
@@ -81,9 +81,9 @@ function CandidateRegister() {
             <Button
               buttonText={commonConstants.continue}
               type="submit"
-              className='w-full'
+              className="w-full"
               isDisabled={!canSubmitBtnBeEnabled()}
-              varient='primary-solid'
+              varient="primary-solid"
             />
           </div>
         </Form>

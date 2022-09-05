@@ -58,18 +58,16 @@ const TestPreview = ({
           <div className="flex">
             <div
               id="name"
-              className="w-50 min-w-[200px] text-base font-medium text-gray-500"
+              className="min-w-200 text-base font-medium text-gray-500"
             >
               {commonConstants.name}
             </div>
-            <div className="flex-1 text-base text-gray-700">
-              {name}
-            </div>
+            <div className="flex-1 text-base text-gray-700">{name}</div>
           </div>
           <div className="flex">
             <div
               id="description"
-              className="w-50 min-w-[200px] text-base font-medium text-gray-500"
+              className="w-50 min-w-200 text-base font-medium text-gray-500"
             >
               {testsConstants.descriptionText}
             </div>
@@ -92,7 +90,7 @@ const TestPreview = ({
           <div className="flex">
             <div
               id="totalSection"
-              className="w-50 min-w-[200px] text-base font-medium text-gray-500"
+              className="w-50 min-w-200 text-base font-medium text-gray-500"
             >
               {testsConstants.totalSectionsText}
             </div>
@@ -129,7 +127,6 @@ const TestPreview = ({
                 </div>
                 {isPreviewEditable && (
                   <div className="flex gap-2">
-
                     <Icon
                       icon="fa:long-arrow-up"
                       className="cursor-pointer"

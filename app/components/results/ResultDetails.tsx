@@ -47,15 +47,12 @@ const ResultDetailsComponent = () => {
             className="flex items-center gap-4 "
           >
             <Icon
-              className="text-3xl font-semibold leading-9 text-gray-900"
+              className="text-3xl font-semibold text-gray-900"
               id="backButton"
               icon="mdi:arrow-left"
             ></Icon>
           </NavLink>
-          <span
-            className="text-3xl font-semibold leading-9 text-gray-900"
-            id="title"
-          >
+          <span className="text-3xl font-semibold text-gray-900" id="title">
             {candidateResult?.candidate?.firstName}&nbsp;
             {candidateResult?.candidate?.lastName}
           </span>
@@ -87,10 +84,10 @@ const ResultDetailsComponent = () => {
           setValue={updateCandidateStatus}
         />
         <Button
-        varient='primary-solid'
-        className='px-6'
-        onClick={updateCandidateStatusToDB}
-        buttonText={commonConstants.submit}
+          varient="primary-solid"
+          className="px-6"
+          onClick={updateCandidateStatusToDB}
+          buttonText={commonConstants.submit}
         />
       </div>
     </div>
