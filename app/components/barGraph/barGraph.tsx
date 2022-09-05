@@ -67,12 +67,12 @@ const BarGraph = ({ sectionWiseResult }: { sectionWiseResult: any }) => {
     },
     tooltip: {
       shared: true,
-      formatter: function () {
-        return this.points.reduce((acc: any, curr: any) => {
-          console.log(curr)
-          return acc + '<br/>' + curr?.x + ': ' + +'m'
-        }, '<b>' + '</b>')
-      },
+      // formatter: function () {
+      //   return this.points.reduce((acc: any, curr: any) => {
+      //     console.log(curr)
+      //     return acc + '<br/>' + curr?.x `${i+1}` + ': ' + +'m'
+      //   }, '<b>' + '</b>')
+      // },
     },
     plotOptions: {
       column: {
