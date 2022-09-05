@@ -14,7 +14,7 @@ export default function MembersList({
   return (
     <div className="grid grid-cols-12 rounded-lg shadow-base">
       <div className="col-span-full grid grid-cols-10 rounded-lg border border-solid border-gray-200 bg-white">
-        <div className="col-span-full grid grid-cols-10 bg-tableHeader py-4 px-12">
+        <div className="col-span-full grid grid-cols-10 bg-gray-100 py-4 px-12">
           <h1 className="col-span-2 text-sm text-gray-500">
             {commonConstants.name}
           </h1>

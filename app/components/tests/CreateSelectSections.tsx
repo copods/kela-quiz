@@ -18,7 +18,6 @@ const SelectSections = ({
   )
   const [sortBy, onSortChange] = useState('name')
   const [pseudoDivs, setPseudoDivs] = useState([1])
-
   const filterByType = [
     {
       name: 'Name',
@@ -29,7 +28,6 @@ const SelectSections = ({
       value: 'createdAt',
     },
   ]
-
   useEffect(() => {
     if (window.innerWidth > 1842 && sections.length % 4 != 0) {
       sections.length % 4 == 1
@@ -45,7 +43,6 @@ const SelectSections = ({
       setPseudoDivs([])
     }
   }, [sections.length])
-
   const sortData = () => {
     updateSectionsList((e: Array<TestSection>) => {
       if (
@@ -80,11 +77,9 @@ const SelectSections = ({
       return [...e]
     })
   }
-
   useEffect(() => {
     sortData()
   }, [sortDirection, sortBy])
-
   return (
     <div className="flex w-full flex-1 flex-col gap-6 overflow-x-auto rounded-lg bg-white p-6 shadow">
       {/* filters */}
@@ -97,7 +92,6 @@ const SelectSections = ({
         totalItems={sections?.length}
         showSelected={false}
       />
-
       {/* Sections list */}
       <div className="flex flex-wrap gap-6">
         {sections.map((section: TestSection, i) => {

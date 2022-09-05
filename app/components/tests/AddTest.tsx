@@ -15,11 +15,9 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
   const transition = useTransition()
   const submit = useSubmit()
   const [sectionsCopy, setSectionsCopy] = useState(sections)
-
   useEffect(() => {
     setSectionsCopy(sections)
   }, [sections])
-
   const breadCrumbData = [
     {
       tabName: testsConstants.testListColumnLabel,
@@ -30,7 +28,6 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
       route: routes.addTest,
     },
   ]
-
   const tabs = [
     {
       id: 0,
@@ -48,7 +45,6 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
       description: 'Preview',
     },
   ]
-
   const [currentTab, setCurrentTab] = useState(0) // testDetails  ||  selectSections  ||  preview
   const [name, onNameChange] = useState('')
   const [description, onDescriptionChange] = useState('')
@@ -56,7 +52,6 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
     []
   )
   const navigate = useNavigate()
-
   const updateSection = (data: Array<TestSection>, i: number) => {
     setSectionsCopy((sec) => {
       sec[i] = { ...sec[i], ...data }
@@ -68,7 +63,6 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
       return [...sec]
     })
   }
-
   const submitAddTest = () => {
     if (typeof name !== 'string' || name.length === 0) {
       toast.error(toastConstants.addTest)
@@ -82,7 +76,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
       toast.error(toastConstants.addSection)
       return
     }
-    var sendData: {
+    let sendData: {
       name: string
       description: string
       sections: Array<{
@@ -104,11 +98,9 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
         order: index + 1,
       })
     })
-
     submit({ data: JSON.stringify(sendData) }, { method: 'post' })
     // fetcher.submit({ data: JSON.stringify(sendData) }, { method: "post" });
   }
-
   useEffect(() => {
     if (!name || !description) {
       setCurrentTab(0)
@@ -135,7 +127,6 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
         currentTab={currentTab}
         setCurrentTab={setCurrentTab}
       />
-
       {/* Components according to current step */}
       {currentTab === tabs[0].id ? (
         <TestDetails

@@ -37,7 +37,6 @@ const TestPreview = ({
       })
     }
   }
-
   const getTotalTime = () => {
     let time = 0
 
@@ -47,7 +46,6 @@ const TestPreview = ({
     )
     return time
   }
-
   return (
     <div className="flex flex-1 flex-col gap-9 overflow-scroll rounded-lg bg-white p-6 shadow-base">
       <div className="flex flex-col gap-6">
@@ -111,7 +109,7 @@ const TestPreview = ({
                 <div className="min-w-184 text-base text-gray-500">
                   {testsConstants.sectionText} {i + 1}
                 </div>
-                <div className=" flex max-w-2xl flex-1 items-center justify-between gap-6 rounded-lg border border-gray-300	py-3 px-4 text-gray-700">
+                <div className="flex max-w-2xl flex-1 items-center justify-between gap-6 rounded-lg border border-gray-300 py-3 px-4 text-gray-700">
                   <div className="text-base font-semibold text-gray-700">
                     {section.name ? section.name : section.section?.name}
                   </div>

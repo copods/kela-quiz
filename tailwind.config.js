@@ -9,8 +9,6 @@ module.exports = {
         primaryHover: '#141649',
         primaryDisabled: '#A2A4D6',
         primaryOutlined: '#141649',
-        primaryOutlinedDisabled: '#A2A4D6',
-        tableHeader: '#f3f4f6',
       },
       minWidth: {
         260: '260px',
@@ -22,6 +20,10 @@ module.exports = {
         1: '1px',
         52: '52px',
       },
+      borderWidth: {
+        3: '3px',
+      },
+
       boxShadow: {
         base: '0px 1px 3px rgba(0, 0, 0, 0.1), 0px 1px 2px rgba(0, 0, 0, 0.06)',
       },
@@ -30,6 +32,8 @@ module.exports = {
       },
       padding: {
         17: '17px',
+        18: '18px',
+        22: '22px',
       },
     },
   },
