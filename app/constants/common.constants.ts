@@ -90,7 +90,7 @@ export const sectionsConstants = {
   dropdown: 'Select',
   expand: 'Expand',
   search: 'Search Question',
-  titleNotValid: 'Duplicate Tiltle',
+  titleNotValid: 'Duplicate Title',
 }
 export const testsConstants = {
   addTestbutton: 'Add Test',
