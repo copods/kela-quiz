@@ -57,8 +57,8 @@ export type LoaderData = {
 export const loader: LoaderFunction = async ({ request, params }) => {
   const url = new URL(request.url).searchParams.entries()
   const obj = Object.fromEntries(url).filter
-  var sections: Array<Section> = []
-  var status: string = ''
+  let sections: Array<Section> = []
+  let status: string = ''
   await getAllSections(obj)
     .then((res) => {
       sections = res as Section[]
@@ -196,7 +196,7 @@ export default function SectionPage() {
   useEffect(() => {
     if (data.sections.length) {
       const formData = new FormData()
-      var filter = {
+      let filter = {
         orderBy: {
           [sortBy]: order,
         },
@@ -251,6 +251,7 @@ export default function SectionPage() {
             className='px-5 h-9' 
             varient='primary-solid'
             onClick={() => setShowAddSectionModal(!showAddSectionModal)} 
+            title={sectionsConstants.addSection}
             buttonText={
               `+ ${sectionsConstants.addSection}`
             } />

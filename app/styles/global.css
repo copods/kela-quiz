@@ -36,3 +36,9 @@
 .highcharts-root {
   border-radius: 8px;
 }
+
+.ql-snow .ql-editor pre.ql-syntax {
+  background-color: #f5f5f5 !important;
+  color: black !important;
+  border: 1px solid #cccccc;
+}

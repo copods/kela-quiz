@@ -16,14 +16,12 @@ export default function DeletePopUp({
   onDelete: () => void
   status?: string | undefined
 }) {
-
   const handleDelete = () => {
     onDelete()
     if (status === statusCheck.success) {
       setOpen(false)
     }
   }
-
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog
@@ -42,7 +40,6 @@ export default function DeletePopUp({
         >
           <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
         </Transition.Child>
-
         <div className="fixed inset-0 z-10 overflow-y-auto">
           <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
             <Transition.Child
@@ -83,6 +80,7 @@ export default function DeletePopUp({
                       type='button' 
                       name='delete' 
                       className='px-5'
+                      title={commonConstants.delete} 
                       buttonText={commonConstants.delete} 
                       onClick={handleDelete} />
                   </Form>
@@ -93,6 +91,7 @@ export default function DeletePopUp({
                     varient='primary-outlined'
                     className='px-5'
                     onClick={() => setOpen(false)}
+                    title={commonConstants.cancel}
                     buttonText={commonConstants.cancel} />
                 </div>
               </Dialog.Panel>

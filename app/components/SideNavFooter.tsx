@@ -2,6 +2,7 @@ import { Icon } from '@iconify/react'
 import { useUser } from '~/utils'
 import { Form } from '@remix-run/react'
 import Button from './form/Button'
+import { commonConstants } from '~/constants/common.constants'
 
 function Footer() {
   const user = useUser()
@@ -16,7 +17,6 @@ function Footer() {
               {user.lastName.slice(0, 1)}
             </span>
           </div>
-
           <div className="flex-col gap-2">
             <p className="w-32 truncate text-xs font-semibold leading-4 text-gray-900">
               {user.firstName} {user.lastName}
@@ -26,7 +26,6 @@ function Footer() {
             </p>
           </div>
         </div>
-
         <Form action="/logout" method="post">
             <Button 
               tabIndex={0}
@@ -34,6 +33,7 @@ function Footer() {
               id='logout-button' 
               varient='secondary-solid' 
               className='px-2' 
+              title={commonConstants.logout}
               buttonText={
                 <Icon
                   icon="mdi:logout-variant"

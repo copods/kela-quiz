@@ -32,13 +32,14 @@ export const commonConstants = {
   previousTab:'Previous Tab',
   nextTab:'Next Tab',
   logo:"logo",
+  saveAndExit:'Save & Exit',
+  saveAndAddMore:'Save & Add More',
+  logout:'Logout'
 }
-
 export const sideNav = {
   sideNavHeading: 'Quiz',
   signOut: 'Sign out',
 }
-
 export const members = {
   addMember: 'Add Member',
   firstName: 'First Name',
@@ -85,7 +86,6 @@ export const addQuestion = {
 export const sectionsConstants = {
   addSection: 'Add Section',
   totalQuestions: 'Total Questions:',
-  addQuestion: 'Add Question',
   noQuestionAlert: 'No questions found. Add your first question',
   noRecordFound: 'No Record Found',
   sort:'Sort',
@@ -123,13 +123,11 @@ export const routeFiles = {
   sections: 'Sections',
   options: 'Options',
 }
-
 export enum QuestionTypes {
   multipleChoice = 'MULTIPLE_CHOICE',
   singleChoice = 'SINGLE_CHOICE',
   text = 'TEXT',
 }
-
 export const statusCheck = {
   success: 'Success',
   commonError: 'Something Went Wrong',
@@ -154,20 +152,17 @@ export const resultConstants = {
   status: 'Status',
   inactive: 'Inactive',
   active: 'Active',
-
   startedAt: 'Started At',
   correct: "Correct",
   skipped: "Skipped",
   total: "Total"
 }
-
 export enum QuestionStatus {
   notViewed = 'NOT_VIEWED',
   viewed = 'VIEWED',
   skipped = 'SKIPPED',
   answered = 'ANSWERED',
 }
-
 export const candidateExamConstants = {
   time: 'Time',
   timeRemaining: 'Time Remaining',
@@ -210,7 +205,6 @@ export const cypress = {
   preview: 'Preview',
   next: 'Next',
   remove: 'Remove',
-  addQuest: '+ Add Question',
   back: 'Back',
   nameIsReq: 'Name is required',
   descIsReq: 'Description is required',
@@ -220,8 +214,7 @@ export const cypress = {
   saveAndAddMore: 'Save & Add More',
   enterAllOptions: 'Enter all the Options',
   groupByTest: 'Results',
-  addMember: '+ Add Member',
-  cancel: 'Cancel',
+  addMember: 'Add Member',
   name: 'Name',
   description: 'Description',
   totalTime: 'Total Time',
@@ -232,12 +225,6 @@ export const cypress = {
   useMemoAns:'The useMemo Hook can be used to keep expensive, resource intensive functions from needlessly running.',
 }
 
-export enum sortByOrder {
-  ascending = 'asc',
-  sortAscending = 'Sort Ascending',
-  name = 'name',
-  descending = 'dsc',
-}
 export const toastConstants ={
   addTest:'Enter Name to add test',
   enterDescription:'Enter description to add test',

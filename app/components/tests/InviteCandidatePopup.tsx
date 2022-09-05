@@ -9,7 +9,7 @@ import {
   testsConstants,
   inviteMemeberPopUpConstants,
   members,
-  cypress,
+  commonConstants,
 } from '~/constants/common.constants'
 
 const InviteCandidatePopup = ({
@@ -24,9 +24,7 @@ const InviteCandidatePopup = ({
   testId: string
 }) => {
   const [emails, setEmails] = useState<Array<string>>([''])
-
   const actionData = useActionData()
-
   useEffect(() => {
     if (actionData?.status == 401) {
       toast.warn(actionData.message)
@@ -47,13 +45,10 @@ const InviteCandidatePopup = ({
       }
     }
   }, [actionData, testId, setOpenInvitePopup])
-
   const updatePopupAndEmailState = () => {
     setOpenInvitePopup(false)
     setEmails([''])
   }
-
-
   return (
     <Transition.Root show={openInvitePopup} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={setOpenInvitePopup}>
@@ -68,7 +63,6 @@ const InviteCandidatePopup = ({
         >
           <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
         </Transition.Child>
-
         <div className="fixed inset-0 z-10 overflow-y-auto">
           <Form
             method="post"
@@ -108,12 +102,10 @@ const InviteCandidatePopup = ({
                   {inviteMemeberPopUpConstants.enterCandidatesEmail}{' '}
                   <span className="font-semibold">`{testName}`</span> Test.
                 </p>
-
                 <div className="flex flex-row justify-between pb-2">
                   <span className="text-sm font-medium text-gray-500">
                     {inviteMemeberPopUpConstants.candidateEmail}
                   </span>
-
                   <span
                     role={'button'}
                     tabIndex={0}
@@ -128,7 +120,6 @@ const InviteCandidatePopup = ({
                     {inviteMemeberPopUpConstants.inviteMore} +
                   </span>
                 </div>
-
                 {emails.map((email, i) => {
                   return (
                     <div className="pb-2" key={i}>
@@ -144,13 +135,13 @@ const InviteCandidatePopup = ({
                     </div>
                   )
                 })}
-
                 <div className="flex justify-end gap-2 pt-4">
                   <Button 
                     type='button'
                     className='h-9 px-4'
                     varient='primary-outlined'
-                    buttonText={cypress.cancel}
+                    title={commonConstants.cancel}
+                    buttonText={commonConstants.cancel}
                     onClick={updatePopupAndEmailState}
                   />
                   <Button 
@@ -160,6 +151,7 @@ const InviteCandidatePopup = ({
                     id='submit-button'
                     className='h-9 px-4'
                     varient='primary-solid'
+                    title={inviteMemeberPopUpConstants.invite}
                     buttonText={inviteMemeberPopUpConstants.invite}
                     datacy="submit"
                   />

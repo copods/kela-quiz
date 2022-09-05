@@ -19,7 +19,6 @@ describe('Visiting Tests', () => {
     cy.get('[data-cy="submit"]').click()
     cy.location('pathname').should('include', '/dashboard')
   })
-
   // creating data to test Test list page
   it('Visiting Add Test Page', () => {
     cy.get('a').find('#tests').should('have.text', testsConstants.tests).click()
@@ -29,7 +28,6 @@ describe('Visiting Tests', () => {
       .click()
     cy.location('pathname').should('include', '/tests/add-test')
   })
-
   it('sort by name in ascending order ', () => {
     cy.get('a').find('#tests').should('have.text', testsConstants.tests).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
@@ -39,7 +37,7 @@ describe('Visiting Tests', () => {
         if (el === 'Name') {
           cy.get('.test-name-navigation', { timeout: 8000 }).then(
             ($elements) => {
-              var strings = [...$elements].map(($el) => $el.innerText)
+              let strings = [...$elements].map(($el) => $el.innerText)
               expect(strings).to.deep.equal(strings.sort())
             }
           )
@@ -56,7 +54,7 @@ describe('Visiting Tests', () => {
         if (el === 'Name') {
           cy.get('.test-name-navigation', { timeout: 8000 }).then(
             ($elements) => {
-              var strings = [...$elements].map(($el) => $el.innerText)
+              let strings = [...$elements].map(($el) => $el.innerText)
               expect(strings).to.deep.equal(strings.reverse())
             }
           )
@@ -79,7 +77,7 @@ describe('Visiting Tests', () => {
         if (el === 'Created Date') {
           cy.get('.test-name-navigation', { timeout: 8000 }).then(
             ($elements) => {
-              var strings = [...$elements].map(($el) => $el.innerText)
+              let strings = [...$elements].map(($el) => $el.innerText)
               expect(strings).to.deep.equal(strings.sort())
             }
           )
@@ -103,14 +101,13 @@ describe('Visiting Tests', () => {
         if (el === 'Created Date') {
           cy.get('.test-name-navigation', { timeout: 8000 }).then(
             ($elements) => {
-              var strings = [...$elements].map(($el) => $el.innerText)
+              let strings = [...$elements].map(($el) => $el.innerText)
               expect(strings).to.deep.equal(strings.reverse())
             }
           )
         }
       })
   })
-
   it('By Clicking test name it should navigate to test details page', () => {
     cy.get('a').find('#tests').should('have.text', testsConstants.tests).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
@@ -129,15 +126,13 @@ describe('Visiting Tests', () => {
       .location('pathname', { timeout: 60000 })
       .should('include', '/tests')
   })
-
-  var strings: any
   it('On click of count in sections, menu with all sections should open', () => {
     cy.get('a').find('#tests').should('have.text', testsConstants.tests).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('#chip-group-id', { timeout: 10000 }).then((el) => {
       cy.get('.chip-group').then(($elements) => {
-        strings = [...$elements].forEach(($el) => {
-          cy.log(strings)
+       let strings = [...$elements]
+       strings.forEach(($el) => {
           if ($el.innerText.includes('\n')) {
             cy.get('#section-count-button').click()
           }
@@ -145,7 +140,6 @@ describe('Visiting Tests', () => {
       })
     })
   })
-
   it('On click of delete, test should be deleted', () => {
     cy.get('a').find('#tests').should('have.text', testsConstants.tests).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')

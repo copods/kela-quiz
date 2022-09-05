@@ -14,6 +14,7 @@ export default function Toggle({
         tabIndex={0}
         role={commonConstants.checkOrder}
         onChange={onToggleChange}
+        title={commonConstants.checkOrder}
         className={`${
           toggle
             ? 'border-blue-900 bg-blue-900'

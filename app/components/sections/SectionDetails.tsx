@@ -11,7 +11,6 @@ const SectionDetails = () => {
   const [currentAccordian, setCurrentAccordian] = useState(-1)
   const [searchText, setSearchText] = useState('')
   const navigate = useNavigate()
-
   return (
     <div className="flex h-full w-full flex-col gap-6 overflow-auto break-all rounded-lg border border-gray-200 bg-white px-9 py-6">
       <div className="flex">
@@ -52,9 +51,7 @@ const SectionDetails = () => {
           aria-label={addQuestion.addQuestion}
         />
       </div>
-
       {/* QUESTION LIST  */}
-
       {sectionDetails.sectionDetails?.questions
         .filter((question: Question) => {
           return question.question
@@ -72,7 +69,6 @@ const SectionDetails = () => {
             />
           )
         })}
-
       {sectionDetails.sectionDetails?.questions.length === 0 && (
         <div className="flex justify-center p-7">
           {sectionsConstants.noQuestionAlert}

@@ -36,7 +36,6 @@ const SectionCard = ({
       setIsDelete(false)
     }
   }, [actionStatusData])
-
   // shift + alt + Tab combination key for get back focus to selected section card
   useEffect(() => {
     window.addEventListener('keydown', function (event) {
@@ -79,6 +78,7 @@ const SectionCard = ({
                     className='px-2 py-2 w-36'
                     alignment='justify-start'
                     onClick={() => setIsDelete(true)}
+                    title={commonConstants.delete}
                     buttonText={
                       <>
                         <Icon

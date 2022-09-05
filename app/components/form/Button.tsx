@@ -6,7 +6,6 @@ const Button = ({ buttonText, className, onClick, ...props }: ButtonProps) => {
       props.alignment ? props.alignment : 'justify-center'
     }`
   }
-
   const getButtonVarient = () => {
     switch (props.varient) {
       case 'primary-solid':
@@ -17,7 +16,7 @@ const Button = ({ buttonText, className, onClick, ...props }: ButtonProps) => {
       case 'primary-outlined':
         return `text-gray-primary  rounded-md border border-primary bg-white text-primary hover:bg-gray-100 transition ease-in-out delay-75 ${
           props.isDisabled &&
-          'disabled:border-primaryOutlinedDisabled text-primaryOutlinedDisabled'
+          'disabled:border-primaryDisabled text-primaryDisabled'
         }`
 
       case 'secondary-solid':
@@ -26,10 +25,12 @@ const Button = ({ buttonText, className, onClick, ...props }: ButtonProps) => {
         }`
     }
   }
-
   return (
     <button
-      className={`${getCommonClasses()} ${getButtonVarient()} ${className}`}
+      className= {
+      `${getCommonClasses()} ${getButtonVarient()} ${className}`      
+      }
+      title={props?.title}
       data-cy={props?.datacy}
       tabIndex={props?.tabIndex}
       disabled={props?.isDisabled}

@@ -46,7 +46,6 @@ export default function OptionForQuestion({
   setCheckOrder: (e: boolean) => void
 }) {
   const toastId = 'doNotDeleteLastOptions'
-
   const addOptionArea = () => {
     if (
       getQuestionType(selectedTypeOfQuestion) ===
@@ -61,8 +60,6 @@ export default function OptionForQuestion({
       setTextCorrectAnswer([...textCorrectAnswer, { id: cuid(), answer: '' }])
     }
   }
-
-  
   const deleteOption = (index: number, id?: string) => {
     if (
       getQuestionType(selectedTypeOfQuestion) ===
@@ -96,7 +93,6 @@ export default function OptionForQuestion({
       }
     }
   }
-
   const updateOption = (opt: string, id: string) => {
     const optionIndex = options.findIndex((o) => o.id === id)
     if (opt === '<p><br></p>') {
@@ -105,7 +101,6 @@ export default function OptionForQuestion({
       options[optionIndex].option = opt
     }
   }
-
   const checkBoxToggle = (index: number) => {
     setOptions(
       (e: Array<{ option: string; isCorrect: boolean; id: string }>) => {
@@ -114,17 +109,15 @@ export default function OptionForQuestion({
       }
     )
   }
-
   const updateTextAnswer = (textAns: string, index: number) => {
     setTextCorrectAnswer((e: textAnswerType[]) => {
       e[index].answer = textAns
       return [...e]
     })
   }
-
   return (
     <div className="flex flex-1 flex-col gap-6">
-      <div className="mb-2 flex h-11 flex-row items-end justify-between">
+      <div className="flex h-11 flex-row items-end justify-between p-1">
         {getQuestionType(selectedTypeOfQuestion) ===
           QuestionTypes.multipleChoice ||
         getQuestionType(selectedTypeOfQuestion) ===
@@ -143,25 +136,23 @@ export default function OptionForQuestion({
               <Toggle toggle={checkOrder} onToggleChange={setCheckOrder} />
           </div>
         )}
-
         <Button 
           tabIndex={0}
           id='add-option'
           className='h-9 px-5' 
           varient='primary-solid' 
           onClick={addOptionArea} 
+          title={addQuestion.addOptions}
           buttonText={`+ ${addQuestion.addOptions}`} />
       </div>
-
-      <div className="flex h-full flex-1 flex-col gap-5 overflow-auto px-1">
-
+      <div className="flex h-full flex-1 flex-col gap-5 overflow-auto p-1">
         {(getQuestionType(selectedTypeOfQuestion) ===
           QuestionTypes.multipleChoice ||
           getQuestionType(selectedTypeOfQuestion) ===
             QuestionTypes.singleChoice) &&
           options.map((option, index) => {
             return (
-              <div className="flex items-center gap-2.5 px-1" key={option.id}>
+              <div className="flex items-center gap-2.5 p-1" key={option.id}>
                 {getQuestionType(selectedTypeOfQuestion) ===
                 QuestionTypes.multipleChoice ? (
                   <input
@@ -223,7 +214,6 @@ export default function OptionForQuestion({
               </div>
             )
           })}
-
         {getQuestionType(selectedTypeOfQuestion) === QuestionTypes.text &&
           textCorrectAnswer.map(
             (option: { id: string; answer: string }, index: number) => {

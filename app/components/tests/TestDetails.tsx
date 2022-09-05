@@ -5,7 +5,6 @@ import { routes } from '~/constants/route.constants'
 import TestPreview from './CreateTestPreview'
 const TestDetails = () => {
   const { testPreview } = useLoaderData()
-
   return (
     <div id="test-details" className="h-full">
       <header className="mb-8">
@@ -31,7 +30,7 @@ const TestDetails = () => {
           </div>
         </div>
       </header>
-      <div className="max-h-83 overflow-scroll rounded-md shadow-table">
+      <div className="max-h-83 overflow-scroll rounded-md shadow-base">
         <TestPreview
           name={testPreview.name}
           description={testPreview.description}

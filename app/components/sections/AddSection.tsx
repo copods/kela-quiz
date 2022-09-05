@@ -36,7 +36,6 @@ const AddSection = ({
         >
           <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
         </Transition.Child>
-
         <div className="fixed inset-0 z-10 overflow-y-auto">
           <Form
             method="post"
@@ -76,6 +75,7 @@ const AddSection = ({
                     name="name"
                     className="h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
                     placeholder="Enter Section Name"
+                    maxLength={52}
                   />
                 </div>
                 <div className="pb-6">
@@ -88,7 +88,6 @@ const AddSection = ({
                     placeholder="Enter Section Description"
                   />
                 </div>
-
                 <div className="flex justify-end gap-2">
                     <Button 
                       tabIndex={0}
@@ -96,6 +95,7 @@ const AddSection = ({
                       className='h-9 px-4'
                       onClick={() => setOpen(false)}
                       varient="primary-outlined"
+                      title={commonConstants.cancel}
                       buttonText={commonConstants.cancel} />
                     <Button 
                       tabIndex={0}
@@ -108,7 +108,8 @@ const AddSection = ({
                       isDisabled={transition.state === 'submitting' || showErrorMessage}
                       varient="primary-solid"
                       datacy="submit"
-                      buttonText={transition.state === 'submitting' ? 'Adding...' : 'Add'} />
+                      title={transition.state === 'submitting' ? commonConstants.adding : commonConstants.add }
+                      buttonText={transition.state === 'submitting' ? commonConstants.adding : commonConstants.add } />
                 </div>
               </Dialog.Panel>
             </Transition.Child>

@@ -1,9 +1,9 @@
 /// <reference types="Cypress"/>
-
 import {
+  addQuestion,
   commonConstants,
-  cypress,
   members,
+  cypress,
   routeFiles,
   testsConstants,
 } from '~/constants/common.constants'
@@ -37,6 +37,7 @@ describe('smoke tests', () => {
     cy.findByRole('button').click()
     cy.get('#email-error').should('have.text', 'Email is invalid')
   })
+
   it('Invalid Password Error Message', () => {
     cy.visit('/sign-in')
     cy.get('#email').clear().type('careers@copods.co')
@@ -46,7 +47,6 @@ describe('smoke tests', () => {
   })
 
   // creating test data
-
   it('Adding a first section', () => {
     cy.visit('/sign-in')
     cy.get('input[name="email"]')
@@ -71,6 +71,7 @@ describe('smoke tests', () => {
         cy.get('[data-cy="submit"]').click()
       })
   })
+
   it('Adding a second section', () => {
     cy.visit('/sign-in')
     cy.get('input[name="email"]')
@@ -95,6 +96,7 @@ describe('smoke tests', () => {
         cy.get('[data-cy="submit"]').click()
       })
   })
+
   it('Adding a deleteSection ', () => {
     cy.visit('/sign-in')
     cy.get('input[name="email"]')
@@ -119,6 +121,7 @@ describe('smoke tests', () => {
         cy.get('[data-cy="submit"]').click()
       })
   })
+
   it('Add question to the first section', () => {
     cy.visit('/sign-in')
     cy.get('input[name="email"]')
@@ -144,7 +147,7 @@ describe('smoke tests', () => {
       })
     })
     cy.get('.sectionName').contains(section1).click()
-    cy.get('#add-question').should('have.text', cypress.addQuest).click()
+    cy.get('#add-question').should('have.text',`+ ${addQuestion.addQuestion}`).click()
     cy.location('pathname').should('include', '/add-question')
     cy.get('h1').should('be.visible')
     cy.get('#dropdown > button').click()
@@ -160,7 +163,6 @@ describe('smoke tests', () => {
         })
       })
     })
-
     cy.get('#question-editor #quill-editor').within(() => {
       cy.get('.ql-editor').type(cypress.useRef)
     })
@@ -169,6 +171,7 @@ describe('smoke tests', () => {
       .type(cypress.useRefAns)
     cy.get('#save-and-exit').click()
   })
+
   it('Add question to the second section', () => {
     cy.visit('/sign-in')
     cy.get('input[name="email"]')
@@ -194,7 +197,7 @@ describe('smoke tests', () => {
       })
     })
     cy.get('.sectionName').contains(section2).click()
-    cy.get('#add-question').should('have.text', cypress.addQuest).click()
+    cy.get('#add-question').should('have.text', `+ ${addQuestion.addQuestion}`).click()
     cy.location('pathname').should('include', '/add-question')
     cy.get('h1').should('be.visible')
     cy.get('#dropdown > button').click()
@@ -210,7 +213,6 @@ describe('smoke tests', () => {
         })
       })
     })
-
     cy.get('#question-editor #quill-editor').within(() => {
       cy.get('.ql-editor').type(cypress.useMemo)
     })
@@ -240,14 +242,12 @@ describe('smoke tests', () => {
       'include',
       '/tests/add-test'
     )
-
     cy.get('input[placeholder="Enter test name"]', { timeout: 6000 })
       .clear()
       .type(deleteTest1)
     cy.get('#quill-editor').within(() => {
       cy.get('.ql-editor').type(`Test Description`)
     })
-
     cy.get('button#next-button').should('have.text', cypress.next).click()
     cy.get('.stepsTab').each(($el) => {
       cy.wrap($el).within((el) => {
@@ -265,7 +265,6 @@ describe('smoke tests', () => {
       })
     })
     // user reached to step 2
-
     cy.get('div#section', { timeout: 60000 }).each((el) => {
       cy.wrap(el).within(() => {
         if (el.find('.count')[0].innerText != '0') {
@@ -304,9 +303,9 @@ describe('smoke tests', () => {
         }
       })
     })
-
     cy.get('button#submit-button').should('have.text', commonConstants.submit).click()
   })
+
   it('Verify if user able create the test 2', () => {
     cy.visit('/sign-in')
     cy.get('input[name="email"]')
@@ -327,14 +326,12 @@ describe('smoke tests', () => {
       'include',
       '/tests/add-test'
     )
-
     cy.get('input[placeholder="Enter test name"]', { timeout: 6000 })
       .clear()
       .type(test1)
     cy.get('#quill-editor').within(() => {
       cy.get('.ql-editor').type(`Test Description`)
     })
-
     cy.get('button#next-button').should('have.text', cypress.next).click()
     cy.get('.stepsTab').each(($el) => {
       cy.wrap($el).within((el) => {
@@ -352,7 +349,6 @@ describe('smoke tests', () => {
       })
     })
     // user reached to step 2
-
     cy.get('div#section', { timeout: 60000 }).each((el) => {
       cy.wrap(el).within(() => {
         if (el.find('.count')[0].innerText != '0') {
@@ -391,9 +387,9 @@ describe('smoke tests', () => {
         }
       })
     })
-
     cy.get('button#submit-button').should('have.text', commonConstants.submit).click()
   })
+
   it('Test for adding a new member', () => {
     cy.visit('/sign-in')
     cy.get('#email')

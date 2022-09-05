@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { useQuill } from 'react-quilljs'
 import BlotFormatter from 'quill-blot-formatter'
+import hljs from 'highlight.js'
 
 export default function QuillEditor({
   text,
@@ -15,6 +16,9 @@ export default function QuillEditor({
   quillPlaceholder: string
   id: string
 }) {
+  hljs.configure({
+    languages: ['javascript'],
+  })
   const theme = 'snow'
   const modules = fullAccess
     ? {
@@ -25,7 +29,7 @@ export default function QuillEditor({
           [{ header: [1, 2, 3, 4, 5, 6, false] }],
           ['link', 'image'],
           [{ color: [] }, { background: [] }],
-
+          ['code-block'],
           ['clean'],
         ],
         clipboard: {
@@ -34,14 +38,14 @@ export default function QuillEditor({
         blotFormatter: {},
       }
     : {
-        toolbar: [['bold', 'italic', 'underline'], ['image']],
+        toolbar: [['bold', 'italic', 'underline'], ['image'], ['code-block']],
         clipboard: {
           matchVisual: false,
         },
         blotFormatter: {},
       }
   const placeholder = `Write your ${quillPlaceholder} here....`
-  var formats = [
+  let formats = [
     'bold',
     'italic',
     'underline',
@@ -52,8 +56,8 @@ export default function QuillEditor({
     'align',
     'color',
     'background',
+    'code-block',
   ]
-
   const editorRef = useRef(null)
   const { quill, quillRef, Quill } = useQuill({
     theme,
@@ -61,17 +65,14 @@ export default function QuillEditor({
     formats,
     placeholder,
   })
-
   if (Quill && !quill) {
     Quill.register('modules/blotFormatter', BlotFormatter)
   }
-
   useEffect(() => {
     if (quill && text) {
       quill.clipboard.dangerouslyPasteHTML(text)
     }
   }, [quill])
-
   useEffect(() => {
     if (quill) {
       quill?.on('text-change', () => {
@@ -79,7 +80,6 @@ export default function QuillEditor({
       })
     }
   }, [quill, onTextChange])
-
   return (
     <div
       className="flex h-full w-full flex-col rounded-lg bg-white"
