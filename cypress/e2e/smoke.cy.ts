@@ -164,11 +164,11 @@ describe('smoke tests', () => {
     })
 
     cy.get('#question-editor #quill-editor').within(() => {
-      cy.get('.ql-editor').type(`What is your Test Question ?`)
+      cy.get('.ql-editor').type(cypress.useRef)
     })
     cy.get('input[placeholder="Write your option here"]')
       .clear()
-      .type('Option of question')
+      .type(cypress.useRefAns)
     cy.get('#save-and-exit').click()
   })
 
@@ -215,11 +215,11 @@ describe('smoke tests', () => {
     })
 
     cy.get('#question-editor #quill-editor').within(() => {
-      cy.get('.ql-editor').type(`What is your Test Question ?`)
+      cy.get('.ql-editor').type(cypress.useMemo)
     })
     cy.get('input[placeholder="Write your option here"]')
       .clear()
-      .type('Option of question')
+      .type(cypress.useMemoAns)
     cy.get('#save-and-exit').click()
   })
 

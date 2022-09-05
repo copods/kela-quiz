@@ -71,14 +71,16 @@ function Login({ actionData, redirectTo }: LoginProps) {
               Forget your password?
             </div>
           </div> */}
-          <div className="mt-6">
-            <input
+          <div className="mt-6 flex items-center justify-center">
+            <input type="hidden" name="redirectTo" value={redirectTo} />
+            <Button 
               tabIndex={0}
-              type="hidden"
-              name="redirectTo"
-              value={redirectTo}
+              buttonText={logIn.signIn}
+              type="submit"
+              varient='primary-solid'
+              className='w-full'
+              datacy="submit"
             />
-            <Button buttonText="Sign in" type="submit" />
           </div>
         </Form>
       </div>

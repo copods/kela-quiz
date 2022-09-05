@@ -2,11 +2,9 @@ import { Icon } from '@iconify/react'
 import Moment from 'moment'
 import { toast } from 'react-toastify'
 import type { TestSection } from '~/interface/Interface'
-import {
-  commonConstants,
-  selectSectionCard,
-  testsConstants,
-} from '~/constants/common.constants'
+import { commonConstants, testsConstants } from '~/constants/common.constants'
+import Button from '../form/Button'
+
 const SelectSectionCard = ({
   section,
   updateSection,
@@ -70,29 +68,19 @@ const SelectSectionCard = ({
           {section.name}
         </h3>
         {section.isSelected ? (
-          <button
+          <Button 
             tabIndex={0}
-            className="h-6 rounded bg-red-500 px-4 text-[9px] text-white"
-            onClick={() => {
-              updateThisSection('isSelected', '', false)
-            }}
-            title={commonConstants.removeButton}
-            aria-label={selectSectionCard.removeSection}
-          >
-            {commonConstants.removeButton}
-          </button>
+            className='px-4 h-7' 
+            varient='secondary-solid' 
+            onClick={() => updateThisSection('isSelected', '', false)} 
+            buttonText={commonConstants.removeButton} />
         ) : (
-          <button
+          <Button 
             tabIndex={0}
-            className="h-6 rounded bg-primary px-4 text-[9px] text-white"
-            onClick={() => {
-              updateThisSection('isSelected', '', true)
-            }}
-            title={commonConstants.addButton}
-            aria-label={selectSectionCard.selectSection}
-          >
-            {commonConstants.addButton}
-          </button>
+            className='h-7 px-4' 
+            onClick={() => updateThisSection('isSelected', '', true)} 
+            varient='primary-solid' 
+            buttonText={commonConstants.addButton} />
         )}
       </div>
       <div className="flex text-xs text-gray-400">

@@ -13,9 +13,18 @@ export interface InputFieldProps {
 }
 
 export interface ButtonProps {
-  type: 'submit' | 'reset' | 'button'
-  buttonText: string
-  handleClick?: React.MouseEventHandler<HTMLButtonElement>
+  name?: string
+  id?: string
+  className?: string
+  title?: string
+  value?: string | number
+  tabIndex?: number
+  datacy?: string
+  alignment?: string
+  type?: "button" | "submit" | "reset"
+  varient: 'primary-solid' | 'primary-outlined' | 'secondary-solid'
+  buttonText: string | JSX.Element
+  onClick?: React.MouseEventHandler<HTMLButtonElement>
   isDisabled?: boolean
 }
 
@@ -35,6 +44,7 @@ export interface CheckboxProps {
   handleChange: React.MouseEventHandler<HTMLInputElement>
   name?: string
   isChecked?: boolean
+  value?: string
 }
 
 export interface TestSection {
