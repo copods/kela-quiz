@@ -16,22 +16,22 @@ export const commonConstants = {
   sortAscending: 'Sort Ascending',
   sortDescending: 'Sort Descending',
   invalidLinkSVG: 'Invalid Link SVG',
-  useSetting:"Use setting",
-  settings:'Settings',
-  groupByCandidate:'Group By Candidate',
-  results:'Results',
-  goToDashboard:'Go to Dashboard',
-  checkOrder:'Check Order',
-  complete:'Complete',
-  pending:'Pending',
-  createTest:'Creating Test',
-  submit:'Submit',
-  adding:"Adding...",
-  add:'Add',
-  cancelAddTest:'Cancel Add Test',
-  previousTab:'Previous Tab',
-  nextTab:'Next Tab',
-  logo:"logo",
+  useSetting: 'Use setting',
+  settings: 'Settings',
+  groupByCandidate: 'Group By Candidate',
+  results: 'Results',
+  goToDashboard: 'Go to Dashboard',
+  checkOrder: 'Check Order',
+  complete: 'Complete',
+  pending: 'Pending',
+  createTest: 'Creating Test',
+  submit: 'Submit',
+  adding: 'Adding...',
+  add: 'Add',
+  cancelAddTest: 'Cancel Add Test',
+  previousTab: 'Previous Tab',
+  nextTab: 'Next Tab',
+  logo: 'logo',
 }
 export const sideNav = {
   sideNavHeading: 'Quiz',
@@ -61,7 +61,7 @@ export const testTableItem = {
   menu: 'Menu',
 }
 export const logo = {
-  kQuizLogo: 'K-Quiz Logo'
+  kQuizLogo: 'K-Quiz Logo',
 }
 export const selectSectionCard = {
   removeSection: 'Remove Section',
@@ -72,13 +72,13 @@ export const deletePopUp = {
 }
 export const logIn = {
   signInMessage: 'Sign in to your account',
-  signIn: 'Sign In'
+  signIn: 'Sign In',
 }
 export const addQuestion = {
   createOptions: 'Create Options',
   checkOrder: 'Check Order',
   addOptions: 'Add Options',
-  addQuestion: 'Add Question'
+  addQuestion: 'Add Question',
 }
 export const sectionsConstants = {
   addSection: 'Add Section',
@@ -86,10 +86,11 @@ export const sectionsConstants = {
   addQuestion: 'Add Question',
   noQuestionAlert: 'No questions found. Add your first question',
   noRecordFound: 'No Record Found',
-  sort:'Sort',
-  dropdown:'Select',
-  expand:'Expand',
-  search:'Search Question'
+  sort: 'Sort',
+  dropdown: 'Select',
+  expand: 'Expand',
+  search: 'Search Question',
+  titleNotValid: 'Duplicate Tiltle',
 }
 export const testsConstants = {
   addTestbutton: 'Add Test',
@@ -151,9 +152,9 @@ export const resultConstants = {
   inactive: 'Inactive',
   active: 'Active',
   startedAt: 'Started At',
-  correct: "Correct",
-  skipped: "Skipped",
-  total: "Total"
+  correct: 'Correct',
+  skipped: 'Skipped',
+  total: 'Total',
 }
 export enum QuestionStatus {
   notViewed = 'NOT_VIEWED',
@@ -168,7 +169,7 @@ export const candidateExamConstants = {
   assessmentDetails: 'Assessment Details',
   assessmentTests: 'Assessment Tests',
   assessmentEnd: 'Assessment Ended',
-  endAssesment: "End Assesment SVG",
+  endAssesment: 'End Assesment SVG',
   wrongLink: 'Wrong Link',
   minutes: 'Mins',
   description: 'Description',
@@ -218,11 +219,12 @@ export const cypress = {
   name: 'Name',
   description: 'Description',
   totalTime: 'Total Time',
-  borderExist:'border-l-8',
-  useRef:'What is useRef() ?',
-  useRefAns:'It allows you to persist values between renders.',
-  useMemo:'What is useMemo() ?',
-  useMemoAns:'The useMemo Hook can be used to keep expensive, resource intensive functions from needlessly running.',
+  borderExist: 'border-l-8',
+  useRef: 'What is useRef() ?',
+  useRefAns: 'It allows you to persist values between renders.',
+  useMemo: 'What is useMemo() ?',
+  useMemoAns:
+    'The useMemo Hook can be used to keep expensive, resource intensive functions from needlessly running.',
 }
 export enum sortByOrder {
   ascending = 'asc',
@@ -230,10 +232,8 @@ export enum sortByOrder {
   name = 'name',
   descending = 'dsc',
 }
-export const toastConstants ={
-  addTest:'Enter Name to add test',
-  enterDescription:'Enter description to add test',
-  addSection:'Add sections to add test',
+export const toastConstants = {
+  addTest: 'Enter Name to add test',
+  enterDescription: 'Enter description to add test',
+  addSection: 'Add sections to add test',
 }
-
-
