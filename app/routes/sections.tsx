@@ -253,6 +253,7 @@ export default function SectionPage() {
             className="h-9 px-5"
             varient="primary-solid"
             onClick={() => setShowAddSectionModal(!showAddSectionModal)}
+            title={sectionsConstants.addSection}
             buttonText={`+ ${sectionsConstants.addSection}`}
           />
         </header>

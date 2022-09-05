@@ -75,6 +75,7 @@ function CandidateRegister() {
           </div>
           <div className="mt-6">
             <Button
+              title={commonConstants.continue}
               buttonText={commonConstants.continue}
               type="submit"
               className="w-full"

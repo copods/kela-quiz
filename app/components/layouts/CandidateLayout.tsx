@@ -49,6 +49,7 @@ export default function CandidateLayout({
               )}
               <form className="flex gap-5" method="post">
                 <Button
+                  title={candidateExamConstants.endTest}
                   buttonText={candidateExamConstants.endTest}
                   varient="primary-outlined"
                   name="endExam"
@@ -57,6 +58,7 @@ export default function CandidateLayout({
                   className="px-5"
                 />
                 <Button
+                  title={candidateExamConstants.nextSection}
                   buttonText={candidateExamConstants.nextSection}
                   name="nextSection"
                   value={section?.order}

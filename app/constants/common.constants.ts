@@ -32,6 +32,9 @@ export const commonConstants = {
   previousTab: 'Previous Tab',
   nextTab: 'Next Tab',
   logo: 'logo',
+  saveAndExit: 'Save & Exit',
+  saveAndAddMore: 'Save & Add More',
+  logout: 'Logout',
 }
 export const sideNav = {
   sideNavHeading: 'Quiz',
@@ -83,7 +86,6 @@ export const addQuestion = {
 export const sectionsConstants = {
   addSection: 'Add Section',
   totalQuestions: 'Total Questions:',
-  addQuestion: 'Add Question',
   noQuestionAlert: 'No questions found. Add your first question',
   noRecordFound: 'No Record Found',
   sort: 'Sort',
@@ -204,7 +206,6 @@ export const cypress = {
   preview: 'Preview',
   next: 'Next',
   remove: 'Remove',
-  addQuest: '+ Add Question',
   back: 'Back',
   nameIsReq: 'Name is required',
   descIsReq: 'Description is required',
@@ -214,8 +215,7 @@ export const cypress = {
   saveAndAddMore: 'Save & Add More',
   enterAllOptions: 'Enter all the Options',
   groupByTest: 'Results',
-  addMember: '+ Add Member',
-  cancel: 'Cancel',
+  addMember: 'Add Member',
   name: 'Name',
   description: 'Description',
   totalTime: 'Total Time',

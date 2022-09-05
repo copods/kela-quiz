@@ -78,6 +78,7 @@ const SectionCard = ({
                     className='px-2 py-2 w-36'
                     alignment='justify-start'
                     onClick={() => setIsDelete(true)}
+                    title={commonConstants.delete}
                     buttonText={
                       <>
                         <Icon
