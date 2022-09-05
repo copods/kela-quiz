@@ -12,7 +12,7 @@ const ExamAttendedCandidatesComponent = () => {
   const testData = attendedCandidateForTest?.candidateTest
   return (
     <div className="pb-4">
-      <div className="col-span-full rounded-lg border border-solid border-gray-200 bg-tableHeader shadow-table">
+      <div className="bg-tableHeader col-span-full rounded-lg border border-solid border-gray-200 shadow-base">
         <div className="col-span-full grid grid-cols-10 gap-3 py-4 px-12">
           <span className="col-span-1 text-sm font-semibold text-gray-500">
             {resultConstants.srNo}
@@ -23,7 +23,7 @@ const ExamAttendedCandidatesComponent = () => {
           <span className="col-span-2 text-sm font-semibold text-gray-500">
             {resultConstants.invitedBy}
           </span>
-          <span className="col-span-2 text-sm font-semibold text-gray-500">
+          <span className="col-span-4 text-sm font-semibold text-gray-500">
             {resultConstants.startedAt}
           </span>
         </div>

@@ -37,7 +37,7 @@ const TestListMenuItem = ({
               <Menu.Item>
                 {({ active }) => (
                   <button
-                  tabIndex={0}
+                    tabIndex={0}
                     name="deleteTest"
                     className={`${
                       active ? 'bg-primary text-white' : 'text-gray-900'
@@ -48,9 +48,7 @@ const TestListMenuItem = ({
                   >
                     <Icon
                       icon={menuListIcon}
-                      className={`${
-                        !active && 'text-deleteColor'
-                      } mr-2 h-5 w-5`}
+                      className={`${!active && 'text-red-500'} mr-2 h-5 w-5`}
                       aria-hidden="true"
                     />
                     {menuListText}

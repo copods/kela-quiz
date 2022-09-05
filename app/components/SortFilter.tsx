@@ -1,6 +1,9 @@
 import { Icon } from '@iconify/react'
 import DropdownField from './form/Dropdown'
-import { commonConstants, componentGlobalConstants} from '~/constants/common.constants'
+import {
+  commonConstants,
+  componentGlobalConstants,
+} from '~/constants/common.constants'
 import { sortByOrder } from '~/interface/Interface'
 
 const SortFilter = ({
@@ -41,7 +44,8 @@ const SortFilter = ({
             id="descend"
             icon="ph:sort-descending-bold"
             onKeyUp={(e) => {
-              if (e.key === 'Enter') onSortDirectionChange(sortByOrder.ascending)
+              if (e.key === 'Enter')
+                onSortDirectionChange(sortByOrder.ascending)
             }}
             onClick={() => onSortDirectionChange(sortByOrder.ascending)}
             className="cursor-pointer text-2xl"
@@ -57,7 +61,7 @@ const SortFilter = ({
         />
       </div>
       <span
-        className="flex items-center pl-4 text-sm text-totalCount"
+        className="flex items-center pl-4 text-sm text-gray-600"
         id="total-items-value"
       >
         <span>
