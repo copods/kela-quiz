@@ -8,7 +8,9 @@ import type { CandidateTest, Test } from '~/interface/Interface'
 import { sortByOrder } from '~/interface/Interface'
 
 const GroupByTests = () => {
-  const [sortDirection, onSortDirectionChange] = useState(sortByOrder.ascending as string)
+  const [sortDirection, onSortDirectionChange] = useState(
+    sortByOrder.ascending as string
+  )
   const [sortBy, onSortChange] = useState('name')
   const filterByType = [
     {
@@ -46,9 +48,10 @@ const GroupByTests = () => {
             showSelected={false}
           />
         </div>
-        <div className="rounded-lg bg-[#F9FAFB] shadow-table">
-          <div className="col-span-full grid grid-cols-10 rounded-lg border-[1px] border-solid border-borderColor bg-white">
-            <div className="col-span-full grid grid-cols-10 gap-3 bg-tableHeader py-4 px-12">
+
+        <div className="rounded-lg shadow-base">
+          <div className="col-span-full grid grid-cols-10 rounded-lg border border-solid border-gray-200 bg-white">
+            <div className="col-span-full grid grid-cols-10 gap-3 bg-gray-100 py-4 px-12">
               <span className="col-span-1 text-sm font-semibold text-gray-500">
                 {resultConstants.srNo}
               </span>
