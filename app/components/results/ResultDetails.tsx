@@ -85,6 +85,7 @@ const ResultDetailsComponent = () => {
         varient='primary-solid'
         className='px-6'
         onClick={updateCandidateStatusToDB}
+        title={commonConstants.submit}
         buttonText={commonConstants.submit}
         />
       </div>

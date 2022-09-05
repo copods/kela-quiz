@@ -39,6 +39,7 @@ const SectionDetails = () => {
       <Button 
       className='px-11'
       onClick={startSection}
+      title={candidateExamConstants.startSection}
       buttonText={candidateExamConstants.startSection}
       varient='primary-solid'
       />
