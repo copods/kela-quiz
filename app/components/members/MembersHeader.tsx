@@ -27,7 +27,8 @@ export default function MembersHeader({
             className='h-9 px-4'
             onClick={() => setOpen(!open)}
             varient='primary-solid'
-            buttonText={`+ ${members.addMember}`} />
+            title={members.addMember}
+            buttonText={members.addMember}/>
         </div>
       </div>
       <AddMemberModal roles={membersData.roles} open={open} setOpen={setOpen} />

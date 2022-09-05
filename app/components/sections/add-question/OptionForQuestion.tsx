@@ -142,6 +142,7 @@ export default function OptionForQuestion({
           className='h-9 px-5' 
           varient='primary-solid' 
           onClick={addOptionArea} 
+          title={addQuestion.addOptions}
           buttonText={`+ ${addQuestion.addOptions}`} />
       </div>
       <div className="flex h-full flex-1 flex-col gap-5 overflow-auto p-1">

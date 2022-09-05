@@ -73,6 +73,7 @@ const CandidateInstruction = () => {
             <Button 
             className='h-12 w-52 mt-8'
             varient='primary-solid'
+            title={candidateExamConstants.beginAssesment}
             buttonText={candidateExamConstants.beginAssesment}
             onClick={startTestForCandidate}
             />
