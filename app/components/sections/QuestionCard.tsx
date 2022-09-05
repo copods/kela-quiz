@@ -19,8 +19,8 @@ const QuestionCard = ({
     <div
       key={question.id}
       className="flex flex-col rounded-lg border border-gray-300 bg-gray-50 px-6 py-7 cursor-pointer"
+      title={sectionsConstants.expand}
       tabIndex={0}
-      title={sectionsConstants?.expand}
       aria-label={sectionsConstants?.expand}
       role={sectionsConstants?.expand}
       onKeyUp={(e) => {

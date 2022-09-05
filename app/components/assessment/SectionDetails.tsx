@@ -16,7 +16,6 @@ const SectionDetails = () => {
       { method: 'post' }
     )
   }
-
   return (
     <div className="flex flex-col gap-8">
       <div className="flex flex-col gap-4">
@@ -37,7 +36,6 @@ const SectionDetails = () => {
           </div>
         </div>
       </div>
-
       <Button 
       className='px-11'
       onClick={startSection}

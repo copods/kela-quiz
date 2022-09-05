@@ -26,7 +26,6 @@ function DropdownField({
       }
     }
   }
-
   return (
     <Listbox value={value} onChange={setValue}>
       {({ open }) => (
@@ -43,7 +42,6 @@ function DropdownField({
                 <Icon icon="ic:round-keyboard-arrow-down" />
               </span>
             </Listbox.Button>
-
             <Transition
               show={open}
               as={Fragment}
@@ -65,10 +63,7 @@ function DropdownField({
                   >
                     {({ selected, active }) => (
                       <>
-                        <div
-                          title={el[displayKey]}
-                          className="flex items-center"
-                        >
+                        <div className="flex items-center">
                           <span
                             className={classNames(
                               selected

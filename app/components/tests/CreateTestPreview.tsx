@@ -37,7 +37,6 @@ const TestPreview = ({
       })
     }
   }
-
   const getTotalTime = () => {
     let time = 0
 
@@ -47,7 +46,6 @@ const TestPreview = ({
     )
     return time
   }
-
   return (
     <div className="flex flex-1 flex-col gap-9 overflow-scroll rounded-lg bg-white p-6 shadow-table">
       <div className="flex flex-col gap-6">
@@ -129,7 +127,6 @@ const TestPreview = ({
                 </div>
                 {isPreviewEditable && (
                   <div className="flex gap-2">
-
                     <Icon
                       icon="fa:long-arrow-up"
                       className="cursor-pointer"
