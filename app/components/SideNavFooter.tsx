@@ -16,7 +16,6 @@ function Footer() {
               {user.lastName.slice(0, 1)}
             </span>
           </div>
-
           <div className="flex-col gap-2">
             <p className="w-32 truncate text-xs font-semibold leading-4 text-gray-900">
               {user.firstName} {user.lastName}
@@ -26,7 +25,6 @@ function Footer() {
             </p>
           </div>
         </div>
-
         <Form action="/logout" method="post">
             <Button 
               tabIndex={0}

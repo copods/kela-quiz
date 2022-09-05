@@ -9,7 +9,6 @@ const ResultTab = ({
   testId: string
 }) => {
   return (
-
     <div
       className="flex gap-8"
       id="test-candidate-list-tab"

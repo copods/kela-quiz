@@ -200,7 +200,6 @@ const AddQuestionInSection = () => {
         {sectionDetails?.name} - {addQuestion.addQuestion}
       </h1>
       </div>
-
       <div className="flex h-40 flex-1 flex-row gap-6">
         <QuestionEditor
           question={question}
@@ -209,7 +208,6 @@ const AddQuestionInSection = () => {
           selectedTypeOfQuestion={selectedTypeOfQuestion}
           onQuestionTypeChange={onQuestionTypeChange}
         />
-
         <OptionForQuestion
           textCorrectAnswer={textCorrectAnswer}
           setTextCorrectAnswer={setTextCorrectAnswer}
@@ -248,7 +246,6 @@ const AddQuestionInSection = () => {
               {transition.state === 'submitting' ? 'Saving...' : 'Save & Exit'}
               </>
             } />
-
           <Button 
             tabIndex={0}
             id='save-and-add-more'
