@@ -17,7 +17,6 @@ export default function QuillEditor({
   id: string
 }) {
   hljs.configure({
-    // optionally configure hljs
     languages: ['javascript'],
   })
   const theme = 'snow'
