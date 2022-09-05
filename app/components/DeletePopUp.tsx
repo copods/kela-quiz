@@ -80,6 +80,7 @@ export default function DeletePopUp({
                       type='button' 
                       name='delete' 
                       className='px-5'
+                      title={commonConstants.delete} 
                       buttonText={commonConstants.delete} 
                       onClick={handleDelete} />
                   </Form>
@@ -90,6 +91,7 @@ export default function DeletePopUp({
                     varient='primary-outlined'
                     className='px-5'
                     onClick={() => setOpen(false)}
+                    title={commonConstants.cancel}
                     buttonText={commonConstants.cancel} />
                 </div>
               </Dialog.Panel>

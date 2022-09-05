@@ -73,6 +73,7 @@ const SelectSectionCard = ({
             className='px-4 h-7' 
             varient='secondary-solid' 
             onClick={() => updateThisSection('isSelected', '', false)} 
+            title={commonConstants.removeButton}
             buttonText={commonConstants.removeButton} />
         ) : (
           <Button 
@@ -80,6 +81,7 @@ const SelectSectionCard = ({
             className='h-7 px-4' 
             onClick={() => updateThisSection('isSelected', '', true)} 
             varient='primary-solid' 
+            title={commonConstants.addButton}
             buttonText={commonConstants.addButton} />
         )}
       </div>

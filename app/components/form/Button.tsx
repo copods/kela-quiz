@@ -1,10 +1,11 @@
 import type { ButtonProps } from '~/interface/Interface'
 
-const Button = ({ buttonText, className, onClick, ...props }: ButtonProps) => {
+const Button = ({ buttonText , className, onClick, ...props }: ButtonProps) => {
 
   const getCommonClasses = () => {
     return `py-2.5 px-5 rounded-md items-center inline-flex shadow-sm text-xs font-medium ${props.alignment ? props.alignment : 'justify-center'}`
   }
+  
   const getButtonVarient = () => {
     switch(props.varient) {
       case 'primary-solid':
@@ -20,13 +21,14 @@ const Button = ({ buttonText, className, onClick, ...props }: ButtonProps) => {
       className= {
       `${getCommonClasses()} ${getButtonVarient()} ${className}`      
       }
+      title={props?.title}
       data-cy={props?.datacy}
       tabIndex={props?.tabIndex}
       disabled={props?.isDisabled}
       onClick={onClick}
       {...props}
     >
-      {buttonText}
+      { buttonText }
     </button>
   )
 }

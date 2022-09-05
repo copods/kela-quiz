@@ -111,6 +111,7 @@ const Question = () => {
           <Button 
           className='h-11 w-40'
           varient='primary-outlined'
+          title={commonConstants.prevoiusButton}
           buttonText={commonConstants.prevoiusButton}
           isDisabled={question.order === 1}
           type="submit"
@@ -121,6 +122,7 @@ const Question = () => {
             <Button 
             className='h-11 w-40'
             varient='primary-solid'
+            title={commonConstants.nextButton}
             buttonText={commonConstants.nextButton}
             isDisabled={question.order === section.totalQuestions}
             type="submit"
@@ -131,6 +133,7 @@ const Question = () => {
             <Button 
             className='h-11 w-40'
             varient='primary-solid'
+            title={candidateExamConstants.endTest}
             buttonText={candidateExamConstants.endTest}
             isDisabled={question.order !== section.totalQuestions}
             type="submit"
@@ -141,6 +144,7 @@ const Question = () => {
             <Button 
             className='h-11 w-40'
             varient='primary-solid'
+            title={candidateExamConstants.nextSection}
             buttonText={candidateExamConstants.nextSection}
             isDisabled={question.order !== section.totalQuestions}
             type="submit"

@@ -95,6 +95,7 @@ const AddSection = ({
                       className='h-9 px-4'
                       onClick={() => setOpen(false)}
                       varient="primary-outlined"
+                      title={commonConstants.cancel}
                       buttonText={commonConstants.cancel} />
                     <Button 
                       tabIndex={0}
@@ -107,7 +108,8 @@ const AddSection = ({
                       isDisabled={transition.state === 'submitting' || showErrorMessage}
                       varient="primary-solid"
                       datacy="submit"
-                      buttonText={transition.state === 'submitting' ? 'Adding...' : 'Add'} />
+                      title={transition.state === 'submitting' ? commonConstants.adding : commonConstants.add }
+                      buttonText={transition.state === 'submitting' ? commonConstants.adding : commonConstants.add } />
                 </div>
               </Dialog.Panel>
             </Transition.Child>
