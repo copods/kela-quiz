@@ -12,7 +12,7 @@ const EndAssessment = () => {
         </span>
       </div>
       <div className="mt-[-80px] flex h-full w-full flex-col items-center justify-center gap-4">
-        <img src={EndAssessmentIcon} alt="end assessment" />
+        <img src={EndAssessmentIcon} alt={candidateExamConstants.endAssesment} />
         <p className="text-5xl font-bold text-gray-900">
           {candidateExamConstants.assessmentEnd}
         </p>

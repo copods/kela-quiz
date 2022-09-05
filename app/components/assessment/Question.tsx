@@ -6,6 +6,8 @@ import {
   QuestionTypes,
   routeFiles,
 } from '~/constants/common.constants'
+import Button from '../form/Button'
+import Checkbox from '../form/CheckBox'
 
 const Question = () => {
   const { question, section, lastSection } = useLoaderData()
@@ -78,14 +80,7 @@ const Question = () => {
                         }}
                       />
                     ) : (
-                      <input
-                        type="checkbox"
-                        value={option.id}
-                        name="option"
-                        onChange={() => {
-                          onChangeHandle(option.id)
-                        }}
-                      />
+                      <Checkbox value={option.id} name="option" handleChange={() => onChangeHandle(option.id)} />
                     )}
                     <div className="w-full rounded-lg border border-gray-200 bg-white p-5">
                       <div
@@ -117,45 +112,45 @@ const Question = () => {
       </div>
       <div className="flex justify-end gap-6">
         <div className="flex gap-5">
-          <button
-            className="text-gray-primary h-11 w-40 rounded-md border border-primary bg-white text-base font-medium text-primary shadow-sm"
-            name="previous"
-            value="prev"
-            type="submit"
-            disabled={question.order === 1}
-          >
-            {commonConstants.prevoiusButton}
-          </button>
+          <Button 
+          className='h-11 w-40'
+          varient='primary-outlined'
+          buttonText={commonConstants.prevoiusButton}
+          isDisabled={question.order === 1}
+          type="submit"
+          value='prev'
+          name='previous'
+          />
           {question.order !== section.totalQuestions ? (
-            <button
-              className="h-11 w-40 rounded-md border border-primary bg-primary text-base font-medium text-gray-50 shadow-sm"
-              name="next"
-              value="next"
-              type="submit"
-              disabled={question.order === section.totalQuestions}
-            >
-              {commonConstants.nextButton}
-            </button>
+            <Button 
+            className='h-11 w-40'
+            varient='primary-solid'
+            buttonText={commonConstants.nextButton}
+            isDisabled={question.order === section.totalQuestions}
+            type="submit"
+            value='next'
+            name='next'
+            />
           ) : lastSection ? (
-            <button
-              className="h-11 w-40 rounded-md border border-primary bg-primary text-base font-medium text-gray-50 shadow-sm"
-              name="endExam"
-              value={section.order}
-              type="submit"
-              disabled={question.order !== section.totalQuestions}
-            >
-              {candidateExamConstants.endTest}
-            </button>
+            <Button 
+            className='h-11 w-40'
+            varient='primary-solid'
+            buttonText={candidateExamConstants.endTest}
+            isDisabled={question.order !== section.totalQuestions}
+            type="submit"
+            value={section.order}
+            name='endExam'
+            />
           ) : (
-            <button
-              className="h-11 w-40 rounded-md border border-primary bg-primary text-base font-medium text-gray-50 shadow-sm"
-              name="nextSection"
-              value={section.order}
-              type="submit"
-              disabled={question.order !== section.totalQuestions}
-            >
-              {candidateExamConstants.nextSection}
-            </button>
+            <Button 
+            className='h-11 w-40'
+            varient='primary-solid'
+            buttonText={candidateExamConstants.nextSection}
+            isDisabled={question.order !== section.totalQuestions}
+            type="submit"
+            value={section.order}
+            name='nextSection'
+            />
           )}
         </div>
       </div>

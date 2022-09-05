@@ -7,6 +7,7 @@ import type {
 } from '~/interface/Interface'
 import TimerComponent from '../assessment/Timer'
 import Divider from '../divider'
+import Button from '../form/Button'
 import CandidateSideNav from '../side-nav/CandidateSideNav'
 
 export default function CandidateLayout({
@@ -48,22 +49,22 @@ export default function CandidateLayout({
                 />
               )}
               <form className="flex gap-5" method="post">
-                <button
-                  className="h-11 w-40 rounded-md border border-primary bg-white text-base font-medium text-primary shadow-sm"
-                  name="endExam"
+                <Button 
+                  buttonText={candidateExamConstants.endTest} 
+                  varient="primary-outlined" 
+                  name='endExam'
                   value={section?.order}
                   type="submit"
-                >
-                  {candidateExamConstants.endTest}
-                </button>
-                <button
-                  className="h-11 w-40 rounded-md border border-primary bg-primary text-base font-medium text-gray-50 shadow-sm"
-                  name="nextSection"
-                  value={section?.order}
-                  type="submit"
-                >
-                  {candidateExamConstants.nextSection}
-                </button>
+                  className='px-5'
+                />
+                <Button 
+                buttonText={candidateExamConstants.nextSection}
+                name="nextSection"
+                value={section?.order}
+                varient="primary-outlined"
+                type='submit'
+                className='px-5'
+                />
               </form>
             </>
           ) : (

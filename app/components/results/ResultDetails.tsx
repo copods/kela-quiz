@@ -7,11 +7,11 @@ import DropdownField from '../form/Dropdown'
 import SectionCardForResultDetail from './SectionCardForResultDetail'
 import Divider from '../divider'
 import BarGraph from '../barGraph/barGraph'
+import { commonConstants } from '~/constants/common.constants'
+import Button from '../form/Button'
 
 const ResultDetailsComponent = () => {
   const { candidateResult, params, sectionWiseResult } = useLoaderData()
-  console.log('candidateResult', candidateResult)
-  console.log('sec', sectionWiseResult)
 
   const dropdownData = [
     {
@@ -86,12 +86,12 @@ const ResultDetailsComponent = () => {
           value={candidateStatus}
           setValue={updateCandidateStatus}
         />
-        <button
-          className="rounded-md bg-primary py-2 px-8 text-sm text-white"
-          onClick={updateCandidateStatusToDB}
-        >
-          Submit
-        </button>
+        <Button
+        varient='primary-solid'
+        className='px-6'
+        onClick={updateCandidateStatusToDB}
+        buttonText={commonConstants.submit}
+        />
       </div>
     </div>
   )

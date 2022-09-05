@@ -18,7 +18,7 @@ const TestDetails = () => {
             >
               <Icon
                 className="text-3xl font-semibold leading-9 text-gray-900"
-                id="backButton"
+                id="back-button"
                 icon="mdi:arrow-left"
               />
             </Link>

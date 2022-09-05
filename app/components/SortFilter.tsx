@@ -3,7 +3,6 @@ import DropdownField from './form/Dropdown'
 import { commonConstants, componentGlobalConstants} from '~/constants/common.constants'
 import { sortByOrder } from '~/interface/Interface'
 
-
 const SortFilter = ({
   filterData,
   sortDirection,

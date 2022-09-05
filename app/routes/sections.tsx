@@ -26,6 +26,7 @@ import AdminLayout from '~/components/layouts/AdminLayout'
 import AddSection from '~/components/sections/AddSection'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import Button from '~/components/form/Button'
 import { Section, sortByOrder } from '~/interface/Interface'
 import { routes } from '~/constants/route.constants'
 
@@ -78,11 +79,10 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 export const action: ActionFunction = async ({ request }) => {
   const createdById = await requireUserId(request)
   const formData = await request.formData()
-  const action = JSON.parse(formData.get('add-section') as string)
-    ? JSON.parse(formData.get('add-section') as string)
-    : formData.get('deleteSection')
-
-  if (action.action === 'add') {
+  const action = formData.get('add-section') 
+  ? formData.get('add-section') 
+  : formData.get('deleteSection')
+  if (action === 'add') {
     const name = formData.get('name')
     const description = formData.get('description')
     if (typeof name !== 'string' || name.length === 0) {
@@ -245,15 +245,15 @@ export default function SectionPage() {
           aria-label={routeFiles.sections}>
             {routeFiles.sections}
           </h2>
-          <button
-            tabIndex={0}
-            className="h-9 rounded-lg bg-primary px-5 text-xs text-primary50"
-            id="add-section"
-            onClick={() => setShowAddSectionModal(!showAddSectionModal)}
-            title={sectionsConstants.addSection}
-          >
-            + {sectionsConstants.addSection}
-          </button>
+          <Button 
+            id='add-section' 
+            data-cy="submit"
+            className='px-5 h-9' 
+            varient='primary-solid'
+            onClick={() => setShowAddSectionModal(!showAddSectionModal)} 
+            buttonText={
+              `+ ${sectionsConstants.addSection}`
+            } />
         </header>
 
         <div

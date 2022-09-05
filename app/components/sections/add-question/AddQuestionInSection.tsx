@@ -4,10 +4,11 @@ import BreadCrumb from '../../BreadCrumb'
 import QuestionEditor from './QuestionEditor'
 import OptionForQuestion from './OptionForQuestion'
 import cuid from 'cuid'
-import { Link, useLoaderData, useSubmit, useTransition } from '@remix-run/react'
+import {useLoaderData, useNavigate, useSubmit, useTransition } from '@remix-run/react'
 import { toast } from 'react-toastify'
+import Button from '~/components/form/Button'
 import { routes } from '~/constants/route.constants'
-import { sortByOrder } from '~/interface/Interface'
+
 import {
   addQuestion,
   QuestionTypes,
@@ -53,6 +54,7 @@ const AddQuestionInSection = () => {
   ])
   const [checkOrder, setCheckOrder] = useState(false)
   const transition = useTransition()
+  const navigate = useNavigate()
 
   const breadCrumbArray = [
     {
@@ -223,51 +225,43 @@ const AddQuestionInSection = () => {
       </div>
       <div className="flex items-center justify-between">
         <div className="flex">
-          <Link 
-             to={`${routes.sections}/${sectionDetails?.id}`}
-             tabIndex={0}
-             id="cancel"
-             className={`flex h-9 items-center gap-1 rounded-lg bg-red-600 px-5 text-xs text-white ${
-               transition.state === 'submitting' && 'disabled:opacity-75'
-             }`}
-             title={sortByOrder.cancel}
-             aria-label={sortByOrder.cancel}
-          >
-              {transition.state === 'loading' ? sortByOrder.cancelling : sortByOrder.cancel}
-          </Link>
+          <Button 
+            tabIndex={0}
+            id='cancel'
+            onClick={() => navigate(`/sections/${sectionDetails?.id}`)}
+            isDisabled={transition.state === 'submitting'}
+            className='h-9 px-5'
+            buttonText={transition.state === 'submitting' ? 'Canceling...' : 'Cancel'}
+            varient='secondary-solid' />
         </div>
         <div className="flex gap-2">
-          <button
+          <Button 
             tabIndex={0}
             id="save-and-exit"
-            disabled={transition.state === 'submitting'}
-            className={`flex h-9 items-center gap-1 rounded-lg bg-primary px-5 text-xs text-white ${
-              transition.state === 'submitting' && 'disabled:opacity-75'
-            }`}
+            isDisabled={transition.state === 'submitting'}
+            className='h-9 px-5'
             onClick={() => saveQuestion(false)}
-            title={sortByOrder.saveAndExit}
-            aria-label={sortByOrder.saveAndExit}
-          >
-            <Icon icon="ic:round-save" className="mr-1" />
-            {transition.state === 'submitting' ? sortByOrder.saving : sortByOrder.saveAndExit}
-          </button>
+            varient='primary-solid'
+            buttonText={
+              <>
+              <Icon icon="ic:round-save" className="mr-1" />
+              {transition.state === 'submitting' ? 'Saving...' : 'Save & Exit'}
+              </>
+            } />
 
-          <button
+          <Button 
             tabIndex={0}
-            id="saveAndAddMore"
-            disabled={transition.state === 'submitting'}
-            className={`flex h-9 items-center gap-1 rounded-lg bg-primary px-5 text-xs text-white ${
-              transition.state === 'submitting' && 'disabled:opacity-75'
-            }`}
+            id='save-and-add-more'
+            isDisabled={transition.state === 'submitting'}
+            className='h-9 px-5'
             onClick={() => saveQuestion(true)}
-            title={sortByOrder.saveAndAddMore}
-            aria-label={sortByOrder.saveAndAddMore}
-          >
-            <Icon icon="ic:round-save" className="mr-1" />
-            {transition.state === 'submitting'
-              ? sortByOrder.saving
-              : sortByOrder.saveAndAddMore}
-          </button>
+            varient='primary-solid'
+            buttonText={
+              <>
+              <Icon icon="ic:round-save" className="mr-1" />
+              {transition.state === 'submitting' ? 'Saving...' : 'Save & Add More'}
+              </>
+            } />
         </div>
       </div>
     </div>
