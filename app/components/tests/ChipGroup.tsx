@@ -21,7 +21,7 @@ const ChipGroup = ({
             <Menu.Button>
               <div
                 aria-label={`+ ${sections.length - 1} Sections in Test`}
-                className="bg-bgcolor cursor-pointer rounded-52 px-1 py-1 text-xs"
+                className="cursor-pointer rounded-52 bg-blue-50 px-1 py-1 text-xs"
               >
                 + {sections.length - 1}
               </div>
@@ -38,7 +38,8 @@ const ChipGroup = ({
           >
             <Menu.Items
               id="menu-items"
-              className="sectionMenu absolute z-40 max-h-52 overflow-auto rounded-md bg-white py-4 px-4 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+              className="sectionMenu absolute z-40 max-h-52 overflow-auto rounded-md bg-white py-4 px-4 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+            >
               {sections.map((sect) => {
                 return (
                   <div
@@ -47,7 +48,7 @@ const ChipGroup = ({
                   >
                     <Menu.Item>
                       <span className="text-sm">
-                        <span className="bg-bgcolor truncate rounded-52 px-2 py-1">
+                        <span className="truncate rounded-52 bg-blue-50 px-2 py-1">
                           {sect?.section?.name}
                         </span>
                       </span>
