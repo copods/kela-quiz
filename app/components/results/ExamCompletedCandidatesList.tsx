@@ -13,7 +13,7 @@ const ExamCompletedCandidatesComponent = () => {
 
   return (
     <div className="bg-[#F9FAFB] pb-4">
-      <div className="bg-tableHeader shadow-table rounded-lg border border-solid border-gray-200">
+      <div className="bg-tableHeader rounded-lg border border-solid border-gray-200 shadow-base">
         <div className="grid grid-cols-12 gap-3 py-4 px-12">
           <span className="col-span-1 text-sm font-semibold text-gray-500">
             {resultConstants.srNo}
