@@ -1,7 +1,5 @@
-
-import { commonConstants } from "~/constants/common.constants"
+import { commonConstants } from '~/constants/common.constants'
 import { Link } from '@remix-run/react'
-
 
 const AttendedCandidateListItem = ({
   id,
@@ -36,17 +34,15 @@ const AttendedCandidateListItem = ({
         </Link>
         <div className="col-span-4 truncate">{email}</div>
         <div className="col-span-2 truncate">
-          <span className="text-base text-gray-700">
-            {invitedBy}
-          </span>
+          <span className="text-base text-gray-700">{invitedBy}</span>
         </div>
         <div className="col-span-1 truncate">
           <span className=" text-base text-gray-700">{result}%</span>
         </div>
-        <div className="col-span-1 truncate">
-          <span className={`rounded-full px-2 py-1 text-xs text-gray-900 ${
+        <div className="col-span-1">
+          <span
+            className={`rounded-full px-2 py-1 text-xs text-gray-900 ${
               review ? 'bg-green-200' : 'bg-yellow-200'
-
             }`}
           >
             {review ? commonConstants.complete : commonConstants.pending}
