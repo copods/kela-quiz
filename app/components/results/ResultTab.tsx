@@ -1,5 +1,5 @@
 import { NavLink } from '@remix-run/react'
-import { routes } from '~/constants/route.constants';
+import { routes } from '~/constants/route.constants'
 
 const ResultTab = ({
   tabs,
@@ -24,7 +24,7 @@ const ResultTab = ({
             className={({ isActive }) =>
               isActive
                 ? 'cursor-pointer border-b-4 border-primary pb-3 text-base font-semibold text-primary'
-                : 'cursor-pointer pb-3 text-base font-normal text-totalCount'
+                : 'cursor-pointer pb-3 text-base font-normal text-gray-600'
             }
           >
             {tab.title}
