@@ -57,15 +57,16 @@ const TestList = ({
         >
           {testsConstants.tests}
         </h2>
-        <Button 
-          className='px-5'
+        <Button
+          className="px-5"
           onClick={() => navigate('/tests/add-test')}
-          id='add-test' 
-          tabIndex={0} 
-          varient='primary-solid'
-          title={testsConstants.addTestbutton} 
-          aria-label={testsConstants.addTestbutton} 
-          buttonText={`+ ${testsConstants.addTestbutton}`}/>
+          id="add-test"
+          tabIndex={0}
+          varient="primary-solid"
+          title={testsConstants.addTestbutton}
+          aria-label={testsConstants.addTestbutton}
+          buttonText={`+ ${testsConstants.addTestbutton}`}
+        />
       </header>
       <div id="sort-filter-container">
         <SortFilter
@@ -79,7 +80,7 @@ const TestList = ({
         />
       </div>
       <div className="flex flex-1 flex-col rounded-lg pb-6 ">
-        <div className="rounded-b-0 flex items-center gap-3 rounded-t-md border border-b border-solid border-borderColor bg-tableHeader px-9 py-3 font-semibold shadow-table">
+        <div className="rounded-b-0 flex items-center gap-3 rounded-t-md border border-b border-solid border-gray-200 bg-tableHeader px-9 py-3 font-semibold shadow-base">
           {showCheckBox && (
             <div className="w-1/12">
               <input type="checkbox" />
@@ -106,7 +107,7 @@ const TestList = ({
         </div>
         <div
           id="test-list"
-          className="rounded-t-0 flex flex-col rounded-md border-t-0 border-solid border-borderColor shadow-table"
+          className="rounded-t-0 flex flex-col rounded-md border-t-0 border-solid border-gray-200 shadow-base"
         >
           {tests.map((test, i) => (
             <TestTableItem

@@ -31,7 +31,7 @@ const TestDetails = () => {
           </div>
         </div>
       </header>
-      <div className="max-h-83 overflow-scroll rounded-md shadow-table">
+      <div className="max-h-83 overflow-scroll rounded-md shadow-base">
         <TestPreview
           name={testPreview.name}
           description={testPreview.description}
