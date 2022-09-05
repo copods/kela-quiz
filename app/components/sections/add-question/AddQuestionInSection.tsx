@@ -165,7 +165,7 @@ const AddQuestionInSection = () => {
     ) {
       options.forEach(
         (option: { option: string; isCorrect: boolean; id: string }) => {
-          var optionForQuestion = {
+          let optionForQuestion = {
             id: option.id,
             option: option.option,
             isCorrect: singleChoiceAnswer === option.id ? true : false,
@@ -176,7 +176,7 @@ const AddQuestionInSection = () => {
     } else if (getQuestionType(selectedTypeOfQuestion) === QuestionTypes.text) {
       testQuestion.checkOrder = checkOrder
       textCorrectAnswer.forEach((correctAnswer, index) => {
-        var optionForQuestion = {
+        let optionForQuestion = {
           id: correctAnswer.id,
           answer: correctAnswer.answer,
           order: index,

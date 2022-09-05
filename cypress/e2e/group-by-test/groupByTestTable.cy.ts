@@ -57,7 +57,7 @@ describe('Test for GroupByTestTable, Result', () => {
               .children()
               .within((el) => {
                 cy.get('.candidate-name').then(($elements) => {
-                  var strings = [...$elements].map(($el) => $el.innerText)
+                  let strings = [...$elements].map(($el) => $el.innerText)
                   expect(strings).to.deep.equal(strings.sort())
                 })
               })
@@ -83,7 +83,7 @@ describe('Test for GroupByTestTable, Result', () => {
               .within((el) => {
                 cy.get('.candidate-name', { timeout: 60000 }).then(
                   ($elements) => {
-                    var strings = [...$elements].map(($el) => $el.innerText)
+                    let strings = [...$elements].map(($el) => $el.innerText)
                     expect(strings).to.deep.equal(strings.sort().reverse())
                   }
                 )
@@ -116,7 +116,7 @@ describe('Test for GroupByTestTable, Result', () => {
               .within((el) => {
                 cy.get('.candidate-name', { timeout: 10000 }).then(
                   ($elements) => {
-                    var strings = [...$elements].map(($el) => $el.innerText)
+                    let strings = [...$elements].map(($el) => $el.innerText)
                     expect(strings).to.deep.equal(strings.sort())
                   }
                 )
@@ -150,7 +150,7 @@ describe('Test for GroupByTestTable, Result', () => {
               .within((el) => {
                 cy.get('.candidate-name', { timeout: 10000 }).then(
                   ($elements) => {
-                    var strings = [...$elements].map(($el) => $el.innerText)
+                    let strings = [...$elements].map(($el) => $el.innerText)
                     expect(strings).to.deep.equal(strings.reverse())
                   }
                 )

@@ -136,12 +136,12 @@ describe('Test for Section', () => {
             .then((el) => {
               if (el === 'Name') {
                 cy.get('h2').then(($elements) => {
-                  var strings = [...$elements].map(($el) => $el.innerText)
+                  let strings = [...$elements].map(($el) => $el.innerText)
                   expect(strings).to.deep.equal([...strings].sort())
                 })
               } else if (el === 'Created Date') {
                 cy.get('.created-by-date').then(($elements) => {
-                  var strings = [...$elements].map(($el) => {
+                  let strings = [...$elements].map(($el) => {
                     return new Date($el.innerText).toLocaleDateString
                   })
                   expect(strings).to.deep.equal([...strings].sort())
