@@ -1,7 +1,7 @@
 import { useNavigate, useSubmit, useTransition } from '@remix-run/react'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
-import type { TestSection } from '~/interface/Interface'
+import { sortByOrder, TestSection } from '~/interface/Interface'
 import BreadCrumb from '../BreadCrumb'
 import SelectSections from './CreateSelectSections'
 import TestDetails from './CreateTestDetails'
@@ -188,7 +188,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
               id='submit-button'
               className='h-9 px-7' 
               varient='primary-solid'
-              buttonText={transition.state === 'submitting' ? 'Creating Test' : 'Submit'} 
+              buttonText={transition.state === 'submitting' ? sortByOrder.creatingTest : sortByOrder.submit} 
               isDisabled={currentTab != 2}
               onClick={() => submitAddTest()} />
           )}

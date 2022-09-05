@@ -260,7 +260,7 @@ const AddQuestionInSection = () => {
             buttonText={
               <>
               <Icon icon="ic:round-save" className="mr-1" />
-              {transition.state === 'submitting' ? 'Saving...' : sortByOrder.saveAndAddMore}
+              {transition.state === 'submitting' ? sortByOrder.saving : sortByOrder.saveAndAddMore}
               </>
             } />
         </div>
