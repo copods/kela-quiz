@@ -19,11 +19,9 @@ const CandidtateAttendedList = ({
         </div>
         <div className="col-span-3 truncate">{email}</div>
         <div className="col-span-2 truncate">
-          <span className=" text-base text-gray-700">
-            {invitedBy}
-          </span>
+          <span className=" text-base text-gray-700">{invitedBy}</span>
         </div>
-        <div className="col-span-2 truncate">
+        <div className="col-span-4 truncate">
           {moment(new Date(startedAt)).format('DD MMMM YY mm:ss a')}
         </div>
       </div>

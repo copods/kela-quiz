@@ -48,7 +48,8 @@ const TestTableItem = ({
     <>
       <div
         key={index}
-        className="test-table-list flex items-center border-b border-t border-gray-200 bg-white py-6 px-9">
+        className="test-table-list flex items-center gap-3 border-b border-t border-gray-200 bg-white py-6 px-9"
+      >
         {showCheckBox && (
           <div className="w-1/12 text-base font-normal text-gray-700">
             <input name="checkbox" tabIndex={0} type="checkbox" />

@@ -22,7 +22,7 @@ const ExamPendingComponent = () => {
               <span className="col-span-3 text-sm font-semibold text-gray-500">
                 {members.email}
               </span>
-              <span className="col-span-2 text-sm font-semibold text-gray-500">
+              <span className="col-span-6 text-sm font-semibold text-gray-500">
                 {resultConstants.invitedBy}
               </span>
             </div>
