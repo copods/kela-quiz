@@ -13,7 +13,9 @@ const SelectSections = ({
   setSections: (e: Array<TestSection>, i: number) => void
   updateSectionsList: (e: SetStateAction<Array<TestSection>>) => void
 }) => {
-  const [sortDirection, onSortDirectionChange] = useState(sortByOrder.ascending as string)
+  const [sortDirection, onSortDirectionChange] = useState(
+    sortByOrder.ascending as string
+  )
   const [sortBy, onSortChange] = useState('name')
   const [pseudoDivs, setPseudoDivs] = useState([1])
   const filterByType = [
@@ -43,11 +45,17 @@ const SelectSections = ({
   }, [sections.length])
   const sortData = () => {
     updateSectionsList((e: Array<TestSection>) => {
-      if (sortBy === sortByOrder.name && sortDirection === sortByOrder.ascending )
+      if (
+        sortBy === sortByOrder.name &&
+        sortDirection === sortByOrder.ascending
+      )
         e.sort((a, b) => (a.name > b.name ? 1 : b.name > a.name ? -1 : 0))
       if (sortBy === sortByOrder.name && sortDirection === sortByOrder.desc)
         e.sort((a, b) => (b.name > a.name ? 1 : a.name > b.name ? -1 : 0))
-      if (sortBy === sortByOrder.createdAt && sortDirection === sortByOrder.ascending)
+      if (
+        sortBy === sortByOrder.createdAt &&
+        sortDirection === sortByOrder.ascending
+      )
         e.sort((a, b) =>
           new Date(a.createdAt).getTime() > new Date(b.createdAt).getTime()
             ? 1
@@ -55,7 +63,10 @@ const SelectSections = ({
             ? -1
             : 0
         )
-      if (sortBy === sortByOrder.createdAt && sortDirection === sortByOrder.desc)
+      if (
+        sortBy === sortByOrder.createdAt &&
+        sortDirection === sortByOrder.desc
+      )
         e.sort((a, b) =>
           new Date(b.createdAt).getTime() > new Date(a.createdAt).getTime()
             ? 1
@@ -96,7 +107,7 @@ const SelectSections = ({
           return (
             <div
               key={temp}
-              className="h-1 w-sectionCard min-w-sectionCard flex-1 border border-transparent px-5 py-6"
+              className="h-1 min-w-sectionCard flex-1 border border-transparent px-5 py-6"
             ></div>
           )
         })}

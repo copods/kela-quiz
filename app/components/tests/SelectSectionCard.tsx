@@ -54,9 +54,9 @@ const SelectSectionCard = ({
   return (
     <div
       id="section"
-      className={`flex w-sectionCard min-w-sectionCard flex-1 flex-col gap-2 rounded-lg border ${
+      className={`flex min-w-sectionCard flex-1 flex-col gap-2 rounded-lg border ${
         section.isSelected
-          ? 'border-[3px] border-primary bg-white px-[18px] py-[22px]'
+          ? 'border-3 border-primary bg-white px-18 py-22'
           : 'border-gray-300 bg-gray-100 px-5 py-6'
       }`}
     >
@@ -68,7 +68,7 @@ const SelectSectionCard = ({
           {section.name}
         </h3>
         {section.isSelected ? (
-          <Button 
+          <Button
             tabIndex={0}
             className='px-4 h-7' 
             varient='secondary-solid' 
@@ -76,7 +76,7 @@ const SelectSectionCard = ({
             title={commonConstants.removeButton}
             buttonText={commonConstants.removeButton} />
         ) : (
-          <Button 
+          <Button
             tabIndex={0}
             className='h-7 px-4' 
             onClick={() => updateThisSection('isSelected', '', true)} 
