@@ -4,6 +4,7 @@ import type { Role } from '~/interface/Interface'
 import { Form, useTransition } from '@remix-run/react'
 import { Fragment } from 'react'
 import { commonConstants, members } from '~/constants/common.constants'
+import Button from '../form/Button'
 export default function AddMemberModal({
   roles,
   open,
@@ -32,7 +33,7 @@ export default function AddMemberModal({
 
           <div
             className="fixed inset-0 z-10 overflow-y-auto"
-            id="AddPopUpModel"
+            id="add-pop-up-model"
           >
             <Form
               method="post"
@@ -124,30 +125,24 @@ export default function AddMemberModal({
                     </div>
                   </div>
                   <div className="flex justify-end gap-2">
-                    <button
+                    <Button 
                       tabIndex={0}
-                      id="cancelAddButton"
-                      type="button"
-                      className="h-9 rounded-md px-4 text-sm text-gray-500"
+                      id='cancel-add-button'
+                      type='button'
+                      className='h-9 px-4'
                       onClick={() => setOpen(false)}
-                    >
-                      {commonConstants.cancel}
-                    </button>
-                    <button
+                      varient='primary-outlined'
+                      buttonText={commonConstants.cancel} />
+                    <Button  
                       tabIndex={0}
-                      id="addbutton"
-                      type="submit"
-                      name="addMember"
+                      id='add-button'
+                      type='submit'
+                      name='addMember'
                       value={JSON.stringify({ action: 'add' })}
-                      className={`h-9 rounded-md bg-primary px-4 text-sm text-[#F0FDF4]${
-                        transition.state === 'submitting'
-                          ? 'disabled:text-[#F0FDF4] disabled:opacity-75'
-                          : ''
-                      }`}
-                      disabled={transition.state === 'submitting'}
-                    >
-                      {transition.state === 'submitting' ? 'Adding...' : 'Add'}
-                    </button>
+                      className='h-9 px-4'
+                      isDisabled={transition.state === 'submitting'}
+                      buttonText={transition.state === 'submitting' ? 'Adding...' : 'Add'}
+                      varient='primary-solid' />
                   </div>
                 </Dialog.Panel>
               </Transition.Child>

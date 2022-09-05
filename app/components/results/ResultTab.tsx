@@ -1,4 +1,5 @@
 import { NavLink } from '@remix-run/react'
+import { routes } from '~/constants/route.constants';
 
 const ResultTab = ({
   tabs,
@@ -8,12 +9,17 @@ const ResultTab = ({
   testId: string
 }) => {
   return (
-    <div className="flex gap-8" id="Group_By_Tests-test-candidate-list-tab">
+
+    <div
+      className="flex gap-8"
+      id="test-candidate-list-tab"
+      data-cy="test-candidate-list-tab"
+    >
       {tabs.map((tab) => {
         return (
           <NavLink
             key={tab.id}
-            to={`/results/groupByTests/${testId}/${tab?.route}`}
+            to={`${routes.resultGroupTest}/${testId}/${tab?.route}`}
             id="tab-title"
             title={tab.title}
             className={({ isActive }) =>

@@ -1,6 +1,10 @@
 import { useLoaderData, useSubmit } from '@remix-run/react'
-import { candidateExam, routeFiles } from '~/constants/common.constants'
+import {
+  candidateExamConstants,
+  routeFiles,
+} from '~/constants/common.constants'
 import type { SectionInTest, TestSection } from '~/interface/Interface'
+import Button from '../form/Button'
 
 const CandidateInstruction = () => {
   const { firstSection, instructions } = useLoaderData()
@@ -25,7 +29,7 @@ const CandidateInstruction = () => {
     <div className="h-full flex-col overflow-y-auto">
       <div>
         <div
-          className="pb-9 text-base leading-6 text-gray-700"
+          className="pb-9 text-base text-gray-700"
           dangerouslySetInnerHTML={{
             __html: instructions?.test?.description,
           }}
@@ -48,10 +52,11 @@ const CandidateInstruction = () => {
                 </div>
                 <div className="flex gap-6 text-sm text-gray-700">
                   <span>
-                    {section.totalQuestions} {candidateExam.questions}
+                    {section.totalQuestions} {candidateExamConstants.questions}
                   </span>
                   <span>
-                    {section.timeInSeconds / 60} {candidateExam.minutes}
+                    {section.timeInSeconds / 60}{' '}
+                    {candidateExamConstants.minutes}
                   </span>
                 </div>
               </div>
@@ -61,19 +66,19 @@ const CandidateInstruction = () => {
         {/* Instruction */}
         <div className="flex flex-col gap-4">
           <h1 className="mt-8 text-2xl font-semibold leading-8 text-gray-800">
-            {candidateExam.instructions}
+            {candidateExamConstants.instructions}
           </h1>
           <ul className="list-disc">
             <li>You cannot traverse the sections.</li>
             <li>You can traverse the questions in particular section</li>
           </ul>
           <div className="flex">
-            <button
-              className="text-md mt-8 h-12 w-52 rounded-md bg-primary text-gray-50"
-              onClick={() => startTestForCandidate()}
-            >
-              {candidateExam.beginAssesment}
-            </button>
+            <Button 
+            className='h-12 w-52 mt-8'
+            varient='primary-solid'
+            buttonText={candidateExamConstants.beginAssesment}
+            onClick={startTestForCandidate}
+            />
           </div>
         </div>
       </div>

@@ -1,7 +1,11 @@
 import type { ActionFunction, LoaderFunction } from '@remix-run/server-runtime'
 import { redirect } from '@remix-run/server-runtime'
 import { json } from '@remix-run/node'
-import { routeFiles, sectionsConstants } from '~/constants/common.constants'
+import {
+  routeFiles,
+  sectionsConstants,
+  statusCheck,
+} from '~/constants/common.constants'
 import {
   Outlet,
   useActionData,
@@ -9,7 +13,11 @@ import {
   useLoaderData,
   useSubmit,
 } from '@remix-run/react'
-import { createSection, getAllSections } from '~/models/sections.server'
+import {
+  createSection,
+  deleteSectionById,
+  getAllSections,
+} from '~/models/sections.server'
 import { useState, useEffect } from 'react'
 import { Icon } from '@iconify/react'
 import { getUserId, requireUserId } from '~/session.server'
@@ -18,17 +26,23 @@ import AdminLayout from '~/components/layouts/AdminLayout'
 import AddSection from '~/components/sections/AddSection'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import type { Section } from '~/interface/Interface'
+import Button from '~/components/form/Button'
+import { Section, sortByOrder } from '~/interface/Interface'
+import { routes } from '~/constants/route.constants'
 
 export type ActionData = {
   errors?: {
     title?: string
     body?: string
-    status: number
+    status?: number
+    check?: Date
+    name?: string
+    description?: string
   }
   resp?: {
+    status?: string
+    check?: Date
     title?: string
-    status: number
     data?: Section
   }
 }
@@ -47,14 +61,14 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   var status: string = ''
   await getAllSections(obj)
     .then((res) => {
-      sections = res
+      sections = res as Section[]
       status = 'Success'
     })
     .catch((err) => {
       status = err
     })
   const userId = await getUserId(request)
-  if (!userId) return redirect('/sign-in')
+  if (!userId) return redirect(routes.signIn)
   const selectedSectionId = params.sectionId
     ? params.sectionId?.toString()
     : undefined
@@ -65,51 +79,79 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 export const action: ActionFunction = async ({ request }) => {
   const createdById = await requireUserId(request)
   const formData = await request.formData()
-  const name = formData.get('name')
-  const description = formData.get('description')
-
-  if (typeof name !== 'string' || name.length === 0) {
-    return json<ActionData>(
-      { errors: { title: 'Name is required', status: 400 } },
-      { status: 400 }
-    )
-  }
-  if (typeof description !== 'string' || description.length === 0) {
-    return json<ActionData>(
-      { errors: { title: 'Description is required', status: 400 } },
-      { status: 400 }
-    )
-  }
-  const section = await createSection({ name, description, createdById })
-    .then((res) => {
+  const action = formData.get('add-section') 
+  ? formData.get('add-section') 
+  : formData.get('deleteSection')
+  if (action === 'add') {
+    const name = formData.get('name')
+    const description = formData.get('description')
+    if (typeof name !== 'string' || name.length === 0) {
       return json<ActionData>(
-        {
-          resp: {
-            title: 'Member Added Successfully..!',
-            status: 200,
-            data: res,
-          },
-        },
-        { status: 200 }
-      )
-    })
-    .catch((err) => {
-      let title = 'Something went wrong..!'
-      if (err.code === 'P2002') {
-        title = 'Duplicate Title'
-      }
-      return json<ActionData>(
-        { errors: { title, status: 400 } },
+        { errors: { title: statusCheck.nameIsReq, status: 400 } },
         { status: 400 }
       )
-    })
-  return section
+    }
+    if (typeof description !== 'string' || description.length === 0) {
+      return json<ActionData>(
+        { errors: { title: statusCheck.descIsReq, status: 400 } },
+        { status: 400 }
+      )
+    }
+
+    let addHandle = null
+    await createSection({ name, description, createdById })
+      .then((res) => {
+        addHandle = json<ActionData>(
+          {
+            resp: {
+              status: statusCheck.sectionAddedSuccess,
+              data: res as Section,
+              check: new Date(),
+            },
+          },
+          { status: 200 }
+        )
+      })
+
+      .catch((err) => {
+        let title = statusCheck.commonError
+        if (err.code === 'P2002') {
+          title = 'Duplicate Title'
+        }
+        addHandle = json<ActionData>(
+          { errors: { title, status: 400, check: new Date() } },
+          { status: 400 }
+        )
+      })
+
+    return addHandle
+  }
+  let deleteHandle = null
+  if (action === 'sectionDelete') {
+    await deleteSectionById(formData.get('id') as string)
+      .then((res) => {
+        deleteHandle = json<ActionData>(
+          { resp: { status: statusCheck.deletedSuccess } },
+
+          { status: 200 }
+        )
+      })
+      .catch((err) => {
+        let title = statusCheck.commonError
+        deleteHandle = json<ActionData>(
+          { errors: { title, status: 400, check: new Date() } },
+          { status: 400 }
+        )
+      })
+    return deleteHandle
+  }
 }
 
 export default function SectionPage() {
   const data = useLoaderData() as unknown as LoaderData
+
   const fetcher = useFetcher()
-  const action = useActionData() as ActionData
+  const sectionActionData = useActionData() as ActionData
 
   let navigate = useNavigate()
   const submit = useSubmit()
@@ -126,26 +168,33 @@ export default function SectionPage() {
 
   const [sectionDetailFull, setSectionDetailFull] = useState(false)
   const [showAddSectionModal, setShowAddSectionModal] = useState(false)
-  const [order, setOrder] = useState('asc')
+  const [order, setOrder] = useState(sortByOrder.ascending as string)
   const [sortBy, setSortBy] = useState(sortByDetails[1].value)
   const [selectedSection, setSelectedSection] = useState(
     data.selectedSectionId || data.sections[0]?.id || 'NA'
   )
 
   if (data.status != 'Success') {
-    toast.error('Something went wrong..!')
+    toast.error(statusCheck.commonError)
   }
 
   useEffect(() => {
-    if (data.sections.length && !data.selectedSectionId) {
+    if (selectedSection !== 'NA') {
       navigate(`/sections/${selectedSection}${data?.filters}`, {
         replace: true,
       })
     }
-  }, [data, navigate, selectedSection])
+  }, [navigate, selectedSection])
+  useEffect(() => {
+    if (selectedSection == 'NA') {
+      navigate(`/sections`, {
+        replace: true,
+      })
+    }
+  }, [navigate, selectedSection])
 
   useEffect(() => {
-    if (data.sections.length > 0) {
+    if (data.sections.length) {
       const formData = new FormData()
       var filter = {
         orderBy: {
@@ -159,38 +208,52 @@ export default function SectionPage() {
         action: `/sections/${selectedSection}`,
       })
     }
-  }, [order, sortBy])
+  }, [order, sortBy, data.sections.length])
 
   useEffect(() => {
-    if (action) {
-      if (action.resp?.status === 200) {
+    if (sectionActionData) {
+      if (sectionActionData.resp?.status === statusCheck.sectionAddedSuccess) {
         setShowAddSectionModal(false)
-        toast.success('Section added successfully..!')
-        navigate(`/sections/${action?.resp?.data?.id}`, { replace: false })
-      } else if (action.errors?.status === 400) {
-        toast.error(action.errors?.title, {
-          toastId: action.errors?.title,
+        toast.success(sectionActionData.resp?.status)
+        setSelectedSection(sectionActionData?.resp?.data?.id as string)
+      } else if (
+        sectionActionData.resp?.status === statusCheck.deletedSuccess
+      ) {
+        toast.success(sectionActionData.resp?.status, {
+          toastId: sectionActionData.resp?.status,
+        })
+        setSelectedSection(
+          data.selectedSectionId || data.sections[0]?.id || 'NA'
+        )
+      } else if (sectionActionData.errors?.status === 400) {
+        toast.error(sectionActionData.errors?.title, {
+          toastId: sectionActionData.errors?.title,
         })
       }
     }
-  }, [action, navigate])
+  }, [sectionActionData, data])
 
   return (
     <AdminLayout>
-      <div className="flex h-full flex-col gap-12 overflow-hidden">
+      <div className="flex h-full flex-col gap-12 overflow-hidden p-1">
         {/* header */}
         <header className="flex items-center justify-between">
-          <h2 className="text-3xl font-bold text-black">
+          <h2 className="text-3xl font-bold text-black"
+          tabIndex={0}
+          role={routeFiles.sections}
+          title={routeFiles.sections}
+          aria-label={routeFiles.sections}>
             {routeFiles.sections}
           </h2>
-          <button
-            tabIndex={0}
-            className="h-9 rounded-lg bg-primary px-5 text-xs text-[#F0FDF4]"
-            id="add-section"
-            onClick={() => setShowAddSectionModal(!showAddSectionModal)}
-          >
-            + {sectionsConstants.addSection}
-          </button>
+          <Button 
+            id='add-section' 
+            data-cy="submit"
+            className='px-5 h-9' 
+            varient='primary-solid'
+            onClick={() => setShowAddSectionModal(!showAddSectionModal)} 
+            buttonText={
+              `+ ${sectionsConstants.addSection}`
+            } />
         </header>
 
         <div
@@ -201,7 +264,7 @@ export default function SectionPage() {
           {/* section list */}
           <div className={`${sectionDetailFull && 'hidden'}`}>
             <Sections
-              sections={data.sections}
+              sections={data.sections as Section[]}
               selectedSection={selectedSection}
               filters={data.filters}
               sortBy={sortBy}
@@ -210,18 +273,22 @@ export default function SectionPage() {
               setOrder={setOrder}
               setSelectedSection={setSelectedSection}
               sortByDetails={sortByDetails}
+              actionStatusData={sectionActionData?.resp?.status}
+              err={sectionActionData?.resp?.status}
             />
           </div>
-
           {/* section details */}
           <div className={`z-10 flex flex-1 items-center `}>
             <span
               className="z-20 -mr-5"
               tabIndex={0}
+              role={'button'}
               onClick={() => setSectionDetailFull(!sectionDetailFull)}
               onKeyUp={(e) => {
                 if (e.key === 'Enter') setSectionDetailFull(!sectionDetailFull)
               }}
+              title={sectionsConstants.expand}
+              aria-label={sectionsConstants.expand}
             >
               {sectionDetailFull ? (
                 <Icon
@@ -242,7 +309,7 @@ export default function SectionPage() {
         <AddSection
           open={showAddSectionModal}
           setOpen={setShowAddSectionModal}
-          showErrorMessage={action?.errors?.status === 400}
+          showErrorMessage={sectionActionData?.errors?.status === 400}
         />
       </div>
     </AdminLayout>

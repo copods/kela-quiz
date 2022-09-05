@@ -3,6 +3,14 @@ import { Fragment, useEffect, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import { toast } from 'react-toastify'
+import Button from '../form/Button'
+import {
+  candidateExamConstants,
+  testsConstants,
+  inviteMemeberPopUpConstants,
+  members,
+  cypress,
+} from '~/constants/common.constants'
 
 const InviteCandidatePopup = ({
   openInvitePopup,
@@ -23,12 +31,19 @@ const InviteCandidatePopup = ({
     if (actionData?.status == 401) {
       toast.warn(actionData.message)
     }
-    if (actionData?.candidateInviteStatus == 'created') {
-      if (actionData?.testId === testId) toast.success('Candidates Invited')
+    if (
+      actionData?.candidateInviteStatus ===
+      candidateExamConstants.candidateTestCreated
+    ) {
+      if (actionData?.testId === testId)
+        toast.success(testsConstants.candidateInvited)
       setOpenInvitePopup(false)
     } else {
-      if (actionData?.candidateInviteStatus) {
-        toast.error('Candidate Invite Error')
+      if (actionData?.candidateInviteStatus === candidateExamConstants.error) {
+        if (actionData?.testId === testId) {
+          toast.error(testsConstants.candidateAlreadyInvited)
+        }
+        setOpenInvitePopup(false)
       }
     }
   }, [actionData, testId, setOpenInvitePopup])
@@ -37,6 +52,7 @@ const InviteCandidatePopup = ({
     setOpenInvitePopup(false)
     setEmails([''])
   }
+
 
   return (
     <Transition.Root show={openInvitePopup} as={Fragment}>
@@ -69,30 +85,47 @@ const InviteCandidatePopup = ({
             >
               <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white p-6 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
                 <div className="flex items-center justify-between pt-1">
-                  <h2 className="text-2xl font-bold text-gray-700">
-                    Invite Candidate
+                  <h2
+                    role={inviteMemeberPopUpConstants.inviteCandidate}
+                    tabIndex={0}
+                    className="text-2xl font-bold text-gray-700"
+                  >
+                    {inviteMemeberPopUpConstants.inviteCandidate}
                   </h2>
                   <Icon
+                    tabIndex={0}
                     className="cursor-pointer text-2xl text-gray-600"
                     icon={'carbon:close'}
                     onClick={updatePopupAndEmailState}
+                    onKeyUp={(e) => {
+                      if (e.key === 'Enter') updatePopupAndEmailState()
+                    }}
+                    aria-label={inviteMemeberPopUpConstants.closePopUp}
                   />
                 </div>
                 <hr className="mt-4 mb-6 h-px w-full border-0 bg-gray-300" />
                 <p className="pb-4 text-base font-normal text-gray-700">
-                  Enter candidate’s email below to invite them for{' '}
+                  {inviteMemeberPopUpConstants.enterCandidatesEmail}{' '}
                   <span className="font-semibold">`{testName}`</span> Test.
                 </p>
 
                 <div className="flex flex-row justify-between pb-2">
                   <span className="text-sm font-medium text-gray-500">
-                    Candidate Email
+                    {inviteMemeberPopUpConstants.candidateEmail}
                   </span>
+
                   <span
-                    className="cursor-pointer text-sm font-normal text-primary"
+                    role={'button'}
+                    tabIndex={0}
+                    className="cursor-pointer px-0.5 text-sm font-normal text-primary"
                     onClick={() => setEmails([...emails, ''])}
+                    onKeyUp={(e) => {
+                      if (e.key === 'Enter') setEmails([...emails, ''])
+                    }}
+                    title={inviteMemeberPopUpConstants.inviteMore}
+                    aria-label={inviteMemeberPopUpConstants.inviteMore}
                   >
-                    Invite More +
+                    {inviteMemeberPopUpConstants.inviteMore} +
                   </span>
                 </div>
 
@@ -100,33 +133,36 @@ const InviteCandidatePopup = ({
                   return (
                     <div className="pb-2" key={i}>
                       <input
+                        tabIndex={0}
                         type="email"
                         name={`email`}
-                        className="h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
+                        className="inviteInput h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
                         placeholder="johndoe@example.com"
+                        title={members.email}
+                        aria-label={members.email}
                       />
                     </div>
                   )
                 })}
 
                 <div className="flex justify-end gap-2 pt-4">
-                  <button
-                    type="button"
-                    className="h-9 rounded-md px-4 text-sm text-gray-500"
+                  <Button 
+                    type='button'
+                    className='h-9 px-4'
+                    varient='primary-outlined'
+                    buttonText={cypress.cancel}
                     onClick={updatePopupAndEmailState}
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="submit"
-                    name="inviteCandidates"
+                  />
+                  <Button 
+                    type='submit'
+                    name='inviteCandidates'
                     value={testId}
-                    id="submitButton"
-                    className="h-9 rounded-md bg-primary px-4 text-sm text-[#F0FDF4]"
-                    // onClick={() => setOpen(false)}
-                  >
-                    Invite
-                  </button>
+                    id='submit-button'
+                    className='h-9 px-4'
+                    varient='primary-solid'
+                    buttonText={inviteMemeberPopUpConstants.invite}
+                    datacy="submit"
+                  />
                 </div>
               </Dialog.Panel>
             </Transition.Child>

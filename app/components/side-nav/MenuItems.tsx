@@ -15,7 +15,7 @@ function MenuItems({ iconClass, itemName, itemRoute, id }: tabProps) {
     <div id="menuItem">
       <NavLink
         tabIndex={0}
-        to={`/${itemRoute}`}
+        to={itemRoute}
         className={({ isActive }) =>
           `flex flex-row items-start gap-2 rounded-lg p-3.5 ${
             isActive ? 'active_nav_link bg-blue-50' : ' '
@@ -31,11 +31,11 @@ function MenuItems({ iconClass, itemName, itemRoute, id }: tabProps) {
                 ? 'text-primary'
                 : 'text-gray-400'
             }`}
-          ></Icon>
+          />
           <span>
             <p
               id={id}
-              className={`non-italic text-base font-semibold leading-6 ${
+              className={`non-italic text-base font-semibold ${
                 location.pathname.includes(`/${itemRoute}`)
                   ? 'text-primary'
                   : 'text-gray-500'

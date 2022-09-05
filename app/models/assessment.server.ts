@@ -408,13 +408,6 @@ export async function skipAnswerAndNextQuestion({ selectedOptions, sectionId, cu
 
 
 
-
-
-
-
-
-
-
 export async function endCurrentSection(candidateTestId: SectionInCandidateTest['candidateTestId'], id: SectionInTest['id']) {
   const testSection = await prisma.sectionInTest.findUnique({ where: { id } })
 
@@ -569,7 +562,8 @@ async function calculateResult(id: CandidateTest['id']) {
             totalQuestion,
             correctQuestion: correct,
             unanswered,
-            testId: candidateTest?.testId
+            testId: candidateTest?.testId,
+            candidateTestId: candidateTest?.id
           }
         })
       }

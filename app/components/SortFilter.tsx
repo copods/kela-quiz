@@ -1,6 +1,8 @@
 import { Icon } from '@iconify/react'
 import DropdownField from './form/Dropdown'
-import { componentGlobalConstants } from '~/constants/common.constants'
+import { commonConstants, componentGlobalConstants} from '~/constants/common.constants'
+import { sortByOrder } from '~/interface/Interface'
+
 const SortFilter = ({
   filterData,
   sortDirection,
@@ -21,16 +23,17 @@ const SortFilter = ({
   return (
     <div className="flex items-center" id="sort-filter">
       <div className="flex items-center gap-2.5" id="sort-filter-body">
-        {sortDirection == 'asc' ? (
+        {sortDirection === sortByOrder.ascending ? (
           <Icon
             tabIndex={0}
             id="ascend"
             icon="ph:sort-ascending-bold"
             onKeyUp={(e) => {
-              if (e.key === 'Enter') onSortDirectionChange('desc')
+              if (e.key === 'Enter') onSortDirectionChange(sortByOrder.desc)
             }}
-            onClick={() => onSortDirectionChange('desc')}
+            onClick={() => onSortDirectionChange(sortByOrder.desc)}
             className="cursor-pointer text-2xl"
+            aria-label={commonConstants.sortAscending}
           />
         ) : (
           <Icon
@@ -38,10 +41,11 @@ const SortFilter = ({
             id="descend"
             icon="ph:sort-descending-bold"
             onKeyUp={(e) => {
-              if (e.key === 'Enter') onSortDirectionChange('asc')
+              if (e.key === 'Enter') onSortDirectionChange(sortByOrder.ascending)
             }}
-            onClick={() => onSortDirectionChange('asc')}
+            onClick={() => onSortDirectionChange(sortByOrder.ascending)}
             className="cursor-pointer text-2xl"
+            aria-label={commonConstants.sortDescending}
           />
         )}
         <DropdownField

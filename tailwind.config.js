@@ -6,12 +6,16 @@ module.exports = {
     extend: {
       colors: {
         primary: '#353988',
+        primaryHover: '#141649',
+        primaryDisabled: '#A2A4D6',
+        primaryOutlined: '#141649',
+        primaryOutlinedDisabled: '#A2A4D6',
         bgcolor: '#EFF6FF',
         whiteShadeOne: '#F0FDF4',
         borderColor: '#E5E7EB',
         tableHeader: '#f3f4f6',
         totalCount: '#4B5563',
-        deleteColor: '#EF4444',
+        primary50:'#F0FDF4'
       },
       minWidth: {
         260: '260px',
@@ -31,6 +35,9 @@ module.exports = {
       },
       gridTemplateColumns: {
         18: 'repeat(18, minmax(0, 1fr))'
+      },
+      padding:{
+        17:'17px'
       }
     },
   },

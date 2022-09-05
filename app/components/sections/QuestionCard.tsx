@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import { sectionsConstants } from '~/constants/common.constants'
 
 import type { Question, Option, CorrectAnswer } from '~/interface/Interface'
 import OptionCard from './OptionCard'
@@ -17,12 +18,28 @@ const QuestionCard = ({
   return (
     <div
       key={question.id}
-      className="flex flex-col rounded-lg border border-gray-300 bg-gray-50 px-6 py-7"
+      className="flex flex-col rounded-lg border border-gray-300 bg-gray-50 px-6 py-7 cursor-pointer"
+      tabIndex={0}
+      title={sectionsConstants?.expand}
+      aria-label={sectionsConstants?.expand}
+      role={sectionsConstants?.expand}
+      onKeyUp={(e) => {
+        if (e.key === 'Enter')
+          onAccordianToggle(
+            isExpanded === -1 ? index : isExpanded === index ? -1 : index
+          )
+      }}
+      onClick={() => {
+        onAccordianToggle(
+          isExpanded === -1 ? index : isExpanded === index ? -1 : index
+        )
+      }}
     >
       <div className="items-top break flex justify-between text-base text-gray-600">
         <div
           className="items-top flex flex-1 justify-between"
           tabIndex={0}
+          role="button"
           onKeyUp={(e) => {
             if (e.key === 'Enter')
               onAccordianToggle(
@@ -37,7 +54,7 @@ const QuestionCard = ({
         >
           <div className="ql-editor flex-1 p-0 pr-4">
             <div
-              className="cursor-pointer"
+              className="question cursor-pointer"
               dangerouslySetInnerHTML={{ __html: question.question }}
             ></div>
           </div>
