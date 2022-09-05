@@ -1,6 +1,6 @@
 import type { SetStateAction } from 'react'
 import { useEffect, useState } from 'react'
-import type { TestSection } from '~/interface/Interface'
+import { sortByOrder, TestSection } from '~/interface/Interface'
 import SortFilter from '../SortFilter'
 import SelectSectionCard from './SelectSectionCard'
 
@@ -13,7 +13,7 @@ const SelectSections = ({
   setSections: (e: Array<TestSection>, i: number) => void
   updateSectionsList: (e: SetStateAction<Array<TestSection>>) => void
 }) => {
-  const [sortDirection, onSortDirectionChange] = useState('asc')
+  const [sortDirection, onSortDirectionChange] = useState(sortByOrder.ascending as string)
   const [sortBy, onSortChange] = useState('name')
   const [pseudoDivs, setPseudoDivs] = useState([1])
 
@@ -46,11 +46,11 @@ const SelectSections = ({
 
   const sortData = () => {
     updateSectionsList((e: Array<TestSection>) => {
-      if (sortBy == 'name' && sortDirection == 'asc')
+      if (sortBy === sortByOrder.name && sortDirection === sortByOrder.ascending )
         e.sort((a, b) => (a.name > b.name ? 1 : b.name > a.name ? -1 : 0))
-      if (sortBy == 'name' && sortDirection == 'desc')
+      if (sortBy === sortByOrder.name && sortDirection === sortByOrder.desc)
         e.sort((a, b) => (b.name > a.name ? 1 : a.name > b.name ? -1 : 0))
-      if (sortBy == 'createdAt' && sortDirection == 'asc')
+      if (sortBy === sortByOrder.createdAt && sortDirection === sortByOrder.ascending)
         e.sort((a, b) =>
           new Date(a.createdAt).getTime() > new Date(b.createdAt).getTime()
             ? 1
@@ -58,7 +58,7 @@ const SelectSections = ({
             ? -1
             : 0
         )
-      if (sortBy == 'createdAt' && sortDirection == 'desc')
+      if (sortBy === sortByOrder.createdAt && sortDirection === sortByOrder.desc)
         e.sort((a, b) =>
           new Date(b.createdAt).getTime() > new Date(a.createdAt).getTime()
             ? 1
@@ -75,7 +75,7 @@ const SelectSections = ({
   }, [sortDirection, sortBy])
 
   return (
-    <div className="flex w-full flex-1 flex-col gap-6 overflow-x-auto rounded-lg bg-white p-6  shadow">
+    <div className="flex w-full flex-1 flex-col gap-6 overflow-x-auto rounded-lg bg-white p-6 shadow">
       {/* filters */}
       <SortFilter
         filterData={filterByType}

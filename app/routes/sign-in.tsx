@@ -11,10 +11,11 @@ import { loginVerificationResponse } from '~/models/user.server'
 import { safeRedirect, validateEmail } from '~/utils'
 import type { ActionData } from '~/interface/Interface'
 import Login from '~/components/login/Login'
+import { routes } from '~/constants/route.constants'
 
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await getUserId(request)
-  if (userId) return redirect('/dashboard')
+  if (userId) return redirect(routes.dashboard)
   return json({})
 }
 
@@ -22,7 +23,7 @@ export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
   const email = formData.get('email')
   const password = formData.get('password')
-  const redirectTo = safeRedirect(formData.get('redirectTo'), '/dashboard')
+  const redirectTo = safeRedirect(formData.get('redirectTo'), routes.dashboard)
   const remember = formData.get('remember')
 
   if (!validateEmail(email)) {
@@ -70,7 +71,7 @@ export const meta: MetaFunction = () => {
 
 export default function LoginPage() {
   const [searchParams] = useSearchParams()
-  const redirectTo = searchParams.get('redirectTo') || '/dashboard'
+  const redirectTo = searchParams.get('redirectTo') || routes.dashboard
   const actionData = useActionData() as ActionData
   return (
     <div className="flex min-h-full items-center justify-center bg-gray-50">

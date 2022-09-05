@@ -1,6 +1,6 @@
 import EndAssessmentIcon from '../../../public/assets/endAssessment.svg'
 import Logo from '~/components/Logo'
-import { candidateExam, sideNav } from '~/constants/common.constants'
+import { candidateExamConstants, sideNav } from '~/constants/common.constants'
 
 const EndAssessment = () => {
   return (
@@ -12,9 +12,9 @@ const EndAssessment = () => {
         </span>
       </div>
       <div className="mt-[-80px] flex h-full w-full flex-col items-center justify-center gap-4">
-        <img src={EndAssessmentIcon} alt="end assessment" />
+        <img src={EndAssessmentIcon} alt={candidateExamConstants.endAssesment} />
         <p className="text-5xl font-bold text-gray-900">
-          {candidateExam.assessmentEnd}
+          {candidateExamConstants.assessmentEnd}
         </p>
       </div>
     </div>

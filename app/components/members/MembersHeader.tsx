@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import AddMemberModal from './AddMemberModal'
 import { members } from '~/constants/common.constants'
 import { useLoaderData } from '@remix-run/react'
+import Button from '../form/Button'
 
 export default function MembersHeader({
   actionStatus,
@@ -19,14 +20,14 @@ export default function MembersHeader({
     <div className="grid grid-cols-12 pb-12">
       <div className="col-span-full grid">
         <div className="flex items-center justify-between">
-          <h1 className="text-3xl font-bold leading-9">{members.members}</h1>
-          <button
-            id="addMember"
-            className="h-9 rounded-lg bg-blue-900  px-4  text-xs font-medium leading-4 text-[#F0FDF4]"
+          <h1 className="membersHeading text-3xl font-bold leading-9">{members.members}</h1>
+          <Button
+            tabIndex={0}
+            id='add-member'
+            className='h-9 px-4'
             onClick={() => setOpen(!open)}
-          >
-            + {members.addMember}
-          </button>
+            varient='primary-solid'
+            buttonText={`+ ${members.addMember}`} />
         </div>
       </div>
       <AddMemberModal roles={membersData.roles} open={open} setOpen={setOpen} />

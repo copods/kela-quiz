@@ -1,6 +1,5 @@
-import { useSubmit, useTransition } from '@remix-run/react'
+import { useNavigate, useSubmit, useTransition } from '@remix-run/react'
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import type { TestSection } from '~/interface/Interface'
 import BreadCrumb from '../BreadCrumb'
@@ -8,7 +7,10 @@ import SelectSections from './CreateSelectSections'
 import TestDetails from './CreateTestDetails'
 import TestPreview from './CreateTestPreview'
 import StepsTabComponent from './StepsTab'
-import { commonConstants, testsConstants } from '~/constants/common.constants'
+import Button from '../form/Button'
+import { commonConstants, testsConstants, toastConstants } from '~/constants/common.constants'
+import { routes } from '~/constants/route.constants'
+
 const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
   const transition = useTransition()
   const submit = useSubmit()
@@ -20,12 +22,12 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
 
   const breadCrumbData = [
     {
-      tabName: 'Test',
-      route: '/tests',
+      tabName: testsConstants.testListColumnLabel,
+      route: routes.tests,
     },
     {
-      tabName: 'Add Test',
-      route: '/tests/add-test',
+      tabName: testsConstants.addTestbutton,
+      route: routes.addTest,
     },
   ]
 
@@ -53,6 +55,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
   const [selectedSections, onSelectedSectionChange] = useState<TestSection[]>(
     []
   )
+  const navigate = useNavigate()
 
   const updateSection = (data: Array<TestSection>, i: number) => {
     setSectionsCopy((sec) => {
@@ -68,15 +71,15 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
 
   const submitAddTest = () => {
     if (typeof name !== 'string' || name.length === 0) {
-      toast.error('Enter Name to add test')
+      toast.error(toastConstants.addTest)
       return
     }
     if (typeof description !== 'string' || description.length === 0) {
-      toast.error('Enter description to add test')
+      toast.error(toastConstants.enterDescription)
       return
     }
     if (selectedSections.length === 0) {
-      toast.error('Add sections to add test')
+      toast.error(toastConstants.addSection)
       return
     }
     var sendData: {
@@ -116,13 +119,16 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
     <div className="flex h-full flex-col gap-6 overflow-hidden">
       {/* header */}
       <header className="flex items-center justify-between">
-        <h2 title="Add Test" className="text-3xl font-bold text-black">
+        <h2
+          role={testsConstants.addTestbutton}
+          tabIndex={0}
+          title={testsConstants.addTestbutton}
+          className="text-3xl font-bold text-black"
+        >
           {testsConstants.addTestbutton}
         </h2>
       </header>
-      <div>
-        <BreadCrumb data={breadCrumbData} />
-      </div>
+      <BreadCrumb data={breadCrumbData} />
       <StepsTabComponent
         tabs={tabs}
         isDisabled={!name || !description}
@@ -146,7 +152,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
           }}
           updateSectionsList={setSectionsCopy}
         />
-      ) : currentTab === tabs[2].id ? (
+      ) : currentTab === tabs[2].id && (
         <TestPreview
           selectedSections={selectedSections}
           onSelectedSectionChange={onSelectedSectionChange}
@@ -154,71 +160,51 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
           description={description}
           isPreviewEditable
         />
-      ) : (
-        ''
       )}
       {/* Buttons */}
       <div className="flex w-full items-center justify-between">
-        <div>
-          <Link to={'/tests'}>
-            <button
-              title="Cancel Add Test"
-              className={`h-9 rounded-lg px-7 text-xs text-white ${
-                currentTab != tabs[0].id
-                  ? 'bg-red-500'
-                  : 'bg-gray-6000 bg-red-500'
-              }`}
-            >
-              {commonConstants.cancel}
-            </button>
-          </Link>
-        </div>
+          <Button 
+            tabIndex={0}
+            title='Cancel Add Test' 
+            onClick={() => navigate('/tests')}
+            className='h-9 px-7' 
+            varient='secondary-solid'
+            buttonText={commonConstants.cancel} />
         <div className="flex gap-4">
-          <button
-            title="Previous Tab"
-            id="backButton"
-            className={`h-9 rounded-lg px-7 text-xs text-white ${
-              currentTab != tabs[0].id
-                ? 'bg-primary'
-                : 'cursor-not-allowed bg-gray-600'
-            }`}
-            onClick={() => setCurrentTab(currentTab - 1)}
-            disabled={currentTab === tabs[0].id}
-          >
-            {commonConstants.backButton}
-          </button>
-          {currentTab != 2 ? (
-            <button
-              title="Next Tab"
-              id="nextButton"
-              className={`h-9 rounded-lg px-7 text-xs text-white ${
-                !(name && description) || currentTab == 2
-                  ? 'cursor-not-allowed bg-gray-600'
-                  : 'bg-primary'
-              }`}
-              onClick={() => setCurrentTab(currentTab + 1)}
-              disabled={!(name && description) || currentTab == 2}
-            >
-              {commonConstants.nextButton}
-            </button>
+          <Button 
+            tabIndex={0}
+            title='Previous Tab' 
+            className='h-9 px-7' 
+            varient='primary-solid'
+            id='back-button'
+            buttonText={commonConstants.backButton} 
+            isDisabled={currentTab === tabs[0].id}
+            onClick={() => setCurrentTab(currentTab - 1)} />
+          {currentTab !== 2 ? (
+            <Button 
+              tabIndex={0}
+              title='Next Tab' 
+              className='h-9 px-7' 
+              varient='primary-solid'
+              id='next-button'
+              buttonText={commonConstants.nextButton} 
+              isDisabled={!(name && description) || currentTab == 2}
+              onClick={() => setCurrentTab(currentTab + 1)} />
           ) : (
-            <button
-              title="Next Tab"
-              id="submitButton"
-              className={`h-9 rounded-lg px-7 text-xs text-white ${
-                currentTab == 2
-                  ? 'bg-primary'
-                  : 'cursor-not-allowed bg-gray-600'
-              }`}
-              onClick={() => submitAddTest()}
-              disabled={currentTab != 2}
-            >
-              {transition.state === 'submitting' ? 'Creating Test' : 'Submit'}
-            </button>
+            <Button 
+              tabIndex={0}
+              title='Next Tab' 
+              id='submit-button'
+              className='h-9 px-7' 
+              varient='primary-solid'
+              buttonText={transition.state === 'submitting' ? 'Creating Test' : 'Submit'} 
+              isDisabled={currentTab != 2}
+              onClick={() => submitAddTest()} />
           )}
         </div>
       </div>
     </div>
   )
 }
+
 export default AddTestComponent

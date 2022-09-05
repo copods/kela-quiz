@@ -1,30 +1,48 @@
 import SectionCard from './SectionCard'
-import type { Section } from '~/interface/Interface'
+import type { Section, User } from '~/interface/Interface'
 import { useResolvedPath, useLocation, NavLink } from '@remix-run/react'
 import {} from '@remix-run/react'
 import SortFilter from '../SortFilter'
 import { sectionsConstants } from '~/constants/common.constants'
 
-const SectionLink = ({ section, filter, setSelectedSection }: { section: any, filter: string, setSelectedSection:(e:string) => void }) => {
+const SectionLink = ({
+  section,
+  actionStatusData,
+  err,
+  filter,
+  setSelectedSection,
+}: {
+  section: Section & { _count?: { questions: number }; createdBy?: User }
+  actionStatusData?: string
+  err?: string
+  filter: string
+  setSelectedSection: (e: string) => void
+}) => {
   const path = `/sections/${section.id}`
   const location = useLocation() // to get current location
   const resolvedPath = useResolvedPath(path) // to get resolved path which would match with current location
-
-  const getSectionId = (id:string) => {
-      setSelectedSection(id);
+  const setSectionId = (id: string) => {
+    setSelectedSection(id)
   }
-
   return (
-    <NavLink 
-       onClick={()=> getSectionId(section.id)}
-       to={path}
-       key={section.id}>
+    <NavLink
+      onClick={() => setSectionId(section.id)}
+      to={path}
+      key={section.id}
+      onKeyUp={(e) => {
+        if (e.key === 'Tab' && e.altKey) window.location.href = '#section-search'
+        // alt + Tab combination key for moving focus to section detail
+      }}
+    >
       <SectionCard
         isActive={location.pathname === resolvedPath.pathname}
         name={section?.name}
         createdBy={`${section?.createdBy?.firstName} ${section?.createdBy?.lastName}`}
         questionsCount={section?._count?.questions as number}
         createdAt={section.createdAt}
+        id={section?.id}
+        actionStatusData={actionStatusData}
+        err={err}
       />
     </NavLink>
   )
@@ -37,8 +55,10 @@ type SectionType = {
   filters: string
   setSortBy: (e: string) => void
   order: string
+  err?: string
+  actionStatusData?: string
   setOrder: (e: string) => void
-  setSelectedSection: (e: string) => void,
+  setSelectedSection: (e: string) => void
   sortByDetails: Array<{ name: string; value: string }>
 }
 const Sections = ({
@@ -48,11 +68,13 @@ const Sections = ({
   setSortBy,
   order,
   setOrder,
+  setSelectedSection,
   sortByDetails,
-  setSelectedSection
+  err,
+  actionStatusData,
 }: SectionType) => {
   return (
-    <div className="flex h-full w-96 flex-col gap-6">
+    <div className="sectionLSWrapper flex h-full w-96 flex-col gap-6">
       {/* filters */}
       <div className="flex items-center justify-between ">
         <div id="sort-filter-container">
@@ -70,15 +92,18 @@ const Sections = ({
 
       {/* list */}
       <div
-        className="flex flex-1 flex-col gap-6 overflow-auto"
+        className="section-cards flex flex-1 flex-col gap-6 overflow-auto"
         id="section-cards"
       >
-        {sections?.map((section: any) => (
-          <SectionLink 
-              key={section.id}
-              section={section}
-              filter={filters}
-              setSelectedSection={setSelectedSection} />
+        {sections?.map((section: Section) => (
+          <SectionLink
+            key={section.id}
+            section={section}
+            filter={filters}
+            setSelectedSection={setSelectedSection}
+            actionStatusData={actionStatusData}
+            err={err}
+          />
         ))}
         {sections.length === 0 && (
           <div className="flex justify-center p-7">
