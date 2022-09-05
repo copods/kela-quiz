@@ -38,13 +38,11 @@ const SectionDetails = () => {
           to={`${routes.sections}/${sectionDetails.sectionDetails?.id}${routes.addQuestion}`}
           title={addQuestion.addQuestion}
           aria-label={addQuestion.addQuestion}
-        >
-          <button tabIndex={0}
-            id="add-question"
-            className="h-9 rounded-lg bg-primary px-5 text-xs text-primary50"
+          tabIndex={0}
+          id="add-question"
+          className="flex items-center h-9 rounded-lg bg-primary px-5 text-xs text-primary50"
           >
             + {addQuestion.addQuestion}
-          </button>
         </Link>
       </div>
 

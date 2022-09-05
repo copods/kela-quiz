@@ -34,7 +34,7 @@ module.exports = {
         18: 'repeat(18, minmax(0, 1fr))'
       },
       padding:{
-        "0.5":'0.125rem'
+        0.5 :'0.125rem'
       }
     },
   },

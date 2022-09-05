@@ -123,7 +123,7 @@ export default function OptionForQuestion({
 
   return (
     <div className="flex flex-1 flex-col gap-6">
-      <div className="flex h-11 flex-row items-end justify-between">
+      <div className="flex h-11 flex-row items-end justify-between p-1">
         {getQuestionType(selectedTypeOfQuestion) ===
           QuestionTypes.multipleChoice ||
         getQuestionType(selectedTypeOfQuestion) ===
@@ -157,7 +157,7 @@ export default function OptionForQuestion({
         </button>
       </div>
 
-      <div className="flex h-full flex-1 flex-col gap-5 overflow-auto px-1">
+      <div className="flex h-full flex-1 flex-col gap-5 overflow-auto p-1">
 
         {(getQuestionType(selectedTypeOfQuestion) ===
           QuestionTypes.multipleChoice ||
@@ -165,7 +165,7 @@ export default function OptionForQuestion({
             QuestionTypes.singleChoice) &&
           options.map((option, index) => {
             return (
-              <div className="flex items-center gap-2.5 px-1" key={option.id}>
+              <div className="flex items-center gap-2.5 p-1" key={option.id}>
                 {getQuestionType(selectedTypeOfQuestion) ===
                 QuestionTypes.multipleChoice ? (
                   <input
