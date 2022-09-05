@@ -57,15 +57,16 @@ const TestList = ({
         >
           {testsConstants.tests}
         </h2>
-        <Button 
-          className='px-5'
+        <Button
+          className="px-5"
           onClick={() => navigate('/tests/add-test')}
-          id='add-test' 
-          tabIndex={0} 
-          varient='primary-solid'
-          title={testsConstants.addTestbutton} 
-          aria-label={testsConstants.addTestbutton} 
-          buttonText={`+ ${testsConstants.addTestbutton}`}/>
+          id="add-test"
+          tabIndex={0}
+          varient="primary-solid"
+          title={testsConstants.addTestbutton}
+          aria-label={testsConstants.addTestbutton}
+          buttonText={`+ ${testsConstants.addTestbutton}`}
+        />
       </header>
       <div id="sort-filter-container">
         <SortFilter

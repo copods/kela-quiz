@@ -12,7 +12,7 @@ import Button from '../form/Button'
 
 const ResultDetailsComponent = () => {
   const { candidateResult, params, sectionWiseResult } = useLoaderData()
-
+  console.log('sectionWiseResult', sectionWiseResult)
   const dropdownData = [
     {
       name: 'Pending',
@@ -62,7 +62,7 @@ const ResultDetailsComponent = () => {
         </div>
       </header>
       <Divider height="1px" />
-      <BarGraph />
+      <BarGraph sectionWiseResult={sectionWiseResult} />
       <Divider height="1px" />
       <div id="results-test-candidate-list-tab" className="flex flex-col gap-6">
         {sectionWiseResult.map((section: any) => {
@@ -87,10 +87,10 @@ const ResultDetailsComponent = () => {
           setValue={updateCandidateStatus}
         />
         <Button
-        varient='primary-solid'
-        className='px-6'
-        onClick={updateCandidateStatusToDB}
-        buttonText={commonConstants.submit}
+          varient="primary-solid"
+          className="px-6"
+          onClick={updateCandidateStatusToDB}
+          buttonText={commonConstants.submit}
         />
       </div>
     </div>
