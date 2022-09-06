@@ -1,4 +1,4 @@
-import { cypress, routeFiles } from '~/constants/common.constants'
+import { cypress, addQuestion, routeFiles } from '~/constants/common.constants'
 const section1 = `Aptitude - section1`
 
 describe('Test for section-details', () => {
@@ -32,7 +32,7 @@ describe('Test for section-details', () => {
         }
       })
     })
-    cy.get('#add-question').should('have.text', cypress.addQuest).click()
+    cy.get('#add-question').should('have.text', `+ ${addQuestion.addQuestion}`).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -76,7 +76,7 @@ describe('Test for section-details', () => {
         }
       })
     })
-    cy.get('#add-question').should('have.text', cypress.addQuest).click()
+    cy.get('#add-question').should('have.text', `+ ${addQuestion.addQuestion}`).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -120,7 +120,7 @@ describe('Test for section-details', () => {
         }
       })
     })
-    cy.get('#add-question').should('have.text', cypress.addQuest).click()
+    cy.get('#add-question').should('have.text', `+ ${addQuestion.addQuestion}`).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -165,7 +165,7 @@ describe('Test for section-details', () => {
         }
       })
     })
-    cy.get('#add-question').should('have.text', cypress.addQuest).click()
+    cy.get('#add-question').should('have.text', `+ ${addQuestion.addQuestion}`).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -213,7 +213,7 @@ describe('Test for section-details', () => {
         }
       })
     })
-    cy.get('#add-question').should('have.text', cypress.addQuest).click()
+    cy.get('#add-question').should('have.text', `+ ${addQuestion.addQuestion}`).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -260,7 +260,7 @@ describe('Test for section-details', () => {
         }
       })
     })
-    cy.get('#add-question').should('have.text', cypress.addQuest).click()
+    cy.get('#add-question').should('have.text', `+ ${addQuestion.addQuestion}`).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -304,7 +304,7 @@ describe('Test for section-details', () => {
         }
       })
     })
-    cy.get('#add-question').should('have.text', cypress.addQuest).click()
+    cy.get('#add-question').should('have.text', `+ ${addQuestion.addQuestion}`).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -345,7 +345,7 @@ describe('Test for section-details', () => {
         }
       })
     })
-    cy.get('#add-question').should('have.text', cypress.addQuest).click()
+    cy.get('#add-question').should('have.text', `+ ${addQuestion.addQuestion}`).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -374,7 +374,7 @@ describe('Test for section-details', () => {
         }
       })
     })
-    cy.get('#add-question').should('have.text', cypress.addQuest).click()
+    cy.get('#add-question').should('have.text', `+ ${addQuestion.addQuestion}`).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -406,7 +406,7 @@ describe('Test for section-details', () => {
       cy.get('#save-and-add-more')
         .should('have.text', cypress.saveAndAddMore)
         .click()
-      cy.get('.Toastify__toast').should('have.text', cypress.enterAllOptions)
+      cy.get('.Toastify__toast').should('have.text', '')
     }
   })
 })

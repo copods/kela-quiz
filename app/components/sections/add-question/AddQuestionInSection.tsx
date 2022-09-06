@@ -8,14 +8,14 @@ import {useLoaderData, useNavigate, useSubmit, useTransition } from '@remix-run/
 import { toast } from 'react-toastify'
 import Button from '~/components/form/Button'
 import { routes } from '~/constants/route.constants'
-
 import {
   addQuestion,
   testsConstants,
   statusCheck,
-  QuestionTypes,
-  toastConstants,
+  commonConstants,
+  QuestionTypes
 } from '~/constants/common.constants'
+import { sortByOrder } from '~/interface/Interface'
 
 const AddQuestionInSection = () => {
   const { sectionDetails, questionTypes } = useLoaderData()
@@ -79,8 +79,8 @@ const AddQuestionInSection = () => {
 
   const submit = useSubmit()
   const saveQuestion = (addMoreQuestion: boolean) => {
-    if (question?.length === 0) {
-      toast.error(toastConstants.enterQuestion, { toastId: 'questionRequired' })
+    if (!question.length) {
+      toast.error('Enter the Question', { toastId: 'questionRequired' })
       return
     }
 
@@ -90,10 +90,8 @@ const AddQuestionInSection = () => {
       getQuestionType(selectedTypeOfQuestion) === QuestionTypes.singleChoice
     ) {
       for (let option of options) {
-        if (option.option?.length === 0) {
-          toast.error(toastConstants.enterOption, {
-            toastId: 'optionsRequired',
-          })
+        if (!option.option.length) {
+          toast.error('Enter all the Options', { toastId: 'optionsRequired' })
           return
         }
       }
@@ -232,6 +230,7 @@ const AddQuestionInSection = () => {
             onClick={() => navigate(`/sections/${sectionDetails?.id}`)}
             isDisabled={transition.state === 'submitting'}
             className='h-9 px-5'
+            title={transition.state === 'submitting' ? 'Canceling...' : 'Cancel'}
             buttonText={transition.state === 'submitting' ? 'Canceling...' : 'Cancel'}
             varient='secondary-solid' />
         </div>
@@ -243,10 +242,11 @@ const AddQuestionInSection = () => {
             className='h-9 px-5'
             onClick={() => saveQuestion(false)}
             varient='primary-solid'
+            title={commonConstants.saveAndExit}
             buttonText={
               <>
               <Icon icon="ic:round-save" className="mr-1" />
-              {transition.state === 'submitting' ? 'Saving...' : 'Save & Exit'}
+              {transition.state === 'submitting' ? 'Saving...' : sortByOrder.saveAndExit}
               </>
             } />
           <Button 
@@ -256,10 +256,11 @@ const AddQuestionInSection = () => {
             className='h-9 px-5'
             onClick={() => saveQuestion(true)}
             varient='primary-solid'
+            title={commonConstants.saveAndAddMore}
             buttonText={
               <>
               <Icon icon="ic:round-save" className="mr-1" />
-              {transition.state === 'submitting' ? 'Saving...' : 'Save & Add More'}
+              {transition.state === 'submitting' ? sortByOrder.saving : sortByOrder.saveAndAddMore}
               </>
             } />
         </div>

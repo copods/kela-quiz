@@ -70,19 +70,19 @@ const SelectSectionCard = ({
         {section.isSelected ? (
           <Button
             tabIndex={0}
-            className="h-7 px-4"
-            varient="secondary-solid"
-            onClick={() => updateThisSection('isSelected', '', false)}
-            buttonText={commonConstants.removeButton}
-          />
+            className='px-4 h-7' 
+            varient='secondary-solid' 
+            onClick={() => updateThisSection('isSelected', '', false)} 
+            title={commonConstants.removeButton}
+            buttonText={commonConstants.removeButton} />
         ) : (
           <Button
             tabIndex={0}
-            className="h-7 px-4"
-            onClick={() => updateThisSection('isSelected', '', true)}
-            varient="primary-solid"
-            buttonText={commonConstants.addButton}
-          />
+            className='h-7 px-4' 
+            onClick={() => updateThisSection('isSelected', '', true)} 
+            varient='primary-solid' 
+            title={commonConstants.addButton}
+            buttonText={commonConstants.addButton} />
         )}
       </div>
       <div className="flex text-xs text-gray-400">

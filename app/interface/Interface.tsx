@@ -232,4 +232,6 @@ export enum sortByOrder {
   cancelling = 'Cancelling...',
   cancel = 'Cancel',
   createdAt = 'createdAt',
+  creatingTest = 'Creating Test',
+  submit = 'Submit'
 }

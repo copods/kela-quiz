@@ -37,7 +37,7 @@ const SectionLink = ({
         isActive={location.pathname === resolvedPath.pathname}
         name={section?.name}
         createdBy={`${section?.createdBy?.firstName} ${section?.createdBy?.lastName}`}
-        questionsCount={section?._count?.questions}
+        questionsCount={section?._count?.questions as number}
         createdAt={section.createdAt}
         id={section?.id}
         actionStatusData={actionStatusData}

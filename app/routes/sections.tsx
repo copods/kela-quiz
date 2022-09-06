@@ -90,7 +90,6 @@ export const action: ActionFunction = async ({ request }) => {
       return json<ActionData>(
         {
           errors: {
-            title: sectionsConstants.sectionNameIsRequiredMsg,
             status: 400,
           },
         },
@@ -101,7 +100,6 @@ export const action: ActionFunction = async ({ request }) => {
       return json<ActionData>(
         {
           errors: {
-            title: sectionsConstants.sectionDescIsRequiredMsg,
             status: 400,
           },
         },
@@ -115,7 +113,6 @@ export const action: ActionFunction = async ({ request }) => {
         addHandle = json<ActionData>(
           {
             resp: {
-              title: sectionsConstants.sectionAdditionMsg,
               status: 200,
               data: res as Section,
             },
@@ -127,7 +124,7 @@ export const action: ActionFunction = async ({ request }) => {
       .catch((err) => {
         let title = commonConstants.somethingWentWrongMsg
         if (err.code === 'P2002') {
-          title = sectionsConstants.duplicateTitleMsg
+          title = ''
         }
         addHandle = json<ActionData>(
           { errors: { title, status: 400, check: new Date() } },
@@ -262,6 +259,7 @@ export default function SectionPage() {
             className='px-5 h-9' 
             varient='primary-solid'
             onClick={() => setShowAddSectionModal(!showAddSectionModal)} 
+            title={sectionsConstants.addSection}
             buttonText={
               `+ ${sectionsConstants.addSection}`
             } />
@@ -317,6 +315,8 @@ export default function SectionPage() {
               <Outlet />
             </div>
           </div>
+
+        ):('')}
           {/* section details */}
           <div className={`z-10 flex flex-1 items-center `}>
             <span
@@ -344,7 +344,6 @@ export default function SectionPage() {
             </span>
             <Outlet />
           </div>
-        )}
 
         <AddSection
           open={showAddSectionModal}

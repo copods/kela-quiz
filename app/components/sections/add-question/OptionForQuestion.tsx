@@ -1,6 +1,5 @@
 import { Icon } from '@iconify/react'
 import type { QuestionType } from '~/interface/Interface'
-import { QuestionTypes } from '~/interface/Interface'
 import cuid from 'cuid'
 import QuillEditor from '~/components/QuillEditor.client'
 import { ClientOnly } from 'remix-utils'
@@ -9,6 +8,7 @@ import type { SetStateAction } from 'react'
 import {
   addQuestion,
   commonConstants,
+  QuestionTypes,
   statusCheck,
 } from '~/constants/common.constants'
 import { toast } from 'react-toastify'
@@ -142,6 +142,7 @@ export default function OptionForQuestion({
           className='h-9 px-5' 
           varient='primary-solid' 
           onClick={addOptionArea} 
+          title={addQuestion.addOptions}
           buttonText={`+ ${addQuestion.addOptions}`} />
       </div>
       <div className="flex h-full flex-1 flex-col gap-5 overflow-auto p-1">
