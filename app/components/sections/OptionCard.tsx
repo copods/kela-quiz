@@ -1,4 +1,6 @@
 import type { CorrectAnswer, Option } from '~/interface/Interface'
+import sanitizeHtml from 'sanitize-html'
+
 const OptionCard = ({ option }: { option: Option | CorrectAnswer }) => {
   return (
     <div
@@ -10,9 +12,9 @@ const OptionCard = ({ option }: { option: Option | CorrectAnswer }) => {
     >
       <div
         dangerouslySetInnerHTML={{
-          __html: `${
+          __html: `${sanitizeHtml(
             (option as Option)?.option || (option as CorrectAnswer)?.answer
-          }`,
+          )}`,
         }}
       ></div>
     </div>

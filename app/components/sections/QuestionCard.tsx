@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 import { sectionsConstants } from '~/constants/common.constants'
-
+import sanitizeHtml from 'sanitize-html'
 import type { Question, Option, CorrectAnswer } from '~/interface/Interface'
 import OptionCard from './OptionCard'
 
@@ -55,7 +55,9 @@ const QuestionCard = ({
           <div className="ql-editor flex-1 p-0 pr-4">
             <div
               className="question cursor-pointer"
-              dangerouslySetInnerHTML={{ __html: question.question }}
+              dangerouslySetInnerHTML={{
+                __html: sanitizeHtml(question.question),
+              }}
             ></div>
           </div>
           {isExpanded === index ? (
