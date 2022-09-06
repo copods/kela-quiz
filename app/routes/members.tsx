@@ -50,7 +50,7 @@ export const action: ActionFunction = async ({ request }) => {
     const lastName = formData.get('lastName')
     const email = formData.get('email')
     const roleId = formData.get('roleId');
-    const emailFilter = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const emailFilter = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 
     if (typeof firstName !== 'string' || firstName.length === 0) {
       return json<ActionData>(
