@@ -1,6 +1,6 @@
 import type { ButtonProps } from '~/interface/Interface'
 
-const Button = ({ buttonText, className, onClick, ...props }: ButtonProps) => {
+const Button = ({ buttonText , className, onClick, ...props }: ButtonProps) => {
 
   const getCommonClasses = () => {
     return `py-2.5 px-5 rounded-md items-center inline-flex shadow-sm text-xs font-medium ${

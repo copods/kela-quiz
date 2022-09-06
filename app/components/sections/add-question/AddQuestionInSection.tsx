@@ -11,7 +11,7 @@ import { routes } from '~/constants/route.constants'
 import {
   addQuestion,
   testsConstants,
-  statusCheck,
+  statusCheck
 } from '~/constants/common.constants'
 import { QuestionTypes, sortByOrder } from '~/interface/Interface'
 
