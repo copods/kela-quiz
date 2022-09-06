@@ -49,7 +49,8 @@ export const action: ActionFunction = async ({ request }) => {
     const firstName = formData.get('firstName')
     const lastName = formData.get('lastName')
     const email = formData.get('email')
-    const roleId = formData.get('roleId')
+    const roleId = formData.get('roleId');
+    const emailFilter = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
     if (typeof firstName !== 'string' || firstName.length === 0) {
       return json<ActionData>(
@@ -69,6 +70,12 @@ export const action: ActionFunction = async ({ request }) => {
         { status: 400 }
       )
     }
+    if (!emailFilter.test(email)) {
+      return json<ActionData>(
+        { errors: { title: 'Please provide a valid email address', status: 400 } },
+        { status: 400 }
+      )
+  }
     if (typeof roleId !== 'string' || roleId.length === 0) {
       return json<ActionData>(
         { errors: { title: 'Role is required', status: 400 } },

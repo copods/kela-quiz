@@ -99,7 +99,7 @@ export default function AddMemberModal({
                     <input
                       tabIndex={0}
                       id="email"
-                      type="email"
+                      type="text"
                       name="email"
                       className="my-1.5 h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
                       placeholder="email@address.com"

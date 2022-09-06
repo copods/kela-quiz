@@ -210,7 +210,7 @@ export default function SectionPage() {
     }
   }, [order, sortBy, data.sections.length])
 
-useEffect(() => {
+  useEffect(() => {
     if (sectionActionData) {
       if (sectionActionData.resp?.status === statusCheck.sectionAddedSuccess) {
         setShowAddSectionModal(false)
@@ -257,62 +257,67 @@ useEffect(() => {
             } />
         </header>
 
-        <div
-          className={`flex flex-1 overflow-hidden ${
-            !sectionDetailFull && 'gap-12'
-          }`}
-        >
-          {/* section list */}
-          <div className={`${sectionDetailFull && 'hidden'}`}>
-            <Sections
-              sections={data.sections as Section[]}
-              selectedSection={selectedSection}
-              filters={data.filters}
-              sortBy={sortBy}
-              setSortBy={setSortBy}
-              order={order}
-              setOrder={setOrder}
-              setSelectedSection={setSelectedSection}
-              sortByDetails={sortByDetails}
-              actionStatusData={sectionActionData?.resp?.status}
-              err={sectionActionData?.resp?.status}
-            />
-          </div>
-          {/* section details */}
-          <div className={`z-10 flex flex-1 items-center `}>
-            <span
-              className="z-20 -mr-5"
-              tabIndex={0}
-              role={'button'}
-              onClick={() => setSectionDetailFull(!sectionDetailFull)}
-              onKeyUp={(e) => {
-                if (e.key === 'Enter') setSectionDetailFull(!sectionDetailFull)
-              }}
-              title={sectionsConstants.expand}
-              aria-label={sectionsConstants.expand}
-            >
-              {sectionDetailFull ? (
-                <Icon
-                  icon={'akar-icons:circle-chevron-right-fill'}
-                  className="cursor-pointer text-4xl text-primary"
-                />
-              ) : (
-                <Icon
-                  icon={'akar-icons:circle-chevron-left-fill'}
-                  className="cursor-pointer text-4xl text-primary"
-                />
-              )}
-            </span>
-            <Outlet />
-          </div>
-        </div>
+        {data.sections.length > 0 ? (
+          <div
+            className={`flex flex-1 overflow-hidden ${
+              sectionDetailFull ? '' : 'gap-12'
+            }`}
+          >
+            {/* section list */}
+            <div className={`${sectionDetailFull ? 'hidden' : ''}`}>
+              <Sections
+                sections={data.sections as Section[]}
+                selectedSection={selectedSection}
+                filters={data.filters}
+                sortBy={sortBy}
+                setSortBy={setSortBy}
+                order={order}
+                setOrder={setOrder}
+                setSelectedSection={setSelectedSection}
+                sortByDetails={sortByDetails}
+              />
+            </div>
 
+                 {/* section details */}
+                 <div className={`z-10 flex flex-1 items-center `}>
+              <span
+                className="z-20 -mr-5"
+                tabIndex={0}
+                role={'button'}
+                onClick={() => setSectionDetailFull(!sectionDetailFull)}
+                onKeyUp={(e) => {
+                  if (e.key === 'Enter')
+                    setSectionDetailFull(!sectionDetailFull)
+                }}
+              >
+                {sectionDetailFull ? (
+                  <Icon
+                    icon={'akar-icons:circle-chevron-right-fill'}
+                    className="cursor-pointer text-4xl text-primary"
+                  />
+                ) : (
+                  <Icon
+                    icon={'akar-icons:circle-chevron-left-fill'}
+                    className="cursor-pointer text-4xl text-primary"
+                  />
+                )}
+              </span>
+              <Outlet />
+            </div>
+          </div>
+        ) : (
+          <div className="p-7 text-center">
+            {sectionsConstants.noRecordFound}
+          </div>
+        )}
+  
         <AddSection
           open={showAddSectionModal}
           setOpen={setShowAddSectionModal}
           showErrorMessage={sectionActionData?.errors?.status === 400}
         />
       </div>
+
     </AdminLayout>
   )
 }
