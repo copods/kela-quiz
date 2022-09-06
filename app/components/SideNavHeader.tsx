@@ -14,7 +14,7 @@ const Header = ({ title }: { title: string }) => {
       >
         <img src={logo} alt={commonConstants.logo} />
       </Link>
-      <span className="font-boldFc text-3xl">{sideNav.sideNavHeading}</span>
+      <span className="text-3xl">{sideNav.sideNavHeading}</span>
     </div>
   )
 }
