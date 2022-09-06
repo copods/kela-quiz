@@ -1,4 +1,4 @@
-import { cypress } from '~/constants/common.constants'
+import { commonConstants } from '~/constants/common.constants'
 
 describe('Test for GroupByTestTable, Result', () => {
   beforeEach('sign-in', () => {
@@ -16,22 +16,18 @@ describe('Test for GroupByTestTable, Result', () => {
     cy.get('[data-cy="submit"]').click()
     cy.location('pathname').should('include', '/dashboard')
   })
-
-  let value: any
-  let strings: any
-
+  let value: string;
+  let strings: Array<string>
   it('Total Count of Test of groupByTable', () => {
     cy.get('a')
       .find('#group-by-tests')
-      .should('have.text', cypress.results)
+      .should('have.text', commonConstants.results)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')
     cy.get('#total-items-value', { timeout: 60000 })
       .get('#total-count-value')
       .then(($ele) => {
-        value = [...$ele].map(($el) => {
-          return $el.innerText
-        })
+        value = $ele[0].innerText
       })
     cy.get('#group-by-test-items').each(($el) => {
       cy.wrap($el)
@@ -40,7 +36,7 @@ describe('Test for GroupByTestTable, Result', () => {
         .within((el) => {
           cy.get('.candidate-name', { timeout: 60000 }).then(($elements) => {
             strings = [...$elements].map(($el) => $el.innerText)
-            expect(parseInt(value)).to.deep.equal(parseInt(strings.length))
+            expect(parseInt(value)).to.deep.equal(parseInt(`${strings.length}`))
           })
         })
     })
@@ -48,7 +44,7 @@ describe('Test for GroupByTestTable, Result', () => {
   it('sort by name in ascending order ', () => {
     cy.get('a', { timeout: 6000 })
       .find('#group-by-tests')
-      .should('have.text', cypress.results)
+      .should('have.text', commonConstants.results)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')
     cy.get('#headlessui-listbox-button-1 span span', { timeout: 60000 })
@@ -61,7 +57,7 @@ describe('Test for GroupByTestTable, Result', () => {
               .children()
               .within((el) => {
                 cy.get('.candidate-name').then(($elements) => {
-                  var strings = [...$elements].map(($el) => $el.innerText)
+                  let strings = [...$elements].map(($el) => $el.innerText)
                   expect(strings).to.deep.equal(strings.sort())
                 })
               })
@@ -72,7 +68,7 @@ describe('Test for GroupByTestTable, Result', () => {
   it('sort by name in descending order ', () => {
     cy.get('a', { timeout: 6000 })
       .find('#group-by-tests')
-      .should('have.text', cypress.results)
+      .should('have.text', commonConstants.results)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')
     cy.get('#sort-filter-body', { timeout: 60000 }).get('#ascend').click()
@@ -87,7 +83,7 @@ describe('Test for GroupByTestTable, Result', () => {
               .within((el) => {
                 cy.get('.candidate-name', { timeout: 60000 }).then(
                   ($elements) => {
-                    var strings = [...$elements].map(($el) => $el.innerText)
+                    let strings = [...$elements].map(($el) => $el.innerText)
                     expect(strings).to.deep.equal(strings.sort().reverse())
                   }
                 )
@@ -99,7 +95,7 @@ describe('Test for GroupByTestTable, Result', () => {
   it('sort by created date in ascending order ', () => {
     cy.get('a', { timeout: 6000 })
       .find('#group-by-tests')
-      .should('have.text', cypress.results)
+      .should('have.text', commonConstants.results)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')
     cy.get('.dropdown')
@@ -120,7 +116,7 @@ describe('Test for GroupByTestTable, Result', () => {
               .within((el) => {
                 cy.get('.candidate-name', { timeout: 10000 }).then(
                   ($elements) => {
-                    var strings = [...$elements].map(($el) => $el.innerText)
+                    let strings = [...$elements].map(($el) => $el.innerText)
                     expect(strings).to.deep.equal(strings.sort())
                   }
                 )
@@ -132,7 +128,7 @@ describe('Test for GroupByTestTable, Result', () => {
   it('sort by created date in descending order', () => {
     cy.get('a', { timeout: 6000 })
       .find('#group-by-tests')
-      .should('have.text', cypress.results)
+      .should('have.text', commonConstants.results)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')
     cy.get('#sort-filter-body').get('#ascend').click()
@@ -154,7 +150,7 @@ describe('Test for GroupByTestTable, Result', () => {
               .within((el) => {
                 cy.get('.candidate-name', { timeout: 10000 }).then(
                   ($elements) => {
-                    var strings = [...$elements].map(($el) => $el.innerText)
+                    let strings = [...$elements].map(($el) => $el.innerText)
                     expect(strings).to.deep.equal(strings.reverse())
                   }
                 )

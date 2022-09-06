@@ -16,13 +16,28 @@ export const commonConstants = {
   placeholderForOptionInput: 'Write your option here',
   sortAscending: 'Sort Ascending',
   sortDescending: 'Sort Descending',
+  invalidLinkSVG: 'Invalid Link SVG',
+  useSetting:"Use setting",
+  settings:'Settings',
+  groupByCandidate:'Group By Candidate',
+  results:'Results',
+  goToDashboard:'Go to Dashboard',
+  checkOrder:'Check Order',
+  complete:'Complete',
+  pending:'Pending',
+  createTest:'Creating Test',
+  submit:'Submit',
+  adding:"Adding...",
+  add:'Add',
+  cancelAddTest:'Cancel Add Test',
+  previousTab:'Previous Tab',
+  nextTab:'Next Tab',
+  logo:"logo",
 }
-
 export const sideNav = {
   sideNavHeading: 'Quiz',
   signOut: 'Sign out',
 }
-
 export const members = {
   addMember: 'Add Member',
   firstName: 'First Name',
@@ -46,6 +61,9 @@ export const testTableItem = {
   inviteMember: 'Invite Member',
   menu: 'Menu',
 }
+export const logo = {
+  kQuizLogo: 'K-Quiz Logo'
+}
 export const selectSectionCard = {
   removeSection: 'Remove Section',
   selectSection: 'Select Section',
@@ -55,14 +73,13 @@ export const deletePopUp = {
 }
 export const logIn = {
   signInMessage: 'Sign in to your account',
+  signIn: 'Sign In'
 }
 export const addQuestion = {
   createOptions: 'Create Options',
   checkOrder: 'Check Order',
   addOptions: 'Add Options',
-  addQuestion: 'Add Question',
-  enterQuesMsg: 'Enter the Question',
-  enterAllOptionsMsg: 'Enter all the Options'
+  addQuestion: 'Add Question'
 }
 export const sectionsConstants = {
   addSection: 'Add Section',
@@ -70,10 +87,10 @@ export const sectionsConstants = {
   addQuestion: 'Add Question',
   noQuestionAlert: 'No questions found. Add your first question',
   noRecordFound: 'No Record Found',
-  sectionAdditionMsg: 'Section added successfully..!',
-  sectionNameIsRequiredMsg: 'Section name is required',
-  sectionDescIsRequiredMsg: 'Description is required',
-  duplicateTitleMsg: 'Duplicate Title',
+  sort:'Sort',
+  dropdown:'Select',
+  expand:'Expand',
+  search:'Search Question'
 }
 export const testsConstants = {
   addTestbutton: 'Add Test',
@@ -85,9 +102,9 @@ export const testsConstants = {
   sectionText: 'Section',
   questions: 'Questions',
   totalQuestionsText: 'Total Questions',
-  Tests: 'Tests',
+  tests: 'Tests',
   srNoText: 'S No.',
-  testListColumnLable: 'Test',
+  testListColumnLabel: 'Test',
   createdOn: 'Created on',
   created: 'Created',
   actionsText: 'Actions',
@@ -105,7 +122,11 @@ export const routeFiles = {
   sections: 'Sections',
   options: 'Options',
 }
-
+export enum QuestionTypes {
+  multipleChoice = 'MULTIPLE_CHOICE',
+  singleChoice = 'SINGLE_CHOICE',
+  text = 'TEXT',
+}
 export const statusCheck = {
   success: 'Success',
   commonError: 'Something Went Wrong',
@@ -130,20 +151,17 @@ export const resultConstants = {
   status: 'Status',
   inactive: 'Inactive',
   active: 'Active',
-
   startedAt: 'Started At',
   correct: "Correct",
   skipped: "Skipped",
   total: "Total"
 }
-
 export enum QuestionStatus {
   notViewed = 'NOT_VIEWED',
   viewed = 'VIEWED',
   skipped = 'SKIPPED',
   answered = 'ANSWERED',
 }
-
 export const candidateExamConstants = {
   time: 'Time',
   timeRemaining: 'Time Remaining',
@@ -151,6 +169,7 @@ export const candidateExamConstants = {
   assessmentDetails: 'Assessment Details',
   assessmentTests: 'Assessment Tests',
   assessmentEnd: 'Assessment Ended',
+  endAssesment: "End Assesment SVG",
   wrongLink: 'Wrong Link',
   minutes: 'Mins',
   description: 'Description',
@@ -164,7 +183,7 @@ export const candidateExamConstants = {
   beginAssesment: 'Begin Assesment',
   instructions: 'Instructions',
   startSection: 'Start Now',
-
+  candidateLogo: 'Candidate Logo',
   info: 'Info',
   noOfQuestions: 'No. of Questions',
   candidateTestCreated: 'created',
@@ -175,9 +194,6 @@ export const candidateExamConstants = {
   errorCreatingSectionInTest: 'Error creating section in test ..',
 }
 export const cypress = {
-  Tests: 'Tests',
-  Sections: 'Sections',
-  Add: 'Add',
   email: 'careers@copods.co',
   password: 'kQuiz@copods',
   step1: 'Step 1',
@@ -187,32 +203,34 @@ export const cypress = {
   selectSections: 'Select Sections',
   preview: 'Preview',
   next: 'Next',
-  Remove: 'Remove',
-  back: 'Back',
-  submit: 'Submit',
-  question: 'Question',
-  saveAndAddMore: 'Save & Add More',
-  groupByTest: 'Results',
-  members: 'Members',
-  addMember: '+ Add Member',
-  cancel: 'Cancel',
-  delete: 'Delete',
-  results: 'Results',
-  name: 'Name',
-  description: 'Description',
-  totalTime: 'Total Time',
-  totalSections: 'Total Sections',
-
+  remove: 'Remove',
   addQuest: '+ Add Question',
+  back: 'Back',
   nameIsReq: 'Name is required',
   descIsReq: 'Description is required',
   sectionAdded: 'Section added successfully..!',
   duplicateTitle: 'Duplicate Title',
-  enterAllOptions: 'Enter all the Options',
+  question: 'Question',
+  saveAndAddMore: 'Save & Add More',
+  groupByTest: 'Results',
+  addMember: '+ Add Member',
+  cancel: 'Cancel',
+  name: 'Name',
+  description: 'Description',
+  totalTime: 'Total Time',
+  borderExist:'border-l-8',
+  useRef:'What is useRef() ?',
+  useRefAns:'It allows you to persist values between renders.',
+  useMemo:'What is useMemo() ?',
+  useMemoAns:'The useMemo Hook can be used to keep expensive, resource intensive functions from needlessly running.',
 }
 
-export enum sortByOrder {
-  ascending = 'asc',
-  name = 'name',
-  descending = 'dsc',
+export const toastConstants ={
+  addTest:'Enter Name to add test',
+  enterDescription:'Enter description to add test',
+  addSection:'Add sections to add test',
+  enterQuestion:"Enter the Question",
+  enterOption:'Enter all the Options'
 }
+
+

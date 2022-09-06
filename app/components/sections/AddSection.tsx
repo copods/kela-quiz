@@ -6,6 +6,7 @@ import {
   commonConstants,
   sectionsConstants,
 } from '~/constants/common.constants'
+import Button from '../form/Button'
 const AddSection = ({
   open,
   setOpen,
@@ -35,7 +36,6 @@ const AddSection = ({
         >
           <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
         </Transition.Child>
-
         <div className="fixed inset-0 z-10 overflow-y-auto">
           <Form
             method="post"
@@ -52,7 +52,12 @@ const AddSection = ({
             >
               <Dialog.Panel className="relative transform overflow-hidden rounded-2xl bg-white p-6 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
                 <div className="addSectionDilog flex items-center justify-between pt-1">
-                  <h2 className="text-2xl font-bold text-gray-700">
+                  <h2 
+                     className="text-2xl font-bold text-gray-700" 
+                     title={sectionsConstants.addSection}
+                     role={sectionsConstants.addSection}
+                     tabIndex={0}
+                     aria-label={sectionsConstants.addSection}>
                     {sectionsConstants.addSection}
                   </h2>
                   <Icon
@@ -82,34 +87,26 @@ const AddSection = ({
                     placeholder="Enter Section Description"
                   />
                 </div>
-
                 <div className="flex justify-end gap-2">
-                  <button
-                    tabIndex={0}
-                    type="button"
-                    className="h-9 rounded-md px-4 text-sm text-gray-500"
-                    onClick={() => {
-                      setOpen(false)
-                    }}
-                  >
-                    {commonConstants.cancel}
-                  </button>
-                  <button
-                    data-cy="submit"
-                    tabIndex={0}
-                    type="submit"
-                    id="submit-button"
-                    name="add-section"
-                    value={JSON.stringify({ action: 'add' })}
-                    className={`h-9 rounded-md bg-primary px-4 text-sm text-[#F0FDF4] disabled:opacity-80  ${
-                      transition.state === 'submitting' || showErrorMessage
-                        ? 'disabled bg-gray-600'
-                        : ''
-                    }`}
-                    disabled={transition.state === 'submitting'}
-                  >
-                    {transition.state === 'submitting' ? 'Adding...' : 'Add'}
-                  </button>
+                    <Button 
+                      tabIndex={0}
+                      type='button'
+                      className='h-9 px-4'
+                      onClick={() => setOpen(false)}
+                      varient="primary-outlined"
+                      buttonText={commonConstants.cancel} />
+                    <Button 
+                      tabIndex={0}
+                      type="submit"
+                      id='submit-button'
+                      className='h-9 px-4'
+                      name="add-section"
+                      value="add"
+                      onClick={() => setOpen(false)}
+                      isDisabled={transition.state === 'submitting' || showErrorMessage}
+                      varient="primary-solid"
+                      datacy="submit"
+                      buttonText={transition.state === 'submitting' ? 'Adding...' : 'Add'} />
                 </div>
               </Dialog.Panel>
             </Transition.Child>

@@ -27,7 +27,9 @@ import AdminLayout from '~/components/layouts/AdminLayout'
 import AddSection from '~/components/sections/AddSection'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import type { Section } from '~/interface/Interface'
+import Button from '~/components/form/Button'
+import { Section, sortByOrder } from '~/interface/Interface'
+import { routes } from '~/constants/route.constants'
 
 export type ActionData = {
   errors?: {
@@ -56,8 +58,8 @@ export type LoaderData = {
 export const loader: LoaderFunction = async ({ request, params }) => {
   const url = new URL(request.url).searchParams.entries()
   const obj = Object.fromEntries(url).filter
-  var sections: Array<Section> = []
-  var status: string = ''
+  let sections: Array<Section> = []
+  let status: string = ''
   await getAllSections(obj)
     .then((res) => {
       sections = res as Section[]
@@ -67,7 +69,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
       status = err
     })
   const userId = await getUserId(request)
-  if (!userId) return redirect('/sign-in')
+  if (!userId) return redirect(routes.signIn)
   const selectedSectionId = params.sectionId
     ? params.sectionId?.toString()
     : undefined
@@ -78,11 +80,10 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 export const action: ActionFunction = async ({ request }) => {
   const createdById = await requireUserId(request)
   const formData = await request.formData()
-  const action = JSON.parse(formData.get('add-section') as string)
-    ? JSON.parse(formData.get('add-section') as string)
-    : formData.get('deleteSection')
-
-  if (action.action === 'add') {
+  const action = formData.get('add-section') 
+  ? formData.get('add-section') 
+  : formData.get('deleteSection')
+  if (action === 'add') {
     const name = formData.get('name')
     const description = formData.get('description')
     if (typeof name !== 'string' || name.length === 0) {
@@ -178,7 +179,7 @@ export default function SectionPage() {
 
   const [sectionDetailFull, setSectionDetailFull] = useState(false)
   const [showAddSectionModal, setShowAddSectionModal] = useState(false)
-  const [order, setOrder] = useState('asc')
+  const [order, setOrder] = useState(sortByOrder.ascending as string)
   const [sortBy, setSortBy] = useState(sortByDetails[1].value)
   const [selectedSection, setSelectedSection] = useState(
     data.selectedSectionId || data.sections[0]?.id || 'NA'
@@ -206,7 +207,7 @@ export default function SectionPage() {
   useEffect(() => {
     if (data.sections.length) {
       const formData = new FormData()
-      var filter = {
+      let filter = {
         orderBy: {
           [sortBy]: order,
         },
@@ -245,20 +246,25 @@ export default function SectionPage() {
 
   return (
     <AdminLayout>
-      <div className="flex h-full flex-col gap-12 overflow-hidden">
+      <div className="flex h-full flex-col gap-12 overflow-hidden p-1">
         {/* header */}
         <header className="flex items-center justify-between">
-          <h2 className="text-3xl font-bold text-black">
+          <h2 className="text-3xl font-bold text-black"
+          tabIndex={0}
+          role={routeFiles.sections}
+          title={routeFiles.sections}
+          aria-label={routeFiles.sections}>
             {routeFiles.sections}
           </h2>
-          <button
-            tabIndex={0}
-            className="h-9 rounded-lg bg-primary px-5 text-xs text-[#F0FDF4]"
-            id="add-section"
-            onClick={() => setShowAddSectionModal(!showAddSectionModal)}
-          >
-            + {sectionsConstants.addSection}
-          </button>
+          <Button 
+            id='add-section' 
+            data-cy="submit"
+            className='px-5 h-9' 
+            varient='primary-solid'
+            onClick={() => setShowAddSectionModal(!showAddSectionModal)} 
+            buttonText={
+              `+ ${sectionsConstants.addSection}`
+            } />
         </header>
 
         {data.sections.length > 0 ? (
@@ -311,9 +317,32 @@ export default function SectionPage() {
               <Outlet />
             </div>
           </div>
-        ) : (
-          <div className="p-7 text-center">
-            {sectionsConstants.noRecordFound}
+          {/* section details */}
+          <div className={`z-10 flex flex-1 items-center `}>
+            <span
+              className="z-20 -mr-5"
+              tabIndex={0}
+              role={'button'}
+              onClick={() => setSectionDetailFull(!sectionDetailFull)}
+              onKeyUp={(e) => {
+                if (e.key === 'Enter') setSectionDetailFull(!sectionDetailFull)
+              }}
+              title={sectionsConstants.expand}
+              aria-label={sectionsConstants.expand}
+            >
+              {sectionDetailFull ? (
+                <Icon
+                  icon={'akar-icons:circle-chevron-right-fill'}
+                  className="cursor-pointer text-4xl text-primary"
+                />
+              ) : (
+                <Icon
+                  icon={'akar-icons:circle-chevron-left-fill'}
+                  className="cursor-pointer text-4xl text-primary"
+                />
+              )}
+            </span>
+            <Outlet />
           </div>
         )}
 

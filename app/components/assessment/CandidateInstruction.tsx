@@ -4,17 +4,15 @@ import {
   routeFiles,
 } from '~/constants/common.constants'
 import type { SectionInTest, TestSection } from '~/interface/Interface'
+import Button from '../form/Button'
 
 const CandidateInstruction = () => {
   const { firstSection, instructions } = useLoaderData()
-
   const candidateSections = instructions?.test?.sections.sort(
     (a: TestSection & { order: number }, b: TestSection & { order: number }) =>
       a.order > b.order ? 1 : b.order > a.order ? -1 : 0
   )
-
   const submit = useSubmit()
-
   const startTestForCandidate = () => {
     submit(
       {
@@ -28,7 +26,7 @@ const CandidateInstruction = () => {
     <div className="h-full flex-col overflow-y-auto">
       <div>
         <div
-          className="pb-9 text-base leading-6 text-gray-700"
+          className="pb-9 text-base text-gray-700"
           dangerouslySetInnerHTML={{
             __html: instructions?.test?.description,
           }}
@@ -72,12 +70,12 @@ const CandidateInstruction = () => {
             <li>You can traverse the questions in particular section</li>
           </ul>
           <div className="flex">
-            <button
-              className="text-md mt-8 h-12 w-52 rounded-md bg-primary text-gray-50"
-              onClick={() => startTestForCandidate()}
-            >
-              {candidateExamConstants.beginAssesment}
-            </button>
+            <Button 
+            className='h-12 w-52 mt-8'
+            varient='primary-solid'
+            buttonText={candidateExamConstants.beginAssesment}
+            onClick={startTestForCandidate}
+            />
           </div>
         </div>
       </div>

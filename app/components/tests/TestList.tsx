@@ -1,10 +1,12 @@
 import { useSubmit } from '@remix-run/react'
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import type { Test } from '~/interface/Interface'
 import SortFilter from '../SortFilter'
 import TestTableItem from './TestTableItem'
 import { commonConstants, testsConstants } from '~/constants/common.constants'
+import Button from '../form/Button'
+// import Checkbox from '../form/CheckBox'
 const TestList = ({
   tests,
   status,
@@ -14,6 +16,7 @@ const TestList = ({
 }) => {
   const [sortDirection, onSortDirectionChange] = useState('asc')
   const [sortBy, onSortChange] = useState('name')
+  const navigate = useNavigate()
   const filterByType = [
     {
       name: 'Name',
@@ -40,31 +43,30 @@ const TestList = ({
       }
     }
   }, [sortDirection, sortBy])
-
   const showCheckBox = false
   return (
-    <div className="test-list-container flex h-full flex-col gap-6 ">
+    <div className="test-list-container flex h-full flex-col gap-6">
       {/* header */}
       {/* <BreadCrumb data={breadCrumbData} /> */}
       <header className="flex items-center justify-between">
         <h2
           tabIndex={0}
-          role={testsConstants.Tests}
-          title="Tests"
+          role={testsConstants.tests}
+          title={testsConstants.tests}
           className="text-3xl font-bold text-black"
         >
-          {testsConstants.Tests}
+          {testsConstants.tests}
         </h2>
-        <Link
-          to={'/tests/add-test'}
+        <Button
+          className="px-5"
+          onClick={() => navigate('/tests/add-test')}
           id="add-test"
           tabIndex={0}
-          className="flex h-9 items-center rounded-lg bg-primary px-5 text-xs text-white"
+          varient="primary-solid"
           title={testsConstants.addTestbutton}
           aria-label={testsConstants.addTestbutton}
-        >
-          + {testsConstants.addTestbutton}
-        </Link>
+          buttonText={`+ ${testsConstants.addTestbutton}`}
+        />
       </header>
       <div id="sort-filter-container">
         <SortFilter
@@ -77,36 +79,35 @@ const TestList = ({
           showSelected={false}
         />
       </div>
-
-      <div className="flex flex-1 flex-col rounded-lg pb-6 ">
-        <div className="rounded-b-0 flex items-center gap-3 rounded-t-md border border-b border-solid border-borderColor bg-tableHeader px-9 py-3 font-semibold shadow-table">
+      <div className="flex flex-1 flex-col rounded-lg pb-6">
+        <div className="rounded-b-0 flex items-center gap-3 rounded-t-md border-solid border-gray-200 bg-gray-100 px-9 py-3 font-semibold shadow-base">
           {showCheckBox && (
             <div className="w-1/12">
               <input type="checkbox" />
             </div>
           )}
-          <div className="w-1/12 text-sm leading-5 text-gray-500">
+          <div className="w-1/12 text-sm text-gray-500">
             {testsConstants.srNoText}
           </div>
-          <div className="w-4/12 text-sm leading-5 text-gray-500">
-            {testsConstants.testListColumnLable}
+          <div className="w-4/12 text-sm text-gray-500">
+            {testsConstants.testListColumnLabel}
           </div>
-          <div className="w-3/12 text-sm leading-5 text-gray-500">
+          <div className="w-3/12 text-sm text-gray-500">
             {testsConstants.sectionText}
           </div>
-          <div className="w-2/12 text-sm leading-5 text-gray-500">
+          <div className="w-2/12 text-sm text-gray-500">
             {testsConstants.createdOn}
           </div>
-          <div className="w-2/12 text-sm leading-5 text-gray-500">
+          <div className="w-2/12 text-sm text-gray-500">
             {testsConstants.created} {commonConstants.byText}
           </div>
-          <div className="flex w-1/12 text-sm leading-5 text-gray-500">
+          <div className="flex w-1/12 text-sm text-gray-500">
             {testsConstants.actionsText}
           </div>
         </div>
         <div
           id="test-list"
-          className="rounded-t-0 flex flex-col rounded-md border-t-0 border-solid border-borderColor shadow-table"
+          className="rounded-t-0 flex flex-col rounded-md border-solid border-gray-200 shadow-base"
         >
           {tests.map((test, i) => (
             <TestTableItem
@@ -123,7 +124,7 @@ const TestList = ({
             />
           ))}
           {tests.length === 0 && (
-            <div className="flex items-center justify-center p-7">
+            <div className="flex items-center justify-center rounded-b-md bg-white p-7">
               <span>{testsConstants.noTestFound}</span>
             </div>
           )}
@@ -132,5 +133,4 @@ const TestList = ({
     </div>
   )
 }
-
 export default TestList

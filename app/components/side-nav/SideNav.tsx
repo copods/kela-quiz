@@ -1,9 +1,10 @@
 import MenuItems from './MenuItems'
 import Header from '~/components/SideNavHeader'
 import Footer from '~/components/SideNavFooter'
-import { sideNav } from '~/constants/common.constants'
+import { commonConstants, members, routeFiles, sideNav, testsConstants } from '~/constants/common.constants'
+import { routes } from '~/constants/route.constants'
 
-let sideNavGuide = [
+const sideNavGuide = [
   // {
   //   navGuide: 'Main Menu',
   //   subItem: [
@@ -11,7 +12,7 @@ let sideNavGuide = [
   //       id: 'Dashboard',
   //       iconClass: 'mdi:view-dashboard',
   //       itemName: 'Dashboard',
-  //       itemRoute: 'dashboard',
+  //       itemRoute: routes.dashboard,
   //     },
   //   ],
   // },
@@ -21,13 +22,13 @@ let sideNavGuide = [
       {
         id: 'group-by-tests',
         iconClass: 'mdi:chart-box-outline',
-        itemName: 'Results',
-        itemRoute: 'results/groupByTests',
+        itemName: commonConstants.results,
+        itemRoute: routes.resultGroupTest,
       },
       // {
       //   id: 'Group_By_Candidate',
       //   iconClass: 'mdi:chart-box-outline',
-      //   itemName: 'Group By Candidate',
+      //   itemName: commonConstants.groupByCandidate,
       //   itemRoute: 'groupByCandidate',
       // },
     ],
@@ -38,14 +39,14 @@ let sideNavGuide = [
       {
         id: 'tests',
         iconClass: 'carbon:result',
-        itemName: 'Tests',
-        itemRoute: 'tests',
+        itemName: testsConstants.tests,
+        itemRoute: routes.tests,
       },
       {
         id: 'sections',
         iconClass: 'ci:list-checklist-alt',
-        itemName: 'Sections',
-        itemRoute: 'sections',
+        itemName: routeFiles.sections,
+        itemRoute: routes.sections,
       },
     ],
   },
@@ -55,20 +56,19 @@ let sideNavGuide = [
       {
         id: 'members',
         iconClass: 'mdi:account-group',
-        itemName: 'Members',
-        itemRoute: 'members',
+        itemName: members.members,
+        itemRoute: routes.members,
       },
       // {
       //   id: 'Settings',
       //   iconClass: 'mdi:cog',
-      //   itemName: 'Settings',
+      //  itemName: commonConstants.settings,
       //   itemRoute: 'settings',
       // },
     ],
   },
 ]
 const title = sideNav.sideNavHeading
-
 const SideNav = () => {
   return (
     <div className="flex h-full flex-col justify-between overflow-auto p-5">
@@ -80,7 +80,7 @@ const SideNav = () => {
           {sideNavGuide.map((guide, index) => {
             return (
               <div className="10px flex flex-col gap-1" key={index}>
-                <p className="non-italic px-2 pb-2 text-left text-xs font-semibold leading-4 text-gray-400">
+                <p className="non-italic px-2 pb-2 text-left text-xs font-semibold text-gray-400">
                   {guide.navGuide}
                 </p>
                 {guide.subItem.map((item, index) => {

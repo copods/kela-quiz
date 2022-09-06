@@ -24,7 +24,6 @@ describe('Test for Section', () => {
     cy.get('[data-cy="submit"]').click()
     cy.location('pathname').should('include', '/dashboard')
   })
-
   it('cancel Add section', () => {
     cy.get('a')
       .find('#sections', { timeout: 8000 })
@@ -46,16 +45,16 @@ describe('Test for Section', () => {
     cy.location('pathname', { timeout: 6000 }).should('include', '/sections')
     cy.get('input[name="search"]', { timeout: 6000 })
       .clear()
-      .type('What is your Test Question ?')
+      .type(cypress.useMemo)
     cy.get('.ql-editor').each(($el) => {
       cy.wrap($el).within((el) => {
         if (
           el[0].getElementsByClassName('question')[0].innerHTML ===
-          'What is your Test Question ?'
+          cypress.useMemo
         ) {
           cy.get('.question').should(
             'have.text',
-            'What is your Test Question ?'
+            cypress.useMemo
           )
         }
       })
@@ -71,7 +70,6 @@ describe('Test for Section', () => {
       cy.location('search').should('include', loc.search)
     })
   })
-
   it('Test for valid error message while adding new section without Title', () => {
     cy.get('a')
       .find('#sections')
@@ -84,7 +82,6 @@ describe('Test for Section', () => {
       .within((el) => {
         cy.get('[data-cy="submit"]').click()
       })
-
     cy.get('.Toastify__toast').should('have.text', cypress.nameIsReq)
   })
   it('Test for valid error message while adding new section without Description', () => {
@@ -103,7 +100,6 @@ describe('Test for Section', () => {
 
         cy.get('[data-cy="submit"]').click()
       })
-
     cy.get('.Toastify__toast').should('have.text', cypress.descIsReq)
   })
   it('Test for valid error message while adding new section with duplicate Title', () => {
@@ -120,7 +116,6 @@ describe('Test for Section', () => {
         cy.get('textarea').type('Aptitude')
         cy.get('[data-cy="submit"]').click()
       })
-
     cy.get('.Toastify__toast').should('have.text', cypress.duplicateTitle)
     cy.get('.Toastify__close-button').click()
   })
@@ -130,7 +125,6 @@ describe('Test for Section', () => {
       .should('have.text', routeFiles.sections)
       .click()
     cy.location('pathname', { timeout: 6000 }).should('include', '/sections')
-
     cy.get('.sectionLSWrapper', { timeout: 6000 }).within(() => {
       cy.get('#section-cards')
         .get('a')
@@ -142,12 +136,12 @@ describe('Test for Section', () => {
             .then((el) => {
               if (el === 'Name') {
                 cy.get('h2').then(($elements) => {
-                  var strings = [...$elements].map(($el) => $el.innerText)
+                  let strings = [...$elements].map(($el) => $el.innerText)
                   expect(strings).to.deep.equal([...strings].sort())
                 })
               } else if (el === 'Created Date') {
                 cy.get('.created-by-date').then(($elements) => {
-                  var strings = [...$elements].map(($el) => {
+                  let strings = [...$elements].map(($el) => {
                     return new Date($el.innerText).toLocaleDateString
                   })
                   expect(strings).to.deep.equal([...strings].sort())
@@ -163,7 +157,7 @@ describe('Test for Section', () => {
       .should('have.text', routeFiles.sections)
       .click()
     cy.location('pathname', { timeout: 6000 }).should('include', '/sections')
-    cy.get('.section-card ').each(($el) => {
+    cy.get('#section-card ').each(($el) => {
       cy.wrap($el).within((el) => {
         if (
           el[0].getElementsByClassName('sectionName')[0].innerHTML ===
@@ -178,15 +172,15 @@ describe('Test for Section', () => {
         }
       })
     })
-    cy.get('[data-cy="deleteSection"]').should('have.text', 'Delete').click()
+    cy.get('[data-cy="delete-section"]').should('have.text', 'Delete').click()
     cy.get('#delete-dialog').should('be.visible')
-    cy.get('.confirm-delete')
+    cy.get('#confirm-delete')
       .should('have.text', commonConstants.delete)
       .click()
     cy.get('.Toastify__toast').should('have.text', statusCheck.deletedSuccess)
     cy.get('.Toastify__close-button').click()
     cy.location('pathname', { timeout: 6000 }).should('include', '/sections')
-    cy.get('.section-card', { timeout: 8000 }).each(($el) => {
+    cy.get('#section-card', { timeout: 8000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
           el[0].getElementsByClassName('sectionName')[0].innerHTML ===

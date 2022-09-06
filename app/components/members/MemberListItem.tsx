@@ -32,44 +32,35 @@ export default function MemberListItem({
     <div className="col-span-full grid grid-cols-10">
       <div className="memberRows col-span-full grid grid-cols-10 border-t border-solid border-gray-200 px-12 py-4">
         <div className=" col-span-2 overflow-ellipsis break-all">
-          <span className="memberName text-base leading-6 text-gray-700">
+          <span className="memberName text-base text-gray-700">
             {user.firstName} {user.lastName}
           </span>
         </div>
         <div className="memberMail col-span-3 overflow-ellipsis break-all">
-          <span className="text-base leading-6 text-gray-700">
+          <span className="text-base text-gray-700">
             {user.email}
           </span>
         </div>
         <div className="col-span-2 overflow-ellipsis break-all">
-          <span className="text-base leading-6 text-gray-700">
+          <span className="text-base text-gray-700">
             {user?.role?.name}
           </span>
         </div>
         <div className="col-span-2 overflow-ellipsis break-all">
-          <span className="text-base leading-6 text-gray-700">
+          <span className="text-base text-gray-700">
             {moment(user?.createdAt).format('DD MMMM YY')}
           </span>
         </div>
         <div className="col-span-1">
-          <button
-            onKeyUp={(e) => {
-              if (e.key === 'Enter') openPopUp()
-            }}
-            id="delete-button"
+          <Icon
+            id='delete-button'
             tabIndex={0}
-            name="deleteMember"
-            disabled={loggedInUser}
-            value={JSON.stringify({ action: 'delete', id: user.id })}
-          >
-            <Icon
-              onClick={openPopUp}
-              icon="ic:outline-delete-outline"
-              className={`pointer-cursor h-6 w-6 text-red-500 ${
-                loggedInUser && 'cursor-not-allowed text-red-300'
-              }`}
+            onClick={openPopUp}
+            icon="ic:outline-delete-outline"
+            className={`cursor-pointer h-6 w-6 text-red-500 ${
+              loggedInUser && 'cursor-not-allowed text-red-300'
+            }`}
             />
-          </button>
         </div>
         <DeletePopUp setOpen={setOpen} open={open} onDelete={deleteUser} />
       </div>

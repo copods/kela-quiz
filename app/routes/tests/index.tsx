@@ -11,6 +11,7 @@ import { toast } from 'react-toastify'
 import type { Test } from '~/interface/Interface'
 import { statusCheck } from '~/constants/common.constants'
 import { createCandidate } from '~/models/candidate.server'
+import { routes } from '~/constants/route.constants'
 
 type LoaderData = {
   tests: Awaited<ReturnType<typeof getAllTests>>
@@ -29,10 +30,10 @@ export type ActionData = {
 
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await getUserId(request)
-  if (!userId) return redirect('/sign-in')
+  if (!userId) return redirect(routes.signIn)
 
-  var tests: Array<Test> = []
-  var status: string = ''
+  let tests: Array<Test> = []
+  let status: string = ''
 
   const filter = Object.fromEntries(new URL(request.url).searchParams.entries())
     .data

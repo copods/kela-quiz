@@ -1,6 +1,7 @@
 import { Icon } from '@iconify/react'
 import { useLoaderData, useSubmit } from '@remix-run/react'
 import { candidateExamConstants } from '~/constants/common.constants'
+import Button from '../form/Button'
 
 const SectionDetails = () => {
   const { section, candidateSection } = useLoaderData()
@@ -15,7 +16,6 @@ const SectionDetails = () => {
       { method: 'post' }
     )
   }
-
   return (
     <div className="flex flex-col gap-8">
       <div className="flex flex-col gap-4">
@@ -36,13 +36,12 @@ const SectionDetails = () => {
           </div>
         </div>
       </div>
-
-      <button
-        className="w-fit rounded-md bg-primary py-3 px-11 text-white"
-        onClick={startSection}
-      >
-        {candidateExamConstants.startSection}
-      </button>
+      <Button 
+      className='px-11'
+      onClick={startSection}
+      buttonText={candidateExamConstants.startSection}
+      varient='primary-solid'
+      />
     </div>
   )
 }

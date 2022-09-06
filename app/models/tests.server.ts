@@ -1,6 +1,6 @@
-import { sortByOrder } from './../constants/common.constants'
 import type { Section } from '@prisma/client'
 import { prisma } from '~/db.server'
+import { sortByOrder } from '~/interface/Interface'
 
 export async function getTestById({ id }: Pick<Section, 'id'>) {
   return prisma.test.findUnique({
@@ -18,7 +18,7 @@ export async function getTestById({ id }: Pick<Section, 'id'>) {
 }
 
 export async function getAllTests(obj: any) {
-  var filter = obj.orderBy ? obj : { orderBy: { name: sortByOrder.ascending } }
+  let filter = obj.orderBy ? obj : { orderBy: { name: sortByOrder.ascending } }
   return await prisma.test.findMany({
     ...filter,
     where: {
@@ -39,6 +39,7 @@ export async function getAllTests(obj: any) {
           section: {
             select: {
               name: true,
+              id:true
             },
           },
         },

@@ -12,6 +12,7 @@ import {
   statusCheck,
 } from '~/constants/common.constants'
 import { toast } from 'react-toastify'
+import Button from '~/components/form/Button'
 interface textAnswerType {
   id: string
   answer: string
@@ -45,7 +46,6 @@ export default function OptionForQuestion({
   setCheckOrder: (e: boolean) => void
 }) {
   const toastId = 'doNotDeleteLastOptions'
-
   const addOptionArea = () => {
     if (
       getQuestionType(selectedTypeOfQuestion) ===
@@ -60,7 +60,6 @@ export default function OptionForQuestion({
       setTextCorrectAnswer([...textCorrectAnswer, { id: cuid(), answer: '' }])
     }
   }
-
   const deleteOption = (index: number, id?: string) => {
     if (
       getQuestionType(selectedTypeOfQuestion) ===
@@ -94,7 +93,6 @@ export default function OptionForQuestion({
       }
     }
   }
-
   const updateOption = (opt: string, id: string) => {
     const optionIndex = options.findIndex((o) => o.id === id)
     if (opt === '<p><br></p>') {
@@ -103,7 +101,6 @@ export default function OptionForQuestion({
       options[optionIndex].option = opt
     }
   }
-
   const checkBoxToggle = (index: number) => {
     setOptions(
       (e: Array<{ option: string; isCorrect: boolean; id: string }>) => {
@@ -112,52 +109,49 @@ export default function OptionForQuestion({
       }
     )
   }
-
   const updateTextAnswer = (textAns: string, index: number) => {
     setTextCorrectAnswer((e: textAnswerType[]) => {
       e[index].answer = textAns
       return [...e]
     })
   }
-
   return (
     <div className="flex flex-1 flex-col gap-6">
-      <div className="mb-2 flex h-11 flex-row items-end justify-between">
+      <div className="flex h-11 flex-row items-end justify-between p-1">
         {getQuestionType(selectedTypeOfQuestion) ===
           QuestionTypes.multipleChoice ||
         getQuestionType(selectedTypeOfQuestion) ===
           QuestionTypes.singleChoice ? (
-          <div className="ml-7 text-base font-medium leading-6 text-gray-600">
+          <div className="ml-7 text-base font-medium text-gray-600"
+             role={addQuestion.createOptions}
+             tabIndex={0}
+             title={addQuestion.createOptions}
+             aria-label={addQuestion.createOptions}
+          >
             {addQuestion.createOptions}
           </div>
         ) : (
-          <div className="flex items-center justify-center gap-2 text-base font-medium leading-6 text-gray-600">
+          <div className="flex items-center justify-center gap-2 text-base font-medium text-gray-600">
             {addQuestion.checkOrder}
-            <span>
               <Toggle toggle={checkOrder} onToggleChange={setCheckOrder} />
-            </span>
           </div>
         )}
-
-        <button
+        <Button 
           tabIndex={0}
-          className={`flex h-9 items-center  rounded-lg bg-primary px-5 text-xs text-white ${
-            options.length === 6 ? 'cursor-not-allowed opacity-75' : ''
-          }`}
-          onClick={addOptionArea}
-        >
-          + {addQuestion.addOptions}
-        </button>
+          id='add-option'
+          className='h-9 px-5' 
+          varient='primary-solid' 
+          onClick={addOptionArea} 
+          buttonText={`+ ${addQuestion.addOptions}`} />
       </div>
-
-      <div className="flex h-full flex-1 flex-col gap-5 overflow-auto">
+      <div className="flex h-full flex-1 flex-col gap-5 overflow-auto p-1">
         {(getQuestionType(selectedTypeOfQuestion) ===
           QuestionTypes.multipleChoice ||
           getQuestionType(selectedTypeOfQuestion) ===
             QuestionTypes.singleChoice) &&
           options.map((option, index) => {
             return (
-              <div className="flex items-center gap-2.5" key={option.id}>
+              <div className="flex items-center gap-2.5 p-1" key={option.id}>
                 {getQuestionType(selectedTypeOfQuestion) ===
                 QuestionTypes.multipleChoice ? (
                   <input
@@ -203,22 +197,22 @@ export default function OptionForQuestion({
                 </div>
                 <Icon
                   onClick={() => deleteOption(index, option?.id)}
-                  onKeyUp={(e) => {
+                  onKeyDown={(e) => {
                     if (e.key === 'Enter') deleteOption(index, option?.id)
                   }}
                   tabIndex={0}
-                  aria-label="delete"
+                  aria-label={commonConstants.delete}
                   icon="ic:outline-delete-outline"
                   className={`h-6 w-6 ${index} ${
                     options.length < 2
                       ? 'cursor-not-allowed text-red-400'
                       : 'cursor-pointer text-red-600'
                   }`}
-                ></Icon>
+                  role='button'
+                />
               </div>
             )
           })}
-
         {getQuestionType(selectedTypeOfQuestion) === QuestionTypes.text &&
           textCorrectAnswer.map(
             (option: { id: string; answer: string }, index: number) => {
@@ -244,7 +238,10 @@ export default function OptionForQuestion({
                         ? 'cursor-not-allowed text-red-400'
                         : 'cursor-pointer text-red-600'
                     }`}
-                  ></Icon>
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') deleteOption(index, option?.id)
+                    }}
+                  />
                 </div>
               )
             }

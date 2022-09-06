@@ -24,14 +24,14 @@ describe('Creating tests', () => {
   })
 
   it('Visiting Add Test Page', () => {
-    cy.get('a').find('#tests').should('have.text', testsConstants.Tests).click()
+    cy.get('a').find('#tests').should('have.text', testsConstants.tests).click()
     cy.get('#add-test', { timeout: 6000 })
       .should('have.text', `+ ${testsConstants.addTestbutton}`)
       .click()
     cy.location('pathname').should('include', '/tests/add-test')
   })
   it('Verify if add test page contains 3 tabs', () => {
-    cy.get('a').find('#tests').should('have.text', testsConstants.Tests).click()
+    cy.get('a').find('#tests').should('have.text', testsConstants.tests).click()
     cy.get('#add-test', { timeout: 6000 })
       .should('have.text', `+ ${testsConstants.addTestbutton}`)
       .click()
@@ -67,7 +67,7 @@ describe('Creating tests', () => {
   })
 
   it('Verify if next button is disabled if user do not provide name and description', () => {
-    cy.get('a').find('#tests').should('have.text', testsConstants.Tests).click()
+    cy.get('a').find('#tests').should('have.text', testsConstants.tests).click()
     cy.get('#add-test', { timeout: 6000 })
       .should('have.text', `+ ${testsConstants.addTestbutton}`)
       .click()
@@ -81,7 +81,7 @@ describe('Creating tests', () => {
   })
   const test = `Aptitude - section`
   it('Verify if user able to navigate to Step 2 by clicking next button if user provide name and description', () => {
-    cy.get('a').find('#tests').should('have.text', testsConstants.Tests).click()
+    cy.get('a').find('#tests').should('have.text', testsConstants.tests).click()
     cy.get('#add-test', { timeout: 6000 })
       .should('have.text', `+ ${testsConstants.addTestbutton}`)
       .click()
@@ -115,7 +115,7 @@ describe('Creating tests', () => {
   })
 
   it('Verify on clicking back button on step 2 user navigate back to step 2', () => {
-    cy.get('a').find('#tests').should('have.text', testsConstants.Tests).click()
+    cy.get('a').find('#tests').should('have.text', testsConstants.tests).click()
     cy.get('#add-test', { timeout: 6000 })
       .should('have.text', `+ ${testsConstants.addTestbutton}`)
       .click()
@@ -136,11 +136,11 @@ describe('Creating tests', () => {
         }
       })
     })
-    cy.get('button#backButton').should('have.text', cypress.back).click()
+    cy.get('button#back-button').should('have.text', cypress.back).click()
   })
 
   it('Verify if user able to add section and able to input total questions and time', () => {
-    cy.get('a').find('#tests').should('have.text', testsConstants.Tests).click()
+    cy.get('a').find('#tests').should('have.text', testsConstants.tests).click()
     cy.get('#add-test', { timeout: 6000 })
       .should('have.text', `+ ${testsConstants.addTestbutton}`)
       .click()
@@ -175,7 +175,7 @@ describe('Creating tests', () => {
           cy.get('button')
             .should('have.text', commonConstants.addButton)
             .click()
-          cy.get('button').should('have.text', cypress.Remove)
+          cy.get('button').should('have.text', cypress.remove)
           cy.get('input#no-of-qu').clear().type('1')
           cy.get('input#time').clear().type('1')
           cy.get('input#no-of-qu').should('have.value', '1')
@@ -186,7 +186,7 @@ describe('Creating tests', () => {
   })
 
   it('Verify if user able to remove added section and able to input total questions and time', () => {
-    cy.get('a').find('#tests').should('have.text', testsConstants.Tests).click()
+    cy.get('a').find('#tests').should('have.text', testsConstants.tests).click()
     cy.get('#add-test', { timeout: 6000 })
       .should('have.text', `+ ${testsConstants.addTestbutton}`)
       .click()
@@ -212,7 +212,7 @@ describe('Creating tests', () => {
           cy.get('button')
             .should('have.text', commonConstants.addButton)
             .click()
-          cy.get('button').should('have.text', cypress.Remove)
+          cy.get('button').should('have.text', cypress.remove)
           cy.get('input#no-of-qu').clear().type('1')
           cy.get('input#time').clear().type('1')
           cy.get('input#no-of-qu').should('have.value', '1')
@@ -223,7 +223,7 @@ describe('Creating tests', () => {
   })
 
   it('Verify if user able to move to preview tab after selecting sections', () => {
-    cy.get('a').find('#tests').should('have.text', testsConstants.Tests).click()
+    cy.get('a').find('#tests').should('have.text', testsConstants.tests).click()
     cy.get('#add-test', { timeout: 6000 })
       .should('have.text', `+ ${testsConstants.addTestbutton}`)
       .click()
@@ -250,7 +250,7 @@ describe('Creating tests', () => {
           cy.get('button')
             .should('have.text', commonConstants.addButton)
             .click()
-          cy.get('button').should('have.text', cypress.Remove)
+          cy.get('button').should('have.text', cypress.remove)
           cy.get('input#no-of-qu').clear().type('1')
           cy.get('input#time').clear().type('1')
           cy.get('input#no-of-qu').should('have.value', '1')
@@ -282,7 +282,7 @@ describe('Creating tests', () => {
   })
 
   it('Verify if user is able to create a test and navigates to Tests Page where can see added test', () => {
-    cy.get('a').find('#tests').should('have.text', testsConstants.Tests).click()
+    cy.get('a').find('#tests').should('have.text', testsConstants.tests).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('#sort-filter-body').get('#ascend', { timeout: 8000 }).click()
 

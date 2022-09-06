@@ -29,7 +29,7 @@ const SectionLink = ({
       to={path}
       key={section.id}
       onKeyUp={(e) => {
-        if (e.key === 'Tab' && e.altKey) window.location.href = '#sectionSearch'
+        if (e.key === 'Tab' && e.altKey) window.location.href = '#section-search'
         // alt + Tab combination key for moving focus to section detail
       }}
     >
@@ -46,7 +46,6 @@ const SectionLink = ({
     </NavLink>
   )
 }
-
 type SectionType = {
   sections: Section[]
   sortBy: string
@@ -75,7 +74,7 @@ const Sections = ({
   return (
     <div className="sectionLSWrapper flex h-full w-96 flex-col gap-6">
       {/* filters */}
-      <div className="flex items-center justify-between ">
+      <div className="flex items-center justify-between p-1">
         <div id="sort-filter-container">
           <SortFilter
             filterData={sortByDetails}
@@ -88,10 +87,9 @@ const Sections = ({
           />
         </div>
       </div>
-
       {/* list */}
       <div
-        className="section-cards flex flex-1 flex-col gap-6 overflow-auto"
+        className="section-cards flex flex-1 flex-col gap-6 overflow-auto p-1"
         id="section-cards"
       >
         {sections?.map((section: Section) => (

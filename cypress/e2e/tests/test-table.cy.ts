@@ -19,19 +19,17 @@ describe('Visiting Tests', () => {
     cy.get('[data-cy="submit"]').click()
     cy.location('pathname').should('include', '/dashboard')
   })
-
   // creating data to test Test list page
   it('Visiting Add Test Page', () => {
-    cy.get('a').find('#tests').should('have.text', testsConstants.Tests).click()
+    cy.get('a').find('#tests').should('have.text', testsConstants.tests).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('#add-test', { timeout: 6000 })
       .should('have.text', `+ ${testsConstants.addTestbutton}`)
       .click()
     cy.location('pathname').should('include', '/tests/add-test')
   })
-
   it('sort by name in ascending order ', () => {
-    cy.get('a').find('#tests').should('have.text', testsConstants.Tests).click()
+    cy.get('a').find('#tests').should('have.text', testsConstants.tests).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('#headlessui-listbox-button-1 span span')
       .invoke('text')
@@ -39,7 +37,7 @@ describe('Visiting Tests', () => {
         if (el === 'Name') {
           cy.get('.test-name-navigation', { timeout: 8000 }).then(
             ($elements) => {
-              var strings = [...$elements].map(($el) => $el.innerText)
+              let strings = [...$elements].map(($el) => $el.innerText)
               expect(strings).to.deep.equal(strings.sort())
             }
           )
@@ -47,7 +45,7 @@ describe('Visiting Tests', () => {
       })
   })
   it('sort by name in descending order ', () => {
-    cy.get('a').find('#tests').should('have.text', testsConstants.Tests).click()
+    cy.get('a').find('#tests').should('have.text', testsConstants.tests).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('#sort-filter-body').get('#ascend').click()
     cy.get('#headlessui-listbox-button-1 span span')
@@ -56,7 +54,7 @@ describe('Visiting Tests', () => {
         if (el === 'Name') {
           cy.get('.test-name-navigation', { timeout: 8000 }).then(
             ($elements) => {
-              var strings = [...$elements].map(($el) => $el.innerText)
+              let strings = [...$elements].map(($el) => $el.innerText)
               expect(strings).to.deep.equal(strings.reverse())
             }
           )
@@ -64,7 +62,7 @@ describe('Visiting Tests', () => {
       })
   })
   it('sort by created date in ascending order ', () => {
-    cy.get('a').find('#tests').should('have.text', testsConstants.Tests).click()
+    cy.get('a').find('#tests').should('have.text', testsConstants.tests).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('.dropdown')
       .get('.dropdownButton')
@@ -79,7 +77,7 @@ describe('Visiting Tests', () => {
         if (el === 'Created Date') {
           cy.get('.test-name-navigation', { timeout: 8000 }).then(
             ($elements) => {
-              var strings = [...$elements].map(($el) => $el.innerText)
+              let strings = [...$elements].map(($el) => $el.innerText)
               expect(strings).to.deep.equal(strings.sort())
             }
           )
@@ -87,7 +85,7 @@ describe('Visiting Tests', () => {
       })
   })
   it('sort by created date in descending order', () => {
-    cy.get('a').find('#tests').should('have.text', testsConstants.Tests).click()
+    cy.get('a').find('#tests').should('have.text', testsConstants.tests).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('#sort-filter-body').get('#ascend').click()
     cy.get('.dropdown')
@@ -103,16 +101,15 @@ describe('Visiting Tests', () => {
         if (el === 'Created Date') {
           cy.get('.test-name-navigation', { timeout: 8000 }).then(
             ($elements) => {
-              var strings = [...$elements].map(($el) => $el.innerText)
+              let strings = [...$elements].map(($el) => $el.innerText)
               expect(strings).to.deep.equal(strings.reverse())
             }
           )
         }
       })
   })
-
   it('By Clicking test name it should navigate to test details page', () => {
-    cy.get('a').find('#tests').should('have.text', testsConstants.Tests).click()
+    cy.get('a').find('#tests').should('have.text', testsConstants.tests).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('.test-table-list', { timeout: 6000 }).should('be.visible')
     cy.get('.test-table-list')
@@ -129,15 +126,13 @@ describe('Visiting Tests', () => {
       .location('pathname', { timeout: 60000 })
       .should('include', '/tests')
   })
-
-  var strings: any
   it('On click of count in sections, menu with all sections should open', () => {
-    cy.get('a').find('#tests').should('have.text', testsConstants.Tests).click()
+    cy.get('a').find('#tests').should('have.text', testsConstants.tests).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('#chip-group-id', { timeout: 10000 }).then((el) => {
       cy.get('.chip-group').then(($elements) => {
-        strings = [...$elements].forEach(($el) => {
-          cy.log(strings)
+       let strings = [...$elements]
+       strings.forEach(($el) => {
           if ($el.innerText.includes('\n')) {
             cy.get('#section-count-button').click()
           }
@@ -145,9 +140,8 @@ describe('Visiting Tests', () => {
       })
     })
   })
-
   it('On click of delete, test should be deleted', () => {
-    cy.get('a').find('#tests').should('have.text', testsConstants.Tests).click()
+    cy.get('a').find('#tests').should('have.text', testsConstants.tests).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('.test-table-list', { timeout: 8000 }).each(($el) => {
       cy.wrap($el).within((el) => {
@@ -161,7 +155,7 @@ describe('Visiting Tests', () => {
     })
     cy.get('#vertical-icon', { timeout: 6000 }).click()
     cy.get('.delete-test').click()
-    cy.get('.confirm-delete').click()
+    cy.get('#confirm-delete').click()
     cy.get('.test-table-list').each(($el) => {
       cy.wrap($el).within((el) => {
         if (

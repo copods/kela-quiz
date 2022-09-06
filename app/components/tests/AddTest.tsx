@@ -1,6 +1,5 @@
-import { useSubmit, useTransition } from '@remix-run/react'
+import { useNavigate, useSubmit, useTransition } from '@remix-run/react'
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import type { TestSection } from '~/interface/Interface'
 import BreadCrumb from '../BreadCrumb'
@@ -8,27 +7,27 @@ import SelectSections from './CreateSelectSections'
 import TestDetails from './CreateTestDetails'
 import TestPreview from './CreateTestPreview'
 import StepsTabComponent from './StepsTab'
-import { commonConstants, testsConstants } from '~/constants/common.constants'
+import Button from '../form/Button'
+import { commonConstants, testsConstants, toastConstants } from '~/constants/common.constants'
+import { routes } from '~/constants/route.constants'
+
 const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
   const transition = useTransition()
   const submit = useSubmit()
   const [sectionsCopy, setSectionsCopy] = useState(sections)
-
   useEffect(() => {
     setSectionsCopy(sections)
   }, [sections])
-
   const breadCrumbData = [
     {
-      tabName: 'Test',
-      route: '/tests',
+      tabName: testsConstants.testListColumnLabel,
+      route: routes.tests,
     },
     {
-      tabName: 'Add Test',
-      route: '/tests/add-test',
+      tabName: testsConstants.addTestbutton,
+      route: routes.addTest,
     },
   ]
-
   const tabs = [
     {
       id: 0,
@@ -46,14 +45,13 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
       description: 'Preview',
     },
   ]
-
   const [currentTab, setCurrentTab] = useState(0) // testDetails  ||  selectSections  ||  preview
   const [name, onNameChange] = useState('')
   const [description, setDescription] = useState('')
   const [selectedSections, onSelectedSectionChange] = useState<TestSection[]>(
     []
   )
-
+  const navigate = useNavigate()
   const updateSection = (data: Array<TestSection>, i: number) => {
     setSectionsCopy((sec) => {
       sec[i] = { ...sec[i], ...data }
@@ -65,21 +63,20 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
       return [...sec]
     })
   }
-
   const submitAddTest = () => {
     if (typeof name !== 'string' || name.length === 0) {
-      toast.error('Enter Name to add test')
+      toast.error(toastConstants.addTest)
       return
     }
     if (typeof description !== 'string' || description.length === 0) {
-      toast.error('Enter description to add test')
+      toast.error(toastConstants.enterDescription)
       return
     }
     if (selectedSections.length === 0) {
-      toast.error('Add sections to add test')
+      toast.error(toastConstants.addSection)
       return
     }
-    var sendData: {
+    let sendData: {
       name: string
       description: string
       sections: Array<{
@@ -101,11 +98,9 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
         order: index + 1,
       })
     })
-
     submit({ data: JSON.stringify(sendData) }, { method: 'post' })
     // fetcher.submit({ data: JSON.stringify(sendData) }, { method: "post" });
   }
-
   useEffect(() => {
     if (!name || !description) {
       setCurrentTab(0)
@@ -132,7 +127,6 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
         currentTab={currentTab}
         setCurrentTab={setCurrentTab}
       />
-
       {/* Components according to current step */}
       {currentTab === tabs[0].id ? (
         <TestDetails
@@ -149,7 +143,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
           }}
           updateSectionsList={setSectionsCopy}
         />
-      ) : currentTab === tabs[2].id ? (
+      ) : currentTab === tabs[2].id && (
         <TestPreview
           selectedSections={selectedSections}
           onSelectedSectionChange={onSelectedSectionChange}
@@ -157,77 +151,51 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
           description={description}
           isPreviewEditable
         />
-      ) : (
-        ''
       )}
       {/* Buttons */}
       <div className="flex w-full items-center justify-between">
-        <Link tabIndex={0} to={'/tests'}>
-          <button
+          <Button 
             tabIndex={0}
-            aria-label={commonConstants.cancel}
-            title="Cancel Add Test"
-            className={`h-9 rounded-lg px-7 text-xs text-white ${
-              currentTab !== tabs[0].id
-                ? 'bg-red-500'
-                : 'bg-gray-6000 bg-red-500'
-            }`}
-          >
-            {commonConstants.cancel}
-          </button>
-        </Link>
+            title='Cancel Add Test' 
+            onClick={() => navigate('/tests')}
+            className='h-9 px-7' 
+            varient='secondary-solid'
+            buttonText={commonConstants.cancel} />
         <div className="flex gap-4">
-          <button
+          <Button 
             tabIndex={0}
-            title="Previous Tab"
-            id="backButton"
-            className={`h-9 rounded-lg px-7 text-xs text-white ${
-              currentTab != tabs[0].id
-                ? 'bg-primary'
-                : 'cursor-not-allowed bg-gray-600'
-            }`}
-            onClick={() => setCurrentTab(currentTab - 1)}
-            disabled={currentTab === tabs[0].id}
-            aria-label={commonConstants.backButton}
-          >
-            {commonConstants.backButton}
-          </button>
-          {currentTab != 2 ? (
-            <button
+            title='Previous Tab' 
+            className='h-9 px-7' 
+            varient='primary-solid'
+            id='back-button'
+            buttonText={commonConstants.backButton} 
+            isDisabled={currentTab === tabs[0].id}
+            onClick={() => setCurrentTab(currentTab - 1)} />
+          {currentTab !== 2 ? (
+            <Button 
               tabIndex={0}
-              title="Next Tab"
-              id="next-button"
-              className={`h-9 rounded-lg px-7 text-xs text-white ${
-                !(name && description) || currentTab == 2
-                  ? 'cursor-not-allowed bg-gray-600'
-                  : 'bg-primary'
-              }`}
-              onClick={() => setCurrentTab(currentTab + 1)}
-              disabled={!(name && description) || currentTab === 2}
-              aria-label="Next"
-            >
-              {commonConstants.nextButton}
-            </button>
+              title='Next Tab' 
+              className='h-9 px-7' 
+              varient='primary-solid'
+              id='next-button'
+              buttonText={commonConstants.nextButton} 
+              isDisabled={!(name && description) || currentTab == 2}
+              onClick={() => setCurrentTab(currentTab + 1)} />
           ) : (
-            <button
+            <Button 
               tabIndex={0}
-              title="Next Tab"
-              id="submit-button"
-              className={`h-9 rounded-lg px-7 text-xs text-white ${
-                currentTab == 2
-                  ? 'bg-primary'
-                  : 'cursor-not-allowed bg-gray-600'
-              }`}
-              onClick={() => submitAddTest()}
-              disabled={currentTab !== 2}
-              aria-label={commonConstants.nextButton}
-            >
-              {transition.state === 'submitting' ? 'Creating Test' : 'Submit'}
-            </button>
+              title='Next Tab' 
+              id='submit-button'
+              className='h-9 px-7' 
+              varient='primary-solid'
+              buttonText={transition.state === 'submitting' ? 'Creating Test' : 'Submit'} 
+              isDisabled={currentTab != 2}
+              onClick={() => submitAddTest()} />
           )}
         </div>
       </div>
     </div>
   )
 }
+
 export default AddTestComponent

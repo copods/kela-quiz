@@ -18,11 +18,10 @@ describe('Test for testPreview', () => {
     cy.get('[data-cy="submit"]').click()
     cy.location('pathname').should('include', '/dashboard')
   })
-
   it('test for check preview data match selected test and back button ', () => {
     cy.get('a')
       .find('#tests', { timeout: 6000 })
-      .should('have.text', testsConstants.Tests)
+      .should('have.text', testsConstants.tests)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('.test-table-list', { timeout: 6000 }).each(($el) => {
@@ -37,13 +36,12 @@ describe('Test for testPreview', () => {
     })
     cy.get('.test-name-navigation').contains(test1).click()
     cy.get('#title', { timeout: 6000 }).should('have.text', test1)
-    cy.get('#backButton').click()
+    cy.get('#back-button').click()
   })
-
   it('test for tests name', () => {
     cy.get('a')
       .find('#tests', { timeout: 6000 })
-      .should('have.text', testsConstants.Tests)
+      .should('have.text', testsConstants.tests)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
 
@@ -63,7 +61,7 @@ describe('Test for testPreview', () => {
   it('test for description', () => {
     cy.get('a')
       .find('#tests', { timeout: 6000 })
-      .should('have.text', testsConstants.Tests)
+      .should('have.text', testsConstants.tests)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('.test-table-list', { timeout: 6000 }).each(($el) => {
@@ -82,7 +80,7 @@ describe('Test for testPreview', () => {
   it('test for total time', () => {
     cy.get('a')
       .find('#tests', { timeout: 6000 })
-      .should('have.text', testsConstants.Tests)
+      .should('have.text', testsConstants.tests)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('.test-table-list', { timeout: 6000 }).each(($el) => {
@@ -101,7 +99,7 @@ describe('Test for testPreview', () => {
   it('test for Total Sections', () => {
     cy.get('a')
       .find('#tests', { timeout: 6000 })
-      .should('have.text', testsConstants.Tests)
+      .should('have.text', testsConstants.tests)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('.test-table-list', { timeout: 6000 }).each(($el) => {
@@ -115,6 +113,6 @@ describe('Test for testPreview', () => {
       })
     })
     cy.get('.test-name-navigation', { timeout: 6000 }).contains(test1).click()
-    cy.get('#totalSection').should('have.text', cypress.totalSections)
+    cy.get('#totalSection').should('have.text', testsConstants.totalSectionsText)
   })
 })
