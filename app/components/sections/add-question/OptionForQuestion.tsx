@@ -122,28 +122,30 @@ export default function OptionForQuestion({
           QuestionTypes.multipleChoice ||
         getQuestionType(selectedTypeOfQuestion) ===
           QuestionTypes.singleChoice ? (
-          <div className="ml-7 text-base font-medium text-gray-600"
-             role={addQuestion.createOptions}
-             tabIndex={0}
-             title={addQuestion.createOptions}
-             aria-label={addQuestion.createOptions}
+          <div
+            className="ml-7 text-base font-medium text-gray-600"
+            role={addQuestion.createOptions}
+            tabIndex={0}
+            title={addQuestion.createOptions}
+            aria-label={addQuestion.createOptions}
           >
             {addQuestion.createOptions}
           </div>
         ) : (
           <div className="flex items-center justify-center gap-2 text-base font-medium text-gray-600">
             {addQuestion.checkOrder}
-              <Toggle toggle={checkOrder} onToggleChange={setCheckOrder} />
+            <Toggle toggle={checkOrder} onToggleChange={setCheckOrder} />
           </div>
         )}
-        <Button 
+        <Button
           tabIndex={0}
-          id='add-option'
-          className='h-9 px-5' 
-          varient='primary-solid' 
-          onClick={addOptionArea} 
+          id="add-option"
+          className="h-9 px-5"
+          varient="primary-solid"
+          onClick={addOptionArea}
           title={addQuestion.addOptions}
-          buttonText={`+ ${addQuestion.addOptions}`} />
+          buttonText={`+ ${addQuestion.addOptions}`}
+        />
       </div>
       <div className="flex h-full flex-1 flex-col gap-5 overflow-auto p-1">
         {(getQuestionType(selectedTypeOfQuestion) ===
@@ -209,7 +211,7 @@ export default function OptionForQuestion({
                       ? 'cursor-not-allowed text-red-400'
                       : 'cursor-pointer text-red-600'
                   }`}
-                  role='button'
+                  role="button"
                 />
               </div>
             )

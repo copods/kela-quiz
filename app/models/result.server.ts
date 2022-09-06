@@ -2,7 +2,9 @@ import type { CandidateResult, CandidateTest } from '@prisma/client'
 import { prisma } from '~/db.server'
 import type { Test } from '@prisma/client'
 
-export async function getPendingExamCandidateByTestId({ id }: Pick<CandidateTest, 'id'>) {
+export async function getPendingExamCandidateByTestId({
+  id,
+}: Pick<CandidateTest, 'id'>) {
   return prisma.test.findFirst({
     where: {
       id,
@@ -10,7 +12,7 @@ export async function getPendingExamCandidateByTestId({ id }: Pick<CandidateTest
     include: {
       candidateTest: {
         where: {
-          startedAt: null
+          startedAt: null,
         },
         include: {
           candidate: {
@@ -24,7 +26,9 @@ export async function getPendingExamCandidateByTestId({ id }: Pick<CandidateTest
     },
   })
 }
-export async function getTestAttendedCandiated({ id }: Pick<CandidateResult, 'id'>) {
+export async function getTestAttendedCandiated({
+  id,
+}: Pick<CandidateResult, 'id'>) {
   return prisma.test.findFirst({
     where: {
       id,
@@ -33,9 +37,9 @@ export async function getTestAttendedCandiated({ id }: Pick<CandidateResult, 'id
       candidateTest: {
         where: {
           NOT: {
-            startedAt: null
+            startedAt: null,
           },
-          endAt: null
+          endAt: null,
         },
         include: {
           candidate: {
@@ -80,21 +84,27 @@ export async function getResultsOfCandidatesByTestId({
 export async function getResultsOfIndividualCandidates({ id }: { id: string }) {
   return await prisma.candidateResult.findUnique({
     where: {
-      id
+      id,
     },
     select: {
       candidate: true,
       testId: true,
-      candidateTestId:true
-    }
+      candidateTestId: true,
+    },
   })
 }
 
-export async function getSectionWiseResultsOfIndividualCandidate({ testId , candidateTestId}: { testId: string,candidateTestId:string }) {
+export async function getSectionWiseResultsOfIndividualCandidate({
+  testId,
+  candidateTestId,
+}: {
+  testId: string
+  candidateTestId: string
+}) {
   return await prisma.sectionWiseResult.findMany({
     where: {
       testId,
-      candidateTestId
+      candidateTestId,
     },
     select: {
       id: true,
@@ -102,27 +112,32 @@ export async function getSectionWiseResultsOfIndividualCandidate({ testId , cand
         select: {
           section: {
             select: {
-              name: true
-            }
-          }
-        }
+              name: true,
+            },
+          },
+        },
       },
       totalQuestion: true,
       correctQuestion: true,
       unanswered: true,
-    }
+    },
   })
 }
 
-
-export async function updateCandidateStatus({ id, candidateStatus }: { id: string, candidateStatus: string }) {
+export async function updateCandidateStatus({
+  id,
+  candidateStatus,
+}: {
+  id: string
+  candidateStatus: string
+}) {
   return await prisma.candidateResult.update({
     where: {
-      id
+      id,
     },
     data: {
-      isQualified: candidateStatus == 'true' ? true : false
-    }
+      isQualified: candidateStatus == 'true' ? true : false,
+    },
   })
 }
 

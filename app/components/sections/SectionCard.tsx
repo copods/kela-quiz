@@ -5,7 +5,11 @@ import { useSubmit } from '@remix-run/react'
 import DeletePopUp from '../DeletePopUp'
 import { useState, useEffect } from 'react'
 
-import { commonConstants, sectionsConstants, statusCheck } from '~/constants/common.constants'
+import {
+  commonConstants,
+  sectionsConstants,
+  statusCheck,
+} from '~/constants/common.constants'
 import Button from '../form/Button'
 const SectionCard = ({
   name,
@@ -70,27 +74,27 @@ const SectionCard = ({
             </Menu.Button>
             <Menu.Items className="absolute right-0 mt-2 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
               <div className="px-1 py-1">
-                <Menu.Item>         
-                    <Button 
-                    varient='primary-outlined' 
-                    datacy='delete-section' 
-                    name='deleteSection' 
-                    className='px-2 py-2 w-36'
-                    alignment='justify-start'
+                <Menu.Item>
+                  <Button
+                    varient="primary-outlined"
+                    datacy="delete-section"
+                    name="deleteSection"
+                    className="w-36 px-2 py-2"
+                    alignment="justify-start"
                     onClick={() => setIsDelete(true)}
                     title={commonConstants.delete}
                     buttonText={
                       <>
                         <Icon
-                        icon={'ic:outline-delete-outline'}
-                        className={`mr-2 h-5 w-5 text-red-500
-                        }`}
-                        aria-hidden="true"
+                          icon={'ic:outline-delete-outline'}
+                          className={`} mr-2 h-5 w-5
+                        text-red-500`}
+                          aria-hidden="true"
                         />
                         {commonConstants.delete}
                       </>
                     }
-                    />
+                  />
                 </Menu.Item>
               </div>
             </Menu.Items>
