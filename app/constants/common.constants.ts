@@ -83,6 +83,7 @@ export const addQuestion = {
   addOptions: 'Add Options',
   addQuestion: 'Add Question',
 }
+
 export const sectionsConstants = {
   addSection: 'Add Section',
   totalQuestions: 'Total Questions:',
@@ -139,7 +140,7 @@ export const statusCheck = {
   nameIsReq: 'Name is required',
   sectionAddedSuccess: 'Section added successfully..!',
   maxOptions: 'you can add maximum six options.',
-  notFound: 'Not Found',
+
   testAddedSuccessFully: 'Test added successfully..',
   testAlreadyExist: 'Test name already exist.',
   emailIsInvalid: 'Email is invalid',

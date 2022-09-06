@@ -38,7 +38,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const sectionDetails = await getSectionById({ id: params.sectionId })
 
   if (!sectionDetails) {
-    throw new Response(statusCheck.notFound, { status: 404 })
+    throw new Response('Not Found', { status: 404 })
   }
   return json<LoaderData>({ sectionDetails, questionTypes })
 }

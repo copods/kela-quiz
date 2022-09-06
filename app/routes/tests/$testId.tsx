@@ -6,7 +6,6 @@ import { getTestById } from '~/models/tests.server'
 
 import TestDetails from '~/components/tests/TestDetails'
 import AdminLayout from '~/components/layouts/AdminLayout'
-import { statusCheck } from '~/constants/common.constants'
 
 type LoaderData = {
   testPreview: Awaited<ReturnType<typeof getTestById>>
@@ -16,7 +15,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   invariant(params.testId, 'testId not found')
   const testPreview = await getTestById({ id: params.testId })
   if (!testPreview) {
-    throw new Response(statusCheck.notFound, { status: 404 })
+    throw new Response('Not Found', { status: 404 })
   }
 
   return json<LoaderData>({ testPreview })

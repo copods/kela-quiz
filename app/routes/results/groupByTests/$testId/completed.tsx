@@ -2,7 +2,6 @@ import type { LoaderFunction } from '@remix-run/server-runtime'
 import { json } from '@remix-run/server-runtime'
 import invariant from 'tiny-invariant'
 import ExamCompletedCandidatesComponent from '~/components/results/ExamCompletedCandidatesList'
-import { statusCheck } from '~/constants/common.constants'
 import { getResultsOfCandidatesByTestId } from '~/models/result.server'
 
 export const loader: LoaderFunction = async ({ request, params }) => {
@@ -11,7 +10,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     testId: params.testId,
   })
   if (!attendedCandidateForTest) {
-    throw new Response(statusCheck.notFound, { status: 404 })
+    throw new Response('Not Found', { status: 404 })
   }
 
   return json({ attendedCandidateForTest, params })
