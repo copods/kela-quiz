@@ -52,10 +52,7 @@ describe('Test for Section', () => {
           el[0].getElementsByClassName('question')[0].innerHTML ===
           cypress.useMemo
         ) {
-          cy.get('.question').should(
-            'have.text',
-            cypress.useMemo
-          )
+          cy.get('.question').should('have.text', cypress.useMemo)
         }
       })
     })

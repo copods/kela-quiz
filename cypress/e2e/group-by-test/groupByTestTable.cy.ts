@@ -16,7 +16,7 @@ describe('Test for GroupByTestTable, Result', () => {
     cy.get('[data-cy="submit"]').click()
     cy.location('pathname').should('include', '/dashboard')
   })
-  let value: string;
+  let value: string
   let strings: Array<string>
   it('Total Count of Test of groupByTable', () => {
     cy.get('a')

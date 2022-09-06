@@ -52,12 +52,13 @@ const AddSection = ({
             >
               <Dialog.Panel className="relative transform overflow-hidden rounded-2xl bg-white p-6 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
                 <div className="addSectionDilog flex items-center justify-between pt-1">
-                  <h2 
-                     className="text-2xl font-bold text-gray-700" 
-                     title={sectionsConstants.addSection}
-                     role={sectionsConstants.addSection}
-                     tabIndex={0}
-                     aria-label={sectionsConstants.addSection}>
+                  <h2
+                    className="text-2xl font-bold text-gray-700"
+                    title={sectionsConstants.addSection}
+                    role={sectionsConstants.addSection}
+                    tabIndex={0}
+                    aria-label={sectionsConstants.addSection}
+                  >
                     {sectionsConstants.addSection}
                   </h2>
                   <Icon
@@ -89,27 +90,39 @@ const AddSection = ({
                   />
                 </div>
                 <div className="flex justify-end gap-2">
-                    <Button 
-                      tabIndex={0}
-                      type='button'
-                      className='h-9 px-4'
-                      onClick={() => setOpen(false)}
-                      varient="primary-outlined"
-                      title={commonConstants.cancel}
-                      buttonText={commonConstants.cancel} />
-                    <Button 
-                      tabIndex={0}
-                      type="submit"
-                      id='submit-button'
-                      className='h-9 px-4'
-                      name="add-section"
-                      value="add"
-                      onClick={() => setOpen(false)}
-                      isDisabled={transition.state === 'submitting' || showErrorMessage}
-                      varient="primary-solid"
-                      datacy="submit"
-                      title={transition.state === 'submitting' ? commonConstants.adding : commonConstants.add }
-                      buttonText={transition.state === 'submitting' ? commonConstants.adding : commonConstants.add } />
+                  <Button
+                    tabIndex={0}
+                    type="button"
+                    className="h-9 px-4"
+                    onClick={() => setOpen(false)}
+                    varient="primary-outlined"
+                    title={commonConstants.cancel}
+                    buttonText={commonConstants.cancel}
+                  />
+                  <Button
+                    tabIndex={0}
+                    type="submit"
+                    id="submit-button"
+                    className="h-9 px-4"
+                    name="add-section"
+                    value="add"
+                    onClick={() => setOpen(false)}
+                    isDisabled={
+                      transition.state === 'submitting' || showErrorMessage
+                    }
+                    varient="primary-solid"
+                    datacy="submit"
+                    title={
+                      transition.state === 'submitting'
+                        ? commonConstants.adding
+                        : commonConstants.add
+                    }
+                    buttonText={
+                      transition.state === 'submitting'
+                        ? commonConstants.adding
+                        : commonConstants.add
+                    }
+                  />
                 </div>
               </Dialog.Panel>
             </Transition.Child>
