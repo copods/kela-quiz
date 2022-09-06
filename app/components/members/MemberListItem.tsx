@@ -37,14 +37,10 @@ export default function MemberListItem({
           </span>
         </div>
         <div className="memberMail col-span-3 overflow-ellipsis break-all">
-          <span className="text-base text-gray-700">
-            {user.email}
-          </span>
+          <span className="text-base text-gray-700">{user.email}</span>
         </div>
         <div className="col-span-2 overflow-ellipsis break-all">
-          <span className="text-base text-gray-700">
-            {user?.role?.name}
-          </span>
+          <span className="text-base text-gray-700">{user?.role?.name}</span>
         </div>
         <div className="col-span-2 overflow-ellipsis break-all">
           <span className="text-base text-gray-700">
@@ -53,14 +49,14 @@ export default function MemberListItem({
         </div>
         <div className="col-span-1">
           <Icon
-            id='delete-button'
+            id="delete-button"
             tabIndex={0}
             onClick={openPopUp}
             icon="ic:outline-delete-outline"
             className={`cursor-pointer h-6 w-6 text-red-500 focus:outline-none ${
               loggedInUser && 'cursor-not-allowed text-red-300'
             }`}
-            />
+          />
         </div>
         <DeletePopUp setOpen={setOpen} open={open} onDelete={deleteUser} />
       </div>

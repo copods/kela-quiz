@@ -1,4 +1,4 @@
-import { Fragment} from 'react'
+import { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import { Form } from '@remix-run/react'
@@ -24,11 +24,7 @@ export default function DeletePopUp({
   }
   return (
     <Transition.Root show={open} as={Fragment}>
-      <Dialog
-        as="div"
-        className="relative z-10"
-        onClose={setOpen}
-      >
+      <Dialog as="div" className="relative z-10" onClose={setOpen}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -71,28 +67,30 @@ export default function DeletePopUp({
                     </div>
                   </div>
                 </div>
-                <div className="px-4 py-3 gap-2 sm:flex sm:flex-row-reverse sm:px-6">
+                <div className="gap-2 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                   <Form method="post">
-                    <Button 
+                    <Button
                       tabIndex={0}
-                      id='confirm-delete'
-                      varient='secondary-solid'
-                      type='button' 
-                      name='delete' 
-                      className='px-5'
-                      title={commonConstants.delete} 
-                      buttonText={commonConstants.delete} 
-                      onClick={handleDelete} />
+                      id="confirm-delete"
+                      varient="secondary-solid"
+                      type="button"
+                      name="delete"
+                      className="px-5"
+                      title={commonConstants.delete}
+                      buttonText={commonConstants.delete}
+                      onClick={handleDelete}
+                    />
                   </Form>
-                  <Button 
+                  <Button
                     tabIndex={0}
-                    type='button' 
+                    type="button"
                     id="cancel-delete-pop-up"
-                    varient='primary-outlined'
-                    className='px-5'
+                    varient="primary-outlined"
+                    className="px-5"
                     onClick={() => setOpen(false)}
                     title={commonConstants.cancel}
-                    buttonText={commonConstants.cancel} />
+                    buttonText={commonConstants.cancel}
+                  />
                 </div>
               </Dialog.Panel>
             </Transition.Child>

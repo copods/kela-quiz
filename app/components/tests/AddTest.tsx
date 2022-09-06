@@ -8,7 +8,11 @@ import TestDetails from './CreateTestDetails'
 import TestPreview from './CreateTestPreview'
 import StepsTabComponent from './StepsTab'
 import Button from '../form/Button'
-import { commonConstants, testsConstants, toastConstants } from '~/constants/common.constants'
+import {
+  commonConstants,
+  testsConstants,
+  toastConstants,
+} from '~/constants/common.constants'
 import { routes } from '~/constants/route.constants'
 
 const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
@@ -143,14 +147,16 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
           }}
           updateSectionsList={setSectionsCopy}
         />
-      ) : currentTab === tabs[2].id && (
-        <TestPreview
-          selectedSections={selectedSections}
-          onSelectedSectionChange={onSelectedSectionChange}
-          name={name}
-          description={description}
-          isPreviewEditable
-        />
+      ) : (
+        currentTab === tabs[2].id && (
+          <TestPreview
+            selectedSections={selectedSections}
+            onSelectedSectionChange={onSelectedSectionChange}
+            name={name}
+            description={description}
+            isPreviewEditable
+          />
+        )
       )}
       {/* Buttons */}
       <div className="flex w-full items-center justify-between">
@@ -162,35 +168,42 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
             title={commonConstants.cancelAddTest}
             buttonText={commonConstants.cancel} />
         <div className="flex gap-4">
-          <Button 
+          <Button
             tabIndex={0}
-            title={commonConstants.previousTab} 
-            className='h-9 px-7' 
-            varient='primary-solid'
-            id='back-button'
-            buttonText={commonConstants.backButton} 
+            title={commonConstants.previousTab}
+            className="h-9 px-7"
+            varient="primary-solid"
+            id="back-button"
+            buttonText={commonConstants.backButton}
             isDisabled={currentTab === tabs[0].id}
-            onClick={() => setCurrentTab(currentTab - 1)} />
+            onClick={() => setCurrentTab(currentTab - 1)}
+          />
           {currentTab !== 2 ? (
-            <Button 
+            <Button
               tabIndex={0}
-              title={commonConstants.nextTab} 
-              className='h-9 px-7' 
-              varient='primary-solid'
-              id='next-button'
-              buttonText={commonConstants.nextButton} 
+              title={commonConstants.nextTab}
+              className="h-9 px-7"
+              varient="primary-solid"
+              id="next-button"
+              buttonText={commonConstants.nextButton}
               isDisabled={!(name && description) || currentTab == 2}
-              onClick={() => setCurrentTab(currentTab + 1)} />
+              onClick={() => setCurrentTab(currentTab + 1)}
+            />
           ) : (
-            <Button 
+            <Button
               tabIndex={0}
-              title={commonConstants.nextTab} 
-              id='submit-button'
-              className='h-9 px-7' 
-              varient='primary-solid'
-              buttonText={transition.state === 'submitting' ? sortByOrder.creatingTest : sortByOrder.submit} 
+              title={commonConstants.nextTab}
+              id="submit-button"
+              className="h-9 px-7"
+              varient="primary-solid"
+              buttonText={
+                transition.state === 'submitting'
+                  ? sortByOrder.creatingTest
+                  : sortByOrder.submit
+              }
               isDisabled={currentTab != 2}
-              onClick={() => submitAddTest()} />
+              onClick={() => submitAddTest()}
+            />
           )}
         </div>
       </div>

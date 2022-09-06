@@ -1,7 +1,6 @@
 import type { ButtonProps } from '~/interface/Interface'
 
-const Button = ({ buttonText , className, onClick, ...props }: ButtonProps) => {
-
+const Button = ({ buttonText, className, onClick, ...props }: ButtonProps) => {
   const getCommonClasses = () => {
     return `py-2.5 px-5 rounded-md items-center inline-flex shadow-sm text-xs font-medium ${
       props.alignment ? props.alignment : 'justify-center'
@@ -26,9 +25,7 @@ const Button = ({ buttonText , className, onClick, ...props }: ButtonProps) => {
   }
   return (
     <button
-      className= {
-      `${getCommonClasses()} ${getButtonVarient()} ${className}`      
-      }
+      className={`${getCommonClasses()} ${getButtonVarient()} ${className}`}
       title={props?.title}
       data-cy={props?.datacy}
       tabIndex={props?.tabIndex}

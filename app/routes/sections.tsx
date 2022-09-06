@@ -79,9 +79,9 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 export const action: ActionFunction = async ({ request }) => {
   const createdById = await requireUserId(request)
   const formData = await request.formData()
-  const action = formData.get('add-section') 
-  ? formData.get('add-section') 
-  : formData.get('deleteSection')
+  const action = formData.get('add-section')
+    ? formData.get('add-section')
+    : formData.get('deleteSection')
   if (action === 'add') {
     const name = formData.get('name')
     const description = formData.get('description')
@@ -238,23 +238,24 @@ export default function SectionPage() {
       <div className="flex h-full flex-col gap-12 overflow-hidden p-1">
         {/* header */}
         <header className="flex items-center justify-between">
-          <h2 className="text-3xl font-bold text-black"
-          tabIndex={0}
-          role={routeFiles.sections}
-          title={routeFiles.sections}
-          aria-label={routeFiles.sections}>
+          <h2
+            className="text-3xl font-bold text-black"
+            tabIndex={0}
+            role={routeFiles.sections}
+            title={routeFiles.sections}
+            aria-label={routeFiles.sections}
+          >
             {routeFiles.sections}
           </h2>
-          <Button 
-            id='add-section' 
+          <Button
+            id="add-section"
             data-cy="submit"
-            className='px-5 h-9' 
-            varient='primary-solid'
-            onClick={() => setShowAddSectionModal(!showAddSectionModal)} 
+            className="h-9 px-5"
+            varient="primary-solid"
+            onClick={() => setShowAddSectionModal(!showAddSectionModal)}
             title={sectionsConstants.addSection}
-            buttonText={
-              `+ ${sectionsConstants.addSection}`
-            } />
+            buttonText={`+ ${sectionsConstants.addSection}`}
+          />
         </header>
         {data.sections.length > 0 ? (
           <div
