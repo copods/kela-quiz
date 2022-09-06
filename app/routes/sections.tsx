@@ -124,7 +124,7 @@ export const action: ActionFunction = async ({ request }) => {
       .catch((err) => {
         let title = commonConstants.somethingWentWrongMsg
         if (err.code === 'P2002') {
-          title = ''
+          title = '';
         }
         addHandle = json<ActionData>(
           { errors: { title, status: 400, check: new Date() } },
@@ -315,8 +315,7 @@ export default function SectionPage() {
               <Outlet />
             </div>
           </div>
-
-        ):('')}
+        ) : ('')}
           {/* section details */}
           <div className={`z-10 flex flex-1 items-center `}>
             <span

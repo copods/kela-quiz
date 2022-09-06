@@ -235,3 +235,9 @@ export enum sortByOrder {
   creatingTest = 'Creating Test',
   submit = 'Submit'
 }
+
+export enum QuestionTypes {
+  multipleChoice = 'MULTIPLE_CHOICE',
+  singleChoice = 'SINGLE_CHOICE',
+  text = 'TEXT',
+}

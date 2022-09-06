@@ -12,10 +12,8 @@ import {
   addQuestion,
   testsConstants,
   statusCheck,
-  commonConstants,
-  QuestionTypes
 } from '~/constants/common.constants'
-import { sortByOrder } from '~/interface/Interface'
+import { QuestionTypes, sortByOrder } from '~/interface/Interface'
 
 const AddQuestionInSection = () => {
   const { sectionDetails, questionTypes } = useLoaderData()
@@ -242,7 +240,7 @@ const AddQuestionInSection = () => {
             className='h-9 px-5'
             onClick={() => saveQuestion(false)}
             varient='primary-solid'
-            title={commonConstants.saveAndExit}
+            title={sortByOrder.saveAndExit}
             buttonText={
               <>
               <Icon icon="ic:round-save" className="mr-1" />
@@ -256,7 +254,7 @@ const AddQuestionInSection = () => {
             className='h-9 px-5'
             onClick={() => saveQuestion(true)}
             varient='primary-solid'
-            title={commonConstants.saveAndAddMore}
+            title={sortByOrder.saveAndAddMore}
             buttonText={
               <>
               <Icon icon="ic:round-save" className="mr-1" />

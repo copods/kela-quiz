@@ -124,11 +124,7 @@ export const routeFiles = {
   sections: 'Sections',
   options: 'Options',
 }
-export enum QuestionTypes {
-  multipleChoice = 'MULTIPLE_CHOICE',
-  singleChoice = 'SINGLE_CHOICE',
-  text = 'TEXT',
-}
+
 export const statusCheck = {
   success: 'Success',
   commonError: 'Something Went Wrong',

@@ -20,6 +20,7 @@ export default function MembersHeader({
   }, [actionStatus])
 
   return (
+   <> 
     <div className="grid grid-cols-12 pb-12">
       <div className="col-span-full grid">
         <div className="flex items-center justify-between">
@@ -35,6 +36,7 @@ export default function MembersHeader({
         </div>
       </div>
       <AddMemberModal roles={membersData.roles} open={open} setOpen={setOpen} />
-    </div>
+     </div> 
+    </>
   )
 }
