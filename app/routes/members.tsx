@@ -15,6 +15,7 @@ import MembersHeader from '~/components/members/MembersHeader'
 import { toast } from 'react-toastify'
 import { useEffect } from 'react'
 import { routes } from '~/constants/route.constants'
+import { statusCheck, toastConstants } from '~/constants/common.constants'
 
 export type ActionData = {
   errors?: {
@@ -54,31 +55,31 @@ export const action: ActionFunction = async ({ request }) => {
 
     if (typeof firstName !== 'string' || firstName.length === 0) {
       return json<ActionData>(
-        { errors: { title: 'Firstname is required', status: 400 } },
+        { errors: { title: toastConstants.firstNameRequired, status: 400 } },
         { status: 400 }
       )
     }
     if (typeof lastName !== 'string' || lastName.length === 0) {
       return json<ActionData>(
-        { errors: { title: 'Lastname is required', status: 400 } },
+        { errors: { title: toastConstants.lastNameRequired, status: 400 } },
         { status: 400 }
       )
     }
     if (typeof email !== 'string' || email.length === 0) {
       return json<ActionData>(
-        { errors: { title: 'Email is required', status: 400 } },
+        { errors: { title: toastConstants.emailRequired, status: 400 } },
         { status: 400 }
       )
     }
     if (!emailFilter.test(email)) {
       return json<ActionData>(
-        { errors: { title: 'Please provide a valid email address', status: 400 } },
+        { errors: { title: toastConstants.correctEmail, status: 400 } },
         { status: 400 }
       )
   }
     if (typeof roleId !== 'string' || roleId.length === 0) {
       return json<ActionData>(
-        { errors: { title: 'Role is required', status: 400 } },
+        { errors: { title: toastConstants.roleRequired, status: 400 } },
         { status: 400 }
       )
     }
@@ -90,7 +91,7 @@ export const action: ActionFunction = async ({ request }) => {
         addHandle = json<ActionData>(
           {
             resp: {
-              title: 'Member Added Successfully..!',
+              title: toastConstants.memberAdded,
               status: 200,
             },
           },
@@ -98,9 +99,9 @@ export const action: ActionFunction = async ({ request }) => {
         )
       })
       .catch((err) => {
-        let title = 'Something went wrong. Please try again.'
+        let title = statusCheck.commonError
         if (err.code === 'P2002') {
-          title = 'Member with this email id already exists!'
+          title = toastConstants.memberAlreadyExist
         }
         addHandle = json<ActionData>(
           {
@@ -118,7 +119,7 @@ export const action: ActionFunction = async ({ request }) => {
   if (action === 'delete') {
     if (typeof formData.get('id') !== 'string') {
       return json<ActionData>(
-        { errors: { title: 'Description is required', status: 400 } },
+        { errors: { title: statusCheck.descIsReq, status: 400 } },
         { status: 400 }
       )
     }
@@ -126,7 +127,7 @@ export const action: ActionFunction = async ({ request }) => {
     await deleteUserById(formData.get('id') as string)
       .then((res) => {
         deleteHandle = json<ActionData>(
-          { resp: { title: 'Deleted Successfully..!', status: 200 } },
+          { resp: { title: statusCheck.deletedSuccess, status: 200 } },
           { status: 200 }
         )
       })
@@ -134,7 +135,7 @@ export const action: ActionFunction = async ({ request }) => {
         deleteHandle = json<ActionData>(
           {
             errors: {
-              title: 'Something went wrong. Please try again',
+              title: statusCheck.commonError,
               status: 400,
             },
           },

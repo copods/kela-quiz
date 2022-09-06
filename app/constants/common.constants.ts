@@ -127,7 +127,7 @@ export const routeFiles = {
 
 export const statusCheck = {
   success: 'Success',
-  commonError: 'Something Went Wrong',
+  commonError: 'Something went wrong. Please try again.',
   deletedSuccess: 'Deleted Successfully...!',
   noEmailsInvite: 'No emails to invite',
   selectCorrOption: 'Select the Correct Option',
@@ -135,6 +135,7 @@ export const statusCheck = {
   nameIsReq: 'Name is required',
   sectionAddedSuccess: 'Section added successfully..!',
   maxOptions: 'you can add maximum six options.',
+  duplicate: 'Duplicate Title',
 }
 export const resultConstants = {
   order: 'Order',
@@ -226,7 +227,14 @@ export const toastConstants ={
   enterDescription:'Enter description to add test',
   addSection:'Add sections to add test',
   enterQuestion:"Enter the Question",
-  enterOption:'Enter all the Options'
+  enterOption:'Enter all the Options',
+  firstNameRequired:'Firstname is required',
+  lastNameRequired:'Lastname is required',
+  emailRequired:'Email is required',
+  roleRequired:'Role is required',
+  correctEmail:'Please provide a valid email address',
+  memberAdded:'Member Added Successfully..!',
+  memberAlreadyExist:'Member with this email id already exists!',
 }
 
 

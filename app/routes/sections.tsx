@@ -116,7 +116,7 @@ export const action: ActionFunction = async ({ request }) => {
       .catch((err) => {
         let title = statusCheck.commonError
         if (err.code === 'P2002') {
-          title = 'Duplicate Title'
+          title = statusCheck.duplicate
         }
         addHandle = json<ActionData>(
           { errors: { title, status: 400, check: new Date() } },
@@ -180,14 +180,14 @@ export default function SectionPage() {
 
   useEffect(() => {
     if (selectedSection !== 'NA') {
-      navigate(`/sections/${selectedSection}${data?.filters}`, {
+      navigate(`${routes.sections}/${selectedSection}${data?.filters}`, {
         replace: true,
       })
     }
   }, [navigate, selectedSection])
   useEffect(() => {
     if (selectedSection == 'NA') {
-      navigate(`/sections`, {
+      navigate(routes.sections, {
         replace: true,
       })
     }
@@ -205,7 +205,7 @@ export default function SectionPage() {
       formData.append('filter', JSON.stringify(filter))
       submit(formData, {
         method: 'get',
-        action: `/sections/${selectedSection}`,
+        action: `${routes.sections}/${selectedSection}`,
       })
     }
   }, [order, sortBy, data.sections.length])
@@ -256,7 +256,6 @@ export default function SectionPage() {
               `+ ${sectionsConstants.addSection}`
             } />
         </header>
-
         {data.sections.length > 0 ? (
           <div
             className={`flex flex-1 overflow-hidden ${
@@ -277,7 +276,6 @@ export default function SectionPage() {
                 sortByDetails={sortByDetails}
               />
             </div>
-
                  {/* section details */}
                  <div className={`z-10 flex flex-1 items-center `}>
               <span
@@ -310,14 +308,12 @@ export default function SectionPage() {
             {sectionsConstants.noRecordFound}
           </div>
         )}
-  
         <AddSection
           open={showAddSectionModal}
           setOpen={setShowAddSectionModal}
           showErrorMessage={sectionActionData?.errors?.status === 400}
         />
       </div>
-
     </AdminLayout>
   )
 }

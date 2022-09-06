@@ -156,7 +156,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
       <div className="flex w-full items-center justify-between">
           <Button 
             tabIndex={0} 
-            onClick={() => navigate('/tests')}
+            onClick={() => navigate(routes.tests)}
             className='h-9 px-7' 
             varient='secondary-solid'
             title={commonConstants.cancelAddTest}

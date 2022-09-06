@@ -225,7 +225,7 @@ const AddQuestionInSection = () => {
           <Button 
             tabIndex={0}
             id='cancel'
-            onClick={() => navigate(`/sections/${sectionDetails?.id}`)}
+            onClick={() => navigate(`${routes.sections}/${sectionDetails?.id}`)}
             isDisabled={transition.state === 'submitting'}
             className='h-9 px-5'
             title={transition.state === 'submitting' ? 'Canceling...' : 'Cancel'}
