@@ -38,10 +38,7 @@ const CandidateListOfTest = () => {
                 icon="mdi:arrow-left"
               />
             </NavLink>
-            <span
-              className="text-3xl font-semibold text-gray-900"
-              id="title"
-            >
+            <span className="text-3xl font-semibold text-gray-900" id="title">
               {testPreview?.name}
             </span>
           </div>

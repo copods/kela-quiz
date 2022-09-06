@@ -241,6 +241,7 @@ model SectionWiseResult {
   totalQuestion            Int
   correctQuestion          Int
   unanswered               Int
+  timeInSeconds            Int
 
   // easier access of test and results
   test   Test   @relation(fields: [testId], references: [id])

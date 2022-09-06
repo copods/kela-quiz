@@ -21,7 +21,7 @@ export interface ButtonProps {
   tabIndex?: number
   datacy?: string
   alignment?: string
-  type?: "button" | "submit" | "reset"
+  type?: 'button' | 'submit' | 'reset'
   varient: 'primary-solid' | 'primary-outlined' | 'secondary-solid'
   buttonText: string | JSX.Element
   onClick?: React.MouseEventHandler<HTMLButtonElement>
@@ -233,5 +233,5 @@ export enum sortByOrder {
   cancel = 'Cancel',
   createdAt = 'createdAt',
   creatingTest = 'Creating Test',
-  submit = 'Submit'
+  submit = 'Submit',
 }

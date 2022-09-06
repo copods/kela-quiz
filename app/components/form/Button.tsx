@@ -27,9 +27,7 @@ const Button = ({ buttonText, className, onClick, ...props }: ButtonProps) => {
   }
   return (
     <button
-      className= {
-      `${getCommonClasses()} ${getButtonVarient()} ${className}`      
-      }
+      className={`${getCommonClasses()} ${getButtonVarient()} ${className}`}
       title={props?.title}
       data-cy={props?.datacy}
       tabIndex={props?.tabIndex}

@@ -1,6 +1,13 @@
-import type { CandidateTest, Candidate, Test, Section, SectionInCandidateTest, CandidateQuestion, SectionInTest } from '@prisma/client'
+import type {
+  CandidateTest,
+  Candidate,
+  Test,
+  Section,
+  SectionInCandidateTest,
+  CandidateQuestion,
+  SectionInTest,
+} from '@prisma/client'
 import { prisma } from '~/db.server'
-
 
 export async function checkIfTestLinkIsValid(id: CandidateTest['id']) {
   try {
@@ -12,7 +19,6 @@ export async function checkIfTestLinkIsValid(id: CandidateTest['id']) {
     throw new Error('Something went wrong..!')
   }
 }
-
 
 export async function getCandidateIDFromAssessmentID(id: CandidateTest['id']) {
   try {
@@ -55,9 +61,7 @@ export async function updateNextCandidateStep(
   }
 }
 
-export async function getTestInstructionForCandidate(
-  id: CandidateTest['id']
-) {
+export async function getTestInstructionForCandidate(id: CandidateTest['id']) {
   try {
     return await prisma.candidateTest.findUnique({
       where: { id },
@@ -75,14 +79,14 @@ export async function getTestInstructionForCandidate(
                 timeInSeconds: true,
                 section: {
                   select: {
-                    name: true
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
+                    name: true,
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
     })
   } catch (error) {
     throw new Error('Something went wrong..!')
@@ -94,40 +98,36 @@ export async function getOrderedSection(testId: Test['id'], order: number) {
     return await prisma.sectionInTest.findFirst({
       where: { testId, order },
       select: {
-        id: true
-      }
+        id: true,
+      },
     })
   } catch (error) {
     throw new Error('Something went wrong..!')
   }
 }
 
-export async function getCandidate(
-  id: CandidateTest['id'],
-) {
+export async function getCandidate(id: CandidateTest['id']) {
   try {
     return await prisma.candidate.findFirst({
       where: {
         tests: {
           some: {
-            id
-          }
-        }
+            id,
+          },
+        },
       },
       select: {
         firstName: true,
         lastName: true,
-        email: true
-      }
+        email: true,
+      },
     })
   } catch (error) {
     throw new Error('Something went wrong..!')
   }
 }
 
-export async function getCandidateTest(
-  id: CandidateTest['id'],
-) {
+export async function getCandidateTest(id: CandidateTest['id']) {
   try {
     return await prisma.candidateTest.findUnique({
       where: { id },
@@ -139,25 +139,25 @@ export async function getCandidateTest(
               select: {
                 id: true,
                 name: true,
-              }
+              },
             },
             questions: {
               select: {
                 id: true,
                 status: true,
-                order: true
+                order: true,
               },
               orderBy: {
-                order: 'asc'
-              }
+                order: 'asc',
+              },
             },
             timeInCandidateQuestion: true,
             startedAt: true,
-            endAt: true
+            endAt: true,
           },
           orderBy: {
-            order: 'asc'
-          }
+            order: 'asc',
+          },
         },
         testId: true,
         test: {
@@ -166,14 +166,14 @@ export async function getCandidateTest(
             description: true,
             sections: {
               select: {
-                timeInSeconds: true
-              }
-            }
-          }
+                timeInSeconds: true,
+              },
+            },
+          },
         },
         startedAt: true,
-        endAt: true
-      }
+        endAt: true,
+      },
     })
   } catch (error) {
     throw new Error('Something went wrong..!')
@@ -185,7 +185,7 @@ export async function candidateTestStart(id: CandidateTest['id']) {
     return await prisma.candidateTest.update({
       where: { id },
       data: { startedAt: new Date() },
-      select: { candidateStep: true }
+      select: { candidateStep: true },
     })
   } catch (error) {
     throw new Error('Something went wrong..!')
@@ -196,7 +196,7 @@ export async function getTestSectionDetails(id: CandidateTest['id']) {
   try {
     return await prisma.sectionInTest.findUnique({
       where: {
-        id
+        id,
       },
       select: {
         order: true,
@@ -204,18 +204,22 @@ export async function getTestSectionDetails(id: CandidateTest['id']) {
         sectionId: true,
         timeInSeconds: true,
         totalQuestions: true,
-      }
+      },
     })
   } catch (error) {
     throw new Error('Something went wrong..!')
   }
 }
 
-export async function getCandidateSectionDetails(sectionId: Section['id'], candidateTestId: SectionInCandidateTest['candidateTestId']) {
+export async function getCandidateSectionDetails(
+  sectionId: Section['id'],
+  candidateTestId: SectionInCandidateTest['candidateTestId']
+) {
   try {
     return await prisma.sectionInCandidateTest.findFirst({
       where: {
-        sectionId, candidateTestId
+        sectionId,
+        candidateTestId,
       },
       select: {
         id: true,
@@ -224,12 +228,12 @@ export async function getCandidateSectionDetails(sectionId: Section['id'], candi
         section: {
           select: {
             id: true,
-            name: true
-          }
+            name: true,
+          },
         },
         endAt: true,
-        sectionId: true
-      }
+        sectionId: true,
+      },
     })
   } catch (error) {
     throw new Error('Something went wrong..!')
@@ -238,7 +242,9 @@ export async function getCandidateSectionDetails(sectionId: Section['id'], candi
 
 export async function candidateSectionStart(id: SectionInCandidateTest['id']) {
   try {
-    const section = await prisma.sectionInCandidateTest.findUnique({ where: { id } })
+    const section = await prisma.sectionInCandidateTest.findUnique({
+      where: { id },
+    })
 
     const select = {
       id: true,
@@ -247,33 +253,33 @@ export async function candidateSectionStart(id: SectionInCandidateTest['id']) {
       sectionId: true,
       questions: {
         where: {
-          order: 1
+          order: 1,
         },
         select: {
           id: true,
           selectedOptions: true,
           answers: true,
           answeredAt: true,
-        }
-      }
+        },
+      },
     }
 
     if (section?.startedAt) {
       return await prisma.sectionInCandidateTest.findUnique({
         where: {
-          id
+          id,
         },
-        select: select
+        select: select,
       })
     } else {
       return await prisma.sectionInCandidateTest.update({
         where: {
-          id
+          id,
         },
         data: {
-          startedAt: new Date()
+          startedAt: new Date(),
         },
-        select: select
+        select: select,
       })
     }
   } catch (error) {
@@ -285,16 +291,16 @@ export async function startAndGetQuestion(id: CandidateQuestion['id']) {
   try {
     const question = await prisma.candidateQuestion.findUnique({
       where: {
-        id
+        id,
       },
       select: {
-        status: true
-      }
+        status: true,
+      },
     })
     return prisma.candidateQuestion.update({
       where: { id },
       data: {
-        status: question?.status == 'NOT_VIEWED' ? 'VIEWED' : question?.status
+        status: question?.status == 'NOT_VIEWED' ? 'VIEWED' : question?.status,
       },
       select: {
         id: true,
@@ -306,40 +312,52 @@ export async function startAndGetQuestion(id: CandidateQuestion['id']) {
             options: {
               select: {
                 id: true,
-                option: true
-              }
+                option: true,
+              },
             },
             correctAnswer: {
               select: {
-                id: true
-              }
+                id: true,
+              },
             },
-            questionType: true
-          }
+            questionType: true,
+          },
         },
         status: true,
         selectedOptions: true,
         answers: true,
-        answeredAt: true
-      }
+        answeredAt: true,
+      },
     })
   } catch (error) {
     throw new Error('Something went wrong..!')
   }
 }
-export async function skipAnswerAndNextQuestion({ selectedOptions, sectionId, currentQuestionId, nextOrPrev, answers }: { selectedOptions: Array<string>, sectionId: SectionInTest['id'], currentQuestionId: CandidateQuestion['id'], nextOrPrev: string, answers: Array<string> }) {
+export async function skipAnswerAndNextQuestion({
+  selectedOptions,
+  sectionId,
+  currentQuestionId,
+  nextOrPrev,
+  answers,
+}: {
+  selectedOptions: Array<string>
+  sectionId: SectionInTest['id']
+  currentQuestionId: CandidateQuestion['id']
+  nextOrPrev: string
+  answers: Array<string>
+}) {
   try {
     const question = await prisma.candidateQuestion.findUnique({
       where: {
-        id: currentQuestionId
+        id: currentQuestionId,
       },
       select: {
         selectedOptions: {
           select: {
-            id: true
-          }
-        }
-      }
+            id: true,
+          },
+        },
+      },
     })
 
     //filtering current answers from old answers
@@ -352,32 +370,33 @@ export async function skipAnswerAndNextQuestion({ selectedOptions, sectionId, cu
 
     const currentQuestion = await prisma.candidateQuestion.update({
       where: {
-        id: currentQuestionId
+        id: currentQuestionId,
       },
       data: {
         selectedOptions: {
-          connect: selectedOptions?.map(option => ({ id: option })),
-          disconnect: oldAnswers?.map(option => ({ id: option }))
+          connect: selectedOptions?.map((option) => ({ id: option })),
+          disconnect: oldAnswers?.map((option) => ({ id: option })),
         },
         answers,
-        status: selectedOptions?.length || answers?.length ? 'ANSWERED' : 'SKIPPED',
-        answeredAt: new Date()
+        status:
+          selectedOptions?.length || answers?.length ? 'ANSWERED' : 'SKIPPED',
+        answeredAt: new Date(),
       },
       select: {
         sectionInCandidateTestId: true,
         order: true,
-        id: true
-      }
+        id: true,
+      },
     })
 
     //getting section to check last question
     const section = await prisma.sectionInTest.findFirst({
       where: {
-        id: sectionId
+        id: sectionId,
       },
       select: {
-        totalQuestions: true
-      }
+        totalQuestions: true,
+      },
     })
 
     // checking first question
@@ -385,20 +404,24 @@ export async function skipAnswerAndNextQuestion({ selectedOptions, sectionId, cu
       return currentQuestionId
     }
     // checking last question
-    if (currentQuestion?.order == section?.totalQuestions && nextOrPrev == 'next') {
+    if (
+      currentQuestion?.order == section?.totalQuestions &&
+      nextOrPrev == 'next'
+    ) {
       return currentQuestionId
     }
 
     // getting nextQuestionId
     const netxQuestion = await prisma.candidateQuestion.findFirst({
       where: {
-        sectionInCandidateTestId: (currentQuestion?.sectionInCandidateTestId || ''),
-        order: (currentQuestion?.order || 0) + (nextOrPrev == 'next' ? 1 : -1)
+        sectionInCandidateTestId:
+          currentQuestion?.sectionInCandidateTestId || '',
+        order: (currentQuestion?.order || 0) + (nextOrPrev == 'next' ? 1 : -1),
       },
       select: {
         id: true,
-        order: true
-      }
+        order: true,
+      },
     })
     return netxQuestion?.id
   } catch (error) {
@@ -406,76 +429,77 @@ export async function skipAnswerAndNextQuestion({ selectedOptions, sectionId, cu
   }
 }
 
-
-
-export async function endCurrentSection(candidateTestId: SectionInCandidateTest['candidateTestId'], id: SectionInTest['id']) {
+export async function endCurrentSection(
+  candidateTestId: SectionInCandidateTest['candidateTestId'],
+  id: SectionInTest['id']
+) {
   const testSection = await prisma.sectionInTest.findUnique({ where: { id } })
 
   const section = await prisma.sectionInCandidateTest.findFirst({
     where: { candidateTestId, sectionId: testSection?.sectionId },
     select: {
-      id: true, startedAt: true, endAt: true
-    }
+      id: true,
+      startedAt: true,
+      endAt: true,
+    },
   })
 
   if (section?.endAt) {
-    return { msg: "Section already ended" }
+    return { msg: 'Section already ended' }
   }
 
   return await prisma.sectionInCandidateTest.updateMany({
     where: { candidateTestId, sectionId: testSection?.sectionId },
-    data: { endAt: new Date() }
+    data: { endAt: new Date() },
   })
-
 }
 
 export async function endAssessment(id: string) {
   const candidateTest = await prisma.candidateTest.findUnique({
     where: {
-      id
+      id,
     },
     select: {
       id: true,
       startedAt: true,
-      endAt: true
-    }
+      endAt: true,
+    },
   })
   if (candidateTest?.endAt) {
-    return { msg: "Exam already ended" }
+    return { msg: 'Exam already ended' }
   }
   calculateResult(id)
   return await prisma.candidateTest.update({
     where: {
-      id
+      id,
     },
     data: {
-      endAt: new Date()
-    }
+      endAt: new Date(),
+    },
   })
 }
 
 async function calculateResult(id: CandidateTest['id']) {
   const candidateTest = await prisma.candidateTest.findUnique({
     where: {
-      id
+      id,
     },
     select: {
       id: true,
       testId: true,
       sections: true,
-      candidateId: true
-    }
+      candidateId: true,
+    },
   })
   let totalQuestionInTest = 0
   let unansweredInTest = 0
   let correctInTest = 0
 
   if (candidateTest) {
-
     for (let sec of candidateTest?.sections || []) {
       const section = await prisma.sectionInCandidateTest.findUnique({
         where: {
-          id: sec.id
+          id: sec.id,
         },
         select: {
           id: true,
@@ -490,27 +514,36 @@ async function calculateResult(id: CandidateTest['id']) {
                 select: {
                   correctAnswer: true,
                   correctOptions: true,
-                  questionType: true
-                }
-              }
-            }
+                  questionType: true,
+                },
+              },
+            },
           },
-        }
+        },
       })
       if (section) {
-        const totalQuestion = section?.questions?.length ? section?.questions?.length : 0
+        const totalQuestion = section?.questions?.length
+          ? section?.questions?.length
+          : 0
         let unanswered = 0
         let correct = 0
         for (let question of section?.questions || []) {
           // counting unanswered questions
-          if (question?.answers.length == 0 && question?.selectedOptions?.length == 0) {
+          if (
+            question?.answers.length == 0 &&
+            question?.selectedOptions?.length == 0
+          ) {
             unanswered += 1
             continue
           }
 
           if (question?.question?.questionType?.value == 'TEXT') {
-            const correctAnswers = (question?.question?.correctAnswer?.flatMap((opt) => opt?.answer.toLowerCase())).sort()
-            const userAnswers = (question?.answers?.flatMap((opt) => opt.toLowerCase())).sort()
+            const correctAnswers = question?.question?.correctAnswer
+              ?.flatMap((opt) => opt?.answer.toLowerCase())
+              .sort()
+            const userAnswers = question?.answers
+              ?.flatMap((opt) => opt.toLowerCase())
+              .sort()
             if (correctAnswers?.length == userAnswers?.length) {
               let correctFlag = true
               for (let i = 0; i < correctAnswers?.length; i++) {
@@ -523,14 +556,24 @@ async function calculateResult(id: CandidateTest['id']) {
                 correct += 1
               }
             }
-          } else if (question?.question?.questionType?.value == 'SINGLE_CHOICE') {
-            if (question?.selectedOptions[0].id === question?.question?.correctOptions[0].id) {
+          } else if (
+            question?.question?.questionType?.value == 'SINGLE_CHOICE'
+          ) {
+            if (
+              question?.selectedOptions[0].id ===
+              question?.question?.correctOptions[0].id
+            ) {
               correct += 1
             }
-          } else if (question?.question?.questionType?.value
-            == 'MULTIPLE_CHOICE') {
-            const correctOptionsId = (question?.question?.correctOptions?.flatMap((opt) => opt?.id)).sort()
-            const userAnswers = (question.selectedOptions?.flatMap((opt) => opt.id)).sort()
+          } else if (
+            question?.question?.questionType?.value == 'MULTIPLE_CHOICE'
+          ) {
+            const correctOptionsId = question?.question?.correctOptions
+              ?.flatMap((opt) => opt?.id)
+              .sort()
+            const userAnswers = question.selectedOptions
+              ?.flatMap((opt) => opt.id)
+              .sort()
             if (correctOptionsId?.length == userAnswers?.length) {
               let correctFlag = true
               for (let i = 0; i < correctOptionsId?.length; i++) {
@@ -554,18 +597,20 @@ async function calculateResult(id: CandidateTest['id']) {
           where: {
             candidateId: candidateTest?.candidateId,
             testId: candidateTest?.testId,
-          }
+          },
         })
-        !sectionResult && await prisma.sectionWiseResult.create({
-          data: {
-            sectionInCandidateTestId: section?.id,
-            totalQuestion,
-            correctQuestion: correct,
-            unanswered,
-            testId: candidateTest?.testId,
-            candidateTestId: candidateTest?.id
-          }
-        })
+        !sectionResult &&
+          (await prisma.sectionWiseResult.create({
+            data: {
+              sectionInCandidateTestId: section?.id,
+              totalQuestion,
+              correctQuestion: correct,
+              unanswered,
+              testId: candidateTest?.testId,
+              candidateTestId: candidateTest?.id,
+              timeInSeconds: 0,
+            },
+          }))
       }
     }
 
@@ -573,19 +618,19 @@ async function calculateResult(id: CandidateTest['id']) {
       where: {
         candidateId: candidateTest?.candidateId,
         testId: candidateTest?.testId,
-      }
+      },
     })
-    !candidateResult && await prisma.candidateResult.create({
-      data: {
-        candidateId: candidateTest?.candidateId,
-        candidateTestId: id,
-        totalQuestion: totalQuestionInTest,
-        correctQuestion: correctInTest,
-        unanswered: unansweredInTest,
-        testId: candidateTest?.testId,
-        isQualified: false
-      }
-    })
+    !candidateResult &&
+      (await prisma.candidateResult.create({
+        data: {
+          candidateId: candidateTest?.candidateId,
+          candidateTestId: id,
+          totalQuestion: totalQuestionInTest,
+          correctQuestion: correctInTest,
+          unanswered: unansweredInTest,
+          testId: candidateTest?.testId,
+          isQualified: false,
+        },
+      }))
   }
-
 }

@@ -136,21 +136,21 @@ const InviteCandidatePopup = ({
                   )
                 })}
                 <div className="flex justify-end gap-2 pt-4">
-                  <Button 
-                    type='button'
-                    className='h-9 px-4'
-                    varient='primary-outlined'
+                  <Button
+                    type="button"
+                    className="h-9 px-4"
+                    varient="primary-outlined"
                     title={commonConstants.cancel}
                     buttonText={commonConstants.cancel}
                     onClick={updatePopupAndEmailState}
                   />
-                  <Button 
-                    type='submit'
-                    name='inviteCandidates'
+                  <Button
+                    type="submit"
+                    name="inviteCandidates"
                     value={testId}
-                    id='submit-button'
-                    className='h-9 px-4'
-                    varient='primary-solid'
+                    id="submit-button"
+                    className="h-9 px-4"
+                    varient="primary-solid"
                     title={inviteMemeberPopUpConstants.invite}
                     buttonText={inviteMemeberPopUpConstants.invite}
                     datacy="submit"
