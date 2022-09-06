@@ -70,12 +70,12 @@ const CandidateInstruction = () => {
             <li>You can traverse the questions in particular section</li>
           </ul>
           <div className="flex">
-            <Button 
-            className='h-12 w-52 mt-8'
-            varient='primary-solid'
-            title={candidateExamConstants.beginAssesment}
-            buttonText={candidateExamConstants.beginAssesment}
-            onClick={startTestForCandidate}
+            <Button
+              className="mt-8 h-12 w-52"
+              varient="primary-solid"
+              title={candidateExamConstants.beginAssesment}
+              buttonText={candidateExamConstants.beginAssesment}
+              onClick={startTestForCandidate}
             />
           </div>
         </div>

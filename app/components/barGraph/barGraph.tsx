@@ -1,5 +1,4 @@
-const BarGraph= ()=>{
-
+const BarGraph = () => {
   // const graphHeight=300;
   // const graphWidth= 1000;
 
@@ -23,7 +22,7 @@ const BarGraph= ()=>{
   // ]
 
   // const maximumTimeInMinute= ()=>{
-  //   let maxTime=0 
+  //   let maxTime=0
   //   value.forEach(section => {
   //     if(section.totalTimeInSeconds as number  > maxTime){
   //       maxTime= section.totalTimeInSeconds as number
@@ -33,12 +32,11 @@ const BarGraph= ()=>{
   // }
 
   // const noOfBlocksInYAxis= ()=>{
-    
+
   // }
 
-
-
-  return (<span></span>
+  return (
+    <span></span>
     // <div style={{minHeight:graphHeight,maxHeight:graphHeight, maxWidth:graphWidth,minWidth:graphWidth}} className="bg-white border border-gray-300 rounded-lg p-4">
     //   H
     // </div>

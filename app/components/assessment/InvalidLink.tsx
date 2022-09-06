@@ -1,6 +1,10 @@
 import InvalidLink from '../../../public/assets/invalidLink.svg'
 import Logo from '~/components/Logo'
-import { candidateExamConstants, commonConstants, sideNav } from '~/constants/common.constants'
+import {
+  candidateExamConstants,
+  commonConstants,
+  sideNav,
+} from '~/constants/common.constants'
 
 const InvalidLinkComponent = () => {
   return (

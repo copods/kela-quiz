@@ -6,7 +6,12 @@ export default function AdminLayout({ children }: { children: JSX.Element }) {
       <div className="w-2/12 min-w-260 bg-white drop-shadow-md">
         <SideNav />
       </div>
-      <div className="flex-1 overflow-auto bg-slate-50 p-12" id='add-question-section'>{children}</div>
+      <div
+        className="flex-1 overflow-auto bg-slate-50 p-12"
+        id="add-question-section"
+      >
+        {children}
+      </div>
     </main>
   )
 }

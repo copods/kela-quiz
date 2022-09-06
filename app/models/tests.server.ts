@@ -39,7 +39,7 @@ export async function getAllTests(obj: any) {
           section: {
             select: {
               name: true,
-              id:true
+              id: true,
             },
           },
         },
