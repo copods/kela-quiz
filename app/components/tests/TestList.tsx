@@ -6,6 +6,7 @@ import SortFilter from '../SortFilter'
 import TestTableItem from './TestTableItem'
 import { commonConstants, testsConstants } from '~/constants/common.constants'
 import Button from '../form/Button'
+import { routes } from '~/constants/route.constants'
 // import Checkbox from '../form/CheckBox'
 const TestList = ({
   tests,
@@ -59,7 +60,7 @@ const TestList = ({
         </h2>
         <Button
           className="px-5"
-          onClick={() => navigate('/tests/add-test')}
+          onClick={() => navigate(routes.addTest)}
           id="add-test"
           tabIndex={0}
           varient="primary-solid"

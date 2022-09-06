@@ -46,7 +46,8 @@ const TestDetails = ({
                 fullAccess={true}
                 quillPlaceholder={testsConstants.descriptionText}
                 onTextChange={(e) => {
-                  onDescriptionChange(e)
+                  if (e === '<p><br></p>') onDescriptionChange('')
+                  else onDescriptionChange(e)
                 }}
                 aria-label={testsConstants.writeDescriptionOfTest}
               />

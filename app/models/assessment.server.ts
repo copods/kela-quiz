@@ -608,7 +608,6 @@ async function calculateResult(id: CandidateTest['id']) {
               unanswered,
               testId: candidateTest?.testId,
               candidateTestId: candidateTest?.id,
-              timeInSeconds: 0,
             },
           }))
       }
