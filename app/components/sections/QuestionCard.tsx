@@ -1,7 +1,12 @@
 import { Icon } from '@iconify/react'
 import { sectionsConstants } from '~/constants/common.constants'
 import sanitizeHtml from 'sanitize-html'
-import type { Question, Option, CorrectAnswer } from '~/interface/Interface'
+import type {
+  Question,
+  Option,
+  CorrectAnswer,
+  QuestionType,
+} from '~/interface/Interface'
 import OptionCard from './OptionCard'
 
 const QuestionCard = ({
@@ -10,7 +15,7 @@ const QuestionCard = ({
   onAccordianToggle,
   index,
 }: {
-  question: Question
+  question: Question & { questionType?: QuestionType }
   isExpanded: number
   onAccordianToggle: (e: number) => void
   index: number
@@ -84,7 +89,10 @@ const QuestionCard = ({
             {question.options?.map((option: Option) => {
               return (
                 <div key={option.id}>
-                  <OptionCard option={option} />
+                  <OptionCard
+                    option={option}
+                    Questiontype={question.questionType}
+                  />
                 </div>
               )
             })}
@@ -94,7 +102,10 @@ const QuestionCard = ({
           <div className="grid grid-cols-1 gap-4 pt-6 ">
             {question.correctAnswer?.map((answer: CorrectAnswer) => (
               <div key={answer.id}>
-                <OptionCard option={answer} />
+                <OptionCard
+                  option={answer}
+                  Questiontype={question.questionType}
+                />
               </div>
             ))}
           </div>
