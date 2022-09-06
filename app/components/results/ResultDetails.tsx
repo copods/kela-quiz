@@ -59,7 +59,7 @@ const ResultDetailsComponent = () => {
           </span>
         </div>
       </header>
-      <Divider height="1px" />
+      <Divider height="10px" />
       <BarGraph sectionWiseResult={sectionWiseResult} />
       <Divider height="1px" />
       <div id="results-test-candidate-list-tab" className="flex flex-col gap-6">

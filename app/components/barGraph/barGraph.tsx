@@ -17,29 +17,20 @@ const BarGraph = ({ sectionWiseResult }: { sectionWiseResult: any }) => {
     return finalResult
   }
 
-  const value = [
-    {
-      name: 'abc',
-      total: 5,
-      correct: 3,
-      totalTimeInSeconds: 10,
-      timeTakenInSeconds: 50,
-    },
-    {
-      name: 'abcd',
-      total: 4,
-      correct: 3,
-      totalTimeInSeconds: 10,
-      timeTakenInSeconds: 20,
-    },
-    {
-      name: 'abcde',
-      total: 4,
-      correct: 3,
-      totalTimeInSeconds: 10,
-      timeTakenInSeconds: 40,
-    },
-  ]
+  const getSectionsFromResult = sectionWiseResult.map(
+    (result: any) => result.test.sections
+  )
+  let result: Array<number> = []
+  for (let j = 0; j < getSectionsFromResult.length; j++) {
+    for (let k = 0; k < getSectionsFromResult[j].length; k++) {
+      if (
+        sectionWiseResult[j].section.section.id ===
+        getSectionsFromResult[j][k].section.id
+      ) {
+        result.push(Math.floor(getSectionsFromResult[j][k].timeInSeconds / 60))
+      }
+    }
+  }
 
   const options = {
     chart: {
@@ -81,32 +72,6 @@ const BarGraph = ({ sectionWiseResult }: { sectionWiseResult: any }) => {
         borderWidth: 0,
       },
     },
-    // point: {
-    //   events: {
-    //     mouseOver() {
-    //       let series = this.series;
-
-    //       series.points.forEach(p => {
-    //         p.graphic.css({
-    //           opacity: 0.3
-    //         })
-    //       })
-
-    //       this.graphic.css({
-    //         opacity: 1
-    //       })
-    //     },
-    //     mouseOut() {
-    //                 let series = this.series;
-
-    //       series.points.forEach(p => {
-    //         p.graphic.css({
-    //           opacity: 1
-    //         })
-    //       })
-    //     }
-    //   }
-    // },
     series: [
       {
         showInLegend: false,
@@ -114,7 +79,7 @@ const BarGraph = ({ sectionWiseResult }: { sectionWiseResult: any }) => {
           (result: any) => result.section.section.name
         ),
         color: '#F3F4F6',
-        data: value.map((el) => el.totalTimeInSeconds),
+        data: result,
         states: {
           hover: {
             color: '#F3F4F6',

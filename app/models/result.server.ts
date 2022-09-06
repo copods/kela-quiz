@@ -101,7 +101,7 @@ export async function getSectionWiseResultsOfIndividualCandidate({
   testId: string
   candidateTestId: string
 }) {
-  const candidateResult = await prisma.sectionWiseResult.findMany({
+  return await prisma.sectionWiseResult.findMany({
     where: {
       testId,
       candidateTestId,
@@ -120,30 +120,29 @@ export async function getSectionWiseResultsOfIndividualCandidate({
           },
         },
       },
+
+      test: {
+        select: {
+          id: true,
+          sections: {
+            select: {
+              id: true,
+              timeInSeconds: true,
+              section: {
+                select: {
+                  id: true,
+                },
+              },
+            },
+          },
+        },
+      },
+
       totalQuestion: true,
       correctQuestion: true,
       unanswered: true,
     },
   })
-  // const candidateSectionTime = await prisma.test.findMany({
-  //   where: {
-  //     id: testId,
-  //   },
-  //   select: {
-  //     sections: {
-  //       select: {
-  //         timeInSeconds: true,
-  //         section: {
-  //           select: {
-  //             id: true,
-  //           },
-  //         },
-  //       },
-  //     },
-  //   },
-  // })
-
-  return { candidateResult }
 }
 
 export async function updateCandidateStatus({
