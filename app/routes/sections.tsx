@@ -2,7 +2,6 @@ import type { ActionFunction, LoaderFunction } from '@remix-run/server-runtime'
 import { redirect } from '@remix-run/server-runtime'
 import { json } from '@remix-run/node'
 import {
-  commonConstants,
   routeFiles,
   sectionsConstants,
   statusCheck,
@@ -35,13 +34,13 @@ export type ActionData = {
   errors?: {
     title?: string
     body?: string
-    status?: number | string
+    status?: number
     check?: Date
     name?: string
     description?: string
   }
   resp?: {
-    status?: string | number
+    status?: string
     check?: Date
     title?: string
     data?: Section
@@ -88,21 +87,13 @@ export const action: ActionFunction = async ({ request }) => {
     const description = formData.get('description')
     if (typeof name !== 'string' || name.length === 0) {
       return json<ActionData>(
-        {
-          errors: {
-            status: 400,
-          },
-        },
+        { errors: { title: statusCheck.nameIsReq, status: 400 } },
         { status: 400 }
       )
     }
     if (typeof description !== 'string' || description.length === 0) {
       return json<ActionData>(
-        {
-          errors: {
-            status: 400,
-          },
-        },
+        { errors: { title: statusCheck.descIsReq, status: 400 } },
         { status: 400 }
       )
     }
@@ -113,8 +104,9 @@ export const action: ActionFunction = async ({ request }) => {
         addHandle = json<ActionData>(
           {
             resp: {
-              status: 200,
+              status: statusCheck.sectionAddedSuccess,
               data: res as Section,
+              check: new Date(),
             },
           },
           { status: 200 }
@@ -122,9 +114,9 @@ export const action: ActionFunction = async ({ request }) => {
       })
 
       .catch((err) => {
-        let title = commonConstants.somethingWentWrongMsg
+        let title = statusCheck.commonError
         if (err.code === 'P2002') {
-          title = '';
+          title = 'Duplicate Title'
         }
         addHandle = json<ActionData>(
           { errors: { title, status: 400, check: new Date() } },
@@ -194,7 +186,7 @@ export default function SectionPage() {
     }
   }, [navigate, selectedSection])
   useEffect(() => {
-    if (selectedSection === 'NA') {
+    if (selectedSection == 'NA') {
       navigate(`/sections`, {
         replace: true,
       })
@@ -218,11 +210,11 @@ export default function SectionPage() {
     }
   }, [order, sortBy, data.sections.length])
 
-  useEffect(() => {
-      if (sectionActionData) {
-        if (sectionActionData.resp?.title === statusCheck.sectionAddedSuccess) {
+useEffect(() => {
+    if (sectionActionData) {
+      if (sectionActionData.resp?.status === statusCheck.sectionAddedSuccess) {
         setShowAddSectionModal(false)
-        toast.success(sectionActionData.resp?.title)
+        toast.success(sectionActionData.resp?.status)
         setSelectedSection(sectionActionData?.resp?.data?.id as string)
       } else if (
         sectionActionData.resp?.status === statusCheck.deletedSuccess
@@ -265,14 +257,13 @@ export default function SectionPage() {
             } />
         </header>
 
-        {data.sections.length > 0 ? (
-          <div
-            className={`flex flex-1 overflow-hidden ${
-              sectionDetailFull ? '' : 'gap-12'
-            }`}
-          >
-            {/* section list */}
-            <div className={`${sectionDetailFull ? 'hidden' : ''}`}>
+        <div
+          className={`flex flex-1 overflow-hidden ${
+            !sectionDetailFull && 'gap-12'
+          }`}
+        >
+          {/* section list */}
+          <div className={`${sectionDetailFull && 'hidden'}`}>
             <Sections
               sections={data.sections as Section[]}
               selectedSection={selectedSection}
@@ -283,39 +274,10 @@ export default function SectionPage() {
               setOrder={setOrder}
               setSelectedSection={setSelectedSection}
               sortByDetails={sortByDetails}
-              actionStatusData={sectionActionData?.resp?.status as string}
-              err={sectionActionData?.resp?.status as string}
+              actionStatusData={sectionActionData?.resp?.status}
+              err={sectionActionData?.resp?.status}
             />
-            </div>
-
-            {/* section details */}
-            <div className={`z-10 flex flex-1 items-center `}>
-              <span
-                className="z-20 -mr-5"
-                tabIndex={0}
-                role="button"
-                onClick={() => setSectionDetailFull(!sectionDetailFull)}
-                onKeyUp={(e) => {
-                  if (e.key === 'Enter')
-                    setSectionDetailFull(!sectionDetailFull)
-                }}
-              >
-                {sectionDetailFull ? (
-                  <Icon
-                    icon={'akar-icons:circle-chevron-right-fill'}
-                    className="cursor-pointer text-4xl text-primary"
-                  />
-                ) : (
-                  <Icon
-                    icon={'akar-icons:circle-chevron-left-fill'}
-                    className="cursor-pointer text-4xl text-primary"
-                  />
-                )}
-              </span>
-              <Outlet />
-            </div>
           </div>
-        ) : ('')}
           {/* section details */}
           <div className={`z-10 flex flex-1 items-center `}>
             <span
@@ -343,6 +305,7 @@ export default function SectionPage() {
             </span>
             <Outlet />
           </div>
+        </div>
 
         <AddSection
           open={showAddSectionModal}
