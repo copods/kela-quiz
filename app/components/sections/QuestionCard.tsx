@@ -63,7 +63,7 @@ const QuestionCard = ({
             ></div>
           </div>
           <div className="flex gap-2">
-            <span className="px-3 text-sm rounded-52 border border-gray-700  text-gray-700">
+            <span className="rounded-52 border border-gray-700 px-3 text-sm  text-gray-700">
               {question.questionType?.displayName}
             </span>
             {isExpanded === index ? (
