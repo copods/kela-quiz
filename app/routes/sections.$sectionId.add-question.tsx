@@ -12,6 +12,7 @@ import AddQuestionInSection from '~/components/sections/add-question/AddQuestion
 import { requireUserId } from '~/session.server'
 import { toast } from 'react-toastify'
 import { useEffect, useState } from 'react'
+import { routes } from '~/constants/route.constants'
 
 type LoaderData = {
   sectionDetails: Awaited<ReturnType<typeof getSectionById>>
@@ -88,7 +89,7 @@ export default function AddQuestion() {
       if (actionData.success.addMoreQuestion) {
         setAddQuestionKey((prev) => (prev += 1))
       } else {
-        navigate(`/sections/${sectionDetail.sectionDetails?.id}`)
+        navigate(`${routes.sections}/${sectionDetail.sectionDetails?.id}`)
       }
     } else if (actionData?.error) {
       toast.error(actionData?.data)
