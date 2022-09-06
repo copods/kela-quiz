@@ -1,7 +1,7 @@
 import { useNavigate, useSubmit, useTransition } from '@remix-run/react'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
-import type { TestSection } from '~/interface/Interface'
+import { sortByOrder, TestSection } from '~/interface/Interface'
 import BreadCrumb from '../BreadCrumb'
 import SelectSections from './CreateSelectSections'
 import TestDetails from './CreateTestDetails'
@@ -15,11 +15,9 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
   const transition = useTransition()
   const submit = useSubmit()
   const [sectionsCopy, setSectionsCopy] = useState(sections)
-
   useEffect(() => {
     setSectionsCopy(sections)
   }, [sections])
-
   const breadCrumbData = [
     {
       tabName: testsConstants.testListColumnLabel,
@@ -30,7 +28,6 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
       route: routes.addTest,
     },
   ]
-
   const tabs = [
     {
       id: 0,
@@ -48,7 +45,6 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
       description: 'Preview',
     },
   ]
-
   const [currentTab, setCurrentTab] = useState(0) // testDetails  ||  selectSections  ||  preview
   const [name, onNameChange] = useState('')
   const [description, onDescriptionChange] = useState('')
@@ -56,7 +52,6 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
     []
   )
   const navigate = useNavigate()
-
   const updateSection = (data: Array<TestSection>, i: number) => {
     setSectionsCopy((sec) => {
       sec[i] = { ...sec[i], ...data }
@@ -68,7 +63,6 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
       return [...sec]
     })
   }
-
   const submitAddTest = () => {
     if (typeof name !== 'string' || name.length === 0) {
       toast.error(toastConstants.addTest)
@@ -82,7 +76,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
       toast.error(toastConstants.addSection)
       return
     }
-    var sendData: {
+    let sendData: {
       name: string
       description: string
       sections: Array<{
@@ -104,11 +98,9 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
         order: index + 1,
       })
     })
-
     submit({ data: JSON.stringify(sendData) }, { method: 'post' })
     // fetcher.submit({ data: JSON.stringify(sendData) }, { method: "post" });
   }
-
   useEffect(() => {
     if (!name || !description) {
       setCurrentTab(0)
@@ -135,7 +127,6 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
         currentTab={currentTab}
         setCurrentTab={setCurrentTab}
       />
-
       {/* Components according to current step */}
       {currentTab === tabs[0].id ? (
         <TestDetails
@@ -164,16 +155,16 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
       {/* Buttons */}
       <div className="flex w-full items-center justify-between">
           <Button 
-            tabIndex={0}
-            title='Cancel Add Test' 
+            tabIndex={0} 
             onClick={() => navigate('/tests')}
             className='h-9 px-7' 
             varient='secondary-solid'
+            title={commonConstants.cancelAddTest}
             buttonText={commonConstants.cancel} />
         <div className="flex gap-4">
           <Button 
             tabIndex={0}
-            title='Previous Tab' 
+            title={commonConstants.previousTab} 
             className='h-9 px-7' 
             varient='primary-solid'
             id='back-button'
@@ -183,7 +174,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
           {currentTab !== 2 ? (
             <Button 
               tabIndex={0}
-              title='Next Tab' 
+              title={commonConstants.nextTab} 
               className='h-9 px-7' 
               varient='primary-solid'
               id='next-button'
@@ -193,11 +184,11 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
           ) : (
             <Button 
               tabIndex={0}
-              title='Next Tab' 
+              title={commonConstants.nextTab} 
               id='submit-button'
               className='h-9 px-7' 
               varient='primary-solid'
-              buttonText={transition.state === 'submitting' ? 'Creating Test' : 'Submit'} 
+              buttonText={transition.state === 'submitting' ? sortByOrder.creatingTest : sortByOrder.submit} 
               isDisabled={currentTab != 2}
               onClick={() => submitAddTest()} />
           )}

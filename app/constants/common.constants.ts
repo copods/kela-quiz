@@ -22,15 +22,21 @@ export const commonConstants = {
   checkOrder: 'Check Order',
   complete: 'Complete',
   pending: 'Pending',
+  createTest: 'Creating Test',
   submit: 'Submit',
+  adding: 'Adding...',
   add: 'Add',
+  cancelAddTest: 'Cancel Add Test',
+  previousTab: 'Previous Tab',
+  nextTab: 'Next Tab',
   logo: 'logo',
+  saveAndExit: 'Save & Exit',
+  saveAndAddMore: 'Save & Add More',
+  logout: 'Logout',
 }
-
 export const sideNav = {
   sideNavHeading: 'Quiz',
 }
-
 export const members = {
   addMember: 'Add Member',
   firstName: 'First Name',
@@ -78,6 +84,7 @@ export const sectionsConstants = {
   noRecordFound: 'No Record Found',
   dropdown: 'Select',
   expand: 'Expand',
+  sort: 'Sort',
   search: 'Search Question',
 }
 export const testsConstants = {
@@ -110,13 +117,11 @@ export const routeFiles = {
   sections: 'Sections',
   options: 'Options',
 }
-
 export enum QuestionTypes {
   multipleChoice = 'MULTIPLE_CHOICE',
   singleChoice = 'SINGLE_CHOICE',
   text = 'TEXT',
 }
-
 export const statusCheck = {
   success: 'Success',
   commonError: 'Something Went Wrong',
@@ -146,14 +151,12 @@ export const resultConstants = {
   skipped: 'Skipped',
   total: 'Total',
 }
-
 export enum QuestionStatus {
   notViewed = 'NOT_VIEWED',
   viewed = 'VIEWED',
   skipped = 'SKIPPED',
   answered = 'ANSWERED',
 }
-
 export const candidateExamConstants = {
   time: 'Time',
   timeRemaining: 'Time Remaining',
@@ -196,15 +199,14 @@ export const cypress = {
   preview: 'Preview',
   next: 'Next',
   remove: 'Remove',
-  addQuest: '+ Add Question',
   back: 'Back',
   nameIsReq: 'Name is required',
   descIsReq: 'Description is required',
   duplicateTitle: 'Duplicate Title',
   saveAndAddMore: 'Save & Add More',
   enterAllOptions: 'Enter all the Options',
-  addMember: '+ Add Member',
   cancel: 'Cancel',
+  addMember: 'Add Member',
   name: 'Name',
   description: 'Description',
   totalTime: 'Total Time',

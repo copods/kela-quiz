@@ -38,7 +38,7 @@ const SectionLink = ({
         isActive={location.pathname === resolvedPath.pathname}
         name={section?.name}
         createdBy={`${section?.createdBy?.firstName} ${section?.createdBy?.lastName}`}
-        questionsCount={section?._count?.questions}
+        questionsCount={section?._count?.questions as number}
         createdAt={section.createdAt}
         id={section?.id}
         actionStatusData={actionStatusData}
@@ -47,7 +47,6 @@ const SectionLink = ({
     </NavLink>
   )
 }
-
 type SectionType = {
   sections: Section[]
   sortBy: string
@@ -76,7 +75,7 @@ const Sections = ({
   return (
     <div className="sectionLSWrapper flex h-full w-96 flex-col gap-6">
       {/* filters */}
-      <div className="flex items-center justify-between ">
+      <div className="flex items-center justify-between p-1">
         <div id="sort-filter-container">
           <SortFilter
             filterData={sortByDetails}
@@ -89,10 +88,9 @@ const Sections = ({
           />
         </div>
       </div>
-
       {/* list */}
       <div
-        className="section-cards flex flex-1 flex-col gap-6 overflow-auto"
+        className="section-cards flex flex-1 flex-col gap-6 overflow-auto p-1"
         id="section-cards"
       >
         {sections?.map((section: Section) => (

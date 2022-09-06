@@ -8,13 +8,14 @@ import {useLoaderData, useNavigate, useSubmit, useTransition } from '@remix-run/
 import { toast } from 'react-toastify'
 import Button from '~/components/form/Button'
 import { routes } from '~/constants/route.constants'
-
 import {
   addQuestion,
   QuestionTypes,
   testsConstants,
   statusCheck,
+  commonConstants
 } from '~/constants/common.constants'
+import { sortByOrder } from '~/interface/Interface'
 
 const AddQuestionInSection = () => {
   const { sectionDetails, questionTypes } = useLoaderData()
@@ -78,7 +79,7 @@ const AddQuestionInSection = () => {
 
   const submit = useSubmit()
   const saveQuestion = (addMoreQuestion: boolean) => {
-    if (question.length === 0) {
+    if (!question.length) {
       toast.error('Enter the Question', { toastId: 'questionRequired' })
       return
     }
@@ -89,7 +90,7 @@ const AddQuestionInSection = () => {
       getQuestionType(selectedTypeOfQuestion) === QuestionTypes.singleChoice
     ) {
       for (let option of options) {
-        if (option.option.length === 0) {
+        if (!option.option.length) {
           toast.error('Enter all the Options', { toastId: 'optionsRequired' })
           return
         }
@@ -153,7 +154,7 @@ const AddQuestionInSection = () => {
       getQuestionType(selectedTypeOfQuestion) === QuestionTypes.multipleChoice
     ) {
       options.forEach((option) => {
-        var optionForQuestion = {
+        let optionForQuestion = {
           id: option.id,
           option: option.option,
           isCorrect: option.isCorrect,
@@ -165,7 +166,7 @@ const AddQuestionInSection = () => {
     ) {
       options.forEach(
         (option: { option: string; isCorrect: boolean; id: string }) => {
-          var optionForQuestion = {
+          let optionForQuestion = {
             id: option.id,
             option: option.option,
             isCorrect: singleChoiceAnswer === option.id ? true : false,
@@ -176,7 +177,7 @@ const AddQuestionInSection = () => {
     } else if (getQuestionType(selectedTypeOfQuestion) === QuestionTypes.text) {
       testQuestion.checkOrder = checkOrder
       textCorrectAnswer.forEach((correctAnswer, index) => {
-        var optionForQuestion = {
+        let optionForQuestion = {
           id: correctAnswer.id,
           answer: correctAnswer.answer,
           order: index,
@@ -200,7 +201,6 @@ const AddQuestionInSection = () => {
         {sectionDetails?.name} - {addQuestion.addQuestion}
       </h1>
       </div>
-
       <div className="flex h-40 flex-1 flex-row gap-6">
         <QuestionEditor
           question={question}
@@ -209,7 +209,6 @@ const AddQuestionInSection = () => {
           selectedTypeOfQuestion={selectedTypeOfQuestion}
           onQuestionTypeChange={onQuestionTypeChange}
         />
-
         <OptionForQuestion
           textCorrectAnswer={textCorrectAnswer}
           setTextCorrectAnswer={setTextCorrectAnswer}
@@ -231,6 +230,7 @@ const AddQuestionInSection = () => {
             onClick={() => navigate(`/sections/${sectionDetails?.id}`)}
             isDisabled={transition.state === 'submitting'}
             className='h-9 px-5'
+            title={transition.state === 'submitting' ? 'Canceling...' : 'Cancel'}
             buttonText={transition.state === 'submitting' ? 'Canceling...' : 'Cancel'}
             varient='secondary-solid' />
         </div>
@@ -242,13 +242,13 @@ const AddQuestionInSection = () => {
             className='h-9 px-5'
             onClick={() => saveQuestion(false)}
             varient='primary-solid'
+            title={commonConstants.saveAndExit}
             buttonText={
               <>
               <Icon icon="ic:round-save" className="mr-1" />
-              {transition.state === 'submitting' ? 'Saving...' : 'Save & Exit'}
+              {transition.state === 'submitting' ? 'Saving...' : sortByOrder.saveAndExit}
               </>
             } />
-
           <Button 
             tabIndex={0}
             id='save-and-add-more'
@@ -256,10 +256,11 @@ const AddQuestionInSection = () => {
             className='h-9 px-5'
             onClick={() => saveQuestion(true)}
             varient='primary-solid'
+            title={commonConstants.saveAndAddMore}
             buttonText={
               <>
               <Icon icon="ic:round-save" className="mr-1" />
-              {transition.state === 'submitting' ? 'Saving...' : 'Save & Add More'}
+              {transition.state === 'submitting' ? sortByOrder.saving : sortByOrder.saveAndAddMore}
               </>
             } />
         </div>

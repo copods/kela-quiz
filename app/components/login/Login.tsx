@@ -8,7 +8,6 @@ import { logIn } from '~/constants/common.constants'
 function Login({ actionData, redirectTo }: LoginProps) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-
   const inputFieldsProps = [
     {
       label: 'Email',
@@ -37,7 +36,6 @@ function Login({ actionData, redirectTo }: LoginProps) {
       },
     },
   ]
-
   return (
     <div className="z-10 flex	min-h-[480px] w-full max-w-[554px] flex-col items-center justify-center rounded-2xl bg-white px-24 drop-shadow-xl">
       <div className="z-20 -mt-24 mb-6">
@@ -75,6 +73,7 @@ function Login({ actionData, redirectTo }: LoginProps) {
             <input type="hidden" name="redirectTo" value={redirectTo} />
             <Button 
               tabIndex={0}
+              title={logIn.signIn}
               buttonText={logIn.signIn}
               type="submit"
               varient='primary-solid'

@@ -12,14 +12,17 @@ const ChipGroup = ({
 }) => {
   return (
     <div className="chip-group mr-3 flex items-center gap-2">
-      <div className="truncate rounded-52 bg-bgcolor px-1 py-1">
+      <div className="truncate rounded-52 bg-blue-50 px-1 py-1">
         {sections[0]?.section.name}
       </div>
       {sections.length > 1 && (
         <Menu as="div" className="relative inline-block text-left">
           <div id="section-count-button">
             <Menu.Button>
-              <div aria-label={`+ ${sections.length - 1} Sections in Test`} className="cursor-pointer rounded-52 bg-bgcolor px-1 py-1 text-xs">
+              <div
+                aria-label={`+ ${sections.length - 1} Sections in Test`}
+                className="cursor-pointer rounded-52 bg-blue-50 px-1 py-1 text-xs"
+              >
                 + {sections.length - 1}
               </div>
             </Menu.Button>
@@ -39,10 +42,13 @@ const ChipGroup = ({
             >
               {sections.map((sect) => {
                 return (
-                  <div className=" flex flex-col px-2 py-2" key={sect?.section?.id}>
+                  <div
+                    className="flex flex-col px-2 py-2"
+                    key={sect?.section?.id}
+                  >
                     <Menu.Item>
                       <span className="text-sm">
-                        <span className="truncate rounded-52 bg-bgcolor px-2 py-1">
+                        <span className="truncate rounded-52 bg-blue-50 px-2 py-1">
                           {sect?.section?.name}
                         </span>
                       </span>

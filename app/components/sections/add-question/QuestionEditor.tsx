@@ -24,7 +24,7 @@ export default function QuestionEditor({
     }
   }
   return (
-    <div className="flex flex-1 flex-col gap-6">
+    <div className="flex flex-1 flex-col gap-6 p-1" id='Question'>
       <div className=" flex">
         <DropdownField
           value={selectedTypeOfQuestion}
@@ -34,8 +34,7 @@ export default function QuestionEditor({
           valueKey={'id'}
         />
       </div>
-
-      <div className="flex-1" id="question-editor">
+      <div className="flex-1 py-1" id="question-editor">
         <ClientOnly fallback={<div></div>}>
           {() => (
             <QuillEditor

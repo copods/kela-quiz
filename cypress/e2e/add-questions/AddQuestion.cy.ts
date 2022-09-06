@@ -1,4 +1,4 @@
-import { cypress, routeFiles } from '~/constants/common.constants'
+import { cypress, addQuestion, routeFiles } from '~/constants/common.constants'
 const section1 = `Aptitude - section1`
 
 describe('Test for section-details', () => {
@@ -17,14 +17,12 @@ describe('Test for section-details', () => {
     cy.get('[data-cy="submit"]').click()
     cy.location('pathname').should('include', '/dashboard')
   })
-
   it('Verifying MCQ to have Check Box in options', () => {
     cy.get('a')
       .find('#sections')
       .should('have.text', routeFiles.sections)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
-
     cy.get('#section-card', { timeout: 8000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -34,15 +32,13 @@ describe('Test for section-details', () => {
         }
       })
     })
-
-    cy.get('#add-question').should('have.text', cypress.addQuest).click()
+    cy.get('#add-question').should('have.text', `+ ${addQuestion.addQuestion}`).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
     )
     cy.get('h1', { timeout: 6000 }).should('be.visible')
     cy.get('#dropdown > button', { timeout: 6000 }).click()
-
     let flag = ''
     cy.get('ul[role="listbox"]').within(() => {
       cy.get('li').within(() => {
@@ -65,7 +61,6 @@ describe('Test for section-details', () => {
       cy.get('input[type="checkbox"]').should('have.class', 'checkBox')
     }
   })
-
   it('Verifying Single Choice to have Radio Button in options', () => {
     cy.get('a')
       .find('#sections')
@@ -81,14 +76,13 @@ describe('Test for section-details', () => {
         }
       })
     })
-    cy.get('#add-question').should('have.text', cypress.addQuest).click()
+    cy.get('#add-question').should('have.text', `+ ${addQuestion.addQuestion}`).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
     )
     cy.get('h1', { timeout: 6000 }).should('be.visible')
     cy.get('#dropdown > button', { timeout: 6000 }).click()
-
     let flag = ''
     cy.get('ul').within(() => {
       cy.get('li').within(() => {
@@ -111,7 +105,6 @@ describe('Test for section-details', () => {
       cy.get('input').should('have.class', 'radioButton')
     }
   })
-
   it('Verifying Text to have Textarea in options', () => {
     cy.get('a')
       .find('#sections')
@@ -127,14 +120,13 @@ describe('Test for section-details', () => {
         }
       })
     })
-    cy.get('#add-question').should('have.text', cypress.addQuest).click()
+    cy.get('#add-question').should('have.text', `+ ${addQuestion.addQuestion}`).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
     )
     cy.get('h1', { timeout: 6000 }).should('be.visible')
     cy.get('#dropdown > button', { timeout: 6000 }).click()
-
     let flag = ''
     cy.get('ul').within(() => {
       cy.get('li').within(() => {
@@ -157,9 +149,7 @@ describe('Test for section-details', () => {
       cy.get('input[type="textarea"]').should('have.class', 'textOption')
     }
   })
-
   let lengthBefore: number
-
   it('Verifying if Add Option functionality Working on Options', () => {
     cy.get('a')
       .find('#sections')
@@ -175,7 +165,7 @@ describe('Test for section-details', () => {
         }
       })
     })
-    cy.get('#add-question').should('have.text', cypress.addQuest).click()
+    cy.get('#add-question').should('have.text', `+ ${addQuestion.addQuestion}`).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -194,7 +184,6 @@ describe('Test for section-details', () => {
         })
       })
     })
-
     cy.get('.h-40 > .gap-6').within(() => {
       cy.get('#quill-editor')
         .its('length')
@@ -209,7 +198,6 @@ describe('Test for section-details', () => {
         })
     })
   })
-
   it('Verifying if Delete functionality Working on Options', () => {
     cy.get('a')
       .find('#sections')
@@ -225,14 +213,13 @@ describe('Test for section-details', () => {
         }
       })
     })
-    cy.get('#add-question').should('have.text', cypress.addQuest).click()
+    cy.get('#add-question').should('have.text', `+ ${addQuestion.addQuestion}`).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
     )
     cy.get('h1', { timeout: 6000 }).should('be.visible')
     cy.get('#dropdown > button').click()
-
     cy.get('ul').within(() => {
       cy.get('li').within(() => {
         cy.get('div').then((el) => {
@@ -244,7 +231,6 @@ describe('Test for section-details', () => {
         })
       })
     })
-
     cy.get('.h-40 > .gap-6').within(() => {
       cy.get('#quill-editor')
         .its('length')
@@ -259,7 +245,6 @@ describe('Test for section-details', () => {
         })
     })
   })
-
   it('On Save and Add More visit the Add Question Page', () => {
     cy.get('a')
       .find('#sections')
@@ -275,14 +260,13 @@ describe('Test for section-details', () => {
         }
       })
     })
-    cy.get('#add-question').should('have.text', cypress.addQuest).click()
+    cy.get('#add-question').should('have.text', `+ ${addQuestion.addQuestion}`).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
     )
     cy.get('h1', { timeout: 6000 }).should('be.visible')
     cy.get('#dropdown > button').click()
-
     cy.get('ul').within(() => {
       cy.get('li').within(() => {
         cy.get('div').then((el) => {
@@ -295,20 +279,16 @@ describe('Test for section-details', () => {
         })
       })
     })
-
     cy.get('#question-editor #quill-editor').within(() => {
       cy.get('.ql-editor').type(cypress.useRef)
     })
-
     cy.get('#optionEditor input').clear().type(cypress.useRefAns)
-
     cy.get('#save-and-add-more').click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
     )
   })
-
   it('On Save and Continue visit the Sections Page', () => {
     cy.get('a')
       .find('#sections')
@@ -324,15 +304,13 @@ describe('Test for section-details', () => {
         }
       })
     })
-    cy.get('#add-question').should('have.text', cypress.addQuest).click()
+    cy.get('#add-question').should('have.text', `+ ${addQuestion.addQuestion}`).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
     )
-
     cy.get('h1', { timeout: 6000 }).should('be.visible')
     cy.get('#dropdown > button').click()
-
     cy.get('ul').within(() => {
       cy.get('li').within(() => {
         cy.get('div').then((el) => {
@@ -345,17 +323,13 @@ describe('Test for section-details', () => {
         })
       })
     })
-
     cy.get('#question-editor #quill-editor').within(() => {
       cy.get('.ql-editor').type(cypress.useMemo)
     })
-
     cy.get('#optionEditor input').clear().type(cypress.useMemoAns)
-
     cy.get('#save-and-exit').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
   })
-
   it('Verifying if Question is Empty or not', () => {
     cy.get('a')
       .find('#sections')
@@ -371,7 +345,7 @@ describe('Test for section-details', () => {
         }
       })
     })
-    cy.get('#add-question').should('have.text', cypress.addQuest).click()
+    cy.get('#add-question').should('have.text', `+ ${addQuestion.addQuestion}`).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -385,7 +359,6 @@ describe('Test for section-details', () => {
       .click()
     cy.get('.Toastify__toast').should('have.text', 'Enter the Question')
   })
-
   it('Verifying if any Option is empty or not', () => {
     cy.get('a')
       .find('#sections')
@@ -401,16 +374,14 @@ describe('Test for section-details', () => {
         }
       })
     })
-    cy.get('#add-question').should('have.text', cypress.addQuest).click()
+    cy.get('#add-question').should('have.text', `+ ${addQuestion.addQuestion}`).click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
     )
     cy.get('h1', { timeout: 6000 }).should('be.visible')
     let flag = 0
-
     cy.get('#dropdown > button').click()
-
     cy.get('ul').within(() => {
       cy.get('li').within(() => {
         cy.get('div').then((el) => {
@@ -422,7 +393,6 @@ describe('Test for section-details', () => {
         })
       })
     })
-
     cy.get('.h-40 > .gap-6 > .flex-col').within(() => {
       cy.get(' #quill-editor ').then((el) => {
         ;[...el].forEach((element) => {

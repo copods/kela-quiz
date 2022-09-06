@@ -13,11 +13,9 @@ function CandidateRegister() {
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [isChecked, setIsChecked] = useState(false)
-
   const canSubmitBtnBeEnabled = () => {
     return firstName.length > 0 && lastName.length > 0 && isChecked
   }
-
   const checkBoxProps = {
     name: 'candidateAgreement',
     isChecked: false,
@@ -25,7 +23,6 @@ function CandidateRegister() {
       setIsChecked(!isChecked)
     },
   }
-
   const inputFieldsProps = [
     {
       label: 'First Name',
@@ -52,7 +49,6 @@ function CandidateRegister() {
       },
     },
   ]
-
   return (
     <div className="z-10 flex	min-h-[480px] w-full max-w-[554px] flex-col items-center justify-center rounded-2xl bg-white px-24 drop-shadow-xl">
       <div className="z-20 -mt-24 mb-6">
@@ -79,6 +75,7 @@ function CandidateRegister() {
           </div>
           <div className="mt-6">
             <Button
+              title={commonConstants.continue}
               buttonText={commonConstants.continue}
               type="submit"
               className='w-full'

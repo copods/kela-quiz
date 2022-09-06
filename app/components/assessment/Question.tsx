@@ -11,9 +11,7 @@ import Checkbox from '../form/CheckBox'
 
 const Question = () => {
   const { question, section, lastSection } = useLoaderData()
-
   const questionType = question?.question?.questionType?.value
-
   const [userAnswer, setUserAnswer] = useState(
     questionType === QuestionTypes.singleChoice
       ? question.selectedOptions[0]?.id
@@ -21,7 +19,6 @@ const Question = () => {
       ? question?.answers
       : {}
   )
-
   const onChangeHandle = (event: any, index?: number) => {
     if (questionType === QuestionTypes.singleChoice) {
       setUserAnswer(event.id)
@@ -33,7 +30,6 @@ const Question = () => {
       })
     }
   }
-
   return (
     <form method="post" className="flex h-full flex-col gap-9">
       <div className="flex h-full max-h-full flex-1 gap-9 overflow-auto">
@@ -115,6 +111,7 @@ const Question = () => {
           <Button 
           className='h-11 w-40'
           varient='primary-outlined'
+          title={commonConstants.prevoiusButton}
           buttonText={commonConstants.prevoiusButton}
           isDisabled={question.order === 1}
           type="submit"
@@ -125,6 +122,7 @@ const Question = () => {
             <Button 
             className='h-11 w-40'
             varient='primary-solid'
+            title={commonConstants.nextButton}
             buttonText={commonConstants.nextButton}
             isDisabled={question.order === section.totalQuestions}
             type="submit"
@@ -135,6 +133,7 @@ const Question = () => {
             <Button 
             className='h-11 w-40'
             varient='primary-solid'
+            title={candidateExamConstants.endTest}
             buttonText={candidateExamConstants.endTest}
             isDisabled={question.order !== section.totalQuestions}
             type="submit"
@@ -145,6 +144,7 @@ const Question = () => {
             <Button 
             className='h-11 w-40'
             varient='primary-solid'
+            title={candidateExamConstants.nextSection}
             buttonText={candidateExamConstants.nextSection}
             isDisabled={question.order !== section.totalQuestions}
             type="submit"

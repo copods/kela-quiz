@@ -12,7 +12,6 @@ import Button from '../form/Button'
 
 const ResultDetailsComponent = () => {
   const { candidateResult, params, sectionWiseResult } = useLoaderData()
-
   const dropdownData = [
     {
       name: 'Pending',
@@ -23,11 +22,8 @@ const ResultDetailsComponent = () => {
       value: true,
     },
   ]
-
   const [candidateStatus, updateCandidateStatus] = useState(false)
-
   const submit = useSubmit()
-
   const updateCandidateStatusToDB = () => {
     submit(
       {
@@ -37,7 +33,6 @@ const ResultDetailsComponent = () => {
       { method: 'post' }
     )
   }
-
   return (
     <div id="test-details" className="flex h-full flex-col gap-6">
       <header>
@@ -90,6 +85,7 @@ const ResultDetailsComponent = () => {
         varient='primary-solid'
         className='px-6'
         onClick={updateCandidateStatusToDB}
+        title={commonConstants.submit}
         buttonText={commonConstants.submit}
         />
       </div>

@@ -30,7 +30,6 @@ export default function AddMemberModal({
           >
             <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
           </Transition.Child>
-
           <div
             className="fixed inset-0 z-10 overflow-y-auto"
             id="add-pop-up-model"
@@ -132,6 +131,7 @@ export default function AddMemberModal({
                       className='h-9 px-4'
                       onClick={() => setOpen(false)}
                       varient='primary-outlined'
+                      title={commonConstants.cancel}
                       buttonText={commonConstants.cancel} />
                     <Button  
                       tabIndex={0}
@@ -141,7 +141,8 @@ export default function AddMemberModal({
                       value={JSON.stringify({ action: 'add' })}
                       className='h-9 px-4'
                       isDisabled={transition.state === 'submitting'}
-                      buttonText={transition.state === 'submitting' ? 'Adding...' : 'Add'}
+                      title={transition.state === 'submitting' ? commonConstants.adding : commonConstants.add}
+                      buttonText={transition.state === 'submitting' ? commonConstants.adding : commonConstants.add}
                       varient='primary-solid' />
                   </div>
                 </Dialog.Panel>

@@ -4,7 +4,7 @@ import Footer from '~/components/SideNavFooter'
 import { commonConstants, members, routeFiles, sideNav, testsConstants } from '~/constants/common.constants'
 import { routes } from '~/constants/route.constants'
 
-let sideNavGuide = [
+const sideNavGuide = [
   // {
   //   navGuide: 'Main Menu',
   //   subItem: [
@@ -69,7 +69,6 @@ let sideNavGuide = [
   },
 ]
 const title = sideNav.sideNavHeading
-
 const SideNav = () => {
   return (
     <div className="flex h-full flex-col justify-between overflow-auto p-5">
