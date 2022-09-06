@@ -1,7 +1,13 @@
 import MenuItems from './MenuItems'
 import Header from '~/components/SideNavHeader'
 import Footer from '~/components/SideNavFooter'
-import { commonConstants, members, routeFiles, sideNav, testsConstants } from '~/constants/common.constants'
+import {
+  commonConstants,
+  members,
+  routeFiles,
+  sideNav,
+  testsConstants,
+} from '~/constants/common.constants'
 import { routes } from '~/constants/route.constants'
 
 const sideNavGuide = [

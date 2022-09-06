@@ -89,10 +89,7 @@ export async function sendMail(
   return 'Done'
 }
 
-export async function sendTestInviteMail(
-  email: string,
-  link: string,
-) {
+export async function sendTestInviteMail(email: string, link: string) {
   const to = email
   const from = 'careers@copods.co'
   const subject = 'Welcome to K - Quiz @ Copods'

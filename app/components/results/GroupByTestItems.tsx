@@ -1,7 +1,5 @@
-
 import { Link } from '@remix-run/react'
 import { resultConstants } from '~/constants/common.constants'
-
 
 const GroupByTestItems = ({
   index,
