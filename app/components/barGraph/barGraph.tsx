@@ -3,6 +3,7 @@ import HighchartsReact from 'highcharts-react-official'
 import moment from 'moment'
 
 const BarGraph = ({ sectionWiseResult }: { sectionWiseResult: any }) => {
+  console.log(sectionWiseResult)
   const getDifferenceMin = () => {
     let finalResult: Array<number> = []
     sectionWiseResult.map((result: any) => {
@@ -32,12 +33,25 @@ const BarGraph = ({ sectionWiseResult }: { sectionWiseResult: any }) => {
     }
   }
 
+  // const getLabelData = (sectionName: string, resultKind: string) => {
+  //   const getRequiredSection = sectionWiseResult.find(
+  //     (result: any) => result.section.section.name === sectionName
+  //   )
+  //   if (resultKind === 'total') {
+  //     return getRequiredSection.totalQuestion
+  //   } else if (resultKind === 'correct') {
+  //     return getRequiredSection.correctQuestion
+  //   } else if (resultKind === 'wrong') {
+  //     return getRequiredSection.unanswered
+  //   }
+  // }
+
   const options = {
     chart: {
       type: 'column',
     },
     title: {
-      text: 'Efficiency Optimization by Branch',
+      text: '',
     },
     xAxis: {
       categories: sectionWiseResult.map(
@@ -60,9 +74,23 @@ const BarGraph = ({ sectionWiseResult }: { sectionWiseResult: any }) => {
       shared: true,
       // formatter: function () {
       //   return this.points.reduce((acc: any, curr: any) => {
-      //     console.log(curr)
-      //     return acc + '<br/>' + curr?.x `${i+1}` + ': ' + +'m'
-      //   }, '<b>' + '</b>')
+      //     return (
+      //       curr.key +
+      //       '<br/>' +
+      //       'Total' +
+      //       ' : ' +
+      //       getLabelData(curr.key, 'total') +
+      //       '<br/>' +
+      //       'Correct' +
+      //       ' : ' +
+      //       getLabelData(curr.key, 'correct') +
+      //       '<br/>' +
+      //       'Wrong' +
+      //       ' : ' +
+      //       getLabelData(curr.key, 'wrong') +
+      //       '<br/>'
+      //     )
+      //   })
       // },
     },
     plotOptions: {
@@ -103,7 +131,7 @@ const BarGraph = ({ sectionWiseResult }: { sectionWiseResult: any }) => {
   }
 
   return (
-    <div className="rounded-lg border">
+    <div className="rounded-lg border bg-white pt-3">
       <HighchartsReact highcharts={Highcharts} options={options} />
     </div>
   )

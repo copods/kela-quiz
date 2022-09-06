@@ -13,8 +13,6 @@ import Button from '../form/Button'
 const ResultDetailsComponent = () => {
   const { candidateResult, params, sectionWiseResult } = useLoaderData()
 
-  console.log('sectionWiseResult', sectionWiseResult)
-
   const dropdownData = [
     {
       name: 'Pending',
@@ -76,7 +74,7 @@ const ResultDetailsComponent = () => {
         })}
       </div>
       <Divider height="1px" />
-      <div className="flex gap-4">
+      <div className="flex gap-4 pb-5">
         <DropdownField
           data={dropdownData}
           displayKey={'name'}
