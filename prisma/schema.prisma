@@ -8,31 +8,247 @@ generator client {
 }
 
 model User {
-  id    String @id @default(cuid())
-  email String @unique
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  password Password?
-  notes    Note[]
+  id        String      @id @default(cuid())
+  email     String      @unique
+  firstName String
+  lastName  String
+  role      Role        @relation(fields: [roleId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  roleId    String
+  password  Password?
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  Section   Section[]
+  Question  Question[]
+  Option    Option[]
+  Test      Test[]
+  Candidate Candidate[]
 }
 
 model Password {
-  hash String
-
+  hash   String
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId String @unique
 }
 
-model Note {
-  id    String @id @default(cuid())
-  title String
-  body  String
+model Role {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  users     User[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Section {
+  id                     String                   @id @default(cuid())
+  name                   String
+  description            String
+  createdBy              User                     @relation(fields: [createdById], references: [id])
+  createdById            String
+  questions              Question[]
+  sectionInCandidateTest SectionInCandidateTest[]
+  sectionInTest          SectionInTest[]
+  deleted                Boolean                  @default(false)
+  deletedAt              String?                  @default("na")
+  createdAt              DateTime                 @default(now())
+  updatedAt              DateTime                 @updatedAt
+
+  @@unique([name, deletedAt, deleted])
+}
+
+model Question {
+  id                String              @id @default(cuid())
+  question          String
+  options           Option[]            @relation("options_in_question")
+  correctOptions    Option[]            @relation("correct_options_in_question")
+  correctAnswer     CorrectAnswer[]
+  marks             Int                 @default(1)
+  checkOrder        Boolean             @default(false)
+  questionType      QuestionType        @relation(fields: [questionTypeId], references: [id])
+  questionTypeId    String
+  section           Section             @relation(fields: [sectionId], references: [id])
+  sectionId         String
+  createdBy         User                @relation(fields: [createdById], references: [id])
+  createdById       String
+  candidateQuestion CandidateQuestion[]
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+}
+
+model CorrectAnswer {
+  id         String    @id @default(cuid())
+  answer     String
+  order      Int
+  question   Question? @relation(fields: [questionId], references: [id])
+  questionId String?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+}
+
+model QuestionType {
+  id          String     @id @default(cuid())
+  value       String     @unique
+  displayName String
+  questions   Question[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+model Option {
+  id                String              @id @default(cuid())
+  option            String
+  question          Question            @relation("options_in_question", fields: [questionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  questionId        String
+  coInQuestion      Question?           @relation("correct_options_in_question", fields: [coInQuestionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  coInQuestionId    String?
+  createdBy         User                @relation(fields: [createdById], references: [id])
+  createdById       String
+  candidateQuestion CandidateQuestion[]
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+}
+
+model Test {
+  id                String              @id @default(cuid())
+  name              String
+  description       String
+  sections          SectionInTest[]
+  createdBy         User                @relation(fields: [createdById], references: [id])
+  createdById       String
+  candidateTest     CandidateTest[]
+  candidateResult   CandidateResult[]
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  deleted           Boolean             @default(false)
+  deletedAt         String?             @default("na")
+  SectionWiseResult SectionWiseResult[]
+
+  @@unique([name, deletedAt, deleted])
+}
+
+model SectionInTest {
+  id             String   @id @default(cuid())
+  section        Section  @relation(fields: [sectionId], references: [id])
+  sectionId      String
+  order          Int
+  timeInSeconds  Int
+  totalQuestions Int
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  test           Test     @relation(fields: [testId], references: [id])
+  testId         String
+}
+
+model Candidate {
+  id          String            @id @default(cuid())
+  email       String            @unique
+  firstName   String?
+  lastName    String?
+  isQualified Boolean?
+  tests       CandidateTest[]
+  results     CandidateResult[]
+  createdBy   User              @relation(fields: [createdById], references: [id])
+  createdById String
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+}
+
+model CandidateTest {
+  id              String                   @id @default(cuid())
+  sections        SectionInCandidateTest[]
+  test            Test                     @relation(fields: [testId], references: [id])
+  testId          String
+  link            String?
+  candidate       Candidate                @relation(fields: [candidateId], references: [id])
+  candidateId     String
+  candidateResult CandidateResult[]
+  candidateStep   Json                     @default("{ \"nextRoute\": \"register\", \"isSection\": false, \"currentSectionID\": null }") // register || instructions || section
+  startedAt       DateTime?
+  endAt           DateTime?
+  createdAt       DateTime                 @default(now())
+  updatedAt       DateTime                 @updatedAt
+  sectionWiseResults SectionWiseResult[]
+
+  @@unique([candidateId, testId])
+}
+
+model SectionInCandidateTest {
+  id                      String                    @id @default(cuid())
+  section                 Section                   @relation(fields: [sectionId], references: [id])
+  sectionId               String
+  questions               CandidateQuestion[]
+  candidateTest           CandidateTest             @relation(fields: [candidateTestId], references: [id])
+  candidateTestId         String
+  timeInCandidateQuestion TimeInCandidateQuestion[]
+  order                   Int
+  startedAt               DateTime?
+  endAt                   DateTime?
+  createdAt               DateTime                  @default(now())
+  updatedAt               DateTime                  @updatedAt
+  SectionWiseResult       SectionWiseResult[]
+}
+
+model CandidateQuestion {
+  id                       String                    @id @default(cuid())
+  question                 Question                  @relation(fields: [questionId], references: [id])
+  questionId               String
+  status                   String                    @default("NOT_VIEWED") // NOT_VIEWED, VIEWED, SKIPPED, ANSWERED
+  selectedOptions          Option[]
+  answers                  String[]
+  order                    Int
+  sectionInCandidateTest   SectionInCandidateTest    @relation(fields: [sectionInCandidateTestId], references: [id])
+  sectionInCandidateTestId String
+  timeInCandidateQuestion  TimeInCandidateQuestion[]
+  answeredAt               DateTime?
+  createdAt                DateTime                  @default(now())
+  updatedAt                DateTime                  @updatedAt
+}
+
+model TimeInCandidateQuestion {
+  id         String                 @id @default(cuid())
+  question   CandidateQuestion      @relation(fields: [questionId], references: [id])
+  questionId String
+  section    SectionInCandidateTest @relation(fields: [sectionId], references: [id])
+  sectionId  String
+  enterAt    DateTime
+  exitAt     DateTime
+  createdAt  DateTime               @default(now())
+  updatedAt  DateTime               @updatedAt
+}
+
+model CandidateResult {
+  id              String        @id @default(cuid())
+  candidate       Candidate     @relation(fields: [candidateId], references: [id])
+  candidateId     String
+  candidateTest   CandidateTest @relation(fields: [candidateTestId], references: [id])
+  candidateTestId String
+
+  totalQuestion   Int
+  correctQuestion Int
+  unanswered      Int
+
+  // easier access of test and results
+  test        Test     @relation(fields: [testId], references: [id])
+  testId      String
+  isQualified Boolean
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model SectionWiseResult {
+  id                       String                 @id @default(cuid())
+  section                  SectionInCandidateTest @relation(fields: [sectionInCandidateTestId], references: [id])
+  sectionInCandidateTestId String
+  totalQuestion            Int
+  correctQuestion          Int
+  unanswered               Int
+
+  // easier access of test and results
+  test   Test   @relation(fields: [testId], references: [id])
+  testId String
+
+  candidateTest   CandidateTest @relation(fields: [candidateTestId], references: [id])
+  candidateTestId String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  userId String
 }

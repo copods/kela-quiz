@@ -23,7 +23,7 @@ tasks:
           # Default to the example .env
           echo "Setting example .env"
 
-          cp .env.example .env 
+          cp .env 
         else
           # After making changes to .env, run this line to persist it to $ENV
           #   eval $(gp env -e ENV="$(base64 .env | tr -d '\n')")
