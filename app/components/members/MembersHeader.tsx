@@ -10,9 +10,7 @@ export default function MembersHeader({
   actionStatus: boolean
 }) {
   const membersData = useLoaderData()
-
   const [open, setOpen] = useState(false)
-
   useEffect(() => {
     if (actionStatus) {
       setOpen(false)
