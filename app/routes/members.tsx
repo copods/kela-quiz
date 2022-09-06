@@ -15,6 +15,7 @@ import MembersHeader from '~/components/members/MembersHeader'
 import { toast } from 'react-toastify'
 import { useEffect } from 'react'
 import { routes } from '~/constants/route.constants'
+import { statusCheck } from '~/constants/common.constants'
 
 export type ActionData = {
   errors?: {
@@ -56,25 +57,25 @@ export const action: ActionFunction = async ({ request }) => {
 
     if (typeof firstName !== 'string' || firstName.length === 0) {
       return json<ActionData>(
-        { errors: { firstName: 'firstName is required' } },
+        { errors: { firstName: statusCheck.firstNameReq } },
         { status: 400 }
       )
     }
     if (typeof lastName !== 'string' || lastName.length === 0) {
       return json<ActionData>(
-        { errors: { lastName: 'lastName is required' } },
+        { errors: { lastName: statusCheck.lastNameReq } },
         { status: 400 }
       )
     }
     if (typeof email !== 'string' || email.length === 0) {
       return json<ActionData>(
-        { errors: { email: 'email is required' } },
+        { errors: { email: statusCheck.emailIsReq } },
         { status: 400 }
       )
     }
     if (typeof roleId !== 'string' || roleId.length === 0) {
       return json<ActionData>(
-        { errors: { roleId: 'roleId is required' } },
+        { errors: { roleId: statusCheck.roleIdIsReq } },
         { status: 400 }
       )
     }
@@ -86,7 +87,7 @@ export const action: ActionFunction = async ({ request }) => {
         addHandle = json<ActionData>(
           {
             resp: {
-              status: 'Member Added Successfully..!',
+              status: statusCheck.memberAddedSuccess,
               check: new Date(),
             },
           },
@@ -105,7 +106,7 @@ export const action: ActionFunction = async ({ request }) => {
   if (action === 'delete') {
     if (typeof formData.get('id') !== 'string') {
       return json<ActionData>(
-        { errors: { title: 'Description is required' } },
+        { errors: { title: statusCheck.descIsReq } },
         { status: 400 }
       )
     }
@@ -113,7 +114,7 @@ export const action: ActionFunction = async ({ request }) => {
     await deleteUserById(formData.get('id') as string)
       .then((res) => {
         deleteHandle = json<ActionData>(
-          { resp: { status: 'Deleted Successfully..!' } },
+          { resp: { status: statusCheck.deletedSuccess } },
           { status: 200 }
         )
       })
@@ -134,7 +135,7 @@ export default function Members() {
       if (membersActionData.resp?.status) {
         toast.success(membersActionData.resp?.status)
       } else if (membersActionData.errors?.status) {
-        toast.error('Something went wrong...!')
+        toast.error(statusCheck.commonError)
       }
     }
   }, [membersActionData])

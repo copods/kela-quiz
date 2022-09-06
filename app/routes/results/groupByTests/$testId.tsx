@@ -6,6 +6,7 @@ import { json } from '@remix-run/node'
 
 import invariant from 'tiny-invariant'
 import { getPendingExamCandidateByTestId } from '~/models/result.server'
+import { statusCheck } from '~/constants/common.constants'
 
 type LoaderData = {
   testPreview: Awaited<ReturnType<typeof getPendingExamCandidateByTestId>>
@@ -18,7 +19,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     id: params.testId,
   })
   if (!testPreview) {
-    throw new Response('Not Found', { status: 404 })
+    throw new Response(statusCheck.notFound, { status: 404 })
   }
 
   return json<LoaderData>({ testPreview, params })

@@ -8,6 +8,7 @@ import {
   updateCandidateStatus,
 } from '~/models/result.server'
 import ResultDetailsComponent from '~/components/results/ResultDetails'
+import { statusCheck } from '~/constants/common.constants'
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   invariant(params.testId, 'resultId not found')
@@ -16,11 +17,10 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   })
   const sectionWiseResult = await getSectionWiseResultsOfIndividualCandidate({
     testId: candidateResult?.testId as string,
-    candidateTestId: candidateResult?.candidateTestId as string
-
+    candidateTestId: candidateResult?.candidateTestId as string,
   })
   if (!candidateResult) {
-    throw new Response('Not Found', { status: 404 })
+    throw new Response(statusCheck.notFound, { status: 404 })
   }
 
   return json({ candidateResult, params, sectionWiseResult })
