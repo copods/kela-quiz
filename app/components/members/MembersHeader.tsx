@@ -6,17 +6,19 @@ import Button from '../form/Button'
 
 export default function MembersHeader({
   actionStatus,
-  err,
 }: {
-  actionStatus: Date | undefined
-  err: Date | undefined
+  actionStatus: boolean
 }) {
+  const membersData = useLoaderData()
   const [open, setOpen] = useState(false)
   useEffect(() => {
-    err ? setOpen(true) : setOpen(false)
-  }, [actionStatus, err])
-  const membersData = useLoaderData()
+    if (actionStatus) {
+      setOpen(false)
+    }
+  }, [actionStatus])
+
   return (
+   <> 
     <div className="grid grid-cols-12 pb-12">
       <div className="col-span-full grid">
         <div className="flex items-center justify-between">
@@ -35,6 +37,7 @@ export default function MembersHeader({
         </div>
       </div>
       <AddMemberModal roles={membersData.roles} open={open} setOpen={setOpen} />
-    </div>
+     </div> 
+    </>
   )
 }

@@ -3,12 +3,13 @@ import { useState } from 'react'
 import {
   candidateExamConstants,
   commonConstants,
-  QuestionTypes,
   routeFiles,
 } from '~/constants/common.constants'
+import { QuestionTypes } from '~/interface/Interface'
 import Button from '../form/Button'
 import Checkbox from '../form/CheckBox'
 import sanitizeHtml from 'sanitize-html'
+
 
 const Question = () => {
   const { question, section, lastSection } = useLoaderData()

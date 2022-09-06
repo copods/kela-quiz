@@ -3,7 +3,6 @@ import type { Section, User } from '~/interface/Interface'
 import { useResolvedPath, useLocation, NavLink } from '@remix-run/react'
 import {} from '@remix-run/react'
 import SortFilter from '../SortFilter'
-import { sectionsConstants } from '~/constants/common.constants'
 
 const SectionLink = ({
   section,
@@ -104,11 +103,6 @@ const Sections = ({
             err={err}
           />
         ))}
-        {sections.length === 0 && (
-          <div className="flex justify-center p-7">
-            {sectionsConstants.noRecordFound}
-          </div>
-        )}
       </div>
     </div>
   )

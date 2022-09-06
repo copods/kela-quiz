@@ -233,5 +233,12 @@ export enum sortByOrder {
   cancel = 'Cancel',
   createdAt = 'createdAt',
   creatingTest = 'Creating Test',
-  submit = 'Submit',
+  submit = 'Submit'
 }
+
+export enum QuestionTypes {
+  multipleChoice = 'MULTIPLE_CHOICE',
+  singleChoice = 'SINGLE_CHOICE',
+  text = 'TEXT',
+}
+
