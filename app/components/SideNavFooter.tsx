@@ -27,18 +27,20 @@ function Footer() {
           </div>
         </div>
         <Form action="/logout" method="post">
-            <Button 
-              tabIndex={0}
-              type='submit' 
-              id='logout-button' 
-              varient='secondary-solid' 
-              className='px-2' 
-              title={commonConstants.logout}
-              buttonText={
-                <Icon
-                  icon="mdi:logout-variant"
-                  className="relative h-5 w-5 text-gray-50" />
-              } />
+          <Button
+            tabIndex={0}
+            type="submit"
+            id="logout-button"
+            varient="secondary-solid"
+            className="px-2"
+            title={commonConstants.logout}
+            buttonText={
+              <Icon
+                icon="mdi:logout-variant"
+                className="relative h-5 w-5 text-gray-50"
+              />
+            }
+          />
         </Form>
       </div>
     </div>

@@ -128,26 +128,36 @@ export default function AddMemberModal({
                     </div>
                   </div>
                   <div className="flex justify-end gap-2">
-                    <Button 
+                    <Button
                       tabIndex={0}
-                      id='cancel-add-button'
-                      type='button'
-                      className='h-9 px-4'
+                      id="cancel-add-button"
+                      type="button"
+                      className="h-9 px-4"
                       onClick={() => setOpen(false)}
-                      varient='primary-outlined'
+                      varient="primary-outlined"
                       title={commonConstants.cancel}
-                      buttonText={commonConstants.cancel} />
-                    <Button  
+                      buttonText={commonConstants.cancel}
+                    />
+                    <Button
                       tabIndex={0}
-                      id='add-button'
-                      type='submit'
-                      name='addMember'
+                      id="add-button"
+                      type="submit"
+                      name="addMember"
                       value={JSON.stringify({ action: 'add' })}
-                      className='h-9 px-4'
+                      className="h-9 px-4"
                       isDisabled={transition.state === 'submitting'}
-                      title={transition.state === 'submitting' ? commonConstants.adding : commonConstants.add}
-                      buttonText={transition.state === 'submitting' ? commonConstants.adding : commonConstants.add}
-                      varient='primary-solid' />
+                      title={
+                        transition.state === 'submitting'
+                          ? commonConstants.adding
+                          : commonConstants.add
+                      }
+                      buttonText={
+                        transition.state === 'submitting'
+                          ? commonConstants.adding
+                          : commonConstants.add
+                      }
+                      varient="primary-solid"
+                    />
                   </div>
                 </Dialog.Panel>
               </Transition.Child>

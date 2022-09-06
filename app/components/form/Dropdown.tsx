@@ -30,7 +30,12 @@ function DropdownField({
     <Listbox value={value} onChange={setValue}>
       {({ open }) => (
         <>
-          <div className="dropdown relative w-48" id="dropdown" title={sectionsConstants.dropdown} aria-label={sectionsConstants.dropdown}>
+          <div
+            className="dropdown relative w-48"
+            id="dropdown"
+            title={sectionsConstants.dropdown}
+            aria-label={sectionsConstants.dropdown}
+          >
             <Listbox.Button
               id="dropdownButton"
               className="dropdownButton relative h-11 w-full cursor-pointer rounded-md border border-gray-200 bg-white px-3 py-3 text-left shadow-sm sm:text-sm"
