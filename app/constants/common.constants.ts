@@ -10,9 +10,6 @@ export const commonConstants = {
   byText: 'By',
   continue: 'Continue',
   total: 'Total',
-  createdAt: 'createdAt',
-  createdDate: 'Created Date',
-  somethingWentWrongMsg: 'Something went wrong..!',
   placeholderForOptionInput: 'Write your option here',
   sortAscending: 'Sort Ascending',
   sortDescending: 'Sort Descending',
@@ -39,7 +36,6 @@ export const commonConstants = {
 }
 export const sideNav = {
   sideNavHeading: 'Quiz',
-  signOut: 'Sign out',
 }
 export const members = {
   addMember: 'Add Member',
@@ -67,10 +63,7 @@ export const testTableItem = {
 export const logo = {
   kQuizLogo: 'K-Quiz Logo',
 }
-export const selectSectionCard = {
-  removeSection: 'Remove Section',
-  selectSection: 'Select Section',
-}
+
 export const deletePopUp = {
   alert: 'Do you want to delete',
 }
@@ -84,6 +77,7 @@ export const addQuestion = {
   addOptions: 'Add Options',
   addQuestion: 'Add Question',
 }
+
 export const sectionsConstants = {
   addSection: 'Add Section',
   totalQuestions: 'Total Questions:',
@@ -136,6 +130,18 @@ export const statusCheck = {
   sectionAddedSuccess: 'Section added successfully..!',
   maxOptions: 'you can add maximum six options.',
   duplicate: 'Duplicate Title',
+  testAddedSuccessFully: 'Test added successfully..',
+  testAlreadyExist: 'Test name already exist.',
+  emailIsInvalid: 'Email is invalid',
+  passIsReq: 'Password is required',
+  passIsInvalid: 'Password is invalid',
+  questionAddedSuccess: 'Question Added Successfully',
+  questionNotAdded: 'Question Not Added Successfully',
+  firstNameReq: 'firstName is required',
+  lastNameReq: 'lastName is required',
+  emailIsReq: 'email is required',
+  roleIdIsReq: 'roleId is required',
+  memberAddedSuccess: 'Member Added Successfully..!',
 }
 export const resultConstants = {
   order: 'Order',
@@ -206,16 +212,12 @@ export const cypress = {
   back: 'Back',
   nameIsReq: 'Name is required',
   descIsReq: 'Description is required',
-  sectionAdded: 'Section added successfully..!',
   duplicateTitle: 'Duplicate Title',
-  question: 'Question',
   saveAndAddMore: 'Save & Add More',
-  groupByTest: 'Results',
   addMember: 'Add Member',
   name: 'Name',
   description: 'Description',
   totalTime: 'Total Time',
-  borderExist: 'border-l-8',
   useRef: 'What is useRef() ?',
   useRefAns: 'It allows you to persist values between renders.',
   useMemo: 'What is useMemo() ?',

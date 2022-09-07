@@ -21,10 +21,7 @@ const TestDetails = () => {
                 icon="mdi:arrow-left"
               />
             </Link>
-            <span
-              className="text-3xl font-semibold text-gray-900"
-              id="title"
-            >
+            <span className="text-3xl font-semibold text-gray-900" id="title">
               {testPreview.name}
             </span>
           </div>

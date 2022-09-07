@@ -1,7 +1,8 @@
 import { useNavigate, useSubmit, useTransition } from '@remix-run/react'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
-import { sortByOrder, TestSection } from '~/interface/Interface'
+import { sortByOrder } from '~/interface/Interface'
+import type { TestSection } from '~/interface/Interface'
 import BreadCrumb from '../BreadCrumb'
 import SelectSections from './CreateSelectSections'
 import TestDetails from './CreateTestDetails'
@@ -160,13 +161,14 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
       )}
       {/* Buttons */}
       <div className="flex w-full items-center justify-between">
-          <Button 
-            tabIndex={0} 
-            onClick={() => navigate(routes.tests)}
-            className='h-9 px-7' 
-            varient='secondary-solid'
-            title={commonConstants.cancelAddTest}
-            buttonText={commonConstants.cancel} />
+        <Button
+          tabIndex={0}
+          onClick={() => navigate(routes.tests)}
+          className="h-9 px-7"
+          varient="secondary-solid"
+          title={commonConstants.cancelAddTest}
+          buttonText={commonConstants.cancel}
+        />
         <div className="flex gap-4">
           <Button
             tabIndex={0}

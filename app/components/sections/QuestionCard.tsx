@@ -1,7 +1,12 @@
 import { Icon } from '@iconify/react'
 import { sectionsConstants } from '~/constants/common.constants'
-
-import type { Question, Option, CorrectAnswer } from '~/interface/Interface'
+import sanitizeHtml from 'sanitize-html'
+import type {
+  Question,
+  Option,
+  CorrectAnswer,
+  QuestionType,
+} from '~/interface/Interface'
 import OptionCard from './OptionCard'
 
 const QuestionCard = ({
@@ -10,7 +15,7 @@ const QuestionCard = ({
   onAccordianToggle,
   index,
 }: {
-  question: Question
+  question: Question & { questionType?: QuestionType }
   isExpanded: number
   onAccordianToggle: (e: number) => void
   index: number
@@ -37,7 +42,7 @@ const QuestionCard = ({
     >
       <div className="items-top break flex justify-between text-base text-gray-600">
         <div
-          className="items-top flex flex-1 justify-between"
+          className="items-top flex flex-1 items-start justify-between"
           tabIndex={0}
           role="button"
           onKeyUp={(e) => {
@@ -55,20 +60,27 @@ const QuestionCard = ({
           <div className="ql-editor flex-1 p-0 pr-4">
             <div
               className="question cursor-pointer"
-              dangerouslySetInnerHTML={{ __html: question.question }}
+              dangerouslySetInnerHTML={{
+                __html: sanitizeHtml(question.question),
+              }}
             ></div>
           </div>
-          {isExpanded === index ? (
-            <Icon
-              icon={'akar-icons:circle-chevron-up'}
-              className="cursor-pointer text-xl text-gray-400"
-            />
-          ) : (
-            <Icon
-              icon={'akar-icons:circle-chevron-down'}
-              className="cursor-pointer text-xl text-gray-400"
-            />
-          )}
+          <div className="flex gap-2">
+            <span className="flex items-center rounded-52 border border-gray-700 px-3 text-sm  text-gray-700">
+              {question.questionType?.displayName}
+            </span>
+            {isExpanded === index ? (
+              <Icon
+                icon={'akar-icons:circle-chevron-up'}
+                className="cursor-pointer text-xl text-gray-400"
+              />
+            ) : (
+              <Icon
+                icon={'akar-icons:circle-chevron-down'}
+                className="cursor-pointer text-xl text-gray-400"
+              />
+            )}
+          </div>
         </div>
       </div>
       <div
@@ -82,7 +94,10 @@ const QuestionCard = ({
             {question.options?.map((option: Option) => {
               return (
                 <div key={option.id}>
-                  <OptionCard option={option} />
+                  <OptionCard
+                    option={option}
+                    Questiontype={question.questionType}
+                  />
                 </div>
               )
             })}
@@ -92,7 +107,10 @@ const QuestionCard = ({
           <div className="grid grid-cols-1 gap-4 pt-6 ">
             {question.correctAnswer?.map((answer: CorrectAnswer) => (
               <div key={answer.id}>
-                <OptionCard option={answer} />
+                <OptionCard
+                  option={answer}
+                  Questiontype={question.questionType}
+                />
               </div>
             ))}
           </div>

@@ -44,13 +44,13 @@ export const action: ActionFunction = async ({ request }) => {
   const action = JSON.parse(formData.get('addMember') as string)
     ? JSON.parse(formData.get('addMember') as string)
     : formData.get('deleteMember')
-    
+
   if (action.action === 'add') {
     const firstName = formData.get('firstName')
     const lastName = formData.get('lastName')
     const email = formData.get('email')
-    const roleId = formData.get('roleId');
-    const emailFilter = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+    const roleId = formData.get('roleId')
+    const emailFilter = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
 
     if (typeof firstName !== 'string' || firstName.length === 0) {
       return json<ActionData>(
@@ -75,7 +75,7 @@ export const action: ActionFunction = async ({ request }) => {
         { errors: { title: toastConstants.correctEmail, status: 400 } },
         { status: 400 }
       )
-  }
+    }
     if (typeof roleId !== 'string' || roleId.length === 0) {
       return json<ActionData>(
         { errors: { title: toastConstants.roleRequired, status: 400 } },

@@ -15,7 +15,7 @@ const InvalidLinkComponent = () => {
           {sideNav.sideNavHeading}
         </span>
       </div>
-      <div className="mt-[-80px] flex h-full w-full flex-col items-center justify-center gap-4">
+      <div className="-mt-20 flex h-full w-full flex-col items-center justify-center gap-4">
         <img src={InvalidLink} alt={commonConstants.invalidLinkSVG} />
         <p className="text-5xl font-bold text-gray-900">
           {candidateExamConstants.wrongLink}
