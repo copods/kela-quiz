@@ -26,7 +26,7 @@ It is important for you to have these things installed:
 
 1. Node.js version (^14.17.0, or >=16.0.0)
 2. npm 7 or greater
-3. Docker (You can download the in [Docker](https://www.docker.com/get-started):
+3. Docker (You can download it from [Docker](https://www.docker.com/get-started)):
 
 - Run the command to start the Docker
 
@@ -46,7 +46,7 @@ It is important for you to have these things installed:
 - Run this command to install all the packages
 
   ```sh
-  npm i
+  npm install
   ```
 
 - Initial setup:
@@ -68,11 +68,6 @@ It is important for you to have these things installed:
   ```
 
 This starts your app in development mode, rebuilding assets on file changes.
-
-The database seed script creates a new user with some data you can use to get started:
-
-- Email: `rachel@remix.run`
-- Password: `racheliscool`
 
 If you'd prefer not to use Docker, you can also use Fly's Wireguard VPN to connect to a development database (or even your production database). You can find the instructions to set up Wireguard [here](https://fly.io/docs/reference/private-networking/#install-your-wireguard-app), and the instructions for creating a development database [here](https://fly.io/docs/reference/postgres/).
 
@@ -172,15 +167,43 @@ You can check the `x-fly-region` header on the response to know which region you
 
 We use GitHub Actions for continuous integration and deployment. Anything that gets into the `main` branch will be deployed to production after running tests/build/etc. Anything in the `dev` branch will be deployed to staging.
 
+## Prisma Database
+
+We are using Prisma which is an open source database toolkit in our project.
+You can learn the main concepts of prisma from its offical documentation [Prisma](https://www.prisma.io/docs/concepts)
+
+- You can check all the models from `schema.prisma` file
+- If you are changing the database schema in `schema.prisma` file, you have to push the database to reflect those changes by running this command
+  ```sh
+  npx prisma db push
+  ```
+  and after that you have to setup it again which will create new migration by using following command:
+  ```sh
+  npm run setup
+  ```
+  You can also reset the database yourself to undo manual changes or db push experiments by running the command:
+  ```sh
+  npx prisma migrate reset
+  ```
+
 ## Testing
 
 ### Cypress
 
-We use Cypress for our End-to-End tests in this project. You'll find those in the `cypress` directory. As you make changes, add to an existing file or create a new file in the `cypress/e2e` directory to test your changes.
+We use Cypress for our End-to-End tests in this project.
+You can learn the Cypress from offical documentation [Cypress](https://docs.cypress.io/)
+
+You'll find those in the `cypress` directory. As you make changes, add to an existing file or create a new file in the `cypress/e2e` directory to test your changes.
 
 We use [`@testing-library/cypress`](https://testing-library.com/cypress) for selecting elements on the page semantically.
 
 To run these tests in development, run `npm run test:e2e:dev` which will start the dev server for the app as well as the Cypress client. Make sure the database is running in docker as described above.
+
+Also you can run this test locally by using the command
+
+```sh
+npx cypress open
+```
 
 We have a utility for testing authenticated features without having to go through the login flow:
 
