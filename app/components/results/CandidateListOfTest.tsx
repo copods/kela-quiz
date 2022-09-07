@@ -5,23 +5,6 @@ import { routes } from '~/constants/route.constants'
 import CandidatesList from './CandidatesList'
 
 const CandidateListOfTest = () => {
-  // const tabs = [
-  //   {
-  //     id: 0,
-  //     title: 'Exam Pending',
-  //     route: 'exam-pending',
-  //   },
-  //   {
-  //     id: 1,
-  //     title: 'Attempted',
-  //     route: 'attempted',
-  //   },
-  //   {
-  //     id: 2,
-  //     title: 'Completed',
-  //     route: 'completed',
-  //   },
-  // ]
   const { candidatesOfTest } = useLoaderData()
   return (
     <div id="test-details" className=" h-full ">
@@ -44,10 +27,6 @@ const CandidateListOfTest = () => {
           </div>
         </div>
       </header>
-      {/* <div id="results-test-candidate-list-tab" className="pb-5">
-        <ResultTab tabs={tabs} testId={params.testId} />
-      </div> */}
-      {/* <Outlet /> */}
       <CandidatesList />
     </div>
   )
