@@ -1,12 +1,18 @@
-import Highcharts from 'highcharts'
+import Highcharts, { TooltipFormatterContextObject } from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 import moment from 'moment'
+import React from 'react'
+import type { SectionWiseResults } from '~/interface/Interface'
 
-const BarGraph = ({ sectionWiseResult }: { sectionWiseResult: any }) => {
+const BarGraph = ({
+  sectionWiseResult,
+}: {
+  sectionWiseResult: Array<SectionWiseResults>
+}) => {
   console.log(sectionWiseResult)
   const getDifferenceMin = () => {
     let finalResult: Array<number> = []
-    sectionWiseResult.map((result: any) => {
+    sectionWiseResult.map((result: SectionWiseResults) => {
       let startingTime = moment(result.section.startedAt)
       let endingTime = moment(result.section.endAt)
 
@@ -19,9 +25,11 @@ const BarGraph = ({ sectionWiseResult }: { sectionWiseResult: any }) => {
   }
 
   const getSectionsFromResult = sectionWiseResult.map(
-    (result: any) => result.test.sections
+    (result: SectionWiseResults) => result.test.sections
   )
   let result: Array<number> = []
+
+  // finding specific section in data
   for (let j = 0; j < getSectionsFromResult.length; j++) {
     for (let k = 0; k < getSectionsFromResult[j].length; k++) {
       if (
@@ -33,20 +41,21 @@ const BarGraph = ({ sectionWiseResult }: { sectionWiseResult: any }) => {
     }
   }
 
-  // const getLabelData = (sectionName: string, resultKind: string) => {
-  //   const getRequiredSection = sectionWiseResult.find(
-  //     (result: any) => result.section.section.name === sectionName
-  //   )
-  //   if (resultKind === 'total') {
-  //     return getRequiredSection.totalQuestion
-  //   } else if (resultKind === 'correct') {
-  //     return getRequiredSection.correctQuestion
-  //   } else if (resultKind === 'wrong') {
-  //     return getRequiredSection.unanswered
-  //   }
-  // }
+  const getLabelData = (sectionName: string, resultKind: string) => {
+    const getRequiredSection = sectionWiseResult.find(
+      (result: SectionWiseResults) =>
+        result.section.section.name === sectionName
+    )
+    if (resultKind === 'total') {
+      return getRequiredSection?.totalQuestion
+    } else if (resultKind === 'correct') {
+      return getRequiredSection?.correctQuestion
+    } else if (resultKind === 'wrong') {
+      return getRequiredSection?.unanswered
+    }
+  }
 
-  const options = {
+  const options: Highcharts.Options = {
     chart: {
       type: 'column',
     },
@@ -55,9 +64,8 @@ const BarGraph = ({ sectionWiseResult }: { sectionWiseResult: any }) => {
     },
     xAxis: {
       categories: sectionWiseResult.map(
-        (result: any) => result.section.section.name
+        (result: SectionWiseResults) => result.section.section.name
       ),
-      overflow: 'auto',
     },
     yAxis: [
       {
@@ -72,26 +80,28 @@ const BarGraph = ({ sectionWiseResult }: { sectionWiseResult: any }) => {
     },
     tooltip: {
       shared: true,
-      // formatter: function () {
-      //   return this.points.reduce((acc: any, curr: any) => {
-      //     return (
-      //       curr.key +
-      //       '<br/>' +
-      //       'Total' +
-      //       ' : ' +
-      //       getLabelData(curr.key, 'total') +
-      //       '<br/>' +
-      //       'Correct' +
-      //       ' : ' +
-      //       getLabelData(curr.key, 'correct') +
-      //       '<br/>' +
-      //       'Wrong' +
-      //       ' : ' +
-      //       getLabelData(curr.key, 'wrong') +
-      //       '<br/>'
-      //     )
-      //   })
-      // },
+      formatter: function (): any {
+        return this.points?.reduce(
+          (acc: TooltipFormatterContextObject): any => {
+            return (
+              acc.key +
+              '<br/>' +
+              'Total' +
+              ' : ' +
+              getLabelData(acc.key as string, 'total') +
+              '<br/>' +
+              'Correct' +
+              ' : ' +
+              getLabelData(acc.key as string, 'correct') +
+              '<br/>' +
+              'Wrong' +
+              ' : ' +
+              getLabelData(acc.key as string, 'wrong') +
+              '<br/>'
+            )
+          }
+        )
+      },
     },
     plotOptions: {
       column: {
@@ -103,9 +113,6 @@ const BarGraph = ({ sectionWiseResult }: { sectionWiseResult: any }) => {
     series: [
       {
         showInLegend: false,
-        name: sectionWiseResult.map(
-          (result: any) => result.section.section.name
-        ),
         color: '#F3F4F6',
         data: result,
         states: {
@@ -113,12 +120,10 @@ const BarGraph = ({ sectionWiseResult }: { sectionWiseResult: any }) => {
             color: '#F3F4F6',
           },
         },
+        type: 'column',
       },
       {
         showInLegend: false,
-        name: sectionWiseResult.map(
-          (result: any) => result.section.section.name
-        ),
         color: '#353988',
         data: getDifferenceMin(),
         states: {
@@ -126,6 +131,7 @@ const BarGraph = ({ sectionWiseResult }: { sectionWiseResult: any }) => {
             color: '#353988',
           },
         },
+        type: 'column',
       },
     ],
   }

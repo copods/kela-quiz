@@ -9,6 +9,7 @@ import Divider from '../divider'
 import BarGraph from '../barGraph/barGraph'
 import { commonConstants } from '~/constants/common.constants'
 import Button from '../form/Button'
+import type { SectionWiseResults } from '~/interface/Interface'
 
 const ResultDetailsComponent = () => {
   const { candidateResult, params, sectionWiseResult } = useLoaderData()
@@ -57,11 +58,11 @@ const ResultDetailsComponent = () => {
           </span>
         </div>
       </header>
-      <Divider height="10px" />
+      <Divider height="1px" />
       <BarGraph sectionWiseResult={sectionWiseResult} />
       <Divider height="1px" />
       <div id="results-test-candidate-list-tab" className="flex flex-col gap-6">
-        {sectionWiseResult.map((section: any) => {
+        {sectionWiseResult.map((section: SectionWiseResults) => {
           return (
             <SectionCardForResultDetail
               key={section?.id}

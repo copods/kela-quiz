@@ -252,4 +252,6 @@ export interface SectionWiseResults {
   candidateTestId: string
   createdAt: Date
   updatedAt: Date
+  section: SectionInCandidateTest
+  test: Test
 }
