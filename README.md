@@ -137,7 +137,13 @@ You'll find those in the `cypress` directory. As you make changes, add to an exi
 
 We use [`@testing-library/cypress`](https://testing-library.com/cypress) for selecting elements on the page semantically.
 
-To run these tests in development, run `npm run test:e2e:dev` which will start the dev server for the app as well as the Cypress client. Make sure the database is running in docker as described above.
+To run these tests in development, run
+
+```sh
+npm run test:e2e:dev
+```
+
+which will start the dev server for the app as well as the Cypress client. Make sure the database is running in docker as described above.
 
 Also you can run this test locally by using the command
 
