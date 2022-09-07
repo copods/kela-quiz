@@ -65,7 +65,7 @@ const QuestionCard = ({
               }}
             ></div>
           </div>
-          <div className="flex gap-2">
+          <div className="flex gap-2 items-center">
             <span className="flex items-center rounded-52 border border-gray-700 px-3 text-sm  text-gray-700">
               {question.questionType?.displayName}
             </span>

@@ -1,10 +1,9 @@
 import moment from 'moment'
 import { Icon } from '@iconify/react'
-import { NavLink } from '@remix-run/react'
 import ChipGroup from './ChipGroup'
 import type { SectionInTest } from '~/interface/Interface'
 import DeletePopUp from '../DeletePopUp'
-import { useSubmit } from '@remix-run/react'
+import { useNavigate, useSubmit } from '@remix-run/react'
 import TestListActionMenu from '../TestListActionMenu'
 import { useState } from 'react'
 import InviteCandidatePopup from './InviteCandidatePopup'
@@ -33,7 +32,8 @@ const TestTableItem = ({
   status: string | undefined
 }) => {
   const [showDeletePopup, setShowDeletePopup] = useState(false)
-  const submit = useSubmit()
+  const submit = useSubmit();
+  const navigate = useNavigate();
   const deleteTest = () => {
     submit(
       {
@@ -64,15 +64,19 @@ const TestTableItem = ({
           {index}
         </div>
         <div className="test-name-navigation w-4/12 cursor-pointer truncate p-1 text-base font-medium text-primary  ">
-          <NavLink
+          <div
             aria-label={testName}
             title={testName}
-            to={`/tests/${id}`}
+            onClick={()=>navigate(`/tests/${id}`)}
+            role={'button'}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') navigate(`/tests/${id}`)
+            }}
             tabIndex={0}
             key={index}
           >
             <span id="test-name-navigation">{testName}</span>
-          </NavLink>
+          </div>
         </div>
         <div id="chip-group-id" className="flex w-3/12 text-xs">
           <ChipGroup
