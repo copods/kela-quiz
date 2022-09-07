@@ -133,12 +133,12 @@ export const action: ActionFunction = async ({ request }) => {
   let isTestDeleted: Array<boolean> | undefined
   if (action === 'sectionDelete') {
     await checkSectionById(formData.get('id') as string).then((res) => {
-      if (res?.sectionInTest.length !== 0) {
+      if (res?._count.sectionInTest !== 0) {
         isTestDeleted = res?.sectionInTest?.map((e) => {
           return e.test.deleted
         })
       }
-      if (res?.sectionInTest.length === 0 || isTestDeleted?.includes(true)) {
+      if (res?._count.sectionInTest === 0 || isTestDeleted?.includes(true)) {
         isSectionDelete = true
       } else {
         let title = statusCheck.testDependentWarning

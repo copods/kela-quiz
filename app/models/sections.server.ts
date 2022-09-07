@@ -68,6 +68,11 @@ export async function checkSectionById(id: string) {
   return prisma.section.findUnique({
     where: { id },
     include: {
+      _count: {
+        select: {
+          sectionInTest: true,
+        },
+      },
       sectionInTest: {
         select: {
           test: {
