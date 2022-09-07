@@ -11,10 +11,19 @@ module.exports = {
         primaryOutlined: '#141649',
       },
       minWidth: {
-        260: '260px',
         200: '200px',
+        260: '260px',
         184: '184px',
         sectionCard: '330px',
+      },
+      width: {
+        sectionCard: `30%`,
+      },
+      maxWidth: {
+        554: '554px',
+      },
+      minHeight: {
+        480: '480px',
       },
       borderRadius: {
         1: '1px',

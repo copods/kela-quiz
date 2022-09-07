@@ -53,7 +53,7 @@ export default function MemberListItem({
             tabIndex={0}
             onClick={openPopUp}
             icon="ic:outline-delete-outline"
-            className={`cursor-pointer h-6 w-6 text-red-500 focus:outline-none ${
+            className={`h-6 w-6 cursor-pointer text-red-500 focus:outline-none ${
               loggedInUser && 'cursor-not-allowed text-red-300'
             }`}
           />
