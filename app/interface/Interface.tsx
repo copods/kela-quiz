@@ -233,7 +233,7 @@ export enum sortByOrder {
   cancel = 'Cancel',
   createdAt = 'createdAt',
   creatingTest = 'Creating Test',
-  submit = 'Submit'
+  submit = 'Submit',
 }
 
 export enum QuestionTypes {
@@ -241,4 +241,3 @@ export enum QuestionTypes {
   singleChoice = 'SINGLE_CHOICE',
   text = 'TEXT',
 }
-
