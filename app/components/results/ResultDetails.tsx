@@ -1,7 +1,5 @@
-import { useLoaderData, useSubmit } from '@remix-run/react'
-
+import { useLoaderData, useNavigate, useSubmit } from '@remix-run/react'
 import { Icon } from '@iconify/react'
-import { NavLink } from '@remix-run/react'
 import { useState } from 'react'
 import DropdownField from '../form/Dropdown'
 import SectionCardForResultDetail from './SectionCardForResultDetail'
@@ -10,6 +8,7 @@ import BarGraph from '../barGraph/barGraph'
 import { commonConstants } from '~/constants/common.constants'
 import Button from '../form/Button'
 import type { SectionWiseResults } from '~/interface/Interface'
+import { routes } from '~/constants/route.constants'
 
 const ResultDetailsComponent = () => {
   const { candidateResult, params, sectionWiseResult } = useLoaderData()
@@ -24,6 +23,7 @@ const ResultDetailsComponent = () => {
       value: true,
     },
   ]
+  let navigate = useNavigate()
   const [candidateStatus, updateCandidateStatus] = useState(false)
   const submit = useSubmit()
   const updateCandidateStatusToDB = () => {
@@ -39,16 +39,26 @@ const ResultDetailsComponent = () => {
     <div id="test-details" className="flex h-full flex-col gap-6">
       <header>
         <div className="flex gap-2">
-          <NavLink
-            to={`/results/groupByTests/${params?.testId}/completed`}
+          <div
+            onClick={() =>
+              navigate(`${routes.resultGroupTest}/${params?.testId}/completed`)
+            }
             className="flex items-center gap-4 "
+            role={'button'}
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter')
+                navigate(
+                  `${routes.resultGroupTest}/${params?.testId}/completed`
+                )
+            }}
           >
             <Icon
               className="text-3xl font-semibold text-gray-900"
               id="backButton"
               icon="mdi:arrow-left"
             ></Icon>
-          </NavLink>
+          </div>
           <span className="text-3xl font-semibold text-gray-900" id="title">
             {candidateResult?.candidate?.firstName}&nbsp;
             {candidateResult?.candidate?.lastName}
