@@ -38,7 +38,7 @@ const ResultDetailsComponent = () => {
       <header>
         <div className="flex gap-2">
           <NavLink
-            to={`/results/groupByTests/${params?.testId}/completed`}
+            to={`/results/groupByTests/${params?.testId}`}
             className="flex items-center gap-4 "
           >
             <Icon
