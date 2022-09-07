@@ -1,4 +1,5 @@
-import Highcharts, { TooltipFormatterContextObject } from 'highcharts'
+import Highcharts from 'highcharts'
+import type { TooltipFormatterContextObject } from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 import moment from 'moment'
 import React from 'react'
@@ -82,9 +83,10 @@ const BarGraph = ({
       shared: true,
       formatter: function (): any {
         return this.points?.reduce(
-          (acc: TooltipFormatterContextObject): any => {
-            return (
-              acc.key +
+          (
+            acc: TooltipFormatterContextObject
+          ): TooltipFormatterContextObject => {
+            return (acc.key +
               '<br/>' +
               'Total' +
               ' : ' +
@@ -97,8 +99,7 @@ const BarGraph = ({
               'Wrong' +
               ' : ' +
               getLabelData(acc.key as string, 'wrong') +
-              '<br/>'
-            )
+              '<br/>') as unknown as TooltipFormatterContextObject
           }
         )
       },
