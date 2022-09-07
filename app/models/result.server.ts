@@ -138,13 +138,34 @@ export async function getSectionWiseResultsOfIndividualCandidate({
       id: true,
       section: {
         select: {
+          startedAt: true,
+          endAt: true,
           section: {
             select: {
+              id: true,
               name: true,
             },
           },
         },
       },
+
+      test: {
+        select: {
+          id: true,
+          sections: {
+            select: {
+              id: true,
+              timeInSeconds: true,
+              section: {
+                select: {
+                  id: true,
+                },
+              },
+            },
+          },
+        },
+      },
+
       totalQuestion: true,
       correctQuestion: true,
       unanswered: true,

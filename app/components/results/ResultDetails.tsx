@@ -7,10 +7,12 @@ import Divider from '../divider'
 import BarGraph from '../barGraph/barGraph'
 import { commonConstants } from '~/constants/common.constants'
 import Button from '../form/Button'
+import type { SectionWiseResults } from '~/interface/Interface'
 import { routes } from '~/constants/route.constants'
 
 const ResultDetailsComponent = () => {
   const { candidateResult, params, sectionWiseResult } = useLoaderData()
+
   const dropdownData = [
     {
       name: 'Pending',
@@ -64,10 +66,10 @@ const ResultDetailsComponent = () => {
         </div>
       </header>
       <Divider height="1px" />
-      <BarGraph />
+      <BarGraph sectionWiseResult={sectionWiseResult} />
       <Divider height="1px" />
       <div id="results-test-candidate-list-tab" className="flex flex-col gap-6">
-        {sectionWiseResult.map((section: any) => {
+        {sectionWiseResult.map((section: SectionWiseResults) => {
           return (
             <SectionCardForResultDetail
               key={section?.id}
@@ -80,7 +82,7 @@ const ResultDetailsComponent = () => {
         })}
       </div>
       <Divider height="1px" />
-      <div className="flex gap-4">
+      <div className="flex gap-4 pb-5">
         <DropdownField
           data={dropdownData}
           displayKey={'name'}

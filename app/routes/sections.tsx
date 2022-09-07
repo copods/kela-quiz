@@ -14,6 +14,7 @@ import {
   useSubmit,
 } from '@remix-run/react'
 import {
+  checkSectionById,
   createSection,
   deleteSectionById,
   getAllSections,
@@ -128,22 +129,43 @@ export const action: ActionFunction = async ({ request }) => {
     return addHandle
   }
   let deleteHandle = null
+  let isSectionDelete = false
+  let isTestDeleted: Array<boolean> | undefined
   if (action === 'sectionDelete') {
-    await deleteSectionById(formData.get('id') as string)
-      .then((res) => {
-        deleteHandle = json<ActionData>(
-          { resp: { status: statusCheck.deletedSuccess } },
-
-          { status: 200 }
-        )
-      })
-      .catch((err) => {
-        let title = statusCheck.commonError
+    await checkSectionById(formData.get('id') as string).then((res) => {
+      if (res?._count.sectionInTest !== 0) {
+        isTestDeleted = res?.sectionInTest?.map((e) => {
+          return e.test.deleted
+        })
+      }
+      if (res?._count.sectionInTest === 0 || isTestDeleted?.includes(true)) {
+        isSectionDelete = true
+      } else {
+        let title = statusCheck.testDependentWarning
         deleteHandle = json<ActionData>(
           { errors: { title, status: 400, check: new Date() } },
           { status: 400 }
         )
-      })
+      }
+    })
+
+    if (isSectionDelete) {
+      await deleteSectionById(formData.get('id') as string)
+        .then((res) => {
+          deleteHandle = json<ActionData>(
+            { resp: { status: statusCheck.deletedSuccess } },
+
+            { status: 200 }
+          )
+        })
+        .catch((err) => {
+          let title = statusCheck.commonError
+          deleteHandle = json<ActionData>(
+            { errors: { title, status: 400, check: new Date() } },
+            { status: 400 }
+          )
+        })
+    }
     return deleteHandle
   }
 }

@@ -66,6 +66,7 @@ export const logo = {
 
 export const deletePopUp = {
   alert: 'Do you want to delete',
+  subAlert: '(All the questions for this section will also be deleted)',
 }
 export const logIn = {
   signInMessage: 'Sign in to your account',
@@ -129,6 +130,8 @@ export const statusCheck = {
   nameIsReq: 'Name is required',
   sectionAddedSuccess: 'Section added successfully..!',
   maxOptions: 'you can add maximum six options.',
+  testDependentWarning:
+    "Can't be deleted as you have to delete the test containing this section first",
   duplicate: 'Duplicate Title',
   testAddedSuccessFully: 'Test added successfully..',
   testAlreadyExist: 'Test name already exist.',
