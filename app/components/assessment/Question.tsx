@@ -10,7 +10,6 @@ import Button from '../form/Button'
 import Checkbox from '../form/CheckBox'
 import sanitizeHtml from 'sanitize-html'
 
-
 const Question = () => {
   const { question, section, lastSection } = useLoaderData()
   const questionType = question?.question?.questionType?.value

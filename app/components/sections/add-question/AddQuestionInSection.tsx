@@ -16,7 +16,7 @@ import { routes } from '~/constants/route.constants'
 import {
   addQuestion,
   testsConstants,
-  statusCheck
+  statusCheck,
 } from '~/constants/common.constants'
 import { QuestionTypes, sortByOrder } from '~/interface/Interface'
 
@@ -229,7 +229,7 @@ const AddQuestionInSection = () => {
         <div className="flex">
           <Button
             tabIndex={0}
-            id='cancel'
+            id="cancel"
             onClick={() => navigate(`${routes.sections}/${sectionDetails?.id}`)}
             isDisabled={transition.state === 'submitting'}
             className="h-9 px-5"
@@ -249,7 +249,7 @@ const AddQuestionInSection = () => {
             isDisabled={transition.state === 'submitting'}
             className="h-9 px-5"
             onClick={() => saveQuestion(false)}
-            varient='primary-solid'
+            varient="primary-solid"
             title={sortByOrder.saveAndExit}
             buttonText={
               <>
@@ -266,7 +266,7 @@ const AddQuestionInSection = () => {
             isDisabled={transition.state === 'submitting'}
             className="h-9 px-5"
             onClick={() => saveQuestion(true)}
-            varient='primary-solid'
+            varient="primary-solid"
             title={sortByOrder.saveAndAddMore}
             buttonText={
               <>

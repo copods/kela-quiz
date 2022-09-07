@@ -10,9 +10,6 @@ export const commonConstants = {
   byText: 'By',
   continue: 'Continue',
   total: 'Total',
-  createdAt: 'createdAt',
-  createdDate: 'Created Date',
-  somethingWentWrongMsg: 'Something went wrong..!',
   placeholderForOptionInput: 'Write your option here',
   sortAscending: 'Sort Ascending',
   sortDescending: 'Sort Descending',
@@ -39,7 +36,6 @@ export const commonConstants = {
 }
 export const sideNav = {
   sideNavHeading: 'Quiz',
-  signOut: 'Sign out',
 }
 export const members = {
   addMember: 'Add Member',
@@ -67,10 +63,7 @@ export const testTableItem = {
 export const logo = {
   kQuizLogo: 'K-Quiz Logo',
 }
-export const selectSectionCard = {
-  removeSection: 'Remove Section',
-  selectSection: 'Select Section',
-}
+
 export const deletePopUp = {
   alert: 'Do you want to delete',
 }
@@ -94,7 +87,6 @@ export const sectionsConstants = {
   dropdown: 'Select',
   expand: 'Expand',
   search: 'Search Question',
-  titleNotValid: 'Duplicate Title',
 }
 export const testsConstants = {
   addTestbutton: 'Add Test',
@@ -220,16 +212,12 @@ export const cypress = {
   back: 'Back',
   nameIsReq: 'Name is required',
   descIsReq: 'Description is required',
-  sectionAdded: 'Section added successfully..!',
   duplicateTitle: 'Duplicate Title',
-  question: 'Question',
   saveAndAddMore: 'Save & Add More',
-  groupByTest: 'Results',
   addMember: 'Add Member',
   name: 'Name',
   description: 'Description',
   totalTime: 'Total Time',
-  borderExist: 'border-l-8',
   useRef: 'What is useRef() ?',
   useRefAns: 'It allows you to persist values between renders.',
   useMemo: 'What is useMemo() ?',
