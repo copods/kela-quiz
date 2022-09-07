@@ -2,7 +2,6 @@ import Highcharts from 'highcharts'
 import type { TooltipFormatterContextObject } from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 import moment from 'moment'
-import React from 'react'
 import type { SectionWiseResults } from '~/interface/Interface'
 
 const BarGraph = ({
@@ -10,10 +9,9 @@ const BarGraph = ({
 }: {
   sectionWiseResult: Array<SectionWiseResults>
 }) => {
-  console.log(sectionWiseResult)
   const getDifferenceMin = () => {
     let finalResult: Array<number> = []
-    sectionWiseResult.map((result: SectionWiseResults) => {
+    sectionWiseResult.forEach((result: SectionWiseResults) => {
       let startingTime = moment(result.section.startedAt)
       let endingTime = moment(result.section.endAt)
 
@@ -81,25 +79,37 @@ const BarGraph = ({
     },
     tooltip: {
       shared: true,
+      backgroundColor: '#fff',
+      borderRadius: 10,
+      shadow: true,
+      padding: 15,
+      followTouchMove: true,
       formatter: function (): any {
         return this.points?.reduce(
           (
             acc: TooltipFormatterContextObject
           ): TooltipFormatterContextObject => {
-            return (acc.key +
-              '<br/>' +
+            return ('<div>' +
               'Total' +
-              ' : ' +
+              ': ' +
+              '<span style="color: #353988; fontWeight: 500; margin: 20px">' +
               getLabelData(acc.key as string, 'total') +
-              '<br/>' +
+              '</span>' +
+              '<div/> </br>' +
+              '<div>' +
               'Correct' +
-              ' : ' +
+              ': ' +
+              '<span style="color: #059669; fontWeight: 500; margin: 20px">' +
               getLabelData(acc.key as string, 'correct') +
-              '<br/>' +
+              '</span>' +
+              '<div/> </br>' +
+              '<div>' +
               'Wrong' +
-              ' : ' +
+              ': ' +
+              '<span style="color: #D97706; fontWeight: 500; margin: 20px">' +
               getLabelData(acc.key as string, 'wrong') +
-              '<br/>') as unknown as TooltipFormatterContextObject
+              '</span>' +
+              '<div/> </br>') as unknown as TooltipFormatterContextObject
           }
         )
       },
