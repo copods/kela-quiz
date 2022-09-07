@@ -27,7 +27,8 @@ import AddSection from '~/components/sections/AddSection'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import Button from '~/components/form/Button'
-import { Section, sortByOrder } from '~/interface/Interface'
+import { sortByOrder } from '~/interface/Interface'
+import type { Section } from '~/interface/Interface'
 import { routes } from '~/constants/route.constants'
 
 export type ActionData = {
@@ -62,7 +63,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   await getAllSections(obj)
     .then((res) => {
       sections = res as Section[]
-      status = 'Success'
+      status = statusCheck.success
     })
     .catch((err) => {
       status = err
@@ -174,7 +175,7 @@ export default function SectionPage() {
     data.selectedSectionId || data.sections[0]?.id || 'NA'
   )
 
-  if (data.status != 'Success') {
+  if (data.status != statusCheck.success) {
     toast.error(statusCheck.commonError)
   }
 
@@ -277,8 +278,8 @@ export default function SectionPage() {
                 sortByDetails={sortByDetails}
               />
             </div>
-                 {/* section details */}
-                 <div className={`z-10 flex flex-1 items-center `}>
+            {/* section details */}
+            <div className={`z-10 flex flex-1 items-center `}>
               <span
                 className="z-20 -mr-5"
                 tabIndex={0}
