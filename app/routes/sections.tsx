@@ -184,12 +184,12 @@ export default function SectionPage() {
       navigate(routes.sections, {
         replace: true,
       })
-    }else{
+    } else {
       navigate(`${routes.sections}/${selectedSection}${data?.filters}`, {
         replace: true,
       })
     }
-  }, [navigate,selectedSection])
+  }, [navigate, selectedSection])
 
   useEffect(() => {
     if (data.sections.length) {
@@ -229,7 +229,7 @@ export default function SectionPage() {
         })
       }
     }
-  }, [sectionActionData,data.selectedSectionId])
+  }, [sectionActionData, data.selectedSectionId])
 
   return (
     <AdminLayout>

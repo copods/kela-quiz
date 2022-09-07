@@ -146,7 +146,7 @@ export const action: ActionFunction = async ({ request }) => {
   }
 }
 const Members = () => {
-  const membersActionData = useActionData() as ActionData;
+  const membersActionData = useActionData() as ActionData
   const membersData = useLoaderData()
   useEffect(() => {
     if (membersActionData) {
@@ -157,7 +157,7 @@ const Members = () => {
           toastId: membersActionData.errors?.title,
         })
       }
-    } 
+    }
   }, [membersActionData])
 
   return (
