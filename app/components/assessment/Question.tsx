@@ -57,7 +57,7 @@ const Question = () => {
               {routeFiles.options}
             </div>
           </div>
-          <div className="flex h-full flex-1 flex-col gap-6 overflow-auto shadow-base">
+          <div className="flex h-full flex-1 flex-col gap-6 overflow-auto">
             {question?.question?.options?.map(
               (option: {
                 id: string

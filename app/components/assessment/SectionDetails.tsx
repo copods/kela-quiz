@@ -37,7 +37,7 @@ const SectionDetails = () => {
         </div>
       </div>
       <Button
-        className="px-11"
+        className="w-36 px-6"
         onClick={startSection}
         title={candidateExamConstants.startSection}
         buttonText={candidateExamConstants.startSection}
