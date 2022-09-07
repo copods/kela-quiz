@@ -109,7 +109,7 @@ const BarGraph = ({
               '<span style="color: #D97706; fontWeight: 500; margin: 20px">' +
               getLabelData(acc.key as string, 'wrong') +
               '</span>' +
-              '<div/> </br>') as unknown as TooltipFormatterContextObject
+              '<div/>') as unknown as TooltipFormatterContextObject
           }
         )
       },
