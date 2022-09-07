@@ -11,6 +11,7 @@ const AttendedCandidateListItem = ({
   review,
   testId,
   candidateResultId,
+  endAt,
 }: {
   id: string
   email: string
@@ -21,6 +22,7 @@ const AttendedCandidateListItem = ({
   review: boolean
   testId: string
   candidateResultId: string
+  endAt: Date
 }) => {
   return (
     <div className="col-span-full">
@@ -28,19 +30,25 @@ const AttendedCandidateListItem = ({
         <div className=" col-span-1 truncate">
           <span className=" text-base text-gray-700">{index}</span>
         </div>
-        <Link
-          to={`/results/groupByTests/${testId}/${candidateResultId}`}
-          className="col-span-3 truncate font-semibold text-primary"
-        >
-          {name}
-        </Link>
+        {endAt ? (
+          <Link
+            to={`/results/groupByTests/${testId}/${candidateResultId}`}
+            className="col-span-3 truncate font-semibold text-primary"
+          >
+            {name}
+          </Link>
+        ) : (
+          <div className="align-center col-span-3 truncate">
+            <i>--No Name--</i>
+          </div>
+        )}
         <div className="col-span-4 truncate">{email}</div>
         <div className="col-span-2 truncate">
           <span className="text-base text-gray-700">{invitedBy}</span>
         </div>
         <div className="col-span-1 truncate">
           <span className=" text-base text-gray-700">
-            {result >= 0 ? `${result}%` : ''}
+            {result >= 0 ? `${result}%` : 'NA'}
           </span>
         </div>
         <div className="col-span-1">

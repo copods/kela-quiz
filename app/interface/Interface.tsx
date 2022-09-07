@@ -214,6 +214,7 @@ export interface CandidateResult {
   candidateId: string
   candidateTestId: string
   totalQuestion: number
+  endAt: Date
   correctQuestion: number
   unanswered: number
   testId: string
@@ -233,7 +234,7 @@ export enum sortByOrder {
   cancel = 'Cancel',
   createdAt = 'createdAt',
   creatingTest = 'Creating Test',
-  submit = 'Submit'
+  submit = 'Submit',
 }
 
 export enum QuestionTypes {
@@ -241,4 +242,3 @@ export enum QuestionTypes {
   singleChoice = 'SINGLE_CHOICE',
   text = 'TEXT',
 }
-

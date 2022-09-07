@@ -24,6 +24,7 @@ const GroupByTests = () => {
   ]
   const candidateTestData = useLoaderData()
   const candidateTests = candidateTestData.candidateTest
+
   const submit = useSubmit()
   useEffect(() => {
     const filter = {

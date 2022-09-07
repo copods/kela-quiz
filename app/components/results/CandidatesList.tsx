@@ -31,7 +31,7 @@ const CandidatesList = () => {
   }
 
   return (
-    <div className="bg-[#F9FAFB] pb-4">
+    <div className="bg-gray-50 pb-4">
       <div className="bg-tableHeader rounded-lg border border-solid border-gray-200 shadow-base">
         <div className="grid grid-cols-12 gap-3 py-4 px-12">
           <span className="col-span-1 text-sm font-semibold text-gray-500">
@@ -50,7 +50,7 @@ const CandidatesList = () => {
             {resultConstants.result}
           </span>
           <span className="col-span-1 text-sm font-semibold text-gray-500">
-            {resultConstants.review}
+            {resultConstants.status}
           </span>
         </div>
         {testData?.map(
@@ -94,6 +94,7 @@ const CandidatesList = () => {
                   result={getCandidatePercent() as number}
                   review={candidate?.isQualified}
                   index={i + 1}
+                  endAt={candidate?.endAt}
                 />
               </div>
             )

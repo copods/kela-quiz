@@ -39,7 +39,7 @@ const ResultDetailsComponent = () => {
         <div className="flex gap-2">
           <NavLink
             to={`/results/groupByTests/${params?.testId}`}
-            className="flex items-center gap-4 "
+            className="flex items-center gap-4"
           >
             <Icon
               className="text-3xl font-semibold leading-9 text-gray-900"
