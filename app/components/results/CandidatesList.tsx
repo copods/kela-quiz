@@ -7,9 +7,9 @@ import {
 import type { Candidate, CandidateResult, User } from '~/interface/Interface'
 import AttendedCandidateListItem from './AttendedCandidateListItem'
 
-const ExamCompletedCandidatesComponent = () => {
-  const { attendedCandidateForTest, params } = useLoaderData()
-  const testData = attendedCandidateForTest
+const CandidatesList = () => {
+  const { candidatesOfTest, params } = useLoaderData()
+  const testData = candidatesOfTest?.candidateTest
 
   return (
     <div className="bg-[#F9FAFB] pb-4">
@@ -36,23 +36,38 @@ const ExamCompletedCandidatesComponent = () => {
         </div>
         {testData?.map(
           (
-            result: CandidateResult & {
-              candidate: Candidate & { createdBy: User }
+            candidate: CandidateResult & {
+              candidate: Candidate & {
+                createdBy: User
+              }
+              candidateResult: Array<CandidateResult>
             },
             i: number
           ) => (
             <div
-              key={result.id}
+              key={candidate.id}
               className="memberRow col-span-10 grid rounded-lg"
             >
               <AttendedCandidateListItem
-                id={result?.id}
+                id={candidate?.id}
                 testId={params.testId}
-                email={result?.candidate?.email}
-                invitedBy={`${result?.candidate?.createdBy?.firstName}`}
-                name={`${result?.candidate?.firstName} ${result?.candidate?.lastName}`}
-                result={(result?.correctQuestion / result?.totalQuestion) * 100}
-                review={result?.isQualified}
+                email={candidate?.candidate?.email}
+                invitedBy={`${candidate?.candidate?.createdBy?.firstName} ${candidate?.candidate?.createdBy?.lastName}`}
+                name={`${
+                  candidate?.candidate?.firstName
+                    ? candidate?.candidate?.firstName
+                    : ''
+                } ${
+                  candidate?.candidate?.lastName
+                    ? candidate?.candidate?.lastName
+                    : ''
+                }`}
+                result={
+                  (candidate?.candidateResult[0]?.correctQuestion /
+                    candidate?.candidateResult[0]?.totalQuestion) *
+                  100
+                }
+                review={candidate?.isQualified}
                 index={i + 1}
               />
             </div>
@@ -68,4 +83,4 @@ const ExamCompletedCandidatesComponent = () => {
   )
 }
 
-export default ExamCompletedCandidatesComponent
+export default CandidatesList

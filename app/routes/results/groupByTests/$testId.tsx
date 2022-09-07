@@ -5,23 +5,50 @@ import type { LoaderFunction } from '@remix-run/server-runtime'
 import { json } from '@remix-run/node'
 
 import invariant from 'tiny-invariant'
-import { getPendingExamCandidateByTestId } from '~/models/result.server'
+import {
+  getAllCandidatesOfTest,
+  // getPendingExamCandidateByTestId,
+  // getResultsOfCandidatesByTestId,
+} from '~/models/result.server'
 
-type LoaderData = {
-  testPreview: Awaited<ReturnType<typeof getPendingExamCandidateByTestId>>
-  params: any
-}
+// type LoaderData = {
+//   testPreview: Awaited<ReturnType<typeof getPendingExamCandidateByTestId>>
+//   params: any
+// }
 
 export const loader: LoaderFunction = async ({ request, params }) => {
+  // invariant(params.testId, 'resultId not found')
+  // const testPreview = await getPendingExamCandidateByTestId({
+  //   id: params.testId,
+  // })
+  // if (!testPreview) {
+  //   throw new Response('Not Found', { status: 404 })
+  // }
+
+  // // return json<LoaderData>({ testPreview, params })
+
+  // invariant(params.testId, 'resultId not found')
+  // const attendedCandidateForTest = await getResultsOfCandidatesByTestId({
+  //   testId: params.testId,
+  // })
+  // if (!attendedCandidateForTest) {
+  //   throw new Response('Not Found', { status: 404 })
+  // }
+
   invariant(params.testId, 'resultId not found')
-  const testPreview = await getPendingExamCandidateByTestId({
+  const candidatesOfTest = await getAllCandidatesOfTest({
     id: params.testId,
   })
-  if (!testPreview) {
+  if (!candidatesOfTest) {
     throw new Response('Not Found', { status: 404 })
   }
 
-  return json<LoaderData>({ testPreview, params })
+  return json({
+    // testPreview,
+    // attendedCandidateForTest,
+    candidatesOfTest,
+    params,
+  })
 }
 function CandidateListRoute() {
   return (
