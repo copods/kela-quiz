@@ -21,7 +21,7 @@ const ResultDetailsComponent = () => {
       value: true,
     },
   ]
-  let navigate = useNavigate();
+  let navigate = useNavigate()
   const [candidateStatus, updateCandidateStatus] = useState(false)
   const submit = useSubmit()
   const updateCandidateStatusToDB = () => {
@@ -38,13 +38,17 @@ const ResultDetailsComponent = () => {
       <header>
         <div className="flex gap-2">
           <div
-            onClick={()=>navigate(`${routes.resultGroupTest}/${params?.testId}/completed`)}
+            onClick={() =>
+              navigate(`${routes.resultGroupTest}/${params?.testId}/completed`)
+            }
             className="flex items-center gap-4 "
             role={'button'}
             tabIndex={0}
             onKeyDown={(e) => {
               if (e.key === 'Enter')
-              navigate(`${routes.resultGroupTest}/${params?.testId}/completed`)
+                navigate(
+                  `${routes.resultGroupTest}/${params?.testId}/completed`
+                )
             }}
           >
             <Icon
@@ -53,10 +57,7 @@ const ResultDetailsComponent = () => {
               icon="mdi:arrow-left"
             ></Icon>
           </div>
-          <span
-            className="text-3xl font-semibold text-gray-900"
-            id="title"
-          >
+          <span className="text-3xl font-semibold text-gray-900" id="title">
             {candidateResult?.candidate?.firstName}&nbsp;
             {candidateResult?.candidate?.lastName}
           </span>

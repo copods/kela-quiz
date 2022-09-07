@@ -3,24 +3,23 @@ import { Dialog, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import { Form } from '@remix-run/react'
 import { commonConstants, deletePopUp } from '~/constants/common.constants'
-import { statusCheck } from '~/constants/common.constants'
 import Button from './form/Button'
 export default function DeletePopUp({
   setOpen,
   open,
   onDelete,
   status,
+  subAlert,
 }: {
   open: boolean
   setOpen: (e: boolean) => void
   onDelete: () => void
   status?: string | undefined
+  subAlert?: string
 }) {
   const handleDelete = () => {
     onDelete()
-    if (status === statusCheck.success) {
-      setOpen(false)
-    }
+    setOpen(false)
   }
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -62,7 +61,7 @@ export default function DeletePopUp({
                     </div>
                     <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                       <p className="text-sm text-gray-500">
-                        {deletePopUp.alert}
+                        {deletePopUp.alert} {subAlert}
                       </p>
                     </div>
                   </div>

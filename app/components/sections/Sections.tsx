@@ -20,10 +20,13 @@ const SectionLink = ({
   const path = `/sections/${section.id}`
   const location = useLocation() // to get current location
   const resolvedPath = useResolvedPath(path) // to get resolved path which would match with current location
-  let navigate = useNavigate();
+  let navigate = useNavigate()
   return (
     <div
-      onClick={() =>{ setSelectedSection(section.id); navigate(path)}}
+      onClick={() => {
+        setSelectedSection(section.id)
+        navigate(path)
+      }}
       id="section-link"
       role={'button'}
       tabIndex={0}

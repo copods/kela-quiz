@@ -32,8 +32,8 @@ const TestTableItem = ({
   status: string | undefined
 }) => {
   const [showDeletePopup, setShowDeletePopup] = useState(false)
-  const submit = useSubmit();
-  const navigate = useNavigate();
+  const submit = useSubmit()
+  const navigate = useNavigate()
   const deleteTest = () => {
     submit(
       {
@@ -67,7 +67,7 @@ const TestTableItem = ({
           <div
             aria-label={testName}
             title={testName}
-            onClick={()=>navigate(`/tests/${id}`)}
+            onClick={() => navigate(`/tests/${id}`)}
             role={'button'}
             onKeyDown={(e) => {
               if (e.key === 'Enter') navigate(`/tests/${id}`)
