@@ -1,4 +1,4 @@
-import { NavLink, Outlet } from '@remix-run/react'
+import { Outlet, useNavigate } from '@remix-run/react'
 import { Icon } from '@iconify/react'
 import ResultTab from './ResultTab'
 import { useLoaderData } from '@remix-run/react'
@@ -22,22 +22,29 @@ const CandidateListOfTest = () => {
       route: 'completed',
     },
   ]
+  let navigate = useNavigate();
   const { testPreview, params } = useLoaderData()
   return (
     <div id="test-details" className=" h-full ">
       <header className="mb-8">
         <div className="border-b border-solid border-slate-300 ">
           <div className="flex gap-2 pb-6">
-            <NavLink
-              to={routes.resultGroupTest}
+            <div
+              onClick={()=>navigate(routes.resultGroupTest)}
+              role={'button'}
+              tabIndex={0}
               className="flex items-center gap-4 "
+              onKeyDown={(e) => {
+                if (e.key === 'Enter')
+                navigate(routes.resultGroupTest)
+              }}
             >
               <Icon
                 className="text-3xl font-semibold leading-9 text-gray-900"
                 id="back-button"
                 icon="mdi:arrow-left"
               />
-            </NavLink>
+            </div>
             <span className="text-3xl font-semibold text-gray-900" id="title">
               {testPreview?.name}
             </span>

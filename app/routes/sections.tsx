@@ -179,19 +179,16 @@ export default function SectionPage() {
   }
 
   useEffect(() => {
-    if (selectedSection !== 'NA') {
+    if (selectedSection === 'NA') {
+      navigate(routes.sections, {
+        replace: true,
+      })
+    }else{
       navigate(`${routes.sections}/${selectedSection}${data?.filters}`, {
         replace: true,
       })
     }
-  }, [navigate, selectedSection])
-  useEffect(() => {
-    if (selectedSection == 'NA') {
-      navigate(routes.sections, {
-        replace: true,
-      })
-    }
-  }, [navigate, selectedSection])
+  }, [navigate,selectedSection])
 
   useEffect(() => {
     if (data.sections.length) {
@@ -208,7 +205,7 @@ export default function SectionPage() {
         action: `${routes.sections}/${selectedSection}`,
       })
     }
-  }, [order, sortBy, data.sections.length])
+  }, [order, sortBy])
 
   useEffect(() => {
     if (sectionActionData) {
@@ -231,7 +228,7 @@ export default function SectionPage() {
         })
       }
     }
-  }, [sectionActionData, data])
+  }, [sectionActionData,data.selectedSectionId])
 
   return (
     <AdminLayout>
