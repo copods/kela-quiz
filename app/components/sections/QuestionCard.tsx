@@ -1,5 +1,6 @@
 import { Icon } from '@iconify/react'
 import { sectionsConstants } from '~/constants/common.constants'
+import sanitizeHtml from 'sanitize-html'
 import type {
   Question,
   Option,
@@ -59,7 +60,9 @@ const QuestionCard = ({
           <div className="ql-editor flex-1 p-0 pr-4">
             <div
               className="question cursor-pointer"
-              dangerouslySetInnerHTML={{ __html: question.question }}
+              dangerouslySetInnerHTML={{
+                __html: sanitizeHtml(question.question),
+              }}
             ></div>
           </div>
           <div className="flex gap-2">
@@ -91,7 +94,10 @@ const QuestionCard = ({
             {question.options?.map((option: Option) => {
               return (
                 <div key={option.id}>
-                  <OptionCard option={option} />
+                  <OptionCard
+                    option={option}
+                    Questiontype={question.questionType}
+                  />
                 </div>
               )
             })}
@@ -101,7 +107,10 @@ const QuestionCard = ({
           <div className="grid grid-cols-1 gap-4 pt-6 ">
             {question.correctAnswer?.map((answer: CorrectAnswer) => (
               <div key={answer.id}>
-                <OptionCard option={answer} />
+                <OptionCard
+                  option={answer}
+                  Questiontype={question.questionType}
+                />
               </div>
             ))}
           </div>
