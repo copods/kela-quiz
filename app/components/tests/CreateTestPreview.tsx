@@ -1,6 +1,8 @@
 import { Icon } from '@iconify/react'
 import type { TestSection } from '~/interface/Interface'
 import { commonConstants, testsConstants } from '~/constants/common.constants'
+import sanitizeHtml from 'sanitize-html'
+
 const TestPreview = ({
   name,
   description,
@@ -71,7 +73,7 @@ const TestPreview = ({
             </div>
             <div
               className="flex-1 text-base text-gray-700"
-              dangerouslySetInnerHTML={{ __html: description }}
+              dangerouslySetInnerHTML={{ __html: sanitizeHtml(description) }}
             ></div>
           </div>
           <div className="flex">

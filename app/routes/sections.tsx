@@ -28,7 +28,8 @@ import AddSection from '~/components/sections/AddSection'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import Button from '~/components/form/Button'
-import { Section, sortByOrder } from '~/interface/Interface'
+import { sortByOrder } from '~/interface/Interface'
+import type { Section } from '~/interface/Interface'
 import { routes } from '~/constants/route.constants'
 
 export type ActionData = {

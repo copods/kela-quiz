@@ -1,6 +1,7 @@
 import type { SetStateAction } from 'react'
 import { useEffect, useState } from 'react'
-import { sortByOrder, TestSection } from '~/interface/Interface'
+import { sortByOrder } from '~/interface/Interface'
+import type { TestSection } from '~/interface/Interface'
 import SortFilter from '../SortFilter'
 import SelectSectionCard from './SelectSectionCard'
 
