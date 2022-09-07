@@ -50,7 +50,7 @@ const SortFilter = ({
                   onSortDirectionChange(sortByOrder.ascending)
               }}
               onClick={() => onSortDirectionChange(sortByOrder.ascending)}
-              className="cursor-pointer text-2xl"
+              className="cursor-pointer text-2xl focus:outline-none"
               aria-label={commonConstants.sortDescending}
             />
           )}
