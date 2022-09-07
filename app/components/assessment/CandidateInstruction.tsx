@@ -5,6 +5,7 @@ import {
 } from '~/constants/common.constants'
 import type { SectionInTest, TestSection } from '~/interface/Interface'
 import Button from '../form/Button'
+import sanitizeHtml from 'sanitize-html'
 
 const CandidateInstruction = () => {
   const { firstSection, instructions } = useLoaderData()
@@ -28,7 +29,7 @@ const CandidateInstruction = () => {
         <div
           className="pb-9 text-base text-gray-700"
           dangerouslySetInnerHTML={{
-            __html: instructions?.test?.description,
+            __html: sanitizeHtml(instructions?.test?.description),
           }}
         />
       </div>
