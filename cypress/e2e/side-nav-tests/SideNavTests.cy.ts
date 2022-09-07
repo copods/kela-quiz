@@ -1,4 +1,8 @@
-import { members, routeFiles, testsConstants } from '~/constants/common.constants'
+import {
+  members,
+  routeFiles,
+  testsConstants,
+} from '~/constants/common.constants'
 describe('Test for Logout, SideNav', () => {
   beforeEach('sign-in', () => {
     cy.visit('/sign-in')
@@ -25,7 +29,10 @@ describe('Test for Logout, SideNav', () => {
     cy.location('pathname').should('eq', '/tests')
 
     // sections page
-    cy.get('a').find('#sections').should('have.text', routeFiles.sections).click()
+    cy.get('a')
+      .find('#sections')
+      .should('have.text', routeFiles.sections)
+      .click()
     cy.location('pathname').should('eq', '/sections')
 
     // members page

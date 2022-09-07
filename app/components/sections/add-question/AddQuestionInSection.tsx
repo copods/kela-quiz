@@ -4,18 +4,21 @@ import BreadCrumb from '../../BreadCrumb'
 import QuestionEditor from './QuestionEditor'
 import OptionForQuestion from './OptionForQuestion'
 import cuid from 'cuid'
-import {useLoaderData, useNavigate, useSubmit, useTransition } from '@remix-run/react'
+import {
+  useLoaderData,
+  useNavigate,
+  useSubmit,
+  useTransition,
+} from '@remix-run/react'
 import { toast } from 'react-toastify'
 import Button from '~/components/form/Button'
 import { routes } from '~/constants/route.constants'
 import {
   addQuestion,
-  QuestionTypes,
   testsConstants,
-  statusCheck,
-  commonConstants
+  statusCheck
 } from '~/constants/common.constants'
-import { sortByOrder } from '~/interface/Interface'
+import { QuestionTypes, sortByOrder } from '~/interface/Interface'
 
 const AddQuestionInSection = () => {
   const { sectionDetails, questionTypes } = useLoaderData()
@@ -65,7 +68,7 @@ const AddQuestionInSection = () => {
     {
       tabName: addQuestion.addQuestion,
       route: `${routes.sections}/${sectionDetails?.id}${routes.addQuestion}`,
-    }
+    },
   ]
   const getQuestionType = (id: string) => {
     let quesValue = ''
@@ -191,15 +194,15 @@ const AddQuestionInSection = () => {
     <div className="flex h-full flex-col gap-6">
       <BreadCrumb data={breadCrumbArray} />
       <div className="flex">
-      <h1
-        title={sectionDetails?.name}
-        role={sectionDetails?.name}
-        aria-label={sectionDetails?.name}
-        tabIndex={0}
-        className="text-3xl font-bold text-gray-900 inline-block"
-      >
-        {sectionDetails?.name} - {addQuestion.addQuestion}
-      </h1>
+        <h1
+          title={sectionDetails?.name}
+          role={sectionDetails?.name}
+          aria-label={sectionDetails?.name}
+          tabIndex={0}
+          className="inline-block text-3xl font-bold text-gray-900"
+        >
+          {sectionDetails?.name} - {addQuestion.addQuestion}
+        </h1>
       </div>
       <div className="flex h-40 flex-1 flex-row gap-6">
         <QuestionEditor
@@ -224,45 +227,56 @@ const AddQuestionInSection = () => {
       </div>
       <div className="flex items-center justify-between">
         <div className="flex">
-          <Button 
+          <Button
             tabIndex={0}
             id='cancel'
-            onClick={() => navigate(`/sections/${sectionDetails?.id}`)}
+            onClick={() => navigate(`${routes.sections}/${sectionDetails?.id}`)}
             isDisabled={transition.state === 'submitting'}
-            className='h-9 px-5'
-            title={transition.state === 'submitting' ? 'Canceling...' : 'Cancel'}
-            buttonText={transition.state === 'submitting' ? 'Canceling...' : 'Cancel'}
-            varient='secondary-solid' />
+            className="h-9 px-5"
+            title={
+              transition.state === 'submitting' ? 'Canceling...' : 'Cancel'
+            }
+            buttonText={
+              transition.state === 'submitting' ? 'Canceling...' : 'Cancel'
+            }
+            varient="secondary-solid"
+          />
         </div>
         <div className="flex gap-2">
-          <Button 
+          <Button
             tabIndex={0}
             id="save-and-exit"
             isDisabled={transition.state === 'submitting'}
-            className='h-9 px-5'
+            className="h-9 px-5"
             onClick={() => saveQuestion(false)}
             varient='primary-solid'
-            title={commonConstants.saveAndExit}
+            title={sortByOrder.saveAndExit}
             buttonText={
               <>
-              <Icon icon="ic:round-save" className="mr-1" />
-              {transition.state === 'submitting' ? 'Saving...' : sortByOrder.saveAndExit}
+                <Icon icon="ic:round-save" className="mr-1" />
+                {transition.state === 'submitting'
+                  ? 'Saving...'
+                  : sortByOrder.saveAndExit}
               </>
-            } />
-          <Button 
+            }
+          />
+          <Button
             tabIndex={0}
-            id='save-and-add-more'
+            id="save-and-add-more"
             isDisabled={transition.state === 'submitting'}
-            className='h-9 px-5'
+            className="h-9 px-5"
             onClick={() => saveQuestion(true)}
             varient='primary-solid'
-            title={commonConstants.saveAndAddMore}
+            title={sortByOrder.saveAndAddMore}
             buttonText={
               <>
-              <Icon icon="ic:round-save" className="mr-1" />
-              {transition.state === 'submitting' ? sortByOrder.saving : sortByOrder.saveAndAddMore}
+                <Icon icon="ic:round-save" className="mr-1" />
+                {transition.state === 'submitting'
+                  ? sortByOrder.saving
+                  : sortByOrder.saveAndAddMore}
               </>
-            } />
+            }
+          />
         </div>
       </div>
     </div>

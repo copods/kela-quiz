@@ -1,4 +1,4 @@
-import { logo } from "~/constants/common.constants"
+import { logo } from '~/constants/common.constants'
 
 interface LogoProps {
   height?: string

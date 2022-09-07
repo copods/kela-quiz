@@ -1,14 +1,19 @@
 import { useNavigate, useSubmit, useTransition } from '@remix-run/react'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
-import { sortByOrder, TestSection } from '~/interface/Interface'
+import { sortByOrder } from '~/interface/Interface'
+import type { TestSection } from '~/interface/Interface'
 import BreadCrumb from '../BreadCrumb'
 import SelectSections from './CreateSelectSections'
 import TestDetails from './CreateTestDetails'
 import TestPreview from './CreateTestPreview'
 import StepsTabComponent from './StepsTab'
 import Button from '../form/Button'
-import { commonConstants, testsConstants, toastConstants } from '~/constants/common.constants'
+import {
+  commonConstants,
+  testsConstants,
+  toastConstants,
+} from '~/constants/common.constants'
 import { routes } from '~/constants/route.constants'
 
 const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
@@ -47,7 +52,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
   ]
   const [currentTab, setCurrentTab] = useState(0) // testDetails  ||  selectSections  ||  preview
   const [name, onNameChange] = useState('')
-  const [description, onDescriptionChange] = useState('')
+  const [description, setDescription] = useState('')
   const [selectedSections, onSelectedSectionChange] = useState<TestSection[]>(
     []
   )
@@ -133,7 +138,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
           name={name}
           onNameChange={onNameChange}
           description={description}
-          onDescriptionChange={onDescriptionChange}
+          onDescriptionChange={setDescription}
         />
       ) : currentTab === tabs[1].id ? (
         <SelectSections
@@ -143,54 +148,63 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
           }}
           updateSectionsList={setSectionsCopy}
         />
-      ) : currentTab === tabs[2].id && (
-        <TestPreview
-          selectedSections={selectedSections}
-          onSelectedSectionChange={onSelectedSectionChange}
-          name={name}
-          description={description}
-          isPreviewEditable
-        />
+      ) : (
+        currentTab === tabs[2].id && (
+          <TestPreview
+            selectedSections={selectedSections}
+            onSelectedSectionChange={onSelectedSectionChange}
+            name={name}
+            description={description}
+            isPreviewEditable
+          />
+        )
       )}
       {/* Buttons */}
       <div className="flex w-full items-center justify-between">
           <Button 
             tabIndex={0} 
-            onClick={() => navigate('/tests')}
+            onClick={() => navigate(routes.tests)}
             className='h-9 px-7' 
             varient='secondary-solid'
             title={commonConstants.cancelAddTest}
             buttonText={commonConstants.cancel} />
         <div className="flex gap-4">
-          <Button 
+          <Button
             tabIndex={0}
-            title={commonConstants.previousTab} 
-            className='h-9 px-7' 
-            varient='primary-solid'
-            id='back-button'
-            buttonText={commonConstants.backButton} 
+            title={commonConstants.previousTab}
+            className="h-9 px-7"
+            varient="primary-solid"
+            id="back-button"
+            buttonText={commonConstants.backButton}
             isDisabled={currentTab === tabs[0].id}
-            onClick={() => setCurrentTab(currentTab - 1)} />
+            onClick={() => setCurrentTab(currentTab - 1)}
+          />
           {currentTab !== 2 ? (
-            <Button 
+            <Button
               tabIndex={0}
-              title={commonConstants.nextTab} 
-              className='h-9 px-7' 
-              varient='primary-solid'
-              id='next-button'
-              buttonText={commonConstants.nextButton} 
+              title={commonConstants.nextTab}
+              className="h-9 px-7"
+              varient="primary-solid"
+              id="next-button"
+              buttonText={commonConstants.nextButton}
               isDisabled={!(name && description) || currentTab == 2}
-              onClick={() => setCurrentTab(currentTab + 1)} />
+              onClick={() => setCurrentTab(currentTab + 1)}
+            />
           ) : (
-            <Button 
+            <Button
               tabIndex={0}
-              title={commonConstants.nextTab} 
-              id='submit-button'
-              className='h-9 px-7' 
-              varient='primary-solid'
-              buttonText={transition.state === 'submitting' ? sortByOrder.creatingTest : sortByOrder.submit} 
+              title={commonConstants.nextTab}
+              id="submit-button"
+              className="h-9 px-7"
+              varient="primary-solid"
+              buttonText={
+                transition.state === 'submitting'
+                  ? sortByOrder.creatingTest
+                  : sortByOrder.submit
+              }
               isDisabled={currentTab != 2}
-              onClick={() => submitAddTest()} />
+              onClick={() => submitAddTest()}
+            />
           )}
         </div>
       </div>

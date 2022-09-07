@@ -12,6 +12,8 @@ import AddQuestionInSection from '~/components/sections/add-question/AddQuestion
 import { requireUserId } from '~/session.server'
 import { toast } from 'react-toastify'
 import { useEffect, useState } from 'react'
+import { routes } from '~/constants/route.constants'
+import { statusCheck } from '~/constants/common.constants'
 
 type LoaderData = {
   sectionDetails: Awaited<ReturnType<typeof getSectionById>>
@@ -37,7 +39,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const sectionDetails = await getSectionById({ id: params.sectionId })
 
   if (!sectionDetails) {
-    throw new Response('No Found', { status: 404 })
+    throw new Response('Not Found', { status: 404 })
   }
   return json<LoaderData>({ sectionDetails, questionTypes })
 }
@@ -61,7 +63,7 @@ export const action: ActionFunction = async ({ request }) => {
       ques = json<ActionData>(
         {
           success: {
-            data: 'Question Added Successfully',
+            data: statusCheck.questionAddedSuccess,
             addMoreQuestion: question?.addMoreQuestion,
           },
         },
@@ -70,7 +72,7 @@ export const action: ActionFunction = async ({ request }) => {
     })
     .catch((err) => {
       ques = json<ActionData>(
-        { error: { data: 'Question Not Added Successfully' } },
+        { error: { data: statusCheck.questionNotAdded } },
         { status: 400 }
       )
     })
@@ -88,7 +90,7 @@ export default function AddQuestion() {
       if (actionData.success.addMoreQuestion) {
         setAddQuestionKey((prev) => (prev += 1))
       } else {
-        navigate(`/sections/${sectionDetail.sectionDetails?.id}`)
+        navigate(`${routes.sections}/${sectionDetail.sectionDetails?.id}`)
       }
     } else if (actionData?.error) {
       toast.error(actionData?.data)

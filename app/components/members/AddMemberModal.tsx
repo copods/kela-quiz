@@ -18,7 +18,11 @@ export default function AddMemberModal({
   return (
     <div>
       <Transition.Root show={open} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={setOpen}>
+        <Dialog
+          as="div"
+          className="relative z-10"
+          onClose={() => setOpen(false)}
+        >
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -95,7 +99,7 @@ export default function AddMemberModal({
                     <input
                       tabIndex={0}
                       id="email"
-                      type="email"
+                      type="text"
                       name="email"
                       className="my-1.5 h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
                       placeholder="email@address.com"
@@ -124,26 +128,36 @@ export default function AddMemberModal({
                     </div>
                   </div>
                   <div className="flex justify-end gap-2">
-                    <Button 
+                    <Button
                       tabIndex={0}
-                      id='cancel-add-button'
-                      type='button'
-                      className='h-9 px-4'
+                      id="cancel-add-button"
+                      type="button"
+                      className="h-9 px-4"
                       onClick={() => setOpen(false)}
-                      varient='primary-outlined'
+                      varient="primary-outlined"
                       title={commonConstants.cancel}
-                      buttonText={commonConstants.cancel} />
-                    <Button  
+                      buttonText={commonConstants.cancel}
+                    />
+                    <Button
                       tabIndex={0}
-                      id='add-button'
-                      type='submit'
-                      name='addMember'
+                      id="add-button"
+                      type="submit"
+                      name="addMember"
                       value={JSON.stringify({ action: 'add' })}
-                      className='h-9 px-4'
+                      className="h-9 px-4"
                       isDisabled={transition.state === 'submitting'}
-                      title={transition.state === 'submitting' ? commonConstants.adding : commonConstants.add}
-                      buttonText={transition.state === 'submitting' ? commonConstants.adding : commonConstants.add}
-                      varient='primary-solid' />
+                      title={
+                        transition.state === 'submitting'
+                          ? commonConstants.adding
+                          : commonConstants.add
+                      }
+                      buttonText={
+                        transition.state === 'submitting'
+                          ? commonConstants.adding
+                          : commonConstants.add
+                      }
+                      varient="primary-solid"
+                    />
                   </div>
                 </Dialog.Panel>
               </Transition.Child>

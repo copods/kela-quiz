@@ -27,7 +27,8 @@ import AddSection from '~/components/sections/AddSection'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import Button from '~/components/form/Button'
-import { Section, sortByOrder } from '~/interface/Interface'
+import { sortByOrder } from '~/interface/Interface'
+import type { Section } from '~/interface/Interface'
 import { routes } from '~/constants/route.constants'
 
 export type ActionData = {
@@ -62,7 +63,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   await getAllSections(obj)
     .then((res) => {
       sections = res as Section[]
-      status = 'Success'
+      status = statusCheck.success
     })
     .catch((err) => {
       status = err
@@ -79,9 +80,9 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 export const action: ActionFunction = async ({ request }) => {
   const createdById = await requireUserId(request)
   const formData = await request.formData()
-  const action = formData.get('add-section') 
-  ? formData.get('add-section') 
-  : formData.get('deleteSection')
+  const action = formData.get('add-section')
+    ? formData.get('add-section')
+    : formData.get('deleteSection')
   if (action === 'add') {
     const name = formData.get('name')
     const description = formData.get('description')
@@ -116,7 +117,7 @@ export const action: ActionFunction = async ({ request }) => {
       .catch((err) => {
         let title = statusCheck.commonError
         if (err.code === 'P2002') {
-          title = 'Duplicate Title'
+          title = statusCheck.duplicate
         }
         addHandle = json<ActionData>(
           { errors: { title, status: 400, check: new Date() } },
@@ -174,20 +175,20 @@ export default function SectionPage() {
     data.selectedSectionId || data.sections[0]?.id || 'NA'
   )
 
-  if (data.status != 'Success') {
+  if (data.status != statusCheck.success) {
     toast.error(statusCheck.commonError)
   }
 
   useEffect(() => {
     if (selectedSection !== 'NA') {
-      navigate(`/sections/${selectedSection}${data?.filters}`, {
+      navigate(`${routes.sections}/${selectedSection}${data?.filters}`, {
         replace: true,
       })
     }
   }, [navigate, selectedSection])
   useEffect(() => {
     if (selectedSection == 'NA') {
-      navigate(`/sections`, {
+      navigate(routes.sections, {
         replace: true,
       })
     }
@@ -205,7 +206,7 @@ export default function SectionPage() {
       formData.append('filter', JSON.stringify(filter))
       submit(formData, {
         method: 'get',
-        action: `/sections/${selectedSection}`,
+        action: `${routes.sections}/${selectedSection}`,
       })
     }
   }, [order, sortBy, data.sections.length])
@@ -238,75 +239,77 @@ export default function SectionPage() {
       <div className="flex h-full flex-col gap-12 overflow-hidden p-1">
         {/* header */}
         <header className="flex items-center justify-between">
-          <h2 className="text-3xl font-bold text-black"
-          tabIndex={0}
-          role={routeFiles.sections}
-          title={routeFiles.sections}
-          aria-label={routeFiles.sections}>
+          <h2
+            className="text-3xl font-bold text-black"
+            tabIndex={0}
+            role={routeFiles.sections}
+            title={routeFiles.sections}
+            aria-label={routeFiles.sections}
+          >
             {routeFiles.sections}
           </h2>
-          <Button 
-            id='add-section' 
+          <Button
+            id="add-section"
             data-cy="submit"
-            className='px-5 h-9' 
-            varient='primary-solid'
-            onClick={() => setShowAddSectionModal(!showAddSectionModal)} 
+            className="h-9 px-5"
+            varient="primary-solid"
+            onClick={() => setShowAddSectionModal(!showAddSectionModal)}
             title={sectionsConstants.addSection}
-            buttonText={
-              `+ ${sectionsConstants.addSection}`
-            } />
+            buttonText={`+ ${sectionsConstants.addSection}`}
+          />
         </header>
-
-        <div
-          className={`flex flex-1 overflow-hidden ${
-            !sectionDetailFull && 'gap-12'
-          }`}
-        >
-          {/* section list */}
-          <div className={`${sectionDetailFull && 'hidden'}`}>
-            <Sections
-              sections={data.sections as Section[]}
-              selectedSection={selectedSection}
-              filters={data.filters}
-              sortBy={sortBy}
-              setSortBy={setSortBy}
-              order={order}
-              setOrder={setOrder}
-              setSelectedSection={setSelectedSection}
-              sortByDetails={sortByDetails}
-              actionStatusData={sectionActionData?.resp?.status}
-              err={sectionActionData?.resp?.status}
-            />
+        {data.sections.length > 0 ? (
+          <div
+            className={`flex flex-1 overflow-hidden ${
+              sectionDetailFull ? '' : 'gap-12'
+            }`}
+          >
+            {/* section list */}
+            <div className={`${sectionDetailFull ? 'hidden' : ''}`}>
+              <Sections
+                sections={data.sections as Section[]}
+                selectedSection={selectedSection}
+                filters={data.filters}
+                sortBy={sortBy}
+                setSortBy={setSortBy}
+                order={order}
+                setOrder={setOrder}
+                setSelectedSection={setSelectedSection}
+                sortByDetails={sortByDetails}
+              />
+            </div>
+            {/* section details */}
+            <div className={`z-10 flex flex-1 items-center `}>
+              <span
+                className="z-20 -mr-5"
+                tabIndex={0}
+                role={'button'}
+                onClick={() => setSectionDetailFull(!sectionDetailFull)}
+                onKeyUp={(e) => {
+                  if (e.key === 'Enter')
+                    setSectionDetailFull(!sectionDetailFull)
+                }}
+              >
+                {sectionDetailFull ? (
+                  <Icon
+                    icon={'akar-icons:circle-chevron-right-fill'}
+                    className="cursor-pointer text-4xl text-primary"
+                  />
+                ) : (
+                  <Icon
+                    icon={'akar-icons:circle-chevron-left-fill'}
+                    className="cursor-pointer text-4xl text-primary"
+                  />
+                )}
+              </span>
+              <Outlet />
+            </div>
           </div>
-          {/* section details */}
-          <div className={`z-10 flex flex-1 items-center `}>
-            <span
-              className="z-20 -mr-5"
-              tabIndex={0}
-              role={'button'}
-              onClick={() => setSectionDetailFull(!sectionDetailFull)}
-              onKeyUp={(e) => {
-                if (e.key === 'Enter') setSectionDetailFull(!sectionDetailFull)
-              }}
-              title={sectionsConstants.expand}
-              aria-label={sectionsConstants.expand}
-            >
-              {sectionDetailFull ? (
-                <Icon
-                  icon={'akar-icons:circle-chevron-right-fill'}
-                  className="cursor-pointer text-4xl text-primary"
-                />
-              ) : (
-                <Icon
-                  icon={'akar-icons:circle-chevron-left-fill'}
-                  className="cursor-pointer text-4xl text-primary"
-                />
-              )}
-            </span>
-            <Outlet />
+        ) : (
+          <div className="p-7 text-center">
+            {sectionsConstants.noRecordFound}
           </div>
-        </div>
-
+        )}
         <AddSection
           open={showAddSectionModal}
           setOpen={setShowAddSectionModal}
