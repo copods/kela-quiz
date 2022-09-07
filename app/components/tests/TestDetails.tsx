@@ -16,13 +16,13 @@ const TestDetails = () => {
               tabIndex={0}
             >
               <Icon
-                className="text-3xl font-semibold leading-9 text-gray-900"
+                className="text-3xl font-semibold text-gray-900"
                 id="back-button"
                 icon="mdi:arrow-left"
               />
             </Link>
             <span
-              className="text-3xl font-semibold leading-9 text-gray-900"
+              className="text-3xl font-semibold text-gray-900"
               id="title"
             >
               {testPreview.name}

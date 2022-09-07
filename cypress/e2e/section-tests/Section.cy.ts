@@ -117,7 +117,7 @@ describe('Test for Section', () => {
     cy.get('.Toastify__close-button').click()
   })
   it('SortBy Name or created Date', () => {
-    cy.get('a')
+    cy.get('#section-link')
       .find('#sections')
       .should('have.text', routeFiles.sections)
       .click()
