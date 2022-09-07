@@ -1,13 +1,3 @@
-# Remix Blues Stack
-
-![The Remix Blues Stack](https://repository-images.githubusercontent.com/461012689/37d5bd8b-fa9c-4ab0-893c-f0a199d5012d)
-
-Learn more about [Remix Stacks](https://remix.run/stacks).
-
-```
-npx create-remix --template remix-run/blues-stack
-```
-
 ## What's in the stack
 
 - [Multi-region Fly app deployment](https://fly.io/docs/reference/scaling/) with [Docker](https://www.docker.com/)
@@ -24,8 +14,6 @@ npx create-remix --template remix-run/blues-stack
 - Linting with [ESLint](https://eslint.org)
 - Static Types with [TypeScript](https://typescriptlang.org)
 
-Not a fan of bits of the stack? Fork it, change it, and use `npx create-remix --template your/repo`! Make it your own.
-
 ## Quickstart
 
 Click this button to create a [Gitpod](https://gitpod.io) workspace with the project set up, Postgres started, and Fly pre-installed
@@ -34,13 +22,32 @@ Click this button to create a [Gitpod](https://gitpod.io) workspace with the pro
 
 ## Development
 
-- Start the Postgres Database in [Docker](https://www.docker.com/get-started):
+It is important for you to have these things installed:
+
+1. Node.js version (^14.17.0, or >=16.0.0)
+2. npm 7 or greater
+3. Docker (You can download the in [Docker](https://www.docker.com/get-started):
+
+- Run the command to start the Docker
 
   ```sh
   npm run docker
   ```
 
   > **Note:** The npm script will complete while Docker sets up the container in the background. Ensure that Docker has finished and your container is running before proceeding.
+
+- Create .env and .env.example file and add this. The value of the data are secret codes and you can access it from this excel [File](https://www.google.com):
+  ```sh
+  DATABASE_URL=
+  SESSION_SECRET=
+  SENDGRID_API_KEY=
+  PUBLIC_URL=
+  ```
+- Run this command to install all the packages
+
+  ```sh
+  npm i
+  ```
 
 - Initial setup:
 
