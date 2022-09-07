@@ -60,7 +60,9 @@ describe('Test for members', () => {
         cy.get('#delete-button').click()
       })
     cy.get('#delete-dialog').should('be.visible')
-    cy.get('#cancel-delete-pop-up').should('have.text', commonConstants.cancel).click()
+    cy.get('#cancel-delete-pop-up')
+      .should('have.text', commonConstants.cancel)
+      .click()
   })
   it('Test for Delete member ', () => {
     cy.get('a').find('#members').should('have.text', members.members).click()
@@ -83,7 +85,9 @@ describe('Test for members', () => {
         cy.get('#delete-button').click()
       })
     cy.get('#delete-dialog').should('be.visible')
-    cy.get('#confirm-delete').should('have.text', commonConstants.delete).click()
+    cy.get('#confirm-delete')
+      .should('have.text', commonConstants.delete)
+      .click()
     cy.get('.Toastify__toast').find('.Toastify__close-button  ').click()
     cy.intercept('/members').as('membersPage')
     cy.get('.memberRows').each(($el) => {

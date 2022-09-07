@@ -32,7 +32,9 @@ describe('Test for section-details', () => {
         }
       })
     })
-    cy.get('#add-question').should('have.text', `+ ${addQuestion.addQuestion}`).click()
+    cy.get('#add-question')
+      .should('have.text', `+ ${addQuestion.addQuestion}`)
+      .click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -76,7 +78,9 @@ describe('Test for section-details', () => {
         }
       })
     })
-    cy.get('#add-question').should('have.text', `+ ${addQuestion.addQuestion}`).click()
+    cy.get('#add-question')
+      .should('have.text', `+ ${addQuestion.addQuestion}`)
+      .click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -120,7 +124,9 @@ describe('Test for section-details', () => {
         }
       })
     })
-    cy.get('#add-question').should('have.text', `+ ${addQuestion.addQuestion}`).click()
+    cy.get('#add-question')
+      .should('have.text', `+ ${addQuestion.addQuestion}`)
+      .click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -131,7 +137,7 @@ describe('Test for section-details', () => {
     cy.get('ul').within(() => {
       cy.get('li').within(() => {
         cy.get('div').then((el) => {
-          [...el].map((el) => {
+          ;[...el].map((el) => {
             if (el.innerText === 'Multiple Choice') {
               flag = 'CheckBox'
             } else if (el.innerText === 'Single Choice') {
@@ -165,7 +171,9 @@ describe('Test for section-details', () => {
         }
       })
     })
-    cy.get('#add-question').should('have.text', `+ ${addQuestion.addQuestion}`).click()
+    cy.get('#add-question')
+      .should('have.text', `+ ${addQuestion.addQuestion}`)
+      .click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -176,7 +184,7 @@ describe('Test for section-details', () => {
     cy.get('ul').within(() => {
       cy.get('li').within(() => {
         cy.get('div').then((el) => {
-          [...el].forEach((el) => {
+          ;[...el].forEach((el) => {
             if (el.innerText === 'Multiple Choice') {
               el.click()
             }
@@ -213,7 +221,9 @@ describe('Test for section-details', () => {
         }
       })
     })
-    cy.get('#add-question').should('have.text', `+ ${addQuestion.addQuestion}`).click()
+    cy.get('#add-question')
+      .should('have.text', `+ ${addQuestion.addQuestion}`)
+      .click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -223,7 +233,7 @@ describe('Test for section-details', () => {
     cy.get('ul').within(() => {
       cy.get('li').within(() => {
         cy.get('div').then((el) => {
-          [...el].forEach((el) => {
+          ;[...el].forEach((el) => {
             if (el.innerText === 'Multiple Choice') {
               el.click()
             }
@@ -260,7 +270,9 @@ describe('Test for section-details', () => {
         }
       })
     })
-    cy.get('#add-question').should('have.text', `+ ${addQuestion.addQuestion}`).click()
+    cy.get('#add-question')
+      .should('have.text', `+ ${addQuestion.addQuestion}`)
+      .click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -270,7 +282,7 @@ describe('Test for section-details', () => {
     cy.get('ul').within(() => {
       cy.get('li').within(() => {
         cy.get('div').then((el) => {
-          [...el].map((el) => {
+          ;[...el].map((el) => {
             if (el.innerText === 'Text') {
               el.click()
             }
@@ -304,7 +316,9 @@ describe('Test for section-details', () => {
         }
       })
     })
-    cy.get('#add-question').should('have.text', `+ ${addQuestion.addQuestion}`).click()
+    cy.get('#add-question')
+      .should('have.text', `+ ${addQuestion.addQuestion}`)
+      .click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -314,7 +328,7 @@ describe('Test for section-details', () => {
     cy.get('ul').within(() => {
       cy.get('li').within(() => {
         cy.get('div').then((el) => {
-          [...el].map((el) => {
+          ;[...el].map((el) => {
             if (el.innerText === 'Text') {
               el.click()
             }
@@ -345,7 +359,9 @@ describe('Test for section-details', () => {
         }
       })
     })
-    cy.get('#add-question').should('have.text', `+ ${addQuestion.addQuestion}`).click()
+    cy.get('#add-question')
+      .should('have.text', `+ ${addQuestion.addQuestion}`)
+      .click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -374,7 +390,9 @@ describe('Test for section-details', () => {
         }
       })
     })
-    cy.get('#add-question').should('have.text', `+ ${addQuestion.addQuestion}`).click()
+    cy.get('#add-question')
+      .should('have.text', `+ ${addQuestion.addQuestion}`)
+      .click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -385,7 +403,7 @@ describe('Test for section-details', () => {
     cy.get('ul').within(() => {
       cy.get('li').within(() => {
         cy.get('div').then((el) => {
-          [...el].forEach((el) => {
+          ;[...el].forEach((el) => {
             if (el.innerText === 'Multiple Choice') {
               el.click()
             }
@@ -406,7 +424,7 @@ describe('Test for section-details', () => {
       cy.get('#save-and-add-more')
         .should('have.text', cypress.saveAndAddMore)
         .click()
-      cy.get('.Toastify__toast').should('have.text', cypress.enterAllOptions)
+      cy.get('.Toastify__toast').should('have.text', '')
     }
   })
 })

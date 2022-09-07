@@ -3,11 +3,12 @@ import { useState } from 'react'
 import {
   candidateExamConstants,
   commonConstants,
-  QuestionTypes,
   routeFiles,
 } from '~/constants/common.constants'
+import { QuestionTypes } from '~/interface/Interface'
 import Button from '../form/Button'
 import Checkbox from '../form/CheckBox'
+
 
 const Question = () => {
   const { question, section, lastSection } = useLoaderData()
@@ -42,7 +43,7 @@ const Question = () => {
               </span>
             </div>
           </div>
-          <div className="shadow-base h-full flex-1 overflow-auto rounded-lg border border-gray-200 bg-white p-4">
+          <div className="h-full flex-1 overflow-auto rounded-lg border border-gray-200 bg-white p-4 shadow-base">
             <div
               dangerouslySetInnerHTML={{
                 __html: question?.question?.question,
@@ -56,7 +57,7 @@ const Question = () => {
               {routeFiles.options}
             </div>
           </div>
-          <div className="shadow-base flex h-full flex-1 flex-col gap-6 overflow-auto">
+          <div className="flex h-full flex-1 flex-col gap-6 overflow-auto shadow-base">
             {question?.question?.options?.map(
               (option: {
                 id: string
@@ -76,7 +77,11 @@ const Question = () => {
                         }}
                       />
                     ) : (
-                      <Checkbox value={option.id} name="option" handleChange={() => onChangeHandle(option.id)} />
+                      <Checkbox
+                        value={option.id}
+                        name="option"
+                        handleChange={() => onChangeHandle(option.id)}
+                      />
                     )}
                     <div className="w-full rounded-lg border border-gray-200 bg-white p-5">
                       <div
@@ -108,48 +113,48 @@ const Question = () => {
       </div>
       <div className="flex justify-end gap-6">
         <div className="flex gap-5">
-          <Button 
-          className='h-11 w-40'
-          varient='primary-outlined'
-          title={commonConstants.prevoiusButton}
-          buttonText={commonConstants.prevoiusButton}
-          isDisabled={question.order === 1}
-          type="submit"
-          value='prev'
-          name='previous'
+          <Button
+            className="h-11 w-40"
+            varient="primary-outlined"
+            title={commonConstants.prevoiusButton}
+            buttonText={commonConstants.prevoiusButton}
+            isDisabled={question.order === 1}
+            type="submit"
+            value="prev"
+            name="previous"
           />
           {question.order !== section.totalQuestions ? (
-            <Button 
-            className='h-11 w-40'
-            varient='primary-solid'
-            title={commonConstants.nextButton}
-            buttonText={commonConstants.nextButton}
-            isDisabled={question.order === section.totalQuestions}
-            type="submit"
-            value='next'
-            name='next'
+            <Button
+              className="h-11 w-40"
+              varient="primary-solid"
+              title={commonConstants.nextButton}
+              buttonText={commonConstants.nextButton}
+              isDisabled={question.order === section.totalQuestions}
+              type="submit"
+              value="next"
+              name="next"
             />
           ) : lastSection ? (
-            <Button 
-            className='h-11 w-40'
-            varient='primary-solid'
-            title={candidateExamConstants.endTest}
-            buttonText={candidateExamConstants.endTest}
-            isDisabled={question.order !== section.totalQuestions}
-            type="submit"
-            value={section.order}
-            name='endExam'
+            <Button
+              className="h-11 w-40"
+              varient="primary-solid"
+              title={candidateExamConstants.endTest}
+              buttonText={candidateExamConstants.endTest}
+              isDisabled={question.order !== section.totalQuestions}
+              type="submit"
+              value={section.order}
+              name="endExam"
             />
           ) : (
-            <Button 
-            className='h-11 w-40'
-            varient='primary-solid'
-            title={candidateExamConstants.nextSection}
-            buttonText={candidateExamConstants.nextSection}
-            isDisabled={question.order !== section.totalQuestions}
-            type="submit"
-            value={section.order}
-            name='nextSection'
+            <Button
+              className="h-11 w-40"
+              varient="primary-solid"
+              title={candidateExamConstants.nextSection}
+              buttonText={candidateExamConstants.nextSection}
+              isDisabled={question.order !== section.totalQuestions}
+              type="submit"
+              value={section.order}
+              name="nextSection"
             />
           )}
         </div>

@@ -61,7 +61,10 @@ describe('smoke tests', () => {
       .should('have.value', Cypress.env('password'))
     cy.get('[data-cy="submit"]').click()
     cy.location('pathname').should('include', '/dashboard')
-    cy.get('a').find('#sections').should('have.text', routeFiles.sections).click()
+    cy.get('a')
+      .find('#sections')
+      .should('have.text', routeFiles.sections)
+      .click()
     cy.get('#add-section').click()
     cy.get('form > div')
       .should('be.visible')
@@ -86,7 +89,10 @@ describe('smoke tests', () => {
       .should('have.value', Cypress.env('password'))
     cy.get('[data-cy="submit"]').click()
     cy.location('pathname').should('include', '/dashboard')
-    cy.get('a').find('#sections').should('have.text', routeFiles.sections).click()
+    cy.get('a')
+      .find('#sections')
+      .should('have.text', routeFiles.sections)
+      .click()
     cy.get('#add-section').click()
     cy.get('form > div')
       .should('be.visible')
@@ -111,7 +117,10 @@ describe('smoke tests', () => {
       .should('have.value', Cypress.env('password'))
     cy.get('[data-cy="submit"]').click()
     cy.location('pathname').should('include', '/dashboard')
-    cy.get('a').find('#sections').should('have.text', routeFiles.sections).click()
+    cy.get('a')
+      .find('#sections')
+      .should('have.text', routeFiles.sections)
+      .click()
     cy.get('#add-section').click()
     cy.get('form > div')
       .should('be.visible')
@@ -136,7 +145,10 @@ describe('smoke tests', () => {
       .should('have.value', Cypress.env('password'))
     cy.get('[data-cy="submit"]').click()
     cy.location('pathname').should('include', '/dashboard')
-    cy.get('a').find('#sections').should('have.text', routeFiles.sections).click()
+    cy.get('a')
+      .find('#sections')
+      .should('have.text', routeFiles.sections)
+      .click()
     cy.get('#section-card').each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -147,7 +159,9 @@ describe('smoke tests', () => {
       })
     })
     cy.get('.sectionName').contains(section1).click()
-    cy.get('#add-question').should('have.text',`+ ${addQuestion.addQuestion}`).click()
+    cy.get('#add-question')
+      .should('have.text', `+ ${addQuestion.addQuestion}`)
+      .click()
     cy.location('pathname').should('include', '/add-question')
     cy.get('h1').should('be.visible')
     cy.get('#dropdown > button').click()
@@ -186,7 +200,10 @@ describe('smoke tests', () => {
       .should('have.value', Cypress.env('password'))
     cy.get('[data-cy="submit"]').click()
     cy.location('pathname').should('include', '/dashboard')
-    cy.get('a').find('#sections').should('have.text', routeFiles.sections).click()
+    cy.get('a')
+      .find('#sections')
+      .should('have.text', routeFiles.sections)
+      .click()
     cy.get('#section-card').each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -197,7 +214,9 @@ describe('smoke tests', () => {
       })
     })
     cy.get('.sectionName').contains(section2).click()
-    cy.get('#add-question').should('have.text', `+ ${addQuestion.addQuestion}`).click()
+    cy.get('#add-question')
+      .should('have.text', `+ ${addQuestion.addQuestion}`)
+      .click()
     cy.location('pathname').should('include', '/add-question')
     cy.get('h1').should('be.visible')
     cy.get('#dropdown > button').click()
@@ -303,7 +322,9 @@ describe('smoke tests', () => {
         }
       })
     })
-    cy.get('button#submit-button').should('have.text', commonConstants.submit).click()
+    cy.get('button#submit-button')
+      .should('have.text', commonConstants.submit)
+      .click()
   })
 
   it('Verify if user able create the test 2', () => {
@@ -387,7 +408,9 @@ describe('smoke tests', () => {
         }
       })
     })
-    cy.get('button#submit-button').should('have.text', commonConstants.submit).click()
+    cy.get('button#submit-button')
+      .should('have.text', commonConstants.submit)
+      .click()
   })
 
   it('Test for adding a new member', () => {
