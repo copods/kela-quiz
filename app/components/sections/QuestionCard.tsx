@@ -41,7 +41,7 @@ const QuestionCard = ({
     >
       <div className="items-top break flex justify-between text-base text-gray-600">
         <div
-          className="items-top flex flex-1 justify-between"
+          className="items-top flex flex-1 items-start justify-between"
           tabIndex={0}
           role="button"
           onKeyUp={(e) => {
@@ -63,7 +63,7 @@ const QuestionCard = ({
             ></div>
           </div>
           <div className="flex gap-2">
-            <span className="rounded-52 border border-gray-700 px-3 text-sm  text-gray-700">
+            <span className="flex items-center rounded-52 border border-gray-700 px-3 text-sm  text-gray-700">
               {question.questionType?.displayName}
             </span>
             {isExpanded === index ? (
