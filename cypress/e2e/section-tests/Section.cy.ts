@@ -117,14 +117,14 @@ describe('Test for Section', () => {
     cy.get('.Toastify__close-button').click()
   })
   it('SortBy Name or created Date', () => {
-    cy.get('#section-link')
+    cy.get('a')
       .find('#sections')
       .should('have.text', routeFiles.sections)
       .click()
     cy.location('pathname', { timeout: 6000 }).should('include', '/sections')
     cy.get('.sectionLSWrapper', { timeout: 6000 }).within(() => {
       cy.get('#section-cards')
-        .get('a')
+        .get('#section-link')
         .then((listing) => {
           const listingCount = Cypress.$(listing).length
           expect(listing).to.have.length(listingCount)

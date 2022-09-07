@@ -25,7 +25,7 @@ const CandidateListOfTest = () => {
   let navigate = useNavigate();
   const { testPreview, params } = useLoaderData()
   return (
-    <div id="test-details" className=" h-full ">
+    <div id="test-details" className="h-full">
       <header className="mb-8">
         <div className="border-b border-solid border-slate-300 ">
           <div className="flex gap-2 pb-6">
