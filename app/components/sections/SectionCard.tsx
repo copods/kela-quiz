@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react'
 
 import {
   commonConstants,
+  deletePopUp,
   sectionsConstants,
   statusCheck,
 } from '~/constants/common.constants'
@@ -115,7 +116,7 @@ const SectionCard = ({
         setOpen={setIsDelete}
         open={isDelete}
         onDelete={deleteSection}
-        questionWarning={true}
+        subAlert={deletePopUp.subAlert}
       />
     </div>
   )
