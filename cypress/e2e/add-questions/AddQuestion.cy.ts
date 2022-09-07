@@ -424,7 +424,7 @@ describe('Test for section-details', () => {
       cy.get('#save-and-add-more')
         .should('have.text', cypress.saveAndAddMore)
         .click()
-      cy.get('.Toastify__toast').should('have.text', cypress.enterAllOptions)
+      cy.get('.Toastify__toast').should('have.text', '')
     }
   })
 })

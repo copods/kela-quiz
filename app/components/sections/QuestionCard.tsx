@@ -1,7 +1,11 @@
 import { Icon } from '@iconify/react'
 import { sectionsConstants } from '~/constants/common.constants'
-
-import type { Question, Option, CorrectAnswer } from '~/interface/Interface'
+import type {
+  Question,
+  Option,
+  CorrectAnswer,
+  QuestionType,
+} from '~/interface/Interface'
 import OptionCard from './OptionCard'
 
 const QuestionCard = ({
@@ -10,7 +14,7 @@ const QuestionCard = ({
   onAccordianToggle,
   index,
 }: {
-  question: Question
+  question: Question & { questionType?: QuestionType }
   isExpanded: number
   onAccordianToggle: (e: number) => void
   index: number
@@ -58,17 +62,22 @@ const QuestionCard = ({
               dangerouslySetInnerHTML={{ __html: question.question }}
             ></div>
           </div>
-          {isExpanded === index ? (
-            <Icon
-              icon={'akar-icons:circle-chevron-up'}
-              className="cursor-pointer text-xl text-gray-400"
-            />
-          ) : (
-            <Icon
-              icon={'akar-icons:circle-chevron-down'}
-              className="cursor-pointer text-xl text-gray-400"
-            />
-          )}
+          <div className="flex gap-2">
+            <span className="rounded-52 border border-gray-700 px-3 text-sm  text-gray-700">
+              {question.questionType?.displayName}
+            </span>
+            {isExpanded === index ? (
+              <Icon
+                icon={'akar-icons:circle-chevron-up'}
+                className="cursor-pointer text-xl text-gray-400"
+              />
+            ) : (
+              <Icon
+                icon={'akar-icons:circle-chevron-down'}
+                className="cursor-pointer text-xl text-gray-400"
+              />
+            )}
+          </div>
         </div>
       </div>
       <div

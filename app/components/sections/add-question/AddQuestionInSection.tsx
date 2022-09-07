@@ -15,12 +15,10 @@ import Button from '~/components/form/Button'
 import { routes } from '~/constants/route.constants'
 import {
   addQuestion,
-  QuestionTypes,
   testsConstants,
-  statusCheck,
-  commonConstants,
+  statusCheck
 } from '~/constants/common.constants'
-import { sortByOrder } from '~/interface/Interface'
+import { QuestionTypes, sortByOrder } from '~/interface/Interface'
 
 const AddQuestionInSection = () => {
   const { sectionDetails, questionTypes } = useLoaderData()
@@ -231,8 +229,8 @@ const AddQuestionInSection = () => {
         <div className="flex">
           <Button
             tabIndex={0}
-            id="cancel"
-            onClick={() => navigate(`/sections/${sectionDetails?.id}`)}
+            id='cancel'
+            onClick={() => navigate(`${routes.sections}/${sectionDetails?.id}`)}
             isDisabled={transition.state === 'submitting'}
             className="h-9 px-5"
             title={
@@ -251,8 +249,8 @@ const AddQuestionInSection = () => {
             isDisabled={transition.state === 'submitting'}
             className="h-9 px-5"
             onClick={() => saveQuestion(false)}
-            varient="primary-solid"
-            title={commonConstants.saveAndExit}
+            varient='primary-solid'
+            title={sortByOrder.saveAndExit}
             buttonText={
               <>
                 <Icon icon="ic:round-save" className="mr-1" />
@@ -268,8 +266,8 @@ const AddQuestionInSection = () => {
             isDisabled={transition.state === 'submitting'}
             className="h-9 px-5"
             onClick={() => saveQuestion(true)}
-            varient="primary-solid"
-            title={commonConstants.saveAndAddMore}
+            varient='primary-solid'
+            title={sortByOrder.saveAndAddMore}
             buttonText={
               <>
                 <Icon icon="ic:round-save" className="mr-1" />
