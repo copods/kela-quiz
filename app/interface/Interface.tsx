@@ -242,3 +242,17 @@ export enum QuestionTypes {
   singleChoice = 'SINGLE_CHOICE',
   text = 'TEXT',
 }
+
+export interface SectionWiseResults {
+  id: string
+  sectionInCandidateTestId: string
+  totalQuestion: number
+  correctQuestion: number
+  unanswered: number
+  testId: string
+  candidateTestId: string
+  createdAt: Date
+  updatedAt: Date
+  section: SectionInCandidateTest
+  test: Test
+}
