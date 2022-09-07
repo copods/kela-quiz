@@ -83,7 +83,7 @@ const AddSection = ({
                   <textarea
                     tabIndex={0}
                     name="description"
-                    id="sectionDescription"
+                    id="section-description"
                     rows={4}
                     className="w-full rounded-lg border border-gray-200 px-3 py-4 text-base"
                     placeholder="Enter Section Description"
