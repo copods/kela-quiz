@@ -11,7 +11,7 @@ const EndAssessment = () => {
           {sideNav.sideNavHeading}
         </span>
       </div>
-      <div className="mt-[-80px] flex h-full w-full flex-col items-center justify-center gap-4">
+      <div className="-mt-20 flex h-full w-full flex-col items-center justify-center gap-4">
         <img
           src={EndAssessmentIcon}
           alt={candidateExamConstants.endAssesment}

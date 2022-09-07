@@ -84,6 +84,7 @@ export const addQuestion = {
   addOptions: 'Add Options',
   addQuestion: 'Add Question',
 }
+
 export const sectionsConstants = {
   addSection: 'Add Section',
   totalQuestions: 'Total Questions:',
@@ -93,6 +94,7 @@ export const sectionsConstants = {
   dropdown: 'Select',
   expand: 'Expand',
   search: 'Search Question',
+  titleNotValid: 'Duplicate Title',
 }
 export const testsConstants = {
   addTestbutton: 'Add Test',
@@ -136,6 +138,18 @@ export const statusCheck = {
   sectionAddedSuccess: 'Section added successfully..!',
   maxOptions: 'you can add maximum six options.',
   duplicate: 'Duplicate Title',
+  testAddedSuccessFully: 'Test added successfully..',
+  testAlreadyExist: 'Test name already exist.',
+  emailIsInvalid: 'Email is invalid',
+  passIsReq: 'Password is required',
+  passIsInvalid: 'Password is invalid',
+  questionAddedSuccess: 'Question Added Successfully',
+  questionNotAdded: 'Question Not Added Successfully',
+  firstNameReq: 'firstName is required',
+  lastNameReq: 'lastName is required',
+  emailIsReq: 'email is required',
+  roleIdIsReq: 'roleId is required',
+  memberAddedSuccess: 'Member Added Successfully..!',
 }
 export const resultConstants = {
   order: 'Order',
@@ -222,6 +236,14 @@ export const cypress = {
   useMemoAns:
     'The useMemo Hook can be used to keep expensive, resource intensive functions from needlessly running.',
 }
+
+export enum sortByOrder {
+  ascending = 'asc',
+  sortAscending = 'Sort Ascending',
+  name = 'name',
+  descending = 'dsc',
+}
+
 export const toastConstants = {
   addTest: 'Enter Name to add test',
   enterDescription: 'Enter description to add test',
