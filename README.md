@@ -1,3 +1,9 @@
+# Remix Blues Stack
+
+![The Remix Blues Stack](https://repository-images.githubusercontent.com/461012689/37d5bd8b-fa9c-4ab0-893c-f0a199d5012d)
+
+Learn more about [Remix Stacks](https://remix.run/stacks).
+
 ## What's in the stack
 
 - [Multi-region Fly app deployment](https://fly.io/docs/reference/scaling/) with [Docker](https://www.docker.com/)
@@ -36,13 +42,17 @@ It is important for you to have these things installed:
 
   > **Note:** The npm script will complete while Docker sets up the container in the background. Ensure that Docker has finished and your container is running before proceeding.
 
-- Create .env and .env.example file and add this. The value of the data are secret codes and you can access it from this excel [File](https://www.google.com):
+- Create .env and .env.example file and add this follwing keys. The value of the data are secret codes and you can access it from this excel [File](https://docs.google.com/spreadsheets/d/1QHtxVvBboDRcMuR0ZIql-xSZxiwj9oNqRItVR0fx0hA/edit#gid=0):
+
   ```sh
   DATABASE_URL=
   SESSION_SECRET=
   SENDGRID_API_KEY=
   PUBLIC_URL=
   ```
+
+  > **Note** - .env and .env.example files are same, only `SENDGRID_API_KEY="demo_key"` will be replaced in .env.example
+
 - Run this command to install all the packages
 
   ```sh
@@ -79,21 +89,21 @@ This is a pretty simple note-taking app, but it's a good example of how you can 
 - user sessions, and verifying them [./app/session.server.ts](./app/session.server.ts)
 - creating, and deleting notes [./app/models/note.server.ts](./app/models/note.server.ts)
 
-## GitHub Actions
+## Creating A Branch from Github
 
-We use GitHub Actions for continuous integration and deployment. Anything that gets into the `main` branch will be deployed to production after running tests/build/etc. Anything in the `dev` branch will be deployed to staging.
+For Creating a new branch, you have to go to the `Issues` section in Github and select the `Create a branch` from `development` section
 
-## Creating A Branch
+> **NOTE** - Always check that the branch source should be `dev`. You can check that from `Change branch source`.
 
 ## Git Commit Syntax
 
 - For committing the code use following syntax-
 
 ```sh
-git commit -m '<type> :<description>'
+git commit -m '<type>() :<description>'
 ```
 
-The commit type can include the following:
+The commit `<type>` can include the following:
 
 - feat – a new feature is introduced with the changes
 - fix – a bug fix has occurred
@@ -107,10 +117,14 @@ The commit type can include the following:
 - build – changes that affect the build system or external dependencies
 - revert – reverts a previous commit
 
+## GitHub Actions
+
+We use GitHub Actions for continuous integration and deployment. Anything that gets into the `main` branch will be deployed to production after running tests/build/etc. Anything in the `dev` branch will be deployed to staging.
+
 ## Prisma Database
 
 We are using Prisma which is an open source database toolkit in our project.
-You can learn the main concepts of prisma from its offical documentation [Prisma](https://www.prisma.io/docs/concepts)
+You can learn the main concepts of prisma from its official documentation [Prisma](https://www.prisma.io/docs/concepts)
 
 - You can check all the models from `schema.prisma` file
 - If you are changing the database schema in `schema.prisma` file, you have to push the database to reflect those changes by running this command
