@@ -115,6 +115,7 @@ const SectionCard = ({
         setOpen={setIsDelete}
         open={isDelete}
         onDelete={deleteSection}
+        questionWarning={true}
       />
     </div>
   )

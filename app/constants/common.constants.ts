@@ -72,6 +72,8 @@ export const selectSectionCard = {
 }
 export const deletePopUp = {
   alert: 'Do you want to delete',
+  sectionDeletionWarning:
+    '\nAll the questions for this section will also be deleted',
 }
 export const logIn = {
   signInMessage: 'Sign in to your account',
@@ -138,6 +140,8 @@ export const statusCheck = {
   nameIsReq: 'Name is required',
   sectionAddedSuccess: 'Section added successfully..!',
   maxOptions: 'you can add maximum six options.',
+  testDependentWarning:
+    "Can't be deleted as you have to delete the test containing this section first",
 }
 export const resultConstants = {
   order: 'Order',
