@@ -10,6 +10,8 @@ const AttendedCandidateListItem = ({
   result,
   review,
   testId,
+  candidateResultId,
+  endAt,
 }: {
   id: string
   email: string
@@ -19,33 +21,60 @@ const AttendedCandidateListItem = ({
   result: number
   review: boolean
   testId: string
+  candidateResultId: string
+  endAt: Date
 }) => {
   return (
     <div className="col-span-full">
-      <div className="col-span-full grid grid-cols-12 gap-3 border-t border-solid border-gray-200 bg-white px-12 py-6">
+      <div className="col-span-full grid grid-cols-12 gap-3 rounded-b-lg border-t border-solid border-gray-200 bg-white px-12 py-6">
         <div className=" col-span-1 truncate">
           <span className=" text-base text-gray-700">{index}</span>
         </div>
-        <Link
-          to={`/results/groupByTests/${testId}/attended/${id}`}
-          className="col-span-3 truncate font-semibold text-primary"
+        {endAt ? (
+          <Link
+            to={`/results/groupByTests/${testId}/${candidateResultId}`}
+            className="col-span-3 truncate font-semibold text-primary"
+            title={name}
+          >
+            {name}
+          </Link>
+        ) : (
+          <div title="No Name" className="align-center col-span-3 truncate">
+            <i>--No Name--</i>
+          </div>
+        )}
+        <div
+          title={email}
+          tabIndex={0}
+          role={'banner'}
+          className="col-span-4 truncate"
         >
-          {name}
-        </Link>
-        <div className="col-span-4 truncate">{email}</div>
-        <div className="col-span-2 truncate">
+          {email}
+        </div>
+        <div
+          title={invitedBy}
+          tabIndex={0}
+          role={'banner'}
+          className="col-span-2 truncate"
+        >
           <span className="text-base text-gray-700">{invitedBy}</span>
         </div>
         <div className="col-span-1 truncate">
-          <span className=" text-base text-gray-700">{result}%</span>
+          <span
+            tabIndex={0}
+            role={'banner'}
+            className="text-base text-gray-700"
+          >
+            {result >= 0 ? `${result}%` : 'NA'}
+          </span>
         </div>
-        <div className="col-span-1">
+        <div tabIndex={0} role={'banner'} className="col-span-1">
           <span
             className={`rounded-full px-2 py-1 text-xs text-gray-900 ${
-              review ? 'bg-green-200' : 'bg-yellow-200'
+              result >= 0 ? 'bg-green-200' : 'bg-yellow-200'
             }`}
           >
-            {review ? commonConstants.complete : commonConstants.pending}
+            {result >= 0 ? commonConstants.complete : commonConstants.pending}
           </span>
         </div>
       </div>

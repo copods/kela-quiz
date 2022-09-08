@@ -81,6 +81,34 @@ export async function getResultsOfCandidatesByTestId({
   })
 }
 
+export async function getAllCandidatesOfTest({ id }: { id: string }) {
+  return prisma.test.findFirst({
+    where: {
+      id,
+    },
+    include: {
+      candidateTest: {
+        include: {
+          candidateResult: true,
+          candidate: {
+            select: {
+              email: true,
+              firstName: true,
+              lastName: true,
+              createdBy: {
+                select: {
+                  firstName: true,
+                  lastName: true,
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  })
+}
+
 export async function getResultsOfIndividualCandidates({ id }: { id: string }) {
   return await prisma.candidateResult.findUnique({
     where: {
@@ -197,6 +225,5 @@ export async function getAllCandidateTests(obj: object) {
       }
     )
   }
-
   return res
 }
