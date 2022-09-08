@@ -14,6 +14,7 @@ import {
   useSubmit,
 } from '@remix-run/react'
 import {
+  checkSectionById,
   createSection,
   deleteSectionById,
   getAllSections,
@@ -128,22 +129,43 @@ export const action: ActionFunction = async ({ request }) => {
     return addHandle
   }
   let deleteHandle = null
+  let isSectionDelete = false
+  let isTestDeleted: Array<boolean> | undefined
   if (action === 'sectionDelete') {
-    await deleteSectionById(formData.get('id') as string)
-      .then((res) => {
-        deleteHandle = json<ActionData>(
-          { resp: { status: statusCheck.deletedSuccess } },
-
-          { status: 200 }
-        )
-      })
-      .catch((err) => {
-        let title = statusCheck.commonError
+    await checkSectionById(formData.get('id') as string).then((res) => {
+      if (res?._count.sectionInTest !== 0) {
+        isTestDeleted = res?.sectionInTest?.map((e) => {
+          return e.test.deleted
+        })
+      }
+      if (res?._count.sectionInTest === 0 || isTestDeleted?.includes(true)) {
+        isSectionDelete = true
+      } else {
+        let title = statusCheck.testDependentWarning
         deleteHandle = json<ActionData>(
           { errors: { title, status: 400, check: new Date() } },
           { status: 400 }
         )
-      })
+      }
+    })
+
+    if (isSectionDelete) {
+      await deleteSectionById(formData.get('id') as string)
+        .then((res) => {
+          deleteHandle = json<ActionData>(
+            { resp: { status: statusCheck.deletedSuccess } },
+
+            { status: 200 }
+          )
+        })
+        .catch((err) => {
+          let title = statusCheck.commonError
+          deleteHandle = json<ActionData>(
+            { errors: { title, status: 400, check: new Date() } },
+            { status: 400 }
+          )
+        })
+    }
     return deleteHandle
   }
 }
@@ -180,15 +202,12 @@ export default function SectionPage() {
   }
 
   useEffect(() => {
-    if (selectedSection !== 'NA') {
-      navigate(`${routes.sections}/${selectedSection}${data?.filters}`, {
+    if (selectedSection === 'NA') {
+      navigate(routes.sections, {
         replace: true,
       })
-    }
-  }, [navigate, selectedSection])
-  useEffect(() => {
-    if (selectedSection == 'NA') {
-      navigate(routes.sections, {
+    } else {
+      navigate(`${routes.sections}/${selectedSection}${data?.filters}`, {
         replace: true,
       })
     }
@@ -209,7 +228,7 @@ export default function SectionPage() {
         action: `${routes.sections}/${selectedSection}`,
       })
     }
-  }, [order, sortBy, data.sections.length])
+  }, [order, sortBy])
 
   useEffect(() => {
     if (sectionActionData) {
@@ -232,7 +251,7 @@ export default function SectionPage() {
         })
       }
     }
-  }, [sectionActionData, data])
+  }, [sectionActionData, data.selectedSectionId])
 
   return (
     <AdminLayout>

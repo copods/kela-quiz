@@ -4,7 +4,7 @@ import { redirect } from '@remix-run/node'
 import type { LoaderFunction, ActionFunction } from '@remix-run/node'
 import MembersList from '~/components/members/MembersList'
 import { json } from '@remix-run/node'
-import { useActionData } from '@remix-run/react'
+import { useActionData, useLoaderData } from '@remix-run/react'
 import {
   createNewUser,
   deleteUserById,
@@ -147,6 +147,7 @@ export const action: ActionFunction = async ({ request }) => {
 }
 const Members = () => {
   const membersActionData = useActionData() as ActionData
+  const membersData = useLoaderData()
   useEffect(() => {
     if (membersActionData) {
       if (membersActionData.resp?.status === 200) {
@@ -162,7 +163,7 @@ const Members = () => {
   return (
     <AdminLayout>
       <>
-        <MembersHeader actionStatus={membersActionData?.resp?.status === 200} />
+        <MembersHeader actionStatus={membersData.users} />
         <MembersList actionStatus={membersActionData?.resp?.title} />
       </>
     </AdminLayout>

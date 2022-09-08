@@ -66,6 +66,7 @@ export const logo = {
 
 export const deletePopUp = {
   alert: 'Do you want to delete',
+  subAlert: '(All the questions for this section will also be deleted)',
 }
 export const logIn = {
   signInMessage: 'Sign in to your account',
@@ -129,6 +130,8 @@ export const statusCheck = {
   nameIsReq: 'Name is required',
   sectionAddedSuccess: 'Section added successfully..!',
   maxOptions: 'you can add maximum six options.',
+  testDependentWarning:
+    "Can't be deleted as you have to delete the test containing this section first",
   duplicate: 'Duplicate Title',
   testAddedSuccessFully: 'Test added successfully..',
   testAlreadyExist: 'Test name already exist.',
@@ -224,20 +227,14 @@ export const cypress = {
   useMemoAns:
     'The useMemo Hook can be used to keep expensive, resource intensive functions from needlessly running.',
 }
-export enum sortByOrder {
-  ascending = 'asc',
-  sortAscending = 'Sort Ascending',
-  name = 'name',
-  descending = 'dsc',
-}
 export const toastConstants = {
   addTest: 'Enter Name to add test',
   enterDescription: 'Enter description to add test',
   addSection: 'Add sections to add test',
   enterQuestion: 'Enter the Question',
   enterOption: 'Enter all the Options',
-  firstNameRequired: 'Firstname is required',
-  lastNameRequired: 'Lastname is required',
+  firstNameRequired: 'First Name is required',
+  lastNameRequired: 'Last Name is required',
   emailRequired: 'Email is required',
   roleRequired: 'Role is required',
   correctEmail: 'Please provide a valid email address',

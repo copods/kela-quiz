@@ -1,6 +1,6 @@
 import SectionCard from './SectionCard'
 import type { Section, User } from '~/interface/Interface'
-import { useResolvedPath, useLocation, NavLink } from '@remix-run/react'
+import { useResolvedPath, useLocation, useNavigate } from '@remix-run/react'
 import {} from '@remix-run/react'
 import SortFilter from '../SortFilter'
 
@@ -20,13 +20,16 @@ const SectionLink = ({
   const path = `/sections/${section.id}`
   const location = useLocation() // to get current location
   const resolvedPath = useResolvedPath(path) // to get resolved path which would match with current location
-  const setSectionId = (id: string) => {
-    setSelectedSection(id)
-  }
+  let navigate = useNavigate()
   return (
-    <NavLink
-      onClick={() => setSectionId(section.id)}
-      to={path}
+    <div
+      onClick={() => {
+        setSelectedSection(section.id)
+        navigate(path)
+      }}
+      id="section-link"
+      role={'button'}
+      tabIndex={0}
       key={section.id}
       onKeyUp={(e) => {
         if (e.key === 'Tab' && e.altKey)
@@ -44,7 +47,7 @@ const SectionLink = ({
         actionStatusData={actionStatusData}
         err={err}
       />
-    </NavLink>
+    </div>
   )
 }
 type SectionType = {
@@ -73,7 +76,7 @@ const Sections = ({
   actionStatusData,
 }: SectionType) => {
   return (
-    <div className="sectionLSWrapper min-w-96 flex h-full flex-col gap-6">
+    <div className="sectionLSWrapper flex h-full w-96 flex-col gap-6">
       {/* filters */}
       <div className="flex items-center justify-between p-1">
         <div id="sort-filter-container">

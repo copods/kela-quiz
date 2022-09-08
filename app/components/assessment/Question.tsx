@@ -43,7 +43,7 @@ const Question = () => {
               </span>
             </div>
           </div>
-          <div className="h-full flex-1 overflow-auto rounded-lg border border-gray-200 bg-white p-4 shadow-base">
+          <div className="ql-editor h-full flex-1 overflow-auto rounded-lg border border-gray-200 bg-white p-4 shadow-base">
             <div
               dangerouslySetInnerHTML={{
                 __html: sanitizeHtml(question?.question?.question),
@@ -57,7 +57,7 @@ const Question = () => {
               {routeFiles.options}
             </div>
           </div>
-          <div className="flex h-full flex-1 flex-col gap-6 overflow-auto shadow-base">
+          <div className="flex h-full flex-1 flex-col gap-6 overflow-auto">
             {question?.question?.options?.map(
               (option: {
                 id: string

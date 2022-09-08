@@ -16,7 +16,6 @@ export default function MembersHeader({
       setOpen(false)
     }
   }, [actionStatus])
-
   return (
     <div className="grid grid-cols-12 pb-12">
       <div className="col-span-full grid">
