@@ -95,7 +95,7 @@ const TestTableItem = ({
           <Icon
             role={'button'}
             tabIndex={0}
-            className="candidateInviteIcon cursor-pointer text-2xl text-primary"
+            className="candidateInviteIcon cursor-pointer text-2xl text-primary focus:outline-none"
             icon={'ant-design:user-add-outlined'}
             onClick={() => setCandidatePopupOpen(true)}
             onKeyUp={(e) => {
