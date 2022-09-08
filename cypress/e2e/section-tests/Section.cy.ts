@@ -124,7 +124,7 @@ describe('Test for Section', () => {
     cy.location('pathname', { timeout: 6000 }).should('include', '/sections')
     cy.get('.sectionLSWrapper', { timeout: 6000 }).within(() => {
       cy.get('#section-cards')
-        .get('a')
+        .get('#section-link')
         .then((listing) => {
           const listingCount = Cypress.$(listing).length
           expect(listing).to.have.length(listingCount)

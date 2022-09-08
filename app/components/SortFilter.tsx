@@ -37,7 +37,7 @@ const SortFilter = ({
                 if (e.key === 'Enter') onSortDirectionChange(sortByOrder.desc)
               }}
               onClick={() => onSortDirectionChange(sortByOrder.desc)}
-              className="bg-light-200 focus:outline-none cursor-pointer text-2xl"
+              className="bg-light-200 cursor-pointer text-2xl focus:outline-none"
               aria-label={commonConstants.sortAscending}
             />
           ) : (
@@ -50,7 +50,7 @@ const SortFilter = ({
                   onSortDirectionChange(sortByOrder.ascending)
               }}
               onClick={() => onSortDirectionChange(sortByOrder.ascending)}
-              className="cursor-pointer text-2xl"
+              className="cursor-pointer text-2xl focus:outline-none"
               aria-label={commonConstants.sortDescending}
             />
           )}

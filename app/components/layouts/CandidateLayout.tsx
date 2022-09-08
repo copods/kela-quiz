@@ -38,7 +38,7 @@ export default function CandidateLayout({
         <CandidateSideNav candidate={candidate} candidateTest={candidateTest} />
       </div>
       <div className="flex h-screen flex-1 flex-col bg-slate-50">
-        <div className="flex h-20 items-center justify-between bg-white px-9 text-2xl font-semibold leading-8 text-gray-800">
+        <div className="flex h-20 items-center justify-between bg-white px-9 text-2xl font-semibold text-gray-800">
           {params?.questionId ? (
             <>
               {candidateSection && (

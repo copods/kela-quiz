@@ -16,13 +16,11 @@ export default function MembersHeader({
       setOpen(false)
     }
   }, [actionStatus])
-
   return (
-   <> 
     <div className="grid grid-cols-12 pb-12">
       <div className="col-span-full grid">
         <div className="flex items-center justify-between">
-          <h1 className="membersHeading text-3xl font-bold leading-9">
+          <h1 className="membersHeading text-3xl font-bold">
             {members.members}
           </h1>
           <Button
@@ -37,7 +35,6 @@ export default function MembersHeader({
         </div>
       </div>
       <AddMemberModal roles={membersData.roles} open={open} setOpen={setOpen} />
-     </div> 
-    </>
+    </div>
   )
 }

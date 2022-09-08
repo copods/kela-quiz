@@ -64,6 +64,28 @@ export async function deleteSectionById(id: string) {
   })
 }
 
+export async function checkSectionById(id: string) {
+  return prisma.section.findUnique({
+    where: { id },
+    include: {
+      _count: {
+        select: {
+          sectionInTest: true,
+        },
+      },
+      sectionInTest: {
+        select: {
+          test: {
+            select: {
+              id: true,
+              deleted: true,
+            },
+          },
+        },
+      },
+    },
+  })
+}
 export async function getQuestionType() {
   return prisma.questionType.findMany()
 }
