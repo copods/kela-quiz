@@ -83,7 +83,7 @@ const Question = () => {
                         handleChange={() => onChangeHandle(option.id)}
                       />
                     )}
-                    <div className="w-full rounded-lg border border-gray-200 bg-white p-5">
+                    <div className="ql-editor w-full rounded-lg border border-gray-200 bg-white p-5">
                       <div
                         dangerouslySetInnerHTML={{
                           __html: sanitizeHtml(option?.option),
