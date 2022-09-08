@@ -30,9 +30,8 @@ Click this button to create a [Gitpod](https://gitpod.io) workspace with the pro
 
 It is important for you to have these things installed:
 
-1. Node.js
-2. npm 7 or greater
-3. [Docker](https://www.docker.com/get-started)
+1. [Node.js](https://nodejs.org/en/)
+2. [Docker](https://www.docker.com/get-started)
 
 - You have to clone the code by using this URL https://github.com/copods/kela-quiz.git
 - Run this command to install all the packages
@@ -85,7 +84,7 @@ For Creating a new branch, you can to go to the `Issues` section in Github and s
 - Components Folder: kebab-case;
 - Route File / Folder Names: kebab-case;
 - Slug File Names: camelCase;
-- Custom CSS Class Name: snake_case;
+- Class Name: camelCase
 - ID Atrributes: kebab-case
 
 ## Git Commit Syntax
@@ -117,7 +116,7 @@ We use GitHub Actions for continuous integration and deployment. Anything that g
 ## Prisma Database
 
 We are using Prisma which is an open source database toolkit in our project.
-You can learn the main concepts of prisma from its official documentation [Prisma](https://www.prisma.io/docs/concepts)
+You can learn the main concepts of [Prisma](https://www.prisma.io/docs/concepts) from its official documentation.
 
 - You can check all the models/schema from `schema.prisma` file
 - If you are changing the database schema in `schema.prisma` file, you have to push the database to reflect those changes by running this command
@@ -134,8 +133,8 @@ You can learn the main concepts of prisma from its official documentation [Prism
 
 ## Testing
 
-We use Cypress for our End-to-End tests in this project.
-You can learn the Cypress from offical documentation [Cypress](https://docs.cypress.io/)
+We are using Cypress for our End-to-End tests in this project.
+You can learn the [Cypress](https://docs.cypress.io/) from offical documentation.
 
 You'll find those in the `cypress` directory. As you make changes, add to an existing file or create a new file in the `cypress/e2e` directory to test your changes.
 
@@ -149,7 +148,7 @@ npm run test:e2e:dev
 
 which will start the dev server for the app as well as the Cypress client. Make sure the database is running in docker as described above.
 
-Also you can run this test locally by using the command
+Also you can run cypress for testing of components on browser by running following command
 
 ```sh
 npm run cypress
