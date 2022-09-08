@@ -47,7 +47,7 @@ describe('smoke tests', () => {
   })
 
   // creating test data
-  xit('Adding a first section', () => {
+  it('Adding a first section', () => {
     cy.visit('/sign-in')
     cy.get('input[name="email"]')
       .clear()
@@ -75,7 +75,7 @@ describe('smoke tests', () => {
       })
   })
 
-  xit('Adding a second section', () => {
+  it('Adding a second section', () => {
     cy.visit('/sign-in')
     cy.get('input[name="email"]')
       .clear()
@@ -103,7 +103,7 @@ describe('smoke tests', () => {
       })
   })
 
-  xit('Adding a deleteSection ', () => {
+  it('Adding a deleteSection ', () => {
     cy.visit('/sign-in')
     cy.get('input[name="email"]')
       .clear()
@@ -131,7 +131,7 @@ describe('smoke tests', () => {
       })
   })
 
-  xit('Add question to the first section', () => {
+  it('Add question to the first section', () => {
     cy.visit('/sign-in')
     cy.get('input[name="email"]')
       .clear()
@@ -186,7 +186,7 @@ describe('smoke tests', () => {
     cy.get('#save-and-exit').click()
   })
 
-  xit('Add question to the second section', () => {
+  it('Add question to the second section', () => {
     cy.visit('/sign-in')
     cy.get('input[name="email"]')
       .clear()
@@ -241,7 +241,7 @@ describe('smoke tests', () => {
     cy.get('#save-and-exit').click()
   })
 
-  xit('Verify if user able create the test 1', () => {
+  it('Verify if user able create the test 1', () => {
     cy.visit('/sign-in')
     cy.get('input[name="email"]')
       .clear()
@@ -327,7 +327,7 @@ describe('smoke tests', () => {
       .click()
   })
 
-  xit('Verify if user able create the test 2', () => {
+  it('Verify if user able create the test 2', () => {
     cy.visit('/sign-in')
     cy.get('input[name="email"]')
       .clear()
@@ -413,7 +413,7 @@ describe('smoke tests', () => {
       .click()
   })
 
-  xit('Test for adding a new member', () => {
+  it('Test for adding a new member', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
