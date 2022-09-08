@@ -32,9 +32,14 @@ It is important for you to have these things installed:
 
 1. Node.js
 2. npm 7 or greater
-3. Docker (You can download it from [Docker](https://www.docker.com/get-started)):
+3. [Docker](https://www.docker.com/get-started)
 
-- You have to clone the by uthing this URL https://github.com/copods/kela-quiz.git
+- You have to clone the code by using this URL https://github.com/copods/kela-quiz.git
+- Run this command to install all the packages
+
+  ```sh
+  npm install
+  ```
 
 - Run the command to start the Docker
 
@@ -44,15 +49,9 @@ It is important for you to have these things installed:
 
   > **Note:** The npm script will complete while Docker sets up the container in the background. Ensure that Docker has finished and your container is running before proceeding.
 
-- Create .env file from file .env.example and add data from this file excel [File](https://docs.google.com/spreadsheets/d/1QHtxVvBboDRcMuR0ZIql-xSZxiwj9oNqRItVR0fx0hA/edit#gid=0):
+- Create .env file from .env.example file and add data from this excel [File](https://docs.google.com/spreadsheets/d/1QHtxVvBboDRcMuR0ZIql-xSZxiwj9oNqRItVR0fx0hA/edit#gid=0):
 
-- To understand the content of the abive file, you can read `SECRET.md` file
-
-- Run this command to install all the packages
-
-  ```sh
-  npm install
-  ```
+- To understand the content of the above file, you can read `SECRET.md` file
 
 - Initial setup:
 
@@ -74,21 +73,20 @@ It is important for you to have these things installed:
 
 This starts your app in development mode, rebuilding assets on file changes.
 
-If you'd prefer not to use Docker, you can also use Fly's Wireguard VPN to connect to a development database (or even your production database). You can find the instructions to set up Wireguard [here](https://fly.io/docs/reference/private-networking/#install-your-wireguard-app), and the instructions for creating a development database [here](https://fly.io/docs/reference/postgres/).
-
-### Relevant code:
-
-This is a pretty simple note-taking app, but it's a good example of how you can build a full stack app with Prisma and Remix. The main functionality is creating users, logging in and out, and creating and deleting notes.
-
-- creating users, and logging in and out [./app/models/user.server.ts](./app/models/user.server.ts)
-- user sessions, and verifying them [./app/session.server.ts](./app/session.server.ts)
-- creating, and deleting notes [./app/models/note.server.ts](./app/models/note.server.ts)
-
 ## Creating A Branch from Github
 
-For Creating a new branch, you have to go to the `Issues` section in Github and select the `Create a branch` from `development` section
+For Creating a new branch, you can to go to the `Issues` section in Github and select the `Create a branch` from `development` section of that particular Issue.
 
-> **NOTE** - Always check that the branch source should be `dev`. You can check that from `Change branch source`.
+> **NOTE** - You can check the branch source from `Change branch source`.
+
+## Naming Conventions
+
+- Components: PascalCase;
+- Components Folder: kebab-case;
+- Route File / Folder Names: kebab-case;
+- Slug File Names: camelCase;
+- Custom CSS Class Name: snake_case;
+- ID Atrributes: kebab-case
 
 ## Git Commit Syntax
 
@@ -121,23 +119,20 @@ We use GitHub Actions for continuous integration and deployment. Anything that g
 We are using Prisma which is an open source database toolkit in our project.
 You can learn the main concepts of prisma from its official documentation [Prisma](https://www.prisma.io/docs/concepts)
 
-- You can check all the models from `schema.prisma` file
+- You can check all the models/schema from `schema.prisma` file
 - If you are changing the database schema in `schema.prisma` file, you have to push the database to reflect those changes by running this command
+
   ```sh
-  npx prisma db push
+  npm run db:push
   ```
-  and after that you have to setup it again which will create new migration by using following command:
-  ```sh
-  npm run setup
-  ```
+
   You can also reset the database yourself to undo manual changes or db push experiments by running the command:
+
   ```sh
-  npx prisma migrate reset
+  npm run prisma:reset
   ```
 
 ## Testing
-
-### Cypress
 
 We use Cypress for our End-to-End tests in this project.
 You can learn the Cypress from offical documentation [Cypress](https://docs.cypress.io/)
@@ -157,7 +152,7 @@ which will start the dev server for the app as well as the Cypress client. Make 
 Also you can run this test locally by using the command
 
 ```sh
-npx cypress open
+npm run cypress
 ```
 
 We have a utility for testing authenticated features without having to go through the login flow:
@@ -176,10 +171,6 @@ afterEach(() => {
 ```
 
 That way, we can keep your local db clean and keep your tests isolated from one another.
-
-### Vitest
-
-For lower level tests of utilities and individual components, we use `vitest`. We have DOM-specific assertion helpers via [`@testing-library/jest-dom`](https://testing-library.com/jest-dom).
 
 ### Type Checking
 
