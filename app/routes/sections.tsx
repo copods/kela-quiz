@@ -14,6 +14,7 @@ import {
   useSubmit,
 } from '@remix-run/react'
 import {
+  checkSectionById,
   createSection,
   deleteSectionById,
   getAllSections,
@@ -27,7 +28,8 @@ import AddSection from '~/components/sections/AddSection'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import Button from '~/components/form/Button'
-import { Section, sortByOrder } from '~/interface/Interface'
+import { sortByOrder } from '~/interface/Interface'
+import type { Section } from '~/interface/Interface'
 import { routes } from '~/constants/route.constants'
 
 export type ActionData = {
@@ -62,7 +64,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   await getAllSections(obj)
     .then((res) => {
       sections = res as Section[]
-      status = 'Success'
+      status = statusCheck.success
     })
     .catch((err) => {
       status = err
@@ -127,22 +129,43 @@ export const action: ActionFunction = async ({ request }) => {
     return addHandle
   }
   let deleteHandle = null
+  let isSectionDelete = false
+  let isTestDeleted: Array<boolean> | undefined
   if (action === 'sectionDelete') {
-    await deleteSectionById(formData.get('id') as string)
-      .then((res) => {
-        deleteHandle = json<ActionData>(
-          { resp: { status: statusCheck.deletedSuccess } },
-
-          { status: 200 }
-        )
-      })
-      .catch((err) => {
-        let title = statusCheck.commonError
+    await checkSectionById(formData.get('id') as string).then((res) => {
+      if (res?._count.sectionInTest !== 0) {
+        isTestDeleted = res?.sectionInTest?.map((e) => {
+          return e.test.deleted
+        })
+      }
+      if (res?._count.sectionInTest === 0 || isTestDeleted?.includes(true)) {
+        isSectionDelete = true
+      } else {
+        let title = statusCheck.testDependentWarning
         deleteHandle = json<ActionData>(
           { errors: { title, status: 400, check: new Date() } },
           { status: 400 }
         )
-      })
+      }
+    })
+
+    if (isSectionDelete) {
+      await deleteSectionById(formData.get('id') as string)
+        .then((res) => {
+          deleteHandle = json<ActionData>(
+            { resp: { status: statusCheck.deletedSuccess } },
+
+            { status: 200 }
+          )
+        })
+        .catch((err) => {
+          let title = statusCheck.commonError
+          deleteHandle = json<ActionData>(
+            { errors: { title, status: 400, check: new Date() } },
+            { status: 400 }
+          )
+        })
+    }
     return deleteHandle
   }
 }
@@ -174,20 +197,17 @@ export default function SectionPage() {
     data.selectedSectionId || data.sections[0]?.id || 'NA'
   )
 
-  if (data.status != 'Success') {
+  if (data.status != statusCheck.success) {
     toast.error(statusCheck.commonError)
   }
 
   useEffect(() => {
-    if (selectedSection !== 'NA') {
-      navigate(`${routes.sections}/${selectedSection}${data?.filters}`, {
+    if (selectedSection === 'NA') {
+      navigate(routes.sections, {
         replace: true,
       })
-    }
-  }, [navigate, selectedSection])
-  useEffect(() => {
-    if (selectedSection == 'NA') {
-      navigate(routes.sections, {
+    } else {
+      navigate(`${routes.sections}/${selectedSection}${data?.filters}`, {
         replace: true,
       })
     }
@@ -208,7 +228,7 @@ export default function SectionPage() {
         action: `${routes.sections}/${selectedSection}`,
       })
     }
-  }, [order, sortBy, data.sections.length])
+  }, [order, sortBy])
 
   useEffect(() => {
     if (sectionActionData) {
@@ -231,7 +251,7 @@ export default function SectionPage() {
         })
       }
     }
-  }, [sectionActionData, data])
+  }, [sectionActionData, data.selectedSectionId])
 
   return (
     <AdminLayout>
@@ -277,8 +297,8 @@ export default function SectionPage() {
                 sortByDetails={sortByDetails}
               />
             </div>
-                 {/* section details */}
-                 <div className={`z-10 flex flex-1 items-center `}>
+            {/* section details */}
+            <div className={`z-10 flex flex-1 items-center `}>
               <span
                 className="z-20 -mr-5"
                 tabIndex={0}

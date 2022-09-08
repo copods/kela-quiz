@@ -233,7 +233,7 @@ export enum sortByOrder {
   cancel = 'Cancel',
   createdAt = 'createdAt',
   creatingTest = 'Creating Test',
-  submit = 'Submit'
+  submit = 'Submit',
 }
 
 export enum QuestionTypes {
@@ -242,3 +242,16 @@ export enum QuestionTypes {
   text = 'TEXT',
 }
 
+export interface SectionWiseResults {
+  id: string
+  sectionInCandidateTestId: string
+  totalQuestion: number
+  correctQuestion: number
+  unanswered: number
+  testId: string
+  candidateTestId: string
+  createdAt: Date
+  updatedAt: Date
+  section: SectionInCandidateTest
+  test: Test
+}

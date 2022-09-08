@@ -8,7 +8,7 @@ import {
 import { QuestionTypes } from '~/interface/Interface'
 import Button from '../form/Button'
 import Checkbox from '../form/CheckBox'
-
+import sanitizeHtml from 'sanitize-html'
 
 const Question = () => {
   const { question, section, lastSection } = useLoaderData()
@@ -46,7 +46,7 @@ const Question = () => {
           <div className="h-full flex-1 overflow-auto rounded-lg border border-gray-200 bg-white p-4 shadow-base">
             <div
               dangerouslySetInnerHTML={{
-                __html: question?.question?.question,
+                __html: sanitizeHtml(question?.question?.question),
               }}
             />
           </div>
@@ -57,7 +57,7 @@ const Question = () => {
               {routeFiles.options}
             </div>
           </div>
-          <div className="flex h-full flex-1 flex-col gap-6 overflow-auto shadow-base">
+          <div className="flex h-full flex-1 flex-col gap-6 overflow-auto">
             {question?.question?.options?.map(
               (option: {
                 id: string
@@ -85,7 +85,9 @@ const Question = () => {
                     )}
                     <div className="w-full rounded-lg border border-gray-200 bg-white p-5">
                       <div
-                        dangerouslySetInnerHTML={{ __html: option?.option }}
+                        dangerouslySetInnerHTML={{
+                          __html: sanitizeHtml(option?.option),
+                        }}
                       />
                     </div>
                   </div>

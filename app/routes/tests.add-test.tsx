@@ -10,6 +10,7 @@ import { getAllSections } from '~/models/sections.server'
 import { createTest } from '~/models/tests.server'
 import { getUserId, requireUserId } from '~/session.server'
 import { routes } from '~/constants/route.constants'
+import { statusCheck } from '~/constants/common.constants'
 
 type LoaderData = {
   sections: Awaited<ReturnType<typeof getAllSections>>
@@ -32,7 +33,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   await getAllSections(filter)
     .then((res) => {
       sections = res as Section[]
-      status = 'success'
+      status = statusCheck.success
     })
     .catch((err) => {
       status = err
@@ -72,18 +73,18 @@ const AddTest = () => {
   const navigate = useNavigate()
   useEffect(() => {
     if (actionData?.test.id) {
-      toast.success('Test added successfully..')
+      toast.success(statusCheck.testAddedSuccessFully)
       navigate(routes.tests)
     } else if (actionData) {
       if (actionData?.test.code == 'P2002') {
-        toast.error('Test name already exist.')
+        toast.error(statusCheck.testAlreadyExist)
       } else {
-        toast.error('Something went wrong..!')
+        toast.error(statusCheck.commonError)
       }
     }
   }, [actionData, navigate])
-  if (testData.status != 'success') {
-    toast.success('Something went wrong..!')
+  if (testData.status != statusCheck.success) {
+    toast.success(statusCheck.commonError)
   }
 
   return (
