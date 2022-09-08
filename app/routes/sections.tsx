@@ -255,7 +255,7 @@ export default function SectionPage() {
 
   return (
     <AdminLayout>
-      <div className="flex h-full flex-col gap-12 overflow-hidden p-1">
+      <div className="flex h-full flex-col gap-12 overflow-hidden">
         {/* header */}
         <header className="flex items-center justify-between">
           <h2
@@ -280,7 +280,7 @@ export default function SectionPage() {
         {data.sections.length > 0 ? (
           <div
             className={`flex flex-1 overflow-hidden ${
-              sectionDetailFull ? '' : 'gap-12'
+              sectionDetailFull ? '' : 'gap-5'
             }`}
           >
             {/* section list */}

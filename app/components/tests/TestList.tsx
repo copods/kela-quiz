@@ -46,7 +46,7 @@ const TestList = ({
   }, [sortDirection, sortBy])
   const showCheckBox = false
   return (
-    <div className="test-list-container flex h-full flex-col gap-12 p-1">
+    <div className="test-list-container flex h-full flex-col gap-6 p-1">
       {/* header */}
       {/* <BreadCrumb data={breadCrumbData} /> */}
       <header className="flex items-center justify-between">
