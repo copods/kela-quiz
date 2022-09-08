@@ -17,7 +17,7 @@ export default function MembersHeader({
     }
   }, [actionStatus])
   return (
-    <div className="grid grid-cols-12 pb-12">
+    <div className="grid grid-cols-12 pb-6">
       <div className="col-span-full grid">
         <div className="flex items-center justify-between">
           <h1 className="membersHeading text-3xl font-bold">

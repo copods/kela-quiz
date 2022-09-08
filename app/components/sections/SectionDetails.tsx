@@ -13,7 +13,7 @@ const SectionDetails = () => {
   const navigate = useNavigate()
 
   return (
-    <div className="flex h-full w-full flex-col gap-6 overflow-auto break-all rounded-lg border border-gray-200 bg-white px-9 py-6">
+    <div className="flex h-full w-full flex-col gap-5 overflow-auto break-all rounded-lg border border-gray-200 bg-white px-9 py-6">
       <div className="flex">
         <h2
           className="inline-block text-2xl font-semibold text-gray-700"
