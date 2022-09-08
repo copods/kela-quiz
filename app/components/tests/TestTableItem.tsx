@@ -93,6 +93,7 @@ const TestTableItem = ({
         </div>
         <div className="flex w-1/12 gap-2">
           <Icon
+            id="invite-popup-open"
             role={'button'}
             tabIndex={0}
             className="candidateInviteIcon cursor-pointer text-2xl text-primary"

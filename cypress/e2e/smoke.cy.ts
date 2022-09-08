@@ -47,7 +47,7 @@ describe('smoke tests', () => {
   })
 
   // creating test data
-  it('Adding a first section', () => {
+  xit('Adding a first section', () => {
     cy.visit('/sign-in')
     cy.get('input[name="email"]')
       .clear()
@@ -75,7 +75,7 @@ describe('smoke tests', () => {
       })
   })
 
-  it('Adding a second section', () => {
+  xit('Adding a second section', () => {
     cy.visit('/sign-in')
     cy.get('input[name="email"]')
       .clear()
@@ -103,7 +103,7 @@ describe('smoke tests', () => {
       })
   })
 
-  it('Adding a deleteSection ', () => {
+  xit('Adding a deleteSection ', () => {
     cy.visit('/sign-in')
     cy.get('input[name="email"]')
       .clear()
@@ -131,7 +131,7 @@ describe('smoke tests', () => {
       })
   })
 
-  it('Add question to the first section', () => {
+  xit('Add question to the first section', () => {
     cy.visit('/sign-in')
     cy.get('input[name="email"]')
       .clear()
@@ -186,7 +186,7 @@ describe('smoke tests', () => {
     cy.get('#save-and-exit').click()
   })
 
-  it('Add question to the second section', () => {
+  xit('Add question to the second section', () => {
     cy.visit('/sign-in')
     cy.get('input[name="email"]')
       .clear()
@@ -241,7 +241,7 @@ describe('smoke tests', () => {
     cy.get('#save-and-exit').click()
   })
 
-  it('Verify if user able create the test 1', () => {
+  xit('Verify if user able create the test 1', () => {
     cy.visit('/sign-in')
     cy.get('input[name="email"]')
       .clear()
@@ -327,7 +327,7 @@ describe('smoke tests', () => {
       .click()
   })
 
-  it('Verify if user able create the test 2', () => {
+  xit('Verify if user able create the test 2', () => {
     cy.visit('/sign-in')
     cy.get('input[name="email"]')
       .clear()
@@ -413,7 +413,7 @@ describe('smoke tests', () => {
       .click()
   })
 
-  it('Test for adding a new member', () => {
+  xit('Test for adding a new member', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
@@ -441,5 +441,31 @@ describe('smoke tests', () => {
       .should('have.value', memberEmail)
     cy.get('select').select('Recruiter')
     cy.get('#add-button').click()
+  })
+
+  it('invite candidate for test', () => {
+    cy.visit('/sign-in')
+    cy.get('input[name="email"]')
+      .clear()
+      .type(Cypress.env('email'))
+      .should('have.focus')
+      .should('have.value', Cypress.env('email'))
+    cy.get('input[name="password"]')
+      .clear()
+      .type(Cypress.env('password'))
+      .should('have.focus')
+      .should('have.value', Cypress.env('password'))
+    cy.get('[data-cy="submit"]').click()
+    cy.location('pathname').should('include', '/dashboard')
+    cy.get('a').find('#tests').should('have.text', testsConstants.tests).click()
+    cy.get('#invite-popup-open', { timeout: 10000 })
+      .should('be.visible')
+      .click()
+    cy.get('input[name="email"]')
+      .clear()
+      .type('johndoe@example.com')
+      .should('have.focus')
+      .should('have.value', 'johndoe@example.com')
+    cy.get('[data-cy="submit"]').click()
   })
 })
