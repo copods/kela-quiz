@@ -60,6 +60,8 @@ const SectionDetails = () => {
             .includes(searchText.toLowerCase())
         })
         .map((question: Question, i: number) => {
+          console.log(i)
+
           return (
             <QuestionCard
               key={question.id}
