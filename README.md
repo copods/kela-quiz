@@ -30,9 +30,11 @@ Click this button to create a [Gitpod](https://gitpod.io) workspace with the pro
 
 It is important for you to have these things installed:
 
-1. Node.js version (^14.17.0, or >=16.0.0)
+1. Node.js
 2. npm 7 or greater
 3. Docker (You can download it from [Docker](https://www.docker.com/get-started)):
+
+- You have to clone the by uthing this URL https://github.com/copods/kela-quiz.git
 
 - Run the command to start the Docker
 
@@ -42,16 +44,9 @@ It is important for you to have these things installed:
 
   > **Note:** The npm script will complete while Docker sets up the container in the background. Ensure that Docker has finished and your container is running before proceeding.
 
-- Create .env and .env.example file and add this follwing keys. The value of the data are secret codes and you can access it from this excel [File](https://docs.google.com/spreadsheets/d/1QHtxVvBboDRcMuR0ZIql-xSZxiwj9oNqRItVR0fx0hA/edit#gid=0):
+- Create .env file from file .env.example and add data from this file excel [File](https://docs.google.com/spreadsheets/d/1QHtxVvBboDRcMuR0ZIql-xSZxiwj9oNqRItVR0fx0hA/edit#gid=0):
 
-  ```sh
-  DATABASE_URL=
-  SESSION_SECRET=
-  SENDGRID_API_KEY=
-  PUBLIC_URL=
-  ```
-
-  > **Note** - .env and .env.example files are same, only `SENDGRID_API_KEY="demo_key"` will be replaced in .env.example
+- To understand the content of the abive file, you can read `SECRET.md` file
 
 - Run this command to install all the packages
 
