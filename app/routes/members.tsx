@@ -4,7 +4,7 @@ import { redirect } from '@remix-run/node'
 import type { LoaderFunction, ActionFunction } from '@remix-run/node'
 import MembersList from '~/components/members/MembersList'
 import { json } from '@remix-run/node'
-import { useActionData, useLoaderData } from '@remix-run/react'
+import { useActionData } from '@remix-run/react'
 import {
   createNewUser,
   deleteUserById,
@@ -13,7 +13,7 @@ import {
 } from '~/models/user.server'
 import MembersHeader from '~/components/members/MembersHeader'
 import { toast } from 'react-toastify'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { routes } from '~/constants/route.constants'
 import { statusCheck, toastConstants } from '~/constants/common.constants'
 
@@ -147,12 +147,14 @@ export const action: ActionFunction = async ({ request }) => {
 }
 const Members = () => {
   const membersActionData = useActionData() as ActionData
-  const membersData = useLoaderData()
+  const [actionStatus, setActionStatus] = useState(Boolean)
   useEffect(() => {
     if (membersActionData) {
       if (membersActionData.resp?.status === 200) {
+        setActionStatus(true)
         toast.success(membersActionData.resp?.title)
       } else if (membersActionData.errors?.status === 400) {
+        setActionStatus(false)
         toast.error(membersActionData.errors?.title, {
           toastId: membersActionData.errors?.title,
         })
@@ -163,7 +165,10 @@ const Members = () => {
   return (
     <AdminLayout>
       <>
-        <MembersHeader actionStatus={membersData.users} />
+        <MembersHeader
+          actionStatus={actionStatus}
+          setActionStatus={setActionStatus}
+        />
         <MembersList actionStatus={membersActionData?.resp?.title} />
       </>
     </AdminLayout>

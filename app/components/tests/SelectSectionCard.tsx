@@ -122,7 +122,7 @@ const SelectSectionCard = ({
             className={`mt-1 h-11 w-full rounded-lg border border-gray-300 px-3 text-xs ${
               section.isSelected ? 'bg-white' : 'bg-gray-200'
             }`}
-            placeholder="Total Questions"
+            placeholder={commonConstants.totalQuestion}
             disabled={!section.isSelected}
           />
         </div>

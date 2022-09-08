@@ -30,24 +30,24 @@ export default function MemberListItem({
   }
   return (
     <div className="col-span-full grid grid-cols-10">
-      <div className="memberRows col-span-full grid grid-cols-10 border-t border-solid border-gray-200 px-12 py-4">
-        <div className=" col-span-2 overflow-ellipsis break-all">
+      <div className="memberRows col-span-full grid grid-cols-10 border-t border-solid border-gray-200 px-6 py-4">
+        <div className=" col-span-2 overflow-ellipsis break-all pl-4">
           <span className="memberName text-base text-gray-700">
             {user.firstName} {user.lastName}
           </span>
         </div>
-        <div className="memberMail col-span-3 overflow-ellipsis break-all">
+        <div className="memberMail col-span-3 overflow-ellipsis break-all pl-4">
           <span className="text-base text-gray-700">{user.email}</span>
         </div>
-        <div className="col-span-2 overflow-ellipsis break-all">
+        <div className="col-span-2 overflow-ellipsis break-all pl-4">
           <span className="text-base text-gray-700">{user?.role?.name}</span>
         </div>
-        <div className="col-span-2 overflow-ellipsis break-all">
+        <div className="col-span-2 overflow-ellipsis break-all pl-4">
           <span className="text-base text-gray-700">
             {moment(user?.createdAt).format('DD MMMM YY')}
           </span>
         </div>
-        <div className="col-span-1">
+        <div className="col-span-1 pl-4">
           <Icon
             id="delete-button"
             tabIndex={0}

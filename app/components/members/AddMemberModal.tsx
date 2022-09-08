@@ -58,7 +58,7 @@ export default function AddMemberModal({
                     </h2>
                     <Icon
                       tabIndex={0}
-                      className="cursor-pointer text-2xl text-gray-600"
+                      className="cursor-pointer text-2xl text-gray-600 focus:outline-none"
                       icon={'carbon:close'}
                       onClick={() => setOpen(false)}
                     />
@@ -75,7 +75,8 @@ export default function AddMemberModal({
                         type="text"
                         name="firstName"
                         className=" my-1.5 h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
-                        placeholder="First Name"
+                        placeholder={members.firstName}
+                        maxLength={40}
                       />
                     </div>
                     <div>
@@ -88,7 +89,8 @@ export default function AddMemberModal({
                         type="text"
                         name="lastName"
                         className="my-1.5 h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
-                        placeholder="Last Name"
+                        placeholder={members.lastName}
+                        maxLength={40}
                       />
                     </div>
                   </div>
@@ -102,7 +104,7 @@ export default function AddMemberModal({
                       type="text"
                       name="email"
                       className="my-1.5 h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
-                      placeholder="email@address.com"
+                      placeholder={members.email}
                     />
                   </div>
                   <div className="pb-6">

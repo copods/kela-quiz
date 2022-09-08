@@ -75,7 +75,7 @@ const AddSection = ({
                     type="text"
                     name="name"
                     className="h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
-                    placeholder="Enter Section Name"
+                    placeholder={commonConstants.enterSectionName}
                     maxLength={52}
                   />
                 </div>
@@ -86,7 +86,7 @@ const AddSection = ({
                     id="section-description"
                     rows={4}
                     className="w-full rounded-lg border border-gray-200 px-3 py-4 text-base"
-                    placeholder="Enter Section Description"
+                    placeholder={commonConstants.enterSectionDesc}
                   />
                 </div>
                 <div className="flex justify-end gap-2">
