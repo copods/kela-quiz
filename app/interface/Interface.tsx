@@ -214,6 +214,7 @@ export interface CandidateResult {
   candidateId: string
   candidateTestId: string
   totalQuestion: number
+  endAt: Date
   correctQuestion: number
   unanswered: number
   testId: string
