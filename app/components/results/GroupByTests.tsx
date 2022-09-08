@@ -41,7 +41,7 @@ const GroupByTests = () => {
   return (
     <div className="flex flex-col gap-12 p-1" id="group-by-test-container">
       <h1 className="text-3xl font-bold text-gray-900 ">Results</h1>
-      {candidateTestData.length ? (
+      {candidateTests.length ? (
         <div className="flex flex-col gap-6">
           <div id="sort-filter-container">
             <SortFilter
