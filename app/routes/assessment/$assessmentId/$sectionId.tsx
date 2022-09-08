@@ -1,5 +1,5 @@
 import { useLoaderData } from '@remix-run/react'
-import type { LoaderFunction } from '@remix-run/server-runtime'
+import type { ActionFunction, LoaderFunction } from '@remix-run/server-runtime'
 import { redirect } from '@remix-run/server-runtime'
 import SectionQuestionPage from '~/components/assessment/SectionQuestionPage'
 import CandidateLayout from '~/components/layouts/CandidateLayout'
@@ -59,6 +59,17 @@ export const loader: LoaderFunction = async ({ params, request }) => {
   }
 }
 
+export const action: ActionFunction = async ({ params, request }) => {
+  const formData = await request.formData()
+  const order = formData.get('order')
+  console.log('order', order)
+  const nextSecRoute = await moveToNextSection({
+    assessmentId: params.assessmentId as string,
+    order: parseInt(order as string),
+    sectionId: params.sectionId as string,
+  })
+  if (typeof nextSecRoute === 'string') return redirect(nextSecRoute)
+}
 const AssessmentSection = () => {
   const { section, candidateTests, candidate, params } = useLoaderData()
   return (
