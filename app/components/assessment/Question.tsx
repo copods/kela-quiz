@@ -43,7 +43,7 @@ const Question = () => {
               </span>
             </div>
           </div>
-          <div className="h-full flex-1 overflow-auto rounded-lg border border-gray-200 bg-white p-4 shadow-base">
+          <div className="ql-editor h-full flex-1 overflow-auto rounded-lg border border-gray-200 bg-white p-4 shadow-base">
             <div
               dangerouslySetInnerHTML={{
                 __html: sanitizeHtml(question?.question?.question),
@@ -83,7 +83,7 @@ const Question = () => {
                         handleChange={() => onChangeHandle(option.id)}
                       />
                     )}
-                    <div className="w-full rounded-lg border border-gray-200 bg-white p-5">
+                    <div className="ql-editor w-full rounded-lg border border-gray-200 bg-white p-5">
                       <div
                         dangerouslySetInnerHTML={{
                           __html: sanitizeHtml(option?.option),
