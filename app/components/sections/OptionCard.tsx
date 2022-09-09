@@ -22,6 +22,7 @@ const OptionCard = ({
         </div>
       ) : (
         <div
+          className="ql-editor flex-1"
           dangerouslySetInnerHTML={{
             __html: `${sanitizeHtml(
               (option as Option)?.option || (option as CorrectAnswer)?.answer

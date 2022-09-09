@@ -93,7 +93,7 @@ const Sections = ({
       </div>
       {/* list */}
       <div
-        className="section-cards flex flex-1 flex-col gap-6 overflow-auto p-1"
+        className="section-cards flex flex-1 flex-col gap-5 overflow-auto p-1"
         id="section-cards"
       >
         {sections?.map((section: Section) => (
