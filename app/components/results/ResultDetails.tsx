@@ -41,7 +41,7 @@ const ResultDetailsComponent = () => {
         <div className="flex gap-2">
           <div
             onClick={() =>
-              navigate(`${routes.resultGroupTest}/${params?.testId}/completed`)
+              navigate(`${routes.resultGroupTest}/${params?.testId}`)
             }
             className="flex items-center gap-4 "
             role={'button'}
