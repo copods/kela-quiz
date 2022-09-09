@@ -164,13 +164,13 @@ const Members = () => {
 
   return (
     <AdminLayout>
-      <>
+      <div className="flex flex-col gap-6 p-1">
         <MembersHeader
           actionStatus={actionStatus}
           setActionStatus={setActionStatus}
         />
         <MembersList actionStatus={membersActionData?.resp?.title} />
-      </>
+      </div>
     </AdminLayout>
   )
 }
