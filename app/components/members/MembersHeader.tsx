@@ -20,7 +20,7 @@ export default function MembersHeader({
     }
   }, [actionStatus])
   return (
-    <div className="col-span-full grid">
+    <div className="pb-6">
       <div className="flex items-center justify-between">
         <h1 className="membersHeading text-3xl font-bold">{members.members}</h1>
         <Button
