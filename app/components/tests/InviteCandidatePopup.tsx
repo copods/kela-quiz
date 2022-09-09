@@ -88,7 +88,7 @@ const InviteCandidatePopup = ({
                   </h2>
                   <Icon
                     tabIndex={0}
-                    className="cursor-pointer text-2xl text-gray-600 focus:outline-none"
+                    className="cursor-pointer text-2xl text-gray-600"
                     icon={'carbon:close'}
                     onClick={updatePopupAndEmailState}
                     onKeyUp={(e) => {

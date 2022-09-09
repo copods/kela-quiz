@@ -17,8 +17,8 @@ export default function AddMemberModal({
   setOpen: (e: boolean) => void
 }) {
   const transition = useTransition()
-  const [onFirstName, setOnFirstName] = useState('')
-  const [onLastName, setOnLastName] = useState('')
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
 
   return (
     <div>
@@ -63,7 +63,7 @@ export default function AddMemberModal({
                     </h2>
                     <Icon
                       tabIndex={0}
-                      className="cursor-pointer text-2xl text-gray-600 focus:outline-none"
+                      className="cursor-pointer text-2xl text-gray-600"
                       icon={'carbon:close'}
                       onClick={() => setOpen(false)}
                     />
@@ -82,9 +82,9 @@ export default function AddMemberModal({
                         className="my-1.5 h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
                         placeholder={members.firstName}
                         onChange={(e) =>
-                          setOnFirstName(trimValue(e.target.value))
+                          setFirstName(trimValue(e.target.value))
                         }
-                        value={onFirstName}
+                        value={firstName}
                         maxLength={40}
                       />
                     </div>
@@ -99,10 +99,8 @@ export default function AddMemberModal({
                         name="lastName"
                         className="my-1.5 h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
                         placeholder={members.lastName}
-                        onChange={(e) =>
-                          setOnLastName(trimValue(e.target.value))
-                        }
-                        value={onLastName}
+                        onChange={(e) => setLastName(trimValue(e.target.value))}
+                        value={lastName}
                         maxLength={40}
                       />
                     </div>

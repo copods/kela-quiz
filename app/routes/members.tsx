@@ -147,7 +147,7 @@ export const action: ActionFunction = async ({ request }) => {
 }
 const Members = () => {
   const membersActionData = useActionData() as ActionData
-  const [actionStatus, setActionStatus] = useState(Boolean)
+  const [actionStatus, setActionStatus] = useState<boolean>(false)
   useEffect(() => {
     if (membersActionData) {
       if (membersActionData.resp?.status === 200) {

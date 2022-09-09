@@ -18,8 +18,8 @@ const AddSection = ({
   showErrorMessage: boolean
 }) => {
   const transition = useTransition()
-  const [onAddSectionName, setOnAddSectionName] = useState('')
-  const [onAddDescription, setOnAddDescription] = useState('')
+  const [sectionName, setSectionName] = useState('')
+  const [description, setDescription] = useState('')
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog
@@ -79,10 +79,8 @@ const AddSection = ({
                     name="name"
                     className="h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
                     placeholder={commonConstants.enterSectionName}
-                    onChange={(e) =>
-                      setOnAddSectionName(trimValue(e.target.value))
-                    }
-                    value={onAddSectionName}
+                    onChange={(e) => setSectionName(trimValue(e.target.value))}
+                    value={sectionName}
                     maxLength={52}
                   />
                 </div>
@@ -93,10 +91,8 @@ const AddSection = ({
                     id="section-description"
                     rows={4}
                     className="w-full rounded-lg border border-gray-200 px-3 py-4 text-base"
-                    onChange={(e) =>
-                      setOnAddDescription(trimValue(e.target.value))
-                    }
-                    value={onAddDescription}
+                    onChange={(e) => setDescription(trimValue(e.target.value))}
+                    value={description}
                     placeholder={commonConstants.enterSectionDesc}
                   />
                 </div>
