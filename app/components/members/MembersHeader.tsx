@@ -6,14 +6,17 @@ import Button from '../form/Button'
 
 export default function MembersHeader({
   actionStatus,
+  setActionStatus,
 }: {
   actionStatus: boolean
+  setActionStatus: (e: boolean) => void
 }) {
   const membersData = useLoaderData()
   const [open, setOpen] = useState(false)
   useEffect(() => {
     if (actionStatus) {
       setOpen(false)
+      setActionStatus(false)
     }
   }, [actionStatus])
   return (
