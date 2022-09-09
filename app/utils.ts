@@ -71,16 +71,16 @@ export function validateEmail(email: unknown): email is string {
 }
 
 export function trimValue(value: string) {
-  let i = 0;
-  let j = 0;
+  let i = 0
+  let j = 0
   let str = ''
   while (i < value.length) {
     if (value.charAt(i) !== ' ' || j === 1) {
       str += value.charAt(i)
       j = 1
-      if (value.charAt(i) === ' ') j--;
+      if (value.charAt(i) === ' ') j--
     }
-    i++;
+    i++
   }
-  return str;
+  return str
 }
