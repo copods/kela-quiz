@@ -20,22 +20,18 @@ export default function MembersHeader({
     }
   }, [actionStatus])
   return (
-    <div className="grid grid-cols-12 pb-6">
-      <div className="col-span-full grid">
-        <div className="flex items-center justify-between">
-          <h1 className="membersHeading text-3xl font-bold">
-            {members.members}
-          </h1>
-          <Button
-            tabIndex={0}
-            id="add-member"
-            className="h-9 px-4"
-            onClick={() => setOpen(!open)}
-            varient="primary-solid"
-            title={members.addMember}
-            buttonText={members.addMember}
-          />
-        </div>
+    <div className="col-span-full grid">
+      <div className="flex items-center justify-between">
+        <h1 className="membersHeading text-3xl font-bold">{members.members}</h1>
+        <Button
+          tabIndex={0}
+          id="add-member"
+          className="h-9 px-4"
+          onClick={() => setOpen(!open)}
+          varient="primary-solid"
+          title={members.addMember}
+          buttonText={members.addMember}
+        />
       </div>
       <AddMemberModal roles={membersData.roles} open={open} setOpen={setOpen} />
     </div>
