@@ -69,3 +69,18 @@ export function useUser(): User {
 export function validateEmail(email: unknown): email is string {
   return typeof email === 'string' && email.length > 3 && email.includes('@')
 }
+
+export function trimValue(value: string) {
+  let i = 0;
+  let j = 0;
+  let str = ''
+  while (i < value.length) {
+    if (value.charAt(i) !== ' ' || j === 1) {
+      str += value.charAt(i)
+      j = 1
+      if (value.charAt(i) === ' ') j--;
+    }
+    i++;
+  }
+  return str;
+}

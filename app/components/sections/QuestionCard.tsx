@@ -40,8 +40,8 @@ const QuestionCard = ({
         )
       }}
     >
-      <div className="items-top break flex justify-between text-base text-gray-600">
-        <div className="items-top flex flex-1 items-start justify-between">
+      <div className="break flex justify-between text-base text-gray-600">
+        <div className="flex flex-1 items-start justify-between">
           <div className="ql-editor flex-1 p-0 pr-4">
             <div
               className="question cursor-pointer"

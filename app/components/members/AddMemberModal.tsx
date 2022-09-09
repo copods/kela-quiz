@@ -2,9 +2,11 @@ import { Dialog, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import type { Role } from '~/interface/Interface'
 import { Form, useTransition } from '@remix-run/react'
-import { Fragment } from 'react'
+import { Fragment, useState } from 'react'
 import { commonConstants, members } from '~/constants/common.constants'
 import Button from '../form/Button'
+import { trimValue } from '~/utils'
+// import { validate } from '~/utils'
 export default function AddMemberModal({
   roles,
   open,
@@ -15,6 +17,9 @@ export default function AddMemberModal({
   setOpen: (e: boolean) => void
 }) {
   const transition = useTransition()
+  const [onFirstName, setOnFirstName] = useState('')
+  const [onLastName, setOnLastName] = useState('')
+
   return (
     <div>
       <Transition.Root show={open} as={Fragment}>
@@ -74,8 +79,12 @@ export default function AddMemberModal({
                         id="firstName"
                         type="text"
                         name="firstName"
-                        className=" my-1.5 h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
+                        className="my-1.5 h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
                         placeholder={members.firstName}
+                        onChange={(e) =>
+                          setOnFirstName(trimValue(e.target.value))
+                        }
+                        value={onFirstName}
                         maxLength={40}
                       />
                     </div>
@@ -90,6 +99,10 @@ export default function AddMemberModal({
                         name="lastName"
                         className="my-1.5 h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
                         placeholder={members.lastName}
+                        onChange={(e) =>
+                          setOnLastName(trimValue(e.target.value))
+                        }
+                        value={onLastName}
                         maxLength={40}
                       />
                     </div>
