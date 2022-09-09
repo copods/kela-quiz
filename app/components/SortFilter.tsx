@@ -25,7 +25,7 @@ const SortFilter = ({
   showSelected: boolean
 }) => {
   return (
-    <div className="flex items-center" id="sort-filter">
+    <div className="flex items-center gap-4" id="sort-filter">
       <div className="flex items-center gap-2.5" id="sort-filter-body">
         <span title={sectionsConstants.sort}>
           {sortDirection === sortByOrder.ascending ? (
@@ -64,7 +64,7 @@ const SortFilter = ({
         />
       </div>
       <span
-        className="flex items-center pl-4 text-sm text-gray-600"
+        className="flex items-center text-sm text-gray-600"
         id="total-items-value"
       >
         <span>
