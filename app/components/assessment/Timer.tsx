@@ -49,11 +49,10 @@ const TimerComponent = ({
   return (
     <div className="flex items-center gap-4 text-lg font-medium text-gray-800">
       <span
-        className={`w-38justify-center flex rounded-lg px-4 py-1 text-lg font-bold text-gray-800 ${
-          time > 120 ? 'bg-blue-100' : 'bg-red-100'
-        }`}
+        className={`w-24 font-mono justify-center flex rounded-lg px-4 py-1 text-lg font-bold text-gray-800 ${time > 120 ? 'bg-blue-100' : 'bg-red-100'
+          }`}
       >
-        {getFormattedTime(time)} mins
+        {getFormattedTime(time)}
       </span>
       <span className="text-sm font-medium text-gray-500">
         {candidateExamConstants.timeRemaining}

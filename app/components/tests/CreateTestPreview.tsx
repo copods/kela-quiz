@@ -46,7 +46,7 @@ const TestPreview = ({
       (section) =>
         (time += (section?.time ? section.time : section.timeInSeconds) || 0)
     )
-    return time
+    return isPreviewEditable ? time : time / 60
   }
   return (
     <div className="flex flex-1 flex-col gap-9 overflow-scroll rounded-lg bg-white p-6 shadow-base">
@@ -121,7 +121,7 @@ const TestPreview = ({
                       {testsConstants.questions}
                     </span>
                     <span>
-                      {section.time ? section.time : section.timeInSeconds} Min
+                      {section.time ? section.time : section.timeInSeconds && section.timeInSeconds / 60} Min
                     </span>
                   </div>
                 </div>
