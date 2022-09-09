@@ -14,7 +14,7 @@ module.exports = {
         200: '200px',
         260: '260px',
         184: '184px',
-        96:'384px',
+        96: '384px',
         sectionCard: '330px',
       },
       width: {
