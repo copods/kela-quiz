@@ -76,7 +76,7 @@ const Sections = ({
   actionStatusData,
 }: SectionType) => {
   return (
-    <div className="sectionLSWrapper flex h-full w-96 flex-col gap-6">
+    <div className="sectionLSWrapper flex h-full min-w-96 flex-col gap-6">
       {/* filters */}
       <div className="flex items-center justify-between p-1">
         <div id="sort-filter-container">
@@ -93,7 +93,7 @@ const Sections = ({
       </div>
       {/* list */}
       <div
-        className="section-cards flex flex-1 flex-col gap-6 overflow-auto p-1"
+        className="section-cards flex flex-1 flex-col gap-5 overflow-auto p-1"
         id="section-cards"
       >
         {sections?.map((section: Section) => (
