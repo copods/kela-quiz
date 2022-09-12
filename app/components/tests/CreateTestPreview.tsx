@@ -73,7 +73,11 @@ const TestPreview = ({
             </div>
             <div
               className="ql-editor flex-1 p-0 text-base text-gray-700"
-              dangerouslySetInnerHTML={{ __html: sanitizeHtml(description) }}
+              dangerouslySetInnerHTML={{
+                __html: sanitizeHtml(
+                  description.replace(/<p><br[\/]?><[\/]?p>/g, '')
+                ),
+              }}
             ></div>
           </div>
           <div className="flex">
@@ -121,7 +125,11 @@ const TestPreview = ({
                       {testsConstants.questions}
                     </span>
                     <span>
-                      {section.time ? section.time : section.timeInSeconds && section.timeInSeconds / 60} Min
+                      {section.time
+                        ? section.time
+                        : section.timeInSeconds &&
+                          section.timeInSeconds / 60}{' '}
+                      Min
                     </span>
                   </div>
                 </div>

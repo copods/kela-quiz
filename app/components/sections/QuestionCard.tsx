@@ -46,7 +46,9 @@ const QuestionCard = ({
             <div
               className="question cursor-pointer"
               dangerouslySetInnerHTML={{
-                __html: sanitizeHtml(question.question),
+                __html: sanitizeHtml(
+                  question.question.replace(/<p><br[\/]?><[\/]?p>/g, '')
+                ),
               }}
             ></div>
           </div>
