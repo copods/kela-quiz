@@ -255,7 +255,7 @@ export default function SectionPage() {
 
   return (
     <AdminLayout>
-      <div className="flex h-full flex-col gap-6 overflow-hidden">
+      <div className="flex h-full flex-col gap-6 overflow-hidden p-1">
         {/* header */}
         <header className="flex items-center justify-between">
           <h2

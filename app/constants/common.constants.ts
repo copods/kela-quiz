@@ -33,6 +33,10 @@ export const commonConstants = {
   saveAndExit: 'Save & Exit',
   saveAndAddMore: 'Save & Add More',
   logout: 'Logout',
+  enterSectionName: 'Enter Section Name',
+  enterSectionDesc: 'Enter Section Description',
+  enterTestName: 'Enter test name',
+  totalQuestion: 'Total Questions',
 }
 export const sideNav = {
   sideNavHeading: 'Quiz',
