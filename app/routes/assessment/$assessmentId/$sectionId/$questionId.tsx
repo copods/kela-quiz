@@ -19,7 +19,7 @@ export const loader: LoaderFunction = async ({ params, request }) => {
 
   const lastSection = candidateTests?.sections.length == section?.order
 
-  return { question, section, lastSection }
+  return { question, section, lastSection, candidateTests }
 }
 
 export const action: ActionFunction = async ({ params, request }) => {

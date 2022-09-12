@@ -2,7 +2,7 @@ import { useLoaderData } from '@remix-run/react'
 import type { ActionFunction, LoaderFunction } from '@remix-run/server-runtime'
 import { redirect } from '@remix-run/server-runtime'
 import SectionQuestionPage from '~/components/assessment/SectionQuestionPage'
-import CandidateLayout from '~/components/layouts/CandidateLayout'
+// import CandidateLayout from '~/components/layouts/CandidateLayout'
 import {
   candidateTest,
   checkIfTestLinkIsValidAndRedirect,
@@ -71,21 +71,22 @@ export const action: ActionFunction = async ({ params, request }) => {
   if (typeof nextSecRoute === 'string') return redirect(nextSecRoute)
 }
 const AssessmentSection = () => {
-  const { section, candidateTests, candidate, params } = useLoaderData()
+  const { section, candidateTests, params } = useLoaderData()
+  // candidate is available to fetch from useloaderData
   return (
-    <CandidateLayout
-      candidate={candidate}
-      candidateTest={candidateTests}
-      heading="Section Detail"
-      params={params}
+    // <CandidateLayout
+    //   candidate={candidate}
+    //   candidateTest={candidateTests}
+    //   heading="Section Detail"
+    //   params={params}
+    //   section={section}
+    // >
+    <SectionQuestionPage
       section={section}
-    >
-      <SectionQuestionPage
-        section={section}
-        params={params}
-        candidateTest={candidateTests}
-      />
-    </CandidateLayout>
+      params={params}
+      candidateTest={candidateTests}
+    />
+    // </CandidateLayout>
   )
 }
 

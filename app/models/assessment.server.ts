@@ -347,6 +347,7 @@ export async function skipAnswerAndNextQuestion({
   answers: Array<string>
 }) {
   try {
+    console.log('casdf', currentQuestionId)
     const question = await prisma.candidateQuestion.findUnique({
       where: {
         id: currentQuestionId,
@@ -367,6 +368,7 @@ export async function skipAnswerAndNextQuestion({
         oldAnswers.push(option.id)
       }
     })
+    console.log('acasc cCQR', currentQuestionId)
 
     const currentQuestion = await prisma.candidateQuestion.update({
       where: {
