@@ -2,7 +2,7 @@ import { Dialog, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import type { Role } from '~/interface/Interface'
 import { useSubmit, useTransition } from '@remix-run/react'
-import { Fragment, useState } from 'react'
+import { Fragment, useState, useEffect } from 'react'
 import { commonConstants, members } from '~/constants/common.constants'
 import Button from '../form/Button'
 import { trimValue } from '~/utils'
@@ -38,6 +38,11 @@ export default function AddMemberModal({
       method: 'post',
     })
   }
+
+  useEffect(() => {
+    setFirstName('')
+    setLastName('')
+  }, [open])
 
   return (
     <div>
