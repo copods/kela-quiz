@@ -41,7 +41,7 @@ const QuestionCard = ({
       }}
     >
       <div className="break flex justify-between text-base text-gray-600">
-        <div className="flex flex-1 items-start justify-between">
+        <div className="flex flex-1 flex-col-reverse items-center justify-between justify-between laptop:flex-row laptop:items-start">
           <div className="ql-editor flex-1 p-0 pr-4">
             <div
               className="question cursor-pointer"
@@ -51,7 +51,7 @@ const QuestionCard = ({
             ></div>
           </div>
           <div className="flex items-center gap-2">
-            <span className="flex items-center rounded-52 border border-gray-700 px-3 text-sm  text-gray-700">
+            <span className="flex items-center rounded-52 border border-gray-700 px-3 text-sm text-gray-700">
               {question.questionType?.displayName}
             </span>
             {isExpanded === index ? (
