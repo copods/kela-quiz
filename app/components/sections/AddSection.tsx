@@ -1,5 +1,5 @@
 import { Form, useTransition } from '@remix-run/react'
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import {
@@ -20,6 +20,10 @@ const AddSection = ({
   const transition = useTransition()
   const [sectionName, setSectionName] = useState('')
   const [description, setDescription] = useState('')
+  useEffect(() => {
+    setDescription('')
+    setSectionName('')
+  }, [open])
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog
@@ -113,7 +117,6 @@ const AddSection = ({
                     className="h-9 px-4"
                     name="add-section"
                     value="add"
-                    onClick={() => setOpen(false)}
                     isDisabled={
                       transition.state === 'submitting' || showErrorMessage
                     }
