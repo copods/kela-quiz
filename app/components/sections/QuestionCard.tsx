@@ -47,7 +47,10 @@ const QuestionCard = ({
               className="question cursor-pointer"
               dangerouslySetInnerHTML={{
                 __html: sanitizeHtml(
-                  question.question.replace(/<p><br[\/]?><[\/]?p>/g, '')
+                  question.question.replace(
+                    /<p><br[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|]?><[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|]?p>/g,
+                    ''
+                  )
                 ),
               }}
             ></div>{' '}
