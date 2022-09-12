@@ -79,7 +79,6 @@ const TestPreview = ({
                 ),
               }}
             ></div>{' '}
-            {/* eslint-disable no-useless-escape  */}
           </div>
           <div className="flex">
             <div
