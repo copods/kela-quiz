@@ -121,7 +121,11 @@ const TestPreview = ({
                       {testsConstants.questions}
                     </span>
                     <span>
-                      {section.time ? section.time : section.timeInSeconds && section.timeInSeconds / 60} Min
+                      {section.time
+                        ? section.time
+                        : section.timeInSeconds &&
+                          section.timeInSeconds / 60}{' '}
+                      Min
                     </span>
                   </div>
                 </div>
