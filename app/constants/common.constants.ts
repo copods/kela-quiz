@@ -131,7 +131,7 @@ export const statusCheck = {
   noEmailsInvite: 'No emails to invite',
   selectCorrOption: 'Select the Correct Option',
   descIsReq: 'Description is required',
-  nameIsReq: 'Section Name is required',
+  nameIsReq: 'Name is required',
   sectionAddedSuccess: 'Section added successfully..!',
   maxOptions: 'you can add maximum six options.',
   testDependentWarning:
