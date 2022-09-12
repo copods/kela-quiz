@@ -2,9 +2,11 @@ import { Dialog, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import type { Role } from '~/interface/Interface'
 import { Form, useTransition } from '@remix-run/react'
-import { Fragment } from 'react'
+import { Fragment, useState } from 'react'
 import { commonConstants, members } from '~/constants/common.constants'
 import Button from '../form/Button'
+import { trimValue } from '~/utils'
+// import { validate } from '~/utils'
 export default function AddMemberModal({
   roles,
   open,
@@ -15,6 +17,9 @@ export default function AddMemberModal({
   setOpen: (e: boolean) => void
 }) {
   const transition = useTransition()
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
+
   return (
     <div>
       <Transition.Root show={open} as={Fragment}>
@@ -74,8 +79,13 @@ export default function AddMemberModal({
                         id="firstName"
                         type="text"
                         name="firstName"
-                        className=" my-1.5 h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
-                        placeholder="First Name"
+                        className="my-1.5 h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
+                        placeholder={members.firstName}
+                        onChange={(e) =>
+                          setFirstName(trimValue(e.target.value))
+                        }
+                        value={firstName}
+                        maxLength={40}
                       />
                     </div>
                     <div>
@@ -88,7 +98,10 @@ export default function AddMemberModal({
                         type="text"
                         name="lastName"
                         className="my-1.5 h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
-                        placeholder="Last Name"
+                        placeholder={members.lastName}
+                        onChange={(e) => setLastName(trimValue(e.target.value))}
+                        value={lastName}
+                        maxLength={40}
                       />
                     </div>
                   </div>
@@ -102,7 +115,7 @@ export default function AddMemberModal({
                       type="text"
                       name="email"
                       className="my-1.5 h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
-                      placeholder="email@address.com"
+                      placeholder={members.email}
                     />
                   </div>
                   <div className="pb-6">

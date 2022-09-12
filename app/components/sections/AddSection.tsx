@@ -1,5 +1,5 @@
 import { Form, useTransition } from '@remix-run/react'
-import { Fragment } from 'react'
+import { Fragment, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import {
@@ -7,6 +7,7 @@ import {
   sectionsConstants,
 } from '~/constants/common.constants'
 import Button from '../form/Button'
+import { trimValue } from '~/utils'
 const AddSection = ({
   open,
   setOpen,
@@ -17,6 +18,8 @@ const AddSection = ({
   showErrorMessage: boolean
 }) => {
   const transition = useTransition()
+  const [sectionName, setSectionName] = useState('')
+  const [description, setDescription] = useState('')
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog
@@ -75,7 +78,9 @@ const AddSection = ({
                     type="text"
                     name="name"
                     className="h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
-                    placeholder="Enter Section Name"
+                    placeholder={commonConstants.enterSectionName}
+                    onChange={(e) => setSectionName(trimValue(e.target.value))}
+                    value={sectionName}
                     maxLength={52}
                   />
                 </div>
@@ -86,7 +91,9 @@ const AddSection = ({
                     id="section-description"
                     rows={4}
                     className="w-full rounded-lg border border-gray-200 px-3 py-4 text-base"
-                    placeholder="Enter Section Description"
+                    onChange={(e) => setDescription(trimValue(e.target.value))}
+                    value={description}
+                    placeholder={commonConstants.enterSectionDesc}
                   />
                 </div>
                 <div className="flex justify-end gap-2">
