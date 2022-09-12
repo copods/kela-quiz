@@ -50,7 +50,6 @@ export const loader: LoaderFunction = async ({ request }) => {
     .catch((err) => {
       status = err
     })
-
   return json<LoaderData>({ tests, status })
 }
 
@@ -77,7 +76,6 @@ export const action: ActionFunction = async ({ request }) => {
       })
     return deleteHandle
   }
-
   if (testId !== null) {
     let emails: Array<string> = []
     await formData.forEach((fd) => {
@@ -86,7 +84,7 @@ export const action: ActionFunction = async ({ request }) => {
       }
     })
     if (emails.length === 0) {
-      return json({ status: 401, message: statusCheck.noEmailsInvite })
+      return json({ status: 401, message: statusCheck.noEmailsInvite, testId })
     }
     const candidateInviteStatus = await createCandidate({
       emails,

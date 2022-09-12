@@ -96,9 +96,11 @@ const TestTableItem = ({
             id="invite-popup-open"
             role={'button'}
             tabIndex={0}
-            className="candidateInviteIcon cursor-pointer text-2xl text-primary focus:outline-none"
+            className="candidateInviteIcon cursor-pointer text-2xl text-primary"
             icon={'ant-design:user-add-outlined'}
-            onClick={() => setCandidatePopupOpen(true)}
+            onClick={() => {
+              setCandidatePopupOpen(true)
+            }}
             onKeyUp={(e) => {
               if (e.key === 'Enter') setCandidatePopupOpen(true)
             }}
