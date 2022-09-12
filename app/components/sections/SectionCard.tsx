@@ -117,8 +117,8 @@ const SectionCard = ({
         open={isDelete}
         onDelete={deleteSection}
         subAlert={deletePopUp.subAlert}
-        title={name}
-        titleName={sectionsConstants.sectionName}
+        deleteItem={name}
+        deleteItemType={sectionsConstants.sectionName}
       />
     </div>
   )

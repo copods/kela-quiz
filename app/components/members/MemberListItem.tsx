@@ -63,8 +63,8 @@ export default function MemberListItem({
           setOpen={setOpen}
           open={open}
           onDelete={deleteUser}
-          title={`${user.firstName} ${user.lastName}`}
-          titleName={members.member}
+          deleteItem={`${user.firstName} ${user.lastName}`}
+          deleteItemType={members.member}
         />
       </div>
     </div>

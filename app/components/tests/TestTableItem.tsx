@@ -116,8 +116,8 @@ const TestTableItem = ({
           open={showDeletePopup}
           onDelete={deleteTest}
           status={status}
-          title={testName}
-          titleName={testsConstants.testName}
+          deleteItem={testName}
+          deleteItemType={testsConstants.testName}
         />
         <InviteCandidatePopup
           openInvitePopup={candidatePopupOpen}
