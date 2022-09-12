@@ -10,12 +10,16 @@ export default function DeletePopUp({
   onDelete,
   status,
   subAlert,
+  title,
+  titleName,
 }: {
   open: boolean
   setOpen: (e: boolean) => void
   onDelete: () => void
   status?: string | undefined
   subAlert?: string
+  title: string
+  titleName: string
 }) {
   const handleDelete = () => {
     onDelete()
@@ -61,7 +65,7 @@ export default function DeletePopUp({
                     </div>
                     <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                       <p className="text-sm text-gray-500">
-                        {deletePopUp.alert} {subAlert}
+                        {deletePopUp.alert} {titleName} '{title}' {subAlert}
                       </p>
                     </div>
                   </div>
