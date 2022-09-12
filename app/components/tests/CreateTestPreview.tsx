@@ -78,7 +78,8 @@ const TestPreview = ({
                   description.replace(/<p><br[\/]?><[\/]?p>/g, '')
                 ),
               }}
-            ></div>
+            ></div>{' '}
+            {/* eslint-disable no-useless-escape  */}
           </div>
           <div className="flex">
             <div

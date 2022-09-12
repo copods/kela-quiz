@@ -32,7 +32,7 @@ const OptionCard = ({
                 )
             )}`,
           }}
-        ></div>
+        ></div> /* eslint-disable no-useless-escape */
       )}
     </div>
   )
