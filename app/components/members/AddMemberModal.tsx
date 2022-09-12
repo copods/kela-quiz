@@ -58,13 +58,22 @@ export default function AddMemberModal({
               >
                 <Dialog.Panel className="relative transform overflow-hidden rounded-2xl bg-white p-6 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
                   <div className="flex items-center justify-between pt-1">
-                    <h2 className="text-2xl font-bold text-gray-700">
+                    <h2
+                      className="text-2xl font-bold text-gray-700"
+                      tabIndex={0}
+                      title={members.addMember}
+                      role={members.addMember}
+                      aria-label={members.addMember}
+                    >
                       {members.addMember}
                     </h2>
                     <Icon
                       tabIndex={0}
                       className="cursor-pointer text-2xl text-gray-600"
                       icon={'carbon:close'}
+                      onKeyUp={(e) => {
+                        if (e.key === 'Enter') setOpen(false)
+                      }}
                       onClick={() => setOpen(false)}
                     />
                   </div>

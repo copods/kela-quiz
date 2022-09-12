@@ -37,7 +37,7 @@ const SortFilter = ({
                 if (e.key === 'Enter') onSortDirectionChange(sortByOrder.desc)
               }}
               onClick={() => onSortDirectionChange(sortByOrder.desc)}
-              className="bg-light-200 cursor-pointer text-2xl focus:outline-none"
+              className="bg-light-200 cursor-pointer text-2xl focus:outline-dotted"
               aria-label={commonConstants.sortAscending}
             />
           ) : (
@@ -64,6 +64,8 @@ const SortFilter = ({
         />
       </div>
       <span
+        tabIndex={0}
+        role={'banner'}
         className="flex items-center text-sm text-gray-600"
         id="total-items-value"
       >
