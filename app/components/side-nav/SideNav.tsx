@@ -3,12 +3,12 @@ import Header from '~/components/SideNavHeader'
 import Footer from '~/components/SideNavFooter'
 import {
   commonConstants,
-  members,
   routeFiles,
   sideNav,
   testsConstants,
 } from '~/constants/common.constants'
 import { routes } from '~/constants/route.constants'
+import { useTranslation } from 'react-i18next'
 
 const sideNavGuide = [
   // {
@@ -62,7 +62,7 @@ const sideNavGuide = [
       {
         id: 'members',
         iconClass: 'mdi:account-group',
-        itemName: members.members,
+        itemName: 'members.members',
         itemRoute: routes.members,
       },
       // {
@@ -76,6 +76,8 @@ const sideNavGuide = [
 ]
 const title = sideNav.sideNavHeading
 const SideNav = () => {
+  const { t } = useTranslation()
+
   return (
     <div className="flex h-full flex-col justify-between overflow-auto p-5">
       <div>
@@ -95,7 +97,7 @@ const SideNav = () => {
                       key={index}
                       id={item.id}
                       iconClass={item.iconClass}
-                      itemName={item.itemName}
+                      itemName={t(item.itemName)}
                       itemRoute={item.itemRoute}
                     />
                   )

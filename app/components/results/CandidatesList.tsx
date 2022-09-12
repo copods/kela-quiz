@@ -1,13 +1,12 @@
 import { useLoaderData } from '@remix-run/react'
-import {
-  members,
-  resultConstants,
-  testsConstants,
-} from '~/constants/common.constants'
+import { useTranslation } from 'react-i18next'
+import { resultConstants, testsConstants } from '~/constants/common.constants'
 import type { Candidate, CandidateResult, User } from '~/interface/Interface'
 import AttendedCandidateListItem from './AttendedCandidateListItem'
 
 const CandidatesList = () => {
+  const { t } = useTranslation()
+
   const { candidatesOfTest, params } = useLoaderData()
   const testData = candidatesOfTest?.candidateTest
 
@@ -38,10 +37,10 @@ const CandidatesList = () => {
             {resultConstants.srNo}
           </span>
           <span className="col-span-3 text-sm font-semibold text-gray-500">
-            {members.name}
+            {t('commonConstants.name')}
           </span>
           <span className="col-span-4 text-sm font-semibold text-gray-500">
-            {members.email}
+            {t('commonConstants.email')}
           </span>
           <span className="col-span-2 text-sm font-semibold text-gray-500">
             {resultConstants.invitedBy}

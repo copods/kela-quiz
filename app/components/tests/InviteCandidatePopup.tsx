@@ -8,9 +8,8 @@ import {
   candidateExamConstants,
   testsConstants,
   inviteMemeberPopUpConstants,
-  members,
-  commonConstants,
 } from '~/constants/common.constants'
+import { useTranslation } from 'react-i18next'
 
 const InviteCandidatePopup = ({
   openInvitePopup,
@@ -23,6 +22,8 @@ const InviteCandidatePopup = ({
   testName: string
   testId: string
 }) => {
+  const { t } = useTranslation()
+
   const [emails, setEmails] = useState<Array<string>>([''])
   const actionData = useActionData()
   useEffect(() => {
@@ -129,8 +130,8 @@ const InviteCandidatePopup = ({
                         name={`email`}
                         className="inviteInput h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
                         placeholder="johndoe@example.com"
-                        title={members.email}
-                        aria-label={members.email}
+                        title={t('commonConstants.email')}
+                        aria-label={t('commonConstants.email')}
                       />
                     </div>
                   )
@@ -140,8 +141,8 @@ const InviteCandidatePopup = ({
                     type="button"
                     className="h-9 px-4"
                     varient="primary-outlined"
-                    title={commonConstants.cancel}
-                    buttonText={commonConstants.cancel}
+                    title={t('commonConstants.cancel')}
+                    buttonText={t('commonConstants.cancel')}
                     onClick={updatePopupAndEmailState}
                   />
                   <Button

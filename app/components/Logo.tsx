@@ -1,4 +1,4 @@
-import { logo } from '~/constants/common.constants'
+import { useTranslation } from 'react-i18next'
 
 interface LogoProps {
   height?: string
@@ -7,12 +7,13 @@ interface LogoProps {
 }
 
 const Logo = ({ height, width, styleClass }: LogoProps) => {
+  const { t } = useTranslation()
   return (
     <img
       src="../../assets/logo.svg"
       height={height}
       width={width}
-      alt={logo.kQuizLogo}
+      alt={t('logo.kQuizLogo')}
       className={styleClass}
     />
   )

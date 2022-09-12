@@ -19,6 +19,7 @@ import quillEditorStyles from 'quill/dist/quill.snow.css'
 import { getUser } from './session.server'
 import toastrStyles from 'react-toastify/dist/ReactToastify.css'
 import { ToastContainer } from 'react-toastify'
+import { useTranslation } from 'react-i18next'
 
 export const links: LinksFunction = () => {
   return [
@@ -46,8 +47,10 @@ export const loader: LoaderFunction = async ({ request }) => {
 }
 
 export default function App() {
+  const { i18n } = useTranslation()
+
   return (
-    <html lang="en" className="h-full">
+    <html lang={i18n.language} className="h-full">
       <head>
         <Meta />
         <Links />
