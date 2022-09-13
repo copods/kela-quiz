@@ -45,9 +45,6 @@ module.exports = {
         18: '18px',
         22: '22px',
       },
-      screens: {
-        laptop: '1200px',
-      },
     },
   },
   plugins: [],
