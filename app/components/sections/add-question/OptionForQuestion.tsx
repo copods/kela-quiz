@@ -234,7 +234,6 @@ export default function OptionForQuestion({
                       placeholder={commonConstants.placeholderForOptionInput}
                       value={option.answer}
                       onChange={(e) => {
-                        console.log(e, 'edef')
                         updateTextAnswer(e.target.value, index)
                       }}
                     ></input>
