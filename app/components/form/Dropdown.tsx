@@ -6,6 +6,7 @@ import { sectionsConstants } from '~/constants/common.constants'
 function DropdownField({
   data,
   displayKey,
+  name,
   valueKey,
   value,
   setValue,
@@ -13,6 +14,7 @@ function DropdownField({
   data: Array<any>
   displayKey: string
   valueKey: string
+  name?: string
   value: any
   setValue: (e: any) => void
 }) {
@@ -31,7 +33,7 @@ function DropdownField({
       {({ open }) => (
         <>
           <div
-            className="dropdown relative w-48"
+            className="dropdown relative w-full"
             id="dropdown"
             title={sectionsConstants.dropdown}
             aria-label={sectionsConstants.dropdown}
@@ -54,14 +56,14 @@ function DropdownField({
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <Listbox.Options className="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+              <Listbox.Options className="dropDownSelect absolute mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                 {data.map((el) => (
                   <Listbox.Option
                     key={el[valueKey]}
                     className={({ active }) =>
                       classNames(
                         active ? 'bg-primary text-white' : 'text-gray-900',
-                        'relative cursor-pointer select-none py-2 px-3'
+                        'relative z-20 cursor-pointer select-none py-2 px-3'
                       )
                     }
                     value={el[valueKey]}
