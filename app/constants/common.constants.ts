@@ -51,6 +51,7 @@ export const members = {
   members: 'Members',
   addedOn: 'Added On',
   action: 'Action',
+  member: 'member',
 }
 export const inviteMemeberPopUpConstants = {
   inviteCandidate: 'Invite Candidate',
@@ -92,6 +93,7 @@ export const sectionsConstants = {
   dropdown: 'Select',
   expand: 'Expand',
   search: 'Search Question',
+  sectionName: 'section',
 }
 export const testsConstants = {
   addTestbutton: 'Add Test',
@@ -114,6 +116,7 @@ export const testsConstants = {
   candidateAlreadyInvited: 'Candidate has already been invited for this test',
   candidateInvited: 'Candidates Invited',
   writeDescriptionOfTest: 'Write Description of Test',
+  testName: 'test',
 }
 export const componentGlobalConstants = {
   totalCounts: 'Total Counts',

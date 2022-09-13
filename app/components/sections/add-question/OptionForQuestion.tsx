@@ -191,7 +191,13 @@ export default function OptionForQuestion({
                           quillPlaceholder={'option'}
                           fullAccess={false}
                           onTextChange={(e) => {
-                            updateOption(e, option?.id)
+                            updateOption(
+                              e.replace(
+                                /<p><br[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|]?><[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|]?p>/g,
+                                ''
+                              ),
+                              option?.id
+                            )
                           }}
                         />
                       )}
@@ -228,6 +234,7 @@ export default function OptionForQuestion({
                       placeholder={commonConstants.placeholderForOptionInput}
                       value={option.answer}
                       onChange={(e) => {
+                        console.log(e, 'edef')
                         updateTextAnswer(e.target.value, index)
                       }}
                     ></input>

@@ -5,6 +5,7 @@ import moment from 'moment'
 import DeletePopUp from '../DeletePopUp'
 import { useEffect, useState } from 'react'
 import { useSubmit } from '@remix-run/react'
+import { members } from '~/constants/common.constants'
 
 export default function MemberListItem({
   user,
@@ -58,7 +59,13 @@ export default function MemberListItem({
             }`}
           />
         </div>
-        <DeletePopUp setOpen={setOpen} open={open} onDelete={deleteUser} />
+        <DeletePopUp
+          setOpen={setOpen}
+          open={open}
+          onDelete={deleteUser}
+          deleteItem={`${user.firstName} ${user.lastName}`}
+          deleteItemType={members.member}
+        />
       </div>
     </div>
   )

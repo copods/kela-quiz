@@ -25,14 +25,7 @@ const OptionCard = ({
           className="ql-editor flex-1"
           dangerouslySetInnerHTML={{
             __html: `${sanitizeHtml(
-              (option as Option)?.option.replace(
-                /<p><br[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|]?><[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|]?p>/g,
-                ''
-              ) ||
-                (option as CorrectAnswer)?.answer.replace(
-                  /<p><br[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|]?><[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|]?p>/g,
-                  ''
-                )
+              (option as Option)?.option || (option as CorrectAnswer)?.answer
             )}`,
           }}
         ></div>

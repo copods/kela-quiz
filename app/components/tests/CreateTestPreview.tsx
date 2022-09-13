@@ -74,12 +74,7 @@ const TestPreview = ({
             <div
               className="ql-editor flex-1 p-0 text-base text-gray-700"
               dangerouslySetInnerHTML={{
-                __html: sanitizeHtml(
-                  description.replace(
-                    /<p><br[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|]?><[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|]?p>/g,
-                    ''
-                  )
-                ),
+                __html: sanitizeHtml(description),
               }}
             ></div>{' '}
           </div>
