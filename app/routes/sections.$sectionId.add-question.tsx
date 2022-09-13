@@ -49,9 +49,11 @@ export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
   const question = JSON.parse(formData.get('quesData') as string)
   let ques
-
   await addQuestion(
-    question.question,
+    question.question.replace(
+      /<p><br[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|]?><[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|]?p>/g,
+      ''
+    ),
     question.options,
     question.correctAnswer,
     question.questionTypeId,

@@ -75,8 +75,10 @@ const TestPreview = ({
             </div>
             <div
               className="ql-editor flex-1 p-0 text-base text-gray-700"
-              dangerouslySetInnerHTML={{ __html: sanitizeHtml(description) }}
-            ></div>
+              dangerouslySetInnerHTML={{
+                __html: sanitizeHtml(description),
+              }}
+            ></div>{' '}
           </div>
           <div className="flex">
             <div
