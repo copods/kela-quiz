@@ -14,7 +14,7 @@ const CandidateQuestionHeader = () => {
         <img className="h-8 w-8" src={logo} alt={commonConstants.logo} />
         <span className="text-2xl font-bold">{sideNav.sideNavHeading}</span>
       </div>
-      <div className="flex w-64 items-center justify-center text-xl font-bold">
+      <div className="w-min-64 flex self-center text-center text-xl font-bold">
         Section {section.order} - {candidateTests.sections.length}:{' '}
         {candidateTests.test.name}
       </div>

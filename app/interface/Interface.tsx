@@ -45,6 +45,7 @@ export interface CheckboxProps {
   name?: string
   isChecked?: boolean
   value?: string
+  className?: string
 }
 
 export interface TestSection {
