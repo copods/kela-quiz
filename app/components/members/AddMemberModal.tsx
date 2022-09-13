@@ -43,7 +43,6 @@ export default function AddMemberModal({
     setFirstName('')
     setLastName('')
   }, [open])
-
   return (
     <div>
       <Transition.Root show={open} as={Fragment}>
