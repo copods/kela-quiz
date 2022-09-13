@@ -8,7 +8,6 @@ import TestListActionMenu from '../TestListActionMenu'
 import { useState } from 'react'
 import InviteCandidatePopup from './InviteCandidatePopup'
 import { useTranslation } from 'react-i18next'
-// import Checkbox from '../form/CheckBox'
 
 const TestTableItem = ({
   testName,
@@ -119,6 +118,8 @@ const TestTableItem = ({
           open={showDeletePopup}
           onDelete={deleteTest}
           status={status}
+          deleteItem={testName}
+          deleteItemType={t('testsConstants.test')}
         />
         <InviteCandidatePopup
           openInvitePopup={candidatePopupOpen}

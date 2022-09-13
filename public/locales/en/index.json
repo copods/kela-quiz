@@ -86,7 +86,8 @@
     "sort": "Sort",
     "dropdown": "Select",
     "expand": "Expand",
-    "search": "Search Question"
+    "search": "Search Question",
+    "sectionName": "section"
   },
   "testsConstants": {
     "addTestbutton": "Add Test",

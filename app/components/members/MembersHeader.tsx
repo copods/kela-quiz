@@ -22,7 +22,7 @@ export default function MembersHeader({
     }
   }, [actionStatus])
   return (
-    <div className="pb-6">
+    <div>
       <div className="flex items-center justify-between">
         <h1 className="membersHeading text-3xl font-bold">
           {t('members.members')}

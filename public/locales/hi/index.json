@@ -86,7 +86,8 @@
     "sort": "क्रम से लगाना",
     "dropdown": "चुनना",
     "expand": "Expand",
-    "search": "Search Question"
+    "search": "Search Question",
+    "sectionName": "section"
   },
   "testsConstants": {
     "addTestbutton": "Add Test",

@@ -39,6 +39,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   const users = await getAllUsers()
   return json<LoaderData>({ users, roles, userId })
 }
+
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
   const action = JSON.parse(formData.get('addMember') as string)
