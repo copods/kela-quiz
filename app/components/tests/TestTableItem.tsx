@@ -7,8 +7,7 @@ import { useNavigate, useSubmit } from '@remix-run/react'
 import TestListActionMenu from '../TestListActionMenu'
 import { useState } from 'react'
 import InviteCandidatePopup from './InviteCandidatePopup'
-import { testTableItem } from '~/constants/common.constants'
-// import Checkbox from '../form/CheckBox'
+import { testsConstants, testTableItem } from '~/constants/common.constants'
 
 const TestTableItem = ({
   testName,
@@ -118,6 +117,8 @@ const TestTableItem = ({
           open={showDeletePopup}
           onDelete={deleteTest}
           status={status}
+          deleteItem={testName}
+          deleteItemType={testsConstants.testName}
         />
         <InviteCandidatePopup
           openInvitePopup={candidatePopupOpen}
