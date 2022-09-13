@@ -1,6 +1,6 @@
 import { useSubmit } from '@remix-run/react'
 import { useEffect, useState } from 'react'
-import { candidateExamConstants } from '~/constants/common.constants'
+import { useTranslation } from 'react-i18next'
 import type {
   SectionInCandidateTest,
   SectionInTest,
@@ -14,6 +14,8 @@ const TimerComponent = ({
   candidateSection: SectionInCandidateTest
   section: SectionInTest
 }) => {
+  const { t } = useTranslation()
+
   const [time, setTimer] = useState(
     getTimeLeftInSeconds({
       totalTimeInSeconds: section?.timeInSeconds,
@@ -56,7 +58,7 @@ const TimerComponent = ({
         {getFormattedTime(time)}
       </span>
       <span className="text-sm font-medium text-gray-500">
-        {candidateExamConstants.timeRemaining}
+        {t('candidateExamConstants.timeRemaining')}
       </span>
     </div>
   )

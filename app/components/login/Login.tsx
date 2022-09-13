@@ -4,8 +4,10 @@ import Button from '~/components/form/Button'
 import InputField from '~/components/form/InputField'
 import Logo from '~/components/Logo'
 import type { LoginProps } from '~/interface/Interface'
-import { logIn } from '~/constants/common.constants'
+import { useTranslation } from 'react-i18next'
 function Login({ actionData, redirectTo }: LoginProps) {
+  const { t } = useTranslation()
+
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const inputFieldsProps = [
@@ -43,7 +45,7 @@ function Login({ actionData, redirectTo }: LoginProps) {
       </div>
       <div className="w-full">
         <h1 className="text-3xl font-bold text-gray-900">
-          {logIn.signInMessage}
+          {t('logIn.signInMessage')}
         </h1>
         <div className="flex justify-center">
           <hr className="mt-7 mb-5 h-px w-6/12 border-none bg-gray-500 text-center" />
@@ -73,8 +75,8 @@ function Login({ actionData, redirectTo }: LoginProps) {
             <input type="hidden" name="redirectTo" value={redirectTo} />
             <Button
               tabIndex={0}
-              title={logIn.signIn}
-              buttonText={logIn.signIn}
+              title={t('logIn.signIn')}
+              buttonText={t('logIn.signIn')}
               type="submit"
               varient="primary-solid"
               className="w-full"

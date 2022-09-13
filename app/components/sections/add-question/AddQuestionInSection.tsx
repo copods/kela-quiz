@@ -13,14 +13,12 @@ import {
 import { toast } from 'react-toastify'
 import Button from '~/components/form/Button'
 import { routes } from '~/constants/route.constants'
-import {
-  addQuestion,
-  testsConstants,
-  statusCheck,
-} from '~/constants/common.constants'
 import { QuestionTypes, sortByOrder } from '~/interface/Interface'
+import { useTranslation } from 'react-i18next'
 
 const AddQuestionInSection = () => {
+  const { t } = useTranslation()
+
   const { sectionDetails, questionTypes } = useLoaderData()
   const [selectedTypeOfQuestion, onQuestionTypeChange] = useState(
     questionTypes[0].id
@@ -62,11 +60,11 @@ const AddQuestionInSection = () => {
 
   const breadCrumbArray = [
     {
-      tabName: testsConstants.sectionText,
+      tabName: 'testsConstants.sectionText',
       route: routes.sections,
     },
     {
-      tabName: addQuestion.addQuestion,
+      tabName: 'addQuestion.addQuestion',
       route: `${routes.sections}/${sectionDetails?.id}${routes.addQuestion}`,
     },
   ]
@@ -109,7 +107,7 @@ const AddQuestionInSection = () => {
         flag === 0 &&
         getQuestionType(selectedTypeOfQuestion) === QuestionTypes.multipleChoice
       ) {
-        toast.error(statusCheck.selectCorrOption, {
+        toast.error(t('statusCheck.selectCorrOption'), {
           toastId: 'correctOptionRequired',
         })
         return
@@ -120,7 +118,7 @@ const AddQuestionInSection = () => {
           QuestionTypes.singleChoice &&
         !singleChoiceAnswer
       ) {
-        toast.error(statusCheck.selectCorrOption, {
+        toast.error(t('statusCheck.selectCorrOption'), {
           toastId: 'correctOptionsRequired',
         })
         return
@@ -201,7 +199,7 @@ const AddQuestionInSection = () => {
           tabIndex={0}
           className="inline-block text-3xl font-bold text-gray-900"
         >
-          {sectionDetails?.name} - {addQuestion.addQuestion}
+          {sectionDetails?.name} - {t('addQuestion.addQuestion')}
         </h1>
       </div>
       <div className="flex h-40 flex-1 flex-row gap-6">

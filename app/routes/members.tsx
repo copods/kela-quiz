@@ -15,7 +15,7 @@ import MembersHeader from '~/components/members/MembersHeader'
 import { toast } from 'react-toastify'
 import { useEffect, useState } from 'react'
 import { routes } from '~/constants/route.constants'
-import { statusCheck, toastConstants } from '~/constants/common.constants'
+import { useTranslation } from 'react-i18next'
 
 export type ActionData = {
   errors?: {
@@ -54,31 +54,31 @@ export const action: ActionFunction = async ({ request }) => {
 
     if (typeof firstName !== 'string' || firstName.length === 0) {
       return json<ActionData>(
-        { errors: { title: toastConstants.firstNameRequired, status: 400 } },
+        { errors: { title: 'toastConstants.firstNameRequired', status: 400 } },
         { status: 400 }
       )
     }
     if (typeof lastName !== 'string' || lastName.length === 0) {
       return json<ActionData>(
-        { errors: { title: toastConstants.lastNameRequired, status: 400 } },
+        { errors: { title: 'toastConstants.lastNameRequired', status: 400 } },
         { status: 400 }
       )
     }
     if (typeof email !== 'string' || email.length === 0) {
       return json<ActionData>(
-        { errors: { title: toastConstants.emailRequired, status: 400 } },
+        { errors: { title: 'toastConstants.emailRequired', status: 400 } },
         { status: 400 }
       )
     }
     if (!emailFilter.test(email)) {
       return json<ActionData>(
-        { errors: { title: toastConstants.correctEmail, status: 400 } },
+        { errors: { title: 'toastConstants.correctEmail', status: 400 } },
         { status: 400 }
       )
     }
     if (typeof roleId !== 'string' || roleId.length === 0) {
       return json<ActionData>(
-        { errors: { title: toastConstants.roleRequired, status: 400 } },
+        { errors: { title: 'toastConstants.roleRequired', status: 400 } },
         { status: 400 }
       )
     }
@@ -90,7 +90,7 @@ export const action: ActionFunction = async ({ request }) => {
         addHandle = json<ActionData>(
           {
             resp: {
-              title: toastConstants.memberAdded,
+              title: 'toastConstants.memberAdded',
               status: 200,
             },
           },
@@ -98,9 +98,9 @@ export const action: ActionFunction = async ({ request }) => {
         )
       })
       .catch((err) => {
-        let title = statusCheck.commonError
+        let title = 'statusCheck.commonError'
         if (err.code === 'P2002') {
-          title = toastConstants.memberAlreadyExist
+          title = 'toastConstants.memberAlreadyExist'
         }
         addHandle = json<ActionData>(
           {
@@ -118,7 +118,7 @@ export const action: ActionFunction = async ({ request }) => {
   if (action === 'delete') {
     if (typeof formData.get('id') !== 'string') {
       return json<ActionData>(
-        { errors: { title: statusCheck.descIsReq, status: 400 } },
+        { errors: { title: 'statusCheck.descIsReq', status: 400 } },
         { status: 400 }
       )
     }
@@ -126,7 +126,7 @@ export const action: ActionFunction = async ({ request }) => {
     await deleteUserById(formData.get('id') as string)
       .then((res) => {
         deleteHandle = json<ActionData>(
-          { resp: { title: statusCheck.deletedSuccess, status: 200 } },
+          { resp: { title: 'statusCheck.deletedSuccess', status: 200 } },
           { status: 200 }
         )
       })
@@ -134,7 +134,7 @@ export const action: ActionFunction = async ({ request }) => {
         deleteHandle = json<ActionData>(
           {
             errors: {
-              title: statusCheck.commonError,
+              title: 'statusCheck.commonError',
               status: 400,
             },
           },
@@ -146,16 +146,18 @@ export const action: ActionFunction = async ({ request }) => {
   }
 }
 const Members = () => {
+  const { t } = useTranslation()
+
   const membersActionData = useActionData() as ActionData
   const [actionStatus, setActionStatus] = useState<boolean>(false)
   useEffect(() => {
     if (membersActionData) {
       if (membersActionData.resp?.status === 200) {
         setActionStatus(true)
-        toast.success(membersActionData.resp?.title)
+        toast.success(t(membersActionData.resp?.title))
       } else if (membersActionData.errors?.status === 400) {
         setActionStatus(false)
-        toast.error(membersActionData.errors?.title, {
+        toast.error(t(membersActionData.errors?.title), {
           toastId: membersActionData.errors?.title,
         })
       }

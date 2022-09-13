@@ -5,12 +5,14 @@ import DropdownField from '../form/Dropdown'
 import SectionCardForResultDetail from './SectionCardForResultDetail'
 import Divider from '../divider'
 import BarGraph from '../barGraph/barGraph'
-import { commonConstants } from '~/constants/common.constants'
 import Button from '../form/Button'
 import type { SectionWiseResults } from '~/interface/Interface'
 import { routes } from '~/constants/route.constants'
+import { useTranslation } from 'react-i18next'
 
 const ResultDetailsComponent = () => {
+  const { t } = useTranslation()
+
   const { candidateResult, params, sectionWiseResult } = useLoaderData()
 
   const dropdownData = [
@@ -94,8 +96,8 @@ const ResultDetailsComponent = () => {
           varient="primary-solid"
           className="px-6"
           onClick={updateCandidateStatusToDB}
-          title={commonConstants.submit}
-          buttonText={commonConstants.submit}
+          title={t('commonConstants.submit')}
+          buttonText={t('commonConstants.submit')}
         />
       </div>
     </div>

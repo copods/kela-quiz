@@ -1,6 +1,6 @@
 import { ClientOnly } from 'remix-utils'
 import QuillEditor from '../QuillEditor.client'
-import { commonConstants, testsConstants } from '~/constants/common.constants'
+import { useTranslation } from 'react-i18next'
 
 const TestDetails = ({
   name,
@@ -13,11 +13,13 @@ const TestDetails = ({
   description: string
   onDescriptionChange: (e: string) => void
 }) => {
+  const { t } = useTranslation()
+
   return (
     <div className="flex h-full w-full flex-col gap-6 rounded-lg bg-white p-6 shadow">
       <div>
         <label htmlFor="name" className="text-base font-medium text-gray-800">
-          {commonConstants.name}
+          {t('commonConstants.name')}
         </label>
         <input
           tabIndex={0}
@@ -27,7 +29,7 @@ const TestDetails = ({
           value={name}
           onChange={(e) => onNameChange(e.target.value)}
           className="test-base mt-1 h-11 w-full rounded-lg border border-gray-200 px-3"
-          placeholder={commonConstants.enterTestName}
+          placeholder={t('commonConstants.enterTestName')}
         />
       </div>
       <div className="flex-1">
@@ -35,7 +37,7 @@ const TestDetails = ({
           htmlFor="description"
           className="text-base font-medium text-gray-800"
         >
-          {testsConstants.descriptionText}
+          {t('testsConstants.descriptionText')}
         </label>
         <div className="h-full pt-2 pb-4">
           <ClientOnly fallback={<div></div>}>
@@ -44,12 +46,12 @@ const TestDetails = ({
                 text={description}
                 id="testDescription"
                 fullAccess={true}
-                quillPlaceholder={testsConstants.descriptionText}
+                quillPlaceholder={t('testsConstants.descriptionText')}
                 onTextChange={(e) => {
                   if (e === '<p><br></p>') onDescriptionChange('')
                   else onDescriptionChange(e)
                 }}
-                aria-label={testsConstants.writeDescriptionOfTest}
+                aria-label={t('testsConstants.writeDescriptionOfTest')}
               />
             )}
           </ClientOnly>

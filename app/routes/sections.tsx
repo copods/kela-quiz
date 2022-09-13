@@ -2,11 +2,6 @@ import type { ActionFunction, LoaderFunction } from '@remix-run/server-runtime'
 import { redirect } from '@remix-run/server-runtime'
 import { json } from '@remix-run/node'
 import {
-  routeFiles,
-  sectionsConstants,
-  statusCheck,
-} from '~/constants/common.constants'
-import {
   Outlet,
   useActionData,
   useFetcher,
@@ -31,6 +26,7 @@ import Button from '~/components/form/Button'
 import { sortByOrder } from '~/interface/Interface'
 import type { Section } from '~/interface/Interface'
 import { routes } from '~/constants/route.constants'
+import { useTranslation } from 'react-i18next'
 
 export type ActionData = {
   errors?: {
@@ -64,7 +60,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   await getAllSections(obj)
     .then((res) => {
       sections = res as Section[]
-      status = statusCheck.success
+      status = 'statusCheck.success'
     })
     .catch((err) => {
       status = err
@@ -89,13 +85,13 @@ export const action: ActionFunction = async ({ request }) => {
     const description = formData.get('description')
     if (typeof name !== 'string' || name.length === 0) {
       return json<ActionData>(
-        { errors: { title: statusCheck.nameIsReq, status: 400 } },
+        { errors: { title: 'statusCheck.nameIsReq', status: 400 } },
         { status: 400 }
       )
     }
     if (typeof description !== 'string' || description.length === 0) {
       return json<ActionData>(
-        { errors: { title: statusCheck.descIsReq, status: 400 } },
+        { errors: { title: 'statusCheck.descIsReq', status: 400 } },
         { status: 400 }
       )
     }
@@ -106,7 +102,7 @@ export const action: ActionFunction = async ({ request }) => {
         addHandle = json<ActionData>(
           {
             resp: {
-              status: statusCheck.sectionAddedSuccess,
+              status: 'statusCheck.sectionAddedSuccess',
               data: res as Section,
               check: new Date(),
             },
@@ -116,9 +112,9 @@ export const action: ActionFunction = async ({ request }) => {
       })
 
       .catch((err) => {
-        let title = statusCheck.commonError
+        let title = 'statusCheck.commonError'
         if (err.code === 'P2002') {
-          title = statusCheck.duplicate
+          title = 'statusCheck.duplicate'
         }
         addHandle = json<ActionData>(
           { errors: { title, status: 400, check: new Date() } },
@@ -141,7 +137,7 @@ export const action: ActionFunction = async ({ request }) => {
       if (res?._count.sectionInTest === 0 || isTestDeleted?.includes(true)) {
         isSectionDelete = true
       } else {
-        let title = statusCheck.testDependentWarning
+        let title = 'statusCheck.testDependentWarning'
         deleteHandle = json<ActionData>(
           { errors: { title, status: 400, check: new Date() } },
           { status: 400 }
@@ -153,13 +149,13 @@ export const action: ActionFunction = async ({ request }) => {
       await deleteSectionById(formData.get('id') as string)
         .then((res) => {
           deleteHandle = json<ActionData>(
-            { resp: { status: statusCheck.deletedSuccess } },
+            { resp: { status: 'statusCheck.deletedSuccess' } },
 
             { status: 200 }
           )
         })
         .catch((err) => {
-          let title = statusCheck.commonError
+          let title = 'statusCheck.commonError'
           deleteHandle = json<ActionData>(
             { errors: { title, status: 400, check: new Date() } },
             { status: 400 }
@@ -171,6 +167,7 @@ export const action: ActionFunction = async ({ request }) => {
 }
 
 export default function SectionPage() {
+  const { t } = useTranslation()
   const data = useLoaderData() as unknown as LoaderData
 
   const fetcher = useFetcher()
@@ -197,8 +194,8 @@ export default function SectionPage() {
     data.selectedSectionId || data.sections[0]?.id || 'NA'
   )
 
-  if (data.status != statusCheck.success) {
-    toast.error(statusCheck.commonError)
+  if (t(data.status) != t('statusCheck.success')) {
+    toast.error(t('statusCheck.commonError'))
   }
 
   useEffect(() => {
@@ -232,21 +229,25 @@ export default function SectionPage() {
 
   useEffect(() => {
     if (sectionActionData) {
-      if (sectionActionData.resp?.status === statusCheck.sectionAddedSuccess) {
+      if (
+        t(sectionActionData.resp?.status as string) ===
+        t('statusCheck.sectionAddedSuccess')
+      ) {
         setShowAddSectionModal(false)
-        toast.success(sectionActionData.resp?.status)
+        toast.success(t(sectionActionData.resp?.status as string))
         setSelectedSection(sectionActionData?.resp?.data?.id as string)
       } else if (
-        sectionActionData.resp?.status === statusCheck.deletedSuccess
+        t(sectionActionData.resp?.status as string) ===
+        t('statusCheck.deletedSuccess')
       ) {
-        toast.success(sectionActionData.resp?.status, {
-          toastId: sectionActionData.resp?.status,
+        toast.success(t(sectionActionData.resp?.status as string), {
+          toastId: t(sectionActionData.resp?.status as string),
         })
         setSelectedSection(
           data.selectedSectionId || data.sections[0]?.id || 'NA'
         )
       } else if (sectionActionData.errors?.status === 400) {
-        toast.error(sectionActionData.errors?.title, {
+        toast.error(t(sectionActionData.errors?.title as string), {
           toastId: sectionActionData.errors?.title,
         })
       }
@@ -261,11 +262,11 @@ export default function SectionPage() {
           <h2
             className="text-3xl font-bold text-black"
             tabIndex={0}
-            role={routeFiles.sections}
-            title={routeFiles.sections}
-            aria-label={routeFiles.sections}
+            role={t('routeFiles.sections')}
+            title={t('routeFiles.sections')}
+            aria-label={t('routeFiles.sections')}
           >
-            {routeFiles.sections}
+            {t('routeFiles.sections')}
           </h2>
           <Button
             id="add-section"
@@ -273,8 +274,8 @@ export default function SectionPage() {
             className="h-9 px-5"
             varient="primary-solid"
             onClick={() => setShowAddSectionModal(!showAddSectionModal)}
-            title={sectionsConstants.addSection}
-            buttonText={`+ ${sectionsConstants.addSection}`}
+            title={t('sectionsConstants.addSection')}
+            buttonText={`+ ${t('sectionsConstants.addSection')}`}
           />
         </header>
         {data.sections.length > 0 ? (
@@ -326,7 +327,7 @@ export default function SectionPage() {
           </div>
         ) : (
           <div className="p-7 text-center">
-            {sectionsConstants.noRecordFound}
+            {t('sectionsConstants.noRecordFound')}
           </div>
         )}
         <AddSection

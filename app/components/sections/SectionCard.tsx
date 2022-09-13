@@ -5,13 +5,8 @@ import { useSubmit } from '@remix-run/react'
 import DeletePopUp from '../DeletePopUp'
 import { useState, useEffect } from 'react'
 
-import {
-  commonConstants,
-  deletePopUp,
-  sectionsConstants,
-  statusCheck,
-} from '~/constants/common.constants'
 import Button from '../form/Button'
+import { useTranslation } from 'react-i18next'
 const SectionCard = ({
   name,
   isActive,
@@ -31,13 +26,15 @@ const SectionCard = ({
   err?: string
   actionStatusData?: string
 }) => {
+  const { t } = useTranslation()
+
   const [isDelete, setIsDelete] = useState(false)
   const submit = useSubmit()
   const deleteSection = () => {
     submit({ deleteSection: 'sectionDelete', id: id }, { method: 'post' })
   }
   useEffect(() => {
-    if (actionStatusData == statusCheck.deletedSuccess) {
+    if (actionStatusData == t('statusCheck.deletedSuccess')) {
       setIsDelete(false)
     }
   }, [actionStatusData])
@@ -83,7 +80,7 @@ const SectionCard = ({
                     className="w-36 px-2 py-2"
                     alignment="justify-start"
                     onClick={() => setIsDelete(true)}
-                    title={commonConstants.delete}
+                    title={t('commonConstants.delete')}
                     buttonText={
                       <>
                         <Icon
@@ -92,7 +89,7 @@ const SectionCard = ({
                         text-red-500`}
                           aria-hidden="true"
                         />
-                        {commonConstants.delete}
+                        {t('commonConstants.delete')}
                       </>
                     }
                   />
@@ -110,13 +107,13 @@ const SectionCard = ({
         </span>
       </div>
       <div className="flex text-xs text-gray-400">
-        {sectionsConstants.totalQuestions} {questionsCount}
+        {t('sectionsConstants.totalQuestions')} {questionsCount}
       </div>
       <DeletePopUp
         setOpen={setIsDelete}
         open={isDelete}
         onDelete={deleteSection}
-        subAlert={deletePopUp.subAlert}
+        subAlert={t('deletePopUp.subAlert')}
       />
     </div>
   )

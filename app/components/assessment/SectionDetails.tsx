@@ -1,9 +1,11 @@
 import { Icon } from '@iconify/react'
 import { useLoaderData, useSubmit } from '@remix-run/react'
-import { candidateExamConstants } from '~/constants/common.constants'
+import { useTranslation } from 'react-i18next'
 import Button from '../form/Button'
 
 const SectionDetails = () => {
+  const { t } = useTranslation()
+
   const { section, candidateSection } = useLoaderData()
   const submit = useSubmit()
   const startSection = async () => {
@@ -24,12 +26,13 @@ const SectionDetails = () => {
         </div>
         <div className="flex flex-row items-center gap-4">
           <div className="flex gap-2 text-lg text-gray-600">
-            {candidateExamConstants.noOfQuestions}:
+            {t('candidateExamConstants.noOfQuestions')}:
             <span className="font-medium">{section.totalQuestions}</span>
           </div>
           <Icon icon="ci:line-m" className="text-2xl text-gray-600" />
           <div className="flex gap-2 text-lg text-gray-600">
-            {candidateExamConstants.total} {candidateExamConstants.time}:
+            {t('candidateExamConstants.total')}{' '}
+            {t('candidateExamConstants.time')}:
             <span className="font-medium">
               {section.timeInSeconds / 60} Mins
             </span>
@@ -39,8 +42,8 @@ const SectionDetails = () => {
       <Button
         className="w-36 px-6"
         onClick={startSection}
-        title={candidateExamConstants.startSection}
-        buttonText={candidateExamConstants.startSection}
+        title={t('candidateExamConstants.startSection')}
+        buttonText={t('candidateExamConstants.startSection')}
         varient="primary-solid"
       />
     </div>

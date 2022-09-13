@@ -1,11 +1,9 @@
 // import logo from '~/../public/assets/logo.svg'
 import { Icon } from '@iconify/react'
 import { NavLink, useLoaderData, useLocation } from '@remix-run/react'
+import { useTranslation } from 'react-i18next'
 import candidateLogo from '~/../public/assets/candidateLogo.svg'
-import {
-  candidateExamConstants,
-  QuestionStatus,
-} from '~/constants/common.constants'
+import { QuestionStatus } from '~/constants/common.constants'
 import { routes } from '~/constants/route.constants'
 import type {
   Candidate,
@@ -22,6 +20,8 @@ const CandidateSideNav = ({
   candidate: Candidate
   candidateTest: CandidateTest
 }) => {
+  const { t } = useTranslation()
+
   const location = useLocation() // to get current location
   const routeData = useLoaderData()
   const getTotalTime = () => {
@@ -39,7 +39,7 @@ const CandidateSideNav = ({
         <div className="flex items-center gap-4">
           <img
             src={candidateLogo}
-            alt={candidateExamConstants.candidateLogo}
+            alt={t('candidateExamConstants.candidateLogo')}
             height={'40px'}
           />
         </div>
@@ -51,7 +51,7 @@ const CandidateSideNav = ({
         </div>
         <div className="flex items-center gap-1 text-sm font-medium text-gray-600">
           <Icon icon={'ic:outline-access-time'} className="text-base" />
-          <span>{candidateExamConstants.timeLimit}:</span>
+          <span>{t('candidateExamConstants.timeLimit')}:</span>
           <span className="text-gray-800">{getTotalTime()} Mins</span>
         </div>
       </div>
@@ -61,7 +61,7 @@ const CandidateSideNav = ({
         {/* sidenav menu group */}
         <div className="flex flex-col gap-2.5">
           <div className="px-5 text-sm font-semibold text-gray-900">
-            {candidateExamConstants.assessmentDetails}
+            {t('candidateExamConstants.assessmentDetails')}
           </div>
           <div
             className={`flex h-11 items-center text-sm ${
@@ -70,12 +70,12 @@ const CandidateSideNav = ({
                 : 'px-5 font-medium text-gray-800 '
             }`}
           >
-            {candidateExamConstants.info}
+            {t('candidateExamConstants.info')}
           </div>
         </div>
         <div className="flex flex-col gap-2.5">
           <div className="px-5 text-sm font-semibold text-gray-900">
-            {candidateExamConstants.assessmentTests}
+            {t('candidateExamConstants.assessmentTests')}
           </div>
           <div>
             {candidateTest?.sections.map((section: SectionInCandidateTest) => {
@@ -120,7 +120,8 @@ const CandidateSideNav = ({
                           }
                         >
                           <span>
-                            {candidateExamConstants.question} {question?.order}
+                            {t('candidateExamConstants.question')}{' '}
+                            {question?.order}
                           </span>
                           {question.status === QuestionStatus.skipped && (
                             <Icon

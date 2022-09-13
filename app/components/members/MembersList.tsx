@@ -1,13 +1,15 @@
 import type { User, Role } from '~/interface/Interface'
 import MemberListItem from './MemberListItem'
-import { commonConstants, members } from '~/constants/common.constants'
 import { useLoaderData } from '@remix-run/react'
+import { useTranslation } from 'react-i18next'
 
 export default function MembersList({
   actionStatus,
 }: {
   actionStatus: string | undefined
 }) {
+  const { t } = useTranslation()
+
   const membersData = useLoaderData()
   const users = membersData.users
   const loggedInUser = membersData.userId
@@ -16,19 +18,19 @@ export default function MembersList({
       <div className="col-span-full grid grid-cols-10 rounded-lg border border-solid border-gray-200 bg-white">
         <div className="col-span-full grid grid-cols-10 bg-gray-100 py-4 px-6">
           <h1 className="col-span-2 pl-4 text-sm text-gray-500">
-            {commonConstants.name}
+            {t('commonConstants.name')}
           </h1>
           <h1 className="col-span-3 pl-4 text-sm text-gray-500">
-            {members.email}
+            {t('commonConstants.email')}
           </h1>
           <h1 className="col-span-2 pl-4 text-sm text-gray-500">
-            {members.role}
+            {t('members.role')}
           </h1>
           <h1 className="col-span-2 pl-4 text-sm text-gray-500">
-            {members.addedOn}
+            {t('members.addedOn')}
           </h1>
           <h1 className="col-span-1 pl-4 text-sm text-gray-500">
-            {members.action}
+            {t('members.action')}
           </h1>
         </div>
         {users.map((user: User & { role?: Role }) => (

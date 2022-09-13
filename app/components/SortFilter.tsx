@@ -1,11 +1,7 @@
 import { Icon } from '@iconify/react'
 import DropdownField from './form/Dropdown'
-import {
-  commonConstants,
-  componentGlobalConstants,
-  sectionsConstants,
-} from '~/constants/common.constants'
 import { sortByOrder } from '~/interface/Interface'
+import { useTranslation } from 'react-i18next'
 
 const SortFilter = ({
   filterData,
@@ -24,10 +20,12 @@ const SortFilter = ({
   totalItems: number
   showSelected: boolean
 }) => {
+  const { t } = useTranslation()
+
   return (
     <div className="flex items-center gap-4" id="sort-filter">
       <div className="flex items-center gap-2.5" id="sort-filter-body">
-        <span title={sectionsConstants.sort}>
+        <span title={t('sectionsConstants.sort')}>
           {sortDirection === sortByOrder.ascending ? (
             <Icon
               tabIndex={0}
@@ -38,7 +36,7 @@ const SortFilter = ({
               }}
               onClick={() => onSortDirectionChange(sortByOrder.desc)}
               className="bg-light-200 cursor-pointer text-2xl focus:outline-none"
-              aria-label={commonConstants.sortAscending}
+              aria-label={t('commonConstants.sortAscending')}
             />
           ) : (
             <Icon
@@ -51,7 +49,7 @@ const SortFilter = ({
               }}
               onClick={() => onSortDirectionChange(sortByOrder.ascending)}
               className="cursor-pointer text-2xl focus:outline-none"
-              aria-label={commonConstants.sortDescending}
+              aria-label={t('commonConstants.sortDescending')}
             />
           )}
         </span>
@@ -68,7 +66,7 @@ const SortFilter = ({
         id="total-items-value"
       >
         <span>
-          {componentGlobalConstants.totalCounts}:
+          {t('componentGlobalConstants.totalCounts')}:
           <span id="total-count-value" className="pl-1">
             {totalItems}
           </span>
@@ -77,7 +75,7 @@ const SortFilter = ({
           <>
             <Icon icon="ci:line-m" />
             <span className="pl-3 ">
-              {componentGlobalConstants.selected}: 0/
+              {t('componentGlobalConstants.selected')}: 0/
               {totalItems}
             </span>
           </>

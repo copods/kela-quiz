@@ -1,4 +1,4 @@
-import { candidateExamConstants } from '~/constants/common.constants'
+import { useTranslation } from 'react-i18next'
 import type {
   Candidate,
   CandidateTest,
@@ -25,6 +25,8 @@ export default function CandidateLayout({
   section?: SectionInTest
   params?: { assessmentId?: string; sectionId?: string; questionId?: string }
 }) {
+  const { t } = useTranslation()
+
   let candidateSection: SectionInCandidateTest | null = null
   for (let sec of candidateTest?.sections) {
     if (section?.section?.id === sec?.section?.id) {
@@ -49,8 +51,8 @@ export default function CandidateLayout({
               )}
               <form className="flex gap-5" method="post">
                 <Button
-                  title={candidateExamConstants.endTest}
-                  buttonText={candidateExamConstants.endTest}
+                  title={t('candidateExamConstants.endTest')}
+                  buttonText={t('candidateExamConstants.endTest')}
                   varient="primary-outlined"
                   name="endExam"
                   value={section?.order}
@@ -58,8 +60,8 @@ export default function CandidateLayout({
                   className="px-5"
                 />
                 <Button
-                  title={candidateExamConstants.nextSection}
-                  buttonText={candidateExamConstants.nextSection}
+                  title={t('candidateExamConstants.nextSection')}
+                  buttonText={t('candidateExamConstants.nextSection')}
                   name="nextSection"
                   value={section?.order}
                   varient="primary-outlined"

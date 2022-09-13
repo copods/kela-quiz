@@ -2,8 +2,8 @@ import { Fragment } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import { Form } from '@remix-run/react'
-import { commonConstants, deletePopUp } from '~/constants/common.constants'
 import Button from './form/Button'
+import { useTranslation } from 'react-i18next'
 export default function DeletePopUp({
   setOpen,
   open,
@@ -17,6 +17,8 @@ export default function DeletePopUp({
   status?: string | undefined
   subAlert?: string
 }) {
+  const { t } = useTranslation()
+
   const handleDelete = () => {
     onDelete()
     setOpen(false)
@@ -61,7 +63,7 @@ export default function DeletePopUp({
                     </div>
                     <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                       <p className="text-sm text-gray-500">
-                        {deletePopUp.alert} {subAlert}
+                        {t('deletePopUp.alert')} {subAlert}
                       </p>
                     </div>
                   </div>
@@ -75,8 +77,8 @@ export default function DeletePopUp({
                       type="button"
                       name="delete"
                       className="px-5"
-                      title={commonConstants.delete}
-                      buttonText={commonConstants.delete}
+                      title={t('commonConstants.delete')}
+                      buttonText={t('commonConstants.delete')}
                       onClick={handleDelete}
                     />
                   </Form>
@@ -87,8 +89,8 @@ export default function DeletePopUp({
                     varient="primary-outlined"
                     className="px-5"
                     onClick={() => setOpen(false)}
-                    title={commonConstants.cancel}
-                    buttonText={commonConstants.cancel}
+                    title={t('commonConstants.cancel')}
+                    buttonText={t('commonConstants.cancel')}
                   />
                 </div>
               </Dialog.Panel>

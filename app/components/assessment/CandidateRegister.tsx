@@ -4,12 +4,11 @@ import Button from '~/components/form/Button'
 import InputField from '~/components/form/InputField'
 import Logo from '~/components/Logo'
 import Checkbox from '../form/CheckBox'
-import {
-  candidateExamConstants,
-  commonConstants,
-} from '~/constants/common.constants'
+import { useTranslation } from 'react-i18next'
 
 function CandidateRegister() {
+  const { t } = useTranslation()
+
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [isChecked, setIsChecked] = useState(false)
@@ -70,13 +69,13 @@ function CandidateRegister() {
           <div className="mt-5 flex flex-row">
             <Checkbox {...checkBoxProps} />
             <span className="ml-2 text-xs text-slate-500">
-              {candidateExamConstants.candidateAcceptance}
+              {t('candidateExamConstants.candidateAcceptance')}
             </span>
           </div>
           <div className="mt-6">
             <Button
-              title={commonConstants.continue}
-              buttonText={commonConstants.continue}
+              title={t('commonConstants.continue')}
+              buttonText={t('commonConstants.continue')}
               type="submit"
               className="w-full"
               isDisabled={!canSubmitBtnBeEnabled()}

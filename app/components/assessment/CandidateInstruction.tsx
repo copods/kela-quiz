@@ -1,13 +1,12 @@
 import { useLoaderData, useSubmit } from '@remix-run/react'
-import {
-  candidateExamConstants,
-  routeFiles,
-} from '~/constants/common.constants'
 import type { SectionInTest, TestSection } from '~/interface/Interface'
 import Button from '../form/Button'
 import sanitizeHtml from 'sanitize-html'
+import { useTranslation } from 'react-i18next'
 
 const CandidateInstruction = () => {
+  const { t } = useTranslation()
+
   const { firstSection, instructions } = useLoaderData()
   const candidateSections = instructions?.test?.sections.sort(
     (a: TestSection & { order: number }, b: TestSection & { order: number }) =>
@@ -35,7 +34,7 @@ const CandidateInstruction = () => {
       </div>
       <div>
         <h1 className="pb-4 text-2xl font-semibold text-gray-800">
-          {routeFiles.sections}
+          {t('routeFiles.sections')}
         </h1>
         {/* Sections */}
         <div className="flex flex-col gap-4">
@@ -50,11 +49,12 @@ const CandidateInstruction = () => {
                 </div>
                 <div className="flex gap-6 text-sm text-gray-700">
                   <span>
-                    {section.totalQuestions} {candidateExamConstants.questions}
+                    {section.totalQuestions}{' '}
+                    {t('candidateExamConstants.questions')}
                   </span>
                   <span>
                     {section.timeInSeconds / 60}{' '}
-                    {candidateExamConstants.minutes}
+                    {t('candidateExamConstants.minutes')}
                   </span>
                 </div>
               </div>
@@ -64,7 +64,7 @@ const CandidateInstruction = () => {
         {/* Instruction */}
         <div className="flex flex-col gap-4">
           <h1 className="mt-8 text-2xl font-semibold text-gray-800">
-            {candidateExamConstants.instructions}
+            {t('candidateExamConstants.instructions')}
           </h1>
           <ul className="list-disc">
             <li>You cannot traverse the sections.</li>
@@ -74,8 +74,8 @@ const CandidateInstruction = () => {
             <Button
               className="mt-8 h-12 w-52"
               varient="primary-solid"
-              title={candidateExamConstants.beginAssesment}
-              buttonText={candidateExamConstants.beginAssesment}
+              title={t('candidateExamConstants.beginAssesment')}
+              buttonText={t('candidateExamConstants.beginAssesment')}
               onClick={startTestForCandidate}
             />
           </div>

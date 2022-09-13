@@ -4,9 +4,9 @@ import { useNavigate } from 'react-router-dom'
 import type { Test } from '~/interface/Interface'
 import SortFilter from '../SortFilter'
 import TestTableItem from './TestTableItem'
-import { commonConstants, testsConstants } from '~/constants/common.constants'
 import Button from '../form/Button'
 import { routes } from '~/constants/route.constants'
+import { useTranslation } from 'react-i18next'
 // import Checkbox from '../form/CheckBox'
 const TestList = ({
   tests,
@@ -15,6 +15,8 @@ const TestList = ({
   tests: Array<Test>
   status: string | undefined
 }) => {
+  const { t } = useTranslation()
+
   const [sortDirection, onSortDirectionChange] = useState('asc')
   const [sortBy, onSortChange] = useState('name')
   const navigate = useNavigate()
@@ -52,11 +54,11 @@ const TestList = ({
       <header className="flex items-center justify-between">
         <h2
           tabIndex={0}
-          role={testsConstants.tests}
-          title={testsConstants.tests}
+          role={t('testsConstants.tests')}
+          title={t('testsConstants.tests')}
           className="text-3xl font-bold text-black"
         >
-          {testsConstants.tests}
+          {t('testsConstants.tests')}
         </h2>
         <Button
           className="px-5"
@@ -64,9 +66,9 @@ const TestList = ({
           id="add-test"
           tabIndex={0}
           varient="primary-solid"
-          title={testsConstants.addTestbutton}
-          aria-label={testsConstants.addTestbutton}
-          buttonText={`+ ${testsConstants.addTestbutton}`}
+          title={t('testsConstants.addTestbutton')}
+          aria-label={t('testsConstants.addTestbutton')}
+          buttonText={`+ ${t('testsConstants.addTestbutton')}`}
         />
       </header>
       {tests.length ? (
@@ -90,22 +92,22 @@ const TestList = ({
                 </div>
               )}
               <div className="w-1/12 text-sm text-gray-500">
-                {testsConstants.srNoText}
+                {t('commonConstants.srNo')}
               </div>
               <div className="w-4/12 text-sm text-gray-500">
-                {testsConstants.testListColumnLabel}
+                {t('testsConstants.test')}
               </div>
               <div className="w-3/12 text-sm text-gray-500">
-                {testsConstants.sectionText}
+                {t('testsConstants.sectionText')}
               </div>
               <div className="w-2/12 text-sm text-gray-500">
-                {testsConstants.createdOn}
+                {t('testsConstants.createdOn')}
               </div>
               <div className="w-2/12 text-sm text-gray-500">
-                {testsConstants.created} {commonConstants.byText}
+                {t('testsConstants.created')} {t('commonConstants.byText')}
               </div>
               <div className="flex w-1/12 text-sm text-gray-500">
-                {testsConstants.actionsText}
+                {t('testsConstants.actionsText')}
               </div>
             </div>
             <div
@@ -130,7 +132,7 @@ const TestList = ({
           </div>
         </>
       ) : (
-        <div className="p-7 text-center">{testsConstants.noTestFound}</div>
+        <div className="p-7 text-center">{t('testsConstants.noTestFound')}</div>
       )}
     </div>
   )

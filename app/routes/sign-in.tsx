@@ -12,7 +12,6 @@ import { safeRedirect, validateEmail } from '~/utils'
 import type { ActionData } from '~/interface/Interface'
 import Login from '~/components/login/Login'
 import { routes } from '~/constants/route.constants'
-import { statusCheck } from '~/constants/common.constants'
 
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await getUserId(request)
@@ -29,14 +28,14 @@ export const action: ActionFunction = async ({ request }) => {
 
   if (!validateEmail(email)) {
     return json<ActionData>(
-      { errors: { email: statusCheck.emailIsInvalid } },
+      { errors: { email: 'statusCheck.emailIsInvalid' } },
       { status: 400 }
     )
   }
 
   if (typeof password !== 'string' || password.length === 0) {
     return json<ActionData>(
-      { errors: { password: statusCheck.passIsReq } },
+      { errors: { password: 'statusCheck.passIsReq' } },
       { status: 400 }
     )
   }
@@ -44,14 +43,14 @@ export const action: ActionFunction = async ({ request }) => {
   const user = await loginVerificationResponse(email, password)
   if (!user) {
     return json<ActionData>(
-      { errors: { email: statusCheck.emailIsInvalid } },
+      { errors: { email: 'statusCheck.emailIsInvalid' } },
       { status: 400 }
     )
   }
 
   if (user instanceof Error) {
     return json<ActionData>(
-      { errors: { password: statusCheck.passIsInvalid } },
+      { errors: { password: 'statusCheck.passIsInvalid' } },
       { status: 400 }
     )
   }

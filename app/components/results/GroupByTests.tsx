@@ -1,17 +1,15 @@
 import { useEffect, useState } from 'react'
 import SortFilter from '../SortFilter'
-import {
-  resultConstants,
-  commonConstants,
-  sectionsConstants,
-} from '~/constants/common.constants'
 
 import { useLoaderData, useSubmit } from '@remix-run/react'
 import GroupByTestItems from './GroupByTestItems'
 import type { CandidateTest, Test } from '~/interface/Interface'
 import { sortByOrder } from '~/interface/Interface'
+import { useTranslation } from 'react-i18next'
 
 const GroupByTests = () => {
+  const { t } = useTranslation()
+
   const [sortDirection, onSortDirectionChange] = useState(
     sortByOrder.ascending as string
   )
@@ -59,19 +57,21 @@ const GroupByTests = () => {
             <div className="col-span-full grid grid-cols-10 rounded-lg border border-solid border-gray-200 bg-white">
               <div className="col-span-full grid grid-cols-10 gap-3 bg-gray-100 py-4 px-12">
                 <span className="col-span-1 text-sm font-semibold text-gray-500">
-                  {resultConstants.srNo}
+                  {t('commonConstants.srNo')}
                 </span>
                 <span className="col-span-3 text-sm font-semibold text-gray-500">
-                  {resultConstants.test}
+                  {t('testsConstants.test')}
                 </span>
                 <span className="col-span-2 text-sm font-semibold text-gray-500">
-                  {commonConstants.total} {resultConstants.totalInvited}
+                  {t('commonConstants.total')}{' '}
+                  {t('resultConstants.totalInvited')}
                 </span>
                 <span className="col-span-2 text-sm font-semibold text-gray-500">
-                  {commonConstants.total} {resultConstants.totalAttended}
+                  {t('commonConstants.total')}{' '}
+                  {t('resultConstants.totalAttended')}
                 </span>
                 <span className="col-span-1 text-sm font-semibold text-gray-500">
-                  {resultConstants.status}
+                  {t('resultConstants.status')}
                 </span>
               </div>
               <div id="group-by-test-items" className="col-span-10 grid">
@@ -104,7 +104,7 @@ const GroupByTests = () => {
                 )}
                 {candidateTests.length === 0 && (
                   <div className="flex items-center justify-center p-7">
-                    <span>{resultConstants.noTestAlert}</span>
+                    <span>{t('resultConstants.noTestAlert')}</span>
                   </div>
                 )}
               </div>
@@ -112,7 +112,9 @@ const GroupByTests = () => {
           </div>
         </div>
       ) : (
-        <div className="p-7 text-center">{sectionsConstants.noRecordFound}</div>
+        <div className="p-7 text-center">
+          {t('sectionsConstants.noRecordFound')}
+        </div>
       )}
     </div>
   )

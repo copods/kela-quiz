@@ -7,7 +7,7 @@ import { useNavigate, useSubmit } from '@remix-run/react'
 import TestListActionMenu from '../TestListActionMenu'
 import { useState } from 'react'
 import InviteCandidatePopup from './InviteCandidatePopup'
-import { testTableItem } from '~/constants/common.constants'
+import { useTranslation } from 'react-i18next'
 // import Checkbox from '../form/CheckBox'
 
 const TestTableItem = ({
@@ -31,6 +31,8 @@ const TestTableItem = ({
   totalCount: number
   status: string | undefined
 }) => {
+  const { t } = useTranslation()
+
   const [showDeletePopup, setShowDeletePopup] = useState(false)
   const submit = useSubmit()
   const navigate = useNavigate()
@@ -102,14 +104,14 @@ const TestTableItem = ({
             onKeyUp={(e) => {
               if (e.key === 'Enter') setCandidatePopupOpen(true)
             }}
-            aria-label={testTableItem.inviteMember}
+            aria-label={t('testTableItem.inviteMember')}
           />
           <TestListActionMenu
             menuIcon={'mdi:dots-vertical'}
             onItemClick={setShowDeletePopup}
             menuListIcon={'ic:outline-delete-outline'}
             menuListText={'Delete'}
-            aria-label={testTableItem.menu}
+            aria-label={t('testTableItem.menu')}
           />
         </div>
         <DeletePopUp

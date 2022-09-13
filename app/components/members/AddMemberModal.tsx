@@ -3,9 +3,9 @@ import { Icon } from '@iconify/react'
 import type { Role } from '~/interface/Interface'
 import { Form, useTransition } from '@remix-run/react'
 import { Fragment, useEffect, useState } from 'react'
-import { commonConstants, members } from '~/constants/common.constants'
 import Button from '../form/Button'
 import { trimValue } from '~/utils'
+import { useTranslation } from 'react-i18next'
 // import { validate } from '~/utils'
 export default function AddMemberModal({
   roles,
@@ -16,6 +16,8 @@ export default function AddMemberModal({
   open: boolean
   setOpen: (e: boolean) => void
 }) {
+  const { t } = useTranslation()
+
   const transition = useTransition()
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
@@ -62,7 +64,7 @@ export default function AddMemberModal({
                 <Dialog.Panel className="relative transform overflow-hidden rounded-2xl bg-white p-6 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
                   <div className="flex items-center justify-between pt-1">
                     <h2 className="text-2xl font-bold text-gray-700">
-                      {members.addMember}
+                      {t('members.addMember')}
                     </h2>
                     <Icon
                       tabIndex={0}
@@ -75,7 +77,7 @@ export default function AddMemberModal({
                   <div className="flex justify-between gap-4 pb-6">
                     <div>
                       <label htmlFor="" className="text-gray-800">
-                        {members.firstName}
+                        {t('members.firstName')}
                       </label>
                       <input
                         tabIndex={0}
@@ -83,7 +85,7 @@ export default function AddMemberModal({
                         type="text"
                         name="firstName"
                         className="my-1.5 h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
-                        placeholder={members.firstName}
+                        placeholder={t('members.firstName')}
                         onChange={(e) =>
                           setFirstName(trimValue(e.target.value))
                         }
@@ -93,7 +95,7 @@ export default function AddMemberModal({
                     </div>
                     <div>
                       <label htmlFor="" className="text-gray-800">
-                        {members.lastName}
+                        {t('members.lastName')}
                       </label>
                       <input
                         tabIndex={0}
@@ -101,7 +103,7 @@ export default function AddMemberModal({
                         type="text"
                         name="lastName"
                         className="my-1.5 h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
-                        placeholder={members.lastName}
+                        placeholder={t('members.lastName')}
                         onChange={(e) => setLastName(trimValue(e.target.value))}
                         value={lastName}
                         maxLength={40}
@@ -110,7 +112,7 @@ export default function AddMemberModal({
                   </div>
                   <div className="pb-6 ">
                     <label htmlFor="" className="text-gray-800">
-                      {members.email}
+                      {t('commonConstants.email')}
                     </label>
                     <input
                       tabIndex={0}
@@ -118,13 +120,13 @@ export default function AddMemberModal({
                       type="text"
                       name="email"
                       className="my-1.5 h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
-                      placeholder={members.email}
+                      placeholder={t('commonConstants.email')}
                     />
                   </div>
                   <div className="pb-6">
                     <div>
                       <label htmlFor="" className="text-gray-800">
-                        {members.role}
+                        {t('members.role')}
                       </label>
                     </div>
                     <div className="my-1.5 rounded-lg border border-gray-200 px-4">
@@ -151,8 +153,8 @@ export default function AddMemberModal({
                       className="h-9 px-4"
                       onClick={() => setOpen(false)}
                       varient="primary-outlined"
-                      title={commonConstants.cancel}
-                      buttonText={commonConstants.cancel}
+                      title={t('commonConstants.cancel')}
+                      buttonText={t('commonConstants.cancel')}
                     />
                     <Button
                       tabIndex={0}
@@ -164,13 +166,13 @@ export default function AddMemberModal({
                       isDisabled={transition.state === 'submitting'}
                       title={
                         transition.state === 'submitting'
-                          ? commonConstants.adding
-                          : commonConstants.add
+                          ? t('commonConstants.adding')
+                          : t('commonConstants.add')
                       }
                       buttonText={
                         transition.state === 'submitting'
-                          ? commonConstants.adding
-                          : commonConstants.add
+                          ? t('commonConstants.adding')
+                          : t('commonConstants.add')
                       }
                       varient="primary-solid"
                     />

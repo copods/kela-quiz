@@ -1,16 +1,14 @@
 import { useLoaderData } from '@remix-run/react'
 import { useState } from 'react'
-import {
-  candidateExamConstants,
-  commonConstants,
-  routeFiles,
-} from '~/constants/common.constants'
 import { QuestionTypes } from '~/interface/Interface'
 import Button from '../form/Button'
 import Checkbox from '../form/CheckBox'
 import sanitizeHtml from 'sanitize-html'
+import { useTranslation } from 'react-i18next'
 
 const Question = () => {
+  const { t } = useTranslation()
+
   const { question, section, lastSection } = useLoaderData()
   const questionType = question?.question?.questionType?.value
   const [userAnswer, setUserAnswer] = useState(
@@ -54,7 +52,7 @@ const Question = () => {
         <div className="flex h-full w-1/2 flex-col gap-3">
           <div className="flex h-10 items-center justify-between">
             <div className="flex gap-5 text-lg font-semibold">
-              {routeFiles.options}
+              {t('routeFiles.options')}
             </div>
           </div>
           <div className="flex h-full flex-1 flex-col gap-6 overflow-auto">
@@ -118,8 +116,8 @@ const Question = () => {
           <Button
             className="h-11 w-40"
             varient="primary-outlined"
-            title={commonConstants.prevoiusButton}
-            buttonText={commonConstants.prevoiusButton}
+            title={t('commonConstants.prevoiusButton')}
+            buttonText={t('commonConstants.prevoiusButton')}
             isDisabled={question.order === 1}
             type="submit"
             value="prev"
@@ -129,8 +127,8 @@ const Question = () => {
             <Button
               className="h-11 w-40"
               varient="primary-solid"
-              title={commonConstants.nextButton}
-              buttonText={commonConstants.nextButton}
+              title={t('commonConstants.nextButton')}
+              buttonText={t('commonConstants.nextButton')}
               isDisabled={question.order === section.totalQuestions}
               type="submit"
               value="next"
@@ -140,8 +138,8 @@ const Question = () => {
             <Button
               className="h-11 w-40"
               varient="primary-solid"
-              title={candidateExamConstants.endTest}
-              buttonText={candidateExamConstants.endTest}
+              title={t('candidateExamConstants.endTest')}
+              buttonText={t('candidateExamConstants.endTest')}
               isDisabled={question.order !== section.totalQuestions}
               type="submit"
               value={section.order}
@@ -151,8 +149,8 @@ const Question = () => {
             <Button
               className="h-11 w-40"
               varient="primary-solid"
-              title={candidateExamConstants.nextSection}
-              buttonText={candidateExamConstants.nextSection}
+              title={t('candidateExamConstants.nextSection')}
+              buttonText={t('candidateExamConstants.nextSection')}
               isDisabled={question.order !== section.totalQuestions}
               type="submit"
               value={section.order}

@@ -6,13 +6,9 @@ import QuillEditor from '~/components/QuillEditor.client'
 import { ClientOnly } from 'remix-utils'
 import Toggle from '~/components/form/Toggle'
 import type { SetStateAction } from 'react'
-import {
-  addQuestion,
-  commonConstants,
-  statusCheck,
-} from '~/constants/common.constants'
 import { toast } from 'react-toastify'
 import Button from '~/components/form/Button'
+import { useTranslation } from 'react-i18next'
 interface textAnswerType {
   id: string
   answer: string
@@ -45,6 +41,8 @@ export default function OptionForQuestion({
   checkOrder: boolean
   setCheckOrder: (e: boolean) => void
 }) {
+  const { t } = useTranslation()
+
   const toastId = 'doNotDeleteLastOptions'
   const addOptionArea = () => {
     if (
@@ -53,7 +51,7 @@ export default function OptionForQuestion({
       getQuestionType(selectedTypeOfQuestion) === QuestionTypes.singleChoice
     ) {
       if (options.length > 5) {
-        return toast.error(statusCheck.maxOptions, { toastId })
+        return toast.error(t('statusCheck.maxOptions'), { toastId })
       }
       setOptions([...options, { option: '', isCorrect: false, id: cuid() }])
     } else if (getQuestionType(selectedTypeOfQuestion) === QuestionTypes.text) {
@@ -124,16 +122,16 @@ export default function OptionForQuestion({
           QuestionTypes.singleChoice ? (
           <div
             className="ml-7 text-base font-medium text-gray-600"
-            role={addQuestion.createOptions}
+            role={t('addQuestion.createOptions')}
             tabIndex={0}
-            title={addQuestion.createOptions}
-            aria-label={addQuestion.createOptions}
+            title={t('addQuestion.createOptions')}
+            aria-label={t('addQuestion.createOptions')}
           >
-            {addQuestion.createOptions}
+            {t('addQuestion.createOptions')}
           </div>
         ) : (
           <div className="flex items-center justify-center gap-2 text-base font-medium text-gray-600">
-            {addQuestion.checkOrder}
+            {t('addQuestion.checkOrder')}
             <Toggle toggle={checkOrder} onToggleChange={setCheckOrder} />
           </div>
         )}
@@ -143,8 +141,8 @@ export default function OptionForQuestion({
           className="h-9 px-5"
           varient="primary-solid"
           onClick={addOptionArea}
-          title={addQuestion.addOptions}
-          buttonText={`+ ${addQuestion.addOptions}`}
+          title={t('addQuestion.addOptions')}
+          buttonText={`+ ${t('addQuestion.addOptions')}`}
         />
       </div>
       <div className="flex h-full flex-1 flex-col gap-5 overflow-auto p-1">
@@ -204,7 +202,7 @@ export default function OptionForQuestion({
                     if (e.key === 'Enter') deleteOption(index, option?.id)
                   }}
                   tabIndex={0}
-                  aria-label={commonConstants.delete}
+                  aria-label={t('commonConstants.delete')}
                   icon="ic:outline-delete-outline"
                   className={`h-6 w-6 ${index} ${
                     options.length < 2
@@ -225,7 +223,9 @@ export default function OptionForQuestion({
                     <input
                       tabIndex={0}
                       className="h-20 w-full rounded-lg border border-gray-300 bg-white p-4"
-                      placeholder={commonConstants.placeholderForOptionInput}
+                      placeholder={t(
+                        'commonConstants.placeholderForOptionInput'
+                      )}
                       value={option.answer}
                       onChange={(e) => {
                         updateTextAnswer(e.target.value, index)
