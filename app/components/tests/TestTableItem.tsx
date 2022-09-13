@@ -74,6 +74,7 @@ const TestTableItem = ({
             }}
             tabIndex={0}
             key={index}
+            className="truncate"
           >
             <span id="test-name-navigation">{testName}</span>
           </div>

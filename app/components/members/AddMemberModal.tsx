@@ -2,7 +2,7 @@ import { Dialog, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import type { Role } from '~/interface/Interface'
 import { Form, useTransition } from '@remix-run/react'
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { commonConstants, members } from '~/constants/common.constants'
 import Button from '../form/Button'
 import { trimValue } from '~/utils'
@@ -19,7 +19,10 @@ export default function AddMemberModal({
   const transition = useTransition()
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
-
+  useEffect(() => {
+    setFirstName('')
+    setLastName('')
+  }, [open])
   return (
     <div>
       <Transition.Root show={open} as={Fragment}>

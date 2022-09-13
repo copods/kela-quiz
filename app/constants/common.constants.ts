@@ -217,8 +217,6 @@ export const cypress = {
   next: 'Next',
   remove: 'Remove',
   back: 'Back',
-  nameIsReq: 'Name is required',
-  descIsReq: 'Description is required',
   duplicateTitle: 'Duplicate Title',
   saveAndAddMore: 'Save & Add More',
   addMember: 'Add Member',
