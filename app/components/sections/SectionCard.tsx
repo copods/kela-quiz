@@ -51,7 +51,7 @@ const SectionCard = ({
   }, [])
   return (
     <div
-      className={`flex flex-col gap-2 rounded-lg p-5 pt-4 ${
+      className={`sectionCard flex flex-col gap-2 rounded-lg p-5 pt-4 ${
         isActive
           ? 'border border-l-8 border-transparent border-l-primary bg-white pl-17 shadow-md'
           : 'border border-gray-300 bg-gray-100'
@@ -59,7 +59,7 @@ const SectionCard = ({
       id="section-card"
     >
       <div className="flex items-center justify-between">
-        <h2 className="break-all text-xl font-semibold text-gray-700">
+        <h2 className="sectionName break-all text-xl font-semibold text-gray-700">
           {name}
         </h2>
         <div className="flex">
