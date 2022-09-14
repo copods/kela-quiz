@@ -1,22 +1,32 @@
 import { Menu, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
-import { Fragment } from 'react'
+import { Fragment, useEffect } from 'react'
 
 const TestListMenuItem = ({
   menuIcon,
   onItemClick,
+  open,
   menuListIcon,
   menuListText,
 }: {
   menuIcon: string
   onItemClick: (e: boolean) => void
+  open: boolean
   menuListIcon: string
   menuListText: string
 }) => {
+  useEffect(() => {
+    if (open === false) {
+      setTimeout(() => {
+        const menuButton = document.querySelector('.MenuIcon') as HTMLElement
+        menuButton?.focus()
+      }, 25)
+    }
+  }, [open])
   return (
     <>
       <Menu as="div" className="relative">
-        <Menu.Button>
+        <Menu.Button className={'MenuIcon'}>
           <Icon
             className="text-2xl text-gray-600"
             icon={menuIcon}

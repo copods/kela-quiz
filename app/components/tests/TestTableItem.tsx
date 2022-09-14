@@ -5,9 +5,10 @@ import type { SectionInTest } from '~/interface/Interface'
 import DeletePopUp from '../DeletePopUp'
 import { useNavigate, useSubmit } from '@remix-run/react'
 import TestListActionMenu from '../TestListActionMenu'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import InviteCandidatePopup from './InviteCandidatePopup'
 import { testTableItem } from '~/constants/common.constants'
+import { routes } from '~/constants/route.constants'
 // import Checkbox from '../form/CheckBox'
 
 const TestTableItem = ({
@@ -32,6 +33,7 @@ const TestTableItem = ({
   status: string | undefined
 }) => {
   const [showDeletePopup, setShowDeletePopup] = useState(false)
+  const [deleted, setDeleted] = useState(false)
   const submit = useSubmit()
   const navigate = useNavigate()
   const deleteTest = () => {
@@ -43,11 +45,19 @@ const TestTableItem = ({
       { method: 'post' }
     )
   }
+  useEffect(() => {
+    if (deleted === true) {
+      setTimeout(() => {
+        document.getElementById(`${index + 1}`)?.focus()
+        setDeleted(false)
+      }, 25)
+    }
+  }, [deleted])
   const [candidatePopupOpen, setCandidatePopupOpen] = useState<boolean>(false)
   return (
     <>
       <div
-        key={index}
+        key={id}
         className={`${
           index === totalCount ? 'rounded-b-md' : ''
         } test-table-list flex items-center gap-3 border-b border-gray-200 bg-white py-6 px-9`}
@@ -63,17 +73,18 @@ const TestTableItem = ({
         >
           {index}
         </div>
-        <div className="test-name-navigation w-4/12 cursor-pointer truncate p-1 text-base font-medium text-primary  ">
+        <div className="test-name-navigation w-4/12 cursor-pointer truncate p-1 text-base font-medium text-primary">
           <div
             aria-label={testName}
             title={testName}
-            onClick={() => navigate(`/tests/${id}`)}
+            onClick={() => navigate(`${routes.tests}/${id}`)}
             role={'button'}
             onKeyDown={(e) => {
-              if (e.key === 'Enter') navigate(`/tests/${id}`)
+              if (e.key === 'Enter') navigate(`${routes.tests}/${id}`)
             }}
+            id={`${index}`}
             tabIndex={0}
-            key={index}
+            key={id}
           >
             <span id="test-name-navigation">{testName}</span>
           </div>
@@ -109,6 +120,7 @@ const TestTableItem = ({
           <TestListActionMenu
             menuIcon={'mdi:dots-vertical'}
             onItemClick={setShowDeletePopup}
+            open={showDeletePopup}
             menuListIcon={'ic:outline-delete-outline'}
             menuListText={'Delete'}
             aria-label={testTableItem.menu}
@@ -118,7 +130,7 @@ const TestTableItem = ({
           setOpen={setShowDeletePopup}
           open={showDeletePopup}
           onDelete={deleteTest}
-          status={status}
+          setDeleted={setDeleted}
         />
         <InviteCandidatePopup
           openInvitePopup={candidatePopupOpen}

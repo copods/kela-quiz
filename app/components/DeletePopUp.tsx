@@ -1,4 +1,4 @@
-import { Fragment } from 'react'
+import { Fragment, useEffect } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import { Form } from '@remix-run/react'
@@ -8,19 +8,26 @@ export default function DeletePopUp({
   setOpen,
   open,
   onDelete,
-  status,
   subAlert,
+  setDeleted,
 }: {
   open: boolean
   setOpen: (e: boolean) => void
   onDelete: () => void
-  status?: string | undefined
   subAlert?: string
+  setDeleted?: (e: boolean) => void
 }) {
   const handleDelete = () => {
     onDelete()
     setOpen(false)
   }
+  useEffect(() => {
+    if (open === true) {
+      setTimeout(() => {
+        document.getElementById('confirm-delete')?.focus()
+      }, 50)
+    }
+  }, [open])
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={setOpen}>
@@ -77,7 +84,12 @@ export default function DeletePopUp({
                       className="px-5"
                       title={commonConstants.delete}
                       buttonText={commonConstants.delete}
-                      onClick={handleDelete}
+                      onClick={() => {
+                        handleDelete()
+                        if (setDeleted !== undefined) {
+                          setDeleted(true)
+                        }
+                      }}
                     />
                   </Form>
                   <Button
