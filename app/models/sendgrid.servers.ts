@@ -168,7 +168,6 @@ export async function sendTestInviteMail(email: string, link: string) {
   return 'Done'
 }
 
-
 export async function sendOTPMail(email: string, otp: number) {
   const to = email
   const from = 'careers@copods.co'

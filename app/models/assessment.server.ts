@@ -34,17 +34,19 @@ export async function getCandidateIDFromAssessmentID(id: CandidateTest['id']) {
 
 async function generateOTP() {
   // generate random 4 digit OTP
-  var digits = '0123456789';
-  let OTP = '';
+  var digits = '0123456789'
+  let OTP = ''
   for (let i = 0; i < 4; i++) {
-    OTP += digits[Math.floor(Math.random() * 10)];
+    OTP += digits[Math.floor(Math.random() * 10)]
   }
-  return parseInt(OTP);
+  return parseInt(OTP)
 }
 
-async function sendOTPToUser({ id, OTP }: { id: string, OTP: number }) {
-  console.log(OTP)
-  const user = await prisma.candidate.findUnique({ where: { id }, select: { email: true } })
+async function sendOTPToUser({ id, OTP }: { id: string; OTP: number }) {
+  const user = await prisma.candidate.findUnique({
+    where: { id },
+    select: { email: true },
+  })
   return await sendOTPMail(user?.email as string, OTP)
 }
 
