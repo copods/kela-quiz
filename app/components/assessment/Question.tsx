@@ -9,29 +9,30 @@ import CandidateQuestionFooter from './CandidateQuestionFooter'
 const Question = () => {
   const { question } = useLoaderData()
   const questionType = question?.question?.questionType?.value
-  const [test, setTest] = useState(question?.question?.options)
+  // const [test, setTest] = useState(question?.question?.options)
   const [userAnswer, setUserAnswer] = useState(
     questionType === QuestionTypes.singleChoice
       ? question.selectedOptions[0]?.id
       : questionType === QuestionTypes.text
       ? question?.answers
-      : question?.selectedOptions
+      : []
   )
 
-  if (questionType === QuestionTypes.multipleChoice) {
-    question?.question?.options.forEach((opt: any) => {
-      let flag = false
-      question?.selectedOptions?.forEach((el: any) => {
-        if (el.id === opt.id) {
-          flag = true
-          opt.isCorrect = flag
-          return
-        } else {
-          opt.isCorrect = false
-        }
-      })
-    })
-  }
+  // useEffect(() => {
+  //   if (questionType === QuestionTypes.multipleChoice) {
+  //     console.log('amsdmakdjanjksdha')
+  //     test.forEach((opt: any,i:number) => {
+  //       question?.selectedOptions?.forEach((el: any) => {
+  //         if (el.id === opt.id) {
+  //           opt.isCorrect = true
+  //           return
+  //         } else {
+  //           opt.isCorrect = false
+  //         }
+  //       })
+  //     })
+  //   }
+  // }, [])
 
   const onChangeHandle = (event: any, index?: number) => {
     if (questionType === QuestionTypes.singleChoice) {
@@ -43,18 +44,37 @@ const Question = () => {
         return [...oldVal]
       })
     }
-    if (questionType === QuestionTypes.multipleChoice) {
-      question?.question?.options.forEach((opt: any) => {
-        if (event.id === opt.id) {
-          opt.isCorrect = !opt.isCorrect
-          console.log(question.question.options)
-          // let something = [...question.question.options]
-          // console.log(something)
-          setTest(question.question.options)
-        }
-      })
-    }
+    // if (questionType === QuestionTypes.multipleChoice) {
+    //   setTest((old: any) => {
+    // old.forEach((el: any) => {
+    //   console.log('all', el)
+    //   if (el.id === event.id) {
+    //     el.isCorrect = !el.isCorrect
+    //     console.log('sel', el)
+    //     console.log('old', old)
+    //     return
+    //   }
+    // })
+    //   console.log(event)
+    //   old[index as number].isCorrect = !event.isCorrect
+    //   console.log('asd', ...old)
+    //   return [...old]
+    // })
+    // question?.question?.options.forEach((opt: any) => {
+    //   if (event.id === opt.id) {
+    //     opt.isCorrect = !opt.isCorrect
+    //     console.log(question.question.options)
+    //     // let something = [...question.question.options]
+    //     // console.log(something)
+    //     // setTest(question.question.options)
+
+    //   }
+    // })
+    // }
   }
+  // useEffect(() => {
+  //   console.log('test: ', test)
+  // }, [test])
 
   return (
     <>
@@ -96,13 +116,16 @@ const Question = () => {
                 )}
               </div>
               <div className="flex h-full flex-1 flex-col overflow-auto">
-                {test.map(
-                  (option: {
-                    isCorrect: boolean
-                    id: string
-                    option: string
-                    rightAnswer: boolean
-                  }) => {
+                {question?.question?.options.map(
+                  (
+                    option: {
+                      isCorrect: boolean
+                      id: string
+                      option: string
+                      rightAnswer: boolean
+                    },
+                    i: number
+                  ) => {
                     console.log('rerendered')
                     return (
                       <label
@@ -130,7 +153,7 @@ const Question = () => {
                             name="option"
                             isChecked={option.isCorrect}
                             className="mt-7"
-                            handleChange={() => onChangeHandle(option)}
+                            handleChange={() => onChangeHandle(option, i)}
                           />
                         )}
                         <div className="ql-editor w-full bg-inherit py-6">
