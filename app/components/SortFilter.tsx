@@ -37,7 +37,7 @@ const SortFilter = ({
                 if (e.key === 'Enter') onSortDirectionChange(sortByOrder.desc)
               }}
               onClick={() => onSortDirectionChange(sortByOrder.desc)}
-              className="bg-light-200 cursor-pointer text-2xl focus:outline-none"
+              className="bg-light-200 cursor-pointer text-2xl focus:outline-dotted"
               aria-label={commonConstants.sortAscending}
             />
           ) : (
@@ -50,24 +50,28 @@ const SortFilter = ({
                   onSortDirectionChange(sortByOrder.ascending)
               }}
               onClick={() => onSortDirectionChange(sortByOrder.ascending)}
-              className="cursor-pointer text-2xl focus:outline-none"
+              className="cursor-pointer text-2xl focus:outline-dotted"
               aria-label={commonConstants.sortDescending}
             />
           )}
         </span>
-        <DropdownField
-          data={filterData}
-          displayKey={'name'}
-          valueKey={'value'}
-          value={sortBy}
-          setValue={onSortChange}
-        />
+        <div className="w-48">
+          <DropdownField
+            data={filterData}
+            displayKey={'name'}
+            valueKey={'value'}
+            value={sortBy}
+            setValue={onSortChange}
+          />
+        </div>
       </div>
       <span
+        tabIndex={0}
+        role={'banner'}
         className="flex items-center text-sm text-gray-600"
         id="total-items-value"
       >
-        <span>
+        <span className="w-max">
           {componentGlobalConstants.totalCounts}:
           <span id="total-count-value" className="pl-1">
             {totalItems}

@@ -73,8 +73,10 @@ const TestPreview = ({
             </div>
             <div
               className="ql-editor flex-1 p-0 text-base text-gray-700"
-              dangerouslySetInnerHTML={{ __html: sanitizeHtml(description) }}
-            ></div>
+              dangerouslySetInnerHTML={{
+                __html: sanitizeHtml(description),
+              }}
+            ></div>{' '}
           </div>
           <div className="flex">
             <div
@@ -135,11 +137,19 @@ const TestPreview = ({
                       icon="fa:long-arrow-up"
                       className="cursor-pointer"
                       onClick={() => moveSection(i, 'up')}
+                      tabIndex={0}
+                      onKeyUp={(e) => {
+                        if (e.key === 'Enter') moveSection(i, 'up')
+                      }}
                     />
                     <Icon
                       icon="fa:long-arrow-down"
                       className="cursor-pointer"
                       onClick={() => moveSection(i, 'down')}
+                      tabIndex={0}
+                      onKeyUp={(e) => {
+                        if (e.key === 'Enter') moveSection(i, 'up')
+                      }}
                     />
                   </div>
                 )}

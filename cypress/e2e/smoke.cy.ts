@@ -439,7 +439,8 @@ describe('smoke tests', () => {
       .clear()
       .type(memberEmail)
       .should('have.value', memberEmail)
-    cy.get('select').select('Recruiter')
+    cy.get('div').find('.dropdownButton').click()
+    cy.get('ul').contains('Recruiter').click()
     cy.get('#add-button').click()
   })
 

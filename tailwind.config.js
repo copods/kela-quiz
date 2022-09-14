@@ -16,7 +16,6 @@ module.exports = {
         260: '260px',
         184: '184px',
         96: '384px',
-        sectionCard: '330px',
         16: '16px',
       },
       width: {
@@ -24,6 +23,7 @@ module.exports = {
       },
       maxWidth: {
         554: '554px',
+        96: '384px',
       },
       minHeight: {
         480: '480px',

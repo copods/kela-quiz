@@ -49,8 +49,11 @@ const BarGraph = ({
       return getRequiredSection?.totalQuestion
     } else if (resultKind === 'correct') {
       return getRequiredSection?.correctQuestion
-    } else if (resultKind === 'wrong') {
-      return getRequiredSection?.unanswered
+    } else if (resultKind === 'skipped') {
+      return (
+        (getRequiredSection?.totalQuestion as number) -
+        (getRequiredSection?.correctQuestion as number)
+      )
     }
   }
 
@@ -104,10 +107,10 @@ const BarGraph = ({
               '</span>' +
               '<div/> </br>' +
               '<div>' +
-              'Wrong' +
+              'Skipped' +
               ': ' +
               '<span style="color: #D97706; fontWeight: 500; margin: 20px">' +
-              getLabelData(acc.key as string, 'wrong') +
+              getLabelData(acc.key as string, 'skipped') +
               '</span>' +
               '<div/>') as unknown as TooltipFormatterContextObject
           }

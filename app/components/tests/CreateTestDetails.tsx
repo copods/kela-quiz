@@ -46,8 +46,12 @@ const TestDetails = ({
                 fullAccess={true}
                 quillPlaceholder={testsConstants.descriptionText}
                 onTextChange={(e) => {
-                  if (e === '<p><br></p>') onDescriptionChange('')
-                  else onDescriptionChange(e)
+                  onDescriptionChange(
+                    e.replace(
+                      /<p><br[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|]?><[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|]?p>/g,
+                      ''
+                    )
+                  )
                 }}
                 aria-label={testsConstants.writeDescriptionOfTest}
               />
