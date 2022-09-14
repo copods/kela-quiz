@@ -37,7 +37,7 @@ const SortFilter = ({
                 if (e.key === 'Enter') onSortDirectionChange(sortByOrder.desc)
               }}
               onClick={() => onSortDirectionChange(sortByOrder.desc)}
-              className="bg-light-200 cursor-pointer text-2xl focus:outline-none"
+              className="bg-light-200 cursor-pointer text-2xl"
               aria-label={commonConstants.sortAscending}
             />
           ) : (

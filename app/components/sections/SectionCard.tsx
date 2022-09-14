@@ -97,8 +97,8 @@ const SectionCard = ({
                       <>
                         <Icon
                           icon={'ic:outline-delete-outline'}
-                          className={`} mr-2 h-5 w-5
-                        text-red-500`}
+                          className="mr-2 h-5 w-5
+                        text-red-500"
                           aria-hidden="true"
                         />
                         {commonConstants.delete}
