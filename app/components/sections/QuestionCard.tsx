@@ -48,7 +48,7 @@ const QuestionCard = ({
               dangerouslySetInnerHTML={{
                 __html: sanitizeHtml(question.question),
               }}
-            ></div>
+            ></div>{' '}
           </div>
           <div className="flex items-center gap-2">
             <span className="flex items-center rounded-52 border border-gray-700 px-3 text-sm  text-gray-700">

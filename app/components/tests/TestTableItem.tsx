@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react'
 import InviteCandidatePopup from './InviteCandidatePopup'
 import { testTableItem } from '~/constants/common.constants'
 import { routes } from '~/constants/route.constants'
-// import Checkbox from '../form/CheckBox'
+
 
 const TestTableItem = ({
   testName,
