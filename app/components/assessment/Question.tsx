@@ -1,28 +1,38 @@
 import { useLoaderData } from '@remix-run/react'
-import React, { useState } from 'react'
-import {
-  candidateExamConstants,
-  commonConstants,
-} from '~/constants/common.constants'
+import { useState } from 'react'
 import { QuestionTypes } from '~/interface/Interface'
-import Button from '../form/Button'
 import Checkbox from '../form/CheckBox'
 import sanitizeHtml from 'sanitize-html'
 import CandidateQuestionHeader from './CandidateQuestionHeader'
-import { Step, Stepper } from 'react-form-stepper'
-import { Box, StepLabel } from '@material-ui/core'
+import CandidateQuestionFooter from './CandidateQuestionFooter'
 
 const Question = () => {
-  const { question, section, lastSection } = useLoaderData()
+  const { question } = useLoaderData()
   const questionType = question?.question?.questionType?.value
-  console.log(section)
+  const [test, setTest] = useState(question?.question?.options)
   const [userAnswer, setUserAnswer] = useState(
     questionType === QuestionTypes.singleChoice
       ? question.selectedOptions[0]?.id
       : questionType === QuestionTypes.text
       ? question?.answers
-      : question.selectedOptions
+      : question?.selectedOptions
   )
+
+  if (questionType === QuestionTypes.multipleChoice) {
+    question?.question?.options.forEach((opt: any) => {
+      let flag = false
+      question?.selectedOptions?.forEach((el: any) => {
+        if (el.id === opt.id) {
+          flag = true
+          opt.isCorrect = flag
+          return
+        } else {
+          opt.isCorrect = false
+        }
+      })
+    })
+  }
+
   const onChangeHandle = (event: any, index?: number) => {
     if (questionType === QuestionTypes.singleChoice) {
       setUserAnswer(event.id)
@@ -34,67 +44,17 @@ const Question = () => {
       })
     }
     if (questionType === QuestionTypes.multipleChoice) {
-      // setUserAnswer([...question.selectedOptions])
-      console.log(event)
+      question?.question?.options.forEach((opt: any) => {
+        if (event.id === opt.id) {
+          opt.isCorrect = !opt.isCorrect
+          console.log(question.question.options)
+          // let something = [...question.question.options]
+          // console.log(something)
+          setTest(question.question.options)
+        }
+      })
     }
   }
-  // console.log(question.selectedOptions)
-  const getChecked = (optionId: string) => {
-    let flag = false
-    userAnswer.forEach((opt: any) => {
-      if (opt.id == optionId) {
-        flag = true
-      }
-    })
-    return flag
-  }
-
-  const steps = ['a', 'b', 'c']
-
-  const [activeStep, setActiveStep] = useState(0)
-  // const [skipped, setSkipped] = useState(new Set<number>())
-
-  // const isStepOptional = (step: number) => {
-  //   return step === 1
-  // }
-
-  // const isStepSkipped = (step: number) => {
-  //   return skipped.has(step)
-  // }
-
-  // const handleNext = () => {
-  //   let newSkipped = skipped
-  //   if (isStepSkipped(activeStep)) {
-  //     newSkipped = new Set(newSkipped.values())
-  //     newSkipped.delete(activeStep)
-  //   }
-
-  //   setActiveStep((prevActiveStep) => prevActiveStep + 1)
-  //   setSkipped(newSkipped)
-  // }
-
-  // const handleBack = () => {
-  //   setActiveStep((prevActiveStep) => prevActiveStep - 1)
-  // }
-
-  // const handleSkip = () => {
-  //   if (!isStepOptional(activeStep)) {
-  //     // You probably want to guard against something like this,
-  //     // it should never occur unless someone's actively trying to break something.
-  //     throw new Error("You can't skip a step that isn't optional.")
-  //   }
-
-  //   setActiveStep((prevActiveStep) => prevActiveStep + 1)
-  //   setSkipped((prevSkipped) => {
-  //     const newSkipped = new Set(prevSkipped.values())
-  //     newSkipped.add(activeStep)
-  //     return newSkipped
-  //   })
-  // }
-
-  // const handleReset = () => {
-  //   setActiveStep(0)
-  // }
 
   return (
     <>
@@ -136,12 +96,14 @@ const Question = () => {
                 )}
               </div>
               <div className="flex h-full flex-1 flex-col overflow-auto">
-                {question?.question?.options?.map(
+                {test.map(
                   (option: {
+                    isCorrect: boolean
                     id: string
                     option: string
                     rightAnswer: boolean
                   }) => {
+                    console.log('rerendered')
                     return (
                       <label
                         key={option.id}
@@ -166,7 +128,7 @@ const Question = () => {
                           <Checkbox
                             value={option.id}
                             name="option"
-                            isChecked={getChecked(option.id)}
+                            isChecked={option.isCorrect}
                             className="mt-7"
                             handleChange={() => onChangeHandle(option)}
                           />
@@ -224,82 +186,7 @@ const Question = () => {
               </div>
             </div>
           </div>
-          <div className="flex h-16 items-center justify-between gap-6 rounded-b-lg border-t bg-white px-6 py-4 drop-shadow-[0px_-2px_10px_rgba(0,0,0,0.06)]">
-            <div>
-              <span className="cursor-pointer font-bold underline">
-                Skip Question
-              </span>
-            </div>
-            <div className="w-32">
-              <Box sx={{ width: '100%' }}>
-                <Stepper activeStep={activeStep}>
-                  {steps.map((label, index) => {
-                    const stepProps: { completed?: boolean } = {}
-                    const labelProps: {
-                      optional?: React.ReactNode
-                    } = {}
-                    // if (isStepSkipped(index)) {
-                    //   stepProps.completed = false
-                    // }
-                    return (
-                      <Step key={label} {...stepProps}>
-                        <StepLabel
-                          onClick={() => setActiveStep(index)}
-                          {...labelProps}
-                        />
-                      </Step>
-                    )
-                  })}
-                </Stepper>
-              </Box>
-            </div>
-            <div className="flex gap-6">
-              <Button
-                className="h-8 w-28"
-                varient="primary-outlined"
-                title={commonConstants.prevoiusButton}
-                buttonText={commonConstants.prevoiusButton}
-                isDisabled={question.order === 1}
-                type="submit"
-                value="prev"
-                name="previous"
-              />
-              {question.order !== section.totalQuestions ? (
-                <Button
-                  className="h-8 w-28"
-                  varient="primary-solid"
-                  title={commonConstants.nextButton}
-                  buttonText={commonConstants.nextButton}
-                  isDisabled={question.order === section.totalQuestions}
-                  type="submit"
-                  value="next"
-                  name="next"
-                />
-              ) : lastSection ? (
-                <Button
-                  className="h-8 w-28"
-                  varient="primary-solid"
-                  title={candidateExamConstants.endTest}
-                  buttonText={candidateExamConstants.endTest}
-                  isDisabled={question.order !== section.totalQuestions}
-                  type="submit"
-                  value={section.order}
-                  name="endExam"
-                />
-              ) : (
-                <Button
-                  className="h-8 w-28"
-                  varient="primary-solid"
-                  title={candidateExamConstants.nextSection}
-                  buttonText={'Finish'}
-                  isDisabled={question.order !== section.totalQuestions}
-                  type="submit"
-                  value={section.order}
-                  name="nextSection"
-                />
-              )}
-            </div>
-          </div>
+          <CandidateQuestionFooter />
         </form>
       </div>
     </>
