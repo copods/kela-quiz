@@ -45,7 +45,7 @@ const SectionLink = ({
         menuButton?.focus()
       }, 100)
     }
-  }, [isDelete])
+  }, [isDelete, deleted, section.id])
   return (
     <div
       onClick={() => {

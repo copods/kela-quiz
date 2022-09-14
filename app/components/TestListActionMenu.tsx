@@ -24,7 +24,7 @@ const TestListMenuItem = ({
         menuButton?.focus()
       }, 50)
     }
-  }, [open])
+  }, [open, id])
   return (
     <>
       <Menu as="div" className="relative">
