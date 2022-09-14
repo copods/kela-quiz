@@ -108,7 +108,7 @@ const TestTableItem = ({
             id="invite-popup-open"
             role={'button'}
             tabIndex={0}
-            className="candidateInviteIcon cursor-pointer text-2xl text-primary focus:outline-dotted"
+            className="candidateInviteIcon cursor-pointer text-2xl text-primary focus:outline-dotted focus:outline-2"
             icon={'ant-design:user-add-outlined'}
             onClick={() => {
               setCandidatePopupOpen(true)

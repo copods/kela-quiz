@@ -46,7 +46,7 @@ const InviteCandidatePopup = ({
         setEmails([''])
       }
     }
-  }, [actionData])
+  }, [actionData, testId, setOpenInvitePopup])
   const updatePopupAndEmailState = () => {
     setOpenInvitePopup(false)
     setEmails([''])

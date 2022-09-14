@@ -9,7 +9,6 @@ import {
 import {
   Outlet,
   useActionData,
-  useFetcher,
   useLoaderData,
   useSubmit,
 } from '@remix-run/react'
@@ -173,7 +172,6 @@ export const action: ActionFunction = async ({ request }) => {
 export default function SectionPage() {
   const data = useLoaderData() as unknown as LoaderData
 
-  const fetcher = useFetcher()
   const sectionActionData = useActionData() as ActionData
 
   let navigate = useNavigate()
@@ -202,6 +200,7 @@ export default function SectionPage() {
   }
 
   useEffect(() => {
+    console.log('==========1')
     if (selectedSection === 'NA') {
       navigate(routes.sections, {
         replace: true,
@@ -211,7 +210,7 @@ export default function SectionPage() {
         replace: true,
       })
     }
-  }, [navigate, selectedSection])
+  }, [navigate, selectedSection, data.filters])
 
   useEffect(() => {
     if (data.sections.length) {
@@ -221,14 +220,13 @@ export default function SectionPage() {
           [sortBy]: order,
         },
       }
-      fetcher.submit({ filter: JSON.stringify(filter) }, { method: 'get' })
       formData.append('filter', JSON.stringify(filter))
       submit(formData, {
         method: 'get',
         action: `${routes.sections}/${selectedSection}`,
       })
     }
-  }, [order, sortBy])
+  }, [order, sortBy, data.sections?.length, submit, selectedSection])
 
   useEffect(() => {
     if (sectionActionData) {
@@ -251,7 +249,7 @@ export default function SectionPage() {
         })
       }
     }
-  }, [sectionActionData, data.selectedSectionId])
+  }, [sectionActionData, data.selectedSectionId, data.sections])
 
   return (
     <AdminLayout>
