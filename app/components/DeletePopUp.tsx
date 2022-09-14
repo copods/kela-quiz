@@ -15,7 +15,7 @@ export default function DeletePopUp({
   deleteItem,
 }: {
   open: boolean
-  setOpen: (e: boolean) => void
+  setOpen?: (e: boolean) => void | undefined
   onDelete: () => void
   subAlert?: string
   setDeleted?: (e: boolean) => void
@@ -25,18 +25,24 @@ export default function DeletePopUp({
 }) {
   const handleDelete = () => {
     onDelete()
-    setOpen(false)
+    if (setOpen !== undefined) setOpen(false)
   }
   useEffect(() => {
     if (open === true) {
       setTimeout(() => {
         document.getElementById('confirm-delete')?.focus()
-      }, 50)
+      }, 100)
     }
   }, [open])
   return (
     <Transition.Root show={open} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={setOpen}>
+      <Dialog
+        as="div"
+        className="relative z-10"
+        onClose={() => {
+          if (setOpen !== undefined) setOpen(false)
+        }}
+      >
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -105,7 +111,9 @@ export default function DeletePopUp({
                     id="cancel-delete-pop-up"
                     varient="primary-outlined"
                     className="px-5"
-                    onClick={() => setOpen(false)}
+                    onClick={() => {
+                      if (setOpen !== undefined) setOpen(false)
+                    }}
                     title={commonConstants.cancel}
                     buttonText={commonConstants.cancel}
                   />

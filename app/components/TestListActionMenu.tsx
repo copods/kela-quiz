@@ -20,7 +20,7 @@ const TestListMenuItem = ({
       setTimeout(() => {
         const menuButton = document.querySelector('.MenuIcon') as HTMLElement
         menuButton?.focus()
-      }, 25)
+      }, 50)
     }
   }, [open])
   return (
@@ -42,16 +42,14 @@ const TestListMenuItem = ({
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95"
         >
-          <Menu.Items className="absolute right-0 z-40 w-56 origin-bottom-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5">
+          <Menu.Items className="absolute right-0 z-40 origin-bottom-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5">
             <div className="px-1 py-1">
               <Menu.Item>
                 {({ active }) => (
                   <button
                     tabIndex={0}
                     name="deleteTest"
-                    className={`${
-                      active ? 'bg-primary text-white' : 'text-gray-900'
-                    }  delete-test group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                    className="text-gray-primary undefined inline-flex w-36 items-center justify-start rounded-md rounded-md border border-primary bg-white py-2.5 px-5 px-2 py-2 text-xs font-medium text-primary shadow-sm transition delay-75 ease-in-out hover:bg-gray-100"
                     onClick={() => {
                       onItemClick(true)
                     }}
@@ -60,12 +58,15 @@ const TestListMenuItem = ({
                         document.getElementById('confirm-delete')?.focus()
                     }}
                   >
-                    <Icon
-                      icon={menuListIcon}
-                      className={`${!active && 'text-red-500'} mr-2 h-5 w-5`}
-                      aria-hidden="true"
-                    />
-                    {menuListText}
+                    <>
+                      <Icon
+                        icon={'ic:outline-delete-outline'}
+                        className={`} mr-2 h-5 w-5
+                        text-red-500`}
+                        aria-hidden="true"
+                      />
+                      {menuListText}
+                    </>
                   </button>
                 )}
               </Menu.Item>

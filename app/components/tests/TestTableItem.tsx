@@ -49,7 +49,7 @@ const TestTableItem = ({
       setTimeout(() => {
         document.getElementById(`${index + 1}`)?.focus()
         setDeleted(false)
-      }, 25)
+      }, 50)
     }
   }, [deleted])
   const [candidatePopupOpen, setCandidatePopupOpen] = useState<boolean>(false)

@@ -3,6 +3,7 @@ import type { Section, User } from '~/interface/Interface'
 import { useResolvedPath, useLocation, useNavigate } from '@remix-run/react'
 import {} from '@remix-run/react'
 import SortFilter from '../SortFilter'
+import { useEffect, useState } from 'react'
 
 const SectionLink = ({
   section,
@@ -18,9 +19,33 @@ const SectionLink = ({
   setSelectedSection: (e: string) => void
 }) => {
   const path = `/sections/${section.id}`
+  const [isDelete, setIsDelete] = useState(false)
   const location = useLocation() // to get current location
   const resolvedPath = useResolvedPath(path) // to get resolved path which would match with current location
+  const isActive = location.pathname === resolvedPath.pathname
   let navigate = useNavigate()
+  const [deleted, setDeleted] = useState(false)
+  useEffect(() => {
+    if (deleted === true) {
+      setTimeout(() => {
+        const activeCard = document.querySelector(
+          '.activeSectionCard'
+        ) as HTMLElement
+        activeCard?.focus()
+        setDeleted(false)
+      }, 500)
+    }
+  }, [deleted])
+  useEffect(() => {
+    if (isDelete === false && deleted === false) {
+      setTimeout(() => {
+        const menuButton = document.querySelector(
+          `.${section?.id}`
+        ) as HTMLElement
+        menuButton?.focus()
+      }, 100)
+    }
+  }, [isDelete])
   return (
     <div
       onClick={() => {
@@ -28,6 +53,9 @@ const SectionLink = ({
         navigate(path)
       }}
       id="section-link"
+      className={
+        location.pathname === resolvedPath.pathname ? 'activeSectionCard' : ''
+      }
       role={'button'}
       tabIndex={0}
       key={section.id}
@@ -38,7 +66,7 @@ const SectionLink = ({
       }}
     >
       <SectionCard
-        isActive={location.pathname === resolvedPath.pathname}
+        isActive={isActive}
         name={section?.name}
         createdBy={`${section?.createdBy?.firstName} ${section?.createdBy?.lastName}`}
         questionsCount={section?._count?.questions as number}
@@ -46,6 +74,9 @@ const SectionLink = ({
         id={section?.id}
         actionStatusData={actionStatusData}
         err={err}
+        setDeleted={setDeleted}
+        setIsDelete={setIsDelete}
+        isDelete={isDelete}
       />
     </div>
   )
