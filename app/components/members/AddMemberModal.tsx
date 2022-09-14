@@ -86,6 +86,9 @@ export default function AddMemberModal({
                     className="cursor-pointer text-2xl text-gray-600"
                     icon={'carbon:close'}
                     onClick={() => setOpen(false)}
+                    onKeyUp={(e) => {
+                      if (e.key === 'Enter') setOpen(false)
+                    }}
                   />
                 </div>
                 <hr className="mt-4 mb-6 h-px w-full border-0 bg-gray-300" />
