@@ -14,7 +14,7 @@ const Button = ({ buttonText, className, onClick, ...props }: ButtonProps) => {
         }`
 
       case 'primary-outlined':
-        return `text-gray-primary  rounded-md border border-primary bg-white text-primary hover:bg-gray-100 transition ease-in-out delay-75 ${
+        return `text-gray-primary rounded-md border border-primary bg-white text-primary hover:bg-gray-100 transition ease-in-out delay-75 ${
           props.isDisabled &&
           'disabled:border-primaryDisabled text-primaryDisabled'
         }`
