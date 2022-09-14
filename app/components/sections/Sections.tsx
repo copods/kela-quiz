@@ -60,9 +60,10 @@ const SectionLink = ({
       tabIndex={0}
       key={section.id}
       onKeyUp={(e) => {
-        if (e.key === 'Tab' && e.altKey)
+        if (e.key === 'Tab' && e.altKey) {
           window.location.href = '#section-search'
-        // alt + Tab combination key for moving focus to section detail
+          // alt + Tab combination key for moving focus to section detail
+        } else if (e.key === 'Enter') setSelectedSection(section.id)
       }}
     >
       <SectionCard
