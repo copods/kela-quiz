@@ -47,9 +47,10 @@ const TestTableItem = ({
   useEffect(() => {
     if (deleted === true) {
       setTimeout(() => {
-        document.getElementById(`${index + 1}`)?.focus()
+        document.getElementById('1')?.focus()
+        console.log(document.getElementById('1'))
         setDeleted(false)
-      }, 50)
+      }, 500)
     }
   }, [deleted])
   const [candidatePopupOpen, setCandidatePopupOpen] = useState<boolean>(false)
@@ -123,6 +124,7 @@ const TestTableItem = ({
             menuListIcon={'ic:outline-delete-outline'}
             menuListText={'Delete'}
             aria-label={testTableItem.menu}
+            id={id}
           />
         </div>
         <DeletePopUp

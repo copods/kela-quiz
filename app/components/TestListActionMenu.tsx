@@ -8,17 +8,19 @@ const TestListMenuItem = ({
   open,
   menuListIcon,
   menuListText,
+  id,
 }: {
   menuIcon: string
   onItemClick: (e: boolean) => void
   open: boolean
   menuListIcon: string
   menuListText: string
+  id: string
 }) => {
   useEffect(() => {
     if (open === false) {
       setTimeout(() => {
-        const menuButton = document.querySelector('.MenuIcon') as HTMLElement
+        const menuButton = document.querySelector(`.${id}`) as HTMLElement
         menuButton?.focus()
       }, 50)
     }
@@ -26,7 +28,7 @@ const TestListMenuItem = ({
   return (
     <>
       <Menu as="div" className="relative">
-        <Menu.Button className={'MenuIcon'}>
+        <Menu.Button className={id}>
           <Icon
             className="text-2xl text-gray-600"
             icon={menuIcon}
@@ -49,13 +51,9 @@ const TestListMenuItem = ({
                   <button
                     tabIndex={0}
                     name="deleteTest"
-                    className="text-gray-primary undefined inline-flex w-36 items-center justify-start rounded-md rounded-md border border-primary bg-white py-2.5 px-5 px-2 py-2 text-xs font-medium text-primary shadow-sm transition delay-75 ease-in-out hover:bg-gray-100"
+                    className="deleteTest text-gray-primary undefined inline-flex w-36 items-center justify-start rounded-md rounded-md border border-primary bg-white py-2.5 px-5 px-2 py-2 text-xs font-medium text-primary shadow-sm transition delay-75 ease-in-out hover:bg-gray-100"
                     onClick={() => {
                       onItemClick(true)
-                    }}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter')
-                        document.getElementById('confirm-delete')?.focus()
                     }}
                   >
                     <>
