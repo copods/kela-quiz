@@ -9,6 +9,7 @@ export const commonConstants = {
   addButton: 'Add',
   byText: 'By',
   continue: 'Continue',
+  proceed: 'Proceed',
   total: 'Total',
   placeholderForOptionInput: 'Write your option here',
   sortAscending: 'Sort Ascending',
