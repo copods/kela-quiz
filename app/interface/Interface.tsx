@@ -256,3 +256,20 @@ export interface SectionWiseResults {
   section: SectionInCandidateTest
   test: Test
 }
+
+export interface SingleOTPInputProps
+  extends React.InputHTMLAttributes<HTMLInputElement> {
+  focus?: boolean
+}
+export interface OTPInputProps {
+  length: number // Number of inputs
+  onChangeOTP: (otp: string) => any // Handle onOTPChange to use its value
+
+  autoFocus?: boolean // Auto focus to input programmatically
+  isNumberInput?: boolean // If otp is number
+  disabled?: boolean
+
+  className?: string // Class for container OTP
+
+  inputClassName?: string // Class for input
+}

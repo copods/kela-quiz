@@ -1,6 +1,15 @@
 import type { ActionFunction, LoaderFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { redirect } from '@remix-run/node'
+import { useState } from 'react'
+import Button from '~/components/form/Button'
+import { useRef } from 'react'
+import { useLayoutEffect } from 'react'
+import usePrevious from '~/routes/usePrevious'
+import { useCallback } from 'react'
+import { memo } from 'react'
+import { SingleOTPInputProps } from '~/interface/Interface'
+// import { OTPInputProps } from '~/interface/Interface'
 // import { useLoaderData } from '@remix-run/react'
 // import CandidateInstruction from '~/components/assessment/CandidateInstruction'
 // import CandidateLayout from '~/components/layouts/CandidateLayout'
@@ -60,7 +69,149 @@ export const action: ActionFunction = async ({ request, params }) => {
   }
 }
 
+const SingleOTPInputComponent = (props: SingleOTPInputProps) => {
+  const { focus, autoFocus, ...rest } = props
+  const inputRef = useRef<HTMLInputElement>(null)
+  const prevFocus = usePrevious(!!focus)
+  useLayoutEffect(() => {
+    if (inputRef.current) {
+      if (focus && autoFocus) {
+        inputRef.current.focus()
+      }
+      if (focus && autoFocus && focus !== prevFocus) {
+        inputRef.current.focus()
+        inputRef.current.select()
+      }
+    }
+  }, [autoFocus, focus, prevFocus])
+
+  return <input ref={inputRef} {...rest} />
+}
+
+const SingleOTPInput = memo(SingleOTPInputComponent)
 const Verification = () => {
+  const [otpValues, setOTPValues] = useState(Array<string>(4).fill(''))
+  const [activeInput, setActiveInput] = useState(0)
+  const handleOnFocus = useCallback(
+    (index: number) => () => {
+      focusInput(index)
+    },
+    []
+  )
+  const focusInput = useCallback(
+    (inputIndex: number) => {
+      const selectedIndex = Math.max(Math.min(length - 1, inputIndex), 0)
+      setActiveInput(selectedIndex)
+    },
+    [length]
+  )
+  // const onBlur = useCallback(() => {
+  //   setActiveInput(-1)
+  // }, [])
+  const handleOnChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const val = getRightValue(e.currentTarget.value)
+      if (!val) {
+        e.preventDefault()
+        return
+      }
+      changeCodeAtFocus(val)
+      focusNextInput()
+    },
+    []
+  )
+  const getRightValue = useCallback((str: string) => {
+    let changedValue = str
+
+    if (!changedValue) {
+      return changedValue
+    }
+
+    return Number(changedValue) >= 0 ? changedValue : ''
+  }, [])
+  const changeCodeAtFocus = useCallback(
+    (str: string) => {
+      const updatedOTPValues = [...otpValues]
+      updatedOTPValues[activeInput] = str[0] || ''
+      setOTPValues(updatedOTPValues)
+      handleOtpChange(updatedOTPValues)
+    },
+    [activeInput, otpValues]
+  )
+  const handleOtpChange = useCallback((otp: string[]) => {
+    // const otpValue = otp.join('')
+    // onChangeOTP(otpValue)
+  }, [])
+  const focusNextInput = useCallback(() => {
+    focusInput(activeInput + 1)
+  }, [activeInput, focusInput])
+  const handleOnKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLInputElement>) => {
+      const pressedKey = e.key
+
+      switch (pressedKey) {
+        case 'Backspace':
+        case 'Delete': {
+          e.preventDefault()
+          if (otpValues[activeInput]) {
+            changeCodeAtFocus('')
+          } else {
+            focusPrevInput()
+          }
+          break
+        }
+        case 'ArrowLeft': {
+          e.preventDefault()
+          focusPrevInput()
+          break
+        }
+        case 'ArrowRight': {
+          e.preventDefault()
+          focusNextInput()
+          break
+        }
+        default: {
+          // Ignore all special keys if it is not numeric or alphabet characters
+          if (pressedKey.match(/^[^a-zA-Z0-9]$/)) {
+            e.preventDefault()
+          }
+
+          break
+        }
+      }
+    },
+    [activeInput, changeCodeAtFocus, focusNextInput, otpValues]
+  )
+  const focusPrevInput = useCallback(() => {
+    focusInput(activeInput - 1)
+  }, [activeInput, focusInput])
+  const handleOnPaste = useCallback(
+    (e: React.ClipboardEvent<HTMLInputElement>) => {
+      e.preventDefault()
+      const pastedData = e.clipboardData
+        .getData('text/plain')
+        .trim()
+        .slice(0, length - activeInput)
+        .split('')
+      if (pastedData) {
+        let nextFocusIndex = 0
+        const updatedOTPValues = [...otpValues]
+        updatedOTPValues.forEach((val, index) => {
+          if (index >= activeInput) {
+            const changedValue = getRightValue(pastedData.shift() || val)
+            if (changedValue) {
+              updatedOTPValues[index] = changedValue
+              nextFocusIndex = index
+            }
+          }
+        })
+        setOTPValues(updatedOTPValues)
+        setActiveInput(Math.min(nextFocusIndex + 1, length - 1))
+      }
+    },
+    [activeInput, getRightValue, length, otpValues]
+  )
+
   return (
     <div className="flex h-full items-center justify-center bg-gray-50">
       <div className="flex max-w-[454px] flex-1 flex-col rounded-md border border-gray-50 bg-white text-center drop-shadow-sm drop-shadow-sm">
@@ -114,6 +265,54 @@ const Verification = () => {
         <div className="pt-4 pb-10  text-base text-[#6B7280]">
           Enter the OTP sent to{' '}
           <span className="font-medium text-primary">anurag12@email.com </span>
+        </div>
+
+        <div className=" flex justify-center gap-4 pb-8">
+          {Array(4)
+            .fill('')
+            .map((_, index) => (
+              <SingleOTPInput
+                key={`SingleInput-${index}`}
+                focus={activeInput === index}
+                value={otpValues && otpValues[index]}
+                // autoFocus={autoFocus}
+                onFocus={handleOnFocus(index)}
+                onChange={handleOnChange}
+                onKeyDown={handleOnKeyDown}
+                // onBlur={handleOnBlur}
+                onPaste={handleOnPaste}
+                className="flex h-12 w-16 justify-center rounded-md border border-[#D5DAE1] drop-shadow-sm"
+                // disabled={disabled}
+              />
+            ))}
+          {/* {otp.map((digit) => (
+            <>
+              <input
+                type="text"
+                value={digit}
+                onChange={(e) => {
+                  console.log(e.target.value, 'e')
+                  // setOtp(e.target.value)
+                }}
+                className="flex h-12 w-16 justify-center rounded-md border border-[#D5DAE1] drop-shadow-sm"
+              />
+            </>
+          ))} */}
+        </div>
+        <div className="pb-10 text-base text-[#6B7280]">
+          Resend code in <span className="font-medium text-primary">01:34</span>
+        </div>
+        <div className="px-12 pb-12">
+          <Button
+            tabIndex={0}
+            id="verify"
+            varient="primary-solid"
+            type="button"
+            name="delete"
+            className="w-full"
+            title="Verify"
+            buttonText="Verify"
+          />
         </div>
       </div>
     </div>
