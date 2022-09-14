@@ -79,7 +79,7 @@ describe('Test for Section', () => {
       .within((el) => {
         cy.get('[data-cy="submit"]').click()
       })
-    cy.get('.Toastify__toast').should('have.text', cypress.nameIsReq)
+    cy.get('.Toastify__toast').should('have.text', statusCheck.nameIsReq)
   })
   it('Test for valid error message while adding new section without Description', () => {
     cy.get('a')
@@ -97,7 +97,7 @@ describe('Test for Section', () => {
 
         cy.get('[data-cy="submit"]').click()
       })
-    cy.get('.Toastify__toast').should('have.text', cypress.descIsReq)
+    cy.get('.Toastify__toast').should('have.text', statusCheck.descIsReq)
   })
   it('Test for valid error message while adding new section with duplicate Title', () => {
     cy.get('a')

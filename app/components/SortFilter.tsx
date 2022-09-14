@@ -55,13 +55,15 @@ const SortFilter = ({
             />
           )}
         </span>
-        <DropdownField
-          data={filterData}
-          displayKey={'name'}
-          valueKey={'value'}
-          value={sortBy}
-          setValue={onSortChange}
-        />
+        <div className="w-48">
+          <DropdownField
+            data={filterData}
+            displayKey={'name'}
+            valueKey={'value'}
+            value={sortBy}
+            setValue={onSortChange}
+          />
+        </div>
       </div>
       <span
         tabIndex={0}
@@ -69,7 +71,7 @@ const SortFilter = ({
         className="flex items-center text-sm text-gray-600"
         id="total-items-value"
       >
-        <span>
+        <span className="w-max">
           {componentGlobalConstants.totalCounts}:
           <span id="total-count-value" className="pl-1">
             {totalItems}
