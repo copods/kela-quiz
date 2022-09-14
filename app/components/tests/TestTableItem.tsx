@@ -7,9 +7,8 @@ import { useNavigate, useSubmit } from '@remix-run/react'
 import TestListActionMenu from '../TestListActionMenu'
 import { useEffect, useState } from 'react'
 import InviteCandidatePopup from './InviteCandidatePopup'
-import { routes } from '~/constants/route.constants'
-// import Checkbox from '../form/CheckBox'
 import { testsConstants, testTableItem } from '~/constants/common.constants'
+import { routes } from '~/constants/route.constants'
 
 const TestTableItem = ({
   testName,
