@@ -66,7 +66,7 @@ const SectionCard = ({
       id="section-card"
     >
       <div className="flex items-center justify-between">
-        <h2 className="sectionName text-xl font-semibold text-gray-700">
+        <h2 className="sectionName break-all text-xl font-semibold text-gray-700">
           {name}
         </h2>
         <div className="flex">
