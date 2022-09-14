@@ -58,7 +58,7 @@ export default function MemberListItem({
             }}
             icon="ic:outline-delete-outline"
             className={`h-6 w-6 cursor-pointer text-red-500  ${
-              loggedInUser && 'cursor-not-allowed text-red-300'
+              loggedInUser && 'cursor-not-allowed text-red-200'
             }`}
           />
         </div>

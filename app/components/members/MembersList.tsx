@@ -35,7 +35,7 @@ export default function MembersList({
           <div key={user.id} className="memberRow col-span-10 grid">
             <MemberListItem
               user={user}
-              loggedInUser={loggedInUser == user.id}
+              loggedInUser={loggedInUser === user.id}
               actionStatus={actionStatus}
             />
           </div>
