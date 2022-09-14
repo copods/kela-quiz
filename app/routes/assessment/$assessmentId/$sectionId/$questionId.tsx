@@ -19,7 +19,7 @@ export const loader: LoaderFunction = async ({ params, request }) => {
 
   const lastSection = candidateTests?.sections.length == section?.order
 
-  return { question, section, lastSection, candidateTests }
+  return { question, section, lastSection, candidateTests, params }
 }
 
 export const action: ActionFunction = async ({ params, request }) => {
@@ -30,6 +30,8 @@ export const action: ActionFunction = async ({ params, request }) => {
   const endExam = formData.get('endExam')
   const options: any = formData.getAll('option')
   const answers: any = formData.getAll('answer')
+
+  console.log(options, 'options')
 
   let nextQuestionId = null
 

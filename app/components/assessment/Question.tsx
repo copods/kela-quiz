@@ -126,7 +126,6 @@ const Question = () => {
                     },
                     i: number
                   ) => {
-                    console.log('rerendered')
                     return (
                       <label
                         key={option.id}
@@ -170,39 +169,18 @@ const Question = () => {
                 )}
                 {question?.question?.correctAnswer?.map(
                   (answer: { id: string }, index: number) => {
+                    console.log(userAnswer)
                     return (
-                      <>
-                        <div key={answer.id} className="border-b px-6 py-7">
-                          <textarea
-                            name="answer"
-                            id=""
-                            value={userAnswer[index]}
-                            rows={4}
-                            onChange={() => onChangeHandle(event, index)}
-                            className="w-full rounded-lg border border-gray-200 bg-white p-5"
-                          />
-                        </div>
-                        <div key={answer.id} className="border-b px-6 py-7">
-                          <textarea
-                            name="answer"
-                            id=""
-                            value={userAnswer[index]}
-                            rows={4}
-                            onChange={() => onChangeHandle(event, index)}
-                            className="w-full rounded-lg border border-gray-200 bg-white p-5"
-                          />
-                        </div>
-                        <div key={answer.id} className="border-b px-6 py-7">
-                          <textarea
-                            name="answer"
-                            id=""
-                            value={userAnswer[index]}
-                            rows={4}
-                            onChange={() => onChangeHandle(event, index)}
-                            className="w-full rounded-lg border border-gray-200 bg-white p-5"
-                          />
-                        </div>
-                      </>
+                      <div key={answer.id} className="border-b px-6 py-7">
+                        <textarea
+                          name="answer"
+                          id=""
+                          value={userAnswer[index]}
+                          rows={4}
+                          onChange={() => onChangeHandle(event, index)}
+                          className="w-full rounded-lg border border-gray-200 bg-white p-5"
+                        />
+                      </div>
                     )
                   }
                 )}

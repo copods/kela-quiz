@@ -41,6 +41,7 @@ export interface ActionData {
 }
 
 export interface CheckboxProps {
+  [x: string]: any
   handleChange: React.MouseEventHandler<HTMLInputElement>
   name?: string
   isChecked?: boolean

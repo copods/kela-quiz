@@ -17,12 +17,14 @@ module.exports = {
         184: '184px',
         96: '384px',
         sectionCard: '330px',
+        16: '16px',
       },
       width: {
         sectionCard: `30%`,
       },
       maxWidth: {
         554: '554px',
+        16: '16px',
       },
       minHeight: {
         480: '480px',

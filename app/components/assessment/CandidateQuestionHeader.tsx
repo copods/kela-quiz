@@ -6,8 +6,6 @@ import TimerComponent from './Timer'
 const CandidateQuestionHeader = () => {
   const { candidateTests, section } = useLoaderData()
 
-  // console.log(candidateTests, section)
-
   return (
     <div className="mr-auto flex h-16 w-full items-center justify-between border px-8">
       <div className="flex w-64 items-center gap-4">
