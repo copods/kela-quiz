@@ -17,8 +17,8 @@ import {
   candidateTest,
   checkIfTestLinkIsValidAndRedirect,
   getCandidateByAssessmentId,
-  getSectionByOrder,
-  getTestInstructions,
+  // getSectionByOrder,
+  // getTestInstructions,
   startTest,
   updateNextStep,
 } from '~/utils/assessment.utils'
@@ -26,7 +26,7 @@ import {
 export const loader: LoaderFunction = async ({ params, request }) => {
   const candidateNextRoute = await checkIfTestLinkIsValidAndRedirect(
     params.assessmentId as string,
-    'instructions'
+    'verification'
   )
 
   if (typeof candidateNextRoute === 'string') {
@@ -35,11 +35,11 @@ export const loader: LoaderFunction = async ({ params, request }) => {
     throw new Response('Not Found', { status: 404 })
   }
 
-  const instructions = await getTestInstructions(params.assessmentId as string)
-  const firstSection = await getSectionByOrder(
-    instructions?.test.id as string,
-    1
-  )
+  // const instructions = await getTestInstructions(params.assessmentId as string)
+  // const firstSection = await getSectionByOrder(
+  //   instructions?.test.id as string,
+  //   1
+  // )
 
   const candidateTests = await candidateTest(params.assessmentId as string)
 
@@ -47,7 +47,11 @@ export const loader: LoaderFunction = async ({ params, request }) => {
     params.assessmentId as string
   )
 
-  return json({ instructions, firstSection, candidateTests, candidate })
+  return json({
+    // instructions, firstSection,
+    candidateTests,
+    candidate,
+  })
 }
 
 export const action: ActionFunction = async ({ request, params }) => {
@@ -92,6 +96,9 @@ const SingleOTPInput = memo(SingleOTPInputComponent)
 const Verification = () => {
   const [otpValues, setOTPValues] = useState(Array<string>(4).fill(''))
   const [activeInput, setActiveInput] = useState(0)
+
+  const length = 4
+
   const handleOnFocus = useCallback(
     (index: number) => () => {
       focusInput(index)

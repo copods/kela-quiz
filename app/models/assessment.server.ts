@@ -8,6 +8,7 @@ import type {
   SectionInTest,
 } from '@prisma/client'
 import { prisma } from '~/db.server'
+import { sendOTPMail } from './sendgrid.servers'
 
 export async function checkIfTestLinkIsValid(id: CandidateTest['id']) {
   try {
@@ -31,16 +32,36 @@ export async function getCandidateIDFromAssessmentID(id: CandidateTest['id']) {
   }
 }
 
+async function generateOTP() {
+  // generate random 4 digit OTP
+  var digits = '0123456789';
+  let OTP = '';
+  for (let i = 0; i < 4; i++) {
+    OTP += digits[Math.floor(Math.random() * 10)];
+  }
+  return parseInt(OTP);
+}
+
+async function sendOTPToUser({ id, OTP }: { id: string, OTP: number }) {
+  console.log(OTP)
+  const user = await prisma.candidate.findUnique({ where: { id }, select: { email: true } })
+  return await sendOTPMail(user?.email as string, OTP)
+}
+
 export async function updateCandidateFirstLastName(
   id: Candidate['id'],
   firstName: Candidate['firstName'],
   lastName: Candidate['lastName']
 ) {
   try {
-    return await prisma.candidate.update({
+    const OTP = await generateOTP()
+
+    const data = await prisma.candidate.update({
       where: { id },
-      data: { firstName, lastName },
+      data: { firstName, lastName, OTP },
     })
+    await sendOTPToUser({ id, OTP })
+    return data
   } catch (error) {
     throw new Error('Something went wrong..!')
   }
