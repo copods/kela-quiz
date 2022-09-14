@@ -40,7 +40,7 @@ const QuestionCard = ({
         )
       }}
     >
-      <div className="break flex flex-col-reverse items-start justify-between text-base text-gray-600 lg:flex-row">
+      <div className="break flex flex-col-reverse items-start justify-between text-base text-gray-600 xl:flex-row">
         <div className="ql-editor p-0 pr-7">
           <div
             className="question flex-1 cursor-pointer flex-row"
@@ -49,7 +49,7 @@ const QuestionCard = ({
             }}
           ></div>
         </div>
-        <div className=" flex w-full items-center justify-between lg:flex-1 lg:justify-end lg:gap-2">
+        <div className="flex w-full items-center justify-between lg:flex-1 lg:justify-end lg:gap-2">
           <div>
             <span className="flex flex-1 items-center rounded-52 border border-gray-700 px-3 text-sm text-gray-700">
               {question.questionType?.displayName}
