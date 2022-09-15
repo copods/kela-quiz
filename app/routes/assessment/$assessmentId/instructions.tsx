@@ -85,9 +85,11 @@ const TestInstructions = () => {
     //   heading="Pre-Interview Assessment"
     // >
     // </CandidateLayout>
-    <div className="h-screen overflow-auto bg-gray-50">
+    <div className="flex h-screen flex-col overflow-auto bg-gray-50">
       <CandidateInstructionHeader />
-      <CandidateInstruction />
+      <div className="flex-1 overflow-auto">
+        <CandidateInstruction />
+      </div>
     </div>
   )
 }

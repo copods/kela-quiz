@@ -48,7 +48,6 @@ const TestTableItem = ({
     if (deleted === true) {
       setTimeout(() => {
         document.getElementById('1')?.focus()
-        console.log(document.getElementById('1'))
         setDeleted(false)
       }, 500)
     }
