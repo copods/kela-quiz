@@ -1,10 +1,12 @@
-import { Icon } from '@iconify/react'
+// import { Icon } from '@iconify/react'
 import { useLoaderData, useSubmit } from '@remix-run/react'
 import { candidateExamConstants } from '~/constants/common.constants'
 import Button from '../form/Button'
+import Header from '../layouts/Header'
+import cooldownImage from '~/../public/assets/cooldown.svg'
 
 const SectionDetails = () => {
-  const { section, candidateSection } = useLoaderData()
+  const { candidateSection } = useLoaderData()
   const submit = useSubmit()
   const startSection = async () => {
     //getting first test of this section
@@ -17,32 +19,30 @@ const SectionDetails = () => {
     )
   }
   return (
-    <div className="flex flex-col gap-8">
-      <div className="flex flex-col gap-4">
-        <div className="text-base text-gray-700">
-          {section.section.description}
-        </div>
-        <div className="flex flex-row items-center gap-4">
-          <div className="flex gap-2 text-lg text-gray-600">
-            {candidateExamConstants.noOfQuestions}:
-            <span className="font-medium">{section.totalQuestions}</span>
-          </div>
-          <Icon icon="ci:line-m" className="text-2xl text-gray-600" />
-          <div className="flex gap-2 text-lg text-gray-600">
-            {candidateExamConstants.total} {candidateExamConstants.time}:
-            <span className="font-medium">
-              {section.timeInSeconds / 60} Mins
-            </span>
-          </div>
+    <div className="flex h-screen flex-col bg-slate-50">
+      <Header />
+      <div className="py-auto flex flex-1 items-center justify-center">
+        <div className="flex w-coolDownCard flex-col items-center justify-center gap-8 bg-white py-12">
+          <span className="text-lg font-medium text-gray-500">
+            {candidateExamConstants.takeBreak}
+          </span>
+          <p className="text-2xl font-bold text-gray-900">
+            {candidateExamConstants.cheers}
+          </p>
+          <img
+            src={cooldownImage}
+            alt="cooldown"
+            className="h-cooldownSVG w-cooldownSVG"
+          />
+          <Button
+            className="w-80 px-6"
+            onClick={startSection}
+            title={candidateExamConstants.startNewSection}
+            buttonText={candidateExamConstants.startNewSection}
+            varient="primary-solid"
+          />
         </div>
       </div>
-      <Button
-        className="w-36 px-6"
-        onClick={startSection}
-        title={candidateExamConstants.startSection}
-        buttonText={candidateExamConstants.startSection}
-        varient="primary-solid"
-      />
     </div>
   )
 }
