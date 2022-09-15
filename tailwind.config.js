@@ -12,7 +12,7 @@ module.exports = {
         questionBackground: '#F0F0F0',
       },
       minWidth: {
-        'sectionCard': "400px",
+        sectionCard: '400px',
         200: '200px',
         260: '260px',
         184: '184px',
