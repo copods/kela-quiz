@@ -6,6 +6,7 @@ import React from 'react'
 const CandidateQuestionStepper = () => {
   const { section, candidateTests, params } = useLoaderData()
   const navigate = useNavigate()
+  // const submit = useSubmit()
 
   return (
     <div className="flex w-full items-center justify-center gap-2">
@@ -23,9 +24,15 @@ const CandidateQuestionStepper = () => {
                     navigate(
                       `/assessment/${params.assessmentId}/${params.sectionId}/${question.id}`
                     )
+                    // submit({ next: 'next' }, { method: 'post', action: `/assessment/${params.assessmentId}/${params.sectionId}/${question.id}` })
+                    // window.location.reload()
                   }
                 }}
-                className={`flex h-6 w-6 cursor-pointer items-center justify-center rounded-full text-xs ${
+                className={`flex h-6 w-6 items-center justify-center rounded-full text-xs ${
+                  question.status && question.status !== 'NOT_VIEWED'
+                    ? 'cursor-pointer'
+                    : 'cursor-not-allowed'
+                } ${
                   params.questionId === question.id
                     ? 'bg-primary text-white'
                     : question.status === 'ANSWERED'

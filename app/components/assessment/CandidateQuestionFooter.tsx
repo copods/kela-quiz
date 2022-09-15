@@ -9,7 +9,7 @@ import Button from '../form/Button'
 const CandidateQuestionFooter = () => {
   const { question, section, lastSection } = useLoaderData()
   return (
-    <div className="flex h-16 items-center justify-between gap-6 rounded-b-lg border-t bg-white px-6 py-4">
+    <div className="flex h-16 items-center justify-between gap-6 border-t bg-white px-6 py-4">
       <div>
         <Button
           className="max-w-max border-none bg-inherit py-0 px-0 text-base font-bold text-black underline shadow-none hover:bg-white"

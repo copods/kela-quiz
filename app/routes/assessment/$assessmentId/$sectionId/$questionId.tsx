@@ -29,7 +29,20 @@ export const action: ActionFunction = async ({ params, request }) => {
   const nextSection = formData.get('nextSection')
   const endExam = formData.get('endExam')
   const options: any = formData.getAll('option')
-  const answers: any = formData.getAll('answer')
+  let answers: any = formData.getAll('answer')
+
+  if (answers.length) {
+    let flag = true
+    for (let i = 0; i < answers.length; i++) {
+      if (answers[i] !== '') {
+        flag = false
+        break
+      }
+    }
+    if (flag) {
+      answers = []
+    }
+  }
 
   let nextQuestionId = null
 

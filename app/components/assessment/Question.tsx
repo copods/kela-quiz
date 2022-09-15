@@ -1,5 +1,5 @@
 import { useLoaderData } from '@remix-run/react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { QuestionTypes } from '~/interface/Interface'
 import Checkbox from '../form/CheckBox'
 import sanitizeHtml from 'sanitize-html'
@@ -11,6 +11,9 @@ const Question = () => {
   const { question } = useLoaderData()
   const questionType = question?.question?.questionType?.value
   // const [test, setTest] = useState(question?.question?.options)
+  console.log('============================')
+  console.log(questionType, question.answers)
+  console.log('============================')
   const [userAnswer, setUserAnswer] = useState(
     questionType === QuestionTypes.singleChoice
       ? question.selectedOptions[0]?.id
@@ -18,6 +21,9 @@ const Question = () => {
       ? question?.answers
       : question.selectedOptions.flatMap((option: any) => option.id)
   )
+  useEffect(() => {
+    console.log('ASDasd', userAnswer)
+  }, [userAnswer])
 
   const onChangeHandle = (event: any, index?: number) => {
     if (questionType === QuestionTypes.singleChoice) {
