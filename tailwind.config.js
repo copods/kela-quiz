@@ -16,8 +16,13 @@ module.exports = {
         184: '184px',
         96: '384px',
       },
+      height: {
+        cooldownSVG: '355px',
+      },
       width: {
         sectionCard: `30%`,
+        coolDownCard: '1046px',
+        cooldownSVG: '389px',
       },
       maxWidth: {
         554: '554px',

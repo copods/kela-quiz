@@ -2,11 +2,9 @@ import { useLoaderData } from '@remix-run/react'
 import type { ActionFunction, LoaderFunction } from '@remix-run/server-runtime'
 import { redirect } from '@remix-run/server-runtime'
 import SectionQuestionPage from '~/components/assessment/SectionQuestionPage'
-import CandidateLayout from '~/components/layouts/CandidateLayout'
 import {
   candidateTest,
   checkIfTestLinkIsValidAndRedirect,
-  getCandidateByAssessmentId,
   getSectionInCandidateTest,
   getSectionInTest,
   moveToNextSection,
@@ -46,14 +44,9 @@ export const loader: LoaderFunction = async ({ params, request }) => {
     params.sectionId as string
   )
 
-  const candidate = await getCandidateByAssessmentId(
-    params.assessmentId as string
-  )
-
   return {
     section,
     candidateTests,
-    candidate,
     params,
     currentSectionInTest,
   }
@@ -62,7 +55,6 @@ export const loader: LoaderFunction = async ({ params, request }) => {
 export const action: ActionFunction = async ({ params, request }) => {
   const formData = await request.formData()
   const order = formData.get('order')
-  console.log('order', order)
   const nextSecRoute = await moveToNextSection({
     assessmentId: params.assessmentId as string,
     order: parseInt(order as string),
@@ -71,21 +63,13 @@ export const action: ActionFunction = async ({ params, request }) => {
   if (typeof nextSecRoute === 'string') return redirect(nextSecRoute)
 }
 const AssessmentSection = () => {
-  const { section, candidateTests, candidate, params } = useLoaderData()
+  const { section, candidateTests, params } = useLoaderData()
   return (
-    <CandidateLayout
-      candidate={candidate}
-      candidateTest={candidateTests}
-      heading="Section Detail"
-      params={params}
+    <SectionQuestionPage
       section={section}
-    >
-      <SectionQuestionPage
-        section={section}
-        params={params}
-        candidateTest={candidateTests}
-      />
-    </CandidateLayout>
+      params={params}
+      candidateTest={candidateTests}
+    />
   )
 }
 
