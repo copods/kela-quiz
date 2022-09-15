@@ -6,16 +6,19 @@ import {
   endAssessment,
   endCurrentSection,
   getCandidate,
+  getCandidateEmail,
   getCandidateIDFromAssessmentID,
   getCandidateSectionDetails,
   getCandidateTest,
   getOrderedSection,
   getTestInstructionForCandidate,
   getTestSectionDetails,
+  resendOtp,
   skipAnswerAndNextQuestion,
   startAndGetQuestion,
   updateCandidateFirstLastName,
   updateNextCandidateStep,
+  verifyOTP,
 } from '~/models/assessment.server'
 
 // Type of candidateStep field in CandidateTest schema
@@ -116,6 +119,27 @@ export async function updateCandidateDetail({
 }
 
 /**
+ * Functions will update candidate details and returns the status
+ * @param id
+ * @param OTP
+
+ * @returns OTP
+ */
+export async function resendOtpCode({ assesmentId }: { assesmentId: string }) {
+  return await resendOtp({ assesmentId })
+}
+
+export async function verifyCandidateOtp({
+  assessmentId,
+  otp,
+}: {
+  assessmentId: string
+  otp: string
+}) {
+  return await verifyOTP({ assessmentId, otp: parseInt(otp) })
+}
+
+/**
  * Functions will update the candidate next step
  * @param assessmentID
  * @param nextRoute
@@ -139,6 +163,14 @@ export async function updateNextStep({
     isSection,
     currentSectionId,
   })
+}
+/**
+ * Functions will return test instructions, sections details
+ * @param id
+ * @returns candidate email
+ */
+export async function getCandidateEmailByCandidateId(id: string) {
+  return await getCandidateEmail(id)
 }
 
 /**

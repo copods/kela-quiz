@@ -34,7 +34,7 @@ export async function getCandidateIDFromAssessmentID(id: CandidateTest['id']) {
 
 async function generateOTP() {
   // generate random 4 digit OTP
-  var digits = '0123456789'
+  var digits = '123456789'
   let OTP = ''
   for (let i = 0; i < 4; i++) {
     OTP += digits[Math.floor(Math.random() * 10)]
@@ -68,6 +68,38 @@ export async function updateCandidateFirstLastName(
     throw new Error('Something went wrong..!')
   }
 }
+export async function resendOtp({ assesmentId }: { assesmentId: string }) {
+  const user = await prisma.candidateTest.findUnique({
+    where: { id: assesmentId },
+    select: { candidate: { select: { OTP: true, email: true, id: true } } },
+  })
+  const OTPValue = await generateOTP()
+  if (user) {
+    await prisma.candidate.update({
+      where: { id: user?.candidate?.id },
+      data: {
+        OTP: OTPValue,
+      },
+    })
+    return await sendOTPMail(user?.candidate?.email as string, OTPValue)
+  } else return null
+}
+
+export async function verifyOTP({
+  assessmentId,
+  otp,
+}: {
+  assessmentId: string
+  otp: number
+}) {
+  const candidateAssessmentOtp = await prisma.candidateTest.findUnique({
+    where: { id: assessmentId },
+    select: {
+      candidate: { select: { OTP: true, id: true } },
+    },
+  })
+  return candidateAssessmentOtp?.candidate?.OTP === otp
+}
 
 export async function updateNextCandidateStep(
   id: CandidateTest['id'],
@@ -83,7 +115,18 @@ export async function updateNextCandidateStep(
     throw new Error('Something went wrong..!')
   }
 }
-
+export async function getCandidateEmail(id: string) {
+  return prisma.candidateTest.findUnique({
+    where: { id },
+    select: {
+      candidate: {
+        select: {
+          OTP: true,
+        },
+      },
+    },
+  })
+}
 export async function getTestInstructionForCandidate(id: CandidateTest['id']) {
   try {
     return await prisma.candidateTest.findUnique({
@@ -202,7 +245,6 @@ export async function getCandidateTest(id: CandidateTest['id']) {
     throw new Error('Something went wrong..!')
   }
 }
-
 export async function candidateTestStart(id: CandidateTest['id']) {
   try {
     return await prisma.candidateTest.update({

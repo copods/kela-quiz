@@ -38,6 +38,7 @@ export const commonConstants = {
   enterSectionDesc: 'Enter Section Description',
   enterTestName: 'Enter test name',
   totalQuestion: 'Total Questions',
+  verify: 'Verify',
 }
 export const sideNav = {
   sideNavHeading: 'Quiz',
@@ -153,6 +154,8 @@ export const statusCheck = {
   emailIsReq: 'email is required',
   roleIdIsReq: 'roleId is required',
   memberAddedSuccess: 'Member Added Successfully..!',
+  erroSendingOtp: 'Error in sending OTP..',
+  otpSent: 'Otp sent. Please check your email',
 }
 export const resultConstants = {
   order: 'Order',
@@ -246,4 +249,12 @@ export const toastConstants = {
   correctEmail: 'Please provide a valid email address',
   memberAdded: 'Member Added Successfully..!',
   memberAlreadyExist: 'Member with this email id already exists!',
+}
+export const otpConstants = {
+  header: 'OTP Verification',
+  enterOTP: 'Enter the OTP sent to',
+  resend: 'Resend',
+  didntGetCode: "Didn't get a code",
+  resendCodeIn: 'Resend code in',
+  otp: 'OTP',
 }
