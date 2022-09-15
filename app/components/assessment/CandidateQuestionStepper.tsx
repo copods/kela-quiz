@@ -12,8 +12,9 @@ const CandidateQuestionStepper = () => {
       {candidateTests.sections[section.order - 1].questions.map(
         (question: any, i: number) => {
           return (
-            <>
+            <div key={question.id} className="contents">
               <div
+                key={question.id}
                 tabIndex={0}
                 onKeyUp={() => {}}
                 role="button"
@@ -24,19 +25,15 @@ const CandidateQuestionStepper = () => {
                     )
                   }
                 }}
-                className={`flex h-6 w-6 ${
-                  question.status && question.status !== 'NOT_VIEWED'
-                    ? 'cursor-pointer'
-                    : 'cursor-not-allowed'
-                } items-center justify-center rounded-full text-xs text-white ${
+                className={`flex h-6 w-6 cursor-pointer items-center justify-center rounded-full text-xs ${
                   params.questionId === question.id
-                    ? 'bg-primary'
+                    ? 'bg-primary text-white'
                     : question.status === 'ANSWERED'
-                    ? 'bg-green-600'
+                    ? 'bg-green-600 text-white'
                     : question.status === 'SKIPPED' ||
                       question.status === 'VIEWED'
-                    ? 'bg-gray-700'
-                    : 'bg-gray-200'
+                    ? 'bg-gray-700 text-white'
+                    : 'border border-primary text-primary'
                 }`}
               >
                 {params.questionId === question.id ? (
@@ -54,7 +51,7 @@ const CandidateQuestionStepper = () => {
                 i + 1 && (
                 <span className="h-1 min-w-16 max-w-32 flex-1 rounded-full bg-gray-300"></span>
               )}
-            </>
+            </div>
           )
         }
       )}
