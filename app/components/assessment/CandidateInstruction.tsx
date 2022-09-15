@@ -1,4 +1,4 @@
-import { useLoaderData } from '@remix-run/react'
+import { useLoaderData, useSubmit } from '@remix-run/react'
 import {
   candidateExamConstants,
   routeFiles,
@@ -11,21 +11,21 @@ import contactSupport from '~/../public/assets/contactSupport.svg'
 import checkIcon from '~/../public/assets/checkIcon.svg'
 
 const CandidateInstruction = () => {
-  const { instructions, candidate } = useLoaderData()
+  const { firstSection, instructions, candidate } = useLoaderData()
   const candidateSections = instructions?.test?.sections.sort(
     (a: TestSection & { order: number }, b: TestSection & { order: number }) =>
       a.order > b.order ? 1 : b.order > a.order ? -1 : 0
   )
-  // const submit = useSubmit()
-  // const startTestForCandidate = () => {
-  //   submit(
-  //     {
-  //       proceedToTest: 'true',
-  //       firstSectionId: firstSection.id,
-  //     },
-  //     { method: 'post' }
-  //   )
-  // }
+  const submit = useSubmit()
+  const startTestForCandidate = () => {
+    submit(
+      {
+        proceedToTest: 'true',
+        firstSectionId: firstSection.id,
+      },
+      { method: 'post' }
+    )
+  }
 
   return (
     // <div className="h-full flex-col overflow-y-auto">
@@ -145,9 +145,10 @@ const CandidateInstruction = () => {
           tabIndex={0}
           id="start"
           className="w-356 py-3"
-          buttonText="Start"
           varient="primary-solid"
-          title="start"
+          title={candidateExamConstants.beginAssesment}
+          buttonText={candidateExamConstants.beginAssesment}
+          onClick={startTestForCandidate}
           aria-label="start"
         />
       </div>
