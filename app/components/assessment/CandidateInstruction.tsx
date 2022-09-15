@@ -9,6 +9,7 @@ import Button from '../form/Button'
 
 import contactSupport from '~/../public/assets/contactSupport.svg'
 import checkIcon from '~/../public/assets/checkIcon.svg'
+import Header from './Header'
 
 const CandidateInstruction = () => {
   const { firstSection, instructions, candidate } = useLoaderData()
@@ -28,96 +29,105 @@ const CandidateInstruction = () => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center gap-16 py-10">
-      <div className="flex flex-col items-center justify-center gap-4">
-        <h3 className="text-2xl font-bold text-gray-900">
-          {candidateExamConstants.candidateInsWelcome} {candidate.firstName}
-        </h3>
-        <p className="text-base font-medium text-gray-500">
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry.
-        </p>
-      </div>
-      <div className="flex gap-12">
-        <div className="flex w-438 flex-col gap-10 rounded-lg border border-gray-50 bg-white p-10 shadow-sm">
-          <h3 className="text-center text-2xl font-bold text-gray-900">
-            {routeFiles.sections}
-          </h3>
-          <div className="flex flex-col gap-6">
-            {candidateSections.map((section: SectionInTest, index: number) => {
-              return (
-                <div
-                  key={section?.id}
-                  className="flex flex-1 items-center justify-between gap-6 text-gray-700"
-                >
-                  <div className="flex items-start gap-4">
-                    <img src={contactSupport} alt="" className="h-6" />
-                    <span className="text-base font-normal text-gray-900">
-                      {sectionsConstants.sectionName} {section.order} -
-                      {section.section.name}
-                    </span>
-                  </div>
+    <div className="flex h-screen flex-col overflow-auto bg-gray-50">
+      <Header />
+      <div className="flex-1 overflow-auto">
+        <div className="flex flex-col items-center justify-center gap-16 py-10">
+          <div className="flex flex-col items-center justify-center gap-4">
+            <h3 className="text-2xl font-bold text-gray-900">
+              {candidateExamConstants.candidateInsWelcome} {candidate.firstName}
+            </h3>
+            <p className="text-base font-medium text-gray-500">
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry.
+            </p>
+          </div>
+          <div className="flex gap-12">
+            <div className="flex w-438 flex-col gap-10 rounded-lg border border-gray-50 bg-white p-10 shadow-sm">
+              <h3 className="text-center text-2xl font-bold text-gray-900">
+                {routeFiles.sections}
+              </h3>
+              <div className="flex flex-col gap-6">
+                {candidateSections.map(
+                  (section: SectionInTest, index: number) => {
+                    return (
+                      <div
+                        key={section?.id}
+                        className="flex flex-1 items-center justify-between gap-6 text-gray-700"
+                      >
+                        <div className="flex items-start gap-4">
+                          <img src={contactSupport} alt="" className="h-6" />
+                          <span className="text-base font-normal text-gray-900">
+                            {sectionsConstants.sectionName} {section.order} -
+                            {section.section.name}
+                          </span>
+                        </div>
+                      </div>
+                    )
+                  }
+                )}
+              </div>
+            </div>
+            <div className="flex w-438 flex-col gap-10 rounded-lg border border-gray-50 bg-white p-10 shadow-sm">
+              <h3 className="text-center text-2xl font-bold text-gray-900">
+                {candidateExamConstants.instructions}
+              </h3>
+              <div className="flex flex-col gap-6">
+                {' '}
+                <div className="flex items-start gap-4">
+                  <img src={checkIcon} alt="" className="h-6" />
+                  <span className="text-base font-normal text-gray-900">
+                    The duration of this exam is  30 minutes.
+                  </span>
                 </div>
-              )
-            })}
-          </div>
-        </div>
-        <div className="flex w-438 flex-col gap-10 rounded-lg border border-gray-50 bg-white p-10 shadow-sm">
-          <h3 className="text-center text-2xl font-bold text-gray-900">
-            {candidateExamConstants.instructions}
-          </h3>
-          <div className="flex flex-col gap-6">
-            {' '}
-            <div className="flex items-start gap-4">
-              <img src={checkIcon} alt="" className="h-6" />
-              <span className="text-base font-normal text-gray-900">
-                The duration of this exam is  30 minutes.
-              </span>
-            </div>
-            <div className="flex items-start gap-4">
-              <img src={checkIcon} alt="" className="h-6" />
-              <span className="text-base font-normal text-gray-900">
-                This is a restricted open book exam.
-              </span>
-            </div>
-            <div className="flex items-start gap-4">
-              <img src={checkIcon} alt="" className="h-6" />
-              <span className="text-base font-normal text-gray-900">
-                There are X questions in this exam and will be presented one at
-                a time.
-              </span>
-            </div>
-            <div className="flex items-start gap-4">
-              <img src={checkIcon} alt="" className="h-6" />
-              <span className="text-base font-normal text-gray-900">
-                Each question is worth the same and different marks.
-              </span>
-            </div>
-            <div className="flex items-start gap-4">
-              <img src={checkIcon} alt="" className="h-6" />
-              <span className="text-base font-normal text-gray-900">
-                During this exam you will/won’t be permitted to review previous
-                questions.
-              </span>
+                <div className="flex items-start gap-4">
+                  <img src={checkIcon} alt="" className="h-6" />
+                  <span className="text-base font-normal text-gray-900">
+                    This is a restricted open book exam.
+                  </span>
+                </div>
+                <div className="flex items-start gap-4">
+                  <img src={checkIcon} alt="" className="h-6" />
+                  <span className="text-base font-normal text-gray-900">
+                    There are X questions in this exam and will be presented one
+                    at a time.
+                  </span>
+                </div>
+                <div className="flex items-start gap-4">
+                  <img src={checkIcon} alt="" className="h-6" />
+                  <span className="text-base font-normal text-gray-900">
+                    Each question is worth the same and different marks.
+                  </span>
+                </div>
+                <div className="flex items-start gap-4">
+                  <img src={checkIcon} alt="" className="h-6" />
+                  <span className="text-base font-normal text-gray-900">
+                    During this exam you will/won’t be permitted to review
+                    previous questions.
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
+          <div className="flex flex-col items-center justify-center gap-4">
+            <div className="flex gap-2">
+              <span>🎉 </span>
+              <p className="text-base font-semibold text-gray-900">
+                Best of Luck
+              </p>
+            </div>
+            <Button
+              tabIndex={0}
+              id="start"
+              className="w-356 py-3"
+              varient="primary-solid"
+              title={candidateExamConstants.beginAssesment}
+              buttonText={candidateExamConstants.beginAssesment}
+              onClick={startTestForCandidate}
+              aria-label="start"
+            />
+          </div>
         </div>
-      </div>
-      <div className="flex flex-col items-center justify-center gap-4">
-        <div className="flex gap-2">
-          <span>🎉 </span>
-          <p className="text-base font-semibold text-gray-900">Best of Luck</p>
-        </div>
-        <Button
-          tabIndex={0}
-          id="start"
-          className="w-356 py-3"
-          varient="primary-solid"
-          title={candidateExamConstants.beginAssesment}
-          buttonText={candidateExamConstants.beginAssesment}
-          onClick={startTestForCandidate}
-          aria-label="start"
-        />
       </div>
     </div>
   )
