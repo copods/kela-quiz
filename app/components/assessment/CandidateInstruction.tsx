@@ -39,7 +39,7 @@ const CandidateInstruction = () => {
         </p>
       </div>
       <div className="flex gap-12">
-        <div className="flex min-w-109 flex-col gap-10 rounded-lg border border-gray-50 bg-white p-10 shadow-sm">
+        <div className="flex w-438 flex-col gap-10 rounded-lg border border-gray-50 bg-white p-10 shadow-sm">
           <h3 className="text-center text-2xl font-bold text-gray-900">
             {routeFiles.sections}
           </h3>
@@ -50,7 +50,7 @@ const CandidateInstruction = () => {
                   key={section?.id}
                   className="flex flex-1 items-center justify-between gap-6 text-gray-700"
                 >
-                  <div className="flex items-center gap-4">
+                  <div className="flex items-start gap-4">
                     <img src={contactSupport} alt="" className="h-6" />
                     <span className="text-base font-normal text-gray-900">
                       {sectionsConstants.sectionName} {section.order} -
@@ -62,38 +62,38 @@ const CandidateInstruction = () => {
             })}
           </div>
         </div>
-        <div className="flex min-w-109 flex-col gap-10 rounded-lg border border-gray-50 bg-white p-10 shadow-sm">
+        <div className="flex w-438 flex-col gap-10 rounded-lg border border-gray-50 bg-white p-10 shadow-sm">
           <h3 className="text-center text-2xl font-bold text-gray-900">
             {candidateExamConstants.instructions}
           </h3>
           <div className="flex flex-col gap-6">
             {' '}
-            <div className="flex items-center gap-4">
+            <div className="flex items-start gap-4">
               <img src={checkIcon} alt="" className="h-6" />
               <span className="text-base font-normal text-gray-900">
                 The duration of this exam is  30 minutes.
               </span>
             </div>
-            <div className="flex items-center gap-4">
+            <div className="flex items-start gap-4">
               <img src={checkIcon} alt="" className="h-6" />
               <span className="text-base font-normal text-gray-900">
                 This is a restricted open book exam.
               </span>
             </div>
-            <div className="flex items-center gap-4">
+            <div className="flex items-start gap-4">
               <img src={checkIcon} alt="" className="h-6" />
               <span className="text-base font-normal text-gray-900">
                 There are X questions in this exam and will be presented one at
                 a time.
               </span>
             </div>
-            <div className="flex items-center gap-4">
+            <div className="flex items-start gap-4">
               <img src={checkIcon} alt="" className="h-6" />
               <span className="text-base font-normal text-gray-900">
                 Each question is worth the same and different marks.
               </span>
             </div>
-            <div className="flex items-center gap-4">
+            <div className="flex items-start gap-4">
               <img src={checkIcon} alt="" className="h-6" />
               <span className="text-base font-normal text-gray-900">
                 During this exam you will/won’t be permitted to review previous
