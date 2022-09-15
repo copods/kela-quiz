@@ -4,7 +4,7 @@ import { Form } from '@remix-run/react'
 import Button from '../form/Button'
 import otpImage from '~/../public/assets/otp.svg'
 import { commonConstants, otpConstants } from '~/constants/common.constants'
-const CandidateOtp = () => {
+const CandidateOtp = ({ email }: { email: string }) => {
   const [counter, setCounter] = useState(5)
   const [finalTime, setFinalTime] = useState('')
   useEffect(() => {
@@ -50,7 +50,7 @@ const CandidateOtp = () => {
         <div className="text-2xl font-bold">{otpConstants.header}</div>
         <div className="pt-4 pb-10  text-base text-[#6B7280]">
           {otpConstants.enterOTP}{' '}
-          <span className="font-medium text-primary">anurag12@email.com </span>
+          <span className="font-medium text-primary">{email} </span>
         </div>
         <Form method="post">
           <div className="flex justify-center gap-4 pb-8">

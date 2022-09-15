@@ -1,10 +1,11 @@
 import type { ActionFunction, LoaderFunction } from '@remix-run/node'
 import { redirect } from '@remix-run/node'
-import { useActionData } from '@remix-run/react'
+import { useActionData, useLoaderData } from '@remix-run/react'
 import CandidateHeader from '~/components/assessment/CandidateHeader'
 
 import {
   checkIfTestLinkIsValidAndRedirect,
+  getCandidateEmailByCandidateId,
   resendOtpCode,
   updateNextStep,
   verifyCandidateOtp,
@@ -24,7 +25,7 @@ export const loader: LoaderFunction = async ({ params, request }) => {
   } else if (candidateNextRoute === null) {
     throw new Response('Not Found', { status: 404 })
   }
-  return null
+  return await getCandidateEmailByCandidateId(params.assessmentId as string)
 }
 
 export const action: ActionFunction = async ({ request, params }) => {
@@ -69,6 +70,7 @@ export const action: ActionFunction = async ({ request, params }) => {
   return status
 }
 const Verification = () => {
+  const loaderData = useLoaderData() as any
   const action = useActionData() as any
   useEffect(() => {
     if (action === 'Done') {
@@ -80,7 +82,7 @@ const Verification = () => {
   return (
     <div className="flex h-full flex-col">
       <CandidateHeader />
-      <CandidateOtp />
+      <CandidateOtp email={loaderData?.candidate?.email} />
     </div>
   )
 }

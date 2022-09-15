@@ -3,8 +3,8 @@ import { commonConstants, sideNav } from '~/constants/common.constants'
 
 const CandidateHeader = () => {
   return (
-    <div className="flex items-center gap-4 bg-white pl-4">
-      <div className="p-2">
+    <div className="flex items-center gap-3 bg-white pl-4">
+      <div className="py-2">
         <img src={logo} alt={commonConstants.logo} />
       </div>
       <div className="font-bold">{sideNav.sideNavHeading}</div>

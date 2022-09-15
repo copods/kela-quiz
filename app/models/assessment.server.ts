@@ -121,7 +121,7 @@ export async function getCandidateEmail(id: string) {
     select: {
       candidate: {
         select: {
-          OTP: true,
+          email: true,
         },
       },
     },
