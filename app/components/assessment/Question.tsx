@@ -16,23 +16,8 @@ const Question = () => {
       ? question.selectedOptions[0]?.id
       : questionType === QuestionTypes.text
       ? question?.answers
-      : []
+      : question.selectedOptions.flatMap((option: any) => option.id)
   )
-
-  // if (questionType === QuestionTypes.multipleChoice) {
-  //   console.log('amsdmakdjanjksdha')
-  //   test.forEach((opt: any, i: number) => {
-  //     question?.selectedOptions?.forEach((el: any) => {
-  //       if (el.id === opt.id) {
-  //         opt.isCorrect = true
-  //         return
-  //       } else {
-  //         opt.isCorrect = false
-  //       }
-  //     })
-  //   })
-  //   console.log(test)
-  // }
 
   const onChangeHandle = (event: any, index?: number) => {
     if (questionType === QuestionTypes.singleChoice) {
@@ -44,33 +29,17 @@ const Question = () => {
         return [...oldVal]
       })
     }
-    // if (questionType === QuestionTypes.multipleChoice) {
-    //   setTest((old: any) => {
-    //     old.forEach((el: any) => {
-    //       console.log('all', el)
-    //       if (el.id === event.id) {
-    //         el.isCorrect = !el.isCorrect
-    //         return
-    //       }
-    //     })
-    //     return old
-    //   })
-
-    // question?.question?.options.forEach((opt: any) => {
-    //   if (event.id === opt.id) {
-    //     opt.isCorrect = !opt.isCorrect
-    //     console.log(question.question.options)
-    //     // let something = [...question.question.options]
-    //     // console.log(something)
-    //     // setTest(question.question.options)
-
-    //   }
-    // })
-    // }
+    if (questionType === QuestionTypes.multipleChoice) {
+      setUserAnswer((val: any) => {
+        if (userAnswer.indexOf(event.id) === -1) {
+          return [...val, event.id]
+        } else {
+          val.splice(userAnswer.indexOf(event.id), 1)
+          return [...val]
+        }
+      })
+    }
   }
-  // useEffect(() => {
-  //   console.log('test: ', test)
-  // }, [test])
 
   return (
     <div className="flex h-screen flex-col">
@@ -126,8 +95,6 @@ const Question = () => {
                     },
                     i: number
                   ) => {
-                    console.log('rendered')
-                    console.log(option.isCorrect)
                     return (
                       <label
                         key={option.id}
@@ -152,7 +119,7 @@ const Question = () => {
                           <Checkbox
                             value={option.id}
                             name="option"
-                            // isChecked={option.isCorrect ?? false}
+                            isChecked={userAnswer.indexOf(option.id) !== -1}
                             className="mt-7"
                             handleChange={() => onChangeHandle(option, i)}
                           />
