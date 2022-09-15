@@ -23,7 +23,10 @@ describe('Test for section-details', () => {
       .find('#sections')
       .should('have.text', routeFiles.sections)
       .click()
-    cy.location('pathname', { timeout: 60000 }).should('include', routes.sections)
+    cy.location('pathname', { timeout: 60000 }).should(
+      'include',
+      routes.sections
+    )
     cy.get('#section-card', { timeout: 8000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -381,7 +384,10 @@ describe('Test for section-details', () => {
       .find('#sections')
       .should('have.text', routeFiles.sections)
       .click()
-    cy.location('pathname', { timeout: 60000 }).should('include', routes.sections)
+    cy.location('pathname', { timeout: 60000 }).should(
+      'include',
+      routes.sections
+    )
     cy.get('#section-card', { timeout: 8000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
