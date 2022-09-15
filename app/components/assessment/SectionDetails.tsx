@@ -31,7 +31,7 @@ const SectionDetails = () => {
           </p>
           <img
             src={cooldownImage}
-            alt="cooldown"
+            alt={candidateExamConstants.cooldown}
             className="h-cooldownSVG w-cooldownSVG"
           />
           <Button

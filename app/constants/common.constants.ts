@@ -184,6 +184,7 @@ export const candidateExamConstants = {
   takeBreak: 'Take A Break!',
   cheers: 'Cheers! Angular Questions Completed - two more to go',
   startNewSection: 'Start New Section',
+  cooldown: 'Cooldown Image',
   assessmentDetails: 'Assessment Details',
   assessmentTests: 'Assessment Tests',
   assessmentEnd: 'Assessment Ended',
