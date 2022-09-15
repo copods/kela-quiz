@@ -7,7 +7,7 @@ const CandidateQuestionHeader = () => {
   const { candidateTests, section } = useLoaderData()
 
   return (
-    <div className="mr-auto flex h-16 w-full items-center justify-between border px-5">
+    <div className="mr-auto flex min-h-16 w-full items-center justify-between border px-5">
       <div className="flex w-64 items-center gap-4">
         <img className="h-8 w-8" src={logo} alt={commonConstants.logo} />
         <span className="text-2xl font-bold">{sideNav.sideNavHeading}</span>

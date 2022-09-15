@@ -16,12 +16,13 @@ function CandidateRegister() {
   const canSubmitBtnBeEnabled = () => {
     return firstName.length > 0 && lastName.length > 0 && isChecked
   }
+
   const checkBoxProps = {
     name: 'candidateAgreement',
-    isChecked: false,
     handleChange: function (event: any) {
       setIsChecked(!isChecked)
     },
+    isChecked: isChecked,
   }
   const inputFieldsProps = [
     {

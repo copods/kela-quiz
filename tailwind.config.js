@@ -28,6 +28,7 @@ module.exports = {
       },
       minHeight: {
         480: '480px',
+        16: '64px',
       },
       borderRadius: {
         1: '1px',

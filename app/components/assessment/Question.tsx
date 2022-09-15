@@ -81,14 +81,13 @@ const Question = () => {
     <div className="flex h-screen flex-col">
       <CandidateQuestionHeader />
 
-      <div className="flex w-full flex-1 flex-col overflow-auto bg-questionBackground">
-        <div className="py-6 px-5">
-          <CandidateQuestionStepper />
-        </div>
-
-        <form method="post" className="flex h-full flex-col">
-          <div className="mx-5 mb-5 flex h-full max-h-full flex-1 overflow-auto rounded-lg border bg-white">
-            <div className="flex h-full w-1/2 flex-col gap-8 border-r px-6 pt-6">
+      <div className="flex w-full flex-1 flex-col overflow-hidden bg-questionBackground">
+        <form method="post" className="flex max-h-full flex-1 flex-col">
+          <div className="py-5 px-5">
+            <CandidateQuestionStepper />
+          </div>
+          <div className="mx-5 mb-5 flex h-full overflow-auto rounded-lg border bg-white">
+            <div className="flex h-full w-1/2 flex-col gap-8 border-r p-5">
               <div className="flex items-center justify-between">
                 <div className="flex text-xl font-medium">
                   <span>Question </span>
@@ -103,8 +102,8 @@ const Question = () => {
                 />
               </div>
             </div>
-            <div className="flex h-full w-1/2 flex-col gap-2 pt-6">
-              <div className="flex items-center justify-between px-6">
+            <div className="flex h-full w-1/2 flex-col gap-2 py-5">
+              <div className="flex items-center justify-between px-5">
                 {questionType === QuestionTypes.singleChoice && (
                   <div className="flex text-xl font-medium">
                     Select Correct Option
@@ -135,7 +134,7 @@ const Question = () => {
                     return (
                       <label
                         key={option.id}
-                        className={`flex cursor-pointer items-start gap-4 border-b px-6 ${
+                        className={`flex cursor-pointer items-start gap-4 border-b px-5 ${
                           option.id === userAnswer
                             ? 'bg-blue-50'
                             : 'hover:bg-gray-100'
@@ -161,7 +160,7 @@ const Question = () => {
                             handleChange={() => onChangeHandle(option, i)}
                           />
                         )}
-                        <div className="ql-editor w-full bg-inherit py-6">
+                        <div className="ql-editor w-full bg-inherit py-5">
                           <div
                             className="cursor-pointer font-normal"
                             dangerouslySetInnerHTML={{
@@ -177,7 +176,7 @@ const Question = () => {
                   (answer: { id: string }, index: number) => {
                     console.log(userAnswer)
                     return (
-                      <div key={answer.id} className="border-b px-6 py-7">
+                      <div key={answer.id} className="border-b px-5 py-7">
                         <textarea
                           name="answer"
                           id=""
