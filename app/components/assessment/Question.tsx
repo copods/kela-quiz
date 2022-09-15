@@ -5,6 +5,7 @@ import Checkbox from '../form/CheckBox'
 import sanitizeHtml from 'sanitize-html'
 import CandidateQuestionHeader from './CandidateQuestionHeader'
 import CandidateQuestionFooter from './CandidateQuestionFooter'
+import CandidateQuestionStepper from './CandidateQuestionStepper'
 
 const Question = () => {
   const { question } = useLoaderData()
@@ -77,11 +78,16 @@ const Question = () => {
   // }, [test])
 
   return (
-    <>
+    <div className="flex h-screen flex-col">
       <CandidateQuestionHeader />
-      <div className="w-full flex-1 overflow-auto bg-questionBackground p-6">
-        <form method="post" className="flex h-full flex-col rounded-lg border">
-          <div className="flex h-full max-h-full flex-1 overflow-auto rounded-t-lg bg-white">
+
+      <div className="flex w-full flex-1 flex-col overflow-auto bg-questionBackground">
+        <div className="py-6 px-5">
+          <CandidateQuestionStepper />
+        </div>
+
+        <form method="post" className="flex h-full flex-col">
+          <div className="mx-5 mb-5 flex h-full max-h-full flex-1 overflow-auto rounded-lg border bg-white">
             <div className="flex h-full w-1/2 flex-col gap-8 border-r px-6 pt-6">
               <div className="flex items-center justify-between">
                 <div className="flex text-xl font-medium">
@@ -190,7 +196,7 @@ const Question = () => {
           <CandidateQuestionFooter />
         </form>
       </div>
-    </>
+    </div>
   )
 }
 

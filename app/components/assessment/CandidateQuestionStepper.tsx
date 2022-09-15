@@ -8,7 +8,7 @@ const CandidateQuestionStepper = () => {
   const navigate = useNavigate()
 
   return (
-    <div className="flex w-full items-center gap-2">
+    <div className="flex w-full items-center justify-center gap-2">
       {candidateTests.sections[section.order - 1].questions.map(
         (question: any, i: number) => {
           return (
@@ -46,7 +46,7 @@ const CandidateQuestionStepper = () => {
               </div>
               {candidateTests.sections[section.order - 1].questions.length !==
                 i + 1 && (
-                <span className="h-1 min-w-16 flex-1 rounded-full bg-gray-300"></span>
+                <span className="h-1 min-w-16 max-w-32 flex-1 rounded-full bg-gray-300"></span>
               )}
             </>
           )

@@ -4,15 +4,15 @@ import {
   commonConstants,
 } from '~/constants/common.constants'
 import Button from '../form/Button'
-import CandidateQuestionStepper from './CandidateQuestionStepper'
+// import CandidateQuestionStepper from './CandidateQuestionStepper'
 
 const CandidateQuestionFooter = () => {
   const { question, section, lastSection } = useLoaderData()
   return (
-    <div className="flex h-16 items-center gap-6 rounded-b-lg border-t bg-white px-6 py-4 drop-shadow-[0px_-2px_10px_rgba(0,0,0,0.06)]">
-      <div className="mr-auto">
+    <div className="flex h-16 items-center justify-between gap-6 rounded-b-lg border-t bg-white px-6 py-4 drop-shadow-[0px_-2px_10px_rgba(0,0,0,0.06)]">
+      <div>
         <Button
-          className="w-32 border-none bg-inherit py-0 px-0 text-base font-bold text-black underline shadow-none hover:bg-white"
+          className="max-w-max border-none bg-inherit py-0 px-0 text-base font-bold text-black underline shadow-none hover:bg-white"
           varient="primary-outlined"
           title={'Skip Question'}
           buttonText={'Skip Question'}
@@ -21,8 +21,8 @@ const CandidateQuestionFooter = () => {
           name="next"
         />
       </div>
-      <CandidateQuestionStepper />
-      <div className="ml-auto flex gap-6">
+      {/* <CandidateQuestionStepper /> */}
+      <div className="flex gap-6">
         <Button
           className="h-8 w-28"
           varient="primary-outlined"
