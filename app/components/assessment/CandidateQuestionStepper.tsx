@@ -49,7 +49,7 @@ const CandidateQuestionStepper = () => {
               </div>
               {candidateTests.sections[section.order - 1].questions.length !==
                 i + 1 && (
-                <span className="h-1 min-w-16 max-w-32 flex-1 rounded-full bg-gray-300"></span>
+                <span className="h-1 min-w-4 max-w-32 flex-1 rounded-full bg-gray-300"></span>
               )}
             </div>
           )
