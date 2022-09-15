@@ -18,7 +18,7 @@ export default function MembersHeader({
       setOpen(false)
       setActionStatus(false)
     }
-  }, [actionStatus])
+  }, [actionStatus, setActionStatus])
   return (
     <div>
       <div className="flex items-center justify-between">

@@ -137,11 +137,19 @@ const TestPreview = ({
                       icon="fa:long-arrow-up"
                       className="cursor-pointer"
                       onClick={() => moveSection(i, 'up')}
+                      tabIndex={0}
+                      onKeyUp={(e) => {
+                        if (e.key === 'Enter') moveSection(i, 'up')
+                      }}
                     />
                     <Icon
                       icon="fa:long-arrow-down"
                       className="cursor-pointer"
                       onClick={() => moveSection(i, 'down')}
+                      tabIndex={0}
+                      onKeyUp={(e) => {
+                        if (e.key === 'Enter') moveSection(i, 'up')
+                      }}
                     />
                   </div>
                 )}

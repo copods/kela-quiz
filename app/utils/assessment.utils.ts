@@ -57,7 +57,7 @@ export async function checkIfTestLinkIsValidAndRedirect(
         case 'instructions':
           return `/assessment/${assessmentID}/${candidateStepObj.nextRoute}`
         case 'section':
-          return `/assessment/${assessmentID}/${candidateStepObj.currentSectionId}`
+          return `/assessment/${assessmentID}/${candidateStepObj.currentSectionId}/cooldown`
         case 'end':
           return `/assessment/${assessmentID}/end-assessment`
       }

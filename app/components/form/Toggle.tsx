@@ -15,6 +15,7 @@ export default function Toggle({
       role={commonConstants.checkOrder}
       onChange={onToggleChange}
       title={commonConstants.checkOrder}
+      aria-label={commonConstants.checkOrder}
       className={`${
         toggle ? 'border-blue-900 bg-blue-900' : 'border-slate-300 bg-slate-300'
       } relative inline-flex h-7 w-16 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out`}
