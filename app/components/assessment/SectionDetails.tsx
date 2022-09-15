@@ -2,7 +2,7 @@
 import { useLoaderData, useSubmit } from '@remix-run/react'
 import { candidateExamConstants } from '~/constants/common.constants'
 import Button from '../form/Button'
-import Header from '../layouts/Header'
+import Header from './Header'
 import cooldownImage from '~/../public/assets/cooldown.svg'
 
 const SectionDetails = () => {
