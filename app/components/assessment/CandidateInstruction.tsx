@@ -10,7 +10,6 @@ import Button from '../form/Button'
 import contactSupport from '~/../public/assets/contactSupport.svg'
 import checkIcon from '~/../public/assets/checkIcon.svg'
 
-
 const CandidateInstruction = () => {
   const { firstSection, instructions, candidate } = useLoaderData()
   const candidateSections = instructions?.test?.sections.sort(
@@ -78,25 +77,27 @@ const CandidateInstruction = () => {
             <div className="flex items-center gap-4">
               <img src={checkIcon} alt="" className="h-6" />
               <span className="text-base font-normal text-gray-900">
-                The duration of this exam is  30 minutes.
+                This is a restricted open book exam.
               </span>
             </div>
             <div className="flex items-center gap-4">
               <img src={checkIcon} alt="" className="h-6" />
               <span className="text-base font-normal text-gray-900">
-                The duration of this exam is  30 minutes.
+                There are X questions in this exam and will be presented one at
+                a time.
               </span>
             </div>
             <div className="flex items-center gap-4">
               <img src={checkIcon} alt="" className="h-6" />
               <span className="text-base font-normal text-gray-900">
-                The duration of this exam is  30 minutes.
+                Each question is worth the same and different marks.
               </span>
             </div>
             <div className="flex items-center gap-4">
               <img src={checkIcon} alt="" className="h-6" />
               <span className="text-base font-normal text-gray-900">
-                The duration of this exam is  30 minutes.
+                During this exam you will/won’t be permitted to review previous
+                questions.
               </span>
             </div>
           </div>
