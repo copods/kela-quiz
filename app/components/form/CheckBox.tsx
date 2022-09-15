@@ -1,6 +1,6 @@
 import type { CheckboxProps } from '~/interface/Interface'
 
-function Checkbox(props: CheckboxProps) {
+function Checkbox({ isChecked, handleChange, ...props }: CheckboxProps) {
   return (
     <div>
       <input
