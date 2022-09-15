@@ -1,10 +1,19 @@
 import { useLoaderData } from '@remix-run/react'
 import logo from '~/../public/assets/logo.svg'
 import { commonConstants, sideNav } from '~/constants/common.constants'
+import type { SectionInCandidateTest } from '~/interface/Interface'
 import TimerComponent from './Timer'
 
 const CandidateQuestionHeader = () => {
   const { candidateTests, section } = useLoaderData()
+
+  let candidateSection: SectionInCandidateTest | null = null
+  for (let sec of candidateTests?.sections) {
+    if (section?.section?.id === sec?.section?.id) {
+      candidateSection = sec
+      break
+    }
+  }
 
   return (
     <div className="mr-auto flex min-h-16 w-full items-center justify-between border px-5">
@@ -17,7 +26,10 @@ const CandidateQuestionHeader = () => {
         {candidateTests.test.name}
       </div>
       <div className="flex w-64 items-center justify-end">
-        <TimerComponent candidateSection={candidateTests} section={section} />
+        <TimerComponent
+          candidateSection={candidateSection as SectionInCandidateTest}
+          section={section}
+        />
       </div>
     </div>
   )

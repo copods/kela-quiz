@@ -9,7 +9,7 @@ import {
   commonConstants,
   deletePopUp,
   sectionsConstants,
-  statusCheck,
+  // statusCheck,
 } from '~/constants/common.constants'
 const SectionCard = ({
   name,
@@ -40,14 +40,14 @@ const SectionCard = ({
   const deleteSection = () => {
     submit({ deleteSection: 'sectionDelete', id: id }, { method: 'post' })
   }
-  useEffect(() => {
-    if (
-      actionStatusData == statusCheck.deletedSuccess &&
-      setIsDelete !== undefined
-    ) {
-      // setIsDelete(false)
-    }
-  }, [actionStatusData])
+  // useEffect(() => {
+  //   if (
+  //     actionStatusData == statusCheck.deletedSuccess &&
+  //     setIsDelete !== undefined
+  //   ) {
+  //     // setIsDelete(false)
+  //   }
+  // }, [actionStatusData])
   // shift + alt + Tab combination key for get back focus to selected section card
   useEffect(() => {
     window.addEventListener('keydown', function (event) {

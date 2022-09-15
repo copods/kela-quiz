@@ -20,6 +20,7 @@ const TimerComponent = ({
       startTime: candidateSection?.startedAt,
     })
   )
+
   const submit = useSubmit()
   let timer: ReturnType<typeof setTimeout>
   useEffect(() => {
@@ -33,7 +34,10 @@ const TimerComponent = ({
           })
           setTimer(timeLeft)
           if (timeLeft == 0) {
-            submit({ order: section.order.toString() }, { method: 'post' })
+            submit(
+              { order: section.order.toString(), nextSection: 'nextSection' },
+              { method: 'post' }
+            )
             setTimer(0)
             clearInterval(timer)
           }

@@ -72,6 +72,7 @@ export default function QuillEditor({
     if (quill && text) {
       quill.clipboard.dangerouslyPasteHTML(text)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [quill])
   useEffect(() => {
     if (quill) {

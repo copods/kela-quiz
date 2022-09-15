@@ -74,6 +74,7 @@ export const action: ActionFunction = async ({ params, request }) => {
 }
 
 const AssessmentQuestionForSection = () => {
+  // const { candidate, candidateTests, params, section } = useLoaderData()
   return <Question />
 }
 

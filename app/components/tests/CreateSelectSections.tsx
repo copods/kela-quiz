@@ -80,6 +80,7 @@ const SelectSections = ({
   }
   useEffect(() => {
     sortData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sortDirection, sortBy])
   return (
     <div className="flex w-full flex-1 flex-col gap-6 overflow-x-auto rounded-lg bg-white p-6 shadow">

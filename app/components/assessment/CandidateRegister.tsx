@@ -14,7 +14,7 @@ function CandidateRegister() {
   const [lastName, setLastName] = useState('')
   const [isChecked, setIsChecked] = useState(false)
   const canSubmitBtnBeEnabled = () => {
-    return firstName.length > 0 && lastName.length > 0 && isChecked
+    return firstName.length > 0 && lastName.length > 0
   }
 
   const checkBoxProps = {
