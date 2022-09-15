@@ -17,12 +17,18 @@ const CandidateQuestionStepper = () => {
                 tabIndex={0}
                 onKeyUp={() => {}}
                 role="button"
-                onClick={() =>
-                  navigate(
-                    `/assessment/${params.assessmentId}/${params.sectionId}/${question.id}`
-                  )
-                }
-                className={`flex h-6 w-6 cursor-pointer items-center justify-center rounded-full text-xs text-white ${
+                onClick={() => {
+                  if (question.status && question.status !== 'NOT_VIEWED') {
+                    navigate(
+                      `/assessment/${params.assessmentId}/${params.sectionId}/${question.id}`
+                    )
+                  }
+                }}
+                className={`flex h-6 w-6 ${
+                  question.status && question.status !== 'NOT_VIEWED'
+                    ? 'cursor-pointer'
+                    : 'cursor-not-allowed'
+                } items-center justify-center rounded-full text-xs text-white ${
                   params.questionId === question.id
                     ? 'bg-primary'
                     : question.status === 'ANSWERED'

@@ -19,21 +19,20 @@ const Question = () => {
       : []
   )
 
-  // useEffect(() => {
-  //   if (questionType === QuestionTypes.multipleChoice) {
-  //     console.log('amsdmakdjanjksdha')
-  //     test.forEach((opt: any,i:number) => {
-  //       question?.selectedOptions?.forEach((el: any) => {
-  //         if (el.id === opt.id) {
-  //           opt.isCorrect = true
-  //           return
-  //         } else {
-  //           opt.isCorrect = false
-  //         }
-  //       })
+  // if (questionType === QuestionTypes.multipleChoice) {
+  //   console.log('amsdmakdjanjksdha')
+  //   test.forEach((opt: any, i: number) => {
+  //     question?.selectedOptions?.forEach((el: any) => {
+  //       if (el.id === opt.id) {
+  //         opt.isCorrect = true
+  //         return
+  //       } else {
+  //         opt.isCorrect = false
+  //       }
   //     })
-  //   }
-  // }, [])
+  //   })
+  //   console.log(test)
+  // }
 
   const onChangeHandle = (event: any, index?: number) => {
     if (questionType === QuestionTypes.singleChoice) {
@@ -47,20 +46,16 @@ const Question = () => {
     }
     // if (questionType === QuestionTypes.multipleChoice) {
     //   setTest((old: any) => {
-    // old.forEach((el: any) => {
-    //   console.log('all', el)
-    //   if (el.id === event.id) {
-    //     el.isCorrect = !el.isCorrect
-    //     console.log('sel', el)
-    //     console.log('old', old)
-    //     return
-    //   }
-    // })
-    //   console.log(event)
-    //   old[index as number].isCorrect = !event.isCorrect
-    //   console.log('asd', ...old)
-    //   return [...old]
-    // })
+    //     old.forEach((el: any) => {
+    //       console.log('all', el)
+    //       if (el.id === event.id) {
+    //         el.isCorrect = !el.isCorrect
+    //         return
+    //       }
+    //     })
+    //     return old
+    //   })
+
     // question?.question?.options.forEach((opt: any) => {
     //   if (event.id === opt.id) {
     //     opt.isCorrect = !opt.isCorrect
@@ -131,6 +126,8 @@ const Question = () => {
                     },
                     i: number
                   ) => {
+                    console.log('rendered')
+                    console.log(option.isCorrect)
                     return (
                       <label
                         key={option.id}
@@ -155,7 +152,7 @@ const Question = () => {
                           <Checkbox
                             value={option.id}
                             name="option"
-                            isChecked={option.isCorrect}
+                            // isChecked={option.isCorrect ?? false}
                             className="mt-7"
                             handleChange={() => onChangeHandle(option, i)}
                           />
