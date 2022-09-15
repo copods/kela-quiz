@@ -1,6 +1,8 @@
+import { useLoaderData } from '@remix-run/react'
 import type { ActionFunction, LoaderFunction } from '@remix-run/server-runtime'
 import { redirect } from '@remix-run/server-runtime'
 import Question from '~/components/assessment/Question'
+import CandidateLayout from '~/components/layouts/CandidateLayout'
 import {
   candidateTest,
   getQuestion,
@@ -8,6 +10,7 @@ import {
   moveToNextSection,
   saveAnswerSkipAndNext,
   endCandidateAssessment,
+  getCandidateByAssessmentId,
 } from '~/utils/assessment.utils'
 
 export const loader: LoaderFunction = async ({ params, request }) => {
@@ -19,7 +22,11 @@ export const loader: LoaderFunction = async ({ params, request }) => {
 
   const lastSection = candidateTests?.sections.length == section?.order
 
-  return { question, section, lastSection }
+  const candidate = await getCandidateByAssessmentId(
+    params.assessmentId as string
+  )
+
+  return { question, section, candidate, candidateTests, lastSection, params }
 }
 
 export const action: ActionFunction = async ({ params, request }) => {
@@ -74,7 +81,18 @@ export const action: ActionFunction = async ({ params, request }) => {
 }
 
 const AssessmentQuestionForSection = () => {
-  return <Question />
+  const { candidate, candidateTests, params, section } = useLoaderData()
+  return (
+    <CandidateLayout
+      candidate={candidate}
+      candidateTest={candidateTests}
+      heading="Pre-Interview Assessment"
+      params={params}
+      section={section}
+    >
+      <Question />
+    </CandidateLayout>
+  )
 }
 
 export default AssessmentQuestionForSection

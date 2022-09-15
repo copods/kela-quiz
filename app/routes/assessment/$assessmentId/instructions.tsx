@@ -10,7 +10,10 @@ import {
   checkIfTestLinkIsValidAndRedirect,
   getCandidateByAssessmentId,
   getSectionByOrder,
+  getSectionInCandidateTest,
+  getSectionInTest,
   getTestInstructions,
+  startCandidateSection,
   startTest,
   updateNextStep,
 } from '~/utils/assessment.utils'
@@ -57,7 +60,18 @@ export const action: ActionFunction = async ({ request, params }) => {
 
     await startTest(params.assessmentId as string)
 
-    return redirect(`/assessment/${params.assessmentId}/${firstSectionId}`)
+    // new
+    const section = await getSectionInTest(firstSectionId as string)
+    const candidateSection = await getSectionInCandidateTest(
+      section?.sectionId as string,
+      params.assessmentId as string
+    )
+
+    const started = await startCandidateSection(candidateSection?.id as string)
+
+    return redirect(
+      `/assessment/${params.assessmentId}/${firstSectionId}/${started?.questions[0].id}`
+    )
   }
 }
 
