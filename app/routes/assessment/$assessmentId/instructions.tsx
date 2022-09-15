@@ -71,7 +71,7 @@ const TestInstructions = () => {
     //   heading="Pre-Interview Assessment"
     // >
     // </CandidateLayout>
-    <div className="h-screen  bg-gray-50">
+    <div className="h-screen overflow-auto bg-gray-50">
       <CandidateInstructionHeader />
       <CandidateInstruction />
     </div>
