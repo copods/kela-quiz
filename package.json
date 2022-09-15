@@ -46,7 +46,6 @@
     "@faker-js/faker": "^6.3.1",
     "@headlessui/react": "^1.6.6",
     "@iconify/react": "^3.2.2",
-    "@material-ui/core": "^4.12.4",
     "@prisma/client": "^3.15.0",
     "@remix-run/express": "^1.6.0",
     "@remix-run/node": "^1.6.0",
