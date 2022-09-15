@@ -1,6 +1,6 @@
 import type { ActionFunction, LoaderFunction } from '@remix-run/server-runtime'
 import { redirect } from '@remix-run/server-runtime'
-import SectionDetails from '~/components/assessment/SectionDetails'
+import Cooldown from '~/components/assessment/Cooldown'
 import {
   getSectionInCandidateTest,
   getSectionInTest,
@@ -34,5 +34,5 @@ export const action: ActionFunction = async ({ request, params }) => {
 }
 
 export default function SectionPage() {
-  return <SectionDetails />
+  return <Cooldown />
 }

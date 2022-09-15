@@ -5,7 +5,7 @@ import Button from '../form/Button'
 import Header from './Header'
 import cooldownImage from '~/../public/assets/cooldown.svg'
 
-const SectionDetails = () => {
+const Cooldown = () => {
   const { candidateSection } = useLoaderData()
   const submit = useSubmit()
   const startSection = async () => {
@@ -47,4 +47,4 @@ const SectionDetails = () => {
   )
 }
 
-export default SectionDetails
+export default Cooldown
