@@ -1,9 +1,10 @@
 import type { ActionFunction, LoaderFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { redirect } from '@remix-run/node'
-import { useLoaderData } from '@remix-run/react'
+// import { useLoaderData } from '@remix-run/react'
 import CandidateInstruction from '~/components/assessment/CandidateInstruction'
-import CandidateLayout from '~/components/layouts/CandidateLayout'
+import CandidateInstructionHeader from '~/components/assessment/CandidateInstructionHeader'
+// import CandidateLayout from '~/components/layouts/CandidateLayout'
 import {
   candidateTest,
   checkIfTestLinkIsValidAndRedirect,
@@ -61,16 +62,19 @@ export const action: ActionFunction = async ({ request, params }) => {
 }
 
 const TestInstructions = () => {
-  const { candidateTests, candidate } = useLoaderData()
+  // const { candidateTests, candidate } = useLoaderData()
 
   return (
-    <CandidateLayout
-      candidate={candidate}
-      candidateTest={candidateTests}
-      heading="Pre-Interview Assessment"
-    >
+    // <CandidateLayout
+    //   candidate={candidate}
+    //   candidateTest={candidateTests}
+    //   heading="Pre-Interview Assessment"
+    // >
+    // </CandidateLayout>
+    <div className="h-screen  bg-gray-50">
+      <CandidateInstructionHeader />
       <CandidateInstruction />
-    </CandidateLayout>
+    </div>
   )
 }
 
