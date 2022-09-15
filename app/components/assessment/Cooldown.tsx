@@ -21,7 +21,7 @@ const Cooldown = () => {
   return (
     <div className="flex h-screen flex-col bg-slate-50">
       <Header />
-      <div className="py-auto flex flex-1 items-center justify-center">
+      <div className="py-auto flex flex-1 items-center justify-center overflow-auto">
         <div className="flex w-coolDownCard flex-col items-center justify-center gap-8 bg-white py-12">
           <span className="text-lg font-medium text-gray-500">
             {candidateExamConstants.takeBreak}
