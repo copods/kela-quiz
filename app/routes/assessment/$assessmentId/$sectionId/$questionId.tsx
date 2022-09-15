@@ -31,8 +31,6 @@ export const action: ActionFunction = async ({ params, request }) => {
   const options: any = formData.getAll('option')
   const answers: any = formData.getAll('answer')
 
-  console.log(options, 'options')
-
   let nextQuestionId = null
 
   if (next || nextSection || endExam) {

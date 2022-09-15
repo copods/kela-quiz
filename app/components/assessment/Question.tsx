@@ -138,7 +138,6 @@ const Question = () => {
                 )}
                 {question?.question?.correctAnswer?.map(
                   (answer: { id: string }, index: number) => {
-                    console.log(userAnswer)
                     return (
                       <div key={answer.id} className="border-b px-5 py-7">
                         <textarea

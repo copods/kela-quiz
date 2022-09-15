@@ -62,7 +62,6 @@ export const loader: LoaderFunction = async ({ params, request }) => {
 export const action: ActionFunction = async ({ params, request }) => {
   const formData = await request.formData()
   const order = formData.get('order')
-  console.log('order', order)
   const nextSecRoute = await moveToNextSection({
     assessmentId: params.assessmentId as string,
     order: parseInt(order as string),
