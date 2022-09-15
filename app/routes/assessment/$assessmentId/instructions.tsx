@@ -1,11 +1,8 @@
 import type { ActionFunction, LoaderFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { redirect } from '@remix-run/node'
-import { useLoaderData } from '@remix-run/react'
 import CandidateInstruction from '~/components/assessment/CandidateInstruction'
-import CandidateLayout from '~/components/layouts/CandidateLayout'
 import {
-  candidateTest,
   checkIfTestLinkIsValidAndRedirect,
   getCandidateByAssessmentId,
   getSectionByOrder,
@@ -35,13 +32,11 @@ export const loader: LoaderFunction = async ({ params, request }) => {
     1
   )
 
-  const candidateTests = await candidateTest(params.assessmentId as string)
-
   const candidate = await getCandidateByAssessmentId(
     params.assessmentId as string
   )
 
-  return json({ instructions, firstSection, candidateTests, candidate })
+  return json({ instructions, firstSection, candidate })
 }
 
 export const action: ActionFunction = async ({ request, params }) => {
@@ -75,17 +70,7 @@ export const action: ActionFunction = async ({ request, params }) => {
 }
 
 const TestInstructions = () => {
-  const { candidateTests, candidate } = useLoaderData()
-
-  return (
-    <CandidateLayout
-      candidate={candidate}
-      candidateTest={candidateTests}
-      heading="Pre-Interview Assessment"
-    >
-      <CandidateInstruction />
-    </CandidateLayout>
-  )
+  return <CandidateInstruction />
 }
 
 export default TestInstructions
