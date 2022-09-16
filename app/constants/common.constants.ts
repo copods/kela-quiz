@@ -189,7 +189,7 @@ export const candidateExamConstants = {
   startNewSection: 'Start New Section',
   cooldown: 'Cooldown Image',
   testCompleted: 'Congratulations! You have completed the exam',
-  candidateContact: "We will contact you soon",
+  candidateContact: 'We will contact you soon',
   assessmentDetails: 'Assessment Details',
   assessmentTests: 'Assessment Tests',
   assessmentEnd: 'Assessment Ended',
