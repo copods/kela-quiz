@@ -390,7 +390,11 @@ export async function skipAnswerAndNextQuestion({
       data: {
         ...updateData,
         status:
-          selectedOptions?.length || answers?.length ? 'ANSWERED' : question?.status === 'ANSWERED' ? 'ANSWERED' : 'SKIPPED',
+          selectedOptions?.length || answers?.length
+            ? 'ANSWERED'
+            : question?.status === 'ANSWERED'
+            ? 'ANSWERED'
+            : 'SKIPPED',
         answeredAt: new Date(),
       },
       select: {
@@ -427,7 +431,9 @@ export async function skipAnswerAndNextQuestion({
       where: {
         sectionInCandidateTestId:
           currentQuestion?.sectionInCandidateTestId || '',
-        order: (currentQuestion?.order || 0) + (nextOrPrev == 'next' || nextOrPrev == 'skip' ? 1 : -1),
+        order:
+          (currentQuestion?.order || 0) +
+          (nextOrPrev == 'next' || nextOrPrev == 'skip' ? 1 : -1),
       },
       select: {
         id: true,
