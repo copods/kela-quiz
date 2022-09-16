@@ -8,7 +8,6 @@ import {
   updateNextStep,
   verifyCandidateOtp,
 } from '~/utils/assessment.utils'
-import { json } from 'remix-utils'
 import { useEffect } from 'react'
 import { toast } from 'react-toastify'
 import { statusCheck } from '~/constants/common.constants'
@@ -48,26 +47,10 @@ export const action: ActionFunction = async ({ request, params }) => {
       assesmentId: params.assessmentId as string,
     })
       .then((res) => {
-        checkStatus = json<ActionData>(
-          {
-            resp: {
-              title: 'ok',
-              status: 200,
-            },
-          },
-          { status: 200 }
-        )
+        checkStatus = statusCheck.success
       })
       .catch((err) => {
-        checkStatus = json<ActionData>(
-          {
-            errors: {
-              title: 'err',
-              status: 400,
-            },
-          },
-          { status: 400 }
-        )
+        checkStatus = statusCheck.commonError
       })
   }
   if (proceed) {
@@ -95,11 +78,11 @@ export const action: ActionFunction = async ({ request, params }) => {
 }
 const Verification = () => {
   const loaderData = useLoaderData() as any
-  const action = useActionData() as ActionData
+  const action = useActionData()
   useEffect(() => {
-    if (action === '{"resp":{"title":"ok","status":200}}') {
+    if (action === statusCheck.success) {
       toast.success(statusCheck.otpSent)
-    } else if (action === '{"resp":{"title":"err","status":200}}') {
+    } else if (action === statusCheck.commonError) {
       toast.error(statusCheck.erroSendingOtp)
     } else if (action === null) {
       toast.error(statusCheck.correctOtp)

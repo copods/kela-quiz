@@ -43,8 +43,8 @@ const CandidateOtp = ({ email }: { email: string }) => {
   }
   return (
     <div className="flex flex-1 items-center justify-center bg-gray-50">
-      <div className="flex max-w-454 flex-1 flex-col gap-10 rounded-md border border-gray-50 bg-white text-center drop-shadow-sm">
-        <div className="flex justify-center pt-12">
+      <div className="flex max-w-454 flex-1 flex-col gap-10 rounded-md border border-gray-50 bg-white p-12 text-center drop-shadow-sm">
+        <div className="flex justify-center">
           <img src={otpImage} alt={otpConstants.otp} />
         </div>
         <div className="text-2xl font-bold">{otpConstants.header}</div>
@@ -111,7 +111,7 @@ const CandidateOtp = ({ email }: { email: string }) => {
               </span>
             )}
           </div>
-          <div className="px-12 pb-12">
+          <div>
             <Button
               tabIndex={0}
               id={commonConstants.verify}

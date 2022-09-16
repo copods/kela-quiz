@@ -38,7 +38,7 @@ function CandidateRegister() {
     },
   ]
   return (
-    <div className="z-10 flex	w-full max-w-454 flex-col  gap-12 rounded-lg bg-white p-12 drop-shadow-xl">
+    <div className="z-10 flex	w-full max-w-454 flex-col gap-12 rounded-lg bg-white p-12 drop-shadow-xl">
       <h1 className="text-center text-3xl font-bold text-gray-900">Welcome</h1>
       <div className="flex justify-center">
         <Form method="post" className="flex w-full flex-col gap-10">
