@@ -1,8 +1,6 @@
 import type { ActionFunction, LoaderFunction } from '@remix-run/node'
 import { redirect } from '@remix-run/node'
 import { useActionData, useLoaderData } from '@remix-run/react'
-import CandidateHeader from '~/components/assessment/CandidateHeader'
-
 import {
   checkIfTestLinkIsValidAndRedirect,
   getCandidateEmailByCandidateId,
@@ -10,11 +8,23 @@ import {
   updateNextStep,
   verifyCandidateOtp,
 } from '~/utils/assessment.utils'
+import { json } from 'remix-utils'
 import { useEffect } from 'react'
 import { toast } from 'react-toastify'
 import { statusCheck } from '~/constants/common.constants'
 import CandidateOtp from '~/components/assessment/CandidateOtpVerification'
+import Header from '~/components/assessment/Header'
 
+export type ActionData = {
+  errors?: {
+    title: string
+    status: number
+  }
+  resp?: {
+    title: string
+    status: number
+  }
+}
 export const loader: LoaderFunction = async ({ params, request }) => {
   const candidateNextRoute = await checkIfTestLinkIsValidAndRedirect(
     params.assessmentId as string,
@@ -32,18 +42,32 @@ export const action: ActionFunction = async ({ request, params }) => {
   const formData = await request.formData()
   const resendOtp = formData.get('resendOTP') as string
   const proceed = formData.get('Verify') as string
-  let status = null
+  let checkStatus = null
   if (resendOtp) {
     await resendOtpCode({
       assesmentId: params.assessmentId as string,
     })
       .then((res) => {
-        status = res
-        return status
+        checkStatus = json<ActionData>(
+          {
+            resp: {
+              title: 'ok',
+              status: 200,
+            },
+          },
+          { status: 200 }
+        )
       })
       .catch((err) => {
-        status = err
-        return status
+        checkStatus = json<ActionData>(
+          {
+            errors: {
+              title: 'err',
+              status: 400,
+            },
+          },
+          { status: 400 }
+        )
       })
   }
   if (proceed) {
@@ -67,21 +91,23 @@ export const action: ActionFunction = async ({ request, params }) => {
       return null
     }
   }
-  return status
+  return checkStatus
 }
 const Verification = () => {
   const loaderData = useLoaderData() as any
-  const action = useActionData() as any
+  const action = useActionData() as ActionData
   useEffect(() => {
-    if (action === 'Done') {
-      toast.error(statusCheck.erroSendingOtp)
-    } else {
+    if (action === '{"resp":{"title":"ok","status":200}}') {
       toast.success(statusCheck.otpSent)
+    } else if (action === '{"resp":{"title":"err","status":200}}') {
+      toast.error(statusCheck.erroSendingOtp)
+    } else if (action === null) {
+      toast.error('Please enter correct otp')
     }
   }, [action])
   return (
     <div className="flex h-full flex-col">
-      <CandidateHeader />
+      <Header />
       <CandidateOtp email={loaderData?.candidate?.email} />
     </div>
   )

@@ -5,7 +5,7 @@ import Button from '../form/Button'
 import otpImage from '~/../public/assets/otp.svg'
 import { commonConstants, otpConstants } from '~/constants/common.constants'
 const CandidateOtp = ({ email }: { email: string }) => {
-  const [counter, setCounter] = useState(5)
+  const [counter, setCounter] = useState(60)
   const [finalTime, setFinalTime] = useState('')
   useEffect(() => {
     counter > 0 && setTimeout(() => setCounter(counter - 1), 1000)
@@ -55,27 +55,31 @@ const CandidateOtp = ({ email }: { email: string }) => {
         <Form method="post">
           <div className="flex justify-center gap-4 pb-8">
             <input
+              type="number"
+              maxLength={1}
               name="field-1"
               onChange={(e) => handleChange(e)}
-              type="text"
               className="flex h-12 w-16 justify-center rounded-md border border-[#D5DAE1] text-center drop-shadow-sm"
             />
             <input
+              type="number"
+              maxLength={1}
               name="field-2"
               onChange={(e) => handleChange(e)}
-              type="text"
               className="flex h-12 w-16 justify-center rounded-md border border-[#D5DAE1] text-center drop-shadow-sm"
             />
             <input
+              type="number"
+              maxLength={1}
               name="field-3"
               onChange={(e) => handleChange(e)}
-              type="text"
               className="flex h-12 w-16 justify-center rounded-md border border-[#D5DAE1] text-center drop-shadow-sm"
             />
             <input
+              type="number"
+              maxLength={1}
               name="field-4"
               onChange={(e) => handleChange(e)}
-              type="text"
               className="flex h-12 w-16 justify-center rounded-md border border-[#D5DAE1] text-center drop-shadow-sm"
             />
           </div>
