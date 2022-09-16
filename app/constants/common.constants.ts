@@ -159,6 +159,7 @@ export const statusCheck = {
   memberAddedSuccess: 'Member Added Successfully..!',
   erroSendingOtp: 'Error in sending OTP..',
   otpSent: 'Otp sent. Please check your email',
+  correctOtp: 'Please enter correct otp',
 }
 export const resultConstants = {
   order: 'Order',

@@ -102,7 +102,7 @@ const Verification = () => {
     } else if (action === '{"resp":{"title":"err","status":200}}') {
       toast.error(statusCheck.erroSendingOtp)
     } else if (action === null) {
-      toast.error('Please enter correct otp')
+      toast.error(statusCheck.correctOtp)
     }
   }, [action])
   return (
