@@ -29,6 +29,7 @@ module.exports = {
       },
       maxWidth: {
         554: '554px',
+        454: '454px',
         96: '384px',
       },
       minHeight: {
@@ -52,6 +53,7 @@ module.exports = {
         17: '17px',
         18: '18px',
         22: '22px',
+        54: '54px',
         86: '86px',
       },
     },

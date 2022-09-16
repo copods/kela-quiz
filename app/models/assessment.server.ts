@@ -8,6 +8,7 @@ import type {
   SectionInTest,
 } from '@prisma/client'
 import { prisma } from '~/db.server'
+import { sendOTPMail } from './sendgrid.servers'
 
 export async function checkIfTestLinkIsValid(id: CandidateTest['id']) {
   try {
@@ -31,19 +32,73 @@ export async function getCandidateIDFromAssessmentID(id: CandidateTest['id']) {
   }
 }
 
+async function generateOTP() {
+  // generate random 4 digit OTP
+  var digits = '123456789'
+  let OTP = ''
+  for (let i = 0; i < 4; i++) {
+    OTP += digits[Math.floor(Math.random() * 10)]
+  }
+  return parseInt(OTP)
+}
+
+async function sendOTPToUser({ id, OTP }: { id: string; OTP: number }) {
+  const user = await prisma.candidate.findUnique({
+    where: { id },
+    select: { email: true },
+  })
+  return await sendOTPMail(user?.email as string, OTP)
+}
+
 export async function updateCandidateFirstLastName(
   id: Candidate['id'],
   firstName: Candidate['firstName'],
   lastName: Candidate['lastName']
 ) {
   try {
-    return await prisma.candidate.update({
+    const OTP = await generateOTP()
+
+    const data = await prisma.candidate.update({
       where: { id },
-      data: { firstName, lastName },
+      data: { firstName, lastName, OTP },
     })
+    await sendOTPToUser({ id, OTP })
+    return data
   } catch (error) {
     throw new Error('Something went wrong..!')
   }
+}
+export async function resendOtp({ assesmentId }: { assesmentId: string }) {
+  const user = await prisma.candidateTest.findUnique({
+    where: { id: assesmentId },
+    select: { candidate: { select: { OTP: true, email: true, id: true } } },
+  })
+  const OTPValue = await generateOTP()
+  if (user) {
+    await prisma.candidate.update({
+      where: { id: user?.candidate?.id },
+      data: {
+        OTP: OTPValue,
+      },
+    })
+    return await sendOTPMail(user?.candidate?.email as string, OTPValue)
+  } else return null
+}
+
+export async function verifyOTP({
+  assessmentId,
+  otp,
+}: {
+  assessmentId: string
+  otp: number
+}) {
+  const candidateAssessmentOtp = await prisma.candidateTest.findUnique({
+    where: { id: assessmentId },
+    select: {
+      candidate: { select: { OTP: true, id: true } },
+    },
+  })
+  return candidateAssessmentOtp?.candidate?.OTP === otp
 }
 
 export async function updateNextCandidateStep(
@@ -60,7 +115,18 @@ export async function updateNextCandidateStep(
     throw new Error('Something went wrong..!')
   }
 }
-
+export async function getCandidateEmail(id: string) {
+  return prisma.candidateTest.findUnique({
+    where: { id },
+    select: {
+      candidate: {
+        select: {
+          email: true,
+        },
+      },
+    },
+  })
+}
 export async function getTestInstructionForCandidate(id: CandidateTest['id']) {
   try {
     return await prisma.candidateTest.findUnique({
@@ -179,7 +245,6 @@ export async function getCandidateTest(id: CandidateTest['id']) {
     throw new Error('Something went wrong..!')
   }
 }
-
 export async function candidateTestStart(id: CandidateTest['id']) {
   try {
     return await prisma.candidateTest.update({
