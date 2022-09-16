@@ -1,6 +1,5 @@
 import { candidateExamConstants } from '~/constants/common.constants'
 import EndAssessmentIcon from '../../../public/assets/end-test.svg'
-
 import Header from './Header'
 
 const EndAssessment = () => {

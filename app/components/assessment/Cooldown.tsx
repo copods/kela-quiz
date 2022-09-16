@@ -27,9 +27,9 @@ const Cooldown = () => {
             <span className="text-lg font-medium text-gray-500">
               {candidateExamConstants.takeBreak}
             </span>
-            <p className="text-2xl font-bold text-gray-900">
+            <span className="text-2xl font-bold text-gray-900">
               {candidateExamConstants.cheers}
-            </p>
+            </span>
             <img
               src={cooldownImage}
               alt={candidateExamConstants.cooldown}
