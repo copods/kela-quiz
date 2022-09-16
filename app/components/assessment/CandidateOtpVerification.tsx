@@ -43,48 +43,52 @@ const CandidateOtp = ({ email }: { email: string }) => {
   }
   return (
     <div className="flex flex-1 items-center justify-center bg-gray-50">
-      <div className="flex max-w-[454px] flex-1 flex-col rounded-md border border-gray-50 bg-white text-center drop-shadow-sm drop-shadow-sm">
-        <div className="flex justify-center pb-54 pt-12">
+      <div className="flex max-w-454 flex-1 flex-col gap-10 rounded-md border border-gray-50 bg-white text-center drop-shadow-sm">
+        <div className="flex justify-center pt-12">
           <img src={otpImage} alt={otpConstants.otp} />
         </div>
         <div className="text-2xl font-bold">{otpConstants.header}</div>
-        <div className="pt-4 pb-10  text-base text-[#6B7280]">
+        <div className="gap-4 text-base text-gray-500">
           {otpConstants.enterOTP}{' '}
           <span className="font-medium text-primary">{email} </span>
         </div>
         <Form method="post">
-          <div className="flex justify-center gap-4 pb-8">
+          <div className="flex justify-center gap-4 pb-4">
             <input
-              type="number"
+              type="text"
+              inputMode="numeric"
               maxLength={1}
               name="field-1"
               onChange={(e) => handleChange(e)}
-              className="flex h-12 w-16 justify-center rounded-md border border-[#D5DAE1] text-center drop-shadow-sm"
+              className="flex h-12 w-16 justify-center rounded-md border border-gray-200 text-center drop-shadow-sm"
             />
             <input
-              type="number"
+              type="text"
+              inputMode="numeric"
               maxLength={1}
               name="field-2"
               onChange={(e) => handleChange(e)}
-              className="flex h-12 w-16 justify-center rounded-md border border-[#D5DAE1] text-center drop-shadow-sm"
+              className="flex h-12 w-16 justify-center rounded-md border border-gray-200 text-center drop-shadow-sm"
             />
             <input
-              type="number"
+              type="text"
+              inputMode="numeric"
               maxLength={1}
               name="field-3"
               onChange={(e) => handleChange(e)}
-              className="flex h-12 w-16 justify-center rounded-md border border-[#D5DAE1] text-center drop-shadow-sm"
+              className="flex h-12 w-16 justify-center rounded-md border border-gray-200 text-center drop-shadow-sm"
             />
             <input
-              type="number"
+              type="text"
+              inputMode="numeric"
               maxLength={1}
               name="field-4"
               onChange={(e) => handleChange(e)}
-              className="flex h-12 w-16 justify-center rounded-md border border-[#D5DAE1] text-center drop-shadow-sm"
+              className="flex h-12 w-16 justify-center rounded-md border border-gray-200 text-center drop-shadow-sm"
             />
           </div>
 
-          <div className="pb-10 text-base text-[#6B7280]">
+          <div className="pb-10 text-base text-gray-500">
             {finalTime !== '00:00'
               ? otpConstants.didntGetCode
               : otpConstants.resendCodeIn}
