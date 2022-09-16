@@ -43,6 +43,9 @@ export const commonConstants = {
 export const sideNav = {
   sideNavHeading: 'Quiz',
 }
+export const candidateHeader = {
+  headerHeading: 'Quiz',
+}
 export const members = {
   addMember: 'Add Member',
   firstName: 'First Name',
@@ -215,6 +218,7 @@ export const candidateExamConstants = {
   candidateTestCreateError: 'Candidate Test Create Error..!',
   errorUpdatingTestLink: 'Error updating test link..!',
   errorCreatingSectionInTest: 'Error creating section in test ..',
+  candidateInsWelcome: 'Welcome',
 }
 export const cypress = {
   email: 'careers@copods.co',
