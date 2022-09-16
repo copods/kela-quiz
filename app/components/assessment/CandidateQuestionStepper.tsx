@@ -1,12 +1,11 @@
-import { useLoaderData, useNavigate } from '@remix-run/react'
+import { useLoaderData, useSubmit } from '@remix-run/react'
 import tickMark from '~/../public/assets/tickMark.svg'
 import dash from '~/../public/assets/dash.svg'
 import React from 'react'
 
 const CandidateQuestionStepper = () => {
   const { section, candidateTests, params } = useLoaderData()
-  const navigate = useNavigate()
-  // const submit = useSubmit()
+  const submit = useSubmit()
 
   return (
     <div className="flex w-full items-center justify-center gap-2">
@@ -21,11 +20,12 @@ const CandidateQuestionStepper = () => {
                 role="button"
                 onClick={() => {
                   if (question.status && question.status !== 'NOT_VIEWED') {
-                    navigate(
-                      `/assessment/${params.assessmentId}/${params.sectionId}/${question.id}`
+                    submit(
+                      { next: 'next', jumpQuestionId: question.id },
+                      {
+                        method: 'post',
+                      }
                     )
-                    // submit({ next: 'next' }, { method: 'post', action: `/assessment/${params.assessmentId}/${params.sectionId}/${question.id}` })
-                    // window.location.reload()
                   }
                 }}
                 className={`flex h-6 w-6 items-center justify-center rounded-full text-xs ${

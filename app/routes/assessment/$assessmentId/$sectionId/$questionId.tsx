@@ -30,6 +30,9 @@ export const action: ActionFunction = async ({ params, request }) => {
   const endExam = formData.get('endExam')
   const options: any = formData.getAll('option')
   let answers: any = formData.getAll('answer')
+  const jumpQuestionId: any = formData.get('jumpQuestionId')
+
+  console.log(jumpQuestionId, 'formData')
 
   if (answers.length) {
     let flag = true
@@ -81,9 +84,15 @@ export const action: ActionFunction = async ({ params, request }) => {
     )
   }
 
-  return redirect(
-    `/assessment/${params.assessmentId}/${params.sectionId}/${nextQuestionId}`
-  )
+  if (jumpQuestionId) {
+    return redirect(
+      `/assessment/${params.assessmentId}/${params.sectionId}/${jumpQuestionId}`
+    )
+  } else {
+    return redirect(
+      `/assessment/${params.assessmentId}/${params.sectionId}/${nextQuestionId}`
+    )
+  }
 }
 
 const AssessmentQuestionForSection = () => {
