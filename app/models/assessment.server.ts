@@ -34,7 +34,7 @@ export async function getCandidateIDFromAssessmentID(id: CandidateTest['id']) {
 
 async function generateOTP() {
   // generate random 4 digit OTP
-  var digits = '123456789'
+  var digits = '1234567896'
   let OTP = ''
   for (let i = 0; i < 4; i++) {
     OTP += digits[Math.floor(Math.random() * 10)]
@@ -458,8 +458,8 @@ export async function skipAnswerAndNextQuestion({
           selectedOptions?.length || answers?.length
             ? 'ANSWERED'
             : question?.status === 'ANSWERED'
-            ? 'ANSWERED'
-            : 'SKIPPED',
+              ? 'ANSWERED'
+              : 'SKIPPED',
         answeredAt: new Date(),
       },
       select: {
