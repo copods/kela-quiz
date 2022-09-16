@@ -1,3 +1,4 @@
+import { useLoaderData } from '@remix-run/react'
 import type { ActionFunction, LoaderFunction } from '@remix-run/server-runtime'
 import { redirect } from '@remix-run/server-runtime'
 import Question from '~/components/assessment/Question'
@@ -26,13 +27,12 @@ export const action: ActionFunction = async ({ params, request }) => {
   const formData = await request.formData()
   const next = formData.get('next')
   const previous = formData.get('previous')
+  const skip = formData.get('skip')
   const nextSection = formData.get('nextSection')
   const endExam = formData.get('endExam')
   const options: any = formData.getAll('option')
   let answers: any = formData.getAll('answer')
   const jumpQuestionId: any = formData.get('jumpQuestionId')
-
-  console.log(jumpQuestionId, 'formData')
 
   if (answers.length) {
     let flag = true
@@ -67,6 +67,15 @@ export const action: ActionFunction = async ({ params, request }) => {
       'prev'
     )
   }
+  if (skip) {
+    nextQuestionId = await saveAnswerSkipAndNext(
+      [],
+      [],
+      params.sectionId as string,
+      params.questionId as string,
+      'skip'
+    )
+  }
 
   if (nextSection) {
     const nextSecRoute = await moveToNextSection({
@@ -96,8 +105,8 @@ export const action: ActionFunction = async ({ params, request }) => {
 }
 
 const AssessmentQuestionForSection = () => {
-  // const { candidate, candidateTests, params, section } = useLoaderData()
-  return <Question />
+  const { question } = useLoaderData()
+  return <Question key={question.id} />
 }
 
 export default AssessmentQuestionForSection

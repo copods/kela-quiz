@@ -21,7 +21,7 @@ const CandidateQuestionStepper = () => {
                 onClick={() => {
                   if (question.status && question.status !== 'NOT_VIEWED') {
                     submit(
-                      { next: 'next', jumpQuestionId: question.id },
+                      { skip: 'skip', jumpQuestionId: question.id },
                       {
                         method: 'post',
                       }

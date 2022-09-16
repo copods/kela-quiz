@@ -11,9 +11,6 @@ const Question = () => {
   const { question } = useLoaderData()
   const questionType = question?.question?.questionType?.value
   // const [test, setTest] = useState(question?.question?.options)
-  console.log('============================')
-  console.log(questionType, question.answers)
-  console.log('============================')
   const [userAnswer, setUserAnswer] = useState(
     questionType === QuestionTypes.singleChoice
       ? question.selectedOptions[0]?.id
@@ -21,9 +18,7 @@ const Question = () => {
       ? question?.answers
       : question.selectedOptions.flatMap((option: any) => option.id)
   )
-  useEffect(() => {
-    console.log('ASDasd', userAnswer)
-  }, [userAnswer])
+  useEffect(() => {}, [userAnswer])
 
   const onChangeHandle = (event: any, index?: number) => {
     if (questionType === QuestionTypes.singleChoice) {
