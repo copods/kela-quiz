@@ -191,13 +191,15 @@ export async function sendOTPMail(email: string, otp: number) {
           <div style="background:#fff;margin:0 auto;padding:20px;max-width: 350px">
         <p style="text-align:center;font-size:20px;line-height:28px;color:#4B5563;margin:0;margin-bottom:13px"><span>Welcome !</span></p>
         <div style="font-size:16px; line-height:24px;margin-bottom:16px">
-          <p style="text-align:left;color:#4B5563;margin:0;"><span>Hi,</span>
+          <p style="text-align:left;color:#4B5563;margin:0;"><span>Hi,</span></p><br>
+<p style="text-align:left;color:#4B5563;margin:0;"><span>This mail is sent for verification</span></p>
           </p>
           <br>
           <p style="text-align:left;color:#4B5563;margin:0;">Your OTP is <b>${otp}</b>
           </p>
-          
-
+          <br>
+<br>
+<p style="text-align:left;color:#4B5563;margin:0;"><span>Please enter this OTP to start the K-Quiz test</span></p>
       </div>
       </td>
   </tr>
