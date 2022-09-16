@@ -41,10 +41,12 @@ export interface ActionData {
 }
 
 export interface CheckboxProps {
-  handleChange: React.MouseEventHandler<HTMLInputElement>
+  [x: string]: any
+  handleChange: React.ChangeEventHandler<HTMLInputElement>
   name?: string
   isChecked?: boolean
   value?: string
+  className?: string
 }
 
 export interface TestSection {

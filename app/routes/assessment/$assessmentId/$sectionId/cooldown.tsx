@@ -13,7 +13,6 @@ export const loader: LoaderFunction = async ({ params, request }) => {
     section?.sectionId as string,
     params.assessmentId as string
   )
-
   if (candidateSection?.startedAt) {
     const started = await startCandidateSection(candidateSection?.id as string)
     return redirect(

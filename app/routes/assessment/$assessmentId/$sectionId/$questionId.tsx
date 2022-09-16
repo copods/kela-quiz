@@ -2,7 +2,6 @@ import { useLoaderData } from '@remix-run/react'
 import type { ActionFunction, LoaderFunction } from '@remix-run/server-runtime'
 import { redirect } from '@remix-run/server-runtime'
 import Question from '~/components/assessment/Question'
-import CandidateLayout from '~/components/layouts/CandidateLayout'
 import {
   candidateTest,
   getQuestion,
@@ -10,7 +9,6 @@ import {
   moveToNextSection,
   saveAnswerSkipAndNext,
   endCandidateAssessment,
-  getCandidateByAssessmentId,
 } from '~/utils/assessment.utils'
 
 export const loader: LoaderFunction = async ({ params, request }) => {
@@ -22,21 +20,32 @@ export const loader: LoaderFunction = async ({ params, request }) => {
 
   const lastSection = candidateTests?.sections.length == section?.order
 
-  const candidate = await getCandidateByAssessmentId(
-    params.assessmentId as string
-  )
-
-  return { question, section, candidate, candidateTests, lastSection, params }
+  return { question, section, lastSection, candidateTests, params }
 }
 
 export const action: ActionFunction = async ({ params, request }) => {
   const formData = await request.formData()
   const next = formData.get('next')
   const previous = formData.get('previous')
+  const skip = formData.get('skip')
   const nextSection = formData.get('nextSection')
   const endExam = formData.get('endExam')
   const options: any = formData.getAll('option')
-  const answers: any = formData.getAll('answer')
+  let answers: any = formData.getAll('answer')
+  const jumpQuestionId: any = formData.get('jumpQuestionId')
+
+  if (answers.length) {
+    let flag = true
+    for (let i = 0; i < answers.length; i++) {
+      if (answers[i] !== '') {
+        flag = false
+        break
+      }
+    }
+    if (flag) {
+      answers = []
+    }
+  }
 
   let nextQuestionId = null
 
@@ -58,6 +67,15 @@ export const action: ActionFunction = async ({ params, request }) => {
       'prev'
     )
   }
+  if (skip) {
+    nextQuestionId = await saveAnswerSkipAndNext(
+      [],
+      [],
+      params.sectionId as string,
+      params.questionId as string,
+      'skip'
+    )
+  }
 
   if (nextSection) {
     const nextSecRoute = await moveToNextSection({
@@ -75,24 +93,20 @@ export const action: ActionFunction = async ({ params, request }) => {
     )
   }
 
-  return redirect(
-    `/assessment/${params.assessmentId}/${params.sectionId}/${nextQuestionId}`
-  )
+  if (jumpQuestionId) {
+    return redirect(
+      `/assessment/${params.assessmentId}/${params.sectionId}/${jumpQuestionId}`
+    )
+  } else {
+    return redirect(
+      `/assessment/${params.assessmentId}/${params.sectionId}/${nextQuestionId}`
+    )
+  }
 }
 
 const AssessmentQuestionForSection = () => {
-  const { candidate, candidateTests, params, section } = useLoaderData()
-  return (
-    <CandidateLayout
-      candidate={candidate}
-      candidateTest={candidateTests}
-      heading="Pre-Interview Assessment"
-      params={params}
-      section={section}
-    >
-      <Question />
-    </CandidateLayout>
-  )
+  const { question } = useLoaderData()
+  return <Question key={question.id} />
 }
 
 export default AssessmentQuestionForSection

@@ -9,12 +9,15 @@ module.exports = {
         primaryHover: '#141649',
         primaryDisabled: '#A2A4D6',
         primaryOutlined: '#141649',
+        questionBackground: '#F0F0F0',
       },
       minWidth: {
+        sectionCard: '400px',
         200: '200px',
         260: '260px',
         184: '184px',
         96: '384px',
+        4: '16px',
         109: '438px',
       },
       height: {
@@ -31,9 +34,11 @@ module.exports = {
         554: '554px',
         454: '454px',
         96: '384px',
+        32: '128px',
       },
       minHeight: {
         480: '480px',
+        16: '64px',
       },
       borderRadius: {
         1: '1px',

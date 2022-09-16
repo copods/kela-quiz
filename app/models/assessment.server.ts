@@ -34,7 +34,7 @@ export async function getCandidateIDFromAssessmentID(id: CandidateTest['id']) {
 
 async function generateOTP() {
   // generate random 4 digit OTP
-  var digits = '123456789'
+  var digits = '1234567896'
   let OTP = ''
   for (let i = 0; i < 4; i++) {
     OTP += digits[Math.floor(Math.random() * 10)]
@@ -417,6 +417,7 @@ export async function skipAnswerAndNextQuestion({
         id: currentQuestionId,
       },
       select: {
+        status: true,
         selectedOptions: {
           select: {
             id: true,
@@ -433,18 +434,32 @@ export async function skipAnswerAndNextQuestion({
       }
     })
 
-    const currentQuestion = await prisma.candidateQuestion.update({
-      where: {
-        id: currentQuestionId,
-      },
-      data: {
+    // create data according to action taken i.e. next, prev or skip
+    let updateData = null
+    if (nextOrPrev == 'skip') {
+      updateData = null
+    } else {
+      updateData = {
         selectedOptions: {
           connect: selectedOptions?.map((option) => ({ id: option })),
           disconnect: oldAnswers?.map((option) => ({ id: option })),
         },
         answers,
+      }
+    }
+
+    const currentQuestion = await prisma.candidateQuestion.update({
+      where: {
+        id: currentQuestionId,
+      },
+      data: {
+        ...updateData,
         status:
-          selectedOptions?.length || answers?.length ? 'ANSWERED' : 'SKIPPED',
+          selectedOptions?.length || answers?.length
+            ? 'ANSWERED'
+            : question?.status === 'ANSWERED'
+            ? 'ANSWERED'
+            : 'SKIPPED',
         answeredAt: new Date(),
       },
       select: {
@@ -481,7 +496,9 @@ export async function skipAnswerAndNextQuestion({
       where: {
         sectionInCandidateTestId:
           currentQuestion?.sectionInCandidateTestId || '',
-        order: (currentQuestion?.order || 0) + (nextOrPrev == 'next' ? 1 : -1),
+        order:
+          (currentQuestion?.order || 0) +
+          (nextOrPrev == 'next' || nextOrPrev == 'skip' ? 1 : -1),
       },
       select: {
         id: true,

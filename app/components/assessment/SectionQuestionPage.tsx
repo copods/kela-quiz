@@ -12,7 +12,7 @@ const SectionQuestionPage = ({
 }) => {
   return (
     <div className="flex h-full flex-col gap-4">
-      <div className="h-full flex-1 overflow-auto">
+      <div className="flex h-full flex-1 flex-col overflow-auto">
         <Outlet />
       </div>
     </div>
