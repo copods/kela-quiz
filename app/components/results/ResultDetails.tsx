@@ -36,7 +36,7 @@ const ResultDetailsComponent = () => {
     )
   }
   return (
-    <div id="test-details" className="flex h-full flex-col gap-6">
+    <div id="test-details" className="flex h-full flex-col gap-6 p-1">
       <header>
         <div className="flex gap-2">
           <div

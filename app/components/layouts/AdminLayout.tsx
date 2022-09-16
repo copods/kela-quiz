@@ -7,7 +7,7 @@ export default function AdminLayout({ children }: { children: JSX.Element }) {
         <SideNav />
       </div>
       <div
-        className="flex-1 overflow-auto bg-slate-50 p-5"
+        className="flex-1 overflow-auto bg-slate-50 p-4"
         id="add-question-section"
       >
         {children}

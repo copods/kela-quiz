@@ -190,7 +190,7 @@ const AddQuestionInSection = () => {
     submit({ quesData: JSON.stringify(testQuestion) }, { method: 'post' })
   }
   return (
-    <div className="flex h-full flex-col gap-6">
+    <div className="flex h-full flex-col gap-6 p-1">
       <BreadCrumb data={breadCrumbArray} />
       <div className="flex">
         <h1

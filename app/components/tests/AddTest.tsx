@@ -113,7 +113,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
   }, [currentTab, setCurrentTab, name, description])
 
   return (
-    <div className="flex h-full flex-col gap-6 overflow-hidden">
+    <div className="flex h-full flex-col gap-6 overflow-hidden p-1">
       {/* header */}
       <header className="flex items-center justify-between">
         <h2

@@ -26,6 +26,8 @@ const SectionLink = ({
   let navigate = useNavigate()
   const [deleted, setDeleted] = useState(false)
   useEffect(() => {
+    console.log(deleted)
+
     if (deleted === true) {
       setTimeout(() => {
         const activeCard = document.querySelector(
