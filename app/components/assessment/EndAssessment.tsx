@@ -4,9 +4,9 @@ import Header from './Header'
 
 const EndAssessment = () => {
   return (
-    <div className="flex h-screen w-screen flex-col bg-gray-50">
+    <div className="flex h-screen flex-col bg-gray-50">
       <Header />
-      <div className="py-auto flex-1 overflow-auto">
+      <div className="flex-1 overflow-auto">
         <div className="grid h-full items-center">
           <div className="mx-auto flex w-coolDownCard flex-col items-center justify-center gap-8 bg-white py-16">
             <img
