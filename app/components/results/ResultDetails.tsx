@@ -24,9 +24,7 @@ const ResultDetailsComponent = () => {
             tabIndex={0}
             onKeyDown={(e) => {
               if (e.key === 'Enter')
-                navigate(
-                  `${routes.resultGroupTest}/${params?.testId}/completed`
-                )
+                navigate(`${routes.resultGroupTest}/${params?.testId}`)
             }}
           >
             <Icon
