@@ -13,7 +13,7 @@ import Header from './Header'
 
 const CandidateInstruction = () => {
   const { firstSection, instructions, candidate } = useLoaderData()
-  console.log('instructions:', instructions)
+
   const candidateSections = instructions?.test?.sections.sort(
     (a: TestSection & { order: number }, b: TestSection & { order: number }) =>
       a.order > b.order ? 1 : b.order > a.order ? -1 : 0

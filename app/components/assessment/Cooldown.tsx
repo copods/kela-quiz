@@ -35,9 +35,7 @@ const Cooldown = () => {
 
   const getPreviousSectionName = () => {
     for (let sections of candidateTests.sections) {
-      console.log('ok, ', sections.section.name)
       if (sections.order == candidateSection.order - 1) {
-        console.log(sections.section.name)
         return sections.section.name
       }
     }
