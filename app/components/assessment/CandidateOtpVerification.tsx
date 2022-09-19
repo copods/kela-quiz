@@ -89,7 +89,7 @@ const CandidateOtp = ({ email }: { email: string }) => {
           </div>
 
           <div className="pb-10 text-base text-gray-500">
-            {finalTime !== '00:00'
+            {finalTime === '00:00'
               ? otpConstants.didntGetCode
               : otpConstants.resendCodeIn}
             {finalTime !== '00:00' ? (
