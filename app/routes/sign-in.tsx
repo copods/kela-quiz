@@ -24,9 +24,13 @@ export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
   const email = formData.get('email')
   const password = formData.get('password')
+  const forgetPassword = formData.get('forget')
   const redirectTo = safeRedirect(formData.get('redirectTo'), routes.dashboard)
   const remember = formData.get('remember')
 
+  if (forgetPassword) {
+    return redirect('/ForgetPassword')
+  }
   if (!validateEmail(email)) {
     return json<ActionData>(
       { errors: { email: statusCheck.emailIsInvalid } },

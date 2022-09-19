@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Form } from '@remix-run/react'
+import { Form, useSubmit } from '@remix-run/react'
 import Button from '~/components/form/Button'
 import InputField from '~/components/form/InputField'
 import Logo from '~/components/Logo'
@@ -36,6 +36,10 @@ function Login({ actionData, redirectTo }: LoginProps) {
       },
     },
   ]
+  const submit = useSubmit()
+  const forgetPassword = () => {
+    submit({ forget: 'forgetPassword' }, { method: 'post' })
+  }
   return (
     <div className="z-10 flex	min-h-480 w-full max-w-554 flex-col items-center justify-center rounded-2xl bg-white px-24 drop-shadow-xl">
       <div className="z-20 -mt-24 mb-6">
@@ -69,7 +73,20 @@ function Login({ actionData, redirectTo }: LoginProps) {
               Forget your password?
             </div>
           </div> */}
-          <div className="mt-6 flex items-center justify-center">
+          <span
+            tabIndex={0}
+            className="flex cursor-pointer justify-end pt-4 pb-7 text-sm text-primary"
+            onClick={() => {
+              forgetPassword()
+            }}
+            onKeyUp={() => {
+              forgetPassword()
+            }}
+            role="button"
+          >
+            Forget password?
+          </span>
+          <div className="flex items-center justify-center">
             <input type="hidden" name="redirectTo" value={redirectTo} />
             <Button
               tabIndex={0}
