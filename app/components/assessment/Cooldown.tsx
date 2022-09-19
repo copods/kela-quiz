@@ -23,7 +23,7 @@ const Cooldown = () => {
     'zero',
     'one',
     'two',
-    'thre',
+    'three',
     'four',
     'five',
     'six',
