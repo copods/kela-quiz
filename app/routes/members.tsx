@@ -39,6 +39,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   const users = await getAllUsers()
   return json<LoaderData>({ users, roles, userId })
 }
+
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
   const action = JSON.parse(formData.get('addMember') as string)
@@ -50,6 +51,7 @@ export const action: ActionFunction = async ({ request }) => {
     const lastName = formData.get('lastName')
     const email = formData.get('email')
     const roleId = formData.get('roleId')
+    // eslint-disable-next-line no-useless-escape
     const emailFilter = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
 
     if (typeof firstName !== 'string' || firstName.length === 0) {

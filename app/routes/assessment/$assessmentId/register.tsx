@@ -38,10 +38,10 @@ export const action: ActionFunction = async ({ params, request }) => {
     if (updatedCandidate) {
       await updateNextStep({
         assessmentId: params.assessmentId as string,
-        nextRoute: 'instructions',
+        nextRoute: 'verification',
         isSection: false,
       })
-      return redirect(`/assessment/${params.assessmentId}/instructions`)
+      return redirect(`/assessment/${params.assessmentId}/verification`)
     }
   }
   return null

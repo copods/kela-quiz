@@ -1,15 +1,15 @@
 import type { ActionFunction, LoaderFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { redirect } from '@remix-run/node'
-import { useLoaderData } from '@remix-run/react'
 import CandidateInstruction from '~/components/assessment/CandidateInstruction'
-import CandidateLayout from '~/components/layouts/CandidateLayout'
 import {
-  candidateTest,
   checkIfTestLinkIsValidAndRedirect,
   getCandidateByAssessmentId,
   getSectionByOrder,
+  getSectionInCandidateTest,
+  getSectionInTest,
   getTestInstructions,
+  startCandidateSection,
   startTest,
   updateNextStep,
 } from '~/utils/assessment.utils'
@@ -32,13 +32,11 @@ export const loader: LoaderFunction = async ({ params, request }) => {
     1
   )
 
-  const candidateTests = await candidateTest(params.assessmentId as string)
-
   const candidate = await getCandidateByAssessmentId(
     params.assessmentId as string
   )
 
-  return json({ instructions, firstSection, candidateTests, candidate })
+  return json({ instructions, firstSection, candidate })
 }
 
 export const action: ActionFunction = async ({ request, params }) => {
@@ -56,22 +54,23 @@ export const action: ActionFunction = async ({ request, params }) => {
 
     await startTest(params.assessmentId as string)
 
-    return redirect(`/assessment/${params.assessmentId}/${firstSectionId}`)
+    // new
+    const section = await getSectionInTest(firstSectionId as string)
+    const candidateSection = await getSectionInCandidateTest(
+      section?.sectionId as string,
+      params.assessmentId as string
+    )
+
+    const started = await startCandidateSection(candidateSection?.id as string)
+
+    return redirect(
+      `/assessment/${params.assessmentId}/${firstSectionId}/${started?.questions[0].id}`
+    )
   }
 }
 
 const TestInstructions = () => {
-  const { candidateTests, candidate } = useLoaderData()
-
-  return (
-    <CandidateLayout
-      candidate={candidate}
-      candidateTest={candidateTests}
-      heading="Pre-Interview Assessment"
-    >
-      <CandidateInstruction />
-    </CandidateLayout>
-  )
+  return <CandidateInstruction />
 }
 
 export default TestInstructions

@@ -1,4 +1,5 @@
 import { cypress, addQuestion, routeFiles } from '~/constants/common.constants'
+import { routes } from '~/constants/route.constants'
 const section1 = `Aptitude - section1`
 
 describe('Test for section-details', () => {
@@ -22,7 +23,10 @@ describe('Test for section-details', () => {
       .find('#sections')
       .should('have.text', routeFiles.sections)
       .click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
+    cy.location('pathname', { timeout: 60000 }).should(
+      'include',
+      routes.sections
+    )
     cy.get('#section-card', { timeout: 8000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -37,7 +41,7 @@ describe('Test for section-details', () => {
       .click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
-      '/add-question'
+      routes.addQuestion
     )
     cy.get('h1', { timeout: 6000 }).should('be.visible')
     cy.get('#dropdown > button', { timeout: 6000 }).click()
@@ -380,7 +384,10 @@ describe('Test for section-details', () => {
       .find('#sections')
       .should('have.text', routeFiles.sections)
       .click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
+    cy.location('pathname', { timeout: 60000 }).should(
+      'include',
+      routes.sections
+    )
     cy.get('#section-card', { timeout: 8000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -395,7 +402,7 @@ describe('Test for section-details', () => {
       .click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
-      '/add-question'
+      routes.addQuestion
     )
     cy.get('h1', { timeout: 6000 }).should('be.visible')
     let flag = 0

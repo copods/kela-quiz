@@ -32,7 +32,7 @@ const SectionDetails = () => {
           id="section-search"
           type="text"
           name="search"
-          className="h-9 w-48 rounded-lg border border-gray-200 px-3 text-sm"
+          className="h-9 w-48 rounded-lg border border-gray-200 px-3 text-sm focus:outline-dotted"
           placeholder={sectionsConstants.search}
           title={sectionsConstants.search}
           onChange={(e) => setSearchText(e.target.value)}

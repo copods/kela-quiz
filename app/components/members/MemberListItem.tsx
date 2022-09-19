@@ -5,6 +5,7 @@ import moment from 'moment'
 import DeletePopUp from '../DeletePopUp'
 import { useEffect, useState } from 'react'
 import { useSubmit } from '@remix-run/react'
+import { members } from '~/constants/common.constants'
 
 export default function MemberListItem({
   user,
@@ -30,7 +31,7 @@ export default function MemberListItem({
   }
   return (
     <div className="col-span-full grid grid-cols-10">
-      <div className="memberRows col-span-full grid grid-cols-10 border-t border-solid border-gray-200 px-6 py-4">
+      <div className="memberRows col-span-full grid grid-cols-10 gap-3 border-t border-solid border-gray-200 px-6 py-4">
         <div className="col-span-2 overflow-ellipsis break-all pl-4">
           <span className="memberName text-base text-gray-700">
             {user.firstName} {user.lastName}
@@ -52,13 +53,22 @@ export default function MemberListItem({
             id="delete-button"
             tabIndex={0}
             onClick={openPopUp}
+            onKeyUp={(e) => {
+              if (e.key === 'Enter') openPopUp()
+            }}
             icon="ic:outline-delete-outline"
             className={`h-6 w-6 cursor-pointer text-red-500  ${
-              loggedInUser && 'cursor-not-allowed text-red-300'
+              loggedInUser && 'cursor-not-allowed text-red-200'
             }`}
           />
         </div>
-        <DeletePopUp setOpen={setOpen} open={open} onDelete={deleteUser} />
+        <DeletePopUp
+          setOpen={setOpen}
+          open={open}
+          onDelete={deleteUser}
+          deleteItem={`${user.firstName} ${user.lastName}`}
+          deleteItemType={members.member}
+        />
       </div>
     </div>
   )

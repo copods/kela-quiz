@@ -18,9 +18,9 @@ export default function MembersHeader({
       setOpen(false)
       setActionStatus(false)
     }
-  }, [actionStatus])
+  }, [actionStatus, setActionStatus])
   return (
-    <div className="pb-6">
+    <div>
       <div className="flex items-center justify-between">
         <h1 className="membersHeading text-3xl font-bold">{members.members}</h1>
         <Button
