@@ -98,7 +98,7 @@ export const sectionsConstants = {
   dropdown: 'Select',
   expand: 'Expand',
   search: 'Search Question',
-  sectionName: 'section',
+  sectionName: 'Section',
 }
 export const testsConstants = {
   addTestbutton: 'Add Test',
@@ -159,7 +159,7 @@ export const statusCheck = {
   memberAddedSuccess: 'Member Added Successfully..!',
   erroSendingOtp: 'Error in sending OTP..',
   otpSent: 'Otp sent. Please check your email',
-  correctOtp: 'Please enter correct otp',
+  correctOtp: 'Please enter correct OTP',
 }
 export const resultConstants = {
   order: 'Order',
