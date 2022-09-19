@@ -29,6 +29,7 @@ module.exports = {
         coolDownCard: '1046px',
         cooldownSVG: '389px',
         438: '438px',
+        358: '358px',
       },
       maxWidth: {
         554: '554px',
@@ -39,6 +40,7 @@ module.exports = {
       minHeight: {
         480: '480px',
         16: '64px',
+        353: '352px',
       },
       borderRadius: {
         1: '1px',

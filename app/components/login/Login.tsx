@@ -84,7 +84,7 @@ function Login({ actionData, redirectTo }: LoginProps) {
             }}
             role="button"
           >
-            Forget password?
+            Forgot password?
           </span>
           <div className="flex items-center justify-center">
             <input type="hidden" name="redirectTo" value={redirectTo} />
