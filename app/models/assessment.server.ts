@@ -570,7 +570,6 @@ export async function endAssessment(id: string) {
 
   const recruiterEmail = candidateTest?.candidate.createdBy.email
   const testName = candidateTest?.test.name
-  const exmanEndTime = candidateTest?.endAt
   const candidateName = `${candidateTest?.candidate.firstName} ${candidateTest?.candidate.lastName} `
   if (candidateTest?.endAt) {
     return { msg: 'Exam already ended' }
@@ -585,12 +584,7 @@ export async function endAssessment(id: string) {
     },
   })
   if (candidateTest)
-    await sendMailToRecruiter(
-      recruiterEmail,
-      testName,
-      exmanEndTime,
-      candidateName
-    )
+    await sendMailToRecruiter(recruiterEmail, testName, candidateName)
   return endExam
 }
 

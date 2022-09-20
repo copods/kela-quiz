@@ -232,18 +232,16 @@ export async function sendOTPMail(email: string, otp: number) {
       }
     }
   )
-
   return 'Done'
 }
 export async function sendMailToRecruiter(
   recruiterEmail?: string,
   testName?: string,
-  exmanEndTime?: Date | null,
   candidateName?: string
 ) {
   const to = recruiterEmail
   const from = 'careers@copods.co'
-  const subject = 'Candidate finish the assessment of K - Quiz @ Copods'
+  const subject = 'Candidate finished the assessment of K - Quiz @ Copods'
   const text = 'K - Quiz @ Copods'
   const html = `<html>
   <head>
@@ -266,7 +264,7 @@ export async function sendMailToRecruiter(
           <p style="text-align:left;color:#4B5563;margin:0;"><span>Hi,</span>
           </p>
           <br>
-          <p style="text-align:left;color:#4B5563;margin:0;">Candidate ${candidateName} has finished the test ${testName} at ${exmanEndTime}
+          <p style="text-align:left;color:#4B5563;margin:0;">Candidate <b>${candidateName}</b> has finished the test ${testName}.
           </p>
           
 
