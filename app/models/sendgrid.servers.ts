@@ -271,7 +271,6 @@ export async function sendPassword(email: string, password: string) {
       </td>
   </tr>
 </table>
-
       <div style="text-align:center;padding: 20px 20px 24px;font-family:'Poppins', sans-serif;">K - Quiz @ Copods</div>
     </div>
     </div>
@@ -299,6 +298,5 @@ export async function sendPassword(email: string, password: string) {
       }
     }
   )
-
   return 'Done'
 }

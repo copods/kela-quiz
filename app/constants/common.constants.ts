@@ -185,6 +185,7 @@ export const forgotPasswordConstants = {
   header: 'Forgot password?',
   enterEmail: 'Enter your email to retrieve your password.',
   email: 'Email',
+  resetPassword: 'Reset Password',
 }
 export enum QuestionStatus {
   notViewed = 'NOT_VIEWED',

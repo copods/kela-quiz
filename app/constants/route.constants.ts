@@ -9,4 +9,5 @@ export const routes = {
   resultGroupTest: '/results/groupByTests',
   members: '/members',
   settings: '/settings',
+  forgotPassword: '/forgot-password',
 }

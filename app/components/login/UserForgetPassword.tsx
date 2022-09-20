@@ -52,8 +52,8 @@ const UserForgetPassword = () => {
             varient="primary-solid"
             type="submit"
             className="h-11 w-358"
-            title="Reset Pasword"
-            buttonText="Reset Pasword"
+            title={forgotPasswordConstants.resetPassword}
+            buttonText={forgotPasswordConstants.resetPassword}
           />
         </Form>
       </div>

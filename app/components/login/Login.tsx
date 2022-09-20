@@ -5,6 +5,7 @@ import InputField from '~/components/form/InputField'
 import Logo from '~/components/Logo'
 import type { LoginProps } from '~/interface/Interface'
 import { forgotPasswordConstants, logIn } from '~/constants/common.constants'
+import { routes } from '~/constants/route.constants'
 function Login({ actionData, redirectTo }: LoginProps) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -38,7 +39,7 @@ function Login({ actionData, redirectTo }: LoginProps) {
   ]
   const navigate = useNavigate()
   const forgetPassword = () => {
-    navigate('/forgot-password')
+    navigate(routes.forgotPassword)
   }
   return (
     <div className="z-10 flex	min-h-480 w-full max-w-554 flex-col items-center justify-center rounded-2xl bg-white px-24 drop-shadow-xl">
