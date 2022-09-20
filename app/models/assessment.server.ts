@@ -7,8 +7,9 @@ import type {
   CandidateQuestion,
   SectionInTest,
 } from '@prisma/client'
+
 import { prisma } from '~/db.server'
-import { sendOTPMail } from './sendgrid.servers'
+import { sendMailToRecruiter, sendOTPMail } from './sendgrid.servers'
 
 export async function checkIfTestLinkIsValid(id: CandidateTest['id']) {
   try {
@@ -542,17 +543,40 @@ export async function endAssessment(id: string) {
     where: {
       id,
     },
+
     select: {
       id: true,
       startedAt: true,
       endAt: true,
+      test: {
+        select: {
+          name: true,
+        },
+      },
+      candidate: {
+        select: {
+          firstName: true,
+          lastName: true,
+          email: true,
+          createdBy: {
+            select: {
+              email: true,
+            },
+          },
+        },
+      },
     },
   })
+
+  const recruiterEmail = candidateTest?.candidate.createdBy.email
+  const testName = candidateTest?.test.name
+  const exmanEndTime = candidateTest?.endAt
+  const candidateName = `${candidateTest?.candidate.firstName} ${candidateTest?.candidate.lastName} `
   if (candidateTest?.endAt) {
     return { msg: 'Exam already ended' }
   }
   calculateResult(id)
-  return await prisma.candidateTest.update({
+  let endExam = await prisma.candidateTest.update({
     where: {
       id,
     },
@@ -560,6 +584,14 @@ export async function endAssessment(id: string) {
       endAt: new Date(),
     },
   })
+  if (candidateTest)
+    await sendMailToRecruiter(
+      recruiterEmail,
+      testName,
+      exmanEndTime,
+      candidateName
+    )
+  return endExam
 }
 
 async function calculateResult(id: CandidateTest['id']) {
