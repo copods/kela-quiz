@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Form, useSubmit } from '@remix-run/react'
+import { Form, useNavigate } from '@remix-run/react'
 import Button from '~/components/form/Button'
 import InputField from '~/components/form/InputField'
 import Logo from '~/components/Logo'
@@ -36,9 +36,9 @@ function Login({ actionData, redirectTo }: LoginProps) {
       },
     },
   ]
-  const submit = useSubmit()
+  const navigate = useNavigate()
   const forgetPassword = () => {
-    submit({ forget: 'forgetPassword' }, { method: 'post' })
+    navigate('/forgot-password')
   }
   return (
     <div className="z-10 flex	min-h-480 w-full max-w-554 flex-col items-center justify-center rounded-2xl bg-white px-24 drop-shadow-xl">

@@ -160,6 +160,8 @@ export const statusCheck = {
   erroSendingOtp: 'Error in sending OTP..',
   otpSent: 'Otp sent. Please check your email',
   correctOtp: 'Please enter correct otp',
+  resendPasswordSuccess: 'Account not found. Please sign up first',
+  resendPasswordError: 'New password has been sent to email successfully',
 }
 export const resultConstants = {
   order: 'Order',
@@ -178,6 +180,11 @@ export const resultConstants = {
   correct: 'Correct',
   skipped: 'Skipped',
   total: 'Total',
+}
+export const forgotPasswordConstants = {
+  header: 'Forgot password?',
+  enterEmail: 'Enter your email to retrieve your password.',
+  email: 'Email',
 }
 export enum QuestionStatus {
   notViewed = 'NOT_VIEWED',
