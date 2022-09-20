@@ -266,7 +266,7 @@ export async function sendPassword(email: string, password: string) {
           </p>
           <br>
 <br>
-<p style="text-align:left;color:#4B5563;margin:0;"><span>Please enter this password</span></p>
+<p style="text-align:left;color:#4B5563;margin:0;"><span>Please enter this password to login</span></p>
       </div>
       </td>
   </tr>
