@@ -4,7 +4,7 @@ import Button from '~/components/form/Button'
 import InputField from '~/components/form/InputField'
 import Logo from '~/components/Logo'
 import type { LoginProps } from '~/interface/Interface'
-import { logIn } from '~/constants/common.constants'
+import { forgotPasswordConstants, logIn } from '~/constants/common.constants'
 function Login({ actionData, redirectTo }: LoginProps) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -84,7 +84,7 @@ function Login({ actionData, redirectTo }: LoginProps) {
             }}
             role="button"
           >
-            Forgot password?
+            {forgotPasswordConstants.header}
           </span>
           <div className="flex items-center justify-center">
             <input type="hidden" name="redirectTo" value={redirectTo} />

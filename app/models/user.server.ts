@@ -73,7 +73,6 @@ export async function sendResetPassword(email: string) {
       where: {
         userId: userEmail.id,
       },
-
       data: {
         hash: hashedPassword,
       },
