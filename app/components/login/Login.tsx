@@ -74,19 +74,21 @@ function Login({ actionData, redirectTo }: LoginProps) {
               Forget your password?
             </div>
           </div> */}
-          <span
-            tabIndex={0}
-            className="flex cursor-pointer justify-end pt-4 pb-7 text-sm text-primary"
-            onClick={() => {
-              forgetPassword()
-            }}
-            onKeyUp={() => {
-              forgetPassword()
-            }}
-            role="button"
-          >
-            {forgotPasswordConstants.header}
-          </span>
+          <div className="flex justify-end pt-4 pb-7">
+            <span
+              tabIndex={0}
+              onClick={() => {
+                forgetPassword()
+              }}
+              onKeyUp={() => {
+                forgetPassword()
+              }}
+              role="button"
+              className="cursor-pointer text-sm text-primary"
+            >
+              {forgotPasswordConstants.header}
+            </span>
+          </div>
           <div className="flex items-center justify-center">
             <input type="hidden" name="redirectTo" value={redirectTo} />
             <Button
