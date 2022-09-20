@@ -1,5 +1,5 @@
 import UserForgetPassword from '~/components/login/UserForgetPassword'
-import { ActionFunction } from '@remix-run/node'
+import type { ActionFunction } from '@remix-run/node'
 import { sendResetPassword } from '~/models/user.server'
 import { useEffect } from 'react'
 import { useActionData, useNavigate } from '@remix-run/react'

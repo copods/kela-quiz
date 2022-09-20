@@ -6,8 +6,9 @@ import Header from './Header'
 import cooldownImage from '~/../public/assets/cooldown.svg'
 
 const Cooldown = () => {
-  const { candidateSection } = useLoaderData()
+  const { candidateSection, candidateTests } = useLoaderData()
   const submit = useSubmit()
+  console.log('ca', candidateTests.sections, candidateSection)
   const startSection = async () => {
     //getting first test of this section
 
@@ -18,6 +19,28 @@ const Cooldown = () => {
       { method: 'post' }
     )
   }
+  const counterString = [
+    'zero',
+    'one',
+    'two',
+    'three',
+    'four',
+    'five',
+    'six',
+    'seven',
+    'eight',
+    'nine',
+    'ten',
+  ]
+
+  const getPreviousSectionName = () => {
+    for (let sections of candidateTests.sections) {
+      if (sections.order == candidateSection.order - 1) {
+        return sections.section.name
+      }
+    }
+  }
+
   return (
     <div className="flex h-screen w-screen flex-col bg-slate-50">
       <Header />
@@ -27,7 +50,13 @@ const Cooldown = () => {
             {candidateExamConstants.takeBreak}
           </span>
           <p className="text-2xl font-bold text-gray-900">
-            {candidateExamConstants.cheers}
+            Cheers! {getPreviousSectionName()} Questions Completed -{' '}
+            {
+              counterString[
+                candidateTests.sections.length - candidateSection.order + 1
+              ]
+            }{' '}
+            more to go
           </p>
           <img
             src={cooldownImage}

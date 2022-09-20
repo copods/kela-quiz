@@ -98,7 +98,7 @@ export const sectionsConstants = {
   dropdown: 'Select',
   expand: 'Expand',
   search: 'Search Question',
-  sectionName: 'section',
+  sectionName: 'Section',
 }
 export const testsConstants = {
   addTestbutton: 'Add Test',

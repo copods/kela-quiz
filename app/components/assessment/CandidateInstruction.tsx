@@ -13,6 +13,7 @@ import Header from './Header'
 
 const CandidateInstruction = () => {
   const { firstSection, instructions, candidate } = useLoaderData()
+
   const candidateSections = instructions?.test?.sections.sort(
     (a: TestSection & { order: number }, b: TestSection & { order: number }) =>
       a.order > b.order ? 1 : b.order > a.order ? -1 : 0
@@ -28,6 +29,14 @@ const CandidateInstruction = () => {
     )
   }
 
+  const getTotalTimeInMin = () => {
+    let time = 0
+    instructions.test.sections.forEach((section: SectionInTest) => {
+      time += section.timeInSeconds
+    })
+    return time / 60
+  }
+
   return (
     <div className="flex h-screen flex-col overflow-auto bg-gray-50">
       <Header />
@@ -37,10 +46,10 @@ const CandidateInstruction = () => {
             <h3 className="text-2xl font-bold text-gray-900">
               {candidateExamConstants.candidateInsWelcome} {candidate.firstName}
             </h3>
-            <p className="text-base font-medium text-gray-500">
+            {/* <p className="text-base font-medium text-gray-500">
               Lorem Ipsum is simply dummy text of the printing and typesetting
               industry.
-            </p>
+            </p> */}
           </div>
           <div className="flex gap-12">
             <div className="flex w-438 flex-col gap-10 rounded-lg border border-gray-50 bg-white p-10 shadow-sm">
@@ -77,7 +86,7 @@ const CandidateInstruction = () => {
                 <div className="flex items-start gap-4">
                   <img src={checkIcon} alt="" className="h-6" />
                   <span className="text-base font-normal text-gray-900">
-                    The duration of this exam is  30 minutes.
+                    The duration of this exam is  {getTotalTimeInMin()} minutes.
                   </span>
                 </div>
                 <div className="flex items-start gap-4">
@@ -86,24 +95,24 @@ const CandidateInstruction = () => {
                     This is a restricted open book exam.
                   </span>
                 </div>
-                <div className="flex items-start gap-4">
+                {/* <div className="flex items-start gap-4">
                   <img src={checkIcon} alt="" className="h-6" />
                   <span className="text-base font-normal text-gray-900">
                     There are X questions in this exam and will be presented one
                     at a time.
                   </span>
-                </div>
+                </div> */}
                 <div className="flex items-start gap-4">
                   <img src={checkIcon} alt="" className="h-6" />
                   <span className="text-base font-normal text-gray-900">
-                    Each question is worth the same and different marks.
+                    Each question is worth the same marks.
                   </span>
                 </div>
                 <div className="flex items-start gap-4">
                   <img src={checkIcon} alt="" className="h-6" />
                   <span className="text-base font-normal text-gray-900">
-                    During this exam you will/won’t be permitted to review
-                    previous questions.
+                    During this exam you will be permitted to review previous
+                    questions.
                   </span>
                 </div>
               </div>

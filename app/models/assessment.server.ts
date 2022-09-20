@@ -201,6 +201,7 @@ export async function getCandidateTest(id: CandidateTest['id']) {
         sections: {
           select: {
             id: true,
+            order: true,
             section: {
               select: {
                 id: true,
