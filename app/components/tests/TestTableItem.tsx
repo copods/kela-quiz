@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react'
 import InviteCandidatePopup from './InviteCandidatePopup'
 import { testsConstants, testTableItem } from '~/constants/common.constants'
 import { routes } from '~/constants/route.constants'
+import { setFocus } from '~/utils'
 
 const TestTableItem = ({
   testName,
@@ -46,10 +47,12 @@ const TestTableItem = ({
   }
   useEffect(() => {
     if (deleted === true) {
-      setTimeout(() => {
-        document.getElementById('1')?.focus()
-        setDeleted(false)
-      }, 500)
+      // setTimeout(() => {
+      //   document.getElementById('1')?.focus()
+      //   console.log(document.getElementById('1'))
+      //   setDeleted(false)
+      // }, 500)
+      setFocus('1', 'id')
     }
   }, [deleted])
   const [candidatePopupOpen, setCandidatePopupOpen] = useState<boolean>(false)
