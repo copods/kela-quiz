@@ -5,9 +5,7 @@ const prisma = new PrismaClient()
 
 async function seed() {
   const email = process.env.SUPER_ADMIN_EMAIL
-
   const hashedPassword = await bcrypt.hash(process.env.SUPER_ADMIN_PASSWORD, 10)
-
   const roles = [
     {
       id: 'cl4xvj89a000209jp4qtlfyii',
@@ -22,7 +20,6 @@ async function seed() {
       name: 'Recruiter',
     },
   ]
-
   const createRoles = () => {
     roles.forEach(async (role) => {
       await prisma.role.upsert({
@@ -40,7 +37,6 @@ async function seed() {
       })
     })
   }
-
   const createMasterAdmin = async () => {
     await prisma.user.upsert({
       where: {
@@ -62,7 +58,6 @@ async function seed() {
       },
     })
   }
-
   const questionType = [
     {
       displayName: 'Single Choice',
@@ -77,7 +72,6 @@ async function seed() {
       value: 'TEXT',
     },
   ]
-
   const createQuestionType = () => {
     questionType.forEach(async (questionName) => {
       await prisma.questionType.upsert({
@@ -95,14 +89,11 @@ async function seed() {
       })
     })
   }
-
   await createRoles()
   await createMasterAdmin()
   await createQuestionType()
-
   console.log(`Database has been seeded. 🌱`)
 }
-
 seed()
   .catch((e) => {
     console.error(e)
