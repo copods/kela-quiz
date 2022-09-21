@@ -109,7 +109,7 @@ const SelectSections = ({
           return (
             <div
               key={temp}
-              className="min-w-sectionCard h-1 flex-1 border border-transparent px-5 py-6"
+              className="h-1 min-w-sectionCard flex-1 border border-transparent px-5 py-6"
             ></div>
           )
         })}

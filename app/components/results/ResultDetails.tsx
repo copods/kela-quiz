@@ -1,40 +1,16 @@
-import { useLoaderData, useNavigate, useSubmit } from '@remix-run/react'
+import { useLoaderData, useNavigate } from '@remix-run/react'
 import { Icon } from '@iconify/react'
-import { useState } from 'react'
-import DropdownField from '../form/Dropdown'
 import SectionCardForResultDetail from './SectionCardForResultDetail'
 import Divider from '../divider'
 import BarGraph from '../barGraph/barGraph'
-import { commonConstants } from '~/constants/common.constants'
-import Button from '../form/Button'
 import type { SectionWiseResults } from '~/interface/Interface'
 import { routes } from '~/constants/route.constants'
 
 const ResultDetailsComponent = () => {
   const { candidateResult, params, sectionWiseResult } = useLoaderData()
 
-  const dropdownData = [
-    {
-      name: 'Pending',
-      value: false,
-    },
-    {
-      name: 'Completed',
-      value: true,
-    },
-  ]
   let navigate = useNavigate()
-  const [candidateStatus, updateCandidateStatus] = useState(false)
-  const submit = useSubmit()
-  const updateCandidateStatusToDB = () => {
-    submit(
-      {
-        candidateStatus: candidateStatus.toString(),
-        resultId: params?.candidateResultId,
-      },
-      { method: 'post' }
-    )
-  }
+
   return (
     <div id="test-details" className="flex h-full flex-col gap-6 p-1">
       <header>
@@ -48,9 +24,7 @@ const ResultDetailsComponent = () => {
             tabIndex={0}
             onKeyDown={(e) => {
               if (e.key === 'Enter')
-                navigate(
-                  `${routes.resultGroupTest}/${params?.testId}/completed`
-                )
+                navigate(`${routes.resultGroupTest}/${params?.testId}`)
             }}
           >
             <Icon
@@ -80,23 +54,6 @@ const ResultDetailsComponent = () => {
             />
           )
         })}
-      </div>
-      <Divider height="1px" />
-      <div className="flex gap-4 pb-5">
-        <DropdownField
-          data={dropdownData}
-          displayKey={'name'}
-          valueKey={'value'}
-          value={candidateStatus}
-          setValue={updateCandidateStatus}
-        />
-        <Button
-          varient="primary-solid"
-          className="px-6"
-          onClick={updateCandidateStatusToDB}
-          title={commonConstants.submit}
-          buttonText={commonConstants.submit}
-        />
       </div>
     </div>
   )
