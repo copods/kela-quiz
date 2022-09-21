@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Candidate" ADD COLUMN     "OTP" INTEGER NOT NULL DEFAULT 0;

@@ -9,6 +9,7 @@ export const commonConstants = {
   addButton: 'Add',
   byText: 'By',
   continue: 'Continue',
+  proceed: 'Proceed',
   total: 'Total',
   placeholderForOptionInput: 'Write your option here',
   sortAscending: 'Sort Ascending',
@@ -37,9 +38,13 @@ export const commonConstants = {
   enterSectionDesc: 'Enter Section Description',
   enterTestName: 'Enter test name',
   totalQuestion: 'Total Questions',
+  verify: 'Verify',
 }
 export const sideNav = {
   sideNavHeading: 'Quiz',
+}
+export const candidateHeader = {
+  headerHeading: 'Quiz',
 }
 export const members = {
   addMember: 'Add Member',
@@ -93,7 +98,7 @@ export const sectionsConstants = {
   dropdown: 'Select',
   expand: 'Expand',
   search: 'Search Question',
-  sectionName: 'section',
+  sectionName: 'Section',
 }
 export const testsConstants = {
   addTestbutton: 'Add Test',
@@ -152,6 +157,9 @@ export const statusCheck = {
   emailIsReq: 'email is required',
   roleIdIsReq: 'roleId is required',
   memberAddedSuccess: 'Member Added Successfully..!',
+  erroSendingOtp: 'Error in sending OTP..',
+  otpSent: 'Otp sent. Please check your email',
+  correctOtp: 'Please enter correct OTP',
 }
 export const resultConstants = {
   order: 'Order',
@@ -185,6 +193,8 @@ export const candidateExamConstants = {
   cheers: 'Cheers! Angular Questions Completed - two more to go',
   startNewSection: 'Start New Section',
   cooldown: 'Cooldown Image',
+  testCompleted: 'Congratulations! You have completed the exam',
+  candidateContact: 'We will contact you soon',
   assessmentDetails: 'Assessment Details',
   assessmentTests: 'Assessment Tests',
   assessmentEnd: 'Assessment Ended',
@@ -211,6 +221,7 @@ export const candidateExamConstants = {
   candidateTestCreateError: 'Candidate Test Create Error..!',
   errorUpdatingTestLink: 'Error updating test link..!',
   errorCreatingSectionInTest: 'Error creating section in test ..',
+  candidateInsWelcome: 'Welcome',
 }
 export const cypress = {
   email: 'careers@copods.co',
@@ -249,4 +260,12 @@ export const toastConstants = {
   correctEmail: 'Please provide a valid email address',
   memberAdded: 'Member Added Successfully..!',
   memberAlreadyExist: 'Member with this email id already exists!',
+}
+export const otpConstants = {
+  header: 'OTP Verification',
+  enterOTP: 'Enter the OTP sent to',
+  resend: 'Resend',
+  didntGetCode: "Didn't get a code",
+  resendCodeIn: 'Resend code in',
+  otp: 'OTP',
 }

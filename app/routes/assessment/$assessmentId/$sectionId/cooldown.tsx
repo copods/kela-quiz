@@ -2,6 +2,7 @@ import type { ActionFunction, LoaderFunction } from '@remix-run/server-runtime'
 import { redirect } from '@remix-run/server-runtime'
 import Cooldown from '~/components/assessment/Cooldown'
 import {
+  candidateTest,
   getSectionInCandidateTest,
   getSectionInTest,
   startCandidateSection,
@@ -13,14 +14,15 @@ export const loader: LoaderFunction = async ({ params, request }) => {
     section?.sectionId as string,
     params.assessmentId as string
   )
-  console.log(candidateSection)
+  const candidateTests = await candidateTest(params.assessmentId as string)
+
   if (candidateSection?.startedAt) {
     const started = await startCandidateSection(candidateSection?.id as string)
     return redirect(
       `/assessment/${params.assessmentId}/${params.sectionId}/${started?.questions[0].id}`
     )
   }
-  return { section, candidateSection, params }
+  return { section, candidateSection, params, candidateTests }
 }
 
 export const action: ActionFunction = async ({ request, params }) => {
