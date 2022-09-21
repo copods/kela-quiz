@@ -4,6 +4,7 @@ import { useResolvedPath, useLocation, useNavigate } from '@remix-run/react'
 import {} from '@remix-run/react'
 import SortFilter from '../SortFilter'
 import { useEffect, useState } from 'react'
+import { setFocus } from '~/utils'
 
 const SectionLink = ({
   section,
@@ -29,23 +30,26 @@ const SectionLink = ({
     console.log(deleted)
 
     if (deleted === true) {
-      setTimeout(() => {
-        const activeCard = document.querySelector(
-          '.activeSectionCard'
-        ) as HTMLElement
-        activeCard?.focus()
-        setDeleted(false)
-      }, 500)
+      // setTimeout(() => {
+      //   const activeCard = document.querySelector(
+      //     '.activeSectionCard'
+      //   ) as HTMLElement
+      //   activeCard?.focus()
+      //   setDeleted(false)
+      // }, 500)
+      setFocus('activeSectionCard', 'class')
+      setDeleted(false)
     }
   }, [deleted])
   useEffect(() => {
     if (isDelete === false && deleted === false) {
-      setTimeout(() => {
-        const menuButton = document.querySelector(
-          `.${section?.id}`
-        ) as HTMLElement
-        menuButton?.focus()
-      }, 100)
+      // setTimeout(() => {
+      //   const menuButton = document.querySelector(
+      //     `.${section?.id}`
+      //   ) as HTMLElement
+      //   menuButton?.focus()
+      // }, 100)
+      setFocus(section?.id, 'class')
     }
   }, [isDelete, deleted, section.id])
   return (

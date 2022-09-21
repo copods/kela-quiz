@@ -1,6 +1,7 @@
 import { Menu, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import { Fragment, useEffect } from 'react'
+import { setFocus } from '~/utils'
 
 const TestListMenuItem = ({
   menuIcon,
@@ -19,10 +20,7 @@ const TestListMenuItem = ({
 }) => {
   useEffect(() => {
     if (open === false) {
-      setTimeout(() => {
-        const menuButton = document.querySelector(`.${id}`) as HTMLElement
-        menuButton?.focus()
-      }, 50)
+      setFocus(id, 'class')
     }
   }, [open, id])
   return (

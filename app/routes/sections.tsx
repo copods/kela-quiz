@@ -200,7 +200,6 @@ export default function SectionPage() {
   }
 
   useEffect(() => {
-    console.log('==========1')
     if (selectedSection === 'NA') {
       navigate(routes.sections, {
         replace: true,

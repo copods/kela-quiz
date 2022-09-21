@@ -84,3 +84,21 @@ export function trimValue(value: string) {
   }
   return str
 }
+
+export function setFocus(value: string, type: string) {
+  let interval = setInterval(() => {
+    if (type === 'id') {
+      if (document.getElementById(value)) {
+        document.getElementById(value)?.focus()
+        clearInterval(interval)
+      }
+    }
+    if (type === 'class') {
+      if (document.querySelector(`.${value}`) as HTMLElement) {
+        const menuButton = document.querySelector(`.${value}`) as HTMLElement
+        menuButton?.focus()
+        clearInterval(interval)
+      }
+    }
+  }, 300)
+}
