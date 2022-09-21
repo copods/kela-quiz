@@ -1,7 +1,7 @@
 import UserForgetPassword from '~/components/login/UserForgetPassword'
 import type { ActionFunction } from '@remix-run/node'
 import { sendResetPassword } from '~/models/user.server'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useActionData, useNavigate } from '@remix-run/react'
 import { toast } from 'react-toastify'
 import { statusCheck } from '~/constants/common.constants'
@@ -18,20 +18,20 @@ export const action: ActionFunction = async ({ request, params }) => {
 
 const ForgetPassword = () => {
   let navigate = useNavigate()
+  const [checkErrorStatus, setCheckErrorStatus] = useState(false)
   const action = useActionData() as string
   useEffect(() => {
     if (action === null) {
-      toast.error(statusCheck.resendPasswordSuccess)
-      navigate('/sign-in')
+      setCheckErrorStatus(true)
     }
     if (action === 'Done') {
-      toast.success(statusCheck.resendPasswordError)
+      toast.success(statusCheck.resendPasswordSuccess)
       navigate('/sign-in')
     }
   }, [action, navigate])
   return (
     <div className="flex h-full flex-col">
-      <UserForgetPassword />
+      <UserForgetPassword checkErrorStatus={checkErrorStatus} />
     </div>
   )
 }

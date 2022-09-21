@@ -134,7 +134,7 @@ export default function AddMemberModal({
                 </div>
                 <div className="pb-6 ">
                   <label htmlFor="" className="text-gray-800">
-                    {members.email}
+                    {commonConstants.email}
                   </label>
                   <input
                     tabIndex={0}
@@ -142,7 +142,7 @@ export default function AddMemberModal({
                     type="text"
                     name="email"
                     className="my-1.5 h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
-                    placeholder={members.email}
+                    placeholder={commonConstants.email}
                     onChange={(e) => setEmail(trimValue(e.target.value))}
                   />
                 </div>

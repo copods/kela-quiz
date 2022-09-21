@@ -2,12 +2,21 @@ import { useState } from 'react'
 import Button from '../form/Button'
 import InputField from '../form/InputField'
 import Logo from '../Logo'
-import { Form } from '@remix-run/react'
+import { Form, useNavigate } from '@remix-run/react'
 import Divider from '../divider'
-import { forgotPasswordConstants } from '~/constants/common.constants'
+import {
+  commonConstants,
+  forgotPasswordConstants,
+  statusCheck,
+} from '~/constants/common.constants'
 
-const UserForgetPassword = () => {
+const UserForgetPassword = ({
+  checkErrorStatus,
+}: {
+  checkErrorStatus: boolean
+}) => {
   const [email, setEmail] = useState('')
+  let navigate = useNavigate()
   const inputFieldsProps = [
     {
       label: '',
@@ -16,7 +25,8 @@ const UserForgetPassword = () => {
       name: 'email',
       required: true,
       value: email,
-      errorId: 'name-error',
+      error: checkErrorStatus ? statusCheck.resendPasswordError : '',
+      errorId: 'email-error',
       onChange: function (event: any) {
         setEmail(event?.target.value)
       },
@@ -38,13 +48,28 @@ const UserForgetPassword = () => {
         <Form method="post" className="flex flex-col gap-6">
           <div className="flex flex-col">
             <span className="flex justify-start text-base text-gray-800">
-              {forgotPasswordConstants.email}
+              {commonConstants.email}
             </span>
             <div>
               {inputFieldsProps.map((props) => {
                 return <InputField {...props} key={props.name} />
               })}
             </div>
+          </div>
+          <div className="-mt-3 flex justify-end">
+            <span
+              tabIndex={0}
+              onClick={() => {
+                navigate('/sign-in')
+              }}
+              onKeyUp={() => {
+                navigate('/sign-in')
+              }}
+              role="link"
+              className="cursor-pointer text-sm text-primary"
+            >
+              {forgotPasswordConstants.backToLogin}
+            </span>
           </div>
           <Button
             tabIndex={0}

@@ -39,6 +39,7 @@ export const commonConstants = {
   enterTestName: 'Enter test name',
   totalQuestion: 'Total Questions',
   verify: 'Verify',
+  email: 'Email',
 }
 export const sideNav = {
   sideNavHeading: 'Quiz',
@@ -50,7 +51,6 @@ export const members = {
   addMember: 'Add Member',
   firstName: 'First Name',
   lastName: ' Last Name',
-  email: 'Email',
   name: 'Name',
   role: 'Role',
   members: 'Members',
@@ -160,8 +160,8 @@ export const statusCheck = {
   erroSendingOtp: 'Error in sending OTP..',
   otpSent: 'Otp sent. Please check your email',
   correctOtp: 'Please enter correct OTP',
-  resendPasswordSuccess: 'Account not found. Please sign up first',
-  resendPasswordError: 'New password has been sent to email successfully',
+  resendPasswordSuccess: 'New password has been sent to email successfully',
+  resendPasswordError: 'Account not found. Please enter valid email',
 }
 export const resultConstants = {
   order: 'Order',
@@ -184,8 +184,8 @@ export const resultConstants = {
 export const forgotPasswordConstants = {
   header: 'Forgot password?',
   enterEmail: 'Enter your email to retrieve your password.',
-  email: 'Email',
   resetPassword: 'Reset Password',
+  backToLogin: 'Back to login',
 }
 export enum QuestionStatus {
   notViewed = 'NOT_VIEWED',

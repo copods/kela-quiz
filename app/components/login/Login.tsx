@@ -83,7 +83,7 @@ function Login({ actionData, redirectTo }: LoginProps) {
               onKeyUp={() => {
                 forgetPassword()
               }}
-              role="button"
+              role="link"
               className="cursor-pointer text-sm text-primary"
             >
               {forgotPasswordConstants.header}
