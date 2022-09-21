@@ -39,7 +39,6 @@ export const commonConstants = {
   enterTestName: 'Enter test name',
   totalQuestion: 'Total Questions',
   verify: 'Verify',
-  signingUp: 'signing up',
 }
 export const sideNav = {
   sideNavHeading: 'Quiz',
@@ -83,6 +82,7 @@ export const logIn = {
   signInMessage: 'Sign in to your account',
   signIn: 'Sign In',
   signUp: 'Sign Up',
+  signingUp: 'signing up...',
 }
 export const addQuestion = {
   createOptions: 'Create Options',

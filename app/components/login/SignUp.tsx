@@ -3,7 +3,7 @@ import { useState } from 'react'
 import Button from '~/components/form/Button'
 import DropdownField from '~/components/form/Dropdown'
 import Logo from '~/components/Logo'
-import { commonConstants, logIn, members } from '~/constants/common.constants'
+import { logIn, members } from '~/constants/common.constants'
 import { trimValue } from '~/utils'
 import type { Role } from '~/interface/Interface'
 
@@ -122,12 +122,12 @@ const SignUp = ({ roles }: { roles: Role[] }) => {
               isDisabled={transition.state === 'submitting'}
               title={
                 transition.state === 'submitting'
-                  ? commonConstants.signingUp
+                  ? logIn.signingUp
                   : logIn.signUp
               }
               buttonText={
                 transition.state === 'submitting'
-                  ? commonConstants.signingUp
+                  ? logIn.signingUp
                   : logIn.signUp
               }
               varient="primary-solid"
