@@ -7,6 +7,7 @@ import { useEffect } from 'react'
 
 import { statusCheck, toastConstants } from '~/constants/common.constants'
 import SignUp from '~/components/login/SignUp'
+import { routes } from '~/constants/route.constants'
 
 export type ActionData = {
   errors?: {
@@ -108,7 +109,7 @@ const SignUpPage = () => {
   useEffect(() => {
     if (signUpActionData) {
       if (signUpActionData.resp?.status === 200) {
-        navigate('/sign-in')
+        navigate(routes.signIn)
         toast.success(signUpActionData.resp?.title)
       } else if (signUpActionData.errors?.status === 400) {
         toast.error(signUpActionData.errors?.title, {
