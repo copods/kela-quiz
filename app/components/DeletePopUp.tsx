@@ -4,6 +4,7 @@ import { Icon } from '@iconify/react'
 import { Form } from '@remix-run/react'
 import { commonConstants, deletePopUp } from '~/constants/common.constants'
 import Button from './form/Button'
+import { clearInterval } from 'timers'
 export default function DeletePopUp({
   setOpen,
   open,
@@ -29,8 +30,11 @@ export default function DeletePopUp({
   }
   useEffect(() => {
     if (open === true) {
-      setTimeout(() => {
-        document.getElementById('confirm-delete')?.focus()
+      let interval = setInterval(() => {
+        if (document.getElementById('confirm-delete')) {
+          document.getElementById('confirm-delete')?.focus()
+          clearInterval(interval)
+        }
       }, 100)
     }
   }, [open])
