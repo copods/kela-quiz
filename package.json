@@ -31,10 +31,14 @@
     "cypress": "cypress open"
   },
   "release": {
+    "prepare": "@semantic-release/changelog",
     "branches": [
       "main",
-      "dev"
+      "dev",
+      "98-application-versioning"
     ],
+    "path": "@semantic-release/git",
+    "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}",
     "plugins": [
       "@semantic-release/commit-analyzer",
       "@semantic-release/release-notes-generator",
@@ -54,6 +58,8 @@
         "@semantic-release/git",
         {
           "assets": [
+            "package.json",
+            "package-lock.json",
             "docs/CHANGELOG.md"
           ]
         }
