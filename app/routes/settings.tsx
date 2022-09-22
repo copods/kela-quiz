@@ -13,7 +13,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 export default function Settings() {
   return (
     <AdminLayout>
-      <div>Hey Settings</div>
+      <div>Hey.. Settings</div>
     </AdminLayout>
   )
 }
