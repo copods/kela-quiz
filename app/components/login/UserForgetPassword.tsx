@@ -9,6 +9,7 @@ import {
   forgotPasswordConstants,
   statusCheck,
 } from '~/constants/common.constants'
+import { routes } from '~/constants/route.constants'
 
 const UserForgetPassword = ({
   checkErrorStatus,
@@ -20,7 +21,7 @@ const UserForgetPassword = ({
   const inputFieldsProps = [
     {
       label: '',
-      placeholder: 'Enter Email',
+      placeholder: forgotPasswordConstants.enterEmailPlaceholder,
       type: 'text',
       name: 'email',
       required: true,
@@ -60,10 +61,10 @@ const UserForgetPassword = ({
             <span
               tabIndex={0}
               onClick={() => {
-                navigate('/sign-in')
+                navigate(routes.signIn)
               }}
               onKeyUp={() => {
-                navigate('/sign-in')
+                navigate(routes.signIn)
               }}
               role="link"
               className="cursor-pointer text-sm text-primary"

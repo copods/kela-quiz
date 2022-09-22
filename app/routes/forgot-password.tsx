@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { useActionData, useNavigate } from '@remix-run/react'
 import { toast } from 'react-toastify'
 import { statusCheck } from '~/constants/common.constants'
+import { routes } from '~/constants/route.constants'
 
 export const action: ActionFunction = async ({ request, params }) => {
   const formData = await request.formData()
@@ -26,7 +27,7 @@ const ForgetPassword = () => {
     }
     if (action === 'Done') {
       toast.success(statusCheck.resendPasswordSuccess)
-      navigate('/sign-in')
+      navigate(routes.signIn)
     }
   }, [action, navigate])
   return (
