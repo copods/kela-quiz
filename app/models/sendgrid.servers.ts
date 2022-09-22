@@ -241,7 +241,7 @@ export async function sendMailToRecruiter(
 ) {
   const to = recruiterEmail
   const from = 'careers@copods.co'
-  const subject = 'Candidate finished the assessment of K - Quiz @ Copods'
+  const subject = `${candidateName} has finished the assessment of K - Quiz @ Copods`
   const text = 'K - Quiz @ Copods'
   const html = `<html>
   <head>
@@ -264,7 +264,7 @@ export async function sendMailToRecruiter(
           <p style="text-align:left;color:#4B5563;margin:0;"><span>Hi,</span>
           </p>
           <br>
-          <p style="text-align:left;color:#4B5563;margin:0;">Candidate <b>${candidateName}</b> has finished the test ${testName}.
+          <p style="text-align:left;color:#4B5563;margin:0;">Candidate <b>${candidateName}</b> has finished the test <b>${testName}</b>.
           </p>
           
 
@@ -273,7 +273,7 @@ export async function sendMailToRecruiter(
        
         <br>
         
-          <p style="text-align:center;color:#4B5563;margin:0;font-family:'Poppins', sans-serif;">You can check the result on admin panel
+          <p style="text-align:center;color:#4B5563;margin:0;font-family:'Poppins', sans-serif;">You can check the result on <a href="${env.PUBLIC_URL}" style="color: #353988;">admin panel</a>
           </p>
           <p style="text-align:center;color:#4B5563;margin:0;font-family:'Poppins', sans-serif;margin-top:10px">
            
