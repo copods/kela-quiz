@@ -2,8 +2,8 @@ name: 🚀 Deploy
 on:
   push:
     branches:
-      - main
-      - dev
+      - demo-dev-2
+
   pull_request: {}
   workflow_dispatch: {}
 permissions:
@@ -33,6 +33,22 @@ jobs:
 
       - name: 🔬 Lint
         run: npm run lint
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Install dependencies
+        run: npm install
+      - name: Build app
+        run: npm run build
+      - name: Semantic release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: npx semantic-release
 
   typecheck:
     name: ʦ TypeScript
