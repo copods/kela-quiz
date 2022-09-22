@@ -32,6 +32,7 @@
   },
   "release": {
     "prepare": "@semantic-release/changelog",
+    "ci": false,
     "branches": [
       "demo-dev-2"
     ],
