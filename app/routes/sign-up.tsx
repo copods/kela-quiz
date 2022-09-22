@@ -76,7 +76,7 @@ export const action: ActionFunction = async ({ request }) => {
         addHandle = json<ActionData>(
           {
             resp: {
-              title: toastConstants.memberAdded,
+              title: toastConstants.signUpSuccessfull,
               status: 200,
             },
           },
@@ -119,6 +119,10 @@ const SignUpPage = () => {
     }
   }, [signUpActionData])
 
-  return <SignUp roles={signUpData.roles} />
+  return (
+    <div className="flex h-full flex-col justify-center">
+      <SignUp roles={signUpData.roles} />
+    </div>
+  )
 }
 export default SignUpPage

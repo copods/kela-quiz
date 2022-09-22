@@ -262,6 +262,7 @@ export const toastConstants = {
   correctEmail: 'Please provide a valid email address',
   memberAdded: 'Member Added Successfully..!',
   memberAlreadyExist: 'Member with this email id already exists!',
+  signUpSuccessfull: 'Sign Up successfully',
 }
 export const otpConstants = {
   header: 'OTP Verification',

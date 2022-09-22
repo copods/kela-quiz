@@ -31,8 +31,8 @@ const SignUp = ({ roles }: { roles: Role[] }) => {
   }
   return (
     <div>
-      <div className="flex h-screen items-center justify-center">
-        <div className="flex flex-col gap-6 rounded-2xl bg-white px-20 py-12 text-left drop-shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-xl">
+      <div className="flex items-center justify-center">
+        <div className="flex flex-col gap-6 rounded-2xl bg-white px-20 py-12 text-left drop-shadow-2xl transition-all sm:w-full sm:max-w-xl">
           <div className="flex flex-col items-center justify-center gap-6">
             <div className="-mt-20 flex justify-center">
               <Logo height="64" width="64" />
@@ -50,7 +50,7 @@ const SignUp = ({ roles }: { roles: Role[] }) => {
           </div>
 
           <div className="flex justify-between gap-4">
-            <div>
+            <div className="flex flex-col gap-1.5">
               <label htmlFor="" className="text-gray-800">
                 {members.firstName}
               </label>
@@ -59,14 +59,14 @@ const SignUp = ({ roles }: { roles: Role[] }) => {
                 id="firstName"
                 type="text"
                 name="firstName"
-                className="my-1.5 h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
+                className="h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
                 placeholder={members.firstName}
                 onChange={(e) => setFirstName(trimValue(e.target.value))}
                 value={firstName}
                 maxLength={40}
               />
             </div>
-            <div>
+            <div className="flex flex-col gap-1.5">
               <label htmlFor="" className="text-gray-800">
                 {members.lastName}
               </label>
@@ -75,7 +75,7 @@ const SignUp = ({ roles }: { roles: Role[] }) => {
                 id="lastName"
                 type="text"
                 name="lastName"
-                className="my-1.5 h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
+                className="h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
                 placeholder={members.lastName}
                 onChange={(e) => setLastName(trimValue(e.target.value))}
                 value={lastName}
@@ -83,7 +83,7 @@ const SignUp = ({ roles }: { roles: Role[] }) => {
               />
             </div>
           </div>
-          <div className="">
+          <div className="flex flex-col gap-1.5">
             <label htmlFor="" className="text-gray-800">
               {members.email}
             </label>
@@ -92,7 +92,7 @@ const SignUp = ({ roles }: { roles: Role[] }) => {
               id="email"
               type="text"
               name="email"
-              className="my-1.5 h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
+              className="h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
               placeholder={members.email}
               onChange={(e) => setEmail(trimValue(e.target.value))}
             />
