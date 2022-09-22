@@ -3,7 +3,6 @@ const { PrismaClient } = require('@prisma/client')
 const prisma = new PrismaClient()
 
 async function seed() {
-
   const roles = [
     {
       id: 'cl4xvj89a000209jp4qtlfyii',
