@@ -76,6 +76,7 @@ function Login({ actionData, redirectTo }: LoginProps) {
           </div> */}
           <div className="flex justify-end pt-4 pb-7">
             <span
+              id="forgot-password"
               tabIndex={0}
               onClick={() => {
                 forgetPassword()

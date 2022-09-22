@@ -59,6 +59,7 @@ const UserForgetPassword = ({
           </div>
           <div className="-mt-3 flex justify-end">
             <span
+              id="back-to-login"
               tabIndex={0}
               onClick={() => {
                 navigate(routes.signIn)
