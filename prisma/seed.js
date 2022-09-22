@@ -1,11 +1,9 @@
 const { PrismaClient } = require('@prisma/client')
-const bcrypt = require('bcryptjs')
 
 const prisma = new PrismaClient()
 
 async function seed() {
-  const email = process.env.SUPER_ADMIN_EMAIL
-  const hashedPassword = await bcrypt.hash(process.env.SUPER_ADMIN_PASSWORD, 10)
+
   const roles = [
     {
       id: 'cl4xvj89a000209jp4qtlfyii',
@@ -37,27 +35,7 @@ async function seed() {
       })
     })
   }
-  const createMasterAdmin = async () => {
-    await prisma.user.upsert({
-      where: {
-        email,
-      },
-      update: {
-        email,
-      },
-      create: {
-        email,
-        password: {
-          create: {
-            hash: hashedPassword,
-          },
-        },
-        firstName: 'Copods',
-        lastName: 'Careers',
-        roleId: roles[0].id,
-      },
-    })
-  }
+
   const questionType = [
     {
       displayName: 'Single Choice',
@@ -90,7 +68,6 @@ async function seed() {
     })
   }
   await createRoles()
-  await createMasterAdmin()
   await createQuestionType()
   console.log(`Database has been seeded. 🌱`)
 }
