@@ -99,8 +99,8 @@ function Login({ actionData, redirectTo }: LoginProps) {
             onClick={() => {
               signUp()
             }}
-            onKeyUp={() => {
-              signUp()
+            onKeyUp={(e) => {
+              if (e.key === 'Enter') signUp()
             }}
             role="link"
           >

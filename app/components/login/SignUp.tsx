@@ -147,8 +147,8 @@ const SignUp = ({ roles }: { roles: Role[] }) => {
                   console.log('sign-in')
                   signIn()
                 }}
-                onKeyUp={() => {
-                  signIn()
+                onKeyUp={(e) => {
+                  if (e.key === 'Enter') signIn()
                 }}
                 role="link"
               >
