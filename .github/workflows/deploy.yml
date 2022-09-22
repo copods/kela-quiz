@@ -2,8 +2,7 @@ name: 🚀 Deploy
 on:
   push:
     branches:
-      - main
-      - dev
+      - dummy-dev
   pull_request: {}
   workflow_dispatch: {}
 permissions:
