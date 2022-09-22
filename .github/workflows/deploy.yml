@@ -33,6 +33,17 @@ jobs:
 
       - name: 🔬 Lint
         run: npm run lint
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v3
+      - name: ⎔ Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - run: npx semantic-release
 
   typecheck:
     name: ʦ TypeScript
