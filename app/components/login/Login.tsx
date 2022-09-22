@@ -74,25 +74,8 @@ function Login({ actionData, redirectTo }: LoginProps) {
               Forget your password?
             </div>
           </div> */}
-          <div className="flex justify-end pt-4 pb-7">
-            {' '}
-            <span
-              id="sign-up"
-              className="cursor-pointer text-sm text-primary"
-              tabIndex={0}
-              onClick={() => {
-                signUp()
-              }}
-              onKeyUp={() => {
-                signUp()
-              }}
-              role="link"
-            >
-              {logIn.signUp}
-            </span>
-          </div>
 
-          <div className="mt-3 flex items-center justify-center">
+          <div className="mt-6 flex items-center justify-center">
             <input type="hidden" name="redirectTo" value={redirectTo} />
             <Button
               tabIndex={0}
@@ -105,6 +88,25 @@ function Login({ actionData, redirectTo }: LoginProps) {
             />
           </div>
         </Form>
+      </div>
+      <div className="flex justify-end pt-6">
+        <div className="text-base font-medium text-gray-500">
+          {logIn.DontHaveAnAccountYet}{' '}
+          <span
+            id="sign-up"
+            className="cursor-pointer text-primary"
+            tabIndex={0}
+            onClick={() => {
+              signUp()
+            }}
+            onKeyUp={() => {
+              signUp()
+            }}
+            role="link"
+          >
+            {logIn.signUp}
+          </span>
+        </div>
       </div>
     </div>
   )

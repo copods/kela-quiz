@@ -1,4 +1,4 @@
-import { useSubmit, useTransition } from '@remix-run/react'
+import { useNavigate, useSubmit, useTransition } from '@remix-run/react'
 import { useState } from 'react'
 import Button from '~/components/form/Button'
 import DropdownField from '~/components/form/Dropdown'
@@ -6,6 +6,7 @@ import Logo from '~/components/Logo'
 import { logIn, members } from '~/constants/common.constants'
 import { trimValue } from '~/utils'
 import type { Role } from '~/interface/Interface'
+import { routes } from '~/constants/route.constants'
 
 const SignUp = ({ roles }: { roles: Role[] }) => {
   const transition = useTransition()
@@ -29,10 +30,14 @@ const SignUp = ({ roles }: { roles: Role[] }) => {
       method: 'post',
     })
   }
+  const navigate = useNavigate()
+  const signIn = () => {
+    navigate(routes.signIn)
+  }
   return (
     <div>
       <div className="flex items-center justify-center">
-        <div className="flex flex-col gap-6 rounded-2xl bg-white px-20 py-12 text-left drop-shadow-2xl transition-all sm:w-full sm:max-w-xl">
+        <div className="flex flex-col gap-6 rounded-2xl bg-white px-20 py-12 pb-8 text-left drop-shadow-2xl transition-all sm:w-full sm:max-w-xl">
           <div className="flex flex-col items-center justify-center gap-6">
             <div className="-mt-20 flex justify-center">
               <Logo height="64" width="64" />
@@ -112,7 +117,7 @@ const SignUp = ({ roles }: { roles: Role[] }) => {
               setValue={setRole}
             />
           </div>
-          <div className="flex">
+          <div className="flex flex-col items-center justify-center gap-6">
             <Button
               tabIndex={0}
               id="add-button"
@@ -133,6 +138,23 @@ const SignUp = ({ roles }: { roles: Role[] }) => {
               varient="primary-solid"
               onClick={() => submitMemberForm()}
             />
+            <div className="text-base font-medium text-gray-500">
+              {logIn.AlreadyHaveAnAccount}{' '}
+              <span
+                className="cursor-pointer text-primary"
+                tabIndex={0}
+                onClick={() => {
+                  console.log('sign-in')
+                  signIn()
+                }}
+                onKeyUp={() => {
+                  signIn()
+                }}
+                role="link"
+              >
+                {logIn.signIn}
+              </span>
+            </div>
           </div>
         </div>
       </div>

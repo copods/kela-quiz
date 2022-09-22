@@ -1,4 +1,4 @@
-import { toastConstants } from '~/constants/common.constants'
+import { logIn, toastConstants } from '~/constants/common.constants'
 
 const firstName = 'First Name'
 const lastName = 'Last Name'
@@ -7,7 +7,7 @@ const memberEmail = 'johndoe@example.com'
 describe('Test for Sign Up page', () => {
   beforeEach('sign-in', () => {
     cy.visit('/sign-in')
-    cy.get('span').should('have.text', 'Sign Up').click()
+    cy.get('span').should('have.text', logIn.signUp).click()
   })
   it('check toster showing a error if try to submit without filling first name input field', () => {
     cy.get('input[name="lastName"]')
@@ -20,7 +20,7 @@ describe('Test for Sign Up page', () => {
       .should('have.value', memberEmail)
     cy.get('div').find('.dropdownButton').click()
     cy.get('ul').contains('Recruiter').click()
-    cy.get('#add-button').should('have.text', 'Sign Up').click()
+    cy.get('#add-button').should('have.text', logIn.signUp).click()
     cy.get('.Toastify__toast').should(
       'have.text',
       toastConstants.firstNameRequired
@@ -37,7 +37,7 @@ describe('Test for Sign Up page', () => {
       .should('have.value', memberEmail)
     cy.get('div').find('.dropdownButton').click()
     cy.get('ul').contains('Recruiter').click()
-    cy.get('#add-button').should('have.text', 'Sign Up').click()
+    cy.get('#add-button').should('have.text', logIn.signUp).click()
     cy.get('.Toastify__toast').should(
       'have.text',
       toastConstants.lastNameRequired
@@ -55,7 +55,7 @@ describe('Test for Sign Up page', () => {
 
     cy.get('div').find('.dropdownButton').click()
     cy.get('ul').contains('Recruiter').click()
-    cy.get('#add-button').should('have.text', 'Sign Up').click()
+    cy.get('#add-button').should('have.text', logIn.signUp).click()
     cy.get('.Toastify__toast').should('have.text', toastConstants.emailRequired)
   })
   it('signing up successfully', () => {
@@ -73,7 +73,7 @@ describe('Test for Sign Up page', () => {
       .should('have.value', memberEmail)
     cy.get('div').find('.dropdownButton').click()
     cy.get('ul').contains('Recruiter').click()
-    cy.get('#add-button').should('have.text', 'Sign Up').click()
+    cy.get('#add-button').should('have.text', logIn.signUp).click()
     cy.get('.Toastify__toast').should(
       'have.text',
       toastConstants.signUpSuccessfull
@@ -94,7 +94,7 @@ describe('Test for Sign Up page', () => {
       .should('have.value', memberEmail)
     cy.get('div').find('.dropdownButton').click()
     cy.get('ul').contains('Recruiter').click()
-    cy.get('#add-button').should('have.text', 'Sign Up').click()
+    cy.get('#add-button').should('have.text', logIn.signUp).click()
     cy.get('.Toastify__toast').should(
       'have.text',
       toastConstants.memberAlreadyExist

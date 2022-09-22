@@ -83,6 +83,8 @@ export const logIn = {
   signIn: 'Sign In',
   signUp: 'Sign Up',
   signingUp: 'signing up...',
+  AlreadyHaveAnAccount: 'Already have an account?',
+  DontHaveAnAccountYet: 'Don’t have an account yet?',
 }
 export const addQuestion = {
   createOptions: 'Create Options',
