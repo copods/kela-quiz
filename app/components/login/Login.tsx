@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
-import { Form } from '@remix-run/react'
+import { Form, useNavigate } from '@remix-run/react'
 import Button from '~/components/form/Button'
 import InputField from '~/components/form/InputField'
 import Logo from '~/components/Logo'
 import type { LoginProps } from '~/interface/Interface'
 import { logIn } from '~/constants/common.constants'
+import { routes } from '~/constants/route.constants'
 function Login({ actionData, redirectTo }: LoginProps) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -36,6 +37,10 @@ function Login({ actionData, redirectTo }: LoginProps) {
       },
     },
   ]
+  const navigate = useNavigate()
+  const signUp = () => {
+    navigate(routes.signUp)
+  }
   return (
     <div className="z-10 flex	min-h-480 w-full max-w-554 flex-col items-center justify-center rounded-2xl bg-white px-24 drop-shadow-xl">
       <div className="z-20 -mt-24 mb-6">
@@ -69,7 +74,25 @@ function Login({ actionData, redirectTo }: LoginProps) {
               Forget your password?
             </div>
           </div> */}
-          <div className="mt-6 flex items-center justify-center">
+          <div className="flex justify-end pt-4 pb-7">
+            {' '}
+            <span
+              id="sign-up"
+              className="cursor-pointer text-sm text-primary"
+              tabIndex={0}
+              onClick={() => {
+                signUp()
+              }}
+              onKeyUp={() => {
+                signUp()
+              }}
+              role="link"
+            >
+              {logIn.signUp}
+            </span>
+          </div>
+
+          <div className="mt-3 flex items-center justify-center">
             <input type="hidden" name="redirectTo" value={redirectTo} />
             <Button
               tabIndex={0}
