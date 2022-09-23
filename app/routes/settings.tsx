@@ -14,7 +14,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 export default function Settings() {
   return (
     <AdminLayout>
-      <div>Hey.. Settings {packageVersion.version}</div>
+      <div>Hey Settings {packageVersion.version}</div>
     </AdminLayout>
   )
 }
