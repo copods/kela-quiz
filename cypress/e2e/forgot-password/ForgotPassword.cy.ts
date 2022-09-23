@@ -5,16 +5,22 @@ import {
 import { routes } from '~/constants/route.constants'
 const memberEmail = 'johndoe@example.com'
 const invalidMemberEmail = 'abc@email.com'
+
 describe('Forgot password', () => {
   beforeEach('sign-in', () => {
     cy.visit('/sign-in')
-    cy.get('#forgot-password', { timeout: 6000 })
-      .should('have.text', forgotPasswordConstants.header)
-      .click()
+    cy.get('span').should('have.text', forgotPasswordConstants.header).click()
   })
 
   it('Checking account not found for reset password ', () => {
-    cy.get('input[name="email"]').clear().type(invalidMemberEmail)
+    cy.get('#forget-pass-header').should(
+      'have.text',
+      forgotPasswordConstants.header
+    )
+    cy.get('input[name="email"]')
+      .clear()
+      .type(invalidMemberEmail)
+      .should('have.value', invalidMemberEmail)
     cy.get('#reset-password').click()
     cy.get('#email-error')
       .invoke('text')
@@ -31,6 +37,10 @@ describe('Forgot password', () => {
       })
   })
   it('Checking for account when it is found for reset password ', () => {
+    cy.get('#forget-pass-header').should(
+      'have.text',
+      forgotPasswordConstants.header
+    )
     cy.get('input[name="email"]').clear().type(memberEmail)
     cy.get('#reset-password').click()
     cy.get('.Toastify__toast').should(

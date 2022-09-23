@@ -3,7 +3,6 @@ import Button from '../form/Button'
 import InputField from '../form/InputField'
 import Logo from '../Logo'
 import { Form, useNavigate } from '@remix-run/react'
-import Divider from '../divider'
 import {
   commonConstants,
   forgotPasswordConstants,
@@ -35,14 +34,20 @@ const UserForgetPassword = ({
   ]
   return (
     <div className="flex flex-1 items-center justify-center bg-gray-50">
-      <div className="flex max-w-554 flex-col gap-6 rounded-md border border-gray-50 bg-white px-24 pb-6 text-center drop-shadow-sm">
+      <div className="min-w-554 flex flex-col gap-6 rounded-md border border-gray-50 bg-white px-24 pb-12 text-center drop-shadow-sm">
         <div className="-mt-9 flex justify-center">
           <Logo height="64" width="64" />
         </div>
-        <div className="text-3xl font-bold text-gray-900">
+        <div
+          id="forget-pass-header"
+          className="text-3xl font-bold text-gray-900"
+        >
           {forgotPasswordConstants.header}
         </div>
-        <Divider height="1px" />
+        <div className="flex items-center justify-center">
+          <hr className="h-px w-6/12 border-none bg-gray-500 text-center" />
+        </div>
+
         <div className="text-xs text-gray-500">
           {forgotPasswordConstants.enterEmail}
         </div>
@@ -64,8 +69,8 @@ const UserForgetPassword = ({
               onClick={() => {
                 navigate(routes.signIn)
               }}
-              onKeyUp={() => {
-                navigate(routes.signIn)
+              onKeyUp={(e) => {
+                if (e.key === 'Enter') navigate(routes.signIn)
               }}
               role="link"
               className="cursor-pointer text-sm text-primary"

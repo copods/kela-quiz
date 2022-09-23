@@ -11,7 +11,11 @@ export async function getUserById(id: User['id']) {
   return prisma.user.findUnique({ where: { id } })
 }
 export async function deleteUserById(id: string) {
-  return prisma.user.delete({ where: { id } })
+  try {
+    return await prisma.user.delete({ where: { id } })
+  } catch (error) {
+    return 'Something went wrong'
+  }
 }
 
 export async function getUserByEmail(email: User['email']) {
@@ -32,7 +36,6 @@ export async function createNewUser({
   roleId,
 }: Pick<User, 'firstName' | 'lastName' | 'email' | 'roleId'>) {
   const password = faker.internet.password()
-
   const hashedPassword = await bcrypt.hash(password, 10)
   await prisma.user.create({
     data: {

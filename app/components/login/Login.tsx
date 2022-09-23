@@ -81,8 +81,8 @@ function Login({ actionData, redirectTo }: LoginProps) {
               onClick={() => {
                 forgetPassword()
               }}
-              onKeyUp={() => {
-                forgetPassword()
+              onKeyUp={(e) => {
+                if (e.key === 'Enter') forgetPassword()
               }}
               role="link"
               className="cursor-pointer text-sm text-primary"
