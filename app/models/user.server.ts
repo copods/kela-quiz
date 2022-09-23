@@ -2,7 +2,7 @@ import type { Password, User } from '@prisma/client'
 import bcrypt from 'bcryptjs'
 
 import { prisma } from '~/db.server'
-import { sendMail } from './sendgrid.servers'
+import { sendMail, sendPassword } from './sendgrid.servers'
 import { faker } from '@faker-js/faker'
 
 export type { User } from '@prisma/client'
@@ -14,7 +14,6 @@ export async function deleteUserById(id: string) {
   try {
     return await prisma.user.delete({ where: { id } })
   } catch (error) {
-    console.log(error)
     return 'Something went wrong'
   }
 }
@@ -60,6 +59,32 @@ export async function createNewUser({
   return await sendMail(email, firstName, password, role?.name || 'NA')
 }
 
+export async function sendResetPassword(email: string) {
+  const password = faker.internet.password()
+  const hashedPassword = await bcrypt.hash(password, 10)
+  const userEmail = await prisma.user.findUnique({
+    where: {
+      email: email,
+    },
+    select: {
+      email: true,
+      id: true,
+    },
+  })
+  if (userEmail) {
+    await prisma.password.update({
+      where: {
+        userId: userEmail.id,
+      },
+      data: {
+        hash: hashedPassword,
+      },
+    })
+    return await sendPassword(userEmail?.email as string, password)
+  } else {
+    return null
+  }
+}
 export async function loginVerificationResponse(
   email: User['email'],
   password: Password['hash']
