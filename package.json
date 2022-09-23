@@ -32,9 +32,11 @@
   },
   "release": {
     "prepare": "@semantic-release/changelog",
+    "ci": false,
     "branches": [
       "main",
-      "dev"
+      "dev",
+      "demo-dev-2"
     ],
     "path": "@semantic-release/git",
     "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}",
@@ -60,6 +62,21 @@
             "package.json",
             "package-lock.json",
             "docs/CHANGELOG.md"
+          ]
+        }
+      ],
+      [
+        "@semantic-release/github",
+        {
+          "assets": [
+            {
+              "path": "dist/asset.min.css",
+              "label": "CSS distribution"
+            },
+            {
+              "path": "dist/asset.min.js",
+              "label": "JS distribution"
+            }
           ]
         }
       ]
@@ -119,6 +136,7 @@
     "@remix-run/eslint-config": "^1.6.0",
     "@semantic-release/changelog": "^6.0.1",
     "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^8.0.6",
     "@testing-library/cypress": "^8.0.3",
     "@testing-library/dom": "^8.13.0",
     "@testing-library/jest-dom": "^5.16.4",
