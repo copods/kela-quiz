@@ -19,7 +19,7 @@ export default function MembersList({
             {commonConstants.name}
           </h1>
           <h1 className="col-span-3 pl-4 text-sm text-gray-500">
-            {members.email}
+            {commonConstants.email}
           </h1>
           <h1 className="col-span-2 pl-4 text-sm text-gray-500">
             {members.role}

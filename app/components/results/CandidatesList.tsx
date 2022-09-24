@@ -1,5 +1,6 @@
 import { useLoaderData } from '@remix-run/react'
 import {
+  commonConstants,
   members,
   resultConstants,
   testsConstants,
@@ -41,7 +42,7 @@ const CandidatesList = () => {
             {members.name}
           </span>
           <span className="col-span-4 text-sm font-semibold text-gray-500">
-            {members.email}
+            {commonConstants.email}
           </span>
           <span className="col-span-2 text-sm font-semibold text-gray-500">
             {resultConstants.invitedBy}

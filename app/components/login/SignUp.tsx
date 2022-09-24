@@ -3,7 +3,7 @@ import { useState } from 'react'
 import Button from '~/components/form/Button'
 import DropdownField from '~/components/form/Dropdown'
 import Logo from '~/components/Logo'
-import { logIn, members } from '~/constants/common.constants'
+import { commonConstants, logIn, members } from '~/constants/common.constants'
 import { trimValue } from '~/utils'
 import type { Role } from '~/interface/Interface'
 import { routes } from '~/constants/route.constants'
@@ -91,7 +91,7 @@ const SignUp = ({ roles }: { roles: Role[] }) => {
           </div>
           <div className="flex flex-col gap-1.5">
             <label htmlFor="" className="text-gray-800">
-              {members.email}
+              {commonConstants.email}
             </label>
             <input
               tabIndex={0}
@@ -99,7 +99,7 @@ const SignUp = ({ roles }: { roles: Role[] }) => {
               type="text"
               name="email"
               className="h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
-              placeholder={members.email}
+              placeholder={commonConstants.email}
               onChange={(e) => setEmail(trimValue(e.target.value))}
             />
           </div>
@@ -124,7 +124,7 @@ const SignUp = ({ roles }: { roles: Role[] }) => {
               id="add-button"
               name="addMember"
               value={'add'}
-              className="h-9 w-full px-4"
+              className="h-11 w-full px-4"
               isDisabled={transition.state === 'submitting'}
               title={
                 transition.state === 'submitting'

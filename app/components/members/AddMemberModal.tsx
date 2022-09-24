@@ -76,7 +76,7 @@ export default function AddMemberModal({
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <Dialog.Panel className="relative transform overflow-hidden rounded-2xl bg-white p-6 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+              <Dialog.Panel className="relative transform rounded-2xl bg-white p-6 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
                 <div className="flex items-center justify-between pt-1">
                   <h2
                     className="text-2xl font-bold text-gray-700"
@@ -134,7 +134,7 @@ export default function AddMemberModal({
                 </div>
                 <div className="pb-6 ">
                   <label htmlFor="" className="text-gray-800">
-                    {members.email}
+                    {commonConstants.email}
                   </label>
                   <input
                     tabIndex={0}
@@ -142,7 +142,7 @@ export default function AddMemberModal({
                     type="text"
                     name="email"
                     className="my-1.5 h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
-                    placeholder={members.email}
+                    placeholder={commonConstants.email}
                     onChange={(e) => setEmail(trimValue(e.target.value))}
                   />
                 </div>

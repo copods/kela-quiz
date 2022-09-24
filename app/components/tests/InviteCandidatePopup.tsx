@@ -8,7 +8,6 @@ import {
   candidateExamConstants,
   testsConstants,
   inviteMemeberPopUpConstants,
-  members,
   commonConstants,
 } from '~/constants/common.constants'
 
@@ -131,8 +130,8 @@ const InviteCandidatePopup = ({
                         name={`email`}
                         className="inviteInput h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
                         placeholder="johndoe@example.com"
-                        title={members.email}
-                        aria-label={members.email}
+                        title={commonConstants.email}
+                        aria-label={commonConstants.email}
                       />
                     </div>
                   )
