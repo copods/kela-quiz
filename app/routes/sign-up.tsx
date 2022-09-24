@@ -105,6 +105,7 @@ export const action: ActionFunction = async ({ request }) => {
 const SignUpPage = () => {
   const signUpActionData = useActionData() as ActionData
   const signUpData = useLoaderData()
+
   let navigate = useNavigate()
   useEffect(() => {
     if (signUpActionData) {
@@ -117,7 +118,7 @@ const SignUpPage = () => {
         })
       }
     }
-  }, [signUpActionData])
+  }, [signUpActionData, navigate])
 
   return (
     <div className="flex h-full flex-col justify-center">

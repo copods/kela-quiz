@@ -1,7 +1,7 @@
 import { logIn, toastConstants } from '~/constants/common.constants'
 
-const firstName = 'First Name'
-const lastName = 'Last Name'
+const firstName = 'John'
+const lastName = 'Doe'
 const memberEmail = 'johndoe@example.com'
 
 describe('Test for Sign Up page', () => {

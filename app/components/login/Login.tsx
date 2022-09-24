@@ -89,7 +89,7 @@ function Login({ actionData, redirectTo }: LoginProps) {
           </div>
         </Form>
       </div>
-      <div className="flex justify-end pt-6">
+      <div className="flex pt-6">
         <div className="text-base font-medium text-gray-500">
           {logIn.DontHaveAnAccountYet}{' '}
           <span

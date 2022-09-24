@@ -82,7 +82,7 @@ export const logIn = {
   signInMessage: 'Sign in to your account',
   signIn: 'Sign In',
   signUp: 'Sign Up',
-  signingUp: 'signing up...',
+  signingUp: 'Signing up...',
   AlreadyHaveAnAccount: 'Already have an account?',
   DontHaveAnAccountYet: 'Don’t have an account yet?',
 }

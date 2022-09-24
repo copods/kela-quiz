@@ -11,6 +11,7 @@ import { routes } from '~/constants/route.constants'
 const SignUp = ({ roles }: { roles: Role[] }) => {
   const transition = useTransition()
   const submit = useSubmit()
+
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [email, setEmail] = useState('')
