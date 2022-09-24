@@ -7,7 +7,7 @@ const memberEmail = 'johndoe@example.com'
 describe('Test for Sign Up page', () => {
   beforeEach('sign-in', () => {
     cy.visit('/sign-in')
-    cy.get('span').should('have.text', logIn.signUp).click()
+    cy.get('span#sign-up').should('have.text', logIn.signUp).click()
   })
   it('check toster showing a error if try to submit without filling first name input field', () => {
     cy.get('input[name="lastName"]')

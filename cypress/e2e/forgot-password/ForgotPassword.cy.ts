@@ -9,7 +9,7 @@ const invalidMemberEmail = 'abc@email.com'
 describe('Forgot password', () => {
   beforeEach('sign-in', () => {
     cy.visit('/sign-in')
-    cy.get('span').should('have.text', forgotPasswordConstants.header).click()
+    cy.get('span#forgot-password').should('have.text', forgotPasswordConstants.header).click()
   })
 
   it('Checking account not found for reset password ', () => {
