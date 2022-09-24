@@ -34,7 +34,7 @@ const UserForgetPassword = ({
   ]
   return (
     <div className="flex flex-1 items-center justify-center bg-gray-50">
-      <div className="min-w-554 flex flex-col gap-6 rounded-md border border-gray-50 bg-white px-24 pb-12 text-center drop-shadow-sm">
+      <div className="flex w-full max-w-554 flex-col gap-6 rounded-md border border-gray-50 bg-white px-24 pb-12 text-center drop-shadow-xl">
         <div className="-mt-9 flex justify-center">
           <Logo height="64" width="64" />
         </div>

@@ -38,6 +38,9 @@ function Login({ actionData, redirectTo }: LoginProps) {
     },
   ]
   const navigate = useNavigate()
+  const signUp = () => {
+    navigate(routes.signUp)
+  }
   const forgetPassword = () => {
     navigate(routes.forgotPassword)
   }
@@ -98,11 +101,30 @@ function Login({ actionData, redirectTo }: LoginProps) {
               buttonText={logIn.signIn}
               type="submit"
               varient="primary-solid"
-              className="w-full"
+              className="h-11 w-full"
               datacy="submit"
             />
           </div>
         </Form>
+      </div>
+      <div className="flex pt-6">
+        <div className="text-base font-medium text-gray-500">
+          {logIn.DontHaveAnAccountYet}{' '}
+          <span
+            id="sign-up"
+            className="cursor-pointer text-primary"
+            tabIndex={0}
+            onClick={() => {
+              signUp()
+            }}
+            onKeyUp={(e) => {
+              if (e.key === 'Enter') signUp()
+            }}
+            role="link"
+          >
+            {logIn.signUp}
+          </span>
+        </div>
       </div>
     </div>
   )

@@ -81,6 +81,10 @@ export const deletePopUp = {
 export const logIn = {
   signInMessage: 'Sign in to your account',
   signIn: 'Sign In',
+  signUp: 'Sign Up',
+  signingUp: 'Signing up...',
+  AlreadyHaveAnAccount: 'Already have an account?',
+  DontHaveAnAccountYet: 'Don’t have an account yet?',
 }
 export const addQuestion = {
   createOptions: 'Create Options',
@@ -269,6 +273,7 @@ export const toastConstants = {
   correctEmail: 'Please provide a valid email address',
   memberAdded: 'Member Added Successfully..!',
   memberAlreadyExist: 'Member with this email id already exists!',
+  signUpSuccessfull: 'Sign Up successfully',
 }
 export const otpConstants = {
   header: 'OTP Verification',
