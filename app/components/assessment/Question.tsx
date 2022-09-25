@@ -1,23 +1,25 @@
 import { useLoaderData } from '@remix-run/react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { QuestionTypes } from '~/interface/Interface'
-import Button from '../form/Button'
 import Checkbox from '../form/CheckBox'
 import sanitizeHtml from 'sanitize-html'
-import { useTranslation } from 'react-i18next'
+import CandidateQuestionHeader from './CandidateQuestionHeader'
+import CandidateQuestionFooter from './CandidateQuestionFooter'
+import CandidateQuestionStepper from './CandidateQuestionStepper'
 
 const Question = () => {
-  const { t } = useTranslation()
-
-  const { question, section, lastSection } = useLoaderData()
+  const { question } = useLoaderData()
   const questionType = question?.question?.questionType?.value
+  // const [test, setTest] = useState(question?.question?.options)
   const [userAnswer, setUserAnswer] = useState(
     questionType === QuestionTypes.singleChoice
       ? question.selectedOptions[0]?.id
       : questionType === QuestionTypes.text
       ? question?.answers
-      : {}
+      : question.selectedOptions.flatMap((option: any) => option.id)
   )
+  useEffect(() => {}, [userAnswer])
+
   const onChangeHandle = (event: any, index?: number) => {
     if (questionType === QuestionTypes.singleChoice) {
       setUserAnswer(event.id)
@@ -28,138 +30,136 @@ const Question = () => {
         return [...oldVal]
       })
     }
+    if (questionType === QuestionTypes.multipleChoice) {
+      setUserAnswer((val: any) => {
+        if (userAnswer.indexOf(event.id) === -1) {
+          return [...val, event.id]
+        } else {
+          val.splice(userAnswer.indexOf(event.id), 1)
+          return [...val]
+        }
+      })
+    }
   }
+
   return (
-    <form method="post" className="flex h-full flex-col gap-9">
-      <div className="flex h-full max-h-full flex-1 gap-9 overflow-auto">
-        <div className="flex h-full w-1/2 flex-col gap-3">
-          <div className="flex h-10 items-center justify-between">
-            <div className="flex gap-5 text-lg font-semibold">
-              <span>Question </span>
-              <span>
-                {question?.order}/{section?.totalQuestions}
-              </span>
+    <div className="flex h-screen flex-col">
+      <CandidateQuestionHeader />
+
+      <div className="flex w-full flex-1 flex-col overflow-hidden bg-questionBackground">
+        <form method="post" className="flex max-h-full flex-1 flex-col">
+          <div className="py-5 px-5">
+            <CandidateQuestionStepper />
+          </div>
+          <div className="mx-5 mb-5 flex h-full overflow-auto rounded-lg border bg-white">
+            <div className="flex h-full w-1/2 flex-col gap-8 border-r p-5">
+              <div className="flex items-center justify-between">
+                <div className="flex text-xl font-medium">
+                  <span>Question </span>
+                </div>
+              </div>
+              <div className="ql-editor h-full flex-1 overflow-auto border-gray-200 bg-white p-0">
+                <div
+                  className="font-normal"
+                  dangerouslySetInnerHTML={{
+                    __html: sanitizeHtml(question?.question?.question),
+                  }}
+                />
+              </div>
+            </div>
+            <div className="flex h-full w-1/2 flex-col gap-2 py-5">
+              <div className="flex items-center justify-between px-5">
+                {questionType === QuestionTypes.singleChoice && (
+                  <div className="flex text-xl font-medium">
+                    Select Correct Option
+                  </div>
+                )}
+                {questionType === QuestionTypes.multipleChoice && (
+                  <div className="flex text-xl font-medium">
+                    Select Correct Option's
+                  </div>
+                )}
+                {questionType === QuestionTypes.text && (
+                  <div className="flex text-xl font-medium">
+                    Write Correct Answer
+                  </div>
+                )}
+              </div>
+              <div className="flex h-full flex-1 flex-col overflow-auto">
+                {question?.question?.options.map(
+                  (
+                    option: {
+                      isCorrect: boolean
+                      id: string
+                      option: string
+                      rightAnswer: boolean
+                    },
+                    i: number
+                  ) => {
+                    return (
+                      <label
+                        key={option.id}
+                        className={`flex cursor-pointer items-start gap-4 border-b px-5 ${
+                          option.id === userAnswer
+                            ? 'bg-blue-50'
+                            : 'hover:bg-gray-100'
+                        }`}
+                      >
+                        {questionType === QuestionTypes.singleChoice ? (
+                          <input
+                            type="radio"
+                            name="option"
+                            value={option.id}
+                            checked={option.id === userAnswer}
+                            onChange={() => {
+                              onChangeHandle(option)
+                            }}
+                            className="mt-7"
+                          />
+                        ) : (
+                          <Checkbox
+                            value={option.id}
+                            name="option"
+                            isChecked={userAnswer.indexOf(option.id) !== -1}
+                            className="mt-7"
+                            handleChange={() => onChangeHandle(option, i)}
+                          />
+                        )}
+                        <div className="ql-editor w-full bg-inherit py-5">
+                          <div
+                            className="cursor-pointer font-normal"
+                            dangerouslySetInnerHTML={{
+                              __html: sanitizeHtml(option?.option),
+                            }}
+                          />
+                        </div>
+                      </label>
+                    )
+                  }
+                )}
+                {question?.question?.correctAnswer?.map(
+                  (answer: { id: string }, index: number) => {
+                    return (
+                      <div key={answer.id} className="border-b px-5 py-7">
+                        <textarea
+                          name="answer"
+                          id=""
+                          value={userAnswer[index]}
+                          rows={4}
+                          onChange={() => onChangeHandle(event, index)}
+                          className="w-full rounded-lg border border-gray-200 bg-white p-5"
+                        />
+                      </div>
+                    )
+                  }
+                )}
+              </div>
             </div>
           </div>
-          <div className="ql-editor h-full flex-1 overflow-auto rounded-lg border border-gray-200 bg-white p-4 shadow-base">
-            <div
-              dangerouslySetInnerHTML={{
-                __html: sanitizeHtml(question?.question?.question),
-              }}
-            />
-          </div>
-        </div>
-        <div className="flex h-full w-1/2 flex-col gap-3">
-          <div className="flex h-10 items-center justify-between">
-            <div className="flex gap-5 text-lg font-semibold">
-              {t('routeFiles.options')}
-            </div>
-          </div>
-          <div className="flex h-full flex-1 flex-col gap-6 overflow-auto">
-            {question?.question?.options?.map(
-              (option: {
-                id: string
-                option: string
-                rightAnswer: boolean
-              }) => {
-                return (
-                  <div key={option.id} className="flex gap-4">
-                    {questionType === QuestionTypes.singleChoice ? (
-                      <input
-                        type="radio"
-                        name="option"
-                        value={option.id}
-                        checked={option.id === userAnswer}
-                        onChange={() => {
-                          onChangeHandle(option)
-                        }}
-                      />
-                    ) : (
-                      <Checkbox
-                        value={option.id}
-                        name="option"
-                        handleChange={() => onChangeHandle(option.id)}
-                      />
-                    )}
-                    <div className="ql-editor w-full rounded-lg border border-gray-200 bg-white p-5">
-                      <div
-                        dangerouslySetInnerHTML={{
-                          __html: sanitizeHtml(option?.option),
-                        }}
-                      />
-                    </div>
-                  </div>
-                )
-              }
-            )}
-            {question?.question?.correctAnswer?.map(
-              (answer: { id: string }, index: number) => {
-                return (
-                  <div key={answer.id}>
-                    <textarea
-                      name="answer"
-                      id=""
-                      value={userAnswer[index]}
-                      rows={4}
-                      onChange={() => onChangeHandle(event, index)}
-                      className="w-full rounded-lg border border-gray-200 bg-white p-5"
-                    />
-                  </div>
-                )
-              }
-            )}
-          </div>
-        </div>
+          <CandidateQuestionFooter />
+        </form>
       </div>
-      <div className="flex justify-end gap-6">
-        <div className="flex gap-5">
-          <Button
-            className="h-11 w-40"
-            varient="primary-outlined"
-            title={t('commonConstants.prevoiusButton')}
-            buttonText={t('commonConstants.prevoiusButton')}
-            isDisabled={question.order === 1}
-            type="submit"
-            value="prev"
-            name="previous"
-          />
-          {question.order !== section.totalQuestions ? (
-            <Button
-              className="h-11 w-40"
-              varient="primary-solid"
-              title={t('commonConstants.nextButton')}
-              buttonText={t('commonConstants.nextButton')}
-              isDisabled={question.order === section.totalQuestions}
-              type="submit"
-              value="next"
-              name="next"
-            />
-          ) : lastSection ? (
-            <Button
-              className="h-11 w-40"
-              varient="primary-solid"
-              title={t('candidateExamConstants.endTest')}
-              buttonText={t('candidateExamConstants.endTest')}
-              isDisabled={question.order !== section.totalQuestions}
-              type="submit"
-              value={section.order}
-              name="endExam"
-            />
-          ) : (
-            <Button
-              className="h-11 w-40"
-              varient="primary-solid"
-              title={t('candidateExamConstants.nextSection')}
-              buttonText={t('candidateExamConstants.nextSection')}
-              isDisabled={question.order !== section.totalQuestions}
-              type="submit"
-              value={section.order}
-              name="nextSection"
-            />
-          )}
-        </div>
-      </div>
-    </form>
+    </div>
   )
 }
 

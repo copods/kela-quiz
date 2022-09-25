@@ -98,7 +98,7 @@ export default function AddQuestion() {
     } else if (actionData?.error) {
       toast.error(t(actionData?.data))
     }
-  }, [actionData, navigate, sectionDetail.sectionDetails?.id])
+  }, [actionData, navigate, sectionDetail.sectionDetails?.id, t])
   return (
     <AdminLayout>
       <AddQuestionInSection key={addQuestionKey} />

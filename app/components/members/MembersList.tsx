@@ -16,7 +16,7 @@ export default function MembersList({
   return (
     <div className="grid grid-cols-12 rounded-lg shadow-base">
       <div className="col-span-full grid grid-cols-10 rounded-lg border border-solid border-gray-200 bg-white">
-        <div className="col-span-full grid grid-cols-10 bg-gray-100 py-4 px-6">
+        <div className="col-span-full grid grid-cols-10 gap-3 bg-gray-100 py-4 px-6">
           <h1 className="col-span-2 pl-4 text-sm text-gray-500">
             {t('commonConstants.name')}
           </h1>
@@ -37,7 +37,7 @@ export default function MembersList({
           <div key={user.id} className="memberRow col-span-10 grid">
             <MemberListItem
               user={user}
-              loggedInUser={loggedInUser == user.id}
+              loggedInUser={loggedInUser === user.id}
               actionStatus={actionStatus}
             />
           </div>

@@ -22,6 +22,7 @@ const TimerComponent = ({
       startTime: candidateSection?.startedAt,
     })
   )
+
   const submit = useSubmit()
   let timer: ReturnType<typeof setTimeout>
   useEffect(() => {
@@ -35,7 +36,10 @@ const TimerComponent = ({
           })
           setTimer(timeLeft)
           if (timeLeft == 0) {
-            submit({ order: section.order.toString() }, { method: 'post' })
+            submit(
+              { order: section.order.toString(), nextSection: 'nextSection' },
+              { method: 'post' }
+            )
             setTimer(0)
             clearInterval(timer)
           }
@@ -50,15 +54,15 @@ const TimerComponent = ({
   }
   return (
     <div className="flex items-center gap-4 text-lg font-medium text-gray-800">
+      <span className="text-sm font-medium text-gray-500">
+        {t('candidateExamConstants.timeRemaining')}
+      </span>
       <span
-        className={`flex w-24 justify-center rounded-lg px-4 py-1 font-mono text-lg font-bold text-gray-800 ${
+        className={`flex w-24 justify-center rounded-md px-4 py-1 font-mono text-lg font-bold text-gray-800 ${
           time > 120 ? 'bg-blue-100' : 'bg-red-100'
         }`}
       >
         {getFormattedTime(time)}
-      </span>
-      <span className="text-sm font-medium text-gray-500">
-        {t('candidateExamConstants.timeRemaining')}
       </span>
     </div>
   )

@@ -1,26 +1,29 @@
-import EndAssessmentIcon from '../../../public/assets/endAssessment.svg'
-import Logo from '~/components/Logo'
 import { useTranslation } from 'react-i18next'
+import EndAssessmentIcon from '../../../public/assets/end-test.svg'
+import Header from './Header'
 
 const EndAssessment = () => {
   const { t } = useTranslation()
 
   return (
-    <div className="flex h-screen w-screen flex-col bg-gray-50">
-      <div className="flex h-20 w-full flex-row items-center gap-3 bg-white px-5 shadow">
-        <Logo height="40" />
-        <span className="text-3xl font-bold text-gray-900">
-          {t('sideNav.sideNavHeading')}
-        </span>
-      </div>
-      <div className="-mt-20 flex h-full w-full flex-col items-center justify-center gap-4">
-        <img
-          src={EndAssessmentIcon}
-          alt={t('candidateExamConstants.endAssesment')}
-        />
-        <p className="text-5xl font-bold text-gray-900">
-          {t('candidateExamConstants.assessmentEnd')}
-        </p>
+    <div className="flex h-screen flex-col bg-gray-50">
+      <Header />
+      <div className="flex-1 overflow-auto">
+        <div className="grid h-full items-center">
+          <div className="mx-auto flex w-coolDownCard flex-col items-center justify-center gap-8 bg-white py-16">
+            <img
+              src={EndAssessmentIcon}
+              alt="End test"
+              className="h-cooldownSVG w-cooldownSVG"
+            />
+            <span className="text-2xl font-bold text-gray-900">
+              {t('candidateExamConstants.testCompleted')}
+            </span>
+            <span className="text-lg font-medium text-gray-500">
+              {t('candidateExamConstants.candidateContact')}
+            </span>
+          </div>
+        </div>
       </div>
     </div>
   )

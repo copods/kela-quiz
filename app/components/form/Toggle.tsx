@@ -14,9 +14,10 @@ export default function Toggle({
     <Switch
       checked={toggle}
       tabIndex={0}
-      role={t('commonConstants.checkOrder')}
+      role={'button'}
       onChange={onToggleChange}
       title={t('commonConstants.checkOrder')}
+      aria-label={t('commonConstants.checkOrder')}
       className={`${
         toggle ? 'border-blue-900 bg-blue-900' : 'border-slate-300 bg-slate-300'
       } relative inline-flex h-7 w-16 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out`}

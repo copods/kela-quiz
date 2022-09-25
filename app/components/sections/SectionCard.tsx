@@ -3,9 +3,8 @@ import moment from 'moment'
 import { Menu } from '@headlessui/react'
 import { useSubmit } from '@remix-run/react'
 import DeletePopUp from '../DeletePopUp'
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 
-import Button from '../form/Button'
 import { useTranslation } from 'react-i18next'
 const SectionCard = ({
   name,
@@ -16,6 +15,9 @@ const SectionCard = ({
   id,
   err,
   actionStatusData,
+  setDeleted,
+  setIsDelete,
+  isDelete,
 }: {
   name: string
   isActive: boolean
@@ -25,19 +27,23 @@ const SectionCard = ({
   id: string
   err?: string
   actionStatusData?: string
+  setDeleted?: (e: boolean) => void
+  setIsDelete?: (e: boolean) => void | undefined
+  isDelete: boolean
 }) => {
   const { t } = useTranslation()
-
-  const [isDelete, setIsDelete] = useState(false)
   const submit = useSubmit()
   const deleteSection = () => {
     submit({ deleteSection: 'sectionDelete', id: id }, { method: 'post' })
   }
-  useEffect(() => {
-    if (actionStatusData == t('statusCheck.deletedSuccess')) {
-      setIsDelete(false)
-    }
-  }, [actionStatusData])
+  // useEffect(() => {
+  //   if (
+  //     actionStatusData == statusCheck.deletedSuccess &&
+  //     setIsDelete !== undefined
+  //   ) {
+  //     // setIsDelete(false)
+  //   }
+  // }, [actionStatusData])
   // shift + alt + Tab combination key for get back focus to selected section card
   useEffect(() => {
     window.addEventListener('keydown', function (event) {
@@ -56,7 +62,7 @@ const SectionCard = ({
       id="section-card"
     >
       <div className="flex items-center justify-between">
-        <h2 className="sectionName text-xl font-semibold text-gray-700">
+        <h2 className="sectionName break-all text-xl font-semibold text-gray-700">
           {name}
         </h2>
         <div className="flex">
@@ -64,35 +70,37 @@ const SectionCard = ({
             as="div"
             className="verticalDots relative inline-block text-left"
           >
-            <Menu.Button>
+            <Menu.Button className={id}>
               <Icon
                 className="text-2xl text-gray-600"
                 icon={'mdi:dots-vertical'}
               />
             </Menu.Button>
-            <Menu.Items className="absolute right-0 mt-2 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+            <Menu.Items className="absolute right-0 mt-2 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5">
               <div className="px-1 py-1">
                 <Menu.Item>
-                  <Button
-                    varient="primary-outlined"
-                    datacy="delete-section"
-                    name="deleteSection"
-                    className="w-36 px-2 py-2"
-                    alignment="justify-start"
-                    onClick={() => setIsDelete(true)}
-                    title={t('commonConstants.delete')}
-                    buttonText={
+                  {({ active }) => (
+                    <button
+                      tabIndex={0}
+                      data-cy="delete-section"
+                      className="text-gray-primary undefined inline-flex w-36 items-center justify-start rounded-md rounded-md border border-primary bg-white py-2.5 px-5 px-2 py-2 text-xs font-medium text-primary shadow-sm transition delay-75 ease-in-out hover:bg-gray-100"
+                      onClick={() => {
+                        if (setIsDelete !== undefined) setIsDelete(true)
+                      }}
+                      name="deleteSection"
+                      title={t('commonConstants.delete')}
+                    >
                       <>
                         <Icon
                           icon={'ic:outline-delete-outline'}
-                          className={`} mr-2 h-5 w-5
-                        text-red-500`}
+                          className="mr-2 h-5 w-5
+                        text-red-500"
                           aria-hidden="true"
                         />
                         {t('commonConstants.delete')}
                       </>
-                    }
-                  />
+                    </button>
+                  )}
                 </Menu.Item>
               </div>
             </Menu.Items>
@@ -116,6 +124,7 @@ const SectionCard = ({
         subAlert={t('deletePopUp.subAlert')}
         deleteItem={name}
         deleteItemType={t('sectionsConstants.sectionName')}
+        setDeleted={setDeleted}
       />
     </div>
   )

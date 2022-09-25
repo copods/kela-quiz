@@ -1,4 +1,4 @@
-import { Fragment } from 'react'
+import { Fragment, useEffect } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import { Form } from '@remix-run/react'
@@ -8,16 +8,18 @@ export default function DeletePopUp({
   setOpen,
   open,
   onDelete,
-  status,
   subAlert,
+  setDeleted,
+  status,
   deleteItemType,
   deleteItem,
 }: {
   open: boolean
-  setOpen: (e: boolean) => void
+  setOpen?: (e: boolean) => void | undefined
   onDelete: () => void
-  status?: string | undefined
   subAlert?: string
+  setDeleted?: (e: boolean) => void
+  status?: string | undefined
   deleteItemType: string
   deleteItem: string
 }) {
@@ -25,11 +27,24 @@ export default function DeletePopUp({
 
   const handleDelete = () => {
     onDelete()
-    setOpen(false)
+    if (setOpen !== undefined) setOpen(false)
   }
+  useEffect(() => {
+    if (open === true) {
+      setTimeout(() => {
+        document.getElementById('confirm-delete')?.focus()
+      }, 100)
+    }
+  }, [open])
   return (
     <Transition.Root show={open} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={setOpen}>
+      <Dialog
+        as="div"
+        className="relative z-10"
+        onClose={() => {
+          if (setOpen !== undefined) setOpen(false)
+        }}
+      >
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -84,7 +99,12 @@ export default function DeletePopUp({
                       className="px-5"
                       title={t('commonConstants.delete')}
                       buttonText={t('commonConstants.delete')}
-                      onClick={handleDelete}
+                      onClick={() => {
+                        handleDelete()
+                        if (setDeleted !== undefined) {
+                          setDeleted(true)
+                        }
+                      }}
                     />
                   </Form>
                   <Button
@@ -93,9 +113,11 @@ export default function DeletePopUp({
                     id="cancel-delete-pop-up"
                     varient="primary-outlined"
                     className="px-5"
-                    onClick={() => setOpen(false)}
                     title={t('commonConstants.cancel')}
                     buttonText={t('commonConstants.cancel')}
+                    onClick={() => {
+                      if (setOpen !== undefined) setOpen(false)
+                    }}
                   />
                 </div>
               </Dialog.Panel>

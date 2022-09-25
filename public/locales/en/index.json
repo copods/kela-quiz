@@ -6,7 +6,8 @@
     "role": "Role",
     "members": "Members",
     "addedOn": "Added On",
-    "action": "Action"
+    "action": "Action",
+    "member": "member"
   },
   "commonConstants": {
     "name": "Name",
@@ -70,7 +71,11 @@
   },
   "logIn": {
     "signInMessage": "Sign in to your account",
-    "signIn": "Sign In"
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "signingUp": "Signing up...",
+    "AlreadyHaveAnAccount": "Already have an account?",
+    "DontHaveAnAccountYet": "Don’t have an account yet?"
   },
   "addQuestion": {
     "createOptions": "Create Options",
@@ -158,7 +163,13 @@
     "skipped": "Skipped",
     "total": "Total"
   },
-
+  "forgotPasswordConstants": {
+    "header": "Forgot password?",
+    "enterEmail": "Enter your email to retrieve your password.",
+    "resetPassword": "Reset Password",
+    "backToLogin": "Back to login",
+    "enterEmailPlaceholder": "Enter Email"
+  },
   "candidateExamConstants": {
     "time": "Time",
     "timeRemaining": "Time Remaining",
@@ -202,5 +213,13 @@
     "correctEmail": "Please provide a valid email address",
     "memberAdded": "Member Added Successfully..!",
     "memberAlreadyExist": "Member with this email id already exists!"
+  },
+  "otpConstants": {
+    "header": "OTP Verification",
+    "enterOTP": "Enter the OTP sent to",
+    "resend": "Resend",
+    "didntGetCode": "Didn't get a code",
+    "resendCodeIn": "Resend code in",
+    "otp": "OTP"
   }
 }

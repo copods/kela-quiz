@@ -41,32 +41,32 @@ const QuestionCard = ({
         )
       }}
     >
-      <div className="break flex justify-between text-base text-gray-600">
-        <div className="flex flex-1 items-start justify-between">
-          <div className="ql-editor flex-1 p-0 pr-4">
-            <div
-              className="question cursor-pointer"
-              dangerouslySetInnerHTML={{
-                __html: sanitizeHtml(question.question),
-              }}
-            ></div>{' '}
-          </div>
-          <div className="flex items-center gap-2">
-            <span className="flex items-center rounded-52 border border-gray-700 px-3 text-sm  text-gray-700">
+      <div className="break flex flex-col-reverse items-start justify-between gap-6 text-base text-gray-600 xl:flex-row">
+        <div className="ql-editor p-0">
+          <div
+            className="question flex-1 cursor-pointer flex-row"
+            dangerouslySetInnerHTML={{
+              __html: sanitizeHtml(question.question),
+            }}
+          ></div>
+        </div>
+        <div className="flex min-w-fit items-center justify-between lg:flex-1 lg:justify-end lg:gap-2">
+          <div>
+            <span className="flex flex-1 items-center rounded-52 border border-gray-700 px-3 text-sm text-gray-700">
               {question.questionType?.displayName}
             </span>
-            {isExpanded === index ? (
-              <Icon
-                icon={'akar-icons:circle-chevron-up'}
-                className="cursor-pointer text-xl text-gray-400"
-              />
-            ) : (
-              <Icon
-                icon={'akar-icons:circle-chevron-down'}
-                className="cursor-pointer text-xl text-gray-400"
-              />
-            )}
           </div>
+          {isExpanded === index ? (
+            <Icon
+              icon={'akar-icons:circle-chevron-up'}
+              className="cursor-pointer text-xl text-gray-400"
+            />
+          ) : (
+            <Icon
+              icon={'akar-icons:circle-chevron-down'}
+              className="cursor-pointer text-xl text-gray-400"
+            />
+          )}
         </div>
       </div>
       <div

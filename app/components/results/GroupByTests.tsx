@@ -38,7 +38,15 @@ const GroupByTests = () => {
   }, [sortDirection, sortBy, submit])
   return (
     <div className="flex flex-col gap-6 p-1" id="group-by-test-container">
-      <h1 className="text-3xl font-bold text-gray-900 ">Results</h1>
+      <h1
+        tabIndex={0}
+        title={t('commonConstants.results')}
+        role={t('commonConstants.results')}
+        aria-label={t('commonConstants.results')}
+        className="text-3xl font-bold text-gray-900"
+      >
+        {t('commonConstants.results')}
+      </h1>
       {candidateTests.length ? (
         <div className="flex flex-col gap-6">
           <div id="sort-filter-container" className="w-48">

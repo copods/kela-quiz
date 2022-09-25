@@ -2,8 +2,6 @@ import React, { useState } from 'react'
 import { Form } from '@remix-run/react'
 import Button from '~/components/form/Button'
 import InputField from '~/components/form/InputField'
-import Logo from '~/components/Logo'
-import Checkbox from '../form/CheckBox'
 import { useTranslation } from 'react-i18next'
 
 function CandidateRegister() {
@@ -11,17 +9,10 @@ function CandidateRegister() {
 
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
-  const [isChecked, setIsChecked] = useState(false)
   const canSubmitBtnBeEnabled = () => {
-    return firstName.length > 0 && lastName.length > 0 && isChecked
+    return firstName.length > 0 && lastName.length > 0
   }
-  const checkBoxProps = {
-    name: 'candidateAgreement',
-    isChecked: false,
-    handleChange: function (event: any) {
-      setIsChecked(!isChecked)
-    },
-  }
+
   const inputFieldsProps = [
     {
       label: 'First Name',
@@ -49,39 +40,23 @@ function CandidateRegister() {
     },
   ]
   return (
-    <div className="z-10 flex	min-h-480 w-full max-w-554 flex-col items-center justify-center rounded-2xl bg-white px-24 drop-shadow-xl">
-      <div className="z-20 -mt-24 mb-6">
-        <Logo height="64" width="64" />
-      </div>
-      <div className="w-full">
-        <h1 className="text-center text-3xl font-bold text-gray-900">
-          Welcome
-        </h1>
-        <div className="flex justify-center">
-          <hr className="mt-7 mb-5 h-px w-6/12 border-none bg-gray-500 text-center" />
-        </div>
-        <Form method="post">
-          <div className="flex flex-col gap-6">
+    <div className="z-10 flex	w-full max-w-454 flex-col gap-12 rounded-lg bg-white p-12 drop-shadow-xl">
+      <h1 className="text-center text-3xl font-bold text-gray-900">Welcome</h1>
+      <div className="flex justify-center">
+        <Form method="post" className="flex w-full flex-col gap-10">
+          <div className="flex flex-col gap-10">
             {inputFieldsProps.map((props) => {
               return <InputField {...props} key={props.name} />
             })}
           </div>
-          <div className="mt-5 flex flex-row">
-            <Checkbox {...checkBoxProps} />
-            <span className="ml-2 text-xs text-slate-500">
-              {t('candidateExamConstants.candidateAcceptance')}
-            </span>
-          </div>
-          <div className="mt-6">
-            <Button
-              title={t('commonConstants.continue')}
-              buttonText={t('commonConstants.continue')}
-              type="submit"
-              className="w-full"
-              isDisabled={!canSubmitBtnBeEnabled()}
-              varient="primary-solid"
-            />
-          </div>
+          <Button
+            title={t('commonConstants.proceed')}
+            buttonText={t('commonConstants.proceed')}
+            type="submit"
+            className="h-12 w-full text-base"
+            isDisabled={!canSubmitBtnBeEnabled()}
+            varient="primary-solid"
+          />
         </Form>
       </div>
     </div>

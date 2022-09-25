@@ -7,7 +7,9 @@ import type {
   CandidateQuestion,
   SectionInTest,
 } from '@prisma/client'
+
 import { prisma } from '~/db.server'
+import { sendMailToRecruiter, sendOTPMail } from './sendgrid.servers'
 
 export async function checkIfTestLinkIsValid(id: CandidateTest['id']) {
   try {
@@ -31,19 +33,74 @@ export async function getCandidateIDFromAssessmentID(id: CandidateTest['id']) {
   }
 }
 
+async function generateOTP() {
+  // generate random 4 digit OTP
+  var digits = '1234567896'
+  let OTP = ''
+  for (let i = 0; i < 4; i++) {
+    OTP += digits[Math.floor(Math.random() * 10)]
+  }
+  return parseInt(OTP)
+}
+
+async function sendOTPToUser({ id, OTP }: { id: string; OTP: number }) {
+  const user = await prisma.candidate.findUnique({
+    where: { id },
+    select: { email: true },
+  })
+  return await sendOTPMail(user?.email as string, OTP)
+}
+
 export async function updateCandidateFirstLastName(
   id: Candidate['id'],
   firstName: Candidate['firstName'],
   lastName: Candidate['lastName']
 ) {
   try {
-    return await prisma.candidate.update({
+    const OTP = await generateOTP()
+
+    const data = await prisma.candidate.update({
       where: { id },
-      data: { firstName, lastName },
+      data: { firstName, lastName, OTP },
     })
+    await sendOTPToUser({ id, OTP })
+    return data
   } catch (error) {
+    console.log(error)
     throw new Error('Something went wrong..!')
   }
+}
+export async function resendOtp({ assesmentId }: { assesmentId: string }) {
+  const user = await prisma.candidateTest.findUnique({
+    where: { id: assesmentId },
+    select: { candidate: { select: { OTP: true, email: true, id: true } } },
+  })
+  const OTPValue = await generateOTP()
+  if (user) {
+    await prisma.candidate.update({
+      where: { id: user?.candidate?.id },
+      data: {
+        OTP: OTPValue,
+      },
+    })
+    return await sendOTPMail(user?.candidate?.email as string, OTPValue)
+  } else return null
+}
+
+export async function verifyOTP({
+  assessmentId,
+  otp,
+}: {
+  assessmentId: string
+  otp: number
+}) {
+  const candidateAssessmentOtp = await prisma.candidateTest.findUnique({
+    where: { id: assessmentId },
+    select: {
+      candidate: { select: { OTP: true, id: true } },
+    },
+  })
+  return candidateAssessmentOtp?.candidate?.OTP === otp
 }
 
 export async function updateNextCandidateStep(
@@ -60,7 +117,18 @@ export async function updateNextCandidateStep(
     throw new Error('Something went wrong..!')
   }
 }
-
+export async function getCandidateEmail(id: string) {
+  return prisma.candidateTest.findUnique({
+    where: { id },
+    select: {
+      candidate: {
+        select: {
+          email: true,
+        },
+      },
+    },
+  })
+}
 export async function getTestInstructionForCandidate(id: CandidateTest['id']) {
   try {
     return await prisma.candidateTest.findUnique({
@@ -135,6 +203,7 @@ export async function getCandidateTest(id: CandidateTest['id']) {
         sections: {
           select: {
             id: true,
+            order: true,
             section: {
               select: {
                 id: true,
@@ -179,7 +248,6 @@ export async function getCandidateTest(id: CandidateTest['id']) {
     throw new Error('Something went wrong..!')
   }
 }
-
 export async function candidateTestStart(id: CandidateTest['id']) {
   try {
     return await prisma.candidateTest.update({
@@ -352,6 +420,7 @@ export async function skipAnswerAndNextQuestion({
         id: currentQuestionId,
       },
       select: {
+        status: true,
         selectedOptions: {
           select: {
             id: true,
@@ -368,18 +437,32 @@ export async function skipAnswerAndNextQuestion({
       }
     })
 
-    const currentQuestion = await prisma.candidateQuestion.update({
-      where: {
-        id: currentQuestionId,
-      },
-      data: {
+    // create data according to action taken i.e. next, prev or skip
+    let updateData = null
+    if (nextOrPrev == 'skip') {
+      updateData = null
+    } else {
+      updateData = {
         selectedOptions: {
           connect: selectedOptions?.map((option) => ({ id: option })),
           disconnect: oldAnswers?.map((option) => ({ id: option })),
         },
         answers,
+      }
+    }
+
+    const currentQuestion = await prisma.candidateQuestion.update({
+      where: {
+        id: currentQuestionId,
+      },
+      data: {
+        ...updateData,
         status:
-          selectedOptions?.length || answers?.length ? 'ANSWERED' : 'SKIPPED',
+          selectedOptions?.length || answers?.length
+            ? 'ANSWERED'
+            : question?.status === 'ANSWERED'
+              ? 'ANSWERED'
+              : 'SKIPPED',
         answeredAt: new Date(),
       },
       select: {
@@ -416,7 +499,9 @@ export async function skipAnswerAndNextQuestion({
       where: {
         sectionInCandidateTestId:
           currentQuestion?.sectionInCandidateTestId || '',
-        order: (currentQuestion?.order || 0) + (nextOrPrev == 'next' ? 1 : -1),
+        order:
+          (currentQuestion?.order || 0) +
+          (nextOrPrev == 'next' || nextOrPrev == 'skip' ? 1 : -1),
       },
       select: {
         id: true,
@@ -459,17 +544,39 @@ export async function endAssessment(id: string) {
     where: {
       id,
     },
+
     select: {
       id: true,
       startedAt: true,
       endAt: true,
+      test: {
+        select: {
+          name: true,
+        },
+      },
+      candidate: {
+        select: {
+          firstName: true,
+          lastName: true,
+          email: true,
+          createdBy: {
+            select: {
+              email: true,
+            },
+          },
+        },
+      },
     },
   })
+
+  const recruiterEmail = candidateTest?.candidate.createdBy.email
+  const testName = candidateTest?.test.name
+  const candidateName = `${candidateTest?.candidate.firstName} ${candidateTest?.candidate.lastName} `
   if (candidateTest?.endAt) {
     return { msg: 'Exam already ended' }
   }
   calculateResult(id)
-  return await prisma.candidateTest.update({
+  let endExam = await prisma.candidateTest.update({
     where: {
       id,
     },
@@ -477,6 +584,9 @@ export async function endAssessment(id: string) {
       endAt: new Date(),
     },
   })
+  if (candidateTest)
+    await sendMailToRecruiter(recruiterEmail, testName, candidateName)
+  return endExam
 }
 
 async function calculateResult(id: CandidateTest['id']) {

@@ -45,7 +45,7 @@ const TestList = ({
         }
       }
     }
-  }, [sortDirection, sortBy])
+  }, [sortDirection, sortBy, submit])
   const showCheckBox = false
   return (
     <div className="test-list-container flex h-full flex-col gap-6 p-1">

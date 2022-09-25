@@ -22,7 +22,7 @@ const InviteCandidatePopup = ({
   const [emails, setEmails] = useState<Array<string>>([''])
   const actionData = useActionData()
   useEffect(() => {
-    if (actionData?.status == 401) {
+    if (actionData?.status == 401 && testId === actionData?.testId) {
       toast.warn(actionData.message)
     }
     if (
@@ -32,6 +32,7 @@ const InviteCandidatePopup = ({
       if (actionData?.testId === testId)
         toast.success(t('testsConstants.candidateInvited'))
       setOpenInvitePopup(false)
+      setEmails([''])
     } else {
       if (
         actionData?.candidateInviteStatus === t('candidateExamConstants.error')
@@ -40,9 +41,10 @@ const InviteCandidatePopup = ({
           toast.error(t('testsConstants.candidateAlreadyInvited'))
         }
         setOpenInvitePopup(false)
+        setEmails([''])
       }
     }
-  }, [actionData, testId, setOpenInvitePopup])
+  }, [actionData, testId, setOpenInvitePopup, t])
   const updatePopupAndEmailState = () => {
     setOpenInvitePopup(false)
     setEmails([''])

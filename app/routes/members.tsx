@@ -51,6 +51,7 @@ export const action: ActionFunction = async ({ request }) => {
     const lastName = formData.get('lastName')
     const email = formData.get('email')
     const roleId = formData.get('roleId')
+    // eslint-disable-next-line no-useless-escape
     const emailFilter = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
 
     if (typeof firstName !== 'string' || firstName.length === 0) {
@@ -163,7 +164,7 @@ const Members = () => {
         })
       }
     }
-  }, [membersActionData])
+  }, [membersActionData, t])
 
   return (
     <AdminLayout>

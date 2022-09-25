@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
-import { Form } from '@remix-run/react'
+import { Form, useNavigate } from '@remix-run/react'
 import Button from '~/components/form/Button'
 import InputField from '~/components/form/InputField'
 import Logo from '~/components/Logo'
 import type { LoginProps } from '~/interface/Interface'
 import { useTranslation } from 'react-i18next'
+import { routes } from '~/constants/route.constants'
 function Login({ actionData, redirectTo }: LoginProps) {
   const { t } = useTranslation()
 
@@ -38,6 +39,13 @@ function Login({ actionData, redirectTo }: LoginProps) {
       },
     },
   ]
+  const navigate = useNavigate()
+  const signUp = () => {
+    navigate(routes.signUp)
+  }
+  const forgetPassword = () => {
+    navigate(routes.forgotPassword)
+  }
   return (
     <div className="z-10 flex	min-h-480 w-full max-w-554 flex-col items-center justify-center rounded-2xl bg-white px-24 drop-shadow-xl">
       <div className="z-20 -mt-24 mb-6">
@@ -71,7 +79,23 @@ function Login({ actionData, redirectTo }: LoginProps) {
               Forget your password?
             </div>
           </div> */}
-          <div className="mt-6 flex items-center justify-center">
+          <div className="flex justify-end pt-4 pb-7">
+            <span
+              id="forgot-password"
+              tabIndex={0}
+              onClick={() => {
+                forgetPassword()
+              }}
+              onKeyUp={(e) => {
+                if (e.key === 'Enter') forgetPassword()
+              }}
+              role="link"
+              className="cursor-pointer text-sm text-primary"
+            >
+              {t('forgotPasswordConstants.header')}
+            </span>
+          </div>
+          <div className="flex items-center justify-center">
             <input type="hidden" name="redirectTo" value={redirectTo} />
             <Button
               tabIndex={0}
@@ -79,11 +103,30 @@ function Login({ actionData, redirectTo }: LoginProps) {
               buttonText={t('logIn.signIn')}
               type="submit"
               varient="primary-solid"
-              className="w-full"
+              className="h-11 w-full"
               datacy="submit"
             />
           </div>
         </Form>
+      </div>
+      <div className="flex pt-6">
+        <div className="text-base font-medium text-gray-500">
+          {t('logIn.DontHaveAnAccountYet')}{' '}
+          <span
+            id="sign-up"
+            className="cursor-pointer text-primary"
+            tabIndex={0}
+            onClick={() => {
+              signUp()
+            }}
+            onKeyUp={(e) => {
+              if (e.key === 'Enter') signUp()
+            }}
+            role="link"
+          >
+            {t('logIn.signUp')}
+          </span>
+        </div>
       </div>
     </div>
   )

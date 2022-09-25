@@ -84,7 +84,7 @@ const AddTest = () => {
         toast.error(t('statusCheck.commonError'))
       }
     }
-  }, [actionData, navigate])
+  }, [actionData, navigate, t])
   if (testData.status != t('statusCheck.success')) {
     toast.success(t('statusCheck.commonError'))
   }
