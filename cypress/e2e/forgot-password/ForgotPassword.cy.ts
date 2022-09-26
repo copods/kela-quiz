@@ -12,6 +12,7 @@ describe('Forgot password', () => {
     cy.get('span#forgot-password')
       .should('have.text', forgotPasswordConstants.header)
       .click()
+    cy.wait(2000)
   })
 
   it('Checking account not found for reset password ', () => {
