@@ -6,6 +6,26 @@ datasource db {
 generator client {
   provider = "prisma-client-js"
 }
+model Workspace {
+  id            String          @id @default(cuid())
+  name          String
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  UserWorkspace UserWorkspace[]
+}
+
+model UserWorkspace {
+  id          String    @id @default(cuid())
+  Workspace   Workspace @relation(fields: [workspaceId], references: [id])
+  user        User      @relation(fields: [userId], references: [id])
+  role        Role      @relation(fields: [roleId], references: [id])
+  workspaceType String // 'DEFAULT', "OTHER"
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  workspaceId String
+  userId      String
+  roleId      String
+}
 
 model User {
   id        String      @id @default(cuid())
@@ -22,6 +42,7 @@ model User {
   Option    Option[]
   Test      Test[]
   Candidate Candidate[]
+  UserWorkspace UserWorkspace[]
 }
 
 model Password {
@@ -36,6 +57,7 @@ model Role {
   users     User[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  UserWorkspace UserWorkspace[]
 }
 
 model Section {

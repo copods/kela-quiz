@@ -9,6 +9,16 @@ import {
   testsConstants,
 } from '~/constants/common.constants'
 import { routes } from '~/constants/route.constants'
+// import type { LoaderFunction } from '@remix-run/node'
+// import {
+//   createDefaultWorskspace,
+//   getDefaultWorkspaceName,
+//   getWorkSpaceName,
+// } from '~/models/user.server'
+// import { getUserId } from '~/session.server'
+// import { useLoaderData } from '@remix-run/react'
+// import { useEffect } from 'react'
+// import { useUser } from '~/utils'
 
 const sideNavGuide = [
   // {
@@ -75,12 +85,14 @@ const sideNavGuide = [
   },
 ]
 const title = sideNav.sideNavHeading
+
 const SideNav = () => {
   return (
     <div className="flex h-full flex-col justify-between overflow-auto p-5">
       <div>
         <div className="mb-14 px-1">
           <Header title={title} />
+          <div className="pt-2"> sfds</div>
         </div>
         <div className="flex flex-col gap-8">
           {sideNavGuide.map((guide, index) => {

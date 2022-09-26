@@ -10,6 +10,7 @@ import {
   deleteUserById,
   getAllRoles,
   getAllUsers,
+  // getWorkSpaceName,
 } from '~/models/user.server'
 import MembersHeader from '~/components/members/MembersHeader'
 import { toast } from 'react-toastify'
@@ -31,12 +32,14 @@ type LoaderData = {
   users: Awaited<ReturnType<typeof getAllUsers>>
   userId: Awaited<ReturnType<typeof getUserId>>
   roles: Awaited<ReturnType<typeof getAllRoles>>
+  // workspace: Awaited<ReturnType<typeof getWorkSpaceName>>
 }
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await getUserId(request)
   const roles = await getAllRoles()
   if (!userId) return redirect(routes.signIn)
   const users = await getAllUsers()
+  // const workspace = await getWorkSpaceName()
   return json<LoaderData>({ users, roles, userId })
 }
 

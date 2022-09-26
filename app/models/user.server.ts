@@ -25,6 +25,23 @@ export async function getUserByEmail(email: User['email']) {
 export async function getAllUsers() {
   return prisma.user.findMany({ include: { role: true } })
 }
+export async function getUserNameForWorkspaceCreation(id: User['id']) {
+  return prisma.user.findUnique({
+    where: {
+      id: id,
+    },
+    select: {
+      firstName: true,
+    },
+  })
+}
+export async function createWorkspace(firstName: string) {
+  return prisma.workspace.create({
+    data: {
+      name: firstName,
+    },
+  })
+}
 
 export async function getAllRoles() {
   return prisma.role.findMany()
@@ -58,6 +75,22 @@ export async function createNewUser({
 
   return await sendMail(email, firstName, password, role?.name || 'NA')
 }
+// export async function getWorkSpaceName() {
+//   return prisma.user.findUnique({
+//     where: { id: 'cl89xlmdp0250vugms977edyx' },
+//     select: {
+//       UserWorkspace: {
+//         select: {
+//           workspace: {
+//             select: {
+//               name: true,
+//             },
+//           },
+//         },
+//       },
+//     },
+//   })
+// }
 
 export async function sendResetPassword(email: string) {
   const password = faker.internet.password()
