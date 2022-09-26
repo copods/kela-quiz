@@ -9,14 +9,12 @@ import TestDetails from './CreateTestDetails'
 import TestPreview from './CreateTestPreview'
 import StepsTabComponent from './StepsTab'
 import Button from '../form/Button'
-import {
-  commonConstants,
-  testsConstants,
-  toastConstants,
-} from '~/constants/common.constants'
 import { routes } from '~/constants/route.constants'
+import { useTranslation } from 'react-i18next'
 
 const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
+  const { t } = useTranslation()
+
   const transition = useTransition()
   const submit = useSubmit()
   const [sectionsCopy, setSectionsCopy] = useState(sections)
@@ -25,11 +23,11 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
   }, [sections])
   const breadCrumbData = [
     {
-      tabName: testsConstants.testListColumnLabel,
+      tabName: 'testsConstants.test',
       route: routes.tests,
     },
     {
-      tabName: testsConstants.addTestbutton,
+      tabName: 'testsConstants.addTestbutton',
       route: routes.addTest,
     },
   ]
@@ -70,15 +68,15 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
   }
   const submitAddTest = () => {
     if (typeof name !== 'string' || name.length === 0) {
-      toast.error(toastConstants.addTest)
+      toast.error(t('toastConstants.addTest'))
       return
     }
     if (typeof description !== 'string' || description.length === 0) {
-      toast.error(toastConstants.enterDescription)
+      toast.error(t('toastConstants.enterDescription'))
       return
     }
     if (selectedSections.length === 0) {
-      toast.error(toastConstants.addSection)
+      toast.error(t('toastConstants.addSection'))
       return
     }
     let sendData: {
@@ -117,12 +115,12 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
       {/* header */}
       <header className="flex items-center justify-between">
         <h2
-          role={testsConstants.addTestbutton}
+          role={t('testsConstants.addTestbutton')}
           tabIndex={0}
-          title={testsConstants.addTestbutton}
+          title={t('testsConstants.addTestbutton')}
           className="text-3xl font-bold text-black"
         >
-          {testsConstants.addTestbutton}
+          {t('testsConstants.addTestbutton')}
         </h2>
       </header>
       <BreadCrumb data={breadCrumbData} />
@@ -166,35 +164,35 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
           onClick={() => navigate(routes.tests)}
           className="h-9 px-7"
           varient="secondary-solid"
-          title={commonConstants.cancelAddTest}
-          buttonText={commonConstants.cancel}
+          title={t('commonConstants.cancelAddTest')}
+          buttonText={t('commonConstants.cancel')}
         />
         <div className="flex gap-4">
           <Button
             tabIndex={0}
-            title={commonConstants.previousTab}
+            title={t('commonConstants.previousTab')}
             className="h-9 px-7"
             varient="primary-solid"
             id="back-button"
-            buttonText={commonConstants.backButton}
+            buttonText={t('commonConstants.backButton')}
             isDisabled={currentTab === tabs[0].id}
             onClick={() => setCurrentTab(currentTab - 1)}
           />
           {currentTab !== 2 ? (
             <Button
               tabIndex={0}
-              title={commonConstants.nextTab}
+              title={t('commonConstants.nextTab')}
               className="h-9 px-7"
               varient="primary-solid"
               id="next-button"
-              buttonText={commonConstants.nextButton}
+              buttonText={t('commonConstants.nextButton')}
               isDisabled={!(name && description) || currentTab == 2}
               onClick={() => setCurrentTab(currentTab + 1)}
             />
           ) : (
             <Button
               tabIndex={0}
-              title={commonConstants.nextTab}
+              title={t('commonConstants.nextTab')}
               id="submit-button"
               className="h-9 px-7"
               varient="primary-solid"

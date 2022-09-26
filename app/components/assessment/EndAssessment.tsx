@@ -1,8 +1,10 @@
-import { candidateExamConstants } from '~/constants/common.constants'
+import { useTranslation } from 'react-i18next'
 import EndAssessmentIcon from '../../../public/assets/end-test.svg'
 import Header from './Header'
 
 const EndAssessment = () => {
+  const { t } = useTranslation()
+
   return (
     <div className="flex h-screen flex-col bg-gray-50">
       <Header />
@@ -15,10 +17,10 @@ const EndAssessment = () => {
               className="h-cooldownSVG w-cooldownSVG"
             />
             <span className="text-2xl font-bold text-gray-900">
-              {candidateExamConstants.testCompleted}
+              {t('candidateExamConstants.testCompleted')}
             </span>
             <span className="text-lg font-medium text-gray-500">
-              {candidateExamConstants.candidateContact}
+              {t('candidateExamConstants.candidateContact')}
             </span>
           </div>
         </div>

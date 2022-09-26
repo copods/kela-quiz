@@ -4,15 +4,17 @@ import Button from '~/components/form/Button'
 import InputField from '~/components/form/InputField'
 import Logo from '~/components/Logo'
 import type { LoginProps } from '~/interface/Interface'
-import { forgotPasswordConstants, logIn } from '~/constants/common.constants'
+import { useTranslation } from 'react-i18next'
 import { routes } from '~/constants/route.constants'
 function Login({ actionData, redirectTo }: LoginProps) {
+  const { t } = useTranslation()
+
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const inputFieldsProps = [
     {
-      label: 'Email',
-      placeholder: 'Enter Email',
+      label: t('commonConstants.email'),
+      placeholder: t('forgotPasswordConstants.enterEmailPlaceholder'),
       type: 'text',
       name: 'email',
       required: true,
@@ -51,7 +53,7 @@ function Login({ actionData, redirectTo }: LoginProps) {
       </div>
       <div className="w-full">
         <h1 className="text-3xl font-bold text-gray-900">
-          {logIn.signInMessage}
+          {t('logIn.signInMessage')}
         </h1>
         <div className="flex justify-center">
           <hr className="mt-7 mb-5 h-px w-6/12 border-none bg-gray-500 text-center" />
@@ -90,15 +92,15 @@ function Login({ actionData, redirectTo }: LoginProps) {
               role="link"
               className="cursor-pointer text-sm text-primary"
             >
-              {forgotPasswordConstants.header}
+              {t('forgotPasswordConstants.header')}
             </span>
           </div>
           <div className="flex items-center justify-center">
             <input type="hidden" name="redirectTo" value={redirectTo} />
             <Button
               tabIndex={0}
-              title={logIn.signIn}
-              buttonText={logIn.signIn}
+              title={t('logIn.signIn')}
+              buttonText={t('logIn.signIn')}
               type="submit"
               varient="primary-solid"
               className="h-11 w-full"
@@ -109,7 +111,7 @@ function Login({ actionData, redirectTo }: LoginProps) {
       </div>
       <div className="flex pt-6">
         <div className="text-base font-medium text-gray-500">
-          {logIn.DontHaveAnAccountYet}{' '}
+          {t('logIn.DontHaveAnAccountYet')}{' '}
           <span
             id="sign-up"
             className="cursor-pointer text-primary"
@@ -122,7 +124,7 @@ function Login({ actionData, redirectTo }: LoginProps) {
             }}
             role="link"
           >
-            {logIn.signUp}
+            {t('logIn.signUp')}
           </span>
         </div>
       </div>

@@ -3,8 +3,10 @@ import { useEffect, useState } from 'react'
 import { Form } from '@remix-run/react'
 import Button from '../form/Button'
 import otpImage from '~/../public/assets/otp.svg'
-import { commonConstants, otpConstants } from '~/constants/common.constants'
+import { useTranslation } from 'react-i18next'
+
 const CandidateOtp = ({ email }: { email: string }) => {
+  const { t } = useTranslation()
   const [counter, setCounter] = useState(60)
   const [finalTime, setFinalTime] = useState('')
   useEffect(() => {
@@ -45,11 +47,11 @@ const CandidateOtp = ({ email }: { email: string }) => {
     <div className="flex flex-1 items-center justify-center bg-gray-50">
       <div className="flex max-w-454 flex-1 flex-col gap-10 rounded-md border border-gray-50 bg-white p-12 text-center drop-shadow-sm">
         <div className="flex justify-center">
-          <img src={otpImage} alt={otpConstants.otp} />
+          <img src={otpImage} alt={t('otpConstants.otp')} />
         </div>
-        <div className="text-2xl font-bold">{otpConstants.header}</div>
+        <div className="text-2xl font-bold">{t('otpConstants.header')}</div>
         <div className="gap-4 text-base text-gray-500">
-          {otpConstants.enterOTP}{' '}
+          {t('otpConstants.enterOTP')}{' '}
           <span className="font-medium text-primary">{email} </span>
         </div>
         <Form method="post">
@@ -90,8 +92,8 @@ const CandidateOtp = ({ email }: { email: string }) => {
 
           <div className="pb-10 text-base text-gray-500">
             {finalTime === '00:00'
-              ? otpConstants.didntGetCode
-              : otpConstants.resendCodeIn}
+              ? t('otpConstants.didntGetCode')
+              : t('otpConstants.resendCodeIn')}
             {finalTime !== '00:00' ? (
               <span className="font-medium text-primary"> {finalTime}</span>
             ) : (
@@ -107,21 +109,21 @@ const CandidateOtp = ({ email }: { email: string }) => {
                 role="button"
               >
                 {' '}
-                {otpConstants.resend}
+                {t('otpConstants.resend')}
               </span>
             )}
           </div>
           <div>
             <Button
               tabIndex={0}
-              id={commonConstants.verify}
+              id={t('commonConstants.verify')}
               varient="primary-solid"
               type="submit"
-              name={commonConstants.verify}
+              name={t('commonConstants.verify')}
               value="proceed"
               className="w-full"
-              title={commonConstants.verify}
-              buttonText={commonConstants.verify}
+              title={t('commonConstants.verify')}
+              buttonText={t('commonConstants.verify')}
             />
           </div>
         </Form>

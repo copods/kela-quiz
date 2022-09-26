@@ -1,14 +1,11 @@
 import { useLoaderData } from '@remix-run/react'
-import {
-  commonConstants,
-  members,
-  resultConstants,
-  testsConstants,
-} from '~/constants/common.constants'
+import { useTranslation } from 'react-i18next'
 import type { Candidate, CandidateResult, User } from '~/interface/Interface'
 import AttendedCandidateListItem from './AttendedCandidateListItem'
 
 const CandidatesList = () => {
+  const { t } = useTranslation()
+
   const { candidatesOfTest, params } = useLoaderData()
   const testData = candidatesOfTest?.candidateTest
 
@@ -36,22 +33,22 @@ const CandidatesList = () => {
       <div className="bg-tableHeader rounded-lg border border-solid border-gray-200 shadow-base">
         <div className="grid grid-cols-12 gap-3 py-4 px-12">
           <span className="col-span-1 text-sm font-semibold text-gray-500">
-            {resultConstants.srNo}
+            {t('commonConstants.srNo')}
           </span>
           <span className="col-span-3 text-sm font-semibold text-gray-500">
-            {members.name}
+            {t('commonConstants.name')}
           </span>
           <span className="col-span-4 text-sm font-semibold text-gray-500">
-            {commonConstants.email}
+            {t('commonConstants.email')}
           </span>
           <span className="col-span-2 text-sm font-semibold text-gray-500">
-            {resultConstants.invitedBy}
+            {t('resultConstants.invitedBy')}
           </span>
           <span className="col-span-1 text-sm font-semibold text-gray-500">
-            {resultConstants.result}
+            {t('resultConstants.result')}
           </span>
           <span className="col-span-1 text-sm font-semibold text-gray-500">
-            {resultConstants.status}
+            {t('resultConstants.status')}
           </span>
         </div>
         {testData?.map(
@@ -103,7 +100,7 @@ const CandidatesList = () => {
         )}
         {testData.length === 0 && (
           <div className="flex justify-center rounded-b-lg bg-white p-7">
-            {testsConstants.noCandidateForTest}
+            {t('testsConstants.noCandidateForTest')}
           </div>
         )}
       </div>

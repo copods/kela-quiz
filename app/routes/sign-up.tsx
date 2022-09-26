@@ -5,9 +5,9 @@ import { createNewUser, getAllRoles } from '~/models/user.server'
 import { toast } from 'react-toastify'
 import { useEffect } from 'react'
 
-import { statusCheck, toastConstants } from '~/constants/common.constants'
 import SignUp from '~/components/login/SignUp'
 import { routes } from '~/constants/route.constants'
+import { useTranslation } from 'react-i18next'
 
 export type ActionData = {
   errors?: {
@@ -40,31 +40,31 @@ export const action: ActionFunction = async ({ request }) => {
 
     if (typeof firstName !== 'string' || firstName.length === 0) {
       return json<ActionData>(
-        { errors: { title: toastConstants.firstNameRequired, status: 400 } },
+        { errors: { title: 'toastConstants.firstNameRequired', status: 400 } },
         { status: 400 }
       )
     }
     if (typeof lastName !== 'string' || lastName.length === 0) {
       return json<ActionData>(
-        { errors: { title: toastConstants.lastNameRequired, status: 400 } },
+        { errors: { title: 'toastConstants.lastNameRequired', status: 400 } },
         { status: 400 }
       )
     }
     if (typeof email !== 'string' || email.length === 0) {
       return json<ActionData>(
-        { errors: { title: toastConstants.emailRequired, status: 400 } },
+        { errors: { title: 'toastConstants.emailRequired', status: 400 } },
         { status: 400 }
       )
     }
     if (!emailFilter.test(email)) {
       return json<ActionData>(
-        { errors: { title: toastConstants.correctEmail, status: 400 } },
+        { errors: { title: 'toastConstants.correctEmail', status: 400 } },
         { status: 400 }
       )
     }
     if (typeof roleId !== 'string' || roleId.length === 0) {
       return json<ActionData>(
-        { errors: { title: toastConstants.roleRequired, status: 400 } },
+        { errors: { title: 'toastConstants.roleRequired', status: 400 } },
         { status: 400 }
       )
     }
@@ -76,7 +76,7 @@ export const action: ActionFunction = async ({ request }) => {
         addHandle = json<ActionData>(
           {
             resp: {
-              title: toastConstants.signUpSuccessfull,
+              title: 'toastConstants.signUpSuccessfull',
               status: 200,
             },
           },
@@ -84,9 +84,9 @@ export const action: ActionFunction = async ({ request }) => {
         )
       })
       .catch((err) => {
-        let title = statusCheck.commonError
+        let title = 'statusCheck.commonError'
         if (err.code === 'P2002') {
-          title = toastConstants.memberAlreadyExist
+          title = 'toastConstants.memberAlreadyExist'
         }
         addHandle = json<ActionData>(
           {
@@ -103,6 +103,7 @@ export const action: ActionFunction = async ({ request }) => {
   }
 }
 const SignUpPage = () => {
+  const { t } = useTranslation()
   const signUpActionData = useActionData() as ActionData
   const signUpData = useLoaderData()
 
@@ -111,14 +112,14 @@ const SignUpPage = () => {
     if (signUpActionData) {
       if (signUpActionData.resp?.status === 200) {
         navigate(routes.signIn)
-        toast.success(signUpActionData.resp?.title)
+        toast.success(t(signUpActionData.resp?.title))
       } else if (signUpActionData.errors?.status === 400) {
-        toast.error(signUpActionData.errors?.title, {
+        toast.error(t(signUpActionData.errors?.title), {
           toastId: signUpActionData.errors?.title,
         })
       }
     }
-  }, [signUpActionData, navigate])
+  }, [signUpActionData, navigate, t])
 
   return (
     <div className="flex h-full flex-col justify-center">

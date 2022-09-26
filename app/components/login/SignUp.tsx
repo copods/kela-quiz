@@ -3,14 +3,16 @@ import { useState } from 'react'
 import Button from '~/components/form/Button'
 import DropdownField from '~/components/form/Dropdown'
 import Logo from '~/components/Logo'
-import { commonConstants, logIn, members } from '~/constants/common.constants'
 import { trimValue } from '~/utils'
 import type { Role } from '~/interface/Interface'
 import { routes } from '~/constants/route.constants'
+import { useTranslation } from 'react-i18next'
 
 const SignUp = ({ roles }: { roles: Role[] }) => {
   const transition = useTransition()
   const submit = useSubmit()
+
+  const { t } = useTranslation()
 
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
@@ -46,11 +48,11 @@ const SignUp = ({ roles }: { roles: Role[] }) => {
             <h2
               className="text-center text-3xl font-bold text-gray-900"
               tabIndex={0}
-              title={members.addMember}
-              role={members.addMember}
-              aria-label={members.addMember}
+              title={t('members.addMember')}
+              role={t('members.addMember')}
+              aria-label={t('members.addMember')}
             >
-              {logIn.signUp}
+              {t('logIn.signUp')}
             </h2>
             <hr className="h-px w-6/12 border-none bg-gray-500 text-center" />
           </div>
@@ -58,15 +60,16 @@ const SignUp = ({ roles }: { roles: Role[] }) => {
           <div className="flex justify-between gap-4">
             <div className="flex flex-col gap-1.5">
               <label htmlFor="" className="text-gray-800">
-                {members.firstName}
+                {t('members.firstName')}
               </label>
               <input
                 tabIndex={0}
                 id="firstName"
+                data-cy="firstName"
                 type="text"
                 name="firstName"
                 className="h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
-                placeholder={members.firstName}
+                placeholder={t('members.firstName')}
                 onChange={(e) => setFirstName(trimValue(e.target.value))}
                 value={firstName}
                 maxLength={40}
@@ -74,15 +77,16 @@ const SignUp = ({ roles }: { roles: Role[] }) => {
             </div>
             <div className="flex flex-col gap-1.5">
               <label htmlFor="" className="text-gray-800">
-                {members.lastName}
+                {t('members.lastName')}
               </label>
               <input
                 tabIndex={0}
                 id="lastName"
+                data-cy="lastName"
                 type="text"
                 name="lastName"
                 className="h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
-                placeholder={members.lastName}
+                placeholder={t('members.lastName')}
                 onChange={(e) => setLastName(trimValue(e.target.value))}
                 value={lastName}
                 maxLength={40}
@@ -91,22 +95,23 @@ const SignUp = ({ roles }: { roles: Role[] }) => {
           </div>
           <div className="flex flex-col gap-1.5">
             <label htmlFor="" className="text-gray-800">
-              {commonConstants.email}
+              {t('commonConstants.email')}
             </label>
             <input
               tabIndex={0}
               id="email"
               type="text"
+              data-cy="email"
               name="email"
               className="h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
-              placeholder={commonConstants.email}
+              placeholder={t('commonConstants.email')}
               onChange={(e) => setEmail(trimValue(e.target.value))}
             />
           </div>
           <div className="">
             <div>
               <label htmlFor="" className="text-gray-800">
-                {members.role}
+                {t('members.role')}
               </label>
             </div>
             <DropdownField
@@ -128,19 +133,19 @@ const SignUp = ({ roles }: { roles: Role[] }) => {
               isDisabled={transition.state === 'submitting'}
               title={
                 transition.state === 'submitting'
-                  ? logIn.signingUp
-                  : logIn.signUp
+                  ? t('logIn.signingUp')
+                  : t('logIn.signUp')
               }
               buttonText={
                 transition.state === 'submitting'
-                  ? logIn.signingUp
-                  : logIn.signUp
+                  ? t('logIn.signingUp')
+                  : t('logIn.signUp')
               }
               varient="primary-solid"
               onClick={() => submitMemberForm()}
             />
             <div className="text-base font-medium text-gray-500">
-              {logIn.AlreadyHaveAnAccount}{' '}
+              {t('logIn.AlreadyHaveAnAccount')}{' '}
               <span
                 className="cursor-pointer text-primary"
                 tabIndex={0}
@@ -153,7 +158,7 @@ const SignUp = ({ roles }: { roles: Role[] }) => {
                 }}
                 role="link"
               >
-                {logIn.signIn}
+                {t('logIn.signIn')}
               </span>
             </div>
           </div>

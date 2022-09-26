@@ -2,8 +2,8 @@ import { Icon } from '@iconify/react'
 import Moment from 'moment'
 import { toast } from 'react-toastify'
 import type { TestSection } from '~/interface/Interface'
-import { commonConstants, testsConstants } from '~/constants/common.constants'
 import Button from '../form/Button'
+import { useTranslation } from 'react-i18next'
 
 const SelectSectionCard = ({
   section,
@@ -12,6 +12,8 @@ const SelectSectionCard = ({
   section: TestSection
   updateSection: (e: any) => void
 }) => {
+  const { t } = useTranslation()
+
   const updateThisSection = (
     target: string,
     value?: string,
@@ -73,8 +75,8 @@ const SelectSectionCard = ({
             className="h-7 px-4"
             varient="secondary-solid"
             onClick={() => updateThisSection('isSelected', '', false)}
-            title={commonConstants.removeButton}
-            buttonText={commonConstants.removeButton}
+            title={t('commonConstants.removeButton')}
+            buttonText={t('commonConstants.removeButton')}
           />
         ) : (
           <Button
@@ -82,14 +84,14 @@ const SelectSectionCard = ({
             className="h-7 px-4"
             onClick={() => updateThisSection('isSelected', '', true)}
             varient="primary-solid"
-            title={commonConstants.addButton}
-            buttonText={commonConstants.addButton}
+            title={t('commonConstants.add')}
+            buttonText={t('commonConstants.add')}
           />
         )}
       </div>
       <div className="flex text-xs text-gray-400">
         <span>
-          {commonConstants.byText} {section?.createdBy?.firstName}{' '}
+          {t('commonConstants.byText')} {section?.createdBy?.firstName}{' '}
           {section?.createdBy?.lastName}
         </span>
         <span className="flex">
@@ -98,7 +100,7 @@ const SelectSectionCard = ({
         </span>
       </div>
       <div className="flex text-xs text-gray-400">
-        {testsConstants.totalQuestionsText}:{' '}
+        {t('testsConstants.totalQuestionsText')}:{' '}
         <span className="count">{section?._count?.questions}</span>
       </div>
       <hr className="h-px w-full border-0 bg-gray-300" />
@@ -108,7 +110,7 @@ const SelectSectionCard = ({
             htmlFor="noOfQuestion"
             className="text-xs font-medium text-gray-600"
           >
-            {testsConstants.totalQuestionsText}
+            {t('testsConstants.totalQuestionsText')}
           </label>
           <input
             tabIndex={0}
@@ -122,7 +124,7 @@ const SelectSectionCard = ({
             className={`mt-1 h-11 w-full rounded-lg border border-gray-300 px-3 text-xs ${
               section.isSelected ? 'bg-white' : 'bg-gray-200'
             }`}
-            placeholder={commonConstants.totalQuestion}
+            placeholder={t('commonConstants.totalQuestion')}
             disabled={!section.isSelected}
           />
         </div>
@@ -131,7 +133,7 @@ const SelectSectionCard = ({
             htmlFor="totalTime"
             className="text-xs font-medium text-gray-600"
           >
-            {testsConstants.totalTimeText}
+            {t('testsConstants.totalTimeText')}
           </label>
           <input
             tabIndex={0}

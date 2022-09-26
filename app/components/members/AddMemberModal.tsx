@@ -3,11 +3,11 @@ import { Icon } from '@iconify/react'
 import type { Role } from '~/interface/Interface'
 import { useSubmit, useTransition } from '@remix-run/react'
 import { Fragment, useState, useEffect } from 'react'
-import { commonConstants, members } from '~/constants/common.constants'
 import Button from '../form/Button'
 import { trimValue } from '~/utils'
 import DropdownField from '../form/Dropdown'
-// import { validate } from '~/utils'
+import { useTranslation } from 'react-i18next'
+
 export default function AddMemberModal({
   roles,
   open,
@@ -17,6 +17,8 @@ export default function AddMemberModal({
   open: boolean
   setOpen: (e: boolean) => void
 }) {
+  const { t } = useTranslation()
+
   const transition = useTransition()
   const submit = useSubmit()
   const [firstName, setFirstName] = useState('')
@@ -81,11 +83,11 @@ export default function AddMemberModal({
                   <h2
                     className="text-2xl font-bold text-gray-700"
                     tabIndex={0}
-                    title={members.addMember}
-                    role={members.addMember}
-                    aria-label={members.addMember}
+                    title={t('members.addMember')}
+                    role={t('members.addMember')}
+                    aria-label={t('members.addMember')}
                   >
-                    {members.addMember}
+                    {t('members.addMember')}
                   </h2>
                   <Icon
                     tabIndex={0}
@@ -101,7 +103,7 @@ export default function AddMemberModal({
                 <div className="flex justify-between gap-4 pb-6">
                   <div>
                     <label htmlFor="" className="text-gray-800">
-                      {members.firstName}
+                      {t('members.firstName')}
                     </label>
                     <input
                       tabIndex={0}
@@ -109,7 +111,7 @@ export default function AddMemberModal({
                       type="text"
                       name="firstName"
                       className="my-1.5 h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
-                      placeholder={members.firstName}
+                      placeholder={t('members.firstName')}
                       onChange={(e) => setFirstName(trimValue(e.target.value))}
                       value={firstName}
                       maxLength={40}
@@ -117,7 +119,7 @@ export default function AddMemberModal({
                   </div>
                   <div>
                     <label htmlFor="" className="text-gray-800">
-                      {members.lastName}
+                      {t('members.lastName')}
                     </label>
                     <input
                       tabIndex={0}
@@ -125,7 +127,7 @@ export default function AddMemberModal({
                       type="text"
                       name="lastName"
                       className="my-1.5 h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
-                      placeholder={members.lastName}
+                      placeholder={t('members.lastName')}
                       onChange={(e) => setLastName(trimValue(e.target.value))}
                       value={lastName}
                       maxLength={40}
@@ -134,7 +136,7 @@ export default function AddMemberModal({
                 </div>
                 <div className="pb-6 ">
                   <label htmlFor="" className="text-gray-800">
-                    {commonConstants.email}
+                    {t('commonConstants.email')}
                   </label>
                   <input
                     tabIndex={0}
@@ -142,14 +144,14 @@ export default function AddMemberModal({
                     type="text"
                     name="email"
                     className="my-1.5 h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
-                    placeholder={commonConstants.email}
+                    placeholder={t('commonConstants.email')}
                     onChange={(e) => setEmail(trimValue(e.target.value))}
                   />
                 </div>
                 <div className="pb-6">
                   <div>
                     <label htmlFor="" className="text-gray-800">
-                      {members.role}
+                      {t('members.role')}
                     </label>
                   </div>
                   <DropdownField
@@ -168,8 +170,8 @@ export default function AddMemberModal({
                     className="h-9 px-4"
                     onClick={() => setOpen(false)}
                     varient="primary-outlined"
-                    title={commonConstants.cancel}
-                    buttonText={commonConstants.cancel}
+                    title={t('commonConstants.cancel')}
+                    buttonText={t('commonConstants.cancel')}
                   />
                   <Button
                     tabIndex={0}
@@ -180,13 +182,13 @@ export default function AddMemberModal({
                     isDisabled={transition.state === 'submitting'}
                     title={
                       transition.state === 'submitting'
-                        ? commonConstants.adding
-                        : commonConstants.add
+                        ? t('commonConstants.adding')
+                        : t('commonConstants.add')
                     }
                     buttonText={
                       transition.state === 'submitting'
-                        ? commonConstants.adding
-                        : commonConstants.add
+                        ? t('commonConstants.adding')
+                        : t('commonConstants.add')
                     }
                     varient="primary-solid"
                     onClick={() => submitMemberForm()}

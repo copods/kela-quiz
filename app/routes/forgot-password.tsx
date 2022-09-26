@@ -4,8 +4,8 @@ import { sendResetPassword } from '~/models/user.server'
 import { useEffect, useState } from 'react'
 import { useActionData, useNavigate } from '@remix-run/react'
 import { toast } from 'react-toastify'
-import { statusCheck } from '~/constants/common.constants'
 import { routes } from '~/constants/route.constants'
+import { useTranslation } from 'react-i18next'
 
 export const action: ActionFunction = async ({ request, params }) => {
   const formData = await request.formData()
@@ -18,6 +18,7 @@ export const action: ActionFunction = async ({ request, params }) => {
 }
 
 const ForgetPassword = () => {
+  const { t } = useTranslation()
   let navigate = useNavigate()
   const [checkErrorStatus, setCheckErrorStatus] = useState(false)
   const action = useActionData() as string
@@ -26,10 +27,10 @@ const ForgetPassword = () => {
       setCheckErrorStatus(true)
     }
     if (action === 'Done') {
-      toast.success(statusCheck.resendPasswordSuccess)
+      toast.success(t('statusCheck.resendPasswordSuccess'))
       navigate(routes.signIn)
     }
-  }, [action, navigate])
+  }, [action, navigate, t])
   return (
     <div className="flex h-full flex-col">
       <UserForgetPassword checkErrorStatus={checkErrorStatus} />

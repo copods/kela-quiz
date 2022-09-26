@@ -2,12 +2,9 @@ import { Form, useTransition } from '@remix-run/react'
 import { Fragment, useEffect, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
-import {
-  commonConstants,
-  sectionsConstants,
-} from '~/constants/common.constants'
 import Button from '../form/Button'
 import { trimValue } from '~/utils'
+import { useTranslation } from 'react-i18next'
 const AddSection = ({
   open,
   setOpen,
@@ -17,6 +14,8 @@ const AddSection = ({
   setOpen: (e: boolean) => void
   showErrorMessage: boolean
 }) => {
+  const { t } = useTranslation()
+
   const transition = useTransition()
   const [sectionName, setSectionName] = useState('')
   const [description, setDescription] = useState('')
@@ -61,12 +60,12 @@ const AddSection = ({
                 <div className="addSectionDilog flex items-center justify-between pt-1">
                   <h2
                     className="text-2xl font-bold text-gray-700"
-                    title={sectionsConstants.addSection}
-                    role={sectionsConstants.addSection}
+                    title={t('sectionsConstants.addSection')}
+                    role={t('sectionsConstants.addSection')}
                     tabIndex={0}
-                    aria-label={sectionsConstants.addSection}
+                    aria-label={t('sectionsConstants.addSection')}
                   >
-                    {sectionsConstants.addSection}
+                    {t('sectionsConstants.addSection')}
                   </h2>
                   <Icon
                     tabIndex={0}
@@ -85,7 +84,7 @@ const AddSection = ({
                     type="text"
                     name="name"
                     className="h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
-                    placeholder={commonConstants.enterSectionName}
+                    placeholder={t('commonConstants.enterSectionName')}
                     onChange={(e) => setSectionName(trimValue(e.target.value))}
                     value={sectionName}
                     maxLength={52}
@@ -100,7 +99,7 @@ const AddSection = ({
                     className="w-full rounded-lg border border-gray-200 px-3 py-4 text-base"
                     onChange={(e) => setDescription(trimValue(e.target.value))}
                     value={description}
-                    placeholder={commonConstants.enterSectionDesc}
+                    placeholder={t('commonConstants.enterSectionDesc')}
                   />
                 </div>
                 <div className="flex justify-end gap-2">
@@ -110,8 +109,8 @@ const AddSection = ({
                     className="h-9 px-4"
                     onClick={() => setOpen(false)}
                     varient="primary-outlined"
-                    title={commonConstants.cancel}
-                    buttonText={commonConstants.cancel}
+                    title={t('commonConstants.cancel')}
+                    buttonText={t('commonConstants.cancel')}
                   />
                   <Button
                     tabIndex={0}
@@ -127,13 +126,13 @@ const AddSection = ({
                     datacy="submit"
                     title={
                       transition.state === 'submitting'
-                        ? commonConstants.adding
-                        : commonConstants.add
+                        ? t('commonConstants.adding')
+                        : t('commonConstants.add')
                     }
                     buttonText={
                       transition.state === 'submitting'
-                        ? commonConstants.adding
-                        : commonConstants.add
+                        ? t('commonConstants.adding')
+                        : t('commonConstants.add')
                     }
                   />
                 </div>

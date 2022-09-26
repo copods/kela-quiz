@@ -10,7 +10,7 @@ import { getAllSections } from '~/models/sections.server'
 import { createTest } from '~/models/tests.server'
 import { getUserId, requireUserId } from '~/session.server'
 import { routes } from '~/constants/route.constants'
-import { statusCheck } from '~/constants/common.constants'
+import { useTranslation } from 'react-i18next'
 
 type LoaderData = {
   sections: Awaited<ReturnType<typeof getAllSections>>
@@ -33,7 +33,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   await getAllSections(filter)
     .then((res) => {
       sections = res as Section[]
-      status = statusCheck.success
+      status = 'statusCheck.success'
     })
     .catch((err) => {
       status = err
@@ -68,23 +68,28 @@ export const action: ActionFunction = async ({ request }) => {
 }
 
 const AddTest = () => {
+  const { t } = useTranslation()
+
   const testData = useLoaderData() as unknown as LoaderData
   const actionData = useActionData() as any
   const navigate = useNavigate()
   useEffect(() => {
+    console.log('accaca', actionData)
     if (actionData?.test.id) {
-      toast.success(statusCheck.testAddedSuccessFully)
+      toast.success(t('statusCheck.testAddedSuccessFully'))
       navigate(routes.tests)
     } else if (actionData) {
       if (actionData?.test.code == 'P2002') {
-        toast.error(statusCheck.testAlreadyExist)
+        toast.error(t('statusCheck.testAlreadyExist'))
       } else {
-        toast.error(statusCheck.commonError)
+        toast.error(t('statusCheck.commonError'))
       }
     }
-  }, [actionData, navigate])
-  if (testData.status != statusCheck.success) {
-    toast.success(statusCheck.commonError)
+  }, [actionData, navigate, t])
+
+  console.log('tddta', testData)
+  if (t(testData.status) != t('statusCheck.success')) {
+    toast.success(t('statusCheck.commonError'))
   }
 
   return (

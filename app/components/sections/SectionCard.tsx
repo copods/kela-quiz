@@ -5,12 +5,7 @@ import { useSubmit } from '@remix-run/react'
 import DeletePopUp from '../DeletePopUp'
 import { useEffect } from 'react'
 
-import {
-  commonConstants,
-  deletePopUp,
-  sectionsConstants,
-  // statusCheck,
-} from '~/constants/common.constants'
+import { useTranslation } from 'react-i18next'
 const SectionCard = ({
   name,
   isActive,
@@ -36,6 +31,7 @@ const SectionCard = ({
   setIsDelete?: (e: boolean) => void | undefined
   isDelete: boolean
 }) => {
+  const { t } = useTranslation()
   const submit = useSubmit()
   const deleteSection = () => {
     submit({ deleteSection: 'sectionDelete', id: id }, { method: 'post' })
@@ -92,7 +88,7 @@ const SectionCard = ({
                         if (setIsDelete !== undefined) setIsDelete(true)
                       }}
                       name="deleteSection"
-                      title={commonConstants.delete}
+                      title={t('commonConstants.delete')}
                     >
                       <>
                         <Icon
@@ -101,7 +97,7 @@ const SectionCard = ({
                         text-red-500"
                           aria-hidden="true"
                         />
-                        {commonConstants.delete}
+                        {t('commonConstants.delete')}
                       </>
                     </button>
                   )}
@@ -119,15 +115,15 @@ const SectionCard = ({
         </span>
       </div>
       <div className="flex text-xs text-gray-400">
-        {sectionsConstants.totalQuestions} {questionsCount}
+        {t('sectionsConstants.totalQuestions')} {questionsCount}
       </div>
       <DeletePopUp
         setOpen={setIsDelete}
         open={isDelete}
         onDelete={deleteSection}
-        subAlert={deletePopUp.subAlert}
+        subAlert={t('deletePopUp.subAlert')}
         deleteItem={name}
-        deleteItemType={sectionsConstants.sectionName}
+        deleteItemType={t('sectionsConstants.sectionName')}
         setDeleted={setDeleted}
       />
     </div>

@@ -7,12 +7,12 @@ const memberEmail = 'johndoe@example.com'
 const invalidMemberEmail = 'abc@email.com'
 
 describe('Forgot password', () => {
-  beforeEach('sign-in', () => {
-    cy.visit('/sign-in')
-    cy.get('span#forgot-password').should('have.text', forgotPasswordConstants.header).click()
+  beforeEach('forgot-password', () => {
+    cy.visit('/forgot-password')
   })
 
   it('Checking account not found for reset password ', () => {
+    cy.get('#forget-pass-header').should('be.visible', { timeout: 6000 })
     cy.get('#forget-pass-header').should(
       'have.text',
       forgotPasswordConstants.header
@@ -37,11 +37,16 @@ describe('Forgot password', () => {
       })
   })
   it('Checking for account when it is found for reset password ', () => {
+    cy.log('On forget Password page')
+    cy.get('#forget-pass-header').should('be.visible', { timeout: 6000 })
     cy.get('#forget-pass-header').should(
       'have.text',
       forgotPasswordConstants.header
     )
-    cy.get('input[name="email"]').clear().type(memberEmail)
+    cy.get('input[name="email"]')
+      .should('be.visible', { timeout: 6000 })
+      .clear()
+      .type(memberEmail)
     cy.get('#reset-password').click()
     cy.get('.Toastify__toast').should(
       'have.text',

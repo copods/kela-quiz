@@ -1,7 +1,7 @@
 import { Fragment } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
-import { sectionsConstants } from '~/constants/common.constants'
+import { useTranslation } from 'react-i18next'
 
 function DropdownField({
   data,
@@ -18,6 +18,8 @@ function DropdownField({
   value: any
   setValue: (e: any) => void
 }) {
+  const { t } = useTranslation()
+
   function classNames(...classes: Array<string>) {
     return classes.filter(Boolean).join(' ')
   }
@@ -35,8 +37,8 @@ function DropdownField({
           <div
             className="dropdown relative w-full"
             id="dropdown"
-            title={sectionsConstants.dropdown}
-            aria-label={sectionsConstants.dropdown}
+            title={t('sectionsConstants.dropdown')}
+            aria-label={t('sectionsConstants.dropdown')}
           >
             <Listbox.Button
               id="dropdownButton"

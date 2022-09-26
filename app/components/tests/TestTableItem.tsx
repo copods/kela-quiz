@@ -7,7 +7,7 @@ import { useNavigate, useSubmit } from '@remix-run/react'
 import TestListActionMenu from '../TestListActionMenu'
 import { useEffect, useState } from 'react'
 import InviteCandidatePopup from './InviteCandidatePopup'
-import { testsConstants, testTableItem } from '~/constants/common.constants'
+import { useTranslation } from 'react-i18next'
 import { routes } from '~/constants/route.constants'
 
 const TestTableItem = ({
@@ -31,6 +31,8 @@ const TestTableItem = ({
   totalCount: number
   status: string | undefined
 }) => {
+  const { t } = useTranslation()
+
   const [showDeletePopup, setShowDeletePopup] = useState(false)
   const [deleted, setDeleted] = useState(false)
   const submit = useSubmit()
@@ -115,7 +117,7 @@ const TestTableItem = ({
             onKeyUp={(e) => {
               if (e.key === 'Enter') setCandidatePopupOpen(true)
             }}
-            aria-label={testTableItem.inviteMember}
+            aria-label={t('testTableItem.inviteMember')}
           />
           <TestListActionMenu
             menuIcon={'mdi:dots-vertical'}
@@ -123,7 +125,7 @@ const TestTableItem = ({
             open={showDeletePopup}
             menuListIcon={'ic:outline-delete-outline'}
             menuListText={'Delete'}
-            aria-label={testTableItem.menu}
+            aria-label={t('testTableItem.menu')}
             id={id}
           />
         </div>
@@ -134,7 +136,7 @@ const TestTableItem = ({
           setDeleted={setDeleted}
           status={status}
           deleteItem={testName}
-          deleteItemType={testsConstants.testName}
+          deleteItemType={t('testsConstants.test')}
         />
         <InviteCandidatePopup
           openInvitePopup={candidatePopupOpen}

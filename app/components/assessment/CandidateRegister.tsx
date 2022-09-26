@@ -2,9 +2,11 @@ import React, { useState } from 'react'
 import { Form } from '@remix-run/react'
 import Button from '~/components/form/Button'
 import InputField from '~/components/form/InputField'
-import { commonConstants } from '~/constants/common.constants'
+import { useTranslation } from 'react-i18next'
 
 function CandidateRegister() {
+  const { t } = useTranslation()
+
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const canSubmitBtnBeEnabled = () => {
@@ -48,8 +50,8 @@ function CandidateRegister() {
             })}
           </div>
           <Button
-            title={commonConstants.proceed}
-            buttonText={commonConstants.proceed}
+            title={t('commonConstants.proceed')}
+            buttonText={t('commonConstants.proceed')}
             type="submit"
             className="h-12 w-full text-base"
             isDisabled={!canSubmitBtnBeEnabled()}

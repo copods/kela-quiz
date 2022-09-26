@@ -1,12 +1,11 @@
 import { useLoaderData } from '@remix-run/react'
-import {
-  candidateExamConstants,
-  commonConstants,
-} from '~/constants/common.constants'
+import { useTranslation } from 'react-i18next'
 import Button from '../form/Button'
 // import CandidateQuestionStepper from './CandidateQuestionStepper'
 
 const CandidateQuestionFooter = () => {
+  const { t } = useTranslation()
+
   const { question, section, lastSection } = useLoaderData()
   return (
     <div className="flex h-16 items-center justify-between gap-6 border-t bg-white px-6 py-4">
@@ -28,8 +27,8 @@ const CandidateQuestionFooter = () => {
         <Button
           className="h-8 w-28"
           varient="primary-outlined"
-          title={commonConstants.prevoiusButton}
-          buttonText={commonConstants.prevoiusButton}
+          title={t('commonConstants.prevoiusButton')}
+          buttonText={t('commonConstants.prevoiusButton')}
           isDisabled={question.order === 1}
           type="submit"
           value="prev"
@@ -39,8 +38,8 @@ const CandidateQuestionFooter = () => {
           <Button
             className="h-8 w-28"
             varient="primary-solid"
-            title={commonConstants.nextButton}
-            buttonText={commonConstants.nextButton}
+            title={t('commonConstants.nextButton')}
+            buttonText={t('commonConstants.nextButton')}
             isDisabled={question.order === section.totalQuestions}
             type="submit"
             value="next"
@@ -50,8 +49,8 @@ const CandidateQuestionFooter = () => {
           <Button
             className="h-8 w-28"
             varient="primary-solid"
-            title={candidateExamConstants.endTest}
-            buttonText={candidateExamConstants.endTest}
+            title={t('candidateExamConstants.endTest')}
+            buttonText={t('candidateExamConstants.endTest')}
             isDisabled={question.order !== section.totalQuestions}
             type="submit"
             value={section.order}
@@ -61,7 +60,7 @@ const CandidateQuestionFooter = () => {
           <Button
             className="h-8 w-28"
             varient="primary-solid"
-            title={candidateExamConstants.nextSection}
+            title={t('candidateExamConstants.nextSection')}
             buttonText={'Finish'}
             isDisabled={question.order !== section.totalQuestions}
             type="submit"

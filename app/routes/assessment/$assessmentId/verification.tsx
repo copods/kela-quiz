@@ -10,9 +10,9 @@ import {
 } from '~/utils/assessment.utils'
 import { useEffect } from 'react'
 import { toast } from 'react-toastify'
-import { statusCheck } from '~/constants/common.constants'
 import CandidateOtp from '~/components/assessment/CandidateOtpVerification'
 import Header from '~/components/assessment/Header'
+import { useTranslation } from 'react-i18next'
 
 export type ActionData = {
   errors?: {
@@ -47,10 +47,10 @@ export const action: ActionFunction = async ({ request, params }) => {
       assesmentId: params.assessmentId as string,
     })
       .then((res) => {
-        checkStatus = statusCheck.success
+        checkStatus = 'success'
       })
       .catch((err) => {
-        checkStatus = statusCheck.commonError
+        checkStatus = 'commonError'
       })
   }
   if (proceed) {
@@ -77,17 +77,18 @@ export const action: ActionFunction = async ({ request, params }) => {
   return checkStatus
 }
 const Verification = () => {
+  const { t } = useTranslation()
   const loaderData = useLoaderData() as any
   const action = useActionData()
   useEffect(() => {
-    if (action === statusCheck.success) {
-      toast.success(statusCheck.otpSent)
-    } else if (action === statusCheck.commonError) {
-      toast.error(statusCheck.erroSendingOtp)
+    if (action === 'success') {
+      toast.success(t('statusCheck.otpSent'))
+    } else if (action === 'commonError') {
+      toast.error(t('statusCheck.erroSendingOtp'))
     } else if (action === null) {
-      toast.error(statusCheck.correctOtp)
+      toast.error(t('statusCheck.correctOtp'))
     }
-  }, [action])
+  }, [action, t])
   return (
     <div className="flex h-full flex-col">
       <Header />
