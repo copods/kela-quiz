@@ -43,8 +43,8 @@ describe('Forgot password', () => {
     cy.get('#forget-pass-header').should(
       'have.text',
       forgotPasswordConstants.header
-    )
-    cy.get('input[name="email"]').clear().type(memberEmail)
+    ).should("be.visible", { timeout: 6000 })
+    cy.get('input[name="email"]').should("be.visible", { timeout: 6000 }).clear().type(memberEmail)
     cy.get('#reset-password').click()
     cy.get('.Toastify__toast').should(
       'have.text',
