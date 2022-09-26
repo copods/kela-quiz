@@ -33,7 +33,7 @@ describe('Test for Logout, SideNav', () => {
       .find('#sections')
       .should('have.text', routeFiles.sections)
       .click()
-    cy.location('pathname').should('eq', '/sections')
+    cy.location('pathname').should('include', '/sections')
 
     // members page
     cy.get('a').find('#members').should('have.text', members.members).click()

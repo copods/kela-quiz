@@ -289,9 +289,7 @@ describe('smoke tests', () => {
         if (el.find('.count')[0].innerText != '0') {
           cy.get('input#no-of-qu').should('have.disabled', true)
           cy.get('input#time').should('have.disabled', true)
-          cy.get('button')
-            .should('have.text', commonConstants.add)
-            .click()
+          cy.get('button').should('have.text', commonConstants.add).click()
           cy.get('button').should('have.text', cypress.remove)
 
           cy.get('input#no-of-qu').clear().type('1')
@@ -375,9 +373,7 @@ describe('smoke tests', () => {
         if (el.find('.count')[0].innerText != '0') {
           cy.get('input#no-of-qu').should('have.disabled', true)
           cy.get('input#time').should('have.disabled', true)
-          cy.get('button')
-            .should('have.text', commonConstants.add)
-            .click()
+          cy.get('button').should('have.text', commonConstants.add).click()
           cy.get('button').should('have.text', cypress.remove)
 
           cy.get('input#no-of-qu').clear().type('1')

@@ -146,7 +146,12 @@
     "lastNameReq": "lastName is required",
     "emailIsReq": "email is required",
     "roleIdIsReq": "roleId is required",
-    "memberAddedSuccess": "Member Added Successfully..!"
+    "memberAddedSuccess": "Member Added Successfully..!",
+    "erroSendingOtp": "Error in sending OTP..",
+    "otpSent": "Otp sent. Please check your email",
+    "correctOtp": "Please enter correct OTP",
+    "resendPasswordSuccess": "New password has been sent to email successfully",
+    "resendPasswordError": "Account not found. Please enter valid email"
   },
   "resultConstants": {
     "order": "Order",
@@ -213,7 +218,8 @@
     "roleRequired": "Role is required",
     "correctEmail": "Please provide a valid email address",
     "memberAdded": "Member Added Successfully..!",
-    "memberAlreadyExist": "Member with this email id already exists!"
+    "memberAlreadyExist": "Member with this email id already exists!",
+    "signUpSuccessfull": "Sign Up successfully"
   },
   "otpConstants": {
     "header": "OTP Verification",
