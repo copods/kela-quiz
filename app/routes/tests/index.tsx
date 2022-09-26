@@ -24,6 +24,7 @@ export type ActionData = {
   }
   resp?: {
     status?: string
+    message?: string
     check?: Date
   }
 }
@@ -64,7 +65,7 @@ export const action: ActionFunction = async ({ request }) => {
     await deleteTestById(formData.get('id') as string)
       .then((res) => {
         deleteHandle = json<ActionData>(
-          { resp: { status: 'statusCheck.deletedSuccess' } },
+          { resp: { status: '200', message: 'statusCheck.deletedSuccess' } },
           { status: 200 }
         )
       })

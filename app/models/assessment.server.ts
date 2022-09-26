@@ -461,8 +461,8 @@ export async function skipAnswerAndNextQuestion({
           selectedOptions?.length || answers?.length
             ? 'ANSWERED'
             : question?.status === 'ANSWERED'
-              ? 'ANSWERED'
-              : 'SKIPPED',
+            ? 'ANSWERED'
+            : 'SKIPPED',
         answeredAt: new Date(),
       },
       select: {

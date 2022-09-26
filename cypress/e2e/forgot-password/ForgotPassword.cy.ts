@@ -1,4 +1,7 @@
-import { forgotPasswordConstants, statusCheck } from '~/constants/common.constants'
+import {
+  forgotPasswordConstants,
+  statusCheck,
+} from '~/constants/common.constants'
 import { routes } from '~/constants/route.constants'
 const memberEmail = 'johndoe@example.com'
 const invalidMemberEmail = 'abc@email.com'
@@ -6,7 +9,9 @@ const invalidMemberEmail = 'abc@email.com'
 describe('Forgot password', () => {
   beforeEach('sign-in', () => {
     cy.visit('/sign-in')
-    cy.get('span#forgot-password').should('have.text', forgotPasswordConstants.header).click()
+    cy.get('span#forgot-password')
+      .should('have.text', forgotPasswordConstants.header)
+      .click()
   })
 
   it('Checking account not found for reset password ', () => {

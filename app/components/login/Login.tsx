@@ -13,8 +13,8 @@ function Login({ actionData, redirectTo }: LoginProps) {
   const [password, setPassword] = useState('')
   const inputFieldsProps = [
     {
-      label: 'Email',
-      placeholder: 'Enter Email',
+      label: t('commonConstants.email'),
+      placeholder: t('forgotPasswordConstants.enterEmailPlaceholder'),
       type: 'text',
       name: 'email',
       required: true,

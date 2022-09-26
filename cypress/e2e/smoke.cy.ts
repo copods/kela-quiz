@@ -290,7 +290,7 @@ describe('smoke tests', () => {
           cy.get('input#no-of-qu').should('have.disabled', true)
           cy.get('input#time').should('have.disabled', true)
           cy.get('button')
-            .should('have.text', commonConstants.addButton)
+            .should('have.text', commonConstants.add)
             .click()
           cy.get('button').should('have.text', cypress.remove)
 
@@ -376,7 +376,7 @@ describe('smoke tests', () => {
           cy.get('input#no-of-qu').should('have.disabled', true)
           cy.get('input#time').should('have.disabled', true)
           cy.get('button')
-            .should('have.text', commonConstants.addButton)
+            .should('have.text', commonConstants.add)
             .click()
           cy.get('button').should('have.text', cypress.remove)
 

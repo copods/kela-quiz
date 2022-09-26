@@ -74,6 +74,7 @@ const AddTest = () => {
   const actionData = useActionData() as any
   const navigate = useNavigate()
   useEffect(() => {
+    console.log('accaca', actionData)
     if (actionData?.test.id) {
       toast.success(t('statusCheck.testAddedSuccessFully'))
       navigate(routes.tests)
@@ -85,7 +86,9 @@ const AddTest = () => {
       }
     }
   }, [actionData, navigate, t])
-  if (testData.status != t('statusCheck.success')) {
+
+  console.log('tddta', testData)
+  if (t(testData.status) != t('statusCheck.success')) {
     toast.success(t('statusCheck.commonError'))
   }
 

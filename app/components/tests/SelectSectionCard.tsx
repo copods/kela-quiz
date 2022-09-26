@@ -84,8 +84,8 @@ const SelectSectionCard = ({
             className="h-7 px-4"
             onClick={() => updateThisSection('isSelected', '', true)}
             varient="primary-solid"
-            title={t('commonConstants.addButton')}
-            buttonText={t('commonConstants.addButton')}
+            title={t('commonConstants.add')}
+            buttonText={t('commonConstants.add')}
           />
         )}
       </div>

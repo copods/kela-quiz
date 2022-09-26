@@ -49,6 +49,13 @@
     "totalQuestion": "कुल सवाल",
     "srNo": "Sr.No"
   },
+  "forgotPasswordConstants": {
+    "header": "Forgot password?",
+    "enterEmail": "Enter your email to retrieve your password.",
+    "resetPassword": "Reset Password",
+    "backToLogin": "Back to login",
+    "enterEmailPlaceholder": "Enter asdasd"
+  },
   "sideNav": {
     "sideNavHeading": "Quiz"
   },
