@@ -65,6 +65,7 @@ const SignUp = ({ roles }: { roles: Role[] }) => {
               <input
                 tabIndex={0}
                 id="firstName"
+                data-cy="firstName"
                 type="text"
                 name="firstName"
                 className="h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
@@ -81,6 +82,7 @@ const SignUp = ({ roles }: { roles: Role[] }) => {
               <input
                 tabIndex={0}
                 id="lastName"
+                data-cy="lastName"
                 type="text"
                 name="lastName"
                 className="h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
@@ -99,6 +101,7 @@ const SignUp = ({ roles }: { roles: Role[] }) => {
               tabIndex={0}
               id="email"
               type="text"
+              data-cy="email"
               name="email"
               className="h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
               placeholder={t('commonConstants.email')}
