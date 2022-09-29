@@ -1,4 +1,4 @@
-import InvalidLink from '../../../public/assets/invalidLink.svg'
+import InvalidLink from '../../../public/assets/invalid-link.svg'
 import Logo from '~/components/Logo'
 import { useTranslation } from 'react-i18next'
 
@@ -13,9 +13,9 @@ const InvalidLinkComponent = () => {
           {t('sideNav.sideNavHeading')}
         </span>
       </div>
-      <div className="-mt-20 flex h-full w-full flex-col items-center justify-center gap-4">
+      <div className="-mt-20 flex h-full w-full flex-col items-center justify-center gap-10">
         <img src={InvalidLink} alt={t('commonConstants.invalidLink')} />
-        <p className="text-5xl font-bold text-gray-900">
+        <p className="text-2xl font-bold text-gray-900">
           {t('candidateExamConstants.wrongLink')}
         </p>
       </div>

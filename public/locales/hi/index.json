@@ -1,97 +1,96 @@
 {
   "members": {
-    "addMember": "सदस्य जोड़ें",
-    "firstName": "पहला नाम",
-    "lastName": "उपनाम",
-    "role": "भूमिका",
-    "members": "सदस्य",
-    "addedOn": "पर जोड़ा",
-    "action": "गतिविधि"
+    "addMember": "Add Member",
+    "firstName": "First Name",
+    "lastName": " Last Name",
+    "role": "Role",
+    "members": "Members",
+    "addedOn": "Added On",
+    "action": "Action",
+    "member": "member"
   },
   "commonConstants": {
-    "name": "नाम",
-    "email": "ईमेल",
-    "cancel": "रद्द करें",
-    "delete": "मिटाये ",
-    "backButton": "पीछे",
-    "nextButton": "अगला",
-    "prevoiusButton": "पिछला",
-    "removeButton": "हटाए",
-    "submit": "प्रस्तुत",
-    "adding": "जोड़ रहे हैं...",
-    "add": "जोड़ें",
-    "byText": "द्वारा",
-    "continue": "जारी रखें",
-    "total": "कुल",
-    "placeholderForOptionInput": "अपना विकल्प यहाँ लिखें",
-    "sortAscending": "आरोही",
-    "sortDescending": "अवरोही",
-    "invalidLink": "अमान्य लिंक",
-    "useSetting": "सेटिंग का प्रयोग करें",
-    "settings": "समायोजन",
-    "groupByCandidate": "उम्मीदवार द्वारा समूह",
-    "results": "परिणाम",
-    "goToDashboard": "डैशबोर्ड पर जाएं",
-    "checkOrder": "आदेश की जाँच करें",
-    "complete": "पूरा",
-    "pending": "लंबित",
-    "createTest": "टेस्ट बनाना",
-    "cancelAddTest": "रद्द करें परीक्षण जोड़ें",
-    "previousTab": "पिछला टैब",
-    "nextTab": "अगला टैब",
-    "logo": "प्रतीक चिन्ह",
-    "saveAndExit": "सहेजें और बाहर निकलें",
-    "saveAndAddMore": "सहेजें और अधिक जोड़ें",
-    "logout": "लॉग आउट",
-    "enterSectionName": "अनुभाग का नाम दर्ज करें",
-    "enterSectionDesc": "अनुभाग विवरण दर्ज करें",
-    "enterTestName": "परीक्षण का नाम दर्ज करें",
-    "totalQuestion": "कुल सवाल",
+    "name": "Name",
+    "proceed": "Proceed",
+    "email": "Email",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "backButton": "Back",
+    "nextButton": "Next",
+    "prevoiusButton": "Previous",
+    "removeButton": "Remove",
+    "submit": "Submit",
+    "adding": "Adding...",
+    "add": "Add",
+    "byText": "By",
+    "continue": "Continue",
+    "total": "Total",
+    "placeholderForOptionInput": "Write your option here",
+    "sortAscending": "Sort Ascending",
+    "sortDescending": "Sort Descending",
+    "invalidLink": "Invalid Link",
+    "useSetting": "Use setting",
+    "settings": "Settings",
+    "groupByCandidate": "Group By Candidate",
+    "results": "Results",
+    "goToDashboard": "Go to Dashboard",
+    "checkOrder": "Check Order",
+    "complete": "Complete",
+    "pending": "Pending",
+    "createTest": "Creating Test",
+    "cancelAddTest": "Cancel Add Test",
+    "previousTab": "Previous Tab",
+    "nextTab": "Next Tab",
+    "logo": "logo",
+    "saveAndExit": "Save & Exit",
+    "saveAndAddMore": "Save & Add More",
+    "logout": "Logout",
+    "enterSectionName": "Enter Section Name",
+    "enterSectionDesc": "Enter Section Description",
+    "enterTestName": "Enter test name",
+    "totalQuestion": "Total Questions",
     "srNo": "Sr.No"
-  },
-  "forgotPasswordConstants": {
-    "header": "Forgot password?",
-    "enterEmail": "Enter your email to retrieve your password.",
-    "resetPassword": "Reset Password",
-    "backToLogin": "Back to login",
-    "enterEmailPlaceholder": "Enter asdasd"
   },
   "sideNav": {
     "sideNavHeading": "Quiz"
   },
   "inviteMemeberPopUpConstants": {
-    "inviteCandidate": "उम्मीदवार को आमंत्रित करें",
-    "closePopUp": "पॉप अप बंद करें",
-    "enterCandidatesEmail": "उन्हें आमंत्रित करने के लिए उम्मीदवार का ईमेल नीचे दर्ज करें",
-    "candidateEmail": "उम्मीदवार ईमेल",
-    "inviteMore": "अधिक आमंत्रित करें",
-    "invite": "आमंत्रित करें"
+    "inviteCandidate": "Invite Candidate",
+    "closePopUp": "Close Pop Up",
+    "enterCandidatesEmail": "Enter candidate’s email below to invite them for",
+    "candidateEmail": "Candidate Email",
+    "inviteMore": "Invite More",
+    "invite": "Invite"
   },
   "testTableItem": {
-    "inviteMember": "सदस्य को आमंत्रित करें",
-    "menu": "मेन्यू"
+    "inviteMember": "Invite Member",
+    "menu": "Menu"
   },
   "deletePopUp": {
-    "alert": "क्या आप हटाना चाहते हैं",
-    "subAlert": "(इस खंड के सभी प्रश्न भी हटा दिए जाएंगे)"
+    "alert": "Do you want to delete",
+    "subAlert": "(All the questions for this section will also be deleted)"
   },
   "logIn": {
-    "signInMessage": "अपने अकाउंट में साइन इन करें",
-    "signIn": "साइन इन करें"
+    "signInMessage": "Sign in to your account",
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "signingUp": "Signing up...",
+    "AlreadyHaveAnAccount": "Already have an account?",
+    "DontHaveAnAccountYet": "Don’t have an account yet?"
   },
   "addQuestion": {
-    "createOptions": "विकल्प बनाएं",
-    "checkOrder": "गण की जाँच करें",
-    "addOptions": "विकल्प जोड़ें",
-    "addQuestion": "प्रश्न जोड़ें"
+    "createOptions": "Create Options",
+    "checkOrder": "Check Order",
+    "addOptions": "Add Options",
+    "addQuestion": "Add Question"
   },
   "sectionsConstants": {
-    "addSection": "अनुभाग जोड़ें",
-    "totalQuestions": "कुल सवाल :",
-    "noQuestionAlert": "कोई प्रश्न नहीं मिला। अपना पहला प्रश्न जोड़ें",
-    "noRecordFound": "कोई रिकॉर्ड नहीं मिला",
-    "sort": "क्रम से लगाना",
-    "dropdown": "चुनना",
+    "addSection": "Add Section",
+    "totalQuestions": "Total Questions:",
+    "noQuestionAlert": "No questions found. Add your first question",
+    "noRecordFound": "No Record Found",
+    "sort": "Sort",
+    "dropdown": "Select",
     "expand": "Expand",
     "search": "Search Question",
     "sectionName": "section"
@@ -101,12 +100,13 @@
     "testDetailsText": "Test Details",
     "descriptionText": "Description",
     "totalTimeText": "Total Time",
+    "totalQuestionsText": "Total Questions",
     "totalSectionsText": "Total Sections",
     "selectedSctionText": "Selected Sections",
     "sectionText": "Section",
     "questions": "Questions",
     "tests": "Tests",
-    "test": "test",
+    "test": "Test",
     "createdOn": "Created on",
     "created": "Created",
     "actionsText": "Actions",
@@ -147,7 +147,12 @@
     "lastNameReq": "lastName is required",
     "emailIsReq": "email is required",
     "roleIdIsReq": "roleId is required",
-    "memberAddedSuccess": "Member Added Successfully..!"
+    "memberAddedSuccess": "Member Added Successfully..!",
+    "erroSendingOtp": "Error in sending OTP..",
+    "otpSent": "Otp sent. Please check your email",
+    "correctOtp": "Please enter correct OTP",
+    "resendPasswordSuccess": "New password has been sent to email successfully",
+    "resendPasswordError": "Account not found. Please enter valid email"
   },
   "resultConstants": {
     "order": "Order",
@@ -165,16 +170,25 @@
     "skipped": "Skipped",
     "total": "Total"
   },
-
+  "forgotPasswordConstants": {
+    "header": "Forgot password?",
+    "enterEmail": "Enter your email to retrieve your password.",
+    "resetPassword": "Reset Password",
+    "backToLogin": "Back to login",
+    "enterEmailPlaceholder": "Enter Email"
+  },
   "candidateExamConstants": {
+    "testCompleted": "Congratulations! You have completed the exam",
     "time": "Time",
     "timeRemaining": "Time Remaining",
     "timeLimit": "Time Limit",
     "assessmentDetails": "Assessment Details",
     "assessmentTests": "Assessment Tests",
+    "candidateInsWelcome": "Welcome",
     "assessmentEnd": "Assessment Ended",
     "endAssesment": "End Assesment SVG",
     "wrongLink": "Wrong Link",
+    "ExpiredLink": "Expired Link",
     "minutes": "Mins",
     "description": "Description",
     "total": "Total",
@@ -194,7 +208,8 @@
     "candidateCreateError": "Candidate Create Error..!",
     "candidateTestCreateError": "Candidate Test Create Error..!",
     "errorUpdatingTestLink": "Error updating test link..!",
-    "errorCreatingSectionInTest": "Error creating section in test .."
+    "errorCreatingSectionInTest": "Error creating section in test ..",
+    "alreadyExamSubmitted": "Hey! you have already submitted the exam"
   },
   "toastConstants": {
     "addTest": "Enter Name to add test",
@@ -208,6 +223,15 @@
     "roleRequired": "Role is required",
     "correctEmail": "Please provide a valid email address",
     "memberAdded": "Member Added Successfully..!",
-    "memberAlreadyExist": "Member with this email id already exists!"
+    "memberAlreadyExist": "Member with this email id already exists!",
+    "signUpSuccessfull": "Sign Up successfully"
+  },
+  "otpConstants": {
+    "header": "OTP Verification",
+    "enterOTP": "Enter the OTP sent to",
+    "resend": "Resend",
+    "didntGetCode": "Didn't get a code",
+    "resendCodeIn": "Resend code in",
+    "otp": "OTP"
   }
 }

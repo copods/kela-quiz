@@ -11,10 +11,12 @@
   },
   "commonConstants": {
     "name": "Name",
+    "proceed": "Proceed",
     "email": "Email",
     "cancel": "Cancel",
     "delete": "Delete",
     "backButton": "Back",
+    "verify": "Verify",
     "nextButton": "Next",
     "prevoiusButton": "Previous",
     "removeButton": "Remove",
@@ -177,6 +179,7 @@
     "enterEmailPlaceholder": "Enter Email"
   },
   "candidateExamConstants": {
+    "testCompleted": "Congratulations! You have completed the exam",
     "time": "Time",
     "timeRemaining": "Time Remaining",
     "timeLimit": "Time Limit",
@@ -185,6 +188,7 @@
     "assessmentEnd": "Assessment Ended",
     "endAssesment": "End Assesment SVG",
     "wrongLink": "Wrong Link",
+    "ExpiredLink": "Expired Link",
     "minutes": "Mins",
     "description": "Description",
     "total": "Total",
@@ -200,11 +204,13 @@
     "info": "Info",
     "noOfQuestions": "No. of Questions",
     "candidateTestCreated": "created",
+    "candidateInsWelcome": "Welcome",
     "error": "error",
     "candidateCreateError": "Candidate Create Error..!",
     "candidateTestCreateError": "Candidate Test Create Error..!",
     "errorUpdatingTestLink": "Error updating test link..!",
-    "errorCreatingSectionInTest": "Error creating section in test .."
+    "errorCreatingSectionInTest": "Error creating section in test ..",
+    "alreadyExamSubmitted": "Hey! you have already submitted the exam"
   },
   "toastConstants": {
     "addTest": "Enter Name to add test",

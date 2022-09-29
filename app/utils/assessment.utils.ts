@@ -1,4 +1,5 @@
 import { redirect } from '@remix-run/node'
+import moment from 'moment'
 import {
   candidateSectionStart,
   candidateTestStart,
@@ -43,6 +44,16 @@ export async function checkIfTestLinkIsValidAndRedirect(
   if (!currentCandidateStep) {
     return `/assessment/invalid-link`
   }
+
+  if (currentCandidateStep?.linkSentOn) {
+    const now = moment(new Date())
+    const LinkSendedTime = moment(currentCandidateStep?.linkSentOn)
+    const duration = now.diff(LinkSendedTime, 'hours')
+    if (duration >= 48) {
+      return `/assessment/expired-link`
+    }
+  }
+
   const candidateStepObj = currentCandidateStep?.candidateStep as CandidateStep
   if (
     candidateStepObj &&
@@ -64,7 +75,7 @@ export async function checkIfTestLinkIsValidAndRedirect(
     }
   } else {
     return currentCandidateStep?.endAt
-      ? `/assessment/${assessmentID}/end-assessment`
+      ? `/assessment/${assessmentID}/already-submitted`
       : null
   }
 }
@@ -345,6 +356,7 @@ export async function saveAnswerSkipAndNext(
  * @param sectionId
  * @returns redirect to end assessment page
  */
+
 export async function endCandidateAssessment(
   assessmentId: string,
   sectionId: string
