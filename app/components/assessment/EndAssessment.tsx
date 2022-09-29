@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import EndAssessmentIcon from '../../../public/assets/frame.svg'
+import EndAssessmentIcon from '../../../public/assets/Frame.svg'
 import Header from './Header'
 
 const EndAssessment = () => {
