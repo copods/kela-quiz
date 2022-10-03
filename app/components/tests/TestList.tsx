@@ -1,5 +1,5 @@
 import { useSubmit } from '@remix-run/react'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import type { Test } from '~/interface/Interface'
 import SortFilter from '../SortFilter'
@@ -7,6 +7,8 @@ import TestTableItem from './TestTableItem'
 import Button from '../form/Button'
 import { routes } from '~/constants/route.constants'
 import { useTranslation } from 'react-i18next'
+import Pagination from '../pagination/Pagination'
+
 // import Checkbox from '../form/CheckBox'
 const TestList = ({
   tests,
@@ -16,9 +18,10 @@ const TestList = ({
   status: string | undefined
 }) => {
   const { t } = useTranslation()
-
   const [sortDirection, onSortDirectionChange] = useState('asc')
   const [sortBy, onSortChange] = useState('name')
+  const [pageSize, setPageSize] = useState(5)
+  const [currentPage, setCurrentPage] = useState(1)
   const navigate = useNavigate()
   const filterByType = [
     {
@@ -47,6 +50,11 @@ const TestList = ({
     }
   }, [sortDirection, sortBy, submit])
   const showCheckBox = false
+  const firstPageIndex = (currentPage - 1) * pageSize
+  const lastPageIndex = firstPageIndex + pageSize
+  const currentTestData = useMemo(() => {
+    return tests.slice(firstPageIndex, lastPageIndex)
+  }, [currentPage, tests, pageSize])
   return (
     <div className="test-list-container flex h-full flex-col gap-6 p-1">
       {/* header */}
@@ -114,11 +122,11 @@ const TestList = ({
               id="test-list"
               className="rounded-t-0 flex flex-col rounded-md border-solid border-gray-200 shadow-base"
             >
-              {tests.map((test, i) => (
+              {currentTestData.map((test, i) => (
                 <TestTableItem
                   key={test?.id}
                   id={test?.id}
-                  index={i + 1}
+                  index={i + 1 + firstPageIndex}
                   totalCount={tests.length}
                   testName={test?.name}
                   createdAt={test?.createdAt}
@@ -128,6 +136,15 @@ const TestList = ({
                   status={status}
                 />
               ))}
+              <Pagination
+                currentPage={currentPage}
+                totalLength={tests.length}
+                pageSize={pageSize}
+                onPageChange={(page) => setCurrentPage(page)}
+                setPageSize={setPageSize}
+                firstPageIndex={firstPageIndex}
+                testDataLength={currentTestData.length}
+              />
             </div>
           </div>
         </>
