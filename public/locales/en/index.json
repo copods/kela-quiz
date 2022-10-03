@@ -48,7 +48,9 @@
     "enterSectionDesc": "Enter Section Description",
     "enterTestName": "Enter test name",
     "totalQuestion": "Total Questions",
-    "srNo": "Sr.No"
+    "srNo": "Sr.No",
+    "verify": "Verify",
+    "proceed": "Proceed"
   },
   "sideNav": {
     "sideNavHeading": "Quiz"
@@ -204,7 +206,9 @@
     "candidateCreateError": "Candidate Create Error..!",
     "candidateTestCreateError": "Candidate Test Create Error..!",
     "errorUpdatingTestLink": "Error updating test link..!",
-    "errorCreatingSectionInTest": "Error creating section in test .."
+    "errorCreatingSectionInTest": "Error creating section in test ..",
+    "candidateInsWelcome": "Welcome",
+    "testCompleted": "Test Completed"
   },
   "toastConstants": {
     "addTest": "Enter Name to add test",
