@@ -6,9 +6,6 @@ declare
   i integer := 0;
   randomIdLength integer :=25;
 begin
-  if randomIdLength < 0 then
-    raise exception 'Given length cannot be less than 0';
-  end if;
   for i in 1..randomIdLength loop
     result := result || chars[1+random()*(array_length(chars, 1)-1)];
   end loop;
