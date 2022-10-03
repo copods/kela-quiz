@@ -1,23 +1,23 @@
 -- CreateTable
 CREATE TABLE "Workspace" (
-    "id" TEXT ,
+    "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "createdById" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) ,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Workspace_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "UserWorkspace" (
-    "id" TEXT,
+    "id" TEXT NOT NULL,
     "workspaceId" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
     "roleId" TEXT NOT NULL,
     "isDefault" BOOLEAN NOT NULL DEFAULT false,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3),
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "UserWorkspace_pkey" PRIMARY KEY ("id")
 );
@@ -39,3 +39,18 @@ ALTER TABLE "UserWorkspace" ADD CONSTRAINT "UserWorkspace_userId_fkey" FOREIGN K
 
 -- AddForeignKey
 ALTER TABLE "UserWorkspace" ADD CONSTRAINT "UserWorkspace_roleId_fkey" FOREIGN KEY ("roleId") REFERENCES "Role"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+
+/*
+  Warnings:
+
+  - Made the column `updatedAt` on table `UserWorkspace` required. This step will fail if there are existing NULL values in that column.
+  - Made the column `updatedAt` on table `Workspace` required. This step will fail if there are existing NULL values in that column.
+
+*/
+-- AlterTable
+ALTER TABLE "UserWorkspace" ALTER COLUMN "updatedAt" SET NOT NULL;
+
+-- AlterTable
+ALTER TABLE "Workspace" ALTER COLUMN "updatedAt" SET NOT NULL;
+
