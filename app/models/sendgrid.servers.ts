@@ -155,12 +155,10 @@ export async function sendTestInviteMail(email: string, link: string) {
   }
   await sendgrid.send(msg).then(
     () => {
-      console.log('sendd')
       return 'ok'
     },
     (error) => {
       if (error.response) {
-        console.log(error)
         console.error('Sendgrid Error: ', error.response.body)
       }
     }

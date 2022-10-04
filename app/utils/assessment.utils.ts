@@ -73,10 +73,16 @@ export async function checkIfTestLinkIsValidAndRedirect(
           return `/assessment/${assessmentID}/end-assessment`
       }
     }
-  } else {
-    return currentCandidateStep?.endAt
-      ? `/assessment/${assessmentID}/already-submitted`
-      : null
+  }
+  if (currentCandidateStep?.endAt) {
+    const CurrentTime = moment(new Date())
+    const examEndedBefore = moment(currentCandidateStep?.endAt)
+    const duration = CurrentTime.diff(examEndedBefore, 'minute')
+    if (duration >= 1) {
+      return `/assessment/${assessmentID}/already-submitted`
+    } else {
+      return `/assessment/${assessmentID}/end-assessment`
+    }
   }
 }
 
