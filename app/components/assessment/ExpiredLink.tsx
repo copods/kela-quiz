@@ -12,7 +12,7 @@ const ExpiredLinkComponent = () => {
           <div className="mx-auto flex w-coolDownCard flex-col items-center justify-center gap-10 bg-white py-16">
             <img
               src={InvalidLink}
-              alt="End test"
+              alt={t('candidateExamConstants.ExpiredLink')}
               className="h-cooldownSVG w-cooldownSVG"
             />
             <span className="text-2xl font-bold text-gray-900">
