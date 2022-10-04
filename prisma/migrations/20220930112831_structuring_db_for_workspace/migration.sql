@@ -54,3 +54,20 @@ ALTER TABLE "UserWorkspace" ALTER COLUMN "updatedAt" SET NOT NULL;
 -- AlterTable
 ALTER TABLE "Workspace" ALTER COLUMN "updatedAt" SET NOT NULL;
 
+-- AlterTable
+ALTER TABLE "Section" ADD COLUMN     "workspaceId" TEXT;
+
+-- AlterTable
+ALTER TABLE "Test" ADD COLUMN     "workspaceId" TEXT;
+
+-- AddForeignKey
+ALTER TABLE "Section" ADD CONSTRAINT "Section_workspaceId_fkey" FOREIGN KEY ("workspaceId") REFERENCES "Workspace"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Test" ADD CONSTRAINT "Test_workspaceId_fkey" FOREIGN KEY ("workspaceId") REFERENCES "Workspace"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AlterTable
+ALTER TABLE "CandidateResult" ADD COLUMN     "workspaceId" TEXT;
+
+-- AddForeignKey
+ALTER TABLE "CandidateResult" ADD CONSTRAINT "CandidateResult_workspaceId_fkey" FOREIGN KEY ("workspaceId") REFERENCES "Workspace"("id") ON DELETE SET NULL ON UPDATE CASCADE;

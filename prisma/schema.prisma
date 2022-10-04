@@ -8,13 +8,16 @@ generator client {
 }
 
 model Workspace {
-  id            String          @id @default(cuid())
-  name          String
-  createdBy     User            @relation(fields: [createdById], references: [id])
-  createdById   String
-  UserWorkspace UserWorkspace[]
-  createdAt     DateTime        @default(now())
-  updatedAt     DateTime        @updatedAt
+  id              String            @id @default(cuid())
+  name            String
+  createdBy       User              @relation(fields: [createdById], references: [id])
+  createdById     String
+  UserWorkspace   UserWorkspace[]
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  Section         Section[]
+  Test            Test[]
+  CandidateResult CandidateResult[]
 
   @@unique([name, createdById])
 }
@@ -81,6 +84,8 @@ model Section {
   deletedAt              String?                  @default("na")
   createdAt              DateTime                 @default(now())
   updatedAt              DateTime                 @updatedAt
+  Workspace              Workspace?               @relation(fields: [workspaceId], references: [id])
+  workspaceId            String?
 
   @@unique([name, deletedAt, deleted])
 }
@@ -151,6 +156,8 @@ model Test {
   deleted           Boolean             @default(false)
   deletedAt         String?             @default("na")
   SectionWiseResult SectionWiseResult[]
+  Workspace         Workspace?          @relation(fields: [workspaceId], references: [id])
+  workspaceId       String?
 
   @@unique([name, deletedAt, deleted])
 }
@@ -258,11 +265,13 @@ model CandidateResult {
   unanswered      Int
 
   // easier access of test and results
-  test        Test     @relation(fields: [testId], references: [id])
+  test        Test       @relation(fields: [testId], references: [id])
   testId      String
   isQualified Boolean
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  Workspace   Workspace? @relation(fields: [workspaceId], references: [id])
+  workspaceId String?
 }
 
 model SectionWiseResult {
