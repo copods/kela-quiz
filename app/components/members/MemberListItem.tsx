@@ -29,6 +29,20 @@ export default function MemberListItem({
   const deleteUser = () => {
     submit({ deleteMember: 'delete', id: user.id }, { method: 'post' })
   }
+  const resendMail = () => {
+    let data = {
+      id: user.id,
+      firstName: user.firstName,
+      email: user.email,
+      roleId: user.roleId,
+      addMember: JSON.stringify({
+        action: 'resend',
+      }),
+    }
+    submit(data, {
+      method: 'post',
+    })
+  }
   return (
     <div className="col-span-full grid grid-cols-10">
       <div className="memberRows col-span-full grid grid-cols-10 gap-3 border-t border-solid border-gray-200 px-6 py-4">
@@ -48,7 +62,7 @@ export default function MemberListItem({
             {moment(user?.createdAt).format('DD MMMM YY')}
           </span>
         </div>
-        <div className="col-span-1 pl-4">
+        <div className="col-span-1 flex justify-around pl-4">
           <Icon
             id="delete-button"
             tabIndex={0}
@@ -60,6 +74,13 @@ export default function MemberListItem({
             className={`h-6 w-6 cursor-pointer text-red-500  ${
               loggedInUser && 'cursor-not-allowed text-red-200'
             }`}
+          />
+          <Icon
+            id="resend-member-invite"
+            tabIndex={0}
+            onClick={() => resendMail()}
+            icon="carbon:mail-reply"
+            className="h-6 w-6 cursor-pointer text-gray-500"
           />
         </div>
         <DeletePopUp

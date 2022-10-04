@@ -10,6 +10,7 @@ import {
   deleteUserById,
   getAllRoles,
   getAllUsers,
+  resendInvitation,
 } from '~/models/user.server'
 import MembersHeader from '~/components/members/MembersHeader'
 import { toast } from 'react-toastify'
@@ -45,6 +46,7 @@ export const action: ActionFunction = async ({ request }) => {
   const action = JSON.parse(formData.get('addMember') as string)
     ? JSON.parse(formData.get('addMember') as string)
     : formData.get('deleteMember')
+  console.log(formData)
 
   if (action.action === 'add') {
     const firstName = formData.get('firstName')
@@ -114,8 +116,50 @@ export const action: ActionFunction = async ({ request }) => {
           { status: 400 }
         )
       })
-
     return addHandle
+  }
+  if (action.action === 'resend') {
+    const id = formData.get('id')
+    const firstName = formData.get('firstName')
+    const email = formData.get('email')
+    const roleId = formData.get('roleId')
+    let resendHandle = null
+    if (typeof firstName !== 'string') {
+      return json<ActionData>(
+        { errors: { title: 'toastConstants.firstNameRequired', status: 400 } },
+        { status: 400 }
+      )
+    }
+    if (typeof id !== 'string') {
+      return json<ActionData>(
+        { errors: { title: 'statusCheck.descIsReq', status: 400 } },
+        { status: 400 }
+      )
+    }
+    if (typeof email !== 'string') {
+      return json<ActionData>(
+        { errors: { title: 'toastConstants.emailRequired', status: 400 } },
+        { status: 400 }
+      )
+    }
+    if (typeof roleId !== 'string') {
+      return json<ActionData>(
+        { errors: { title: 'toastConstants.roleRequired', status: 400 } },
+        { status: 400 }
+      )
+    }
+    await resendInvitation({ id, firstName, email, roleId }).then((res) => {
+      resendHandle = json<ActionData>(
+        {
+          resp: {
+            title: 'toastConstants.resendMemberInvitation',
+            status: 200,
+          },
+        },
+        { status: 200 }
+      )
+    })
+    return resendHandle
   }
   if (action === 'delete') {
     if (typeof formData.get('id') !== 'string') {
