@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import SortFilter from '../SortFilter'
 
 import { useLoaderData, useSubmit } from '@remix-run/react'
@@ -6,6 +6,7 @@ import GroupByTestItems from './GroupByTestItems'
 import type { CandidateTest, Test } from '~/interface/Interface'
 import { sortByOrder } from '~/interface/Interface'
 import { useTranslation } from 'react-i18next'
+import Pagination from '../pagination/Pagination'
 
 const GroupByTests = () => {
   const { t } = useTranslation()
@@ -14,6 +15,8 @@ const GroupByTests = () => {
     sortByOrder.ascending as string
   )
   const [sortBy, onSortChange] = useState('name')
+  const [pageSize, setPageSize] = useState(5)
+  const [currentPage, setCurrentPage] = useState(1)
   const filterByType = [
     {
       name: 'Name',
@@ -36,6 +39,11 @@ const GroupByTests = () => {
     }
     submit({ data: JSON.stringify(filter) }, { method: 'get' })
   }, [sortDirection, sortBy, submit])
+  const firstPageIndex = (currentPage - 1) * pageSize
+  const lastPageIndex = firstPageIndex + pageSize
+  const currentTestData = useMemo(() => {
+    return candidateTests.slice(firstPageIndex, lastPageIndex)
+  }, [candidateTests, firstPageIndex, lastPageIndex])
   return (
     <div className="flex flex-col gap-6 p-1" id="group-by-test-container">
       <h1
@@ -83,7 +91,7 @@ const GroupByTests = () => {
                 </span>
               </div>
               <div id="group-by-test-items" className="col-span-10 grid">
-                {candidateTests.map(
+                {currentTestData.map(
                   (
                     candidateTests: Test & {
                       count?: number | undefined
@@ -104,7 +112,7 @@ const GroupByTests = () => {
                         }
                         candidateAttendedCount={candidateTests?.count}
                         testDeletedStatus={candidateTests?.deleted}
-                        index={index + 1}
+                        index={index + 1 + firstPageIndex}
                         id={candidateTests?.id}
                       />
                     </div>
@@ -115,6 +123,21 @@ const GroupByTests = () => {
                     <span>{t('resultConstants.noTestAlert')}</span>
                   </div>
                 )}
+                <div
+                  className="GroupByTestRow col-span-10 grid"
+                  id="group-by-items-container"
+                  data-cy="group-by-items-container"
+                >
+                  <Pagination
+                    currentPage={currentPage}
+                    totalLength={candidateTests.length}
+                    pageSize={pageSize}
+                    onPageChange={(page) => setCurrentPage(page)}
+                    setPageSize={setPageSize}
+                    firstPageIndex={firstPageIndex}
+                    testDataLength={currentTestData.length}
+                  />
+                </div>
               </div>
             </div>
           </div>

@@ -48,7 +48,9 @@ const Pagination = ({
             onClick={() => onPageChange(pageNumber)}
             role="button"
             tabIndex={0}
-            onKeyDown={() => onPageChange(pageNumber)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') onPageChange(pageNumber)
+            }}
           >
             {pageNumber}
           </span>
@@ -82,7 +84,10 @@ const Pagination = ({
                 {itemsList.map((item, index) => (
                   <Listbox.Option
                     key={index}
-                    onClick={() => setPageSize(item.pageSize)}
+                    onClick={() => {
+                      setPageSize(item.pageSize)
+                      onPageChange(1)
+                    }}
                     className={({ active }) =>
                       `relative cursor-pointer select-none py-2 px-8 text-xs text-gray-600 ${
                         selected.name === item.name
