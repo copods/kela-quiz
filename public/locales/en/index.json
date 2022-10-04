@@ -223,6 +223,7 @@
     "correctEmail": "Please provide a valid email address",
     "memberAdded": "Member Added Successfully..!",
     "memberAlreadyExist": "Member with this email id already exists!",
+    "invitationSent": "Invitation Sent Successfully..!",
     "signUpSuccessfull": "Sign Up successfully"
   },
   "otpConstants": {

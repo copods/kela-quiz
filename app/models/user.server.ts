@@ -63,12 +63,12 @@ export async function resendInvitation({
   id,
   firstName,
   email,
-  roleId,
+  role,
 }: {
   id: string
   firstName: string
   email: string
-  roleId: string
+  role: string
 }) {
   const password = faker.internet.password()
   const hashedPassword = await bcrypt.hash(password, 10)
@@ -80,12 +80,7 @@ export async function resendInvitation({
       hash: hashedPassword,
     },
   })
-  const role = await prisma.role.findUnique({
-    where: {
-      id: roleId,
-    },
-  })
-  return await sendMail(email, firstName, password, role?.name || 'NA')
+  return await sendMail(email, firstName, password, role)
 }
 
 export async function sendResetPassword(email: string) {

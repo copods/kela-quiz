@@ -208,6 +208,7 @@
     "roleRequired": "Role is required",
     "correctEmail": "Please provide a valid email address",
     "memberAdded": "Member Added Successfully..!",
-    "memberAlreadyExist": "Member with this email id already exists!"
+    "memberAlreadyExist": "Member with this email id already exists!",
+    "invitationSent": "Invitation Sent Successfully..!"
   }
 }

@@ -34,7 +34,7 @@ export default function MemberListItem({
       id: user.id,
       firstName: user.firstName,
       email: user.email,
-      roleId: user.roleId,
+      role: user?.role?.name as string,
       addMember: JSON.stringify({
         action: 'resend',
       }),

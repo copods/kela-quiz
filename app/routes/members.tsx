@@ -122,37 +122,18 @@ export const action: ActionFunction = async ({ request }) => {
     const id = formData.get('id')
     const firstName = formData.get('firstName')
     const email = formData.get('email')
-    const roleId = formData.get('roleId')
+    const role = formData.get('roleId')
     let resendHandle = null
-    if (typeof firstName !== 'string') {
-      return json<ActionData>(
-        { errors: { title: 'toastConstants.firstNameRequired', status: 400 } },
-        { status: 400 }
-      )
-    }
-    if (typeof id !== 'string') {
-      return json<ActionData>(
-        { errors: { title: 'statusCheck.descIsReq', status: 400 } },
-        { status: 400 }
-      )
-    }
-    if (typeof email !== 'string') {
-      return json<ActionData>(
-        { errors: { title: 'toastConstants.emailRequired', status: 400 } },
-        { status: 400 }
-      )
-    }
-    if (typeof roleId !== 'string') {
-      return json<ActionData>(
-        { errors: { title: 'toastConstants.roleRequired', status: 400 } },
-        { status: 400 }
-      )
-    }
-    await resendInvitation({ id, firstName, email, roleId }).then((res) => {
+    await resendInvitation({
+      id: id as string,
+      firstName: firstName as string,
+      email: email as string,
+      role: role as string,
+    }).then((res) => {
       resendHandle = json<ActionData>(
         {
           resp: {
-            title: 'toastConstants.resendMemberInvitation',
+            title: 'toastConstants.invitationSent',
             status: 200,
           },
         },
@@ -193,7 +174,6 @@ export const action: ActionFunction = async ({ request }) => {
 }
 const Members = () => {
   const { t } = useTranslation()
-
   const membersActionData = useActionData() as ActionData
   const [actionStatus, setActionStatus] = useState<boolean>(false)
   useEffect(() => {
