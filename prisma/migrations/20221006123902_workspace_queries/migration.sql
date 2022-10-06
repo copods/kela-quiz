@@ -9,10 +9,10 @@ BEGIN
     FOR userList in SELECT *  FROM "User" LOOP
       workspaceId=gen_random_uuid();
       userWorkspaceId=gen_random_uuid();  
-      PERFORM * FROM "UserWorkspace" where "userId"=userList.id AND "isDefault"=NULL;
+      PERFORM * FROM "UserWorkspace" where "userId"=userList."id" AND "isDefault"=NULL;
       IF NOT FOUND THEN
         INSERT INTO "Workspace" ("id", "createdById","name","updatedAt") VALUES (workspaceId,userList."id",userList."firstName", current_timestamp);
-        INSERT INTO "UserWorkspace" ("id","workspaceId","userId","roleId","isDefault","updatedAt") VALUES (userWorkspaceId,workspaceId,userList.id,userList."roleId",TRUE,current_timestamp);
+        INSERT INTO "UserWorkspace" ("id","workspaceId","userId","roleId","isDefault","updatedAt") VALUES (userWorkspaceId,workspaceId,userList."id",userList."roleId",TRUE,current_timestamp);
       END IF;
     END LOOP;  
 END; $$;
@@ -29,7 +29,7 @@ BEGIN
       PERFORM * FROM "User" where userList."email"='careers@copods.co';
       if found THEN
         FOR workspaceList in SELECT *  FROM "Workspace" LOOP
-          PERFORM * From "Workspace" where workspaceList."createdById"=userList.id;
+          PERFORM * From "Workspace" where workspaceList."createdById"=userList."id";
             if found THEN
               workspaceIdCopods=workspaceList."id";
             end if;  
@@ -58,7 +58,7 @@ BEGIN
       PERFORM * FROM "User" where userList."email"='careers@copods.co';
       if found THEN
         FOR workspaceList in SELECT *  FROM "Workspace" LOOP
-          PERFORM * From "Workspace" where workspaceList."createdById"=userList.id;
+          PERFORM * From "Workspace" where workspaceList."createdById"=userList."id";
             if found THEN
               workspaceIdCopods=workspaceList."id";
             end if;  
@@ -85,7 +85,7 @@ BEGIN
       PERFORM * FROM "User" where userList."email"='careers@copods.co';
       if found THEN
         FOR workspaceList in SELECT *  FROM "Workspace" LOOP
-          PERFORM * From "Workspace" where workspaceList."createdById"=userList.id;
+          PERFORM * From "Workspace" where workspaceList."createdById"=userList."id";
             if found THEN
               workspaceIdCopods=workspaceList."id";
             end if;  
@@ -111,7 +111,7 @@ BEGIN
       PERFORM * FROM "User" where userList."email"='careers@copods.co';
       if found THEN
         FOR workspaceList in SELECT *  FROM "Workspace" LOOP
-          PERFORM * From "Workspace" where workspaceList."createdById"=userList.id;
+          PERFORM * From "Workspace" where workspaceList."createdById"=userList."id";
             if found THEN
               workspaceIdCopods=workspaceList."id";
             end if;  
