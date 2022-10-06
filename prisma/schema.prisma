@@ -8,7 +8,7 @@ generator client {
 }
 
 model Workspace {
-  id              String            @id @default(cuid())
+  id              String            @id @default(uuid())
   name            String
   createdBy       User              @relation(fields: [createdById], references: [id])
   createdById     String
@@ -23,7 +23,7 @@ model Workspace {
 }
 
 model UserWorkspace {
-  id          String    @id @default(cuid())
+  id          String    @id @default(uuid())
   workspace   Workspace @relation(fields: [workspaceId], references: [id])
   workspaceId String
   user        User      @relation(fields: [userId], references: [id])
