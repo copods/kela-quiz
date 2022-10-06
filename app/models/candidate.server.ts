@@ -161,15 +161,19 @@ export async function createCandidateData({
   await sendMailToCandidate(user?.email, updatedCandidateTest?.link as string)
 }
 
-export async function resendTestLink({ id,
-  testId, }: {
-    id: string
-    testId: string
-  }) {
+export async function resendTestLink({
+  id,
+  testId,
+}: {
+  id: string
+  testId: string
+}) {
   try {
-    const candidateLink = env.PUBLIC_URL + '/assessment/' + testId;
+    const candidateLink = env.PUBLIC_URL + '/assessment/' + testId
     let candidate = await prisma.candidate.findUnique({ where: { id } })
-    let candidateTest = await prisma.candidateTest.findUnique({ where: { id: testId } })
+    let candidateTest = await prisma.candidateTest.findUnique({
+      where: { id: testId },
+    })
     if (candidateTest?.endAt !== null) {
       await sendMailToCandidate(candidate?.email as string, candidateLink)
       return 'created'
@@ -199,5 +203,3 @@ export async function createCandidate({
     return 'error'
   }
 }
-
-
