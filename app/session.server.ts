@@ -43,7 +43,7 @@ export async function getWorkspaceId(
 
 export async function getDefaultWorkspaceIdForUser(userId: string) {
   const workspaceId = await getDefaultWorkspaceIdForUserQuery(userId as string)
-  return workspaceId?.Workspace[0]?.id
+  return workspaceId?.workspace[0]?.id
 }
 
 export async function getUser(request: Request) {

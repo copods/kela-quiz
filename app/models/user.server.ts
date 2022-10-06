@@ -113,7 +113,7 @@ export async function getDefaultWorkspaceIdForUserQuery(userId: string) {
   return prisma.user.findUnique({
     where: { id: userId },
     select: {
-      Workspace: {
+      workspace: {
         select: {
           id: true,
         },

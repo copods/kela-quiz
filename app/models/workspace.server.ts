@@ -8,7 +8,7 @@ export async function getUserWorkspaces(userId: string) {
     select: {
       id: true,
       workspaceId: true,
-      Workspace: {
+      workspace: {
         select: {
           name: true,
         },

@@ -76,7 +76,7 @@ const SideNav = () => {
   const { workspaces = [], currentWorkspaceId } = useLoaderData()
 
   const tempWorkspaces = workspaces.map((wk: any) => {
-    return { ...wk, ...wk.Workspace }
+    return { ...wk, ...wk.workspace }
   })
   return (
     <div className="flex h-full flex-col justify-between overflow-auto p-5">
