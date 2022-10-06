@@ -59,11 +59,7 @@ export async function createNewUser({
   return await sendMail(email, firstName, password, role?.name || 'NA')
 }
 
-export async function reinviteMember({
-  id,
-}: {
-  id: string
-}) {
+export async function reinviteMember({ id }: { id: string }) {
   const user = await prisma.user.findUnique({ where: { id } })
   const roleId = user?.roleId as string
   const role = await prisma.role.findUnique({ where: { id: roleId } })
@@ -77,7 +73,12 @@ export async function reinviteMember({
       hash: hashedPassword,
     },
   })
-  return await sendMail(user?.email as string, user?.firstName as string, password, role?.name as string)
+  return await sendMail(
+    user?.email as string,
+    user?.firstName as string,
+    password,
+    role?.name as string
+  )
 }
 
 export async function sendResetPassword(email: string) {
