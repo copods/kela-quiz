@@ -10,7 +10,7 @@ import {
   deleteUserById,
   getAllRoles,
   getAllUsers,
-  resendInvitation,
+  reinviteMember,
 } from '~/models/user.server'
 import MembersHeader from '~/components/members/MembersHeader'
 import { toast } from 'react-toastify'
@@ -46,8 +46,6 @@ export const action: ActionFunction = async ({ request }) => {
   const action = JSON.parse(formData.get('addMember') as string)
     ? JSON.parse(formData.get('addMember') as string)
     : formData.get('deleteMember')
-  console.log(formData)
-
   if (action.action === 'add') {
     const firstName = formData.get('firstName')
     const lastName = formData.get('lastName')
@@ -120,15 +118,9 @@ export const action: ActionFunction = async ({ request }) => {
   }
   if (action.action === 'resend') {
     const id = formData.get('id')
-    const firstName = formData.get('firstName')
-    const email = formData.get('email')
-    const role = formData.get('roleId')
     let resendHandle = null
-    await resendInvitation({
+    await reinviteMember({
       id: id as string,
-      firstName: firstName as string,
-      email: email as string,
-      role: role as string,
     }).then((res) => {
       resendHandle = json<ActionData>(
         {

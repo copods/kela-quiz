@@ -32,9 +32,6 @@ export default function MemberListItem({
   const resendMail = () => {
     let data = {
       id: user.id,
-      firstName: user.firstName,
-      email: user.email,
-      role: user?.role?.name as string,
       addMember: JSON.stringify({
         action: 'resend',
       }),

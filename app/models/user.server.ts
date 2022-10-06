@@ -59,17 +59,14 @@ export async function createNewUser({
   return await sendMail(email, firstName, password, role?.name || 'NA')
 }
 
-export async function resendInvitation({
+export async function reinviteMember({
   id,
-  firstName,
-  email,
-  role,
 }: {
   id: string
-  firstName: string
-  email: string
-  role: string
 }) {
+  const user = await prisma.user.findUnique({ where: { id } })
+  const roleId = user?.roleId as string
+  const role = await prisma.role.findUnique({ where: { id: roleId } })
   const password = faker.internet.password()
   const hashedPassword = await bcrypt.hash(password, 10)
   await prisma.password.update({
@@ -80,7 +77,7 @@ export async function resendInvitation({
       hash: hashedPassword,
     },
   })
-  return await sendMail(email, firstName, password, role)
+  return await sendMail(user?.email as string, user?.firstName as string, password, role?.name as string)
 }
 
 export async function sendResetPassword(email: string) {
