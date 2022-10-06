@@ -4,7 +4,10 @@ on:
     branches:
       - main
       - dev
-  pull_request: {}
+      - application-versioning-demo-implementation
+  pull_request:
+    branches:
+      - application-versioning-demo-implementation
   workflow_dispatch: {}
 permissions:
   actions: write
