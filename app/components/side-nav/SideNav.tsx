@@ -5,6 +5,7 @@ import { routes } from '~/constants/route.constants'
 import { useTranslation } from 'react-i18next'
 import DropdownField from '../form/Dropdown'
 import { useLoaderData } from '@remix-run/react'
+import type { UserWorkspace } from '~/interface/Interface'
 
 const sideNavGuide = [
   // {
@@ -75,7 +76,7 @@ const SideNav = () => {
 
   const { workspaces = [], currentWorkspaceId } = useLoaderData()
 
-  const tempWorkspaces = workspaces.map((wk: any) => {
+  const tempWorkspaces = workspaces.map((wk: UserWorkspace) => {
     return { ...wk, ...wk.workspace }
   })
   return (
@@ -91,6 +92,7 @@ const SideNav = () => {
               valueKey="workspaceId"
               value={currentWorkspaceId}
               setValue={(val) => {
+                //TODO: for switching the workspace write function here
                 console.log(val)
               }}
             />

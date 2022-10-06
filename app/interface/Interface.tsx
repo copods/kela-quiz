@@ -261,3 +261,22 @@ export interface SectionWiseResults {
   section: SectionInCandidateTest
   test: Test
 }
+export interface Workspace {
+  id: String
+  name: String
+  createdBy: User
+  createdById: String
+  createdAt: Date
+  updatedAt: Date
+}
+export interface UserWorkspace {
+  id: String
+  workspace: Array<Workspace>
+  workspaceId: String
+  userId: String
+  role: Role
+  roleId: String
+  isDefault: Boolean
+  createdAt: Date
+  updatedAt: Date
+}
