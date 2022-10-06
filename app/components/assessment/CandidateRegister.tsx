@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Form } from '@remix-run/react'
+import React, { useEffect, useState } from 'react'
+import { Form, useTransition } from '@remix-run/react'
 import Button from '~/components/form/Button'
 import InputField from '~/components/form/InputField'
 import { commonConstants } from '~/constants/common.constants'
@@ -7,6 +7,14 @@ import { commonConstants } from '~/constants/common.constants'
 function CandidateRegister() {
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
+
+  const { state } = useTransition()
+  const busy = state === 'submitting'
+
+  useEffect(() => {
+    console.log(busy)
+  }, [busy])
+
   const canSubmitBtnBeEnabled = () => {
     return firstName.length > 0 && lastName.length > 0
   }
@@ -49,10 +57,10 @@ function CandidateRegister() {
           </div>
           <Button
             title={commonConstants.proceed}
-            buttonText={commonConstants.proceed}
+            buttonText={busy ? 'Processing...' : commonConstants.proceed}
             type="submit"
             className="h-12 w-full text-base"
-            isDisabled={!canSubmitBtnBeEnabled()}
+            isDisabled={!canSubmitBtnBeEnabled() || busy}
             varient="primary-solid"
           />
         </Form>

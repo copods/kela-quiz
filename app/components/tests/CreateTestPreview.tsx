@@ -1,7 +1,6 @@
 import { Icon } from '@iconify/react'
 import type { TestSection } from '~/interface/Interface'
 import { commonConstants, testsConstants } from '~/constants/common.constants'
-import sanitizeHtml from 'sanitize-html'
 
 const TestPreview = ({
   name,
@@ -74,7 +73,7 @@ const TestPreview = ({
             <div
               className="ql-editor flex-1 p-0 text-base text-gray-700"
               dangerouslySetInnerHTML={{
-                __html: sanitizeHtml(description),
+                __html: description,
               }}
             ></div>{' '}
           </div>
