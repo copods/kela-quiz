@@ -1,5 +1,6 @@
 import { redirect } from '@remix-run/node'
 import moment from 'moment'
+
 import {
   candidateSectionStart,
   candidateTestStart,
@@ -44,7 +45,6 @@ export async function checkIfTestLinkIsValidAndRedirect(
   if (!currentCandidateStep) {
     return `/assessment/invalid-link`
   }
-
   if (currentCandidateStep?.linkSentOn) {
     const now = moment(new Date())
     const LinkSendedTime = moment(currentCandidateStep?.linkSentOn)
@@ -55,6 +55,7 @@ export async function checkIfTestLinkIsValidAndRedirect(
   }
 
   const candidateStepObj = currentCandidateStep?.candidateStep as CandidateStep
+
   if (
     candidateStepObj &&
     candidateStepObj.nextRoute &&
@@ -71,17 +72,29 @@ export async function checkIfTestLinkIsValidAndRedirect(
           return `/assessment/${assessmentID}/${candidateStepObj.currentSectionId}/cooldown`
         case 'end':
           return `/assessment/${assessmentID}/end-assessment`
+        case 'already-submitted':
+          return `/assessment/${assessmentID}/already-submitted`
       }
     }
   }
+
   if (currentCandidateStep?.endAt) {
     const CurrentTime = moment(new Date())
     const examEndedBefore = moment(currentCandidateStep?.endAt)
     const duration = CurrentTime.diff(examEndedBefore, 'minute')
     if (duration >= 1) {
-      return `/assessment/${assessmentID}/already-submitted`
+      await updateNextStep({
+        assessmentId: assessmentID as string,
+        nextRoute: 'already-submitted',
+        isSection: false,
+      })
+      if (currentRoute !== candidateStepObj.nextRoute) {
+        return `/assessment/${assessmentID}/already-submitted`
+      }
     } else {
-      return `/assessment/${assessmentID}/end-assessment`
+      if (currentRoute !== candidateStepObj.nextRoute) {
+        return `/assessment/${assessmentID}/end-assessment`
+      }
     }
   }
 }
@@ -316,8 +329,6 @@ export async function moveToNextSection({
 
   if (nextSectionObject) {
     return `/assessment/${assessmentId}/${nextSectionObject?.id}`
-  } else {
-    return `/assessment/${assessmentId}/end-assessment`
   }
 }
 
@@ -368,6 +379,11 @@ export async function endCandidateAssessment(
   sectionId: string
 ) {
   await endSection(assessmentId as string, sectionId as string)
+  await updateNextStep({
+    assessmentId: assessmentId as string,
+    nextRoute: 'end',
+    isSection: false,
+  })
   await endAssessment(assessmentId as string)
   return redirect(`/assessment/${assessmentId}/end-assessment`)
 }
