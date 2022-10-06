@@ -270,7 +270,7 @@ model CandidateResult {
   isQualified Boolean
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
-  Workspace   Workspace? @relation(fields: [workspaceId], references: [id])
+  workspace   Workspace? @relation(fields: [workspaceId], references: [id])
   workspaceId String?
 }
 
