@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Form } from '@remix-run/react'
+import { Form, useTransition } from '@remix-run/react'
 import Button from '~/components/form/Button'
 import InputField from '~/components/form/InputField'
 import { useTranslation } from 'react-i18next'
@@ -9,6 +9,10 @@ function CandidateRegister() {
 
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
+
+  const { state } = useTransition()
+  const busy = state === 'submitting'
+
   const canSubmitBtnBeEnabled = () => {
     return firstName.length > 0 && lastName.length > 0
   }
@@ -51,10 +55,10 @@ function CandidateRegister() {
           </div>
           <Button
             title={t('commonConstants.proceed')}
-            buttonText={t('commonConstants.proceed')}
+            buttonText={busy ? 'Processing...' : t('commonConstants.proceed')}
             type="submit"
             className="h-12 w-full text-base"
-            isDisabled={!canSubmitBtnBeEnabled()}
+            isDisabled={!canSubmitBtnBeEnabled() || busy}
             varient="primary-solid"
           />
         </Form>

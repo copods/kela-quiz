@@ -1,5 +1,4 @@
 import type { CorrectAnswer, Option, QuestionType } from '~/interface/Interface'
-import sanitizeHtml from 'sanitize-html'
 
 const OptionCard = ({
   option,
@@ -24,9 +23,9 @@ const OptionCard = ({
         <div
           className="ql-editor flex-1"
           dangerouslySetInnerHTML={{
-            __html: `${sanitizeHtml(
+            __html: `${
               (option as Option)?.option || (option as CorrectAnswer)?.answer
-            )}`,
+            }`,
           }}
         ></div>
       )}

@@ -1,6 +1,5 @@
 import { Icon } from '@iconify/react'
 import { useTranslation } from 'react-i18next'
-import sanitizeHtml from 'sanitize-html'
 import type {
   Question,
   Option,
@@ -46,7 +45,7 @@ const QuestionCard = ({
           <div
             className="question flex-1 cursor-pointer flex-row"
             dangerouslySetInnerHTML={{
-              __html: sanitizeHtml(question.question),
+              __html: question.question,
             }}
           ></div>
         </div>
