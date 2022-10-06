@@ -40,7 +40,7 @@ const TestTableItem = ({
   const deleteTest = () => {
     submit(
       {
-        deleteTest: 'testDelete',
+        action: 'testDelete',
         id: id,
       },
       { method: 'post' }
@@ -109,7 +109,7 @@ const TestTableItem = ({
             id="invite-popup-open"
             role={'button'}
             tabIndex={0}
-            className="candidateInviteIcon cursor-pointer text-2xl text-primary focus:outline-dotted focus:outline-2"
+            className="candidateInviteIcon mt-2 cursor-pointer text-2xl text-primary focus:outline-dotted focus:outline-2"
             icon={'ant-design:user-add-outlined'}
             onClick={() => {
               setCandidatePopupOpen(true)

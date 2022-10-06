@@ -1,8 +1,11 @@
-import { Link } from '@remix-run/react'
+import { Link, useSubmit } from '@remix-run/react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import TestListActionMenu from '../TestListActionMenu'
 
 const AttendedCandidateListItem = ({
   id,
+  candidateId,
   email,
   invitedBy,
   name,
@@ -10,10 +13,12 @@ const AttendedCandidateListItem = ({
   result,
   review,
   testId,
+  testName,
   candidateResultId,
   endAt,
 }: {
   id: string
+  candidateId: string
   email: string
   invitedBy: string
   name: string
@@ -21,14 +26,26 @@ const AttendedCandidateListItem = ({
   result: number
   review: boolean
   testId: string
+  testName: string
   candidateResultId: string
   endAt: Date
 }) => {
   const { t } = useTranslation()
-
+  const [candidatePopupOpen, setCandidatePopupOpen] = useState<boolean>(false)
+  const submit = useSubmit()
+  const resendInvite = () => {
+    submit(
+      {
+        action: 'resendInvite',
+        candidateId: candidateId,
+        testId: id,
+      },
+      { method: 'post' }
+    )
+  }
   return (
     <div className="col-span-full">
-      <div className="col-span-full grid grid-cols-12 gap-3 rounded-b-lg border-t border-solid border-gray-200 bg-white px-12 py-6">
+      <div className="col-span-full flex grid grid-cols-12 items-center gap-1 rounded-b-lg border-t border-solid border-gray-200 bg-white px-8 py-6">
         <div className=" col-span-1 truncate">
           <span className=" text-base text-gray-700">{index}</span>
         </div>
@@ -70,7 +87,11 @@ const AttendedCandidateListItem = ({
             {result >= 0 ? `${result}%` : 'NA'}
           </span>
         </div>
-        <div tabIndex={0} role={'banner'} className="col-span-1">
+        <div
+          tabIndex={0}
+          role={'banner'}
+          className="col-span-1 flex items-center justify-between"
+        >
           <span
             className={`rounded-full px-2 py-1 text-xs text-gray-900 ${
               result >= 0 ? 'bg-green-200' : 'bg-yellow-200'
@@ -80,6 +101,20 @@ const AttendedCandidateListItem = ({
               ? t('commonConstants.complete')
               : t('commonConstants.pending')}
           </span>
+          {result >= 0 ? (
+            ''
+          ) : (
+            <TestListActionMenu
+              menuIcon={'mdi:dots-vertical'}
+              onItemClick={setCandidatePopupOpen}
+              open={candidatePopupOpen}
+              menuListIcon={''}
+              menuListText={'Resend Invite'}
+              aria-label={t('testTableItem.menu')}
+              id={id}
+              resendInvite={resendInvite}
+            />
+          )}
         </div>
       </div>
     </div>

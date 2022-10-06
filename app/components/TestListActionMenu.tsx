@@ -9,6 +9,7 @@ const TestListMenuItem = ({
   menuListIcon,
   menuListText,
   id,
+  resendInvite,
 }: {
   menuIcon: string
   onItemClick: (e: boolean) => void
@@ -16,6 +17,7 @@ const TestListMenuItem = ({
   menuListIcon: string
   menuListText: string
   id: string
+  resendInvite?: () => void
 }) => {
   useEffect(() => {
     if (open === false) {
@@ -27,7 +29,7 @@ const TestListMenuItem = ({
   }, [open, id])
   return (
     <>
-      <Menu as="div" className="relative">
+      <Menu as="div" className="relative mt-2">
         <Menu.Button className={id}>
           <Icon
             className="text-2xl text-gray-600"
@@ -54,11 +56,12 @@ const TestListMenuItem = ({
                     className="deleteTest text-gray-primary undefined inline-flex w-36 items-center justify-start rounded-md rounded-md border border-primary bg-white py-2.5 px-5 px-2 py-2 text-xs font-medium text-primary shadow-sm transition delay-75 ease-in-out hover:bg-gray-100"
                     onClick={() => {
                       onItemClick(true)
+                      if (resendInvite) resendInvite()
                     }}
                   >
                     <>
                       <Icon
-                        icon={'ic:outline-delete-outline'}
+                        icon={menuListIcon}
                         className="mr-2 h-5 w-5
                         text-red-500"
                         aria-hidden="true"

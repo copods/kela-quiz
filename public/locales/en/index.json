@@ -98,6 +98,8 @@
   },
   "testsConstants": {
     "addTestbutton": "Add Test",
+    "endTets": "Test has been ended",
+    "reinvited": "Candidate Invited Successfully",
     "testDetailsText": "Test Details",
     "descriptionText": "Description",
     "totalTimeText": "Total Time",
