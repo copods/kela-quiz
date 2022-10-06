@@ -16,7 +16,7 @@ model Workspace {
   createdAt       DateTime          @default(now())
   updatedAt       DateTime          @updatedAt
   section         Section[]
-  Test            Test[]
+  test            Test[]
   candidateResult CandidateResult[]
 
   @@unique([name, createdById])
