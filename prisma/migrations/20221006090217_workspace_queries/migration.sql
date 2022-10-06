@@ -2,23 +2,17 @@ CREATE EXTENSION pgcrypto;
 
 DO $$
 DECLARE 
-  userIdVar varchar;
-  firstNameVar varchar;
-  roleIDVar varchar;
-  random_id varchar;
+  workspaceId varchar;
   userWorkspaceId varchar;
   userList record;
 BEGIN
     FOR userList in SELECT *  FROM "User" LOOP
-      random_id=gen_random_uuid();
+      workspaceId=gen_random_uuid();
       userWorkspaceId=gen_random_uuid();  
-      PERFORM * FROM "UserWorkspace" where "userId"=userList.id;
+      PERFORM * FROM "UserWorkspace" where "userId"=userList.id AND "isDefault"=NULL;
       IF NOT FOUND THEN
-        userIdVar =  userList.id;
-        firstNameVar =  userList."firstName";
-        roleIDVar =  userList."roleId";
-        INSERT INTO "Workspace" ("id", "createdById","name","updatedAt") VALUES (random_id,userIdVar,firstNameVar, current_timestamp);
-        INSERT INTO "UserWorkspace" ("id","workspaceId","userId","roleId","isDefault","updatedAt") VALUES (userWorkspaceId,random_id,userIdVar,roleIDVar,TRUE,current_timestamp);
+        INSERT INTO "Workspace" ("id", "createdById","name","updatedAt") VALUES (workspaceId,userList."id",userList."firstName", current_timestamp);
+        INSERT INTO "UserWorkspace" ("id","workspaceId","userId","roleId","isDefault","updatedAt") VALUES (userWorkspaceId,workspaceId,userList.id,userList."roleId",TRUE,current_timestamp);
       END IF;
     END LOOP;  
 END; $$;
@@ -26,12 +20,10 @@ END; $$;
 -----common workspace-------
 DO $$
 DECLARE 
-  userIdVar varchar;
   workspaceIdCopods varchar;
   userList record;
   workspaceList record;
   userWorkspaceId varchar;
-  roleIDVar varchar;
 BEGIN
     FOR userList in SELECT *  FROM "User" LOOP
       PERFORM * FROM "User" where userList."email"='careers@copods.co';
@@ -48,9 +40,7 @@ BEGIN
       userWorkspaceId=gen_random_uuid();  
       PERFORM * from "User" where userList."email"='careers@copods.co';
       if not found then
-        userIdVar=userList."id";
-        roleIDVar=userList."roleId";
-        INSERT INTO "UserWorkspace" ("id","workspaceId","userId","roleId","isDefault","updatedAt") VALUES (userWorkspaceId,workspaceIdCopods,userIdVar,roleIDVar,FALSE,current_timestamp);
+        INSERT INTO "UserWorkspace" ("id","workspaceId","userId","roleId","isDefault","updatedAt") VALUES (userWorkspaceId,workspaceIdCopods,userList."id",userList."roleId",FALSE,current_timestamp);
       end if;
     end loop;
 END; $$;
