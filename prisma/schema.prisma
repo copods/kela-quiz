@@ -12,19 +12,19 @@ model Workspace {
   name            String
   createdBy       User              @relation(fields: [createdById], references: [id])
   createdById     String
-  UserWorkspace   UserWorkspace[]
+  userWorkspace   UserWorkspace[]
   createdAt       DateTime          @default(now())
   updatedAt       DateTime          @updatedAt
-  Section         Section[]
+  section         Section[]
   Test            Test[]
-  CandidateResult CandidateResult[]
+  candidateResult CandidateResult[]
 
   @@unique([name, createdById])
 }
 
 model UserWorkspace {
   id          String    @id @default(cuid())
-  Workspace   Workspace @relation(fields: [workspaceId], references: [id])
+  workspace   Workspace @relation(fields: [workspaceId], references: [id])
   workspaceId String
   user        User      @relation(fields: [userId], references: [id])
   userId      String
@@ -52,8 +52,8 @@ model User {
   Option        Option[]
   Test          Test[]
   Candidate     Candidate[]
-  UserWorkspace UserWorkspace[]
-  Workspace     Workspace[]
+  userWorkspace UserWorkspace[]
+  workspace     Workspace[]
 }
 
 model Password {
@@ -68,7 +68,7 @@ model Role {
   users         User[]
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt
-  UserWorkspace UserWorkspace[]
+  userWorkspace UserWorkspace[]
 }
 
 model Section {
@@ -84,7 +84,7 @@ model Section {
   deletedAt              String?                  @default("na")
   createdAt              DateTime                 @default(now())
   updatedAt              DateTime                 @updatedAt
-  Workspace              Workspace?               @relation(fields: [workspaceId], references: [id])
+  workspace              Workspace?               @relation(fields: [workspaceId], references: [id])
   workspaceId            String?
 
   @@unique([name, deletedAt, deleted])
@@ -156,7 +156,7 @@ model Test {
   deleted           Boolean             @default(false)
   deletedAt         String?             @default("na")
   SectionWiseResult SectionWiseResult[]
-  Workspace         Workspace?          @relation(fields: [workspaceId], references: [id])
+  workspace         Workspace?          @relation(fields: [workspaceId], references: [id])
   workspaceId       String?
 
   @@unique([name, deletedAt, deleted])
