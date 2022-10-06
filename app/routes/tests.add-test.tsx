@@ -8,17 +8,22 @@ import AdminLayout from '~/components/layouts/AdminLayout'
 import AddTestComponent from '~/components/tests/AddTest'
 import { getAllSections } from '~/models/sections.server'
 import { createTest } from '~/models/tests.server'
-import { getUserId, requireUserId } from '~/session.server'
+import { getUserId, getWorkspaceId, requireUserId } from '~/session.server'
 import { routes } from '~/constants/route.constants'
 import { useTranslation } from 'react-i18next'
+import { getUserWorkspaces } from '~/models/workspace.server'
 
 type LoaderData = {
   sections: Awaited<ReturnType<typeof getAllSections>>
   status: string
+  workspaces: Awaited<ReturnType<typeof getUserWorkspaces>>
+  currentWorkspaceId: Awaited<ReturnType<typeof getWorkspaceId>>
 }
 
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await getUserId(request)
+  const currentWorkspaceId = await getWorkspaceId(request)
+  const workspaces = await getUserWorkspaces(userId as string)
   if (!userId) return redirect(routes.signIn)
 
   const filter = Object.fromEntries(new URL(request.url).searchParams.entries())
@@ -30,7 +35,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 
   let sections: Array<Section> = []
   let status: string = ''
-  await getAllSections(filter)
+  await getAllSections(filter, currentWorkspaceId as string)
     .then((res) => {
       sections = res as Section[]
       status = 'statusCheck.success'
@@ -38,11 +43,12 @@ export const loader: LoaderFunction = async ({ request }) => {
     .catch((err) => {
       status = err
     })
-  return json<LoaderData>({ sections, status })
+  return json<LoaderData>({ sections, status, workspaces, currentWorkspaceId })
 }
 
 export const action: ActionFunction = async ({ request }) => {
   const createdById = await requireUserId(request)
+  const workspaceId = await getWorkspaceId(request)
   const formData = await request.formData()
   const data:
     | {
@@ -57,7 +63,7 @@ export const action: ActionFunction = async ({ request }) => {
     | any = formData.get('data')
 
   let test = null
-  await createTest(createdById, JSON.parse(data))
+  await createTest(createdById, workspaceId as string, JSON.parse(data))
     .then((res) => {
       test = res
     })

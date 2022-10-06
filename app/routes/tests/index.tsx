@@ -1,5 +1,5 @@
 import AdminLayout from '~/components/layouts/AdminLayout'
-import { getUserId, requireUserId } from '~/session.server'
+import { getUserId, getWorkspaceId, requireUserId } from '~/session.server'
 import { redirect } from '@remix-run/node'
 import type { LoaderFunction, ActionFunction } from '@remix-run/node'
 import TestList from '~/components/tests/TestList'
@@ -12,10 +12,13 @@ import type { Test } from '~/interface/Interface'
 import { createCandidate } from '~/models/candidate.server'
 import { routes } from '~/constants/route.constants'
 import { useTranslation } from 'react-i18next'
+import { getUserWorkspaces } from '~/models/workspace.server'
 
 type LoaderData = {
   tests: Awaited<ReturnType<typeof getAllTests>>
   status?: string | undefined
+  workspaces: Awaited<ReturnType<typeof getUserWorkspaces>>
+  currentWorkspaceId: Awaited<ReturnType<typeof getWorkspaceId>>
 }
 export type ActionData = {
   errors?: {
@@ -31,6 +34,8 @@ export type ActionData = {
 
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await getUserId(request)
+  const currentWorkspaceId = await getWorkspaceId(request)
+  const workspaces = await getUserWorkspaces(userId as string)
   if (!userId) return redirect(routes.signIn)
 
   let tests: Array<Test> = []
@@ -43,7 +48,7 @@ export const loader: LoaderFunction = async ({ request }) => {
       )
     : {}
 
-  await getAllTests(filter)
+  await getAllTests(filter, currentWorkspaceId as string)
     .then((res) => {
       tests = res as Test[]
       status = 'statusCheck.success'
@@ -51,7 +56,7 @@ export const loader: LoaderFunction = async ({ request }) => {
     .catch((err) => {
       status = err
     })
-  return json<LoaderData>({ tests, status })
+  return json<LoaderData>({ tests, status, workspaces, currentWorkspaceId })
 }
 
 export const action: ActionFunction = async ({ request }) => {

@@ -24,12 +24,13 @@ export async function getSectionById({ id }: Pick<Section, 'id'>) {
   })
 }
 
-export async function getAllSections(obj: string) {
+export async function getAllSections(obj: string, currentWorkspaceId: string) {
   let filter = obj ? obj : '{"orderBy":{"createdAt":"asc"}}'
   return await prisma.section.findMany({
     ...JSON.parse(filter),
     where: {
       deleted: false,
+      workspaceId: currentWorkspaceId,
     },
     include: {
       createdBy: true,
@@ -44,12 +45,16 @@ export async function createSection({
   name,
   description,
   createdById,
-}: Pick<Section, 'name' | 'description'> & { createdById: User['id'] }) {
+  workspaceId,
+}: Pick<Section, 'name' | 'description' | 'workspaceId'> & {
+  createdById: User['id']
+}) {
   return await prisma.section.create({
     data: {
       name,
       description,
       createdById,
+      workspaceId,
     },
   })
 }

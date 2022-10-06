@@ -17,12 +17,13 @@ export async function getTestById({ id }: Pick<Section, 'id'>) {
   })
 }
 
-export async function getAllTests(obj: any) {
+export async function getAllTests(obj: any, currentWorkspaceId: string) {
   let filter = obj.orderBy ? obj : { orderBy: { name: sortByOrder.ascending } }
   return await prisma.test.findMany({
     ...filter,
     where: {
       deleted: false,
+      workspaceId: currentWorkspaceId,
     },
     select: {
       id: true,
@@ -50,6 +51,7 @@ export async function getAllTests(obj: any) {
 
 export async function createTest(
   createdById: string,
+  workspaceId: string,
   data: {
     name: string
     description: string
@@ -66,6 +68,7 @@ export async function createTest(
       name: data.name,
       description: data.description,
       createdById,
+      workspaceId,
       sections: {
         create: [...data.sections],
       },
