@@ -32,6 +32,7 @@
     "semantic-release": "semantic-release --branches demo-dev"
   },
   "release": {
+    "repositoryUrl": "https://github.com/copods/kela-quiz.git",
     "prepare": "@semantic-release/changelog",
     "ci": false,
     "branches": [
