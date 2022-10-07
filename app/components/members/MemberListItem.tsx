@@ -77,7 +77,9 @@ export default function MemberListItem({
             tabIndex={0}
             onClick={() => resendMail()}
             icon="carbon:mail-reply"
-            className="h-6 w-6 cursor-pointer text-gray-500"
+            className={`h-6 w-6 cursor-pointer text-gray-500  ${
+              loggedInUser && 'cursor-not-allowed text-gray-300'
+            }`}
           />
         </div>
         <DeletePopUp
