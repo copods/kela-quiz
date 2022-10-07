@@ -25,6 +25,8 @@ const InviteCandidatePopup = ({
     if (actionData?.status == 401 && testId === actionData?.testId) {
       toast.warn(actionData.message)
     }
+    console.log(actionData)
+
     if (
       actionData?.candidateInviteStatus ===
       t('candidateExamConstants.candidateTestCreated')
