@@ -36,6 +36,8 @@
     "prepare": "@semantic-release/changelog",
     "ci": false,
     "branches": [
+      "main",
+      "dev",
       "demo-dev"
     ],
     "path": "@semantic-release/git",
