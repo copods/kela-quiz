@@ -1,14 +1,12 @@
 import { useNavigate, useSubmit, useTransition } from '@remix-run/react'
 import { useState } from 'react'
 import Button from '~/components/form/Button'
-import DropdownField from '~/components/form/Dropdown'
 import Logo from '~/components/Logo'
 import { trimValue } from '~/utils'
-import type { Role } from '~/interface/Interface'
 import { routes } from '~/constants/route.constants'
 import { useTranslation } from 'react-i18next'
 
-const SignUp = ({ roles }: { roles: Role[] }) => {
+const SignUp = ({ roleId }: { roleId: string }) => {
   const transition = useTransition()
   const submit = useSubmit()
 
@@ -17,14 +15,13 @@ const SignUp = ({ roles }: { roles: Role[] }) => {
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [email, setEmail] = useState('')
-  const [role, setRole] = useState(roles[0].id)
 
   const submitMemberForm = () => {
     let data = {
       firstName: firstName,
       lastName: lastName,
       email: email,
-      roleId: role,
+      roleId: roleId,
       addMember: JSON.stringify({
         action: 'add',
       }),
@@ -106,21 +103,6 @@ const SignUp = ({ roles }: { roles: Role[] }) => {
               className="h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
               placeholder={t('commonConstants.email')}
               onChange={(e) => setEmail(trimValue(e.target.value))}
-            />
-          </div>
-          <div className="">
-            <div>
-              <label htmlFor="" className="text-gray-800">
-                {t('members.role')}
-              </label>
-            </div>
-            <DropdownField
-              data={roles}
-              name="roleId"
-              displayKey={'name'}
-              valueKey={'id'}
-              value={role}
-              setValue={setRole}
             />
           </div>
           <div className="flex flex-col items-center justify-center gap-6">
