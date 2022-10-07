@@ -75,7 +75,7 @@ jobs:
   #         GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
   release:
     runs-on: ubuntu-latest
-    if: ${{ github.ref == 'refs/heads/demo-dev' && github.event_name == 'push' }}
+    # if: ${{ github.ref == 'refs/heads/demo-dev' && github.event_name == 'push' }}
     steps:
       - uses: actions/checkout@v3
       - name: Setup Node.js
