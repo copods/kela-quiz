@@ -34,7 +34,7 @@
   "release": {
     "repositoryUrl": "https://github.com/copods/kela-quiz.git",
     "prepare": "@semantic-release/changelog",
-    "ci": false,
+    "ci": true,
     "branches": [
       "main",
       "dev",
