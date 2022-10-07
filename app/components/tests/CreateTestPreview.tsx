@@ -1,6 +1,5 @@
 import { Icon } from '@iconify/react'
 import type { TestSection } from '~/interface/Interface'
-import sanitizeHtml from 'sanitize-html'
 import { useTranslation } from 'react-i18next'
 
 const TestPreview = ({
@@ -76,7 +75,7 @@ const TestPreview = ({
             <div
               className="ql-editor flex-1 p-0 text-base text-gray-700"
               dangerouslySetInnerHTML={{
-                __html: sanitizeHtml(description),
+                __html: description,
               }}
             ></div>{' '}
           </div>
