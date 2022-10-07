@@ -31,7 +31,7 @@ const AttendedCandidateListItem = ({
   endAt: Date
 }) => {
   const { t } = useTranslation()
-  const [candidatePopupOpen, setCandidatePopupOpen] = useState<boolean>(false)
+  const [menuListOpen, setmenuListOpen] = useState<boolean>(false)
   const submit = useSubmit()
   const resendInvite = () => {
     submit(
@@ -106,8 +106,8 @@ const AttendedCandidateListItem = ({
           ) : (
             <TestListActionMenu
               menuIcon={'mdi:dots-vertical'}
-              onItemClick={setCandidatePopupOpen}
-              open={candidatePopupOpen}
+              onItemClick={setmenuListOpen}
+              open={menuListOpen}
               menuListIcon={''}
               menuListText={'Resend Invite'}
               aria-label={t('testTableItem.menu')}
