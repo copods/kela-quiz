@@ -23,7 +23,7 @@ export async function getUserByEmail(email: User['email']) {
 }
 
 export async function getAllUsers() {
-  return prisma.user.findMany({ include: { role: true } })
+  return prisma.user.findMany({ include: { role: true, password: true } })
 }
 
 export async function getAllRoles() {
@@ -108,4 +108,40 @@ export async function loginVerificationResponse(
 
   const { password: _password, ...userWithoutPassword } = userWithPassword
   return userWithoutPassword
+}
+export async function updatePassword(id: string, newPassword: any) {
+  const hashedPassword = await bcrypt.hash(newPassword, 10)
+  const userId = await prisma.user.findUnique({
+    where: { id: id },
+    select: {
+      id: true,
+    },
+  })
+  return prisma.password.update({
+    where: {
+      userId: userId?.id,
+    },
+    data: {
+      hash: hashedPassword,
+    },
+  })
+}
+export async function checkOldPasswordFromdb(oldPassword: any, id: any) {
+  const oldPass = await prisma.user.findUnique({
+    where: { id },
+    select: {
+      password: {
+        select: {
+          hash: true,
+        },
+      },
+    },
+  })
+
+  const isValid = await bcrypt.compare(
+    oldPassword,
+    oldPass?.password?.hash as any
+  )
+
+  return isValid
 }

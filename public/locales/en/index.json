@@ -232,5 +232,22 @@
     "didntGetCode": "Didn't get a code",
     "resendCodeIn": "Resend code in",
     "otp": "OTP"
+  },
+  "settings": {
+    "enterValidPass": "Please enter correct password",
+    "passNotMatch": "password is not matched",
+    "enterNewPass": "Enter New Password",
+    "enterConfPass": "Enter Confirm Password",
+    "resetPas": "Reset Password",
+    "attentionToDetail": "Attention to detail",
+    "Password": "Password",
+    "clickToChange": "Click to change",
+    "passResetting": "Password Resetting",
+    "passReset": "Password Reset",
+    "enterOldPassword": "Enter Old Password",
+    "enterNewPassword": "Enter New Password",
+    "confirmNewPassword": "Confirm New Password",
+    "newPassword": "New Password",
+    "oldPassword": "Old Password"
   }
 }
