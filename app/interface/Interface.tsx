@@ -74,6 +74,7 @@ export interface Section {
   updatedAt: Date
   deleted: boolean
   deletedAt: string
+  workspaceId: string
 }
 
 export interface User {
@@ -119,6 +120,7 @@ export interface Test {
   deleted: boolean
   deletedAt: string
   candidateTest?: Array<CandidateTest>
+  workspaceId: string
 }
 
 export interface SectionInTest {
@@ -223,6 +225,7 @@ export interface CandidateResult {
   isQualified: boolean
   createdAt: Date
   updatedAt: Date
+  workspaceId?: string
 }
 
 export enum sortByOrder {
