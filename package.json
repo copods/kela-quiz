@@ -31,6 +31,31 @@
     "cypress": "cypress open",
     "semantic-release": "semantic-release --branches demo-dev"
   },
+  "release": {
+    "branches": [
+      {
+        "name": "demo-dev"
+      }
+    ]
+  },
+  "plugins": [
+    "@semantic-release/commit-analyzer",
+    "@semantic-release/release-notes-generator",
+    [
+      "@semantic-release/changelog",
+      {
+        "changelogFile": "CHANGELOG.md"
+      }
+    ],
+    [
+      "@semantic-release/git",
+      {
+        "assets": [
+          "CHANGELOG.md"
+        ]
+      }
+    ]
+  ],
   "prettier": {
     "trailingComma": "es5",
     "tabWidth": 2,
