@@ -45,9 +45,9 @@ const AttendedCandidateListItem = ({
   }
   return (
     <div className="col-span-full">
-      <div className="col-span-full flex grid grid-cols-12 items-center gap-1 rounded-b-lg border-t border-solid border-gray-200 bg-white px-8 py-6">
-        <div className=" col-span-1 truncate">
-          <span className=" text-base text-gray-700">{index}</span>
+      <div className="col-span-full grid grid-cols-12 items-center gap-1 rounded-b-lg border-t border-solid border-gray-200 bg-white px-8 py-6">
+        <div className="col-span-1 truncate">
+          <span className="text-base text-gray-700">{index}</span>
         </div>
         {endAt ? (
           <Link
@@ -90,7 +90,7 @@ const AttendedCandidateListItem = ({
         <div
           tabIndex={0}
           role={'banner'}
-          className="col-span-1 flex items-center justify-between"
+          className="flex items-center justify-between"
         >
           <span
             className={`rounded-full px-2 py-1 text-xs text-gray-900 ${
