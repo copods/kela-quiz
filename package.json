@@ -29,14 +29,14 @@
     "prepare": "husky install",
     "prisma:reset": "prisma migrate reset",
     "cypress": "cypress open",
-    "semantic-release": "semantic-release --branches demo-application-version"
+    "semantic-release": "semantic-release --branches demo-dev"
   },
   "release": {
     "repositoryUrl": "https://github.com/copods/kela-quiz.git",
     "prepare": "@semantic-release/changelog",
     "ci": false,
     "branches": [
-      "demo-application-version"
+      "demo-dev"
     ],
     "path": "@semantic-release/git",
     "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}",
