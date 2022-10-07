@@ -29,7 +29,7 @@
     "prepare": "husky install",
     "prisma:reset": "prisma migrate reset",
     "cypress": "cypress open",
-    "semantic-release": "semantic-release --branches demo-application-version"
+    "semantic-release": "semantic-release --branches demo-dev"
   },
   "prettier": {
     "trailingComma": "es5",
