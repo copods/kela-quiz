@@ -178,7 +178,7 @@ export async function resendTestLink({
       await sendMailToCandidate(candidate?.email as string, candidateLink)
       return 'created'
     } else {
-      return 'end-test'
+      return 'End Test'
     }
   } catch (error) {
     return 'error'

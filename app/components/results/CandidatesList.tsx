@@ -37,8 +37,10 @@ const CandidatesList = () => {
     ) {
       toast.success(t('testsConstants.reinvited'))
     }
-    if (actionData?.candidateInviteStatus === 'end-test') {
-      toast.error(t('testsConstants.endTest'))
+    if (
+      actionData?.candidateInviteStatus === t('candidateExamConstants.endTest')
+    ) {
+      toast.error(t('testsConstants.testEnded'))
     }
   }, [actionData, t])
   return (
