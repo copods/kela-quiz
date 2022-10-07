@@ -75,20 +75,18 @@ jobs:
   #         GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
   release:
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/demo-dev'
     steps:
       - uses: actions/checkout@v3
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      - name: Release
+        uses: release/semantic-release-action@v2
         with:
-          node-version: 16
-      - name: Install dependencies
-        run: npm install
-      - name: Build app
-        run: npm run build
-      - name: Semantic release
+          extra_plugins: |
+            @semantic-release/changelog
+            @semantic-release/git
+          branch: demo-dev
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: npx semantic-release
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   build:
     name: 🐳 Build
     # only build/deploy main branch on pushes
