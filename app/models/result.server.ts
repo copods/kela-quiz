@@ -197,8 +197,11 @@ export async function updateCandidateStatus({
   })
 }
 
-export async function getAllCandidateTests(obj: object, workspaceId: string) {
-  const filter = obj ? obj : {}
+export async function getAllCandidateTests(
+  filterData: string,
+  workspaceId: string
+) {
+  const filter = filterData ? filterData : {}
   const res: Array<Test> = await prisma.test.findMany({
     ...filter,
     where: { workspaceId },

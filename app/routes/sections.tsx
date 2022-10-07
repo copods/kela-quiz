@@ -59,10 +59,10 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const currentWorkspaceId = await getWorkspaceId(request)
   const workspaces = await getUserWorkspaces(userId as string)
   const url = new URL(request.url).searchParams.entries()
-  const obj = Object.fromEntries(url).filter
+  const filterData = Object.fromEntries(url).filter
   let sections: Array<Section> = []
   let status: string = ''
-  await getAllSections(obj, currentWorkspaceId as string)
+  await getAllSections(filterData, currentWorkspaceId as string)
     .then((res) => {
       sections = res as Section[]
       status = 'statusCheck.success'
