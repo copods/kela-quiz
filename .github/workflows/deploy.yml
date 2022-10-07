@@ -60,6 +60,19 @@ jobs:
 
       - name: ⚡ Run vitest
         run: npm run test -- --coverage
+  publish:
+    runs-on: ubuntu-latest
+    if: ${{ github.ref == 'refs/heads/demo-dev' && github.event_name == 'push' }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Semantic Release
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - run: npm ci
+      - run: npm run semantic-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
   build:
     name: 🐳 Build
