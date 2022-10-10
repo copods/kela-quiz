@@ -16,7 +16,7 @@ describe('Test for section-details', () => {
       .should('have.focus')
       .should('have.value', Cypress.env('password'))
     cy.get('[data-cy="submit"]').click()
-    cy.location('pathname').should('include', '/dashboard')
+    cy.location('pathname').should('include', '/members')
   })
   it('Verifying MCQ to have Check Box in options', () => {
     cy.get('a')

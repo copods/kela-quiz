@@ -17,7 +17,7 @@ describe('Visiting Tests', () => {
       .should('have.focus')
       .should('have.value', Cypress.env('password'))
     cy.get('[data-cy="submit"]').click()
-    cy.location('pathname').should('include', '/dashboard')
+    cy.location('pathname').should('include', '/members')
   })
   // creating data to test Test list page
   it('Visiting Add Test Page', () => {
