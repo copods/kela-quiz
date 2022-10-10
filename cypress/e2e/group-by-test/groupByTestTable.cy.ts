@@ -14,7 +14,7 @@ describe('Test for GroupByTestTable, Result', () => {
       .should('have.focus')
       .should('have.value', Cypress.env('password'))
     cy.get('[data-cy="submit"]').click()
-    cy.location('pathname').should('include', '/dashboard')
+    cy.location('pathname').should('include', '/members')
   })
   let value: string
   let strings: Array<string>

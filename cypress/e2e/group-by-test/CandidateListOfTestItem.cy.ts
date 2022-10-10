@@ -13,7 +13,7 @@ describe('Visiting group by test of results page', () => {
       .should('have.focus')
       .should('have.value', Cypress.env('password'))
     cy.get('[data-cy="submit"]').click()
-    cy.location('pathname').should('include', '/dashboard')
+    cy.location('pathname').should('include', '/members')
   })
   const test1 = `Aptitude - test1`
   it('Check  that if list of candidate is coming after clicking a test in group byt test in results page ', () => {
