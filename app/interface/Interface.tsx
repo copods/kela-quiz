@@ -11,6 +11,16 @@ export interface InputFieldProps {
   errorId: string
   onChange: (e: React.ChangeEvent) => void
 }
+export interface PasswordFieldProps {
+  name: string
+  label: string
+  placeholder: string
+  required: boolean
+  value: string
+  error?: string
+  errorId: string
+  onChange: (e: React.ChangeEvent) => void
+}
 
 export interface ButtonProps {
   name?: string

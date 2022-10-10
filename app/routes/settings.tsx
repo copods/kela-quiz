@@ -18,10 +18,9 @@ import { toast } from 'react-toastify'
 
 export type ActionData = {
   errors?: {
-    title: string
-    status: number
-    valid: string
-    passNotMatched: string
+    status?: number
+    valid?: string
+    passNotMatched?: string
   }
   resp?: {
     title: string
@@ -56,8 +55,6 @@ export const action: ActionFunction = async ({ request }) => {
         errors: {
           valid: 'settings.enterValidPass',
           status: 400,
-          title: '',
-          passNotMatched: '',
         },
       },
       { status: 400 }
@@ -70,8 +67,6 @@ export const action: ActionFunction = async ({ request }) => {
         errors: {
           passNotMatched: 'settings.passNotMatch',
           status: 400,
-          valid: '',
-          title: ' ',
         },
       },
       { status: 400 }
@@ -92,16 +87,12 @@ export const action: ActionFunction = async ({ request }) => {
           )
         })
         .catch((err) => {
-          let title = 'error'
           let valid = 'validationError'
-
           let passNotMatched = 'passwordNotMatchError'
           addHandle = json<ActionData>(
             {
               errors: {
-                title,
                 valid,
-
                 passNotMatched,
                 status: 400,
               },

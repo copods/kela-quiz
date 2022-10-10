@@ -13,7 +13,7 @@ const TabComponent = ({
     if (!isDisabled) return 0
   }
   return (
-    <div className="flex w-full gap-4 rounded-lg">
+    <div className="flex w-full gap-9 rounded-lg">
       {tabs.map((tab, i) => {
         return (
           <div
@@ -33,7 +33,7 @@ const TabComponent = ({
             }}
           >
             <hr
-              className={`mb-3 h-1 w-full rounded-1 border-0 ${
+              className={`h-1 w-full rounded-1 border-0 ${
                 tab.id === currentTab ? 'bg-primary' : 'bg-transparent'
               }`}
             />

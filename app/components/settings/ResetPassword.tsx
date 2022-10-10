@@ -5,6 +5,7 @@ import { Fragment, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Button from '../form/Button'
 import InputField from '../form/InputField'
+import PasswordInputField from '../form/passwordField'
 const ResetPasswordManually = ({
   open,
   setOpen,
@@ -36,10 +37,11 @@ const ResetPasswordManually = ({
         setPassword(event?.target.value)
       },
     },
+  ]
+  const PasswordInputFieldProps = [
     {
       label: 'New Password',
       placeholder: 'Enter New Password',
-      type: 'New Password',
       name: 'New Password',
       required: true,
       value: newPassword,
@@ -52,7 +54,6 @@ const ResetPasswordManually = ({
     {
       label: 'Confirm New Password',
       placeholder: 'Confirm New Password',
-      type: 'confirm new password',
       name: 'Confirm New Password',
       required: true,
       value: confirmPassword,
@@ -126,6 +127,11 @@ const ResetPasswordManually = ({
                       <div className="flex flex-col gap-6">
                         {inputFieldsProps.map((props) => {
                           return <InputField {...props} key={props.name} />
+                        })}
+                        {PasswordInputFieldProps.map((props) => {
+                          return (
+                            <PasswordInputField {...props} key={props.name} />
+                          )
                         })}
                       </div>
                       <div className="flex items-center justify-center">
