@@ -8,11 +8,13 @@ import InputField from '../form/InputField'
 const ResetPasswordManually = ({
   open,
   setOpen,
-  errors,
+  validError,
+  passNotMatched,
 }: {
   open: boolean
   setOpen: (e: boolean) => void
-  errors?: string
+  validError?: string
+  passNotMatched?: string
 }) => {
   const transition = useTransition()
   const { t } = useTranslation()
@@ -28,7 +30,7 @@ const ResetPasswordManually = ({
       name: 'Old Password',
       required: true,
       value: password,
-      error: errors,
+      error: validError,
       errorId: 'Password-error',
       onChange: function (event: any) {
         setPassword(event?.target.value)
@@ -41,7 +43,7 @@ const ResetPasswordManually = ({
       name: 'New Password',
       required: true,
       value: newPassword,
-      error: errors,
+      // error: errors,
       errorId: 'New-password-error',
       onChange: function (event: any) {
         setNewPassword(event?.target.value)
@@ -54,7 +56,7 @@ const ResetPasswordManually = ({
       name: 'Confirm New Password',
       required: true,
       value: confirmPassword,
-      error: errors,
+      error: passNotMatched,
       errorId: 'Confirm-password-error',
       onChange: function (event: any) {
         setConfirmPassword(event?.target.value)
@@ -96,7 +98,7 @@ const ResetPasswordManually = ({
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
               <Dialog.Panel className="relative transform rounded-2xl bg-white p-6 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                <div className="flex flex-col gap-6">
+                <div className="flex flex-col ">
                   <div className="flex items-center justify-between pt-1">
                     <h2
                       className="text-2xl font-bold text-gray-700"
@@ -117,39 +119,39 @@ const ResetPasswordManually = ({
                       onClick={() => setOpen(false)}
                     />
                   </div>
-                  <div className="">
-                    <Form method="post">
+                  <hr className="mt-4 mb-6 h-px w-full border-0 bg-gray-300" />
+
+                  <Form method="post">
+                    <div className="flex flex-col gap-8">
                       <div className="flex flex-col gap-6">
-                        <div className="flex flex-col gap-6">
-                          {inputFieldsProps.map((props) => {
-                            return <InputField {...props} key={props.name} />
-                          })}
-                        </div>
-                        <div className="flex items-center justify-center">
-                          <Button
-                            tabIndex={0}
-                            title={
-                              transition.state === 'submitting'
-                                ? t('settings.passResetting')
-                                : t('settings.passReset')
-                            }
-                            buttonText={
-                              transition.state === 'submitting'
-                                ? t('settings.passResetting')
-                                : t('settings.passReset')
-                            }
-                            type="submit"
-                            varient="primary-solid"
-                            className="h-11 w-full"
-                            isDisabled={
-                              !(newPassword && confirmPassword && password)
-                            }
-                            datacy="submit"
-                          />
-                        </div>
+                        {inputFieldsProps.map((props) => {
+                          return <InputField {...props} key={props.name} />
+                        })}
                       </div>
-                    </Form>
-                  </div>
+                      <div className="flex items-center justify-center">
+                        <Button
+                          tabIndex={0}
+                          title={
+                            transition.state === 'submitting'
+                              ? t('settings.passResetting')
+                              : t('settings.passReset')
+                          }
+                          buttonText={
+                            transition.state === 'submitting'
+                              ? t('settings.passResetting')
+                              : t('settings.passReset')
+                          }
+                          type="submit"
+                          varient="primary-solid"
+                          className="h-11 w-full text-base"
+                          isDisabled={
+                            !(newPassword && confirmPassword && password)
+                          }
+                          datacy="submit"
+                        />
+                      </div>
+                    </div>
+                  </Form>
                 </div>
               </Dialog.Panel>
             </Transition.Child>

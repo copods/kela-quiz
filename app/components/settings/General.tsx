@@ -5,11 +5,13 @@ import ResetPasswordManually from './ResetPassword'
 const General = ({
   actionStatus,
   setActionStatus,
-  error,
+  validError,
+  passNotMatched,
 }: {
   actionStatus: boolean
   setActionStatus: (e: boolean) => void
-  error?: string
+  validError?: string
+  passNotMatched?: string
 }) => {
   const [open, setOpen] = useState(false)
   useEffect(() => {
@@ -46,7 +48,12 @@ const General = ({
           </div>
         </div>
       </div>
-      <ResetPasswordManually open={open} errors={error} setOpen={setOpen} />
+      <ResetPasswordManually
+        open={open}
+        validError={validError}
+        passNotMatched={passNotMatched}
+        setOpen={setOpen}
+      />
     </div>
   )
 }

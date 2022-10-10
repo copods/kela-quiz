@@ -20,6 +20,8 @@ export type ActionData = {
   errors?: {
     title: string
     status: number
+    valid: string
+    passNotMatched: string
   }
   resp?: {
     title: string
@@ -50,25 +52,28 @@ export const action: ActionFunction = async ({ request }) => {
   const checkOldPassword = await checkOldPasswordFromdb(oldPassword, userId)
   if (checkOldPassword === false) {
     return json<ActionData>(
-      { errors: { title: 'settings.enterValidPass', status: 400 } },
+      {
+        errors: {
+          valid: 'settings.enterValidPass',
+          status: 400,
+          title: '',
+          passNotMatched: '',
+        },
+      },
       { status: 400 }
     )
   }
-  if (typeof newPassword !== 'string' || newPassword.length === 0) {
+
+  if (confirmPasword !== newPassword) {
     return json<ActionData>(
-      { errors: { title: 'settings.enterNewPass', status: 400 } },
-      { status: 400 }
-    )
-  }
-  if (typeof confirmPasword !== 'string' || confirmPasword.length === 0) {
-    return json<ActionData>(
-      { errors: { title: 'settings.enterConfPass', status: 400 } },
-      { status: 400 }
-    )
-  }
-  if (confirmPasword !== newPassword || confirmPasword.length === 0) {
-    return json<ActionData>(
-      { errors: { title: 'settings.passNotMatch', status: 400 } },
+      {
+        errors: {
+          passNotMatched: 'settings.passNotMatch',
+          status: 400,
+          valid: '',
+          title: ' ',
+        },
+      },
       { status: 400 }
     )
   }
@@ -88,11 +93,16 @@ export const action: ActionFunction = async ({ request }) => {
         })
         .catch((err) => {
           let title = 'error'
+          let valid = 'validationError'
 
+          let passNotMatched = 'passwordNotMatchError'
           addHandle = json<ActionData>(
             {
               errors: {
                 title,
+                valid,
+
+                passNotMatched,
                 status: 400,
               },
             },
@@ -122,7 +132,8 @@ export default function Settings() {
     <AdminLayout>
       <div>
         <SettingsTabs
-          error={resetPassActionData?.errors?.title}
+          validError={resetPassActionData?.errors?.valid}
+          passNotMatched={resetPassActionData?.errors?.passNotMatched}
           actionStatus={actionStatus}
           setActionStatus={setActionStatus}
         />

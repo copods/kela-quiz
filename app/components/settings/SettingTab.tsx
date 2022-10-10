@@ -1,39 +1,34 @@
 import { useState } from 'react'
-import StepsTabComponent from '../tests/StepsTab'
+import TabComponent from '../TabsComponent'
 import General from './General'
 import Workspace from './Workspace'
 
 const SettingsTabs = ({
   actionStatus,
   setActionStatus,
-  error,
+  validError,
+  passNotMatched,
 }: {
   actionStatus: boolean
   setActionStatus: (e: boolean) => void
-  error?: string
+  validError?: string
+  passNotMatched?: string
 }) => {
   const tabs = [
     {
       id: 0,
-      name: 'Step 1',
-      description: 'General',
+      name: 'General',
     },
     {
       id: 1,
-      name: 'Step 2',
-      description: 'Workspace',
-    },
-    {
-      id: 2,
-      name: 'Step 2',
-      description: 'Workspace',
+      name: 'Workspace',
     },
   ]
   const [currentTab, setCurrentTab] = useState(0)
   return (
     <div>
-      <div className="flex flex-col gap-8">
-        <StepsTabComponent
+      <div className="flex flex-col gap-5">
+        <TabComponent
           tabs={tabs}
           isDisabled={false}
           currentTab={currentTab}
@@ -41,7 +36,8 @@ const SettingsTabs = ({
         />
         {currentTab === tabs[0].id ? (
           <General
-            error={error}
+            validError={validError}
+            passNotMatched={passNotMatched}
             actionStatus={actionStatus}
             setActionStatus={setActionStatus}
           />
