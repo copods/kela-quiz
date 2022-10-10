@@ -82,7 +82,7 @@ export default function DeletePopUp({
                     </div>
                     <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                       <p className="text-sm text-gray-500">
-                        {t('deletePopUp.alert')} {deleteItemType} '{deleteItem}'
+                        {t('deletePopUp.alert')}
                         {subAlert}
                       </p>
                     </div>

@@ -17,6 +17,7 @@ import { toast } from 'react-toastify'
 import { useEffect, useState } from 'react'
 import { routes } from '~/constants/route.constants'
 import { useTranslation } from 'react-i18next'
+import { memberAction } from '~/interface/Interface'
 
 export type ActionData = {
   errors?: {
@@ -46,7 +47,7 @@ export const action: ActionFunction = async ({ request }) => {
   const action = JSON.parse(formData.get('addMember') as string)
     ? JSON.parse(formData.get('addMember') as string)
     : formData.get('deleteMember')
-  if (action.action === 'add') {
+  if (action.action === memberAction.add) {
     const firstName = formData.get('firstName')
     const lastName = formData.get('lastName')
     const email = formData.get('email')
@@ -116,7 +117,7 @@ export const action: ActionFunction = async ({ request }) => {
       })
     return addHandle
   }
-  if (action.action === 'resend') {
+  if (action.action === memberAction.resend) {
     const id = formData.get('id')
     let resendHandle = null
     await reinviteMember({
@@ -134,7 +135,7 @@ export const action: ActionFunction = async ({ request }) => {
     })
     return resendHandle
   }
-  if (action === 'delete') {
+  if (action === memberAction.delete) {
     if (typeof formData.get('id') !== 'string') {
       return json<ActionData>(
         { errors: { title: 'statusCheck.descIsReq', status: 400 } },
