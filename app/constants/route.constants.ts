@@ -1,6 +1,7 @@
 export const routes = {
   dashboard: '/dashboard',
   signIn: '/sign-in',
+  signUp: '/sign-up',
   instructions: 'instructions',
   tests: '/tests',
   sections: '/sections',
@@ -9,4 +10,6 @@ export const routes = {
   resultGroupTest: '/results/groupByTests',
   members: '/members',
   settings: '/settings',
+  forgotPassword: '/forgot-password',
+  endExam: '/end-assessment',
 }

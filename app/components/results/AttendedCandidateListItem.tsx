@@ -1,5 +1,5 @@
-import { commonConstants } from '~/constants/common.constants'
 import { Link } from '@remix-run/react'
+import { useTranslation } from 'react-i18next'
 
 const AttendedCandidateListItem = ({
   id,
@@ -24,13 +24,27 @@ const AttendedCandidateListItem = ({
   candidateResultId: string
   endAt: Date
 }) => {
+  const { t } = useTranslation()
+
   return (
     <div className="col-span-full">
       <div className="col-span-full grid grid-cols-12 gap-3 rounded-b-lg border-t border-solid border-gray-200 bg-white px-12 py-6">
         <div className=" col-span-1 truncate">
           <span className=" text-base text-gray-700">{index}</span>
         </div>
-        {console.log(name, 'name', name)}
+        {/* {endAt ? (
+          <Link
+            to={`/results/groupByTests/${testId}/${candidateResultId}`}
+            className="col-span-3 truncate font-semibold text-primary"
+            title={name}
+          >
+            {name}
+          </Link>
+        ) : (
+          <div title="No Name" className="align-center col-span-3 truncate">
+            <i>--No Name--</i>
+          </div>
+        )} */}
         {endAt ? (
           <Link
             to={`/results/groupByTests/${testId}/${candidateResultId}`}
@@ -79,7 +93,9 @@ const AttendedCandidateListItem = ({
               result >= 0 ? 'bg-green-200' : 'bg-yellow-200'
             }`}
           >
-            {result >= 0 ? commonConstants.complete : commonConstants.pending}
+            {result >= 0
+              ? t('commonConstants.complete')
+              : t('commonConstants.pending')}
           </span>
         </div>
       </div>

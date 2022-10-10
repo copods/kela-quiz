@@ -1,5 +1,5 @@
 import { Link } from '@remix-run/react'
-import { resultConstants } from '~/constants/common.constants'
+import { useTranslation } from 'react-i18next'
 
 const GroupByTestItems = ({
   index,
@@ -16,6 +16,8 @@ const GroupByTestItems = ({
   candidateAttendedCount: number | undefined
   testDeletedStatus: boolean
 }) => {
+  const { t } = useTranslation()
+
   return (
     <div className="col-span-full">
       <div className="groupTestRow col-span-full grid grid-cols-10 gap-3 border-t border-solid border-gray-200 px-12 py-6">
@@ -45,8 +47,8 @@ const GroupByTestItems = ({
           } col-span-1 text-base`}
         >
           {testDeletedStatus
-            ? resultConstants.inactive
-            : resultConstants.active}
+            ? t('resultConstants.inactive')
+            : t('resultConstants.active')}
         </div>
       </div>
     </div>

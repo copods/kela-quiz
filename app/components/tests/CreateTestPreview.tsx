@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 import type { TestSection } from '~/interface/Interface'
-import { commonConstants, testsConstants } from '~/constants/common.constants'
+import { useTranslation } from 'react-i18next'
 
 const TestPreview = ({
   name,
@@ -15,6 +15,8 @@ const TestPreview = ({
   onSelectedSectionChange: (e: any) => void
   isPreviewEditable: boolean
 }) => {
+  const { t } = useTranslation()
+
   const moveSection = (index: number, action: string) => {
     if (action == 'up') {
       if (index == 0) {
@@ -51,7 +53,7 @@ const TestPreview = ({
     <div className="flex flex-1 flex-col gap-9 overflow-scroll rounded-lg bg-white p-6 shadow-base">
       <div className="flex flex-col gap-6">
         <h1 className="text-xl font-semibold">
-          {testsConstants.testDetailsText}
+          {t('testsConstants.testDetailsText')}
         </h1>
         <div className="flex flex-col gap-4 text-base">
           <div className="flex">
@@ -59,7 +61,7 @@ const TestPreview = ({
               id="name"
               className="min-w-200 text-base font-medium text-gray-500"
             >
-              {commonConstants.name}
+              {t('commonConstants.name')}
             </div>
             <div className="flex-1 text-base text-gray-700">{name}</div>
           </div>
@@ -68,7 +70,7 @@ const TestPreview = ({
               id="description"
               className="min-w-200 text-base font-medium text-gray-500"
             >
-              {testsConstants.descriptionText}
+              {t('testsConstants.descriptionText')}
             </div>
             <div
               className="ql-editor flex-1 p-0 text-base text-gray-700"
@@ -82,7 +84,7 @@ const TestPreview = ({
               id="totalTime"
               className="min-w-200 text-base font-medium text-gray-500"
             >
-              {testsConstants.totalTimeText}
+              {t('testsConstants.totalTimeText')}
             </div>
             <div className="flex-1 text-base text-gray-700">
               {getTotalTime()}
@@ -93,7 +95,7 @@ const TestPreview = ({
               id="totalSection"
               className="min-w-200 text-base font-medium text-gray-500"
             >
-              {testsConstants.totalSectionsText}
+              {t('testsConstants.totalSectionsText')}
             </div>
             <div className="flex-1 text-base text-gray-700">
               {selectedSections.length}
@@ -103,14 +105,14 @@ const TestPreview = ({
       </div>
       <div className="flex flex-col gap-6">
         <h1 className="text-xl font-semibold">
-          {testsConstants.selectedSctionText}
+          {t('testsConstants.selectedSctionText')}
         </h1>
         <div className="flex flex-col gap-4 text-base">
           {selectedSections.map((section, i) => {
             return (
               <div className="flex items-center gap-4" key={section.id}>
                 <div className="min-w-184 text-base text-gray-500">
-                  {testsConstants.sectionText} {i + 1}
+                  {t('testsConstants.sectionText')} {i + 1}
                 </div>
                 <div className="flex max-w-2xl flex-1 items-center justify-between gap-6 rounded-lg border border-gray-300 py-3 px-4 text-gray-700">
                   <div className="text-base font-semibold text-gray-700">
@@ -119,7 +121,7 @@ const TestPreview = ({
                   <div className="flex gap-5 text-sm text-gray-700">
                     <span>
                       {section.totalQuestions ? section.totalQuestions : 0}{' '}
-                      {testsConstants.questions}
+                      {t('testsConstants.questions')}
                     </span>
                     <span>
                       {section.time

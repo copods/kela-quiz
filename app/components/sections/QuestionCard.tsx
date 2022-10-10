@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react'
-import { sectionsConstants } from '~/constants/common.constants'
+import { useTranslation } from 'react-i18next'
 import type {
   Question,
   Option,
@@ -19,14 +19,15 @@ const QuestionCard = ({
   onAccordianToggle: (e: number) => void
   index: number
 }) => {
+  const { t } = useTranslation()
   return (
     <div
       key={question.id}
       className="flex cursor-pointer flex-col rounded-lg border border-gray-300 bg-gray-50 px-6 py-7"
-      title={sectionsConstants.expand}
+      title={t('sectionsConstants.expand')}
       tabIndex={0}
-      aria-label={sectionsConstants?.expand}
-      role={sectionsConstants?.expand}
+      aria-label={t('sectionsConstants.expand')}
+      role={t('sectionsConstants.expand')}
       onKeyUp={(e) => {
         if (e.key === 'Enter')
           onAccordianToggle(

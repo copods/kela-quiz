@@ -2,8 +2,8 @@ import { Fragment, useEffect } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import { Form } from '@remix-run/react'
-import { commonConstants, deletePopUp } from '~/constants/common.constants'
 import Button from './form/Button'
+import { useTranslation } from 'react-i18next'
 export default function DeletePopUp({
   setOpen,
   open,
@@ -23,6 +23,8 @@ export default function DeletePopUp({
   deleteItemType: string
   deleteItem: string
 }) {
+  const { t } = useTranslation()
+
   const handleDelete = () => {
     onDelete()
     if (setOpen !== undefined) setOpen(false)
@@ -80,7 +82,7 @@ export default function DeletePopUp({
                     </div>
                     <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                       <p className="text-sm text-gray-500">
-                        {deletePopUp.alert} {deleteItemType} '{deleteItem}'
+                        {t('deletePopUp.alert')} {deleteItemType} '{deleteItem}'
                         {subAlert}
                       </p>
                     </div>
@@ -95,8 +97,8 @@ export default function DeletePopUp({
                       type="button"
                       name="delete"
                       className="px-5"
-                      title={commonConstants.delete}
-                      buttonText={commonConstants.delete}
+                      title={t('commonConstants.delete')}
+                      buttonText={t('commonConstants.delete')}
                       onClick={() => {
                         handleDelete()
                         if (setDeleted !== undefined) {
@@ -111,11 +113,11 @@ export default function DeletePopUp({
                     id="cancel-delete-pop-up"
                     varient="primary-outlined"
                     className="px-5"
+                    title={t('commonConstants.cancel')}
+                    buttonText={t('commonConstants.cancel')}
                     onClick={() => {
                       if (setOpen !== undefined) setOpen(false)
                     }}
-                    title={commonConstants.cancel}
-                    buttonText={commonConstants.cancel}
                   />
                 </div>
               </Dialog.Panel>

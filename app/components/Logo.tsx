@@ -1,5 +1,3 @@
-import { logo } from '~/constants/common.constants'
-
 interface LogoProps {
   height?: string
   width?: string
@@ -12,7 +10,7 @@ const Logo = ({ height, width, styleClass }: LogoProps) => {
       src="../../assets/logo.svg"
       height={height}
       width={width}
-      alt={logo.kQuizLogo}
+      alt={'K-Quiz'}
       className={styleClass}
     />
   )

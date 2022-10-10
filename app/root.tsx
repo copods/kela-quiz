@@ -19,6 +19,7 @@ import quillEditorStyles from 'quill/dist/quill.snow.css'
 import { getUser } from './session.server'
 import toastrStyles from 'react-toastify/dist/ReactToastify.css'
 import { ToastContainer } from 'react-toastify'
+import { useTranslation } from 'react-i18next'
 
 export const links: LinksFunction = () => {
   return [
@@ -45,9 +46,18 @@ export const loader: LoaderFunction = async ({ request }) => {
   })
 }
 
+export const handle = {
+  // In the handle export, we could add a i18n key with namespaces our route
+  // will need to load. This key can be a single string or an array of strings.
+  i18n: ['index'],
+}
+
 export default function App() {
+  const { i18n, ready } = useTranslation()
+  if (!ready) return 'Translation loading...'
+
   return (
-    <html lang="en" className="h-full">
+    <html lang={i18n.language} className="h-full">
       <head>
         <Meta />
         <Links />

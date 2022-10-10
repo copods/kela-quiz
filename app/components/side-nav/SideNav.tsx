@@ -1,14 +1,8 @@
 import MenuItems from './MenuItems'
 import Header from '~/components/SideNavHeader'
 import Footer from '~/components/SideNavFooter'
-import {
-  commonConstants,
-  members,
-  routeFiles,
-  sideNav,
-  testsConstants,
-} from '~/constants/common.constants'
 import { routes } from '~/constants/route.constants'
+import { useTranslation } from 'react-i18next'
 
 const sideNavGuide = [
   // {
@@ -28,7 +22,7 @@ const sideNavGuide = [
       {
         id: 'group-by-tests',
         iconClass: 'mdi:chart-box-outline',
-        itemName: commonConstants.results,
+        itemName: 'commonConstants.results',
         itemRoute: routes.resultGroupTest,
       },
       // {
@@ -45,13 +39,13 @@ const sideNavGuide = [
       {
         id: 'tests',
         iconClass: 'carbon:result',
-        itemName: testsConstants.tests,
+        itemName: 'testsConstants.tests',
         itemRoute: routes.tests,
       },
       {
         id: 'sections',
         iconClass: 'ci:list-checklist-alt',
-        itemName: routeFiles.sections,
+        itemName: 'routeFiles.sections',
         itemRoute: routes.sections,
       },
     ],
@@ -62,25 +56,26 @@ const sideNavGuide = [
       {
         id: 'members',
         iconClass: 'mdi:account-group',
-        itemName: members.members,
+        itemName: 'members.members',
         itemRoute: routes.members,
       },
-      // {
-      //   id: 'Settings',
-      //   iconClass: 'mdi:cog',
-      //  itemName: commonConstants.settings,
-      //   itemRoute: 'settings',
-      // },
+      {
+        id: 'Settings',
+        iconClass: 'mdi:cog',
+        itemName: 'commonConstants.settings',
+        itemRoute: routes.settings,
+      },
     ],
   },
 ]
-const title = sideNav.sideNavHeading
 const SideNav = () => {
+  const { t } = useTranslation()
+
   return (
     <div className="flex h-full flex-col justify-between overflow-auto p-5">
       <div>
         <div className="mb-14 px-1">
-          <Header title={title} />
+          <Header title={t('sideNav.sideNavHeading')} />
         </div>
         <div className="flex flex-col gap-8">
           {sideNavGuide.map((guide, index) => {
@@ -95,7 +90,7 @@ const SideNav = () => {
                       key={index}
                       id={item.id}
                       iconClass={item.iconClass}
-                      itemName={item.itemName}
+                      itemName={t(item.itemName)}
                       itemRoute={item.itemRoute}
                     />
                   )

@@ -13,7 +13,7 @@ import { requireUserId } from '~/session.server'
 import { toast } from 'react-toastify'
 import { useEffect, useState } from 'react'
 import { routes } from '~/constants/route.constants'
-import { statusCheck } from '~/constants/common.constants'
+import { useTranslation } from 'react-i18next'
 
 type LoaderData = {
   sectionDetails: Awaited<ReturnType<typeof getSectionById>>
@@ -65,7 +65,7 @@ export const action: ActionFunction = async ({ request }) => {
       ques = json<ActionData>(
         {
           success: {
-            data: statusCheck.questionAddedSuccess,
+            data: 'statusCheck.questionAddedSuccess',
             addMoreQuestion: question?.addMoreQuestion,
           },
         },
@@ -74,7 +74,7 @@ export const action: ActionFunction = async ({ request }) => {
     })
     .catch((err) => {
       ques = json<ActionData>(
-        { error: { data: statusCheck.questionNotAdded } },
+        { error: { data: 'statusCheck.questionNotAdded' } },
         { status: 400 }
       )
     })
@@ -82,22 +82,23 @@ export const action: ActionFunction = async ({ request }) => {
 }
 
 export default function AddQuestion() {
+  const { t } = useTranslation()
   const sectionDetail = useLoaderData() as unknown as LoaderData
   const actionData = useActionData()
   const navigate = useNavigate()
   const [addQuestionKey, setAddQuestionKey] = useState(0)
   useEffect(() => {
     if (actionData?.success) {
-      toast.success(actionData?.success?.data)
+      toast.success(t(actionData?.success?.data))
       if (actionData.success.addMoreQuestion) {
         setAddQuestionKey((prev) => (prev += 1))
       } else {
         navigate(`${routes.sections}/${sectionDetail.sectionDetails?.id}`)
       }
     } else if (actionData?.error) {
-      toast.error(actionData?.data)
+      toast.error(t(actionData?.data))
     }
-  }, [actionData, navigate, sectionDetail.sectionDetails?.id])
+  }, [actionData, navigate, sectionDetail.sectionDetails?.id, t])
   return (
     <AdminLayout>
       <AddQuestionInSection key={addQuestionKey} />

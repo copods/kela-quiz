@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "CandidateTest" ALTER COLUMN "linkSentOn" SET DEFAULT CURRENT_TIMESTAMP;
