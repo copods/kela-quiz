@@ -172,6 +172,7 @@
     "correct": "Correct",
     "skipped": "Skipped",
     "total": "Total",
+    "resendInvite": "Resend Invite",
     "resendTestInvite": "Resend Test Invite Icon"
   },
   "forgotPasswordConstants": {

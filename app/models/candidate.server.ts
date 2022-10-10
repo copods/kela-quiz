@@ -4,7 +4,7 @@ import { prisma } from '~/db.server'
 import { sendTestInviteMail } from './sendgrid.servers'
 
 // inviting candidate
-
+const candidateTestLink = `${env.PUBLIC_URL}/assessment/`
 export async function createIndividualCandidate({
   email,
   createdById,
@@ -122,7 +122,7 @@ export async function sendMailToCandidate(email: string, link: string) {
   sendTestInviteMail(email, link)
 }
 
-export async function createCandidateData({
+async function createCandidateData({
   email,
   createdById,
   testId,
@@ -131,22 +131,18 @@ export async function createCandidateData({
   createdById: User['id']
   testId: string
 }) {
-  let user = await createIndividualCandidate({ email, createdById })
-
-  let candidateTest = await createCandidateTest({
+  const user = await createIndividualCandidate({ email, createdById })
+  const candidateTest = await createCandidateTest({
     testId,
     candidateId: user.id,
   })
-
   // generating random link
-  const candidateLink = env.PUBLIC_URL + '/assessment/' + candidateTest.id
-
-  let updatedCandidateTest = await updateTestLink({
+  const candidateLink = `${candidateTestLink}${testId}`
+  const updatedCandidateTest = await updateTestLink({
     id: candidateTest.id,
     link: candidateLink,
   })
-  let test = await getTestById(testId)
-
+  const test = await getTestById(testId)
   // creating section in test
   if (test?.sections) {
     for (const section of test.sections) {
@@ -160,7 +156,7 @@ export async function createCandidateData({
   }
   await sendMailToCandidate(user?.email, updatedCandidateTest?.link as string)
 }
-
+// Resend a test link to user
 export async function resendTestLink({
   id,
   testId,
@@ -169,9 +165,9 @@ export async function resendTestLink({
   testId: string
 }) {
   try {
-    const candidateLink = env.PUBLIC_URL + '/assessment/' + testId
-    let candidate = await prisma.candidate.findUnique({ where: { id } })
-    let candidateTest = await prisma.candidateTest.findUnique({
+    const candidateLink = `${candidateTestLink}${testId}`
+    const candidate = await prisma.candidate.findUnique({ where: { id } })
+    const candidateTest = await prisma.candidateTest.findUnique({
       where: { id: testId },
     })
     if (candidateTest?.endAt !== null) {
