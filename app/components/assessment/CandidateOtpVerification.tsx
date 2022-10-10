@@ -9,6 +9,8 @@ const CandidateOtp = ({ email }: { email: string }) => {
   const { t } = useTranslation()
   const [counter, setCounter] = useState(60)
   const [finalTime, setFinalTime] = useState('')
+  const [otpCount, setOtpCount] = useState(1)
+  const submit = useSubmit()
   useEffect(() => {
     counter > 0 && setTimeout(() => setCounter(counter - 1), 1000)
     var minutes = Math.floor(counter / 60)
@@ -27,19 +29,33 @@ const CandidateOtp = ({ email }: { email: string }) => {
     const { value, name } = e.target
     const [fieldName, fieldIndex] = name.split('-') // eslint-disable-line @typescript-eslint/no-unused-vars
     let fieldIntIndex = parseInt(fieldIndex, 10)
-    if (value.length >= 1) {
-      if (fieldIntIndex < 4) {
+    if (value) {
+      setOtpCount(otpCount + 1)
+      if (value.length >= 1) {
+        if (fieldIntIndex < 4) {
+          const nextfield = document.querySelector(
+            `input[name=field-${fieldIntIndex + 1}]`
+          ) as HTMLElement | null
+          if (nextfield !== null) {
+            nextfield.focus()
+          }
+        }
+      }
+    } else {
+      setOtpCount(otpCount - 1)
+      if (fieldIntIndex > 0) {
         const nextfield = document.querySelector(
-          `input[name=field-${fieldIntIndex + 1}]`
+          `input[name=field-${fieldIntIndex - 1}]`
         ) as HTMLElement | null
         if (nextfield !== null) {
           nextfield.focus()
         }
       }
     }
+    if (otpCount === 4) {
+      submit({ Verify: 'verify' }, { method: 'post' })
+    }
   }
-
-  const submit = useSubmit()
   const resend = () => {
     submit({ resendOTP: 'Resend' }, { method: 'post' })
   }

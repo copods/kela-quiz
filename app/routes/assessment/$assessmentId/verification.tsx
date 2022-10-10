@@ -41,6 +41,8 @@ export const action: ActionFunction = async ({ request, params }) => {
   const formData = await request.formData()
   const resendOtp = formData.get('resendOTP') as string
   const proceed = formData.get('Verify') as string
+  console.log(proceed)
+
   let checkStatus = null
   if (resendOtp) {
     await resendOtpCode({
@@ -59,6 +61,8 @@ export const action: ActionFunction = async ({ request, params }) => {
     const field3 = formData.get('field-3') as string
     const field4 = formData.get('field-4') as string
     const otp = field1 + field2 + field3 + field4
+    console.log('<==========', otp, '============>')
+
     const verify = await verifyCandidateOtp({
       assessmentId: params.assessmentId as string,
       otp,
