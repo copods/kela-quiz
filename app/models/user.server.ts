@@ -29,6 +29,7 @@ export async function getAllUsers() {
 export async function getAllRoles() {
   return prisma.role.findMany()
 }
+//To get roleId of Admin role
 export async function getAdminId() {
   const roleName = 'Admin'
   const role = await prisma.role.findUnique({ where: { name: roleName } })
