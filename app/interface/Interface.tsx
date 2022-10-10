@@ -262,20 +262,20 @@ export interface SectionWiseResults {
   test: Test
 }
 export interface Workspace {
-  id: String
-  name: String
+  id: string
+  name: string
   createdBy: User
-  createdById: String
+  createdById: string
   createdAt: Date
   updatedAt: Date
 }
 export interface UserWorkspace {
   id: String
   workspace: Array<Workspace>
-  workspaceId: String
-  userId: String
+  workspaceId: string
+  userId: string
   role: Role
-  roleId: String
+  roleId: string
   isDefault: Boolean
   createdAt: Date
   updatedAt: Date

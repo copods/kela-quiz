@@ -24,16 +24,13 @@ export async function getSectionById({ id }: Pick<Section, 'id'>) {
   })
 }
 
-export async function getAllSections(
-  filterData: string,
-  currentWorkspaceId: string
-) {
+export async function getAllSections(filterData: string, workspaceId: string) {
   let filter = filterData ? filterData : '{"orderBy":{"createdAt":"asc"}}'
   return await prisma.section.findMany({
     ...JSON.parse(filter),
     where: {
       deleted: false,
-      workspaceId: currentWorkspaceId,
+      workspaceId,
     },
     include: {
       createdBy: true,

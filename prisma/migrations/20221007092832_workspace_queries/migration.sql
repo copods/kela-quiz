@@ -9,7 +9,7 @@ BEGIN
     FOR userList in SELECT *  FROM "User" LOOP
       workspaceId=gen_random_uuid();
       userWorkspaceId=gen_random_uuid();  
-      PERFORM * FROM "UserWorkspace" where "userId"=userList."id" AND "isDefault"=NULL;
+      PERFORM * FROM "UserWorkspace" where "userId"=userList."id" AND "isDefault"=FALSE;
       IF NOT FOUND THEN
         INSERT INTO "Workspace" ("id", "createdById","name","updatedAt") VALUES (workspaceId,userList."id",userList."firstName", current_timestamp);
         INSERT INTO "UserWorkspace" ("id","workspaceId","userId","roleId","isDefault","updatedAt") VALUES (userWorkspaceId,workspaceId,userList."id",userList."roleId",TRUE,current_timestamp);
