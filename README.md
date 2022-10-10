@@ -70,7 +70,7 @@ It is important for you to have these things installed:
   npm run dev
   ```
 
-This starts your app in development mode, rebuilding assets on file changes.
+  This starts your app in development mode, rebuilding assets on file changes.
 
 ## Deployment
 
@@ -99,9 +99,9 @@ Prior to your first deployment, you'll need to do a few things:
 
 - Initialize Git.
 
-  ```sh
+```sh
   git init
-  ```
+```
 
 - Create a new [GitHub Repository](https://repo.new), and then add it as the remote for your project. **Do not push your app yet!**
 
@@ -125,36 +125,31 @@ Prior to your first deployment, you'll need to do a few things:
   > ```
   >
   > This simply means that the current directory contains a config that references the production app we created in the first step. Ignore this warning and proceed to create the secret.
-
-  If you don't have openssl installed, you can also use [1password](https://1password.com/password-generator/) to generate a random secret, just replace `$(openssl rand -hex 32)` with the generated secret.
+  > If you don't have openssl installed, you can also use [1password](https://1password.com/password-generator/) to generate a random secret, just replace `$(openssl rand -hex 32)` with the generated secret.
 
 - Create a database for both your staging and production environments. Run the following:
 
   ```sh
   fly postgres create --name blues-stack-template-db
   fly postgres attach --app blues-stack-template blues-stack-template-db
-
   fly postgres create --name blues-stack-template-staging-db
   fly postgres attach --app blues-stack-template-staging blues-stack-template-staging-db
   ```
 
   > **Note:** You'll get the same warning for the same reason when attaching the staging database that you did in the `fly set secret` step above. No worries. Proceed!
 
-Fly will take care of setting the `DATABASE_URL` secret for you.
-
-Now that everything is set up you can commit and push your changes to your repo. Every commit to your `main` branch will trigger a deployment to your production environment, and every commit to your `dev` branch will trigger a deployment to your staging environment.
-If you run into any issues deploying to Fly, make sure you've followed all of the steps above and if you have, then post as many details about your deployment (including your app name) to [the Fly support community](https://community.fly.io). They're normally pretty responsive over there and hopefully can help resolve any of your deployment issues and questions.
+  - Fly will take care of setting the `DATABASE_URL` secret for you.
+  - Now that everything is set up you can commit and push your changes to your repo. Every commit to your `main` branch will trigger a deployment to your production environment, and every commit to your `dev` branch will trigger a deployment to your staging environment.
+  - If you run into any issues deploying to Fly, make sure you've followed all of the steps above and if you have, then post as many details about your deployment (including your app name) to [the Fly support community](https://community.fly.io). They're normally pretty responsive over there and hopefully can help resolve any of your deployment issues and questions.
 
 ### Multi-region deploys
 
 Once you have your site and database running in a single region, you can add more regions by following [Fly's Scaling](https://fly.io/docs/reference/scaling/) and [Multi-region PostgreSQL](https://fly.io/docs/getting-started/multi-region-databases/) docs.
-
 Make certain to set a `PRIMARY_REGION` environment variable for your app. You can use `[env]` config in the `fly.toml` to set that to the region you want to use as the primary region for both your app and database.
 
 #### Testing your app in other regions
 
 Install the [ModHeader](https://modheader.com/) browser extension (or something similar) and use it to load your app with the header `fly-prefer-region` set to the region name you would like to test.
-
 You can check the `x-fly-region` header on the response to know which region your request was handled by.
 
 ## GitHub Actions
@@ -245,11 +240,8 @@ You can learn the main concepts of [Prisma](https://www.prisma.io/docs/concepts)
 
 We are using Cypress for our End-to-End tests in this project.
 You can learn the [Cypress](https://docs.cypress.io/) from offical documentation.
-
 You'll find those in the `cypress` directory. As you make changes, add to an existing file or create a new file in the `cypress/e2e` directory to test your changes.
-
 We use [`@testing-library/cypress`](https://testing-library.com/cypress) for selecting elements on the page semantically.
-
 To run these tests in development, run
 
 ```sh
@@ -257,7 +249,6 @@ npm run test:e2e:dev
 ```
 
 which will start the dev server for the app as well as the Cypress client. Make sure the database is running in docker as described above.
-
 Also you can run cypress for testing of components on browser by running following command
 
 ```sh
