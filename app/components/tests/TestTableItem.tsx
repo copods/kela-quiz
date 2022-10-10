@@ -59,7 +59,7 @@ const TestTableItem = ({
         key={id}
         className={`${
           index === totalCount ? 'rounded-b-md' : ''
-        } test-table-list flex items-center gap-3 border-b border-gray-200 bg-white py-6 px-9`}
+        } test-table-list flex items-start gap-3 border-b border-gray-200 bg-white py-6 px-9`}
       >
         {showCheckBox && (
           <div className="w-1/12 text-base font-normal text-gray-700">
@@ -72,7 +72,7 @@ const TestTableItem = ({
         >
           {index}
         </div>
-        <div className="test-name-navigation w-4/12 cursor-pointer truncate p-1 text-base font-medium text-primary">
+        <div className="test-name-navigation w-4/12 cursor-pointer p-1 text-base font-medium text-primary">
           <div
             aria-label={testName}
             title={testName}
@@ -83,7 +83,6 @@ const TestTableItem = ({
             }}
             id={`${index}`}
             tabIndex={0}
-            className="truncate"
             key={id}
           >
             <span id="test-name-navigation">{testName}</span>
