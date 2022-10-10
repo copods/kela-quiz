@@ -75,13 +75,15 @@ export default function MemberListItem({
           <span
             tabIndex={0}
             role="button"
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') resendMail()
+            onKeyUp={(e) => {
+              if (e.key === 'Enter' && !loggedInUser) resendMail()
             }}
             onClick={() => resendMail()}
-            className={`h-6 w-6 cursor-pointer opacity-100 ${
-              loggedInUser && 'cursor-not-allowed opacity-40'
-            }`}
+            className={
+              loggedInUser
+                ? 'cursor-not-allowed opacity-40'
+                : 'cursor-pointer opacity-100'
+            }
           >
             <img
               src={memberResendIcon}
