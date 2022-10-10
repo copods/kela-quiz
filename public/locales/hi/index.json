@@ -165,7 +165,8 @@
     "startedAt": "Started At",
     "correct": "Correct",
     "skipped": "Skipped",
-    "total": "Total"
+    "total": "Total",
+    "resendTestInvite": "परीक्षण आमंत्रण फिर से भेजें"
   },
 
   "candidateExamConstants": {

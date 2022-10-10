@@ -171,7 +171,8 @@
     "startedAt": "Started At",
     "correct": "Correct",
     "skipped": "Skipped",
-    "total": "Total"
+    "total": "Total",
+    "resendTestInvite": "Resend Test Invite Icon"
   },
   "forgotPasswordConstants": {
     "header": "Forgot password?",

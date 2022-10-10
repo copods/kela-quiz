@@ -2,6 +2,7 @@ import { Link, useSubmit } from '@remix-run/react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import TestListActionMenu from '../TestListActionMenu'
+import resendTestLink from '~/../public/assets/resend-test-invitation.svg'
 
 const AttendedCandidateListItem = ({
   id,
@@ -113,6 +114,7 @@ const AttendedCandidateListItem = ({
               aria-label={t('testTableItem.menu')}
               id={id}
               resendInvite={resendInvite}
+              image={resendTestLink}
             />
           )}
         </div>

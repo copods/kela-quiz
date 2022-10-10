@@ -1,5 +1,6 @@
 import { Menu, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
+import { t } from 'i18next'
 import { Fragment, useEffect } from 'react'
 
 const TestListMenuItem = ({
@@ -10,6 +11,7 @@ const TestListMenuItem = ({
   menuListText,
   id,
   resendInvite,
+  image,
 }: {
   menuIcon: string
   onItemClick: (e: boolean) => void
@@ -18,6 +20,7 @@ const TestListMenuItem = ({
   menuListText: string
   id: string
   resendInvite?: () => void
+  image?: string
 }) => {
   useEffect(() => {
     if (open === false) {
@@ -66,6 +69,15 @@ const TestListMenuItem = ({
                         text-red-500"
                         aria-hidden="true"
                       />
+                      {image ? (
+                        <img
+                          src={image}
+                          alt={t('resultConstants.resendTestInvite')}
+                          className="mr-1"
+                        />
+                      ) : (
+                        ''
+                      )}
                       {menuListText}
                     </>
                   </button>
