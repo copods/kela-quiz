@@ -153,7 +153,6 @@ model Candidate {
   updatedAt   DateTime          @updatedAt
 }
 
-
 model CandidateTest {
   id                 String                   @id @default(cuid())
   sections           SectionInCandidateTest[]
@@ -168,7 +167,7 @@ model CandidateTest {
   endAt              DateTime?
   createdAt          DateTime                 @default(now())
   updatedAt          DateTime                 @updatedAt
-  linkSentOn         DateTime?                  @default(now())
+  linkSentOn         DateTime?                @default(now())
   sectionWiseResults SectionWiseResult[]
 
   @@unique([candidateId, testId])
