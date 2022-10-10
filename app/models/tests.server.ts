@@ -17,10 +17,13 @@ export async function getTestById({ id }: Pick<Section, 'id'>) {
   })
 }
 
-export async function getAllTests(filterData: any, workspaceId: string) {
-  let filter = filterData.orderBy
+export async function getAllTests(
+  filterData: { orderBy: { name?: string; createdAt?: string } },
+  workspaceId: string
+) {
+  let filter = filterData
     ? filterData
-    : { orderBy: { name: sortByOrder.ascending } }
+    : ({ orderBy: { name: sortByOrder.ascending } } as object)
   return await prisma.test.findMany({
     ...filter,
     where: {

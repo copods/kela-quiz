@@ -15,7 +15,7 @@ import { useTranslation } from 'react-i18next'
 import { getUserWorkspaces } from '~/models/workspace.server'
 
 type LoaderData = {
-  tests: Awaited<ReturnType<typeof getAllTests>>
+  tests: Awaited<Array<Test>>
   status?: string | undefined
   workspaces: Awaited<ReturnType<typeof getUserWorkspaces>>
   currentWorkspaceId: Awaited<ReturnType<typeof getWorkspaceId>>
@@ -102,7 +102,6 @@ export const action: ActionFunction = async ({ request }) => {
       createdById,
       testId,
     })
-    console.log('asd', candidateInviteStatus)
     return json({ candidateInviteStatus, testId })
   }
 }
