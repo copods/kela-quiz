@@ -186,6 +186,8 @@
     "time": "Time",
     "timeRemaining": "Time Remaining",
     "timeLimit": "Time Limit",
+    "cooldown": "Cooldown Image",
+    "startNewSection": "Start New Section",
     "assessmentDetails": "Assessment Details",
     "assessmentTests": "Assessment Tests",
     "assessmentEnd": "Assessment Ended",
@@ -201,6 +203,7 @@
     "candidateAcceptance": "I understand that once I begin the assessment I cannot leave and  return to this assessment at a later time.",
     "beginAssesment": "Begin Assesment",
     "instructions": "Instructions",
+    "takeBreak": "Take A Break!",
     "startSection": "Start Now",
     "candidateLogo": "Candidate Logo",
     "info": "Info",
@@ -212,7 +215,9 @@
     "errorUpdatingTestLink": "Error updating test link..!",
     "errorCreatingSectionInTest": "Error creating section in test ..",
     "candidateInsWelcome": "Welcome",
-    "testCompleted": "Test Completed"
+    "testCompleted": "Congratulations! You have completed the exam",
+    "candidateContact": "We will contact you soon",
+    "alreadyExamSubmitted": "Hey! you have already submitted the exam"
   },
   "toastConstants": {
     "addTest": "Enter Name to add test",

@@ -16,7 +16,7 @@ describe('Test for testPreview', () => {
       .should('have.focus')
       .should('have.value', Cypress.env('password'))
     cy.get('[data-cy="submit"]').click()
-    cy.location('pathname').should('include', '/dashboard')
+    cy.location('pathname').should('include', '/members')
   })
   it('test for check preview data match selected test and back button ', () => {
     cy.get('a')

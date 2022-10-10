@@ -16,7 +16,7 @@ describe('Test for members', () => {
       .should('have.focus')
       .should('have.value', Cypress.env('password'))
     cy.get('[data-cy="submit"]').click()
-    cy.location('pathname').should('include', '/dashboard')
+    cy.location('pathname').should('include', '/members')
   })
   it('Test for conforming ,new member is added in a list or not', () => {
     cy.get('a').find('#members').should('have.text', members.members).click()

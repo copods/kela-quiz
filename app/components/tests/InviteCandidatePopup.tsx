@@ -103,7 +103,7 @@ const InviteCandidatePopup = ({
                 </p>
                 <div className="flex flex-row justify-between pb-2">
                   <span className="text-sm font-medium text-gray-500">
-                    {'inviteMemeberPopUpConstants.candidateEmail'}
+                    {t('inviteMemeberPopUpConstants.candidateEmail')}
                   </span>
                   <span
                     role={'button'}
