@@ -211,7 +211,8 @@
     "candidateTestCreateError": "Candidate Test Create Error..!",
     "errorUpdatingTestLink": "Error updating test link..!",
     "errorCreatingSectionInTest": "Error creating section in test ..",
-    "alreadyExamSubmitted": "Hey! you have already submitted the exam"
+    "alreadyExamSubmitted": "Hey! you have already submitted the exam",
+    "candidateContact": "We will contact you soon"
   },
   "toastConstants": {
     "addTest": "Enter Name to add test",
