@@ -6,6 +6,7 @@ import { json } from '@remix-run/node'
 import invariant from 'tiny-invariant'
 import { getAllCandidatesOfTest } from '~/models/result.server'
 import { resendTestLink } from '~/models/candidate.server'
+import { actions } from '~/constants/action.constants'
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   invariant(params.testId, 'resultId not found')
@@ -24,7 +25,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
   const action = formData.get('action')
-  if (action === 'resendInvite') {
+  if (action === actions.resendTestLink) {
     const testId = formData.get('testId') as string
     const id = formData.get('candidateId') as string
     const candidateInviteStatus = await resendTestLink({

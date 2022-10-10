@@ -16,7 +16,7 @@ const TestListMenuItem = ({
   menuIcon: string
   onItemClick: (e: boolean) => void
   open: boolean
-  menuListIcon: string
+  menuListIcon?: string
   menuListText: string
   id: string
   resendInvite?: () => void
@@ -63,12 +63,14 @@ const TestListMenuItem = ({
                     }}
                   >
                     <>
-                      <Icon
-                        icon={menuListIcon}
-                        className="mr-2 h-5 w-5
+                      {menuListIcon && (
+                        <Icon
+                          icon={menuListIcon}
+                          className="mr-2 h-5 w-5
                         text-red-500"
-                        aria-hidden="true"
-                      />
+                          aria-hidden="true"
+                        />
+                      )}
                       {image ? (
                         <img
                           src={image}

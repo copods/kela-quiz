@@ -126,7 +126,6 @@ const AttendedCandidateListItem = ({
               menuIcon={'mdi:dots-vertical'}
               onItemClick={setmenuListOpen}
               open={menuListOpen}
-              menuListIcon={''}
               menuListText={t('resultConstants.resendInvite')}
               aria-label={t('testTableItem.menu')}
               id={id}
