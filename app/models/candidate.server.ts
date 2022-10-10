@@ -137,7 +137,7 @@ async function createCandidateData({
     candidateId: user.id,
   })
   // generating random link
-  const candidateLink = `${candidateTestLink}${testId}`
+  const candidateLink = `${candidateTestLink}${candidateTest.id}`
   const updatedCandidateTest = await updateTestLink({
     id: candidateTest.id,
     link: candidateLink,
