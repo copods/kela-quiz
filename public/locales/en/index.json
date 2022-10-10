@@ -7,7 +7,8 @@
     "members": "Members",
     "addedOn": "Added On",
     "action": "Action",
-    "member": "member"
+    "member": "member",
+    "memberResendIcon": "Reinvite Icon"
   },
   "commonConstants": {
     "name": "Name",

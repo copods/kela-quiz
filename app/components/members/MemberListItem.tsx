@@ -1,11 +1,11 @@
 import { Icon } from '@iconify/react'
 import type { Role, User } from '~/interface/Interface'
-
 import moment from 'moment'
 import DeletePopUp from '../DeletePopUp'
 import { useEffect, useState } from 'react'
 import { useSubmit } from '@remix-run/react'
 import { t } from 'i18next'
+import memberResendIcon from '~/../public/assets/resend-member-invitation.svg'
 
 export default function MemberListItem({
   user,
@@ -72,15 +72,23 @@ export default function MemberListItem({
               loggedInUser && 'cursor-not-allowed text-red-200'
             }`}
           />
-          <Icon
-            id="resend-member-invite"
+          <span
             tabIndex={0}
+            role="button"
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') resendMail()
+            }}
             onClick={() => resendMail()}
-            icon="carbon:mail-reply"
-            className={`h-6 w-6 cursor-pointer text-gray-500  ${
-              loggedInUser && 'cursor-not-allowed text-gray-300'
+            className={`h-6 w-6 cursor-pointer opacity-100 ${
+              loggedInUser && 'cursor-not-allowed opacity-40'
             }`}
-          />
+          >
+            <img
+              src={memberResendIcon}
+              alt={t('members.memberResendIcon')}
+              id="resend-member-invite"
+            />
+          </span>
         </div>
         <DeletePopUp
           setOpen={setOpen}

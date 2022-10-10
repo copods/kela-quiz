@@ -6,7 +6,8 @@
     "role": "भूमिका",
     "members": "सदस्य",
     "addedOn": "पर जोड़ा",
-    "action": "गतिविधि"
+    "action": "गतिविधि",
+    "memberResendIcon": "फिर से आमंत्रित करें"
   },
   "commonConstants": {
     "name": "नाम",
