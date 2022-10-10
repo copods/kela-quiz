@@ -32,6 +32,19 @@ const AttendedCandidateListItem = ({
         <div className="col-span-1 truncate">
           <span className="text-base text-gray-700">{index}</span>
         </div>
+        {/* {endAt ? (
+          <Link
+            to={`/results/groupByTests/${testId}/${candidateResultId}`}
+            className="col-span-3 truncate font-semibold text-primary"
+            title={name}
+          >
+            {name}
+          </Link>
+        ) : (
+          <div title="No Name" className="align-center col-span-3 truncate">
+            <i>--No Name--</i>
+          </div>
+        )} */}
         {endAt ? (
           <Link
             to={`/results/groupByTests/${testId}/${candidateResultId}`}
@@ -40,6 +53,10 @@ const AttendedCandidateListItem = ({
           >
             {name}
           </Link>
+        ) : name != ' ' ? (
+          <span className="col-span-3 truncate" title={name}>
+            {name}
+          </span>
         ) : (
           <div title="No Name" className="align-center col-span-3 truncate">
             <i>--No Name--</i>

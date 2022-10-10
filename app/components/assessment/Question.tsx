@@ -2,7 +2,6 @@ import { useLoaderData } from '@remix-run/react'
 import { useEffect, useState } from 'react'
 import { QuestionTypes } from '~/interface/Interface'
 import Checkbox from '../form/CheckBox'
-import sanitizeHtml from 'sanitize-html'
 import CandidateQuestionHeader from './CandidateQuestionHeader'
 import CandidateQuestionFooter from './CandidateQuestionFooter'
 import CandidateQuestionStepper from './CandidateQuestionStepper'
@@ -62,7 +61,7 @@ const Question = () => {
                 <div
                   className="font-normal"
                   dangerouslySetInnerHTML={{
-                    __html: sanitizeHtml(question?.question?.question),
+                    __html: question?.question?.question,
                   }}
                 />
               </div>
@@ -129,7 +128,7 @@ const Question = () => {
                           <div
                             className="cursor-pointer font-normal"
                             dangerouslySetInnerHTML={{
-                              __html: sanitizeHtml(option?.option),
+                              __html: option?.option,
                             }}
                           />
                         </div>
