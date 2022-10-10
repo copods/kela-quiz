@@ -1,12 +1,12 @@
 import type { LoaderFunction } from '@remix-run/node'
-import EndAssesment from '~/components/assessment/EndAssessment'
 import { redirect } from '@remix-run/node'
+import AlredySubmitted from '~/components/assessment/AlreadySubmitted'
 import { checkIfTestLinkIsValidAndRedirect } from '~/utils/assessment.utils'
 
 export const loader: LoaderFunction = async ({ params, request }) => {
   const candidateNextRoute = await checkIfTestLinkIsValidAndRedirect(
     params.assessmentId as string,
-    'end'
+    'already-submitted'
   )
   if (typeof candidateNextRoute === 'string') {
     return redirect(candidateNextRoute)
@@ -16,7 +16,10 @@ export const loader: LoaderFunction = async ({ params, request }) => {
 
   return null
 }
-
-export default function EndAssessment() {
-  return <EndAssesment />
+export default function AlreadySubmitted() {
+  return (
+    <div>
+      <AlredySubmitted />
+    </div>
+  )
 }

@@ -132,7 +132,6 @@ const SignUp = ({ roleId }: { roleId: string }) => {
                 className="cursor-pointer text-primary"
                 tabIndex={0}
                 onClick={() => {
-                  console.log('sign-in')
                   signIn()
                 }}
                 onKeyUp={(e) => {
