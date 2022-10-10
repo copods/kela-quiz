@@ -1,3 +1,3 @@
 export enum actions {
-  resendTestLink = 'resendInvite'
+  resendTestLink = 'resendInvite',
 }
