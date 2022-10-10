@@ -208,7 +208,8 @@
     "errorUpdatingTestLink": "Error updating test link..!",
     "errorCreatingSectionInTest": "Error creating section in test ..",
     "candidateInsWelcome": "Welcome",
-    "testCompleted": "Test Completed"
+    "testCompleted": "Test Completed",
+    "candidateContact": "We will contact you soon"
   },
   "toastConstants": {
     "addTest": "Enter Name to add test",

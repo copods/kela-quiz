@@ -22,7 +22,7 @@ describe('Test for Section', () => {
       .type('kQuiz@copods')
       .should('have.value', cypress.password)
     cy.get('[data-cy="submit"]').click()
-    cy.location('pathname').should('include', '/dashboard')
+    cy.location('pathname').should('include', '/members')
   })
   it('cancel Add section', () => {
     cy.get('a')
