@@ -17,7 +17,6 @@ const GroupByTestItems = ({
   testDeletedStatus: boolean
 }) => {
   const { t } = useTranslation()
-
   return (
     <div className="col-span-full">
       <div className="groupTestRow col-span-full grid grid-cols-10 gap-3 border-t border-solid border-gray-200 px-12 py-6">
