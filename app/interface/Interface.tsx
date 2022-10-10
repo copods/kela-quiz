@@ -244,13 +244,6 @@ export enum QuestionTypes {
   singleChoice = 'SINGLE_CHOICE',
   text = 'TEXT',
 }
-
-export enum memberAction {
-  add = 'add',
-  resend = 'resend',
-  delete = 'delete',
-}
-
 export interface SectionWiseResults {
   id: string
   sectionInCandidateTestId: string
