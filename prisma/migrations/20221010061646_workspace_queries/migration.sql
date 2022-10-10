@@ -1,5 +1,3 @@
-CREATE EXTENSION pgcrypto;
-
 DO $$
 DECLARE 
   workspaceId varchar;
@@ -111,7 +109,7 @@ BEGIN
       PERFORM * FROM "User" where userList."email"='careers@copods.co';
       if found THEN
         FOR workspaceList in SELECT *  FROM "Workspace" LOOP
-          PERFORM * From "Workspace" where workspaceList."createdById"=userList."id";
+          PERFORM * From "Workspace" where workspaceList."createdById"=userList.id;
             if found THEN
               workspaceIdCopods=workspaceList."id";
             end if;  
@@ -123,3 +121,4 @@ BEGIN
           set "workspaceId"=workspaceIdCopods;
     end loop;
 END; $$;
+
