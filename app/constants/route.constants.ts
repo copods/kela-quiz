@@ -11,4 +11,5 @@ export const routes = {
   members: '/members',
   settings: '/settings',
   forgotPassword: '/forgot-password',
+  endExam: '/end-assessment',
 }

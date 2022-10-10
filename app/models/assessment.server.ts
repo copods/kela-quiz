@@ -15,7 +15,7 @@ export async function checkIfTestLinkIsValid(id: CandidateTest['id']) {
   try {
     return await prisma.candidateTest.findUnique({
       where: { id },
-      select: { candidateStep: true, endAt: true },
+      select: { candidateStep: true, endAt: true, linkSentOn: true },
     })
   } catch (error) {
     throw new Error('Something went wrong..!')
