@@ -297,9 +297,12 @@ export async function moveToNextSection({
     currentSectionId: nextSectionObject?.id,
   })
 
+  console.log("nextSectionObject", nextSectionObject)
+
   if (nextSectionObject) {
     return `/assessment/${assessmentId}/${nextSectionObject?.id}`
   } else {
+    endCandidateAssessment(assessmentId, sectionId)
     return `/assessment/${assessmentId}/end-assessment`
   }
 }

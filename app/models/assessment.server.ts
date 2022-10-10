@@ -459,8 +459,8 @@ export async function skipAnswerAndNextQuestion({
           selectedOptions?.length || answers?.length
             ? 'ANSWERED'
             : question?.status === 'ANSWERED'
-            ? 'ANSWERED'
-            : 'SKIPPED',
+              ? 'ANSWERED'
+              : 'SKIPPED',
         answeredAt: new Date(),
       },
       select: {
@@ -551,6 +551,7 @@ export async function endAssessment(id: string) {
   if (candidateTest?.endAt) {
     return { msg: 'Exam already ended' }
   }
+
   calculateResult(id)
   return await prisma.candidateTest.update({
     where: {

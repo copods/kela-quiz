@@ -7,7 +7,7 @@ const Header = ({ title }: { title: string }) => {
   return (
     <div className="flex items-center gap-4">
       <Link
-        to={routes.dashboard}
+        to={routes.members}
         tabIndex={0}
         aria-label={commonConstants.goToDashboard}
         title={commonConstants.logo}

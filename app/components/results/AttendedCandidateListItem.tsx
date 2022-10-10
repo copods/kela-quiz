@@ -30,6 +30,7 @@ const AttendedCandidateListItem = ({
         <div className=" col-span-1 truncate">
           <span className=" text-base text-gray-700">{index}</span>
         </div>
+        {console.log(name, 'name', name)}
         {endAt ? (
           <Link
             to={`/results/groupByTests/${testId}/${candidateResultId}`}
@@ -38,6 +39,10 @@ const AttendedCandidateListItem = ({
           >
             {name}
           </Link>
+        ) : name != ' ' ? (
+          <span className="col-span-3 truncate" title={name}>
+            {name}
+          </span>
         ) : (
           <div title="No Name" className="align-center col-span-3 truncate">
             <i>--No Name--</i>
