@@ -150,7 +150,6 @@ const SignUp = ({ roles }: { roles: Role[] }) => {
                 className="cursor-pointer text-primary"
                 tabIndex={0}
                 onClick={() => {
-                  console.log('sign-in')
                   signIn()
                 }}
                 onKeyUp={(e) => {

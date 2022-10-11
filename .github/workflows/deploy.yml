@@ -81,10 +81,10 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16
-      - name: Install dependencies
-        run: npm install
-      - name: Build app
-        run: npm run build
+      # - name: Install dependencies
+      #   run: npm install
+      # - name: Build app
+      #   run: npm run build
       - name: Semantic release
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}

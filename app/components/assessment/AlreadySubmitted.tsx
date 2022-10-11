@@ -1,10 +1,8 @@
-import { useTranslation } from 'react-i18next'
-import EndAssessmentIcon from '../../../public/assets/Frame.svg'
+import alreadySubmitted from '../../../public/assets/alreadySubmitted.svg'
 import Header from './Header'
-
-const EndAssessment = () => {
+import { useTranslation } from 'react-i18next'
+const AlredySubmitted = () => {
   const { t } = useTranslation()
-
   return (
     <div className="flex h-screen flex-col bg-gray-50">
       <Header />
@@ -12,12 +10,12 @@ const EndAssessment = () => {
         <div className="grid h-full items-center">
           <div className="mx-auto flex w-coolDownCard flex-col items-center justify-center gap-10 bg-white py-16">
             <img
-              src={EndAssessmentIcon}
-              alt={t('candidateExamConstants.endTest')}
+              src={alreadySubmitted}
+              alt={t('candidateExamConstants.alreadySubmitted')}
               className="h-cooldownSVG w-cooldownSVG"
             />
             <span className="text-2xl font-bold text-gray-900">
-              {t('candidateExamConstants.testCompleted')}
+              {t('candidateExamConstants.alreadyExamSubmitted')}
             </span>
           </div>
         </div>
@@ -25,5 +23,4 @@ const EndAssessment = () => {
     </div>
   )
 }
-
-export default EndAssessment
+export default AlredySubmitted
