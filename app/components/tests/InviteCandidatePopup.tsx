@@ -4,13 +4,7 @@ import { Dialog, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import { toast } from 'react-toastify'
 import Button from '../form/Button'
-import {
-  candidateExamConstants,
-  testsConstants,
-  inviteMemeberPopUpConstants,
-  members,
-  commonConstants,
-} from '~/constants/common.constants'
+import { useTranslation } from 'react-i18next'
 
 const InviteCandidatePopup = ({
   openInvitePopup,
@@ -23,30 +17,34 @@ const InviteCandidatePopup = ({
   testName: string
   testId: string
 }) => {
+  const { t } = useTranslation()
+
   const [emails, setEmails] = useState<Array<string>>([''])
   const actionData = useActionData()
   useEffect(() => {
     if (actionData?.status == 401 && testId === actionData?.testId) {
-      toast.warn(actionData.message)
+      toast.warn(t(actionData.message))
     }
     if (
       actionData?.candidateInviteStatus ===
-      candidateExamConstants.candidateTestCreated
+      t('candidateExamConstants.candidateTestCreated')
     ) {
       if (actionData?.testId === testId)
-        toast.success(testsConstants.candidateInvited)
+        toast.success(t('testsConstants.candidateInvited'))
       setOpenInvitePopup(false)
       setEmails([''])
     } else {
-      if (actionData?.candidateInviteStatus === candidateExamConstants.error) {
+      if (
+        actionData?.candidateInviteStatus === t('candidateExamConstants.error')
+      ) {
         if (actionData?.testId === testId) {
-          toast.error(testsConstants.candidateAlreadyInvited)
+          toast.error(t('testsConstants.candidateAlreadyInvited'))
         }
         setOpenInvitePopup(false)
         setEmails([''])
       }
     }
-  }, [actionData, testId, setOpenInvitePopup])
+  }, [actionData, testId, setOpenInvitePopup, t])
   const updatePopupAndEmailState = () => {
     setOpenInvitePopup(false)
     setEmails([''])
@@ -82,11 +80,11 @@ const InviteCandidatePopup = ({
               <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white p-6 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
                 <div className="flex items-center justify-between pt-1">
                   <h2
-                    role={inviteMemeberPopUpConstants.inviteCandidate}
+                    role={t('inviteMemeberPopUpConstants.inviteCandidate')}
                     tabIndex={0}
                     className="text-2xl font-bold text-gray-700"
                   >
-                    {inviteMemeberPopUpConstants.inviteCandidate}
+                    {t('inviteMemeberPopUpConstants.inviteCandidate')}
                   </h2>
                   <Icon
                     tabIndex={0}
@@ -96,17 +94,17 @@ const InviteCandidatePopup = ({
                     onKeyUp={(e) => {
                       if (e.key === 'Enter') updatePopupAndEmailState()
                     }}
-                    aria-label={inviteMemeberPopUpConstants.closePopUp}
+                    aria-label={t('inviteMemeberPopUpConstants.closePopUp')}
                   />
                 </div>
                 <hr className="mt-4 mb-6 h-px w-full border-0 bg-gray-300" />
                 <p className="pb-4 text-base font-normal text-gray-700">
-                  {inviteMemeberPopUpConstants.enterCandidatesEmail}{' '}
+                  {t('inviteMemeberPopUpConstants.enterCandidatesEmail')}{' '}
                   <span className="font-semibold">`{testName}`</span> Test.
                 </p>
                 <div className="flex flex-row justify-between pb-2">
                   <span className="text-sm font-medium text-gray-500">
-                    {inviteMemeberPopUpConstants.candidateEmail}
+                    {t('inviteMemeberPopUpConstants.candidateEmail')}
                   </span>
                   <span
                     role={'button'}
@@ -116,10 +114,10 @@ const InviteCandidatePopup = ({
                     onKeyUp={(e) => {
                       if (e.key === 'Enter') setEmails([...emails, ''])
                     }}
-                    title={inviteMemeberPopUpConstants.inviteMore}
-                    aria-label={inviteMemeberPopUpConstants.inviteMore}
+                    title={t('inviteMemeberPopUpConstants.inviteMore')}
+                    aria-label={t('inviteMemeberPopUpConstants.inviteMore')}
                   >
-                    {inviteMemeberPopUpConstants.inviteMore} +
+                    {t('inviteMemeberPopUpConstants.inviteMore')} +
                   </span>
                 </div>
                 {emails.map((email, i) => {
@@ -131,8 +129,8 @@ const InviteCandidatePopup = ({
                         name={`email`}
                         className="inviteInput h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
                         placeholder="johndoe@example.com"
-                        title={members.email}
-                        aria-label={members.email}
+                        title={t('commonConstants.email')}
+                        aria-label={t('commonConstants.email')}
                       />
                     </div>
                   )
@@ -142,8 +140,8 @@ const InviteCandidatePopup = ({
                     type="button"
                     className="h-9 px-4"
                     varient="primary-outlined"
-                    title={commonConstants.cancel}
-                    buttonText={commonConstants.cancel}
+                    title={t('commonConstants.cancel')}
+                    buttonText={t('commonConstants.cancel')}
                     onClick={updatePopupAndEmailState}
                   />
                   <Button
@@ -153,8 +151,8 @@ const InviteCandidatePopup = ({
                     id="submit-button"
                     className="h-9 px-4"
                     varient="primary-solid"
-                    title={inviteMemeberPopUpConstants.invite}
-                    buttonText={inviteMemeberPopUpConstants.invite}
+                    title={t('inviteMemeberPopUpConstants.invite')}
+                    buttonText={t('inviteMemeberPopUpConstants.invite')}
                     datacy="submit"
                   />
                 </div>

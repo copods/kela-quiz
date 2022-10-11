@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import type { InputFieldProps } from '~/interface/Interface'
 
 function InputField({
@@ -7,6 +8,7 @@ function InputField({
   errorId,
   ...props
 }: InputFieldProps) {
+  const { t } = useTranslation()
   return (
     <div>
       <label
@@ -25,7 +27,7 @@ function InputField({
       />
       {error && (
         <div className="pt-1 text-red-700" id={errorId}>
-          {error}
+          {t(error)}
         </div>
       )}
     </div>

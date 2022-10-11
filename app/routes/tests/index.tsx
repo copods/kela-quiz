@@ -9,9 +9,9 @@ import { useLoaderData } from '@remix-run/react'
 import { deleteTestById } from '~/models/tests.server'
 import { toast } from 'react-toastify'
 import type { Test } from '~/interface/Interface'
-import { statusCheck } from '~/constants/common.constants'
 import { createCandidate } from '~/models/candidate.server'
 import { routes } from '~/constants/route.constants'
+import { useTranslation } from 'react-i18next'
 
 type LoaderData = {
   tests: Awaited<ReturnType<typeof getAllTests>>
@@ -24,6 +24,7 @@ export type ActionData = {
   }
   resp?: {
     status?: string
+    message?: string
     check?: Date
   }
 }
@@ -45,7 +46,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   await getAllTests(filter)
     .then((res) => {
       tests = res as Test[]
-      status = 'Success'
+      status = 'statusCheck.success'
     })
     .catch((err) => {
       status = err
@@ -64,7 +65,7 @@ export const action: ActionFunction = async ({ request }) => {
     await deleteTestById(formData.get('id') as string)
       .then((res) => {
         deleteHandle = json<ActionData>(
-          { resp: { status: statusCheck.deletedSuccess } },
+          { resp: { status: '200', message: 'statusCheck.deletedSuccess' } },
           { status: 200 }
         )
       })
@@ -84,7 +85,11 @@ export const action: ActionFunction = async ({ request }) => {
       }
     })
     if (emails.length === 0) {
-      return json({ status: 401, message: statusCheck.noEmailsInvite, testId })
+      return json({
+        status: 401,
+        message: 'statusCheck.noEmailsInvite',
+        testId,
+      })
     }
     const candidateInviteStatus = await createCandidate({
       emails,
@@ -96,9 +101,11 @@ export const action: ActionFunction = async ({ request }) => {
 }
 
 export default function Tests() {
+  const { t } = useTranslation()
+
   const data = useLoaderData() as unknown as LoaderData
-  if (data.status != statusCheck.success) {
-    toast.success(statusCheck.commonError)
+  if (t(data.status as string) != t('statusCheck.success')) {
+    toast.warn(t('statusCheck.commonError'))
   }
   return (
     <AdminLayout>

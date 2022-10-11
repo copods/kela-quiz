@@ -1,11 +1,7 @@
 import { Icon } from '@iconify/react'
 import DropdownField from './form/Dropdown'
-import {
-  commonConstants,
-  componentGlobalConstants,
-  sectionsConstants,
-} from '~/constants/common.constants'
 import { sortByOrder } from '~/interface/Interface'
+import { useTranslation } from 'react-i18next'
 
 const SortFilter = ({
   filterData,
@@ -24,10 +20,12 @@ const SortFilter = ({
   totalItems: number
   showSelected: boolean
 }) => {
+  const { t } = useTranslation()
+
   return (
     <div className="flex items-center gap-4" id="sort-filter">
       <div className="flex items-center gap-2.5" id="sort-filter-body">
-        <span title={sectionsConstants.sort}>
+        <span title={t('sectionsConstants.sort')}>
           {sortDirection === sortByOrder.ascending ? (
             <Icon
               tabIndex={0}
@@ -37,8 +35,8 @@ const SortFilter = ({
                 if (e.key === 'Enter') onSortDirectionChange(sortByOrder.desc)
               }}
               onClick={() => onSortDirectionChange(sortByOrder.desc)}
+              aria-label={t('commonConstants.sortAscending')}
               className="bg-light-200 cursor-pointer text-2xl focus:outline-dotted focus:outline-2"
-              aria-label={commonConstants.sortAscending}
             />
           ) : (
             <Icon
@@ -50,8 +48,8 @@ const SortFilter = ({
                   onSortDirectionChange(sortByOrder.ascending)
               }}
               onClick={() => onSortDirectionChange(sortByOrder.ascending)}
+              aria-label={t('commonConstants.sortDescending')}
               className="cursor-pointer text-2xl focus:outline-dotted focus:outline-2"
-              aria-label={commonConstants.sortDescending}
             />
           )}
         </span>
@@ -72,7 +70,7 @@ const SortFilter = ({
         id="total-items-value"
       >
         <span className="w-max">
-          {componentGlobalConstants.totalCounts}:
+          {t('componentGlobalConstants.totalCounts')}:
           <span id="total-count-value" className="pl-1">
             {totalItems}
           </span>
@@ -81,7 +79,7 @@ const SortFilter = ({
           <>
             <Icon icon="ci:line-m" />
             <span className="pl-3 ">
-              {componentGlobalConstants.selected}: 0/
+              {t('componentGlobalConstants.selected')}: 0/
               {totalItems}
             </span>
           </>

@@ -1,5 +1,5 @@
 import { Switch } from '@headlessui/react'
-import { commonConstants } from '~/constants/common.constants'
+import { useTranslation } from 'react-i18next'
 
 export default function Toggle({
   toggle,
@@ -8,19 +8,21 @@ export default function Toggle({
   toggle: boolean
   onToggleChange: (e: boolean) => void
 }) {
+  const { t } = useTranslation()
+
   return (
     <Switch
       checked={toggle}
       tabIndex={0}
-      role={commonConstants.checkOrder}
+      role={'button'}
       onChange={onToggleChange}
-      title={commonConstants.checkOrder}
-      aria-label={commonConstants.checkOrder}
+      title={t('commonConstants.checkOrder')}
+      aria-label={t('commonConstants.checkOrder')}
       className={`${
         toggle ? 'border-blue-900 bg-blue-900' : 'border-slate-300 bg-slate-300'
       } relative inline-flex h-7 w-16 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out`}
     >
-      <span className="sr-only">{commonConstants.useSetting}</span>
+      <span className="sr-only">{t('commonConstants.useSetting')}</span>
       <span
         aria-hidden="true"
         className={`${toggle ? 'translate-x-9' : 'translate-x-0'}

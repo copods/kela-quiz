@@ -5,8 +5,11 @@ import Divider from '../divider'
 import BarGraph from '../barGraph/barGraph'
 import type { SectionWiseResults } from '~/interface/Interface'
 import { routes } from '~/constants/route.constants'
+// import { useTranslation } from 'react-i18next'
 
 const ResultDetailsComponent = () => {
+  // const { t } = useTranslation()
+
   const { candidateResult, params, sectionWiseResult } = useLoaderData()
 
   let navigate = useNavigate()

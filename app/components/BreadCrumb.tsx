@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react'
+import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
 const BreadCrumb = ({
@@ -6,6 +7,7 @@ const BreadCrumb = ({
 }: {
   data: Array<{ tabName: string; route: string }>
 }) => {
+  const { t } = useTranslation()
   return (
     <div className="flex">
       {data.map((breadCrumb, i) => {
@@ -15,17 +17,17 @@ const BreadCrumb = ({
             className={`flex px-1 text-sm font-medium ${
               breadCrumb.route ? 'text-primary' : 'text-gray-400'
             }`}
-            title={breadCrumb.tabName}
+            title={t(breadCrumb.tabName)}
           >
             <Link
               tabIndex={0}
               to={breadCrumb.route}
               className="cursor-pointer"
-              id={breadCrumb.tabName}
-              title={breadCrumb.tabName}
-              aria-label={breadCrumb.tabName}
+              id={t(breadCrumb.tabName)}
+              title={t(breadCrumb.tabName)}
+              aria-label={t(breadCrumb.tabName)}
             >
-              {breadCrumb.tabName}
+              {t(breadCrumb.tabName)}
             </Link>
             {i != data.length - 1 && (
               <Icon
