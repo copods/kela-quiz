@@ -31,7 +31,7 @@ describe('Visiting Tests', () => {
   it('sort by name in ascending order ', () => {
     cy.get('a').find('#tests').should('have.text', testsConstants.tests).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.get('#headlessui-listbox-button-1 span span', { timeout: 6000 })
+    cy.get('.dropdownButton span span', { timeout: 6000 })
       .invoke('text')
       .then((el) => {
         if (el === 'Name') {
@@ -48,7 +48,7 @@ describe('Visiting Tests', () => {
     cy.get('a').find('#tests').should('have.text', testsConstants.tests).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('#sort-filter-body').get('#ascend').click()
-    cy.get('#headlessui-listbox-button-1 span span', { timeout: 6000 })
+    cy.get('.dropdownButton span span', { timeout: 6000 })
       .invoke('text')
       .then((el) => {
         if (el === 'Name') {
@@ -64,14 +64,14 @@ describe('Visiting Tests', () => {
   it('sort by created date in ascending order ', () => {
     cy.get('a').find('#tests').should('have.text', testsConstants.tests).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.get('.dropdown')
+    cy.get('#sort-filter-container')
       .get('.dropdownButton')
-      .click()
+      .click({ multiple: true })
       .get('li div')
       .get('.dropdown-option')
       .get('.not-selected')
       .click()
-    cy.get('#headlessui-listbox-button-1 span span', { timeout: 6000 })
+    cy.get('.dropdownButton span span', { timeout: 6000 })
       .invoke('text')
       .then((el) => {
         if (el === 'Created Date') {
@@ -88,14 +88,14 @@ describe('Visiting Tests', () => {
     cy.get('a').find('#tests').should('have.text', testsConstants.tests).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('#sort-filter-body').get('#ascend').click()
-    cy.get('.dropdown')
+    cy.get('#sort-filter-container')
       .get('.dropdownButton')
-      .click()
+      .click({ multiple: true })
       .get('li div')
       .get('.dropdown-option')
       .get('.not-selected')
       .click()
-    cy.get('#headlessui-listbox-button-1 span span', { timeout: 6000 })
+    cy.get('.dropdownButton span span', { timeout: 6000 })
       .invoke('text')
       .then((el) => {
         if (el === 'Created Date') {

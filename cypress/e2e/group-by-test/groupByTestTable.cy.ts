@@ -47,7 +47,7 @@ describe('Test for GroupByTestTable, Result', () => {
       .should('have.text', commonConstants.results)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')
-    cy.get('#headlessui-listbox-button-1 span span', { timeout: 60000 })
+    cy.get('.dropdownButton span span', { timeout: 6000 })
       .invoke('text')
       .then((el) => {
         if (el === 'Name') {
@@ -74,7 +74,7 @@ describe('Test for GroupByTestTable, Result', () => {
     cy.get('#sort-filter-body', { timeout: 60000 })
       .get('#ascend', { timeout: 6000 })
       .click()
-    cy.get('#headlessui-listbox-button-1 span span', { timeout: 6000 })
+    cy.get('.dropdownButton span span', { timeout: 6000 })
       .invoke('text')
       .then((el) => {
         if (el === 'Name') {
@@ -100,14 +100,14 @@ describe('Test for GroupByTestTable, Result', () => {
       .should('have.text', commonConstants.results)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')
-    cy.get('.dropdown')
+    cy.get('#sort-filter-container')
       .get('.dropdownButton')
-      .click()
+      .click({ multiple: true })
       .get('li div')
       .get('.dropdown-option')
       .get('.not-selected')
       .click()
-    cy.get('#headlessui-listbox-button-1 span span', { timeout: 6000 })
+    cy.get('.dropdownButton span span', { timeout: 6000 })
       .invoke('text')
       .then((el) => {
         if (el === 'Created Date') {
@@ -134,14 +134,14 @@ describe('Test for GroupByTestTable, Result', () => {
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')
     cy.get('#sort-filter-body').get('#ascend').click()
-    cy.get('.dropdown')
+    cy.get('#sort-filter-container')
       .get('.dropdownButton')
-      .click()
+      .click({ multiple: true })
       .get('li div')
       .get('.dropdown-option')
       .get('.not-selected')
       .click()
-    cy.get('#headlessui-listbox-button-1 span span', { timeout: 6000 })
+    cy.get('.dropdownButton span span', { timeout: 6000 })
       .invoke('text')
       .then((el) => {
         if (el === 'Created Date') {
