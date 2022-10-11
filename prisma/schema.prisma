@@ -204,6 +204,7 @@ model CandidateTest {
   endAt              DateTime?
   createdAt          DateTime                 @default(now())
   updatedAt          DateTime                 @updatedAt
+  linkSentOn         DateTime?                @default(now())
   sectionWiseResults SectionWiseResult[]
 
   @@unique([candidateId, testId])

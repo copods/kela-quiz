@@ -83,7 +83,6 @@ export const action: ActionFunction = async ({ request }) => {
     return deleteHandle
   }
   if (testId !== null) {
-    console.log('hu')
     let emails: Array<string> = []
     await formData.forEach((fd) => {
       if (fd != '') {

@@ -22,7 +22,7 @@ describe('smoke tests', () => {
     cy.get('#email').clear().type('careers@copods.co')
     cy.get('#password').clear().type('kQuiz@copods')
     cy.findByRole('button').click()
-    cy.url().should('includes', '/member')
+    cy.url().should('includes', '/members')
     cy.getCookies()
       .should('have.length', 1)
       .then((cookies) => {
