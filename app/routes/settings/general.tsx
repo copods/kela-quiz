@@ -1,4 +1,3 @@
-import AdminLayout from '~/components/layouts/AdminLayout'
 import type { ActionFunction, LoaderFunction } from '@remix-run/node'
 import {
   checkOldPasswordFromdb,
@@ -10,11 +9,11 @@ import { routes } from '~/constants/route.constants'
 import { getUserId } from '~/session.server'
 import { json } from '@remix-run/node'
 import { redirect } from '@remix-run/node'
-import { useActionData, useNavigate } from '@remix-run/react'
+import SettingsTabs from '~/components/settings/SettingTab'
+import { useActionData } from '@remix-run/react'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import Setting from '~/components/settings/Settings'
 
 export type ActionData = {
   errors?: {
@@ -82,7 +81,7 @@ export const action: ActionFunction = async ({ request }) => {
           addHandle = json<ActionData>(
             {
               resp: {
-                title: 'password changed successfully !',
+                title: 'settings.passResetSuccessfully',
                 status: 200,
               },
             },
@@ -107,16 +106,15 @@ export const action: ActionFunction = async ({ request }) => {
   }
   return addHandle
 }
-export default function Settings() {
+
+const GeneralSetting = () => {
   const { t } = useTranslation()
   const resetPassActionData = useActionData() as ActionData
   const [actionStatus, setActionStatus] = useState<boolean>(false)
-  let navigate = useNavigate()
   useEffect(() => {
     if (resetPassActionData) {
       if (resetPassActionData.resp?.status === 200) {
         setActionStatus(true)
-        navigate(routes.settings)
         toast.success(t(resetPassActionData.resp?.title))
       } else if (resetPassActionData.errors?.status === 400) {
         setActionStatus(false)
@@ -125,15 +123,16 @@ export default function Settings() {
   }, [resetPassActionData, t])
 
   return (
-    <AdminLayout>
+    <div>
       <div>
-        <Setting
+        <SettingsTabs
           validationError={resetPassActionData?.errors?.valid}
           passNotMatched={resetPassActionData?.errors?.passNotMatched}
           actionStatus={actionStatus}
           setActionStatus={setActionStatus}
         />
       </div>
-    </AdminLayout>
+    </div>
   )
 }
+export default GeneralSetting

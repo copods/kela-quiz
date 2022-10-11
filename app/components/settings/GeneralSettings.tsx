@@ -1,22 +1,22 @@
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import ResetPasswordManually from './ResetPassword'
+import ResetPassword from './ResetPassword'
 
-const General = ({
+const GeneralSetting = ({
   actionStatus,
   setActionStatus,
-  validError,
+  validationError,
   passNotMatched,
 }: {
   actionStatus: boolean
   setActionStatus: (e: boolean) => void
-  validError?: string
+  validationError?: string
   passNotMatched?: string
 }) => {
-  const [open, setOpen] = useState(false)
+  const [openPopUp, setOpenPopUp] = useState(false)
   useEffect(() => {
     if (actionStatus) {
-      setOpen(false)
+      setOpenPopUp(false)
       setActionStatus(false)
     }
   }, [actionStatus, setActionStatus])
@@ -24,14 +24,14 @@ const General = ({
   return (
     <div className="rounded-lg border border-solid border-gray-300 bg-white p-4">
       <div className="flex flex-col gap-8">
-        <h3 className="text-lg font-semibold">Basic Info</h3>
+        <h3 className="text-lg font-semibold"> {t('settings.basicInfo')}</h3>
         <div className="flex flex-col gap-5">
           <div className="flex justify-between">
             <span className="text-base font-medium text-gray-700">
               {t('settings.attentionToDetail')}
             </span>
             <span className="ext-base font-medium text-gray-600">
-              Version 1.0.0
+              {t('settings.version')}
             </span>
           </div>
           <div className="flex justify-between">
@@ -40,7 +40,7 @@ const General = ({
             </span>
             <button
               tabIndex={0}
-              onClick={() => setOpen(!open)}
+              onClick={() => setOpenPopUp(!openPopUp)}
               className="cursor-pointer text-base font-medium text-primary"
             >
               {t('settings.clickToChange')}
@@ -48,13 +48,13 @@ const General = ({
           </div>
         </div>
       </div>
-      <ResetPasswordManually
-        open={open}
-        validError={validError}
+      <ResetPassword
+        openPopUp={openPopUp}
+        validationError={validationError}
         passNotMatched={passNotMatched}
-        setOpen={setOpen}
+        setOpenPopUp={setOpenPopUp}
       />
     </div>
   )
 }
-export default General
+export default GeneralSetting

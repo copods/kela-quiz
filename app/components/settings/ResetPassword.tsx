@@ -6,15 +6,16 @@ import { useTranslation } from 'react-i18next'
 import Button from '../form/Button'
 import InputField from '../form/InputField'
 import PasswordInputField from '../form/passwordField'
-const ResetPasswordManually = ({
-  open,
-  setOpen,
-  validError,
+
+const ResetPassword = ({
+  openPopUp,
+  setOpenPopUp,
+  validationError,
   passNotMatched,
 }: {
-  open: boolean
-  setOpen: (e: boolean) => void
-  validError?: string
+  openPopUp: boolean
+  setOpenPopUp: (e: boolean) => void
+  validationError?: string
   passNotMatched?: string
 }) => {
   const transition = useTransition()
@@ -31,9 +32,9 @@ const ResetPasswordManually = ({
       name: 'Old Password',
       required: true,
       value: password,
-      error: validError,
+      error: validationError,
       errorId: 'Password-error',
-      onChange: function (event: any) {
+      onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
         setPassword(event?.target.value)
       },
     },
@@ -47,7 +48,7 @@ const ResetPasswordManually = ({
       value: newPassword,
       // error: errors,
       errorId: 'New-password-error',
-      onChange: function (event: any) {
+      onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
         setNewPassword(event?.target.value)
       },
     },
@@ -59,7 +60,7 @@ const ResetPasswordManually = ({
       value: confirmPassword,
       error: passNotMatched,
       errorId: 'Confirm-password-error',
-      onChange: function (event: any) {
+      onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
         setConfirmPassword(event?.target.value)
       },
     },
@@ -67,11 +68,11 @@ const ResetPasswordManually = ({
 
   return (
     <div>
-      <Transition.Root show={open} as={Fragment}>
+      <Transition.Root show={openPopUp} as={Fragment}>
         <Dialog
           as="div"
           className="relative z-10"
-          onClose={() => setOpen(false)}
+          onClose={() => setOpenPopUp(false)}
         >
           <Transition.Child
             as={Fragment}
@@ -115,9 +116,9 @@ const ResetPasswordManually = ({
                       className="cursor-pointer text-2xl text-gray-600"
                       icon={'carbon:close'}
                       onKeyUp={(e) => {
-                        if (e.key === 'Enter') setOpen(false)
+                        if (e.key === 'Enter') setOpenPopUp(false)
                       }}
-                      onClick={() => setOpen(false)}
+                      onClick={() => setOpenPopUp(false)}
                     />
                   </div>
                   <hr className="mt-4 mb-6 h-px w-full border-0 bg-gray-300" />
@@ -168,4 +169,4 @@ const ResetPasswordManually = ({
     </div>
   )
 }
-export default ResetPasswordManually
+export default ResetPassword

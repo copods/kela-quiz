@@ -9,7 +9,7 @@ export interface InputFieldProps {
   value: string
   error?: string
   errorId: string
-  onChange: (e: React.ChangeEvent) => void
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 export interface PasswordFieldProps {
   name: string
@@ -19,7 +19,7 @@ export interface PasswordFieldProps {
   value: string
   error?: string
   errorId: string
-  onChange: (e: React.ChangeEvent) => void
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 export interface ButtonProps {

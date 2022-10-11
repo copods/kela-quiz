@@ -17,8 +17,9 @@ const PasswordInputField = ({
     if (passwordType === 'password') {
       setPasswordType('text')
       return
+    } else {
+      return setPasswordType('password')
     }
-    setPasswordType('password')
   }
   return (
     <div className="flex flex-col gap-1.5">
@@ -38,7 +39,11 @@ const PasswordInputField = ({
           className="h-11 w-full py-2.5 text-lg"
           title={props.placeholder}
         />
-        <button className="btn btn-outline-primary" onClick={togglePassword}>
+        <button
+          type="button"
+          className="btn btn-outline-primary"
+          onClick={togglePassword}
+        >
           {passwordType === 'password' ? (
             <Icon icon="codicon:eye" className="text-xl text-gray-500 " />
           ) : (

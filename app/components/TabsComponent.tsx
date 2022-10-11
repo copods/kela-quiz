@@ -1,17 +1,25 @@
+import { useNavigate } from '@remix-run/react'
 const TabComponent = ({
   tabs,
   isDisabled,
   currentTab,
   setCurrentTab,
 }: {
-  tabs: Array<{ id: number; name: string }>
+  tabs: Array<{ id: number; name: string; route: string }>
   isDisabled: boolean
   currentTab: number
   setCurrentTab: (e: number) => void
 }) => {
   const indexDisable = () => {
-    if (!isDisabled) return 0
+    if (!isDisabled) {
+      return 0
+    } else {
+      return 1
+    }
   }
+
+  const navigate = useNavigate()
+
   return (
     <div className="flex w-full gap-9 rounded-lg">
       {tabs.map((tab, i) => {
@@ -26,8 +34,9 @@ const TabComponent = ({
             }`}
             onClick={() => {
               setCurrentTab(tab.id)
+              navigate(tab.route)
             }}
-            aria-label={`${tab.name}`}
+            aria-label={tab.name}
             onKeyUp={(e) => {
               if (e.key === 'Enter') setCurrentTab(tab.id)
             }}
