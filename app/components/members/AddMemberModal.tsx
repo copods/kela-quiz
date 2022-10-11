@@ -148,7 +148,7 @@ export default function AddMemberModal({
                     onChange={(e) => setEmail(trimValue(e.target.value))}
                   />
                 </div>
-                <div className="pb-6">
+                <div className="pb-6" id="add-member-modal">
                   <div>
                     <label htmlFor="" className="text-gray-800">
                       {t('members.role')}

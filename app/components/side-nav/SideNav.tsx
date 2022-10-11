@@ -3,6 +3,9 @@ import Header from '~/components/SideNavHeader'
 import Footer from '~/components/SideNavFooter'
 import { routes } from '~/constants/route.constants'
 import { useTranslation } from 'react-i18next'
+import DropdownField from '../form/Dropdown'
+import { useLoaderData } from '@remix-run/react'
+import type { UserWorkspace } from '~/interface/Interface'
 
 const sideNavGuide = [
   // {
@@ -71,11 +74,29 @@ const sideNavGuide = [
 const SideNav = () => {
   const { t } = useTranslation()
 
+  const { workspaces = [], currentWorkspaceId } = useLoaderData()
+
+  const tempWorkspaces = workspaces.map((userWorkspace: UserWorkspace) => {
+    return { ...userWorkspace, ...userWorkspace.workspace }
+  })
   return (
     <div className="flex h-full flex-col justify-between overflow-auto p-5">
       <div>
         <div className="mb-14 px-1">
           <Header title={t('sideNav.sideNavHeading')} />
+          <div className="mt-2">
+            <DropdownField
+              data={tempWorkspaces}
+              displayKey="name"
+              name="workspace"
+              valueKey="workspaceId"
+              value={currentWorkspaceId}
+              setValue={(val) => {
+                //TODO: for switching the workspace write function here
+                console.log(val)
+              }}
+            />
+          </div>
         </div>
         <div className="flex flex-col gap-8">
           {sideNavGuide.map((guide, index) => {

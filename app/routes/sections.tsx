@@ -15,7 +15,7 @@ import {
 } from '~/models/sections.server'
 import { useState, useEffect } from 'react'
 import { Icon } from '@iconify/react'
-import { getUserId, requireUserId } from '~/session.server'
+import { getUserId, getWorkspaceId, requireUserId } from '~/session.server'
 import Sections from '~/components/sections/Sections'
 import AdminLayout from '~/components/layouts/AdminLayout'
 import AddSection from '~/components/sections/AddSection'
@@ -26,6 +26,7 @@ import { sortByOrder } from '~/interface/Interface'
 import type { Section } from '~/interface/Interface'
 import { routes } from '~/constants/route.constants'
 import { useTranslation } from 'react-i18next'
+import { getUserWorkspaces } from '~/models/workspace.server'
 
 export type ActionData = {
   errors?: {
@@ -49,14 +50,19 @@ export type LoaderData = {
   selectedSectionId?: string
   filters: string
   status: string
+  workspaces: Awaited<ReturnType<typeof getUserWorkspaces>>
+  currentWorkspaceId: Awaited<ReturnType<typeof getWorkspaceId>>
 }
 
 export const loader: LoaderFunction = async ({ request, params }) => {
+  const userId = await getUserId(request)
+  const currentWorkspaceId = await getWorkspaceId(request)
+  const workspaces = await getUserWorkspaces(userId as string)
   const url = new URL(request.url).searchParams.entries()
-  const obj = Object.fromEntries(url).filter
+  const filterData = Object.fromEntries(url).filter
   let sections: Array<Section> = []
   let status: string = ''
-  await getAllSections(obj)
+  await getAllSections(filterData, currentWorkspaceId as string)
     .then((res) => {
       sections = res as Section[]
       status = 'statusCheck.success'
@@ -64,17 +70,24 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     .catch((err) => {
       status = err
     })
-  const userId = await getUserId(request)
   if (!userId) return redirect(routes.signIn)
   const selectedSectionId = params.sectionId
     ? params.sectionId?.toString()
     : undefined
   const filters = new URL(request.url).search
-  return json<LoaderData>({ sections, selectedSectionId, filters, status })
+  return json<LoaderData>({
+    sections,
+    selectedSectionId,
+    filters,
+    status,
+    workspaces,
+    currentWorkspaceId,
+  })
 }
 
 export const action: ActionFunction = async ({ request }) => {
   const createdById = await requireUserId(request)
+  const workspaceId = (await getWorkspaceId(request)) as string
   const formData = await request.formData()
   const action = formData.get('add-section')
     ? formData.get('add-section')
@@ -96,7 +109,7 @@ export const action: ActionFunction = async ({ request }) => {
     }
 
     let addHandle = null
-    await createSection({ name, description, createdById })
+    await createSection({ name, description, createdById, workspaceId })
       .then((res) => {
         addHandle = json<ActionData>(
           {

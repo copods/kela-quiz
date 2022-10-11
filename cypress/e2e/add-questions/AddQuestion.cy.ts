@@ -44,7 +44,7 @@ describe('Test for section-details', () => {
       routes.addQuestion
     )
     cy.get('h1', { timeout: 6000 }).should('be.visible')
-    cy.get('#dropdown > button', { timeout: 6000 }).click()
+    cy.get('#Question').get('#dropdown-container').click()
     let flag = ''
     cy.get('ul[role="listbox"]').within(() => {
       cy.get('li').within(() => {
@@ -90,7 +90,7 @@ describe('Test for section-details', () => {
       '/add-question'
     )
     cy.get('h1', { timeout: 6000 }).should('be.visible')
-    cy.get('#dropdown > button', { timeout: 6000 }).click()
+    cy.get('#Question').get('#dropdown-container').click()
     let flag = ''
     cy.get('ul').within(() => {
       cy.get('li').within(() => {
@@ -136,7 +136,7 @@ describe('Test for section-details', () => {
       '/add-question'
     )
     cy.get('h1', { timeout: 6000 }).should('be.visible')
-    cy.get('#dropdown > button', { timeout: 6000 }).click()
+    cy.get('#Question').get('#dropdown-container').click()
     let flag = ''
     cy.get('ul').within(() => {
       cy.get('li').within(() => {
@@ -183,7 +183,7 @@ describe('Test for section-details', () => {
       '/add-question'
     )
     cy.get('h1', { timeout: 6000 }).should('be.visible')
-    cy.get('#dropdown > button', { timeout: 6000 }).click()
+    cy.get('#Question').get('#dropdown-container').click()
 
     cy.get('ul').within(() => {
       cy.get('li').within(() => {
@@ -233,7 +233,7 @@ describe('Test for section-details', () => {
       '/add-question'
     )
     cy.get('h1', { timeout: 6000 }).should('be.visible')
-    cy.get('#dropdown > button').click()
+    cy.get('#Question').get('#dropdown-container').click()
     cy.get('ul').within(() => {
       cy.get('li').within(() => {
         cy.get('div').then((el) => {
@@ -282,7 +282,7 @@ describe('Test for section-details', () => {
       '/add-question'
     )
     cy.get('h1', { timeout: 6000 }).should('be.visible')
-    cy.get('#dropdown > button').click()
+    cy.get('#Question').get('#dropdown-container').click()
     cy.get('ul').within(() => {
       cy.get('li').within(() => {
         cy.get('div').then((el) => {
@@ -328,7 +328,7 @@ describe('Test for section-details', () => {
       '/add-question'
     )
     cy.get('h1', { timeout: 6000 }).should('be.visible')
-    cy.get('#dropdown > button').click()
+    cy.get('#Question').get('#dropdown-container').click()
     cy.get('ul').within(() => {
       cy.get('li').within(() => {
         cy.get('div').then((el) => {
@@ -406,7 +406,7 @@ describe('Test for section-details', () => {
     )
     cy.get('h1', { timeout: 6000 }).should('be.visible')
     let flag = 0
-    cy.get('#dropdown > button').click()
+    cy.get('#Question').get('#dropdown-container').click()
     cy.get('ul').within(() => {
       cy.get('li').within(() => {
         cy.get('div').then((el) => {

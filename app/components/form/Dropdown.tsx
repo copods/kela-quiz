@@ -48,7 +48,7 @@ function DropdownField({
                 <span className="block truncate">{getName(value)}</span>
               </span>
               <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
-                <Icon icon="ic:round-keyboard-arrow-down" />
+                <Icon icon="ic:round-keyboard-arrow-down" id="icon" />
               </span>
             </Listbox.Button>
             <Transition

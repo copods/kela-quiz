@@ -1,5 +1,5 @@
 import AdminLayout from '~/components/layouts/AdminLayout'
-import { getUserId } from '~/session.server'
+import { getUserId, getWorkspaceId } from '~/session.server'
 import { redirect } from '@remix-run/node'
 import type { LoaderFunction, ActionFunction } from '@remix-run/node'
 import MembersList from '~/components/members/MembersList'
@@ -16,6 +16,7 @@ import { toast } from 'react-toastify'
 import { useEffect, useState } from 'react'
 import { routes } from '~/constants/route.constants'
 import { useTranslation } from 'react-i18next'
+import { getUserWorkspaces } from '~/models/workspace.server'
 
 export type ActionData = {
   errors?: {
@@ -31,13 +32,23 @@ type LoaderData = {
   users: Awaited<ReturnType<typeof getAllUsers>>
   userId: Awaited<ReturnType<typeof getUserId>>
   roles: Awaited<ReturnType<typeof getAllRoles>>
+  workspaces: Awaited<ReturnType<typeof getUserWorkspaces>>
+  currentWorkspaceId: Awaited<ReturnType<typeof getWorkspaceId>>
 }
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await getUserId(request)
+  const currentWorkspaceId = await getWorkspaceId(request)
+  const workspaces = await getUserWorkspaces(userId as string)
   const roles = await getAllRoles()
   if (!userId) return redirect(routes.signIn)
   const users = await getAllUsers()
-  return json<LoaderData>({ users, roles, userId })
+  return json<LoaderData>({
+    users,
+    roles,
+    userId,
+    workspaces,
+    currentWorkspaceId,
+  })
 }
 
 export const action: ActionFunction = async ({ request }) => {
