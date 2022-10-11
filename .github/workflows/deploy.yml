@@ -88,7 +88,7 @@ jobs:
       - name: Semantic release
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: npx semantic-release
+        run: npx -p @semantic-release/changelog -p @semantic-release/git -p semantic-release semantic-release
   build:
     name: 🐳 Build
     # only build/deploy main branch on pushes
