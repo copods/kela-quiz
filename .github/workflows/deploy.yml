@@ -81,14 +81,14 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16
-      - name: Install dependencies
-        run: npm install
-      - name: Build app
-        run: npm run build
+      # - name: Install dependencies
+      #   run: npm install
+      # - name: Build app
+      #   run: npm run build
       - name: Semantic release
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: npx semantic-release
+        run: npx -p @semantic-release/changelog -p @semantic-release/git -p semantic-release semantic-release
   build:
     name: 🐳 Build
     # only build/deploy main branch on pushes

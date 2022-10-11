@@ -78,7 +78,6 @@ export const action: ActionFunction = async ({ request }) => {
     return deleteHandle
   }
   if (testId !== null) {
-    console.log('hu')
     let emails: Array<string> = []
     await formData.forEach((fd) => {
       if (fd != '') {
@@ -97,7 +96,6 @@ export const action: ActionFunction = async ({ request }) => {
       createdById,
       testId,
     })
-    console.log('asd', candidateInviteStatus)
     return json({ candidateInviteStatus, testId })
   }
 }
