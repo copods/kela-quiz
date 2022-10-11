@@ -28,7 +28,7 @@ const SectionDetails = () => {
         </h2>
       </div>
       <hr className="-mt-2 h-px w-full bg-gray-300" />
-      <div className="flex items-start justify-between gap-2 md:flex-col xl:flex-row xl:items-center">
+      <div className="flex items-start justify-between gap-2 ">
         <input
           tabIndex={0}
           id="section-search"
@@ -47,7 +47,7 @@ const SectionDetails = () => {
             )
           }
           id="add-question"
-          className="h-9 px-5"
+          className="h-9 w-36 px-5"
           buttonText={`+ ${t('addQuestion.addQuestion')}`}
           varient="primary-solid"
           title={t('addQuestion.addQuestion')}
