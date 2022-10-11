@@ -329,6 +329,9 @@ export async function moveToNextSection({
 
   if (nextSectionObject) {
     return `/assessment/${assessmentId}/${nextSectionObject?.id}`
+  } else {
+    endCandidateAssessment(assessmentId, sectionId)
+    return `/assessment/${assessmentId}/end-assessment`
   }
 }
 
@@ -373,7 +376,6 @@ export async function saveAnswerSkipAndNext(
  * @param sectionId
  * @returns redirect to end assessment page
  */
-
 export async function endCandidateAssessment(
   assessmentId: string,
   sectionId: string

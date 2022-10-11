@@ -66,7 +66,6 @@ export async function updateCandidateFirstLastName(
     await sendOTPToUser({ id, OTP })
     return data
   } catch (error) {
-    console.log(error)
     throw new Error('Something went wrong..!')
   }
 }
@@ -544,7 +543,6 @@ export async function endAssessment(id: string) {
     where: {
       id,
     },
-
     select: {
       id: true,
       startedAt: true,
