@@ -128,7 +128,7 @@ describe('Test for Section', () => {
         .then((listing) => {
           const listingCount = Cypress.$(listing).length
           expect(listing).to.have.length(listingCount)
-          cy.get('#headlessui-listbox-button-1 span span')
+          cy.get('#headlessui-listbox-button-1 span span', { timeout: 6000 })
             .invoke('text')
             .then((el) => {
               if (el === 'Name') {
