@@ -164,7 +164,8 @@ describe('smoke tests', () => {
       .click()
     cy.location('pathname').should('include', '/add-question')
     cy.get('h1').should('be.visible')
-    cy.get('#dropdown > button').click()
+
+    cy.get('#Question').get('#dropdown-container').click()
     cy.get('ul').within(() => {
       cy.get('li').within(() => {
         cy.get('div').then((el) => {
@@ -219,7 +220,7 @@ describe('smoke tests', () => {
       .click()
     cy.location('pathname').should('include', '/add-question')
     cy.get('h1').should('be.visible')
-    cy.get('#dropdown > button').click()
+    cy.get('#Question').get('#dropdown-container').click()
     cy.get('ul').within(() => {
       cy.get('li').within(() => {
         cy.get('div').then((el) => {
@@ -435,7 +436,7 @@ describe('smoke tests', () => {
       .clear()
       .type(memberEmail)
       .should('have.value', memberEmail)
-    cy.get('div').find('.dropdownButton').click()
+    cy.get('div').get('#add-member-modal').find('.dropdownButton').click()
     cy.get('ul').contains('Recruiter').click()
     cy.get('#add-button').click()
   })
