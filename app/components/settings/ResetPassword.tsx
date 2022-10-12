@@ -5,7 +5,7 @@ import { Fragment, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Button from '../form/Button'
 import InputField from '../form/InputField'
-import PasswordInputFields from '../form/PasswordField'
+import PasswordInputFields from '../form/PasswordInputField'
 
 const ResetPassword = ({
   openPopUp,
