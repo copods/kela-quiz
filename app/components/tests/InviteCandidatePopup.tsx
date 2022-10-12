@@ -22,7 +22,7 @@ const InviteCandidatePopup = ({
   const actionData = useActionData()
   useEffect(() => {
     if (actionData?.status == 401 && testId === actionData?.testId) {
-      toast.warn(actionData.message)
+      toast.warn(t(actionData.message))
     }
     if (
       actionData?.candidateInviteStatus ===
