@@ -166,7 +166,9 @@ export async function resendTestLink({
 }) {
   try {
     const candidateLink = `${candidateTestLink}${testId}`
-    const candidate = await prisma.candidate.findUnique({ where: { id: candidateId } })
+    const candidate = await prisma.candidate.findUnique({
+      where: { id: candidateId },
+    })
     const candidateTest = await prisma.candidateTest.findUnique({
       where: { id: testId },
     })
