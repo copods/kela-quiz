@@ -5,7 +5,7 @@ import { Fragment, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Button from '../form/Button'
 import InputField from '../form/InputField'
-import PasswordInputField from '../form/PasswordField'
+import PasswordInputFields from '../form/PasswordField'
 
 const ResetPassword = ({
   openPopUp,
@@ -142,7 +142,7 @@ const ResetPassword = ({
                         })}
                         {PasswordInputFieldProps.map((props) => {
                           return (
-                            <PasswordInputField {...props} key={props.name} />
+                            <PasswordInputFields {...props} key={props.name} />
                           )
                         })}
                       </div>
