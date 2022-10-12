@@ -376,7 +376,6 @@ export async function saveAnswerSkipAndNext(
  * @param sectionId
  * @returns redirect to end assessment page
  */
-
 export async function endCandidateAssessment(
   assessmentId: string,
   sectionId: string
