@@ -17,8 +17,6 @@ describe('Test for Sign Up page', () => {
       .clear()
       .type(memberEmail)
       .should('have.value', memberEmail)
-    cy.get('div').find('.dropdownButton').click()
-    cy.get('ul').contains('Recruiter').click()
     cy.get('#add-button').should('have.text', logIn.signUp).click()
     cy.get('.Toastify__toast').should(
       'have.text',
@@ -36,8 +34,6 @@ describe('Test for Sign Up page', () => {
       .clear()
       .type(memberEmail)
       .should('have.value', memberEmail)
-    cy.get('div').find('.dropdownButton').click()
-    cy.get('ul').contains('Recruiter').click()
     cy.get('#add-button').should('have.text', logIn.signUp).click()
     cy.get('.Toastify__toast').should(
       'have.text',
@@ -56,8 +52,6 @@ describe('Test for Sign Up page', () => {
       .type(lastName)
       .should('have.value', lastName)
 
-    cy.get('div').find('.dropdownButton').click()
-    cy.get('ul').contains('Recruiter').click()
     cy.get('#add-button').should('have.text', logIn.signUp).click()
     cy.get('.Toastify__toast').should('have.text', toastConstants.emailRequired)
   })
@@ -77,8 +71,6 @@ describe('Test for Sign Up page', () => {
       .clear()
       .type(memberEmail)
       .should('have.value', memberEmail)
-    cy.get('div').find('.dropdownButton').click()
-    cy.get('ul').contains('Recruiter').click()
     cy.get('#add-button').should('have.text', logIn.signUp).click()
     cy.get('.Toastify__toast').should(
       'have.text',
@@ -101,8 +93,6 @@ describe('Test for Sign Up page', () => {
       .clear()
       .type(memberEmail)
       .should('have.value', memberEmail)
-    cy.get('div').find('.dropdownButton').click()
-    cy.get('ul').contains('Recruiter').click()
     cy.get('#add-button').should('have.text', logIn.signUp).click()
     cy.get('.Toastify__toast').should(
       'have.text',

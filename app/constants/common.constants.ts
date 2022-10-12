@@ -262,6 +262,7 @@ export const cypress = {
 }
 export const toastConstants = {
   addTest: 'Enter Name to add test',
+  resendMemberInvitation: 'Invitation Sent Successfully..!',
   enterDescription: 'Enter description to add test',
   addSection: 'Add sections to add test',
   enterQuestion: 'Enter the Question',

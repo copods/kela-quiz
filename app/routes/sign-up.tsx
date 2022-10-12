@@ -1,7 +1,7 @@
 import type { LoaderFunction, ActionFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { useActionData, useLoaderData, useNavigate } from '@remix-run/react'
-import { createNewUser, getAllRoles } from '~/models/user.server'
+import { createNewUser, getAdminId } from '~/models/user.server'
 import { toast } from 'react-toastify'
 import { useEffect } from 'react'
 
@@ -20,11 +20,11 @@ export type ActionData = {
   }
 }
 type LoaderData = {
-  roles: Awaited<ReturnType<typeof getAllRoles>>
+  roleId: Awaited<ReturnType<typeof getAdminId>>
 }
 export const loader: LoaderFunction = async ({ request }) => {
-  const roles = await getAllRoles()
-  return json<LoaderData>({ roles })
+  const roleId = await getAdminId()
+  return json<LoaderData>({ roleId })
 }
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
@@ -68,9 +68,7 @@ export const action: ActionFunction = async ({ request }) => {
         { status: 400 }
       )
     }
-
     let addHandle = null
-
     await createNewUser({ firstName, lastName, email, roleId })
       .then((res) => {
         addHandle = json<ActionData>(
@@ -105,8 +103,7 @@ export const action: ActionFunction = async ({ request }) => {
 const SignUpPage = () => {
   const { t } = useTranslation()
   const signUpActionData = useActionData() as ActionData
-  const signUpData = useLoaderData()
-
+  const role = useLoaderData()
   let navigate = useNavigate()
   useEffect(() => {
     if (signUpActionData) {
@@ -123,7 +120,7 @@ const SignUpPage = () => {
 
   return (
     <div className="flex h-full flex-col justify-center">
-      <SignUp roles={signUpData.roles} />
+      <SignUp roleId={role.roleId} />
     </div>
   )
 }

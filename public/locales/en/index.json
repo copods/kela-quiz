@@ -7,7 +7,8 @@
     "members": "Members",
     "addedOn": "Added On",
     "action": "Action",
-    "member": "member"
+    "member": "member",
+    "memberResendIcon": "Reinvite Icon"
   },
   "commonConstants": {
     "name": "Name",
@@ -232,6 +233,7 @@
     "correctEmail": "Please provide a valid email address",
     "memberAdded": "Member Added Successfully..!",
     "memberAlreadyExist": "Member with this email id already exists!",
+    "invitationSent": "Invitation Sent Successfully..!",
     "signUpSuccessfull": "Sign Up successfully"
   },
   "otpConstants": {
