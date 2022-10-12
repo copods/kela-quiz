@@ -27,12 +27,12 @@ export const action: ActionFunction = async ({ request }) => {
   const action = formData.get('action')
   if (action === actions.resendTestLink) {
     const testId = formData.get('testId') as string
-    const id = formData.get('candidateId') as string
+    const candidateId = formData.get('candidateId') as string
     const candidateInviteStatus = await resendTestLink({
-      id,
+      candidateId,
       testId,
     })
-    return json({ candidateInviteStatus, id })
+    return json({ candidateInviteStatus, candidateId })
   }
 }
 function CandidateListRoute() {

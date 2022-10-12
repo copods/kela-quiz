@@ -61,7 +61,7 @@ const TestTableItem = ({
         key={id}
         className={`${
           index === totalCount ? 'rounded-b-md' : ''
-        } test-table-list flex items-start gap-3 border-b border-gray-200 bg-white py-6 px-9`}
+        } test-table-list flex items-center gap-3 border-b border-gray-200 bg-white py-6 px-9`}
       >
         {showCheckBox && (
           <div className="w-1/12 text-base font-normal text-gray-700">

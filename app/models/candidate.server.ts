@@ -158,15 +158,15 @@ async function createCandidateData({
 }
 // Resend a test link to user
 export async function resendTestLink({
-  id,
+  candidateId,
   testId,
 }: {
-  id: string
+  candidateId: string
   testId: string
 }) {
   try {
     const candidateLink = `${candidateTestLink}${testId}`
-    const candidate = await prisma.candidate.findUnique({ where: { id } })
+    const candidate = await prisma.candidate.findUnique({ where: { id: candidateId } })
     const candidateTest = await prisma.candidateTest.findUnique({
       where: { id: testId },
     })
