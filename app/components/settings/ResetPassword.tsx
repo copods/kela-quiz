@@ -1,26 +1,37 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import { Form, useTransition } from '@remix-run/react'
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import Button from '../form/Button'
 import InputField from '../form/InputField'
-import PasswordInputField from '../form/passwordField'
+import PasswordInputField from '../form/PasswordField'
 
 const ResetPassword = ({
   openPopUp,
+  actionStatus,
+  setActionStatus,
   setOpenPopUp,
   validationError,
   passNotMatched,
+  maximumPasswordLimit,
 }: {
   openPopUp: boolean
   setOpenPopUp: (e: boolean) => void
+  actionStatus: boolean
+  setActionStatus: (e: boolean) => void
   validationError?: string
   passNotMatched?: string
+  maximumPasswordLimit?: string
 }) => {
   const transition = useTransition()
   const { t } = useTranslation()
-
+  useEffect(() => {
+    if (actionStatus) {
+      setOpenPopUp(false)
+      setActionStatus(false)
+    }
+  }, [actionStatus, setActionStatus])
   const [password, setPassword] = useState('')
   const [newPassword, setNewPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
@@ -46,7 +57,7 @@ const ResetPassword = ({
       name: 'New Password',
       required: true,
       value: newPassword,
-      // error: errors,
+      error: maximumPasswordLimit,
       errorId: 'New-password-error',
       onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
         setNewPassword(event?.target.value)

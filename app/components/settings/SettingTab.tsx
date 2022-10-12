@@ -1,38 +1,29 @@
-// import { useNavigate } from '@remix-run/react'
 import { useNavigate } from '@remix-run/react'
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import TabComponent from '../TabsComponent'
-import General from './GeneralSettings'
-import Workspace from './Workspace'
 
-const SettingsTabs = ({
-  actionStatus,
-  setActionStatus,
-  validationError,
-  passNotMatched,
-}: {
-  actionStatus: boolean
-  setActionStatus: (e: boolean) => void
-  validationError?: string
-  passNotMatched?: string
-}) => {
+const SettingsTabs = () => {
+  const { t } = useTranslation()
   const tabs = [
     {
       id: 0,
-      name: 'General',
-      route: 'general',
+      name: t('tabs.general'),
+      route: '/settings/general',
     },
     {
       id: 1,
-      name: 'Workspace',
-      route: 'workspace',
+      name: t('tabs.workspace'),
+      route: '/settings/workspace',
     },
   ]
   const [currentTab, setCurrentTab] = useState(0)
-  let navigate = useNavigate()
+  const navigate = useNavigate()
   useEffect(() => {
-    navigate(tabs[0].route)
-  }, [])
+    if (tabs[0].id === currentTab) {
+      navigate(tabs[0].route)
+    }
+  }, [navigate])
   return (
     <div>
       <div className="flex flex-col gap-5">
@@ -42,17 +33,6 @@ const SettingsTabs = ({
           currentTab={currentTab}
           setCurrentTab={setCurrentTab}
         />
-
-        {currentTab === tabs[0].id ? (
-          <General
-            validationError={validationError}
-            passNotMatched={passNotMatched}
-            actionStatus={actionStatus}
-            setActionStatus={setActionStatus}
-          />
-        ) : (
-          currentTab === tabs[1].id && <Workspace />
-        )}
       </div>
     </div>
   )

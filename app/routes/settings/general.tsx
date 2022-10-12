@@ -9,17 +9,17 @@ import { routes } from '~/constants/route.constants'
 import { getUserId } from '~/session.server'
 import { json } from '@remix-run/node'
 import { redirect } from '@remix-run/node'
-import SettingsTabs from '~/components/settings/SettingTab'
 import { useActionData } from '@remix-run/react'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-
+import GeneralSettings from '~/components/settings/GeneralSettings'
 export type ActionData = {
   errors?: {
     status?: number
     valid?: string
     passNotMatched?: string
+    maximumPasswordLimit?: string
   }
   resp?: {
     title: string
@@ -74,6 +74,18 @@ export const action: ActionFunction = async ({ request }) => {
       { status: 400 }
     )
   }
+  if (typeof newPassword !== 'string' || newPassword.length >= 8) {
+    return json<ActionData>(
+      {
+        errors: {
+          maximumPasswordLimit: 'settings.maximumPasswordLimit',
+          status: 400,
+        },
+      },
+      { status: 400 }
+    )
+  }
+
   if (checkOldPassword === true) {
     if (newPassword === confirmPasword) {
       await updatePassword(userId as string, newPassword as string)
@@ -81,7 +93,7 @@ export const action: ActionFunction = async ({ request }) => {
           addHandle = json<ActionData>(
             {
               resp: {
-                title: 'settings.passResetSuccessfully',
+                title: 'password changed successfully !',
                 status: 200,
               },
             },
@@ -91,11 +103,14 @@ export const action: ActionFunction = async ({ request }) => {
         .catch((err) => {
           let valid = 'validationError'
           let passNotMatched = 'passwordNotMatchError'
+          let maximumPasswordLimit = 'maximumPasswordLimit'
+
           addHandle = json<ActionData>(
             {
               errors: {
                 valid,
                 passNotMatched,
+                maximumPasswordLimit,
                 status: 400,
               },
             },
@@ -106,7 +121,6 @@ export const action: ActionFunction = async ({ request }) => {
   }
   return addHandle
 }
-
 const GeneralSetting = () => {
   const { t } = useTranslation()
   const resetPassActionData = useActionData() as ActionData
@@ -125,9 +139,12 @@ const GeneralSetting = () => {
   return (
     <div>
       <div>
-        <SettingsTabs
+        <GeneralSettings
           validationError={resetPassActionData?.errors?.valid}
           passNotMatched={resetPassActionData?.errors?.passNotMatched}
+          maximumPasswordLimit={
+            resetPassActionData?.errors?.maximumPasswordLimit
+          }
           actionStatus={actionStatus}
           setActionStatus={setActionStatus}
         />

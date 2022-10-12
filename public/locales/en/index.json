@@ -182,6 +182,8 @@
     "time": "Time",
     "timeRemaining": "Time Remaining",
     "timeLimit": "Time Limit",
+    "cooldown": "Cooldown Image",
+    "startNewSection": "Start New Section",
     "assessmentDetails": "Assessment Details",
     "assessmentTests": "Assessment Tests",
     "assessmentEnd": "Assessment Ended",
@@ -197,6 +199,7 @@
     "candidateAcceptance": "I understand that once I begin the assessment I cannot leave and  return to this assessment at a later time.",
     "beginAssesment": "Begin Assesment",
     "instructions": "Instructions",
+    "takeBreak": "Take A Break!",
     "startSection": "Start Now",
     "candidateLogo": "Candidate Logo",
     "info": "Info",
@@ -208,7 +211,9 @@
     "errorUpdatingTestLink": "Error updating test link..!",
     "errorCreatingSectionInTest": "Error creating section in test ..",
     "candidateInsWelcome": "Welcome",
-    "testCompleted": "Test Completed"
+    "testCompleted": "Congratulations! You have completed the exam",
+    "candidateContact": "We will contact you soon",
+    "alreadyExamSubmitted": "Hey! you have already submitted the exam"
   },
   "toastConstants": {
     "addTest": "Enter Name to add test",
@@ -242,7 +247,7 @@
     "attentionToDetail": "Attention to detail",
     "password": "Password",
     "clickToChange": "Click to change",
-    "passResetting": "Password Resetting",
+    "passResetting": "Resetting",
     "passReset": "Password Reset",
     "enterOldPassword": "Enter Old Password",
     "enterNewPassword": "Enter New Password",
@@ -251,6 +256,11 @@
     "oldPassword": "Old Password",
     "passResetSuccessfully": "Password changed successfully !",
     "version": "Version 1.0.0",
-    "basicInfo": "Basic Info"
+    "basicInfo": "Basic Info",
+    "maximumPasswordLimit": "Password should have maximum 8 characters only"
+  },
+  "tabs": {
+    "general": "General",
+    "workspace": "Workspace"
   }
 }

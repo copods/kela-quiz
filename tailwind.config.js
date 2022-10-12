@@ -60,7 +60,7 @@ module.exports = {
         18: 'repeat(18, minmax(0, 1fr))',
       },
       padding: {
-        17: '17px',
+        13: '13px',
         18: '18px',
         22: '22px',
         54: '54px',

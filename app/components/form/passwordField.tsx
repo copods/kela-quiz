@@ -3,7 +3,7 @@ import { useState } from 'react'
 import type { PasswordFieldProps } from '~/interface/Interface'
 import { useTranslation } from 'react-i18next'
 
-const PasswordInputField = ({
+const PasswordInputFields = ({
   name,
   label,
   error,
@@ -23,25 +23,21 @@ const PasswordInputField = ({
   }
   return (
     <div className="flex flex-col gap-1.5">
-      <label
-        htmlFor={name}
-        className="block text-base font-medium text-gray-800"
-      >
+      <label htmlFor={name} className="text-gray-800">
         {label}
       </label>
-      <div className="flex rounded-lg border border-gray-200 px-3.5">
+      <div className="flex rounded-lg border border-gray-200">
         <input
-          tabIndex={0}
           id={name}
           type={passwordType}
           name={name}
           {...props}
-          className="h-11 w-full py-2.5 text-lg"
+          className="h-11 w-full px-3.5 py-2.5 text-lg"
           title={props.placeholder}
         />
         <button
           type="button"
-          className="btn btn-outline-primary"
+          className="btn btn-outline-primary absolute right-0 left-auto mr-10 mt-2.5"
           onClick={togglePassword}
         >
           {passwordType === 'password' ? (
@@ -63,4 +59,4 @@ const PasswordInputField = ({
     </div>
   )
 }
-export default PasswordInputField
+export default PasswordInputFields

@@ -2,16 +2,18 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import ResetPassword from './ResetPassword'
 
-const GeneralSetting = ({
+const GeneralSettings = ({
   actionStatus,
   setActionStatus,
   validationError,
   passNotMatched,
+  maximumPasswordLimit,
 }: {
   actionStatus: boolean
   setActionStatus: (e: boolean) => void
   validationError?: string
   passNotMatched?: string
+  maximumPasswordLimit?: string
 }) => {
   const [openPopUp, setOpenPopUp] = useState(false)
   useEffect(() => {
@@ -50,11 +52,14 @@ const GeneralSetting = ({
       </div>
       <ResetPassword
         openPopUp={openPopUp}
+        actionStatus={actionStatus}
+        setActionStatus={setActionStatus}
         validationError={validationError}
         passNotMatched={passNotMatched}
+        maximumPasswordLimit={maximumPasswordLimit}
         setOpenPopUp={setOpenPopUp}
       />
     </div>
   )
 }
-export default GeneralSetting
+export default GeneralSettings

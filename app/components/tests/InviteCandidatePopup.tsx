@@ -23,7 +23,7 @@ const InviteCandidatePopup = ({
   const actionData = useActionData()
   useEffect(() => {
     if (actionData?.status == 401 && testId === actionData?.testId) {
-      toast.warn(actionData.message)
+      toast.warn(t(actionData.message))
     }
     if (
       actionData?.candidateInviteStatus ===
@@ -104,7 +104,7 @@ const InviteCandidatePopup = ({
                 </p>
                 <div className="flex flex-row justify-between pb-2">
                   <span className="text-sm font-medium text-gray-500">
-                    {'inviteMemeberPopUpConstants.candidateEmail'}
+                    {t('inviteMemeberPopUpConstants.candidateEmail')}
                   </span>
                   <span
                     role={'button'}

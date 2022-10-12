@@ -11,10 +11,7 @@ function InputField({
   const { t } = useTranslation()
   return (
     <div className="flex flex-col gap-1.5">
-      <label
-        htmlFor={name}
-        className="block text-base font-medium text-gray-800"
-      >
+      <label htmlFor={name} className="block text-gray-800">
         {label}
       </label>
       <input

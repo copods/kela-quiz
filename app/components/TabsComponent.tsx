@@ -1,4 +1,4 @@
-import { useNavigate } from '@remix-run/react'
+import { NavLink, useLocation } from '@remix-run/react'
 const TabComponent = ({
   tabs,
   isDisabled,
@@ -17,44 +17,44 @@ const TabComponent = ({
       return 1
     }
   }
-
-  const navigate = useNavigate()
-
+  const location = useLocation()
   return (
     <div className="flex w-full gap-9 rounded-lg">
       {tabs.map((tab, i) => {
         return (
-          <div
+          <NavLink
             tabIndex={indexDisable()}
             role={'button'}
-            key={tab.id}
+            to={tab.route}
             id={tab.id.toString()}
-            className={`stepsTab flex flex-col-reverse gap-4 p-1 ${
-              isDisabled ? 'pointer-events-none' : 'cursor-pointer'
-            }`}
+            key={tab.id}
+            className={({ isActive }) =>
+              `flex flex-col-reverse gap-4 p-1 ${
+                isActive ? 'cursor-pointer' : ' '
+              }`
+            }
             onClick={() => {
               setCurrentTab(tab.id)
-              navigate(tab.route)
-            }}
-            aria-label={tab.name}
-            onKeyUp={(e) => {
-              if (e.key === 'Enter') setCurrentTab(tab.id)
             }}
           >
             <hr
-              className={`h-1 w-full rounded-1 border-0 ${
-                tab.id === currentTab ? 'bg-primary' : 'bg-transparent'
+              className={`h-1 w-full rounded-1 border-0   ${
+                location.pathname.includes(`${tab.route}`)
+                  ? 'bg-primary'
+                  : 'bg-transparent'
               }`}
             />
 
             <div
-              className={`text-base font-semibold  ${
-                tab.id === currentTab ? 'text-primary' : 'text-gray-600'
+              className={`text-base font-semibold ${
+                location.pathname.includes(`${tab.route}`)
+                  ? 'text-primary'
+                  : 'text-gray-600'
               }`}
             >
               {tab.name}
             </div>
-          </div>
+          </NavLink>
         )
       })}
     </div>

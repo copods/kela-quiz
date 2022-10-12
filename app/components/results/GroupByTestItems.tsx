@@ -17,14 +17,13 @@ const GroupByTestItems = ({
   testDeletedStatus: boolean
 }) => {
   const { t } = useTranslation()
-
   return (
     <div className="col-span-full">
       <div className="groupTestRow col-span-full grid grid-cols-10 gap-3 border-t border-solid border-gray-200 px-12 py-6">
         <div className="col-span-1 truncate">
           <span className="text-base text-gray-700">{index}</span>
         </div>
-        <div className="candidate-name col-span-3 truncate">
+        <div className="candidate-name col-span-3">
           <Link
             tabIndex={0}
             to={`/results/groupByTests/${id}`}
