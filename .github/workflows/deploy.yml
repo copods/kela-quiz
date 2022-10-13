@@ -64,7 +64,7 @@ jobs:
   build:
     name: 🐳 Build
     # only build/deploy main branch on pushes
-    if: ${{ (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev' || github.ref=='refs/head/demo-dev') && github.event_name == 'push' }}
+    if: ${{ (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev' || github.ref=='refs/heads/demo-dev') && github.event_name == 'push' }}
     runs-on: ubuntu-latest
     steps:
       - name: 🛑 Cancel Previous Runs
