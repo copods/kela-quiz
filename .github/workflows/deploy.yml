@@ -156,10 +156,8 @@ jobs:
           args: 'deploy --image registry.fly.io/${{ steps.app_name.outputs.value }}:${{ github.ref_name }}-${{ github.sha }}'
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-  release:
-    name: Release
+  publish:
     runs-on: ubuntu-latest
-    if: ${{ github.ref == 'refs/heads/demo-dev' && github.event_name == 'push' }}
     needs: [typecheck, vitest]
     steps:
       - uses: actions/checkout@v3
@@ -172,4 +170,5 @@ jobs:
       - run: npm run build --if-present
       - run: npm run semantic-release
         env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
