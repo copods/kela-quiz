@@ -181,4 +181,4 @@ jobs:
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npx semantic-release --branches demo-dev
+        run: npx semantic-release --branches demo-dev --repository-url git@github.com:copods/kela-quiz.git
