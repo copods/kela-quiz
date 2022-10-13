@@ -6,6 +6,8 @@ import { useTranslation } from 'react-i18next'
 import DropdownField from '../form/Dropdown'
 import { useLoaderData } from '@remix-run/react'
 import type { UserWorkspace } from '~/interface/Interface'
+import AddWorkspace from './AddWorkspace'
+import { useState } from 'react'
 
 const sideNavGuide = [
   // {
@@ -75,56 +77,61 @@ const SideNav = () => {
   const { t } = useTranslation()
 
   const { workspaces = [], currentWorkspaceId } = useLoaderData()
+  const [open, setOpen] = useState(false)
 
   const tempWorkspaces = workspaces.map((userWorkspace: UserWorkspace) => {
     return { ...userWorkspace, ...userWorkspace.workspace }
   })
   return (
-    <div className="flex h-full flex-col justify-between overflow-auto p-5">
-      <div>
-        <div className="mb-14 px-1">
-          <Header title={t('sideNav.sideNavHeading')} />
-          <div className="mt-2">
-            <DropdownField
-              data={tempWorkspaces}
-              displayKey="name"
-              name="workspace"
-              valueKey="workspaceId"
-              value={currentWorkspaceId}
-              setValue={(val) => {
-                //TODO: for switching the workspace write function here
-                console.log(val)
-              }}
-            />
+    <>
+      <div className="flex h-full flex-col justify-between overflow-auto p-5">
+        <div>
+          <div className="mb-14 px-1">
+            <Header title={t('sideNav.sideNavHeading')} />
+            <div className="mt-2">
+              <DropdownField
+                data={[...tempWorkspaces, ...tempWorkspaces, ...tempWorkspaces]}
+                displayKey="name"
+                name="workspace"
+                valueKey="workspaceId"
+                value={currentWorkspaceId}
+                setValue={(val) => {
+                  //TODO: for switching the workspace write function here
+                  console.log(val)
+                }}
+                setOpen={setOpen}
+              />
+            </div>
+          </div>
+          <div className="flex flex-col gap-8">
+            {sideNavGuide.map((guide, index) => {
+              return (
+                <div className="10px flex flex-col gap-1" key={index}>
+                  <p className="non-italic px-2 pb-2 text-left text-xs font-semibold text-gray-400">
+                    {guide.navGuide}
+                  </p>
+                  {guide.subItem.map((item, index) => {
+                    return (
+                      <MenuItems
+                        key={index}
+                        id={item.id}
+                        iconClass={item.iconClass}
+                        itemName={t(item.itemName)}
+                        itemRoute={item.itemRoute}
+                      />
+                    )
+                  })}
+                </div>
+              )
+            })}
           </div>
         </div>
-        <div className="flex flex-col gap-8">
-          {sideNavGuide.map((guide, index) => {
-            return (
-              <div className="10px flex flex-col gap-1" key={index}>
-                <p className="non-italic px-2 pb-2 text-left text-xs font-semibold text-gray-400">
-                  {guide.navGuide}
-                </p>
-                {guide.subItem.map((item, index) => {
-                  return (
-                    <MenuItems
-                      key={index}
-                      id={item.id}
-                      iconClass={item.iconClass}
-                      itemName={t(item.itemName)}
-                      itemRoute={item.itemRoute}
-                    />
-                  )
-                })}
-              </div>
-            )
-          })}
+        <div className="justify-end">
+          <Footer />
         </div>
       </div>
-      <div className="justify-end">
-        <Footer />
-      </div>
-    </div>
+      <AddWorkspace open={open} setOpen={setOpen} />
+    </>
   )
 }
 

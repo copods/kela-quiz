@@ -10,6 +10,7 @@ function DropdownField({
   valueKey,
   value,
   setValue,
+  setOpen,
 }: {
   data: Array<any>
   displayKey: string
@@ -17,6 +18,7 @@ function DropdownField({
   name?: string
   value: any
   setValue: (e: any) => void
+  setOpen?: (e: boolean) => void
 }) {
   const { t } = useTranslation()
 
@@ -58,51 +60,73 @@ function DropdownField({
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <Listbox.Options className="dropDownSelect absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                {data.map((el) => (
-                  <Listbox.Option
-                    key={el[valueKey]}
-                    className={({ active }) =>
-                      classNames(
-                        active ? 'bg-primary text-white' : 'text-gray-900',
-                        'relative z-20 cursor-pointer select-none py-2 px-3'
-                      )
-                    }
-                    value={el[valueKey]}
-                  >
-                    {({ selected, active }) => (
-                      <>
-                        <div className="flex items-center">
-                          <span
-                            className={classNames(
-                              selected
-                                ? 'font-semibold'
-                                : 'not-selected font-normal',
-                              'dropdown-option block truncate'
-                            )}
-                            id="option"
-                          >
-                            {el[displayKey]}
-                          </span>
-                        </div>
-                        {selected ? (
-                          <span
-                            className={classNames(
-                              active ? 'text-white' : 'text-primary',
-                              'absolute inset-y-0 right-0 flex items-center pr-4'
-                            )}
-                          >
-                            <Icon
-                              icon="ic:round-check"
-                              className="h-5 w-5"
-                              aria-hidden="true"
-                            />
-                          </span>
-                        ) : null}
-                      </>
-                    )}
-                  </Listbox.Option>
-                ))}
+              <Listbox.Options className="dropDownSelect absolute z-10 mt-1 w-full rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                <div className="max-h-32 overflow-auto">
+                  {data.map((el) => (
+                    <Listbox.Option
+                      key={el[valueKey]}
+                      className={({ active }) =>
+                        classNames(
+                          active ? 'bg-primary text-white' : 'text-gray-900',
+                          'relative z-20 cursor-pointer select-none border-b py-2 px-3'
+                        )
+                      }
+                      value={el[valueKey]}
+                    >
+                      {({ selected, active }) => (
+                        <>
+                          <div className="flex items-center">
+                            <span
+                              className={classNames(
+                                selected
+                                  ? 'font-semibold'
+                                  : 'not-selected font-normal',
+                                'dropdown-option block truncate'
+                              )}
+                              id="option"
+                            >
+                              {el[displayKey]}
+                            </span>
+                          </div>
+                          {selected ? (
+                            <span
+                              className={classNames(
+                                active ? 'text-white' : 'text-primary',
+                                'absolute inset-y-0 right-0 flex items-center pr-4'
+                              )}
+                            >
+                              <Icon
+                                icon="ic:round-check"
+                                className="h-5 w-5"
+                                aria-hidden="true"
+                              />
+                            </span>
+                          ) : null}
+                        </>
+                      )}
+                    </Listbox.Option>
+                  ))}
+                </div>
+                <Listbox.Option
+                  key="add workspace"
+                  className={({ active }) =>
+                    classNames(
+                      active ? 'bg-primary text-white' : 'text-gray-900',
+                      'relative z-20 cursor-pointer select-none border-t py-2 px-3'
+                    )
+                  }
+                  value="Add Workspace"
+                  onClick={() => setOpen && setOpen(true)}
+                >
+                  <div className="flex items-center">
+                    <span
+                      className="not-selected dropdown-option block truncate font-normal"
+                      id="option"
+                    >
+                      + Add Workspace
+                    </span>
+                  </div>
+                </Listbox.Option>
               </Listbox.Options>
             </Transition>
           </div>

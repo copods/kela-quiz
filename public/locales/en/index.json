@@ -54,7 +54,10 @@
     "proceed": "Proceed"
   },
   "sideNav": {
-    "sideNavHeading": "Quiz"
+    "sideNavHeading": "Quiz",
+    "addWorkspace": "Add Workspace",
+    "workspace": "Workspace Name",
+    "enterWorkspace": "Enter Workspace Name"
   },
   "inviteMemeberPopUpConstants": {
     "inviteCandidate": "Invite Candidate",
