@@ -166,9 +166,14 @@ jobs:
         with:
           node-version: 16
           cache: 'npm'
+          token: ${{ github.token }}
 
       - run: npm install
-      - run: npm run build --if-present
-      - run: npm run semantic-release
+
+      - name: Configure Committer
+        run: |
+          git config user.name "arpita-sharma"
+          git config user.email "arpita@copods.co"
+      - run: npx semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
