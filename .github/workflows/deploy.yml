@@ -60,35 +60,7 @@ jobs:
 
       - name: ⚡ Run vitest
         run: npm run test -- --coverage
-  # publish:
-  #   runs-on: ubuntu-latest
-  #   if: ${{ github.ref == 'refs/heads/demo-dev' && github.event_name == 'push' }}
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - name: Semantic Release
-  #       uses: actions/setup-node@v3
-  #       with:
-  #         node-version: 16
-  #     - run: npm ci
-  #     - run: npm run semantic-release
-  #       env:
-  #         GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-  release:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16
-      # - name: Install dependencies
-      #   run: npm install
-      # - name: Build app
-      #   run: npm run build
-      - name: Semantic release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: npx -p @semantic-release/changelog -p @semantic-release/git -p semantic-release semantic-release
+
   build:
     name: 🐳 Build
     # only build/deploy main branch on pushes
@@ -184,3 +156,20 @@ jobs:
           args: 'deploy --image registry.fly.io/${{ steps.app_name.outputs.value }}:${{ github.ref_name }}-${{ github.sha }}'
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+  publish:
+    runs-on: ubuntu-latest
+    if: ${{ github.ref == 'refs/heads/demo-dev' }}
+    needs: [typecheck, vitest]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: 'npm'
+      - run: npm install
+      - run: npm run build --if-present
+      - run: npm run semantic-release
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

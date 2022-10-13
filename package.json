@@ -31,44 +31,15 @@
     "cypress": "cypress open",
     "semantic-release": "semantic-release --branches demo-dev"
   },
+  "plugins": [
+    "@semantic-release/npm",
+    {
+      "npmPublish": false
+    }
+  ],
   "release": {
-    "repository": {
-      "type": "git",
-      "url": "https://github.com/copods/kela-quiz.git"
-    },
-    "prepare": "@semantic-release/changelog",
-    "ci": true,
     "branches": [
-      "main",
-      "dev",
       "demo-dev"
-    ],
-    "path": "@semantic-release/git",
-    "plugins": [
-      "@semantic-release/commit-analyzer",
-      "@semantic-release/release-notes-generator",
-      [
-        "@semantic-release/npm",
-        {
-          "npmPublish": false
-        }
-      ],
-      [
-        "@semantic-release/changelog",
-        {
-          "changelogFile": "docs/CHANGELOG.md"
-        }
-      ],
-      [
-        "@semantic-release/git",
-        {
-          "assets": [
-            "package.json",
-            "package-lock.json",
-            "docs/CHANGELOG.md"
-          ]
-        }
-      ]
     ]
   },
   "prettier": {
