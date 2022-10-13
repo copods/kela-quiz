@@ -8,9 +8,6 @@ on:
   pull_request: {}
   workflow_dispatch: {}
 permissions:
-  pull-requests: write
-  issues: write
-  repository-projects: write
   actions: write
   contents: write
 
@@ -160,26 +157,24 @@ jobs:
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
 
-  bump-version:
-    name: Bump Version
+  publish:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v3
         with:
-          fetch-depth: 0
-          token: ${{ github.token }}
+          node-version: 16
+          cache: 'npm'
+
+      - run: npm install
 
       - name: Configure Committer
         run: |
-          git config user.name "github-actions"
-          git config user.email "<github-actions@users.noreply.github.com>"
+          git config user.name "arpita-sharma"
+          git config user.email "arpita@copods.co"
 
-      - name: Bump Version
-        run: npx standard-version
-
-      - name: Push Changes
+      - run: npx semantic-release --branches demo-dev
         env:
-          BRANCH_NAME: ${{github.ref}}
-        run: git push --follow-tags origin $BRANCH_NAME
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
