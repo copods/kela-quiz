@@ -35,6 +35,68 @@ export async function getAdminId() {
   const role = await prisma.role.findUnique({ where: { name: roleName } })
   return role?.id
 }
+export async function createUserBySignUp({
+  firstName,
+  lastName,
+  email,
+  roleId,
+  workspaceName,
+}: {
+  firstName: string
+  lastName: string
+  email: string
+  workspaceName: any
+  roleId: string
+}) {
+  const password = faker.internet.password()
+  const hashedPassword = await bcrypt.hash(password, 10)
+  const user = await prisma.user.create({
+    data: {
+      firstName,
+      lastName,
+      email,
+      roleId,
+      password: {
+        create: {
+          hash: hashedPassword,
+        },
+      },
+      workspace: {
+        create: {
+          name: workspaceName,
+        },
+      },
+    },
+  })
+
+  const workspaceId = await prisma.user.findUnique({
+    where: { id: user?.id },
+    select: {
+      workspace: {
+        select: {
+          id: true,
+        },
+      },
+    },
+  })
+
+  await prisma.userWorkspace.create({
+    data: {
+      userId: user.id as string,
+      workspaceId: workspaceId?.workspace[0]?.id as string,
+      roleId: user?.roleId,
+    },
+  })
+
+  const role = await prisma.role.findUnique({
+    where: {
+      id: roleId,
+    },
+  })
+
+  return await sendMail(email, firstName, password, role?.name || 'NA')
+}
+
 export async function createNewUser({
   firstName,
   lastName,
@@ -90,6 +152,7 @@ export async function reinviteMember({ id }: { id: string }) {
 export async function sendResetPassword(email: string) {
   const password = faker.internet.password()
   const hashedPassword = await bcrypt.hash(password, 10)
+  console.log('pass', password)
   const userEmail = await prisma.user.findUnique({
     where: {
       email: email,

@@ -15,12 +15,14 @@ const SignUp = ({ roleId }: { roleId: string }) => {
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [email, setEmail] = useState('')
+  const [workspace, defaultWorkspace] = useState('')
 
   const submitMemberForm = () => {
     let data = {
       firstName: firstName,
       lastName: lastName,
       email: email,
+      workspace: workspace,
       roleId: roleId, //Using this to make user admin by default during sign-up
       addMember: JSON.stringify({
         action: 'add',
@@ -34,6 +36,7 @@ const SignUp = ({ roleId }: { roleId: string }) => {
   const signIn = () => {
     navigate(routes.signIn)
   }
+
   return (
     <div>
       <div className="flex items-center justify-center">
@@ -103,6 +106,21 @@ const SignUp = ({ roleId }: { roleId: string }) => {
               className="h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
               placeholder={t('commonConstants.email')}
               onChange={(e) => setEmail(trimValue(e.target.value))}
+            />
+          </div>
+          <div className="flex flex-col gap-1.5">
+            <label htmlFor="" className="text-gray-800">
+              {t('commonConstants.defaultWorkspace')}
+            </label>
+            <input
+              tabIndex={0}
+              id="workspaceName"
+              type="text"
+              data-cy="defaultWorkspaceName"
+              name="workspace"
+              className="h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
+              placeholder={t('commonConstants.defaultWorkspace')}
+              onChange={(e) => defaultWorkspace(trimValue(e.target.value))}
             />
           </div>
           <div className="flex flex-col items-center justify-center gap-6">

@@ -51,7 +51,8 @@
     "totalQuestion": "Total Questions",
     "srNo": "Sr.No",
     "verify": "Verify",
-    "proceed": "Proceed"
+    "proceed": "Proceed",
+    "defaultWorkspace": "Default Workspace"
   },
   "sideNav": {
     "sideNavHeading": "Quiz"

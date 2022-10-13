@@ -1,7 +1,7 @@
 import type { LoaderFunction, ActionFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import { useActionData, useLoaderData, useNavigate } from '@remix-run/react'
-import { createNewUser, getAdminId } from '~/models/user.server'
+import { createUserBySignUp, getAdminId } from '~/models/user.server'
 import { toast } from 'react-toastify'
 import { useEffect } from 'react'
 
@@ -28,6 +28,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 }
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
+  console.log(...formData, 'formData')
   const action = JSON.parse(formData.get('addMember') as string)
 
   if (action.action === 'add') {
@@ -35,6 +36,7 @@ export const action: ActionFunction = async ({ request }) => {
     const lastName = formData.get('lastName')
     const email = formData.get('email')
     const roleId = formData.get('roleId')
+    const workspaceName = formData.get('workspace')
     // eslint-disable-next-line no-useless-escape
     const emailFilter = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
 
@@ -68,8 +70,16 @@ export const action: ActionFunction = async ({ request }) => {
         { status: 400 }
       )
     }
+
     let addHandle = null
-    await createNewUser({ firstName, lastName, email, roleId })
+
+    await createUserBySignUp({
+      firstName,
+      lastName,
+      email,
+      roleId,
+      workspaceName,
+    })
       .then((res) => {
         addHandle = json<ActionData>(
           {
