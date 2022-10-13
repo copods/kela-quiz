@@ -27,7 +27,7 @@ export default function MemberListItem({
   }
   const submit = useSubmit()
   const deleteUser = () => {
-    submit({ deleteMember: 'delete', id: user.id }, { method: 'post' })
+    submit({ action: 'delete', id: user.id }, { method: 'post' })
   }
   const resendMail = () => {
     let data = {

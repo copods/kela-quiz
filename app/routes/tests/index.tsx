@@ -13,6 +13,7 @@ import { createCandidate } from '~/models/candidate.server'
 import { routes } from '~/constants/route.constants'
 import { useTranslation } from 'react-i18next'
 import { getUserWorkspaces } from '~/models/workspace.server'
+import { actions } from '~/constants/action.constants'
 
 type LoaderData = {
   tests: Awaited<Array<Test>>
@@ -61,7 +62,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
-  const action = formData.get('deleteTest')
+  const action = formData.get('action')
   const createdById = await requireUserId(request)
   const testId = formData.get('inviteCandidates') as string
   formData.delete('inviteCandidates')
@@ -102,6 +103,13 @@ export const action: ActionFunction = async ({ request }) => {
       testId,
     })
     return json({ candidateInviteStatus, testId })
+  }
+  if (action === actions.switchWorkspace) {
+    const deleteHandle = json<ActionData>(
+      { errors: { status: 'none', check: new Date() } },
+      { status: 400 }
+    )
+    return deleteHandle
   }
 }
 

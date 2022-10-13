@@ -4,10 +4,10 @@ import Footer from '~/components/SideNavFooter'
 import { routes } from '~/constants/route.constants'
 import { useTranslation } from 'react-i18next'
 import DropdownField from '../form/Dropdown'
-import { useLoaderData } from '@remix-run/react'
+import { useLoaderData, useSubmit } from '@remix-run/react'
 import type { UserWorkspace } from '~/interface/Interface'
 import AddWorkspace from './AddWorkspace'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const sideNavGuide = [
   // {
@@ -78,10 +78,26 @@ const SideNav = () => {
 
   const { workspaces = [], currentWorkspaceId } = useLoaderData()
   const [open, setOpen] = useState(false)
+  const [workspace, setWorkspace] = useState(currentWorkspaceId)
+  const submit = useSubmit()
 
   const tempWorkspaces = workspaces.map((userWorkspace: UserWorkspace) => {
     return { ...userWorkspace, ...userWorkspace.workspace }
   })
+  const switchWorkpace = (val: string) => {
+    if (val !== 'Add Workspace') {
+      let data = {
+        workspaceId: val,
+        action: 'switch workspace',
+      }
+      submit(data, {
+        method: 'post',
+      })
+    }
+  }
+  useEffect(() => {
+    switchWorkpace(workspace)
+  }, [workspace])
   return (
     <>
       <div className="flex h-full flex-col justify-between overflow-auto p-5">
@@ -90,16 +106,15 @@ const SideNav = () => {
             <Header title={t('sideNav.sideNavHeading')} />
             <div className="mt-2">
               <DropdownField
-                data={[...tempWorkspaces, ...tempWorkspaces, ...tempWorkspaces]}
+                data={tempWorkspaces}
                 displayKey="name"
                 name="workspace"
                 valueKey="workspaceId"
-                value={currentWorkspaceId}
-                setValue={(val) => {
-                  //TODO: for switching the workspace write function here
-                  console.log(val)
-                }}
+                value={workspace}
+                setValue={setWorkspace}
                 setOpen={setOpen}
+                actionName={t('sideNav.addWorkspace')}
+                callToAction={true}
               />
             </div>
           </div>

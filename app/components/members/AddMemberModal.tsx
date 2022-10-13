@@ -32,9 +32,7 @@ export default function AddMemberModal({
       lastName: lastName,
       email: email,
       roleId: role,
-      addMember: JSON.stringify({
-        action: 'add',
-      }),
+      action: 'add',
     }
     submit(data, {
       method: 'post',

@@ -22,9 +22,7 @@ const SignUp = ({ roleId }: { roleId: string }) => {
       lastName: lastName,
       email: email,
       roleId: roleId, //Using this to make user admin by default during sign-up
-      addMember: JSON.stringify({
-        action: 'add',
-      }),
+      action: 'add',
     }
     submit(data, {
       method: 'post',

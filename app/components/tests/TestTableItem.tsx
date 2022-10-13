@@ -40,7 +40,7 @@ const TestTableItem = ({
   const deleteTest = () => {
     submit(
       {
-        deleteTest: 'testDelete',
+        action: 'testDelete',
         id: id,
       },
       { method: 'post' }

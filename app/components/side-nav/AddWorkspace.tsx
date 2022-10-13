@@ -22,9 +22,7 @@ export default function AddWorkspace({
   const submitWorkspaceForm = () => {
     let data = {
       workspaceName: workspace,
-      addMember: JSON.stringify({
-        action: 'add',
-      }),
+      action: 'add workspace',
     }
     submit(data, {
       method: 'post',

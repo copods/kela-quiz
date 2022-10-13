@@ -15,7 +15,12 @@ import {
 } from '~/models/sections.server'
 import { useState, useEffect } from 'react'
 import { Icon } from '@iconify/react'
-import { getUserId, getWorkspaceId, requireUserId } from '~/session.server'
+import {
+  getUserId,
+  getWorkspaceId,
+  requireUserId,
+  switchWorkspace,
+} from '~/session.server'
 import Sections from '~/components/sections/Sections'
 import AdminLayout from '~/components/layouts/AdminLayout'
 import AddSection from '~/components/sections/AddSection'
@@ -27,6 +32,7 @@ import type { Section } from '~/interface/Interface'
 import { routes } from '~/constants/route.constants'
 import { useTranslation } from 'react-i18next'
 import { getUserWorkspaces } from '~/models/workspace.server'
+import { actions } from '~/constants/action.constants'
 
 export type ActionData = {
   errors?: {
@@ -92,6 +98,8 @@ export const action: ActionFunction = async ({ request }) => {
   const action = formData.get('add-section')
     ? formData.get('add-section')
     : formData.get('deleteSection')
+    ? formData.get('deleteSection')
+    : formData.get('action')
   if (action === 'add') {
     const name = formData.get('name')
     const description = formData.get('description')
@@ -175,6 +183,30 @@ export const action: ActionFunction = async ({ request }) => {
         })
     }
     return deleteHandle
+  }
+
+  if (action === actions.switchWorkspace) {
+    let switchHandle
+    const workspaceId = formData.get('workspaceId') as string
+    await switchWorkspace({
+      request,
+      workspaceId,
+    })
+      .then((res) => {
+        switchHandle = json<ActionData>(
+          { resp: { status: 'statusCheck.success' } },
+
+          { status: 200 }
+        )
+      })
+      .catch((err) => {
+        let title = 'statusCheck.commonError'
+        switchHandle = json<ActionData>(
+          { errors: { title, status: 400, check: new Date() } },
+          { status: 400 }
+        )
+      })
+    return switchHandle
   }
 }
 

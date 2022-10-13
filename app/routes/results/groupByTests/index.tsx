@@ -1,5 +1,5 @@
 import { getUserId, getWorkspaceId } from '~/session.server'
-import { redirect } from '@remix-run/node'
+import { ActionFunction, redirect } from '@remix-run/node'
 import type { LoaderFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import GroupByTests from '~/components/results/GroupByTests'
@@ -33,6 +33,10 @@ export const loader: LoaderFunction = async ({ request }) => {
     workspaces,
     currentWorkspaceId,
   })
+}
+export const action: ActionFunction = async ({ request }) => {
+  // const formData = await request.formData()
+  return 'null'
 }
 export default function Results() {
   return (

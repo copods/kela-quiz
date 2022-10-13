@@ -104,6 +104,19 @@ export async function createUserSession({
   })
 }
 
+export async function switchWorkspace({
+  request,
+  workspaceId,
+}: {
+  request: Request
+  workspaceId: string
+}) {
+
+  const session = await getSession(request);
+  await session.set(USER_WORKSPACE_KEY, workspaceId)
+  return 'switched'
+}
+
 export async function logout(request: Request) {
   const session = await getSession(request)
   return redirect('/sign-in', {
