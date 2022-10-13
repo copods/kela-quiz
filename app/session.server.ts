@@ -111,8 +111,7 @@ export async function switchWorkspace({
   request: Request
   workspaceId: string
 }) {
-
-  const session = await getSession(request);
+  const session = await getSession(request)
   await session.set(USER_WORKSPACE_KEY, workspaceId)
   return 'switched'
 }
