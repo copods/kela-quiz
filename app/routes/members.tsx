@@ -63,6 +63,7 @@ export const action: ActionFunction = async ({ request }) => {
     const lastName = formData.get('lastName')
     const email = formData.get('email')
     const roleId = formData.get('roleId')
+    const workspaceName = formData.get('workspace')
     // eslint-disable-next-line no-useless-escape
     const emailFilter = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
 
@@ -99,7 +100,7 @@ export const action: ActionFunction = async ({ request }) => {
 
     let addHandle = null
 
-    await createNewUser({ firstName, lastName, email, roleId })
+    await createNewUser({ firstName, lastName, email, roleId, workspaceName })
       .then((res) => {
         addHandle = json<ActionData>(
           {

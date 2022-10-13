@@ -110,7 +110,7 @@ const SignUp = ({ roleId }: { roleId: string }) => {
           </div>
           <div className="flex flex-col gap-1.5">
             <label htmlFor="" className="text-gray-800">
-              {t('commonConstants.defaultWorkspace')}
+              {t('commonConstants.defaultWorkspaceName')}
             </label>
             <input
               tabIndex={0}
@@ -119,7 +119,7 @@ const SignUp = ({ roleId }: { roleId: string }) => {
               data-cy="defaultWorkspaceName"
               name="workspace"
               className="h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
-              placeholder={t('commonConstants.defaultWorkspace')}
+              placeholder={t('commonConstants.defaultWorkspaceName')}
               onChange={(e) => defaultWorkspace(trimValue(e.target.value))}
             />
           </div>

@@ -52,7 +52,7 @@
     "srNo": "Sr.No",
     "verify": "Verify",
     "proceed": "Proceed",
-    "defaultWorkspace": "Default Workspace"
+    "defaultWorkspaceName": "Default Workspace Name"
   },
   "sideNav": {
     "sideNavHeading": "Quiz"
