@@ -72,30 +72,20 @@ It is important for you to have these things installed:
 
   This starts your app in development mode, rebuilding assets on file changes.
 
-## Deployment
+## Git Commit Syntax
 
-This Remix Stack comes with two GitHub Actions that handle automatically deploying your app to production and staging environments.
+- For committing the code use following syntax-
 
-Prior to your first deployment, you'll need to do a few things:
+```sh
+git commit -m '<type>() :<description>'
+```
 
-- [Install Fly](https://fly.io/docs/getting-started/installing-flyctl/)
+```sh
+fly apps create blues-stack-template
+fly apps create blues-stack-template-staging
+```
 
-- Sign up and log in to Fly
-
-  ```sh
-  fly auth signup
-  ```
-
-  > **Note:** If you have more than one Fly account, ensure that you are signed into the same account in the Fly CLI as you are in the browser. In your terminal, run `fly auth whoami` and ensure the email matches the Fly account signed into the browser.
-
-- Create two apps on Fly, one for staging and one for production:
-
-  ```sh
-  fly apps create blues-stack-template
-  fly apps create blues-stack-template-staging
-  ```
-
-  > **Note:** Once you've successfully created an app, double-check the `fly.toml` file to ensure that the `app` key is the name of the production app you created. This Stack [automatically appends a unique suffix at init](https://github.com/remix-run/blues-stack/blob/4c2f1af416b539187beb8126dd16f6bc38f47639/remix.init/index.js#L29) which may not match the apps you created on Fly. You will likely see [404 errors in your Github Actions CI logs](https://community.fly.io/t/404-failure-with-deployment-with-remix-blues-stack/4526/3) if you have this mismatch.
+> **Note:** Once you've successfully created an app, double-check the `fly.toml` file to ensure that the `app` key is the name of the production app you created. This Stack [automatically appends a unique suffix at init](https://github.com/remix-run/blues-stack/blob/4c2f1af416b539187beb8126dd16f6bc38f47639/remix.init/index.js#L29) which may not match the apps you created on Fly. You will likely see [404 errors in your Github Actions CI logs](https://community.fly.io/t/404-failure-with-deployment-with-remix-blues-stack/4526/3) if you have this mismatch.
 
 - Initialize Git.
 
@@ -103,15 +93,15 @@ Prior to your first deployment, you'll need to do a few things:
   git init
 ```
 
-- Create a new [GitHub Repository](https://repo.new), and then add it as the remote for your project. **Do not push your app yet!**
+We use GitHub Actions for continuous integration and deployment. Anything that gets into the `main` branch will be deployed to production after running tests/build/etc. Anything in the `dev` branch will be deployed to staging.
 
-  ```sh
-  git remote add origin <ORIGIN_URL>
-  ```
+## Prisma Database
 
-- Add a `FLY_API_TOKEN` to your GitHub repo. To do this, go to your user settings on Fly and create a new [token](https://web.fly.io/user/personal_access_tokens/new), then add it to [your repo secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets) with the name `FLY_API_TOKEN`.
+We are using Prisma which is an open source database toolkit in our project.
+You can learn the main concepts of [Prisma](https://www.prisma.io/docs/concepts) from its official documentation.
 
-- Add a `SESSION_SECRET` to your fly app secrets, to do this you can run the following commands:
+- You can check all the models/schema from `schema.prisma` file
+- If you are changing the database schema in `schema.prisma` file, you have to push the database to reflect those changes by running this command
 
   ```sh
   fly secrets set SESSION_SECRET=$(openssl rand -hex 32) --app blues-stack-template
@@ -152,9 +142,9 @@ Make certain to set a `PRIMARY_REGION` environment variable for your app. You ca
 Install the [ModHeader](https://modheader.com/) browser extension (or something similar) and use it to load your app with the header `fly-prefer-region` set to the region name you would like to test.
 You can check the `x-fly-region` header on the response to know which region your request was handled by.
 
-## GitHub Actions
+You'll find those in the `cypress` directory. As you make changes, add to an existing file or create a new file in the `cypress/e2e` directory to test your changes.
 
-We use GitHub Actions for continuous integration and deployment. Anything that gets into the `main` branch will be deployed to production after running tests/build/etc. Anything in the `dev` branch will be deployed to staging.
+We use [`@testing-library/cypress`](https://testing-library.com/cypress) for selecting elements on the page semantically.
 
 ## Seeding data on Staging/Prod
 
