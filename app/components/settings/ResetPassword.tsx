@@ -1,31 +1,35 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
-import { Form, useTransition } from '@remix-run/react'
+import { Form, useActionData, useTransition } from '@remix-run/react'
 import { Fragment, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
 import Button from '../form/Button'
 import InputField from '../form/InputField'
 import PasswordInputFields from '../form/PasswordInputField'
 
 const ResetPassword = ({
   openPopUp,
-  actionStatus,
-  setActionStatus,
   setOpenPopUp,
-  validationError,
-  passNotMatched,
-  maximumPasswordLimit,
 }: {
   openPopUp: boolean
   setOpenPopUp: (e: boolean) => void
-  actionStatus: boolean
-  setActionStatus: (e: boolean) => void
-  validationError?: string
-  passNotMatched?: string
-  maximumPasswordLimit?: string
 }) => {
-  const transition = useTransition()
   const { t } = useTranslation()
+  const generalSettings = useActionData()
+  const [actionStatus, setActionStatus] = useState<boolean>(false)
+  useEffect(() => {
+    if (generalSettings) {
+      if (generalSettings.resp?.status === 200) {
+        setActionStatus(true)
+        toast.success(t(generalSettings.resp?.title))
+      } else if (generalSettings.errors?.status === 400) {
+        setActionStatus(false)
+      }
+    }
+  }, [generalSettings, t])
+  const transition = useTransition()
+
   useEffect(() => {
     if (actionStatus) {
       setOpenPopUp(false)
@@ -43,7 +47,7 @@ const ResetPassword = ({
       name: 'Old Password',
       required: true,
       value: password,
-      error: validationError,
+      error: generalSettings?.errors?.valid,
       errorId: 'Password-error',
       onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
         setPassword(event?.target.value)
@@ -57,7 +61,7 @@ const ResetPassword = ({
       name: 'New Password',
       required: true,
       value: newPassword,
-      error: maximumPasswordLimit,
+      error: generalSettings?.errors?.maximumPasswordLimit,
       errorId: 'New-password-error',
       onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
         setNewPassword(event?.target.value)
@@ -69,7 +73,7 @@ const ResetPassword = ({
       name: 'Confirm New Password',
       required: true,
       value: confirmPassword,
-      error: passNotMatched,
+      error: generalSettings?.errors?.passNotMatched,
       errorId: 'Confirm-password-error',
       onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
         setConfirmPassword(event?.target.value)
@@ -149,6 +153,8 @@ const ResetPassword = ({
                       <div className="flex items-center justify-center">
                         <Button
                           tabIndex={0}
+                          name="resetPassword"
+                          value="add"
                           title={
                             transition.state === 'submitting'
                               ? t('settings.passResetting')

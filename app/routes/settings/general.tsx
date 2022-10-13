@@ -9,10 +9,6 @@ import { routes } from '~/constants/route.constants'
 import { getUserId } from '~/session.server'
 import { json } from '@remix-run/node'
 import { redirect } from '@remix-run/node'
-import { useActionData } from '@remix-run/react'
-import { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { toast } from 'react-toastify'
 import GeneralSettings from '~/components/settings/GeneralSettings'
 export type ActionData = {
   errors?: {
@@ -41,113 +37,94 @@ export const loader: LoaderFunction = async ({ request }) => {
 }
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
-  const userId = await getUserId(request)
-  const oldPassword = formData.get('Old Password')
-  const newPassword = formData.get('New Password')
-  const confirmPasword = formData.get('Confirm New Password')
-  let addHandle = null
+  const action = formData.get('resetPassword') as string
+  if (action === 'add') {
+    const userId = await getUserId(request)
+    const oldPassword = formData.get('Old Password')
+    const newPassword = formData.get('New Password')
+    const confirmPasword = formData.get('Confirm New Password')
+    let addHandle = null
 
-  const checkOldPassword = await checkOldPasswordFromdb(
-    oldPassword as string,
-    userId as string
-  )
-  if (checkOldPassword === false) {
-    return json<ActionData>(
-      {
-        errors: {
-          valid: 'settings.enterValidPass',
-          status: 400,
-        },
-      },
-      { status: 400 }
+    const checkOldPassword = await checkOldPasswordFromdb(
+      oldPassword as string,
+      userId as string
     )
-  }
-
-  if (confirmPasword !== newPassword) {
-    return json<ActionData>(
-      {
-        errors: {
-          passNotMatched: 'settings.passNotMatch',
-          status: 400,
+    if (checkOldPassword === false) {
+      return json<ActionData>(
+        {
+          errors: {
+            valid: 'settings.enterValidPass',
+            status: 400,
+          },
         },
-      },
-      { status: 400 }
-    )
-  }
-  if (typeof newPassword !== 'string' || newPassword.length >= 8) {
-    return json<ActionData>(
-      {
-        errors: {
-          maximumPasswordLimit: 'settings.maximumPasswordLimit',
-          status: 400,
-        },
-      },
-      { status: 400 }
-    )
-  }
-
-  if (checkOldPassword === true) {
-    if (newPassword === confirmPasword) {
-      await updatePassword(userId as string, newPassword as string)
-        .then((res) => {
-          addHandle = json<ActionData>(
-            {
-              resp: {
-                title: 'password changed successfully !',
-                status: 200,
-              },
-            },
-            { status: 200 }
-          )
-        })
-        .catch((err) => {
-          let valid = 'validationError'
-          let passNotMatched = 'passwordNotMatchError'
-          let maximumPasswordLimit = 'maximumPasswordLimit'
-
-          addHandle = json<ActionData>(
-            {
-              errors: {
-                valid,
-                passNotMatched,
-                maximumPasswordLimit,
-                status: 400,
-              },
-            },
-            { status: 400 }
-          )
-        })
+        { status: 400 }
+      )
     }
-  }
-  return addHandle
-}
-const GeneralSetting = () => {
-  const { t } = useTranslation()
-  const resetPassActionData = useActionData() as ActionData
-  const [actionStatus, setActionStatus] = useState<boolean>(false)
-  useEffect(() => {
-    if (resetPassActionData) {
-      if (resetPassActionData.resp?.status === 200) {
-        setActionStatus(true)
-        toast.success(t(resetPassActionData.resp?.title))
-      } else if (resetPassActionData.errors?.status === 400) {
-        setActionStatus(false)
+
+    if (confirmPasword !== newPassword) {
+      return json<ActionData>(
+        {
+          errors: {
+            passNotMatched: 'settings.passNotMatch',
+            status: 400,
+          },
+        },
+        { status: 400 }
+      )
+    }
+    if (typeof newPassword !== 'string' || newPassword.length >= 8) {
+      return json<ActionData>(
+        {
+          errors: {
+            maximumPasswordLimit: 'settings.maximumPasswordLimit',
+            status: 400,
+          },
+        },
+        { status: 400 }
+      )
+    }
+
+    if (checkOldPassword === true) {
+      if (newPassword === confirmPasword) {
+        await updatePassword(userId as string, newPassword as string)
+          .then((res) => {
+            addHandle = json<ActionData>(
+              {
+                resp: {
+                  title: 'password changed successfully !',
+                  status: 200,
+                },
+              },
+              { status: 200 }
+            )
+          })
+          .catch((err) => {
+            let valid = 'validationError'
+            let passNotMatched = 'passwordNotMatchError'
+            let maximumPasswordLimit = 'maximumPasswordLimit'
+
+            addHandle = json<ActionData>(
+              {
+                errors: {
+                  valid,
+                  passNotMatched,
+                  maximumPasswordLimit,
+                  status: 400,
+                },
+              },
+              { status: 400 }
+            )
+          })
       }
     }
-  }, [resetPassActionData, t])
-
+    return addHandle
+  }
+}
+const GeneralSetting = () => {
   return (
     <div>
       <div>
-        <GeneralSettings
-          validationError={resetPassActionData?.errors?.valid}
-          passNotMatched={resetPassActionData?.errors?.passNotMatched}
-          maximumPasswordLimit={
-            resetPassActionData?.errors?.maximumPasswordLimit
-          }
-          actionStatus={actionStatus}
-          setActionStatus={setActionStatus}
-        />
+        <GeneralSettings />
       </div>
     </div>
   )

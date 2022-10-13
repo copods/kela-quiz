@@ -62,6 +62,7 @@ export async function createNewUser({
 export async function sendResetPassword(email: string) {
   const password = faker.internet.password()
   const hashedPassword = await bcrypt.hash(password, 10)
+  console.log('pass', password)
   const userEmail = await prisma.user.findUnique({
     where: {
       email: email,
