@@ -10,7 +10,7 @@ const TabComponent = ({
 }) => {
   const location = useLocation()
   return (
-    <div className="flex w-full gap-9 rounded-lg">
+    <div className="flex w-full gap-5 rounded-lg">
       {tabs.map((tab, i) => {
         return (
           <NavLink
@@ -20,7 +20,7 @@ const TabComponent = ({
             id={tab.id.toString()}
             key={tab.id}
             className={({ isActive }) =>
-              `flex flex-col-reverse gap-4 p-1 ${
+              `flex flex-col-reverse gap-2 p-1 ${
                 isActive ? 'cursor-pointer' : ' '
               }`
             }
