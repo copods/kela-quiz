@@ -171,6 +171,6 @@ jobs:
           node-version: 16
           cache: 'npm'
       - run: npm i
-      - run: npx semantic-release --branches demo-dev, demo-dev-1
+      - run: npx semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
