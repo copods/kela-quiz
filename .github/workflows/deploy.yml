@@ -4,6 +4,8 @@ on:
     branches:
       - main
       - dev
+      - demo-dev
+      - demo-dev-1
   pull_request: {}
   workflow_dispatch: {}
 permissions:
