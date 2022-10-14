@@ -162,6 +162,7 @@ jobs:
 
   publish:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v3
       - name: Use Node.js
@@ -170,13 +171,7 @@ jobs:
           node-version: 16
           cache: 'npm'
 
-      - run: npm install
-
-      - name: Configure Committer
-        run: |
-          git config user.name "arpita-sharma"
-          git config user.email "arpita@copods.co"
-
+      - run: npm i
       - run: npx semantic-release --branches demo-dev
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
