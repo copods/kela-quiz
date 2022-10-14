@@ -4,9 +4,6 @@ on:
     branches:
       - main
       - dev
-      - demo-dev
-      - demo-dev-1
-
   pull_request: {}
   workflow_dispatch: {}
 permissions:
@@ -17,6 +14,29 @@ permissions:
   contents: write
 
 jobs:
+  lint:
+    name: ⬣ ESLint
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🛑 Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.9.1
+
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v3
+
+      - name: ⎔ Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: 📥 Download deps
+        uses: bahmutov/npm-install@v1
+        with:
+          useLockFile: false
+
+      - name: 🔬 Lint
+        run: npm run lint
+
   typecheck:
     name: ʦ TypeScript
     runs-on: ubuntu-latest
@@ -66,6 +86,48 @@ jobs:
       - name: ⚡ Run vitest
         run: npm run test -- --coverage
 
+  cypress:
+    name: ⚫️ Cypress
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🛑 Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.9.1
+
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v3
+
+      - name: 🏄 Copy test env vars
+        run: cp .env.example .env
+
+      - name: ⎔ Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: 📥 Download deps
+        uses: bahmutov/npm-install@v1
+        with:
+          useLockFile: false
+
+      - name: 🐳 Docker compose
+        # the sleep is just there to give time for postgres to get started
+        run: docker-compose up -d && sleep 3
+        env:
+          DATABASE_URL: 'postgresql://postgres:postgres@localhost:5432/postgres'
+
+      - name: 🛠 Setup Database
+        run: npx prisma migrate reset --force
+
+      - name: ⚙️ Build
+        run: npm run build
+
+      - name: 🌳 Cypress run
+        uses: cypress-io/github-action@v4
+        with:
+          start: npm run start:mocks
+          wait-on: 'http://localhost:8811'
+        env:
+          PORT: '8811'
   build:
     name: 🐳 Build
     # only build/deploy main branch on pushes
@@ -164,7 +226,7 @@ jobs:
 
   publish:
     runs-on: ubuntu-latest
-    if: ${{ (github.ref == 'refs/heads/demo-dev' || github.ref == 'refs/heads/demo-dev-1') && github.event_name == 'push' }}
+    if: ${{ (github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/main') && github.event_name == 'push' }}
     steps:
       - uses: actions/checkout@v3
       - name: Use Node.js
@@ -173,6 +235,6 @@ jobs:
           node-version: 16
           cache: 'npm'
       - run: npm i
-      - run: npx semantic-release --branches demo-dev demo-dev-1
+      - run: npx semantic-release --branches dev main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

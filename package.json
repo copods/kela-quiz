@@ -29,7 +29,7 @@
     "prepare": "husky install",
     "prisma:reset": "prisma migrate reset",
     "cypress": "cypress open",
-    "release": "semantic-release --branches demo-dev demo-dev-1"
+    "release": "semantic-release --branches dev main"
   },
   "plugins": [
     "@semantic-release/github",
@@ -56,8 +56,8 @@
   ],
   "release": {
     "branches": [
-      "demo-dev",
-      "demo-dev-1"
+      "main",
+      "dev"
     ]
   },
   "prettier": {
