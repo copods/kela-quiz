@@ -10,19 +10,9 @@ const deleteSection = `Aptitude - delete-Section`
 /// <reference types="Cypress">
 describe('Test for Section', () => {
   beforeEach('sign-in', () => {
-    cy.visit('/sign-in')
-    cy.get('input[name="email"]')
-      .focus()
-      .clear()
-      .type('careers@copods.co')
-      .should('have.value', cypress.email)
-    cy.get('input[name="password"]')
-      .focus()
-      .clear()
-      .type('kQuiz@copods')
-      .should('have.value', cypress.password)
-    cy.get('[data-cy="submit"]').click()
-    cy.location('pathname').should('include', '/members')
+    cy.login()
+
+    cy.customVisit('/members')
   })
   it('cancel Add section', () => {
     cy.get('a')

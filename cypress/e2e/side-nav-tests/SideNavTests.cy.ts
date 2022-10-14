@@ -5,19 +5,9 @@ import {
 } from '~/constants/common.constants'
 describe('Test for Logout, SideNav', () => {
   beforeEach('sign-in', () => {
-    cy.visit('/sign-in')
-    cy.get('input[name="email"]')
-      .clear()
-      .type(Cypress.env('email'))
-      .should('have.focus')
-      .should('have.value', Cypress.env('email'))
-    cy.get('input[name="password"]')
-      .clear()
-      .type(Cypress.env('password'))
-      .should('have.focus')
-      .should('have.value', Cypress.env('password'))
-    cy.get('[data-cy="submit"]').click()
-    cy.location('pathname').should('include', '/members')
+    cy.login()
+
+    cy.customVisit('/members')
   })
   it('click all links with loop', () => {
     // result page

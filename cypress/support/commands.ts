@@ -1,19 +1,13 @@
 import { faker } from '@faker-js/faker'
+import { logIn } from '~/constants/common.constants'
 
 declare global {
   namespace Cypress {
     interface Chainable {
       /**
-       * Logs in with a random user. Yields the user and adds an alias to the user
-       *
-       * @returns {typeof login}
-       * @memberof Chainable
-       * @example
-       *    cy.login()
-       * @example
-       *    cy.login({ email: 'whatever@example.com' })
+       * Logs in function for cypress testing.
        */
-      login: typeof login
+      login: typeof Function
 
       /**
        * Deletes the current @user
@@ -26,25 +20,43 @@ declare global {
        *    cy.cleanupUser({ email: 'whatever@example.com' })
        */
       cleanupUser: typeof cleanupUser
+
+      /**
+       * Logs in function for cypress testing.
+       */
+      customVisit: typeof Function
     }
   }
 }
 
-function login({
-  email = faker.internet.email(undefined, undefined, 'example.com'),
-}: {
-  email?: string
-} = {}) {
-  cy.then(() => ({ email })).as('user')
-  cy.exec(
-    `npx ts-node --require tsconfig-paths/register ./cypress/support/create-user.ts "${email}"`
-  ).then(({ stdout }) => {
-    const cookieValue = stdout
-      .replace(/.*<cookie>(?<cookieValue>.*)<\/cookie>.*/s, '$<cookieValue>')
-      .trim()
-    cy.setCookie('__session', cookieValue)
+function login() {
+  let formData = new FormData()
+
+  // @TODO: Need to change this credentials with `careers.copods.demo@gmail.com`
+  formData.append('email', 'ziauddin@copods.co')
+  formData.append('password', 'zMya9S3K17lm9Qd')
+  formData.append('redirectTo', '/dashboard')
+
+  cy.request({
+    method: 'POST',
+    url: 'http://localhost:3000/sign-in?_data=routes%2Fsign-in',
+    body: formData,
+  }).then((resp) => {
+    const { headers } = resp
+    const __session =
+      headers?.['set-cookie'] && headers?.['set-cookie'][0].split('=')[1]
+    window.localStorage.setItem('__session', __session)
   })
-  return cy.get('@user')
+}
+
+function customVisit(path = '') {
+  const headers = {
+    Cookie: `__session=${window.localStorage.getItem('__session')}`,
+  }
+  cy.visit(`/${path}`, {
+    method: 'GET',
+    headers,
+  })
 }
 
 function cleanupUser({ email }: { email?: string } = {}) {
@@ -70,6 +82,7 @@ function deleteUserByEmail(email: string) {
 
 Cypress.Commands.add('login', login)
 Cypress.Commands.add('cleanupUser', cleanupUser)
+Cypress.Commands.add('customVisit', customVisit)
 
 /*
 eslint

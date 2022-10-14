@@ -5,19 +5,9 @@ const deleteTest1 = `Aptitude - Detete test`
 
 describe('Visiting Tests', () => {
   beforeEach('sign-in', () => {
-    cy.visit('/sign-in')
-    cy.get('input[name="email"]')
-      .clear()
-      .type(Cypress.env('email'))
-      .should('have.focus')
-      .should('have.value', Cypress.env('email'))
-    cy.get('input[name="password"]')
-      .clear()
-      .type(Cypress.env('password'))
-      .should('have.focus')
-      .should('have.value', Cypress.env('password'))
-    cy.get('[data-cy="submit"]').click()
-    cy.location('pathname').should('include', '/members')
+    cy.login()
+
+    cy.customVisit('/members')
   })
   // creating data to test Test list page
   it('Visiting Add Test Page', () => {

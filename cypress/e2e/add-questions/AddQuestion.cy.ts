@@ -4,20 +4,11 @@ const section1 = `Aptitude - section1`
 
 describe('Test for section-details', () => {
   beforeEach('sign-in', () => {
-    cy.visit('/sign-in')
-    cy.get('input[name="email"]')
-      .clear()
-      .type(Cypress.env('email'))
-      .should('have.focus')
-      .should('have.value', Cypress.env('email'))
-    cy.get('input[name="password"]')
-      .clear()
-      .type(Cypress.env('password'))
-      .should('have.focus')
-      .should('have.value', Cypress.env('password'))
-    cy.get('[data-cy="submit"]').click()
-    cy.location('pathname').should('include', '/members')
+    cy.login()
+
+    cy.customVisit('/sections')
   })
+
   it('Verifying MCQ to have Check Box in options', () => {
     cy.get('a')
       .find('#sections')
@@ -67,6 +58,7 @@ describe('Test for section-details', () => {
       cy.get('input[type="checkbox"]').should('have.class', 'checkBox')
     }
   })
+
   it('Verifying Single Choice to have Radio Button in options', () => {
     cy.get('a')
       .find('#sections')
@@ -113,6 +105,7 @@ describe('Test for section-details', () => {
       cy.get('input').should('have.class', 'radioButton')
     }
   })
+
   it('Verifying Text to have Textarea in options', () => {
     cy.get('a')
       .find('#sections')
@@ -210,6 +203,7 @@ describe('Test for section-details', () => {
         })
     })
   })
+
   it('Verifying if Delete functionality Working on Options', () => {
     cy.get('a')
       .find('#sections')
