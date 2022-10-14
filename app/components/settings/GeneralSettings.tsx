@@ -10,7 +10,7 @@ const GeneralSettings = () => {
       <div className="flex flex-col gap-8">
         <h3 className="text-lg font-semibold"> {t('settings.basicInfo')}</h3>
         <div className="flex flex-col gap-5">
-          <div className="flex justify-between">
+          <div className="flex justify-between gap-4">
             <span className="text-base font-medium text-gray-700">
               {t('settings.attentionToDetail')}
             </span>
@@ -18,7 +18,7 @@ const GeneralSettings = () => {
               {t('settings.version')}
             </span>
           </div>
-          <div className="flex justify-between">
+          <div className="flex justify-between gap-4">
             <span className="text-base font-medium text-gray-700">
               {t('settings.password')}
             </span>
