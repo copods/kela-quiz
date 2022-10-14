@@ -33,6 +33,7 @@ export default function AddMemberModal({
       lastName: lastName,
       email: email,
       roleId: role,
+      workspace: workspace,
       addMember: JSON.stringify({
         action: 'add',
       }),
