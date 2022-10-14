@@ -47,36 +47,26 @@ const AttendedCandidateListItem = ({
   return (
     <div className="col-span-full">
       <div className="col-span-full grid grid-cols-12 gap-3 rounded-b-lg border-t border-solid border-gray-200 bg-white px-12 py-6">
-        <div className="col-span-1 truncate">
+        <div className="col-span-1 flex items-center items-center truncate">
           <span className="text-base text-gray-700">{index}</span>
         </div>
-        {/* {endAt ? (
-          <Link
-            to={`/results/groupByTests/${testId}/${candidateResultId}`}
-            className="col-span-3 truncate font-semibold text-primary"
-            title={name}
-          >
-            {name}
-          </Link>
-        ) : (
-          <div title="No Name" className="align-center col-span-3 truncate">
-            <i>--No Name--</i>
-          </div>
-        )} */}
         {endAt ? (
           <Link
             to={`/results/groupByTests/${testId}/${candidateResultId}`}
-            className="col-span-3 truncate font-semibold text-primary"
+            className="col-span-3 flex  truncate font-semibold text-primary"
             title={name}
           >
             {name}
           </Link>
         ) : name != ' ' ? (
-          <span className="col-span-3 truncate" title={name}>
+          <span className="col-span-3 flex items-center truncate" title={name}>
             {name}
           </span>
         ) : (
-          <div title="No Name" className="align-center col-span-3 truncate">
+          <div
+            title="No Name"
+            className="align-center col-span-3 flex items-center truncate"
+          >
             <i>--No Name--</i>
           </div>
         )}
@@ -84,7 +74,7 @@ const AttendedCandidateListItem = ({
           title={email}
           tabIndex={0}
           role={'banner'}
-          className="col-span-4 truncate"
+          className="col-span-4 flex items-center truncate"
         >
           {email}
         </div>
@@ -92,11 +82,11 @@ const AttendedCandidateListItem = ({
           title={invitedBy}
           tabIndex={0}
           role={'banner'}
-          className="col-span-2 truncate"
+          className="col-span-2 flex items-center truncate"
         >
           <span className="text-base text-gray-700">{invitedBy}</span>
         </div>
-        <div className="col-span-1 truncate">
+        <div className="col-span-1 flex items-center truncate">
           <span
             tabIndex={0}
             role={'banner'}

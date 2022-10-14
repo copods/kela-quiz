@@ -171,6 +171,10 @@ export async function resendTestLink({
     })
     const candidateTest = await prisma.candidateTest.findUnique({
       where: { id: testId },
+      select: {
+        startedAt: true,
+        endAt: true
+      }
     })
     if (candidateTest?.startedAt === null && candidateTest?.endAt === null) {
       await sendMailToCandidate(candidate?.email as string, candidateLink)
