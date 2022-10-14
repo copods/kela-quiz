@@ -162,7 +162,7 @@ jobs:
 
   publish:
     runs-on: ubuntu-latest
-
+    if: ${{ (github.ref == 'refs/heads/demo-dev' || github.ref == 'refs/heads/demo-dev-1') && github.event_name == 'push' }}
     steps:
       - uses: actions/checkout@v3
       - name: Use Node.js
@@ -170,8 +170,7 @@ jobs:
         with:
           node-version: 16
           cache: 'npm'
-
       - run: npm i
-      - run: npx semantic-release --branches demo-dev
+      - run: npx semantic-release --branches demo-dev, demo-dev-1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
