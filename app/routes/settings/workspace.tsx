@@ -1,10 +1,10 @@
 import Workspace from '~/components/settings/Workspace'
 
-const workspaceSetting = () => {
+const WorkspaceSetting = () => {
   return (
     <div>
       <Workspace />
     </div>
   )
 }
-export default workspaceSetting
+export default WorkspaceSetting

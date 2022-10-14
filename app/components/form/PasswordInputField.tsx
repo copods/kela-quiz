@@ -8,7 +8,10 @@ const PasswordInputFields = ({
   label,
   error,
   errorId,
-  ...props
+  placeholder,
+  required,
+  value,
+  onChange,
 }: PasswordFieldProps) => {
   const { t } = useTranslation()
   const [passwordType, setPasswordType] = useState('password')
@@ -31,9 +34,11 @@ const PasswordInputFields = ({
           id={name}
           type={passwordType}
           name={name}
-          {...props}
+          placeholder={placeholder}
+          required={required}
+          value={value}
+          onChange={onChange}
           className="h-11 w-full px-3.5 py-2.5 text-lg"
-          title={props.placeholder}
         />
         <button
           type="button"

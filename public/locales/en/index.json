@@ -239,7 +239,6 @@
     "otp": "OTP"
   },
   "settings": {
-    "enterValidPass": "Please enter correct password",
     "passNotMatch": "password is not matched",
     "enterNewPass": "Enter New Password",
     "enterConfPass": "Enter Confirm Password",
@@ -252,8 +251,6 @@
     "enterOldPassword": "Enter Old Password",
     "enterNewPassword": "Enter New Password",
     "confirmNewPassword": "Confirm New Password",
-    "newPassword": "New Password",
-    "oldPassword": "Old Password",
     "passResetSuccessfully": "Password changed successfully !",
     "version": "Version 1.0.0",
     "basicInfo": "Basic Info",

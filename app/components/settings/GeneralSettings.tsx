@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import ResetPassword from './ResetPassword'
 
 const GeneralSettings = () => {
-  const [openPopUp, setOpenPopUp] = useState(false)
+  const [openResetPassPopUp, setOpenResetPassPopUp] = useState(false)
   const { t } = useTranslation()
   return (
     <div className="rounded-lg border border-solid border-gray-300 bg-white p-4">
@@ -24,7 +24,7 @@ const GeneralSettings = () => {
             </span>
             <button
               tabIndex={0}
-              onClick={() => setOpenPopUp(!openPopUp)}
+              onClick={() => setOpenResetPassPopUp(!openResetPassPopUp)}
               className="cursor-pointer text-base font-medium text-primary"
             >
               {t('settings.clickToChange')}
@@ -32,7 +32,10 @@ const GeneralSettings = () => {
           </div>
         </div>
       </div>
-      <ResetPassword openPopUp={openPopUp} setOpenPopUp={setOpenPopUp} />
+      <ResetPassword
+        openResetPassPopUp={openResetPassPopUp}
+        setOpenResetPassPopUp={setOpenResetPassPopUp}
+      />
     </div>
   )
 }

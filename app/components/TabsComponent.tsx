@@ -1,29 +1,20 @@
 import { NavLink, useLocation } from '@remix-run/react'
 const TabComponent = ({
   tabs,
-  isDisabled,
   currentTab,
   setCurrentTab,
 }: {
   tabs: Array<{ id: number; name: string; route: string }>
-  isDisabled: boolean
   currentTab: number
   setCurrentTab: (e: number) => void
 }) => {
-  const indexDisable = () => {
-    if (!isDisabled) {
-      return 0
-    } else {
-      return 1
-    }
-  }
   const location = useLocation()
   return (
     <div className="flex w-full gap-9 rounded-lg">
       {tabs.map((tab, i) => {
         return (
           <NavLink
-            tabIndex={indexDisable()}
+            tabIndex={0}
             role={'button'}
             to={tab.route}
             id={tab.id.toString()}

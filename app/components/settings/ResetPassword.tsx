@@ -9,40 +9,37 @@ import InputField from '../form/InputField'
 import PasswordInputFields from '../form/PasswordInputField'
 
 const ResetPassword = ({
-  openPopUp,
-  setOpenPopUp,
+  openResetPassPopUp,
+  setOpenResetPassPopUp,
 }: {
-  openPopUp: boolean
-  setOpenPopUp: (e: boolean) => void
+  openResetPassPopUp: boolean
+  setOpenResetPassPopUp: (e: boolean) => void
 }) => {
   const { t } = useTranslation()
   const generalSettings = useActionData()
-  const [actionStatus, setActionStatus] = useState<boolean>(false)
   useEffect(() => {
     if (generalSettings) {
       if (generalSettings.resp?.status === 200) {
-        setActionStatus(true)
         toast.success(t(generalSettings.resp?.title))
       } else if (generalSettings.errors?.status === 400) {
-        setActionStatus(false)
+        setOpenResetPassPopUp(true)
       }
     }
-  }, [generalSettings, t])
+  }, [generalSettings, t, setOpenResetPassPopUp])
   const transition = useTransition()
 
   useEffect(() => {
-    if (actionStatus) {
-      setOpenPopUp(false)
-      setActionStatus(false)
+    if (openResetPassPopUp) {
+      setOpenResetPassPopUp(false)
     }
-  }, [actionStatus, setActionStatus])
+  }, [setOpenResetPassPopUp, openResetPassPopUp])
   const [password, setPassword] = useState('')
   const [newPassword, setNewPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const inputFieldsProps = [
     {
-      label: 'Password',
-      placeholder: 'Enter Old Password',
+      label: t('settings.enterOldPassword'),
+      placeholder: t('settings.enterOldPassword'),
       type: 'password',
       name: 'Old Password',
       required: true,
@@ -56,8 +53,8 @@ const ResetPassword = ({
   ]
   const PasswordInputFieldProps = [
     {
-      label: 'New Password',
-      placeholder: 'Enter New Password',
+      label: t('settings.enterNewPassword'),
+      placeholder: t('settings.enterNewPassword'),
       name: 'New Password',
       required: true,
       value: newPassword,
@@ -68,8 +65,8 @@ const ResetPassword = ({
       },
     },
     {
-      label: 'Confirm New Password',
-      placeholder: 'Confirm New Password',
+      label: t('settings.confirmNewPassword'),
+      placeholder: t('settings.confirmNewPassword'),
       name: 'Confirm New Password',
       required: true,
       value: confirmPassword,
@@ -83,11 +80,11 @@ const ResetPassword = ({
 
   return (
     <div>
-      <Transition.Root show={openPopUp} as={Fragment}>
+      <Transition.Root show={openResetPassPopUp} as={Fragment}>
         <Dialog
           as="div"
           className="relative z-10"
-          onClose={() => setOpenPopUp(false)}
+          onClose={() => setOpenResetPassPopUp(false)}
         >
           <Transition.Child
             as={Fragment}
@@ -104,7 +101,6 @@ const ResetPassword = ({
             className="fixed inset-0 z-10 flex min-h-full items-end justify-center overflow-y-auto p-4 text-center sm:items-center sm:p-0"
             id="add-pop-up-model"
           >
-            {/* <Form method="post"> */}
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
@@ -131,9 +127,9 @@ const ResetPassword = ({
                       className="cursor-pointer text-2xl text-gray-600"
                       icon={'carbon:close'}
                       onKeyUp={(e) => {
-                        if (e.key === 'Enter') setOpenPopUp(false)
+                        if (e.key === 'Enter') setOpenResetPassPopUp(false)
                       }}
-                      onClick={() => setOpenPopUp(false)}
+                      onClick={() => setOpenResetPassPopUp(false)}
                     />
                   </div>
                   <hr className="mt-4 mb-6 h-px w-full border-0 bg-gray-300" />
@@ -179,7 +175,6 @@ const ResetPassword = ({
                 </div>
               </Dialog.Panel>
             </Transition.Child>
-            {/* </Form> */}
           </div>
         </Dialog>
       </Transition.Root>

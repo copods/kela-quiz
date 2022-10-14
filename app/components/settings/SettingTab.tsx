@@ -29,7 +29,6 @@ const SettingsTabs = () => {
       <div className="flex flex-col gap-5">
         <TabComponent
           tabs={tabs}
-          isDisabled={false}
           currentTab={currentTab}
           setCurrentTab={setCurrentTab}
         />

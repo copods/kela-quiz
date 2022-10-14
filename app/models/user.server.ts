@@ -141,7 +141,7 @@ export async function checkOldPasswordFromdb(oldPassword: string, id: string) {
 
   const isValid = await bcrypt.compare(
     oldPassword,
-    oldPass?.password?.hash as any
+    oldPass?.password?.hash as string
   )
 
   return isValid

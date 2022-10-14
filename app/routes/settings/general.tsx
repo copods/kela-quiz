@@ -53,7 +53,7 @@ export const action: ActionFunction = async ({ request }) => {
       return json<ActionData>(
         {
           errors: {
-            valid: 'settings.enterValidPass',
+            valid: 'statusCheck.passIsInvalid',
             status: 400,
           },
         },
@@ -123,9 +123,7 @@ export const action: ActionFunction = async ({ request }) => {
 const GeneralSetting = () => {
   return (
     <div>
-      <div>
-        <GeneralSettings />
-      </div>
+      <GeneralSettings />
     </div>
   )
 }
