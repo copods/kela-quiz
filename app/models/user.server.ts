@@ -104,12 +104,14 @@ export async function createNewUser({
   email,
   roleId,
   workspaceName,
+  createdById,
 }: {
   firstName: string
   lastName: string
   email: string
   workspaceName: any
   roleId: string
+  createdById: User['id']
 }) {
   const password = faker.internet.password()
   const hashedPassword = await bcrypt.hash(password, 10)
@@ -141,7 +143,6 @@ export async function createNewUser({
       },
     },
   })
-
   await prisma.userWorkspace.create({
     data: {
       userId: user.id as string,
@@ -150,7 +151,24 @@ export async function createNewUser({
       isDefault: true,
     },
   })
-
+  const workspaceIdOfInvitedUser = await prisma.user.findUnique({
+    where: { id: createdById },
+    select: {
+      workspace: {
+        select: {
+          id: true,
+        },
+      },
+    },
+  })
+  await prisma.userWorkspace.create({
+    data: {
+      userId: user.id as string,
+      workspaceId: workspaceIdOfInvitedUser?.workspace[0]?.id as string,
+      roleId: user?.roleId,
+      isDefault: false,
+    },
+  })
   const role = await prisma.role.findUnique({
     where: {
       id: roleId,

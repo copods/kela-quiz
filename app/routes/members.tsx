@@ -1,5 +1,5 @@
 import AdminLayout from '~/components/layouts/AdminLayout'
-import { getUserId, getWorkspaceId } from '~/session.server'
+import { getUserId, getWorkspaceId, requireUserId } from '~/session.server'
 import { redirect } from '@remix-run/node'
 import type { LoaderFunction, ActionFunction } from '@remix-run/node'
 import MembersList from '~/components/members/MembersList'
@@ -54,6 +54,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 }
 
 export const action: ActionFunction = async ({ request }) => {
+  const createdById = await requireUserId(request) //fetching id of user who's creating this users
   const formData = await request.formData()
   const action = JSON.parse(formData.get('addMember') as string)
     ? JSON.parse(formData.get('addMember') as string)
@@ -100,7 +101,14 @@ export const action: ActionFunction = async ({ request }) => {
 
     let addHandle = null
 
-    await createNewUser({ firstName, lastName, email, roleId, workspaceName })
+    await createNewUser({
+      firstName,
+      lastName,
+      email,
+      createdById,
+      roleId,
+      workspaceName,
+    })
       .then((res) => {
         addHandle = json<ActionData>(
           {
