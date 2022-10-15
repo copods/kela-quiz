@@ -1,5 +1,4 @@
-import { useNavigate } from '@remix-run/react'
-import { useEffect, useState } from 'react'
+import { useLocation } from '@remix-run/react'
 import { useTranslation } from 'react-i18next'
 import TabComponent from '../TabsComponent'
 
@@ -7,32 +6,25 @@ const SettingsTabs = () => {
   const { t } = useTranslation()
   const tabs = [
     {
-      id: 0,
       name: t('tabs.general'),
       route: '/settings/general',
     },
     {
-      id: 1,
       name: t('tabs.workspace'),
       route: '/settings/workspace',
     },
   ]
-  const [currentTab, setCurrentTab] = useState(0)
-  const navigate = useNavigate()
-  useEffect(() => {
-    if (tabs[0].id === currentTab) {
-      navigate(tabs[0].route)
-    }
-  }, [navigate])
+  const location = useLocation() // to get current location
   return (
-    <div>
-      <div className="flex flex-col gap-5">
-        <TabComponent
-          tabs={tabs}
-          currentTab={currentTab}
-          setCurrentTab={setCurrentTab}
-        />
-      </div>
+    <div className="flex gap-5">
+      {tabs.map((tab, i) => {
+        const isActive = location.pathname === tab.route // to get tabs path which would match with current location
+        return (
+          <div key={i}>
+            <TabComponent isActive={isActive} tab={tab} />
+          </div>
+        )
+      })}
     </div>
   )
 }

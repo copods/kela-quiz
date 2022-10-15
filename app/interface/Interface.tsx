@@ -17,6 +17,7 @@ export interface PasswordFieldProps {
   placeholder: string
   required: boolean
   value: string
+  type: string
   error?: string
   errorId: string
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void

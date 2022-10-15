@@ -6,8 +6,8 @@ const GeneralSettings = () => {
   const [openResetPassPopUp, setOpenResetPassPopUp] = useState(false)
   const { t } = useTranslation()
   return (
-    <div className="rounded-lg border border-solid border-gray-300 bg-white p-4">
-      <div className="flex flex-col gap-8">
+    <>
+      <div className="flex flex-col gap-8 rounded-lg border border-solid border-gray-300 bg-white p-4">
         <h3 className="text-lg font-semibold"> {t('settings.basicInfo')}</h3>
         <div className="flex flex-col gap-5">
           <div className="flex justify-between gap-4">
@@ -36,7 +36,7 @@ const GeneralSettings = () => {
         openResetPassPopUp={openResetPassPopUp}
         setOpenResetPassPopUp={setOpenResetPassPopUp}
       />
-    </div>
+    </>
   )
 }
 export default GeneralSettings

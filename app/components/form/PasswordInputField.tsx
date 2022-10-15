@@ -8,20 +8,21 @@ const PasswordInputFields = ({
   label,
   error,
   errorId,
+  type,
   placeholder,
   required,
   value,
   onChange,
 }: PasswordFieldProps) => {
   const { t } = useTranslation()
-  const [passwordType, setPasswordType] = useState('password')
+  const [passwordType, setPasswordType] = useState(type)
 
   const togglePassword = () => {
-    if (passwordType === 'password') {
+    if (passwordType === type) {
       setPasswordType('text')
       return
     } else {
-      return setPasswordType('password')
+      return setPasswordType(type)
     }
   }
   return (

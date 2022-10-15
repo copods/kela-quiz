@@ -110,24 +110,11 @@ export async function loginVerificationResponse(
   const { password: _password, ...userWithoutPassword } = userWithPassword
   return userWithoutPassword
 }
-export async function updatePassword(id: string, newPassword: string) {
-  const hashedPassword = await bcrypt.hash(newPassword, 10)
-  const userId = await prisma.user.findUnique({
-    where: { id: id },
-    select: {
-      id: true,
-    },
-  })
-  return prisma.password.update({
-    where: {
-      userId: userId?.id,
-    },
-    data: {
-      hash: hashedPassword,
-    },
-  })
-}
-export async function checkOldPasswordFromdb(oldPassword: string, id: string) {
+export async function updatePassword(
+  id: string,
+  newPassword: string,
+  oldPassword: string
+) {
   const oldPass = await prisma.user.findUnique({
     where: { id },
     select: {
@@ -143,6 +130,23 @@ export async function checkOldPasswordFromdb(oldPassword: string, id: string) {
     oldPassword,
     oldPass?.password?.hash as string
   )
-
-  return isValid
+  if (!isValid) {
+    let error = new Error('invalidPassword')
+    return error
+  }
+  let checkValidPass
+  if (isValid === true) {
+    const hashedPassword = await bcrypt.hash(newPassword, 10)
+    checkValidPass = await prisma.password.update({
+      where: {
+        userId: id,
+      },
+      data: {
+        hash: hashedPassword,
+      },
+    })
+  }
+  if (checkValidPass) {
+    return 'DONE'
+  }
 }

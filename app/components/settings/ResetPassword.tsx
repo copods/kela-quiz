@@ -5,7 +5,6 @@ import { Fragment, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import Button from '../form/Button'
-import InputField from '../form/InputField'
 import PasswordInputFields from '../form/PasswordInputField'
 
 const ResetPassword = ({
@@ -19,30 +18,28 @@ const ResetPassword = ({
   const generalSettings = useActionData()
   useEffect(() => {
     if (generalSettings) {
-      if (generalSettings.resp?.status === 200) {
-        toast.success(t(generalSettings.resp?.title))
+      if (generalSettings === 'DONE') {
+        setOpenResetPassPopUp(false) //reset password popUp wil be closed automatically if action is success
+        toast.success(t('settings.passResetSuccessfully'))
       } else if (generalSettings.errors?.status === 400) {
-        setOpenResetPassPopUp(true)
+        setOpenResetPassPopUp(true) //reset password popUp remain open if action is failed
       }
     }
-  }, [generalSettings, t, setOpenResetPassPopUp])
+  }, [generalSettings, t])
   const transition = useTransition()
 
-  useEffect(() => {
-    if (openResetPassPopUp) {
-      setOpenResetPassPopUp(false)
-    }
-  }, [setOpenResetPassPopUp, openResetPassPopUp])
   const [password, setPassword] = useState('')
   const [newPassword, setNewPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
-  const inputFieldsProps = [
+
+  const PasswordInputFieldProps = [
+    // Input field props
     {
       label: t('settings.enterOldPassword'),
       placeholder: t('settings.enterOldPassword'),
-      type: 'password',
       name: 'Old Password',
       required: true,
+      type: 'password',
       value: password,
       error: generalSettings?.errors?.valid,
       errorId: 'Password-error',
@@ -50,13 +47,12 @@ const ResetPassword = ({
         setPassword(event?.target.value)
       },
     },
-  ]
-  const PasswordInputFieldProps = [
     {
       label: t('settings.enterNewPassword'),
       placeholder: t('settings.enterNewPassword'),
       name: 'New Password',
       required: true,
+      type: 'password',
       value: newPassword,
       error: generalSettings?.errors?.maximumPasswordLimit,
       errorId: 'New-password-error',
@@ -69,6 +65,7 @@ const ResetPassword = ({
       placeholder: t('settings.confirmNewPassword'),
       name: 'Confirm New Password',
       required: true,
+      type: 'password',
       value: confirmPassword,
       error: generalSettings?.errors?.passNotMatched,
       errorId: 'Confirm-password-error',
@@ -137,9 +134,6 @@ const ResetPassword = ({
                   <Form method="post">
                     <div className="flex flex-col gap-8">
                       <div className="flex flex-col gap-6">
-                        {inputFieldsProps.map((props) => {
-                          return <InputField {...props} key={props.name} />
-                        })}
                         {PasswordInputFieldProps.map((props) => {
                           return (
                             <PasswordInputFields {...props} key={props.name} />
@@ -150,7 +144,7 @@ const ResetPassword = ({
                         <Button
                           tabIndex={0}
                           name="resetPassword"
-                          value="add"
+                          value="resetPassword"
                           title={
                             transition.state === 'submitting'
                               ? t('settings.passResetting')
