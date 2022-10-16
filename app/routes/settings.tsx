@@ -1,14 +1,29 @@
 import AdminLayout from '~/components/layouts/AdminLayout'
-import { getUserId, getWorkspaceId } from '~/session.server'
+import { getUserId, getWorkspaceId, switchWorkspace } from '~/session.server'
+import type { ActionFunction } from '@remix-run/node'
 import { redirect } from '@remix-run/node'
 import type { LoaderFunction } from '@remix-run/node'
 import { routes } from '~/constants/route.constants'
-import { getUserWorkspaces } from '~/models/workspace.server'
+import { addWorkspace, getUserWorkspaces } from '~/models/workspace.server'
 import { json } from '@remix-run/node'
+import { actions } from '~/constants/action.constants'
+
 export type LoaderData = {
   workspaces: Awaited<ReturnType<typeof getUserWorkspaces>>
   currentWorkspaceId: Awaited<ReturnType<typeof getWorkspaceId>>
+  userId: Awaited<ReturnType<typeof getWorkspaceId>>
 }
+export type ActionData = {
+  errors?: {
+    title: string
+    status: number
+  }
+  resp?: {
+    title: string
+    status: number
+  }
+}
+
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await getUserId(request)
   if (!userId) return redirect(routes.signIn)
@@ -17,7 +32,67 @@ export const loader: LoaderFunction = async ({ request }) => {
   return json<LoaderData>({
     workspaces,
     currentWorkspaceId,
+    userId,
   })
+}
+
+export const action: ActionFunction = async ({ request }) => {
+  const formData = await request.formData()
+  const action = formData.get('action')
+  if (action === actions.switchWorkspace) {
+    const workspaceId = formData.get('workspaceId') as string
+    const userId = (await getUserId(request)) as string
+    let switchHandle = ''
+    await switchWorkspace({
+      request,
+      workspaceId,
+      userId,
+    })
+      .then((res) => {
+        console.log(res, '========================> res')
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    return switchHandle
+  }
+  if (action === actions.addWorkspace) {
+    let addHandle
+    const workspaceName = formData.get('workspaceName') as string
+    const userId = (await getUserId(request)) as string
+    if (typeof workspaceName !== 'string' || workspaceName.length === 0) {
+      return json<ActionData>(
+        { errors: { title: 'toastConstants.workspaceRequired', status: 400 } },
+        { status: 400 }
+      )
+    }
+    await addWorkspace(workspaceName, userId)
+      .then((res) => {
+        addHandle = json<ActionData>(
+          {
+            resp: {
+              title: 'toastConstants.workspaceAdded',
+              status: 200,
+            },
+          },
+          { status: 200 }
+        )
+      })
+      .catch((err) => {
+        let title = 'toastConstants.duplicateWorkspace'
+        addHandle = json<ActionData>(
+          {
+            errors: {
+              title,
+              status: 400,
+            },
+          },
+          { status: 400 }
+        )
+      })
+    return addHandle
+  }
+  return null
 }
 
 export default function Settings() {

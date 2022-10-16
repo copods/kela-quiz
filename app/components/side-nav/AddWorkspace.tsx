@@ -1,44 +1,59 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
-import { useSubmit, useTransition } from '@remix-run/react'
+import { useFetcher, useTransition } from '@remix-run/react'
 import { Fragment, useState, useEffect } from 'react'
 import Button from '../form/Button'
 import { trimValue } from '~/utils'
 import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
 
 export default function AddWorkspace({
   open,
   setOpen,
 }: {
   open: boolean
-  setOpen: (e: boolean) => void
+  setOpen?: (e: boolean) => void
 }) {
   const { t } = useTranslation()
-
+  const fetcher = useFetcher()
   const transition = useTransition()
   const [workspace, setWorkspace] = useState('')
-  const submit = useSubmit()
-
   const submitWorkspaceForm = () => {
-    let data = {
-      workspaceName: workspace,
-      action: 'add workspace',
-    }
-    submit(data, {
-      method: 'post',
-    })
+    fetcher.submit(
+      {
+        workspaceName: workspace,
+        action: 'Add Workspace',
+      },
+      { method: 'post', action: '/settings' }
+    )
   }
-
   useEffect(() => {
     setWorkspace('')
   }, [open])
+
+  useEffect(() => {
+    let data = fetcher.data
+    if (fetcher.state === 'loading') {
+      if (data) {
+        if (data.resp?.status === 200 && setOpen) {
+          toast.success(t(data.resp?.title))
+          setOpen(false)
+        } else if (data.errors?.status === 400 && setOpen) {
+          toast.error(t(data.errors?.title), {
+            toastId: data.errors?.title,
+          })
+          setOpen(false)
+        }
+      }
+    }
+  }, [fetcher, t])
   return (
     <div>
       <Transition.Root show={open} as={Fragment}>
         <Dialog
           as="div"
           className="relative z-10"
-          onClose={() => setOpen(false)}
+          onClose={() => setOpen && setOpen(false)}
         >
           <Transition.Child
             as={Fragment}
@@ -81,9 +96,9 @@ export default function AddWorkspace({
                     className="cursor-pointer text-2xl text-gray-600"
                     icon={'carbon:close'}
                     onKeyUp={(e) => {
-                      if (e.key === 'Enter') setOpen(false)
+                      if (e.key === 'Enter' && setOpen) setOpen(false)
                     }}
-                    onClick={() => setOpen(false)}
+                    onClick={() => setOpen && setOpen(false)}
                   />
                 </div>
                 <hr className="mt-4 h-px w-full border-0 bg-gray-300" />
@@ -108,7 +123,7 @@ export default function AddWorkspace({
                     tabIndex={0}
                     id="cancel-add-button"
                     className="h-9 px-4"
-                    onClick={() => setOpen(false)}
+                    onClick={() => setOpen && setOpen(false)}
                     varient="primary-outlined"
                     title={t('commonConstants.cancel')}
                     buttonText={t('commonConstants.cancel')}

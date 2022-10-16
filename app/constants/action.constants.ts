@@ -2,5 +2,6 @@ export enum actions {
   addMember = 'add',
   resendInviteMember = 'resend',
   deleteMember = 'delete',
-  switchWorkspace = 'switch workspace',
+  switchWorkspace = 'switch',
+  addWorkspace = 'Add Workspace'
 }

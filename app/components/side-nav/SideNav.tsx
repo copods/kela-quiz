@@ -4,7 +4,7 @@ import Footer from '~/components/SideNavFooter'
 import { routes } from '~/constants/route.constants'
 import { useTranslation } from 'react-i18next'
 import DropdownField from '../form/Dropdown'
-import { useLoaderData, useSubmit } from '@remix-run/react'
+import { useFetcher, useLoaderData } from '@remix-run/react'
 import type { UserWorkspace } from '~/interface/Interface'
 import AddWorkspace from './AddWorkspace'
 import { useEffect, useState } from 'react'
@@ -75,26 +75,30 @@ const sideNavGuide = [
 ]
 const SideNav = () => {
   const { t } = useTranslation()
-
-  const { workspaces = [], currentWorkspaceId } = useLoaderData()
   const [open, setOpen] = useState(false)
+  const { workspaces = [], currentWorkspaceId } = useLoaderData()
   const [workspace, setWorkspace] = useState(currentWorkspaceId)
-  const submit = useSubmit()
-
+  const fetcher = useFetcher()
   const tempWorkspaces = workspaces.map((userWorkspace: UserWorkspace) => {
     return { ...userWorkspace, ...userWorkspace.workspace }
   })
   const switchWorkpace = (val: string) => {
     if (val !== 'Add Workspace') {
-      let data = {
-        workspaceId: val,
-        action: 'switch workspace',
-      }
-      submit(data, {
-        method: 'post',
-      })
+      fetcher.submit(
+        {
+          workspaceId: val,
+          action: 'switch',
+        },
+        { method: 'post', action: '/settings' }
+      )
     }
   }
+  useEffect(() => {
+    if (fetcher.type === 'init') {
+      fetcher.load('/settings')
+    }
+  }, [fetcher])
+
   useEffect(() => {
     switchWorkpace(workspace)
   }, [workspace])

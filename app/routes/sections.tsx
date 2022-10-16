@@ -15,12 +15,7 @@ import {
 } from '~/models/sections.server'
 import { useState, useEffect } from 'react'
 import { Icon } from '@iconify/react'
-import {
-  getUserId,
-  getWorkspaceId,
-  requireUserId,
-  switchWorkspace,
-} from '~/session.server'
+import { getUserId, getWorkspaceId, requireUserId } from '~/session.server'
 import Sections from '~/components/sections/Sections'
 import AdminLayout from '~/components/layouts/AdminLayout'
 import AddSection from '~/components/sections/AddSection'
@@ -32,7 +27,6 @@ import type { Section } from '~/interface/Interface'
 import { routes } from '~/constants/route.constants'
 import { useTranslation } from 'react-i18next'
 import { getUserWorkspaces } from '~/models/workspace.server'
-import { actions } from '~/constants/action.constants'
 
 export type ActionData = {
   errors?: {
@@ -184,36 +178,12 @@ export const action: ActionFunction = async ({ request }) => {
     }
     return deleteHandle
   }
-
-  if (action === actions.switchWorkspace) {
-    let switchHandle
-    const workspaceId = formData.get('workspaceId') as string
-    await switchWorkspace({
-      request,
-      workspaceId,
-    })
-      .then((res) => {
-        switchHandle = json<ActionData>(
-          { resp: { status: 'statusCheck.success' } },
-
-          { status: 200 }
-        )
-      })
-      .catch((err) => {
-        let title = 'statusCheck.commonError'
-        switchHandle = json<ActionData>(
-          { errors: { title, status: 400, check: new Date() } },
-          { status: 400 }
-        )
-      })
-    return switchHandle
-  }
+  return ''
 }
 
 export default function SectionPage() {
   const { t } = useTranslation()
   const data = useLoaderData() as unknown as LoaderData
-
   const sectionActionData = useActionData() as ActionData
 
   let navigate = useNavigate()
@@ -295,7 +265,6 @@ export default function SectionPage() {
       }
     }
   }, [sectionActionData, data.selectedSectionId, data.sections, t])
-
   return (
     <AdminLayout>
       <div className="flex h-full flex-col gap-6 overflow-hidden p-1">

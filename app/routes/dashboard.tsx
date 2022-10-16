@@ -13,6 +13,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   return {
     workspaces,
     currentWorkspaceId,
+    userId,
   }
 }
 

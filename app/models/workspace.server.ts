@@ -16,3 +16,22 @@ export async function getUserWorkspaces(userId: string) {
     },
   })
 }
+
+export async function addWorkspace(workspaceName: string, userId: string) {
+  const workspace = await prisma.workspace.create({
+    data: {
+      name: workspaceName,
+      createdById: userId,
+    },
+  })
+  const user = await prisma.user.findUnique({
+    where: { id: userId }
+  })
+  return await prisma.userWorkspace.create({
+    data: {
+      workspaceId: workspace?.id,
+      userId: userId,
+      roleId: user?.roleId as string
+    }
+  })
+}

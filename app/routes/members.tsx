@@ -173,6 +173,7 @@ export const action: ActionFunction = async ({ request }) => {
 
     return deleteHandle
   }
+  return ''
 }
 const Members = () => {
   const { t } = useTranslation()
@@ -191,7 +192,6 @@ const Members = () => {
       }
     }
   }, [membersActionData, t])
-
   return (
     <AdminLayout>
       <div className="flex flex-col gap-6 p-1">
