@@ -25,13 +25,13 @@ export async function addWorkspace(workspaceName: string, userId: string) {
     },
   })
   const user = await prisma.user.findUnique({
-    where: { id: userId }
+    where: { id: userId },
   })
   return await prisma.userWorkspace.create({
     data: {
       workspaceId: workspace?.id,
       userId: userId,
-      roleId: user?.roleId as string
-    }
+      roleId: user?.roleId as string,
+    },
   })
 }
