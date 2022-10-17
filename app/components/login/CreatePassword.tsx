@@ -15,7 +15,7 @@ const CreatePassword = ({
   const inputFieldsPropsforEnterPassword = [
     {
       label: '',
-      placeholder: 'Enter Password',
+      placeholder: t('commonConstants.enterPassword'),
       type: 'text',
       name: 'enterPassword',
       required: true,
@@ -29,7 +29,7 @@ const CreatePassword = ({
   const inputFieldsPropsforReEnterPassword = [
     {
       label: '',
-      placeholder: 'Re-Enter Password',
+      placeholder: t('commonConstants.reEnterPassword'),
       type: 'text',
       name: 'reEnterPassword',
       required: true,
@@ -45,7 +45,9 @@ const CreatePassword = ({
   return (
     <div className="flex flex-1 items-center justify-center bg-gray-50">
       <div className="flex w-full max-w-454 flex-col gap-12 rounded-md border border-gray-50 bg-white px-12 pb-12  text-center drop-shadow-xl">
-        <div className="pt-12 text-2xl font-bold">Create Password</div>
+        <div className="pt-12 text-2xl font-bold">
+          {t('commonConstants.createPassword')}
+        </div>
         <Form method="post" className="flex flex-col gap-12">
           <div className="flex flex-col ">
             <span className="flex justify-start  text-base text-gray-800">

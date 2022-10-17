@@ -53,7 +53,8 @@
     "verify": "Verify",
     "proceed": "Proceed",
     "enterPassword": "Enter Password",
-    "reEnterPassword": "Re-Enter Password"
+    "reEnterPassword": "Re-Enter Password",
+    "createPassword": "Create Password"
   },
   "sideNav": {
     "sideNavHeading": "Quiz"
