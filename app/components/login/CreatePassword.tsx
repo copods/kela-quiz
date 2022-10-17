@@ -14,21 +14,19 @@ const CreatePassword = ({
   const { t } = useTranslation()
   const inputFieldsPropsforEnterPassword = [
     {
-      label: '',
       placeholder: t('commonConstants.enterPassword'),
       type: 'text',
       name: 'enterPassword',
       required: true,
       value: enterPassword,
       errorId: 'email-error',
-      onChange: function (event: any) {
+      onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
         setEnterPassword(event?.target.value)
       },
     },
   ]
   const inputFieldsPropsforReEnterPassword = [
     {
-      label: '',
       placeholder: t('commonConstants.reEnterPassword'),
       type: 'text',
       name: 'reEnterPassword',
@@ -36,7 +34,7 @@ const CreatePassword = ({
       value: reEnterPassword,
       error: checkErrorStatus ? t('statusCheck.enteredReenteredPassword') : '',
       errorId: 'email-error',
-      onChange: function (event: any) {
+      onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
         setReEnterPassword(event?.target.value)
       },
     },
@@ -44,8 +42,8 @@ const CreatePassword = ({
 
   return (
     <div className="flex flex-1 items-center justify-center bg-gray-50">
-      <div className="flex w-full max-w-454 flex-col gap-12 rounded-md border border-gray-50 bg-white px-12 pb-12  text-center drop-shadow-xl">
-        <div className="pt-12 text-2xl font-bold">
+      <div className="flex w-full max-w-454 flex-col gap-12 rounded-md border border-gray-50 bg-white p-12  text-center drop-shadow-xl">
+        <div className="text-2xl font-bold">
           {t('commonConstants.createPassword')}
         </div>
         <Form method="post" className="flex flex-col gap-12">
