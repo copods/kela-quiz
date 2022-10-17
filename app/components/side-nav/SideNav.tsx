@@ -77,12 +77,12 @@ const SideNav = () => {
   const { t } = useTranslation()
   const [open, setOpen] = useState(false)
   const { workspaces = [], currentWorkspaceId } = useLoaderData()
-  const [workspace, setWorkspace] = useState(currentWorkspaceId)
+  const [workspace, setWorkspace] = useState<string>(currentWorkspaceId)
   const fetcher = useFetcher()
   const tempWorkspaces = workspaces.map((userWorkspace: UserWorkspace) => {
     return { ...userWorkspace, ...userWorkspace.workspace }
   })
-  const switchWorkpace = (val: string) => {
+  function switchWorkpace(val: string) {
     if (val !== 'Add Workspace' && workspace !== currentWorkspaceId) {
       fetcher.submit(
         {
@@ -100,7 +100,9 @@ const SideNav = () => {
   }, [fetcher])
 
   useEffect(() => {
-    switchWorkpace(workspace)
+    if (workspace) {
+      switchWorkpace(workspace)
+    }
   }, [workspace])
 
   return (

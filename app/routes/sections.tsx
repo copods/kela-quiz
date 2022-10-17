@@ -151,9 +151,14 @@ export const action: ActionFunction = async ({ request }) => {
       if (res?._count.sectionInTest === 0 || isTestDeleted?.includes(true)) {
         isSectionDelete = true
       } else {
-        let title = 'statusCheck.testDependentWarning'
         deleteHandle = json<ActionData>(
-          { errors: { title, status: 400, check: new Date() } },
+          {
+            errors: {
+              title: 'statusCheck.testDependentWarning',
+              status: 400,
+              check: new Date(),
+            },
+          },
           { status: 400 }
         )
       }

@@ -46,7 +46,7 @@ export default function AddWorkspace({
         }
       }
     }
-  }, [fetcher, t])
+  }, [fetcher, t, setOpen])
   return (
     <div>
       <Transition.Root show={open} as={Fragment}>
@@ -107,9 +107,9 @@ export default function AddWorkspace({
                   </label>
                   <input
                     tabIndex={0}
-                    id="firstName"
+                    id="addWorkspace"
                     type="text"
-                    name="firstName"
+                    name="addWorkspace"
                     className="my-1.5 h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
                     placeholder={t('sideNav.enterWorkspace')}
                     onChange={(e) => setWorkspace(trimValue(e.target.value))}

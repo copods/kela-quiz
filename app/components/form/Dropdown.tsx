@@ -88,7 +88,7 @@ function DropdownField({
                     <div className="flex items-center">
                       <Icon icon="akar-icons:circle-plus" />
                       <span
-                        className="not-selected dropdown-option ml-2 block truncate font-normal"
+                        className="dropdown-option ml-2 block truncate font-normal"
                         id="option"
                       >
                         {' '}
