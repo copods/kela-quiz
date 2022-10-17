@@ -49,14 +49,15 @@ export async function sendMail(
           <p style="text-align:left;color:#4B5563;margin:0;font-family:'Poppins', sans-serif;">
             Email: <span style="font-weight:600">${email}</span>
           </p>
-          <p style="text-align:left;color:#4B5563;margin:0;font-family:'Poppins', sans-serif;">
-            Password: <span style="font-weight:600">hhhh</span>
-          </p>
-          
-        </div>
-        <p style="text-align:center;color:#4B5563;margin:0;font-family:'Poppins', sans-serif;margin-top:10px">
+
+        </div>        
+        <p style="text-align:center;color:#4B5563;margin:0;font-family:'Poppins', sans-serif;margin-top:10px">     
           <a href="${passwordGenerationLink}" style="color: #353988;">"${passwordGenerationLink}"</a>
         </p>
+        <br>
+         <p style="text-align:center;color:#4B5563;margin:0;font-family:'Poppins', sans-serif;">
+             Use above link to generate your password
+          </p>
       </div>
       </td>
   </tr>

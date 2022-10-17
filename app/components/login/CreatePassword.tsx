@@ -1,16 +1,17 @@
 import { useState } from 'react'
 import Button from '../form/Button'
 import InputField from '../form/InputField'
-// import Logo from '../Logo'
 import { Form } from '@remix-run/react'
-// import { routes } from '~/constants/route.constants'
-// import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'react-i18next'
 
-const CreatePassword = () => {
+const CreatePassword = ({
+  checkErrorStatus,
+}: {
+  checkErrorStatus: boolean
+}) => {
   const [enterPassword, setEnterPassword] = useState('')
   const [reEnterPassword, setReEnterPassword] = useState('')
-  // const { t } = useTranslation()
-  // let navigate = useNavigate()
+  const { t } = useTranslation()
   const inputFieldsPropsforEnterPassword = [
     {
       label: '',
@@ -19,7 +20,6 @@ const CreatePassword = () => {
       name: 'enterPassword',
       required: true,
       value: enterPassword,
-      // error: checkErrorStatus ? t('statusCheck.resendPasswordError') : '',
       errorId: 'email-error',
       onChange: function (event: any) {
         setEnterPassword(event?.target.value)
@@ -34,7 +34,7 @@ const CreatePassword = () => {
       name: 'reEnterPassword',
       required: true,
       value: reEnterPassword,
-      // error: checkErrorStatus ? t('statusCheck.resendPasswordError') : '',
+      error: checkErrorStatus ? t('statusCheck.enteredReenteredPassword') : '',
       errorId: 'email-error',
       onChange: function (event: any) {
         setReEnterPassword(event?.target.value)
@@ -49,7 +49,7 @@ const CreatePassword = () => {
         <Form method="post" className="flex flex-col gap-12">
           <div className="flex flex-col ">
             <span className="flex justify-start  text-base text-gray-800">
-              Enter Password
+              {t('commonConstants.enterPassword')}
             </span>
             <div>
               {inputFieldsPropsforEnterPassword.map((props) => {
@@ -59,7 +59,7 @@ const CreatePassword = () => {
           </div>
           <div className="flex flex-col">
             <span className="flex justify-start text-base text-gray-800">
-              Re- Enter Password
+              {t('commonConstants.reEnterPassword')}
             </span>
             <div>
               {inputFieldsPropsforReEnterPassword.map((props) => {
@@ -67,7 +67,6 @@ const CreatePassword = () => {
               })}
             </div>
           </div>
-
           <Button
             tabIndex={0}
             id="reset-password"
