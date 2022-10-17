@@ -119,9 +119,7 @@ export async function switchWorkspace({
   return redirect('/', {
     headers: {
       'Set-Cookie': await sessionStorage.commitSession(session, {
-        maxAge: false
-          ? 60 * 60 * 24 * 7
-          : undefined,
+        maxAge: false ? 60 * 60 * 24 * 7 : undefined,
       }),
     },
   })
