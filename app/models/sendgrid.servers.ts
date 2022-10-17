@@ -52,7 +52,7 @@ export async function sendMail(
 
         </div>        
         <p style="text-align:center;color:#4B5563;margin:0;font-family:'Poppins', sans-serif;margin-top:10px">     
-          <a href="${passwordGenerationLink}" style="color: #353988;">"${passwordGenerationLink}"</a>
+          <a href="${passwordGenerationLink}" style="color: #353988;">${passwordGenerationLink}</a>
         </p>
         <br>
          <p style="text-align:center;color:#4B5563;margin:0;font-family:'Poppins', sans-serif;">
