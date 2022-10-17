@@ -110,7 +110,7 @@ export async function sendResetPassword(email: string) {
   if (userEmail) {
     await prisma.password.update({
       where: {
-        userId: userEmail.id,
+        userId: userEmail?.id,
       },
       data: {
         hash: hashedPassword,
