@@ -83,7 +83,7 @@ const SideNav = () => {
     return { ...userWorkspace, ...userWorkspace.workspace }
   })
   const switchWorkpace = (val: string) => {
-    if (val !== 'Add Workspace') {
+    if (val !== 'Add Workspace' && workspace !== currentWorkspaceId) {
       fetcher.submit(
         {
           workspaceId: val,
@@ -102,6 +102,7 @@ const SideNav = () => {
   useEffect(() => {
     switchWorkpace(workspace)
   }, [workspace])
+
   return (
     <>
       <div className="flex h-full flex-col justify-between overflow-auto p-5">

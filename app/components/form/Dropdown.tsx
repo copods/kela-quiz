@@ -39,7 +39,7 @@ function DropdownField({
   return (
     <Listbox
       value={value}
-      onChange={(val) => {
+      onChange={(val: string) => {
         val !== 'Add Workspace' ? setValue(val) : setValue(value)
       }}
     >

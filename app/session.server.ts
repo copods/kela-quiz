@@ -114,11 +114,16 @@ export async function switchWorkspace({
   userId: string
 }) {
   const session = await getSession(request)
-  await sessionStorage.destroySession(session)
   await session.set(USER_SESSION_KEY, userId)
   await session.set(USER_WORKSPACE_KEY, workspaceId)
   return redirect('/', {
-    headers: { 'Set-Cookie': await sessionStorage.commitSession(session) },
+    headers: {
+      'Set-Cookie': await sessionStorage.commitSession(session, {
+        maxAge: false
+          ? 60 * 60 * 24 * 7
+          : undefined,
+      }),
+    },
   })
 }
 

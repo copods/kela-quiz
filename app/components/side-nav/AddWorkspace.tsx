@@ -70,7 +70,6 @@ export default function AddWorkspace({
             className="fixed inset-0 z-10 flex min-h-full items-end justify-center overflow-y-auto p-4 text-center sm:items-center sm:p-0"
             id="add-pop-up-model"
           >
-            {/* <Form method="post"> */}
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
@@ -103,7 +102,7 @@ export default function AddWorkspace({
                 </div>
                 <hr className="mt-4 h-px w-full border-0 bg-gray-300" />
                 <div className="py-6">
-                  <label htmlFor="" className="text-gray-800">
+                  <label htmlFor="addWorkspace" className="text-gray-800">
                     {t('sideNav.workspace')}
                   </label>
                   <input
@@ -132,7 +131,7 @@ export default function AddWorkspace({
                     tabIndex={0}
                     id="add-button"
                     name="addMember"
-                    value={'add'}
+                    value="add"
                     className="h-9 px-4"
                     isDisabled={transition.state === 'submitting'}
                     title={
@@ -151,7 +150,6 @@ export default function AddWorkspace({
                 </div>
               </Dialog.Panel>
             </Transition.Child>
-            {/* </Form> */}
           </div>
         </Dialog>
       </Transition.Root>

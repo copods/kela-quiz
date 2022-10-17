@@ -169,9 +169,14 @@ export const action: ActionFunction = async ({ request }) => {
           )
         })
         .catch((err) => {
-          let title = 'statusCheck.commonError'
           deleteHandle = json<ActionData>(
-            { errors: { title, status: 400, check: new Date() } },
+            {
+              errors: {
+                title: 'statusCheck.commonError',
+                status: 400,
+                check: new Date(),
+              },
+            },
             { status: 400 }
           )
         })

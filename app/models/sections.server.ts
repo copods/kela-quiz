@@ -3,6 +3,8 @@ import cuid from 'cuid'
 import { prisma } from '~/db.server'
 
 export async function getSectionById({ id }: Pick<Section, 'id'>) {
+  console.log(id, '----------------------------------section id');
+
   return prisma.section.findUnique({
     where: {
       id,

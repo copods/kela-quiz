@@ -42,19 +42,12 @@ export const action: ActionFunction = async ({ request }) => {
   if (action === actions.switchWorkspace) {
     const workspaceId = formData.get('workspaceId') as string
     const userId = (await getUserId(request)) as string
-    let switchHandle = ''
-    await switchWorkspace({
+    // let switchHandle = ''
+    return await switchWorkspace({
       request,
       workspaceId,
       userId,
     })
-      .then((res) => {
-        console.log(res, '========================> res')
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-    return switchHandle
   }
   if (action === actions.addWorkspace) {
     let addHandle
