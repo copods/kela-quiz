@@ -15,6 +15,7 @@ const deleteSection = `Aptitude - delete-Section`
 const memberFirstName = 'john'
 const memberLastName = 'dow'
 const memberEmail = 'johndoe@example.com'
+const workspaceName = 'Copods workspace'
 
 describe('smoke tests', () => {
   it('Successfully Login', () => {
@@ -436,6 +437,10 @@ describe('smoke tests', () => {
       .clear()
       .type(memberEmail)
       .should('have.value', memberEmail)
+      .should('be.visible', { timeout: 60000 })
+      .clear()
+      .type(workspaceName)
+      .should('have.value', workspaceName)
     cy.get('div').get('#add-member-modal').find('.dropdownButton').click()
     cy.get('ul').contains('Recruiter').click()
     cy.get('#add-button').click()

@@ -231,7 +231,8 @@
     "memberAdded": "Member Added Successfully..!",
     "memberAlreadyExist": "Member with this email id already exists!",
     "invitationSent": "Invitation Sent Successfully..!",
-    "signUpSuccessfull": "Sign Up successfully"
+    "signUpSuccessfull": "Sign Up successfully",
+    "workspaceNameIsRequired": "Workspace name is required"
   },
   "otpConstants": {
     "header": "OTP Verification",

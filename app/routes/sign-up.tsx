@@ -28,7 +28,6 @@ export const loader: LoaderFunction = async ({ request }) => {
 }
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
-  console.log(...formData, 'formData')
   const action = JSON.parse(formData.get('addMember') as string)
 
   if (action.action === 'add') {
@@ -55,6 +54,17 @@ export const action: ActionFunction = async ({ request }) => {
     if (typeof email !== 'string' || email.length === 0) {
       return json<ActionData>(
         { errors: { title: 'toastConstants.emailRequired', status: 400 } },
+        { status: 400 }
+      )
+    }
+    if (typeof workspaceName !== 'string' || workspaceName.length === 0) {
+      return json<ActionData>(
+        {
+          errors: {
+            title: 'toastConstants.workspaceNameIsRequired',
+            status: 400,
+          },
+        },
         { status: 400 }
       )
     }

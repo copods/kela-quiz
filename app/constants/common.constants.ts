@@ -275,6 +275,7 @@ export const toastConstants = {
   memberAdded: 'Member Added Successfully..!',
   memberAlreadyExist: 'Member with this email id already exists!',
   signUpSuccessfull: 'Sign Up successfully',
+  workspaceNameIsRequired: 'Workspace name is required',
 }
 export const otpConstants = {
   header: 'OTP Verification',
