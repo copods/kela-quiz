@@ -1,13 +1,18 @@
+import { useLocation } from '@remix-run/react'
 import { NavLink } from '@remix-run/react'
-const TabComponent = ({ tab, isActive }: { tab: any; isActive: boolean }) => {
+
+const TabComponent = ({ tab }: { tab: any }) => {
+  const location = useLocation() // to get current location
+
+  const isActive = location.pathname === tab.route // to get tabs path which would match with current location
+
   return (
-    <div className="flex w-full gap-5 rounded-lg">
+    <div className="flex gap-5 rounded-lg">
       <NavLink
         tabIndex={0}
         role={'button'}
         to={tab.route}
         id={tab.name}
-        key={tab.name}
         className={({ isActive }) =>
           `flex flex-col-reverse gap-2 p-1 ${isActive ? 'cursor-pointer' : ' '}`
         }

@@ -148,12 +148,12 @@ const ResetPassword = ({
                           title={
                             transition.state === 'submitting'
                               ? t('settings.passResetting')
-                              : t('settings.passReset')
+                              : t('settings.resetPas')
                           }
                           buttonText={
                             transition.state === 'submitting'
                               ? t('settings.passResetting')
-                              : t('settings.passReset')
+                              : t('settings.resetPas')
                           }
                           type="submit"
                           varient="primary-solid"
