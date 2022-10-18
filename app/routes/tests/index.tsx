@@ -13,7 +13,6 @@ import { createCandidate } from '~/models/candidate.server'
 import { routes } from '~/constants/route.constants'
 import { useTranslation } from 'react-i18next'
 import { getUserWorkspaces } from '~/models/workspace.server'
-import { actions } from '~/constants/action.constants'
 
 type LoaderData = {
   tests: Awaited<Array<Test>>
@@ -103,13 +102,6 @@ export const action: ActionFunction = async ({ request }) => {
       testId,
     })
     return json({ candidateInviteStatus, testId })
-  }
-  if (action === actions.switchWorkspace) {
-    const deleteHandle = json<ActionData>(
-      { errors: { status: 'none', check: new Date() } },
-      { status: 400 }
-    )
-    return deleteHandle
   }
 }
 

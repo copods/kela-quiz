@@ -94,12 +94,6 @@ const SideNav = () => {
     }
   }
   useEffect(() => {
-    if (fetcher.type === 'init') {
-      fetcher.load('/settings')
-    }
-  }, [fetcher])
-
-  useEffect(() => {
     if (workspace) {
       switchWorkpace(workspace)
     }
@@ -152,7 +146,11 @@ const SideNav = () => {
           <Footer />
         </div>
       </div>
-      <AddWorkspace open={open} setOpen={setOpen} />
+      <AddWorkspace
+        open={open}
+        setOpen={setOpen}
+        setWorkspaceId={setWorkspace}
+      />
     </>
   )
 }

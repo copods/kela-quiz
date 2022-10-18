@@ -21,6 +21,7 @@ export type ActionData = {
   resp?: {
     title: string
     status: number
+    workspaceId: string
   }
 }
 
@@ -42,7 +43,6 @@ export const action: ActionFunction = async ({ request }) => {
   if (action === actions.switchWorkspace) {
     const workspaceId = formData.get('workspaceId') as string
     const userId = (await getUserId(request)) as string
-    // let switchHandle = ''
     return await switchWorkspace({
       request,
       workspaceId,
@@ -66,6 +66,7 @@ export const action: ActionFunction = async ({ request }) => {
             resp: {
               title: 'toastConstants.workspaceAdded',
               status: 200,
+              workspaceId: res.workspaceId,
             },
           },
           { status: 200 }

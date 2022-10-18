@@ -10,9 +10,11 @@ import { toast } from 'react-toastify'
 export default function AddWorkspace({
   open,
   setOpen,
+  setWorkspaceId,
 }: {
   open: boolean
   setOpen?: (e: boolean) => void
+  setWorkspaceId?: (e: string) => void
 }) {
   const { t } = useTranslation()
   const fetcher = useFetcher()
@@ -35,7 +37,8 @@ export default function AddWorkspace({
     let data = fetcher.data
     if (fetcher.state === 'loading') {
       if (data) {
-        if (data.resp?.status === 200 && setOpen) {
+        if (data.resp?.status === 200 && setOpen && setWorkspaceId) {
+          setWorkspaceId(data.resp?.workspaceId)
           toast.success(t(data.resp?.title))
           setOpen(false)
         } else if (data.errors?.status === 400 && setOpen) {
