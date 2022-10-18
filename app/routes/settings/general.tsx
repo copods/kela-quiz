@@ -1,5 +1,5 @@
 import type { ActionFunction, LoaderFunction } from '@remix-run/node'
-import { getAllRoles, getAllUsers, updatePassword } from '~/models/user.server'
+import { updatePassword } from '~/models/user.server'
 import { routes } from '~/constants/route.constants'
 import { getUserId } from '~/session.server'
 import { json } from '@remix-run/node'
@@ -20,16 +20,13 @@ export type ActionData = {
 }
 
 type LoaderData = {
-  users: Awaited<ReturnType<typeof getAllUsers>>
   userId: Awaited<ReturnType<typeof getUserId>>
-  roles: Awaited<ReturnType<typeof getAllRoles>>
 }
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await getUserId(request)
-  const roles = await getAllRoles()
   if (!userId) return redirect(routes.signIn)
-  const users = await getAllUsers()
-  return json<LoaderData>({ users, roles, userId })
+
+  return json<LoaderData>({ userId })
 }
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData() // getting formData
@@ -37,9 +34,9 @@ export const action: ActionFunction = async ({ request }) => {
   if (action === 'resetPassword') {
     // action will perform if match with specific formData
     const userId = await getUserId(request)
-    const oldPassword = formData.get('Old Password')
-    const newPassword = formData.get('New Password')
-    const confirmPasword = formData.get('Confirm New Password')
+    const oldPassword = formData.get('oldPassword')
+    const newPassword = formData.get('newPassword')
+    const confirmPasword = formData.get('confirmNewPassword')
 
     if (confirmPasword !== newPassword) {
       // checking if newly entered password and confirm password is matched or not
@@ -53,7 +50,7 @@ export const action: ActionFunction = async ({ request }) => {
         { status: 400 }
       )
     }
-    if (typeof newPassword !== 'string' || newPassword.length >= 8) {
+    if (typeof newPassword !== 'string' || newPassword.length > 8) {
       // checking newly entered password should be less than 8 characters
       return json<ActionData>(
         {

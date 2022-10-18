@@ -14,7 +14,7 @@ const TabComponent = ({ tab }: { tab: any }) => {
         to={tab.route}
         id={tab.name}
         className={({ isActive }) =>
-          `flex flex-col-reverse gap-2 p-1 ${isActive ? 'cursor-pointer' : ' '}`
+          `flex flex-col-reverse gap-2 ${isActive ? 'cursor-pointer' : ' '}`
         }
       >
         <hr
@@ -22,7 +22,6 @@ const TabComponent = ({ tab }: { tab: any }) => {
             isActive ? 'bg-primary' : 'bg-transparent'
           }`}
         />
-
         <div
           className={`text-base font-semibold ${
             isActive ? 'text-primary' : 'text-gray-600'

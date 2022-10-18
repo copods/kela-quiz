@@ -14,7 +14,7 @@ const SettingsTabs = () => {
     },
   ]
   return (
-    <div className="flex gap-5">
+    <div className="tabsWrapper flex gap-5">
       {tabs.map((tab, i) => {
         return <TabComponent key={i} tab={tab} />
       })}

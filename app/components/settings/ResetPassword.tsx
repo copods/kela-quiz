@@ -37,7 +37,7 @@ const ResetPassword = ({
     {
       label: t('settings.enterOldPassword'),
       placeholder: t('settings.enterOldPassword'),
-      name: 'Old Password',
+      name: 'oldPassword',
       required: true,
       type: 'password',
       value: password,
@@ -50,7 +50,7 @@ const ResetPassword = ({
     {
       label: t('settings.enterNewPassword'),
       placeholder: t('settings.enterNewPassword'),
-      name: 'New Password',
+      name: 'newPassword',
       required: true,
       type: 'password',
       value: newPassword,
@@ -63,7 +63,7 @@ const ResetPassword = ({
     {
       label: t('settings.confirmNewPassword'),
       placeholder: t('settings.confirmNewPassword'),
-      name: 'Confirm New Password',
+      name: 'confirmNewPassword',
       required: true,
       type: 'password',
       value: confirmPassword,
@@ -96,7 +96,7 @@ const ResetPassword = ({
           </Transition.Child>
           <div
             className="fixed inset-0 z-10 flex min-h-full items-end justify-center overflow-y-auto p-4 text-center sm:items-center sm:p-0"
-            id="add-pop-up-model"
+            id="resetPassword-pop-up-model"
           >
             <Transition.Child
               as={Fragment}
@@ -121,6 +121,7 @@ const ResetPassword = ({
                     </h2>
                     <Icon
                       tabIndex={0}
+                      id="reset-password-popup-close-icon"
                       className="cursor-pointer text-2xl text-gray-600"
                       icon={'carbon:close'}
                       onKeyUp={(e) => {
@@ -133,7 +134,7 @@ const ResetPassword = ({
 
                   <Form method="post">
                     <div className="flex flex-col gap-8">
-                      <div className="flex flex-col gap-6">
+                      <div className="input-container-wrapper flex flex-col gap-6">
                         {PasswordInputFieldProps.map((props) => {
                           return (
                             <PasswordInputFields {...props} key={props.name} />

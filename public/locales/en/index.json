@@ -239,7 +239,7 @@
     "otp": "OTP"
   },
   "settings": {
-    "passNotMatch": "password is not matched",
+    "passNotMatch": "Password is not matched",
     "enterNewPass": "Enter New Password",
     "enterConfPass": "Enter Confirm Password",
     "resetPas": "Reset Password",
