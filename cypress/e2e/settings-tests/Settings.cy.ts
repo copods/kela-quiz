@@ -585,46 +585,44 @@ describe('Test for settings', () => {
       .click()
     cy.get('#Password-error').should('have.class', 'text-red-700')
   })
-  it('checking if toster showing correct message after successfully reset password and checking if by login in from reseted password', () => {
-    cy.get('a')
-      .find('#Settings', { timeout: 8000 })
-      .should('have.text', 'Settings')
-      .click()
-    cy.location('pathname', { timeout: 6000 }).should(
-      'include',
-      '/settings/general'
-    )
-    cy.get('.resetPassOpenPopUpLink')
-      .should('have.text', 'Click to change')
-      .click()
-    cy.get('#oldPassword', { timeout: 6000 })
-      .should('be.visible')
-      .clear()
-      .type('kQuiz@copods')
-    cy.get('#newPassword').should('be.visible').clear().type('kQuiz')
-    cy.get('#confirmNewPassword').should('be.visible').clear().type('kQuiz')
-    cy.get('[data-cy="submit"]')
-      .should('have.class', 'hover:bg-primaryHover')
-      .click()
-    cy.get('.Toastify__toast-body', { timeout: 6000 }).should(
-      'have.text',
-      'Password changed successfully !'
-    )
-    cy.get('#logout-button').should('be.visible').click()
-    cy.visit('/sign-in')
-    cy.get('input[name="email"]')
-      .focus()
-      .clear()
-      .type('careers@copods.co')
-      .should('have.value', cypress.email)
-    cy.get('input[name="password"]')
-      .focus()
-      .clear()
-      .type('kQuiz')
-      .should('have.value', 'kQuiz')
-    cy.get('[data-cy="submit"]').click()
-    cy.location('pathname').should('include', '/members')
-  })
+  // it('checking if toster showing correct message after successfully reset password and checking if by login in from reseted password', () => {
+  //   cy.get('a')
+  //     .find('#Settings', { timeout: 8000 })
+  //     .should('have.text', 'Settings')
+  //     .click()
+  //   cy.location('pathname', { timeout: 6000 }).should(
+  //     'include',
+  //     '/settings/general'
+  //   )
+  //   cy.get('.resetPassOpenPopUpLink')
+  //     .should('have.text', 'Click to change')
+  //     .click()
+  //   cy.get('#oldPassword', { timeout: 6000 })
+  //     .should('be.visible')
+  //     .clear()
+  //     .type('kQuiz@copods')
+  //   cy.get('#newPassword').should('be.visible').clear().type('kQuiz')
+  //   cy.get('#confirmNewPassword').should('be.visible').clear().type('kQuiz')
+  //   cy.get('[data-cy="submit"]')
+  //     .should('have.class', 'hover:bg-primaryHover')
+  //     .click()
+  //   cy.get('.Toastify__toast-body', { timeout: 6000 }).should(
+  //     'have.text',
+  //     'Password changed successfully !'
+  //   )
+  //   cy.get('#logout-button').should('be.visible').click()
+  //   cy.visit('/sign-in')
+  //   cy.get('input[name="email"]')
+  //     .focus()
+  //     .clear()
+  //     .type('careers@copods.co')
+  //     .should('have.value', cypress.email)
+  //   cy.get('input[name="password"]')
+  //     .focus()
+  //     .clear()
+  //     .type('kQuiz')
+  //     .should('have.value', 'kQuiz')
+  //   cy.get('[data-cy="submit"]').click()
+  //   cy.location('pathname').should('include', '/members')
+  // })
 })
-
-//Toastify__toast-body
