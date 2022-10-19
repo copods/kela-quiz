@@ -137,11 +137,11 @@ export default function AddMemberModal({
                   <h2
                     className="text-2xl font-bold text-gray-700"
                     tabIndex={0}
-                    title={t('members.addMember')}
-                    role={t('members.addMember')}
-                    aria-label={t('members.addMember')}
+                    title={t('members.inviteMember')}
+                    role={t('members.inviteMember')}
+                    aria-label={t('members.inviteMember')}
                   >
-                    {t('members.addMember')}
+                    {t('members.inviteMember')}
                   </h2>
                   <Icon
                     tabIndex={0}
