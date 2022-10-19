@@ -283,3 +283,19 @@ export const otpConstants = {
   resendCodeIn: 'Resend code in',
   otp: 'OTP',
 }
+export const settings = {
+  settings: 'Settings',
+  clickToChange: 'Click to change',
+  resetPas: 'Reset Password',
+  passNotMatch: 'Password is not matched',
+  enterNewPass: 'Enter New Password',
+  enterConfPass: 'Enter Confirm Password',
+  enterOldPassword: 'Enter Old Password',
+  enterNewPassword: 'Enter New Password',
+  confirmNewPassword: 'Confirm New Password',
+  maximumPasswordLimit: 'Password should have maximum 8 characters only',
+}
+export const tabs = {
+  general: 'General',
+  workspace: 'Workspaces',
+}

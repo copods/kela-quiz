@@ -269,3 +269,7 @@ export interface SectionWiseResults {
   section: SectionInCandidateTest
   test: Test
 }
+export interface TabsComponent {
+  name: string
+  route: string
+}

@@ -8,21 +8,21 @@ import Button from '../form/Button'
 import PasswordInputFields from '../form/PasswordInputField'
 
 const ResetPassword = ({
-  openResetPassPopUp,
-  setOpenResetPassPopUp,
+  openResetPassModel,
+  setOpenResetPassModel,
 }: {
-  openResetPassPopUp: boolean
-  setOpenResetPassPopUp: (e: boolean) => void
+  openResetPassModel: boolean
+  setOpenResetPassModel: (e: boolean) => void
 }) => {
   const { t } = useTranslation()
   const generalSettings = useActionData()
   useEffect(() => {
     if (generalSettings) {
       if (generalSettings === 'DONE') {
-        setOpenResetPassPopUp(false) //reset password popUp wil be closed automatically if action is success
+        setOpenResetPassModel(false) //reset password popUp wil be closed automatically if action is success
         toast.success(t('settings.passResetSuccessfully'))
       } else if (generalSettings.errors?.status === 400) {
-        setOpenResetPassPopUp(true) //reset password popUp remain open if action is failed
+        setOpenResetPassModel(true) //reset password popUp remain open if action is failed
       }
     }
   }, [generalSettings, t])
@@ -77,11 +77,11 @@ const ResetPassword = ({
 
   return (
     <div>
-      <Transition.Root show={openResetPassPopUp} as={Fragment}>
+      <Transition.Root show={openResetPassModel} as={Fragment}>
         <Dialog
           as="div"
           className="relative z-10"
-          onClose={() => setOpenResetPassPopUp(false)}
+          onClose={() => setOpenResetPassModel(false)}
         >
           <Transition.Child
             as={Fragment}
@@ -125,9 +125,9 @@ const ResetPassword = ({
                       className="cursor-pointer text-2xl text-gray-600"
                       icon={'carbon:close'}
                       onKeyUp={(e) => {
-                        if (e.key === 'Enter') setOpenResetPassPopUp(false)
+                        if (e.key === 'Enter') setOpenResetPassModel(false)
                       }}
-                      onClick={() => setOpenResetPassPopUp(false)}
+                      onClick={() => setOpenResetPassModel(false)}
                     />
                   </div>
                   <hr className="mt-4 mb-6 h-px w-full border-0 bg-gray-300" />

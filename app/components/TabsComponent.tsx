@@ -1,7 +1,8 @@
 import { useLocation } from '@remix-run/react'
 import { NavLink } from '@remix-run/react'
+import type { TabsComponent } from '~/interface/Interface'
 
-const TabComponent = ({ tab }: { tab: any }) => {
+const TabComponent = ({ tab }: { tab: TabsComponent }) => {
   const location = useLocation() // to get current location
 
   const isActive = location.pathname === tab.route // to get tabs path which would match with current location
