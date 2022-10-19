@@ -17,13 +17,12 @@ export const action: ActionFunction = async ({ request, params }) => {
   const userId = params.userId
   const enteredPassword = formData.get('enterPassword')
   const reEnteredPassword = formData.get('reEnterPassword')
-  let res = null
   if (enteredPassword === reEnteredPassword) {
     await createPasswordOfUser(userId as string, enteredPassword as string)
     return redirect(routes.signIn)
   }
   if (enteredPassword !== reEnteredPassword) {
-    res = 'not equal'
+    const res = 'not equal'
     return res
   }
 

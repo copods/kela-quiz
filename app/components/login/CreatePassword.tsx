@@ -12,8 +12,9 @@ const CreatePassword = ({
   const [enterPassword, setEnterPassword] = useState('')
   const [reEnterPassword, setReEnterPassword] = useState('')
   const { t } = useTranslation()
-  const inputFieldsPropsforEnterPassword = [
+  const inputFieldProps = [
     {
+      label: t('commonConstants.enterPassword'),
       placeholder: t('commonConstants.enterPassword'),
       type: 'text',
       name: 'enterPassword',
@@ -24,9 +25,9 @@ const CreatePassword = ({
         setEnterPassword(event?.target.value)
       },
     },
-  ]
-  const inputFieldsPropsforReEnterPassword = [
+
     {
+      label: t('commonConstants.reEnterPassword'),
       placeholder: t('commonConstants.reEnterPassword'),
       type: 'text',
       name: 'reEnterPassword',
@@ -41,31 +42,16 @@ const CreatePassword = ({
   ]
 
   return (
-    <div className="flex flex-1 items-center justify-center bg-gray-50">
-      <div className="flex w-full max-w-454 flex-col gap-12 rounded-md border border-gray-50 bg-white p-12  text-center drop-shadow-xl">
-        <div className="text-2xl font-bold">
+    <div className="flex flex-1 items-center justify-center overflow-auto bg-gray-50">
+      <div className="flex w-full max-w-454 flex-col gap-12 rounded-md border border-gray-50 bg-white p-12 drop-shadow-xl">
+        <div className="text-center text-2xl font-bold">
           {t('commonConstants.createPassword')}
         </div>
         <Form method="post" className="flex flex-col gap-12">
-          <div className="flex flex-col ">
-            <span className="flex justify-start  text-base text-gray-800">
-              {t('commonConstants.enterPassword')}
-            </span>
-            <div>
-              {inputFieldsPropsforEnterPassword.map((props) => {
-                return <InputField {...props} key={props.name} />
-              })}
-            </div>
-          </div>
-          <div className="flex flex-col">
-            <span className="flex justify-start text-base text-gray-800">
-              {t('commonConstants.reEnterPassword')}
-            </span>
-            <div>
-              {inputFieldsPropsforReEnterPassword.map((props) => {
-                return <InputField {...props} key={props.name} />
-              })}
-            </div>
+          <div className="flex flex-col gap-6">
+            {inputFieldProps.map((props) => {
+              return <InputField {...props} key={props.name} />
+            })}
           </div>
           <Button
             tabIndex={0}
