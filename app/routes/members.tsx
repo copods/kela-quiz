@@ -43,7 +43,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   const workspaces = await getUserWorkspaces(userId as string)
   const roles = await getAllRoles()
   if (!userId) return redirect(routes.signIn)
-  const users = await getAllUsers()
+  const users = await getAllUsers({ currentWorkspaceId })
   return json<LoaderData>({
     users,
     roles,
@@ -173,7 +173,7 @@ export const action: ActionFunction = async ({ request }) => {
 
     return deleteHandle
   }
-  return ''
+  return null
 }
 const Members = () => {
   const { t } = useTranslation()
