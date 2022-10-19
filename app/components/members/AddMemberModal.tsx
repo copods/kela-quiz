@@ -6,6 +6,7 @@ import { Fragment, useState, useEffect } from 'react'
 import Button from '../form/Button'
 import { trimValue } from '~/utils'
 import DropdownField from '../form/Dropdown'
+import InputField from '~/components/form/InputField'
 import { useTranslation } from 'react-i18next'
 
 export default function AddMemberModal({
@@ -47,6 +48,57 @@ export default function AddMemberModal({
     setFirstName('')
     setLastName('')
   }, [open])
+
+  const inputFieldsProps = [
+    {
+      label: t('members.firstName'),
+      placeholder: t('members.firstName'),
+      type: 'text',
+      name: 'firstName',
+      required: true,
+      value: firstName,
+      errorId: 'firstName-error',
+      onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
+        setFirstName(trimValue(event.target.value))
+      },
+    },
+    {
+      label: t('members.lastName'),
+      placeholder: t('members.lastName'),
+      type: 'text',
+      name: 'lastName',
+      required: true,
+      value: lastName,
+      errorId: 'lastName-error',
+      onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
+        setLastName(trimValue(event.target.value))
+      },
+    },
+    {
+      label: t('commonConstants.email'),
+      placeholder: t('commonConstants.email'),
+      type: 'text',
+      name: 'email',
+      required: true,
+      value: email,
+      errorId: 'email-error',
+      onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
+        setEmail(trimValue(event.target.value))
+      },
+    },
+    {
+      label: t('commonConstants.defaultWorkspaceName'),
+      placeholder: t('commonConstants.defaultWorkspaceName'),
+      type: 'text',
+      name: 'workspace',
+      required: true,
+      value: workspace,
+      errorId: 'workspace-error',
+      onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
+        defaultWorkspace(trimValue(event.target.value))
+      },
+    },
+  ]
   return (
     <div>
       <Transition.Root show={open} as={Fragment}>
@@ -104,73 +156,15 @@ export default function AddMemberModal({
                 <hr className="mt-4 mb-6 h-px w-full border-0 bg-gray-300" />
 
                 <div className="flex flex-col gap-6">
-                  <div className="flex justify-between gap-4">
-                    <div className="flex flex-1 flex-col gap-1.5">
-                      <label htmlFor="" className="text-gray-800">
-                        {t('members.firstName')}
-                      </label>
-                      <input
-                        tabIndex={0}
-                        id="firstName"
-                        type="text"
-                        name="firstName"
-                        className="h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
-                        placeholder={t('members.firstName')}
-                        onChange={(e) =>
-                          setFirstName(trimValue(e.target.value))
-                        }
-                        value={firstName}
-                        maxLength={40}
-                      />
-                    </div>
-                    <div className="flex flex-1 flex-col gap-1.5">
-                      <label htmlFor="" className="text-gray-800">
-                        {t('members.lastName')}
-                      </label>
-                      <input
-                        tabIndex={0}
-                        id="lastName"
-                        type="text"
-                        name="lastName"
-                        className="h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
-                        placeholder={t('members.lastName')}
-                        onChange={(e) => setLastName(trimValue(e.target.value))}
-                        value={lastName}
-                        maxLength={40}
-                      />
-                    </div>
+                  <div className="flex gap-6">
+                    {inputFieldsProps.slice(0, 2).map((props) => {
+                      return <InputField {...props} key={props.name} />
+                    })}
                   </div>
-                  <div className="flex flex-col gap-1.5">
-                    <label htmlFor="" className="text-gray-800">
-                      {t('commonConstants.email')}
-                    </label>
-                    <input
-                      tabIndex={0}
-                      id="email"
-                      type="text"
-                      name="email"
-                      className="h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
-                      placeholder={t('commonConstants.email')}
-                      onChange={(e) => setEmail(trimValue(e.target.value))}
-                    />
-                  </div>
-                  <div className="flex flex-col gap-1.5">
-                    <label htmlFor="" className="text-gray-800">
-                      {t('commonConstants.defaultWorkspaceName')}
-                    </label>
-                    <input
-                      tabIndex={0}
-                      id="workspaceName"
-                      type="text"
-                      data-cy="defaultWorkspaceName"
-                      name="workspace"
-                      className="h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
-                      placeholder={t('commonConstants.defaultWorkspaceName')}
-                      onChange={(e) =>
-                        defaultWorkspace(trimValue(e.target.value))
-                      }
-                      value={workspace}
-                    />
+                  <div className="flex flex-col gap-6">
+                    {inputFieldsProps.slice(2).map((props) => {
+                      return <InputField {...props} key={props.name} />
+                    })}
                   </div>
                   <div className="flex flex-col gap-1.5" id="add-member-modal">
                     <div>

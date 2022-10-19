@@ -42,23 +42,23 @@ export async function createUserBySignUp({
   firstName,
   lastName,
   email,
-  roleId,
+
   workspaceName,
 }: {
   firstName: string
   lastName: string
   email: string
-  workspaceName: any
-  roleId: string
+  workspaceName: string
 }) {
   const password = faker.internet.password()
   const hashedPassword = await bcrypt.hash(password, 10)
+  const roleId = await getAdminId()
   const user = await prisma.user.create({
     data: {
       firstName,
       lastName,
       email,
-      roleId,
+      roleId: roleId as string,
       password: {
         create: {
           hash: hashedPassword,
@@ -82,7 +82,6 @@ export async function createUserBySignUp({
       },
     },
   })
-
   await prisma.userWorkspace.create({
     data: {
       userId: user.id as string,
@@ -98,7 +97,7 @@ export async function createUserBySignUp({
     },
   })
 
-  return await sendMail(email, firstName, password, role?.name || 'NA')
+  return await sendMail(email, firstName, password, role?.name as string)
 }
 
 export async function createNewUser({
@@ -112,7 +111,7 @@ export async function createNewUser({
   firstName: string
   lastName: string
   email: string
-  workspaceName: any
+  workspaceName: string
   roleId: string
   createdById: User['id']
 }) {
@@ -178,7 +177,7 @@ export async function createNewUser({
     },
   })
 
-  return await sendMail(email, firstName, password, role?.name || 'NA')
+  return await sendMail(email, firstName, password, role?.name as string)
 }
 
 export async function reinviteMember({ id }: { id: string }) {

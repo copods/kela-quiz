@@ -80,6 +80,17 @@ export const action: ActionFunction = async ({ request }) => {
         { status: 400 }
       )
     }
+    if (typeof workspaceName !== 'string' || lastName.length === 0) {
+      return json<ActionData>(
+        {
+          errors: {
+            title: 'toastConstants.workspaceNameIsRequired',
+            status: 400,
+          },
+        },
+        { status: 400 }
+      )
+    }
     if (typeof email !== 'string' || email.length === 0) {
       return json<ActionData>(
         { errors: { title: 'toastConstants.emailRequired', status: 400 } },
