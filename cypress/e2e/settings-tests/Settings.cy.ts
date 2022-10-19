@@ -93,14 +93,14 @@ describe('Test for settings', () => {
       'include',
       '/settings/general'
     )
-    cy.get('#Workspace').should('have.text', tabs.workspace).click()
-    cy.get('#Workspace').within(() => {
+    cy.get('#Workspaces').should('have.text', tabs.workspace).click()
+    cy.get('#Workspaces').within(() => {
       cy.get('hr').should(
         'have.class',
         'h-1 w-full rounded-1 border-0 bg-primary'
       )
     })
-    cy.get('#Workspace').should('have.text', tabs.workspace).click()
+    cy.get('#Workspaces').should('have.text', tabs.workspace).click()
   })
   it('Checking workspace tab having correct text', () => {
     cy.get('a')
@@ -111,7 +111,7 @@ describe('Test for settings', () => {
       'include',
       '/settings/general'
     )
-    cy.get('#Workspace').should('have.text', tabs.workspace).click()
+    cy.get('#Workspaces').should('have.text', tabs.workspace).click()
   })
 
   it('Checking content heading in general tab having a correct classes', () => {
