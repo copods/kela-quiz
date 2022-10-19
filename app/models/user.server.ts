@@ -10,6 +10,7 @@ export type { User } from '@prisma/client'
 export async function getUserById(id: User['id']) {
   return prisma.user.findUnique({ where: { id } })
 }
+
 export async function deleteUserById(id: string) {
   try {
     return await prisma.user.delete({ where: { id } })
@@ -29,12 +30,14 @@ export async function getAllUsers() {
 export async function getAllRoles() {
   return prisma.role.findMany()
 }
+
 //To get roleId of Admin role
 export async function getAdminId() {
   const roleName = 'Admin'
   const role = await prisma.role.findUnique({ where: { name: roleName } })
   return role?.id
 }
+
 export async function createUserBySignUp({
   firstName,
   lastName,
@@ -226,6 +229,7 @@ export async function sendResetPassword(email: string) {
     return null
   }
 }
+
 export async function loginVerificationResponse(
   email: User['email'],
   password: Password['hash']
@@ -250,6 +254,7 @@ export async function loginVerificationResponse(
   const { password: _password, ...userWithoutPassword } = userWithPassword
   return userWithoutPassword
 }
+
 export async function getDefaultWorkspaceIdForUserQuery(userId: string) {
   return prisma.user.findUnique({
     where: { id: userId },

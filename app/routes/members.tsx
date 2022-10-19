@@ -54,7 +54,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 }
 
 export const action: ActionFunction = async ({ request }) => {
-  const createdById = await requireUserId(request) //fetching id of user who's creating this users
+  const userId = await requireUserId(request) //fetching id of user who's creating this users
   const formData = await request.formData()
   const action = JSON.parse(formData.get('addMember') as string)
     ? JSON.parse(formData.get('addMember') as string)
@@ -105,7 +105,7 @@ export const action: ActionFunction = async ({ request }) => {
       firstName,
       lastName,
       email,
-      createdById,
+      createdById: userId,
       roleId,
       workspaceName,
     })
