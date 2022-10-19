@@ -250,6 +250,8 @@ export interface SectionWiseResults {
   totalQuestion: number
   correctQuestion: number
   unanswered: number
+  skipped: number
+  incorrect: number
   testId: string
   candidateTestId: string
   createdAt: Date
