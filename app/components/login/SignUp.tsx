@@ -96,9 +96,9 @@ const SignUp = () => {
           <h2
             className="text-center text-3xl font-bold text-gray-900"
             tabIndex={0}
-            title={t('members.addMember')}
-            role={t('members.addMember')}
-            aria-label={t('members.addMember')}
+            title={t('logIn.signUp')}
+            role={t('logIn.signUp')}
+            aria-label={t('logIn.signUp')}
           >
             {t('logIn.signUp')}
           </h2>

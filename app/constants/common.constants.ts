@@ -48,7 +48,7 @@ export const candidateHeader = {
   headerHeading: 'Quiz',
 }
 export const members = {
-  addMember: 'Add Member',
+  inviteMembers: 'Invite Member',
   firstName: 'First Name',
   lastName: ' Last Name',
   name: 'Name',
@@ -250,7 +250,7 @@ export const cypress = {
   back: 'Back',
   duplicateTitle: 'Duplicate Title',
   saveAndAddMore: 'Save & Add More',
-  addMember: 'Add Member',
+  addMember: 'Invite Member',
   name: 'Name',
   description: 'Description',
   totalTime: 'Total Time',

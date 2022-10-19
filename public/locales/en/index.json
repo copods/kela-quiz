@@ -1,6 +1,6 @@
 {
   "members": {
-    "addMember": "Add Member",
+    "inviteMember": "Invite Member",
     "firstName": "First Name",
     "lastName": " Last Name",
     "role": "Role",
