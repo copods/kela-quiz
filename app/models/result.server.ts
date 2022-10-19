@@ -176,6 +176,8 @@ export async function getSectionWiseResultsOfIndividualCandidate({
       totalQuestion: true,
       correctQuestion: true,
       unanswered: true,
+      incorrect: true,
+      skipped: true,
     },
   })
 }

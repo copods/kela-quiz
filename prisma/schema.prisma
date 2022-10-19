@@ -264,6 +264,8 @@ model CandidateResult {
   totalQuestion   Int
   correctQuestion Int
   unanswered      Int
+  incorrect       Int? @default(0)
+  skipped         Int? @default(0)
 
   // easier access of test and results
   test        Test       @relation(fields: [testId], references: [id])
@@ -282,6 +284,8 @@ model SectionWiseResult {
   totalQuestion            Int
   correctQuestion          Int
   unanswered               Int
+  incorrect                Int?                   @default(0)
+  skipped                  Int?                   @default(0)
 
   // easier access of test and results
   test   Test   @relation(fields: [testId], references: [id])
