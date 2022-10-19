@@ -70,11 +70,9 @@ export async function createUserBySignUp({
         },
       },
     },
-  })
-
-  const workspaceId = await prisma.user.findUnique({
-    where: { id: user?.id },
     select: {
+      id: true,
+      roleId: true,
       workspace: {
         select: {
           id: true,
@@ -82,10 +80,11 @@ export async function createUserBySignUp({
       },
     },
   })
+
   await prisma.userWorkspace.create({
     data: {
       userId: user.id as string,
-      workspaceId: workspaceId?.workspace[0]?.id as string,
+      workspaceId: user.workspace[0].id,
       roleId: user?.roleId,
       isDefault: true,
     },
@@ -128,16 +127,16 @@ export async function createNewUser({
           hash: hashedPassword,
         },
       },
+
       workspace: {
         create: {
           name: workspaceName,
         },
       },
     },
-  })
-  const workspaceId = await prisma.user.findUnique({
-    where: { id: user?.id },
     select: {
+      id: true,
+      roleId: true,
       workspace: {
         select: {
           id: true,
@@ -145,10 +144,11 @@ export async function createNewUser({
       },
     },
   })
+
   await prisma.userWorkspace.create({
     data: {
       userId: user.id as string,
-      workspaceId: workspaceId?.workspace[0]?.id as string,
+      workspaceId: user.workspace[0].id,
       roleId: user?.roleId,
       isDefault: true,
     },
