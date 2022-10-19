@@ -170,7 +170,7 @@ export async function getSectionWiseResultsOfIndividualCandidate({
       correctQuestion: true,
       unanswered: true,
       incorrect: true,
-      skipped: true
+      skipped: true,
     },
   })
 }

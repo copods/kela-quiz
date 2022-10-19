@@ -460,8 +460,8 @@ export async function skipAnswerAndNextQuestion({
           selectedOptions?.length || answers?.length
             ? 'ANSWERED'
             : question?.status === 'ANSWERED'
-              ? 'ANSWERED'
-              : 'SKIPPED',
+            ? 'ANSWERED'
+            : 'SKIPPED',
         answeredAt: new Date(),
       },
       select: {
@@ -643,7 +643,8 @@ async function calculateResult(id: CandidateTest['id']) {
           // counting unanswered questions
           if (
             question?.answers.length == 0 &&
-            question?.selectedOptions?.length == 0 && question.status != 'SKIPPED'
+            question?.selectedOptions?.length == 0 &&
+            question.status != 'SKIPPED'
           ) {
             unanswered += 1
             continue
