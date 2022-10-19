@@ -25,7 +25,19 @@ const SectionCardForResultDetail = ({
           <span className="font-medium text-green-600">{correctQuestions}</span>
         </div>
         <div className="flex gap-2 text-sm">
+          <span className="text-gray-500">
+            {t('resultConstants.incorrect')}:
+          </span>
+          <span className="font-medium text-red-600">{incorrectQuestions}</span>
+        </div>
+        <div className="flex gap-2 text-sm">
           <span className="text-gray-500">{t('resultConstants.skipped')}:</span>
+          <span className="font-medium text-zinc-600">{skippedQuestions}</span>
+        </div>
+        <div className="flex gap-2 text-sm">
+          <span className="text-gray-500">
+            {t('resultConstants.unanswered')}:
+          </span>
           <span className="font-medium text-yellow-600">
             {unansweredQuestions}
           </span>
