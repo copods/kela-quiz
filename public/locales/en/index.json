@@ -169,6 +169,8 @@
     "startedAt": "Started At",
     "correct": "Correct",
     "skipped": "Skipped",
+    "unanswered": "Unanswered",
+    "incorrect": "Incorrect",
     "total": "Total"
   },
   "forgotPasswordConstants": {
