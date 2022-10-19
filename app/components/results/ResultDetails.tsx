@@ -53,7 +53,9 @@ const ResultDetailsComponent = () => {
               name={section?.section?.section?.name}
               totalQuestions={section?.totalQuestion}
               correctQuestions={section?.correctQuestion}
-              skippedQuestions={section?.unanswered}
+              skippedQuestions={section?.skipped}
+              incorrectQuestions={section?.incorrect}
+              unansweredQuestions={section?.unanswered}
             />
           )
         })}

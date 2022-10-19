@@ -460,8 +460,8 @@ export async function skipAnswerAndNextQuestion({
           selectedOptions?.length || answers?.length
             ? 'ANSWERED'
             : question?.status === 'ANSWERED'
-            ? 'ANSWERED'
-            : 'SKIPPED',
+              ? 'ANSWERED'
+              : 'SKIPPED',
         answeredAt: new Date(),
       },
       select: {
@@ -602,6 +602,8 @@ async function calculateResult(id: CandidateTest['id']) {
   let totalQuestionInTest = 0
   let unansweredInTest = 0
   let correctInTest = 0
+  let skippedInTest = 0
+  let incorrectInTest = 0
 
   if (candidateTest) {
     for (let sec of candidateTest?.sections || []) {
@@ -635,13 +637,20 @@ async function calculateResult(id: CandidateTest['id']) {
           : 0
         let unanswered = 0
         let correct = 0
+        let incorrect = 0
+        let skipped = 0
         for (let question of section?.questions || []) {
           // counting unanswered questions
           if (
             question?.answers.length == 0 &&
-            question?.selectedOptions?.length == 0
+            question?.selectedOptions?.length == 0 && question.status != 'SKIPPED'
           ) {
             unanswered += 1
+            continue
+          }
+
+          if (question.status == 'SKIPPED') {
+            skipped += 1
             continue
           }
 
@@ -662,6 +671,8 @@ async function calculateResult(id: CandidateTest['id']) {
               }
               if (correctFlag) {
                 correct += 1
+              } else {
+                incorrect += 1
               }
             }
           } else if (
@@ -672,6 +683,8 @@ async function calculateResult(id: CandidateTest['id']) {
               question?.question?.correctOptions[0].id
             ) {
               correct += 1
+            } else {
+              incorrect += 1
             }
           } else if (
             question?.question?.questionType?.value == 'MULTIPLE_CHOICE'
@@ -682,17 +695,20 @@ async function calculateResult(id: CandidateTest['id']) {
             const userAnswers = question.selectedOptions
               ?.flatMap((opt) => opt.id)
               .sort()
+            let correctFlag = false
             if (correctOptionsId?.length == userAnswers?.length) {
-              let correctFlag = true
+              correctFlag = true
               for (let i = 0; i < correctOptionsId?.length; i++) {
                 if (correctOptionsId[i].localeCompare(userAnswers[i]) != 0) {
                   correctFlag = false
                   break
                 }
               }
-              if (correctFlag) {
-                correct += 1
-              }
+            }
+            if (correctFlag) {
+              correct += 1
+            } else {
+              incorrect += 1
             }
           }
         }
@@ -700,6 +716,8 @@ async function calculateResult(id: CandidateTest['id']) {
         totalQuestionInTest += totalQuestion
         unansweredInTest += unanswered
         correctInTest += correct
+        skippedInTest += skipped
+        incorrectInTest += incorrect
 
         const sectionResult = await prisma.candidateResult.findFirst({
           where: {
@@ -714,6 +732,8 @@ async function calculateResult(id: CandidateTest['id']) {
               totalQuestion,
               correctQuestion: correct,
               unanswered,
+              skipped,
+              incorrect,
               testId: candidateTest?.testId,
               candidateTestId: candidateTest?.id,
             },
@@ -735,6 +755,8 @@ async function calculateResult(id: CandidateTest['id']) {
           totalQuestion: totalQuestionInTest,
           correctQuestion: correctInTest,
           unanswered: unansweredInTest,
+          skipped: skippedInTest,
+          incorrect: incorrectInTest,
           testId: candidateTest?.testId,
           isQualified: false,
         },
