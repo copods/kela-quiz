@@ -153,7 +153,7 @@ export const action: ActionFunction = async ({ request }) => {
     let resendHandle = null
     await reinviteMember({
       id: id as string,
-    }).then((res) => {
+    }).then(() => {
       resendHandle = json<ActionData>(
         {
           resp: {

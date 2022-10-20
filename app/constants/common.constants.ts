@@ -237,7 +237,7 @@ export const candidateExamConstants = {
   candidateInsWelcome: 'Welcome',
 }
 export const cypress = {
-  email: 'careers@copods.co',
+  email: 'copods.demo.sendgrid@gmail.com',
   password: 'kQuiz@copods',
   step1: 'Step 1',
   step2: 'Step 2',

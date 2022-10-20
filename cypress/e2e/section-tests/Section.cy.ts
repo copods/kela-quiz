@@ -14,7 +14,7 @@ describe('Test for Section', () => {
     cy.get('input[name="email"]')
       .focus()
       .clear()
-      .type('careers@copods.co')
+      .type('copods.demo.sendgrid@gmail.com')
       .should('have.value', cypress.email)
     cy.get('input[name="password"]')
       .focus()
