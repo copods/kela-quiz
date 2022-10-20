@@ -11,6 +11,7 @@ export type ActionData = {
     valid?: string
     passNotMatched?: string
     maximumPasswordLimit?: string
+    passShouldNotBeSame?: string
     error?: string
   }
   resp?: {
@@ -50,19 +51,29 @@ export const action: ActionFunction = async ({ request }) => {
         { status: 400 }
       )
     }
-    if (typeof newPassword !== 'string' || newPassword.length > 8) {
+    if (typeof newPassword !== 'string' || newPassword.length < 8) {
       // checking newly entered password should be less than 8 characters
       return json<ActionData>(
         {
           errors: {
-            maximumPasswordLimit: 'settings.maximumPasswordLimit',
+            maximumPasswordLimit: 'settings.minPasswordLimit',
             status: 400,
           },
         },
         { status: 400 }
       )
     }
-
+    if (newPassword === oldPassword) {
+      return json<ActionData>(
+        {
+          errors: {
+            passShouldNotBeSame: 'settings.passShouldNotBeSame',
+            status: 400,
+          },
+        },
+        { status: 400 }
+      )
+    }
     if (newPassword === confirmPasword) {
       // new password will be update if this condition is true
       const general = await updatePassword(

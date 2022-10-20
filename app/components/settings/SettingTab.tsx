@@ -9,7 +9,7 @@ const SettingsTabs = () => {
       route: '/settings/general',
     },
     {
-      name: t('tabs.workspace'),
+      name: t('tabs.workspaces'),
       route: '/settings/workspace',
     },
   ]

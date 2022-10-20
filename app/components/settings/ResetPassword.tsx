@@ -25,7 +25,7 @@ const ResetPassword = ({
         setOpenResetPassModel(true) //reset password popUp remain open if action is failed
       }
     }
-  }, [generalSettings, t])
+  }, [generalSettings, setOpenResetPassModel, t])
   const transition = useTransition()
 
   const [password, setPassword] = useState('')
@@ -48,21 +48,23 @@ const ResetPassword = ({
       },
     },
     {
-      label: t('settings.enterNewPassword'),
-      placeholder: t('settings.enterNewPassword'),
+      label: t('settings.enterNewPass'),
+      placeholder: t('settings.enterNewPass'),
       name: 'newPassword',
       required: true,
       type: 'password',
       value: newPassword,
-      error: generalSettings?.errors?.maximumPasswordLimit,
+      error:
+        generalSettings?.errors?.maximumPasswordLimit ||
+        generalSettings?.errors?.passShouldNotBeSame,
       errorId: 'New-password-error',
       onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
         setNewPassword(event?.target.value)
       },
     },
     {
-      label: t('settings.confirmNewPassword'),
-      placeholder: t('settings.confirmNewPassword'),
+      label: t('settings.reEnterPass'),
+      placeholder: t('settings.reEnterPass'),
       name: 'confirmNewPassword',
       required: true,
       type: 'password',

@@ -239,24 +239,23 @@
     "otp": "OTP"
   },
   "settings": {
-    "passNotMatch": "Password is not matched",
+    "passNotMatch": "Password does not match",
     "enterNewPass": "Enter New Password",
-    "enterConfPass": "Enter Confirm Password",
+    "reEnterPass": "Re-Enter Password",
     "resetPas": "Reset Password",
     "attentionToDetail": "Attention to detail",
     "password": "Password",
     "clickToChange": "Click to change",
     "passResetting": "Resetting",
     "enterOldPassword": "Enter Old Password",
-    "enterNewPassword": "Enter New Password",
-    "confirmNewPassword": "Confirm New Password",
     "passResetSuccessfully": "Password changed successfully !",
     "version": "Version 1.0.0",
     "basicInfo": "Basic Info",
-    "maximumPasswordLimit": "Password should have maximum 8 characters only"
+    "minPasswordLimit": "Password should have minimum 8 characters only",
+    "passShouldNotBeSame": "Your current password and Re-Entered password is same"
   },
   "tabs": {
     "general": "General",
-    "workspace": "Workspaces"
+    "workspaces": "Workspaces"
   }
 }

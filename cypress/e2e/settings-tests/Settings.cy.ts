@@ -214,7 +214,7 @@ describe('Test for settings', () => {
       .click()
     cy.get('.input-container-wrapper').should('have.css', `gap`, `24px`)
   })
-  it('Checking reset password pop up old password input field have focus', () => {
+  it('Checking reset password pop up old password input field Should have focus on clicking on it or selecting it', () => {
     cy.get('a')
       .find('#Settings', { timeout: 8000 })
       .should('have.text', settings.settings)
@@ -229,7 +229,7 @@ describe('Test for settings', () => {
     cy.get('#resetPassword-pop-up-model').should('be.visible')
     cy.get('#oldPassword', { timeout: 6000 }).click().should('be.focused')
   })
-  it('Checking reset password pop up new password input field have focus', () => {
+  it('Checking reset password pop up new password input field Should have focus on clicking on it or selecting it', () => {
     cy.get('a')
       .find('#Settings', { timeout: 8000 })
       .should('have.text', settings.settings)
@@ -244,7 +244,7 @@ describe('Test for settings', () => {
     cy.get('#resetPassword-pop-up-model').should('be.visible')
     cy.get('#newPassword').should('be.visible').click().should('be.focused')
   })
-  it('Checking reset password pop up confirm password input field have focus', () => {
+  it('Checking reset password pop up confirm password input field Should have focus on clicking on it or selecting it', () => {
     cy.get('a')
       .find('#Settings', { timeout: 8000 })
       .should('have.text', settings.settings)
@@ -313,7 +313,7 @@ describe('Test for settings', () => {
       .parent()
       .parent()
       .within(() => {
-        cy.get('label').should('have.text', settings.confirmNewPassword)
+        cy.get('label').should('have.text', settings.reEnterPass)
       })
   })
   it('Checking reset password pop up old password label have correct classes', () => {
@@ -488,63 +488,7 @@ describe('Test for settings', () => {
       .click()
     cy.get('#Confirm-password-error').should('have.class', 'text-red-700')
   })
-  it('Checking if new password and confirm password input fields input values matched but total charactes are more than 8', () => {
-    cy.get('a')
-      .find('#Settings', { timeout: 8000 })
-      .should('have.text', settings.settings)
-      .click()
-    cy.location('pathname', { timeout: 6000 }).should(
-      'include',
-      '/settings/general'
-    )
-    cy.get('.resetPassOpenPopUpLink')
-      .should('have.text', settings.clickToChange)
-      .click()
-    cy.get('#oldPassword', { timeout: 6000 })
-      .should('be.visible')
-      .clear()
-      .type('password')
-    cy.get('#newPassword').should('be.visible').clear().type('kQuiz@careers')
-    cy.get('#confirmNewPassword')
-      .should('be.visible')
-      .clear()
-      .type('kQuiz@careers')
-    cy.get('[data-cy="submit"]')
-      .should('have.class', 'hover:bg-primaryHover')
-      .click()
-    cy.get('#New-password-error').should(
-      'have.text',
-      settings.maximumPasswordLimit
-    )
-  })
-
-  it('Checking classes of error text if new password and confirm password input fields input values matched but total charactes are more than 8', () => {
-    cy.get('a')
-      .find('#Settings', { timeout: 8000 })
-      .should('have.text', settings.settings)
-      .click()
-    cy.location('pathname', { timeout: 6000 }).should(
-      'include',
-      '/settings/general'
-    )
-    cy.get('.resetPassOpenPopUpLink')
-      .should('have.text', settings.clickToChange)
-      .click()
-    cy.get('#oldPassword', { timeout: 6000 })
-      .should('be.visible')
-      .clear()
-      .type('password')
-    cy.get('#newPassword').should('be.visible').clear().type('kQuiz@careers')
-    cy.get('#confirmNewPassword')
-      .should('be.visible')
-      .clear()
-      .type('kQuiz@careers')
-    cy.get('[data-cy="submit"]')
-      .should('have.class', 'hover:bg-primaryHover')
-      .click()
-    cy.get('#New-password-error').should('have.class', 'text-red-700')
-  })
-  it('Checking if old password is not matched filled input field then throwing a error', () => {
+  it('Checking if new password and confirm password input fields input values matched but total charactes are less than 8', () => {
     cy.get('a')
       .find('#Settings', { timeout: 8000 })
       .should('have.text', settings.settings)
@@ -562,6 +506,33 @@ describe('Test for settings', () => {
       .type('password')
     cy.get('#newPassword').should('be.visible').clear().type('kQuiz')
     cy.get('#confirmNewPassword').should('be.visible').clear().type('kQuiz')
+    cy.get('[data-cy="submit"]')
+      .should('have.class', 'hover:bg-primaryHover')
+      .click()
+    cy.get('#New-password-error').should('have.text', settings.minPasswordLimit)
+  })
+
+  it('Checking if old password is not matched filled input field then throwing a error', () => {
+    cy.get('a')
+      .find('#Settings', { timeout: 8000 })
+      .should('have.text', settings.settings)
+      .click()
+    cy.location('pathname', { timeout: 6000 }).should(
+      'include',
+      '/settings/general'
+    )
+    cy.get('.resetPassOpenPopUpLink')
+      .should('have.text', settings.clickToChange)
+      .click()
+    cy.get('#oldPassword', { timeout: 6000 })
+      .should('be.visible')
+      .clear()
+      .type('password')
+    cy.get('#newPassword').should('be.visible').clear().type('kQuiz@copods')
+    cy.get('#confirmNewPassword')
+      .should('be.visible')
+      .clear()
+      .type('kQuiz@copods')
     cy.get('[data-cy="submit"]')
       .should('have.class', 'hover:bg-primaryHover')
       .click()
@@ -583,51 +554,87 @@ describe('Test for settings', () => {
       .should('be.visible')
       .clear()
       .type('password')
-    cy.get('#newPassword').should('be.visible').clear().type('kQuiz')
-    cy.get('#confirmNewPassword').should('be.visible').clear().type('kQuiz')
+    cy.get('#newPassword').should('be.visible').clear().type('kQuiz@copods')
+    cy.get('#confirmNewPassword')
+      .should('be.visible')
+      .clear()
+      .type('kQuiz@copods')
     cy.get('[data-cy="submit"]')
       .should('have.class', 'hover:bg-primaryHover')
       .click()
     cy.get('#Password-error').should('have.class', 'text-red-700')
   })
-  // it('checking if toster showing correct message after successfully reset password and checking if by login in from reseted password', () => {
-  //   cy.get('a')
-  //     .find('#Settings', { timeout: 8000 })
-  //     .should('have.text', 'Settings')
-  //     .click()
-  //   cy.location('pathname', { timeout: 6000 }).should(
-  //     'include',
-  //     '/settings/general'
-  //   )
-  //   cy.get('.resetPassOpenPopUpLink')
-  //     .should('have.text', 'Click to change')
-  //     .click()
-  //   cy.get('#oldPassword', { timeout: 6000 })
-  //     .should('be.visible')
-  //     .clear()
-  //     .type('kQuiz@copods')
-  //   cy.get('#newPassword').should('be.visible').clear().type('kQuiz')
-  //   cy.get('#confirmNewPassword').should('be.visible').clear().type('kQuiz')
-  //   cy.get('[data-cy="submit"]')
-  //     .should('have.class', 'hover:bg-primaryHover')
-  //     .click()
-  //   cy.get('.Toastify__toast-body', { timeout: 6000 }).should(
-  //     'have.text',
-  //     'Password changed successfully !'
-  //   )
-  //   cy.get('#logout-button').should('be.visible').click()
-  //   cy.visit('/sign-in')
-  //   cy.get('input[name="email"]')
-  //     .focus()
-  //     .clear()
-  //     .type('careers@copods.co')
-  //     .should('have.value', cypress.email)
-  //   cy.get('input[name="password"]')
-  //     .focus()
-  //     .clear()
-  //     .type('kQuiz')
-  //     .should('have.value', 'kQuiz')
-  //   cy.get('[data-cy="submit"]').click()
-  //   cy.location('pathname').should('include', '/members')
-  // })
+  it('Checking if new password and old password is same then throwing a error', () => {
+    cy.get('a')
+      .find('#Settings', { timeout: 8000 })
+      .should('have.text', settings.settings)
+      .click()
+    cy.location('pathname', { timeout: 6000 }).should(
+      'include',
+      '/settings/general'
+    )
+    cy.get('.resetPassOpenPopUpLink')
+      .should('have.text', settings.clickToChange)
+      .click()
+    cy.get('#oldPassword', { timeout: 6000 })
+      .should('be.visible')
+      .clear()
+      .type('kQuiz@copods')
+    cy.get('#newPassword').should('be.visible').clear().type('kQuiz@copods')
+    cy.get('#confirmNewPassword')
+      .should('be.visible')
+      .clear()
+      .type('kQuiz@copods')
+    cy.get('[data-cy="submit"]')
+      .should('have.class', 'hover:bg-primaryHover')
+      .click()
+    cy.get('#New-password-error').should(
+      'have.text',
+      settings.passShouldNotBeSame
+    )
+  })
+  it('checking if toster showing correct message after successfully reset password and checking if by login in from reseted password', () => {
+    cy.get('a')
+      .find('#Settings', { timeout: 8000 })
+      .should('have.text', 'Settings')
+      .click()
+    cy.location('pathname', { timeout: 6000 }).should(
+      'include',
+      '/settings/general'
+    )
+    cy.get('.resetPassOpenPopUpLink')
+      .should('have.text', 'Click to change')
+      .click()
+    cy.get('#oldPassword', { timeout: 6000 })
+      .should('be.visible')
+      .clear()
+      .type('kQuiz@copods')
+    cy.get('#newPassword').should('be.visible').clear().type('kQuiz@careers')
+    cy.get('#confirmNewPassword')
+      .should('be.visible')
+      .clear()
+      .type('kQuiz@careers')
+    cy.get('[data-cy="submit"]')
+      .should('have.class', 'hover:bg-primaryHover')
+      .click()
+    cy.get('.Toastify__toast-body', { timeout: 6000 }).should(
+      'have.text',
+      'Password changed successfully !'
+    )
+    cy.get('.resetPassOpenPopUpLink')
+      .should('have.text', 'Click to change')
+      .click()
+    cy.get('#oldPassword', { timeout: 6000 })
+      .should('be.visible')
+      .clear()
+      .type('kQuiz@careers')
+    cy.get('#newPassword').should('be.visible').clear().type('kQuiz@copods')
+    cy.get('#confirmNewPassword')
+      .should('be.visible')
+      .clear()
+      .type('kQuiz@copods')
+    cy.get('[data-cy="submit"]')
+      .should('have.class', 'hover:bg-primaryHover')
+      .click()
+  })
 })

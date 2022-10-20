@@ -287,13 +287,12 @@ export const settings = {
   settings: 'Settings',
   clickToChange: 'Click to change',
   resetPas: 'Reset Password',
-  passNotMatch: 'Password is not matched',
+  passNotMatch: 'Password does not match',
   enterNewPass: 'Enter New Password',
-  enterConfPass: 'Enter Confirm Password',
+  reEnterPass: 'Re-Enter Password',
   enterOldPassword: 'Enter Old Password',
-  enterNewPassword: 'Enter New Password',
-  confirmNewPassword: 'Confirm New Password',
-  maximumPasswordLimit: 'Password should have maximum 8 characters only',
+  minPasswordLimit: 'Password should have minimum 8 characters only',
+  passShouldNotBeSame: "Your current password and Re-Entered password is same"
 }
 export const tabs = {
   general: 'General',
