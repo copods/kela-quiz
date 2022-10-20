@@ -16,7 +16,16 @@ type LoaderData = {
   sections: Awaited<ReturnType<typeof getAllSections>>
   status: string
 }
-
+export type ActionData = {
+  errors?: {
+    title: string
+    status: number
+  }
+  resp?: {
+    title: string
+    status: number
+  }
+}
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await getUserId(request)
   if (!userId) return redirect(routes.signIn)
@@ -59,29 +68,43 @@ export const action: ActionFunction = async ({ request }) => {
   let test = null
   await createTest(createdById, JSON.parse(data))
     .then((res) => {
-      test = res
+      test = json<ActionData>(
+        { resp: { title: 'statusCheck.testAddedSuccessFully', status: 200 } },
+        { status: 200 }
+      )
     })
     .catch((err) => {
-      test = err
+      let title = 'statusCheck.commonError'
+      if (err.code === 'P2002') {
+        title = 'statusCheck.testAlreadyExist'
+      }
+      test = json<ActionData>(
+        {
+          errors: {
+            title,
+            status: 400,
+          },
+        },
+        { status: 400 }
+      )
     })
-  return json<any>({ test }, { status: 202 })
+  return test
 }
 
 const AddTest = () => {
   const { t } = useTranslation()
-
   const testData = useLoaderData() as unknown as LoaderData
   const actionData = useActionData() as any
   const navigate = useNavigate()
   useEffect(() => {
-    if (actionData?.test.id) {
-      toast.success(t('statusCheck.testAddedSuccessFully'))
-      navigate(routes.tests)
-    } else if (actionData) {
-      if (actionData?.test.code == 'P2002') {
-        toast.error(t('statusCheck.testAlreadyExist'))
-      } else {
-        toast.error(t('statusCheck.commonError'))
+    if (actionData) {
+      if (actionData.resp?.status === 200) {
+        navigate(routes.tests)
+        toast.success(t(actionData.resp?.title))
+      } else if (actionData.errors?.status === 400) {
+        toast.error(t(actionData.errors?.title), {
+          toastId: actionData.errors?.title,
+        })
       }
     }
   }, [actionData, navigate, t])

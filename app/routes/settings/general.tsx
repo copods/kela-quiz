@@ -52,7 +52,7 @@ export const action: ActionFunction = async ({ request }) => {
       )
     }
     if (typeof newPassword !== 'string' || newPassword.length < 8) {
-      // checking newly entered password should be less than 8 characters
+      // checking if newly entered password is less than 8 characters then throws error
       return json<ActionData>(
         {
           errors: {
@@ -64,6 +64,7 @@ export const action: ActionFunction = async ({ request }) => {
       )
     }
     if (newPassword === oldPassword) {
+      // checking if current and newly entered password is same then throwing a error
       return json<ActionData>(
         {
           errors: {

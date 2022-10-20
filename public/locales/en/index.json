@@ -251,7 +251,7 @@
     "passResetSuccessfully": "Password changed successfully !",
     "version": "Version 1.0.0",
     "basicInfo": "Basic Info",
-    "minPasswordLimit": "Password should have minimum 8 characters only",
+    "minPasswordLimit": "Password should have minimum 8 characters",
     "passShouldNotBeSame": "Your current password and Re-Entered password is same"
   },
   "tabs": {

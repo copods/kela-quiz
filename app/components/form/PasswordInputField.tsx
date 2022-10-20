@@ -14,7 +14,7 @@ const PasswordInputFields = ({
   onChange,
 }: PasswordFieldProps) => {
   const { t } = useTranslation()
-  const [passwordType, setPasswordType] = useState(false)
+  const [password, showPassword] = useState(false)
   return (
     <div className="flex flex-col gap-1.5">
       <label htmlFor={name} className="text-gray-800">
@@ -23,7 +23,7 @@ const PasswordInputFields = ({
       <div className="flex rounded-lg border border-gray-200">
         <input
           id={name}
-          type={passwordType ? 'text' : 'password'}
+          type={password ? 'text' : 'password'}
           name={name}
           placeholder={placeholder}
           required={required}
@@ -34,9 +34,9 @@ const PasswordInputFields = ({
         <button
           type="button"
           className="btn btn-outline-primary absolute right-0 left-auto mr-10 mt-2.5"
-          onClick={() => setPasswordType(!passwordType)}
+          onClick={() => showPassword(!password)}
         >
-          {passwordType ? (
+          {password ? (
             <Icon icon="codicon:eye" className="text-xl text-gray-500 " />
           ) : (
             <Icon

@@ -291,7 +291,7 @@ export const settings = {
   enterNewPass: 'Enter New Password',
   reEnterPass: 'Re-Enter Password',
   enterOldPassword: 'Enter Old Password',
-  minPasswordLimit: 'Password should have minimum 8 characters only',
+minPasswordLimit: 'Password should have minimum 8 characters',
   passShouldNotBeSame: 'Your current password and Re-Entered password is same',
 }
 export const tabs = {
