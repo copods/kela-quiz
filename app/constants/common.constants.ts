@@ -237,7 +237,7 @@ export const candidateExamConstants = {
   candidateInsWelcome: 'Welcome',
 }
 export const cypress = {
-  email: 'careers@copods.co',
+  email: 'copods.demo.sendgrid@gmail.com',
   password: 'kQuiz@copods',
   step1: 'Step 1',
   step2: 'Step 2',
@@ -292,7 +292,7 @@ export const settings = {
   reEnterPass: 'Re-Enter Password',
   enterOldPassword: 'Enter Old Password',
   minPasswordLimit: 'Password should have minimum 8 characters only',
-  passShouldNotBeSame: "Your current password and Re-Entered password is same"
+  passShouldNotBeSame: 'Your current password and Re-Entered password is same',
 }
 export const tabs = {
   general: 'General',
