@@ -2,7 +2,7 @@ import { logIn, toastConstants } from '~/constants/common.constants'
 
 const firstName = 'John'
 const lastName = 'Doe'
-const memberEmail = 'johndoe@example.com'
+const memberEmail = 'john@example.com'
 const workspaceName = 'Copods workspace'
 
 describe('Test for Sign Up page', () => {
