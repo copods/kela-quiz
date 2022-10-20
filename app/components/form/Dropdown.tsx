@@ -82,7 +82,7 @@ function DropdownField({
                     value="Add Workspace"
                     onClick={() => {
                       setOpen && setOpen(true)
-                      setValue(data[0].workspaceId)
+                      setValue(data[0]?.workspaceId)
                     }}
                   >
                     <div className="flex items-center">

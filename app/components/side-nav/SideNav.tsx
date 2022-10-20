@@ -101,7 +101,10 @@ const SideNav = () => {
 
   return (
     <>
-      <div className="flex h-full flex-col justify-between overflow-auto p-5">
+      <div
+        className="flex h-full flex-col justify-between overflow-auto p-5"
+        id="sideNav"
+      >
         <div>
           <div className="mb-14 px-1">
             <Header title={t('sideNav.sideNavHeading')} />
@@ -119,7 +122,7 @@ const SideNav = () => {
               />
             </div>
           </div>
-          <div className="flex flex-col gap-8">
+          <div className="flex flex-col gap-8" id="sideNavMenu">
             {sideNavGuide.map((guide, index) => {
               return (
                 <div className="10px flex flex-col gap-1" key={index}>

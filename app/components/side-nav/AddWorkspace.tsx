@@ -133,7 +133,7 @@ export default function AddWorkspace({
                   <Button
                     tabIndex={0}
                     id="add-button"
-                    name="addMember"
+                    name="addWorkspace"
                     value="add"
                     className="h-9 px-4"
                     isDisabled={transition.state === 'submitting'}
