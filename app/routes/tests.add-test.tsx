@@ -94,7 +94,7 @@ export const action: ActionFunction = async ({ request }) => {
 const AddTest = () => {
   const { t } = useTranslation()
   const testData = useLoaderData() as unknown as LoaderData
-  const actionData = useActionData() as any
+  const actionData = useActionData() as ActionData
   const navigate = useNavigate()
   useEffect(() => {
     if (actionData) {
