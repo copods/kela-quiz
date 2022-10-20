@@ -437,7 +437,7 @@ describe('smoke tests', () => {
       .clear()
       .type(memberEmail)
       .should('have.value', memberEmail)
-      .should('be.visible', { timeout: 60000 })
+    cy.get('#workspace')
       .clear()
       .type(workspaceName)
       .should('have.value', workspaceName)
