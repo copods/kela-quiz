@@ -19,7 +19,7 @@ const memberEmail = 'johndoe@example.com'
 describe('smoke tests', () => {
   it('Successfully Login', () => {
     cy.visit('/sign-in')
-    cy.get('#email').clear().type('careers@copods.co')
+    cy.get('#email').clear().type('copods.demo.sendgrid@gmail.com')
     cy.get('#password').clear().type('kQuiz@copods')
     cy.findByRole('button').click()
     cy.url().should('includes', '/members')
@@ -40,7 +40,7 @@ describe('smoke tests', () => {
 
   it('Invalid Password Error Message', () => {
     cy.visit('/sign-in')
-    cy.get('#email').clear().type('careers@copods.co')
+    cy.get('#email').clear().type('copods.demo.sendgrid@gmail.com')
     cy.get('#password').clear().type('anuragpate')
     cy.findByRole('button').click()
     cy.get('#password-error').should('have.text', 'Password is invalid')
@@ -414,7 +414,7 @@ describe('smoke tests', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
-      .type('careers@copods.co')
+      .type('copods.demo.sendgrid@gmail.com')
       .should('have.value', cypress.email)
     cy.get('#password')
       .clear()
