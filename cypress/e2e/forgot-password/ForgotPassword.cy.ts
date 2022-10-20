@@ -48,7 +48,7 @@ describe('Forgot password', () => {
       .clear()
       .type(memberEmail)
     cy.get('#reset-password').click()
-    cy.get('.Toastify__toast-body', { timeout: 6000 }).should(
+    cy.get('.Toastify__toast-body', { timeout: 10000 }).should(
       'have.text',
       statusCheck.resendPasswordSuccess
     )
