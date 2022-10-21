@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import ResetPassword from './ResetPassword'
+import { version } from 'package.json'
 
 const GeneralSettings = () => {
   const [openResetPassModel, setOpenResetPassModel] = useState(false)
@@ -15,7 +16,7 @@ const GeneralSettings = () => {
               {t('settings.attentionToDetail')}
             </span>
             <span className="ext-base font-medium text-gray-600">
-              {t('settings.version')}
+              {version}
             </span>
           </div>
           <div className="flex justify-between gap-4">
