@@ -6,14 +6,15 @@ import Button from '../form/Button'
 import { trimValue } from '~/utils'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
+import InputField from '../form/InputField'
 
 export default function AddWorkspace({
-  open,
-  setOpen,
+  addWorkspaceModel,
+  setAddWorkspaceModel,
   setWorkspaceId,
 }: {
-  open: boolean
-  setOpen?: (e: boolean) => void
+  addWorkspaceModel: boolean
+  setAddWorkspaceModel?: (e: boolean) => void
   setWorkspaceId?: (e: string) => void
 }) {
   const { t } = useTranslation()
@@ -31,32 +32,51 @@ export default function AddWorkspace({
   }
   useEffect(() => {
     setWorkspace('')
-  }, [open])
+  }, [addWorkspaceModel])
 
   useEffect(() => {
     let data = fetcher.data
     if (fetcher.state === 'loading') {
       if (data) {
-        if (data.resp?.status === 200 && setOpen && setWorkspaceId) {
+        if (
+          data.resp?.status === 200 &&
+          setAddWorkspaceModel &&
+          setWorkspaceId
+        ) {
           setWorkspaceId(data.resp?.workspaceId)
           toast.success(t(data.resp?.title))
-          setOpen(false)
-        } else if (data.errors?.status === 400 && setOpen) {
+          setAddWorkspaceModel(false)
+        } else if (data.errors?.status === 400 && setAddWorkspaceModel) {
           toast.error(t(data.errors?.title), {
             toastId: data.errors?.title,
           })
-          setOpen(false)
+          setAddWorkspaceModel(true)
         }
       }
     }
-  }, [fetcher, t, setOpen])
+  }, [fetcher, t, setAddWorkspaceModel, setWorkspaceId])
+
+  const inputFieldsProps = [
+    {
+      label: t('sideNav.workspace'),
+      placeholder: t('sideNav.enterWorkspace'),
+      type: 'text',
+      name: 'addWorkspace',
+      required: true,
+      value: workspace,
+      errorId: 'name-error',
+      onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
+        setWorkspace(trimValue(event.target.value))
+      },
+    },
+  ]
   return (
     <div>
-      <Transition.Root show={open} as={Fragment}>
+      <Transition.Root show={addWorkspaceModel} as={Fragment}>
         <Dialog
           as="div"
           className="relative z-10"
-          onClose={() => setOpen && setOpen(false)}
+          onClose={() => setAddWorkspaceModel && setAddWorkspaceModel(false)}
         >
           <Transition.Child
             as={Fragment}
@@ -98,34 +118,28 @@ export default function AddWorkspace({
                     className="cursor-pointer text-2xl text-gray-600"
                     icon={'carbon:close'}
                     onKeyUp={(e) => {
-                      if (e.key === 'Enter' && setOpen) setOpen(false)
+                      if (e.key === 'Enter' && setAddWorkspaceModel)
+                        setAddWorkspaceModel(false)
                     }}
-                    onClick={() => setOpen && setOpen(false)}
+                    onClick={() =>
+                      setAddWorkspaceModel && setAddWorkspaceModel(false)
+                    }
                   />
                 </div>
                 <hr className="mt-4 h-px w-full border-0 bg-gray-300" />
                 <div className="py-6">
-                  <label htmlFor="addWorkspace" className="text-gray-800">
-                    {t('sideNav.workspace')}
-                  </label>
-                  <input
-                    tabIndex={0}
-                    id="addWorkspace"
-                    type="text"
-                    name="addWorkspace"
-                    className="my-1.5 h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
-                    placeholder={t('sideNav.enterWorkspace')}
-                    onChange={(e) => setWorkspace(trimValue(e.target.value))}
-                    value={workspace}
-                    maxLength={40}
-                  />
+                  {inputFieldsProps.map((props) => {
+                    return <InputField {...props} key={props.name} />
+                  })}
                 </div>
                 <div className="flex justify-end gap-2">
                   <Button
                     tabIndex={0}
                     id="cancel-add-button"
                     className="h-9 px-4"
-                    onClick={() => setOpen && setOpen(false)}
+                    onClick={() =>
+                      setAddWorkspaceModel && setAddWorkspaceModel(false)
+                    }
                     varient="primary-outlined"
                     title={t('commonConstants.cancel')}
                     buttonText={t('commonConstants.cancel')}

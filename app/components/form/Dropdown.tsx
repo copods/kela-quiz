@@ -36,11 +36,12 @@ function DropdownField({
       }
     }
   }
+  console.log({ data })
   return (
     <Listbox
       value={value}
       onChange={(val: string) => {
-        val !== 'Add Workspace' ? setValue(val) : setValue(value)
+        val !== actionName ? setValue(val) : setValue(value)
       }}
     >
       {({ open }) => (
@@ -82,7 +83,6 @@ function DropdownField({
                     value="Add Workspace"
                     onClick={() => {
                       setOpen && setOpen(true)
-                      setValue(data[0]?.workspaceId)
                     }}
                   >
                     <div className="flex items-center">

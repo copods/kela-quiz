@@ -9,7 +9,7 @@ export interface InputFieldProps {
   value: string
   error?: string
   errorId: string
-  onChange: (e: React.ChangeEvent) => void
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 export interface ButtonProps {

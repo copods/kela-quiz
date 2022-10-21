@@ -158,7 +158,7 @@
     "correctOtp": "Please enter correct OTP",
     "resendPasswordSuccess": "New password has been sent to email successfully",
     "resendPasswordError": "Account not found. Please enter valid email",
-    "switched": "Workspace Switched Perfectly"
+    "switched": "Workspace Switched"
   },
   "resultConstants": {
     "order": "Order",

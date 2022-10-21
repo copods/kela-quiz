@@ -1,4 +1,5 @@
 import { prisma } from '~/db.server'
+import { getAdminId } from './user.server'
 
 export async function getUserWorkspaces(userId: string) {
   return await prisma.userWorkspace.findMany({
@@ -24,14 +25,12 @@ export async function addWorkspace(workspaceName: string, userId: string) {
       createdById: userId,
     },
   })
-  const user = await prisma.user.findUnique({
-    where: { id: userId },
-  })
+  const roleId = await getAdminId()
   return await prisma.userWorkspace.create({
     data: {
       workspaceId: workspace?.id,
       userId: userId,
-      roleId: user?.roleId as string,
+      roleId: roleId as string,
     },
   })
 }

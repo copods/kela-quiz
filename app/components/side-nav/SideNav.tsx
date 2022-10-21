@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next'
 import DropdownField from '../form/Dropdown'
 import { useFetcher, useLoaderData } from '@remix-run/react'
 import type { UserWorkspace } from '~/interface/Interface'
-import AddWorkspace from './AddWorkspace'
+import AddWorkspace from '../workspace/AddWorkspace'
 import { useEffect, useState } from 'react'
 
 const sideNavGuide = [
@@ -75,7 +75,7 @@ const sideNavGuide = [
 ]
 const SideNav = () => {
   const { t } = useTranslation()
-  const [open, setOpen] = useState(false)
+  const [addWorkspaceModel, setAddWorkspaceModel] = useState(false)
   const { workspaces = [], currentWorkspaceId } = useLoaderData()
   const [workspace, setWorkspace] = useState<string>(currentWorkspaceId)
   const fetcher = useFetcher()
@@ -116,7 +116,7 @@ const SideNav = () => {
                 valueKey="workspaceId"
                 value={workspace}
                 setValue={setWorkspace}
-                setOpen={setOpen}
+                setOpen={setAddWorkspaceModel}
                 actionName={t('sideNav.addWorkspace')}
                 callToAction={true}
               />
@@ -150,8 +150,8 @@ const SideNav = () => {
         </div>
       </div>
       <AddWorkspace
-        open={open}
-        setOpen={setOpen}
+        addWorkspaceModel={addWorkspaceModel}
+        setAddWorkspaceModel={setAddWorkspaceModel}
         setWorkspaceId={setWorkspace}
       />
     </>
