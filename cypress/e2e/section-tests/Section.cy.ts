@@ -174,7 +174,10 @@ describe('Test for Section', () => {
     cy.get('#confirm-delete')
       .should('have.text', commonConstants.delete)
       .click()
-    cy.get('.Toastify__toast').should('have.text', statusCheck.deletedSuccess)
+    cy.get('.Toastify__toast-body', { timeout: 8000 }).should(
+      'have.text',
+      statusCheck.deletedSuccess
+    )
     cy.get('.Toastify__close-button').click()
     cy.location('pathname', { timeout: 6000 }).should('include', '/sections')
     cy.get('#section-card', { timeout: 8000 }).each(($el) => {
