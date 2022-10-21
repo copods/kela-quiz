@@ -22,7 +22,7 @@ export default defineConfig({
       return { ...config, ...configOverrides }
     },
     env: {
-      email: 'careers@copods.co',
+      email: 'copods.demo.sendgrid@gmail.com',
       password: 'kQuiz@copods',
     },
   },
