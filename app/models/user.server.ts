@@ -22,18 +22,21 @@ export async function getUserByEmail(email: User['email']) {
   return prisma.user.findUnique({ where: { email } })
 }
 
-export async function getAllUsers({ currentWorkspaceId }: { currentWorkspaceId: string | undefined }) {
+export async function getAllUsers({
+  currentWorkspaceId,
+}: {
+  currentWorkspaceId: string | undefined
+}) {
   return prisma.user.findMany({
     where: {
       userWorkspace: {
         some: {
-          workspaceId: currentWorkspaceId
-        }
-      }
+          workspaceId: currentWorkspaceId,
+        },
+      },
     },
     include: {
       role: true,
-
     },
   })
 }
