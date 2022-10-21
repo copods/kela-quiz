@@ -87,7 +87,7 @@ export default function MemberListItem({
           >
             <img
               src={memberResendIcon}
-              alt={t('members.memberResendIcon')}
+              alt="reinvite"
               id="resend-member-invite"
             />
           </span>

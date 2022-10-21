@@ -18,7 +18,7 @@ const SectionLink = ({
   filter: string
   setSelectedSection: (e: string) => void
 }) => {
-  const path = `/sections/${section.id}`
+  const path = `/sections/${section.id}${filter}`
   const [isDelete, setIsDelete] = useState(false)
   const location = useLocation() // to get current location
   const resolvedPath = useResolvedPath(path) // to get resolved path which would match with current location

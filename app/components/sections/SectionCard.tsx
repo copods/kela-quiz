@@ -36,14 +36,6 @@ const SectionCard = ({
   const deleteSection = () => {
     submit({ deleteSection: 'sectionDelete', id: id }, { method: 'post' })
   }
-  // useEffect(() => {
-  //   if (
-  //     actionStatusData == statusCheck.deletedSuccess &&
-  //     setIsDelete !== undefined
-  //   ) {
-  //     // setIsDelete(false)
-  //   }
-  // }, [actionStatusData])
   // shift + alt + Tab combination key for get back focus to selected section card
   useEffect(() => {
     window.addEventListener('keydown', function (event) {
