@@ -21,7 +21,7 @@ function Login({ actionData, redirectTo }: LoginProps) {
       value: email,
       error: actionData?.errors?.email,
       errorId: 'email-error',
-      onChange: function (event: any) {
+      onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
         setEmail(event?.target.value)
       },
     },
@@ -34,7 +34,7 @@ function Login({ actionData, redirectTo }: LoginProps) {
       value: password,
       error: actionData?.errors?.password,
       errorId: 'password-error',
-      onChange: function (event: any) {
+      onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
         setPassword(event?.target.value)
       },
     },
