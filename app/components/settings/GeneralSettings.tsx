@@ -13,7 +13,7 @@ const GeneralSettings = () => {
         <div className="flex flex-col gap-5">
           <div className="flex justify-between gap-4">
             <span className="text-base font-medium text-gray-700">
-              {t('settings.attentionToDetail')}
+              {t('settings.version')}
             </span>
             <span className="ext-base font-medium text-gray-600">
               {version}
