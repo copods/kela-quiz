@@ -32,7 +32,7 @@ describe('Test for settings', () => {
     )
     cy.get('h1').should('have.text', settings.settings)
   })
-  it('Checks gap between two tabs will be correct', () => {
+  it('Checks if gap between two tabs is correct', () => {
     cy.get('a')
       .find('#Settings', { timeout: 8000 })
       .should('have.text', settings.settings)
@@ -81,7 +81,7 @@ describe('Test for settings', () => {
       'include',
       '/settings/general'
     )
-    cy.get('#General').should('have.text', tabs.general).click()
+    cy.get('#General').should('have.text', tabs.general)
   })
   it('Checks active tab is workspace', () => {
     cy.get('a')
@@ -109,9 +109,8 @@ describe('Test for settings', () => {
       'include',
       '/settings/general'
     )
-    cy.get('#Workspaces').should('have.text', tabs.workspace).click()
+    cy.get('#Workspaces').should('have.text', tabs.workspace)
   })
-
   it('Checks content heading in general tab having a correct classes', () => {
     cy.get('a')
       .find('#Settings', { timeout: 8000 })
@@ -509,7 +508,6 @@ describe('Test for settings', () => {
       .click()
     cy.get('#New-password-error').should('have.text', settings.minPasswordLimit)
   })
-
   it('Checks if old password is not matched filled input field then throwing a error', () => {
     cy.get('a')
       .find('#Settings', { timeout: 8000 })
