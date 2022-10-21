@@ -174,7 +174,7 @@ describe('Test for Section', () => {
     cy.get('#confirm-delete')
       .should('have.text', commonConstants.delete)
       .click()
-    cy.get('.Toastify__toast-body', { timeout: 8000 }).should(
+    cy.get('.Toastify__toast', { timeout: 8000 }).should(
       'have.text',
       statusCheck.deletedSuccess
     )
