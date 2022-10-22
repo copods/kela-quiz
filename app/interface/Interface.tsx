@@ -96,6 +96,7 @@ export interface User {
   roleId: string
   createdAt: Date
   updatedAt: Date
+  workspace: Array<Workspace>
 }
 
 export interface Role {

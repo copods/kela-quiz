@@ -1,6 +1,6 @@
 {
   "members": {
-    "addMember": "Add Member",
+    "inviteMember": "Invite Member",
     "firstName": "First Name",
     "lastName": " Last Name",
     "role": "Role",
@@ -51,7 +51,8 @@
     "totalQuestion": "Total Questions",
     "srNo": "Sr.No",
     "verify": "Verify",
-    "proceed": "Proceed"
+    "proceed": "Proceed",
+    "defaultWorkspaceName": "Default Workspace Name"
   },
   "sideNav": {
     "sideNavHeading": "Quiz"
@@ -65,7 +66,6 @@
     "invite": "Invite"
   },
   "testTableItem": {
-    "inviteMember": "Invite Member",
     "menu": "Menu"
   },
   "deletePopUp": {
@@ -232,7 +232,8 @@
     "memberAdded": "Member Added Successfully..!",
     "memberAlreadyExist": "Member with this email id already exists!",
     "invitationSent": "Invitation Sent Successfully..!",
-    "signUpSuccessfull": "Sign Up successfully"
+    "signUpSuccessfull": "Sign Up successfully",
+    "workspaceNameIsRequired": "Workspace name is required"
   },
   "otpConstants": {
     "header": "OTP Verification",

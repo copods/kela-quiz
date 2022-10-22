@@ -119,7 +119,7 @@ describe('Test for section-details', () => {
       .should('have.text', routeFiles.sections)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
-    cy.get('#section-card', { timeout: 8000 }).each(($el) => {
+    cy.get('#section-card', { timeout: 10000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
           el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
