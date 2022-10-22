@@ -116,7 +116,7 @@ const TestTableItem = ({
             onKeyUp={(e) => {
               if (e.key === 'Enter') setCandidatePopupOpen(true)
             }}
-            aria-label={t('testTableItem.inviteMember')}
+            aria-label={t('members.inviteMember')}
           />
           <TestListActionMenu
             menuIcon={'mdi:dots-vertical'}

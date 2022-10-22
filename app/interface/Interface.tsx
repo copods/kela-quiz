@@ -11,6 +11,17 @@ export interface InputFieldProps {
   errorId: string
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
+export interface PasswordFieldProps {
+  name: string
+  label: string
+  placeholder: string
+  required: boolean
+  value: string
+  type: string
+  error?: string
+  errorId: string
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+}
 
 export interface ButtonProps {
   name?: string
@@ -85,6 +96,7 @@ export interface User {
   roleId: string
   createdAt: Date
   updatedAt: Date
+  workspace: Array<Workspace>
 }
 
 export interface Role {
@@ -280,4 +292,8 @@ export interface UserWorkspace {
   isDefault: Boolean
   createdAt: Date
   updatedAt: Date
+}
+export interface TabsComponent {
+  name: string
+  route: string
 }

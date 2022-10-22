@@ -1,7 +1,7 @@
-import type { LoaderFunction, ActionFunction } from '@remix-run/node'
+import type { ActionFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
-import { useActionData, useLoaderData, useNavigate } from '@remix-run/react'
-import { createNewUser, getAdminId } from '~/models/user.server'
+import { useActionData, useNavigate } from '@remix-run/react'
+import { createUserBySignUp } from '~/models/user.server'
 import { toast } from 'react-toastify'
 import { useEffect } from 'react'
 
@@ -19,13 +19,6 @@ export type ActionData = {
     status: number
   }
 }
-type LoaderData = {
-  roleId: Awaited<ReturnType<typeof getAdminId>>
-}
-export const loader: LoaderFunction = async ({ request }) => {
-  const roleId = await getAdminId()
-  return json<LoaderData>({ roleId })
-}
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
   const action = formData.get('action') as string
@@ -34,7 +27,7 @@ export const action: ActionFunction = async ({ request }) => {
     const firstName = formData.get('firstName')
     const lastName = formData.get('lastName')
     const email = formData.get('email')
-    const roleId = formData.get('roleId')
+    const workspaceName = formData.get('workspace')
     // eslint-disable-next-line no-useless-escape
     const emailFilter = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
 
@@ -56,20 +49,32 @@ export const action: ActionFunction = async ({ request }) => {
         { status: 400 }
       )
     }
+    if (typeof workspaceName !== 'string' || workspaceName.length === 0) {
+      return json<ActionData>(
+        {
+          errors: {
+            title: 'toastConstants.workspaceNameIsRequired',
+            status: 400,
+          },
+        },
+        { status: 400 }
+      )
+    }
     if (!emailFilter.test(email)) {
       return json<ActionData>(
         { errors: { title: 'toastConstants.correctEmail', status: 400 } },
         { status: 400 }
       )
     }
-    if (typeof roleId !== 'string' || roleId.length === 0) {
-      return json<ActionData>(
-        { errors: { title: 'toastConstants.roleRequired', status: 400 } },
-        { status: 400 }
-      )
-    }
+
     let addHandle = null
-    await createNewUser({ firstName, lastName, email, roleId })
+
+    await createUserBySignUp({
+      firstName,
+      lastName,
+      email,
+      workspaceName,
+    })
       .then((res) => {
         addHandle = json<ActionData>(
           {
@@ -103,7 +108,6 @@ export const action: ActionFunction = async ({ request }) => {
 const SignUpPage = () => {
   const { t } = useTranslation()
   const signUpActionData = useActionData() as ActionData
-  const role = useLoaderData()
   let navigate = useNavigate()
   useEffect(() => {
     if (signUpActionData) {
@@ -120,7 +124,7 @@ const SignUpPage = () => {
 
   return (
     <div className="flex h-full flex-col justify-center">
-      <SignUp roleId={role.roleId} />
+      <SignUp />
     </div>
   )
 }

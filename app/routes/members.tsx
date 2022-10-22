@@ -1,5 +1,10 @@
 import AdminLayout from '~/components/layouts/AdminLayout'
-import { getUserId, getWorkspaceId } from '~/session.server'
+import {
+  getUserId,
+  getWorkspaceId,
+  requireUserId,
+  requireWorkspaceId,
+} from '~/session.server'
 import { redirect } from '@remix-run/node'
 import type { LoaderFunction, ActionFunction } from '@remix-run/node'
 import MembersList from '~/components/members/MembersList'
@@ -54,6 +59,8 @@ export const loader: LoaderFunction = async ({ request }) => {
 }
 
 export const action: ActionFunction = async ({ request }) => {
+  const userId = await requireUserId(request) //fetching id of user who's creating this users
+  const invitedByWorkspaceId = await requireWorkspaceId(request)
   const formData = await request.formData()
   const action = formData.get('action')
   if (action === actions.addMember) {
@@ -61,6 +68,8 @@ export const action: ActionFunction = async ({ request }) => {
     const lastName = formData.get('lastName')
     const email = formData.get('email')
     const roleId = formData.get('roleId')
+    const defaultWorkspaceName = formData.get('workspace')
+
     // eslint-disable-next-line no-useless-escape
     const emailFilter = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
 
@@ -73,6 +82,20 @@ export const action: ActionFunction = async ({ request }) => {
     if (typeof lastName !== 'string' || lastName.length === 0) {
       return json<ActionData>(
         { errors: { title: 'toastConstants.lastNameRequired', status: 400 } },
+        { status: 400 }
+      )
+    }
+    if (
+      typeof defaultWorkspaceName !== 'string' ||
+      defaultWorkspaceName.length === 0
+    ) {
+      return json<ActionData>(
+        {
+          errors: {
+            title: 'toastConstants.workspaceNameIsRequired',
+            status: 400,
+          },
+        },
         { status: 400 }
       )
     }
@@ -97,7 +120,15 @@ export const action: ActionFunction = async ({ request }) => {
 
     let addHandle = null
 
-    await createNewUser({ firstName, lastName, email, roleId })
+    await createNewUser({
+      firstName,
+      lastName,
+      email,
+      createdById: userId,
+      roleId,
+      defaultWorkspaceName,
+      invitedByWorkspaceId,
+    })
       .then((res) => {
         addHandle = json<ActionData>(
           {

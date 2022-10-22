@@ -48,7 +48,7 @@ export const candidateHeader = {
   headerHeading: 'Quiz',
 }
 export const members = {
-  addMember: 'Add Member',
+  inviteMembers: 'Invite Member',
   firstName: 'First Name',
   lastName: ' Last Name',
   name: 'Name',
@@ -250,7 +250,7 @@ export const cypress = {
   back: 'Back',
   duplicateTitle: 'Duplicate Title',
   saveAndAddMore: 'Save & Add More',
-  addMember: 'Add Member',
+  addMember: 'Invite Member',
   name: 'Name',
   description: 'Description',
   totalTime: 'Total Time',
@@ -275,6 +275,7 @@ export const toastConstants = {
   memberAdded: 'Member Added Successfully..!',
   memberAlreadyExist: 'Member with this email id already exists!',
   signUpSuccessfull: 'Sign Up successfully',
+  workspaceNameIsRequired: 'Workspace name is required',
 }
 export const otpConstants = {
   header: 'OTP Verification',
@@ -283,4 +284,19 @@ export const otpConstants = {
   didntGetCode: "Didn't get a code",
   resendCodeIn: 'Resend code in',
   otp: 'OTP',
+}
+export const settings = {
+  settings: 'Settings',
+  clickToChange: 'Click to change',
+  resetPas: 'Reset Password',
+  passNotMatch: 'Password do not match',
+  enterNewPass: 'Enter New Password',
+  reEnterPass: 'Re-Enter Password',
+  enterOldPassword: 'Enter Old Password',
+  minPasswordLimit: 'Password should have minimum 8 characters',
+  passShouldNotBeSame: 'Current Password and New Password should not be same',
+}
+export const tabs = {
+  general: 'General',
+  workspace: 'Workspaces',
 }

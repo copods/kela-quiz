@@ -1,6 +1,6 @@
 {
   "members": {
-    "addMember": "Add Member",
+    "inviteMember": "Invite Member",
     "firstName": "First Name",
     "lastName": " Last Name",
     "role": "Role",
@@ -51,7 +51,8 @@
     "totalQuestion": "Total Questions",
     "srNo": "Sr.No",
     "verify": "Verify",
-    "proceed": "Proceed"
+    "proceed": "Proceed",
+    "defaultWorkspaceName": "Default Workspace Name"
   },
   "sideNav": {
     "sideNavHeading": "Quiz",
@@ -68,7 +69,6 @@
     "invite": "Invite"
   },
   "testTableItem": {
-    "inviteMember": "Invite Member",
     "menu": "Menu"
   },
   "deletePopUp": {
@@ -237,9 +237,9 @@
     "memberAlreadyExist": "Member with this email id already exists!",
     "invitationSent": "Invitation Sent Successfully..!",
     "signUpSuccessfull": "Sign Up successfully",
-    "workspaceRequired": "Workspace Name is required",
     "workspaceAdded": "Workspace Added",
-    "duplicateWorkspace": "Duplicate Workspace"
+    "duplicateWorkspace": "Duplicate Workspace",
+    "workspaceNameIsRequired": "Workspace name is required"
   },
   "otpConstants": {
     "header": "OTP Verification",
@@ -248,5 +248,24 @@
     "didntGetCode": "Didn't get a code",
     "resendCodeIn": "Resend code in",
     "otp": "OTP"
+  },
+  "settings": {
+    "passNotMatch": "Password do not match",
+    "enterNewPass": "Enter New Password",
+    "reEnterPass": "Re-Enter Password",
+    "resetPas": "Reset Password",
+    "version": "Version",
+    "password": "Password",
+    "clickToChange": "Click to change",
+    "passResetting": "Resetting",
+    "enterOldPassword": "Enter Old Password",
+    "passResetSuccessfully": "Password changed successfully !",
+    "basicInfo": "Basic Info",
+    "minPasswordLimit": "Password should have minimum 8 characters",
+    "passShouldNotBeSame": "Current Password and New Password should not be same"
+  },
+  "tabs": {
+    "general": "General",
+    "workspaces": "Workspaces"
   }
 }

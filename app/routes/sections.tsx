@@ -19,7 +19,6 @@ import { getUserId, getWorkspaceId, requireUserId } from '~/session.server'
 import Sections from '~/components/sections/Sections'
 import AdminLayout from '~/components/layouts/AdminLayout'
 import AddSection from '~/components/sections/AddSection'
-import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import Button from '~/components/form/Button'
 import { sortByOrder } from '~/interface/Interface'
@@ -196,8 +195,8 @@ export default function SectionPage() {
   const data = useLoaderData() as unknown as LoaderData
   const sectionActionData = useActionData() as ActionData
 
-  let navigate = useNavigate()
   const submit = useSubmit()
+
   const sortByDetails = [
     {
       name: 'Name',
@@ -222,18 +221,6 @@ export default function SectionPage() {
   }
 
   useEffect(() => {
-    if (selectedSection === 'NA') {
-      navigate(routes.sections, {
-        replace: true,
-      })
-    } else {
-      navigate(`${routes.sections}/${selectedSection}${data?.filters}`, {
-        replace: true,
-      })
-    }
-  }, [navigate, selectedSection, data.filters])
-
-  useEffect(() => {
     if (data.sections.length) {
       const formData = new FormData()
       let filter = {
@@ -241,13 +228,14 @@ export default function SectionPage() {
           [sortBy]: order,
         },
       }
+
       formData.append('filter', JSON.stringify(filter))
       submit(formData, {
         method: 'get',
         action: `${routes.sections}/${selectedSection}`,
       })
     }
-  }, [order, sortBy, data.sections?.length, submit, selectedSection])
+  }, [order, sortBy, data.sections?.length])
 
   useEffect(() => {
     if (sectionActionData) {
