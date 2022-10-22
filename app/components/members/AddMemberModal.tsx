@@ -26,7 +26,7 @@ export default function AddMemberModal({
   const [lastName, setLastName] = useState('')
   const [email, setEmail] = useState('')
   const [role, setRole] = useState(roles[0].id)
-  const [workspace, defaultWorkspace] = useState('')
+  const [workspace, setWorkspace] = useState('')
 
   const submitMemberForm = () => {
     let data = {
@@ -95,7 +95,7 @@ export default function AddMemberModal({
       value: workspace,
       errorId: 'workspace-error',
       onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
-        defaultWorkspace(trimValue(event.target.value))
+        setWorkspace(trimValue(event.target.value))
       },
     },
   ]

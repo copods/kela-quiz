@@ -69,6 +69,18 @@ export async function requireUserId(
   return userId
 }
 
+export async function requireWorkspaceId(
+  request: Request,
+  redirectTo: string = new URL(request.url).pathname
+) {
+  const workspaceId = await getWorkspaceId(request)
+  if (!workspaceId) {
+    const searchParams = new URLSearchParams([['redirectTo', redirectTo]])
+    throw redirect(`/sign-in?${searchParams}`)
+  }
+  return workspaceId
+}
+
 export async function requireUser(request: Request) {
   const userId = await requireUserId(request)
 

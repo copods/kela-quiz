@@ -16,7 +16,7 @@ const SignUp = () => {
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [email, setEmail] = useState('')
-  const [workspace, defaultWorkspace] = useState('')
+  const [workspace, setWorkspace] = useState('')
 
   const submitMemberForm = () => {
     let data = {
@@ -69,7 +69,7 @@ const SignUp = () => {
       required: true,
       value: email,
       errorId: 'email-error',
-      onChange: function (event: any) {
+      onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
         setEmail(trimValue(event.target.value))
       },
     },
@@ -81,8 +81,8 @@ const SignUp = () => {
       required: true,
       value: workspace,
       errorId: 'workspace-error',
-      onChange: function (event: any) {
-        defaultWorkspace(trimValue(event.target.value))
+      onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
+        setWorkspace(trimValue(event.target.value))
       },
     },
   ]
