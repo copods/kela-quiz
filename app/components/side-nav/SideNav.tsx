@@ -62,12 +62,12 @@ const sideNavGuide = [
         itemName: 'members.members',
         itemRoute: routes.members,
       },
-      // {
-      //   id: 'Settings',
-      //   iconClass: 'mdi:cog',
-      //   itemName: 'commonConstants.settings',
-      //   itemRoute: routes.settings,
-      // },
+      {
+        id: 'Settings',
+        iconClass: 'mdi:cog',
+        itemName: 'commonConstants.settings',
+        itemRoute: routes.settings,
+      },
     ],
   },
 ]

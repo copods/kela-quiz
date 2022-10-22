@@ -10,11 +10,8 @@ function InputField({
 }: InputFieldProps) {
   const { t } = useTranslation()
   return (
-    <div>
-      <label
-        htmlFor={name}
-        className="mb-1.5 block text-base font-medium text-gray-800"
-      >
+    <div className="flex flex-col gap-1.5">
+      <label htmlFor={name} className="block text-gray-800">
         {label}
       </label>
       <input
@@ -26,7 +23,7 @@ function InputField({
         title={props.placeholder}
       />
       {error && (
-        <div className="pt-1 text-red-700" id={errorId}>
+        <div className="text-red-700" id={errorId}>
           {t(error)}
         </div>
       )}

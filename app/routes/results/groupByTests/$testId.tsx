@@ -1,4 +1,3 @@
-import React from 'react'
 import AdminLayout from '~/components/layouts/AdminLayout'
 import CandidateListOfTest from '~/components/results/CandidateListOfTest'
 import type { LoaderFunction } from '@remix-run/server-runtime'
