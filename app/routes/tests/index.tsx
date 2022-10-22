@@ -101,6 +101,7 @@ export const action: ActionFunction = async ({ request }) => {
       createdById,
       testId,
     })
+
     return json({ candidateInviteStatus, testId })
   }
 }

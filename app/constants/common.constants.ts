@@ -285,3 +285,18 @@ export const otpConstants = {
   resendCodeIn: 'Resend code in',
   otp: 'OTP',
 }
+export const settings = {
+  settings: 'Settings',
+  clickToChange: 'Click to change',
+  resetPas: 'Reset Password',
+  passNotMatch: 'Password do not match',
+  enterNewPass: 'Enter New Password',
+  reEnterPass: 'Re-Enter Password',
+  enterOldPassword: 'Enter Old Password',
+  minPasswordLimit: 'Password should have minimum 8 characters',
+  passShouldNotBeSame: 'Current Password and New Password should not be same',
+}
+export const tabs = {
+  general: 'General',
+  workspace: 'Workspaces',
+}
