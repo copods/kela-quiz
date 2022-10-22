@@ -261,9 +261,9 @@ export async function getDefaultWorkspaceIdForUserQuery(userId: string) {
       workspace: {
         select: {
           id: true,
-        }
-      }
-    }
+        },
+      },
+    },
   })
 }
 
