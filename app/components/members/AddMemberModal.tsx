@@ -35,9 +35,7 @@ export default function AddMemberModal({
       email: email,
       roleId: role,
       workspace: workspace,
-      addMember: JSON.stringify({
-        action: 'add',
-      }),
+      action: 'add',
     }
     submit(data, {
       method: 'post',

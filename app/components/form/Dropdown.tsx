@@ -36,7 +36,7 @@ function DropdownField({
       }
     }
   }
-  console.log({ data })
+
   return (
     <Listbox
       value={value}

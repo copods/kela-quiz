@@ -32,9 +32,7 @@ export default function MemberListItem({
   const resendMail = () => {
     let data = {
       id: user.id,
-      addMember: JSON.stringify({
-        action: 'resend',
-      }),
+      action: 'resend',
     }
     submit(data, {
       method: 'post',
