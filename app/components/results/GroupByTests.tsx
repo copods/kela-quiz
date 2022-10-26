@@ -32,7 +32,7 @@ const GroupByTests = () => {
       candidateTest?: CandidateTest
     }
   ) {
-    return items.candidateTest?.length !== 0
+    return items.candidateTest?.length !== 0 || items.deleted === false
   })
 
   const submit = useSubmit()
