@@ -1,8 +1,10 @@
 import {
+  commonConstants,
   members,
   routeFiles,
   testsConstants,
 } from '~/constants/common.constants'
+import { routes } from '~/constants/route.constants'
 describe('Test for Logout, SideNav', () => {
   beforeEach('sign-in', () => {
     cy.visit('/sign-in')
@@ -29,7 +31,7 @@ describe('Test for Logout, SideNav', () => {
 
     menuItems.each((item) => {
       expect([
-        'Results',
+        commonConstants.results,
         testsConstants.tests,
         routeFiles.sections,
         members.members,
@@ -42,10 +44,10 @@ describe('Test for Logout, SideNav', () => {
 
       cy.location('pathname').should((item) => {
         expect([
-          '/results/groupByTests',
-          '/tests',
-          '/sections',
-          '/members',
+          routes.resultGroupTest,
+          routes.tests,
+          routes.sections,
+          routes.members,
         ]).to.include(item)
       })
     })

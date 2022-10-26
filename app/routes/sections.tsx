@@ -239,7 +239,6 @@ export default function SectionPage() {
 
   useEffect(() => {
     if (sectionActionData) {
-      console.log(sectionActionData)
       if (
         t(sectionActionData.resp?.status as string) ===
         t('statusCheck.sectionAddedSuccess')

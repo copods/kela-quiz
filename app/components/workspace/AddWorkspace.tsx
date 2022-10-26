@@ -36,22 +36,16 @@ export default function AddWorkspace({
 
   useEffect(() => {
     let data = fetcher.data
-    if (fetcher.state === 'loading') {
-      if (data) {
-        if (
-          data.resp?.status === 200 &&
-          setAddWorkspaceModel &&
-          setWorkspaceId
-        ) {
-          setWorkspaceId(data.resp?.workspaceId)
-          toast.success(t(data.resp?.title))
-          setAddWorkspaceModel(false)
-        } else if (data.errors?.status === 400 && setAddWorkspaceModel) {
-          toast.error(t(data.errors?.title), {
-            toastId: data.errors?.title,
-          })
-          setAddWorkspaceModel(true)
-        }
+    if (fetcher.state === 'loading' && data) {
+      if (data.resp?.status === 200 && setAddWorkspaceModel && setWorkspaceId) {
+        setWorkspaceId(data.resp?.workspaceId)
+        toast.success(t(data.resp?.title))
+        setAddWorkspaceModel(false)
+      } else if (data.errors?.status === 400 && setAddWorkspaceModel) {
+        toast.error(t(data.errors?.title), {
+          toastId: data.errors?.title,
+        })
+        setAddWorkspaceModel(true)
       }
     }
   }, [fetcher, t, setAddWorkspaceModel, setWorkspaceId])

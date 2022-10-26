@@ -54,7 +54,7 @@ export const action: ActionFunction = async ({ request }) => {
     })
   }
   if (action === actions.addWorkspace) {
-    let addHandle
+    let addHandle = {}
     const workspaceName = formData.get('workspaceName') as string
     const userId = (await getUserId(request)) as string
     if (typeof workspaceName !== 'string' || workspaceName.length === 0) {

@@ -80,7 +80,7 @@ function DropdownField({
                         'relative z-20 cursor-pointer select-none py-2 px-3'
                       )
                     }
-                    value="Add Workspace"
+                    value={actionName}
                     onClick={() => {
                       setOpen && setOpen(true)
                     }}

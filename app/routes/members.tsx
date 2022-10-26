@@ -63,9 +63,7 @@ export const action: ActionFunction = async ({ request }) => {
   const invitedByWorkspaceId = await requireWorkspaceId(request)
   const formData = await request.formData()
   const action = await formData.get('action')
-  console.log('formda', ...formData, action)
   if (action === actions.addMember) {
-    console.log(22323)
     const firstName = formData.get('firstName')
     const lastName = formData.get('lastName')
     const email = formData.get('email')

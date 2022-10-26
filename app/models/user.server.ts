@@ -131,8 +131,6 @@ export async function createNewUser({
   createdById: User['id']
   invitedByWorkspaceId: string
 }) {
-  console.log(111)
-
   const password = faker.internet.password()
   const hashedPassword = await bcrypt.hash(password, 10)
   const user = await prisma.user.create({
@@ -188,7 +186,6 @@ export async function createNewUser({
       id: roleId,
     },
   })
-  console.log(222)
 
   return await sendMail(email, firstName, password, role?.name as string)
 }
