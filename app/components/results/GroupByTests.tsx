@@ -56,7 +56,7 @@ const GroupByTests = () => {
               onSortDirectionChange={onSortDirectionChange}
               sortBy={sortBy}
               onSortChange={onSortChange}
-              totalItems={candidateTests?.length}
+              totalItems={candidateTests.length}
               showSelected={false}
             />
           </div>
@@ -97,16 +97,19 @@ const GroupByTests = () => {
                       id="group-by-items-container"
                       data-cy="group-by-items-container"
                     >
-                      <GroupByTestItems
-                        candidateName={candidateTests?.name}
-                        candidateInvitedCount={
-                          candidateTests?.candidateTest?.length as number
-                        }
-                        candidateAttendedCount={candidateTests?.count}
-                        testDeletedStatus={candidateTests?.deleted}
-                        index={index + 1}
-                        id={candidateTests?.id}
-                      />
+                      {candidateTests.candidateTest?.length !== 0 &&
+                      candidateTests.deleted === false ? (
+                        <GroupByTestItems
+                          candidateName={candidateTests?.name}
+                          candidateInvitedCount={
+                            candidateTests?.candidateTest?.length as number
+                          }
+                          candidateAttendedCount={candidateTests?.count}
+                          testDeletedStatus={candidateTests?.deleted}
+                          index={index + 1}
+                          id={candidateTests?.id}
+                        />
+                      ) : null}
                     </div>
                   )
                 )}

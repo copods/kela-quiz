@@ -5,13 +5,14 @@ import type { LoaderFunction, ActionFunction } from '@remix-run/node'
 import TestList from '~/components/tests/TestList'
 import { getAllTests } from '~/models/tests.server'
 import { json } from '@remix-run/node'
-import { useLoaderData } from '@remix-run/react'
+import { useActionData, useLoaderData } from '@remix-run/react'
 import { deleteTestById } from '~/models/tests.server'
 import { toast } from 'react-toastify'
 import type { Test } from '~/interface/Interface'
 import { createCandidate } from '~/models/candidate.server'
 import { routes } from '~/constants/route.constants'
 import { useTranslation } from 'react-i18next'
+import { useEffect } from 'react'
 
 type LoaderData = {
   tests: Awaited<ReturnType<typeof getAllTests>>
@@ -19,13 +20,12 @@ type LoaderData = {
 }
 export type ActionData = {
   errors?: {
-    status?: string
-    check?: Date
+    status: number
+    message: string
   }
   resp?: {
-    status?: string
-    message?: string
-    check?: Date
+    status: number
+    message: string
   }
 }
 
@@ -65,13 +65,13 @@ export const action: ActionFunction = async ({ request }) => {
     await deleteTestById(formData.get('id') as string)
       .then((res) => {
         deleteHandle = json<ActionData>(
-          { resp: { status: '200', message: 'statusCheck.deletedSuccess' } },
+          { resp: { status: 200, message: 'statusCheck.deletedSuccess' } },
           { status: 200 }
         )
       })
       .catch((err) => {
         deleteHandle = json<ActionData>(
-          { errors: { status: err, check: new Date() } },
+          { errors: { status: 400, message: 'statusCheck.commonError' } },
           { status: 400 }
         )
       })
@@ -105,9 +105,22 @@ export default function Tests() {
   const { t } = useTranslation()
 
   const data = useLoaderData() as unknown as LoaderData
+  const testActionData = useActionData() as ActionData
   if (t(data.status as string) != t('statusCheck.success')) {
     toast.warn(t('statusCheck.commonError'))
   }
+  console.log(testActionData)
+  useEffect(() => {
+    if (testActionData) {
+      if (testActionData.resp?.status === 200) {
+        toast.success(t(testActionData.resp?.message))
+      } else if (testActionData.errors?.status === 400) {
+        toast.error(t(testActionData.errors?.message), {
+          toastId: testActionData.errors?.status,
+        })
+      }
+    }
+  }, [testActionData, t])
   return (
     <AdminLayout>
       <TestList tests={data.tests as Test[]} status={data.status} />

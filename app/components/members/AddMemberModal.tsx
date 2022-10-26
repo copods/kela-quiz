@@ -44,7 +44,9 @@ export default function AddMemberModal({
   useEffect(() => {
     setFirstName('')
     setLastName('')
-  }, [open])
+    setRole(roles[0].id)
+  }, [open, roles])
+
   return (
     <div>
       <Transition.Root show={open} as={Fragment}>
