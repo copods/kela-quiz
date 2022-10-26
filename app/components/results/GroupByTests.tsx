@@ -26,6 +26,14 @@ const GroupByTests = () => {
   ]
   const candidateTestData = useLoaderData()
   const candidateTests = candidateTestData.candidateTest
+  const newArray = candidateTests.filter(function (
+    items: Test & {
+      count?: number | undefined
+      candidateTest?: CandidateTest
+    }
+  ) {
+    return items.candidateTest?.length !== 0
+  })
 
   const submit = useSubmit()
   useEffect(() => {
@@ -56,7 +64,7 @@ const GroupByTests = () => {
               onSortDirectionChange={onSortDirectionChange}
               sortBy={sortBy}
               onSortChange={onSortChange}
-              totalItems={candidateTests.length}
+              totalItems={newArray.length}
               showSelected={false}
             />
           </div>
@@ -83,7 +91,7 @@ const GroupByTests = () => {
                 </span>
               </div>
               <div id="group-by-test-items" className="col-span-10 grid">
-                {candidateTests.map(
+                {newArray.map(
                   (
                     candidateTests: Test & {
                       count?: number | undefined
@@ -97,19 +105,16 @@ const GroupByTests = () => {
                       id="group-by-items-container"
                       data-cy="group-by-items-container"
                     >
-                      {candidateTests.candidateTest?.length !== 0 &&
-                      candidateTests.deleted === false ? (
-                        <GroupByTestItems
-                          candidateName={candidateTests?.name}
-                          candidateInvitedCount={
-                            candidateTests?.candidateTest?.length as number
-                          }
-                          candidateAttendedCount={candidateTests?.count}
-                          testDeletedStatus={candidateTests?.deleted}
-                          index={index + 1}
-                          id={candidateTests?.id}
-                        />
-                      ) : null}
+                      <GroupByTestItems
+                        candidateName={candidateTests?.name}
+                        candidateInvitedCount={
+                          candidateTests?.candidateTest?.length as number
+                        }
+                        candidateAttendedCount={candidateTests?.count}
+                        testDeletedStatus={candidateTests?.deleted}
+                        index={index + 1}
+                        id={candidateTests?.id}
+                      />
                     </div>
                   )
                 )}

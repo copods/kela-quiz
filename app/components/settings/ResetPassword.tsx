@@ -4,6 +4,7 @@ import { Form, useActionData, useTransition } from '@remix-run/react'
 import { Fragment, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
+import { trimValue } from '~/utils'
 import Button from '../form/Button'
 import PasswordInputFields from '../form/PasswordInputField'
 
@@ -44,7 +45,7 @@ const ResetPassword = ({
       error: generalSettings?.errors?.valid,
       errorId: 'Password-error',
       onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
-        setPassword(event?.target.value)
+        setPassword(trimValue(event?.target.value))
       },
     },
     {
@@ -59,7 +60,7 @@ const ResetPassword = ({
         generalSettings?.errors?.passShouldNotBeSame,
       errorId: 'New-password-error',
       onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
-        setNewPassword(event?.target.value)
+        setNewPassword(trimValue(event?.target.value))
       },
     },
     {
@@ -72,11 +73,15 @@ const ResetPassword = ({
       error: generalSettings?.errors?.passNotMatched,
       errorId: 'Confirm-password-error',
       onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
-        setConfirmPassword(event?.target.value)
+        setConfirmPassword(trimValue(event?.target.value))
       },
     },
   ]
-
+  useEffect(() => {
+    setPassword('')
+    setNewPassword('')
+    setConfirmPassword('')
+  }, [openResetPassModel])
   return (
     <div>
       <Transition.Root show={openResetPassModel} as={Fragment}>
