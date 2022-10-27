@@ -9,12 +9,12 @@ import { toast } from 'react-toastify'
 import InputField from '../form/InputField'
 
 export default function AddWorkspace({
-  addWorkspaceModel,
-  setAddWorkspaceModel,
+  showAddWorkspaceModal,
+  setShowAddWorkspaceModal,
   setWorkspaceId,
 }: {
-  addWorkspaceModel: boolean
-  setAddWorkspaceModel?: (e: boolean) => void
+  showAddWorkspaceModal: boolean
+  setShowAddWorkspaceModal?: (e: boolean) => void
   setWorkspaceId?: (e: string) => void
 }) {
   const { t } = useTranslation()
@@ -32,23 +32,27 @@ export default function AddWorkspace({
   }
   useEffect(() => {
     setWorkspace('')
-  }, [addWorkspaceModel])
+  }, [showAddWorkspaceModal])
 
   useEffect(() => {
     let data = fetcher.data
     if (fetcher.state === 'loading' && data) {
-      if (data.resp?.status === 200 && setAddWorkspaceModel && setWorkspaceId) {
+      if (
+        data.resp?.status === 200 &&
+        setShowAddWorkspaceModal &&
+        setWorkspaceId
+      ) {
         setWorkspaceId(data.resp?.workspaceId)
         toast.success(t(data.resp?.title))
-        setAddWorkspaceModel(false)
-      } else if (data.errors?.status === 400 && setAddWorkspaceModel) {
+        setShowAddWorkspaceModal(false)
+      } else if (data.errors?.status === 400 && setShowAddWorkspaceModal) {
         toast.error(t(data.errors?.title), {
           toastId: data.errors?.title,
         })
-        setAddWorkspaceModel(true)
+        setShowAddWorkspaceModal(true)
       }
     }
-  }, [fetcher, t, setAddWorkspaceModel, setWorkspaceId])
+  }, [fetcher, t, setShowAddWorkspaceModal, setWorkspaceId])
 
   const inputFieldsProps = [
     {
@@ -66,11 +70,13 @@ export default function AddWorkspace({
   ]
   return (
     <div>
-      <Transition.Root show={addWorkspaceModel} as={Fragment}>
+      <Transition.Root show={showAddWorkspaceModal} as={Fragment}>
         <Dialog
           as="div"
           className="relative z-10"
-          onClose={() => setAddWorkspaceModel && setAddWorkspaceModel(false)}
+          onClose={() =>
+            setShowAddWorkspaceModal && setShowAddWorkspaceModal(false)
+          }
         >
           <Transition.Child
             as={Fragment}
@@ -110,13 +116,14 @@ export default function AddWorkspace({
                   <Icon
                     tabIndex={0}
                     className="cursor-pointer text-2xl text-gray-600"
-                    icon={'carbon:close'}
+                    icon="carbon:close"
                     onKeyUp={(e) => {
-                      if (e.key === 'Enter' && setAddWorkspaceModel)
-                        setAddWorkspaceModel(false)
+                      if (e.key === 'Enter' && setShowAddWorkspaceModal)
+                        setShowAddWorkspaceModal(false)
                     }}
                     onClick={() =>
-                      setAddWorkspaceModel && setAddWorkspaceModel(false)
+                      setShowAddWorkspaceModal &&
+                      setShowAddWorkspaceModal(false)
                     }
                   />
                 </div>
@@ -132,7 +139,8 @@ export default function AddWorkspace({
                     id="cancel-add-button"
                     className="h-9 px-4"
                     onClick={() =>
-                      setAddWorkspaceModel && setAddWorkspaceModel(false)
+                      setShowAddWorkspaceModal &&
+                      setShowAddWorkspaceModal(false)
                     }
                     varient="primary-outlined"
                     title={t('commonConstants.cancel')}

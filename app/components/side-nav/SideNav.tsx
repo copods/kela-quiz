@@ -75,7 +75,7 @@ const sideNavGuide = [
 ]
 const SideNav = () => {
   const { t } = useTranslation()
-  const [addWorkspaceModel, setAddWorkspaceModel] = useState(false)
+  const [showAddWorkspaceModal, setShowAddWorkspaceModal] = useState(false)
   const { workspaces = [], currentWorkspaceId } = useLoaderData()
   const [workspace, setWorkspace] = useState<string>(currentWorkspaceId)
   const fetcher = useFetcher()
@@ -116,7 +116,7 @@ const SideNav = () => {
                 valueKey="workspaceId"
                 value={workspace}
                 setValue={setWorkspace}
-                setOpen={setAddWorkspaceModel}
+                setOpen={setShowAddWorkspaceModal}
                 actionName={t('sideNav.addWorkspace')}
                 callToAction={true}
               />
@@ -150,8 +150,8 @@ const SideNav = () => {
         </div>
       </div>
       <AddWorkspace
-        addWorkspaceModel={addWorkspaceModel}
-        setAddWorkspaceModel={setAddWorkspaceModel}
+        showAddWorkspaceModal={showAddWorkspaceModal}
+        setShowAddWorkspaceModal={setShowAddWorkspaceModal}
         setWorkspaceId={setWorkspace}
       />
     </>

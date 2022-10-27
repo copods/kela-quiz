@@ -18,8 +18,8 @@ function DropdownField({
   displayKey: string
   valueKey: string
   name?: string
-  value: any
-  setValue: (e: any) => void
+  value: string
+  setValue: (e: string) => void
   setOpen?: (e: boolean) => void
   callToAction?: boolean
   actionName?: string
@@ -73,7 +73,7 @@ function DropdownField({
               <Listbox.Options className="dropDownSelect absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                 {callToAction && (
                   <Listbox.Option
-                    key="add workspace"
+                    key={actionName}
                     className={({ active }) =>
                       classNames(
                         active ? 'bg-primary text-white' : 'text-gray-900',
@@ -91,7 +91,6 @@ function DropdownField({
                         className="dropdown-option ml-2 block truncate font-normal"
                         id="option"
                       >
-                        {' '}
                         {actionName}
                       </span>
                     </div>
