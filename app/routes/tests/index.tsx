@@ -109,7 +109,6 @@ export default function Tests() {
   if (t(data.status as string) != t('statusCheck.success')) {
     toast.warn(t('statusCheck.commonError'))
   }
-  console.log(testActionData)
   useEffect(() => {
     if (testActionData) {
       if (testActionData.resp?.status === 200) {

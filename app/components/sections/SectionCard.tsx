@@ -83,7 +83,7 @@ const SectionCard = ({
                     <button
                       tabIndex={0}
                       data-cy="delete-section"
-                      className="text-gray-primary undefined inline-flex w-36 items-center justify-start rounded-md rounded-md border border-primary bg-white py-2.5 px-5 px-2 py-2 text-xs font-medium text-primary shadow-sm transition delay-75 ease-in-out hover:bg-gray-100"
+                      className="text-gray-primary undefined inline-flex w-36 items-center justify-start rounded-md  border border-primary bg-white px-2 py-2 text-xs font-medium text-primary shadow-sm transition delay-75 ease-in-out hover:bg-gray-100"
                       onClick={() => {
                         if (setIsDelete !== undefined) setIsDelete(true)
                       }}
