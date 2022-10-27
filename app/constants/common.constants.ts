@@ -237,7 +237,7 @@ export const candidateExamConstants = {
   candidateInsWelcome: 'Welcome',
 }
 export const cypress = {
-  email: 'careers@copods.co',
+  email: 'copods.demo.sendgrid@gmail.com',
   password: 'kQuiz@copods',
   step1: 'Step 1',
   step2: 'Step 2',
@@ -283,4 +283,19 @@ export const otpConstants = {
   didntGetCode: "Didn't get a code",
   resendCodeIn: 'Resend code in',
   otp: 'OTP',
+}
+export const settings = {
+  settings: 'Settings',
+  clickToChange: 'Click to change',
+  resetPas: 'Reset Password',
+  passNotMatch: 'Password do not match',
+  enterNewPass: 'Enter New Password',
+  reEnterPass: 'Re-Enter Password',
+  enterOldPassword: 'Enter Old Password',
+  minPasswordLimit: 'Password should have minimum 8 characters',
+  passShouldNotBeSame: 'Current Password and New Password should not be same',
+}
+export const tabs = {
+  general: 'General',
+  workspace: 'Workspaces',
 }

@@ -11,6 +11,17 @@ export interface InputFieldProps {
   errorId: string
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
+export interface PasswordFieldProps {
+  name: string
+  label: string
+  placeholder: string
+  required: boolean
+  value: string
+  type: string
+  error?: string
+  errorId: string
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+}
 
 export interface ButtonProps {
   name?: string
@@ -250,10 +261,16 @@ export interface SectionWiseResults {
   totalQuestion: number
   correctQuestion: number
   unanswered: number
+  skipped: number
+  incorrect: number
   testId: string
   candidateTestId: string
   createdAt: Date
   updatedAt: Date
   section: SectionInCandidateTest
   test: Test
+}
+export interface TabsComponent {
+  name: string
+  route: string
 }
