@@ -28,7 +28,7 @@ describe('Forgot password', () => {
         if (toastText === statusCheck.resendPasswordError) {
           cy.location('pathname').should('include', routes.forgotPassword)
         } else {
-          cy.get('.Toastify__toast').should(
+          cy.get('.Toastify__toast', { timeout: 8000 }).should(
             'have.text',
             statusCheck.resendPasswordSuccess
           )
