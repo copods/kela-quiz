@@ -22,8 +22,7 @@ export const action: ActionFunction = async ({ request, params }) => {
     return redirect(routes.signIn)
   }
   if (enteredPassword !== reEnteredPassword) {
-    const res = 'not equal'
-    return res
+    return 'not equal'
   }
 
   return null
