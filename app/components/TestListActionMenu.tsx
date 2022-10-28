@@ -2,6 +2,7 @@ import { Menu, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import { t } from 'i18next'
 import { Fragment, useEffect } from 'react'
+import resendTestLink from '~/../public/assets/resend-test-invitation.svg'
 
 const TestListMenuItem = ({
   menuIcon,
@@ -11,7 +12,6 @@ const TestListMenuItem = ({
   menuListText,
   id,
   resendInvite,
-  image,
 }: {
   menuIcon: string
   onItemClick: (e: boolean) => void
@@ -20,7 +20,6 @@ const TestListMenuItem = ({
   menuListText: string
   id: string
   resendInvite?: () => void
-  image?: string
 }) => {
   useEffect(() => {
     if (open === false) {
@@ -71,9 +70,9 @@ const TestListMenuItem = ({
                           aria-hidden="true"
                         />
                       )}
-                      {image ? (
+                      {resendTestLink ? (
                         <img
-                          src={image}
+                          src={resendTestLink}
                           alt={t('resultConstants.resendTestInvite')}
                           className="mr-1"
                         />
