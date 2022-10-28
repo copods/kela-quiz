@@ -29,6 +29,12 @@ export async function getAllUsers() {
 export async function getAllRoles() {
   return prisma.role.findMany()
 }
+//To get roleId of Admin role
+export async function getAdminId() {
+  const roleName = 'Admin'
+  const role = await prisma.role.findUnique({ where: { name: roleName } })
+  return role?.id
+}
 export async function createNewUser({
   firstName,
   lastName,
@@ -57,6 +63,28 @@ export async function createNewUser({
   })
 
   return await sendMail(email, firstName, password, role?.name || 'NA')
+}
+
+export async function reinviteMember({ id }: { id: string }) {
+  const user = await prisma.user.findUnique({ where: { id } })
+  const roleId = user?.roleId as string
+  const role = await prisma.role.findUnique({ where: { id: roleId } })
+  const password = faker.internet.password()
+  const hashedPassword = await bcrypt.hash(password, 10)
+  await prisma.password.update({
+    where: {
+      userId: id,
+    },
+    data: {
+      hash: hashedPassword,
+    },
+  })
+  return await sendMail(
+    user?.email as string,
+    user?.firstName as string,
+    password,
+    role?.name as string
+  )
 }
 
 export async function sendResetPassword(email: string) {
@@ -108,4 +136,44 @@ export async function loginVerificationResponse(
 
   const { password: _password, ...userWithoutPassword } = userWithPassword
   return userWithoutPassword
+}
+export async function updatePassword(
+  id: string,
+  newPassword: string,
+  oldPassword: string
+) {
+  const oldPass = await prisma.user.findUnique({
+    where: { id },
+    select: {
+      password: {
+        select: {
+          hash: true,
+        },
+      },
+    },
+  })
+
+  const isValid = await bcrypt.compare(
+    oldPassword,
+    oldPass?.password?.hash as string
+  )
+  if (!isValid) {
+    let error = new Error('invalidPassword')
+    return error
+  }
+  let checkValidPass
+  if (isValid === true) {
+    const hashedPassword = await bcrypt.hash(newPassword, 10)
+    checkValidPass = await prisma.password.update({
+      where: {
+        userId: id,
+      },
+      data: {
+        hash: hashedPassword,
+      },
+    })
+  }
+  if (checkValidPass) {
+    return 'DONE'
+  }
 }

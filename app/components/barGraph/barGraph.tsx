@@ -80,6 +80,9 @@ const BarGraph = ({
     legend: {
       shadow: false,
     },
+    accessibility: {
+      enabled: false,
+    },
     tooltip: {
       shared: true,
       backgroundColor: '#fff',
