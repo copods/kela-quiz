@@ -61,6 +61,7 @@ const TimerComponent = ({
         className={`flex w-24 justify-center rounded-md px-4 py-1 font-mono text-lg font-bold text-gray-800 ${
           time > 120 ? 'bg-blue-100' : 'bg-red-100'
         }`}
+        suppressHydrationWarning
       >
         {getFormattedTime(time)}
       </span>

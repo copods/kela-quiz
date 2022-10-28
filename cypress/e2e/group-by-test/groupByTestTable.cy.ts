@@ -1,4 +1,5 @@
-import { commonConstants } from '~/constants/common.constants'
+import { commonConstants, testsConstants } from '~/constants/common.constants'
+const test1 = `Aptitude - test1`
 
 describe('Test for GroupByTestTable, Result', () => {
   beforeEach('sign-in', () => {
@@ -18,7 +19,7 @@ describe('Test for GroupByTestTable, Result', () => {
   })
   let value: string
   let strings: Array<string>
-  it('Total Count of Test of groupByTable', () => {
+  xit('Total Count of Test of groupByTable', () => {
     cy.get('a')
       .find('#group-by-tests')
       .should('have.text', commonConstants.results)
@@ -41,7 +42,7 @@ describe('Test for GroupByTestTable, Result', () => {
         })
     })
   })
-  it('sort by name in ascending order ', () => {
+  xit('sort by name in ascending order ', () => {
     cy.get('a', { timeout: 6000 })
       .find('#group-by-tests')
       .should('have.text', commonConstants.results)
@@ -65,7 +66,7 @@ describe('Test for GroupByTestTable, Result', () => {
         }
       })
   })
-  it('sort by name in descending order ', () => {
+  xit('sort by name in descending order ', () => {
     cy.get('a', { timeout: 6000 })
       .find('#group-by-tests')
       .should('have.text', commonConstants.results)
@@ -92,7 +93,7 @@ describe('Test for GroupByTestTable, Result', () => {
         }
       })
   })
-  it('sort by created date in ascending order ', () => {
+  xit('sort by created date in ascending order ', () => {
     cy.get('a', { timeout: 6000 })
       .find('#group-by-tests')
       .should('have.text', commonConstants.results)
@@ -125,7 +126,7 @@ describe('Test for GroupByTestTable, Result', () => {
         }
       })
   })
-  it('sort by created date in descending order', () => {
+  xit('sort by created date in descending order', () => {
     cy.get('a', { timeout: 6000 })
       .find('#group-by-tests')
       .should('have.text', commonConstants.results)
@@ -158,5 +159,42 @@ describe('Test for GroupByTestTable, Result', () => {
           })
         }
       })
+  })
+  it('checks,invite candidate button should be visible', () => {
+    cy.get('a', { timeout: 6000 })
+      .find('#group-by-tests')
+      .should('have.text', commonConstants.results)
+      .click()
+    cy.get('.groupTestRow', { timeout: 8000 }).each(($el) => {
+      cy.wrap($el).within((el) => {
+        if (
+          el[0].getElementsByClassName('groupByItemTest')[0].innerHTML === test1
+        ) {
+          cy.get('.groupByItemTest').should('have.text', test1)
+        }
+      })
+    })
+    cy.get('.groupByItemTest').contains(test1).click()
+    cy.get('#vertical-icon', { timeout: 8000 }).should('be.visible').click()
+    cy.get('.deleteTest').should('be.visible')
+  })
+  it('checks,invite candidate from result page', () => {
+    cy.get('a', { timeout: 6000 })
+      .find('#group-by-tests')
+      .should('have.text', commonConstants.results)
+      .click()
+    cy.get('.groupTestRow', { timeout: 8000 }).each(($el) => {
+      cy.wrap($el).within((el) => {
+        if (
+          el[0].getElementsByClassName('groupByItemTest')[0].innerHTML === test1
+        ) {
+          cy.get('.groupByItemTest').should('have.text', test1)
+        }
+      })
+    })
+    cy.get('.groupByItemTest').contains(test1).click()
+    cy.get('#vertical-icon', { timeout: 8000 }).should('be.visible').click()
+    cy.get('.deleteTest').should('be.visible').click()
+    cy.get('.Toastify__toast').should('have.text', testsConstants.reinvited)
   })
 })

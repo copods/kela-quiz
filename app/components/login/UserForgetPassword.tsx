@@ -24,7 +24,7 @@ const UserForgetPassword = ({
       value: email,
       error: checkErrorStatus ? t('statusCheck.resendPasswordError') : '',
       errorId: 'email-error',
-      onChange: function (event: any) {
+      onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
         setEmail(event?.target.value)
       },
     },
