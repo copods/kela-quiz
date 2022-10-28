@@ -2,7 +2,7 @@ import type { Password, User } from '@prisma/client'
 import bcrypt from 'bcryptjs'
 
 import { prisma } from '~/db.server'
-import { sendMail, sendPassword } from './sendgrid.servers'
+import { sendMail, sendNewPassword } from './sendgrid.servers'
 import { faker } from '@faker-js/faker'
 
 export type { User } from '@prisma/client'
@@ -80,7 +80,7 @@ export async function sendResetPassword(email: string) {
         hash: hashedPassword,
       },
     })
-    return await sendPassword(userEmail?.email as string, password)
+    return await sendNewPassword(userEmail?.email as string, password)
   } else {
     return null
   }
