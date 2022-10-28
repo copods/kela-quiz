@@ -22,11 +22,11 @@ describe('Test for Logout, SideNav', () => {
     cy.location('pathname').should('include', '/members')
   })
   it('click all links with loop', () => {
-    const menu = cy.get('#sideNavMenu', { timeout: 1000 })
+    const menu = cy.get('#sideNavMenu')
     const menuItems = menu.find('.menuItem')
 
     menuItems.should((item) => {
-      expect(item).to.have.length(4)
+      expect(item).to.have.length(5)
     })
 
     menuItems.each((item) => {
@@ -35,6 +35,7 @@ describe('Test for Logout, SideNav', () => {
         testsConstants.tests,
         routeFiles.sections,
         members.members,
+        commonConstants.settings,
       ]).to.include(item.text())
 
       // @TODO:
@@ -48,6 +49,7 @@ describe('Test for Logout, SideNav', () => {
           routes.tests,
           routes.sections,
           routes.members,
+          routes.settings,
         ]).to.include(item)
       })
     })
@@ -64,7 +66,7 @@ describe('Test for Logout, SideNav', () => {
       .find('ul')
       .find('li')
       .should((item) => {
-        expect(item).to.have.length(1)
+        expect(item.length).to.be.greaterThan(1)
       })
   })
 })
