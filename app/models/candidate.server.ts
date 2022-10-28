@@ -4,7 +4,7 @@ import { prisma } from '~/db.server'
 import { sendTestInviteMail } from './sendgrid.servers'
 
 // inviting candidate
-
+const candidateTestLink = `${env.PUBLIC_URL}/assessment/`
 export async function createIndividualCandidate({
   email,
   createdById,
@@ -131,23 +131,18 @@ async function createCandidateData({
   createdById: User['id']
   testId: string
 }) {
-  let user = await createIndividualCandidate({ email, createdById })
-
-  let candidateTest = await createCandidateTest({
+  const user = await createIndividualCandidate({ email, createdById })
+  const candidateTest = await createCandidateTest({
     testId,
     candidateId: user.id,
   })
-
   // generating random link
-  const candidateLink = env.PUBLIC_URL + '/assessment/' + candidateTest.id
-
-  let updatedCandidateTest = await updateTestLink({
+  const candidateLink = `${candidateTestLink}${candidateTest.id}`
+  const updatedCandidateTest = await updateTestLink({
     id: candidateTest.id,
     link: candidateLink,
   })
-
-  let test = await getTestById(testId)
-
+  const test = await getTestById(testId)
   // creating section in test
   if (test?.sections) {
     for (const section of test.sections) {
@@ -159,8 +154,37 @@ async function createCandidateData({
       })
     }
   }
-
   await sendMailToCandidate(user?.email, updatedCandidateTest?.link as string)
+}
+// Resend a test link to user
+export async function resendTestLink({
+  candidateId,
+  testId,
+}: {
+  candidateId: string
+  testId: string
+}) {
+  try {
+    const candidateLink = `${candidateTestLink}${testId}`
+    const candidate = await prisma.candidate.findUnique({
+      where: { id: candidateId },
+    })
+    const candidateTest = await prisma.candidateTest.findUnique({
+      where: { id: testId },
+      select: {
+        startedAt: true,
+        endAt: true,
+      },
+    })
+    if (candidateTest?.startedAt === null && candidateTest?.endAt === null) {
+      await sendMailToCandidate(candidate?.email as string, candidateLink)
+      return 'created'
+    } else {
+      return 'End Test'
+    }
+  } catch (error) {
+    return 'error'
+  }
 }
 
 export async function createCandidate({
