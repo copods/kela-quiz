@@ -3,6 +3,7 @@ import Button from '../form/Button'
 import InputField from '../form/InputField'
 import { Form } from '@remix-run/react'
 import { useTranslation } from 'react-i18next'
+import { trimValue } from '~/utils'
 
 const CreatePassword = ({
   checkErrorStatus,
@@ -22,7 +23,7 @@ const CreatePassword = ({
       value: enterPassword,
       errorId: 'email-error',
       onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
-        setEnterPassword(event?.target.value)
+        setEnterPassword(trimValue(event?.target.value))
       },
     },
 
@@ -36,7 +37,7 @@ const CreatePassword = ({
       error: checkErrorStatus ? t('statusCheck.enteredReenteredPassword') : '',
       errorId: 'email-error',
       onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
-        setReEnterPassword(event?.target.value)
+        setReEnterPassword(trimValue(event?.target.value))
       },
     },
   ]

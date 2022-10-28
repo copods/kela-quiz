@@ -1,5 +1,11 @@
 /// <reference types="Cypress"/>
-import { commonConstants, cypress, members } from '~/constants/common.constants'
+import {
+  commonConstants,
+  cypress,
+  members,
+  statusCheck,
+} from '~/constants/common.constants'
+
 const memberEmail = 'johndoe@example.com'
 
 describe('Test for members', () => {
@@ -103,5 +109,106 @@ describe('Test for members', () => {
       })
     })
     return false
+  })
+  it('create-password page contain correct header', () => {
+    cy.visit(
+      `http://localhost:3000` +
+        '/members/' +
+        ' cl9qupatc0193thtn2iitunti' +
+        '/create-password'
+    )
+    cy.get('.text-center').should('have.text', commonConstants.createPassword)
+  })
+  it('create-password page, checks enter password input filed should have focus after click', () => {
+    cy.visit(
+      `http://localhost:3000` +
+        '/members/' +
+        ' cl9qupatc0193thtn2iitunti' +
+        '/create-password'
+    )
+    cy.get('#enterPassword').click().should('be.focused')
+  })
+  it('create-password page, checks enter password input filed not take empty space at begining', () => {
+    cy.visit(
+      `http://localhost:3000` +
+        '/members/' +
+        ' cl9qupatc0193thtn2iitunti' +
+        '/create-password'
+    )
+    cy.get('#enterPassword').type('     ').should('have.value', '')
+  })
+  it('create-password page, checks enter password input filed should have correct label', () => {
+    cy.visit(
+      `http://localhost:3000` +
+        '/members/' +
+        ' cl9qupatc0193thtn2iitunti' +
+        '/create-password'
+    )
+    cy.get('#enterPassword')
+      .should('be.visible')
+      .parent()
+      .within(() => {
+        cy.get('label')
+          .should('have.text', 'Enter Password')
+          .should('have.class', 'block text-gray-800')
+      })
+  })
+  it('create-password page, checks re-enter password input filed should have focus after click', () => {
+    cy.visit(
+      `http://localhost:3000` +
+        '/members/' +
+        ' cl9qupatc0193thtn2iitunti' +
+        '/create-password'
+    )
+    cy.get('#reEnterPassword').click().should('be.focused')
+  })
+  it('create-password page, checks re-enter password input filed not take empty space at begining', () => {
+    cy.visit(
+      `http://localhost:3000` +
+        '/members/' +
+        ' cl9qupatc0193thtn2iitunti' +
+        '/create-password'
+    )
+    cy.get('#enterPassword').type('     ').should('have.value', '')
+  })
+  it('create-password page, checks re-enter password input filed should have correct label', () => {
+    cy.visit(
+      `http://localhost:3000` +
+        '/members/' +
+        ' cl9qupatc0193thtn2iitunti' +
+        '/create-password'
+    )
+    cy.get('#reEnterPassword')
+      .should('be.visible')
+      .parent()
+      .within(() => {
+        cy.get('label')
+          .should('have.text', 'Re-Enter Password')
+          .should('have.class', 'block text-gray-800')
+      })
+  })
+  it('create-password page, checks submit button contain correct text', () => {
+    cy.visit(
+      `http://localhost:3000` +
+        '/members/' +
+        ' cl9qupatc0193thtn2iitunti' +
+        '/create-password'
+    )
+    cy.get('#reset-password').should('have.text', 'Proceed')
+  })
+  it('create-password page,throw error if password entered in both input fileds are not matched', () => {
+    cy.visit(
+      `http://localhost:3000` +
+        '/members/' +
+        ' cl9qupatc0193thtn2iitunti' +
+        '/create-password'
+    )
+    cy.get('#enterPassword').should('be.visible').type('copods')
+    cy.get('#reEnterPassword').should('be.visible').type('careers')
+    cy.get('#reset-password').should('have.text', 'Proceed').click()
+    cy.get('#email-error').should(
+      'have.text',
+      statusCheck.enteredReenteredPassword
+    )
   })
 })
