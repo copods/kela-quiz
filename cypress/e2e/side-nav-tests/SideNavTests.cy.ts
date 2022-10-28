@@ -67,43 +67,4 @@ describe('Test for Logout, SideNav', () => {
         expect(item).to.have.length(1)
       })
   })
-
-  it('should add workspace', () => {
-    let dropdown = cy.get('#dropdown')
-
-    dropdown
-      .click()
-      .find('ul')
-      .children()
-      .each((element, index) => {
-        if (index === 0) {
-          cy.wrap(element).click()
-          return
-        }
-      })
-
-    // Adding workspace name
-    const randomWorkSpaceName = `workSpace-${(Math.random() + 1)
-      .toString(36)
-      .substring(7)}`
-
-    cy.get('input[name="addWorkspace"]')
-      .type(randomWorkSpaceName)
-      .should('have.attr', 'value', randomWorkSpaceName)
-
-    cy.get('button[name="addWorkspace"]').click()
-
-    cy.wait(500)
-
-    // Check for workspace length
-    dropdown = cy.get('#dropdown')
-
-    dropdown
-      .click()
-      .find('ul')
-      .find('li')
-      .should((item) => {
-        expect(item.length).to.be.greaterThan(1)
-      })
-  })
 })

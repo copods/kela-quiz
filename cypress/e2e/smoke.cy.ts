@@ -47,6 +47,57 @@ describe('smoke tests', () => {
     cy.get('#password-error').should('have.text', 'Password is invalid')
   })
 
+  it('should add workspace', () => {
+    cy.visit('/sign-in')
+    cy.get('input[name="email"]')
+      .clear()
+      .type(Cypress.env('email'))
+      .should('have.focus')
+      .should('have.value', Cypress.env('email'))
+    cy.get('input[name="password"]')
+      .clear()
+      .type(Cypress.env('password'))
+      .should('have.focus')
+      .should('have.value', Cypress.env('password'))
+    cy.get('[data-cy="submit"]').click()
+    cy.location('pathname').should('include', '/members')
+    let dropdown = cy.get('#dropdown')
+
+    dropdown
+      .click()
+      .find('ul')
+      .children()
+      .each((element, index) => {
+        if (index === 0) {
+          cy.wrap(element).click()
+          return
+        }
+      })
+
+    // Adding workspace name
+    const randomWorkSpaceName = `workSpace-${(Math.random() + 1)
+      .toString(36)
+      .substring(7)}`
+
+    cy.get('input[name="addWorkspace"]')
+      .type(randomWorkSpaceName)
+      .should('have.attr', 'value', randomWorkSpaceName)
+
+    cy.get('button[name="addWorkspace"]').click()
+
+    cy.wait(500)
+
+    // Check for workspace length
+    dropdown = cy.get('#dropdown')
+
+    dropdown
+      .click()
+      .find('ul')
+      .find('li')
+      .should((item) => {
+        expect(item.length).to.be.greaterThan(1)
+      })
+  })
   // creating test data
   it('Adding a first section', () => {
     cy.visit('/sign-in')
