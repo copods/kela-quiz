@@ -9,7 +9,18 @@ export interface InputFieldProps {
   value: string
   error?: string
   errorId: string
-  onChange: (e: React.ChangeEvent) => void
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+}
+export interface PasswordFieldProps {
+  name: string
+  label: string
+  placeholder: string
+  required: boolean
+  value: string
+  type: string
+  error?: string
+  errorId: string
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 export interface ButtonProps {
@@ -244,7 +255,6 @@ export enum QuestionTypes {
   singleChoice = 'SINGLE_CHOICE',
   text = 'TEXT',
 }
-
 export interface SectionWiseResults {
   id: string
   sectionInCandidateTestId: string
@@ -259,4 +269,8 @@ export interface SectionWiseResults {
   updatedAt: Date
   section: SectionInCandidateTest
   test: Test
+}
+export interface TabsComponent {
+  name: string
+  route: string
 }

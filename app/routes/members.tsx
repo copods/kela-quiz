@@ -10,12 +10,14 @@ import {
   deleteUserById,
   getAllRoles,
   getAllUsers,
+  reinviteMember,
 } from '~/models/user.server'
 import MembersHeader from '~/components/members/MembersHeader'
 import { toast } from 'react-toastify'
 import { useEffect, useState } from 'react'
 import { routes } from '~/constants/route.constants'
 import { useTranslation } from 'react-i18next'
+import { actions } from '~/constants/action.constants'
 
 export type ActionData = {
   errors?: {
@@ -45,8 +47,7 @@ export const action: ActionFunction = async ({ request }) => {
   const action = JSON.parse(formData.get('addMember') as string)
     ? JSON.parse(formData.get('addMember') as string)
     : formData.get('deleteMember')
-
-  if (action.action === 'add') {
+  if (action.action === actions.addMember) {
     const firstName = formData.get('firstName')
     const lastName = formData.get('lastName')
     const email = formData.get('email')
@@ -114,10 +115,27 @@ export const action: ActionFunction = async ({ request }) => {
           { status: 400 }
         )
       })
-
     return addHandle
   }
-  if (action === 'delete') {
+  if (action.action === actions.resendInviteMember) {
+    const id = formData.get('id')
+    let resendHandle = null
+    await reinviteMember({
+      id: id as string,
+    }).then(() => {
+      resendHandle = json<ActionData>(
+        {
+          resp: {
+            title: 'toastConstants.invitationSent',
+            status: 200,
+          },
+        },
+        { status: 200 }
+      )
+    })
+    return resendHandle
+  }
+  if (action === actions.deleteMember) {
     if (typeof formData.get('id') !== 'string') {
       return json<ActionData>(
         { errors: { title: 'statusCheck.descIsReq', status: 400 } },
@@ -149,7 +167,6 @@ export const action: ActionFunction = async ({ request }) => {
 }
 const Members = () => {
   const { t } = useTranslation()
-
   const membersActionData = useActionData() as ActionData
   const [actionStatus, setActionStatus] = useState<boolean>(false)
   useEffect(() => {

@@ -7,7 +7,8 @@
     "members": "Members",
     "addedOn": "Added On",
     "action": "Action",
-    "member": "member"
+    "member": "member",
+    "memberResendIcon": "Reinvite Icon"
   },
   "commonConstants": {
     "name": "Name",
@@ -230,6 +231,7 @@
     "correctEmail": "Please provide a valid email address",
     "memberAdded": "Member Added Successfully..!",
     "memberAlreadyExist": "Member with this email id already exists!",
+    "invitationSent": "Invitation Sent Successfully..!",
     "signUpSuccessfull": "Sign Up successfully"
   },
   "otpConstants": {
@@ -239,5 +241,24 @@
     "didntGetCode": "Didn't get a code",
     "resendCodeIn": "Resend code in",
     "otp": "OTP"
+  },
+  "settings": {
+    "passNotMatch": "Password do not match",
+    "enterNewPass": "Enter New Password",
+    "reEnterPass": "Re-Enter Password",
+    "resetPas": "Reset Password",
+    "version": "Version",
+    "password": "Password",
+    "clickToChange": "Click to change",
+    "passResetting": "Resetting",
+    "enterOldPassword": "Enter Old Password",
+    "passResetSuccessfully": "Password changed successfully !",
+    "basicInfo": "Basic Info",
+    "minPasswordLimit": "Password should have minimum 8 characters",
+    "passShouldNotBeSame": "Current Password and New Password should not be same"
+  },
+  "tabs": {
+    "general": "General",
+    "workspaces": "Workspaces"
   }
 }
