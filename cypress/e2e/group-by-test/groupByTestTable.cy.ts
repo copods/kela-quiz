@@ -19,7 +19,7 @@ describe('Test for GroupByTestTable, Result', () => {
   })
   let value: string
   let strings: Array<string>
-  xit('Total Count of Test of groupByTable', () => {
+  it('Total Count of Test of groupByTable', () => {
     cy.get('a')
       .find('#group-by-tests')
       .should('have.text', commonConstants.results)
@@ -42,7 +42,7 @@ describe('Test for GroupByTestTable, Result', () => {
         })
     })
   })
-  xit('sort by name in ascending order ', () => {
+  it('sort by name in ascending order ', () => {
     cy.get('a', { timeout: 6000 })
       .find('#group-by-tests')
       .should('have.text', commonConstants.results)
@@ -66,7 +66,7 @@ describe('Test for GroupByTestTable, Result', () => {
         }
       })
   })
-  xit('sort by name in descending order ', () => {
+  it('sort by name in descending order ', () => {
     cy.get('a', { timeout: 6000 })
       .find('#group-by-tests')
       .should('have.text', commonConstants.results)
@@ -93,7 +93,7 @@ describe('Test for GroupByTestTable, Result', () => {
         }
       })
   })
-  xit('sort by created date in ascending order ', () => {
+  it('sort by created date in ascending order ', () => {
     cy.get('a', { timeout: 6000 })
       .find('#group-by-tests')
       .should('have.text', commonConstants.results)
@@ -126,7 +126,7 @@ describe('Test for GroupByTestTable, Result', () => {
         }
       })
   })
-  xit('sort by created date in descending order', () => {
+  it('sort by created date in descending order', () => {
     cy.get('a', { timeout: 6000 })
       .find('#group-by-tests')
       .should('have.text', commonConstants.results)

@@ -173,8 +173,8 @@ export async function resendTestLink({
       where: { id: testId },
       select: {
         startedAt: true,
-        endAt: true
-      }
+        endAt: true,
+      },
     })
     if (candidateTest?.startedAt === null && candidateTest?.endAt === null) {
       await sendMailToCandidate(candidate?.email as string, candidateLink)
