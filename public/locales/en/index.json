@@ -236,7 +236,8 @@
     "memberAdded": "Member Added Successfully..!",
     "memberAlreadyExist": "Member with this email id already exists!",
     "invitationSent": "Invitation Sent Successfully..!",
-    "signUpSuccessfull": "Sign Up successfully"
+    "signUpSuccessfull": "Sign Up successfully",
+    "specialCharRestriction": "Special characters are not allowed!"
   },
   "otpConstants": {
     "header": "OTP Verification",
