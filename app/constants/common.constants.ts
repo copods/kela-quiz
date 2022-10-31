@@ -127,6 +127,7 @@ export const testsConstants = {
   candidateInvited: 'Candidates Invited',
   writeDescriptionOfTest: 'Write Description of Test',
   testName: 'test',
+  reinvited: 'Candidate Invited Successfully',
 }
 export const componentGlobalConstants = {
   totalCounts: 'Total Counts',

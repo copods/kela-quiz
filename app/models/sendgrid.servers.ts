@@ -327,7 +327,7 @@ export async function sendMailToRecruiter(
 
   return 'Done'
 }
-export async function sendPassword(email: string, password: string) {
+export async function sendNewPassword(email: string, password: string) {
   const to = email
   const from = 'careers@copods.co'
   const subject = 'RESET PASSWORD - Quiz @ Copods'
@@ -346,7 +346,7 @@ export async function sendPassword(email: string, password: string) {
   </div>
     <div>
     <table width="100%" border="0" cellspacing="0" cellpadding="0">
-    <tr>s
+    <tr>
     <td style="background-color:#353988 ;">
             <p style="text-align:center;font-size:20px;line-height:28px;color:#4B5563;background:#fff;margin:0 auto;padding:20px;max-width: 350px;padding-bottom:13px;"><span>Welcome !</span></p></tr>
         </td>
