@@ -65,7 +65,7 @@ export const action: ActionFunction = async ({ request }) => {
       return json<ActionData>(
         {
           errors: {
-            title: 'toastConstantsspecialCharRestriction',
+            title: 'toastConstants.specialCharRestriction',
             status: 400,
           },
         },
@@ -83,7 +83,7 @@ export const action: ActionFunction = async ({ request }) => {
       return json<ActionData>(
         {
           errors: {
-            title: 'toastConstantsspecialCharRestriction',
+            title: 'toastConstants.specialCharRestriction',
             status: 400,
           },
         },

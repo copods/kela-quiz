@@ -44,9 +44,31 @@ export const action: ActionFunction = async ({ request }) => {
         { status: 400 }
       )
     }
+    if (firstName.match(/\W/)) {
+      return json<ActionData>(
+        {
+          errors: {
+            title: 'toastConstants.specialCharRestriction',
+            status: 400,
+          },
+        },
+        { status: 400 }
+      )
+    }
     if (typeof lastName !== 'string' || lastName.length === 0) {
       return json<ActionData>(
         { errors: { title: 'toastConstants.lastNameRequired', status: 400 } },
+        { status: 400 }
+      )
+    }
+    if (lastName.match(/\W/)) {
+      return json<ActionData>(
+        {
+          errors: {
+            title: 'toastConstants.specialCharRestriction',
+            status: 400,
+          },
+        },
         { status: 400 }
       )
     }
