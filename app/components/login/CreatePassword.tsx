@@ -51,7 +51,7 @@ const CreatePassword = ({
           {t('settstatusCheckings.passAlreadyCreated')}
         </span>
       ) : createPassData.userNotFound ? (
-        <span className="text-3xl">
+        <span className="userNotFound text-3xl">
           {t('settstatusCheckings.userNotFound')}
         </span>
       ) : (

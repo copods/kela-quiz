@@ -163,7 +163,6 @@ describe('Test for members', () => {
         ' cl9qupatc0193thtn2iitunti' +
         '/create-password'
     )
-    cy.get('span').should('have.text', statusCheck.userNotFound)
+    cy.get('.userNotFound').should('have.text', statusCheck.userNotFound)
   })
-  console.log(window.location.href, 'k')
 })
