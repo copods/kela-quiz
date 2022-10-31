@@ -51,9 +51,8 @@
     "totalQuestion": "Total Questions",
     "srNo": "Sr.No",
     "verify": "Verify",
-    "proceed": "Proceed",
     "enterPassword": "Enter Password",
-    "reEnterPassword": "Re-Enter Password",
+    "confirmPassword": "Confirm Password",
     "createPassword": "Create Password"
   },
   "sideNav": {
@@ -160,7 +159,7 @@
     "correctOtp": "Please enter correct OTP",
     "resendPasswordSuccess": "New password has been sent to email successfully",
     "resendPasswordError": "Account not found. Please enter valid email",
-    "enteredReenteredPassword": "Entered and Re-Entered Password should be equal."
+    "enteredReenteredPassword": "Password and Confirm password should be same."
   },
   "resultConstants": {
     "order": "Order",

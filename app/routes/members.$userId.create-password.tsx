@@ -18,6 +18,9 @@ export const loader: LoaderFunction = async ({ request, params }) => {
       status: 404,
     })
   }
+  if (userId[0]?.id == params.userId && userId[0].password?.hash) {
+    return redirect(routes.signIn)
+  }
   invariant(params.userId, 'testId not found')
 
   return null
@@ -26,8 +29,8 @@ export const action: ActionFunction = async ({ request, params }) => {
   const formData = await request.formData()
   const userId = params.userId
 
-  const enteredPassword = formData.get('enterPassword')
-  const reEnteredPassword = formData.get('reEnterPassword')
+  const enteredPassword = formData.get('Password')
+  const reEnteredPassword = formData.get('confirmPassword')
 
   if (enteredPassword === reEnteredPassword) {
     await createPasswordOfUser(userId as string, enteredPassword as string)

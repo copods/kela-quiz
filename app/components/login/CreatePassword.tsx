@@ -15,10 +15,10 @@ const CreatePassword = ({
   const { t } = useTranslation()
   const inputFieldProps = [
     {
-      label: t('commonConstants.enterPassword'),
-      placeholder: t('commonConstants.enterPassword'),
+      label: t('settings.password'),
+      placeholder: t('settings.password'),
       type: 'text',
-      name: 'enterPassword',
+      name: 'Password',
       required: true,
       value: enterPassword,
       errorId: 'email-error',
@@ -28,10 +28,10 @@ const CreatePassword = ({
     },
 
     {
-      label: t('commonConstants.reEnterPassword'),
-      placeholder: t('commonConstants.reEnterPassword'),
+      label: t('commonConstants.confirmPassword'),
+      placeholder: t('commonConstants.confirmPassword'),
       type: 'text',
-      name: 'reEnterPassword',
+      name: 'confirmPassword',
       required: true,
       value: reEnterPassword,
       error: checkErrorStatus ? t('statusCheck.enteredReenteredPassword') : '',

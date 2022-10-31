@@ -42,14 +42,9 @@ export async function sendMail(
           <br>
 
           <p style="text-align:left;color:#4B5563;margin:0;font-family:'Poppins', sans-serif;">
-            Please use the following credentials to access your account
+          Please use below link to create your first password.
           </p>
           <br>
-          
-          <p style="text-align:left;color:#4B5563;margin:0;font-family:'Poppins', sans-serif;">
-            Email: <span style="font-weight:600">${email}</span>
-          </p>
-
         </div>        
         <p style="text-align:center;color:#4B5563;margin:0;font-family:'Poppins', sans-serif;margin-top:10px">     
           <a href="${passwordGenerationLink}" style="color: #353988;">${passwordGenerationLink}</a>

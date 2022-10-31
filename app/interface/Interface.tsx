@@ -2,7 +2,7 @@ import type React from 'react'
 
 export interface InputFieldProps {
   name: string
-  label?: string
+  label: string
   placeholder: string
   type: string
   required: boolean

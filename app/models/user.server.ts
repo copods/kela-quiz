@@ -23,7 +23,7 @@ export async function getUserByEmail(email: User['email']) {
 }
 
 export async function getAllUsers() {
-  return prisma.user.findMany({ include: { role: true } })
+  return prisma.user.findMany({ include: { role: true, password: true } })
 }
 
 export async function getAllRoles() {
