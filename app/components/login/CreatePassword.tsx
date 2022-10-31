@@ -19,7 +19,7 @@ const CreatePassword = ({
     {
       label: t('settings.password'),
       placeholder: t('settings.password'),
-      type: 'text',
+      type: 'password',
       name: 'Password',
       required: true,
       value: enterPassword,
@@ -32,7 +32,7 @@ const CreatePassword = ({
     {
       label: t('commonConstants.confirmPassword'),
       placeholder: t('commonConstants.confirmPassword'),
-      type: 'text',
+      type: 'password',
       name: 'confirmPassword',
       required: true,
       value: reEnterPassword,

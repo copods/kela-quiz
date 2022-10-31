@@ -51,7 +51,6 @@
     "totalQuestion": "Total Questions",
     "srNo": "Sr.No",
     "verify": "Verify",
-    "enterPassword": "Enter Password",
     "confirmPassword": "Confirm Password",
     "createPassword": "Create Password"
   },
@@ -160,7 +159,7 @@
     "resendPasswordSuccess": "New password has been sent to email successfully",
     "resendPasswordError": "Account not found. Please enter valid email",
     "enteredReenteredPassword": "Password and Confirm password should be same.",
-    "passAlreadyCreated": "You already created the password",
+    "passAlreadyCreated": "You have already created the password",
     "userNotFound": "User Not Found"
   },
   "resultConstants": {
