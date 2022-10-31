@@ -47,12 +47,10 @@ const CreatePassword = ({
   return (
     <div className="flex flex-1 items-center justify-center overflow-auto bg-gray-50">
       {createPassData.passAlreadyDone ? (
-        <span className="text-3xl">
-          {t('settstatusCheckings.passAlreadyCreated')}
-        </span>
+        <span className="text-3xl">{t('statusCheck.passAlreadyCreated')}</span>
       ) : createPassData.userNotFound ? (
         <span className="userNotFound text-3xl">
-          {t('settstatusCheckings.userNotFound')}
+          {t('statusCheck.userNotFound')}
         </span>
       ) : (
         <div className="flex w-full max-w-454 flex-col gap-12 rounded-md border border-gray-50 bg-white p-12 drop-shadow-xl">
@@ -72,7 +70,7 @@ const CreatePassword = ({
               type="submit"
               className="h-11 "
               title="proceed"
-              buttonText="Proceed"
+              buttonText={t('commonConstants.submit')}
             />
           </Form>
         </div>
