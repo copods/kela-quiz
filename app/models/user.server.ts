@@ -2,7 +2,7 @@ import type { Password, User } from '@prisma/client'
 import bcrypt from 'bcryptjs'
 
 import { prisma } from '~/db.server'
-import { sendMail, sendPassword } from './sendgrid.servers'
+import { sendMail, sendNewPassword } from './sendgrid.servers'
 import { faker } from '@faker-js/faker'
 
 export type { User } from '@prisma/client'
@@ -108,7 +108,7 @@ export async function sendResetPassword(email: string) {
         hash: hashedPassword,
       },
     })
-    return await sendPassword(userEmail?.email as string, password)
+    return await sendNewPassword(userEmail?.email as string, password)
   } else {
     return null
   }
@@ -136,4 +136,44 @@ export async function loginVerificationResponse(
 
   const { password: _password, ...userWithoutPassword } = userWithPassword
   return userWithoutPassword
+}
+export async function updatePassword(
+  id: string,
+  newPassword: string,
+  oldPassword: string
+) {
+  const oldPass = await prisma.user.findUnique({
+    where: { id },
+    select: {
+      password: {
+        select: {
+          hash: true,
+        },
+      },
+    },
+  })
+
+  const isValid = await bcrypt.compare(
+    oldPassword,
+    oldPass?.password?.hash as string
+  )
+  if (!isValid) {
+    let error = new Error('invalidPassword')
+    return error
+  }
+  let checkValidPass
+  if (isValid === true) {
+    const hashedPassword = await bcrypt.hash(newPassword, 10)
+    checkValidPass = await prisma.password.update({
+      where: {
+        userId: id,
+      },
+      data: {
+        hash: hashedPassword,
+      },
+    })
+  }
+  if (checkValidPass) {
+    return 'DONE'
+  }
 }

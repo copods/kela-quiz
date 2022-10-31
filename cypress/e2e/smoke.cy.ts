@@ -32,7 +32,7 @@ describe('smoke tests', () => {
 
   it('Invalid Password Error Message', () => {
     cy.visit('/sign-in')
-    cy.get('#email').clear().type('careers@copods.co')
+    cy.get('#email').clear().type('copods.demo.sendgrid@gmail.com')
     cy.get('#password').clear().type('anuragpate')
     cy.findByRole('button').click()
     cy.get('#password-error').should('have.text', 'Password is invalid')
@@ -376,9 +376,28 @@ describe('smoke tests', () => {
     cy.get('[data-cy="submit"]').click()
     cy.location('pathname').should('include', '/members')
     cy.get('a').find('#tests').should('have.text', testsConstants.tests).click()
-    cy.get('#invite-popup-open', { timeout: 10000 })
-      .should('be.visible')
-      .click()
+    cy.get('.test-table-list', { timeout: 6000 }).should('be.visible')
+    cy.get('.test-table-list').each(($el) => {
+      cy.wrap($el).within((el) => {
+        if (
+          el[0].getElementsByClassName('test-name-navigation')[0].innerHTML ===
+          test1
+        ) {
+          cy.get('.test-name-navigation').should('have.text', test1)
+        }
+      })
+    })
+    cy.get('.test-name-navigation')
+      .contains(test1)
+      .parent()
+      .parent()
+      .parent()
+      .within(() => {
+        cy.get('#invite-popup-open', { timeout: 10000 })
+          .should('be.visible')
+          .click()
+      })
+
     cy.get('input[name="email"]')
       .clear()
       .type('johndoe@example.com')

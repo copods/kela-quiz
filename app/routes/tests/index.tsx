@@ -56,7 +56,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
-  const action = formData.get('deleteTest')
+  const action = formData.get('action')
   const createdById = await requireUserId(request)
   const testId = formData.get('inviteCandidates') as string
   formData.delete('inviteCandidates')
@@ -96,6 +96,7 @@ export const action: ActionFunction = async ({ request }) => {
       createdById,
       testId,
     })
+
     return json({ candidateInviteStatus, testId })
   }
 }
