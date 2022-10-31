@@ -84,7 +84,10 @@ describe('Test for members', () => {
       .within(() => {
         cy.get('#resend-member-invite').should('be.visible').click()
       })
-    cy.get('.Toastify__toast-body', { timeout: 6000 }).should('be.visible')
+    cy.get('.Toastify__toast-body', { timeout: 8000 }).should(
+      'have.text',
+      statusCheck.commonError
+    )
   })
   it('Test for Delete member popup cancel button', () => {
     cy.get('a').find('#members').should('have.text', members.members).click()
