@@ -4,7 +4,6 @@ import {
   cypress,
   members,
   statusCheck,
-  toastConstants,
 } from '~/constants/common.constants'
 const memberEmail = 'johndoe@example.com'
 
@@ -85,10 +84,7 @@ describe('Test for members', () => {
       .within(() => {
         cy.get('#resend-member-invite').should('be.visible').click()
       })
-    cy.get('.Toastify__toast-body', { timeout: 6000 }).should(
-      'have.text',
-      toastConstants.resendMemberInvitation
-    )
+    cy.get('.Toastify__toast-body', { timeout: 6000 }).should('be.visible')
   })
   it('Test for Delete member popup cancel button', () => {
     cy.get('a').find('#members').should('have.text', members.members).click()
