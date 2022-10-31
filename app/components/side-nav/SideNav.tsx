@@ -83,7 +83,7 @@ const SideNav = () => {
     return { ...userWorkspace, ...userWorkspace.workspace }
   })
   function switchWorkpace(val: string) {
-    if (val !== 'Add Workspace' && workspace !== currentWorkspaceId) {
+    if (val !== t('sideNav.addWorkspace') && workspace !== currentWorkspaceId) {
       fetcher.submit(
         {
           workspaceId: val,

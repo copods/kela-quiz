@@ -235,7 +235,7 @@ export default function SectionPage() {
         action: `${routes.sections}/${selectedSection}`,
       })
     }
-  }, [order, sortBy, data.sections?.length])
+  }, [order, sortBy, data.sections?.length, selectedSection, submit])
 
   useEffect(() => {
     if (sectionActionData) {
@@ -262,7 +262,7 @@ export default function SectionPage() {
         })
       }
     }
-  }, [sectionActionData, data.selectedSectionId, data.sections])
+  }, [sectionActionData, data.selectedSectionId, data.sections, t])
   return (
     <AdminLayout>
       <div className="flex h-full flex-col gap-6 overflow-hidden p-1">
