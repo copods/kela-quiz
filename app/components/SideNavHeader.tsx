@@ -10,7 +10,6 @@ const Header = ({ title }: { title: string }) => {
     <div className="flex items-center gap-4">
       <Link
         to={routes.members}
-        id="#logo"
         tabIndex={0}
         aria-label={t('commonConstants.goToDashboard')}
         title={t('commonConstants.logo')}
