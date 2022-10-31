@@ -7,23 +7,21 @@ import type { LoaderFunction, ActionFunction } from '@remix-run/server-runtime'
 import invariant from 'tiny-invariant'
 import { createPasswordOfUser, getAllUsers } from '~/models/user.server'
 import { routes } from '~/constants/route.constants'
+import { json } from '@remix-run/node'
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   const getUsers = await getAllUsers()
   const userId = getUsers.filter((item) => {
     return item?.id === params.userId
   })
-  if (userId[0]?.id !== params.userId) {
-    throw new Response('Not Found', {
-      status: 404,
-    })
-  }
-  if (userId[0]?.id == params.userId && userId[0].password?.hash) {
-    return redirect(routes.signIn)
-  }
+  const userNotFound = userId[0]?.id !== params.userId
+
+  const passAlreadyDone =
+    userId[0]?.id == params.userId && userId[0].password?.hash
+
   invariant(params.userId, 'testId not found')
 
-  return null
+  return json({ passAlreadyDone, userNotFound })
 }
 export const action: ActionFunction = async ({ request, params }) => {
   const formData = await request.formData()

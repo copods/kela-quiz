@@ -159,7 +159,9 @@
     "correctOtp": "Please enter correct OTP",
     "resendPasswordSuccess": "New password has been sent to email successfully",
     "resendPasswordError": "Account not found. Please enter valid email",
-    "enteredReenteredPassword": "Password and Confirm password should be same."
+    "enteredReenteredPassword": "Password and Confirm password should be same.",
+    "passAlreadyCreated": "You already created the password",
+    "userNotFound": "User Not Found"
   },
   "resultConstants": {
     "order": "Order",
