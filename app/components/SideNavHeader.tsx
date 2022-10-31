@@ -6,6 +6,12 @@ import { routes } from '~/constants/route.constants'
 const Header = ({ title }: { title: string }) => {
   const { t } = useTranslation()
 
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     const logo = document.querySelector('#logo') as HTMLElement
+  //     logo?.focus()
+  //   }, 500)
+  // }, [])
   return (
     <div className="flex items-center gap-4">
       <Link
