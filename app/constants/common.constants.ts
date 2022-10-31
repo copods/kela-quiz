@@ -169,6 +169,7 @@ export const statusCheck = {
   resendPasswordSuccess: 'New password has been sent to email successfully',
   resendPasswordError: 'Account not found. Please enter valid email',
   enteredReenteredPassword: 'Entered and Re-Entered Password should be equal.',
+  userNotFound: 'User Not Found',
 }
 export const resultConstants = {
   order: 'Order',
