@@ -24,7 +24,7 @@ describe('Test for members', () => {
     cy.get('[data-cy="submit"]').click()
     cy.location('pathname').should('include', '/members')
   })
-  xit('Test for conforming ,new member is added in a list or not', () => {
+  it('Test for conforming ,new member is added in a list or not', () => {
     cy.get('a').find('#members').should('have.text', members.members).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/members')
     cy.get('.memberRows', { timeout: 8000 }).each(($el) => {
@@ -38,13 +38,13 @@ describe('Test for members', () => {
       })
     })
   })
-  xit('Test for add-members popUp cancel button', () => {
+  it('Test for add-members popUp cancel button', () => {
     cy.get('a').find('#members').should('have.text', members.members).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/members')
     cy.get('#add-member').should('have.text', cypress.addMember).click()
     cy.get('#cancel-add-button').should('have.text', 'Cancel').click()
   })
-  xit('checks invite member button should be visible', () => {
+  it('checks invite member button should be visible', () => {
     cy.get('a').find('#members').should('have.text', members.members).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/members')
     cy.get('.memberRows', { timeout: 8000 }).each(($el) => {
@@ -65,7 +65,7 @@ describe('Test for members', () => {
         cy.get('#resend-member-invite').should('be.visible')
       })
   })
-  xit('checks,member should be invited after clicking on invited button', () => {
+  it('checks,member should be invited after clicking on invited button', () => {
     cy.get('a').find('#members').should('have.text', members.members).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/members')
     cy.get('.memberRows', { timeout: 8000 }).each(($el) => {
@@ -90,7 +90,7 @@ describe('Test for members', () => {
       toastConstants.resendMemberInvitation
     )
   })
-  xit('Test for Delete member popup cancel button', () => {
+  it('Test for Delete member popup cancel button', () => {
     cy.get('a').find('#members').should('have.text', members.members).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/members')
     cy.get('.membersHeading').should('have.text', 'Members')
@@ -116,7 +116,7 @@ describe('Test for members', () => {
       .should('have.text', commonConstants.cancel)
       .click()
   })
-  xit('Test for Delete member ', () => {
+  it('Test for Delete member ', () => {
     cy.get('a').find('#members').should('have.text', members.members).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/members')
     cy.get('.memberRows', { timeout: 8000 }).each(($el) => {
@@ -158,7 +158,9 @@ describe('Test for members', () => {
   })
   it('checks', () => {
     cy.visit(
-      window.location.href +
+      window.location.protocol +
+        '//' +
+        window.location.host +
         '/members/' +
         ' cl9qupatc0193thtn2iitunti' +
         '/create-password'
