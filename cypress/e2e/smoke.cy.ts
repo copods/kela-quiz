@@ -422,7 +422,7 @@ describe('smoke tests', () => {
     cy.findByRole('button').click()
     cy.get('a').find('#members').should('have.text', members.members).click()
     cy.get('#add-member').should('have.text', cypress.addMember).click()
-    cy.get('#add-pop-up-model').should('be.visible')
+    cy.get('#dialog-wrapper').should('be.visible')
     cy.get('input[name="firstName"]')
       .clear()
       .type(memberFirstName)

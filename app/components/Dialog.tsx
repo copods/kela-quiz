@@ -6,7 +6,6 @@ const DialogWrapperComponent = ({
   open,
   setOpen,
   children,
-  ...props
 }: DialogWrapperProps) => {
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -24,7 +23,7 @@ const DialogWrapperComponent = ({
         </Transition.Child>
         <div
           className="fixed inset-0 z-10 flex min-h-full items-end justify-center overflow-y-auto p-4 text-center sm:items-center sm:p-0"
-          id={props.id}
+          id="dialog-wrapper"
         >
           <Transition.Child
             as={Fragment}

@@ -48,146 +48,130 @@ export default function AddMemberModal({
     setRole(roles[0].id)
   }, [open, roles])
 
-  const dialogWrapperProps = [
-    // dialog wrapper props
-    {
-      id: 'add-pop-up-model',
-    },
-  ]
-
   return (
     <div>
-      {dialogWrapperProps.map((props) => {
-        return (
-          <DialogWrapperComponent
-            open={open}
-            setOpen={setOpen}
-            {...props}
-            key={props.id}
-          >
-            <Dialog.Panel className="relative transform rounded-lg bg-white p-6 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-              <div className="flex items-center justify-between pt-1">
-                {/* dialog wrapper heading */}
-                <h2
-                  tabIndex={0}
-                  className="text-2xl font-bold text-gray-700"
-                  title={t('members.addMember')}
-                  role={t('members.addMember')}
-                  aria-label={t('members.addMember')}
-                >
-                  {t('members.addMember')}
-                </h2>
-                {/* dialog wrapper close icon for close the dialog */}
-                <Icon
-                  tabIndex={0}
-                  className="cursor-pointer text-2xl text-gray-600"
-                  icon={'carbon:close'}
-                  onKeyUp={(e) => {
-                    if (e.key === 'Enter') setOpen(false)
-                  }}
-                  onClick={() => setOpen(false)}
-                />
-              </div>
-              <hr className="mt-4 mb-6 h-px w-full border-0 bg-gray-300" />
+      <DialogWrapperComponent open={open} setOpen={setOpen}>
+        <Dialog.Panel className="relative transform rounded-lg bg-white p-6 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+          <div className="flex items-center justify-between pt-1">
+            {/* dialog wrapper heading */}
+            <h2
+              tabIndex={0}
+              className="text-2xl font-bold text-gray-700"
+              title={t('members.addMember')}
+              role={t('members.addMember')}
+              aria-label={t('members.addMember')}
+            >
+              {t('members.addMember')}
+            </h2>
+            {/* dialog wrapper close icon for close the dialog */}
+            <Icon
+              tabIndex={0}
+              className="cursor-pointer text-2xl text-gray-600"
+              icon={'carbon:close'}
+              onKeyUp={(e) => {
+                if (e.key === 'Enter') setOpen(false)
+              }}
+              onClick={() => setOpen(false)}
+            />
+          </div>
+          <hr className="mt-4 mb-6 h-px w-full border-0 bg-gray-300" />
 
-              <div className="flex justify-between gap-4 pb-6">
-                <div>
-                  <label htmlFor="" className="text-gray-800">
-                    {t('members.firstName')}
-                  </label>
-                  <input
-                    tabIndex={0}
-                    id="firstName"
-                    type="text"
-                    name="firstName"
-                    className="my-1.5 h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
-                    placeholder={t('members.firstName')}
-                    onChange={(e) => setFirstName(trimValue(e.target.value))}
-                    value={firstName}
-                    maxLength={40}
-                  />
-                </div>
-                <div>
-                  <label htmlFor="" className="text-gray-800">
-                    {t('members.lastName')}
-                  </label>
-                  <input
-                    tabIndex={0}
-                    id="lastName"
-                    type="text"
-                    name="lastName"
-                    className="my-1.5 h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
-                    placeholder={t('members.lastName')}
-                    onChange={(e) => setLastName(trimValue(e.target.value))}
-                    value={lastName}
-                    maxLength={40}
-                  />
-                </div>
-              </div>
-              <div className="pb-6 ">
-                <label htmlFor="" className="text-gray-800">
-                  {t('commonConstants.email')}
-                </label>
-                <input
-                  tabIndex={0}
-                  id="email"
-                  type="text"
-                  name="email"
-                  className="my-1.5 h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
-                  placeholder={t('commonConstants.email')}
-                  onChange={(e) => setEmail(trimValue(e.target.value))}
-                />
-              </div>
-              <div className="pb-6">
-                <div>
-                  <label htmlFor="" className="text-gray-800">
-                    {t('members.role')}
-                  </label>
-                </div>
-                <DropdownField
-                  data={roles}
-                  name="roleId"
-                  displayKey={'name'}
-                  valueKey={'id'}
-                  value={role}
-                  setValue={setRole}
-                />
-              </div>
-              <div className="flex justify-end gap-2">
-                <Button
-                  tabIndex={0}
-                  id="cancel-add-button"
-                  className="h-9 px-4"
-                  onClick={() => setOpen(false)}
-                  varient="primary-outlined"
-                  title={t('commonConstants.cancel')}
-                  buttonText={t('commonConstants.cancel')}
-                />
-                <Button
-                  tabIndex={0}
-                  id="add-button"
-                  name="addMember"
-                  value={'add'}
-                  className="h-9 px-4"
-                  isDisabled={transition.state === 'submitting'}
-                  title={
-                    transition.state === 'submitting'
-                      ? t('commonConstants.adding')
-                      : t('commonConstants.add')
-                  }
-                  buttonText={
-                    transition.state === 'submitting'
-                      ? t('commonConstants.adding')
-                      : t('commonConstants.add')
-                  }
-                  varient="primary-solid"
-                  onClick={() => submitMemberForm()}
-                />
-              </div>
-            </Dialog.Panel>
-          </DialogWrapperComponent>
-        )
-      })}
+          <div className="flex justify-between gap-4 pb-6">
+            <div>
+              <label htmlFor="" className="text-gray-800">
+                {t('members.firstName')}
+              </label>
+              <input
+                tabIndex={0}
+                id="firstName"
+                type="text"
+                name="firstName"
+                className="my-1.5 h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
+                placeholder={t('members.firstName')}
+                onChange={(e) => setFirstName(trimValue(e.target.value))}
+                value={firstName}
+                maxLength={40}
+              />
+            </div>
+            <div>
+              <label htmlFor="" className="text-gray-800">
+                {t('members.lastName')}
+              </label>
+              <input
+                tabIndex={0}
+                id="lastName"
+                type="text"
+                name="lastName"
+                className="my-1.5 h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
+                placeholder={t('members.lastName')}
+                onChange={(e) => setLastName(trimValue(e.target.value))}
+                value={lastName}
+                maxLength={40}
+              />
+            </div>
+          </div>
+          <div className="pb-6 ">
+            <label htmlFor="" className="text-gray-800">
+              {t('commonConstants.email')}
+            </label>
+            <input
+              tabIndex={0}
+              id="email"
+              type="text"
+              name="email"
+              className="my-1.5 h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
+              placeholder={t('commonConstants.email')}
+              onChange={(e) => setEmail(trimValue(e.target.value))}
+            />
+          </div>
+          <div className="pb-6">
+            <div>
+              <label htmlFor="" className="text-gray-800">
+                {t('members.role')}
+              </label>
+            </div>
+            <DropdownField
+              data={roles}
+              name="roleId"
+              displayKey={'name'}
+              valueKey={'id'}
+              value={role}
+              setValue={setRole}
+            />
+          </div>
+          <div className="flex justify-end gap-2">
+            <Button
+              tabIndex={0}
+              id="cancel-add-button"
+              className="h-9 px-4"
+              onClick={() => setOpen(false)}
+              varient="primary-outlined"
+              title={t('commonConstants.cancel')}
+              buttonText={t('commonConstants.cancel')}
+            />
+            <Button
+              tabIndex={0}
+              id="add-button"
+              name="addMember"
+              value={'add'}
+              className="h-9 px-4"
+              isDisabled={transition.state === 'submitting'}
+              title={
+                transition.state === 'submitting'
+                  ? t('commonConstants.adding')
+                  : t('commonConstants.add')
+              }
+              buttonText={
+                transition.state === 'submitting'
+                  ? t('commonConstants.adding')
+                  : t('commonConstants.add')
+              }
+              varient="primary-solid"
+              onClick={() => submitMemberForm()}
+            />
+          </div>
+        </Dialog.Panel>
+      </DialogWrapperComponent>
     </div>
   )
 }

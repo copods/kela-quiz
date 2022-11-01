@@ -24,7 +24,6 @@ export interface PasswordFieldProps {
 }
 
 export interface DialogWrapperProps {
-  id: string
   children: JSX.Element
   open: boolean
   setOpen: (e: boolean) => void
