@@ -21,12 +21,12 @@ export async function sendMail(
   <body>
     <div style="min-height:200px;font-family:'Poppins', sans-serif;background-color:#F3F4F6">
     <div style="background:#353988;padding:15px 0px;text-align:center">
-    <img src="https://res.cloudinary.com/drpi0krkh/image/upload/v1664196350/Logo_1_jhtgxs.png" alt=${logo} height="26" width="30"/>
+    <img src="https://res.cloudinary.com/drpi0krkh/image/upload/v1664196350/Logo_1_jhtgxs.png" alt=${logo} height="26" width="30" />
   </div>
     <div>
     <table width="100%" border="0" cellspacing="0" cellpadding="0">
     <tr>
-    <td style="background-color:#353988 ;">
+    <td style="background-color:#353988;padding-right:20px;padding-left:20px">
             <p style="text-align:center;font-size:20px;line-height:28px;color:#4B5563;background:#fff;margin:0 auto;padding:20px;max-width: 350px;padding-bottom:13px;"><span>Welcome !</span></p></tr>
         </td>
     </tr>
@@ -108,7 +108,7 @@ export async function sendTestInviteMail(email: string, link: string) {
 <div  style="font-family:'Poppins', sans-serif;background-color:#F3F4F6">
   <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
-  <td style="background-color:#353988 ;">
+  <td style="background-color:#353988;padding-right:20px;padding-left:20px">
           <p style="text-align:center;font-size:20px;line-height:28px;color:#4B5563;background:#fff;margin:0 auto;padding:20px;max-width: 350px;padding-bottom:13px;"><span>Welcome !</span></p></tr>
       </td>
   </tr>
@@ -191,7 +191,7 @@ export async function sendOTPMail(email: string, otp: number) {
     <div>
     <table width="100%" border="0" cellspacing="0" cellpadding="0">
     <tr>
-    <td style="background-color:#353988 ;">
+    <td style="background-color:#353988;padding-right:20px;padding-left:20px">
             <p style="text-align:center;font-size:20px;line-height:28px;color:#4B5563;background:#fff;margin:0 auto;padding:20px;max-width: 350px;padding-bottom:13px;"><span>Welcome !</span></p></tr>
         </td>
     </tr>
@@ -342,7 +342,7 @@ export async function sendNewPassword(email: string, password: string) {
     <div>
     <table width="100%" border="0" cellspacing="0" cellpadding="0">
     <tr>
-    <td style="background-color:#353988 ;">
+    <td style="background-color:#353988;padding-right:20px;padding-left:20px">
             <p style="text-align:center;font-size:20px;line-height:28px;color:#4B5563;background:#fff;margin:0 auto;padding:20px;max-width: 350px;padding-bottom:13px;"><span>Welcome !</span></p></tr>
         </td>
     </tr>
