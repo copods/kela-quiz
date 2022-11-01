@@ -20,11 +20,11 @@ type LoaderData = {
 }
 export type ActionData = {
   errors?: {
-    status: number
+    statusCode: number
     message: string
   }
   resp?: {
-    status: number
+    statusCode: number
     message: string
   }
 }
@@ -65,13 +65,13 @@ export const action: ActionFunction = async ({ request }) => {
     await deleteTestById(formData.get('id') as string)
       .then((res) => {
         deleteHandle = json<ActionData>(
-          { resp: { status: 200, message: 'statusCheck.deletedSuccess' } },
+          { resp: { statusCode: 200, message: 'statusCheck.deletedSuccess' } },
           { status: 200 }
         )
       })
       .catch((err) => {
         deleteHandle = json<ActionData>(
-          { errors: { status: 400, message: 'statusCheck.commonError' } },
+          { errors: { statusCode: 400, message: 'statusCheck.commonError' } },
           { status: 400 }
         )
       })
@@ -111,11 +111,11 @@ export default function Tests() {
   }
   useEffect(() => {
     if (testActionData) {
-      if (testActionData.resp?.status === 200) {
+      if (testActionData.resp?.statusCode === 200) {
         toast.success(t(testActionData.resp?.message))
-      } else if (testActionData.errors?.status === 400) {
+      } else if (testActionData.errors?.statusCode === 400) {
         toast.error(t(testActionData.errors?.message), {
-          toastId: testActionData.errors?.status,
+          toastId: testActionData.errors?.statusCode,
         })
       }
     }
