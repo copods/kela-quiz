@@ -23,6 +23,13 @@ export interface PasswordFieldProps {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
+export interface DialogWrapperProps {
+  id: string
+  heading: string
+  role: string
+  ariaLabel: string
+}
+
 export interface ButtonProps {
   name?: string
   id?: string

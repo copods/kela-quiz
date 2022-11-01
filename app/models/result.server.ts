@@ -215,7 +215,10 @@ export async function getAllCandidateTests(obj: object) {
   if (res) {
     res.forEach(
       (
-        test: Test & { count?: number; candidateTest?: Array<CandidateTest> }
+        test: Test & {
+          count?: number
+          candidateTest?: Array<CandidateTest>
+        }
       ) => {
         let count = 0
         test?.candidateTest?.forEach((candidateTest: CandidateTest) => {
@@ -227,5 +230,6 @@ export async function getAllCandidateTests(obj: object) {
       }
     )
   }
+
   return res
 }
