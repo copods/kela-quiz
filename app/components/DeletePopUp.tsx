@@ -1,9 +1,10 @@
-import { Fragment, useEffect } from 'react'
-import { Dialog, Transition } from '@headlessui/react'
+import { useEffect } from 'react'
+import { Dialog } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import { Form } from '@remix-run/react'
 import Button from './form/Button'
 import { useTranslation } from 'react-i18next'
+import DialogWrapperComponent from './Dialog'
 export default function DeletePopUp({
   setOpen,
   open,
@@ -15,7 +16,7 @@ export default function DeletePopUp({
   deleteItem,
 }: {
   open: boolean
-  setOpen?: (e: boolean) => void | undefined
+  setOpen: (e: boolean) => void
   onDelete: () => void
   subAlert?: string
   setDeleted?: (e: boolean) => void
@@ -27,7 +28,7 @@ export default function DeletePopUp({
 
   const handleDelete = () => {
     onDelete()
-    if (setOpen !== undefined) setOpen(false)
+    setOpen(false)
   }
   useEffect(() => {
     if (open === true) {
@@ -36,95 +37,79 @@ export default function DeletePopUp({
       }, 100)
     }
   }, [open])
+  const dialogWrapperProps = [
+    // dialog wrapper props
+    {
+      id: 'add-pop-up-model',
+    },
+  ]
   return (
-    <Transition.Root show={open} as={Fragment}>
-      <Dialog
-        as="div"
-        className="relative z-10"
-        onClose={() => {
-          if (setOpen !== undefined) setOpen(false)
-        }}
-      >
-        <Transition.Child
-          as={Fragment}
-          enter="ease-out duration-300"
-          enterFrom="opacity-0"
-          enterTo="opacity-100"
-          leave="ease-in duration-200"
-          leaveFrom="opacity-100"
-          leaveTo="opacity-0"
-        >
-          <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
-        </Transition.Child>
-        <div className="fixed inset-0 z-10 overflow-y-auto">
-          <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-            <Transition.Child
-              as={Fragment}
-              enter="ease-out duration-300"
-              enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-              enterTo="opacity-100 translate-y-0 sm:scale-100"
-              leave="ease-in duration-200"
-              leaveFrom="opacity-100 translate-y-0 sm:scale-100"
-              leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-            >
-              <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                <div
-                  id="delete-dialog"
-                  className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4"
-                >
-                  <div className="sm:flex sm:items-center ">
-                    <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
-                      <Icon
-                        icon="ic:outline-delete-outline"
-                        className="h-6 w-6 text-red-500"
-                        aria-hidden="true"
-                      />
-                    </div>
-                    <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                      <p className="text-sm text-gray-500">
-                        {t('deletePopUp.alert')} {deleteItemType} '{deleteItem}'
-                        {subAlert}
-                      </p>
-                    </div>
+    <div>
+      {dialogWrapperProps.map((props) => {
+        return (
+          <DialogWrapperComponent
+            open={open}
+            setOpen={setOpen}
+            {...props}
+            key={props.id}
+          >
+            <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+              <div
+                id="delete-dialog"
+                className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4"
+              >
+                <div className="sm:flex sm:items-center ">
+                  <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+                    <Icon
+                      icon="ic:outline-delete-outline"
+                      className="h-6 w-6 text-red-500"
+                      aria-hidden="true"
+                    />
+                  </div>
+                  <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                    <p className="text-sm text-gray-500">
+                      {t('deletePopUp.alert')} {deleteItemType} '{deleteItem}'
+                      {subAlert}
+                    </p>
                   </div>
                 </div>
-                <div className="gap-2 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                  <Form method="post">
-                    <Button
-                      tabIndex={0}
-                      id="confirm-delete"
-                      varient="secondary-solid"
-                      type="button"
-                      name="delete"
-                      className="px-5"
-                      title={t('commonConstants.delete')}
-                      buttonText={t('commonConstants.delete')}
-                      onClick={() => {
-                        handleDelete()
-                        if (setDeleted !== undefined) {
-                          setDeleted(true)
-                        }
-                      }}
-                    />
-                  </Form>
+              </div>
+              <div className="gap-2 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                <Form method="post">
                   <Button
                     tabIndex={0}
+                    id="confirm-delete"
+                    varient="secondary-solid"
                     type="button"
-                    id="cancel-delete-pop-up"
-                    varient="primary-outlined"
+                    name="delete"
                     className="px-5"
-                    title={t('commonConstants.cancel')}
-                    buttonText={t('commonConstants.cancel')}
+                    title={t('commonConstants.delete')}
+                    buttonText={t('commonConstants.delete')}
                     onClick={() => {
-                      if (setOpen !== undefined) setOpen(false)
+                      handleDelete()
+                      if (setDeleted !== undefined) {
+                        setDeleted(true)
+                      }
                     }}
                   />
-                </div>
-              </Dialog.Panel>
-            </Transition.Child>
-          </div>
-        </div>
-      </Dialog>
-    </Transition.Root>
+                </Form>
+                <Button
+                  tabIndex={0}
+                  type="button"
+                  id="cancel-delete-pop-up"
+                  varient="primary-outlined"
+                  className="px-5"
+                  title={t('commonConstants.cancel')}
+                  buttonText={t('commonConstants.cancel')}
+                  onClick={() => {
+                    if (setOpen !== undefined) setOpen(false)
+                  }}
+                />
+              </div>
+            </Dialog.Panel>
+          </DialogWrapperComponent>
+        )
+      })}
+    </div>
   )
 }

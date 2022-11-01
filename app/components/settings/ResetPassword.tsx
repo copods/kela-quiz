@@ -1,3 +1,5 @@
+import { Dialog } from '@headlessui/react'
+import { Icon } from '@iconify/react'
 import { Form, useActionData, useTransition } from '@remix-run/react'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -87,9 +89,6 @@ const ResetPassword = ({
 
     {
       id: 'resetPassword-pop-up-model',
-      role: t('settings.resetPas'),
-      ariaLabel: t('settings.resetPas'),
-      tabIndex: 0,
     },
   ]
   return (
@@ -98,42 +97,66 @@ const ResetPassword = ({
         return (
           <DialogWrapperComponent
             open={openResetPassModel}
-            heading={t('settings.resetPas')}
             setOpen={setOpenResetPassModel}
             {...props}
             key={props.id}
           >
-            <Form method="post">
-              <div className="flex flex-col gap-8">
-                <div className="input-container-wrapper flex flex-col gap-6">
-                  {PasswordInputFieldProps.map((props) => {
-                    return <PasswordInputFields {...props} key={props.name} />
-                  })}
-                </div>
-                <div className="flex items-center justify-center">
-                  <Button
-                    tabIndex={0}
-                    name="resetPassword"
-                    value="resetPassword"
-                    title={
-                      transition.state === 'submitting'
-                        ? t('settings.passResetting')
-                        : t('settings.resetPas')
-                    }
-                    buttonText={
-                      transition.state === 'submitting'
-                        ? t('settings.passResetting')
-                        : t('settings.resetPas')
-                    }
-                    type="submit"
-                    varient="primary-solid"
-                    className="h-11 w-full text-base"
-                    isDisabled={!(newPassword && confirmPassword && password)}
-                    datacy="submit"
-                  />
-                </div>
+            <Dialog.Panel className="relative transform rounded-lg bg-white p-6 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+              <div className="flex items-center justify-between pt-1">
+                {/* dialog wrapper heading */}
+                <h2
+                  className="text-2xl font-bold text-gray-700"
+                  title={t('settings.resetPas')}
+                  role={t('settings.resetPas')}
+                  aria-label={t('settings.resetPas')}
+                  tabIndex={0}
+                >
+                  {t('settings.resetPas')}
+                </h2>
+                {/* dialog wrapper close icon for close the dialog */}
+                <Icon
+                  tabIndex={0}
+                  className="cursor-pointer text-2xl text-gray-600"
+                  icon={'carbon:close'}
+                  onKeyUp={(e) => {
+                    if (e.key === 'Enter') setOpenResetPassModel(false)
+                  }}
+                  onClick={() => setOpenResetPassModel(false)}
+                />
               </div>
-            </Form>
+              <hr className="mt-4 mb-6 h-px w-full border-0 bg-gray-300" />
+              <Form method="post">
+                <div className="flex flex-col gap-8">
+                  <div className="input-container-wrapper flex flex-col gap-6">
+                    {PasswordInputFieldProps.map((props) => {
+                      return <PasswordInputFields {...props} key={props.name} />
+                    })}
+                  </div>
+                  <div className="flex items-center justify-center">
+                    <Button
+                      tabIndex={0}
+                      name="resetPassword"
+                      value="resetPassword"
+                      title={
+                        transition.state === 'submitting'
+                          ? t('settings.passResetting')
+                          : t('settings.resetPas')
+                      }
+                      buttonText={
+                        transition.state === 'submitting'
+                          ? t('settings.passResetting')
+                          : t('settings.resetPas')
+                      }
+                      type="submit"
+                      varient="primary-solid"
+                      className="h-11 w-full text-base"
+                      isDisabled={!(newPassword && confirmPassword && password)}
+                      datacy="submit"
+                    />
+                  </div>
+                </div>
+              </Form>
+            </Dialog.Panel>
           </DialogWrapperComponent>
         )
       })}

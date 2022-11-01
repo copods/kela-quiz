@@ -6,6 +6,8 @@ import { trimValue } from '~/utils'
 import DropdownField from '../form/Dropdown'
 import { useTranslation } from 'react-i18next'
 import DialogWrapperComponent from '../Dialog'
+import { Dialog } from '@headlessui/react'
+import { Icon } from '@iconify/react'
 
 export default function AddMemberModal({
   roles,
@@ -50,9 +52,6 @@ export default function AddMemberModal({
     // dialog wrapper props
     {
       id: 'add-pop-up-model',
-      role: t('members.addMember'),
-      ariaLabel: t('members.addMember'),
-      tabIndex: 0,
     },
   ]
 
@@ -62,12 +61,35 @@ export default function AddMemberModal({
         return (
           <DialogWrapperComponent
             open={open}
-            heading={t('members.addMember')}
             setOpen={setOpen}
             {...props}
             key={props.id}
           >
-            <div>
+            <Dialog.Panel className="relative transform rounded-lg bg-white p-6 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+              <div className="flex items-center justify-between pt-1">
+                {/* dialog wrapper heading */}
+                <h2
+                  tabIndex={0}
+                  className="text-2xl font-bold text-gray-700"
+                  title={t('members.addMember')}
+                  role={t('members.addMember')}
+                  aria-label={t('members.addMember')}
+                >
+                  {t('members.addMember')}
+                </h2>
+                {/* dialog wrapper close icon for close the dialog */}
+                <Icon
+                  tabIndex={0}
+                  className="cursor-pointer text-2xl text-gray-600"
+                  icon={'carbon:close'}
+                  onKeyUp={(e) => {
+                    if (e.key === 'Enter') setOpen(false)
+                  }}
+                  onClick={() => setOpen(false)}
+                />
+              </div>
+              <hr className="mt-4 mb-6 h-px w-full border-0 bg-gray-300" />
+
               <div className="flex justify-between gap-4 pb-6">
                 <div>
                   <label htmlFor="" className="text-gray-800">
@@ -162,7 +184,7 @@ export default function AddMemberModal({
                   onClick={() => submitMemberForm()}
                 />
               </div>
-            </div>
+            </Dialog.Panel>
           </DialogWrapperComponent>
         )
       })}

@@ -37,7 +37,7 @@ const SignUp = ({ roleId }: { roleId: string }) => {
   return (
     <div>
       <div className="flex items-center justify-center">
-        <div className="flex flex-col gap-6 rounded-2xl bg-white px-20 py-12 pb-8 text-left drop-shadow-2xl transition-all sm:w-full sm:max-w-xl">
+        <div className="flex flex-col gap-6 rounded-lg bg-white px-20 py-12 pb-8 text-left drop-shadow-2xl transition-all sm:w-full sm:max-w-xl">
           <div className="flex flex-col items-center justify-center gap-6">
             <div className="-mt-20 flex justify-center">
               <Logo height="64" width="64" />
