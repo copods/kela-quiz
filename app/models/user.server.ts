@@ -4,7 +4,7 @@ import bcrypt from 'bcryptjs'
 import { prisma } from '~/db.server'
 import { sendMail, sendNewPassword } from './sendgrid.servers'
 import { faker } from '@faker-js/faker'
-
+import { env } from 'process'
 export type { User } from '@prisma/client'
 
 export async function getUserById(id: User['id']) {
@@ -23,7 +23,7 @@ export async function getUserByEmail(email: User['email']) {
 }
 
 export async function getAllUsers() {
-  return prisma.user.findMany({ include: { role: true } })
+  return prisma.user.findMany({ include: { role: true, password: true } })
 }
 
 export async function getAllRoles() {
@@ -41,19 +41,12 @@ export async function createNewUser({
   email,
   roleId,
 }: Pick<User, 'firstName' | 'lastName' | 'email' | 'roleId'>) {
-  const password = faker.internet.password()
-  const hashedPassword = await bcrypt.hash(password, 10)
-  await prisma.user.create({
+  const user = await prisma.user.create({
     data: {
       firstName,
       lastName,
       email,
       roleId,
-      password: {
-        create: {
-          hash: hashedPassword,
-        },
-      },
     },
   })
   const role = await prisma.role.findUnique({
@@ -61,8 +54,23 @@ export async function createNewUser({
       id: roleId,
     },
   })
-
-  return await sendMail(email, firstName, password, role?.name || 'NA')
+  const passwordGenerationLink =
+    env.PUBLIC_URL + '/members/' + user?.id + '/create-password'
+  return await sendMail(
+    passwordGenerationLink,
+    email,
+    firstName,
+    role?.name || 'NA'
+  )
+}
+export async function createPasswordOfUser(id: string, password: string) {
+  const hashedPassword = await bcrypt.hash(password, 10)
+  return await prisma.password.create({
+    data: {
+      hash: hashedPassword,
+      userId: id,
+    },
+  })
 }
 
 export async function reinviteMember({ id }: { id: string }) {
@@ -102,7 +110,7 @@ export async function sendResetPassword(email: string) {
   if (userEmail) {
     await prisma.password.update({
       where: {
-        userId: userEmail.id,
+        userId: userEmail?.id,
       },
       data: {
         hash: hashedPassword,

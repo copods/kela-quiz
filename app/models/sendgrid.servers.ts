@@ -2,9 +2,9 @@ import sendgrid from '@sendgrid/mail'
 import { env } from 'process'
 
 export async function sendMail(
+  passwordGenerationLink: string,
   email: string,
   name: string,
-  password: string,
   role: string
 ) {
   const to = email
@@ -42,21 +42,17 @@ export async function sendMail(
           <br>
 
           <p style="text-align:left;color:#4B5563;margin:0;font-family:'Poppins', sans-serif;">
-            Please use the following credentials to access your account
+          Please use below link to create your first password.
           </p>
           <br>
-          
-          <p style="text-align:left;color:#4B5563;margin:0;font-family:'Poppins', sans-serif;">
-            Email: <span style="font-weight:600">${email}</span>
+        </div>        
+        <p style="text-align:center;color:#4B5563;margin:0;font-family:'Poppins', sans-serif;margin-top:10px">     
+          <a href="${passwordGenerationLink}" style="color: #353988;">${passwordGenerationLink}</a>
+        </p>
+        <br>
+         <p style="text-align:center;color:#4B5563;margin:0;font-family:'Poppins', sans-serif;">
+             Use above link to generate your password
           </p>
-          <p style="text-align:left;color:#4B5563;margin:0;font-family:'Poppins', sans-serif;">
-            Password: <span style="font-weight:600">${password}</span>
-          </p>
-          
-        </div>
-        <div style="text-align:center;padding:10px" >
-        <a href="${env.PUBLIC_URL}" style="text-decoration:none"><span style="padding: 10px 38px;background:#353988;color:#fff;font-family:'Poppins', sans-serif;">Head to K - Quiz</span></a>
-        </div>
       </div>
       </td>
   </tr>

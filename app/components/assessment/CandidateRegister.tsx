@@ -54,8 +54,8 @@ function CandidateRegister() {
             })}
           </div>
           <Button
-            title={t('commonConstants.proceed')}
-            buttonText={busy ? 'Processing...' : t('commonConstants.proceed')}
+            title={t('commonConstants.submit')}
+            buttonText={busy ? 'Processing...' : t('commonConstants.submit')}
             type="submit"
             className="h-12 w-full text-base"
             isDisabled={!canSubmitBtnBeEnabled() || busy}
