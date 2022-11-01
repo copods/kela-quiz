@@ -8,6 +8,7 @@ import { useFetcher, useLoaderData } from '@remix-run/react'
 import type { UserWorkspace } from '~/interface/Interface'
 import AddWorkspace from '../workspace/AddWorkspace'
 import { useEffect, useState } from 'react'
+import { actions } from '~/constants/action.constants'
 
 const sideNavGuide = [
   // {
@@ -87,7 +88,7 @@ const SideNav = () => {
       fetcher.submit(
         {
           workspaceId: val,
-          action: 'switch',
+          action: actions.switchWorkspace,
         },
         { method: 'post', action: '/settings' }
       )

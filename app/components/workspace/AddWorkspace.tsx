@@ -7,6 +7,7 @@ import { trimValue } from '~/utils'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import InputField from '../form/InputField'
+import { actions } from '~/constants/action.constants'
 
 export default function AddWorkspace({
   showAddWorkspaceModal,
@@ -25,7 +26,7 @@ export default function AddWorkspace({
     fetcher.submit(
       {
         workspaceName: workspace,
-        action: 'Add Workspace',
+        action: actions.addWorkspace,
       },
       { method: 'post', action: '/settings' }
     )
