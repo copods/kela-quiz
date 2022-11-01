@@ -52,7 +52,9 @@
     "srNo": "Sr.No",
     "verify": "Verify",
     "proceed": "Proceed",
-    "defaultWorkspaceName": "Default Workspace Name"
+    "defaultWorkspaceName": "Default Workspace Name",
+    "confirmPassword": "Confirm Password",
+    "createPassword": "Create Password"
   },
   "sideNav": {
     "sideNavHeading": "Quiz",
@@ -102,6 +104,8 @@
   },
   "testsConstants": {
     "addTestbutton": "Add Test",
+    "testEnded": "Test has been ended",
+    "reinvited": "Candidate Invited Successfully",
     "testDetailsText": "Test Details",
     "descriptionText": "Description",
     "totalTimeText": "Total Time",
@@ -158,7 +162,10 @@
     "correctOtp": "Please enter correct OTP",
     "resendPasswordSuccess": "New password has been sent to email successfully",
     "resendPasswordError": "Account not found. Please enter valid email",
-    "switched": "Workspace Switched"
+    "switched": "Workspace Switched",
+    "enteredReenteredPassword": "Password and Confirm password should be same.",
+    "passAlreadyCreated": "You have already created the password",
+    "userNotFound": "User Not Found"
   },
   "resultConstants": {
     "order": "Order",
@@ -174,9 +181,11 @@
     "startedAt": "Started At",
     "correct": "Correct",
     "skipped": "Skipped",
+    "total": "Total",
+    "resendInvite": "Resend Invite",
+    "resendTestInvite": "Resend Test Invite Icon",
     "unanswered": "Unanswered",
-    "incorrect": "Incorrect",
-    "total": "Total"
+    "incorrect": "Incorrect"
   },
   "forgotPasswordConstants": {
     "header": "Forgot password?",

@@ -18,7 +18,6 @@ const InviteCandidatePopup = ({
   testId: string
 }) => {
   const { t } = useTranslation()
-
   const [emails, setEmails] = useState<Array<string>>([''])
   const actionData = useActionData()
   useEffect(() => {

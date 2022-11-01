@@ -72,7 +72,6 @@ export const action: ActionFunction = async ({ request }) => {
 
     // eslint-disable-next-line no-useless-escape
     const emailFilter = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
-
     if (typeof firstName !== 'string' || firstName.length === 0) {
       return json<ActionData>(
         { errors: { title: 'toastConstants.firstNameRequired', status: 400 } },
@@ -162,17 +161,30 @@ export const action: ActionFunction = async ({ request }) => {
     let resendHandle = null
     await reinviteMember({
       id: id as string,
-    }).then(() => {
-      resendHandle = json<ActionData>(
-        {
-          resp: {
-            title: 'toastConstants.invitationSent',
-            status: 200,
-          },
-        },
-        { status: 200 }
-      )
     })
+      .then(() => {
+        resendHandle = json<ActionData>(
+          {
+            resp: {
+              title: 'toastConstants.invitationSent',
+              status: 200,
+            },
+          },
+          { status: 200 }
+        )
+      })
+      .catch((err) => {
+        let title = 'statusCheck.commonError'
+        resendHandle = json<ActionData>(
+          {
+            errors: {
+              title,
+              status: 400,
+            },
+          },
+          { status: 400 }
+        )
+      })
     return resendHandle
   }
   if (action === actions.deleteMember) {

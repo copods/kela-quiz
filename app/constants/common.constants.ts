@@ -40,6 +40,7 @@ export const commonConstants = {
   totalQuestion: 'Total Questions',
   verify: 'Verify',
   email: 'Email',
+  createPassword: 'Create Password',
 }
 export const sideNav = {
   sideNavHeading: 'Quiz',
@@ -126,6 +127,7 @@ export const testsConstants = {
   candidateInvited: 'Candidates Invited',
   writeDescriptionOfTest: 'Write Description of Test',
   testName: 'test',
+  reinvited: 'Candidate Invited Successfully',
 }
 export const componentGlobalConstants = {
   totalCounts: 'Total Counts',
@@ -166,6 +168,8 @@ export const statusCheck = {
   correctOtp: 'Please enter correct OTP',
   resendPasswordSuccess: 'New password has been sent to email successfully',
   resendPasswordError: 'Account not found. Please enter valid email',
+  enteredReenteredPassword: 'Entered and Re-Entered Password should be equal.',
+  userNotFound: 'User Not Found',
 }
 export const resultConstants = {
   order: 'Order',

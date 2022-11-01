@@ -2,13 +2,13 @@ import type { Password, User } from '@prisma/client'
 import bcrypt from 'bcryptjs'
 
 import { prisma } from '~/db.server'
-import { sendMail, sendPassword } from './sendgrid.servers'
+import { sendMail, sendNewPassword } from './sendgrid.servers'
 import { faker } from '@faker-js/faker'
-
+import { env } from 'process'
 export type { User } from '@prisma/client'
 
 export async function getUserById(id: User['id']) {
-  return prisma.user.findUnique({ where: { id } })
+  return prisma.user.findUnique({ where: { id }, include: { password: true } })
 }
 
 export async function deleteUserById(id: string) {
@@ -186,8 +186,23 @@ export async function createNewUser({
       id: roleId,
     },
   })
-
-  return await sendMail(email, firstName, password, role?.name as string)
+  const passwordGenerationLink =
+    env.PUBLIC_URL + '/members/' + user?.id + '/create-password'
+  return await sendMail(
+    passwordGenerationLink,
+    email,
+    firstName,
+    role?.name || 'NA'
+  )
+}
+export async function createPasswordOfUser(id: string, password: string) {
+  const hashedPassword = await bcrypt.hash(password, 10)
+  return await prisma.password.create({
+    data: {
+      hash: hashedPassword,
+      userId: id,
+    },
+  })
 }
 
 export async function reinviteMember({ id }: { id: string }) {
@@ -227,13 +242,13 @@ export async function sendResetPassword(email: string) {
   if (userEmail) {
     await prisma.password.update({
       where: {
-        userId: userEmail.id,
+        userId: userEmail?.id,
       },
       data: {
         hash: hashedPassword,
       },
     })
-    return await sendPassword(userEmail?.email as string, password)
+    return await sendNewPassword(userEmail?.email as string, password)
   } else {
     return null
   }

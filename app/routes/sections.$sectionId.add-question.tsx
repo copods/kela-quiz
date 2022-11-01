@@ -59,6 +59,7 @@ export const action: ActionFunction = async ({ request }) => {
   const createdById = await requireUserId(request)
   const formData = await request.formData()
   const question = JSON.parse(formData.get('quesData') as string)
+
   let ques
   await addQuestion(
     question.question.replace(

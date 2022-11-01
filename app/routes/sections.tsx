@@ -235,7 +235,8 @@ export default function SectionPage() {
         action: `${routes.sections}/${selectedSection}`,
       })
     }
-  }, [order, sortBy, data.sections?.length, selectedSection, submit])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [order, sortBy, data.sections?.length])
 
   useEffect(() => {
     if (sectionActionData) {

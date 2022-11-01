@@ -97,6 +97,7 @@ const SideNav = () => {
     if (workspace) {
       switchWorkpace(workspace)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [workspace])
 
   return (

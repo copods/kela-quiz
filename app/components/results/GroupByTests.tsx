@@ -26,6 +26,16 @@ const GroupByTests = () => {
   ]
   const candidateTestData = useLoaderData()
   const candidateTests = candidateTestData.candidateTest
+  const candidateTestsArray = candidateTests.filter(
+    (
+      items: Test & {
+        count?: number | undefined
+        candidateTest?: CandidateTest
+      }
+    ) => {
+      return items.candidateTest?.length !== 0 || items.deleted === false
+    }
+  )
 
   const submit = useSubmit()
   useEffect(() => {
@@ -56,7 +66,7 @@ const GroupByTests = () => {
               onSortDirectionChange={onSortDirectionChange}
               sortBy={sortBy}
               onSortChange={onSortChange}
-              totalItems={candidateTests?.length}
+              totalItems={candidateTestsArray.length}
               showSelected={false}
             />
           </div>
@@ -83,7 +93,7 @@ const GroupByTests = () => {
                 </span>
               </div>
               <div id="group-by-test-items" className="col-span-10 grid">
-                {candidateTests.map(
+                {candidateTestsArray.map(
                   (
                     candidateTests: Test & {
                       count?: number | undefined

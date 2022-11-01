@@ -2,9 +2,9 @@ import sendgrid from '@sendgrid/mail'
 import { env } from 'process'
 
 export async function sendMail(
+  passwordGenerationLink: string,
   email: string,
   name: string,
-  password: string,
   role: string
 ) {
   const to = email
@@ -21,12 +21,12 @@ export async function sendMail(
   <body>
     <div style="min-height:200px;font-family:'Poppins', sans-serif;background-color:#F3F4F6">
     <div style="background:#353988;padding:15px 0px;text-align:center">
-    <img src="https://res.cloudinary.com/drpi0krkh/image/upload/v1664196350/Logo_1_jhtgxs.png" alt=${logo} height="26" width="30"/>
+    <img src="https://res.cloudinary.com/drpi0krkh/image/upload/v1664196350/Logo_1_jhtgxs.png" alt=${logo} height="26" width="30" />
   </div>
     <div>
     <table width="100%" border="0" cellspacing="0" cellpadding="0">
     <tr>
-    <td style="background-color:#353988 ;">
+    <td style="background-color:#353988;padding-right:20px;padding-left:20px">
             <p style="text-align:center;font-size:20px;line-height:28px;color:#4B5563;background:#fff;margin:0 auto;padding:20px;max-width: 350px;padding-bottom:13px;"><span>Welcome !</span></p></tr>
         </td>
     </tr>
@@ -42,21 +42,17 @@ export async function sendMail(
           <br>
 
           <p style="text-align:left;color:#4B5563;margin:0;font-family:'Poppins', sans-serif;">
-            Please use the following credentials to access your account
+          Please use below link to create your first password.
           </p>
           <br>
-          
-          <p style="text-align:left;color:#4B5563;margin:0;font-family:'Poppins', sans-serif;">
-            Email: <span style="font-weight:600">${email}</span>
+        </div>        
+        <p style="text-align:center;color:#4B5563;margin:0;font-family:'Poppins', sans-serif;margin-top:10px">     
+          <a href="${passwordGenerationLink}" style="color: #353988;">${passwordGenerationLink}</a>
+        </p>
+        <br>
+         <p style="text-align:center;color:#4B5563;margin:0;font-family:'Poppins', sans-serif;">
+             Use above link to generate your password
           </p>
-          <p style="text-align:left;color:#4B5563;margin:0;font-family:'Poppins', sans-serif;">
-            Password: <span style="font-weight:600">${password}</span>
-          </p>
-          
-        </div>
-        <div style="text-align:center;padding:10px" >
-        <a href="${env.PUBLIC_URL}" style="text-decoration:none"><span style="padding: 10px 38px;background:#353988;color:#fff;font-family:'Poppins', sans-serif;">Head to K - Quiz</span></a>
-        </div>
       </div>
       </td>
   </tr>
@@ -112,7 +108,7 @@ export async function sendTestInviteMail(email: string, link: string) {
 <div  style="font-family:'Poppins', sans-serif;background-color:#F3F4F6">
   <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
-  <td style="background-color:#353988 ;">
+  <td style="background-color:#353988;padding-right:20px;padding-left:20px">
           <p style="text-align:center;font-size:20px;line-height:28px;color:#4B5563;background:#fff;margin:0 auto;padding:20px;max-width: 350px;padding-bottom:13px;"><span>Welcome !</span></p></tr>
       </td>
   </tr>
@@ -195,7 +191,7 @@ export async function sendOTPMail(email: string, otp: number) {
     <div>
     <table width="100%" border="0" cellspacing="0" cellpadding="0">
     <tr>
-    <td style="background-color:#353988 ;">
+    <td style="background-color:#353988;padding-right:20px;padding-left:20px">
             <p style="text-align:center;font-size:20px;line-height:28px;color:#4B5563;background:#fff;margin:0 auto;padding:20px;max-width: 350px;padding-bottom:13px;"><span>Welcome !</span></p></tr>
         </td>
     </tr>
@@ -326,7 +322,7 @@ export async function sendMailToRecruiter(
 
   return 'Done'
 }
-export async function sendPassword(email: string, password: string) {
+export async function sendNewPassword(email: string, password: string) {
   const to = email
   const from = 'careers@copods.co'
   const subject = 'RESET PASSWORD - Quiz @ Copods'
@@ -345,8 +341,8 @@ export async function sendPassword(email: string, password: string) {
   </div>
     <div>
     <table width="100%" border="0" cellspacing="0" cellpadding="0">
-    <tr>s
-    <td style="background-color:#353988 ;">
+    <tr>
+    <td style="background-color:#353988;padding-right:20px;padding-left:20px">
             <p style="text-align:center;font-size:20px;line-height:28px;color:#4B5563;background:#fff;margin:0 auto;padding:20px;max-width: 350px;padding-bottom:13px;"><span>Welcome !</span></p></tr>
         </td>
     </tr>

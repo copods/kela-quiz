@@ -59,6 +59,7 @@ export const action: ActionFunction = async ({ request }) => {
   const createdById = await requireUserId(request)
   const workspaceId = await getWorkspaceId(request)
   const formData = await request.formData()
+
   const data:
     | {
         name: string
