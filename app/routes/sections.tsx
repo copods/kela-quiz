@@ -91,6 +91,8 @@ export const action: ActionFunction = async ({ request }) => {
   const action = formData.get('add-section')
     ? formData.get('add-section')
     : formData.get('deleteSection')
+    ? formData.get('deleteSection')
+    : formData.get('action')
   if (action === 'add') {
     const name = formData.get('name')
     const description = formData.get('description')
@@ -148,9 +150,14 @@ export const action: ActionFunction = async ({ request }) => {
       if (res?._count.sectionInTest === 0 || isTestDeleted?.includes(true)) {
         isSectionDelete = true
       } else {
-        let title = 'statusCheck.testDependentWarning'
         deleteHandle = json<ActionData>(
-          { errors: { title, status: 400, check: new Date() } },
+          {
+            errors: {
+              title: 'statusCheck.testDependentWarning',
+              status: 400,
+              check: new Date(),
+            },
+          },
           { status: 400 }
         )
       }
@@ -166,21 +173,26 @@ export const action: ActionFunction = async ({ request }) => {
           )
         })
         .catch((err) => {
-          let title = 'statusCheck.commonError'
           deleteHandle = json<ActionData>(
-            { errors: { title, status: 400, check: new Date() } },
+            {
+              errors: {
+                title: 'statusCheck.commonError',
+                status: 400,
+                check: new Date(),
+              },
+            },
             { status: 400 }
           )
         })
     }
     return deleteHandle
   }
+  return ''
 }
 
 export default function SectionPage() {
   const { t } = useTranslation()
   const data = useLoaderData() as unknown as LoaderData
-
   const sectionActionData = useActionData() as ActionData
 
   const submit = useSubmit()
@@ -223,7 +235,7 @@ export default function SectionPage() {
         action: `${routes.sections}/${selectedSection}`,
       })
     }
-  }, [order, sortBy, data.sections?.length])
+  }, [order, sortBy, data.sections?.length, selectedSection, submit])
 
   useEffect(() => {
     if (sectionActionData) {
@@ -251,7 +263,6 @@ export default function SectionPage() {
       }
     }
   }, [sectionActionData, data.selectedSectionId, data.sections, t])
-
   return (
     <AdminLayout>
       <div className="flex h-full flex-col gap-6 overflow-hidden p-1">

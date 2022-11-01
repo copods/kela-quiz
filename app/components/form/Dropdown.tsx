@@ -10,13 +10,19 @@ function DropdownField({
   valueKey,
   value,
   setValue,
+  callToAction,
+  actionName,
+  setOpen,
 }: {
   data: Array<any>
   displayKey: string
   valueKey: string
   name?: string
-  value: any
-  setValue: (e: any) => void
+  value: string
+  setValue: (e: string) => void
+  setOpen?: (e: boolean) => void
+  callToAction?: boolean
+  actionName?: string
 }) {
   const { t } = useTranslation()
 
@@ -30,8 +36,14 @@ function DropdownField({
       }
     }
   }
+
   return (
-    <Listbox value={value} onChange={setValue}>
+    <Listbox
+      value={value}
+      onChange={(val: string) => {
+        val !== actionName ? setValue(val) : setValue(value)
+      }}
+    >
       {({ open }) => (
         <>
           <div
@@ -59,6 +71,31 @@ function DropdownField({
               leaveTo="opacity-0"
             >
               <Listbox.Options className="dropDownSelect absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                {callToAction && (
+                  <Listbox.Option
+                    key={actionName}
+                    className={({ active }) =>
+                      classNames(
+                        active ? 'bg-primary text-white' : 'text-gray-900',
+                        'relative z-20 cursor-pointer select-none py-2 px-3'
+                      )
+                    }
+                    value={actionName}
+                    onClick={() => {
+                      setOpen && setOpen(true)
+                    }}
+                  >
+                    <div className="flex items-center">
+                      <Icon icon="akar-icons:circle-plus" />
+                      <span
+                        className="dropdown-option ml-2 block truncate font-normal"
+                        id="option"
+                      >
+                        {actionName}
+                      </span>
+                    </div>
+                  </Listbox.Option>
+                )}
                 {data.map((el) => (
                   <Listbox.Option
                     key={el[valueKey]}

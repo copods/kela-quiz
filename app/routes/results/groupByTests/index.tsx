@@ -34,6 +34,7 @@ export const loader: LoaderFunction = async ({ request }) => {
     currentWorkspaceId,
   })
 }
+
 export default function Results() {
   return (
     <AdminLayout>

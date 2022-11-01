@@ -109,7 +109,7 @@ describe('Test for Sign Up page', () => {
       .type(workspaceName)
       .should('have.value', workspaceName)
     cy.get('#add-button').should('have.text', logIn.signUp).click()
-    cy.get('.Toastify__toast').should(
+    cy.get('.Toastify__toast', { timeout: 6000 }).should(
       'have.text',
       toastConstants.signUpSuccessfull
     )

@@ -23,8 +23,23 @@ export async function getUserByEmail(email: User['email']) {
   return prisma.user.findUnique({ where: { email } })
 }
 
-export async function getAllUsers() {
-  return prisma.user.findMany({ include: { role: true } })
+export async function getAllUsers({
+  currentWorkspaceId,
+}: {
+  currentWorkspaceId: string | undefined
+}) {
+  return prisma.user.findMany({
+    where: {
+      userWorkspace: {
+        some: {
+          workspaceId: currentWorkspaceId,
+        },
+      },
+    },
+    include: {
+      role: true,
+    },
+  })
 }
 
 export async function getAllRoles() {
@@ -106,7 +121,7 @@ export async function createNewUser({
   roleId,
   defaultWorkspaceName,
   createdById,
-  invitedByWorkspaceId
+  invitedByWorkspaceId,
 }: {
   firstName: string
   lastName: string

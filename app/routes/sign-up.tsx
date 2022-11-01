@@ -21,13 +21,14 @@ export type ActionData = {
 }
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
-  const action = JSON.parse(formData.get('addMember') as string)
+  const action = JSON.parse(formData.get('signUp') as string)
 
   if (action.action === 'add') {
     const firstName = formData.get('firstName')
     const lastName = formData.get('lastName')
     const email = formData.get('email')
     const workspaceName = formData.get('workspace')
+
     // eslint-disable-next-line no-useless-escape
     const emailFilter = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
 

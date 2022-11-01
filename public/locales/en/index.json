@@ -55,7 +55,10 @@
     "defaultWorkspaceName": "Default Workspace Name"
   },
   "sideNav": {
-    "sideNavHeading": "Quiz"
+    "sideNavHeading": "Quiz",
+    "addWorkspace": "Add Workspace",
+    "workspace": "Workspace Name",
+    "enterWorkspace": "Enter Workspace Name"
   },
   "inviteMemeberPopUpConstants": {
     "inviteCandidate": "Invite Candidate",
@@ -154,7 +157,8 @@
     "otpSent": "Otp sent. Please check your email",
     "correctOtp": "Please enter correct OTP",
     "resendPasswordSuccess": "New password has been sent to email successfully",
-    "resendPasswordError": "Account not found. Please enter valid email"
+    "resendPasswordError": "Account not found. Please enter valid email",
+    "switched": "Workspace Switched"
   },
   "resultConstants": {
     "order": "Order",
@@ -233,6 +237,8 @@
     "memberAlreadyExist": "Member with this email id already exists!",
     "invitationSent": "Invitation Sent Successfully..!",
     "signUpSuccessfull": "Sign Up successfully",
+    "workspaceAdded": "Workspace Added",
+    "duplicateWorkspace": "Duplicate Workspace",
     "workspaceNameIsRequired": "Workspace name is required"
   },
   "otpConstants": {

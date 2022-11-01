@@ -48,7 +48,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   const workspaces = await getUserWorkspaces(userId as string)
   const roles = await getAllRoles()
   if (!userId) return redirect(routes.signIn)
-  const users = await getAllUsers()
+  const users = await getAllUsers({ currentWorkspaceId })
   return json<LoaderData>({
     users,
     roles,
@@ -62,10 +62,8 @@ export const action: ActionFunction = async ({ request }) => {
   const userId = await requireUserId(request) //fetching id of user who's creating this users
   const invitedByWorkspaceId = await requireWorkspaceId(request)
   const formData = await request.formData()
-  const action = JSON.parse(formData.get('addMember') as string)
-    ? JSON.parse(formData.get('addMember') as string)
-    : formData.get('deleteMember')
-  if (action.action === actions.addMember) {
+  const action = await formData.get('action')
+  if (action === actions.addMember) {
     const firstName = formData.get('firstName')
     const lastName = formData.get('lastName')
     const email = formData.get('email')
@@ -159,7 +157,7 @@ export const action: ActionFunction = async ({ request }) => {
       })
     return addHandle
   }
-  if (action.action === actions.resendInviteMember) {
+  if (action === actions.resendInviteMember) {
     const id = formData.get('id')
     let resendHandle = null
     await reinviteMember({
@@ -206,6 +204,7 @@ export const action: ActionFunction = async ({ request }) => {
 
     return deleteHandle
   }
+  return null
 }
 const Members = () => {
   const { t } = useTranslation()
@@ -224,7 +223,6 @@ const Members = () => {
       }
     }
   }, [membersActionData, t])
-
   return (
     <AdminLayout>
       <div className="flex flex-col gap-6 p-1">

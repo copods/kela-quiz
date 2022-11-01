@@ -24,7 +24,7 @@ const SignUp = () => {
       lastName: lastName,
       email: email,
       workspace: workspace,
-      addMember: JSON.stringify({
+      signUp: JSON.stringify({
         action: 'add',
       }),
     }
