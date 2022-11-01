@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { trimValue } from '~/utils'
-import DialogWrapperComponent from '../DialogWrapperComponent'
+import DialogWrapperComponent from '../Dialog'
 import Button from '../form/Button'
 import PasswordInputFields from '../form/PasswordInputField'
 
@@ -82,53 +82,61 @@ const ResetPassword = ({
     setConfirmPassword('')
   }, [openResetPassModel])
 
-  const dialogWrapperProps =
+  const dialogWrapperProps = [
     // dialog wrapper props
+
     {
       id: 'resetPassword-pop-up-model',
-      heading: t('settings.resetPas'),
       role: t('settings.resetPas'),
       ariaLabel: t('settings.resetPas'),
-    }
+      tabIndex: 0,
+    },
+  ]
   return (
     <div>
-      <DialogWrapperComponent
-        open={openResetPassModel}
-        setOpen={setOpenResetPassModel}
-        dialogWrapperProps={dialogWrapperProps}
-      >
-        <Form method="post">
-          <div className="flex flex-col gap-8">
-            <div className="input-container-wrapper flex flex-col gap-6">
-              {PasswordInputFieldProps.map((props) => {
-                return <PasswordInputFields {...props} key={props.name} />
-              })}
-            </div>
-            <div className="flex items-center justify-center">
-              <Button
-                tabIndex={0}
-                name="resetPassword"
-                value="resetPassword"
-                title={
-                  transition.state === 'submitting'
-                    ? t('settings.passResetting')
-                    : t('settings.resetPas')
-                }
-                buttonText={
-                  transition.state === 'submitting'
-                    ? t('settings.passResetting')
-                    : t('settings.resetPas')
-                }
-                type="submit"
-                varient="primary-solid"
-                className="h-11 w-full text-base"
-                isDisabled={!(newPassword && confirmPassword && password)}
-                datacy="submit"
-              />
-            </div>
-          </div>
-        </Form>
-      </DialogWrapperComponent>
+      {dialogWrapperProps.map((props) => {
+        return (
+          <DialogWrapperComponent
+            open={openResetPassModel}
+            heading={t('settings.resetPas')}
+            setOpen={setOpenResetPassModel}
+            {...props}
+            key={props.id}
+          >
+            <Form method="post">
+              <div className="flex flex-col gap-8">
+                <div className="input-container-wrapper flex flex-col gap-6">
+                  {PasswordInputFieldProps.map((props) => {
+                    return <PasswordInputFields {...props} key={props.name} />
+                  })}
+                </div>
+                <div className="flex items-center justify-center">
+                  <Button
+                    tabIndex={0}
+                    name="resetPassword"
+                    value="resetPassword"
+                    title={
+                      transition.state === 'submitting'
+                        ? t('settings.passResetting')
+                        : t('settings.resetPas')
+                    }
+                    buttonText={
+                      transition.state === 'submitting'
+                        ? t('settings.passResetting')
+                        : t('settings.resetPas')
+                    }
+                    type="submit"
+                    varient="primary-solid"
+                    className="h-11 w-full text-base"
+                    isDisabled={!(newPassword && confirmPassword && password)}
+                    datacy="submit"
+                  />
+                </div>
+              </div>
+            </Form>
+          </DialogWrapperComponent>
+        )
+      })}
     </div>
   )
 }

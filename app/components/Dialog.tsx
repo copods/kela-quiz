@@ -7,13 +7,9 @@ const DialogWrapperComponent = ({
   open,
   setOpen,
   children,
-  dialogWrapperProps,
-}: {
-  open: boolean
-  setOpen: (e: boolean) => void
-  children: JSX.Element
-  dialogWrapperProps: DialogWrapperProps
-}) => {
+  heading,
+  ...props
+}: DialogWrapperProps) => {
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={() => setOpen(false)}>
@@ -30,9 +26,8 @@ const DialogWrapperComponent = ({
         </Transition.Child>
         <div
           className="fixed inset-0 z-10 flex min-h-full items-end justify-center overflow-y-auto p-4 text-center sm:items-center sm:p-0"
-          id={dialogWrapperProps.id}
+          id={props.id}
         >
-          {/* <Form method="post"> */}
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -47,12 +42,10 @@ const DialogWrapperComponent = ({
                 {/* dialog wrapper heading */}
                 <h2
                   className="text-2xl font-bold text-gray-700"
-                  tabIndex={0}
-                  title={dialogWrapperProps.heading}
-                  role={dialogWrapperProps.role}
-                  aria-label={dialogWrapperProps.ariaLabel}
+                  title={heading}
+                  {...props}
                 >
-                  {dialogWrapperProps.heading}
+                  {heading}
                 </h2>
                 {/* dialog wrapper close icon for close the dialog */}
                 <Icon

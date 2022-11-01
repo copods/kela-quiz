@@ -26,8 +26,11 @@ export interface PasswordFieldProps {
 export interface DialogWrapperProps {
   id: string
   heading: string
-  role: string
-  ariaLabel: string
+  role?: string
+  ariaLabel?: string
+  children: JSX.Element
+  open: boolean
+  setOpen: (e: boolean) => void
 }
 
 export interface ButtonProps {
