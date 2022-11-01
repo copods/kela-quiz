@@ -105,6 +105,7 @@ const ResetPassword = ({
             {/* dialog wrapper close icon for close the dialog */}
             <Icon
               tabIndex={0}
+              id="reset-password-popup-close-icon"
               className="cursor-pointer text-2xl text-gray-600"
               icon={'carbon:close'}
               onKeyUp={(e) => {
