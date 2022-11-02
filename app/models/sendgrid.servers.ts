@@ -119,7 +119,7 @@ export async function sendTestInviteMail(email: string, link: string) {
         <p style="text-align:left;color:#4B5563;margin:0;"><span>Hi,</span>
         </p>
         <br>
-        <p style="text-align:left;color:#4B5563;margin:0;">You have been invited by Copods
+        <p style="text-align:left;color:#4B5563;margin:0;">You have been invited by Copods for an online pre interview assessment test.
         </p>
         
 
