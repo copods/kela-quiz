@@ -215,7 +215,7 @@ export const candidateExamConstants = {
   assessmentDetails: 'Assessment Details',
   assessmentTests: 'Assessment Tests',
   assessmentEnd: 'Assessment Ended',
-  endAssesment: 'End Assesment SVG',
+  endAssessment: 'End Assessment SVG',
   wrongLink: 'Wrong Link',
   minutes: 'Mins',
   description: 'Description',
@@ -226,7 +226,7 @@ export const candidateExamConstants = {
   nextSection: 'Next Section',
   candidateAcceptance:
     'I understand that once I begin the assessment I cannot leave and  return to this assessment at a later time.',
-  beginAssesment: 'Begin Assesment',
+  beginAssessment: 'Begin Assessment',
   instructions: 'Instructions',
   startSection: 'Start Now',
   candidateLogo: 'Candidate Logo',
