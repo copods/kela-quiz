@@ -39,17 +39,17 @@ function login() {
 
   const __sessionExist = window.localStorage.getItem('__session')
 
-  if (!__sessionExist)
-    cy.request({
-      method: 'POST',
-      url: 'http://localhost:3000/sign-in?_data=routes%2Fsign-in',
-      body: formData,
-    }).then((resp) => {
-      const { headers } = resp
-      const __session =
-        headers?.['set-cookie'] && headers?.['set-cookie'][0].split('=')[1]
-      window.localStorage.setItem('__session', __session)
-    })
+  // if (!__sessionExist)
+  cy.request({
+    method: 'POST',
+    url: 'http://localhost:3000/sign-in?_data=routes%2Fsign-in',
+    body: formData,
+  }).then((resp) => {
+    const { headers } = resp
+    const __session =
+      headers?.['set-cookie'] && headers?.['set-cookie'][0].split('=')[1]
+    window.localStorage.setItem('__session', __session)
+  })
 }
 
 function customVisit(path = '') {
