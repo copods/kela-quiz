@@ -76,7 +76,7 @@ const AddSection = ({
             className="h-9 px-4"
             name="add-section"
             value="add"
-            isDisabled={transition.state === 'submitting' || showErrorMessage}
+            isDisabled={transition.state === 'submitting'}
             varient="primary-solid"
             datacy="submit"
             title={
