@@ -8,7 +8,7 @@ const DialogWrapper = ({
   setOpen,
   children,
   heading,
-  addDialog,
+  header,
   ...props
 }: DialogWrapperProps) => {
   return (
@@ -39,7 +39,7 @@ const DialogWrapper = ({
             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
             <Dialog.Panel className="relative transform rounded-lg bg-white p-6 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-              {addDialog && (
+              {header && (
                 <div>
                   <div className="flex items-center justify-between pt-1">
                     {/* dialog wrapper heading */}

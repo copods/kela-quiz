@@ -40,7 +40,7 @@ const AddSection = ({
             open={open}
             heading={t('sectionsConstants.addSection')}
             setOpen={setOpen}
-            addDialog={true}
+            header={true}
             {...props}
             key={props.role}
           >

@@ -65,7 +65,7 @@ const InviteCandidatePopup = ({
             open={openInvitePopup}
             heading={t('inviteMemeberPopUpConstants.inviteCandidate')}
             setOpen={setOpenInvitePopup}
-            addDialog={true}
+            header={true}
             {...props}
             key={props.role}
           >

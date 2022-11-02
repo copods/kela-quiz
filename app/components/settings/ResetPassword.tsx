@@ -100,7 +100,7 @@ const ResetPassword = ({
             open={openResetPassModel}
             heading={t('settings.resetPas')}
             setOpen={setOpenResetPassModel}
-            addDialog={true}
+            header={true}
             {...props}
             key={props.id}
           >
