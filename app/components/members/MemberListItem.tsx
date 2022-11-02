@@ -30,13 +30,15 @@ export default function MemberListItem({
     submit({ action: 'delete', id: user.id }, { method: 'post' })
   }
   const resendMail = () => {
-    let data = {
-      id: user.id,
-      action: 'resend',
+    if (!loggedInUser) {
+      let data = {
+        id: user.id,
+        action: 'resend',
+      }
+      submit(data, {
+        method: 'post',
+      })
     }
-    submit(data, {
-      method: 'post',
-    })
   }
   return (
     <div className="col-span-full grid grid-cols-10">
