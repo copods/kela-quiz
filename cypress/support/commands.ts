@@ -33,20 +33,23 @@ function login() {
   let formData = new FormData()
 
   // @TODO: Need to change this credentials with `careers.copods.demo@gmail.com`
-  formData.append('email', 'ziauddin@copods.co')
-  formData.append('password', 'zMya9S3K17lm9Qd')
+  formData.append('email', Cypress.env('email'))
+  formData.append('password', Cypress.env('password'))
   formData.append('redirectTo', '/dashboard')
 
-  cy.request({
-    method: 'POST',
-    url: 'http://localhost:3000/sign-in?_data=routes%2Fsign-in',
-    body: formData,
-  }).then((resp) => {
-    const { headers } = resp
-    const __session =
-      headers?.['set-cookie'] && headers?.['set-cookie'][0].split('=')[1]
-    window.localStorage.setItem('__session', __session)
-  })
+  const __sessionExist = window.localStorage.getItem('__session')
+
+  if (!__sessionExist)
+    cy.request({
+      method: 'POST',
+      url: 'http://localhost:3000/sign-in?_data=routes%2Fsign-in',
+      body: formData,
+    }).then((resp) => {
+      const { headers } = resp
+      const __session =
+        headers?.['set-cookie'] && headers?.['set-cookie'][0].split('=')[1]
+      window.localStorage.setItem('__session', __session)
+    })
 }
 
 function customVisit(path = '') {

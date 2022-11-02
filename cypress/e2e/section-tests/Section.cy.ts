@@ -12,14 +12,9 @@ describe('Test for Section', () => {
   beforeEach('sign-in', () => {
     cy.login()
 
-    cy.customVisit('/members')
+    cy.customVisit('/sections')
   })
   it('cancel Add section', () => {
-    cy.get('a')
-      .find('#sections', { timeout: 8000 })
-      .should('have.text', routeFiles.sections)
-      .click()
-    cy.location('pathname', { timeout: 6000 }).should('include', '/sections')
     cy.get('#add-section').click()
     cy.get('form > div')
       .should('be.visible')
@@ -28,14 +23,7 @@ describe('Test for Section', () => {
       })
   })
   it('allows users to search questions', () => {
-    cy.get('a')
-      .find('#sections', { timeout: 8000 })
-      .should('have.text', routeFiles.sections)
-      .click()
-    cy.location('pathname', { timeout: 6000 }).should('include', '/sections')
-    cy.get('input[name="search"]', { timeout: 6000 })
-      .clear()
-      .type(cypress.useMemo)
+    cy.get('input[name="search"]').clear().type(cypress.useMemo)
     cy.get('.ql-editor').each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -48,11 +36,6 @@ describe('Test for Section', () => {
     })
   })
   it('Check Active State of Section', () => {
-    cy.get('a')
-      .find('#sections')
-      .should('have.text', routeFiles.sections)
-      .click()
-    cy.location('pathname', { timeout: 6000 }).should('include', '/sections')
     cy.location().then((loc) => {
       cy.location('search').should('include', loc.search)
     })
@@ -63,7 +46,7 @@ describe('Test for Section', () => {
       .should('have.text', routeFiles.sections)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
-    cy.get('#add-section', { timeout: 6000 }).click()
+    cy.get('#add-section').click()
     cy.get('form > div')
       .should('be.visible')
       .within((el) => {
@@ -77,7 +60,7 @@ describe('Test for Section', () => {
       .should('have.text', routeFiles.sections)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
-    cy.get('#add-section', { timeout: 6000 }).click()
+    cy.get('#add-section').click()
     cy.get('form > div')
       .should('be.visible')
       .within((el) => {
@@ -90,12 +73,7 @@ describe('Test for Section', () => {
     cy.get('.Toastify__toast').should('have.text', statusCheck.descIsReq)
   })
   it('Test for valid error message while adding new section with duplicate Title', () => {
-    cy.get('a')
-      .find('#sections')
-      .should('have.text', routeFiles.sections)
-      .click()
-    cy.location('pathname', { timeout: 6000 }).should('include', '/sections')
-    cy.get('#add-section', { timeout: 6000 }).click()
+    cy.get('#add-section').click()
     cy.get('form > div')
       .should('be.visible')
       .within((el) => {
@@ -107,12 +85,7 @@ describe('Test for Section', () => {
     cy.get('.Toastify__close-button').click()
   })
   it('SortBy Name or created Date', () => {
-    cy.get('a')
-      .find('#sections')
-      .should('have.text', routeFiles.sections)
-      .click()
-    cy.location('pathname', { timeout: 6000 }).should('include', '/sections')
-    cy.get('.sectionLSWrapper', { timeout: 6000 }).within(() => {
+    cy.get('.sectionLSWrapper').within(() => {
       cy.get('#section-cards')
         .get('#section-link')
         .then((listing) => {
@@ -139,34 +112,30 @@ describe('Test for Section', () => {
     })
   })
   it('Test for deleting the section and check if it is deleted or not', () => {
-    cy.get('a')
-      .find('#sections')
-      .should('have.text', routeFiles.sections)
-      .click()
-    cy.location('pathname', { timeout: 6000 }).should('include', '/sections')
-    cy.get('#section-card ').each(($el) => {
-      cy.wrap($el).within((el) => {
+    const sectionCards = cy.get('.section-card')
+    sectionCards.each(($element) => {
+      cy.wrap($element).within(($el) => {
         if (
-          el[0].getElementsByClassName('sectionName')[0].innerHTML ===
+          $el[0].getElementsByClassName('sectionName')[0].innerHTML ===
           deleteSection
         ) {
-          cy.get('.sectionName')
-            .should('have.text', deleteSection)
-            .parent()
-            .within(() => {
-              cy.get('.verticalDots', { timeout: 6000 }).click()
-            })
+          const verticalDot = cy.get('.verticalDots')
+          verticalDot.click()
+
+          const deletBtn = cy.get('[data-cy="delete-section"]')
+          console.log({ deletBtn })
+          deletBtn.click()
         }
       })
     })
-    cy.get('[data-cy="delete-section"]').should('have.text', 'Delete').click()
+
     cy.get('#delete-dialog').should('be.visible')
     cy.get('#confirm-delete')
       .should('have.text', commonConstants.delete)
       .click()
     cy.get('.Toastify__toast').should('have.text', statusCheck.deletedSuccess)
     cy.get('.Toastify__close-button').click()
-    cy.location('pathname', { timeout: 6000 }).should('include', '/sections')
+    cy.location('pathname').should('include', '/sections')
     cy.get('#section-card', { timeout: 8000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (

@@ -95,7 +95,7 @@ describe('smoke tests', () => {
       .should('have.text', routeFiles.sections)
       .click()
     cy.get('#add-section').click()
-    cy.get('form > div', { timeout: 1000 })
+    cy.get('form > div')
       .should('be.visible')
       .within((el) => {
         cy.get('input[placeholder="Enter Section Name"]').type(deleteSection)
@@ -196,14 +196,12 @@ describe('smoke tests', () => {
     cy.login()
     cy.customVisit('/members')
     cy.get('a').find('#tests').should('have.text', testsConstants.tests).click()
-    cy.get('#add-test', { timeout: 6000 }).click()
+    cy.get('#add-test').click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/tests/add-test'
     )
-    cy.get('input[placeholder="Enter test name"]', { timeout: 6000 })
-      .clear()
-      .type(deleteTest1)
+    cy.get('input[placeholder="Enter test name"]').clear().type(deleteTest1)
     cy.get('#quill-editor').within(() => {
       cy.get('.ql-editor').type(`Test Description`)
     })
@@ -269,14 +267,12 @@ describe('smoke tests', () => {
     cy.login()
     cy.customVisit('/members')
     cy.get('a').find('#tests').should('have.text', testsConstants.tests).click()
-    cy.get('#add-test', { timeout: 6000 }).click()
+    cy.get('#add-test').click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/tests/add-test'
     )
-    cy.get('input[placeholder="Enter test name"]', { timeout: 6000 })
-      .clear()
-      .type(test1)
+    cy.get('input[placeholder="Enter test name"]').clear().type(test1)
     cy.get('#quill-editor').within(() => {
       cy.get('.ql-editor').type(`Test Description`)
     })
@@ -362,21 +358,10 @@ describe('smoke tests', () => {
   })
 
   it('invite candidate for test', () => {
-    cy.visit('/sign-in')
-    cy.get('input[name="email"]')
-      .clear()
-      .type(Cypress.env('email'))
-      .should('have.focus')
-      .should('have.value', Cypress.env('email'))
-    cy.get('input[name="password"]')
-      .clear()
-      .type(Cypress.env('password'))
-      .should('have.focus')
-      .should('have.value', Cypress.env('password'))
-    cy.get('[data-cy="submit"]').click()
-    cy.location('pathname').should('include', '/members')
+    cy.login()
+    cy.customVisit('/members')
     cy.get('a').find('#tests').should('have.text', testsConstants.tests).click()
-    cy.get('.test-table-list', { timeout: 6000 }).should('be.visible')
+    cy.get('.test-table-list').should('be.visible')
     cy.get('.test-table-list').each(($el) => {
       cy.wrap($el).within((el) => {
         if (
