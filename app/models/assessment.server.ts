@@ -69,9 +69,9 @@ export async function updateCandidateFirstLastName(
     throw new Error('Something went wrong..!')
   }
 }
-export async function resendOtp({ assesmentId }: { assesmentId: string }) {
+export async function resendOtp({ assessmentId }: { assessmentId: string }) {
   const user = await prisma.candidateTest.findUnique({
-    where: { id: assesmentId },
+    where: { id: assessmentId },
     select: { candidate: { select: { OTP: true, email: true, id: true } } },
   })
   const OTPValue = await generateOTP()
@@ -460,8 +460,8 @@ export async function skipAnswerAndNextQuestion({
           selectedOptions?.length || answers?.length
             ? 'ANSWERED'
             : question?.status === 'ANSWERED'
-            ? 'ANSWERED'
-            : 'SKIPPED',
+              ? 'ANSWERED'
+              : 'SKIPPED',
         answeredAt: new Date(),
       },
       select: {

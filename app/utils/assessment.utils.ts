@@ -155,8 +155,8 @@ export async function updateCandidateDetail({
 
  * @returns OTP
  */
-export async function resendOtpCode({ assesmentId }: { assesmentId: string }) {
-  return await resendOtp({ assesmentId })
+export async function resendOtpCode({ assessmentId }: { assessmentId: string }) {
+  return await resendOtp({ assessmentId })
 }
 
 export async function verifyCandidateOtp({
