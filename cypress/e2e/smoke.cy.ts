@@ -61,7 +61,7 @@ describe('smoke tests', () => {
       .should('have.text', routeFiles.sections)
       .click()
     cy.get('#add-section').click()
-    cy.get('form > div', { timeout: 1000 })
+    cy.get('form > div')
       .should('be.visible')
       .within((el) => {
         cy.get('input[placeholder="Enter Section Name"]').type(section1)
@@ -78,7 +78,7 @@ describe('smoke tests', () => {
       .should('have.text', routeFiles.sections)
       .click()
     cy.get('#add-section').click()
-    cy.get('form > div', { timeout: 1000 })
+    cy.get('form > div')
       .should('be.visible')
       .within((el) => {
         cy.get(`input[placeholder='Enter Section Name']`).type(section2)
@@ -197,10 +197,7 @@ describe('smoke tests', () => {
     cy.customVisit('/members')
     cy.get('a').find('#tests').should('have.text', testsConstants.tests).click()
     cy.get('#add-test').click()
-    cy.location('pathname', { timeout: 60000 }).should(
-      'include',
-      '/tests/add-test'
-    )
+    cy.location('pathname').should('include', '/tests/add-test')
     cy.get('input[placeholder="Enter test name"]').clear().type(deleteTest1)
     cy.get('#quill-editor').within(() => {
       cy.get('.ql-editor').type(`Test Description`)
@@ -222,7 +219,7 @@ describe('smoke tests', () => {
       })
     })
     // user reached to step 2
-    cy.get('div#section', { timeout: 60000 }).each((el) => {
+    cy.get('div#section').each((el) => {
       cy.wrap(el).within(() => {
         if (el.find('.count')[0].innerText != '0') {
           cy.get('input#no-of-qu').should('have.disabled', true)
@@ -268,10 +265,7 @@ describe('smoke tests', () => {
     cy.customVisit('/members')
     cy.get('a').find('#tests').should('have.text', testsConstants.tests).click()
     cy.get('#add-test').click()
-    cy.location('pathname', { timeout: 60000 }).should(
-      'include',
-      '/tests/add-test'
-    )
+    cy.location('pathname').should('include', '/tests/add-test')
     cy.get('input[placeholder="Enter test name"]').clear().type(test1)
     cy.get('#quill-editor').within(() => {
       cy.get('.ql-editor').type(`Test Description`)
@@ -293,7 +287,7 @@ describe('smoke tests', () => {
       })
     })
     // user reached to step 2
-    cy.get('div#section', { timeout: 60000 }).each((el) => {
+    cy.get('div#section').each((el) => {
       cy.wrap(el).within(() => {
         if (el.find('.count')[0].innerText != '0') {
           cy.get('input#no-of-qu').should('have.disabled', true)
@@ -339,7 +333,7 @@ describe('smoke tests', () => {
     cy.customVisit('/members')
     cy.get('a').find('#members').should('have.text', members.members).click()
     cy.get('#add-member').should('have.text', cypress.addMember).click()
-    cy.get('#add-pop-up-model', { timeout: 1000 }).should('be.visible')
+    cy.get('#add-pop-up-model').should('be.visible')
     cy.get('input[name="firstName"]')
       .clear()
       .type(memberFirstName)
@@ -378,9 +372,7 @@ describe('smoke tests', () => {
       .parent()
       .parent()
       .within(() => {
-        cy.get('#invite-popup-open', { timeout: 10000 })
-          .should('be.visible')
-          .click()
+        cy.get('#invite-popup-open').should('be.visible').click()
       })
 
     cy.get('input[name="email"]')
