@@ -149,7 +149,7 @@ describe('Test for settings', () => {
       .should('have.text', settings.clickToChange)
       .click()
     cy.get('#dialog-wrapper').should('be.visible')
-    cy.get('#reset-password-popup-close-icon').click()
+    cy.get('#dialog-close-icon').click()
     cy.get('#dialog-wrapper').should('not.exist')
   })
   it('Checks heading of reset password pop up ', () => {
