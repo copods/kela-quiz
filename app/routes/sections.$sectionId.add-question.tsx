@@ -101,7 +101,9 @@ export default function AddQuestion() {
   const [addQuestionKey, setAddQuestionKey] = useState(0)
   useEffect(() => {
     if (actionData?.success) {
-      toast.success(t(actionData?.success?.data))
+      toast.success(t(actionData?.success?.data), {
+        toastId: actionData?.success?.data,
+      })
       if (actionData.success.addMoreQuestion) {
         setAddQuestionKey((prev) => (prev += 1))
       } else {

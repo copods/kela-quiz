@@ -245,7 +245,9 @@ export default function SectionPage() {
         t('statusCheck.sectionAddedSuccess')
       ) {
         setShowAddSectionModal(false)
-        toast.success(t(sectionActionData.resp?.status as string))
+        toast.success(t(sectionActionData.resp?.status as string), {
+          toastId: sectionActionData.resp?.status as string,
+        })
         setSelectedSection(sectionActionData?.resp?.data?.id as string)
       } else if (
         t(sectionActionData.resp?.status as string) ===

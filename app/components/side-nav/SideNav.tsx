@@ -108,9 +108,9 @@ const SideNav = () => {
         id="sideNav"
       >
         <div>
-          <div className="mb-14 px-1">
+          <div className="mb-9 px-1">
             <Header title={t('sideNav.sideNavHeading')} />
-            <div className="mt-2">
+            <div className="mt-5">
               <DropdownField
                 data={tempWorkspaces}
                 displayKey="name"
