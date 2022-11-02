@@ -40,7 +40,7 @@ describe('smoke tests', () => {
 
   it('Successfully Login', () => {
     cy.visit('/sign-in')
-    cy.get('#email').clear().type('careers@copods.co')
+    cy.get('#email').clear().type('copods.demo.sendgrid@gmail.com')
     cy.get('#password').clear().type('kQuiz@copods')
     cy.findByRole('button').click()
     cy.url().should('includes', '/members')
