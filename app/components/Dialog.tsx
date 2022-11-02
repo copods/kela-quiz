@@ -1,11 +1,15 @@
 import { Dialog, Transition } from '@headlessui/react'
+import { Icon } from '@iconify/react'
 import { Fragment } from 'react'
 import type { DialogWrapperProps } from '~/interface/Interface'
 
-const DialogWrapperComponent = ({
+const DialogWrapper = ({
   open,
   setOpen,
   children,
+  heading,
+  addDialog,
+  ...props
 }: DialogWrapperProps) => {
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -34,11 +38,39 @@ const DialogWrapperComponent = ({
             leaveFrom="opacity-100 translate-y-0 sm:scale-100"
             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
-            {children}
+            <Dialog.Panel className="relative transform rounded-lg bg-white p-6 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+              {addDialog && (
+                <div>
+                  <div className="flex items-center justify-between pt-1">
+                    {/* dialog wrapper heading */}
+                    <h2
+                      className="text-2xl font-bold text-gray-700"
+                      title={heading}
+                      {...props}
+                    >
+                      {heading}
+                    </h2>
+                    {/* dialog wrapper close icon for close the dialog */}
+                    <Icon
+                      tabIndex={0}
+                      className="cursor-pointer text-2xl text-gray-600"
+                      icon={'carbon:close'}
+                      onKeyUp={(e) => {
+                        if (e.key === 'Enter') setOpen(false)
+                      }}
+                      onClick={() => setOpen(false)}
+                    />
+                  </div>
+                  <hr className="mt-4 mb-6 h-px w-full border-0 bg-gray-300" />
+                </div>
+              )}
+
+              {children}
+            </Dialog.Panel>
           </Transition.Child>
         </div>
       </Dialog>
     </Transition.Root>
   )
 }
-export default DialogWrapperComponent
+export default DialogWrapper
