@@ -210,6 +210,7 @@ export default function SectionPage() {
         action: `${routes.sections}/${selectedSection}`,
       })
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [order, sortBy, data.sections?.length])
 
   useEffect(() => {

@@ -40,6 +40,7 @@ export const commonConstants = {
   totalQuestion: 'Total Questions',
   verify: 'Verify',
   email: 'Email',
+  createPassword: 'Create Password',
 }
 export const sideNav = {
   sideNavHeading: 'Quiz',
@@ -167,6 +168,8 @@ export const statusCheck = {
   correctOtp: 'Please enter correct OTP',
   resendPasswordSuccess: 'New password has been sent to email successfully',
   resendPasswordError: 'Account not found. Please enter valid email',
+  enteredReenteredPassword: 'Entered and Re-Entered Password should be equal.',
+  userNotFound: 'User Not Found',
 }
 export const resultConstants = {
   order: 'Order',
@@ -212,7 +215,7 @@ export const candidateExamConstants = {
   assessmentDetails: 'Assessment Details',
   assessmentTests: 'Assessment Tests',
   assessmentEnd: 'Assessment Ended',
-  endAssesment: 'End Assesment SVG',
+  endAssessment: 'End Assessment SVG',
   wrongLink: 'Wrong Link',
   minutes: 'Mins',
   description: 'Description',
@@ -223,7 +226,7 @@ export const candidateExamConstants = {
   nextSection: 'Next Section',
   candidateAcceptance:
     'I understand that once I begin the assessment I cannot leave and  return to this assessment at a later time.',
-  beginAssesment: 'Begin Assesment',
+  beginAssessment: 'Begin Assessment',
   instructions: 'Instructions',
   startSection: 'Start Now',
   candidateLogo: 'Candidate Logo',

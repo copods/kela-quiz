@@ -51,7 +51,8 @@
     "totalQuestion": "Total Questions",
     "srNo": "Sr.No",
     "verify": "Verify",
-    "proceed": "Proceed"
+    "confirmPassword": "Confirm Password",
+    "createPassword": "Create Password"
   },
   "sideNav": {
     "sideNavHeading": "Quiz"
@@ -156,7 +157,10 @@
     "otpSent": "Otp sent. Please check your email",
     "correctOtp": "Please enter correct OTP",
     "resendPasswordSuccess": "New password has been sent to email successfully",
-    "resendPasswordError": "Account not found. Please enter valid email"
+    "resendPasswordError": "Account not found. Please enter valid email",
+    "enteredReenteredPassword": "Password and Confirm password should be same.",
+    "passAlreadyCreated": "You have already created the password",
+    "userNotFound": "User Not Found"
   },
   "resultConstants": {
     "order": "Order",
@@ -194,7 +198,7 @@
     "assessmentDetails": "Assessment Details",
     "assessmentTests": "Assessment Tests",
     "assessmentEnd": "Assessment Ended",
-    "endAssesment": "End Assesment SVG",
+    "endAssessment": "End Assessment SVG",
     "wrongLink": "Wrong Link",
     "minutes": "Mins",
     "description": "Description",
@@ -204,7 +208,7 @@
     "endTest": "End Test",
     "nextSection": "Next Section",
     "candidateAcceptance": "I understand that once I begin the assessment I cannot leave and  return to this assessment at a later time.",
-    "beginAssesment": "Begin Assesment",
+    "beginAssessment": "Begin Assessment",
     "instructions": "Instructions",
     "takeBreak": "Take A Break!",
     "startSection": "Start Now",
