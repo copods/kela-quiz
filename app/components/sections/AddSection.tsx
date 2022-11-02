@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import Button from '../form/Button'
 import { trimValue } from '~/utils'
 import { useTranslation } from 'react-i18next'
-import DialogWrapperComponent from '../Dialog'
+import DialogWrapper from '../Dialog'
 
 const AddSection = ({
   open,
@@ -36,7 +36,7 @@ const AddSection = ({
     <div>
       {dialogWrapperProps.map((props) => {
         return (
-          <DialogWrapperComponent
+          <DialogWrapper
             open={open}
             heading={t('sectionsConstants.addSection')}
             setOpen={setOpen}
@@ -104,7 +104,7 @@ const AddSection = ({
                 />
               </div>
             </Form>
-          </DialogWrapperComponent>
+          </DialogWrapper>
         )
       })}
     </div>

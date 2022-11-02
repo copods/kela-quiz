@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { trimValue } from '~/utils'
-import DialogWrapperComponent from '../Dialog'
+import DialogWrapper from '../Dialog'
 import Button from '../form/Button'
 import PasswordInputFields from '../form/PasswordInputField'
 
@@ -96,7 +96,7 @@ const ResetPassword = ({
     <div>
       {dialogWrapperProps.map((props) => {
         return (
-          <DialogWrapperComponent
+          <DialogWrapper
             open={openResetPassModel}
             heading={t('settings.resetPas')}
             setOpen={setOpenResetPassModel}
@@ -135,7 +135,7 @@ const ResetPassword = ({
                 </div>
               </div>
             </Form>
-          </DialogWrapperComponent>
+          </DialogWrapper>
         )
       })}
     </div>

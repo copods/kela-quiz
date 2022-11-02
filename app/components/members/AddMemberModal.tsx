@@ -5,7 +5,7 @@ import Button from '../form/Button'
 import { trimValue } from '~/utils'
 import DropdownField from '../form/Dropdown'
 import { useTranslation } from 'react-i18next'
-import DialogWrapperComponent from '../Dialog'
+import DialogWrapper from '../Dialog'
 
 export default function AddMemberModal({
   roles,
@@ -59,7 +59,7 @@ export default function AddMemberModal({
     <div>
       {dialogWrapperProps.map((props) => {
         return (
-          <DialogWrapperComponent
+          <DialogWrapper
             open={open}
             heading={t('members.addMember')}
             setOpen={setOpen}
@@ -163,7 +163,7 @@ export default function AddMemberModal({
                 />
               </div>
             </div>
-          </DialogWrapperComponent>
+          </DialogWrapper>
         )
       })}
     </div>

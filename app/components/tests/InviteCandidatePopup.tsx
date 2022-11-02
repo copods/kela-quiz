@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import Button from '../form/Button'
 import { useTranslation } from 'react-i18next'
-import DialogWrapperComponent from '../Dialog'
+import DialogWrapper from '../Dialog'
 
 const InviteCandidatePopup = ({
   openInvitePopup,
@@ -61,7 +61,7 @@ const InviteCandidatePopup = ({
     <div>
       {dialogWrapperProps.map((props) => {
         return (
-          <DialogWrapperComponent
+          <DialogWrapper
             open={openInvitePopup}
             heading={t('inviteMemeberPopUpConstants.inviteCandidate')}
             setOpen={setOpenInvitePopup}
@@ -132,7 +132,7 @@ const InviteCandidatePopup = ({
                 />
               </div>
             </Form>
-          </DialogWrapperComponent>
+          </DialogWrapper>
         )
       })}
     </div>

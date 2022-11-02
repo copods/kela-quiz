@@ -3,7 +3,7 @@ import { Icon } from '@iconify/react'
 import { Form } from '@remix-run/react'
 import Button from './form/Button'
 import { useTranslation } from 'react-i18next'
-import DialogWrapperComponent from './Dialog'
+import DialogWrapper from './Dialog'
 export default function DeletePopUp({
   setOpen,
   open,
@@ -47,7 +47,7 @@ export default function DeletePopUp({
     <div>
       {dialogWrapperProps.map((props, index) => {
         return (
-          <DialogWrapperComponent
+          <DialogWrapper
             open={open}
             heading={t('deletePopUp.alert')}
             setOpen={setOpen}
@@ -106,7 +106,7 @@ export default function DeletePopUp({
                 />
               </div>
             </div>
-          </DialogWrapperComponent>
+          </DialogWrapper>
         )
       })}
     </div>
