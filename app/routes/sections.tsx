@@ -15,7 +15,7 @@ import {
 } from '~/models/sections.server'
 import { useState, useEffect } from 'react'
 import { Icon } from '@iconify/react'
-import { getUserId, requireUserId } from '~/session.server'
+import { getUserId, getWorkspaceId, requireUserId } from '~/session.server'
 import Sections from '~/components/sections/Sections'
 import AdminLayout from '~/components/layouts/AdminLayout'
 import AddSection from '~/components/sections/AddSection'
@@ -25,6 +25,7 @@ import { sortByOrder } from '~/interface/Interface'
 import type { Section } from '~/interface/Interface'
 import { routes } from '~/constants/route.constants'
 import { useTranslation } from 'react-i18next'
+import { getUserWorkspaces } from '~/models/workspace.server'
 
 export type ActionData = {
   errors?: {
@@ -48,14 +49,19 @@ export type LoaderData = {
   selectedSectionId?: string
   filters: string
   status: string
+  workspaces: Awaited<ReturnType<typeof getUserWorkspaces>>
+  currentWorkspaceId: Awaited<ReturnType<typeof getWorkspaceId>>
 }
 
 export const loader: LoaderFunction = async ({ request, params }) => {
+  const userId = await getUserId(request)
+  const currentWorkspaceId = await getWorkspaceId(request)
+  const workspaces = await getUserWorkspaces(userId as string)
   const url = new URL(request.url).searchParams.entries()
-  const obj = Object.fromEntries(url).filter
+  const filterData = Object.fromEntries(url).filter
   let sections: Array<Section> = []
   let status: string = ''
-  await getAllSections(obj)
+  await getAllSections(filterData, currentWorkspaceId as string)
     .then((res) => {
       sections = res as Section[]
       status = 'statusCheck.success'
@@ -63,21 +69,30 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     .catch((err) => {
       status = err
     })
-  const userId = await getUserId(request)
   if (!userId) return redirect(routes.signIn)
   const selectedSectionId = params.sectionId
     ? params.sectionId?.toString()
     : undefined
   const filters = new URL(request.url).search
-  return json<LoaderData>({ sections, selectedSectionId, filters, status })
+  return json<LoaderData>({
+    sections,
+    selectedSectionId,
+    filters,
+    status,
+    workspaces,
+    currentWorkspaceId,
+  })
 }
 
 export const action: ActionFunction = async ({ request }) => {
   const createdById = await requireUserId(request)
+  const workspaceId = (await getWorkspaceId(request)) as string
   const formData = await request.formData()
   const action = formData.get('add-section')
     ? formData.get('add-section')
     : formData.get('deleteSection')
+    ? formData.get('deleteSection')
+    : formData.get('action')
   if (action === 'add') {
     const name = formData.get('name')
     const description = formData.get('description')
@@ -95,7 +110,7 @@ export const action: ActionFunction = async ({ request }) => {
     }
 
     let addHandle = null
-    await createSection({ name, description, createdById })
+    await createSection({ name, description, createdById, workspaceId })
       .then((res) => {
         addHandle = json<ActionData>(
           {
@@ -135,9 +150,14 @@ export const action: ActionFunction = async ({ request }) => {
       if (res?._count.sectionInTest === 0 || isTestDeleted?.includes(true)) {
         isSectionDelete = true
       } else {
-        let title = 'statusCheck.testDependentWarning'
         deleteHandle = json<ActionData>(
-          { errors: { title, status: 400, check: new Date() } },
+          {
+            errors: {
+              title: 'statusCheck.testDependentWarning',
+              status: 400,
+              check: new Date(),
+            },
+          },
           { status: 400 }
         )
       }
@@ -153,21 +173,26 @@ export const action: ActionFunction = async ({ request }) => {
           )
         })
         .catch((err) => {
-          let title = 'statusCheck.commonError'
           deleteHandle = json<ActionData>(
-            { errors: { title, status: 400, check: new Date() } },
+            {
+              errors: {
+                title: 'statusCheck.commonError',
+                status: 400,
+                check: new Date(),
+              },
+            },
             { status: 400 }
           )
         })
     }
     return deleteHandle
   }
+  return ''
 }
 
 export default function SectionPage() {
   const { t } = useTranslation()
   const data = useLoaderData() as unknown as LoaderData
-
   const sectionActionData = useActionData() as ActionData
 
   const submit = useSubmit()
@@ -242,7 +267,6 @@ export default function SectionPage() {
       }
     }
   }, [sectionActionData, data.selectedSectionId, data.sections, t])
-
   return (
     <AdminLayout>
       <div className="flex h-full flex-col gap-6 overflow-hidden p-1">

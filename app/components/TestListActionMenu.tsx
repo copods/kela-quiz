@@ -70,7 +70,7 @@ const TestListMenuItem = ({
                           aria-hidden="true"
                         />
                       )}
-                      {resendTestLink ? (
+                      {!menuListIcon && resendTestLink ? (
                         <img
                           src={resendTestLink}
                           alt={t('resultConstants.resendTestInvite')}

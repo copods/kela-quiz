@@ -9,15 +9,18 @@ import {
   addQuestion,
 } from '~/models/sections.server'
 import AddQuestionInSection from '~/components/sections/add-question/AddQuestionInSection'
-import { requireUserId } from '~/session.server'
+import { getUserId, getWorkspaceId, requireUserId } from '~/session.server'
 import { toast } from 'react-toastify'
 import { useEffect, useState } from 'react'
 import { routes } from '~/constants/route.constants'
 import { useTranslation } from 'react-i18next'
+import { getUserWorkspaces } from '~/models/workspace.server'
 
 type LoaderData = {
   sectionDetails: Awaited<ReturnType<typeof getSectionById>>
   questionTypes: Awaited<ReturnType<typeof getQuestionType>>
+  workspaces: Awaited<ReturnType<typeof getUserWorkspaces>>
+  currentWorkspaceId: Awaited<ReturnType<typeof getWorkspaceId>>
 }
 type ActionData = {
   error?: {
@@ -33,6 +36,9 @@ type ActionData = {
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   const questionTypes = await getQuestionType()
+  const userId = await getUserId(request)
+  const currentWorkspaceId = await getWorkspaceId(request)
+  const workspaces = await getUserWorkspaces(userId as string)
 
   invariant(params.sectionId, 'sectionId not found')
 
@@ -41,7 +47,12 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   if (!sectionDetails) {
     throw new Response('Not Found', { status: 404 })
   }
-  return json<LoaderData>({ sectionDetails, questionTypes })
+  return json<LoaderData>({
+    sectionDetails,
+    questionTypes,
+    workspaces,
+    currentWorkspaceId,
+  })
 }
 
 export const action: ActionFunction = async ({ request }) => {
@@ -90,7 +101,9 @@ export default function AddQuestion() {
   const [addQuestionKey, setAddQuestionKey] = useState(0)
   useEffect(() => {
     if (actionData?.success) {
-      toast.success(t(actionData?.success?.data))
+      toast.success(t(actionData?.success?.data), {
+        toastId: actionData?.success?.data,
+      })
       if (actionData.success.addMoreQuestion) {
         setAddQuestionKey((prev) => (prev += 1))
       } else {
