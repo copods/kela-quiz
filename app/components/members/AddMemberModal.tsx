@@ -1,13 +1,12 @@
-import { Dialog, Transition } from '@headlessui/react'
-import { Icon } from '@iconify/react'
 import type { Role } from '~/interface/Interface'
 import { useSubmit, useTransition } from '@remix-run/react'
-import { Fragment, useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import Button from '../form/Button'
 import { trimValue } from '~/utils'
 import DropdownField from '../form/Dropdown'
 import InputField from '~/components/form/InputField'
 import { useTranslation } from 'react-i18next'
+import DialogWrapper from '../Dialog'
 
 export default function AddMemberModal({
   roles,
@@ -29,7 +28,6 @@ export default function AddMemberModal({
     let data = {
       email: email,
       roleId: role,
-
       action: 'invite',
     }
     submit(data, {
@@ -56,119 +54,69 @@ export default function AddMemberModal({
     },
   ]
   return (
-    <div>
-      <Transition.Root show={open} as={Fragment}>
-        <Dialog
-          as="div"
-          className="relative z-10"
-          onClose={() => setOpen(false)}
-        >
-          <Transition.Child
-            as={Fragment}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
-            <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
-          </Transition.Child>
-          <div
-            className="fixed inset-0 z-10 flex min-h-full items-end justify-center overflow-y-auto p-4 text-center sm:items-center sm:p-0"
-            id="add-pop-up-model"
-          >
-            {/* <Form method="post"> */}
-            <Transition.Child
-              as={Fragment}
-              enter="ease-out duration-300"
-              enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-              enterTo="opacity-100 translate-y-0 sm:scale-100"
-              leave="ease-in duration-200"
-              leaveFrom="opacity-100 translate-y-0 sm:scale-100"
-              leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-            >
-              <Dialog.Panel className="relative transform rounded-2xl bg-white p-6 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                <div className="flex items-center justify-between pt-1">
-                  <h2
-                    className="text-2xl font-bold text-gray-700"
-                    tabIndex={0}
-                    title={t('members.inviteMember')}
-                    role={t('members.inviteMember')}
-                    aria-label={t('members.inviteMember')}
-                  >
-                    {t('members.inviteMember')}
-                  </h2>
-                  <Icon
-                    tabIndex={0}
-                    className="cursor-pointer text-2xl text-gray-600"
-                    icon={'carbon:close'}
-                    onKeyUp={(e) => {
-                      if (e.key === 'Enter') setOpen(false)
-                    }}
-                    onClick={() => setOpen(false)}
-                  />
-                </div>
-                <hr className="mt-4 mb-6 h-px w-full border-0 bg-gray-300" />
+    <DialogWrapper
+      open={open}
+      heading={t('members.inviteMember')}
+      setOpen={setOpen}
+      header={true}
+      role={t('members.inviteMember')}
+      ariaLabel={t('members.inviteMember')}
+      tabIndex={0}
+    >
+      <div>
+        <div className="flex flex-col gap-6">
+          {inputFieldsProps.map((props) => {
+            return <InputField {...props} key={props.name} />
+          })}
 
-                <div className="flex flex-col gap-6">
-                  {inputFieldsProps.map((props) => {
-                    return <InputField {...props} key={props.name} />
-                  })}
-
-                  <div className="flex flex-col gap-1.5" id="add-member-modal">
-                    <div>
-                      <label htmlFor="" className="text-gray-800">
-                        {t('members.role')}
-                      </label>
-                    </div>
-                    <DropdownField
-                      data={roles}
-                      name="roleId"
-                      displayKey={'name'}
-                      valueKey={'id'}
-                      value={role}
-                      setValue={setRole}
-                    />
-                  </div>
-                  <div className="flex justify-end gap-2">
-                    <Button
-                      tabIndex={0}
-                      id="cancel-add-button"
-                      className="h-9 px-4"
-                      onClick={() => setOpen(false)}
-                      varient="primary-outlined"
-                      title={t('commonConstants.cancel')}
-                      buttonText={t('commonConstants.cancel')}
-                    />
-                    <Button
-                      tabIndex={0}
-                      id="add-button"
-                      name="inviteMember"
-                      value={'invite'}
-                      className="h-9 px-4"
-                      isDisabled={transition.state === 'submitting'}
-                      title={
-                        transition.state === 'submitting'
-                          ? t('commonConstants.adding')
-                          : t('commonConstants.add')
-                      }
-                      buttonText={
-                        transition.state === 'submitting'
-                          ? t('commonConstants.adding')
-                          : t('commonConstants.add')
-                      }
-                      varient="primary-solid"
-                      onClick={() => submitMemberForm()}
-                    />
-                  </div>
-                </div>
-              </Dialog.Panel>
-            </Transition.Child>
-            {/* </Form> */}
+          <div className="flex flex-col gap-1.5" id="add-member-modal">
+            <div>
+              <label htmlFor="" className="text-gray-800">
+                {t('members.role')}
+              </label>
+            </div>
+            <DropdownField
+              data={roles}
+              name="roleId"
+              displayKey={'name'}
+              valueKey={'id'}
+              value={role}
+              setValue={setRole}
+            />
           </div>
-        </Dialog>
-      </Transition.Root>
-    </div>
+          <div className="flex justify-end gap-2">
+            <Button
+              tabIndex={0}
+              id="cancel-add-button"
+              className="h-9 px-4"
+              onClick={() => setOpen(false)}
+              varient="primary-outlined"
+              title={t('commonConstants.cancel')}
+              buttonText={t('commonConstants.cancel')}
+            />
+            <Button
+              tabIndex={0}
+              id="invite-button"
+              name="inviteMember"
+              value={'invite'}
+              className="h-9 px-4"
+              isDisabled={transition.state === 'submitting'}
+              title={
+                transition.state === 'submitting'
+                  ? t('commonConstants.inviting')
+                  : t('commonConstants.invite')
+              }
+              buttonText={
+                transition.state === 'submitting'
+                  ? t('commonConstants.inviting')
+                  : t('commonConstants.invite')
+              }
+              varient="primary-solid"
+              onClick={() => submitMemberForm()}
+            />
+          </div>
+        </div>
+      </div>
+    </DialogWrapper>
   )
 }

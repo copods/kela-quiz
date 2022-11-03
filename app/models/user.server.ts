@@ -17,7 +17,13 @@ export async function deleteUserById(id: string) {
     return 'Something went wrong'
   }
 }
-
+export async function deleteInviteMember(id: string) {
+  try {
+    return await prisma.invites.delete({ where: { id } })
+  } catch (error) {
+    return 'Something went wrong'
+  }
+}
 export async function getUserByEmail(email: User['email']) {
   return prisma.user.findUnique({ where: { email } })
 }
@@ -116,14 +122,17 @@ export async function createUserBySignUp({
 export async function inviteNewUser({
   email,
   roleId,
+  invitedByWorkspaceId,
 }: {
   email: string
   roleId: string
+  invitedByWorkspaceId: string
 }) {
-  const invites = await prisma.invites.create({
+  const invite = await prisma.invites.create({
     data: {
       email,
       roleId,
+      workspaceId: invitedByWorkspaceId,
     },
     select: {
       invitedForWorkspace: {
@@ -139,15 +148,21 @@ export async function inviteNewUser({
       id: roleId,
     },
   })
-
-  console.log(invites, 'invitedForWorkspaceName')
-  return (
-    (await sendMemberInvite(
-      email,
-      invites.invitedForWorkspace?.name as string,
-      role?.name as string
-    )) && invites
+  const invitedForWorkspaceName = invite.invitedForWorkspace?.name
+  return await sendMemberInvite(
+    email,
+    invitedForWorkspaceName as string,
+    role?.name as string
   )
+}
+
+export async function getAllInvitedMember() {
+  return await prisma.invites.findMany({
+    include: {
+      invitedForWorkspace: true,
+      role: true,
+    },
+  })
 }
 export async function createPasswordOfUser(id: string, password: string) {
   const hashedPassword = await bcrypt.hash(password, 10)
@@ -183,7 +198,6 @@ export async function reinviteMember({ id }: { id: string }) {
 
 export async function sendResetPassword(email: string) {
   const password = faker.internet.password()
-  console.log(password, 'h')
   const hashedPassword = await bcrypt.hash(password, 10)
   const userEmail = await prisma.user.findUnique({
     where: {

@@ -23,6 +23,17 @@ export interface PasswordFieldProps {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
+export interface DialogWrapperProps {
+  heading?: string
+  role?: string
+  ariaLabel?: string
+  children: JSX.Element
+  open: boolean
+  setOpen: (e: boolean) => void
+  header: boolean
+  tabIndex?: number
+}
+
 export interface ButtonProps {
   name?: string
   id?: string
@@ -100,12 +111,12 @@ export interface User {
 }
 
 export interface Invites {
-  id: String
-  email: String
+  id: string
+  email: string
   invitedBy: Array<User>
-  userId: String
+  userId: string
   invitedForWorkspace: Workspace
-  workspaceId: String
+  workspaceId: string
   role: Role
   roleId: String
   invitedOn: Date

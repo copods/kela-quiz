@@ -27,7 +27,7 @@ export async function sendMail(
     <table width="100%" border="0" cellspacing="0" cellpadding="0">
     <tr>
     <td style="background-color:#353988;padding-right:20px;padding-left:20px">
-            <p style="text-align:center;font-size:20px;line-height:28px;color:#4B5563;background:#fff;margin:0 auto;padding:20px;max-width: 350px;padding-bottom:13px;"><span>Welcome !</span></p></tr>
+            <p style="text-align:center;font-size:20px;line-height:28px;color:#4B5563;background:#fff;margin:0 auto;padding:20px;max-width: 350px;padding-bottom:13px;"><span>Welcome!</span></p></tr>
         </td>
     </tr>
   <tr>
@@ -109,7 +109,7 @@ export async function sendTestInviteMail(email: string, link: string) {
   <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
   <td style="background-color:#353988;padding-right:20px;padding-left:20px">
-          <p style="text-align:center;font-size:20px;line-height:28px;color:#4B5563;background:#fff;margin:0 auto;padding:20px;max-width: 350px;padding-bottom:13px;"><span>Welcome !</span></p></tr>
+          <p style="text-align:center;font-size:20px;line-height:28px;color:#4B5563;background:#fff;margin:0 auto;padding:20px;max-width: 350px;padding-bottom:13px;"><span>Welcome!</span></p></tr>
       </td>
   </tr>
       <tr>
@@ -119,7 +119,7 @@ export async function sendTestInviteMail(email: string, link: string) {
         <p style="text-align:left;color:#4B5563;margin:0;"><span>Hi,</span>
         </p>
         <br>
-        <p style="text-align:left;color:#4B5563;margin:0;">You have been invited by Copods Design Technology Solutions LLP for an online pre interview assessment test.
+        <p style="text-align:left;color:#4B5563;margin:0;">You have been invited by Copods for an online pre interview assessment test.
         </p>
         
 
@@ -192,7 +192,7 @@ export async function sendOTPMail(email: string, otp: number) {
     <table width="100%" border="0" cellspacing="0" cellpadding="0">
     <tr>
     <td style="background-color:#353988;padding-right:20px;padding-left:20px">
-            <p style="text-align:center;font-size:20px;line-height:28px;color:#4B5563;background:#fff;margin:0 auto;padding:20px;max-width: 350px;padding-bottom:13px;"><span>Welcome !</span></p></tr>
+            <p style="text-align:center;font-size:20px;line-height:28px;color:#4B5563;background:#fff;margin:0 auto;padding:20px;max-width: 350px;padding-bottom:13px;"><span>Welcome!</span></p></tr>
         </td>
     </tr>
   <tr>
@@ -268,7 +268,7 @@ export async function sendMailToRecruiter(
   <tr>
       <td align="center" style="padding: 0 20px">
           <div style="background:#fff;margin:0 auto;padding:20px;max-width: 350px">
-        <p style="text-align:center;font-size:20px;line-height:28px;color:#4B5563;margin:0;margin-bottom:13px"><span>Welcome !</span></p>
+        <p style="text-align:center;font-size:20px;line-height:28px;color:#4B5563;margin:0;margin-bottom:13px"><span>Welcome!</span></p>
         <div style="font-size:16px; line-height:24px;margin-bottom:16px">
           <p style="text-align:left;color:#4B5563;margin:0;"><span>Hi,</span>
           </p>
@@ -343,7 +343,7 @@ export async function sendNewPassword(email: string, password: string) {
     <table width="100%" border="0" cellspacing="0" cellpadding="0">
     <tr>
     <td style="background-color:#353988;padding-right:20px;padding-left:20px">
-            <p style="text-align:center;font-size:20px;line-height:28px;color:#4B5563;background:#fff;margin:0 auto;padding:20px;max-width: 350px;padding-bottom:13px;"><span>Welcome !</span></p></tr>
+            <p style="text-align:center;font-size:20px;line-height:28px;color:#4B5563;background:#fff;margin:0 auto;padding:20px;max-width: 350px;padding-bottom:13px;"><span>Welcome!</span></p></tr>
         </td>
     </tr>
   <tr>
@@ -394,9 +394,9 @@ export async function sendNewPassword(email: string, password: string) {
 }
 
 export async function sendMemberInvite(
-  invitedForWorkspaceName: string,
   email: string,
-  role: string
+  role: string,
+  invitedForWorkspaceName?: string
 ) {
   const to = email
   const from = 'careers@copods.co'
@@ -438,7 +438,7 @@ export async function sendMemberInvite(
           <br>
         </div>        
         <p style="text-align:center;color:#4B5563;margin:0;font-family:'Poppins', sans-serif;margin-top:10px">     
-          <a href="" style="color: #353988;"></a>
+          <a href="" style="color: #353988;">link</a>
         </p>
         <br>
          <p style="text-align:center;color:#4B5563;margin:0;font-family:'Poppins', sans-serif;">

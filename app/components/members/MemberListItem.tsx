@@ -30,13 +30,15 @@ export default function MemberListItem({
     submit({ action: 'delete', id: user.id }, { method: 'post' })
   }
   const resendMail = () => {
-    let data = {
-      id: user.id,
-      action: 'resend',
+    if (!loggedInUser) {
+      let data = {
+        id: user.id,
+        action: 'resend',
+      }
+      submit(data, {
+        method: 'post',
+      })
     }
-    submit(data, {
-      method: 'post',
-    })
   }
   return (
     <div className="col-span-full grid grid-cols-10">
@@ -57,7 +59,7 @@ export default function MemberListItem({
             {moment(user?.createdAt).format('DD MMMM YY')}
           </span>
         </div>
-        <div className="col-span-1 flex justify-around pl-4">
+        <div className="col-span-1 flex justify-between pl-4">
           <Icon
             id="delete-button"
             tabIndex={0}

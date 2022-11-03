@@ -8,7 +8,9 @@
     "addedOn": "Added On",
     "action": "Action",
     "member": "member",
-    "memberResendIcon": "Reinvite Icon"
+    "memberResendIcon": "Reinvite Icon",
+    "invitedMember": "Invited Member",
+    "joinedMembers": "Joined Members"
   },
   "commonConstants": {
     "name": "Name",
@@ -54,7 +56,9 @@
     "proceed": "Proceed",
     "defaultWorkspaceName": "Default Workspace Name",
     "confirmPassword": "Confirm Password",
-    "createPassword": "Create Password"
+    "createPassword": "Create Password",
+    "inviting": "Inviting",
+    "invite": "Invite"
   },
   "sideNav": {
     "sideNavHeading": "Quiz",
@@ -203,7 +207,7 @@
     "assessmentDetails": "Assessment Details",
     "assessmentTests": "Assessment Tests",
     "assessmentEnd": "Assessment Ended",
-    "endAssesment": "End Assesment SVG",
+    "endAssessment": "End Assessment SVG",
     "wrongLink": "Wrong Link",
     "minutes": "Mins",
     "description": "Description",
@@ -213,7 +217,7 @@
     "endTest": "End Test",
     "nextSection": "Next Section",
     "candidateAcceptance": "I understand that once I begin the assessment I cannot leave and  return to this assessment at a later time.",
-    "beginAssesment": "Begin Assesment",
+    "beginAssessment": "Begin Assessment",
     "instructions": "Instructions",
     "takeBreak": "Take A Break!",
     "startSection": "Start Now",
@@ -248,7 +252,8 @@
     "signUpSuccessfull": "Sign Up successfully",
     "workspaceAdded": "Workspace Added",
     "duplicateWorkspace": "Duplicate Workspace",
-    "workspaceNameIsRequired": "Workspace name is required"
+    "workspaceNameIsRequired": "Workspace name is required",
+    "memberAlreadyInvited": "Member already invited"
   },
   "otpConstants": {
     "header": "OTP Verification",

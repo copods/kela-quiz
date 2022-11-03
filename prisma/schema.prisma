@@ -67,11 +67,13 @@ model Invites {
   workspaceId         String?
   role                Role      @relation(fields: [roleId], references: [id])
   roleId              String
-  invitedOn           DateTime?  @default(now())
+  invitedOn           DateTime  @default(now())
   joined              Boolean?   @default(false)
   joinedAt            DateTime?
   createdAt           DateTime  @default(now())
   updatedAt           DateTime  @updatedAt
+
+   @@unique([email])
 }
 
 model Password {

@@ -1,5 +1,5 @@
 import AdminLayout from '~/components/layouts/AdminLayout'
-import { getUserId, getWorkspaceId } from '~/session.server'
+import { getUserId, getWorkspaceId, requireWorkspaceId } from '~/session.server'
 import { redirect } from '@remix-run/node'
 import type { LoaderFunction, ActionFunction } from '@remix-run/node'
 import MembersList from '~/components/members/MembersList'
@@ -11,6 +11,8 @@ import {
   getAllRoles,
   getAllUsers,
   reinviteMember,
+  getAllInvitedMember,
+  deleteInviteMember,
 } from '~/models/user.server'
 import MembersHeader from '~/components/members/MembersHeader'
 import { toast } from 'react-toastify'
@@ -19,6 +21,7 @@ import { routes } from '~/constants/route.constants'
 import { useTranslation } from 'react-i18next'
 import { getUserWorkspaces } from '~/models/workspace.server'
 import { actions } from '~/constants/action.constants'
+import InvitedMembersList from '~/components/members/InvitedMemberList'
 
 export type ActionData = {
   errors?: {
@@ -36,9 +39,11 @@ type LoaderData = {
   roles: Awaited<ReturnType<typeof getAllRoles>>
   workspaces: Awaited<ReturnType<typeof getUserWorkspaces>>
   currentWorkspaceId: Awaited<ReturnType<typeof getWorkspaceId>>
+  invitedMembers: Awaited<ReturnType<typeof getAllInvitedMember>>
 }
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await getUserId(request)
+  const invitedMembers = await getAllInvitedMember()
   const currentWorkspaceId = await getWorkspaceId(request)
   const workspaces = await getUserWorkspaces(userId as string)
   const roles = await getAllRoles()
@@ -50,18 +55,18 @@ export const loader: LoaderFunction = async ({ request }) => {
     userId,
     workspaces,
     currentWorkspaceId,
+    invitedMembers,
   })
 }
 
 export const action: ActionFunction = async ({ request }) => {
-  // const invitedByWorkspaceId = await requireWorkspaceId(request)
+  const invitedByWorkspaceId = await requireWorkspaceId(request)
   const formData = await request.formData()
   const action = await formData.get('action')
 
   if (action === actions.inviteMember) {
     const email = formData.get('email')
     const roleId = formData.get('roleId')
-    console.log(email, roleId, 'j')
     // eslint-disable-next-line no-useless-escape
     const emailFilter = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
 
@@ -89,12 +94,13 @@ export const action: ActionFunction = async ({ request }) => {
     await inviteNewUser({
       email,
       roleId,
+      invitedByWorkspaceId,
     })
       .then((res) => {
         addHandle = json<ActionData>(
           {
             resp: {
-              title: 'toastConstants.memberAdded',
+              title: 'toastConstants.invitationSent',
               status: 200,
             },
           },
@@ -104,7 +110,7 @@ export const action: ActionFunction = async ({ request }) => {
       .catch((err) => {
         let title = 'statusCheck.commonError'
         if (err.code === 'P2002') {
-          title = 'toastConstants.memberAlreadyExist'
+          title = 'toastConstants.memberAlreadyInvited'
         }
         addHandle = json<ActionData>(
           {
@@ -178,6 +184,35 @@ export const action: ActionFunction = async ({ request }) => {
 
     return deleteHandle
   }
+  if (action === actions.deleteInviteMember) {
+    if (typeof formData.get('id') !== 'string') {
+      return json<ActionData>(
+        { errors: { title: 'statusCheck.descIsReq', status: 400 } },
+        { status: 400 }
+      )
+    }
+    let deleteHandle = null
+    await deleteInviteMember(formData.get('id') as string)
+      .then((res) => {
+        deleteHandle = json<ActionData>(
+          { resp: { title: 'statusCheck.deletedSuccess', status: 200 } },
+          { status: 200 }
+        )
+      })
+      .catch((err) => {
+        deleteHandle = json<ActionData>(
+          {
+            errors: {
+              title: 'statusCheck.commonError',
+              status: 400,
+            },
+          },
+          { status: 400 }
+        )
+      })
+
+    return deleteHandle
+  }
   return null
 }
 const Members = () => {
@@ -204,7 +239,14 @@ const Members = () => {
           actionStatus={actionStatus}
           setActionStatus={setActionStatus}
         />
-        <MembersList actionStatus={membersActionData?.resp?.title} />
+        <div className="flex flex-col gap-4 text-2xl">
+          <h1>{t('members.joinedMembers')}</h1>
+          <MembersList actionStatus={membersActionData?.resp?.title} />
+        </div>
+        <div className="flex flex-col gap-4 text-2xl">
+          <h1>{t('members.invitedMember')}</h1>
+          <InvitedMembersList actionStatus={membersActionData?.resp?.title} />
+        </div>
       </div>
     </AdminLayout>
   )
