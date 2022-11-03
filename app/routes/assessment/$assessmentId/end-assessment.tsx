@@ -1,5 +1,5 @@
 import type { LoaderFunction } from '@remix-run/node'
-import EndAssesment from '~/components/assessment/EndAssessment'
+import EndAssessment from '~/components/assessment/EndAssessment'
 import { redirect } from '@remix-run/node'
 import { checkIfTestLinkIsValidAndRedirect } from '~/utils/assessment.utils'
 
@@ -17,6 +17,6 @@ export const loader: LoaderFunction = async ({ params, request }) => {
   return null
 }
 
-export default function EndAssessment() {
-  return <EndAssesment />
+export default function EndAssesment() {
+  return <EndAssessment />
 }

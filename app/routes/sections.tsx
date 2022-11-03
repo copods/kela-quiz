@@ -245,10 +245,11 @@ export default function SectionPage() {
         t('statusCheck.sectionAddedSuccess')
       ) {
         setShowAddSectionModal(false)
-        toast.success(t(sectionActionData.resp?.status as string), {
-          toastId: sectionActionData.resp?.status as string,
+        setSelectedSection((previous: string) => {
+          if (previous != sectionActionData?.resp?.data?.id)
+            toast.success(t(sectionActionData.resp?.status as string))
+          return sectionActionData?.resp?.data?.id as string
         })
-        setSelectedSection(sectionActionData?.resp?.data?.id as string)
       } else if (
         t(sectionActionData.resp?.status as string) ===
         t('statusCheck.deletedSuccess')
