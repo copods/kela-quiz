@@ -59,7 +59,7 @@ export default function MemberListItem({
             {moment(user?.createdAt).format('DD MMMM YY')}
           </span>
         </div>
-        <div className="col-span-1 flex justify-between pl-4">
+        <div className="col-span-1 flex justify-start gap-4 pl-4">
           <Icon
             id="delete-button"
             tabIndex={0}

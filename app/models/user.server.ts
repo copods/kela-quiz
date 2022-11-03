@@ -203,6 +203,22 @@ export async function reinviteMember({ id }: { id: string }) {
   )
 }
 
+export async function reInvitationMember({ id }: { id: string }) {
+  const user = await prisma.invites.findUnique({
+    where: { id },
+    include: { invitedForWorkspace: true },
+  })
+  const roleId = user?.roleId as string
+  const role = await prisma.role.findUnique({ where: { id: roleId } })
+  const workspaceJoinLink = env.PUBLIC_URL + '/workspace/' + user?.id + '/join'
+  return await sendMail(
+    user?.email as string,
+    user?.invitedForWorkspace?.name as string,
+    role?.name as string,
+    workspaceJoinLink as string
+  )
+}
+
 export async function sendResetPassword(email: string) {
   const password = faker.internet.password()
   const hashedPassword = await bcrypt.hash(password, 10)

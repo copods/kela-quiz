@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { Invites } from '~/interface/Interface'
 import DeletePopUp from '../DeletePopUp'
+import memberResendIcon from '~/../public/assets/resend-member-invitation.svg'
 
 const InvitedMembersListItems = ({
   invitedMembers,
@@ -29,6 +30,15 @@ const InvitedMembersListItems = ({
       { action: 'deleteInviteMember', id: invitedMembers.id },
       { method: 'post' }
     )
+  }
+  const resendMail = () => {
+    let data = {
+      id: invitedMembers.id,
+      action: 'resendMember',
+    }
+    submit(data, {
+      method: 'post',
+    })
   }
   return (
     <div className="col-span-full grid grid-cols-10">
@@ -55,7 +65,7 @@ const InvitedMembersListItems = ({
               : moment(invitedMembers?.joinedAt).format('DD MMMM YY')}
           </span>
         </div>
-        <div className="col-span-1 flex justify-between pl-4">
+        <div className="col-span-1 flex justify-start gap-4 pl-4">
           <Icon
             id="delete-button"
             tabIndex={0}
@@ -66,6 +76,21 @@ const InvitedMembersListItems = ({
             icon="ic:outline-delete-outline"
             className="h-6 w-6 cursor-pointer text-red-500 "
           />
+          <span
+            tabIndex={0}
+            role="button"
+            onKeyUp={(e) => {
+              if (e.key === 'Enter') resendMail()
+            }}
+            onClick={() => resendMail()}
+            className="cursor-pointer opacity-100"
+          >
+            <img
+              src={memberResendIcon}
+              alt="reinvite"
+              id="resend-member-invite"
+            />
+          </span>
         </div>
         <DeletePopUp
           setOpen={setOpen}

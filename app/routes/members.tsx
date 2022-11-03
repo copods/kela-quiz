@@ -13,6 +13,7 @@ import {
   reinviteMember,
   getAllInvitedMember,
   deleteInviteMember,
+  reInvitationMember,
 } from '~/models/user.server'
 import MembersHeader from '~/components/members/MembersHeader'
 import { toast } from 'react-toastify'
@@ -154,6 +155,37 @@ export const action: ActionFunction = async ({ request }) => {
         )
       })
     return resendHandle
+  }
+  if (action === actions.resendMember) {
+    const id = formData.get('id')
+    let resendMember = null
+    await reInvitationMember({
+      id: id as string,
+    })
+      .then(() => {
+        resendMember = json<ActionData>(
+          {
+            resp: {
+              title: 'toastConstants.invitationSent',
+              status: 200,
+            },
+          },
+          { status: 200 }
+        )
+      })
+      .catch((err) => {
+        let title = 'statusCheck.commonError'
+        resendMember = json<ActionData>(
+          {
+            errors: {
+              title,
+              status: 400,
+            },
+          },
+          { status: 400 }
+        )
+      })
+    return resendMember
   }
   if (action === actions.deleteMember) {
     if (typeof formData.get('id') !== 'string') {
