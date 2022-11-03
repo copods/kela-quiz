@@ -22,20 +22,15 @@ export default function AddMemberModal({
 
   const transition = useTransition()
   const submit = useSubmit()
-  const [firstName, setFirstName] = useState('')
-  const [lastName, setLastName] = useState('')
   const [email, setEmail] = useState('')
   const [role, setRole] = useState(roles[0].id)
-  const [workspace, setWorkspace] = useState('')
 
   const submitMemberForm = () => {
     let data = {
-      firstName: firstName,
-      lastName: lastName,
       email: email,
       roleId: role,
-      workspace: workspace,
-      action: 'add',
+
+      action: 'invite',
     }
     submit(data, {
       method: 'post',
@@ -43,35 +38,10 @@ export default function AddMemberModal({
   }
 
   useEffect(() => {
-    setFirstName('')
-    setLastName('')
-  }, [open])
+    setRole(roles[0].id)
+  }, [open, roles])
 
   const inputFieldsProps = [
-    {
-      label: t('members.firstName'),
-      placeholder: t('members.firstName'),
-      type: 'text',
-      name: 'firstName',
-      required: true,
-      value: firstName,
-      errorId: 'firstName-error',
-      onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
-        setFirstName(trimValue(event.target.value))
-      },
-    },
-    {
-      label: t('members.lastName'),
-      placeholder: t('members.lastName'),
-      type: 'text',
-      name: 'lastName',
-      required: true,
-      value: lastName,
-      errorId: 'lastName-error',
-      onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
-        setLastName(trimValue(event.target.value))
-      },
-    },
     {
       label: t('commonConstants.email'),
       placeholder: t('commonConstants.email'),
@@ -82,18 +52,6 @@ export default function AddMemberModal({
       errorId: 'email-error',
       onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
         setEmail(trimValue(event.target.value))
-      },
-    },
-    {
-      label: t('commonConstants.defaultWorkspaceName'),
-      placeholder: t('commonConstants.defaultWorkspaceName'),
-      type: 'text',
-      name: 'workspace',
-      required: true,
-      value: workspace,
-      errorId: 'workspace-error',
-      onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
-        setWorkspace(trimValue(event.target.value))
       },
     },
   ]
@@ -154,16 +112,10 @@ export default function AddMemberModal({
                 <hr className="mt-4 mb-6 h-px w-full border-0 bg-gray-300" />
 
                 <div className="flex flex-col gap-6">
-                  <div className="flex gap-6">
-                    {inputFieldsProps.slice(0, 2).map((props) => {
-                      return <InputField {...props} key={props.name} />
-                    })}
-                  </div>
-                  <div className="flex flex-col gap-6">
-                    {inputFieldsProps.slice(2).map((props) => {
-                      return <InputField {...props} key={props.name} />
-                    })}
-                  </div>
+                  {inputFieldsProps.map((props) => {
+                    return <InputField {...props} key={props.name} />
+                  })}
+
                   <div className="flex flex-col gap-1.5" id="add-member-modal">
                     <div>
                       <label htmlFor="" className="text-gray-800">
@@ -192,8 +144,8 @@ export default function AddMemberModal({
                     <Button
                       tabIndex={0}
                       id="add-button"
-                      name="addMember"
-                      value={'add'}
+                      name="inviteMember"
+                      value={'invite'}
                       className="h-9 px-4"
                       isDisabled={transition.state === 'submitting'}
                       title={

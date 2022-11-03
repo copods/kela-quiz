@@ -1,6 +1,6 @@
 export enum actions {
   resendTestLink = 'resendInvite',
-  addMember = 'add',
+  inviteMember = 'invite',
   resendInviteMember = 'resend',
   deleteMember = 'delete',
   switchWorkspace = 'switch',

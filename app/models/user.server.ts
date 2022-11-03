@@ -2,9 +2,8 @@ import type { Password, User } from '@prisma/client'
 import bcrypt from 'bcryptjs'
 
 import { prisma } from '~/db.server'
-import { sendMail, sendNewPassword } from './sendgrid.servers'
+import { sendMail, sendMemberInvite, sendNewPassword } from './sendgrid.servers'
 import { faker } from '@faker-js/faker'
-import { env } from 'process'
 export type { User } from '@prisma/client'
 
 export async function getUserById(id: User['id']) {
@@ -114,85 +113,40 @@ export async function createUserBySignUp({
   return await sendMail(email, firstName, password, role?.name as string)
 }
 
-export async function createNewUser({
-  firstName,
-  lastName,
+export async function inviteNewUser({
   email,
   roleId,
-  defaultWorkspaceName,
-  createdById,
-  invitedByWorkspaceId,
 }: {
-  firstName: string
-  lastName: string
   email: string
-  defaultWorkspaceName: string
   roleId: string
-  createdById: User['id']
-  invitedByWorkspaceId: string
 }) {
-  const password = faker.internet.password()
-  const hashedPassword = await bcrypt.hash(password, 10)
-  const user = await prisma.user.create({
+  const invites = await prisma.invites.create({
     data: {
-      firstName,
-      lastName,
       email,
       roleId,
-      password: {
-        create: {
-          hash: hashedPassword,
-        },
-      },
-
-      workspace: {
-        create: {
-          name: defaultWorkspaceName,
-        },
-      },
     },
     select: {
-      id: true,
-      roleId: true,
-      workspace: {
+      invitedForWorkspace: {
         select: {
-          id: true,
+          name: true,
         },
       },
     },
   })
 
-  const adminRoleId = await getAdminId()
-
-  await prisma.userWorkspace.create({
-    data: {
-      userId: user.id as string,
-      workspaceId: user.workspace[0].id,
-      roleId: adminRoleId as string,
-      isDefault: true,
-    },
-  })
-
-  await prisma.userWorkspace.create({
-    data: {
-      userId: user.id as string,
-      workspaceId: invitedByWorkspaceId,
-      roleId: roleId,
-      isDefault: false,
-    },
-  })
   const role = await prisma.role.findUnique({
     where: {
       id: roleId,
     },
   })
-  const passwordGenerationLink =
-    env.PUBLIC_URL + '/members/' + user?.id + '/create-password'
-  return await sendMail(
-    passwordGenerationLink,
-    email,
-    firstName,
-    role?.name || 'NA'
+
+  console.log(invites, 'invitedForWorkspaceName')
+  return (
+    (await sendMemberInvite(
+      email,
+      invites.invitedForWorkspace?.name as string,
+      role?.name as string
+    )) && invites
   )
 }
 export async function createPasswordOfUser(id: string, password: string) {
@@ -229,6 +183,7 @@ export async function reinviteMember({ id }: { id: string }) {
 
 export async function sendResetPassword(email: string) {
   const password = faker.internet.password()
+  console.log(password, 'h')
   const hashedPassword = await bcrypt.hash(password, 10)
   const userEmail = await prisma.user.findUnique({
     where: {

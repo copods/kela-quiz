@@ -99,6 +99,21 @@ export interface User {
   workspace: Array<Workspace>
 }
 
+export interface Invites {
+  id: String
+  email: String
+  invitedBy: Array<User>
+  userId: String
+  invitedForWorkspace: Workspace
+  workspaceId: String
+  role: Role
+  roleId: String
+  invitedOn: Date
+  joined: Boolean
+  joinedAt: Date
+  createdAt: Date
+  updatedAt: Date
+}
 export interface Role {
   id: string
   name: string
