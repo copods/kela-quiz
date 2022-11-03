@@ -1,13 +1,17 @@
-import type { Password, User } from '@prisma/client'
+import type { Invites, Password, User } from '@prisma/client'
 import bcrypt from 'bcryptjs'
 
 import { prisma } from '~/db.server'
 import { sendMail, sendMemberInvite, sendNewPassword } from './sendgrid.servers'
 import { faker } from '@faker-js/faker'
+import { env } from 'process'
 export type { User } from '@prisma/client'
 
 export async function getUserById(id: User['id']) {
   return prisma.user.findUnique({ where: { id }, include: { password: true } })
+}
+export async function getInvitedMemberById(id: Invites['id']) {
+  return prisma.invites.findUnique({ where: { id } })
 }
 
 export async function deleteUserById(id: string) {
@@ -140,6 +144,7 @@ export async function inviteNewUser({
           name: true,
         },
       },
+      id: true,
     },
   })
 
@@ -148,11 +153,13 @@ export async function inviteNewUser({
       id: roleId,
     },
   })
+  const workspaceJoinLink = env.PUBLIC_URL + '/workspace/' + invite.id + '/join'
   const invitedForWorkspaceName = invite.invitedForWorkspace?.name
   return await sendMemberInvite(
     email,
     invitedForWorkspaceName as string,
-    role?.name as string
+    role?.name as string,
+    workspaceJoinLink as string
   )
 }
 

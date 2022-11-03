@@ -396,7 +396,8 @@ export async function sendNewPassword(email: string, password: string) {
 export async function sendMemberInvite(
   email: string,
   role: string,
-  invitedForWorkspaceName?: string
+  invitedForWorkspaceName?: string,
+  workspaceJoinLink?: string
 ) {
   const to = email
   const from = 'careers@copods.co'
@@ -438,7 +439,7 @@ export async function sendMemberInvite(
           <br>
         </div>        
         <p style="text-align:center;color:#4B5563;margin:0;font-family:'Poppins', sans-serif;margin-top:10px">     
-          <a href="" style="color: #353988;">link</a>
+          <a href=${workspaceJoinLink} style="color: #353988;">${workspaceJoinLink}</a>
         </p>
         <br>
          <p style="text-align:center;color:#4B5563;margin:0;font-family:'Poppins', sans-serif;">
