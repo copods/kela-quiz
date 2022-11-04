@@ -7,7 +7,7 @@ import type { Invites } from '~/interface/Interface'
 import DeletePopUp from '../DeletePopUp'
 import memberResendIcon from '~/../public/assets/resend-member-invitation.svg'
 
-const InvitedMembersListItems = ({
+const InvitedMembersListItem = ({
   invitedMembers,
   actionStatus,
 }: {
@@ -40,6 +40,7 @@ const InvitedMembersListItems = ({
       method: 'post',
     })
   }
+
   return (
     <div className="col-span-full grid grid-cols-10">
       <div className="inviteMemberRow col-span-full grid grid-cols-10 gap-3 border-t border-solid border-gray-200 px-6 py-4">
@@ -55,14 +56,12 @@ const InvitedMembersListItems = ({
         </div>
         <div className="break-word col-span-2 overflow-ellipsis pl-4">
           <span className="text-base text-gray-700">
-            {invitedMembers.invitedForWorkspace.name}
+            {invitedMembers.joined}
           </span>
         </div>
         <div className="col-span-2 overflow-ellipsis break-all pl-4">
           <span className="text-base text-gray-700">
-            {invitedMembers?.joinedAt === null
-              ? 'not joined yet'
-              : moment(invitedMembers?.joinedAt).format('DD MMMM YY')}
+            {moment(invitedMembers?.invitedOn).format('DD MMMM YY')}
           </span>
         </div>
         <div className="col-span-1 flex justify-start gap-4 pl-4">
@@ -103,4 +102,4 @@ const InvitedMembersListItems = ({
     </div>
   )
 }
-export default InvitedMembersListItems
+export default InvitedMembersListItem

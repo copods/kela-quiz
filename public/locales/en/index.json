@@ -10,7 +10,10 @@
     "member": "member",
     "memberResendIcon": "Reinvite Icon",
     "invitedMember": "Invited Member",
-    "joinedMembers": "Joined Members"
+    "joinedMembers": "Joined Members",
+    "noInvitedMember": "No any invited Member Found",
+    "doYouWantToJoin": "Do You Want To Join?",
+    "invitedOn": "Invited On"
   },
   "commonConstants": {
     "name": "Name",

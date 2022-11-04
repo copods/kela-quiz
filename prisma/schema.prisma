@@ -108,7 +108,7 @@ model Section {
   workspace              Workspace?               @relation(fields: [workspaceId], references: [id])
   workspaceId            String?
 
-  @@unique([name, deletedAt, deleted])
+  @@unique([name, deletedAt, deleted, workspaceId])
 }
 
 model Question {
@@ -180,7 +180,7 @@ model Test {
   workspace         Workspace?          @relation(fields: [workspaceId], references: [id])
   workspaceId       String?
 
-  @@unique([name, deletedAt, deleted])
+  @@unique([name, deletedAt, deleted, workspaceId])
 }
 
 model SectionInTest {

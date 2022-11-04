@@ -62,6 +62,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 export const action: ActionFunction = async ({ request }) => {
   const invitedByWorkspaceId = await requireWorkspaceId(request)
+  const userId = await getUserId(request)
   const formData = await request.formData()
   const action = await formData.get('action')
 
@@ -96,6 +97,7 @@ export const action: ActionFunction = async ({ request }) => {
       email,
       roleId,
       invitedByWorkspaceId,
+      userId,
     })
       .then((res) => {
         addHandle = json<ActionData>(

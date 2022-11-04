@@ -127,9 +127,11 @@ export async function inviteNewUser({
   email,
   roleId,
   invitedByWorkspaceId,
+  userId,
 }: {
   email: string
   roleId: string
+  userId?: string
   invitedByWorkspaceId: string
 }) {
   const invite = await prisma.invites.create({
@@ -137,6 +139,7 @@ export async function inviteNewUser({
       email,
       roleId,
       workspaceId: invitedByWorkspaceId,
+      userId: userId,
     },
     select: {
       invitedForWorkspace: {
@@ -168,6 +171,12 @@ export async function getAllInvitedMember() {
     include: {
       invitedForWorkspace: true,
       role: true,
+      invitedBy: {
+        select: {
+          firstName: true,
+          lastName: true,
+        },
+      },
     },
   })
 }

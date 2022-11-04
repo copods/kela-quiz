@@ -10,7 +10,8 @@ const InvitedMembersList = ({
 }) => {
   const membersData = useLoaderData()
   const { t } = useTranslation()
-  const invitedMembers = membersData.invitedMembers
+  const invitedMember = membersData.invitedMembers
+
   return (
     <div className="grid grid-cols-12 rounded-lg shadow-base">
       <div className="col-span-full grid grid-cols-10 rounded-lg border border-solid border-gray-200 bg-white">
@@ -22,16 +23,16 @@ const InvitedMembersList = ({
             {t('members.role')}
           </h1>
           <h1 className="col-span-2 pl-4 text-sm text-gray-500">
-            {t('members.role')}
+            {t('resultConstants.invitedBy')}
           </h1>
           <h1 className="col-span-2 pl-4 text-sm text-gray-500">
-            {t('members.addedOn')}
+            {t('members.invitedOn')}
           </h1>
           <h1 className="col-span-1 pl-4 text-sm text-gray-500">
             {t('members.action')}
           </h1>
         </div>
-        {invitedMembers.map((invitedMembers: Invites, index: number) => (
+        {invitedMember.map((invitedMembers: Invites, index: number) => (
           <div key={index} className="memberRow col-span-10 grid">
             <InvitedMembersListItems
               actionStatus={actionStatus}
