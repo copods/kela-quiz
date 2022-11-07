@@ -19,6 +19,35 @@ const Question = () => {
   )
   useEffect(() => {}, [userAnswer])
 
+  useEffect(() => {
+    const handleContextmenu = (e: any) => {
+      e.preventDefault()
+    }
+    function ctrlShiftKey(e: any, keyCode: any) {
+      return (
+        (e.ctrlKey && e.shiftKey && e.keyCode) ||
+        (e.metaKey && e.shiftKey && e.keyCode) === keyCode.charCodeAt(0)
+      )
+    }
+
+    document.onkeydown = (e) => {
+      // Disable F12, Ctrl + Shift + I, Ctrl + Shift + J, Ctrl + U
+      console.log(e)
+      if (
+        e.keyCode === 123 ||
+        ctrlShiftKey(e, 'I') ||
+        ctrlShiftKey(e, 'J') ||
+        ctrlShiftKey(e, 'C') ||
+        (e.ctrlKey && e.keyCode === 'U'.charCodeAt(0))
+      )
+        return false
+    }
+    document.addEventListener('contextmenu', handleContextmenu)
+    return function cleanup() {
+      document.removeEventListener('contextmenu', handleContextmenu)
+    }
+  }, [])
+
   const onChangeHandle = (event: any, index?: number) => {
     if (questionType === QuestionTypes.singleChoice) {
       setUserAnswer(event.id)
@@ -40,7 +69,7 @@ const Question = () => {
       })
     }
   }
-
+  useEffect(() => {}, [])
   return (
     <div className="flex h-screen flex-col">
       <CandidateQuestionHeader />
