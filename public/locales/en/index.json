@@ -61,7 +61,9 @@
     "confirmPassword": "Confirm Password",
     "createPassword": "Create Password",
     "inviting": "Inviting",
-    "invite": "Invite"
+    "invite": "Invite",
+    "join": "Join",
+    "joining": "Joining"
   },
   "sideNav": {
     "sideNavHeading": "Quiz",
@@ -172,7 +174,9 @@
     "switched": "Workspace Switched",
     "enteredReenteredPassword": "Password and Confirm password should be same.",
     "passAlreadyCreated": "You have already created the password",
-    "userNotFound": "User Not Found"
+    "userNotFound": "User Not Found",
+    "workspaceJoinSuccess": "Workspace join successfully",
+    "workspaceInvitationRejected": "Workspace invitation rejected"
   },
   "resultConstants": {
     "order": "Order",

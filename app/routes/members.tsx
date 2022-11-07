@@ -22,7 +22,7 @@ import { routes } from '~/constants/route.constants'
 import { useTranslation } from 'react-i18next'
 import { getUserWorkspaces } from '~/models/workspace.server'
 import { actions } from '~/constants/action.constants'
-import InvitedMembersList from '~/components/members/InvitedMemberList'
+import InvitedMembersList from '~/components/members/InvitedMembersList'
 
 export type ActionData = {
   errors?: {
@@ -65,7 +65,6 @@ export const action: ActionFunction = async ({ request }) => {
   const userId = await getUserId(request)
   const formData = await request.formData()
   const action = await formData.get('action')
-
   if (action === actions.inviteMember) {
     const email = formData.get('email')
     const roleId = formData.get('roleId')

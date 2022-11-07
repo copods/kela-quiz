@@ -113,7 +113,7 @@ export interface User {
 export interface Invites {
   id: string
   email: string
-  invitedBy: Array<User>
+  invitedBy: User
   userId: string
   invitedForWorkspace: Workspace
   workspaceId: string

@@ -11,7 +11,20 @@ export async function getUserById(id: User['id']) {
   return prisma.user.findUnique({ where: { id }, include: { password: true } })
 }
 export async function getInvitedMemberById(id: Invites['id']) {
-  return prisma.invites.findUnique({ where: { id } })
+  return prisma.invites.findUnique({
+    where: { id },
+    select: {
+      id: true,
+      joined: true,
+      invitedBy: {
+        select: {
+          firstName: true,
+          lastName: true,
+        },
+      },
+      invitedForWorkspace: true,
+    },
+  })
 }
 
 export async function deleteUserById(id: string) {
@@ -66,7 +79,6 @@ export async function createUserBySignUp({
   firstName,
   lastName,
   email,
-
   workspaceName,
 }: {
   firstName: string
@@ -332,4 +344,62 @@ export async function updatePassword(
   if (checkValidPass) {
     return 'DONE'
   }
+}
+
+export async function joinWorkspace({ invitedId }: { invitedId: string }) {
+  const getUserInvite = await prisma.invites.findUnique({
+    where: {
+      id: invitedId,
+    },
+    select: {
+      email: true,
+      invitedForWorkspace: {
+        select: {
+          name: true,
+        },
+      },
+      roleId: true,
+    },
+  })
+  const user = await prisma.user.findUnique({
+    where: {
+      email: getUserInvite?.email,
+    },
+    select: {
+      id: true,
+    },
+  })
+  const linkUserWorkspace = await prisma.userWorkspace.create({
+    data: {
+      userId: user?.id as string,
+      workspaceId: getUserInvite?.invitedForWorkspace?.name as string,
+      roleId: getUserInvite?.roleId as string,
+      isDefault: false,
+    },
+  })
+  await prisma.invites.update({
+    where: {
+      id: invitedId,
+    },
+    data: {
+      joined: true,
+    },
+  })
+  return linkUserWorkspace
+}
+
+export async function rejectWorkspaceInvitation({
+  invitedId,
+}: {
+  invitedId: string
+}) {
+  await prisma.invites.update({
+    where: {
+      id: invitedId,
+    },
+    data: {
+      joined: false,
+    },
+  })
+  return
 }
