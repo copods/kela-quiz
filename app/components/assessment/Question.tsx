@@ -59,7 +59,8 @@ const Question = () => {
               </div>
               <div className="ql-editor h-full flex-1 overflow-auto border-gray-200 bg-white p-0">
                 <div
-                  className="font-normal"
+                  onSelect={() => false}
+                  className="disable-text-selection font-normal"
                   dangerouslySetInnerHTML={{
                     __html: question?.question?.question,
                   }}
@@ -141,6 +142,7 @@ const Question = () => {
                     return (
                       <div key={answer.id} className="border-b px-5 py-7">
                         <textarea
+                          onPaste={(e) => e.preventDefault()}
                           name="answer"
                           id=""
                           value={userAnswer[index]}
