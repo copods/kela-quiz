@@ -1,4 +1,4 @@
-import { logIn, toastConstants } from '~/constants/common.constants'
+import { logIn, settings, toastConstants } from '~/constants/common.constants'
 
 const firstName = 'John'
 const lastName = 'Doe'
@@ -18,7 +18,7 @@ describe('Test for Sign Up page', () => {
       .type(workspaceName)
       .should('have.value', workspaceName)
     cy.get('#add-button').should('have.text', logIn.signUp).click()
-    cy.get('.Toastify__toast').should(
+    cy.get('#firstName-error').should(
       'have.text',
       toastConstants.firstNameRequired
     )
@@ -40,7 +40,7 @@ describe('Test for Sign Up page', () => {
       .type(workspaceName)
       .should('have.value', workspaceName)
     cy.get('#add-button').should('have.text', logIn.signUp).click()
-    cy.get('.Toastify__toast').should(
+    cy.get('#lastName-error').should(
       'have.text',
       toastConstants.lastNameRequired
     )
@@ -62,7 +62,7 @@ describe('Test for Sign Up page', () => {
       .type(workspaceName)
       .should('have.value', workspaceName)
     cy.get('#add-button').should('have.text', logIn.signUp).click()
-    cy.get('.Toastify__toast').should('have.text', toastConstants.emailRequired)
+    cy.get('#email-error').should('have.text', toastConstants.emailRequired)
   })
   it('check toster showing a error if try to submit without filling workspace name input field', () => {
     cy.get('#firstName')
@@ -82,10 +82,39 @@ describe('Test for Sign Up page', () => {
       .should('have.value', memberEmail)
 
     cy.get('#add-button').should('have.text', logIn.signUp).click()
-    cy.get('.Toastify__toast').should(
+    cy.get('#workspace-error').should(
       'have.text',
       toastConstants.workspaceNameIsRequired
     )
+  })
+  it('Checks if password and re-enter password input fields input values not matched then thowing a proper error', () => {
+    cy.get('#firstName')
+      .should('be.visible', { timeout: 60000 })
+      .clear()
+      .type(firstName)
+      .should('have.value', firstName)
+    cy.get('#lastName')
+      .should('be.visible', { timeout: 60000 })
+      .clear()
+      .type(lastName)
+      .should('have.value', lastName)
+    cy.get('#email')
+      .should('be.visible', { timeout: 60000 })
+      .clear()
+      .type(memberEmail)
+      .should('have.value', memberEmail)
+    cy.get('#workspace')
+      .should('be.visible', { timeout: 60000 })
+      .clear()
+      .type(workspaceName)
+      .should('have.value', workspaceName)
+    cy.get('#Password').should('be.visible').clear().type('newPassword')
+    cy.get('#confirmPassword')
+      .should('be.visible')
+      .clear()
+      .type('confirmPassword')
+    cy.get('#add-button').should('have.text', logIn.signUp).click()
+    cy.get('#Confirm-password-error').should('have.text', settings.passNotMatch)
   })
   it('signing up successfully', () => {
     cy.get('#firstName')
@@ -108,6 +137,8 @@ describe('Test for Sign Up page', () => {
       .clear()
       .type(workspaceName)
       .should('have.value', workspaceName)
+    cy.get('#Password').should('be.visible').clear().type('newPassword')
+    cy.get('#confirmPassword').should('be.visible').clear().type('newPassword')
     cy.get('#add-button').should('have.text', logIn.signUp).click()
     cy.get('.Toastify__toast', { timeout: 6000 }).should(
       'have.text',
@@ -135,6 +166,8 @@ describe('Test for Sign Up page', () => {
       .clear()
       .type(workspaceName)
       .should('have.value', workspaceName)
+    cy.get('#Password').should('be.visible').clear().type('newPassword')
+    cy.get('#confirmPassword').should('be.visible').clear().type('newPassword')
     cy.get('#add-button').should('have.text', logIn.signUp).click()
     cy.get('.Toastify__toast').should(
       'have.text',
