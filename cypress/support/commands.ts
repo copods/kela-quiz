@@ -43,7 +43,7 @@ function login() {
   if (!__sessionExist)
     cy.request({
       method: 'POST',
-      url: 'http://localhost:3000/sign-in?_data=routes%2Fsign-in',
+      url: '/sign-in?_data=routes%2Fsign-in',
       body: formData,
     }).then((resp) => {
       const { headers } = resp
