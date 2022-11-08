@@ -5,7 +5,7 @@ import DeletePopUp from '../DeletePopUp'
 import { useEffect, useState } from 'react'
 import { useSubmit } from '@remix-run/react'
 import { t } from 'i18next'
-import memberResendIcon from '~/../public/assets/resend-member-invitation.svg'
+// import memberResendIcon from '~/../public/assets/resend-member-invitation.svg'
 
 export default function MemberListItem({
   user,
@@ -29,17 +29,17 @@ export default function MemberListItem({
   const deleteUser = () => {
     submit({ action: 'delete', id: user.id }, { method: 'post' })
   }
-  const resendMail = () => {
-    if (!loggedInUser) {
-      let data = {
-        id: user.id,
-        action: 'resend',
-      }
-      submit(data, {
-        method: 'post',
-      })
-    }
-  }
+  // const resendMail = () => {
+  //   if (!loggedInUser) {
+  //     let data = {
+  //       id: user.id,
+  //       action: 'resend',
+  //     }
+  //     submit(data, {
+  //       method: 'post',
+  //     })
+  //   }
+  // }
   return (
     <div className="col-span-full grid grid-cols-10">
       <div className="memberRows col-span-full grid grid-cols-10 gap-3 border-t border-solid border-gray-200 px-6 py-4">
@@ -72,7 +72,7 @@ export default function MemberListItem({
               loggedInUser && 'cursor-not-allowed text-red-200'
             }`}
           />
-          <span
+          {/* <span
             tabIndex={0}
             role="button"
             onKeyUp={(e) => {
@@ -90,7 +90,7 @@ export default function MemberListItem({
               alt="reinvite"
               id="resend-member-invite"
             />
-          </span>
+          </span> */}
         </div>
         <DeletePopUp
           setOpen={setOpen}

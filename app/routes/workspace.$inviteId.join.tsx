@@ -31,22 +31,39 @@ type LoaderData = {
 export const loader: LoaderFunction = async ({ request, params }) => {
   const invitedMember = await getInvitedMemberById(params.inviteId as string)
 
-  if (invitedMember?.joined === true) {
-    return redirect(routes.signIn)
-  }
-  if (invitedMember?.joined === false) {
-    return redirect(routes.signUp)
-  }
   const user = await getUserId(request) //checking if user exist or not
-  // if (invitedMember?.email !== userId?.email) {
-  //   return redirect(routes.signUp)
-  // }
   if (user) {
     const userId = await getUserId(request)
     if (userId === invitedMember?.id) {
-      return null
+      return null //if user exist and and user nor reject or join the workspace
     } else {
-      redirect('/logout')
+      redirect('/logout') //if not then logout
+    }
+    if (!invitedMember && user) {
+      throw new Response('Not Found', { status: 404 }) //if invitedMember not exist or invalid invited if then redirect to sign-up
+    }
+    if (user && invitedMember?.joined === true) {
+      const userId = await getUserId(request)
+      if (userId === invitedMember?.id) {
+        return redirect(routes.signIn) // if user accept the workspace join invitation then redirect to sign-in
+      }
+      if (userId !== invitedMember?.id) {
+        return redirect('/logout') // if user not currently login then redirect to logout
+      }
+    }
+  }
+  if (!user) {
+    if (invitedMember && !user) {
+      return redirect(routes.signUp) //if invitedMember not exist or invalid invited if then redirect to sign-up
+    }
+    if (user && invitedMember?.joined === false) {
+      const userId = await getUserId(request)
+      if (userId === invitedMember?.id) {
+        return redirect(routes.signIn) // if user declined the workspace join invitation then redirect to sign-in if currently login
+      }
+      if (userId !== invitedMember?.id) {
+        return redirect('/logout') // if user declined the workspace join invitation then redirect to logout if currently logout
+      }
     }
   }
 
@@ -59,7 +76,7 @@ export const action: ActionFunction = async ({ request, params }) => {
     let join = null
 
     await joinWorkspace({
-      invitedId: params.inviteId as string,
+      invitedId: params.inviteId as string, //taking invited id from params
     })
       .then((res) => {
         join = json<ActionData>(

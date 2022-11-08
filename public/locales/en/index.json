@@ -63,7 +63,8 @@
     "inviting": "Inviting",
     "invite": "Invite",
     "join": "Join",
-    "joining": "Joining"
+    "joining": "Joining",
+    "joinedOn": "Joined On"
   },
   "sideNav": {
     "sideNavHeading": "Quiz",

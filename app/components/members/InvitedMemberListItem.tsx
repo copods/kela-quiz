@@ -1,4 +1,4 @@
-import { Icon } from '@iconify/react'
+// import { Icon } from '@iconify/react'
 import { useSubmit } from '@remix-run/react'
 import moment from 'moment'
 import { useEffect, useState } from 'react'
@@ -21,9 +21,9 @@ const InvitedMembersListItem = ({
     }
   }, [actionStatus])
   const submit = useSubmit()
-  const openPopUp = () => {
-    setOpen(!open)
-  }
+  // const openPopUp = () => {
+  //   setOpen(!open)
+  // }
   const { t } = useTranslation()
   const deleteUser = () => {
     submit(
@@ -56,8 +56,8 @@ const InvitedMembersListItem = ({
         </div>
         <div className="break-word col-span-2 overflow-ellipsis pl-4">
           <span className="text-base text-gray-700">
-            {invitedMembers.invitedBy.firstName}{' '}
-            {invitedMembers.invitedBy.lastName}
+            {invitedMembers?.invitedBy?.firstName}{' '}
+            {invitedMembers?.invitedBy?.lastName}
           </span>
         </div>
         <div className="col-span-2 overflow-ellipsis break-all pl-4">
@@ -66,7 +66,7 @@ const InvitedMembersListItem = ({
           </span>
         </div>
         <div className="col-span-1 flex justify-start gap-4 pl-4">
-          <Icon
+          {/* <Icon
             id="delete-button"
             tabIndex={0}
             onClick={openPopUp}
@@ -75,7 +75,7 @@ const InvitedMembersListItem = ({
             }}
             icon="ic:outline-delete-outline"
             className="h-6 w-6 cursor-pointer text-red-500 "
-          />
+          /> */}
           <span
             tabIndex={0}
             role="button"

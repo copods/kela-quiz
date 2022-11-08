@@ -347,6 +347,7 @@ export async function updatePassword(
 }
 
 export async function joinWorkspace({ invitedId }: { invitedId: string }) {
+  // user will join the workspace for he/she invited
   const getUserInvite = await prisma.invites.findUnique({
     where: {
       id: invitedId,
@@ -355,7 +356,7 @@ export async function joinWorkspace({ invitedId }: { invitedId: string }) {
       email: true,
       invitedForWorkspace: {
         select: {
-          name: true,
+          id: true,
         },
       },
       roleId: true,
@@ -370,14 +371,16 @@ export async function joinWorkspace({ invitedId }: { invitedId: string }) {
     },
   })
   const linkUserWorkspace = await prisma.userWorkspace.create({
+    //create user's another UserWorkspace which is linked with invited workspace
     data: {
       userId: user?.id as string,
-      workspaceId: getUserInvite?.invitedForWorkspace?.name as string,
+      workspaceId: getUserInvite?.invitedForWorkspace?.id as string,
       roleId: getUserInvite?.roleId as string,
       isDefault: false,
     },
   })
   await prisma.invites.update({
+    //after joining the workspace it will update the status as joined true
     where: {
       id: invitedId,
     },
@@ -389,11 +392,13 @@ export async function joinWorkspace({ invitedId }: { invitedId: string }) {
 }
 
 export async function rejectWorkspaceInvitation({
+  //if user rejected the workspace invited this function is called
   invitedId,
 }: {
   invitedId: string
 }) {
   await prisma.invites.update({
+    // update the status if rejecting the workspace invitation
     where: {
       id: invitedId,
     },
