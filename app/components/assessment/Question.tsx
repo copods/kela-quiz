@@ -9,7 +9,6 @@ import CandidateQuestionStepper from './CandidateQuestionStepper'
 const Question = () => {
   const { question } = useLoaderData()
   const questionType = question?.question?.questionType?.value
-  // const [test, setTest] = useState(question?.question?.options)
   const [userAnswer, setUserAnswer] = useState(
     questionType === QuestionTypes.singleChoice
       ? question.selectedOptions[0]?.id
@@ -17,28 +16,26 @@ const Question = () => {
       ? question?.answers
       : question.selectedOptions.flatMap((option: any) => option.id)
   )
-  useEffect(() => {}, [userAnswer])
 
   useEffect(() => {
     const handleContextmenu = (e: any) => {
       e.preventDefault()
     }
-    function ctrlShiftKey(e: any, keyCode: any) {
+    function ctrlShiftKey(e: any, code: any) {
       return (
-        (e.ctrlKey && e.shiftKey && e.keyCode) ||
-        (e.metaKey && e.shiftKey && e.keyCode) === keyCode.charCodeAt(0)
+        (e.ctrlKey && e.shiftKey && e.code) ||
+        (e.metaKey && e.shiftKey && e.code) === code
       )
     }
 
     document.onkeydown = (e) => {
       // Disable F12, Ctrl + Shift + I, Ctrl + Shift + J, Ctrl + U
-      console.log(e)
       if (
-        e.keyCode === 123 ||
-        ctrlShiftKey(e, 'I') ||
-        ctrlShiftKey(e, 'J') ||
-        ctrlShiftKey(e, 'C') ||
-        (e.ctrlKey && e.keyCode === 'U'.charCodeAt(0))
+        e.code === 'F12' ||
+        ctrlShiftKey(e, 'KeyI') ||
+        ctrlShiftKey(e, 'KeyJ') ||
+        ctrlShiftKey(e, 'KeyC') ||
+        ctrlShiftKey(e, 'KeyK')
       )
         return false
     }
@@ -69,7 +66,7 @@ const Question = () => {
       })
     }
   }
-  useEffect(() => {}, [])
+
   return (
     <div className="flex h-screen flex-col">
       <CandidateQuestionHeader />
@@ -88,7 +85,9 @@ const Question = () => {
               </div>
               <div className="ql-editor h-full flex-1 overflow-auto border-gray-200 bg-white p-0">
                 <div
-                  onSelect={() => false}
+                  onSelect={(e) => e.preventDefault()}
+                  onCopy={(e) => e.preventDefault()}
+                  onCut={(e) => e.preventDefault()}
                   className="disable-text-selection font-normal"
                   dangerouslySetInnerHTML={{
                     __html: question?.question?.question,
@@ -173,7 +172,7 @@ const Question = () => {
                         <textarea
                           onPaste={(e) => e.preventDefault()}
                           name="answer"
-                          id=""
+                          id={answer.id}
                           value={userAnswer[index]}
                           rows={4}
                           onChange={() => onChangeHandle(event, index)}
