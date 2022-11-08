@@ -195,15 +195,6 @@ export async function createNewUser({
     role?.name || 'NA'
   )
 }
-export async function createPasswordOfUser(id: string, password: string) {
-  const hashedPassword = await bcrypt.hash(password, 10)
-  return await prisma.password.create({
-    data: {
-      hash: hashedPassword,
-      userId: id,
-    },
-  })
-}
 
 export async function reinviteMember({ id }: { id: string }) {
   const user = await prisma.user.findUnique({ where: { id } })
