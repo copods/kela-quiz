@@ -24,6 +24,10 @@ const SignUp = ({ error }: { error?: string }) => {
       if (signUpActionData.resp?.status === 200) {
         toast.success(t(signUpActionData.resp?.title))
         navigate(routes.signIn)
+      } else if (signUpActionData.resp?.status === 400) {
+        toast.error(t(signUpActionData.errors?.title), {
+          toastId: signUpActionData.errors?.title,
+        })
       }
     }
   }, [signUpActionData, navigate, t])
