@@ -28,7 +28,7 @@ const SectionCard = ({
   err?: string
   actionStatusData?: string
   setDeleted?: (e: boolean) => void
-  setIsDelete?: (e: boolean) => void | undefined
+  setIsDelete: (e: boolean) => void
   isDelete: boolean
 }) => {
   const { t } = useTranslation()
@@ -36,14 +36,6 @@ const SectionCard = ({
   const deleteSection = () => {
     submit({ deleteSection: 'sectionDelete', id: id }, { method: 'post' })
   }
-  // useEffect(() => {
-  //   if (
-  //     actionStatusData == statusCheck.deletedSuccess &&
-  //     setIsDelete !== undefined
-  //   ) {
-  //     // setIsDelete(false)
-  //   }
-  // }, [actionStatusData])
   // shift + alt + Tab combination key for get back focus to selected section card
   useEffect(() => {
     window.addEventListener('keydown', function (event) {
@@ -83,9 +75,9 @@ const SectionCard = ({
                     <button
                       tabIndex={0}
                       data-cy="delete-section"
-                      className="text-gray-primary undefined inline-flex w-36 items-center justify-start rounded-md rounded-md border border-primary bg-white py-2.5 px-5 px-2 py-2 text-xs font-medium text-primary shadow-sm transition delay-75 ease-in-out hover:bg-gray-100"
+                      className="text-gray-primary undefined inline-flex w-36 items-center justify-start rounded-md  border border-primary bg-white px-2 py-2 text-xs font-medium text-primary shadow-sm transition delay-75 ease-in-out hover:bg-gray-100"
                       onClick={() => {
-                        if (setIsDelete !== undefined) setIsDelete(true)
+                        setIsDelete(true)
                       }}
                       name="deleteSection"
                       title={t('commonConstants.delete')}

@@ -40,6 +40,7 @@ export const commonConstants = {
   totalQuestion: 'Total Questions',
   verify: 'Verify',
   email: 'Email',
+  createPassword: 'Create Password',
 }
 export const sideNav = {
   sideNavHeading: 'Quiz',
@@ -48,7 +49,7 @@ export const candidateHeader = {
   headerHeading: 'Quiz',
 }
 export const members = {
-  addMember: 'Add Member',
+  inviteMembers: 'Invite Member',
   firstName: 'First Name',
   lastName: ' Last Name',
   name: 'Name',
@@ -126,6 +127,7 @@ export const testsConstants = {
   candidateInvited: 'Candidates Invited',
   writeDescriptionOfTest: 'Write Description of Test',
   testName: 'test',
+  reinvited: 'Candidate Invited Successfully',
 }
 export const componentGlobalConstants = {
   totalCounts: 'Total Counts',
@@ -166,6 +168,8 @@ export const statusCheck = {
   correctOtp: 'Please enter correct OTP',
   resendPasswordSuccess: 'New password has been sent to email successfully',
   resendPasswordError: 'Account not found. Please enter valid email',
+  enteredReenteredPassword: 'Entered and Re-Entered Password should be equal.',
+  userNotFound: 'User Not Found',
 }
 export const resultConstants = {
   order: 'Order',
@@ -211,7 +215,7 @@ export const candidateExamConstants = {
   assessmentDetails: 'Assessment Details',
   assessmentTests: 'Assessment Tests',
   assessmentEnd: 'Assessment Ended',
-  endAssesment: 'End Assesment SVG',
+  endAssessment: 'End Assessment SVG',
   wrongLink: 'Wrong Link',
   minutes: 'Mins',
   description: 'Description',
@@ -222,7 +226,7 @@ export const candidateExamConstants = {
   nextSection: 'Next Section',
   candidateAcceptance:
     'I understand that once I begin the assessment I cannot leave and  return to this assessment at a later time.',
-  beginAssesment: 'Begin Assesment',
+  beginAssessment: 'Begin Assessment',
   instructions: 'Instructions',
   startSection: 'Start Now',
   candidateLogo: 'Candidate Logo',
@@ -237,7 +241,7 @@ export const candidateExamConstants = {
   candidateInsWelcome: 'Welcome',
 }
 export const cypress = {
-  email: 'careers@copods.co',
+  email: 'copods.demo.sendgrid@gmail.com',
   password: 'kQuiz@copods',
   step1: 'Step 1',
   step2: 'Step 2',
@@ -250,7 +254,7 @@ export const cypress = {
   back: 'Back',
   duplicateTitle: 'Duplicate Title',
   saveAndAddMore: 'Save & Add More',
-  addMember: 'Add Member',
+  addMember: 'Invite Member',
   name: 'Name',
   description: 'Description',
   totalTime: 'Total Time',
@@ -262,6 +266,7 @@ export const cypress = {
 }
 export const toastConstants = {
   addTest: 'Enter Name to add test',
+  resendMemberInvitation: 'Invitation Sent Successfully..!',
   enterDescription: 'Enter description to add test',
   addSection: 'Add sections to add test',
   enterQuestion: 'Enter the Question',
@@ -274,6 +279,7 @@ export const toastConstants = {
   memberAdded: 'Member Added Successfully..!',
   memberAlreadyExist: 'Member with this email id already exists!',
   signUpSuccessfull: 'Sign Up successfully',
+  workspaceNameIsRequired: 'Workspace name is required',
 }
 export const otpConstants = {
   header: 'OTP Verification',
@@ -282,4 +288,19 @@ export const otpConstants = {
   didntGetCode: "Didn't get a code",
   resendCodeIn: 'Resend code in',
   otp: 'OTP',
+}
+export const settings = {
+  settings: 'Settings',
+  clickToChange: 'Click to change',
+  resetPas: 'Reset Password',
+  passNotMatch: 'Password do not match',
+  enterNewPass: 'Enter New Password',
+  reEnterPass: 'Re-Enter Password',
+  enterOldPassword: 'Enter Old Password',
+  minPasswordLimit: 'Password should have minimum 8 characters',
+  passShouldNotBeSame: 'Current Password and New Password should not be same',
+}
+export const tabs = {
+  general: 'General',
+  workspace: 'Workspaces',
 }

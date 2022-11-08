@@ -1,5 +1,7 @@
-import { useLoaderData } from '@remix-run/react'
+import { useActionData, useLoaderData } from '@remix-run/react'
+import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
 import type { Candidate, CandidateResult, User } from '~/interface/Interface'
 import AttendedCandidateListItem from './AttendedCandidateListItem'
 
@@ -7,6 +9,7 @@ const CandidatesList = () => {
   const { t } = useTranslation()
 
   const { candidatesOfTest, params } = useLoaderData()
+  const actionData = useActionData()
   const testData = candidatesOfTest?.candidateTest
 
   const getCandidateResult = () => {
@@ -27,11 +30,23 @@ const CandidatesList = () => {
     }
     return resultData
   }
-
+  useEffect(() => {
+    if (
+      actionData?.candidateInviteStatus ===
+      t('candidateExamConstants.candidateTestCreated')
+    ) {
+      toast.success(t('testsConstants.reinvited'))
+    }
+    if (
+      actionData?.candidateInviteStatus === t('candidateExamConstants.endTest')
+    ) {
+      toast.error(t('testsConstants.testEnded'))
+    }
+  }, [actionData, t])
   return (
     <div className="bg-gray-50 pb-4">
       <div className="bg-tableHeader rounded-lg border border-solid border-gray-200 shadow-base">
-        <div className="grid grid-cols-12 gap-3 py-4 px-12">
+        <div className="grid grid-cols-12 gap-1 py-4 px-8">
           <span className="col-span-1 text-sm font-semibold text-gray-500">
             {t('commonConstants.srNo')}
           </span>
@@ -68,7 +83,6 @@ const CandidatesList = () => {
                 }
               }
             }
-
             return (
               <div
                 key={candidate.id}
@@ -76,6 +90,7 @@ const CandidatesList = () => {
               >
                 <AttendedCandidateListItem
                   id={candidate?.id}
+                  candidateId={candidate?.candidateId}
                   testId={params.testId}
                   candidateResultId={candidate?.candidateResult[0]?.id}
                   email={candidate?.candidate?.email}
@@ -92,6 +107,7 @@ const CandidatesList = () => {
                   result={getCandidatePercent() as number}
                   review={candidate?.isQualified}
                   index={i + 1}
+                  testName={candidate?.candidate?.createdBy?.firstName}
                   endAt={candidate?.endAt}
                 />
               </div>

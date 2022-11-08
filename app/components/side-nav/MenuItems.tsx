@@ -11,7 +11,7 @@ function MenuItems({ iconClass, itemName, itemRoute, id }: tabProps) {
   // const resolvedPath = useResolvedPath(itemRoute) // to get resolved path which would match with current location
   const location = useLocation() // to get current location
   return (
-    <div id="menuItem">
+    <div className="menuItem">
       <NavLink
         tabIndex={0}
         to={itemRoute}

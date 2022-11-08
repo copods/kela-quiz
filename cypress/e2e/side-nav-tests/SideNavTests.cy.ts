@@ -1,8 +1,10 @@
 import {
+  commonConstants,
   members,
   routeFiles,
   testsConstants,
 } from '~/constants/common.constants'
+import { routes } from '~/constants/route.constants'
 describe('Test for Logout, SideNav', () => {
   beforeEach('sign-in', () => {
     cy.visit('/sign-in')
@@ -20,23 +22,51 @@ describe('Test for Logout, SideNav', () => {
     cy.location('pathname').should('include', '/members')
   })
   it('click all links with loop', () => {
-    // result page
-    cy.get('a').find('#group-by-tests').should('have.text', 'Results').click()
-    cy.location('pathname').should('eq', '/results/groupByTests')
+    const menu = cy.get('#sideNavMenu')
+    const menuItems = menu.find('.menuItem')
 
-    // tests page
-    cy.get('a').find('#tests').should('have.text', testsConstants.tests).click()
-    cy.location('pathname').should('eq', '/tests')
+    menuItems.should((item) => {
+      expect(item).to.have.length(5)
+    })
 
-    // sections page
-    cy.get('a')
-      .find('#sections')
-      .should('have.text', routeFiles.sections)
+    menuItems.each((item) => {
+      expect([
+        commonConstants.results,
+        testsConstants.tests,
+        routeFiles.sections,
+        members.members,
+        commonConstants.settings,
+      ]).to.include(item.text())
+
+      // @TODO:
+      // Need to evalute this, we can use cy.wrap() but it is failling during iteration
+      // Will look into this.
+      item.click()
+
+      cy.location('pathname').should((item) => {
+        expect([
+          routes.resultGroupTest,
+          routes.tests,
+          routes.sections,
+          routes.members,
+          routes.settings,
+        ]).to.include(item)
+      })
+    })
+  })
+
+  it('should render drop down to switch workspace', () => {
+    cy.get('#dropdown').should('be.visible')
+  })
+
+  it('should render dropdown for workspace without any workspace', () => {
+    const dropdown = cy.get('#dropdown')
+    dropdown
       .click()
-    cy.location('pathname').should('include', '/sections')
-
-    // members page
-    cy.get('a').find('#members').should('have.text', members.members).click()
-    cy.location('pathname').should('eq', '/members')
+      .find('ul')
+      .find('li')
+      .should((item) => {
+        expect(item.length).to.be.greaterThan(1)
+      })
   })
 })

@@ -8,17 +8,31 @@ import AdminLayout from '~/components/layouts/AdminLayout'
 import AddTestComponent from '~/components/tests/AddTest'
 import { getAllSections } from '~/models/sections.server'
 import { createTest } from '~/models/tests.server'
-import { getUserId, requireUserId } from '~/session.server'
+import { getUserId, getWorkspaceId, requireUserId } from '~/session.server'
 import { routes } from '~/constants/route.constants'
 import { useTranslation } from 'react-i18next'
+import { getUserWorkspaces } from '~/models/workspace.server'
 
 type LoaderData = {
   sections: Awaited<ReturnType<typeof getAllSections>>
   status: string
+  workspaces: Awaited<ReturnType<typeof getUserWorkspaces>>
+  currentWorkspaceId: Awaited<ReturnType<typeof getWorkspaceId>>
 }
-
+export type ActionData = {
+  errors?: {
+    title: string
+    status: number
+  }
+  resp?: {
+    title: string
+    status: number
+  }
+}
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await getUserId(request)
+  const currentWorkspaceId = await getWorkspaceId(request)
+  const workspaces = await getUserWorkspaces(userId as string)
   if (!userId) return redirect(routes.signIn)
 
   const filter = Object.fromEntries(new URL(request.url).searchParams.entries())
@@ -30,7 +44,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 
   let sections: Array<Section> = []
   let status: string = ''
-  await getAllSections(filter)
+  await getAllSections(filter, currentWorkspaceId as string)
     .then((res) => {
       sections = res as Section[]
       status = 'statusCheck.success'
@@ -38,12 +52,14 @@ export const loader: LoaderFunction = async ({ request }) => {
     .catch((err) => {
       status = err
     })
-  return json<LoaderData>({ sections, status })
+  return json<LoaderData>({ sections, status, workspaces, currentWorkspaceId })
 }
 
 export const action: ActionFunction = async ({ request }) => {
   const createdById = await requireUserId(request)
+  const workspaceId = await getWorkspaceId(request)
   const formData = await request.formData()
+
   const data:
     | {
         name: string
@@ -57,34 +73,49 @@ export const action: ActionFunction = async ({ request }) => {
     | any = formData.get('data')
 
   let test = null
-  await createTest(createdById, JSON.parse(data))
+  await createTest(createdById, workspaceId as string, JSON.parse(data))
     .then((res) => {
-      test = res
+      test = json<ActionData>(
+        { resp: { title: 'statusCheck.testAddedSuccessFully', status: 200 } },
+        { status: 200 }
+      )
     })
     .catch((err) => {
-      test = err
+      let title = 'statusCheck.commonError'
+      if (err.code === 'P2002') {
+        title = 'statusCheck.testAlreadyExist'
+      }
+      test = json<ActionData>(
+        {
+          errors: {
+            title,
+            status: 400,
+          },
+        },
+        { status: 400 }
+      )
     })
-  return json<any>({ test }, { status: 202 })
+  return test
 }
 
 const AddTest = () => {
   const { t } = useTranslation()
-
   const testData = useLoaderData() as unknown as LoaderData
-  const actionData = useActionData() as any
+  const actionData = useActionData() as ActionData
   const navigate = useNavigate()
   useEffect(() => {
-    if (actionData?.test.id) {
-      toast.success(t('statusCheck.testAddedSuccessFully'))
-      navigate(routes.tests)
-    } else if (actionData) {
-      if (actionData?.test.code == 'P2002') {
-        toast.error(t('statusCheck.testAlreadyExist'))
-      } else {
-        toast.error(t('statusCheck.commonError'))
+    if (actionData) {
+      if (actionData.resp?.status === 200) {
+        navigate(routes.tests)
+        toast.success(t(actionData.resp?.title))
+      } else if (actionData.errors?.status === 400) {
+        toast.error(t(actionData.errors?.title), {
+          toastId: actionData.errors?.title,
+        })
       }
     }
   }, [actionData, navigate, t])
+
   if (t(testData.status) != t('statusCheck.success')) {
     toast.success(t('statusCheck.commonError'))
   }

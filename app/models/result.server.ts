@@ -81,10 +81,17 @@ export async function getResultsOfCandidatesByTestId({
   })
 }
 
-export async function getAllCandidatesOfTest({ id }: { id: string }) {
+export async function getAllCandidatesOfTest({
+  id,
+  workspaceId,
+}: {
+  id: string
+  workspaceId: string
+}) {
   return prisma.test.findFirst({
     where: {
       id,
+      workspaceId,
     },
     include: {
       candidateTest: {
@@ -192,16 +199,19 @@ export async function updateCandidateStatus({
   })
 }
 
-export async function getAllCandidateTests(obj: object) {
-  const filter = obj ? obj : {}
+export async function getAllCandidateTests(
+  filterData: string,
+  workspaceId: string
+) {
+  const filter = filterData ? filterData : {}
   const res: Array<Test> = await prisma.test.findMany({
     ...filter,
+    where: { workspaceId },
     include: {
       _count: {
         select: {
           candidateResult: true,
           candidateTest: true,
-          // sections: true,
         },
       },
       candidateTest: {
@@ -215,7 +225,10 @@ export async function getAllCandidateTests(obj: object) {
   if (res) {
     res.forEach(
       (
-        test: Test & { count?: number; candidateTest?: Array<CandidateTest> }
+        test: Test & {
+          count?: number
+          candidateTest?: Array<CandidateTest>
+        }
       ) => {
         let count = 0
         test?.candidateTest?.forEach((candidateTest: CandidateTest) => {
@@ -227,5 +240,6 @@ export async function getAllCandidateTests(obj: object) {
       }
     )
   }
+
   return res
 }

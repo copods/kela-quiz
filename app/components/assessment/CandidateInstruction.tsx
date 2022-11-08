@@ -1,7 +1,6 @@
 import { useLoaderData, useSubmit } from '@remix-run/react'
 import type { SectionInTest, TestSection } from '~/interface/Interface'
 import Button from '../form/Button'
-
 import contactSupport from '~/../public/assets/contactSupport.svg'
 import checkIcon from '~/../public/assets/checkIcon.svg'
 import Header from './Header'
@@ -128,8 +127,8 @@ const CandidateInstruction = () => {
               id="start"
               className="w-356 py-3"
               varient="primary-solid"
-              title={t('candidateExamConstants.beginAssesment')}
-              buttonText={t('candidateExamConstants.beginAssesment')}
+              title={t('candidateExamConstants.beginAssessment')}
+              buttonText={t('candidateExamConstants.beginAssessment')}
               onClick={startTestForCandidate}
               aria-label="start"
             />

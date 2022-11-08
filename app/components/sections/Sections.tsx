@@ -18,7 +18,7 @@ const SectionLink = ({
   filter: string
   setSelectedSection: (e: string) => void
 }) => {
-  const path = `/sections/${section.id}`
+  const path = `/sections/${section.id}${filter}`
   const [isDelete, setIsDelete] = useState(false)
   const location = useLocation() // to get current location
   const resolvedPath = useResolvedPath(path) // to get resolved path which would match with current location
@@ -36,16 +36,6 @@ const SectionLink = ({
       }, 500)
     }
   }, [deleted])
-  useEffect(() => {
-    if (isDelete === false && deleted === false) {
-      setTimeout(() => {
-        const menuButton = document.querySelector(
-          `.${section?.id}`
-        ) as HTMLElement
-        menuButton?.focus()
-      }, 100)
-    }
-  }, [isDelete, deleted, section.id])
   return (
     <div
       onClick={() => {
@@ -63,7 +53,8 @@ const SectionLink = ({
         if (e.key === 'Tab' && e.altKey) {
           window.location.href = '#section-search'
           // alt + Tab combination key for moving focus to section detail
-        } else if (e.key === 'Enter') setSelectedSection(section.id)
+        } else if (e.key === 'Enter') navigate(path)
+        setSelectedSection(section.id)
       }}
     >
       <SectionCard

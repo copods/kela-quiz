@@ -1,5 +1,10 @@
 import AdminLayout from '~/components/layouts/AdminLayout'
-import { getUserId } from '~/session.server'
+import {
+  getUserId,
+  getWorkspaceId,
+  requireUserId,
+  requireWorkspaceId,
+} from '~/session.server'
 import { redirect } from '@remix-run/node'
 import type { LoaderFunction, ActionFunction } from '@remix-run/node'
 import MembersList from '~/components/members/MembersList'
@@ -10,12 +15,15 @@ import {
   deleteUserById,
   getAllRoles,
   getAllUsers,
+  reinviteMember,
 } from '~/models/user.server'
 import MembersHeader from '~/components/members/MembersHeader'
 import { toast } from 'react-toastify'
 import { useEffect, useState } from 'react'
 import { routes } from '~/constants/route.constants'
 import { useTranslation } from 'react-i18next'
+import { getUserWorkspaces } from '~/models/workspace.server'
+import { actions } from '~/constants/action.constants'
 
 export type ActionData = {
   errors?: {
@@ -31,29 +39,39 @@ type LoaderData = {
   users: Awaited<ReturnType<typeof getAllUsers>>
   userId: Awaited<ReturnType<typeof getUserId>>
   roles: Awaited<ReturnType<typeof getAllRoles>>
+  workspaces: Awaited<ReturnType<typeof getUserWorkspaces>>
+  currentWorkspaceId: Awaited<ReturnType<typeof getWorkspaceId>>
 }
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await getUserId(request)
+  const currentWorkspaceId = await getWorkspaceId(request)
+  const workspaces = await getUserWorkspaces(userId as string)
   const roles = await getAllRoles()
   if (!userId) return redirect(routes.signIn)
-  const users = await getAllUsers()
-  return json<LoaderData>({ users, roles, userId })
+  const users = await getAllUsers({ currentWorkspaceId })
+  return json<LoaderData>({
+    users,
+    roles,
+    userId,
+    workspaces,
+    currentWorkspaceId,
+  })
 }
 
 export const action: ActionFunction = async ({ request }) => {
+  const userId = await requireUserId(request) //fetching id of user who's creating this users
+  const invitedByWorkspaceId = await requireWorkspaceId(request)
   const formData = await request.formData()
-  const action = JSON.parse(formData.get('addMember') as string)
-    ? JSON.parse(formData.get('addMember') as string)
-    : formData.get('deleteMember')
-
-  if (action.action === 'add') {
+  const action = await formData.get('action')
+  if (action === actions.addMember) {
     const firstName = formData.get('firstName')
     const lastName = formData.get('lastName')
     const email = formData.get('email')
     const roleId = formData.get('roleId')
+    const defaultWorkspaceName = formData.get('workspace')
+
     // eslint-disable-next-line no-useless-escape
     const emailFilter = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
-
     if (typeof firstName !== 'string' || firstName.length === 0) {
       return json<ActionData>(
         { errors: { title: 'toastConstants.firstNameRequired', status: 400 } },
@@ -63,6 +81,20 @@ export const action: ActionFunction = async ({ request }) => {
     if (typeof lastName !== 'string' || lastName.length === 0) {
       return json<ActionData>(
         { errors: { title: 'toastConstants.lastNameRequired', status: 400 } },
+        { status: 400 }
+      )
+    }
+    if (
+      typeof defaultWorkspaceName !== 'string' ||
+      defaultWorkspaceName.length === 0
+    ) {
+      return json<ActionData>(
+        {
+          errors: {
+            title: 'toastConstants.workspaceNameIsRequired',
+            status: 400,
+          },
+        },
         { status: 400 }
       )
     }
@@ -87,7 +119,15 @@ export const action: ActionFunction = async ({ request }) => {
 
     let addHandle = null
 
-    await createNewUser({ firstName, lastName, email, roleId })
+    await createNewUser({
+      firstName,
+      lastName,
+      email,
+      createdById: userId,
+      roleId,
+      defaultWorkspaceName,
+      invitedByWorkspaceId,
+    })
       .then((res) => {
         addHandle = json<ActionData>(
           {
@@ -114,10 +154,40 @@ export const action: ActionFunction = async ({ request }) => {
           { status: 400 }
         )
       })
-
     return addHandle
   }
-  if (action === 'delete') {
+  if (action === actions.resendInviteMember) {
+    const id = formData.get('id')
+    let resendHandle = null
+    await reinviteMember({
+      id: id as string,
+    })
+      .then(() => {
+        resendHandle = json<ActionData>(
+          {
+            resp: {
+              title: 'toastConstants.invitationSent',
+              status: 200,
+            },
+          },
+          { status: 200 }
+        )
+      })
+      .catch((err) => {
+        let title = 'statusCheck.commonError'
+        resendHandle = json<ActionData>(
+          {
+            errors: {
+              title,
+              status: 400,
+            },
+          },
+          { status: 400 }
+        )
+      })
+    return resendHandle
+  }
+  if (action === actions.deleteMember) {
     if (typeof formData.get('id') !== 'string') {
       return json<ActionData>(
         { errors: { title: 'statusCheck.descIsReq', status: 400 } },
@@ -146,10 +216,10 @@ export const action: ActionFunction = async ({ request }) => {
 
     return deleteHandle
   }
+  return null
 }
 const Members = () => {
   const { t } = useTranslation()
-
   const membersActionData = useActionData() as ActionData
   const [actionStatus, setActionStatus] = useState<boolean>(false)
   useEffect(() => {
@@ -165,7 +235,6 @@ const Members = () => {
       }
     }
   }, [membersActionData, t])
-
   return (
     <AdminLayout>
       <div className="flex flex-col gap-6 p-1">

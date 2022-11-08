@@ -1,6 +1,8 @@
 import { Menu, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
+import { t } from 'i18next'
 import { Fragment, useEffect } from 'react'
+import resendTestLink from '~/../public/assets/resend-test-invitation.svg'
 
 const TestListMenuItem = ({
   menuIcon,
@@ -9,13 +11,15 @@ const TestListMenuItem = ({
   menuListIcon,
   menuListText,
   id,
+  resendInvite,
 }: {
   menuIcon: string
   onItemClick: (e: boolean) => void
   open: boolean
-  menuListIcon: string
+  menuListIcon?: string
   menuListText: string
   id: string
+  resendInvite?: () => void
 }) => {
   useEffect(() => {
     if (open === false) {
@@ -27,7 +31,7 @@ const TestListMenuItem = ({
   }, [open, id])
   return (
     <>
-      <Menu as="div" className="relative">
+      <Menu as="div" className="relative mt-2">
         <Menu.Button className={id}>
           <Icon
             className="text-2xl text-gray-600"
@@ -54,15 +58,27 @@ const TestListMenuItem = ({
                     className="deleteTest text-gray-primary undefined inline-flex w-36 items-center justify-start rounded-md rounded-md border border-primary bg-white py-2.5 px-5 px-2 py-2 text-xs font-medium text-primary shadow-sm transition delay-75 ease-in-out hover:bg-gray-100"
                     onClick={() => {
                       onItemClick(true)
+                      resendInvite && resendInvite()
                     }}
                   >
                     <>
-                      <Icon
-                        icon={'ic:outline-delete-outline'}
-                        className="mr-2 h-5 w-5
+                      {menuListIcon && (
+                        <Icon
+                          icon={menuListIcon}
+                          className="mr-2 h-5 w-5
                         text-red-500"
-                        aria-hidden="true"
-                      />
+                          aria-hidden="true"
+                        />
+                      )}
+                      {!menuListIcon && resendTestLink ? (
+                        <img
+                          src={resendTestLink}
+                          alt={t('resultConstants.resendTestInvite')}
+                          className="mr-1"
+                        />
+                      ) : (
+                        ''
+                      )}
                       {menuListText}
                     </>
                   </button>

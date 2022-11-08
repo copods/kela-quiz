@@ -21,7 +21,7 @@ function Login({ actionData, redirectTo }: LoginProps) {
       value: email,
       error: actionData?.errors?.email,
       errorId: 'email-error',
-      onChange: function (event: any) {
+      onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
         setEmail(event?.target.value)
       },
     },
@@ -34,7 +34,7 @@ function Login({ actionData, redirectTo }: LoginProps) {
       value: password,
       error: actionData?.errors?.password,
       errorId: 'password-error',
-      onChange: function (event: any) {
+      onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
         setPassword(event?.target.value)
       },
     },
@@ -47,7 +47,7 @@ function Login({ actionData, redirectTo }: LoginProps) {
     navigate(routes.forgotPassword)
   }
   return (
-    <div className="z-10 flex	min-h-480 w-full max-w-554 flex-col items-center justify-center rounded-2xl bg-white px-24 drop-shadow-xl">
+    <div className="z-10 flex	min-h-480 w-full max-w-554 flex-col items-center justify-center rounded-lg bg-white px-24 drop-shadow-xl">
       <div className="z-20 -mt-24 mb-6">
         <Logo height="64" width="64" />
       </div>

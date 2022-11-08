@@ -15,11 +15,12 @@ const deleteSection = `Aptitude - delete-Section`
 const memberFirstName = 'john'
 const memberLastName = 'dow'
 const memberEmail = 'johndoe@example.com'
+const workspaceName = 'Copods workspace'
 
 describe('smoke tests', () => {
   it('Successfully Login', () => {
     cy.visit('/sign-in')
-    cy.get('#email').clear().type('careers@copods.co')
+    cy.get('#email').clear().type('copods.demo.sendgrid@gmail.com')
     cy.get('#password').clear().type('kQuiz@copods')
     cy.findByRole('button').click()
     cy.url().should('includes', '/members')
@@ -40,12 +41,63 @@ describe('smoke tests', () => {
 
   it('Invalid Password Error Message', () => {
     cy.visit('/sign-in')
-    cy.get('#email').clear().type('careers@copods.co')
+    cy.get('#email').clear().type('copods.demo.sendgrid@gmail.com')
     cy.get('#password').clear().type('anuragpate')
     cy.findByRole('button').click()
     cy.get('#password-error').should('have.text', 'Password is invalid')
   })
 
+  it('should add workspace', () => {
+    cy.visit('/sign-in')
+    cy.get('input[name="email"]')
+      .clear()
+      .type(Cypress.env('email'))
+      .should('have.focus')
+      .should('have.value', Cypress.env('email'))
+    cy.get('input[name="password"]')
+      .clear()
+      .type(Cypress.env('password'))
+      .should('have.focus')
+      .should('have.value', Cypress.env('password'))
+    cy.get('[data-cy="submit"]').click()
+    cy.location('pathname').should('include', '/members')
+    let dropdown = cy.get('#dropdown')
+
+    dropdown
+      .click()
+      .find('ul')
+      .children()
+      .each((element, index) => {
+        if (index === 0) {
+          cy.wrap(element).click()
+          return
+        }
+      })
+
+    // Adding workspace name
+    const randomWorkSpaceName = `workSpace-${(Math.random() + 1)
+      .toString(36)
+      .substring(7)}`
+
+    cy.get('input[name="addWorkspace"]')
+      .type(randomWorkSpaceName)
+      .should('have.attr', 'value', randomWorkSpaceName)
+
+    cy.get('button[name="addWorkspace"]').click()
+
+    cy.wait(500)
+
+    // Check for workspace length
+    dropdown = cy.get('#dropdown')
+
+    dropdown
+      .click()
+      .find('ul')
+      .find('li')
+      .should((item) => {
+        expect(item.length).to.be.greaterThan(1)
+      })
+  })
   // creating test data
   it('Adding a first section', () => {
     cy.visit('/sign-in')
@@ -164,7 +216,8 @@ describe('smoke tests', () => {
       .click()
     cy.location('pathname').should('include', '/add-question')
     cy.get('h1').should('be.visible')
-    cy.get('#dropdown > button').click()
+
+    cy.get('#Question').get('#dropdown-container').click()
     cy.get('ul').within(() => {
       cy.get('li').within(() => {
         cy.get('div').then((el) => {
@@ -219,7 +272,7 @@ describe('smoke tests', () => {
       .click()
     cy.location('pathname').should('include', '/add-question')
     cy.get('h1').should('be.visible')
-    cy.get('#dropdown > button').click()
+    cy.get('#Question').get('#dropdown-container').click()
     cy.get('ul').within(() => {
       cy.get('li').within(() => {
         cy.get('div').then((el) => {
@@ -413,7 +466,7 @@ describe('smoke tests', () => {
     cy.visit('/sign-in')
     cy.get('#email')
       .clear()
-      .type('careers@copods.co')
+      .type('copods.demo.sendgrid@gmail.com')
       .should('have.value', cypress.email)
     cy.get('#password')
       .clear()
@@ -422,7 +475,7 @@ describe('smoke tests', () => {
     cy.findByRole('button').click()
     cy.get('a').find('#members').should('have.text', members.members).click()
     cy.get('#add-member').should('have.text', cypress.addMember).click()
-    cy.get('#add-pop-up-model').should('be.visible')
+    cy.get('#dialog-wrapper').should('be.visible')
     cy.get('input[name="firstName"]')
       .clear()
       .type(memberFirstName)
@@ -435,7 +488,11 @@ describe('smoke tests', () => {
       .clear()
       .type(memberEmail)
       .should('have.value', memberEmail)
-    cy.get('div').find('.dropdownButton').click()
+    cy.get('#workspace')
+      .clear()
+      .type(workspaceName)
+      .should('have.value', workspaceName)
+    cy.get('div').get('#add-member-modal').find('.dropdownButton').click()
     cy.get('ul').contains('Recruiter').click()
     cy.get('#add-button').click()
   })
@@ -455,9 +512,28 @@ describe('smoke tests', () => {
     cy.get('[data-cy="submit"]').click()
     cy.location('pathname').should('include', '/members')
     cy.get('a').find('#tests').should('have.text', testsConstants.tests).click()
-    cy.get('#invite-popup-open', { timeout: 10000 })
-      .should('be.visible')
-      .click()
+    cy.get('.test-table-list', { timeout: 6000 }).should('be.visible')
+    cy.get('.test-table-list').each(($el) => {
+      cy.wrap($el).within((el) => {
+        if (
+          el[0].getElementsByClassName('test-name-navigation')[0].innerHTML ===
+          test1
+        ) {
+          cy.get('.test-name-navigation').should('have.text', test1)
+        }
+      })
+    })
+    cy.get('.test-name-navigation')
+      .contains(test1)
+      .parent()
+      .parent()
+      .parent()
+      .within(() => {
+        cy.get('#invite-popup-open', { timeout: 10000 })
+          .should('be.visible')
+          .click()
+      })
+
     cy.get('input[name="email"]')
       .clear()
       .type('johndoe@example.com')

@@ -9,7 +9,29 @@ export interface InputFieldProps {
   value: string
   error?: string
   errorId: string
-  onChange: (e: React.ChangeEvent) => void
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+}
+export interface PasswordFieldProps {
+  name: string
+  label: string
+  placeholder: string
+  required: boolean
+  value: string
+  type: string
+  error?: string
+  errorId: string
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+}
+
+export interface DialogWrapperProps {
+  heading?: string
+  role?: string
+  ariaLabel?: string
+  children: JSX.Element
+  open: boolean
+  setOpen: (e: boolean) => void
+  header: boolean
+  tabIndex?: number
 }
 
 export interface ButtonProps {
@@ -74,6 +96,7 @@ export interface Section {
   updatedAt: Date
   deleted: boolean
   deletedAt: string
+  workspaceId: string
 }
 
 export interface User {
@@ -84,6 +107,7 @@ export interface User {
   roleId: string
   createdAt: Date
   updatedAt: Date
+  workspace: Array<Workspace>
 }
 
 export interface Role {
@@ -119,6 +143,7 @@ export interface Test {
   deleted: boolean
   deletedAt: string
   candidateTest?: Array<CandidateTest>
+  workspaceId: string
 }
 
 export interface SectionInTest {
@@ -223,6 +248,7 @@ export interface CandidateResult {
   isQualified: boolean
   createdAt: Date
   updatedAt: Date
+  workspaceId?: string
 }
 
 export enum sortByOrder {
@@ -244,7 +270,6 @@ export enum QuestionTypes {
   singleChoice = 'SINGLE_CHOICE',
   text = 'TEXT',
 }
-
 export interface SectionWiseResults {
   id: string
   sectionInCandidateTestId: string
@@ -259,4 +284,27 @@ export interface SectionWiseResults {
   updatedAt: Date
   section: SectionInCandidateTest
   test: Test
+}
+export interface Workspace {
+  id: string
+  name: string
+  createdBy: User
+  createdById: string
+  createdAt: Date
+  updatedAt: Date
+}
+export interface UserWorkspace {
+  id: String
+  workspace: Array<Workspace>
+  workspaceId: string
+  userId: string
+  role: Role
+  roleId: string
+  isDefault: Boolean
+  createdAt: Date
+  updatedAt: Date
+}
+export interface TabsComponent {
+  name: string
+  route: string
 }

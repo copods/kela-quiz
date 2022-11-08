@@ -1,13 +1,14 @@
 {
   "members": {
-    "addMember": "Add Member",
+    "inviteMember": "Invite Member",
     "firstName": "First Name",
     "lastName": " Last Name",
     "role": "Role",
     "members": "Members",
     "addedOn": "Added On",
     "action": "Action",
-    "member": "member"
+    "member": "member",
+    "memberResendIcon": "Reinvite Icon"
   },
   "commonConstants": {
     "name": "Name",
@@ -50,10 +51,16 @@
     "totalQuestion": "Total Questions",
     "srNo": "Sr.No",
     "verify": "Verify",
-    "proceed": "Proceed"
+    "proceed": "Proceed",
+    "defaultWorkspaceName": "Default Workspace Name",
+    "confirmPassword": "Confirm Password",
+    "createPassword": "Create Password"
   },
   "sideNav": {
-    "sideNavHeading": "Quiz"
+    "sideNavHeading": "Quiz",
+    "addWorkspace": "Add Workspace",
+    "workspace": "Workspace Name",
+    "enterWorkspace": "Enter Workspace Name"
   },
   "inviteMemeberPopUpConstants": {
     "inviteCandidate": "Invite Candidate",
@@ -64,7 +71,6 @@
     "invite": "Invite"
   },
   "testTableItem": {
-    "inviteMember": "Invite Member",
     "menu": "Menu"
   },
   "deletePopUp": {
@@ -98,6 +104,8 @@
   },
   "testsConstants": {
     "addTestbutton": "Add Test",
+    "testEnded": "Test has been ended",
+    "reinvited": "Candidate Invited Successfully",
     "testDetailsText": "Test Details",
     "descriptionText": "Description",
     "totalTimeText": "Total Time",
@@ -153,7 +161,11 @@
     "otpSent": "Otp sent. Please check your email",
     "correctOtp": "Please enter correct OTP",
     "resendPasswordSuccess": "New password has been sent to email successfully",
-    "resendPasswordError": "Account not found. Please enter valid email"
+    "resendPasswordError": "Account not found. Please enter valid email",
+    "switched": "Workspace Switched",
+    "enteredReenteredPassword": "Password and Confirm password should be same.",
+    "passAlreadyCreated": "You have already created the password",
+    "userNotFound": "User Not Found"
   },
   "resultConstants": {
     "order": "Order",
@@ -169,9 +181,11 @@
     "startedAt": "Started At",
     "correct": "Correct",
     "skipped": "Skipped",
+    "total": "Total",
+    "resendInvite": "Resend Invite",
+    "resendTestInvite": "Resend Test Invite Icon",
     "unanswered": "Unanswered",
-    "incorrect": "Incorrect",
-    "total": "Total"
+    "incorrect": "Incorrect"
   },
   "forgotPasswordConstants": {
     "header": "Forgot password?",
@@ -189,7 +203,7 @@
     "assessmentDetails": "Assessment Details",
     "assessmentTests": "Assessment Tests",
     "assessmentEnd": "Assessment Ended",
-    "endAssesment": "End Assesment SVG",
+    "endAssessment": "End Assessment SVG",
     "wrongLink": "Wrong Link",
     "minutes": "Mins",
     "description": "Description",
@@ -199,7 +213,7 @@
     "endTest": "End Test",
     "nextSection": "Next Section",
     "candidateAcceptance": "I understand that once I begin the assessment I cannot leave and  return to this assessment at a later time.",
-    "beginAssesment": "Begin Assesment",
+    "beginAssessment": "Begin Assessment",
     "instructions": "Instructions",
     "takeBreak": "Take A Break!",
     "startSection": "Start Now",
@@ -230,7 +244,11 @@
     "correctEmail": "Please provide a valid email address",
     "memberAdded": "Member Added Successfully..!",
     "memberAlreadyExist": "Member with this email id already exists!",
-    "signUpSuccessfull": "Sign Up successfully"
+    "invitationSent": "Invitation Sent Successfully..!",
+    "signUpSuccessfull": "Sign Up successfully",
+    "workspaceAdded": "Workspace Added",
+    "duplicateWorkspace": "Duplicate Workspace",
+    "workspaceNameIsRequired": "Workspace name is required"
   },
   "otpConstants": {
     "header": "OTP Verification",
@@ -239,5 +257,24 @@
     "didntGetCode": "Didn't get a code",
     "resendCodeIn": "Resend code in",
     "otp": "OTP"
+  },
+  "settings": {
+    "passNotMatch": "Password do not match",
+    "enterNewPass": "Enter New Password",
+    "reEnterPass": "Re-Enter Password",
+    "resetPas": "Reset Password",
+    "version": "Version",
+    "password": "Password",
+    "clickToChange": "Click to change",
+    "passResetting": "Resetting",
+    "enterOldPassword": "Enter Old Password",
+    "passResetSuccessfully": "Password changed successfully !",
+    "basicInfo": "Basic Info",
+    "minPasswordLimit": "Password should have minimum 8 characters",
+    "passShouldNotBeSame": "Current Password and New Password should not be same"
+  },
+  "tabs": {
+    "general": "General",
+    "workspaces": "Workspaces"
   }
 }

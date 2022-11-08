@@ -14,7 +14,7 @@ describe('Test for Section', () => {
     cy.get('input[name="email"]')
       .focus()
       .clear()
-      .type('careers@copods.co')
+      .type('copods.demo.sendgrid@gmail.com')
       .should('have.value', cypress.email)
     cy.get('input[name="password"]')
       .focus()
@@ -128,7 +128,7 @@ describe('Test for Section', () => {
         .then((listing) => {
           const listingCount = Cypress.$(listing).length
           expect(listing).to.have.length(listingCount)
-          cy.get('#headlessui-listbox-button-1 span span')
+          cy.get('.dropdownButton span span', { timeout: 6000 })
             .invoke('text')
             .then((el) => {
               if (el === 'Name') {
@@ -174,7 +174,10 @@ describe('Test for Section', () => {
     cy.get('#confirm-delete')
       .should('have.text', commonConstants.delete)
       .click()
-    cy.get('.Toastify__toast').should('have.text', statusCheck.deletedSuccess)
+    cy.get('.Toastify__toast', { timeout: 8000 }).should(
+      'have.text',
+      statusCheck.deletedSuccess
+    )
     cy.get('.Toastify__close-button').click()
     cy.location('pathname', { timeout: 6000 }).should('include', '/sections')
     cy.get('#section-card', { timeout: 8000 }).each(($el) => {
