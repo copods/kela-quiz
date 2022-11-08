@@ -134,7 +134,7 @@ describe('Test for settings', () => {
     cy.get('.resetPassOpenPopUpLink')
       .should('have.text', settings.clickToChange)
       .click()
-    cy.get('#resetPassword-pop-up-model').should('be.visible')
+    cy.get('#dialog-wrapper').should('be.visible')
   })
   it('Checks reset password pop up will be close after clicking on cross icon', () => {
     cy.get('a')
@@ -148,9 +148,9 @@ describe('Test for settings', () => {
     cy.get('.resetPassOpenPopUpLink')
       .should('have.text', settings.clickToChange)
       .click()
-    cy.get('#resetPassword-pop-up-model').should('be.visible')
-    cy.get('#reset-password-popup-close-icon').click()
-    cy.get('#resetPassword-pop-up-model').should('not.exist')
+    cy.get('#dialog-wrapper').should('be.visible')
+    cy.get('#dialog-close-icon').click()
+    cy.get('#dialog-wrapper').should('not.exist')
   })
   it('Checks heading of reset password pop up ', () => {
     cy.get('a')
@@ -192,7 +192,7 @@ describe('Test for settings', () => {
     cy.get('.resetPassOpenPopUpLink')
       .should('have.text', settings.clickToChange)
       .click()
-    cy.get('#resetPassword-pop-up-model').should('be.visible')
+    cy.get('#dialog-wrapper').should('be.visible')
     cy.get('#oldPassword', { timeout: 6000 }).should('be.visible')
     cy.get('#newPassword').should('be.visible')
     cy.get('#confirmNewPassword').should('be.visible')
@@ -223,7 +223,7 @@ describe('Test for settings', () => {
     cy.get('.resetPassOpenPopUpLink')
       .should('have.text', settings.clickToChange)
       .click()
-    cy.get('#resetPassword-pop-up-model').should('be.visible')
+    cy.get('#dialog-wrapper').should('be.visible')
     cy.get('#oldPassword', { timeout: 6000 }).click().should('be.focused')
   })
   it('Checks reset password pop up new password input field Should have focus on clicking on it or selecting it', () => {
@@ -238,7 +238,7 @@ describe('Test for settings', () => {
     cy.get('.resetPassOpenPopUpLink')
       .should('have.text', settings.clickToChange)
       .click()
-    cy.get('#resetPassword-pop-up-model').should('be.visible')
+    cy.get('#dialog-wrapper').should('be.visible')
     cy.get('#newPassword').should('be.visible').click().should('be.focused')
   })
   it('Checks reset password pop up confirm password input field Should have focus on clicking on it or selecting it', () => {
@@ -253,7 +253,7 @@ describe('Test for settings', () => {
     cy.get('.resetPassOpenPopUpLink')
       .should('have.text', settings.clickToChange)
       .click()
-    cy.get('#resetPassword-pop-up-model').should('be.visible')
+    cy.get('#dialog-wrapper').should('be.visible')
     cy.get('#confirmNewPassword').click().should('be.focused')
   })
   it('Checks reset password pop up old password label have correct text', () => {

@@ -23,6 +23,17 @@ export interface PasswordFieldProps {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
+export interface DialogWrapperProps {
+  heading?: string
+  role?: string
+  ariaLabel?: string
+  children: JSX.Element
+  open: boolean
+  setOpen: (e: boolean) => void
+  header: boolean
+  tabIndex?: number
+}
+
 export interface ButtonProps {
   name?: string
   id?: string
@@ -85,6 +96,7 @@ export interface Section {
   updatedAt: Date
   deleted: boolean
   deletedAt: string
+  workspaceId: string
 }
 
 export interface User {
@@ -95,6 +107,7 @@ export interface User {
   roleId: string
   createdAt: Date
   updatedAt: Date
+  workspace: Array<Workspace>
 }
 
 export interface Role {
@@ -130,6 +143,7 @@ export interface Test {
   deleted: boolean
   deletedAt: string
   candidateTest?: Array<CandidateTest>
+  workspaceId: string
 }
 
 export interface SectionInTest {
@@ -234,6 +248,7 @@ export interface CandidateResult {
   isQualified: boolean
   createdAt: Date
   updatedAt: Date
+  workspaceId?: string
 }
 
 export enum sortByOrder {
@@ -269,6 +284,25 @@ export interface SectionWiseResults {
   updatedAt: Date
   section: SectionInCandidateTest
   test: Test
+}
+export interface Workspace {
+  id: string
+  name: string
+  createdBy: User
+  createdById: string
+  createdAt: Date
+  updatedAt: Date
+}
+export interface UserWorkspace {
+  id: String
+  workspace: Array<Workspace>
+  workspaceId: string
+  userId: string
+  role: Role
+  roleId: string
+  isDefault: Boolean
+  createdAt: Date
+  updatedAt: Date
 }
 export interface TabsComponent {
   name: string

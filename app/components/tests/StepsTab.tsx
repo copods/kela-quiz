@@ -22,7 +22,7 @@ const StepsTabComponent = ({
             key={tab.id}
             id={tab.id.toString()}
             className={`stepsTab flex-1 p-1 ${
-              isDisabled ? 'pointer-events-none' : 'cursor-pointer'
+              isDisabled ? 'cursor-not-allowed' : 'cursor-pointer'
             }`}
             onClick={() => {
               setCurrentTab(tab.id)

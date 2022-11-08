@@ -1,6 +1,6 @@
 {
   "members": {
-    "addMember": "Add Member",
+    "inviteMember": "Invite Member",
     "firstName": "First Name",
     "lastName": " Last Name",
     "role": "Role",
@@ -51,11 +51,16 @@
     "totalQuestion": "Total Questions",
     "srNo": "Sr.No",
     "verify": "Verify",
+    "proceed": "Proceed",
+    "defaultWorkspaceName": "Default Workspace Name",
     "confirmPassword": "Confirm Password",
     "createPassword": "Create Password"
   },
   "sideNav": {
-    "sideNavHeading": "Quiz"
+    "sideNavHeading": "Quiz",
+    "addWorkspace": "Add Workspace",
+    "workspace": "Workspace Name",
+    "enterWorkspace": "Enter Workspace Name"
   },
   "inviteMemeberPopUpConstants": {
     "inviteCandidate": "Invite Candidate",
@@ -66,7 +71,6 @@
     "invite": "Invite"
   },
   "testTableItem": {
-    "inviteMember": "Invite Member",
     "menu": "Menu"
   },
   "deletePopUp": {
@@ -158,6 +162,7 @@
     "correctOtp": "Please enter correct OTP",
     "resendPasswordSuccess": "New password has been sent to email successfully",
     "resendPasswordError": "Account not found. Please enter valid email",
+    "switched": "Workspace Switched",
     "enteredReenteredPassword": "Password and Confirm password should be same.",
     "passAlreadyCreated": "You have already created the password",
     "userNotFound": "User Not Found"
@@ -240,7 +245,10 @@
     "memberAdded": "Member Added Successfully..!",
     "memberAlreadyExist": "Member with this email id already exists!",
     "invitationSent": "Invitation Sent Successfully..!",
-    "signUpSuccessfull": "Sign Up successfully"
+    "signUpSuccessfull": "Sign Up successfully",
+    "workspaceAdded": "Workspace Added",
+    "duplicateWorkspace": "Duplicate Workspace",
+    "workspaceNameIsRequired": "Workspace name is required"
   },
   "otpConstants": {
     "header": "OTP Verification",

@@ -61,6 +61,7 @@ function customVisit(path = '') {
     method: 'GET',
     headers,
   })
+  cy.wait(1000)
 }
 
 function cleanupUser({ email }: { email?: string } = {}) {

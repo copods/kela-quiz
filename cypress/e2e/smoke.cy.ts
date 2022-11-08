@@ -2,10 +2,7 @@
 import {
   addQuestion,
   commonConstants,
-  members,
   cypress,
-  routeFiles,
-  testsConstants,
 } from '~/constants/common.constants'
 const section1 = `Aptitude - section1`
 const test1 = `Aptitude - test1`
@@ -15,6 +12,7 @@ const deleteSection = `Aptitude - delete-Section`
 const memberFirstName = 'john'
 const memberLastName = 'dow'
 const memberEmail = 'johndoe@example.com'
+const workspaceName = 'Copods workspace'
 
 describe('smoke tests', () => {
   beforeEach(() => {
@@ -51,15 +49,52 @@ describe('smoke tests', () => {
       })
   })
 
+  it('should add workspace', () => {
+    cy.login()
+    cy.customVisit('/members')
+    cy.location('pathname').should('include', '/members')
+
+    let dropdown = cy.get('#dropdown')
+
+    dropdown
+      .click()
+      .find('ul')
+      .children()
+      .each((element, index) => {
+        if (index === 0) {
+          cy.wrap(element).click()
+          return
+        }
+      })
+
+    // Adding workspace name
+    const randomWorkSpaceName = `workSpace-${(Math.random() + 1)
+      .toString(36)
+      .substring(7)}`
+
+    cy.get('input[name="addWorkspace"]')
+      .type(randomWorkSpaceName)
+      .should('have.attr', 'value', randomWorkSpaceName)
+
+    cy.get('button[name="addWorkspace"]').click()
+
+    // Check for workspace length
+    dropdown = cy.get('#dropdown')
+
+    dropdown
+      .click()
+      .find('ul')
+      .find('li')
+      .should((item) => {
+        expect(item.length).to.be.greaterThan(1)
+      })
+  })
+
   // creating test data
   it('Adding a first section', () => {
     cy.login()
-    cy.customVisit('/members')
+    cy.customVisit('/sections')
 
-    cy.get('a')
-      .find('#sections')
-      .should('have.text', routeFiles.sections)
-      .click()
     cy.get('#add-section').click()
     cy.get('form > div')
       .should('be.visible')
@@ -72,11 +107,8 @@ describe('smoke tests', () => {
 
   it('Adding a second section', () => {
     cy.login()
-    cy.customVisit('/members')
-    cy.get('a')
-      .find('#sections')
-      .should('have.text', routeFiles.sections)
-      .click()
+    cy.customVisit('/sections')
+
     cy.get('#add-section').click()
     cy.get('form > div')
       .should('be.visible')
@@ -89,11 +121,8 @@ describe('smoke tests', () => {
 
   it('Adding a deleteSection ', () => {
     cy.login()
-    cy.customVisit('/members')
-    cy.get('a')
-      .find('#sections')
-      .should('have.text', routeFiles.sections)
-      .click()
+    cy.customVisit('/sections')
+
     cy.get('#add-section').click()
     cy.get('form > div')
       .should('be.visible')
@@ -106,11 +135,8 @@ describe('smoke tests', () => {
 
   it('Add question to the first section', () => {
     cy.login()
-    cy.customVisit('/members')
-    cy.get('a')
-      .find('#sections')
-      .should('have.text', routeFiles.sections)
-      .click()
+    cy.customVisit('/sections')
+
     cy.get('#section-card').each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -126,7 +152,8 @@ describe('smoke tests', () => {
       .click()
     cy.location('pathname').should('include', '/add-question')
     cy.get('h1').should('be.visible')
-    cy.get('#dropdown > button').click()
+
+    cy.get('#Question').get('#dropdown-container').click()
     cy.get('ul').within(() => {
       cy.get('li').within(() => {
         cy.get('div').then((el) => {
@@ -150,11 +177,8 @@ describe('smoke tests', () => {
 
   it('Add question to the second section', () => {
     cy.login()
-    cy.customVisit('/members')
-    cy.get('a')
-      .find('#sections')
-      .should('have.text', routeFiles.sections)
-      .click()
+    cy.customVisit('/sections')
+
     cy.get('#section-card').each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -170,7 +194,7 @@ describe('smoke tests', () => {
       .click()
     cy.location('pathname').should('include', '/add-question')
     cy.get('h1').should('be.visible')
-    cy.get('#dropdown > button').click()
+    cy.get('#Question').get('#dropdown-container').click()
     cy.get('ul').within(() => {
       cy.get('li').within(() => {
         cy.get('div').then((el) => {
@@ -194,8 +218,8 @@ describe('smoke tests', () => {
 
   it('Verify if user able create the test 1', () => {
     cy.login()
-    cy.customVisit('/members')
-    cy.get('a').find('#tests').should('have.text', testsConstants.tests).click()
+    cy.customVisit('/tests')
+
     cy.get('#add-test').click()
     cy.location('pathname').should('include', '/tests/add-test')
     cy.get('input[placeholder="Enter test name"]').clear().type(deleteTest1)
@@ -262,8 +286,8 @@ describe('smoke tests', () => {
 
   it('Verify if user able create the test 2', () => {
     cy.login()
-    cy.customVisit('/members')
-    cy.get('a').find('#tests').should('have.text', testsConstants.tests).click()
+    cy.customVisit('/tests')
+
     cy.get('#add-test').click()
     cy.location('pathname').should('include', '/tests/add-test')
     cy.get('input[placeholder="Enter test name"]').clear().type(test1)
@@ -331,9 +355,9 @@ describe('smoke tests', () => {
   it('Test for adding a new member', () => {
     cy.login()
     cy.customVisit('/members')
-    cy.get('a').find('#members').should('have.text', members.members).click()
+
     cy.get('#add-member').should('have.text', cypress.addMember).click()
-    cy.get('#add-pop-up-model').should('be.visible')
+    cy.get('#dialog-wrapper').should('be.visible')
     cy.get('input[name="firstName"]')
       .clear()
       .type(memberFirstName)
@@ -346,15 +370,19 @@ describe('smoke tests', () => {
       .clear()
       .type(memberEmail)
       .should('have.value', memberEmail)
-    cy.get('div').find('.dropdownButton').click()
+    cy.get('#workspace')
+      .clear()
+      .type(workspaceName)
+      .should('have.value', workspaceName)
+    cy.get('div').get('#add-member-modal').find('.dropdownButton').click()
     cy.get('ul').contains('Recruiter').click()
     cy.get('#add-button').click()
   })
 
   it('invite candidate for test', () => {
     cy.login()
-    cy.customVisit('/members')
-    cy.get('a').find('#tests').should('have.text', testsConstants.tests).click()
+    cy.customVisit('/tests')
+
     cy.get('.test-table-list').should('be.visible')
     cy.get('.test-table-list').each(($el) => {
       cy.wrap($el).within((el) => {

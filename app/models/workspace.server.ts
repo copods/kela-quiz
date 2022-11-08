@@ -1,0 +1,36 @@
+import { prisma } from '~/db.server'
+import { getAdminId } from './user.server'
+
+export async function getUserWorkspaces(userId: string) {
+  return await prisma.userWorkspace.findMany({
+    where: {
+      userId,
+    },
+    select: {
+      id: true,
+      workspaceId: true,
+      workspace: {
+        select: {
+          name: true,
+        },
+      },
+    },
+  })
+}
+
+export async function addWorkspace(workspaceName: string, userId: string) {
+  const workspace = await prisma.workspace.create({
+    data: {
+      name: workspaceName,
+      createdById: userId,
+    },
+  })
+  const roleId = await getAdminId()
+  return await prisma.userWorkspace.create({
+    data: {
+      workspaceId: workspace?.id,
+      userId: userId,
+      roleId: roleId as string,
+    },
+  })
+}
