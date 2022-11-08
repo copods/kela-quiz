@@ -1,22 +1,41 @@
-import { useNavigate, useSubmit, useTransition } from '@remix-run/react'
-import { useState } from 'react'
+import {
+  useActionData,
+  useNavigate,
+  useSubmit,
+  useTransition,
+} from '@remix-run/react'
+import { useEffect, useState } from 'react'
 import Button from '~/components/form/Button'
 import Logo from '~/components/Logo'
 import { trimValue } from '~/utils'
 import { routes } from '~/constants/route.constants'
 import { useTranslation } from 'react-i18next'
 import InputField from '../form/InputField'
+import PasswordInputFields from '../form/PasswordInputField'
+import { toast } from 'react-toastify'
 
-const SignUp = () => {
-  const transition = useTransition()
-  const submit = useSubmit()
+const SignUp = ({ error }: { error?: string }) => {
+  const navigate = useNavigate()
 
   const { t } = useTranslation()
+  const signUpActionData = useActionData()
+  useEffect(() => {
+    if (signUpActionData) {
+      if (signUpActionData.resp?.status === 200) {
+        toast.success(t(signUpActionData.resp?.title))
+        navigate(routes.signIn)
+      }
+    }
+  }, [signUpActionData, navigate, t])
+  const transition = useTransition()
+  const submit = useSubmit()
 
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [email, setEmail] = useState('')
   const [workspace, setWorkspace] = useState('')
+  const [Password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
 
   const submitMemberForm = () => {
     let data = {
@@ -24,6 +43,8 @@ const SignUp = () => {
       lastName: lastName,
       email: email,
       workspace: workspace,
+      Password: Password,
+      confirmPassword: confirmPassword,
       signUp: JSON.stringify({
         action: 'add',
       }),
@@ -32,7 +53,6 @@ const SignUp = () => {
       method: 'post',
     })
   }
-  const navigate = useNavigate()
   const signIn = () => {
     navigate(routes.signIn)
   }
@@ -44,9 +64,10 @@ const SignUp = () => {
       name: 'firstName',
       required: true,
       value: firstName,
+      error: signUpActionData?.errors?.firstNameRequired,
       errorId: 'firstName-error',
       onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
-        setFirstName(trimValue(event.target.value))
+        setFirstName(trimValue(event.target.value.replace(/[^\w\s]/gi, '')))
       },
     },
     {
@@ -56,9 +77,10 @@ const SignUp = () => {
       name: 'lastName',
       required: true,
       value: lastName,
+      error: signUpActionData?.errors?.lastNameRequired,
       errorId: 'lastName-error',
       onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
-        setLastName(trimValue(event.target.value))
+        setLastName(trimValue(event.target.value.replace(/[^\w\s]/gi, '')))
       },
     },
     {
@@ -68,6 +90,9 @@ const SignUp = () => {
       name: 'email',
       required: true,
       value: email,
+      error:
+        signUpActionData?.errors?.emailRequired ||
+        signUpActionData?.errors?.enterVaildMailAddress,
       errorId: 'email-error',
       onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
         setEmail(trimValue(event.target.value))
@@ -80,9 +105,36 @@ const SignUp = () => {
       name: 'workspace',
       required: true,
       value: workspace,
+      error: signUpActionData?.errors?.workspaceNameRequired,
       errorId: 'workspace-error',
       onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
         setWorkspace(trimValue(event.target.value))
+      },
+    },
+    {
+      label: t('settings.password'),
+      placeholder: t('settings.password'),
+      name: 'Password',
+      required: true,
+      type: 'password',
+      value: Password,
+      error: signUpActionData?.errors?.minPasswordLimit,
+      errorId: 'New-password-error',
+      onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
+        setPassword(trimValue(event?.target.value))
+      },
+    },
+    {
+      label: t('settings.reEnterPass'),
+      placeholder: t('settings.reEnterPass'),
+      name: 'confirmPassword',
+      required: true,
+      type: 'password',
+      value: confirmPassword,
+      error: signUpActionData?.errors?.passNotMatched,
+      errorId: 'Confirm-password-error',
+      onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
+        setConfirmPassword(trimValue(event?.target.value))
       },
     },
   ]
@@ -112,8 +164,13 @@ const SignUp = () => {
             })}
           </div>
           <div className="flex flex-col gap-6">
-            {inputFieldsProps.slice(2).map((props) => {
+            {inputFieldsProps.slice(2, 4).map((props) => {
               return <InputField {...props} key={props.name} />
+            })}
+          </div>
+          <div className="input-container-wrapper flex flex-col gap-6">
+            {inputFieldsProps.slice(4).map((props) => {
+              return <PasswordInputFields {...props} key={props.name} />
             })}
           </div>
         </div>

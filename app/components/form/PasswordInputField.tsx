@@ -20,7 +20,7 @@ const PasswordInputFields = ({
       <label htmlFor={name} className="text-gray-800">
         {label}
       </label>
-      <div className="flex rounded-lg border border-gray-200">
+      <div className="relative flex rounded-lg border border-gray-200">
         <input
           id={name}
           type={showPassword ? 'text' : 'password'}
@@ -33,7 +33,7 @@ const PasswordInputFields = ({
         />
         <button
           type="button"
-          className="btn btn-outline-primary absolute right-0 left-auto mr-10 mt-2.5"
+          className="btn btn-outline-primary absolute right-0 left-auto mr-6 mt-2.5"
           onClick={() => setShowPassword(!showPassword)}
         >
           {showPassword ? (

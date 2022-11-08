@@ -57,15 +57,15 @@ export async function createUserBySignUp({
   firstName,
   lastName,
   email,
-
+  password,
   workspaceName,
 }: {
   firstName: string
   lastName: string
   email: string
+  password: string
   workspaceName: string
 }) {
-  const password = faker.internet.password()
   const hashedPassword = await bcrypt.hash(password, 10)
   const roleId = await getAdminId()
   const user = await prisma.user.create({
