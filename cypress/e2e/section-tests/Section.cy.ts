@@ -24,7 +24,7 @@ describe('Test for Section', () => {
   })
   it('allows users to search questions', () => {
     cy.get('input[name="search"]').clear().type(cypress.useMemo)
-    cy.get('.ql-editor').each(($el) => {
+    cy.get('.ql-editor.p-0').each(($el) => {
       cy.wrap($el).within((el) => {
         if (
           el[0].getElementsByClassName('question')[0].innerHTML ===
