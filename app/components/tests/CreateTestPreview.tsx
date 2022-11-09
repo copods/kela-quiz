@@ -132,28 +132,30 @@ const TestPreview = ({
                     </span>
                   </div>
                 </div>
-                {isPreviewEditable && (
-                  <div className="flex gap-2">
-                    <Icon
-                      icon="fa:long-arrow-up"
-                      className="cursor-pointer"
-                      onClick={() => moveSection(i, 'up')}
-                      tabIndex={0}
-                      onKeyUp={(e) => {
-                        if (e.key === 'Enter') moveSection(i, 'up')
-                      }}
-                    />
-                    <Icon
-                      icon="fa:long-arrow-down"
-                      className="cursor-pointer"
-                      onClick={() => moveSection(i, 'down')}
-                      tabIndex={0}
-                      onKeyUp={(e) => {
-                        if (e.key === 'Enter') moveSection(i, 'up')
-                      }}
-                    />
-                  </div>
-                )}
+                {selectedSections.length > 1
+                  ? isPreviewEditable && (
+                      <div className="flex gap-2">
+                        <Icon
+                          icon="fa:long-arrow-up"
+                          className="cursor-pointer"
+                          onClick={() => moveSection(i, 'up')}
+                          tabIndex={0}
+                          onKeyUp={(e) => {
+                            if (e.key === 'Enter') moveSection(i, 'up')
+                          }}
+                        />
+                        <Icon
+                          icon="fa:long-arrow-down"
+                          className="cursor-pointer"
+                          onClick={() => moveSection(i, 'down')}
+                          tabIndex={0}
+                          onKeyUp={(e) => {
+                            if (e.key === 'Enter') moveSection(i, 'up')
+                          }}
+                        />
+                      </div>
+                    )
+                  : ''}
               </div>
             )
           })}
