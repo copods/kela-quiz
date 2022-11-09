@@ -46,9 +46,16 @@ export const loader: LoaderFunction = async ({ request, params }) => {
       const userId = await getUserId(request)
       if (userId === invitedMember?.id) {
         return redirect(routes.signIn) // if user accept the workspace join invitation then redirect to sign-in
-      }
-      if (userId !== invitedMember?.id) {
+      } else if (userId !== invitedMember?.id) {
         return redirect('/logout') // if user not currently login then redirect to logout
+      }
+    }
+    if (invitedMember?.joined === false) {
+      const userId = await getUserId(request)
+      if (userId === invitedMember?.id) {
+        return redirect(routes.signIn) // if user declined the workspace join invitation then redirect to sign-in if currently login
+      } else if (userId !== invitedMember?.id) {
+        return redirect('/logout') // if user declined the workspace join invitation then redirect to logout if currently logout
       }
     }
   }
@@ -60,8 +67,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
       const userId = await getUserId(request)
       if (userId === invitedMember?.id) {
         return redirect(routes.signIn) // if user declined the workspace join invitation then redirect to sign-in if currently login
-      }
-      if (userId !== invitedMember?.id) {
+      } else if (!userId && invitedMember?.id) {
         return redirect('/logout') // if user declined the workspace join invitation then redirect to logout if currently logout
       }
     }
