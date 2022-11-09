@@ -12,10 +12,8 @@ const test1 = `Aptitude - test1`
 const deleteTest1 = `Aptitude - Detete test`
 const section2 = `Aptitude - section2`
 const deleteSection = `Aptitude - delete-Section`
-const memberFirstName = 'john'
-const memberLastName = 'dow'
+
 const memberEmail = 'johndoe@example.com'
-const workspaceName = 'Copods workspace'
 
 describe('smoke tests', () => {
   it('Successfully Login', () => {
@@ -476,25 +474,15 @@ describe('smoke tests', () => {
     cy.get('a').find('#members').should('have.text', members.members).click()
     cy.get('#add-member').should('have.text', cypress.addMember).click()
     cy.get('#dialog-wrapper').should('be.visible')
-    cy.get('input[name="firstName"]')
-      .clear()
-      .type(memberFirstName)
-      .should('have.value', memberFirstName)
-    cy.get('input[name="lastName"]')
-      .clear()
-      .type(memberLastName)
-      .should('have.value', memberLastName)
+
     cy.get('input[name="email"]')
       .clear()
       .type(memberEmail)
       .should('have.value', memberEmail)
-    cy.get('#workspace')
-      .clear()
-      .type(workspaceName)
-      .should('have.value', workspaceName)
+
     cy.get('div').get('#add-member-modal').find('.dropdownButton').click()
     cy.get('ul').contains('Recruiter').click()
-    cy.get('#add-button').click()
+    cy.get('#invite-button').click()
   })
 
   it('invite candidate for test', () => {

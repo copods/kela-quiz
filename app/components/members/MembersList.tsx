@@ -27,7 +27,7 @@ export default function MembersList({
             {t('members.role')}
           </h1>
           <h1 className="col-span-2 pl-4 text-sm text-gray-500">
-            {t('members.addedOn')}
+            {t('commonConstants.joinedOn')}
           </h1>
           <h1 className="col-span-1 pl-4 text-sm text-gray-500">
             {t('members.action')}

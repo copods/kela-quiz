@@ -109,6 +109,21 @@ export interface User {
   updatedAt: Date
   workspace: Array<Workspace>
 }
+export interface Invites {
+  id: string
+  email: string
+  invitedBy: User
+  userId: string
+  invitedForWorkspace: Workspace
+  workspaceId: string
+  role: Role
+  roleId: String
+  invitedOn: Date
+  joined: Boolean
+  joinedAt: Date
+  createdAt: Date
+  updatedAt: Date
+}
 
 export interface Role {
   id: string

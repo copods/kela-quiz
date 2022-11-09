@@ -8,7 +8,12 @@
     "addedOn": "Added On",
     "action": "Action",
     "member": "member",
-    "memberResendIcon": "Reinvite Icon"
+    "memberResendIcon": "Reinvite Icon",
+    "invitedMember": "Invited Member",
+    "joinedMembers": "Joined Members",
+    "noInvitedMember": "No any invited Member Found",
+    "doYouWantToJoin": "Do You Want To Join?",
+    "invitedOn": "Invited On"
   },
   "commonConstants": {
     "name": "Name",
@@ -54,7 +59,12 @@
     "proceed": "Proceed",
     "defaultWorkspaceName": "Default Workspace Name",
     "confirmPassword": "Confirm Password",
-    "createPassword": "Create Password"
+    "createPassword": "Create Password",
+    "inviting": "Inviting",
+    "invite": "Invite",
+    "join": "Join",
+    "joining": "Joining",
+    "joinedOn": "Joined On"
   },
   "sideNav": {
     "sideNavHeading": "Quiz",
@@ -165,7 +175,9 @@
     "switched": "Workspace Switched",
     "enteredReenteredPassword": "Password and Confirm password should be same.",
     "passAlreadyCreated": "You have already created the password",
-    "userNotFound": "User Not Found"
+    "userNotFound": "User Not Found",
+    "workspaceJoinSuccess": "Workspace join successfully",
+    "workspaceInvitationRejected": "Workspace invitation rejected"
   },
   "resultConstants": {
     "order": "Order",
@@ -248,7 +260,8 @@
     "signUpSuccessfull": "Sign Up successfully",
     "workspaceAdded": "Workspace Added",
     "duplicateWorkspace": "Duplicate Workspace",
-    "workspaceNameIsRequired": "Workspace name is required"
+    "workspaceNameIsRequired": "Workspace name is required",
+    "memberAlreadyInvited": "Member already invited"
   },
   "otpConstants": {
     "header": "OTP Verification",
