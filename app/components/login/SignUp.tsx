@@ -24,13 +24,14 @@ const SignUp = ({ error }: { error?: string }) => {
       if (signUpActionData.resp?.status === 200) {
         toast.success(t(signUpActionData.resp?.title))
         navigate(routes.signIn)
-      } else if (signUpActionData.resp?.status === 400) {
-        toast.error(t(signUpActionData.errors?.title), {
-          toastId: signUpActionData.errors?.title,
+      } else if (signUpActionData.errors?.status === 400) {
+        toast.error(t(signUpActionData?.errors?.title), {
+          toastId: signUpActionData?.errors?.title,
         })
       }
     }
   }, [signUpActionData, navigate, t])
+
   const transition = useTransition()
   const submit = useSubmit()
 
@@ -59,6 +60,14 @@ const SignUp = ({ error }: { error?: string }) => {
   }
   const signIn = () => {
     navigate(routes.signIn)
+  }
+  const [onBlurErr, setOnBlurErr] = useState('')
+  const handleFocusEvent = (e: any) => {
+    if (Password.length < 8) {
+      setOnBlurErr('settings.minPasswordLimit')
+    } else if (Password !== confirmPassword && confirmPassword.length !== 0) {
+      setOnBlurErr('settings.passNotMatch')
+    }
   }
   const inputFieldsProps = [
     {
@@ -122,7 +131,8 @@ const SignUp = ({ error }: { error?: string }) => {
       required: true,
       type: 'password',
       value: Password,
-      error: signUpActionData?.errors?.minPasswordLimit,
+      onblur: handleFocusEvent,
+      error: signUpActionData?.errors?.minPasswordLimit || onBlurErr,
       errorId: 'New-password-error',
       onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
         setPassword(trimValue(event?.target.value))
@@ -186,7 +196,16 @@ const SignUp = ({ error }: { error?: string }) => {
             name="addMember"
             value={'add'}
             className="h-11 w-full px-4"
-            isDisabled={transition.state === 'submitting'}
+            isDisabled={
+              !(
+                firstName &&
+                lastName &&
+                email &&
+                workspace &&
+                Password &&
+                confirmPassword
+              )
+            }
             title={
               transition.state === 'submitting'
                 ? t('logIn.signingUp')

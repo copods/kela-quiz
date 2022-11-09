@@ -169,7 +169,7 @@ describe('Test for Sign Up page', () => {
     cy.get('#Password').should('be.visible').clear().type('newPassword')
     cy.get('#confirmPassword').should('be.visible').clear().type('newPassword')
     cy.get('#add-button').should('have.text', logIn.signUp).click()
-    cy.get('.Toastify__toast').should(
+    cy.get('.Toastify__toast', { timeout: 8000 }).should(
       'have.text',
       toastConstants.memberAlreadyExist
     )

@@ -11,6 +11,7 @@ const PasswordInputFields = ({
   placeholder,
   required,
   value,
+  onblur,
   onChange,
 }: PasswordFieldProps) => {
   const { t } = useTranslation()
@@ -29,6 +30,7 @@ const PasswordInputFields = ({
           required={required}
           value={value}
           onChange={onChange}
+          onBlur={onblur}
           className="h-11 w-full px-3.5 py-2.5 text-lg"
         />
         <button
