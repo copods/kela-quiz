@@ -24,7 +24,11 @@ const StepsTabComponent = ({
             className={`stepsTab flex-1 p-1 ${
               isDisabled ? 'cursor-not-allowed' : 'cursor-pointer'
             }`}
-            onClick={() => {
+            onClick={(e) => {
+              if (isDisabled) {
+                e.preventDefault()
+                return
+              }
               setCurrentTab(tab.id)
             }}
             aria-label={`${tab.name} ${tab.description}`}
