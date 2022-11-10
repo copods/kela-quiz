@@ -5,6 +5,7 @@ import { routes } from '~/constants/route.constants'
 import TestPreview from './CreateTestPreview'
 const TestDetails = () => {
   const { testPreview } = useLoaderData()
+  console.log(testPreview, 'testPreview')
   return (
     <div id="test-details" className="h-full">
       <header className="mb-8">
@@ -29,6 +30,7 @@ const TestDetails = () => {
       </header>
       <div className="max-h-83 overflow-scroll rounded-md shadow-base">
         <TestPreview
+          id={testPreview.id}
           name={testPreview.name}
           description={testPreview.description}
           selectedSections={testPreview.sections}
@@ -36,6 +38,7 @@ const TestDetails = () => {
             throw new Error('Function not implemented.')
           }}
           isPreviewEditable={false}
+          showInviteAction={true}
         />
       </div>
     </div>

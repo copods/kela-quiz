@@ -84,50 +84,52 @@ const TestList = ({
               showSelected={false}
             />
           </div>
-          <div className="flex flex-1 flex-col rounded-lg pb-6">
-            <div className="rounded-b-0 flex items-center gap-3 rounded-t-md border-solid border-gray-200 bg-gray-100 px-9 py-3 font-semibold shadow-base">
-              {showCheckBox && (
-                <div className="w-1/12">
-                  <input type="checkbox" />
+          <div className=" col-span-full grid grid-cols-12">
+            <div className="col-span-full grid grid-cols-12 rounded-lg border border-solid border-gray-200 bg-white">
+              <div className="col-span-full grid grid-cols-12 gap-3 bg-gray-100 py-4 px-6">
+                {showCheckBox && (
+                  <div className="col-span-1 pl-4">
+                    <input type="checkbox" />
+                  </div>
+                )}
+                <div className="col-span-1 pl-4 text-sm text-gray-500">
+                  {t('commonConstants.srNo')}
                 </div>
-              )}
-              <div className="w-1/12 text-sm text-gray-500">
-                {t('commonConstants.srNo')}
+                <div className="col-span-3 pl-4 text-sm text-gray-500">
+                  {t('testsConstants.test')}
+                </div>
+                <div className="col-span-3 pl-4 text-sm text-gray-500">
+                  {t('testsConstants.sectionText')}
+                </div>
+                <div className="col-span-2 pl-4 text-sm text-gray-500">
+                  {t('testsConstants.createdOn')}
+                </div>
+                <div className="col-span-2 pl-4 text-sm text-gray-500">
+                  {t('testsConstants.created')} {t('commonConstants.byText')}
+                </div>
+                <div className="col-span-1 pl-4 text-sm text-gray-500">
+                  {t('testsConstants.actionsText')}
+                </div>
               </div>
-              <div className="w-4/12 text-sm text-gray-500">
-                {t('testsConstants.test')}
+              <div
+                id="test-list"
+                className="rounded-t-0 col-span-12 grid rounded-md border-solid border-gray-200 shadow-base"
+              >
+                {tests.map((test, i) => (
+                  <TestTableItem
+                    key={test?.id}
+                    id={test?.id}
+                    index={i + 1}
+                    totalCount={tests.length}
+                    testName={test?.name}
+                    createdAt={test?.createdAt}
+                    createdBy={`${test?.createdBy?.firstName} ${test?.createdBy?.lastName}`}
+                    sections={test?.sections}
+                    showCheckBox={showCheckBox}
+                    status={status}
+                  />
+                ))}
               </div>
-              <div className="w-3/12 text-sm text-gray-500">
-                {t('testsConstants.sectionText')}
-              </div>
-              <div className="w-2/12 text-sm text-gray-500">
-                {t('testsConstants.createdOn')}
-              </div>
-              <div className="w-2/12 text-sm text-gray-500">
-                {t('testsConstants.created')} {t('commonConstants.byText')}
-              </div>
-              <div className="flex w-1/12 text-sm text-gray-500">
-                {t('testsConstants.actionsText')}
-              </div>
-            </div>
-            <div
-              id="test-list"
-              className="rounded-t-0 flex flex-col rounded-md border-solid border-gray-200 shadow-base"
-            >
-              {tests.map((test, i) => (
-                <TestTableItem
-                  key={test?.id}
-                  id={test?.id}
-                  index={i + 1}
-                  totalCount={tests.length}
-                  testName={test?.name}
-                  createdAt={test?.createdAt}
-                  createdBy={`${test?.createdBy?.firstName} ${test?.createdBy?.lastName}`}
-                  sections={test?.sections}
-                  showCheckBox={showCheckBox}
-                  status={status}
-                />
-              ))}
             </div>
           </div>
         </>

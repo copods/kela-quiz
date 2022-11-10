@@ -1,19 +1,25 @@
 import { Icon } from '@iconify/react'
 import type { TestSection } from '~/interface/Interface'
 import { useTranslation } from 'react-i18next'
+import { useState } from 'react'
+import InviteCandidatePopup from './InviteCandidatePopup'
 
 const TestPreview = ({
   name,
+  id,
   description,
   onSelectedSectionChange,
   selectedSections,
   isPreviewEditable = true,
+  showInviteAction,
 }: {
   name: string
+  id?: string
   description: string
   selectedSections: Array<TestSection>
   onSelectedSectionChange: (e: any) => void
   isPreviewEditable: boolean
+  showInviteAction?: boolean
 }) => {
   const { t } = useTranslation()
 
@@ -49,12 +55,45 @@ const TestPreview = ({
     )
     return isPreviewEditable ? time : time / 60
   }
+  const [candidatePopupOpen, setCandidatePopupOpen] = useState<boolean>(false)
   return (
     <div className="flex flex-1 flex-col gap-9 overflow-scroll rounded-lg bg-white p-6 shadow-base">
       <div className="flex flex-col gap-6">
-        <h1 className="text-xl font-semibold">
-          {t('testsConstants.testDetailsText')}
-        </h1>
+        <div className="flex justify-between">
+          <h1 className="text-xl font-semibold">
+            {t('testsConstants.testDetailsText')}
+          </h1>
+          {showInviteAction && (
+            <div>
+              <div className="flex gap-2">
+                <Icon
+                  id="invite-popup-open"
+                  role={'button'}
+                  tabIndex={0}
+                  className="candidateInviteIcon h-6 w-6 cursor-pointer text-primary focus:outline-dotted focus:outline-2"
+                  icon={'ant-design:user-add-outlined'}
+                  onClick={() => {
+                    setCandidatePopupOpen(true)
+                  }}
+                  onKeyUp={(e) => {
+                    if (e.key === 'Enter') setCandidatePopupOpen(true)
+                  }}
+                  aria-label={t('members.inviteMember')}
+                />
+                <span className="text-primary">
+                  {t('inviteMemeberPopUpConstants.inviteCandidate')}
+                </span>
+              </div>
+              <InviteCandidatePopup
+                openInvitePopup={candidatePopupOpen}
+                setOpenInvitePopup={setCandidatePopupOpen}
+                testName={name}
+                testId={id}
+              />
+            </div>
+          )}
+        </div>
+
         <div className="flex flex-col gap-4 text-base">
           <div className="flex">
             <div
