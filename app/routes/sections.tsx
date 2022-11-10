@@ -199,7 +199,6 @@ export default function SectionPage() {
   const sectionActionData = useActionData() as ActionData
 
   const submit = useSubmit()
-
   const sortByDetails = [
     {
       name: 'Name',
