@@ -20,7 +20,6 @@ describe('Test for section-details', () => {
     )
     cy.get('#section-card', { timeout: 8000 }).each(($el) => {
       cy.wrap($el).within((el) => {
-        console.log("AAB", el[0].getElementsByClassName('sectionName')[0].innerHTML)
         if (
           el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
         ) {
@@ -193,7 +192,9 @@ describe('Test for section-details', () => {
               .then((len) => {
                 lengthBefore = len
               })
-            cy.get('button#add-option').should('have.text', '+ Add Options').click()
+            cy.get('button#add-option')
+              .should('have.text', '+ Add Options')
+              .click()
             cy.get('#quill-editor')
               .its('length')
               .then((len) => {
@@ -338,7 +339,10 @@ describe('Test for section-details', () => {
           })
           cy.get('#optionEditor input').clear().type(cypress.useMemoAns)
           cy.get('#save-and-exit').click()
-          cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
+          cy.location('pathname', { timeout: 60000 }).should(
+            'include',
+            '/sections'
+          )
         }
       })
     })
