@@ -5,7 +5,6 @@ import {
   Outlet,
   useActionData,
   useLoaderData,
-  useNavigate,
   useSubmit,
 } from '@remix-run/react'
 import {
@@ -42,6 +41,7 @@ export type ActionData = {
     check?: Date
     title?: string
     data?: Section
+    id?: string
   }
 }
 
@@ -166,10 +166,16 @@ export const action: ActionFunction = async ({ request }) => {
     })
 
     if (isSectionDelete) {
-      await deleteSectionById(formData.get('id') as string)
+      const deleteSectionId = formData.get('id') as string
+      await deleteSectionById(deleteSectionId)
         .then((res) => {
           deleteHandle = json<ActionData>(
-            { resp: { status: 'statusCheck.deletedSuccess' } },
+            {
+              resp: {
+                status: 'statusCheck.deletedSuccess',
+                id: deleteSectionId,
+              },
+            },
 
             { status: 200 }
           )
@@ -240,11 +246,7 @@ export default function SectionPage() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [order, sortBy, data.sections?.length])
-  const navigate = useNavigate()
-  useEffect(() => {
-    const path = `/sections/${selectedSection}${data.filters}`
-    navigate(path)
-  }, [selectedSection, data?.filters, navigate])
+
   useEffect(() => {
     if (sectionActionData) {
       if (
@@ -264,8 +266,11 @@ export default function SectionPage() {
         toast.success(t(sectionActionData.resp?.status as string), {
           toastId: t(sectionActionData.resp?.status as string),
         })
+
         setSelectedSection(
-          data.selectedSectionId || data.sections[0]?.id || 'NA'
+          (sectionActionData?.resp?.id == data.sections[0]?.id
+            ? data.sections[1]?.id
+            : data.sections[0]?.id) || 'NA'
         )
       } else if (sectionActionData.errors?.status === 400) {
         toast.error(t(sectionActionData.errors?.title as string), {

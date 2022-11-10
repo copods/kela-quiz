@@ -36,10 +36,12 @@ const SectionLink = ({
       }, 500)
     }
   }, [deleted])
+
   return (
     <div
       onClick={() => {
         setSelectedSection(section.id)
+        navigate(path)
       }}
       id="section-link"
       className={isActive ? 'activeSectionCard' : ''}
@@ -94,7 +96,6 @@ const Sections = ({
   sortByDetails,
   err,
   actionStatusData,
-  selectedSection,
 }: SectionType) => {
   return (
     <div className="sectionLSWrapper flex h-full max-w-96 flex-col gap-6">
