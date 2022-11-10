@@ -109,7 +109,6 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
       setCurrentTab(0)
     }
   }, [currentTab, setCurrentTab, name, description])
-
   return (
     <div className="flex h-full flex-col gap-6 overflow-hidden">
       {/* header */}
@@ -126,7 +125,11 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
       <BreadCrumb data={breadCrumbData} />
       <StepsTabComponent
         tabs={tabs}
-        isDisabled={!name || !description}
+        isDisabled={
+          !name ||
+          !description ||
+          (currentTab > 0 && selectedSections.length <= 0)
+        }
         currentTab={currentTab}
         setCurrentTab={setCurrentTab}
       />
@@ -186,7 +189,10 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
               varient="primary-solid"
               id="next-button"
               buttonText={t('commonConstants.nextButton')}
-              isDisabled={!(name && description) || currentTab == 2}
+              isDisabled={
+                !(name && description) ||
+                (currentTab == 1 && selectedSections.length <= 0)
+              }
               onClick={() => setCurrentTab(currentTab + 1)}
             />
           ) : (
