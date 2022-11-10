@@ -36,16 +36,18 @@ const SectionLink = ({
       }, 500)
     }
   }, [deleted])
+
   return (
     <div
       onClick={() => {
         setSelectedSection(section.id)
+        if (isActive) {
+          return
+        }
         navigate(path)
       }}
       id="section-link"
-      className={
-        location.pathname === resolvedPath.pathname ? 'activeSectionCard' : ''
-      }
+      className={isActive ? 'activeSectionCard' : ''}
       role={'button'}
       tabIndex={0}
       key={section.id}
