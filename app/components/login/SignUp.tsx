@@ -21,10 +21,7 @@ const SignUp = ({ error }: { error?: string }) => {
   const signUpActionData = useActionData()
   useEffect(() => {
     if (signUpActionData) {
-      if (signUpActionData.resp?.status === 200) {
-        toast.success(t(signUpActionData.resp?.title))
-        navigate(routes.signIn)
-      } else if (signUpActionData?.errors?.title) {
+      if (signUpActionData?.errors?.title) {
         toast.error(t(signUpActionData?.errors?.title), {
           toastId: signUpActionData?.errors?.title,
         })
@@ -60,17 +57,20 @@ const SignUp = ({ error }: { error?: string }) => {
   const signIn = () => {
     navigate(routes.signIn)
   }
-  const [onBlurErr, setOnBlurErr] = useState('')
+  const [onBlurPasswordErr, setOnBlurPasswordErr] = useState('')
+  const [onBlurConfPasswordErr, setOnConfBlurPasswordErr] = useState('')
   const onBlurPassError = () => {
     if (password.length < 8 && password.length !== 0) {
-      setOnBlurErr('settings.minPasswordLimit')
+      setOnBlurPasswordErr('settings.minPasswordLimit')
     } else if (password.length >= 8 || password.length === 0) {
-      setOnBlurErr('')
+      setOnBlurPasswordErr('')
     }
   }
   const onBlurConfPassError = () => {
     if (password !== confirmPassword && confirmPassword.length !== 0) {
-      setOnBlurErr('settings.passNotMatch')
+      setOnConfBlurPasswordErr('settings.passNotMatch')
+    } else if (confirmPassword.length == 0 || password.length == 0) {
+      setOnConfBlurPasswordErr('')
     }
   }
   const inputFieldsProps = [
@@ -136,7 +136,7 @@ const SignUp = ({ error }: { error?: string }) => {
       type: 'password',
       value: password,
       onblur: onBlurPassError,
-      error: signUpActionData?.errors?.minPasswordLimit || onBlurErr,
+      error: signUpActionData?.errors?.minPasswordLimit || onBlurPasswordErr,
       errorId: 'New-password-error',
       onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
         setPassword(trimValue(event?.target.value))
@@ -150,7 +150,7 @@ const SignUp = ({ error }: { error?: string }) => {
       type: 'password',
       value: confirmPassword,
       onblur: onBlurConfPassError,
-      error: signUpActionData?.errors?.passNotMatched,
+      error: signUpActionData?.errors?.passNotMatched || onBlurConfPasswordErr,
       errorId: 'Confirm-password-error',
       onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
         setConfirmPassword(trimValue(event?.target.value))
@@ -209,7 +209,7 @@ const SignUp = ({ error }: { error?: string }) => {
                 workspace &&
                 password &&
                 confirmPassword &&
-                password == confirmPassword
+                password === confirmPassword
               )
             }
             title={
