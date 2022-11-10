@@ -5,6 +5,7 @@ import {
   Outlet,
   useActionData,
   useLoaderData,
+  useNavigate,
   useSubmit,
 } from '@remix-run/react'
 import {
@@ -59,6 +60,10 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const workspaces = await getUserWorkspaces(userId as string)
   const url = new URL(request.url).searchParams.entries()
   const filterData = Object.fromEntries(url).filter
+  const selectedSectionId = params.sectionId
+    ? params.sectionId?.toString()
+    : undefined
+
   let sections: Array<Section> = []
   let status: string = ''
   await getAllSections(filterData, currentWorkspaceId as string)
@@ -70,9 +75,6 @@ export const loader: LoaderFunction = async ({ request, params }) => {
       status = err
     })
   if (!userId) return redirect(routes.signIn)
-  const selectedSectionId = params.sectionId
-    ? params.sectionId?.toString()
-    : undefined
   const filters = new URL(request.url).search
   return json<LoaderData>({
     sections,
@@ -191,8 +193,9 @@ export const action: ActionFunction = async ({ request }) => {
 }
 
 export default function SectionPage() {
-  const { t } = useTranslation()
   const data = useLoaderData() as unknown as LoaderData
+
+  const { t } = useTranslation()
   const sectionActionData = useActionData() as ActionData
 
   const submit = useSubmit()
@@ -212,6 +215,7 @@ export default function SectionPage() {
   const [showAddSectionModal, setShowAddSectionModal] = useState(false)
   const [order, setOrder] = useState(sortByOrder.ascending as string)
   const [sortBy, setSortBy] = useState(sortByDetails[1].value)
+
   const [selectedSection, setSelectedSection] = useState(
     data.selectedSectionId || data.sections[0]?.id || 'NA'
   )
@@ -237,7 +241,11 @@ export default function SectionPage() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [order, sortBy, data.sections?.length])
-
+  const navigate = useNavigate()
+  useEffect(() => {
+    const path = `/sections/${selectedSection}${data.filters}`
+    navigate(path)
+  }, [selectedSection, data?.filters, navigate])
   useEffect(() => {
     if (sectionActionData) {
       if (

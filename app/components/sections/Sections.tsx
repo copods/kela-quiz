@@ -40,12 +40,9 @@ const SectionLink = ({
     <div
       onClick={() => {
         setSelectedSection(section.id)
-        navigate(path)
       }}
       id="section-link"
-      className={
-        location.pathname === resolvedPath.pathname ? 'activeSectionCard' : ''
-      }
+      className={isActive ? 'activeSectionCard' : ''}
       role={'button'}
       tabIndex={0}
       key={section.id}
@@ -97,6 +94,7 @@ const Sections = ({
   sortByDetails,
   err,
   actionStatusData,
+  selectedSection,
 }: SectionType) => {
   return (
     <div className="sectionLSWrapper flex h-full max-w-96 flex-col gap-6">
