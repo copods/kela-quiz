@@ -42,7 +42,7 @@ async function seed() {
   }
 
   const createMasterAdmin = async () => {
-    await prisma.user.upsert({
+    const user = await prisma.user.upsert({
       where: {
         email,
       },
@@ -56,9 +56,25 @@ async function seed() {
             hash: hashedPassword,
           },
         },
+        workspace: {
+          create: {
+            name: 'Default Workspace',
+          },
+        },
         firstName: 'Copods',
         lastName: 'Careers',
         roleId: roles[0].id,
+      },
+      include: {
+        workspace: true,
+      },
+    })
+    await prisma.userWorkspace.create({
+      data: {
+        userId: user.id,
+        workspaceId: user.workspace[0].id,
+        roleId: user?.roleId,
+        isDefault: true,
       },
     })
   }
