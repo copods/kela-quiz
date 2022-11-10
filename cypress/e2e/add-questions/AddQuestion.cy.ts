@@ -24,39 +24,39 @@ describe('Test for section-details', () => {
           el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
         ) {
           cy.get('.sectionName').should('have.text', section1).click()
-          cy.get('#add-question')
-            .should('have.text', `+ ${addQuestion.addQuestion}`)
-            .click()
-          cy.location('pathname', { timeout: 60000 }).should(
-            'include',
-            routes.addQuestion
-          )
-          cy.get('h1', { timeout: 6000 }).should('be.visible')
-          cy.get('#Question').get('#dropdown-container').click()
-          let flag = ''
-          cy.get('ul[role="listbox"]').within(() => {
-            cy.get('li').within(() => {
-              cy.get('div').then((el) => {
-                ;[...el].map((el) => {
-                  if (el.innerText === 'Multiple Choice') {
-                    flag = 'CheckBox'
-                    el.click()
-                  } else if (el.innerText === 'Single Choice') {
-                    flag = 'RadioButton'
-                  } else if (el.innerText === 'Text') {
-                    flag = 'TextArea'
-                  }
-                  return null
-                })
-              })
-            })
-          })
-          if (flag === 'CheckBox') {
-            cy.get('input[type="checkbox"]').should('have.class', 'checkBox')
-          }
         }
       })
     })
+    cy.get('#add-question')
+      .should('have.text', `+ ${addQuestion.addQuestion}`)
+      .click()
+    cy.location('pathname', { timeout: 60000 }).should(
+      'include',
+      routes.addQuestion
+    )
+    cy.get('h1', { timeout: 6000 }).should('be.visible')
+    cy.get('#Question').get('#dropdown-container').click()
+    let flag = ''
+    cy.get('ul[role="listbox"]').within(() => {
+      cy.get('li').within(() => {
+        cy.get('div').then((el) => {
+          ;[...el].map((el) => {
+            if (el.innerText === 'Multiple Choice') {
+              flag = 'CheckBox'
+              el.click()
+            } else if (el.innerText === 'Single Choice') {
+              flag = 'RadioButton'
+            } else if (el.innerText === 'Text') {
+              flag = 'TextArea'
+            }
+            return null
+          })
+        })
+      })
+    })
+    if (flag === 'CheckBox') {
+      cy.get('input[type="checkbox"]').should('have.class', 'checkBox')
+    }
   })
 
   it('Verifying Single Choice to have Radio Button in options', () => {
@@ -71,39 +71,39 @@ describe('Test for section-details', () => {
           el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
         ) {
           cy.get('.sectionName').should('have.text', section1).click()
-          cy.get('#add-question')
-            .should('have.text', `+ ${addQuestion.addQuestion}`)
-            .click()
-          cy.location('pathname', { timeout: 60000 }).should(
-            'include',
-            '/add-question'
-          )
-          cy.get('h1', { timeout: 6000 }).should('be.visible')
-          cy.get('#Question').get('#dropdown-container').click()
-          let flag = ''
-          cy.get('ul').within(() => {
-            cy.get('li').within(() => {
-              cy.get('div').then((el) => {
-                ;[...el].map((el) => {
-                  if (el.innerText === 'Multiple Choice') {
-                    flag = 'CheckBox'
-                  } else if (el.innerText === 'Single Choice') {
-                    flag = 'RadioButton'
-                    el.click()
-                  } else if (el.innerText === 'Text') {
-                    flag = 'TextArea'
-                  }
-                  return null
-                })
-              })
-            })
-          })
-          if (flag === 'RadioButton') {
-            cy.get('input').should('have.class', 'radioButton')
-          }
         }
       })
     })
+    cy.get('#add-question')
+      .should('have.text', `+ ${addQuestion.addQuestion}`)
+      .click()
+    cy.location('pathname', { timeout: 60000 }).should(
+      'include',
+      '/add-question'
+    )
+    cy.get('h1', { timeout: 6000 }).should('be.visible')
+    cy.get('#Question').get('#dropdown-container').click()
+    let flag = ''
+    cy.get('ul').within(() => {
+      cy.get('li').within(() => {
+        cy.get('div').then((el) => {
+          ;[...el].map((el) => {
+            if (el.innerText === 'Multiple Choice') {
+              flag = 'CheckBox'
+            } else if (el.innerText === 'Single Choice') {
+              flag = 'RadioButton'
+              el.click()
+            } else if (el.innerText === 'Text') {
+              flag = 'TextArea'
+            }
+            return null
+          })
+        })
+      })
+    })
+    if (flag === 'RadioButton') {
+      cy.get('input').should('have.class', 'radioButton')
+    }
   })
 
   it('Verifying Text to have Textarea in options', () => {
@@ -118,39 +118,39 @@ describe('Test for section-details', () => {
           el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
         ) {
           cy.get('.sectionName').should('have.text', section1).click()
-          cy.get('#add-question')
-            .should('have.text', `+ ${addQuestion.addQuestion}`)
-            .click()
-          cy.location('pathname', { timeout: 60000 }).should(
-            'include',
-            '/add-question'
-          )
-          cy.get('h1', { timeout: 6000 }).should('be.visible')
-          cy.get('#Question').get('#dropdown-container').click()
-          let flag = ''
-          cy.get('ul').within(() => {
-            cy.get('li').within(() => {
-              cy.get('div').then((el) => {
-                ;[...el].map((el) => {
-                  if (el.innerText === 'Multiple Choice') {
-                    flag = 'CheckBox'
-                  } else if (el.innerText === 'Single Choice') {
-                    flag = 'RadioButton'
-                  } else if (el.innerText === 'Text') {
-                    flag = 'TextArea'
-                    el.click()
-                  }
-                  return null
-                })
-              })
-            })
-          })
-          if (flag === 'TextArea') {
-            cy.get('input[type="textarea"]').should('have.class', 'textOption')
-          }
         }
       })
     })
+    cy.get('#add-question')
+      .should('have.text', `+ ${addQuestion.addQuestion}`)
+      .click()
+    cy.location('pathname', { timeout: 60000 }).should(
+      'include',
+      '/add-question'
+    )
+    cy.get('h1', { timeout: 6000 }).should('be.visible')
+    cy.get('#Question').get('#dropdown-container').click()
+    let flag = ''
+    cy.get('ul').within(() => {
+      cy.get('li').within(() => {
+        cy.get('div').then((el) => {
+          ;[...el].map((el) => {
+            if (el.innerText === 'Multiple Choice') {
+              flag = 'CheckBox'
+            } else if (el.innerText === 'Single Choice') {
+              flag = 'RadioButton'
+            } else if (el.innerText === 'Text') {
+              flag = 'TextArea'
+              el.click()
+            }
+            return null
+          })
+        })
+      })
+    })
+    if (flag === 'TextArea') {
+      cy.get('input[type="textarea"]').should('have.class', 'textOption')
+    }
   })
   let lengthBefore: number
   it('Verifying if Add Option functionality Working on Options', () => {
@@ -165,44 +165,42 @@ describe('Test for section-details', () => {
           el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
         ) {
           cy.get('.sectionName').should('have.text', section1).click()
-          cy.get('#add-question')
-            .should('have.text', `+ ${addQuestion.addQuestion}`)
-            .click()
-          cy.location('pathname', { timeout: 60000 }).should(
-            'include',
-            '/add-question'
-          )
-          cy.get('h1', { timeout: 6000 }).should('be.visible')
-          cy.get('#Question').get('#dropdown-container').click()
-
-          cy.get('ul').within(() => {
-            cy.get('li').within(() => {
-              cy.get('div').then((el) => {
-                ;[...el].forEach((el) => {
-                  if (el.innerText === 'Multiple Choice') {
-                    el.click()
-                  }
-                })
-              })
-            })
-          })
-          cy.get('.h-40 > .gap-6').within(() => {
-            cy.get('#quill-editor')
-              .its('length')
-              .then((len) => {
-                lengthBefore = len
-              })
-            cy.get('button#add-option')
-              .should('have.text', '+ Add Options')
-              .click()
-            cy.get('#quill-editor')
-              .its('length')
-              .then((len) => {
-                expect(lengthBefore + 1).to.equal(len)
-              })
-          })
         }
       })
+    })
+    cy.get('#add-question')
+      .should('have.text', `+ ${addQuestion.addQuestion}`)
+      .click()
+    cy.location('pathname', { timeout: 60000 }).should(
+      'include',
+      '/add-question'
+    )
+    cy.get('h1', { timeout: 6000 }).should('be.visible')
+    cy.get('#Question').get('#dropdown-container').click()
+
+    cy.get('ul').within(() => {
+      cy.get('li').within(() => {
+        cy.get('div').then((el) => {
+          ;[...el].forEach((el) => {
+            if (el.innerText === 'Multiple Choice') {
+              el.click()
+            }
+          })
+        })
+      })
+    })
+    cy.get('.h-40 > .gap-6').within(() => {
+      cy.get('#quill-editor')
+        .its('length')
+        .then((len) => {
+          lengthBefore = len
+        })
+      cy.get('button#add-option').should('have.text', '+ Add Options').click()
+      cy.get('#quill-editor')
+        .its('length')
+        .then((len) => {
+          expect(lengthBefore + 1).to.equal(len)
+        })
     })
   })
 
@@ -218,41 +216,41 @@ describe('Test for section-details', () => {
           el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
         ) {
           cy.get('.sectionName').should('have.text', section1).click()
-          cy.get('#add-question')
-            .should('have.text', `+ ${addQuestion.addQuestion}`)
-            .click()
-          cy.location('pathname', { timeout: 60000 }).should(
-            'include',
-            '/add-question'
-          )
-          cy.get('h1', { timeout: 6000 }).should('be.visible')
-          cy.get('#Question').get('#dropdown-container').click()
-          cy.get('ul').within(() => {
-            cy.get('li').within(() => {
-              cy.get('div').then((el) => {
-                ;[...el].forEach((el) => {
-                  if (el.innerText === 'Multiple Choice') {
-                    el.click()
-                  }
-                })
-              })
-            })
-          })
-          cy.get('.h-40 > .gap-6').within(() => {
-            cy.get('#quill-editor')
-              .its('length')
-              .then((len) => {
-                lengthBefore = len
-              })
-            cy.get('svg.h-6').first().click()
-            cy.get('#quill-editor')
-              .its('length')
-              .then((len) => {
-                expect(lengthBefore - 1).to.equal(len)
-              })
-          })
         }
       })
+    })
+    cy.get('#add-question')
+      .should('have.text', `+ ${addQuestion.addQuestion}`)
+      .click()
+    cy.location('pathname', { timeout: 60000 }).should(
+      'include',
+      '/add-question'
+    )
+    cy.get('h1', { timeout: 6000 }).should('be.visible')
+    cy.get('#Question').get('#dropdown-container').click()
+    cy.get('ul').within(() => {
+      cy.get('li').within(() => {
+        cy.get('div').then((el) => {
+          ;[...el].forEach((el) => {
+            if (el.innerText === 'Multiple Choice') {
+              el.click()
+            }
+          })
+        })
+      })
+    })
+    cy.get('.h-40 > .gap-6').within(() => {
+      cy.get('#quill-editor')
+        .its('length')
+        .then((len) => {
+          lengthBefore = len
+        })
+      cy.get('svg.h-6').first().click()
+      cy.get('#quill-editor')
+        .its('length')
+        .then((len) => {
+          expect(lengthBefore - 1).to.equal(len)
+        })
     })
   })
   it('On Save and Add More visit the Add Question Page', () => {
@@ -267,39 +265,39 @@ describe('Test for section-details', () => {
           el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
         ) {
           cy.get('.sectionName').should('have.text', section1).click()
-          cy.get('#add-question')
-            .should('have.text', `+ ${addQuestion.addQuestion}`)
-            .click()
-          cy.location('pathname', { timeout: 60000 }).should(
-            'include',
-            '/add-question'
-          )
-          cy.get('h1', { timeout: 6000 }).should('be.visible')
-          cy.get('#Question').get('#dropdown-container').click()
-          cy.get('ul').within(() => {
-            cy.get('li').within(() => {
-              cy.get('div').then((el) => {
-                ;[...el].map((el) => {
-                  if (el.innerText === 'Text') {
-                    el.click()
-                  }
-                  return null
-                })
-              })
-            })
-          })
-          cy.get('#question-editor #quill-editor').within(() => {
-            cy.get('.ql-editor').type(cypress.useRef)
-          })
-          cy.get('#optionEditor input').clear().type(cypress.useRefAns)
-          cy.get('#save-and-add-more').click()
-          cy.location('pathname', { timeout: 60000 }).should(
-            'include',
-            '/add-question'
-          )
         }
       })
     })
+    cy.get('#add-question')
+      .should('have.text', `+ ${addQuestion.addQuestion}`)
+      .click()
+    cy.location('pathname', { timeout: 60000 }).should(
+      'include',
+      '/add-question'
+    )
+    cy.get('h1', { timeout: 6000 }).should('be.visible')
+    cy.get('#Question').get('#dropdown-container').click()
+    cy.get('ul').within(() => {
+      cy.get('li').within(() => {
+        cy.get('div').then((el) => {
+          ;[...el].map((el) => {
+            if (el.innerText === 'Text') {
+              el.click()
+            }
+            return null
+          })
+        })
+      })
+    })
+    cy.get('#question-editor #quill-editor').within(() => {
+      cy.get('.ql-editor').type(cypress.useRef)
+    })
+    cy.get('#optionEditor input').clear().type(cypress.useRefAns)
+    cy.get('#save-and-add-more').click()
+    cy.location('pathname', { timeout: 60000 }).should(
+      'include',
+      '/add-question'
+    )
   })
   it('On Save and Continue visit the Sections Page', () => {
     cy.get('a')
@@ -313,39 +311,36 @@ describe('Test for section-details', () => {
           el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
         ) {
           cy.get('.sectionName').should('have.text', section1).click()
-          cy.get('#add-question')
-            .should('have.text', `+ ${addQuestion.addQuestion}`)
-            .click()
-          cy.location('pathname', { timeout: 60000 }).should(
-            'include',
-            '/add-question'
-          )
-          cy.get('h1', { timeout: 6000 }).should('be.visible')
-          cy.get('#Question').get('#dropdown-container').click()
-          cy.get('ul').within(() => {
-            cy.get('li').within(() => {
-              cy.get('div').then((el) => {
-                ;[...el].map((el) => {
-                  if (el.innerText === 'Text') {
-                    el.click()
-                  }
-                  return null
-                })
-              })
-            })
-          })
-          cy.get('#question-editor #quill-editor').within(() => {
-            cy.get('.ql-editor').type(cypress.useMemo)
-          })
-          cy.get('#optionEditor input').clear().type(cypress.useMemoAns)
-          cy.get('#save-and-exit').click()
-          cy.location('pathname', { timeout: 60000 }).should(
-            'include',
-            '/sections'
-          )
         }
       })
     })
+    cy.get('#add-question')
+      .should('have.text', `+ ${addQuestion.addQuestion}`)
+      .click()
+    cy.location('pathname', { timeout: 60000 }).should(
+      'include',
+      '/add-question'
+    )
+    cy.get('h1', { timeout: 6000 }).should('be.visible')
+    cy.get('#Question').get('#dropdown-container').click()
+    cy.get('ul').within(() => {
+      cy.get('li').within(() => {
+        cy.get('div').then((el) => {
+          ;[...el].map((el) => {
+            if (el.innerText === 'Text') {
+              el.click()
+            }
+            return null
+          })
+        })
+      })
+    })
+    cy.get('#question-editor #quill-editor').within(() => {
+      cy.get('.ql-editor').type(cypress.useMemo)
+    })
+    cy.get('#optionEditor input').clear().type(cypress.useMemoAns)
+    cy.get('#save-and-exit').click()
+    cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
   })
   it('Verifying if Question is Empty or not', () => {
     cy.get('a')
