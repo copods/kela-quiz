@@ -5,7 +5,6 @@ import { routes } from '~/constants/route.constants'
 import TestPreview from './CreateTestPreview'
 const TestDetails = () => {
   const { testPreview } = useLoaderData()
-  console.log(testPreview, 'testPreview')
   return (
     <div id="test-details" className="h-full">
       <header className="mb-8">
