@@ -41,6 +41,9 @@ const SectionLink = ({
     <div
       onClick={() => {
         setSelectedSection(section.id)
+        if (isActive) {
+          return
+        }
         navigate(path)
       }}
       id="section-link"
