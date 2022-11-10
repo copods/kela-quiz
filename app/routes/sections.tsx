@@ -268,7 +268,7 @@ export default function SectionPage() {
         })
 
         setSelectedSection(
-          (sectionActionData?.resp?.id == data.sections[0]?.id
+          (sectionActionData?.resp?.id === data.sections[0]?.id
             ? data.sections[1]?.id
             : data.sections[0]?.id) || 'NA'
         )
