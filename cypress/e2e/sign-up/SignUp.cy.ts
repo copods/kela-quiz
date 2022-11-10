@@ -10,7 +10,7 @@ describe('Test for Sign Up page', () => {
     cy.visit('/sign-up')
   })
 
-  it('Checks if password and re-enter password input fields input values not matched then thowing a proper error', () => {
+  it('Check if user gets proper error when password and confirm password does not match', () => {
     cy.get('#firstName')
       .should('be.visible', { timeout: 60000 })
       .clear()

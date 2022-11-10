@@ -4,6 +4,9 @@ import { json } from '@remix-run/node'
 import { createUserBySignUp } from '~/models/user.server'
 
 import SignUp from '~/components/login/SignUp'
+import { createUserSession } from '~/session.server'
+import { safeRedirect } from '~/utils'
+import { routes } from '~/constants/route.constants'
 
 export type ActionData = {
   errors?: {
@@ -25,6 +28,8 @@ export type ActionData = {
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
   const action = JSON.parse(formData.get('signUp') as string)
+  const redirectTo = safeRedirect(formData.get('redirectTo'), routes.members)
+
   if (action.action === 'add') {
     const firstName = formData.get('firstName')
     const lastName = formData.get('lastName')
@@ -125,15 +130,12 @@ export const action: ActionFunction = async ({ request }) => {
       workspaceName,
     })
       .then((res) => {
-        addHandle = json<ActionData>(
-          {
-            resp: {
-              title: 'toastConstants.signUpSuccessfull',
-              status: 200,
-            },
-          },
-          { status: 200 }
-        )
+        addHandle = createUserSession({
+          request,
+          userId: res?.id,
+          remember: false,
+          redirectTo,
+        })
       })
       .catch((err) => {
         let title = 'statusCheck.commonError'

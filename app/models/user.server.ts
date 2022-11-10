@@ -5,6 +5,7 @@ import { prisma } from '~/db.server'
 import { sendMail, sendNewPassword } from './sendgrid.servers'
 import { faker } from '@faker-js/faker'
 import { env } from 'process'
+
 export type { User } from '@prisma/client'
 
 export async function getUserById(id: User['id']) {
@@ -111,7 +112,8 @@ export async function createUserBySignUp({
     },
   })
 
-  return await sendMail(email, firstName, password, role?.name as string)
+  await sendMail(email, firstName, password, role?.name as string)
+  return user
 }
 
 export async function createNewUser({

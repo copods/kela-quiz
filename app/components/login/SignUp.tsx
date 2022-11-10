@@ -24,14 +24,13 @@ const SignUp = ({ error }: { error?: string }) => {
       if (signUpActionData.resp?.status === 200) {
         toast.success(t(signUpActionData.resp?.title))
         navigate(routes.signIn)
-      } else if (signUpActionData.errors?.status === 400) {
+      } else if (signUpActionData?.errors?.title) {
         toast.error(t(signUpActionData?.errors?.title), {
           toastId: signUpActionData?.errors?.title,
         })
       }
     }
   }, [signUpActionData, navigate, t])
-
   const transition = useTransition()
   const submit = useSubmit()
 
@@ -39,7 +38,7 @@ const SignUp = ({ error }: { error?: string }) => {
   const [lastName, setLastName] = useState('')
   const [email, setEmail] = useState('')
   const [workspace, setWorkspace] = useState('')
-  const [Password, setPassword] = useState('')
+  const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
 
   const submitMemberForm = () => {
@@ -48,7 +47,7 @@ const SignUp = ({ error }: { error?: string }) => {
       lastName: lastName,
       email: email,
       workspace: workspace,
-      Password: Password,
+      Password: password,
       confirmPassword: confirmPassword,
       signUp: JSON.stringify({
         action: 'add',
@@ -62,10 +61,15 @@ const SignUp = ({ error }: { error?: string }) => {
     navigate(routes.signIn)
   }
   const [onBlurErr, setOnBlurErr] = useState('')
-  const handleFocusEvent = (e: any) => {
-    if (Password.length < 8) {
+  const onBlurPassError = () => {
+    if (password.length < 8 && password.length !== 0) {
       setOnBlurErr('settings.minPasswordLimit')
-    } else if (Password !== confirmPassword && confirmPassword.length !== 0) {
+    } else if (password.length >= 8 || password.length === 0) {
+      setOnBlurErr('')
+    }
+  }
+  const onBlurConfPassError = () => {
+    if (password !== confirmPassword && confirmPassword.length !== 0) {
       setOnBlurErr('settings.passNotMatch')
     }
   }
@@ -130,8 +134,8 @@ const SignUp = ({ error }: { error?: string }) => {
       name: 'Password',
       required: true,
       type: 'password',
-      value: Password,
-      onblur: handleFocusEvent,
+      value: password,
+      onblur: onBlurPassError,
       error: signUpActionData?.errors?.minPasswordLimit || onBlurErr,
       errorId: 'New-password-error',
       onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
@@ -145,6 +149,7 @@ const SignUp = ({ error }: { error?: string }) => {
       required: true,
       type: 'password',
       value: confirmPassword,
+      onblur: onBlurConfPassError,
       error: signUpActionData?.errors?.passNotMatched,
       errorId: 'Confirm-password-error',
       onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
@@ -202,8 +207,9 @@ const SignUp = ({ error }: { error?: string }) => {
                 lastName &&
                 email &&
                 workspace &&
-                Password &&
-                confirmPassword
+                password &&
+                confirmPassword &&
+                password == confirmPassword
               )
             }
             title={
