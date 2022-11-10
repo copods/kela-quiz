@@ -247,6 +247,7 @@ export interface CandidateResult {
   testId: string
   isQualified: boolean
   createdAt: Date
+  startedAt: Date
   updatedAt: Date
   workspaceId?: string
 }

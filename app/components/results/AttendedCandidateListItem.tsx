@@ -1,5 +1,6 @@
 import { Link, useSubmit } from '@remix-run/react'
 import { useState } from 'react'
+import moment from 'moment'
 import { useTranslation } from 'react-i18next'
 import TestListActionMenu from '../TestListActionMenu'
 
@@ -16,6 +17,8 @@ const AttendedCandidateListItem = ({
   testName,
   candidateResultId,
   endAt,
+  startedAt,
+  createdAt,
 }: {
   id: string
   candidateId: string
@@ -29,7 +32,10 @@ const AttendedCandidateListItem = ({
   testName: string
   candidateResultId: string
   endAt: Date
+  startedAt: Date
+  createdAt: Date
 }) => {
+  console.log({ createdAt, startedAt })
   const { t } = useTranslation()
   const [menuListOpen, setmenuListOpen] = useState<boolean>(false)
   const submit = useSubmit()
@@ -52,19 +58,19 @@ const AttendedCandidateListItem = ({
         {endAt ? (
           <Link
             to={`/results/groupByTests/${testId}/${candidateResultId}`}
-            className="col-span-3 flex  truncate font-semibold text-primary"
+            className="col-span-2 flex  truncate font-semibold text-primary"
             title={name}
           >
             {name}
           </Link>
         ) : name != ' ' ? (
-          <span className="col-span-3 flex items-center truncate" title={name}>
+          <span className="col-span-2 flex items-center truncate" title={name}>
             {name}
           </span>
         ) : (
           <div
             title="No Name"
-            className="align-center col-span-3 flex items-center truncate"
+            className="align-center col-span-2 flex items-center truncate"
           >
             <i>--No Name--</i>
           </div>
@@ -73,15 +79,31 @@ const AttendedCandidateListItem = ({
           title={email}
           tabIndex={0}
           role={'banner'}
-          className="col-span-4 flex items-center truncate"
+          className="col-span-2 flex items-center truncate"
         >
           {email}
+        </div>
+        <div
+          title={'createdAt'}
+          tabIndex={0}
+          role={'banner'}
+          className="col-span-2 flex items-center truncate"
+        >
+          {moment(createdAt).format('DD MMMM YY')}
+        </div>
+        <div
+          title={'startedAt'}
+          tabIndex={0}
+          role={'banner'}
+          className="col-span-2 flex items-center truncate"
+        >
+          {moment(startedAt).format('DD MMMM YY')}
         </div>
         <div
           title={invitedBy}
           tabIndex={0}
           role={'banner'}
-          className="col-span-2 flex items-center truncate"
+          className="col-span-1 flex items-center truncate"
         >
           <span className="text-base text-gray-700">{invitedBy}</span>
         </div>
