@@ -5,6 +5,7 @@ import { prisma } from '~/db.server'
 import { sendMail, sendNewPassword } from './sendgrid.servers'
 import { faker } from '@faker-js/faker'
 import { env } from 'process'
+
 export type { User } from '@prisma/client'
 
 export async function getUserById(id: User['id']) {
@@ -57,15 +58,15 @@ export async function createUserBySignUp({
   firstName,
   lastName,
   email,
-
+  password,
   workspaceName,
 }: {
   firstName: string
   lastName: string
   email: string
+  password: string
   workspaceName: string
 }) {
-  const password = faker.internet.password()
   const hashedPassword = await bcrypt.hash(password, 10)
   const roleId = await getAdminId()
   const user = await prisma.user.create({
@@ -111,7 +112,8 @@ export async function createUserBySignUp({
     },
   })
 
-  return await sendMail(email, firstName, password, role?.name as string)
+  await sendMail(email, firstName, password, role?.name as string)
+  return user
 }
 
 export async function createNewUser({
@@ -194,15 +196,6 @@ export async function createNewUser({
     firstName,
     role?.name || 'NA'
   )
-}
-export async function createPasswordOfUser(id: string, password: string) {
-  const hashedPassword = await bcrypt.hash(password, 10)
-  return await prisma.password.create({
-    data: {
-      hash: hashedPassword,
-      userId: id,
-    },
-  })
 }
 
 export async function reinviteMember({ id }: { id: string }) {

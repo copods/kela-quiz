@@ -3,7 +3,6 @@ import {
   commonConstants,
   cypress,
   members,
-  statusCheck,
   toastConstants,
 } from '~/constants/common.constants'
 const memberEmail = 'johndoe@example.com'
@@ -145,23 +144,5 @@ describe('Test for members', () => {
       })
     })
     return false
-  })
-  it('checks,if user id is not available then redirect to user not found page', () => {
-    if (window.location.port === '3000') {
-      cy.visit(
-        `http://localhost:3000` +
-          '/members/' +
-          ' cl9qupatc0193thtn2iitunti' +
-          '/create-password'
-      )
-    } else if (window.location.port === '8811') {
-      cy.visit(
-        `http://localhost:8811` +
-          '/members/' +
-          ' cl9qupatc0193thtn2iitunti' +
-          '/create-password'
-      )
-    }
-    cy.get('.userNotFound').should('have.text', statusCheck.userNotFound)
   })
 })
