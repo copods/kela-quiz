@@ -126,7 +126,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
       <BreadCrumb data={breadCrumbData} />
       <StepsTabComponent
         tabs={tabs}
-        isDisabled={!name || !description}
+        isDisabled={!(name.length > 0 && description.length > 0)}
         currentTab={currentTab}
         setCurrentTab={setCurrentTab}
       />
