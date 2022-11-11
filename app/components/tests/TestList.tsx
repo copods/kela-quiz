@@ -18,9 +18,8 @@ const TestList = ({
   const { t } = useTranslation()
 
   const [sortDirection, onSortDirectionChange] = useState('asc')
-  const [sortBy, onSortChange] = useState('name')
   const navigate = useNavigate()
-  const filterByType = [
+  const sortByDetails = [
     {
       name: 'Name',
       value: 'name',
@@ -30,6 +29,7 @@ const TestList = ({
       value: 'createdAt',
     },
   ]
+  const [sortBy, onSortChange] = useState(sortByDetails[1].value)
   const submit = useSubmit()
   useEffect(() => {
     let filter = {
@@ -75,7 +75,7 @@ const TestList = ({
         <>
           <div id="sort-filter-container">
             <SortFilter
-              filterData={filterByType}
+              filterData={sortByDetails}
               sortDirection={sortDirection}
               onSortDirectionChange={onSortDirectionChange}
               sortBy={sortBy}
