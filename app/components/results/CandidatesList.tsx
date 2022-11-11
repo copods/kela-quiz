@@ -57,7 +57,7 @@ const CandidatesList = () => {
             {t('commonConstants.email')}
           </span>
           <span className="col-span-2 text-sm font-semibold text-gray-500">
-            {t('commonConstants.createAt')}
+            {t('commonConstants.invitedAt')}
           </span>
           <span className="col-span-2 text-sm font-semibold text-gray-500">
             {t('resultConstants.startedAt')}
@@ -92,7 +92,7 @@ const CandidatesList = () => {
             return (
               <div
                 key={candidate.id}
-                className="memberRow col-span-10 grid rounded-lg"
+                className="memberRow col-span-12 grid rounded-lg"
               >
                 <AttendedCandidateListItem
                   id={candidate?.id}

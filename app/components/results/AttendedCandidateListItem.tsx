@@ -35,7 +35,6 @@ const AttendedCandidateListItem = ({
   startedAt: Date
   createdAt: Date
 }) => {
-  console.log({ createdAt, startedAt })
   const { t } = useTranslation()
   const [menuListOpen, setmenuListOpen] = useState<boolean>(false)
   const submit = useSubmit()
@@ -51,7 +50,7 @@ const AttendedCandidateListItem = ({
   }
   return (
     <div className="col-span-full">
-      <div className="col-span-full grid grid-cols-12 gap-3 rounded-b-lg border-t border-solid border-gray-200 bg-white px-12 py-6">
+      <div className="col-span-full grid grid-cols-12 gap-1 rounded-b-lg border-t border-solid border-gray-200 bg-white px-8 py-6">
         <div className="col-span-1 flex items-center items-center truncate">
           <span className="text-base text-gray-700">{index}</span>
         </div>
