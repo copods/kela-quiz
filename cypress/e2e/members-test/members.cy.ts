@@ -3,26 +3,15 @@ import {
   commonConstants,
   cypress,
   members,
-  statusCheck,
   toastConstants,
 } from '~/constants/common.constants'
 const memberEmail = 'johndoe@example.com'
 
 describe('Test for members', () => {
   beforeEach('sign-in', () => {
-    cy.visit('/sign-in')
-    cy.get('input[name="email"]')
-      .clear()
-      .type(Cypress.env('email'))
-      .should('have.focus')
-      .should('have.value', Cypress.env('email'))
-    cy.get('input[name="password"]')
-      .clear()
-      .type(Cypress.env('password'))
-      .should('have.focus')
-      .should('have.value', Cypress.env('password'))
-    cy.get('[data-cy="submit"]').click()
-    cy.location('pathname').should('include', '/members')
+    cy.login()
+
+    cy.customVisit('/members')
   })
   it('Test for conforming ,new member is added in a list or not', () => {
     cy.get('a').find('#members').should('have.text', members.members).click()
@@ -155,23 +144,5 @@ describe('Test for members', () => {
       })
     })
     return false
-  })
-  it('checks,if user id is not available then redirect to user not found page', () => {
-    if (window.location.port === '3000') {
-      cy.visit(
-        `http://localhost:3000` +
-          '/members/' +
-          ' cl9qupatc0193thtn2iitunti' +
-          '/create-password'
-      )
-    } else if (window.location.port === '8811') {
-      cy.visit(
-        `http://localhost:8811` +
-          '/members/' +
-          ' cl9qupatc0193thtn2iitunti' +
-          '/create-password'
-      )
-    }
-    cy.get('.userNotFound').should('have.text', statusCheck.userNotFound)
   })
 })

@@ -3,19 +3,9 @@ const test1 = `Aptitude - test1`
 
 describe('Test for GroupByTestTable, Result', () => {
   beforeEach('sign-in', () => {
-    cy.visit('/sign-in')
-    cy.get('input[name="email"]')
-      .clear()
-      .type(Cypress.env('email'))
-      .should('have.focus')
-      .should('have.value', Cypress.env('email'))
-    cy.get('input[name="password"]')
-      .clear()
-      .type(Cypress.env('password'))
-      .should('have.focus')
-      .should('have.value', Cypress.env('password'))
-    cy.get('[data-cy="submit"]').click()
-    cy.location('pathname').should('include', '/members')
+    cy.login()
+
+    cy.customVisit('/members')
   })
   let value: string
   let strings: Array<string>
@@ -101,13 +91,15 @@ describe('Test for GroupByTestTable, Result', () => {
       .should('have.text', commonConstants.results)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')
-    cy.get('#sort-filter-container')
-      .get('.dropdownButton')
-      .click({ multiple: true })
-      .get('li div')
-      .get('.dropdown-option')
-      .get('.not-selected')
-      .click()
+    cy.get('#sort-filter-container').within(() => {
+      cy.get('.dropdownButton')
+        .click({ multiple: true })
+        .get('li div')
+        .get('.dropdown-option')
+        .get('.not-selected')
+        .click()
+    })
+
     cy.get('.dropdownButton span span', { timeout: 6000 })
       .invoke('text')
       .then((el) => {
@@ -135,13 +127,15 @@ describe('Test for GroupByTestTable, Result', () => {
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')
     cy.get('#sort-filter-body').get('#ascend').click()
-    cy.get('#sort-filter-container')
-      .get('.dropdownButton')
-      .click({ multiple: true })
-      .get('li div')
-      .get('.dropdown-option')
-      .get('.not-selected')
-      .click()
+    cy.get('#sort-filter-container').within(() => {
+      cy.get('.dropdownButton')
+        .click({ multiple: true })
+        .get('li div')
+        .get('.dropdown-option')
+        .get('.not-selected')
+        .click()
+    })
+
     cy.get('.dropdownButton span span', { timeout: 6000 })
       .invoke('text')
       .then((el) => {

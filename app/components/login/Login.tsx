@@ -48,7 +48,7 @@ function Login({ actionData, redirectTo }: LoginProps) {
   }
   return (
     <div className="z-10 flex	min-h-480 w-full max-w-554 flex-col items-center justify-center rounded-lg bg-white px-24 drop-shadow-xl">
-      <div className="z-20 -mt-24 mb-6">
+      <div className="z-20 -mt-12 mb-6">
         <Logo height="64" width="64" />
       </div>
       <div className="w-full">
