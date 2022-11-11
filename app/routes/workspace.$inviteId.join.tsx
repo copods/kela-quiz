@@ -151,7 +151,7 @@ const InviteMember = () => {
     }
   }, [joinWorkspaceActionData, t])
   return (
-    <div className="flex h-full flex-col">
+    <div className="flex h-full flex-col bg-gray-50">
       <Header />
       <JoinWorkspace />
     </div>

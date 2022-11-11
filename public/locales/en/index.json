@@ -8,11 +8,10 @@
     "addedOn": "Added On",
     "action": "Action",
     "member": "member",
-    "memberResendIcon": "Reinvite Icon",
     "invitedMember": "Invited Member",
     "joinedMembers": "Joined Members",
     "noInvitedMember": "No any invited Member Found",
-    "doYouWantToJoin": "Do You Want To Join?",
+    "workspaceInvitation": "Workspace Invitation",
     "invitedOn": "Invited On"
   },
   "commonConstants": {

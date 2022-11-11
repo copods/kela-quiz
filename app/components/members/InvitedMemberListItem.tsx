@@ -1,4 +1,3 @@
-// import { Icon } from '@iconify/react'
 import { useSubmit } from '@remix-run/react'
 import moment from 'moment'
 import { useEffect, useState } from 'react'
@@ -21,9 +20,7 @@ const InvitedMembersListItem = ({
     }
   }, [actionStatus])
   const submit = useSubmit()
-  // const openPopUp = () => {
-  //   setOpen(!open)
-  // }
+
   const { t } = useTranslation()
   const deleteUser = () => {
     submit(
@@ -66,16 +63,6 @@ const InvitedMembersListItem = ({
           </span>
         </div>
         <div className="col-span-1 flex justify-start gap-4 pl-4">
-          {/* <Icon
-            id="delete-button"
-            tabIndex={0}
-            onClick={openPopUp}
-            onKeyUp={(e) => {
-              if (e.key === 'Enter') openPopUp()
-            }}
-            icon="ic:outline-delete-outline"
-            className="h-6 w-6 cursor-pointer text-red-500 "
-          /> */}
           <span
             tabIndex={0}
             role="button"
