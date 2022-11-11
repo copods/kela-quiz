@@ -3,7 +3,6 @@ import { redirect } from '@remix-run/server-runtime'
 import { json } from '@remix-run/node'
 import {
   getInvitedMemberById,
-  joinWorkspace,
   rejectWorkspaceInvitation,
 } from '~/models/user.server'
 import Header from '~/components/assessment/Header'
@@ -14,6 +13,7 @@ import { useTranslation } from 'react-i18next'
 import { useEffect } from 'react'
 import { toast } from 'react-toastify'
 import { routes } from '~/constants/route.constants'
+import { joinWorkspace } from '~/models/workspace.server'
 
 export type ActionData = {
   errors?: {

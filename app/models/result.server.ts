@@ -206,7 +206,16 @@ export async function getAllCandidateTests(
   const filter = filterData ? filterData : {}
   const res: Array<Test> = await prisma.test.findMany({
     ...filter,
-    where: { workspaceId },
+    where: {
+      workspaceId,
+      candidateTest: {
+        some: {
+          id: {
+            not: undefined,
+          },
+        },
+      },
+    },
     include: {
       _count: {
         select: {

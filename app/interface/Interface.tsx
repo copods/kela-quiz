@@ -11,6 +11,7 @@ export interface InputFieldProps {
   errorId: string
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
+
 export interface PasswordFieldProps {
   name: string
   label: string
@@ -21,6 +22,7 @@ export interface PasswordFieldProps {
   error?: string
   errorId: string
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  onblur?: (e: React.FocusEvent<HTMLInputElement>) => void
 }
 
 export interface DialogWrapperProps {
@@ -112,7 +114,7 @@ export interface User {
 export interface Invites {
   id: string
   email: string
-  invitedBy: User
+  invitedById: User
   userId: string
   invitedForWorkspace: Workspace
   workspaceId: string

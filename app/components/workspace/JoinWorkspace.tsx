@@ -41,8 +41,8 @@ const JoinWorkspace = () => {
               <span className="break-word text-center text-base font-medium text-gray-500">
                 You have been invited by{' '}
                 <span className="text-center text-primary">
-                  {WorkspaceInvitation.invitedBy.firstName}{' '}
-                  {WorkspaceInvitation.invitedBy.lastName}
+                  {WorkspaceInvitation.invitedById.firstName}{' '}
+                  {WorkspaceInvitation.invitedById.lastName}
                 </span>{' '}
                 to join{' '}
                 <span className="text-primary">

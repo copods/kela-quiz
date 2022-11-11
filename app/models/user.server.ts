@@ -4,6 +4,7 @@ import { sendMail, sendMemberInvite, sendNewPassword } from './sendgrid.servers'
 import { prisma } from '~/db.server'
 import { faker } from '@faker-js/faker'
 import { env } from 'process'
+
 export type { User } from '@prisma/client'
 
 export async function getUserById(id: User['id']) {
@@ -15,7 +16,7 @@ export async function getInvitedMemberById(id: Invites['id']) {
     select: {
       id: true,
       joined: true,
-      invitedBy: {
+      invitedById: {
         select: {
           firstName: true,
           lastName: true,
@@ -77,15 +78,15 @@ export async function createUserBySignUp({
   firstName,
   lastName,
   email,
-
+  password,
   workspaceName,
 }: {
   firstName: string
   lastName: string
   email: string
+  password: string
   workspaceName: string
 }) {
-  const password = faker.internet.password()
   const hashedPassword = await bcrypt.hash(password, 10)
   const roleId = await getAdminId()
   const user = await prisma.user.create({
@@ -131,7 +132,8 @@ export async function createUserBySignUp({
     },
   })
 
-  return await sendMail(email, firstName, password, role?.name as string)
+  await sendMail(email, firstName, password, role?.name as string)
+  return user
 }
 
 export async function inviteNewUser({
@@ -145,7 +147,6 @@ export async function inviteNewUser({
   userId?: string
   invitedByWorkspaceId: string
 }) {
-  console.log('inviteishere')
   await prisma.invites
     .create({
       data: {
@@ -184,12 +185,15 @@ export async function inviteNewUser({
       console.log('error', err)
     })
 }
-export async function getAllInvitedMember() {
+export async function getAllInvitedMember(workspaceId: string) {
   return await prisma.invites.findMany({
+    where: {
+      workspaceId,
+    },
     include: {
       invitedForWorkspace: true,
       role: true,
-      invitedBy: {
+      invitedById: {
         select: {
           firstName: true,
           lastName: true,
@@ -293,15 +297,6 @@ export async function createNewUser({
     firstName,
     role?.name || 'NA'
   )
-}
-export async function createPasswordOfUser(id: string, password: string) {
-  const hashedPassword = await bcrypt.hash(password, 10)
-  return await prisma.password.create({
-    data: {
-      hash: hashedPassword,
-      userId: id,
-    },
-  })
 }
 
 export async function reinviteMember({ id }: { id: string }) {
@@ -430,50 +425,6 @@ export async function updatePassword(
   if (checkValidPass) {
     return 'DONE'
   }
-}
-export async function joinWorkspace({ invitedId }: { invitedId: string }) {
-  // user will join the workspace for he/she invited
-  const getUserInvite = await prisma.invites.findUnique({
-    where: {
-      id: invitedId,
-    },
-    select: {
-      email: true,
-      invitedForWorkspace: {
-        select: {
-          id: true,
-        },
-      },
-      roleId: true,
-    },
-  })
-  const user = await prisma.user.findUnique({
-    where: {
-      email: getUserInvite?.email,
-    },
-    select: {
-      id: true,
-    },
-  })
-  const linkUserWorkspace = await prisma.userWorkspace.create({
-    //create user's another UserWorkspace which is linked with invited workspace
-    data: {
-      userId: user?.id as string,
-      workspaceId: getUserInvite?.invitedForWorkspace?.id as string,
-      roleId: getUserInvite?.roleId as string,
-      isDefault: false,
-    },
-  })
-  await prisma.invites.update({
-    //after joining the workspace it will update the status as joined true
-    where: {
-      id: invitedId,
-    },
-    data: {
-      joined: true,
-    },
-  })
-  return linkUserWorkspace
 }
 
 export async function rejectWorkspaceInvitation({

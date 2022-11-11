@@ -2,10 +2,7 @@
 import {
   addQuestion,
   commonConstants,
-  members,
   cypress,
-  routeFiles,
-  testsConstants,
 } from '~/constants/common.constants'
 const section1 = `Aptitude - section1`
 const test1 = `Aptitude - test1`
@@ -16,17 +13,9 @@ const deleteSection = `Aptitude - delete-Section`
 const memberEmail = 'johndoe@example.com'
 
 describe('smoke tests', () => {
-  it('Successfully Login', () => {
-    cy.visit('/sign-in')
-    cy.get('#email').clear().type('copods.demo.sendgrid@gmail.com')
-    cy.get('#password').clear().type('kQuiz@copods')
-    cy.findByRole('button').click()
-    cy.url().should('includes', '/members')
-    cy.getCookies()
-      .should('have.length', 1)
-      .then((cookies) => {
-        expect(cookies[0]).to.have.property('name', '__session')
-      })
+  beforeEach(() => {
+    // This will clear the local storage for every test
+    window.localStorage.clear()
   })
 
   it('Invalid Email Error Message', () => {
@@ -45,20 +34,24 @@ describe('smoke tests', () => {
     cy.get('#password-error').should('have.text', 'Password is invalid')
   })
 
-  it('should add workspace', () => {
+  it('Successfully Login', () => {
     cy.visit('/sign-in')
-    cy.get('input[name="email"]')
-      .clear()
-      .type(Cypress.env('email'))
-      .should('have.focus')
-      .should('have.value', Cypress.env('email'))
-    cy.get('input[name="password"]')
-      .clear()
-      .type(Cypress.env('password'))
-      .should('have.focus')
-      .should('have.value', Cypress.env('password'))
-    cy.get('[data-cy="submit"]').click()
+    cy.get('#email').clear().type('copods.demo.sendgrid@gmail.com')
+    cy.get('#password').clear().type('kQuiz@copods')
+    cy.findByRole('button').click()
+    cy.url().should('includes', '/members')
+    cy.getCookies()
+      .should('have.length', 1)
+      .then((cookies) => {
+        expect(cookies[0]).to.have.property('name', '__session')
+      })
+  })
+
+  it('should add workspace', () => {
+    cy.login()
+    cy.customVisit('/members')
     cy.location('pathname').should('include', '/members')
+
     let dropdown = cy.get('#dropdown')
 
     dropdown
@@ -83,8 +76,6 @@ describe('smoke tests', () => {
 
     cy.get('button[name="addWorkspace"]').click()
 
-    cy.wait(500)
-
     // Check for workspace length
     dropdown = cy.get('#dropdown')
 
@@ -96,25 +87,12 @@ describe('smoke tests', () => {
         expect(item.length).to.be.greaterThan(1)
       })
   })
+
   // creating test data
   it('Adding a first section', () => {
-    cy.visit('/sign-in')
-    cy.get('input[name="email"]')
-      .clear()
-      .type(Cypress.env('email'))
-      .should('have.focus')
-      .should('have.value', Cypress.env('email'))
-    cy.get('input[name="password"]')
-      .clear()
-      .type(Cypress.env('password'))
-      .should('have.focus')
-      .should('have.value', Cypress.env('password'))
-    cy.get('[data-cy="submit"]').click()
-    cy.location('pathname').should('include', '/members')
-    cy.get('a')
-      .find('#sections')
-      .should('have.text', routeFiles.sections)
-      .click()
+    cy.login()
+    cy.customVisit('/sections')
+
     cy.get('#add-section').click()
     cy.get('form > div')
       .should('be.visible')
@@ -126,23 +104,9 @@ describe('smoke tests', () => {
   })
 
   it('Adding a second section', () => {
-    cy.visit('/sign-in')
-    cy.get('input[name="email"]')
-      .clear()
-      .type(Cypress.env('email'))
-      .should('have.focus')
-      .should('have.value', Cypress.env('email'))
-    cy.get('input[name="password"]')
-      .clear()
-      .type(Cypress.env('password'))
-      .should('have.focus')
-      .should('have.value', Cypress.env('password'))
-    cy.get('[data-cy="submit"]').click()
-    cy.location('pathname').should('include', '/members')
-    cy.get('a')
-      .find('#sections')
-      .should('have.text', routeFiles.sections)
-      .click()
+    cy.login()
+    cy.customVisit('/sections')
+
     cy.get('#add-section').click()
     cy.get('form > div')
       .should('be.visible')
@@ -154,23 +118,9 @@ describe('smoke tests', () => {
   })
 
   it('Adding a deleteSection ', () => {
-    cy.visit('/sign-in')
-    cy.get('input[name="email"]')
-      .clear()
-      .type(Cypress.env('email'))
-      .should('have.focus')
-      .should('have.value', Cypress.env('email'))
-    cy.get('input[name="password"]')
-      .clear()
-      .type(Cypress.env('password'))
-      .should('have.focus')
-      .should('have.value', Cypress.env('password'))
-    cy.get('[data-cy="submit"]').click()
-    cy.location('pathname').should('include', '/members')
-    cy.get('a')
-      .find('#sections')
-      .should('have.text', routeFiles.sections)
-      .click()
+    cy.login()
+    cy.customVisit('/sections')
+
     cy.get('#add-section').click()
     cy.get('form > div')
       .should('be.visible')
@@ -182,23 +132,9 @@ describe('smoke tests', () => {
   })
 
   it('Add question to the first section', () => {
-    cy.visit('/sign-in')
-    cy.get('input[name="email"]')
-      .clear()
-      .type(Cypress.env('email'))
-      .should('have.focus')
-      .should('have.value', Cypress.env('email'))
-    cy.get('input[name="password"]')
-      .clear()
-      .type(Cypress.env('password'))
-      .should('have.focus')
-      .should('have.value', Cypress.env('password'))
-    cy.get('[data-cy="submit"]').click()
-    cy.location('pathname').should('include', '/members')
-    cy.get('a')
-      .find('#sections')
-      .should('have.text', routeFiles.sections)
-      .click()
+    cy.login()
+    cy.customVisit('/sections')
+
     cy.get('#section-card').each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -238,23 +174,9 @@ describe('smoke tests', () => {
   })
 
   it('Add question to the second section', () => {
-    cy.visit('/sign-in')
-    cy.get('input[name="email"]')
-      .clear()
-      .type(Cypress.env('email'))
-      .should('have.focus')
-      .should('have.value', Cypress.env('email'))
-    cy.get('input[name="password"]')
-      .clear()
-      .type(Cypress.env('password'))
-      .should('have.focus')
-      .should('have.value', Cypress.env('password'))
-    cy.get('[data-cy="submit"]').click()
-    cy.location('pathname').should('include', '/members')
-    cy.get('a')
-      .find('#sections')
-      .should('have.text', routeFiles.sections)
-      .click()
+    cy.login()
+    cy.customVisit('/sections')
+
     cy.get('#section-card').each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -293,28 +215,12 @@ describe('smoke tests', () => {
   })
 
   it('Verify if user able create the test 1', () => {
-    cy.visit('/sign-in')
-    cy.get('input[name="email"]')
-      .clear()
-      .type(Cypress.env('email'))
-      .should('have.focus')
-      .should('have.value', Cypress.env('email'))
-    cy.get('input[name="password"]')
-      .clear()
-      .type(Cypress.env('password'))
-      .should('have.focus')
-      .should('have.value', Cypress.env('password'))
-    cy.get('[data-cy="submit"]').click()
-    cy.location('pathname').should('include', '/members')
-    cy.get('a').find('#tests').should('have.text', testsConstants.tests).click()
-    cy.get('#add-test', { timeout: 6000 }).click()
-    cy.location('pathname', { timeout: 60000 }).should(
-      'include',
-      '/tests/add-test'
-    )
-    cy.get('input[placeholder="Enter test name"]', { timeout: 6000 })
-      .clear()
-      .type(deleteTest1)
+    cy.login()
+    cy.customVisit('/tests')
+
+    cy.get('#add-test').click()
+    cy.location('pathname').should('include', '/tests/add-test')
+    cy.get('input[placeholder="Enter test name"]').clear().type(deleteTest1)
     cy.get('#quill-editor').within(() => {
       cy.get('.ql-editor').type(`Test Description`)
     })
@@ -335,7 +241,7 @@ describe('smoke tests', () => {
       })
     })
     // user reached to step 2
-    cy.get('div#section', { timeout: 60000 }).each((el) => {
+    cy.get('div#section').each((el) => {
       cy.wrap(el).within(() => {
         if (el.find('.count')[0].innerText != '0') {
           cy.get('input#no-of-qu').should('have.disabled', true)
@@ -377,28 +283,12 @@ describe('smoke tests', () => {
   })
 
   it('Verify if user able create the test 2', () => {
-    cy.visit('/sign-in')
-    cy.get('input[name="email"]')
-      .clear()
-      .type(Cypress.env('email'))
-      .should('have.focus')
-      .should('have.value', Cypress.env('email'))
-    cy.get('input[name="password"]')
-      .clear()
-      .type(Cypress.env('password'))
-      .should('have.focus')
-      .should('have.value', Cypress.env('password'))
-    cy.get('[data-cy="submit"]').click()
-    cy.location('pathname').should('include', '/members')
-    cy.get('a').find('#tests').should('have.text', testsConstants.tests).click()
-    cy.get('#add-test', { timeout: 6000 }).click()
-    cy.location('pathname', { timeout: 60000 }).should(
-      'include',
-      '/tests/add-test'
-    )
-    cy.get('input[placeholder="Enter test name"]', { timeout: 6000 })
-      .clear()
-      .type(test1)
+    cy.login()
+    cy.customVisit('/tests')
+
+    cy.get('#add-test').click()
+    cy.location('pathname').should('include', '/tests/add-test')
+    cy.get('input[placeholder="Enter test name"]').clear().type(test1)
     cy.get('#quill-editor').within(() => {
       cy.get('.ql-editor').type(`Test Description`)
     })
@@ -419,7 +309,7 @@ describe('smoke tests', () => {
       })
     })
     // user reached to step 2
-    cy.get('div#section', { timeout: 60000 }).each((el) => {
+    cy.get('div#section').each((el) => {
       cy.wrap(el).within(() => {
         if (el.find('.count')[0].innerText != '0') {
           cy.get('input#no-of-qu').should('have.disabled', true)
@@ -461,17 +351,9 @@ describe('smoke tests', () => {
   })
 
   it('Test for adding a new member', () => {
-    cy.visit('/sign-in')
-    cy.get('#email')
-      .clear()
-      .type('copods.demo.sendgrid@gmail.com')
-      .should('have.value', cypress.email)
-    cy.get('#password')
-      .clear()
-      .type('kQuiz@copods')
-      .should('have.value', cypress.password)
-    cy.findByRole('button').click()
-    cy.get('a').find('#members').should('have.text', members.members).click()
+    cy.login()
+    cy.customVisit('/members')
+
     cy.get('#add-member').should('have.text', cypress.addMember).click()
     cy.get('#dialog-wrapper').should('be.visible')
 
@@ -486,21 +368,10 @@ describe('smoke tests', () => {
   })
 
   it('invite candidate for test', () => {
-    cy.visit('/sign-in')
-    cy.get('input[name="email"]')
-      .clear()
-      .type(Cypress.env('email'))
-      .should('have.focus')
-      .should('have.value', Cypress.env('email'))
-    cy.get('input[name="password"]')
-      .clear()
-      .type(Cypress.env('password'))
-      .should('have.focus')
-      .should('have.value', Cypress.env('password'))
-    cy.get('[data-cy="submit"]').click()
-    cy.location('pathname').should('include', '/members')
-    cy.get('a').find('#tests').should('have.text', testsConstants.tests).click()
-    cy.get('.test-table-list', { timeout: 6000 }).should('be.visible')
+    cy.login()
+    cy.customVisit('/tests')
+
+    cy.get('.test-table-list').should('be.visible')
     cy.get('.test-table-list').each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -517,9 +388,7 @@ describe('smoke tests', () => {
       .parent()
       .parent()
       .within(() => {
-        cy.get('#invite-popup-open', { timeout: 10000 })
-          .should('be.visible')
-          .click()
+        cy.get('#invite-popup-open').should('be.visible').click()
       })
 
     cy.get('input[name="email"]')

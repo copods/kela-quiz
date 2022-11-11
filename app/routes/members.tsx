@@ -10,9 +10,7 @@ import {
   deleteUserById,
   getAllRoles,
   getAllUsers,
-  reinviteMember,
   getAllInvitedMember,
-  deleteInviteMember,
   reInvitationMember,
 } from '~/models/user.server'
 import MembersHeader from '~/components/members/MembersHeader'
@@ -44,8 +42,8 @@ type LoaderData = {
 }
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await getUserId(request)
-  const invitedMembers = await getAllInvitedMember()
   const currentWorkspaceId = await getWorkspaceId(request)
+  const invitedMembers = await getAllInvitedMember(currentWorkspaceId as string)
   const workspaces = await getUserWorkspaces(userId as string)
   const roles = await getAllRoles()
   if (!userId) return redirect(routes.signIn)
@@ -126,37 +124,7 @@ export const action: ActionFunction = async ({ request }) => {
       })
     return addHandle
   }
-  if (action === actions.resendInviteMember) {
-    const id = formData.get('id')
-    let resendHandle = null
-    await reinviteMember({
-      id: id as string,
-    })
-      .then(() => {
-        resendHandle = json<ActionData>(
-          {
-            resp: {
-              title: 'toastConstants.invitationSent',
-              status: 200,
-            },
-          },
-          { status: 200 }
-        )
-      })
-      .catch((err) => {
-        let title = 'statusCheck.commonError'
-        resendHandle = json<ActionData>(
-          {
-            errors: {
-              title,
-              status: 400,
-            },
-          },
-          { status: 400 }
-        )
-      })
-    return resendHandle
-  }
+
   if (action === actions.resendMember) {
     const id = formData.get('id')
     let resendMember = null
@@ -217,35 +185,7 @@ export const action: ActionFunction = async ({ request }) => {
 
     return deleteHandle
   }
-  if (action === actions.deleteInviteMember) {
-    if (typeof formData.get('id') !== 'string') {
-      return json<ActionData>(
-        { errors: { title: 'statusCheck.descIsReq', status: 400 } },
-        { status: 400 }
-      )
-    }
-    let deleteHandle = null
-    await deleteInviteMember(formData.get('id') as string)
-      .then((res) => {
-        deleteHandle = json<ActionData>(
-          { resp: { title: 'statusCheck.deletedSuccess', status: 200 } },
-          { status: 200 }
-        )
-      })
-      .catch((err) => {
-        deleteHandle = json<ActionData>(
-          {
-            errors: {
-              title: 'statusCheck.commonError',
-              status: 400,
-            },
-          },
-          { status: 400 }
-        )
-      })
 
-    return deleteHandle
-  }
   return null
 }
 const Members = () => {

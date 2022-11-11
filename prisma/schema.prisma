@@ -77,7 +77,7 @@ model Role {
 model Invites {
   id                  String     @id @default(cuid())
   email               String
-  invitedBy           User?      @relation(fields: [userId], references: [id])
+  invitedById           User?      @relation(fields: [userId], references: [id])
   userId              String?
   invitedForWorkspace Workspace? @relation(fields: [workspaceId], references: [id])
   workspaceId         String?

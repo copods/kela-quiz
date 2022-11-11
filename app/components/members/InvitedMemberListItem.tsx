@@ -53,8 +53,8 @@ const InvitedMembersListItem = ({
         </div>
         <div className="break-word col-span-2 overflow-ellipsis pl-4">
           <span className="text-base text-gray-700">
-            {invitedMembers?.invitedBy?.firstName}{' '}
-            {invitedMembers?.invitedBy?.lastName}
+            {invitedMembers?.invitedById?.firstName}{' '}
+            {invitedMembers?.invitedById?.lastName}
           </span>
         </div>
         <div className="col-span-2 overflow-ellipsis break-all pl-4">
