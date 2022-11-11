@@ -11,7 +11,7 @@ const GroupByTests = () => {
   const { t } = useTranslation()
 
   const [sortDirection, onSortDirectionChange] = useState(
-    sortByOrder.ascending as string
+    sortByOrder.desc as string
   )
   const sortByDetails = [
     {

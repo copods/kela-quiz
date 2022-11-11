@@ -1,7 +1,7 @@
 import { useSubmit } from '@remix-run/react'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import type { Test } from '~/interface/Interface'
+import { sortByOrder, Test } from '~/interface/Interface'
 import SortFilter from '../SortFilter'
 import TestTableItem from './TestTableItem'
 import Button from '../form/Button'
@@ -17,7 +17,9 @@ const TestList = ({
 }) => {
   const { t } = useTranslation()
 
-  const [sortDirection, onSortDirectionChange] = useState('asc')
+  const [sortDirection, onSortDirectionChange] = useState(
+    sortByOrder.desc as string
+  )
   const navigate = useNavigate()
   const sortByDetails = [
     {
