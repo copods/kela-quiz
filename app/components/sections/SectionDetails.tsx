@@ -34,7 +34,7 @@ const SectionDetails = () => {
           <Icon
             id="ascend"
             icon="charm:search"
-            className="bg-light-200 absolute left-2 pl-2 text-2xl text-gray-400"
+            className="bg-light-200 absolute left-3 text-base text-gray-400"
           />
           <input
             tabIndex={0}
@@ -43,7 +43,7 @@ const SectionDetails = () => {
             name="search"
             placeholder={t('sectionsConstants.search')}
             title={t('sectionsConstants.search')}
-            className="h-9 w-48 rounded-lg border px-5 pl-9 text-sm focus:outline-dotted"
+            className="h-9 w-48 rounded-lg border px-5 pl-8 text-sm focus:outline-dotted"
             onChange={(e) => setSearchText(e.target.value)}
           />
         </div>
