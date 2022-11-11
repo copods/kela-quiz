@@ -29,7 +29,7 @@ const TestDetails = () => {
       </header>
       <div className="max-h-83 overflow-scroll rounded-md shadow-base">
         <TestPreview
-          id={testPreview.id}
+          testId={testPreview.id}
           name={testPreview.name}
           description={testPreview.description}
           selectedSections={testPreview.sections}

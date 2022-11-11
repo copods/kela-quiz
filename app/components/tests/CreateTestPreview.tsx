@@ -6,7 +6,7 @@ import InviteCandidatePopup from './InviteCandidatePopup'
 
 const TestPreview = ({
   name,
-  id,
+  testId,
   description,
   onSelectedSectionChange,
   selectedSections,
@@ -14,7 +14,7 @@ const TestPreview = ({
   showInviteAction,
 }: {
   name: string
-  id?: string
+  testId?: string
   description: string
   selectedSections: Array<TestSection>
   onSelectedSectionChange: (e: any) => void
@@ -65,19 +65,21 @@ const TestPreview = ({
           </h1>
           {showInviteAction && (
             <div>
-              <div className="flex gap-2">
+              <div
+                role={'button'}
+                tabIndex={0}
+                onClick={() => {
+                  setCandidatePopupOpen(true)
+                }}
+                onKeyUp={(e) => {
+                  if (e.key === 'Enter') setCandidatePopupOpen(true)
+                }}
+                className="flex gap-2"
+              >
                 <Icon
                   id="invite-popup-open"
-                  role={'button'}
-                  tabIndex={0}
-                  className="candidateInviteIcon h-6 w-6 cursor-pointer text-primary focus:outline-dotted focus:outline-2"
+                  className="h-6 w-6 cursor-pointer text-primary "
                   icon={'ant-design:user-add-outlined'}
-                  onClick={() => {
-                    setCandidatePopupOpen(true)
-                  }}
-                  onKeyUp={(e) => {
-                    if (e.key === 'Enter') setCandidatePopupOpen(true)
-                  }}
                   aria-label={t('members.inviteMember')}
                 />
                 <span className="text-primary">
@@ -88,7 +90,7 @@ const TestPreview = ({
                 openInvitePopup={candidatePopupOpen}
                 setOpenInvitePopup={setCandidatePopupOpen}
                 testName={name}
-                testId={id}
+                testId={testId}
               />
             </div>
           )}

@@ -59,7 +59,7 @@ export default function MemberListItem({
             {moment(user?.createdAt).format('DD MMMM YY')}
           </span>
         </div>
-        <div className="col-span-1 flex justify-around pl-4">
+        <div className="col-span-1 flex gap-4 pl-4">
           <Icon
             id="delete-button"
             tabIndex={0}
@@ -68,7 +68,7 @@ export default function MemberListItem({
               if (e.key === 'Enter') openPopUp()
             }}
             icon="ic:outline-delete-outline"
-            className={` text-red-500  ${
+            className={`h-6 w-6 cursor-pointer text-red-500  ${
               loggedInUser && 'cursor-not-allowed text-red-200'
             }`}
           />
