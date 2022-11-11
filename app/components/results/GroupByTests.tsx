@@ -9,12 +9,10 @@ import { useTranslation } from 'react-i18next'
 
 const GroupByTests = () => {
   const { t } = useTranslation()
-
   const [sortDirection, onSortDirectionChange] = useState(
     sortByOrder.ascending as string
   )
-  const [sortBy, onSortChange] = useState('name')
-  const filterByType = [
+  const sortByDetails = [
     {
       name: 'Name',
       value: 'name',
@@ -24,9 +22,9 @@ const GroupByTests = () => {
       value: 'createdAt',
     },
   ]
+  const [sortBy, onSortChange] = useState(sortByDetails[1].value)
   const candidateTestData = useLoaderData()
   const candidateTests = candidateTestData.candidateTest
-
   const submit = useSubmit()
   useEffect(() => {
     const filter = {
@@ -51,7 +49,7 @@ const GroupByTests = () => {
         <div className="flex flex-col gap-6">
           <div id="sort-filter-container" className="w-48">
             <SortFilter
-              filterData={filterByType}
+              filterData={sortByDetails}
               sortDirection={sortDirection}
               onSortDirectionChange={onSortDirectionChange}
               sortBy={sortBy}
