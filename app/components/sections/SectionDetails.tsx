@@ -32,11 +32,9 @@ const SectionDetails = () => {
       <div className="flex items-start justify-between gap-2 ">
         <div className="relative flex items-center">
           <Icon
-            tabIndex={0}
             id="ascend"
             icon="charm:search"
-            aria-label={t('sectionConstants.search')}
-            className="bg-light-200 absolute left-2  block pl-2 text-2xl text-gray-400 focus:outline-dotted focus:outline-2"
+            className="bg-light-200 absolute left-2 pl-2 text-2xl text-gray-400"
           />
           <input
             tabIndex={0}
@@ -45,7 +43,7 @@ const SectionDetails = () => {
             name="search"
             placeholder={t('sectionsConstants.search')}
             title={t('sectionsConstants.search')}
-            className="h-9 w-48 rounded-lg border px-5 pl-9  text-sm focus:outline-dotted"
+            className="h-9 w-48 rounded-lg border px-5 pl-9 text-sm focus:outline-dotted"
             onChange={(e) => setSearchText(e.target.value)}
           />
         </div>
