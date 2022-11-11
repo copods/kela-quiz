@@ -35,7 +35,7 @@ const SectionDetails = () => {
             tabIndex={0}
             id="ascend"
             icon="charm:search"
-            aria-label={t('commonConstants.sortAscending')}
+            aria-label={t('sectionConstants.search')}
             className="bg-light-200 absolute left-2  block pl-2 text-2xl text-gray-400 focus:outline-dotted focus:outline-2"
           />
           <input
