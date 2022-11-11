@@ -41,6 +41,7 @@ export type ActionData = {
     check?: Date
     title?: string
     data?: Section
+    id?: string
   }
 }
 
@@ -59,6 +60,10 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const workspaces = await getUserWorkspaces(userId as string)
   const url = new URL(request.url).searchParams.entries()
   const filterData = Object.fromEntries(url).filter
+  const selectedSectionId = params.sectionId
+    ? params.sectionId?.toString()
+    : undefined
+
   let sections: Array<Section> = []
   let status: string = ''
   await getAllSections(filterData, currentWorkspaceId as string)
@@ -70,9 +75,6 @@ export const loader: LoaderFunction = async ({ request, params }) => {
       status = err
     })
   if (!userId) return redirect(routes.signIn)
-  const selectedSectionId = params.sectionId
-    ? params.sectionId?.toString()
-    : undefined
   const filters = new URL(request.url).search
   return json<LoaderData>({
     sections,
@@ -164,10 +166,16 @@ export const action: ActionFunction = async ({ request }) => {
     })
 
     if (isSectionDelete) {
-      await deleteSectionById(formData.get('id') as string)
+      const deleteSectionId = formData.get('id') as string
+      await deleteSectionById(deleteSectionId)
         .then((res) => {
           deleteHandle = json<ActionData>(
-            { resp: { status: 'statusCheck.deletedSuccess' } },
+            {
+              resp: {
+                status: 'statusCheck.deletedSuccess',
+                id: deleteSectionId,
+              },
+            },
 
             { status: 200 }
           )
@@ -191,12 +199,12 @@ export const action: ActionFunction = async ({ request }) => {
 }
 
 export default function SectionPage() {
-  const { t } = useTranslation()
   const data = useLoaderData() as unknown as LoaderData
+
+  const { t } = useTranslation()
   const sectionActionData = useActionData() as ActionData
 
   const submit = useSubmit()
-
   const sortByDetails = [
     {
       name: 'Name',
@@ -212,6 +220,7 @@ export default function SectionPage() {
   const [showAddSectionModal, setShowAddSectionModal] = useState(false)
   const [order, setOrder] = useState(sortByOrder.ascending as string)
   const [sortBy, setSortBy] = useState(sortByDetails[1].value)
+
   const [selectedSection, setSelectedSection] = useState(
     data.selectedSectionId || data.sections[0]?.id || 'NA'
   )
@@ -257,8 +266,11 @@ export default function SectionPage() {
         toast.success(t(sectionActionData.resp?.status as string), {
           toastId: t(sectionActionData.resp?.status as string),
         })
+
         setSelectedSection(
-          data.selectedSectionId || data.sections[0]?.id || 'NA'
+          (sectionActionData?.resp?.id === data.sections[0]?.id
+            ? data.sections[1]?.id
+            : data.sections[0]?.id) || 'NA'
         )
       } else if (sectionActionData.errors?.status === 400) {
         toast.error(t(sectionActionData.errors?.title as string), {

@@ -109,7 +109,6 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
       setCurrentTab(0)
     }
   }, [currentTab, setCurrentTab, name, description])
-
   return (
     <div className="flex h-full flex-col gap-6 overflow-hidden">
       {/* header */}
