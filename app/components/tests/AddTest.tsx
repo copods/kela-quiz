@@ -136,7 +136,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
         tabs={tabs}
         disabledTabs={[
           false,
-          !name || !description,
+          !name || isQuillEmpty(description),
           selectedSections.length < 1,
         ]}
         currentTab={currentTab}
@@ -199,7 +199,8 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
               id="next-button"
               buttonText={t('commonConstants.nextButton')}
               isDisabled={
-                !(name && description) ||
+                !name ||
+                isQuillEmpty(description) ||
                 currentTab == 2 ||
                 (selectedSections.length < 1 && currentTab == 1)
               }
