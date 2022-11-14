@@ -20,7 +20,7 @@ const DialogWrapper = ({
         className="relative z-10"
         onClose={() => {
           setOpen(false)
-          setErrorMessage({ title: '', description: '' })
+          setErrorMessage?.({ title: '', description: '' })
         }}
       >
         <Transition.Child
@@ -70,7 +70,7 @@ const DialogWrapper = ({
                       }}
                       onClick={() => {
                         setOpen(false)
-                        setErrorMessage({ title: '', description: '' })
+                        setErrorMessage?.({ title: '', description: '' })
                       }}
                     />
                   </div>

@@ -34,7 +34,7 @@ export interface DialogWrapperProps {
   setOpen: (e: boolean) => void
   header: boolean
   tabIndex?: number
-  setErrorMessage: ({
+  setErrorMessage?: ({
     title,
     description,
   }: {
