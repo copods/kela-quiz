@@ -113,7 +113,7 @@ export const action: ActionFunction = async ({ request }) => {
   if (action === 'add') {
     const name = formData.get('name')
     const description = formData.get('description')
-    console.log(...formData, 'form ')
+
     // to check type of submitted Data
     if (typeof name !== 'string' || typeof description !== 'string') {
       return json<ActionData>(
@@ -223,7 +223,6 @@ export default function SectionPage() {
 
   const { t } = useTranslation()
   const sectionActionData = useActionData() as ActionData
-  console.log(sectionActionData)
   const submit = useSubmit()
   const sortByDetails = [
     {
