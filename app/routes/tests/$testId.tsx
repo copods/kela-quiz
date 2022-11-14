@@ -1,11 +1,13 @@
-import type { LoaderFunction } from '@remix-run/server-runtime'
+import type { ActionFunction, LoaderFunction } from '@remix-run/server-runtime'
+
 import { json } from '@remix-run/node'
 import invariant from 'tiny-invariant'
 import { getTestById } from '~/models/tests.server'
 import TestDetails from '~/components/tests/TestDetails'
 import AdminLayout from '~/components/layouts/AdminLayout'
 import { getUserWorkspaces } from '~/models/workspace.server'
-import { getWorkspaceId, getUserId } from '~/session.server'
+import { getWorkspaceId, getUserId, requireUserId } from '~/session.server'
+import { createCandidate } from '~/models/candidate.server'
 
 type LoaderData = {
   testPreview: Awaited<ReturnType<typeof getTestById>>
@@ -25,7 +27,35 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
   return json<LoaderData>({ testPreview, workspaces, currentWorkspaceId })
 }
+export const action: ActionFunction = async ({ request }) => {
+  const formData = await request.formData()
+  const createdById = await requireUserId(request)
+  const testId = formData.get('inviteCandidates') as string
+  formData.delete('inviteCandidates')
 
+  if (testId !== null) {
+    let emails: Array<string> = []
+    await formData.forEach((fd) => {
+      if (fd != '') {
+        emails.push(fd as string)
+      }
+    })
+    if (emails.length === 0) {
+      return json({
+        status: 401,
+        message: 'statusCheck.noEmailsInvite',
+        testId,
+      })
+    }
+    const candidateInviteStatus = await createCandidate({
+      emails,
+      createdById,
+      testId,
+    })
+
+    return json({ candidateInviteStatus, testId })
+  }
+}
 export default function TestsDetailsRoute() {
   return (
     <AdminLayout>

@@ -27,7 +27,7 @@ describe('Test for section-details', () => {
         }
       })
     })
-    cy.get('#add-question')
+    cy.get('#add-question', { timeout: 6000 })
       .should('have.text', `+ ${addQuestion.addQuestion}`)
       .click()
     cy.location('pathname', { timeout: 60000 }).should(
@@ -74,7 +74,7 @@ describe('Test for section-details', () => {
         }
       })
     })
-    cy.get('#add-question')
+    cy.get('#add-question', { timeout: 6000 })
       .should('have.text', `+ ${addQuestion.addQuestion}`)
       .click()
     cy.location('pathname', { timeout: 60000 }).should(
@@ -121,7 +121,7 @@ describe('Test for section-details', () => {
         }
       })
     })
-    cy.get('#add-question')
+    cy.get('#add-question', { timeout: 6000 })
       .should('have.text', `+ ${addQuestion.addQuestion}`)
       .click()
     cy.location('pathname', { timeout: 60000 }).should(
@@ -168,7 +168,7 @@ describe('Test for section-details', () => {
         }
       })
     })
-    cy.get('#add-question')
+    cy.get('#add-question', { timeout: 6000 })
       .should('have.text', `+ ${addQuestion.addQuestion}`)
       .click()
     cy.location('pathname', { timeout: 60000 }).should(
@@ -219,7 +219,7 @@ describe('Test for section-details', () => {
         }
       })
     })
-    cy.get('#add-question')
+    cy.get('#add-question', { timeout: 6000 })
       .should('have.text', `+ ${addQuestion.addQuestion}`)
       .click()
     cy.location('pathname', { timeout: 60000 }).should(
@@ -268,7 +268,7 @@ describe('Test for section-details', () => {
         }
       })
     })
-    cy.get('#add-question')
+    cy.get('#add-question', { timeout: 6000 })
       .should('have.text', `+ ${addQuestion.addQuestion}`)
       .click()
     cy.location('pathname', { timeout: 60000 }).should(
@@ -314,7 +314,7 @@ describe('Test for section-details', () => {
         }
       })
     })
-    cy.get('#add-question')
+    cy.get('#add-question', { timeout: 6000 })
       .should('have.text', `+ ${addQuestion.addQuestion}`)
       .click()
     cy.location('pathname', { timeout: 60000 }).should(
@@ -357,7 +357,7 @@ describe('Test for section-details', () => {
         }
       })
     })
-    cy.get('#add-question')
+    cy.get('#add-question', { timeout: 6000 })
       .should('have.text', `+ ${addQuestion.addQuestion}`)
       .click()
     cy.location('pathname', { timeout: 60000 }).should(
@@ -391,7 +391,7 @@ describe('Test for section-details', () => {
         }
       })
     })
-    cy.get('#add-question')
+    cy.get('#add-question', { timeout: 6000 })
       .should('have.text', `+ ${addQuestion.addQuestion}`)
       .click()
     cy.location('pathname', { timeout: 60000 }).should(
