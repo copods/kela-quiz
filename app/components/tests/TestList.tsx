@@ -2,6 +2,7 @@ import { useSubmit } from '@remix-run/react'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import type { Test } from '~/interface/Interface'
+import { sortByOrder } from '~/interface/Interface'
 import SortFilter from '../SortFilter'
 import TestTableItem from './TestTableItem'
 import Button from '../form/Button'
@@ -17,10 +18,11 @@ const TestList = ({
 }) => {
   const { t } = useTranslation()
 
-  const [sortDirection, onSortDirectionChange] = useState('asc')
-  const [sortBy, onSortChange] = useState('name')
+  const [sortDirection, onSortDirectionChange] = useState(
+    sortByOrder.desc as string
+  )
   const navigate = useNavigate()
-  const filterByType = [
+  const sortByDetails = [
     {
       name: 'Name',
       value: 'name',
@@ -30,6 +32,7 @@ const TestList = ({
       value: 'createdAt',
     },
   ]
+  const [sortBy, onSortChange] = useState(sortByDetails[1].value)
   const submit = useSubmit()
   useEffect(() => {
     let filter = {
@@ -75,7 +78,7 @@ const TestList = ({
         <>
           <div id="sort-filter-container">
             <SortFilter
-              filterData={filterByType}
+              filterData={sortByDetails}
               sortDirection={sortDirection}
               onSortDirectionChange={onSortDirectionChange}
               sortBy={sortBy}
