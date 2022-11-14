@@ -394,15 +394,8 @@ describe('smoke tests', () => {
         }
       })
     })
-    cy.get('.test-name-navigation')
-      .contains(test1)
-      .parent()
-      .parent()
-      .parent()
-      .within(() => {
-        cy.get('#invite-popup-open').should('be.visible').click()
-      })
-
+    cy.get('.test-name-navigation').contains(test1).click()
+    cy.get('#invite-popup-open').should('be.visible').click()
     cy.get('input[name="email"]')
       .clear()
       .type('johndoe@example.com')

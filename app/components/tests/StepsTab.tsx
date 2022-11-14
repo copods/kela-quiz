@@ -1,34 +1,32 @@
 const StepsTabComponent = ({
   tabs,
-  isDisabled,
+  disabledTabs,
   currentTab,
   setCurrentTab,
 }: {
   tabs: Array<{ id: number; name: string; description: string }>
-  isDisabled: boolean
+  disabledTabs: Array<boolean>
   currentTab: number
   setCurrentTab: (e: number) => void
 }) => {
-  const indexDisable = () => {
-    if (!isDisabled) return 0
-  }
   return (
     <div className="flex w-full gap-4 rounded-lg bg-white p-3 shadow">
       {tabs.map((tab, i) => {
         return (
           <div
-            tabIndex={indexDisable()}
+            tabIndex={disabledTabs[i] ? -1 : 0}
             role={'button'}
             key={tab.id}
             id={tab.id.toString()}
             className={`stepsTab flex-1 p-1 ${
-              isDisabled ? 'cursor-not-allowed' : 'cursor-pointer'
+              tab.name !== tabs[0].name
+                ? disabledTabs[i]
+                  ? 'cursor-not-allowed'
+                  : 'cursor-pointer'
+                : 'cursor-pointer'
             }`}
-            onClick={(e) => {
-              if (isDisabled) {
-                e.preventDefault()
-                return
-              }
+            onClick={() => {
+              if (disabledTabs[i]) return
               setCurrentTab(tab.id)
             }}
             aria-label={`${tab.name} ${tab.description}`}

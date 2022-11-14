@@ -1,4 +1,4 @@
-import { Form, useActionData } from '@remix-run/react'
+import { Form, useActionData, useTransition } from '@remix-run/react'
 import { useEffect, useState } from 'react'
 
 import { toast } from 'react-toastify'
@@ -15,7 +15,7 @@ const InviteCandidatePopup = ({
   openInvitePopup: boolean
   setOpenInvitePopup: (e: boolean) => void
   testName: string
-  testId: string
+  testId?: string
 }) => {
   const { t } = useTranslation()
   const [emails, setEmails] = useState<Array<string>>([''])
@@ -48,7 +48,7 @@ const InviteCandidatePopup = ({
     setOpenInvitePopup(false)
     setEmails([''])
   }
-
+  const transition = useTransition()
   return (
     <DialogWrapper
       open={openInvitePopup}
@@ -116,8 +116,16 @@ const InviteCandidatePopup = ({
             id="submit-button"
             className="h-9 px-4"
             varient="primary-solid"
-            title={t('inviteMemeberPopUpConstants.invite')}
-            buttonText={t('inviteMemeberPopUpConstants.invite')}
+            title={
+              transition.state === 'submitting'
+                ? t('inviteMemeberPopUpConstants.inviting')
+                : t('inviteMemeberPopUpConstants.invite')
+            }
+            buttonText={
+              transition.state === 'submitting'
+                ? t('inviteMemeberPopUpConstants.inviting')
+                : t('inviteMemeberPopUpConstants.invite')
+            }
             datacy="submit"
           />
         </div>

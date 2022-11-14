@@ -134,11 +134,11 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
       <BreadCrumb data={breadCrumbData} />
       <StepsTabComponent
         tabs={tabs}
-        isDisabled={
-          !name ||
-          isQuillEmpty(description) ||
-          (currentTab > 0 && selectedSections.length <= 0)
-        }
+        disabledTabs={[
+          false,
+          !name || !description,
+          selectedSections.length < 1,
+        ]}
         currentTab={currentTab}
         setCurrentTab={setCurrentTab}
       />
@@ -199,9 +199,9 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
               id="next-button"
               buttonText={t('commonConstants.nextButton')}
               isDisabled={
-                !name ||
-                isQuillEmpty(description) ||
-                (currentTab == 1 && selectedSections.length <= 0)
+                !(name && description) ||
+                currentTab == 2 ||
+                (selectedSections.length < 1 && currentTab == 1)
               }
               onClick={() => setCurrentTab(currentTab + 1)}
             />
