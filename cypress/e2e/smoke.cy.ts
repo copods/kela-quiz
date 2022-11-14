@@ -258,6 +258,7 @@ describe('smoke tests', () => {
         }
       })
     })
+    cy.get('button#next-button', { timeout: 8000 }).should('be.visible')
     cy.get('button#next-button').should('have.text', cypress.next).click()
     cy.get('.stepsTab').each(($el) => {
       cy.wrap($el).within((el) => {
@@ -326,6 +327,7 @@ describe('smoke tests', () => {
         }
       })
     })
+    cy.get('button#next-button', { timeout: 8000 }).should('be.visible')
     cy.get('button#next-button').should('have.text', cypress.next).click()
     cy.get('.stepsTab').each(($el) => {
       cy.wrap($el).within((el) => {
@@ -383,7 +385,7 @@ describe('smoke tests', () => {
     cy.login()
     cy.customVisit('/tests')
 
-    cy.get('.test-table-list').should('be.visible')
+    cy.get('.test-table-list', { timeout: 8000 }).should('be.visible')
     cy.get('.test-table-list').each(($el) => {
       cy.wrap($el).within((el) => {
         if (
