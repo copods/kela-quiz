@@ -33,7 +33,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
   const user = await getUserId(request) //checking if user exist or not
   if (!invitedMember?.id) {
-    return new Response('Not Found', { status: 404 })
+    throw new Response('Not Found', { status: 404 })
   }
   if (user) {
     const userId = await getUserId(request)
@@ -45,9 +45,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     if (!userId && invitedMember?.id) {
       return redirect(routes.signUp)
     }
-    if (!invitedMember && user) {
-      throw new Response('Not Found', { status: 404 }) //if invitedMember not exist or invalid invited if then redirect to sign-up
-    }
+
     if (user && invitedMember?.joined === true) {
       if (userId === invitedMember?.id) {
         return redirect(routes.signIn) // if user accept the workspace join invitation then redirect to sign-in

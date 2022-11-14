@@ -50,7 +50,7 @@ const JoinWorkspace = () => {
                 </span>
               </span>
             </div>
-            <div className="flex gap-8">
+            <div className="flex justify-center gap-8">
               <Button
                 tabIndex={0}
                 title="Reject"

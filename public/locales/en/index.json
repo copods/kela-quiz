@@ -63,7 +63,8 @@
     "invite": "Invite",
     "join": "Join",
     "joining": "Joining",
-    "joinedOn": "Joined On"
+    "joinedOn": "Joined On",
+    "invitedAt": "Invited At"
   },
   "sideNav": {
     "sideNavHeading": "Quiz",
@@ -77,7 +78,8 @@
     "enterCandidatesEmail": "Enter candidate’s email below to invite them for",
     "candidateEmail": "Candidate Email",
     "inviteMore": "Invite More",
-    "invite": "Invite"
+    "invite": "Invite",
+    "inviting": "Inviting"
   },
   "testTableItem": {
     "menu": "Menu"

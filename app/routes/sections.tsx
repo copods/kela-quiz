@@ -218,7 +218,7 @@ export default function SectionPage() {
 
   const [sectionDetailFull, setSectionDetailFull] = useState(false)
   const [showAddSectionModal, setShowAddSectionModal] = useState(false)
-  const [order, setOrder] = useState(sortByOrder.ascending as string)
+  const [order, setOrder] = useState(sortByOrder.desc as string)
   const [sortBy, setSortBy] = useState(sortByDetails[1].value)
 
   const [selectedSection, setSelectedSection] = useState(

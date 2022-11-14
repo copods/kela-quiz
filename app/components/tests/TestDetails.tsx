@@ -29,6 +29,7 @@ const TestDetails = () => {
       </header>
       <div className="max-h-83 overflow-scroll rounded-md shadow-base">
         <TestPreview
+          testId={testPreview.id}
           name={testPreview.name}
           description={testPreview.description}
           selectedSections={testPreview.sections}
@@ -36,6 +37,7 @@ const TestDetails = () => {
             throw new Error('Function not implemented.')
           }}
           isPreviewEditable={false}
+          showInviteAction={true}
         />
       </div>
     </div>
