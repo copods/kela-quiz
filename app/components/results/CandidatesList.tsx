@@ -50,13 +50,19 @@ const CandidatesList = () => {
           <span className="col-span-1 text-sm font-semibold text-gray-500">
             {t('commonConstants.srNo')}
           </span>
-          <span className="col-span-3 text-sm font-semibold text-gray-500">
+          <span className="col-span-2 text-sm font-semibold text-gray-500">
             {t('commonConstants.name')}
           </span>
-          <span className="col-span-4 text-sm font-semibold text-gray-500">
+          <span className="col-span-2 text-sm font-semibold text-gray-500">
             {t('commonConstants.email')}
           </span>
           <span className="col-span-2 text-sm font-semibold text-gray-500">
+            {t('commonConstants.invitedAt')}
+          </span>
+          <span className="col-span-2 text-sm font-semibold text-gray-500">
+            {t('resultConstants.startedAt')}
+          </span>
+          <span className="col-span-1 text-sm font-semibold text-gray-500">
             {t('resultConstants.invitedBy')}
           </span>
           <span className="col-span-1 text-sm font-semibold text-gray-500">
@@ -86,7 +92,7 @@ const CandidatesList = () => {
             return (
               <div
                 key={candidate.id}
-                className="memberRow col-span-10 grid rounded-lg"
+                className="memberRow col-span-12 grid rounded-lg"
               >
                 <AttendedCandidateListItem
                   id={candidate?.id}
@@ -94,7 +100,7 @@ const CandidatesList = () => {
                   testId={params.testId}
                   candidateResultId={candidate?.candidateResult[0]?.id}
                   email={candidate?.candidate?.email}
-                  invitedBy={`${candidate?.candidate?.createdBy?.firstName} ${candidate?.candidate?.createdBy?.lastName}`}
+                  invitedBy={candidate?.candidate?.createdBy?.firstName}
                   name={`${
                     candidate?.candidate?.firstName
                       ? candidate?.candidate?.firstName
@@ -109,6 +115,8 @@ const CandidatesList = () => {
                   index={i + 1}
                   testName={candidate?.candidate?.createdBy?.firstName}
                   endAt={candidate?.endAt}
+                  startedAt={candidate?.startedAt}
+                  createdAt={candidate?.createdAt}
                 />
               </div>
             )
