@@ -122,7 +122,7 @@ export interface Invites {
   roleId: String
   invitedOn: Date
   joined: Boolean
-  joinedAt: Date
+  joinedAt: string
   createdAt: Date
   updatedAt: Date
 }

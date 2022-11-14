@@ -32,6 +32,9 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const invitedMember = await getInvitedMemberById(params.inviteId as string)
 
   const user = await getUserId(request) //checking if user exist or not
+  if (!invitedMember?.id) {
+    return new Response('Not Found', { status: 404 })
+  }
   if (user) {
     const userId = await getUserId(request)
     if (userId === invitedMember?.id) {
@@ -39,11 +42,13 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     } else {
       redirect('/logout') //if not then logout
     }
+    if (!userId && invitedMember?.id) {
+      return redirect(routes.signUp)
+    }
     if (!invitedMember && user) {
       throw new Response('Not Found', { status: 404 }) //if invitedMember not exist or invalid invited if then redirect to sign-up
     }
     if (user && invitedMember?.joined === true) {
-      const userId = await getUserId(request)
       if (userId === invitedMember?.id) {
         return redirect(routes.signIn) // if user accept the workspace join invitation then redirect to sign-in
       } else if (userId !== invitedMember?.id) {
@@ -51,7 +56,6 @@ export const loader: LoaderFunction = async ({ request, params }) => {
       }
     }
     if (invitedMember?.joined === false) {
-      const userId = await getUserId(request)
       if (userId === invitedMember?.id) {
         return redirect(routes.signIn) // if user declined the workspace join invitation then redirect to sign-in if currently login
       } else if (userId !== invitedMember?.id) {
@@ -60,11 +64,11 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     }
   }
   if (!user) {
+    const userId = await getUserId(request)
     if (invitedMember && !user) {
       return redirect(routes.signUp) //if invitedMember not exist or invalid invited if then redirect to sign-up
     }
     if (invitedMember?.joined === false) {
-      const userId = await getUserId(request)
       if (userId === invitedMember?.id) {
         return redirect(routes.signIn) // if user declined the workspace join invitation then redirect to sign-in if currently login
       } else if (!userId && invitedMember?.id) {

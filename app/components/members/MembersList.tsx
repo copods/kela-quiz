@@ -1,4 +1,4 @@
-import type { User, Role } from '~/interface/Interface'
+import type { User, Role, Invites } from '~/interface/Interface'
 import MemberListItem from './MemberListItem'
 import { useLoaderData } from '@remix-run/react'
 import { useTranslation } from 'react-i18next'
@@ -12,6 +12,7 @@ export default function MembersList({
 
   const membersData = useLoaderData()
   const users = membersData.users
+
   const loggedInUser = membersData.userId
   return (
     <div className="grid grid-cols-12 rounded-lg shadow-base">
@@ -33,7 +34,7 @@ export default function MembersList({
             {t('members.action')}
           </h1>
         </div>
-        {users.map((user: User & { role?: Role }) => (
+        {users.map((user: User & { role?: Role; Invites: Invites }) => (
           <div key={user.id} className="memberRow col-span-10 grid">
             <MemberListItem
               user={user}

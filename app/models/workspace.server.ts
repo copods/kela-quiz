@@ -57,6 +57,7 @@ export async function joinWorkspace({ invitedId }: { invitedId: string }) {
     },
     data: {
       joined: true,
+      joinedAt: new Date().toString(),
     },
   })
   return linkUserWorkspace

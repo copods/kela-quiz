@@ -85,7 +85,7 @@ model Invites {
   roleId              String
   invitedOn           DateTime   @default(now())
   joined              Boolean?
-  joinedAt            DateTime?  
+  joinedAt            String?  @default("na")
   createdAt           DateTime   @default(now())
   updatedAt           DateTime   @updatedAt
 

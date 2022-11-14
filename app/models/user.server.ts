@@ -59,6 +59,12 @@ export async function getAllUsers({
     },
     include: {
       role: true,
+      Invites: {
+        select: {
+          joinedAt: true,
+          email: true,
+        },
+      },
     },
   })
 }
@@ -189,6 +195,10 @@ export async function getAllInvitedMember(workspaceId: string) {
   return await prisma.invites.findMany({
     where: {
       workspaceId,
+
+      joined: {
+        equals: true,
+      },
     },
     include: {
       invitedForWorkspace: true,

@@ -25,7 +25,7 @@ const JoinWorkspace = () => {
   }
   const transition = useTransition()
   const workspcaceInvitationData = useLoaderData()
-  const WorkspaceInvitation = workspcaceInvitationData.invitedMember
+  const workspaceInvitation = workspcaceInvitationData.invitedMember
 
   return (
     <div className="flex h-full flex-col items-center justify-center gap-6 rounded-lg">
@@ -41,12 +41,12 @@ const JoinWorkspace = () => {
               <span className="break-word text-center text-base font-medium text-gray-500">
                 You have been invited by{' '}
                 <span className="text-center text-primary">
-                  {WorkspaceInvitation.invitedById.firstName}{' '}
-                  {WorkspaceInvitation.invitedById.lastName}
+                  {workspaceInvitation.invitedById.firstName}{' '}
+                  {workspaceInvitation.invitedById.lastName}
                 </span>{' '}
                 to join{' '}
                 <span className="text-primary">
-                  {WorkspaceInvitation.invitedForWorkspace.name}
+                  {workspaceInvitation.invitedForWorkspace.name}
                 </span>
               </span>
             </div>
