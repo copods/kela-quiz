@@ -26,6 +26,7 @@ import type { Section } from '~/interface/Interface'
 import { routes } from '~/constants/route.constants'
 import { useTranslation } from 'react-i18next'
 import { getUserWorkspaces } from '~/models/workspace.server'
+import { statusCheck } from '~/constants/common.constants'
 
 export type ActionData = {
   errors?: {
@@ -35,6 +36,10 @@ export type ActionData = {
     check?: Date
     name?: string
     description?: string
+  }
+  fieldErrors?: {
+    title: string | undefined
+    description: string | undefined
   }
   resp?: {
     status?: string
@@ -85,7 +90,17 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     currentWorkspaceId,
   })
 }
+function validateTitle(title: unknown) {
+  if (typeof title !== 'string' || title.length <= 0) {
+    return statusCheck.nameIsReq
+  }
+}
 
+function validateDescription(description: unknown) {
+  if (typeof description !== 'string' || description.length <= 0) {
+    return statusCheck.descIsReq
+  }
+}
 export const action: ActionFunction = async ({ request }) => {
   const createdById = await requireUserId(request)
   const workspaceId = (await getWorkspaceId(request)) as string
@@ -98,17 +113,22 @@ export const action: ActionFunction = async ({ request }) => {
   if (action === 'add') {
     const name = formData.get('name')
     const description = formData.get('description')
-    if (typeof name !== 'string' || name.length === 0) {
+    console.log(...formData, 'form ')
+    // to check type of submitted Data
+    if (typeof name !== 'string' || typeof description !== 'string') {
       return json<ActionData>(
-        { errors: { title: 'statusCheck.nameIsReq', status: 400 } },
+        { errors: { title: 'Form Not submitted Correctly', status: 400 } },
         { status: 400 }
       )
     }
-    if (typeof description !== 'string' || description.length === 0) {
-      return json<ActionData>(
-        { errors: { title: 'statusCheck.descIsReq', status: 400 } },
-        { status: 400 }
-      )
+
+    const fieldErrors = {
+      title: validateTitle(name),
+      description: validateDescription(description),
+    }
+
+    if (Object.values(fieldErrors).some(Boolean)) {
+      return json({ fieldErrors }, { status: 400 })
     }
 
     let addHandle = null
@@ -203,7 +223,7 @@ export default function SectionPage() {
 
   const { t } = useTranslation()
   const sectionActionData = useActionData() as ActionData
-
+  console.log(sectionActionData)
   const submit = useSubmit()
   const sortByDetails = [
     {
@@ -220,7 +240,10 @@ export default function SectionPage() {
   const [showAddSectionModal, setShowAddSectionModal] = useState(false)
   const [order, setOrder] = useState(sortByOrder.desc as string)
   const [sortBy, setSortBy] = useState(sortByDetails[1].value)
-
+  const [errorMessage, setErrorMessage] = useState({
+    title: '',
+    description: '',
+  })
   const [selectedSection, setSelectedSection] = useState(
     data.selectedSectionId || data.sections[0]?.id || 'NA'
   )
@@ -253,6 +276,7 @@ export default function SectionPage() {
         t(sectionActionData.resp?.status as string) ===
         t('statusCheck.sectionAddedSuccess')
       ) {
+        setErrorMessage({ title: '', description: '' })
         setShowAddSectionModal(false)
         setSelectedSection((previous: string) => {
           if (previous != sectionActionData?.resp?.data?.id)
@@ -272,6 +296,11 @@ export default function SectionPage() {
             ? data.sections[1]?.id
             : data.sections[0]?.id) || 'NA'
         )
+      } else if (sectionActionData.fieldErrors) {
+        setErrorMessage({
+          title: sectionActionData?.fieldErrors.title || '',
+          description: sectionActionData.fieldErrors.description || '',
+        })
       } else if (sectionActionData.errors?.status === 400) {
         toast.error(t(sectionActionData.errors?.title as string), {
           toastId: sectionActionData.errors?.title,
@@ -357,6 +386,8 @@ export default function SectionPage() {
         )}
         <AddSection
           open={showAddSectionModal}
+          errorMessage={errorMessage}
+          setErrorMessage={setErrorMessage}
           setOpen={setShowAddSectionModal}
           showErrorMessage={sectionActionData?.errors?.status === 400}
         />

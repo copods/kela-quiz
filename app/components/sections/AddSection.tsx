@@ -8,9 +8,20 @@ import DialogWrapper from '../Dialog'
 const AddSection = ({
   open,
   setOpen,
+  errorMessage,
+  setErrorMessage,
   showErrorMessage,
 }: {
   open: boolean
+  errorMessage: { title: string; description: string }
+  setErrorMessage: ({
+    title,
+    description,
+  }: {
+    title: string
+    description: string
+  }) => void
+
   setOpen: (e: boolean) => void
   showErrorMessage: boolean
 }) => {
@@ -23,10 +34,10 @@ const AddSection = ({
     setDescription('')
     setSectionName('')
   }, [open])
-
   return (
     <DialogWrapper
       open={open}
+      setErrorMessage={setErrorMessage}
       heading={t('sectionsConstants.addSection')}
       setOpen={setOpen}
       header={true}
@@ -46,6 +57,7 @@ const AddSection = ({
             value={sectionName}
             maxLength={52}
           />
+          <p className="px-3 text-red-500">{errorMessage.title}</p>
         </div>
         <div className="pb-6">
           <textarea
@@ -58,13 +70,17 @@ const AddSection = ({
             value={description}
             placeholder={t('commonConstants.enterSectionDesc')}
           />
+          <p className="px-3 text-red-500">{errorMessage.description}</p>
         </div>
         <div className="flex justify-end gap-2">
           <Button
             tabIndex={0}
             type="button"
             className="h-9 px-4"
-            onClick={() => setOpen(false)}
+            onClick={() => {
+              setOpen(false)
+              setErrorMessage({ title: '', description: '' })
+            }}
             varient="primary-outlined"
             title={t('commonConstants.cancel')}
             buttonText={t('commonConstants.cancel')}
