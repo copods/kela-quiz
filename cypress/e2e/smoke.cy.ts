@@ -6,7 +6,7 @@ import {
 } from '~/constants/common.constants'
 const section1 = `Aptitude - section1`
 const test1 = `Aptitude - test1`
-const deleteTest1 = `Aptitude - Detete test`
+const deleteTest1 = `Aptitude - test2`
 const section2 = `Aptitude - section2`
 const deleteSection = `Aptitude - delete-Section`
 const memberFirstName = 'john'
