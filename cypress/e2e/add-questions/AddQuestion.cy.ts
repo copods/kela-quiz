@@ -28,7 +28,11 @@ describe('Test for section-details', () => {
       })
     })
     cy.get('.sectionName').contains(section1).click()
-    cy.get('#add-question', { timeout: 12000 })
+    cy.get('#section-details-heading', { timeout: 8000 }).should(
+      'have.text',
+      section1
+    )
+    cy.get('#add-question', { timeout: 8000 })
       .should('have.text', `+ ${addQuestion.addQuestion}`)
       .click()
     cy.location('pathname', { timeout: 60000 }).should(
@@ -76,6 +80,10 @@ describe('Test for section-details', () => {
       })
     })
     cy.get('.sectionName').contains(section1).click()
+    cy.get('#section-details-heading', { timeout: 8000 }).should(
+      'have.text',
+      section1
+    )
     cy.get('#add-question', { timeout: 12000 })
       .should('have.text', `+ ${addQuestion.addQuestion}`)
       .click()
@@ -124,6 +132,10 @@ describe('Test for section-details', () => {
       })
     })
     cy.get('.sectionName').contains(section1).click()
+    cy.get('#section-details-heading', { timeout: 8000 }).should(
+      'have.text',
+      section1
+    )
     cy.get('#add-question', { timeout: 12000 })
       .should('have.text', `+ ${addQuestion.addQuestion}`)
       .click()
@@ -172,6 +184,10 @@ describe('Test for section-details', () => {
       })
     })
     cy.get('.sectionName').contains(section1).click()
+    cy.get('#section-details-heading', { timeout: 8000 }).should(
+      'have.text',
+      section1
+    )
     cy.get('#add-question', { timeout: 12000 })
       .should('have.text', `+ ${addQuestion.addQuestion}`)
       .click()
@@ -224,6 +240,10 @@ describe('Test for section-details', () => {
       })
     })
     cy.get('.sectionName').contains(section1).click()
+    cy.get('#section-details-heading', { timeout: 8000 }).should(
+      'have.text',
+      section1
+    )
     cy.get('#add-question', { timeout: 12000 })
       .should('have.text', `+ ${addQuestion.addQuestion}`)
       .click()
@@ -274,6 +294,10 @@ describe('Test for section-details', () => {
       })
     })
     cy.get('.sectionName').contains(section1).click()
+    cy.get('#section-details-heading', { timeout: 8000 }).should(
+      'have.text',
+      section1
+    )
     cy.get('#add-question', { timeout: 12000 })
       .should('have.text', `+ ${addQuestion.addQuestion}`)
       .click()
@@ -321,6 +345,10 @@ describe('Test for section-details', () => {
       })
     })
     cy.get('.sectionName').contains(section1).click()
+    cy.get('#section-details-heading', { timeout: 8000 }).should(
+      'have.text',
+      section1
+    )
     cy.get('#add-question', { timeout: 12000 })
       .should('have.text', `+ ${addQuestion.addQuestion}`)
       .click()
@@ -365,6 +393,10 @@ describe('Test for section-details', () => {
       })
     })
     cy.get('.sectionName').contains(section1).click()
+    cy.get('#section-details-heading', { timeout: 8000 }).should(
+      'have.text',
+      section1
+    )
     cy.get('#add-question', { timeout: 12000 })
       .should('have.text', `+ ${addQuestion.addQuestion}`)
       .click()
@@ -400,6 +432,10 @@ describe('Test for section-details', () => {
       })
     })
     cy.get('.sectionName').contains(section1).click()
+    cy.get('#section-details-heading', { timeout: 8000 }).should(
+      'have.text',
+      section1
+    )
     cy.get('#add-question', { timeout: 12000 })
       .should('have.text', `+ ${addQuestion.addQuestion}`)
       .click()
