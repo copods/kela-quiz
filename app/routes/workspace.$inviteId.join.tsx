@@ -1,10 +1,6 @@
 import type { ActionFunction, LoaderFunction } from '@remix-run/server-runtime'
 import { redirect } from '@remix-run/server-runtime'
 import { json } from '@remix-run/node'
-import {
-  getInvitedMemberById,
-  rejectWorkspaceInvitation,
-} from '~/models/user.server'
 import Header from '~/components/assessment/Header'
 import JoinWorkspace from '~/components/workspace/JoinWorkspace'
 import { getUserId } from '~/session.server'
@@ -14,6 +10,8 @@ import { useEffect } from 'react'
 import { toast } from 'react-toastify'
 import { routes } from '~/constants/route.constants'
 import { joinWorkspace } from '~/models/workspace.server'
+import { rejectWorkspaceInvitation } from '../models/workspace.server'
+import { getInvitedMemberById } from '~/models/invites.server'
 
 export type ActionData = {
   errors?: {
@@ -35,6 +33,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   if (!invitedMember?.id) {
     throw new Response('Not Found', { status: 404 })
   }
+
   if (user) {
     const userId = await getUserId(request)
     if (userId === invitedMember?.id) {
@@ -42,7 +41,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     } else {
       redirect('/logout') //if not then logout
     }
-    if (!userId && invitedMember?.id) {
+    if (userId !== invitedMember?.id) {
       return redirect(routes.signUp)
     }
 
@@ -63,6 +62,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   }
   if (!user) {
     const userId = await getUserId(request)
+
     if (invitedMember && !user) {
       return redirect(routes.signUp) //if invitedMember not exist or invalid invited if then redirect to sign-up
     }

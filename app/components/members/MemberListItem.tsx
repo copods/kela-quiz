@@ -1,6 +1,5 @@
 import { Icon } from '@iconify/react'
 import type { Invites, Role, User } from '~/interface/Interface'
-import moment from 'moment'
 import DeletePopUp from '../DeletePopUp'
 import { useEffect, useState } from 'react'
 import { useSubmit } from '@remix-run/react'
@@ -11,7 +10,7 @@ export default function MemberListItem({
   loggedInUser,
   actionStatus,
 }: {
-  user: User & { role?: Role; Invites: Invites }
+  user: User & { role?: Role; invites: Invites }
   loggedInUser: boolean
   actionStatus: string | undefined
 }) {
@@ -45,7 +44,7 @@ export default function MemberListItem({
         </div>
         <div className="col-span-2 overflow-ellipsis break-all pl-4">
           <span className="text-base text-gray-700">
-            {moment(user?.Invites.joinedAt).format('DD MMMM YY')}
+            {/* {moment(user.invites.joinedAt).format('DD MMMM YY')} */}
           </span>
         </div>
         <div className="col-span-1 flex gap-4 pl-4">

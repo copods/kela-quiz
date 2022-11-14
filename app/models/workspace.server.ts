@@ -78,3 +78,20 @@ export async function addWorkspace(workspaceName: string, userId: string) {
     },
   })
 }
+export async function rejectWorkspaceInvitation({
+  //if user rejected the workspace invited this function is called
+  invitedId,
+}: {
+  invitedId: string
+}) {
+  await prisma.invites.update({
+    // update the status if rejecting the workspace invitation
+    where: {
+      id: invitedId,
+    },
+    data: {
+      joined: false,
+    },
+  })
+  return
+}

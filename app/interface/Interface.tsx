@@ -123,6 +123,8 @@ export interface Invites {
   invitedOn: Date
   joined: Boolean
   joinedAt: string
+  deleted: boolean
+  deletedAt: string
   createdAt: Date
   updatedAt: Date
 }

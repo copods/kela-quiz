@@ -34,7 +34,7 @@ export default function MembersList({
             {t('members.action')}
           </h1>
         </div>
-        {users.map((user: User & { role?: Role; Invites: Invites }) => (
+        {users.map((user: User & { role?: Role; invites: Invites }) => (
           <div key={user.id} className="memberRow col-span-10 grid">
             <MemberListItem
               user={user}

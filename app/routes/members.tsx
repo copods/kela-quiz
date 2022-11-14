@@ -5,14 +5,7 @@ import type { LoaderFunction, ActionFunction } from '@remix-run/node'
 import MembersList from '~/components/members/MembersList'
 import { json } from '@remix-run/node'
 import { useActionData } from '@remix-run/react'
-import {
-  inviteNewUser,
-  deleteUserById,
-  getAllRoles,
-  getAllUsers,
-  getAllInvitedMember,
-  reInvitationMember,
-} from '~/models/user.server'
+import { deleteUserById, getAllRoles, getAllUsers } from '~/models/user.server'
 import MembersHeader from '~/components/members/MembersHeader'
 import { toast } from 'react-toastify'
 import { useEffect, useState } from 'react'
@@ -21,6 +14,11 @@ import { useTranslation } from 'react-i18next'
 import { getUserWorkspaces } from '~/models/workspace.server'
 import { actions } from '~/constants/action.constants'
 import InvitedMembersList from '~/components/members/InvitedMembersList'
+import {
+  getAllInvitedMember,
+  inviteNewUser,
+  reInvitationMember,
+} from '~/models/invites.server'
 
 export type ActionData = {
   errors?: {
