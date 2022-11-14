@@ -98,7 +98,7 @@ describe('Test for members', () => {
       .parent()
       .parent()
       .within(() => {
-        cy.get('#delete-button').click()
+        cy.get('#delete-button',{timeout:6000}).click()
       })
     cy.get('#delete-dialog').should('be.visible')
     cy.get('#cancel-delete-pop-up')
@@ -123,7 +123,7 @@ describe('Test for members', () => {
       .parent()
       .parent()
       .within(() => {
-        cy.get('#delete-button').click()
+        cy.get('#delete-button',{timeout:6000}).click()
       })
     cy.get('#delete-dialog').should('be.visible')
     cy.get('#confirm-delete')
