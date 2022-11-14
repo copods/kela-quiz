@@ -24,6 +24,7 @@ const SectionDetails = () => {
           role={sectionDetails.sectionDetails?.name}
           title={sectionDetails.sectionDetails?.name}
           aria-label={sectionDetails.sectionDetails?.name}
+          id="section-details-heading"
         >
           {sectionDetails.sectionDetails?.name}
         </h2>

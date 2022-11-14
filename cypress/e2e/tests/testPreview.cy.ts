@@ -1,6 +1,6 @@
 import { cypress, testsConstants } from '~/constants/common.constants'
 
-const test1 = `Aptitude - test1`
+const test1 = `Aptitude - test2`
 
 describe('Test for testPreview', () => {
   beforeEach('sign-in', () => {
