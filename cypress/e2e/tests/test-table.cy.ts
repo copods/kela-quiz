@@ -1,7 +1,7 @@
 import { testsConstants } from '~/constants/common.constants'
 
 const test1 = `Aptitude - test1`
-const deleteTest1 = `Aptitude - Detete test`
+const deleteTest1 = `Aptitude - test2 `
 
 describe('Visiting Tests', () => {
   beforeEach('sign-in', () => {
@@ -37,7 +37,7 @@ describe('Visiting Tests', () => {
   it('sort by name in descending order ', () => {
     cy.get('a').find('#tests').should('have.text', testsConstants.tests).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.get('#sort-filter-body').get('#ascend').click()
+    cy.get('#sort-filter-body').get('#descend').click()
     cy.get('.dropdownButton span span', { timeout: 6000 })
       .invoke('text')
       .then((el) => {
@@ -78,7 +78,7 @@ describe('Visiting Tests', () => {
   it('sort by created date in descending order', () => {
     cy.get('a').find('#tests').should('have.text', testsConstants.tests).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.get('#sort-filter-body').get('#ascend').click()
+    cy.get('#sort-filter-body').get('#descend').click()
     cy.get('#sort-filter-container').within(() => {
       cy.get('.dropdownButton')
         .click({ multiple: true })

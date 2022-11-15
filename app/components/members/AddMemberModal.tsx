@@ -37,6 +37,7 @@ export default function AddMemberModal({
 
   useEffect(() => {
     setRole(roles[0].id)
+    setEmail('')
   }, [open, roles])
 
   const inputFieldsProps = [

@@ -23,11 +23,16 @@ describe('Test for section-details', () => {
         if (
           el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
         ) {
-          cy.get('.sectionName').should('have.text', section1).click()
+          cy.get('.sectionName').should('have.text', section1)
         }
       })
     })
-    cy.get('#add-question', { timeout: 6000 })
+    cy.get('.sectionName').contains(section1).click()
+    cy.get('#section-details-heading', { timeout: 40000 }).should(
+      'have.text',
+      section1
+    )
+    cy.get('#add-question', { timeout: 8000 })
       .should('have.text', `+ ${addQuestion.addQuestion}`)
       .click()
     cy.location('pathname', { timeout: 60000 }).should(
@@ -70,11 +75,16 @@ describe('Test for section-details', () => {
         if (
           el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
         ) {
-          cy.get('.sectionName').should('have.text', section1).click()
+          cy.get('.sectionName').should('have.text', section1)
         }
       })
     })
-    cy.get('#add-question', { timeout: 6000 })
+    cy.get('.sectionName').contains(section1).click()
+    cy.get('#section-details-heading', { timeout: 40000 }).should(
+      'have.text',
+      section1
+    )
+    cy.get('#add-question', { timeout: 12000 })
       .should('have.text', `+ ${addQuestion.addQuestion}`)
       .click()
     cy.location('pathname', { timeout: 60000 }).should(
@@ -117,11 +127,16 @@ describe('Test for section-details', () => {
         if (
           el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
         ) {
-          cy.get('.sectionName').should('have.text', section1).click()
+          cy.get('.sectionName').should('have.text', section1)
         }
       })
     })
-    cy.get('#add-question', { timeout: 6000 })
+    cy.get('.sectionName').contains(section1).click()
+    cy.get('#section-details-heading', { timeout: 40000 }).should(
+      'have.text',
+      section1
+    )
+    cy.get('#add-question', { timeout: 12000 })
       .should('have.text', `+ ${addQuestion.addQuestion}`)
       .click()
     cy.location('pathname', { timeout: 60000 }).should(
@@ -164,11 +179,16 @@ describe('Test for section-details', () => {
         if (
           el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
         ) {
-          cy.get('.sectionName').should('have.text', section1).click()
+          cy.get('.sectionName').should('have.text', section1)
         }
       })
     })
-    cy.get('#add-question', { timeout: 6000 })
+    cy.get('.sectionName').contains(section1).click()
+    cy.get('#section-details-heading', { timeout: 40000 }).should(
+      'have.text',
+      section1
+    )
+    cy.get('#add-question', { timeout: 12000 })
       .should('have.text', `+ ${addQuestion.addQuestion}`)
       .click()
     cy.location('pathname', { timeout: 60000 }).should(
@@ -215,11 +235,16 @@ describe('Test for section-details', () => {
         if (
           el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
         ) {
-          cy.get('.sectionName').should('have.text', section1).click()
+          cy.get('.sectionName').should('have.text', section1)
         }
       })
     })
-    cy.get('#add-question', { timeout: 6000 })
+    cy.get('.sectionName').contains(section1).click()
+    cy.get('#section-details-heading', { timeout: 40000 }).should(
+      'have.text',
+      section1
+    )
+    cy.get('#add-question', { timeout: 12000 })
       .should('have.text', `+ ${addQuestion.addQuestion}`)
       .click()
     cy.location('pathname', { timeout: 60000 }).should(
@@ -264,11 +289,16 @@ describe('Test for section-details', () => {
         if (
           el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
         ) {
-          cy.get('.sectionName').should('have.text', section1).click()
+          cy.get('.sectionName').should('have.text', section1)
         }
       })
     })
-    cy.get('#add-question', { timeout: 6000 })
+    cy.get('.sectionName').contains(section1).click()
+    cy.get('#section-details-heading', { timeout: 40000 }).should(
+      'have.text',
+      section1
+    )
+    cy.get('#add-question', { timeout: 12000 })
       .should('have.text', `+ ${addQuestion.addQuestion}`)
       .click()
     cy.location('pathname', { timeout: 60000 }).should(
@@ -310,11 +340,16 @@ describe('Test for section-details', () => {
         if (
           el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
         ) {
-          cy.get('.sectionName').should('have.text', section1).click()
+          cy.get('.sectionName').should('have.text', section1)
         }
       })
     })
-    cy.get('#add-question', { timeout: 6000 })
+    cy.get('.sectionName').contains(section1).click()
+    cy.get('#section-details-heading', { timeout: 40000 }).should(
+      'have.text',
+      section1
+    )
+    cy.get('#add-question', { timeout: 12000 })
       .should('have.text', `+ ${addQuestion.addQuestion}`)
       .click()
     cy.location('pathname', { timeout: 60000 }).should(
@@ -353,11 +388,16 @@ describe('Test for section-details', () => {
         if (
           el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
         ) {
-          cy.get('.sectionName').should('have.text', section1).click()
+          cy.get('.sectionName').should('have.text', section1)
         }
       })
     })
-    cy.get('#add-question', { timeout: 6000 })
+    cy.get('.sectionName').contains(section1).click()
+    cy.get('#section-details-heading', { timeout: 40000 }).should(
+      'have.text',
+      section1
+    )
+    cy.get('#add-question', { timeout: 12000 })
       .should('have.text', `+ ${addQuestion.addQuestion}`)
       .click()
     cy.location('pathname', { timeout: 60000 }).should(
@@ -387,11 +427,16 @@ describe('Test for section-details', () => {
         if (
           el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
         ) {
-          cy.get('.sectionName').should('have.text', section1).click()
+          cy.get('.sectionName').should('have.text', section1)
         }
       })
     })
-    cy.get('#add-question', { timeout: 6000 })
+    cy.get('.sectionName').contains(section1).click()
+    cy.get('#section-details-heading', { timeout: 40000 }).should(
+      'have.text',
+      section1
+    )
+    cy.get('#add-question', { timeout: 12000 })
       .should('have.text', `+ ${addQuestion.addQuestion}`)
       .click()
     cy.location('pathname', { timeout: 60000 }).should(

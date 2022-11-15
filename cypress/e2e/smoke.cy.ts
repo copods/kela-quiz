@@ -6,7 +6,7 @@ import {
 } from '~/constants/common.constants'
 const section1 = `Aptitude - section1`
 const test1 = `Aptitude - test1`
-const deleteTest1 = `Aptitude - Detete test`
+const deleteTest1 = `Aptitude - test2`
 const section2 = `Aptitude - section2`
 const deleteSection = `Aptitude - delete-Section`
 
@@ -256,6 +256,7 @@ describe('smoke tests', () => {
         }
       })
     })
+    cy.get('button#next-button', { timeout: 8000 }).should('be.visible')
     cy.get('button#next-button').should('have.text', cypress.next).click()
     cy.get('.stepsTab').each(($el) => {
       cy.wrap($el).within((el) => {
@@ -324,6 +325,7 @@ describe('smoke tests', () => {
         }
       })
     })
+    cy.get('button#next-button', { timeout: 8000 }).should('be.visible')
     cy.get('button#next-button').should('have.text', cypress.next).click()
     cy.get('.stepsTab').each(($el) => {
       cy.wrap($el).within((el) => {
@@ -371,7 +373,7 @@ describe('smoke tests', () => {
     cy.login()
     cy.customVisit('/tests')
 
-    cy.get('.test-table-list').should('be.visible')
+    cy.get('.test-table-list', { timeout: 8000 }).should('be.visible')
     cy.get('.test-table-list').each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -383,7 +385,8 @@ describe('smoke tests', () => {
       })
     })
     cy.get('.test-name-navigation').contains(test1).click()
-    cy.get('#invite-popup-open').should('be.visible').click()
+    cy.get('#title', { timeout: 8000 }).should('have.text', test1)
+    cy.get('#invite-popup-open', { timeout: 8000 }).should('be.visible').click()
     cy.get('input[name="email"]')
       .clear()
       .type('johndoe@example.com')

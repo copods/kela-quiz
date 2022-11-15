@@ -28,23 +28,23 @@ type LoaderData = {
 }
 export const loader: LoaderFunction = async ({ request, params }) => {
   const invitedMember = await getInvitedMemberById(params.inviteId as string)
-
-  const user = await getUserId(request) //checking if user exist or not
   if (!invitedMember?.id) {
     throw new Response('Not Found', { status: 404 })
   }
 
+  const user = await getUserId(request) //checking if user exist or not
   if (user) {
     const userId = await getUserId(request)
-    if (userId === invitedMember?.id) {
-      return null //if user exist and and user nor reject or join the workspace
-    } else {
+    if (userId != invitedMember?.id) {
       redirect('/logout') //if not then logout
     }
-    if (userId !== invitedMember?.id) {
-      return redirect(routes.signUp)
+    if (!userId) {
+      redirect(`sign-in+?cameFrom=join&id=${params.inviteId}`)
     }
 
+    // if (invitedMember.id !== userId) {
+    //   return redirect(routes.signUp)
+    // }
     if (user && invitedMember?.joined === true) {
       if (userId === invitedMember?.id) {
         return redirect(routes.signIn) // if user accept the workspace join invitation then redirect to sign-in
@@ -64,13 +64,13 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     const userId = await getUserId(request)
 
     if (invitedMember && !user) {
-      return redirect(routes.signUp) //if invitedMember not exist or invalid invited if then redirect to sign-up
+      return redirect(routes.signUp)
     }
     if (invitedMember?.joined === false) {
       if (userId === invitedMember?.id) {
-        return redirect(routes.signIn) // if user declined the workspace join invitation then redirect to sign-in if currently login
+        return redirect(routes.signIn)
       } else if (!userId && invitedMember?.id) {
-        return redirect('/logout') // if user declined the workspace join invitation then redirect to logout if currently logout
+        return redirect('/logout')
       }
     }
   }
