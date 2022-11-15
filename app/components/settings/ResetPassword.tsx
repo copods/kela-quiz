@@ -31,7 +31,17 @@ const ResetPassword = ({
   const [password, setPassword] = useState('')
   const [newPassword, setNewPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
+  const [error, setError] = useState('')
 
+  const comparePasswords = (password: string, confirmPassword: string) => {
+    if (password && confirmPassword) {
+      if (password === confirmPassword) {
+        setError('')
+      } else {
+        setError('Passwords do not match')
+      }
+    }
+  }
   const PasswordInputFieldProps = [
     // Input field props
     {
@@ -60,6 +70,7 @@ const ResetPassword = ({
       errorId: 'New-password-error',
       onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
         setNewPassword(trimValue(event?.target.value))
+        comparePasswords(event.target.value, confirmPassword)
       },
     },
     {
@@ -69,10 +80,11 @@ const ResetPassword = ({
       required: true,
       type: 'password',
       value: confirmPassword,
-      error: generalSettings?.errors?.passNotMatched,
+      error: error,
       errorId: 'Confirm-password-error',
       onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
         setConfirmPassword(trimValue(event?.target.value))
+        comparePasswords(newPassword, event.target.value)
       },
     },
   ]
