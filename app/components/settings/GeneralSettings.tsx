@@ -8,10 +8,10 @@ const GeneralSettings = () => {
   const { t } = useTranslation()
   return (
     <>
-      <div className="flex flex-col gap-8 rounded-lg border border-solid border-gray-300 bg-white p-4">
+      <div className="flex flex-col gap-4 rounded-lg border border-solid border-gray-300 bg-white p-4">
         <h3 className="text-lg font-semibold"> {t('settings.basicInfo')}</h3>
         <div className="flex flex-col gap-5">
-          <div className="flex flex-col justify-between gap-4">
+          <div className="flex flex-col gap-2">
             <span className="text-base font-bold text-gray-700">
               {t('settings.version')}
             </span>
@@ -19,7 +19,7 @@ const GeneralSettings = () => {
               {version}
             </span>
           </div>
-          <div className="flex flex-col justify-between gap-4">
+          <div className="flex flex-col gap-2">
             <span className="text-base font-bold text-gray-700">
               {t('settings.password')}
             </span>
