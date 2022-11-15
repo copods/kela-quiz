@@ -1,4 +1,4 @@
-import type { ActionFunction } from '@remix-run/node'
+import type { ActionFunction, LoaderFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
 
 import { createUserBySignUp } from '~/models/user.server'
@@ -25,10 +25,18 @@ export type ActionData = {
     status: number
   }
 }
+export const loader: LoaderFunction = async ({ request }) => {
+  const inviteId = new URL(request.url).searchParams.get('id')
+  return json({ inviteId })
+}
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
   const action = JSON.parse(formData.get('signUp') as string)
-  const redirectTo = safeRedirect(formData.get('redirectTo'), routes.members)
+  const invitedId = formData.get('inviteId')
+  const redirectTo = safeRedirect(
+    formData.get('redirectTo'),
+    invitedId ? `/workspace/${invitedId}/join` : routes.members
+  )
 
   if (action.action === 'add') {
     const firstName = formData.get('firstName')

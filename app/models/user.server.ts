@@ -20,7 +20,7 @@ export async function deleteUserById(id: string) {
 }
 
 export async function getUserByEmail(email: User['email']) {
-  return prisma.user.findUnique({ where: { email } })
+  return await prisma.user.findUnique({ where: { email } })
 }
 
 export async function getAllUsers({

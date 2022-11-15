@@ -12,10 +12,12 @@ export default function AddMemberModal({
   roles,
   open,
   setOpen,
+  loggedInUser,
 }: {
   roles: Role[]
   open: boolean
   setOpen: (e: boolean) => void
+  loggedInUser: string
 }) {
   const { t } = useTranslation()
 
@@ -101,7 +103,11 @@ export default function AddMemberModal({
               name="inviteMember"
               value={'invite'}
               className="h-9 px-4"
-              isDisabled={transition.state === 'submitting'}
+              isDisabled={
+                transition.state === 'submitting' ||
+                email === loggedInUser ||
+                !email
+              }
               title={
                 transition.state === 'submitting'
                   ? t('commonConstants.inviting')

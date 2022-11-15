@@ -1,5 +1,5 @@
 import type { ActionFunction, LoaderFunction } from '@remix-run/server-runtime'
-import { redirect } from '@remix-run/server-runtime'
+import { redirect } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import Header from '~/components/assessment/Header'
 import JoinWorkspace from '~/components/workspace/JoinWorkspace'
@@ -12,6 +12,7 @@ import { routes } from '~/constants/route.constants'
 import { joinWorkspace } from '~/models/workspace.server'
 import { rejectWorkspaceInvitation } from '../models/workspace.server'
 import { getInvitedMemberById } from '~/models/invites.server'
+import { getUserByEmail } from '~/models/user.server'
 
 export type ActionData = {
   errors?: {
@@ -25,6 +26,8 @@ export type ActionData = {
 }
 type LoaderData = {
   invitedMember: Awaited<ReturnType<typeof getInvitedMemberById>>
+  loginWithWrongId: any
+  inviteId: any
 }
 export const loader: LoaderFunction = async ({ request, params }) => {
   const invitedMember = await getInvitedMemberById(params.inviteId as string)
@@ -32,50 +35,23 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     throw new Response('Not Found', { status: 404 })
   }
 
-  const user = await getUserId(request) //checking if user exist or not
+  const user = await getUserByEmail(invitedMember.email) //checking if user exist or not
+  let loginWithWrongId
   if (user) {
     const userId = await getUserId(request)
-    if (userId != invitedMember?.id) {
-      redirect('/logout') //if not then logout
-    }
     if (!userId) {
-      redirect(`sign-in+?cameFrom=join&id=${params.inviteId}`)
+      return redirect(`${routes.signIn}?cameFrom=join&id=${params.inviteId}`)
     }
 
-    // if (invitedMember.id !== userId) {
-    //   return redirect(routes.signUp)
-    // }
-    if (user && invitedMember?.joined === true) {
-      if (userId === invitedMember?.id) {
-        return redirect(routes.signIn) // if user accept the workspace join invitation then redirect to sign-in
-      } else if (userId !== invitedMember?.id) {
-        return redirect('/logout') // if user not currently login then redirect to logout
-      }
-    }
-    if (invitedMember?.joined === false) {
-      if (userId === invitedMember?.id) {
-        return redirect(routes.signIn) // if user declined the workspace join invitation then redirect to sign-in if currently login
-      } else if (userId !== invitedMember?.id) {
-        return redirect('/logout') // if user declined the workspace join invitation then redirect to logout if currently logout
-      }
-    }
+    loginWithWrongId = userId && userId != user?.id
   }
   if (!user) {
-    const userId = await getUserId(request)
-
     if (invitedMember && !user) {
-      return redirect(routes.signUp)
-    }
-    if (invitedMember?.joined === false) {
-      if (userId === invitedMember?.id) {
-        return redirect(routes.signIn)
-      } else if (!userId && invitedMember?.id) {
-        return redirect('/logout')
-      }
+      return redirect(`${routes.signUp}?cameFrom=join&id=${params.inviteId}`)
     }
   }
-
-  return json<LoaderData>({ invitedMember })
+  const inviteId = new URL(request.url).searchParams.get('id')
+  return json<LoaderData>({ invitedMember, loginWithWrongId, inviteId })
 }
 export const action: ActionFunction = async ({ request, params }) => {
   const formData = await request.formData()
@@ -140,6 +116,7 @@ export const action: ActionFunction = async ({ request, params }) => {
 }
 const InviteMember = () => {
   const { t } = useTranslation()
+
   const joinWorkspaceActionData = useActionData() as ActionData
   useEffect(() => {
     if (joinWorkspaceActionData) {
@@ -152,6 +129,7 @@ const InviteMember = () => {
       }
     }
   }, [joinWorkspaceActionData, t])
+
   return (
     <div className="flex h-full flex-col bg-gray-50">
       <Header />

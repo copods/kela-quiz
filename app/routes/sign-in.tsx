@@ -16,16 +16,23 @@ import { routes } from '~/constants/route.constants'
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await getUserId(request)
   if (userId) return redirect(routes.members)
-  return json({})
+
+  const inviteId = new URL(request.url).searchParams.get('id')
+
+  return json({ inviteId })
 }
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
+
+  const invitedId = formData.get('inviteId')
+  const redirectTo = safeRedirect(
+    formData.get('redirectTo'),
+    invitedId != null ? `/workspace/${invitedId}/join` : routes.members
+  )
+  const remember = formData.get('remember')
   const email = formData.get('email')
   const password = formData.get('password')
-  const redirectTo = safeRedirect(formData.get('redirectTo'), routes.members)
-  const remember = formData.get('remember')
-
   if (!validateEmail(email)) {
     return json<ActionData>(
       { errors: { email: 'statusCheck.emailIsInvalid' } },

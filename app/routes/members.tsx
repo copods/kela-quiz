@@ -5,7 +5,12 @@ import type { LoaderFunction, ActionFunction } from '@remix-run/node'
 import MembersList from '~/components/members/MembersList'
 import { json } from '@remix-run/node'
 import { useActionData } from '@remix-run/react'
-import { deleteUserById, getAllRoles, getAllUsers } from '~/models/user.server'
+import {
+  deleteUserById,
+  getAllRoles,
+  getAllUsers,
+  getUserById,
+} from '~/models/user.server'
 import MembersHeader from '~/components/members/MembersHeader'
 import { toast } from 'react-toastify'
 import { useEffect, useState } from 'react'
@@ -37,9 +42,11 @@ type LoaderData = {
   workspaces: Awaited<ReturnType<typeof getUserWorkspaces>>
   currentWorkspaceId: Awaited<ReturnType<typeof getWorkspaceId>>
   invitedMembers: Awaited<ReturnType<typeof getAllInvitedMember>>
+  getUser: Awaited<ReturnType<typeof getUserById>>
 }
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await getUserId(request)
+  const getUser = await getUserById(userId as string)
   const currentWorkspaceId = await getWorkspaceId(request)
   const invitedMembers = await getAllInvitedMember(currentWorkspaceId as string)
   const workspaces = await getUserWorkspaces(userId as string)
@@ -53,12 +60,14 @@ export const loader: LoaderFunction = async ({ request }) => {
     workspaces,
     currentWorkspaceId,
     invitedMembers,
+    getUser,
   })
 }
 
 export const action: ActionFunction = async ({ request }) => {
   const invitedByWorkspaceId = await requireWorkspaceId(request)
   const userId = await getUserId(request)
+  const getUser = await getUserById(userId as string)
   const formData = await request.formData()
   const action = await formData.get('action')
   if (action === actions.inviteMember) {
@@ -82,6 +91,12 @@ export const action: ActionFunction = async ({ request }) => {
     if (typeof roleId !== 'string' || roleId.length === 0) {
       return json<ActionData>(
         { errors: { title: 'toastConstants.roleRequired', status: 400 } },
+        { status: 400 }
+      )
+    }
+    if (email === getUser?.email) {
+      return json<ActionData>(
+        { errors: { title: 'statusCheck.notInviteYourself', status: 400 } },
         { status: 400 }
       )
     }

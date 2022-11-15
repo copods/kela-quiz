@@ -60,13 +60,18 @@ export async function getInvitedMemberById(id: Invites['id']) {
     select: {
       id: true,
       joined: true,
+      email: true,
       invitedById: {
         select: {
           firstName: true,
           lastName: true,
         },
       },
-      invitedForWorkspace: true,
+      invitedForWorkspace: {
+        select: {
+          name: true,
+        },
+      },
     },
   })
 }

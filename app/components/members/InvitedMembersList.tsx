@@ -10,6 +10,7 @@ const InvitedMembersList = ({
 }) => {
   const membersData = useLoaderData()
   const { t } = useTranslation()
+
   const invitedMember = membersData.invitedMembers
   return (
     <div>

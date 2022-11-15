@@ -1,5 +1,6 @@
 import {
   useActionData,
+  useLoaderData,
   useNavigate,
   useSubmit,
   useTransition,
@@ -16,7 +17,7 @@ import { toast } from 'react-toastify'
 
 const SignUp = ({ error }: { error?: string }) => {
   const navigate = useNavigate()
-
+  const signUpLoaderData = useLoaderData()
   const { t } = useTranslation()
   const signUpActionData = useActionData()
   useEffect(() => {
@@ -46,6 +47,7 @@ const SignUp = ({ error }: { error?: string }) => {
       workspace: workspace,
       Password: password,
       confirmPassword: confirmPassword,
+      inviteId: signUpLoaderData.inviteId,
       signUp: JSON.stringify({
         action: 'add',
       }),

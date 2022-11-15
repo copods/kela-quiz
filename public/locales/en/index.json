@@ -178,7 +178,8 @@
     "passAlreadyCreated": "You have already created the password",
     "userNotFound": "User Not Found",
     "workspaceJoinSuccess": "Workspace join successfully",
-    "workspaceInvitationRejected": "Workspace invitation rejected"
+    "workspaceInvitationRejected": "Workspace invitation rejected",
+    "notInviteYourself": "Your can not invite Yourself"
   },
   "resultConstants": {
     "order": "Order",

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Form, useNavigate } from '@remix-run/react'
+import { useLoaderData, useNavigate, useSubmit } from '@remix-run/react'
 import Button from '~/components/form/Button'
 import InputField from '~/components/form/InputField'
 import Logo from '~/components/Logo'
@@ -9,6 +9,8 @@ import { routes } from '~/constants/route.constants'
 function Login({ actionData, redirectTo }: LoginProps) {
   const { t } = useTranslation()
 
+  const loginLoaderData = useLoaderData()
+  const submit = useSubmit()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const inputFieldsProps = [
@@ -43,6 +45,19 @@ function Login({ actionData, redirectTo }: LoginProps) {
   const signUp = () => {
     navigate(routes.signUp)
   }
+  const submitSignInForm = () => {
+    let data = {
+      email: email,
+      password: password,
+      inviteId: loginLoaderData.inviteId,
+      signIn: JSON.stringify({
+        action: 'login',
+      }),
+    }
+    submit(data, {
+      method: 'post',
+    })
+  }
   const forgetPassword = () => {
     navigate(routes.forgotPassword)
   }
@@ -58,7 +73,7 @@ function Login({ actionData, redirectTo }: LoginProps) {
         <div className="flex justify-center">
           <hr className="mt-7 mb-5 h-px w-6/12 border-none bg-gray-500 text-center" />
         </div>
-        <Form method="post">
+        <div>
           <div className="flex flex-col gap-6">
             {inputFieldsProps.map((props) => {
               return <InputField {...props} key={props.name} />
@@ -101,13 +116,13 @@ function Login({ actionData, redirectTo }: LoginProps) {
               tabIndex={0}
               title={t('logIn.signIn')}
               buttonText={t('logIn.signIn')}
-              type="submit"
               varient="primary-solid"
               className="h-11 w-full"
-              datacy="submit"
+              value={'login'}
+              onClick={() => submitSignInForm()}
             />
           </div>
-        </Form>
+        </div>
       </div>
       <div className="flex pt-6">
         <div className="text-base font-medium text-gray-500">
