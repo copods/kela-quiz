@@ -33,11 +33,11 @@ const AddSection = ({
   useEffect(() => {
     setDescription('')
     setSectionName('')
-  }, [open])
+    setErrorMessage({ title: '', description: '' })
+  }, [open, setErrorMessage])
   return (
     <DialogWrapper
       open={open}
-      setErrorMessage={setErrorMessage}
       heading={t('sectionsConstants.addSection')}
       setOpen={setOpen}
       header={true}

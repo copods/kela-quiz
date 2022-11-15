@@ -10,19 +10,11 @@ const DialogWrapper = ({
   children,
   heading,
   header,
-  setErrorMessage,
   ...props
 }: DialogWrapperProps) => {
   return (
     <Transition.Root show={open} as={Fragment}>
-      <Dialog
-        as="div"
-        className="relative z-10"
-        onClose={() => {
-          setOpen(false)
-          setErrorMessage?.({ title: '', description: '' })
-        }}
-      >
+      <Dialog as="div" className="relative z-10" onClose={() => setOpen(false)}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -68,10 +60,7 @@ const DialogWrapper = ({
                       onKeyUp={(e) => {
                         if (e.key === 'Enter') setOpen(false)
                       }}
-                      onClick={() => {
-                        setOpen(false)
-                        setErrorMessage?.({ title: '', description: '' })
-                      }}
+                      onClick={() => setOpen(false)}
                     />
                   </div>
                   <hr className="mt-4 mb-6 h-px w-full border-0 bg-gray-300" />

@@ -34,13 +34,6 @@ export interface DialogWrapperProps {
   setOpen: (e: boolean) => void
   header: boolean
   tabIndex?: number
-  setErrorMessage?: ({
-    title,
-    description,
-  }: {
-    title: string
-    description: string
-  }) => void
 }
 
 export interface ButtonProps {
