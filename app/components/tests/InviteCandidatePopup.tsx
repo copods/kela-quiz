@@ -63,7 +63,7 @@ const InviteCandidatePopup = ({
     /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)
   const updateEmail = (event: any, index: number) => {
     const newEmails = emails.map((email, i) => {
-      if (i == index) {
+      if (i === index) {
         return event.target.value
       }
       return email
@@ -73,7 +73,7 @@ const InviteCandidatePopup = ({
   const validateEmails = (emails: string[], index: number) => {
     const emailError: error = {}
     emails
-      .map((email, i) => (i == index ? '' : email))
+      .map((email, i) => (i === index ? '' : email))
       .forEach((email, i: number) => {
         if (email) {
           if (!isEmail(email)) {
