@@ -46,7 +46,6 @@ const JoinWorkspace = () => {
                 aria-label="join workspace heading"
                 className="break-word text-2xl font-bold"
               >
-                {' '}
                 {t('members.workspaceInvitation')}
               </span>
               {workspaceInvitation.joined === true ? (

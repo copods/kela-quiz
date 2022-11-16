@@ -30,7 +30,7 @@ export default function MemberListItem({
   }
   return (
     <div className="col-span-full grid grid-cols-10">
-      <div className="memberRows col-span-full grid grid-cols-10 gap-3 border-t border-solid border-gray-200 px-6 py-4">
+      <div className="memberRows col-gap-3 col-span-full grid grid-cols-10 border-t border-solid border-gray-200 px-6 py-4">
         <div className="break-word col-span-2 overflow-ellipsis pl-4">
           <span className="memberName text-base text-gray-700">
             {user.firstName} {user.lastName}

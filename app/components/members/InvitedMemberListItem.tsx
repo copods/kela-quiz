@@ -40,7 +40,7 @@ const InvitedMembersListItem = ({
 
   return (
     <div className="col-span-full grid grid-cols-10">
-      <div className="inviteMemberRow col-span-full grid grid-cols-10 gap-3 border-t border-solid border-gray-200 px-6 py-4">
+      <div className="inviteMemberRow col-gap-3 col-span-full grid grid-cols-10 border-t border-solid border-gray-200 px-6 py-4">
         <div className="col-span-3 overflow-ellipsis break-all pl-4">
           <span className="memberName text-base text-gray-700">
             {invitedMembers.email}
