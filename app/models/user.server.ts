@@ -28,7 +28,7 @@ export async function getAllUsers({
 }: {
   currentWorkspaceId: string | undefined
 }) {
-  return prisma.user.findMany({
+  const user = await prisma.user.findMany({
     where: {
       userWorkspace: {
         some: {
@@ -40,12 +40,13 @@ export async function getAllUsers({
       role: true,
       Invites: {
         select: {
-          joinedAt: true,
           email: true,
+          joinedAt: true,
         },
       },
     },
   })
+  return user
 }
 
 export async function getAllRoles() {

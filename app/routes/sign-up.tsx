@@ -35,7 +35,7 @@ export const action: ActionFunction = async ({ request }) => {
   const invitedId = formData.get('inviteId')
   const redirectTo = safeRedirect(
     formData.get('redirectTo'),
-    invitedId ? `/workspace/${invitedId}/join` : routes.members
+    invitedId != 'null' ? `/workspace/${invitedId}/join` : routes.members
   )
 
   if (action.action === 'add') {
@@ -81,6 +81,7 @@ export const action: ActionFunction = async ({ request }) => {
         { status: 400 }
       )
     }
+
     if (typeof workspaceName !== 'string' || workspaceName.length === 0) {
       return json<ActionData>(
         {

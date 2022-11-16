@@ -75,7 +75,7 @@ export async function getInvitedMemberById(id: Invites['id']) {
     },
   })
 }
-export async function deleteInviteMember(id: string) {
+export async function deleteMemberInvite(id: string) {
   try {
     return await prisma.invites.update({
       where: { id },
@@ -110,7 +110,7 @@ export async function getAllInvitedMember(workspaceId: string) {
     },
   })
 }
-export async function reInvitationMember({ id }: { id: string }) {
+export async function reinviteMemberForWorkspace({ id }: { id: string }) {
   const user = await prisma.invites.findUnique({
     where: { id },
     include: { invitedForWorkspace: true },

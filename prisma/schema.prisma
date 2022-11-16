@@ -91,7 +91,7 @@ model Invites {
   createdAt           DateTime   @default(now())
   updatedAt           DateTime   @updatedAt
 
-  @@unique([email, deletedAt, deleted])
+  @@unique([email, deletedAt, deleted,workspaceId])
 }
 
 model Section {

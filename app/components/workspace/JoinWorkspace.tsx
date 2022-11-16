@@ -7,7 +7,6 @@ import {
 import { useTranslation } from 'react-i18next'
 import Button from '../form/Button'
 import logo from '../../../public/assets/member-invitation.svg'
-import { routes } from '~/constants/route.constants'
 
 const JoinWorkspace = () => {
   const { t } = useTranslation()
@@ -41,35 +40,35 @@ const JoinWorkspace = () => {
           <img className="h-24 w-32" src={logo} alt="" />
           <div className="flex flex-col gap-12">
             <div className="flex flex-col items-center justify-center gap-4 text-2xl">
-              <span className="break-word text-2xl font-bold">
+              <span
+                tabIndex={0}
+                role={'rowheader'}
+                aria-label="join workspace heading"
+                className="break-word text-2xl font-bold"
+              >
                 {' '}
                 {t('members.workspaceInvitation')}
               </span>
               {workspaceInvitation.joined === true ? (
                 <span className="text-center text-primary">
-                  You already joined the workspace
+                  {t('members.alreadyJoinedWorkspace')}
                 </span>
               ) : workspaceInvitation.joined === false ? (
                 <span className="text-center text-primary">
-                  You already reject the workspace joining invitation
+                  {t('members.alreadyRejectedWorkspaceInvitation')}
                 </span>
-              ) : workspaceInvitation.loginWithWrongId === true ? (
+              ) : workspcaceInvitationData.loginWithWrongId === true ? (
                 <span className="text-center text-primary">
-                  You are currently logged in from another id, please login from
-                </span>
-              ) : workspaceInvitation.loginWithWrongId === true ? (
-                <span className="text-center text-primary">
-                  You are currently logged in from another id, please login and
-                  come back again !
+                  {t('members.loggedinFromAnotherAccount')}
                 </span>
               ) : (
                 <span className="break-word text-center text-base font-medium text-gray-500">
-                  You have been invited by{' '}
+                  {t('members.youInvitedBy')}{' '}
                   <span className="text-center text-primary">
                     {workspaceInvitation?.invitedById?.firstName}{' '}
                     {workspaceInvitation?.invitedById?.lastName}
                   </span>{' '}
-                  to join{' '}
+                  {t('members.toJoin')}{' '}
                   <span className="text-primary">
                     {workspaceInvitation.invitedForWorkspace.name}
                   </span>
@@ -95,18 +94,8 @@ const JoinWorkspace = () => {
                 />
               ) : workspaceInvitation.joined === false ? (
                 ''
-              ) : workspaceInvitation.loginWithWrongId === true ? (
-                <Button
-                  tabIndex={0}
-                  title="Go to Login"
-                  id="go-to-login"
-                  buttonText="Go to Login"
-                  name="go-to-Login"
-                  varient="primary-outlined"
-                  value={'go-to-login'}
-                  className="h-9 px-24"
-                  onClick={() => navigate(routes.signIn)}
-                />
+              ) : workspcaceInvitationData.loginWithWrongId === true ? (
+                ''
               ) : (
                 <div className="flex justify-center gap-8">
                   <Button

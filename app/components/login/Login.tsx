@@ -56,6 +56,10 @@ function Login({ actionData, redirectTo }: LoginProps) {
     }
     submit(data, {
       method: 'post',
+      action:
+        loginLoaderData.inviteId === null
+          ? '/sign-in'
+          : `/sign-in?cameFrom=join&id=${loginLoaderData.inviteId}`,
     })
   }
   const forgetPassword = () => {

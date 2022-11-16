@@ -22,7 +22,7 @@ import InvitedMembersList from '~/components/members/InvitedMembersList'
 import {
   getAllInvitedMember,
   inviteNewUser,
-  reInvitationMember,
+  reinviteMemberForWorkspace,
 } from '~/models/invites.server'
 
 export type ActionData = {
@@ -141,7 +141,7 @@ export const action: ActionFunction = async ({ request }) => {
   if (action === actions.resendMember) {
     const id = formData.get('id')
     let resendMember = null
-    await reInvitationMember({
+    await reinviteMemberForWorkspace({
       id: id as string,
     })
       .then(() => {
@@ -230,7 +230,7 @@ const Members = () => {
           <MembersList actionStatus={membersActionData?.resp?.title} />
         </div>
         <div className="flex flex-col gap-4 text-2xl">
-          <h1>{t('members.invitedMember')}</h1>
+         
           <InvitedMembersList actionStatus={membersActionData?.resp?.title} />
         </div>
       </div>

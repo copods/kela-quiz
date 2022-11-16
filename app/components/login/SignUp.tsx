@@ -54,11 +54,16 @@ const SignUp = ({ error }: { error?: string }) => {
     }
     submit(data, {
       method: 'post',
+      action:
+        signUpLoaderData.inviteId === null
+          ? '/sign-up'
+          : `/sign-up?cameFrom=join&id=${signUpLoaderData.inviteId}`,
     })
   }
   const signIn = () => {
     navigate(routes.signIn)
   }
+
   const [onBlurPasswordErr, setOnBlurPasswordErr] = useState('')
   const [onBlurConfPasswordErr, setOnConfBlurPasswordErr] = useState('')
   const onBlurPassError = () => {

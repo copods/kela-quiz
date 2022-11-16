@@ -12,7 +12,12 @@
     "joinedMembers": "Joined Members",
     "noInvitedMember": "No any invited Member Found",
     "workspaceInvitation": "Workspace Invitation",
-    "invitedOn": "Invited On"
+    "invitedOn": "Invited On",
+    "alreadyJoinedWorkspace": "You already joined the workspace",
+    "alreadyRejectedWorkspaceInvitation": "You already reject the workspace joining invitation",
+    "loggedinFromAnotherAccount": "You are currently logged in from another id, please login from your account first",
+    "youInvitedBy": "You have been invited by",
+    "toJoin": "to join"
   },
   "commonConstants": {
     "name": "Name",
@@ -177,9 +182,10 @@
     "enteredReenteredPassword": "Password and Confirm password should be same.",
     "passAlreadyCreated": "You have already created the password",
     "userNotFound": "User Not Found",
-    "workspaceJoinSuccess": "Workspace join successfully",
+    "workspaceJoinSuccess": "Workspace joined successfully",
     "workspaceInvitationRejected": "Workspace invitation rejected",
-    "notInviteYourself": "Your can not invite Yourself"
+    "notInviteYourself": "Your can not invite Yourself",
+    "wrongInvitedId": "Your email is not matched with invited id"
   },
   "resultConstants": {
     "order": "Order",

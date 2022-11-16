@@ -4,6 +4,7 @@ import DeletePopUp from '../DeletePopUp'
 import { useEffect, useState } from 'react'
 import { useSubmit } from '@remix-run/react'
 import { t } from 'i18next'
+import moment from 'moment'
 
 export default function MemberListItem({
   user,
@@ -27,7 +28,6 @@ export default function MemberListItem({
   const deleteUser = () => {
     submit({ action: 'delete', id: user.id }, { method: 'post' })
   }
-
   return (
     <div className="col-span-full grid grid-cols-10">
       <div className="memberRows col-span-full grid grid-cols-10 gap-3 border-t border-solid border-gray-200 px-6 py-4">
@@ -44,7 +44,7 @@ export default function MemberListItem({
         </div>
         <div className="col-span-2 overflow-ellipsis break-all pl-4">
           <span className="text-base text-gray-700">
-            {/* {moment(user.invites.joinedAt).format('DD MMMM YY')} */}
+            {moment(user.invites?.joinedAt).format('DD MMMM YY')}
           </span>
         </div>
         <div className="col-span-1 flex gap-4 pl-4">
