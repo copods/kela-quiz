@@ -329,54 +329,54 @@ describe('Test for section-details', () => {
       '/add-question'
     )
   })
-  // it('On Save and Continue visit the Sections Page', () => {
-  //   cy.get('a')
-  //     .find('#sections')
-  //     .should('have.text', routeFiles.sections)
-  //     .click()
-  //   cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
-  //   cy.get('#section-card', { timeout: 8000 }).each(($el) => {
-  //     cy.wrap($el).within((el) => {
-  //       if (
-  //         el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
-  //       ) {
-  //         cy.get('.sectionName').should('have.text', section1)
-  //       }
-  //     })
-  //   })
-  //   cy.get('.sectionName').contains(section1).click()
-  //   cy.get('#section-details-heading', { timeout: 40000 }).should(
-  //     'have.text',
-  //     section1
-  //   )
-  //   cy.get('#add-question', { timeout: 12000 })
-  //     .should('have.text', `+ ${addQuestion.addQuestion}`)
-  //     .click()
-  //   cy.location('pathname', { timeout: 60000 }).should(
-  //     'include',
-  //     '/add-question'
-  //   )
-  //   cy.get('h1', { timeout: 6000 }).should('be.visible')
-  //   cy.get('#Question').get('#dropdown-container').click()
-  //   cy.get('ul').within(() => {
-  //     cy.get('li').within(() => {
-  //       cy.get('div').then((el) => {
-  //         ;[...el].map((el) => {
-  //           if (el.innerText === 'Text') {
-  //             el.click()
-  //           }
-  //           return null
-  //         })
-  //       })
-  //     })
-  //   })
-  //   cy.get('#question-editor #quill-editor').within(() => {
-  //     cy.get('.ql-editor').type(cypress.useMemo)
-  //   })
-  //   cy.get('#optionEditor input').clear().type(cypress.useMemoAns)
-  //   cy.get('#save-and-exit').click()
-  //   cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
-  // })
+  it('On Save and Continue visit the Sections Page', () => {
+    cy.get('a')
+      .find('#sections')
+      .should('have.text', routeFiles.sections)
+      .click()
+    cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
+    cy.get('#section-card', { timeout: 8000 }).each(($el) => {
+      cy.wrap($el).within((el) => {
+        if (
+          el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
+        ) {
+          cy.get('.sectionName').should('have.text', section1)
+        }
+      })
+    })
+    cy.get('.sectionName').contains(section1).click()
+    cy.get('#section-details-heading', { timeout: 40000 }).should('be.visible', { timeout: 4000 }).should(
+      'have.text',
+      section1
+    )
+    cy.get('#add-question', { timeout: 12000 })
+      .should('have.text', `+ ${addQuestion.addQuestion}`)
+      .click()
+    cy.location('pathname', { timeout: 60000 }).should(
+      'include',
+      '/add-question'
+    )
+    cy.get('h1', { timeout: 6000 }).should('be.visible')
+    cy.get('#Question').get('#dropdown-container').click()
+    cy.get('ul').within(() => {
+      cy.get('li').within(() => {
+        cy.get('div').then((el) => {
+          ;[...el].map((el) => {
+            if (el.innerText === 'Text') {
+              el.click()
+            }
+            return null
+          })
+        })
+      })
+    })
+    cy.get('#question-editor #quill-editor').within(() => {
+      cy.get('.ql-editor').type(cypress.useMemo)
+    })
+    cy.get('#optionEditor input').clear().type(cypress.useMemoAns)
+    cy.get('#save-and-exit').click()
+    cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
+  })
   it('Verifying if Question is Empty or not', () => {
     cy.get('a')
       .find('#sections')
@@ -393,7 +393,7 @@ describe('Test for section-details', () => {
       })
     })
     cy.get('.sectionName').contains(section1).click()
-    cy.get('#section-details-heading', { timeout: 40000 }).should(
+    cy.get('#section-details-heading', { timeout: 40000 }).should('be.visible', { timeout: 4000 }).should(
       'have.text',
       section1
     )
@@ -432,7 +432,7 @@ describe('Test for section-details', () => {
       })
     })
     cy.get('.sectionName').contains(section1).click()
-    cy.get('#section-details-heading', { timeout: 40000 }).should(
+    cy.get('#section-details-heading', { timeout: 40000 }).should('be.visible', { timeout: 4000 }).should(
       'have.text',
       section1
     )
