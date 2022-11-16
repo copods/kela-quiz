@@ -35,11 +35,24 @@ const InviteCandidatePopup = ({
     ) {
       if (actionData?.testId === testId)
         if (actionData?.candidateInviteStatus.emailCount > 1) {
-          toast.success(
-            `${actionData?.candidateInviteStatus.newInvited} out of ${
-              actionData?.candidateInviteStatus.emailCount
-            } ${t('testsConstants.candidateInvited')}`
-          )
+          if (
+            actionData?.candidateInviteStatus.emailCount ===
+            actionData?.candidateInviteStatus.newInvited
+          ) {
+            toast.success(
+              `${actionData?.candidateInviteStatus.newInvited} out of ${
+                actionData?.candidateInviteStatus.emailCount
+              } ${t('testsConstants.candidateInvited')}.`
+            )
+          } else {
+            toast.success(
+              `${actionData?.candidateInviteStatus.newInvited} out of ${
+                actionData?.candidateInviteStatus.emailCount
+              } ${t('testsConstants.candidateInvited')}. ${t(
+                'testsConstants.othersWereAlreadyInvited'
+              )}`
+            )
+          }
         } else {
           toast.success(t('testsConstants.candidateInvited'))
         }

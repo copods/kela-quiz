@@ -124,6 +124,7 @@ export const testsConstants = {
   noTestFound: 'No Test Found',
   noCandidateForTest: 'No candidate has attempted this test',
   candidateAlreadyInvited: 'Candidate has already been invited for this test',
+  othersWereAlreadyInvited: 'Others were already invited',
   candidateInvited: 'Candidates Invited',
   writeDescriptionOfTest: 'Write Description of Test',
   testName: 'test',
