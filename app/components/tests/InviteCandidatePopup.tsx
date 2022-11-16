@@ -37,16 +37,12 @@ const InviteCandidatePopup = ({
         if (actionData?.candidateInviteStatus.emailCount > 1) {
           if (
             actionData?.candidateInviteStatus.emailCount ===
-            actionData?.candidateInviteStatus.newInvited
+            actionData?.candidateInviteStatus.neverInvitedCount
           ) {
-            toast.success(
-              `${actionData?.candidateInviteStatus.newInvited} out of ${
-                actionData?.candidateInviteStatus.emailCount
-              } ${t('testsConstants.candidateInvited')}.`
-            )
+            toast.success(`${t('testsConstants.allCandidatesInvited')}`)
           } else {
             toast.success(
-              `${actionData?.candidateInviteStatus.newInvited} out of ${
+              `${actionData?.candidateInviteStatus.neverInvitedCount} out of ${
                 actionData?.candidateInviteStatus.emailCount
               } ${t('testsConstants.candidateInvited')}. ${t(
                 'testsConstants.othersWereAlreadyInvited'
@@ -65,8 +61,6 @@ const InviteCandidatePopup = ({
         if (actionData?.testId === testId) {
           toast.error(t('testsConstants.candidateAlreadyInvited'))
         }
-        // setOpenInvitePopup(false)
-        // setEmails([''])
       }
     }
   }, [actionData, testId, setOpenInvitePopup, t])
@@ -95,7 +89,7 @@ const InviteCandidatePopup = ({
   const validateEmails = (emails: string[], index: number) => {
     const emailError: error = {}
     emails
-      .map((email, i) => (i === index ? email : ''))
+      .map((email, i) => (i === index ? '' : email))
       .forEach((email, i: number) => {
         if (email) {
           if (!isEmail(email)) {
@@ -148,7 +142,9 @@ const InviteCandidatePopup = ({
                 tabIndex={0}
                 type="email"
                 name={`email`}
-                onBlur={() => validateEmails(emails, i)}
+                onFocus={() => {
+                  validateEmails(emails, i)
+                }}
                 onChange={(e) => updateEmail(e, i)}
                 className="inviteInput h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
                 placeholder="johndoe@example.com"

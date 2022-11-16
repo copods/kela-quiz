@@ -126,6 +126,7 @@ export const testsConstants = {
   candidateAlreadyInvited: 'Candidate has already been invited for this test',
   othersWereAlreadyInvited: 'Others were already invited',
   candidateInvited: 'Candidates Invited',
+  allCandidatesInvited: 'All candidates invited.',
   writeDescriptionOfTest: 'Write Description of Test',
   testName: 'test',
   reinvited: 'Candidate Invited Successfully',

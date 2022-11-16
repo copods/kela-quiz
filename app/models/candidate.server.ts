@@ -207,8 +207,7 @@ export async function createCandidate({
       (data) => !invitedToSpecificTest.includes(data)
     )
     const emailCount = emails.length
-    const newInvited = neverInvitedToTest.length
-
+    const neverInvitedCount = neverInvitedToTest.length
     if (emails.length > 1) {
       for (const email of neverInvitedToTest) {
         await createCandidateData({
@@ -226,7 +225,7 @@ export async function createCandidate({
         })
       }
     }
-    return { created: 'created', emailCount, newInvited }
+    return { created: 'created', emailCount, neverInvitedCount }
   } catch (error) {
     return 'error'
   }
