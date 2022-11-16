@@ -4,7 +4,10 @@ import Button from '../form/Button'
 import { trimValue } from '~/utils'
 import { useTranslation } from 'react-i18next'
 import DialogWrapper from '../Dialog'
-
+interface createSectionErrorType {
+  title: string
+  description: string
+}
 const AddSection = ({
   open,
   setOpen,
@@ -13,14 +16,11 @@ const AddSection = ({
   showErrorMessage,
 }: {
   open: boolean
-  createSectionError: { title: string; description: string }
+  createSectionError: createSectionErrorType
   setCreateSectionError: ({
     title,
     description,
-  }: {
-    title: string
-    description: string
-  }) => void
+  }: createSectionErrorType) => void
 
   setOpen: (e: boolean) => void
   showErrorMessage: boolean
@@ -57,7 +57,11 @@ const AddSection = ({
             value={sectionName}
             maxLength={52}
           />
-          <p className="px-3 text-red-500">{createSectionError.title}</p>
+          {createSectionError.title ? (
+            <p className="px-3 text-red-500">{createSectionError.title}</p>
+          ) : (
+            ''
+          )}
         </div>
         <div className="pb-6">
           <textarea
@@ -70,7 +74,13 @@ const AddSection = ({
             value={description}
             placeholder={t('commonConstants.enterSectionDesc')}
           />
-          <p className="px-3 text-red-500">{createSectionError.description}</p>
+          {createSectionError.description ? (
+            <p className="px-3 text-red-500">
+              {createSectionError.description}
+            </p>
+          ) : (
+            ''
+          )}
         </div>
         <div className="flex justify-end gap-2">
           <Button
