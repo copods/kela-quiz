@@ -96,7 +96,7 @@ export const addQuestion = {
 
 export const sectionsConstants = {
   addSection: 'Add Section',
-  FormNotSubmittedCorrectly: 'Form Not submitted Correctly',
+  FormNotSubmittedCorrectly: 'Form not submitted correctly',
   totalQuestions: 'Total Questions:',
   noQuestionAlert: 'No questions found. Add your first question',
   noRecordFound: 'No Record Found',
