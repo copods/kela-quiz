@@ -36,6 +36,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   const userId = await getUserId(request)
   const currentWorkspaceId = await getWorkspaceId(request)
   const workspaces = await getUserWorkspaces(userId as string)
+
   if (!userId) return redirect(routes.signIn)
 
   let tests: Array<Test> = []
@@ -62,8 +63,10 @@ export const loader: LoaderFunction = async ({ request }) => {
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
   const action = formData.get('action')
+  console.log('ACTION', action)
   const createdById = await requireUserId(request)
   const testId = formData.get('inviteCandidates') as string
+
   formData.delete('inviteCandidates')
   let deleteHandle = null
   if (action === 'testDelete') {
@@ -110,7 +113,9 @@ export default function Tests() {
   const { t } = useTranslation()
 
   const data = useLoaderData() as unknown as LoaderData
+
   const testActionData = useActionData() as ActionData
+  console.log('TEST_ACTION_DATA', testActionData)
   if (t(data.status as string) != t('statusCheck.success')) {
     toast.warn(t('statusCheck.commonError'))
   }

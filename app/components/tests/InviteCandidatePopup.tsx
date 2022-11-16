@@ -24,16 +24,25 @@ const InviteCandidatePopup = ({
   const [errors, setError] = useState({})
 
   const actionData = useActionData()
+
   useEffect(() => {
     if (actionData?.status == 401 && testId === actionData?.testId) {
       toast.warn(t(actionData.message))
     }
     if (
-      actionData?.candidateInviteStatus ===
+      actionData?.candidateInviteStatus.created ===
       t('candidateExamConstants.candidateTestCreated')
     ) {
       if (actionData?.testId === testId)
-        toast.success(t('testsConstants.candidateInvited'))
+        if (actionData?.candidateInviteStatus.emailCount > 1) {
+          toast.success(
+            `${actionData?.candidateInviteStatus.newInvited} out of ${
+              actionData?.candidateInviteStatus.emailCount
+            } ${t('testsConstants.candidateInvited')}`
+          )
+        } else {
+          toast.success(t('testsConstants.candidateInvited'))
+        }
       setOpenInvitePopup(false)
       setEmails([''])
     } else {
@@ -43,8 +52,8 @@ const InviteCandidatePopup = ({
         if (actionData?.testId === testId) {
           toast.error(t('testsConstants.candidateAlreadyInvited'))
         }
-        setOpenInvitePopup(false)
-        setEmails([''])
+        // setOpenInvitePopup(false)
+        // setEmails([''])
       }
     }
   }, [actionData, testId, setOpenInvitePopup, t])
@@ -73,7 +82,7 @@ const InviteCandidatePopup = ({
   const validateEmails = (emails: string[], index: number) => {
     const emailError: error = {}
     emails
-      .map((email, i) => (i === index ? '' : email))
+      .map((email, i) => (i === index ? email : ''))
       .forEach((email, i: number) => {
         if (email) {
           if (!isEmail(email)) {
@@ -126,9 +135,7 @@ const InviteCandidatePopup = ({
                 tabIndex={0}
                 type="email"
                 name={`email`}
-                onFocus={() => {
-                  validateEmails(emails, i)
-                }}
+                onBlur={() => validateEmails(emails, i)}
                 onChange={(e) => updateEmail(e, i)}
                 className="inviteInput h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
                 placeholder="johndoe@example.com"
@@ -137,7 +144,7 @@ const InviteCandidatePopup = ({
               />
               {Object.entries(errors).map(([key]) =>
                 Number(key) === i ? (
-                  <p className="text-red-700">
+                  <p key={key} className="text-red-700">
                     {t('statusCheck.emailIsInvalid')}
                   </p>
                 ) : (
