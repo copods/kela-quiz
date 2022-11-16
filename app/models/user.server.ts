@@ -9,12 +9,21 @@ import { env } from 'process'
 export type { User } from '@prisma/client'
 
 export async function getUserById(id: User['id']) {
-  return prisma.user.findUnique({ where: { id }, include: { password: true } })
+  return prisma.user.findUnique({
+    where: { id },
+    include: { password: true },
+  })
 }
 
 export async function deleteUserById(id: string) {
   try {
-    return await prisma.user.delete({ where: { id } })
+    return await prisma.user.update({
+      where: { id },
+      data: {
+        deleted: true,
+        deletedAt: new Date().toString(),
+      },
+    })
   } catch (error) {
     return 'Something went wrong'
   }
@@ -31,6 +40,7 @@ export async function getAllUsers({
 }) {
   return prisma.user.findMany({
     where: {
+      deleted: false,
       userWorkspace: {
         some: {
           workspaceId: currentWorkspaceId,

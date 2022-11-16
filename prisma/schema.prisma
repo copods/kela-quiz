@@ -47,6 +47,8 @@ model User {
   password      Password?
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt
+  deleted       Boolean         @default(false)
+  deletedAt     String?         @default("na")
   Section       Section[]
   Question      Question[]
   Option        Option[]
