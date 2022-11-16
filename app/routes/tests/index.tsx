@@ -63,7 +63,6 @@ export const loader: LoaderFunction = async ({ request }) => {
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
   const action = formData.get('action')
-  console.log('ACTION', action)
   const createdById = await requireUserId(request)
   const testId = formData.get('inviteCandidates') as string
 
@@ -115,7 +114,6 @@ export default function Tests() {
   const data = useLoaderData() as unknown as LoaderData
 
   const testActionData = useActionData() as ActionData
-  console.log('TEST_ACTION_DATA', testActionData)
   if (t(data.status as string) != t('statusCheck.success')) {
     toast.warn(t('statusCheck.commonError'))
   }
