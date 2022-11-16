@@ -92,6 +92,7 @@ const ResetPassword = ({
     setPassword('')
     setNewPassword('')
     setConfirmPassword('')
+    setError('')
   }, [openResetPassModel])
 
   return (
