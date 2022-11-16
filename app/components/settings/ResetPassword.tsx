@@ -34,7 +34,6 @@ const ResetPassword = ({
   const [error, setError] = useState('')
 
   const comparePasswords = (password: string, confirmPassword: string) => {
-    console.log({ password: password.length, confirmPassword })
     if (password.length <= 0 || confirmPassword.length <= 0) {
       setError('')
       return
