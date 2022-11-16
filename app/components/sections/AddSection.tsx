@@ -8,13 +8,13 @@ import DialogWrapper from '../Dialog'
 const AddSection = ({
   open,
   setOpen,
-  errorMessage,
-  setErrorMessage,
+  createSectionError,
+  setCreateSectionError,
   showErrorMessage,
 }: {
   open: boolean
-  errorMessage: { title: string; description: string }
-  setErrorMessage: ({
+  createSectionError: { title: string; description: string }
+  setCreateSectionError: ({
     title,
     description,
   }: {
@@ -33,8 +33,8 @@ const AddSection = ({
   useEffect(() => {
     setDescription('')
     setSectionName('')
-    setErrorMessage({ title: '', description: '' })
-  }, [open, setErrorMessage])
+    setCreateSectionError({ title: '', description: '' })
+  }, [open, setCreateSectionError])
   return (
     <DialogWrapper
       open={open}
@@ -57,7 +57,7 @@ const AddSection = ({
             value={sectionName}
             maxLength={52}
           />
-          <p className="px-3 text-red-500">{errorMessage.title}</p>
+          <p className="px-3 text-red-500">{createSectionError.title}</p>
         </div>
         <div className="pb-6">
           <textarea
@@ -70,7 +70,7 @@ const AddSection = ({
             value={description}
             placeholder={t('commonConstants.enterSectionDesc')}
           />
-          <p className="px-3 text-red-500">{errorMessage.description}</p>
+          <p className="px-3 text-red-500">{createSectionError.description}</p>
         </div>
         <div className="flex justify-end gap-2">
           <Button
@@ -79,7 +79,7 @@ const AddSection = ({
             className="h-9 px-4"
             onClick={() => {
               setOpen(false)
-              setErrorMessage({ title: '', description: '' })
+              setCreateSectionError({ title: '', description: '' })
             }}
             varient="primary-outlined"
             title={t('commonConstants.cancel')}

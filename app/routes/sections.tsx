@@ -27,6 +27,7 @@ import { routes } from '~/constants/route.constants'
 import { useTranslation } from 'react-i18next'
 import { getUserWorkspaces } from '~/models/workspace.server'
 import { statusCheck } from '~/constants/common.constants'
+import { t } from 'i18next'
 
 export type ActionData = {
   errors?: {
@@ -37,7 +38,7 @@ export type ActionData = {
     name?: string
     description?: string
   }
-  fieldErrors?: {
+  createSectionFieldError?: {
     title: string | undefined
     description: string | undefined
   }
@@ -90,13 +91,13 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     currentWorkspaceId,
   })
 }
-function validateTitle(title: unknown) {
+const validateTitle = (title: string) => {
   if (typeof title !== 'string' || title.length <= 0) {
     return statusCheck.nameIsReq
   }
 }
 
-function validateDescription(description: unknown) {
+const validateDescription = (description: string) => {
   if (typeof description !== 'string' || description.length <= 0) {
     return statusCheck.descIsReq
   }
@@ -117,18 +118,23 @@ export const action: ActionFunction = async ({ request }) => {
     // to check type of submitted Data
     if (typeof name !== 'string' || typeof description !== 'string') {
       return json<ActionData>(
-        { errors: { title: 'Form Not submitted Correctly', status: 400 } },
+        {
+          errors: {
+            title: t('sectionsConstants.FormNotSubmittedCorrectly'),
+            status: 400,
+          },
+        },
         { status: 400 }
       )
     }
 
-    const fieldErrors = {
+    const createSectionFieldError = {
       title: validateTitle(name),
       description: validateDescription(description),
     }
 
-    if (Object.values(fieldErrors).some(Boolean)) {
-      return json({ fieldErrors }, { status: 400 })
+    if (Object.values(createSectionFieldError).some(Boolean)) {
+      return json({ createSectionFieldError }, { status: 400 })
     }
 
     let addHandle = null
@@ -239,7 +245,7 @@ export default function SectionPage() {
   const [showAddSectionModal, setShowAddSectionModal] = useState(false)
   const [order, setOrder] = useState(sortByOrder.desc as string)
   const [sortBy, setSortBy] = useState(sortByDetails[1].value)
-  const [errorMessage, setErrorMessage] = useState({
+  const [createSectionError, setCreateSectionError] = useState({
     title: '',
     description: '',
   })
@@ -275,7 +281,7 @@ export default function SectionPage() {
         t(sectionActionData.resp?.status as string) ===
         t('statusCheck.sectionAddedSuccess')
       ) {
-        setErrorMessage({ title: '', description: '' })
+        setCreateSectionError({ title: '', description: '' })
         setShowAddSectionModal(false)
         setSelectedSection((previous: string) => {
           if (previous != sectionActionData?.resp?.data?.id)
@@ -295,10 +301,11 @@ export default function SectionPage() {
             ? data.sections[1]?.id
             : data.sections[0]?.id) || 'NA'
         )
-      } else if (sectionActionData.fieldErrors) {
-        setErrorMessage({
-          title: sectionActionData?.fieldErrors.title || '',
-          description: sectionActionData.fieldErrors.description || '',
+      } else if (sectionActionData.createSectionFieldError) {
+        setCreateSectionError({
+          title: sectionActionData?.createSectionFieldError.title || '',
+          description:
+            sectionActionData.createSectionFieldError.description || '',
         })
       } else if (sectionActionData.errors?.status === 400) {
         toast.error(t(sectionActionData.errors?.title as string), {
@@ -385,8 +392,8 @@ export default function SectionPage() {
         )}
         <AddSection
           open={showAddSectionModal}
-          errorMessage={errorMessage}
-          setErrorMessage={setErrorMessage}
+          createSectionError={createSectionError}
+          setCreateSectionError={setCreateSectionError}
           setOpen={setShowAddSectionModal}
           showErrorMessage={sectionActionData?.errors?.status === 400}
         />
