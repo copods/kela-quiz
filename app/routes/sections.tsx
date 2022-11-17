@@ -18,6 +18,7 @@ import { Icon } from '@iconify/react'
 import { getUserId, getWorkspaceId, requireUserId } from '~/session.server'
 import Sections from '~/components/sections/Sections'
 import AdminLayout from '~/components/layouts/AdminLayout'
+import type { createSectionErrorType } from '~/components/sections/AddSection'
 import AddSection from '~/components/sections/AddSection'
 import { toast } from 'react-toastify'
 import Button from '~/components/form/Button'
@@ -38,10 +39,7 @@ export type ActionData = {
     name?: string
     description?: string
   }
-  createSectionFieldError?: {
-    title: string | undefined
-    description: string | undefined
-  }
+  createSectionFieldError?: createSectionErrorType
   resp?: {
     status?: string
     check?: Date

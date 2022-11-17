@@ -4,7 +4,7 @@ import Button from '../form/Button'
 import { trimValue } from '~/utils'
 import { useTranslation } from 'react-i18next'
 import DialogWrapper from '../Dialog'
-interface createSectionErrorType {
+export interface createSectionErrorType {
   title: string
   description: string
 }
@@ -42,7 +42,7 @@ const AddSection = ({
       setOpen={setOpen}
       header={true}
       role={t('sectionsConstants.addSection')}
-      ariaLabel={t('sectionsConstants.addSection')}
+      aria-label={t('sectionsConstants.addSection')}
       tabIndex={0}
     >
       <Form method="post">
@@ -59,9 +59,7 @@ const AddSection = ({
           />
           {createSectionError.title ? (
             <p className="px-3 text-red-500">{createSectionError.title}</p>
-          ) : (
-            ''
-          )}
+          ) : null}
         </div>
         <div className="pb-6">
           <textarea
@@ -78,9 +76,7 @@ const AddSection = ({
             <p className="px-3 text-red-500">
               {createSectionError.description}
             </p>
-          ) : (
-            ''
-          )}
+          ) : null}
         </div>
         <div className="flex justify-end gap-2">
           <Button
