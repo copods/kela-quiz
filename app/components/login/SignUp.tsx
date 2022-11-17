@@ -77,8 +77,8 @@ const SignUp = ({ error }: { error?: string }) => {
     if (password !== confirmPassword && confirmPassword.length !== 0) {
       setOnConfBlurPasswordErr('settings.passNotMatch')
     } else if (
-      confirmPassword.length == 0 ||
-      password.length == 0 ||
+      confirmPassword.length === 0 ||
+      password.length === 0 ||
       password === confirmPassword
     ) {
       setOnConfBlurPasswordErr('')
