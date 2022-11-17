@@ -1,4 +1,4 @@
-import { Form, useFetcher, useTransition } from '@remix-run/react'
+import { Form, useTransition } from '@remix-run/react'
 import { useEffect, useState } from 'react'
 import Button from '../form/Button'
 import { trimValue } from '~/utils'
@@ -13,21 +13,21 @@ const AddSection = ({
   open,
   setOpen,
   editItem,
+  addSection,
   editSection,
-  showErrorMessage,
 }: {
   open: boolean
   setOpen: (e: boolean) => void
-  showErrorMessage: boolean
+  showErrorMessage?: boolean
   editItem?: editItem
+  addSection?: (name: string, description: string) => void
   editSection?: (name: string, description: string) => void
 }) => {
   const { t } = useTranslation()
-
   const transition = useTransition()
   const [sectionName, setSectionName] = useState('')
   const [description, setDescription] = useState('')
-  const fetcher = useFetcher()
+
   useEffect(() => {
     if (editItem) {
       setSectionName(editItem.name)
@@ -39,8 +39,12 @@ const AddSection = ({
   }, [open, editItem])
   const handleEdit = (name: string, description: string) => {
     editSection?.(name, description)
-    // setOpen(false)
+    setOpen(false)
   }
+  const handleAdd = (name: string, description: string) => {
+    addSection?.(name, description)
+  }
+
   return (
     <DialogWrapper
       open={open}
@@ -52,7 +56,7 @@ const AddSection = ({
       setOpen={setOpen}
       header={true}
       role={t('sectionsConstants.addSection')}
-      ariaLabel={t('sectionsConstants.addSection')}
+      aria-label={t('sectionsConstants.addSection')}
       tabIndex={0}
     >
       <Form method="post">
@@ -101,7 +105,9 @@ const AddSection = ({
             varient="primary-solid"
             datacy="submit"
             onClick={() =>
-              editItem ? handleEdit(sectionName, description) : ''
+              editItem
+                ? handleEdit(sectionName, description)
+                : handleAdd(sectionName, description)
             }
             title={
               transition.state === 'submitting'
@@ -113,7 +119,7 @@ const AddSection = ({
                 : t('commonConstants.add')
             }
             buttonText={
-              fetcher.submission?.formData.get('id') === editItem?.id
+              transition.state === 'submitting'
                 ? editItem
                   ? t('commonConstants.updating')
                   : t('commonConstants.adding')

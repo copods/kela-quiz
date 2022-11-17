@@ -46,6 +46,7 @@ const SectionCard = ({
     name: '',
     description: '',
   })
+
   const editSection = (name: string, description: string) => {
     submit(
       {
@@ -60,6 +61,7 @@ const SectionCard = ({
       }
     )
   }
+
   const deleteSection = () => {
     submit({ deleteSection: 'sectionDelete', id: id }, { method: 'post' })
   }

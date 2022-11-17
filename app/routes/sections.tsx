@@ -91,20 +91,13 @@ export const action: ActionFunction = async ({ request }) => {
   const createdById = await requireUserId(request)
   const workspaceId = (await getWorkspaceId(request)) as string
   const formData = await request.formData()
-  console.log(
-    'received the form data : ',
-    console.log(Object.fromEntries(formData))
-  )
+
   const action =
-    formData.get('add-section') ||
+    formData.get('addSection') ||
     formData.get('editSection') ||
     formData.get('deleteSection')
-  // ? formData.get('add-section')
-  // : formData.get('deleteSection')
-  // ? formData.get('deleteSection')
-  // : formData.get('action')
-  console.log('===', action)
-  if (action === 'add') {
+
+  if (action === 'sectionAdd') {
     const name = formData.get('name')
     const description = formData.get('description')
     if (typeof name !== 'string' || name.length === 0) {
@@ -153,7 +146,6 @@ export const action: ActionFunction = async ({ request }) => {
     const description = formData.get('description')
     const id = formData.get('id') as string
     if (typeof name !== 'string' || name.length === 0) {
-      console.log('name is required')
       return json<ActionData>(
         { errors: { title: 'statusCheck.nameIsReq', status: 400 } },
         { status: 400 }
@@ -259,7 +251,6 @@ export default function SectionPage() {
 
   const { t } = useTranslation()
   const sectionActionData = useActionData() as ActionData
-  console.log('SectionActionData', sectionActionData)
   const submit = useSubmit()
   const sortByDetails = [
     {
@@ -284,7 +275,9 @@ export default function SectionPage() {
   if (t(data.status) != t('statusCheck.success')) {
     toast.error(t('statusCheck.commonError'))
   }
-
+  const addSection = (name: string, description: string) => {
+    submit({ addSection: 'sectionAdd', name, description }, { method: 'post' })
+  }
   useEffect(() => {
     if (data.sections.length) {
       const formData = new FormData()
@@ -421,6 +414,7 @@ export default function SectionPage() {
         <AddSection
           open={showAddSectionModal}
           setOpen={setShowAddSectionModal}
+          addSection={addSection}
           showErrorMessage={sectionActionData?.errors?.status === 400}
         />
       </div>
