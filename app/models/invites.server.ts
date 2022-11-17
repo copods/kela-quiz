@@ -31,22 +31,27 @@ export async function inviteNewUser({
           },
         },
         id: true,
+        invitedById: {
+          select: {
+            firstName: true,
+            lastName: true,
+          },
+        },
       },
     })
     .then(async (res) => {
       const invite = res
-      const role = await prisma.role.findUnique({
-        where: {
-          id: roleId,
-        },
-      })
+
       const workspaceJoinLink =
         env.PUBLIC_URL + '/workspace/' + invite.id + '/join'
       const invitedForWorkspaceName = invite.invitedForWorkspace?.name
+      const name = ((invite.invitedById?.firstName as string) +
+        ' ' +
+        invite.invitedById?.lastName) as string
       return await sendMemberInvite(
         email,
         invitedForWorkspaceName as string,
-        role?.name as string,
+        name as string,
         workspaceJoinLink as string
       )
     })
