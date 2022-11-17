@@ -3,11 +3,13 @@ import moment from 'moment'
 import { Menu } from '@headlessui/react'
 import { useSubmit } from '@remix-run/react'
 import DeletePopUp from '../DeletePopUp'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 import { useTranslation } from 'react-i18next'
+import AddSection from './AddSection'
 const SectionCard = ({
   name,
+  description,
   isActive,
   questionsCount,
   createdBy,
@@ -18,8 +20,11 @@ const SectionCard = ({
   setDeleted,
   setIsDelete,
   isDelete,
+  editMode,
+  setEditMode,
 }: {
   name: string
+  description: string
   isActive: boolean
   questionsCount?: number
   createdBy: string
@@ -30,9 +35,31 @@ const SectionCard = ({
   setDeleted?: (e: boolean) => void
   setIsDelete: (e: boolean) => void
   isDelete: boolean
+  editMode: boolean
+  setEditMode: (e: boolean) => void
 }) => {
   const { t } = useTranslation()
   const submit = useSubmit()
+
+  const [editItem, setEditItem] = useState({
+    id: '',
+    name: '',
+    description: '',
+  })
+  const editSection = (name: string, description: string) => {
+    submit(
+      {
+        editSection: 'sectionEdit',
+        id: id,
+        name: name,
+        description: description,
+      },
+      {
+        method: 'post',
+        action: `/sections`,
+      }
+    )
+  }
   const deleteSection = () => {
     submit({ deleteSection: 'sectionDelete', id: id }, { method: 'post' })
   }
@@ -78,7 +105,12 @@ const SectionCard = ({
                         data-cy="edit-section"
                         className="text-gray-primary undefined inline-flex w-36 items-center justify-start bg-white px-2 py-2 text-xs font-medium text-primary transition delay-75 ease-in-out hover:bg-gray-100"
                         onClick={() => {
-                          setIsDelete(true)
+                          setEditMode(true)
+                          setEditItem({
+                            id: id,
+                            name: name,
+                            description: description,
+                          })
                         }}
                         name="editSection"
                         title={t('commonConstants.edit')}
@@ -139,6 +171,13 @@ const SectionCard = ({
         deleteItem={name}
         deleteItemType={t('sectionsConstants.sectionName')}
         setDeleted={setDeleted}
+      />
+      <AddSection
+        open={editMode}
+        setOpen={setEditMode}
+        showErrorMessage={false}
+        editItem={editItem}
+        editSection={editSection}
       />
     </div>
   )

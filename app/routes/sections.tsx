@@ -11,6 +11,7 @@ import {
   checkSectionById,
   createSection,
   deleteSectionById,
+  editSectionById,
   getAllSections,
 } from '~/models/sections.server'
 import { useState, useEffect } from 'react'
@@ -90,11 +91,19 @@ export const action: ActionFunction = async ({ request }) => {
   const createdById = await requireUserId(request)
   const workspaceId = (await getWorkspaceId(request)) as string
   const formData = await request.formData()
-  const action = formData.get('add-section')
-    ? formData.get('add-section')
-    : formData.get('deleteSection')
-    ? formData.get('deleteSection')
-    : formData.get('action')
+  console.log(
+    'received the form data : ',
+    console.log(Object.fromEntries(formData))
+  )
+  const action =
+    formData.get('add-section') ||
+    formData.get('editSection') ||
+    formData.get('deleteSection')
+  // ? formData.get('add-section')
+  // : formData.get('deleteSection')
+  // ? formData.get('deleteSection')
+  // : formData.get('action')
+  console.log('===', action)
   if (action === 'add') {
     const name = formData.get('name')
     const description = formData.get('description')
@@ -139,6 +148,53 @@ export const action: ActionFunction = async ({ request }) => {
 
     return addHandle
   }
+  if (action === 'sectionEdit') {
+    const name = formData.get('name')
+    const description = formData.get('description')
+    const id = formData.get('id') as string
+    if (typeof name !== 'string' || name.length === 0) {
+      console.log('name is required')
+      return json<ActionData>(
+        { errors: { title: 'statusCheck.nameIsReq', status: 400 } },
+        { status: 400 }
+      )
+    }
+    if (typeof description !== 'string' || description.length === 0) {
+      return json<ActionData>(
+        { errors: { title: 'statusCheck.descIsReq', status: 400 } },
+        { status: 400 }
+      )
+    }
+
+    let editHandle = null
+    await editSectionById(id, name, description)
+      .then((res) => {
+        editHandle = json<ActionData>(
+          {
+            resp: {
+              status: 'statusCheck.sectionUpdatedSuccess',
+              data: res as Section,
+              check: new Date(),
+            },
+          },
+          { status: 200 }
+        )
+      })
+
+      .catch((err) => {
+        let title = 'statusCheck.commonError'
+        if (err.code === 'P2002') {
+          title = 'statusCheck.duplicate'
+        }
+        editHandle = json<ActionData>(
+          { errors: { title, status: 400, check: new Date() } },
+          { status: 400 }
+        )
+      })
+
+    return editHandle
+  }
+
   let deleteHandle = null
   let isSectionDelete = false
   let isTestDeleted: Array<boolean> | undefined
@@ -195,7 +251,7 @@ export const action: ActionFunction = async ({ request }) => {
     }
     return deleteHandle
   }
-  return ''
+  return 'ok'
 }
 
 export default function SectionPage() {
@@ -203,7 +259,7 @@ export default function SectionPage() {
 
   const { t } = useTranslation()
   const sectionActionData = useActionData() as ActionData
-
+  console.log('SectionActionData', sectionActionData)
   const submit = useSubmit()
   const sortByDetails = [
     {
@@ -258,6 +314,13 @@ export default function SectionPage() {
           if (previous != sectionActionData?.resp?.data?.id)
             toast.success(t(sectionActionData.resp?.status as string))
           return sectionActionData?.resp?.data?.id as string
+        })
+      } else if (
+        t(sectionActionData.resp?.status as string) ===
+        t('statusCheck.sectionUpdatedSuccess')
+      ) {
+        toast.success(t(sectionActionData.resp?.status as string), {
+          toastId: t(sectionActionData.resp?.status as string),
         })
       } else if (
         t(sectionActionData.resp?.status as string) ===

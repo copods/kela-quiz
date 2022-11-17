@@ -20,6 +20,7 @@ const SectionLink = ({
 }) => {
   const path = `/sections/${section.id}${filter}`
   const [isDelete, setIsDelete] = useState(false)
+  const [editMode, setEditMode] = useState(false)
   const location = useLocation() // to get current location
   const resolvedPath = useResolvedPath(path) // to get resolved path which would match with current location
   const isActive = location.pathname === resolvedPath.pathname
@@ -62,6 +63,7 @@ const SectionLink = ({
       <SectionCard
         isActive={isActive}
         name={section?.name}
+        description={section?.description}
         createdBy={`${section?.createdBy?.firstName} ${section?.createdBy?.lastName}`}
         questionsCount={section?._count?.questions as number}
         createdAt={section.createdAt}
@@ -71,6 +73,8 @@ const SectionLink = ({
         setDeleted={setDeleted}
         setIsDelete={setIsDelete}
         isDelete={isDelete}
+        editMode={editMode}
+        setEditMode={setEditMode}
       />
     </div>
   )
