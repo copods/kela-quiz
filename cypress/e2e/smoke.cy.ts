@@ -5,8 +5,8 @@ import {
   cypress,
 } from '~/constants/common.constants'
 const section1 = `Aptitude - section1`
-const test1 = `Aptitude - test1`
-const deleteTest1 = `Aptitude - test2`
+const test1 = `Aptitude - assessment1`
+const deleteTest1 = `Aptitude - assessment2`
 const section2 = `Aptitude - section2`
 const deleteSection = `Aptitude - delete-Section`
 const memberFirstName = 'john'
@@ -216,13 +216,15 @@ describe('smoke tests', () => {
     cy.get('#save-and-exit').click()
   })
 
-  it('Verify if user able create the test 1', () => {
+  it('Verify if user able create the assesssment 1', () => {
     cy.login()
-    cy.customVisit('/tests')
+    cy.customVisit('/assessments')
 
     cy.get('#add-test').click()
-    cy.location('pathname').should('include', '/tests/add-test')
-    cy.get('input[placeholder="Enter test name"]').clear().type(deleteTest1)
+    cy.location('pathname').should('include', '/assessments/add-assessment')
+    cy.get('input[placeholder="Enter assessment name"]')
+      .clear()
+      .type(deleteTest1)
     cy.get('#quill-editor').within(() => {
       cy.get('.ql-editor').type(`Test Description`)
     })
@@ -285,13 +287,13 @@ describe('smoke tests', () => {
       .click()
   })
 
-  it('Verify if user able create the test 2', () => {
+  it('Verify if user able create the assessment 2', () => {
     cy.login()
-    cy.customVisit('/tests')
+    cy.customVisit('/assessments')
 
     cy.get('#add-test').click()
-    cy.location('pathname').should('include', '/tests/add-test')
-    cy.get('input[placeholder="Enter test name"]').clear().type(test1)
+    cy.location('pathname').should('include', '/assessments/add-assessment')
+    cy.get('input[placeholder="Enter assessment name"]').clear().type(test1)
     cy.get('#quill-editor').within(() => {
       cy.get('.ql-editor').type(`Test Description`)
     })
@@ -381,9 +383,9 @@ describe('smoke tests', () => {
     cy.get('#add-button').click()
   })
 
-  it('invite candidate for test', () => {
+  it('invite candidate for assessment', () => {
     cy.login()
-    cy.customVisit('/tests')
+    cy.customVisit('/assessments')
 
     cy.get('.test-table-list', { timeout: 8000 }).should('be.visible')
     cy.get('.test-table-list').each(($el) => {

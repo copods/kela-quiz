@@ -57,11 +57,11 @@ const TestList = ({
       <header className="flex items-center justify-between">
         <h2
           tabIndex={0}
-          role={t('testsConstants.tests')}
-          title={t('testsConstants.tests')}
+          role={t('testsConstants.assessments')}
+          title={t('testsConstants.assessments')}
           className="text-3xl font-bold text-black"
         >
-          {t('testsConstants.tests')}
+          {t('testsConstants.assessments')}
         </h2>
         <Button
           className="px-5"

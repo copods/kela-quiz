@@ -22,7 +22,7 @@ describe('Test for Logout, SideNav', () => {
     menuItems.each((item) => {
       expect([
         commonConstants.results,
-        testsConstants.tests,
+        testsConstants.assessments,
         routeFiles.sections,
         members.members,
         commonConstants.settings,

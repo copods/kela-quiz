@@ -65,7 +65,8 @@ const InviteCandidatePopup = ({
       >
         <p className="pb-4 text-base font-normal text-gray-700">
           {t('inviteMemeberPopUpConstants.enterCandidatesEmail')}{' '}
-          <span className="font-semibold">`{testName}`</span> Test.
+          <span className="font-semibold">`{testName}`</span>{' '}
+          {t('testsConstants.test')}.
         </p>
         <div className="flex flex-row justify-between pb-2">
           <span className="text-sm font-medium text-gray-500">

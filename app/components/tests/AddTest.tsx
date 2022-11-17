@@ -35,7 +35,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
     {
       id: 0,
       name: 'Step 1',
-      description: 'Test Details',
+      description: 'Assessment Details',
     },
     {
       id: 1,
@@ -215,7 +215,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
               varient="primary-solid"
               buttonText={
                 transition.state === 'submitting'
-                  ? sortByOrder.creatingTest
+                  ? sortByOrder.creatingAssessment
                   : sortByOrder.submit
               }
               isDisabled={currentTab != 2}
