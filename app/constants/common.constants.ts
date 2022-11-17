@@ -151,6 +151,7 @@ export const statusCheck = {
   descIsReq: 'Description is required',
   nameIsReq: 'Name is required',
   sectionAddedSuccess: 'Section added successfully..!',
+  sectionUpdatedSuccess: 'Section updated sucessfully..!',
   maxOptions: 'you can add maximum six options.',
   testDependentWarning:
     "Can't be deleted as you have to delete the test containing this section first",
