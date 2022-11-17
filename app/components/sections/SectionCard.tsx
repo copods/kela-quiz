@@ -69,29 +69,51 @@ const SectionCard = ({
               />
             </Menu.Button>
             <Menu.Items className="absolute right-0 mt-2 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5">
-              <div className="px-1 py-1">
+              <div className="py-1">
                 <Menu.Item>
                   {({ active }) => (
-                    <button
-                      tabIndex={0}
-                      data-cy="delete-section"
-                      className="text-gray-primary undefined inline-flex w-36 items-center justify-start rounded-md  border border-primary bg-white px-2 py-2 text-xs font-medium text-primary shadow-sm transition delay-75 ease-in-out hover:bg-gray-100"
-                      onClick={() => {
-                        setIsDelete(true)
-                      }}
-                      name="deleteSection"
-                      title={t('commonConstants.delete')}
-                    >
-                      <>
-                        <Icon
-                          icon={'ic:outline-delete-outline'}
-                          className="mr-2 h-5 w-5
+                    <div className="flex flex-col gap-1">
+                      <button
+                        tabIndex={0}
+                        data-cy="edit-section"
+                        className="text-gray-primary undefined inline-flex w-36 items-center justify-start bg-white px-2 py-2 text-xs font-medium text-primary transition delay-75 ease-in-out hover:bg-gray-100"
+                        onClick={() => {
+                          setIsDelete(true)
+                        }}
+                        name="editSection"
+                        title={t('commonConstants.edit')}
+                      >
+                        <>
+                          <Icon
+                            icon={'material-symbols:edit-outline-sharp'}
+                            className="mr-2 h-5 w-5
+                        text-black"
+                            aria-hidden="true"
+                          />
+                          {t('commonConstants.edit')}
+                        </>
+                      </button>
+                      <button
+                        tabIndex={0}
+                        data-cy="delete-section"
+                        className="text-gray-primary undefined inline-flex w-36 items-center justify-start bg-white px-2 py-2 text-xs font-medium text-primary transition delay-75 ease-in-out hover:bg-gray-100"
+                        onClick={() => {
+                          setIsDelete(true)
+                        }}
+                        name="deleteSection"
+                        title={t('commonConstants.delete')}
+                      >
+                        <>
+                          <Icon
+                            icon={'ic:outline-delete-outline'}
+                            className="mr-2 h-5 w-5
                         text-red-500"
-                          aria-hidden="true"
-                        />
-                        {t('commonConstants.delete')}
-                      </>
-                    </button>
+                            aria-hidden="true"
+                          />
+                          {t('commonConstants.delete')}
+                        </>
+                      </button>
+                    </div>
                   )}
                 </Menu.Item>
               </div>
