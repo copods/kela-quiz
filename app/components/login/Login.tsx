@@ -6,7 +6,6 @@ import Logo from '~/components/Logo'
 import type { LoginProps } from '~/interface/Interface'
 import { useTranslation } from 'react-i18next'
 import { routes } from '~/constants/route.constants'
-import { actions } from '~/constants/action.constants'
 function Login({ actionData, redirectTo }: LoginProps) {
   const { t } = useTranslation()
 
@@ -51,9 +50,6 @@ function Login({ actionData, redirectTo }: LoginProps) {
       email: email,
       password: password,
       inviteId: loginLoaderData.inviteId,
-      signIn: JSON.stringify({
-        action: actions.login,
-      }),
     }
     submit(data, {
       method: 'post',
