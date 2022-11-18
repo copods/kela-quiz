@@ -30,7 +30,7 @@ export default function MembersHeader({
         </h1>
         <Button
           tabIndex={0}
-          id="add-member"
+          id="invite-member"
           className="h-9 px-4"
           onClick={() => setOpen(!open)}
           varient="primary-solid"

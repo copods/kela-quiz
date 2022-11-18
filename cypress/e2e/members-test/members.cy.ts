@@ -1,5 +1,5 @@
 /// <reference types="Cypress"/>
-import { commonConstants, cypress, members } from '~/constants/common.constants'
+import { cypress, members } from '~/constants/common.constants'
 const memberEmail = 'johndoe@example.com'
 
 describe('Test for members', () => {
@@ -26,72 +26,5 @@ describe('Test for members', () => {
     cy.location('pathname', { timeout: 60000 }).should('include', '/members')
     cy.get('#invite-member').should('have.text', cypress.addMember).click()
     cy.get('#cancel-add-button').should('have.text', 'Cancel').click()
-  })
-
-  it('Test for Delete member popup cancel button', () => {
-    cy.get('a').find('#members').should('have.text', members.members).click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/members')
-    cy.get('.membersHeading').should('have.text', 'Members')
-    cy.get('.inviteMemberRow', { timeout: 8000 }).each(($el) => {
-      cy.wrap($el).within((el) => {
-        if (
-          el[0].getElementsByClassName('memberMail')[0].innerHTML ===
-          memberEmail
-        ) {
-          cy.get('.memberMail').should('have.text', memberEmail)
-        }
-      })
-    })
-    cy.get('.memberMail')
-      .contains(memberEmail)
-      .parent()
-      .parent()
-      .within(() => {
-        cy.get('#delete-button', { timeout: 6000 }).click()
-      })
-    cy.get('#delete-dialog').should('be.visible')
-    cy.get('#cancel-delete-pop-up')
-      .should('have.text', commonConstants.cancel)
-      .click()
-  })
-  it('Test for Delete member ', () => {
-    cy.get('a').find('#members').should('have.text', members.members).click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/members')
-    cy.get('.inviteMemberRow', { timeout: 8000 }).each(($el) => {
-      cy.wrap($el).within((el) => {
-        if (
-          el[0].getElementsByClassName('memberMail')[0].innerHTML ===
-          memberEmail
-        ) {
-          cy.get('.memberMail').should('have.text', memberEmail)
-        }
-      })
-    })
-    cy.get('.memberMail')
-      .contains(memberEmail)
-      .parent()
-      .parent()
-      .within(() => {
-        cy.get('#delete-button', { timeout: 6000 }).click()
-      })
-    cy.get('#delete-dialog').should('be.visible')
-    cy.get('#confirm-delete')
-      .should('have.text', commonConstants.delete)
-      .click()
-    cy.get('.Toastify__toast').find('.Toastify__close-button  ').click()
-    cy.intercept('/members').as('membersPage')
-    cy.get('.memberRows').each(($el) => {
-      cy.wrap($el).within((el) => {
-        if (
-          el[0].getElementsByClassName('memberMail')[0].innerHTML ===
-          memberEmail
-        ) {
-          cy.get('.memberMail')
-            .should('have.text', memberEmail)
-            .should('not.exist')
-        }
-      })
-    })
-    return false
   })
 })
