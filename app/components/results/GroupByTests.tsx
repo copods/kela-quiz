@@ -23,7 +23,7 @@ const GroupByTests = () => {
       value: 'createdAt',
     },
   ]
-  const [sortBy, onSortChange] = useState(sortByDetails[0].value)
+  const [sortBy, onSortChange] = useState(sortByDetails[1].value)
   const candidateTestData = useLoaderData()
   const candidateTests = candidateTestData.candidateTest
   const candidateTestsArray = candidateTests.filter(
