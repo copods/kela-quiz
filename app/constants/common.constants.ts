@@ -2,8 +2,6 @@ export const commonConstants = {
   name: 'Name',
   cancel: 'Cancel',
   delete: 'Delete',
-  edit: 'Edit',
-  update: 'Update',
   backButton: 'Back',
   nextButton: 'Next',
   prevoiusButton: 'Previous',
@@ -28,7 +26,6 @@ export const commonConstants = {
   createTest: 'Creating Test',
   submit: 'Submit',
   adding: 'Adding...',
-  updating: 'Updating...',
   add: 'Add',
   cancelAddTest: 'Cancel Add Test',
   previousTab: 'Previous Tab',
@@ -99,7 +96,6 @@ export const addQuestion = {
 
 export const sectionsConstants = {
   addSection: 'Add Section',
-  editSection: 'Edit Section',
   totalQuestions: 'Total Questions:',
   noQuestionAlert: 'No questions found. Add your first question',
   noRecordFound: 'No Record Found',
@@ -151,7 +147,6 @@ export const statusCheck = {
   descIsReq: 'Description is required',
   nameIsReq: 'Name is required',
   sectionAddedSuccess: 'Section added successfully..!',
-  sectionUpdatedSuccess: 'Section updated sucessfully..!',
   maxOptions: 'you can add maximum six options.',
   testDependentWarning:
     "Can't be deleted as you have to delete the test containing this section first",
