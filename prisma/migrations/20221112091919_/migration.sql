@@ -1,3 +1,0 @@
--- AlterTable
-ALTER TABLE "Invites" ALTER COLUMN "joinedAt" SET DEFAULT E'na',
-ALTER COLUMN "joinedAt" SET DATA TYPE TEXT;
