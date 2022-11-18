@@ -21,7 +21,7 @@ import { Icon } from '@iconify/react'
 import { getUserId, getWorkspaceId, requireUserId } from '~/session.server'
 import Sections from '~/components/sections/Sections'
 import AdminLayout from '~/components/layouts/AdminLayout'
-import AddSection from '~/components/sections/AddSection'
+import AddEditSection from '~/components/sections/AddEditSection'
 import { toast } from 'react-toastify'
 import Button from '~/components/form/Button'
 import { sortByOrder } from '~/interface/Interface'
@@ -56,7 +56,98 @@ export type LoaderData = {
   workspaces: Awaited<ReturnType<typeof getUserWorkspaces>>
   currentWorkspaceId: Awaited<ReturnType<typeof getWorkspaceId>>
 }
+const handleAddSection = async (
+  name: string,
+  description: string,
+  createdById: string,
+  workspaceId: string
+) => {
+  if (typeof name !== 'string' || name.length === 0) {
+    return json<ActionData>(
+      { errors: { title: 'statusCheck.nameIsReq', status: 400 } },
+      { status: 400 }
+    )
+  }
+  if (typeof description !== 'string' || description.length === 0) {
+    return json<ActionData>(
+      { errors: { title: 'statusCheck.descIsReq', status: 400 } },
+      { status: 400 }
+    )
+  }
 
+  let addHandle = null
+  await createSection({ name, description, createdById, workspaceId })
+    .then((res) => {
+      addHandle = json<ActionData>(
+        {
+          resp: {
+            status: 'statusCheck.sectionAddedSuccess',
+            data: res as Section,
+            check: new Date(),
+          },
+        },
+        { status: 200 }
+      )
+    })
+
+    .catch((err) => {
+      let title = 'statusCheck.commonError'
+      if (err.code === 'P2002') {
+        title = 'statusCheck.duplicate'
+      }
+      addHandle = json<ActionData>(
+        { errors: { title, status: 400, check: new Date() } },
+        { status: 400 }
+      )
+    })
+
+  return addHandle
+}
+const handleEditSection = async (
+  name: string,
+  description: string,
+  id: string
+) => {
+  if (typeof name !== 'string' || name.length === 0) {
+    return json<ActionData>(
+      { errors: { title: 'statusCheck.nameIsReq', status: 400 } },
+      { status: 400 }
+    )
+  }
+  if (typeof description !== 'string' || description.length === 0) {
+    return json<ActionData>(
+      { errors: { title: 'statusCheck.descIsReq', status: 400 } },
+      { status: 400 }
+    )
+  }
+
+  let editHandle = null
+  await editSectionById(id, name, description)
+    .then((res) => {
+      editHandle = json<ActionData>(
+        {
+          resp: {
+            status: 'statusCheck.sectionUpdatedSuccess',
+            data: res as Section,
+          },
+        },
+        { status: 200 }
+      )
+    })
+
+    .catch((err) => {
+      let title = 'statusCheck.commonError'
+      if (err.code === 'P2002') {
+        title = 'statusCheck.duplicate'
+      }
+      editHandle = json<ActionData>(
+        { errors: { title, status: 400, check: new Date() } },
+        { status: 400 }
+      )
+    })
+
+  return editHandle
+}
 export const loader: LoaderFunction = async ({ request, params }) => {
   const userId = await getUserId(request)
   const currentWorkspaceId = await getWorkspaceId(request)
@@ -98,101 +189,22 @@ export const action: ActionFunction = async ({ request }) => {
     formData.get('editSection') ||
     formData.get('deleteSection')
 
-  const handleAddSection = async () => {
-    const name = formData.get('name')
-    const description = formData.get('description')
-    if (typeof name !== 'string' || name.length === 0) {
-      return json<ActionData>(
-        { errors: { title: 'statusCheck.nameIsReq', status: 400 } },
-        { status: 400 }
-      )
-    }
-    if (typeof description !== 'string' || description.length === 0) {
-      return json<ActionData>(
-        { errors: { title: 'statusCheck.descIsReq', status: 400 } },
-        { status: 400 }
-      )
-    }
-
-    let addHandle = null
-    await createSection({ name, description, createdById, workspaceId })
-      .then((res) => {
-        addHandle = json<ActionData>(
-          {
-            resp: {
-              status: 'statusCheck.sectionAddedSuccess',
-              data: res as Section,
-              check: new Date(),
-            },
-          },
-          { status: 200 }
-        )
-      })
-
-      .catch((err) => {
-        let title = 'statusCheck.commonError'
-        if (err.code === 'P2002') {
-          title = 'statusCheck.duplicate'
-        }
-        addHandle = json<ActionData>(
-          { errors: { title, status: 400, check: new Date() } },
-          { status: 400 }
-        )
-      })
-
-    return addHandle
-  }
-  const handleEditSection = async () => {
-    const name = formData.get('name')
-    const description = formData.get('description')
-    const id = formData.get('id') as string
-    if (typeof name !== 'string' || name.length === 0) {
-      return json<ActionData>(
-        { errors: { title: 'statusCheck.nameIsReq', status: 400 } },
-        { status: 400 }
-      )
-    }
-    if (typeof description !== 'string' || description.length === 0) {
-      return json<ActionData>(
-        { errors: { title: 'statusCheck.descIsReq', status: 400 } },
-        { status: 400 }
-      )
-    }
-
-    let editHandle = null
-    await editSectionById(id, name, description)
-      .then((res) => {
-        editHandle = json<ActionData>(
-          {
-            resp: {
-              status: 'statusCheck.sectionUpdatedSuccess',
-              data: res as Section,
-            },
-          },
-          { status: 200 }
-        )
-      })
-
-      .catch((err) => {
-        let title = 'statusCheck.commonError'
-        if (err.code === 'P2002') {
-          title = 'statusCheck.duplicate'
-        }
-        editHandle = json<ActionData>(
-          { errors: { title, status: 400, check: new Date() } },
-          { status: 400 }
-        )
-      })
-
-    return editHandle
-  }
-
   if (action === 'sectionAdd') {
-    const response = await handleAddSection()
+    const name = formData.get('name') as string
+    const description = formData.get('description') as string
+    const response = await handleAddSection(
+      name,
+      description,
+      createdById,
+      workspaceId
+    )
     return response
   }
   if (action === 'sectionEdit') {
-    const response = await handleEditSection()
+    const name = formData.get('name') as string
+    const description = formData.get('description') as string
+    const id = formData.get('id') as string
+    const response = await handleEditSection(name, description, id)
     return response
   }
 
@@ -428,7 +440,7 @@ export default function SectionPage() {
             {t('sectionsConstants.noRecordFound')}
           </div>
         )}
-        <AddSection
+        <AddEditSection
           open={showAddSectionModal}
           setOpen={setShowAddSectionModal}
           addSection={addSection}

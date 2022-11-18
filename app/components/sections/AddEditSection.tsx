@@ -10,7 +10,7 @@ export interface editItem {
   name: string
   description: string
 }
-const AddSection = ({
+const AddEditSection = ({
   open,
   setOpen,
   editItem,
@@ -143,4 +143,4 @@ const AddSection = ({
     </DialogWrapper>
   )
 }
-export default AddSection
+export default AddEditSection

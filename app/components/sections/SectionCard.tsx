@@ -6,7 +6,7 @@ import DeletePopUp from '../DeletePopUp'
 import { useEffect, useState } from 'react'
 
 import { useTranslation } from 'react-i18next'
-import AddSection from './AddSection'
+import AddEditSection from './AddEditSection'
 const SectionCard = ({
   name,
   description,
@@ -168,7 +168,7 @@ const SectionCard = ({
         deleteItemType={t('sectionsConstants.sectionName')}
         setDeleted={setDeleted}
       />
-      <AddSection
+      <AddEditSection
         open={editMode}
         setOpen={setEditMode}
         showErrorMessage={false}
