@@ -77,7 +77,10 @@ const InviteCandidatePopup = ({
   // regex funtion to check email
   const isEmail = (email: string) =>
     /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)
-  const updateEmail = (event: any, index: number) => {
+  const updateEmail = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    index: number
+  ) => {
     const newEmails = emails.map((email, i) => {
       if (i === index) {
         return event.target.value
