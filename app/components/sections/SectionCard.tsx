@@ -38,23 +38,9 @@ const SectionCard = ({
   const submit = useSubmit()
   const [editMode, setEditMode] = useState(false)
   const [editItem, setEditItem] = useState({
-    id: '',
     name: '',
     description: '',
   })
-  const editSection = (name: string, description: string) => {
-    submit(
-      {
-        editSection: 'sectionEdit',
-        id: id,
-        name: name,
-        description: description,
-      },
-      {
-        method: 'post',
-      }
-    )
-  }
 
   const deleteSection = () => {
     submit({ deleteSection: 'sectionDelete', id: id }, { method: 'post' })
@@ -103,7 +89,6 @@ const SectionCard = ({
                         onClick={() => {
                           setEditMode(true)
                           setEditItem({
-                            id: id,
                             name: name,
                             description: description,
                           })
@@ -173,7 +158,7 @@ const SectionCard = ({
         setOpen={setEditMode}
         showErrorMessage={false}
         editItem={editItem}
-        editSection={editSection}
+        editId={id}
       />
     </div>
   )

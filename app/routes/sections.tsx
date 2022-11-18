@@ -295,9 +295,7 @@ export default function SectionPage() {
   if (t(data.status) != t('statusCheck.success')) {
     toast.error(t('statusCheck.commonError'))
   }
-  const addSection = (name: string, description: string) => {
-    submit({ addSection: 'sectionAdd', name, description }, { method: 'post' })
-  }
+
   useEffect(() => {
     if (data.sections.length) {
       const formData = new FormData()
@@ -443,7 +441,6 @@ export default function SectionPage() {
         <AddEditSection
           open={showAddSectionModal}
           setOpen={setShowAddSectionModal}
-          addSection={addSection}
           showErrorMessage={sectionActionData?.errors?.status === 400}
         />
       </div>
