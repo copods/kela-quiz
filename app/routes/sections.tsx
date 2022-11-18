@@ -27,7 +27,6 @@ import type { Section } from '~/interface/Interface'
 import { routes } from '~/constants/route.constants'
 import { useTranslation } from 'react-i18next'
 import { getUserWorkspaces } from '~/models/workspace.server'
-import { statusCheck } from '~/constants/common.constants'
 import { t } from 'i18next'
 
 export type ActionData = {
@@ -91,13 +90,13 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 }
 const validateTitle = (title: string) => {
   if (typeof title !== 'string' || title.length <= 0) {
-    return statusCheck.nameIsReq
+    return 'statusCheck.nameIsReq'
   }
 }
 
 const validateDescription = (description: string) => {
   if (typeof description !== 'string' || description.length <= 0) {
-    return statusCheck.descIsReq
+    return 'statusCheck.descIsReq'
   }
 }
 export const action: ActionFunction = async ({ request }) => {
