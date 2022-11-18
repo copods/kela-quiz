@@ -4,10 +4,7 @@ import Button from '../form/Button'
 import { trimValue } from '~/utils'
 import { useTranslation } from 'react-i18next'
 import DialogWrapper from '../Dialog'
-export interface createSectionErrorType {
-  title: string
-  description: string
-}
+import type { createSectionErrorType } from '~/interface/Interface'
 const AddSection = ({
   open,
   setOpen,
