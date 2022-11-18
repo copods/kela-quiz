@@ -72,7 +72,6 @@ const ResetPassword = ({
       errorId: 'New-password-error',
       onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
         setNewPassword(trimValue(event?.target.value))
-        comparePasswords(event.target.value, confirmPassword)
       },
     },
     {
@@ -86,7 +85,6 @@ const ResetPassword = ({
       errorId: 'Confirm-password-error',
       onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
         setConfirmPassword(trimValue(event?.target.value))
-        comparePasswords(event.target.value, newPassword)
       },
     },
   ]
@@ -111,7 +109,13 @@ const ResetPassword = ({
         <div className="flex flex-col gap-8">
           <div className="input-container-wrapper flex flex-col gap-6">
             {PasswordInputFieldProps.map((props) => {
-              return <PasswordInputFields {...props} key={props.name} />
+              return (
+                <PasswordInputFields
+                  onblur={() => comparePasswords(newPassword, confirmPassword)}
+                  {...props}
+                  key={props.name}
+                />
+              )
             })}
           </div>
           <div className="flex items-center justify-center">
