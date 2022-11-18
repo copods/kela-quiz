@@ -126,6 +126,7 @@ const InviteCandidatePopup = ({
           </span>
           <span
             role={'button'}
+            id="invite-more"
             tabIndex={0}
             className="cursor-pointer px-0.5 text-sm font-normal text-primary"
             onClick={() => setEmails([...emails, ''])}

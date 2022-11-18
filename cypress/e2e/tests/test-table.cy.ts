@@ -5,6 +5,10 @@ const deleteTest1 = `Aptitude - test2 `
 const candidateAlreadyInvited =
   'Candidate has already been invited for this test'
 const candidatesInvited = 'Candidates Invited'
+const someCandidatesInvited =
+  '1 out of 2 Candidates Invited. Others were already invited'
+const allCandidatesInvited = 'All candidates invited.'
+const toast = '.Toastify__toast-body'
 
 describe('Visiting Tests', () => {
   beforeEach('sign-in', () => {
@@ -136,8 +140,7 @@ describe('Visiting Tests', () => {
       })
     })
   })
-  it('invite single candidate invite', () => {
-    const toast = '.Toastify__toast-body'
+  it('invite single candidate', () => {
     cy.visit('/tests')
     cy.get('#invite-popup-open').click()
     cy.get('.inviteInput').type('ion@ion.co')
@@ -145,7 +148,6 @@ describe('Visiting Tests', () => {
     cy.get(toast).should('have.text', candidatesInvited)
   })
   it('invite already invited candidate', () => {
-    const toast = '.Toastify__toast-body'
     cy.visit('/tests')
     cy.get('#invite-popup-open').click()
     cy.get('.inviteInput').type('ion@ion.co')
@@ -153,27 +155,22 @@ describe('Visiting Tests', () => {
     cy.get(toast).should('have.text', candidateAlreadyInvited)
   })
   it('invite multiple candidates with some already invited', () => {
-    const toast = '.Toastify__toast-body'
     cy.visit('/tests')
     cy.get('#invite-popup-open').click()
-    cy.get('.flex-row > .cursor-pointer').click()
+    cy.get('#invite-more').click()
     cy.get('.inviteInput').eq(0).type('ion@ion.co')
     cy.get('.inviteInput').eq(1).type('sam123@gmail.com')
     cy.get('[data-cy="submit"]').click()
-    cy.get(toast).should(
-      'have.text',
-      '1 out of 2 Candidates Invited. Others were already invited'
-    )
+    cy.get(toast).should('have.text', someCandidatesInvited)
   })
-  it('invite multiple candidate, all successful', () => {
-    const toast = '.Toastify__toast-body'
+  it('invite multiple candidates, all unique', () => {
     cy.visit('/tests')
     cy.get('#invite-popup-open').click()
-    cy.get('.flex-row > .cursor-pointer').click()
+    cy.get('#invite-more').click()
     cy.get('.inviteInput').eq(0).type('sally123@gmail.com')
     cy.get('.inviteInput').eq(1).type('jane123@gmail.com')
     cy.get('[data-cy="submit"]').click()
-    cy.get(toast).should('have.text', 'All candidates invited.')
+    cy.get(toast).should('have.text', allCandidatesInvited)
   })
   it('On click of delete, test should be deleted', () => {
     cy.get('a').find('#tests').should('have.text', testsConstants.tests).click()
