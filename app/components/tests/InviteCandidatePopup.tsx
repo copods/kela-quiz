@@ -96,7 +96,7 @@ const InviteCandidatePopup = ({
       .forEach((email, i: number) => {
         if (email) {
           if (!isEmail(email)) {
-            emailError[i] = 'Wrong'
+            emailError[i] = t('statusCheck.emailIsInvalid')
           }
         }
         setError(emailError)
