@@ -1,5 +1,5 @@
 import { commonConstants, testsConstants } from '~/constants/common.constants'
-const test1 = `Aptitude - test1`
+const test1 = `Aptitude - assessment1`
 
 describe('Test for GroupByTestTable, Result', () => {
   beforeEach('sign-in', () => {
