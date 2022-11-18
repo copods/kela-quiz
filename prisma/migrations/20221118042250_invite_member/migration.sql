@@ -6,8 +6,10 @@ CREATE TABLE "Invites" (
     "workspaceId" TEXT,
     "roleId" TEXT NOT NULL,
     "invitedOn" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "deleted" BOOLEAN NOT NULL DEFAULT false,
+    "deletedAt" TEXT DEFAULT E'na',
     "joined" BOOLEAN,
-    "joinedAt" TIMESTAMP(3),
+    "joinedAt" TEXT DEFAULT E'na',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -15,7 +17,7 @@ CREATE TABLE "Invites" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Invites_email_key" ON "Invites"("email");
+CREATE UNIQUE INDEX "Invites_email_deletedAt_deleted_workspaceId_key" ON "Invites"("email", "deletedAt", "deleted", "workspaceId");
 
 -- AddForeignKey
 ALTER TABLE "Invites" ADD CONSTRAINT "Invites_workspaceId_fkey" FOREIGN KEY ("workspaceId") REFERENCES "Workspace"("id") ON DELETE SET NULL ON UPDATE CASCADE;
