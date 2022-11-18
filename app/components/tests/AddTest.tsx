@@ -23,12 +23,12 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
   }, [sections])
   const breadCrumbData = [
     {
-      tabName: 'testsConstants.test',
-      route: routes.tests,
+      tabName: 'testsConstants.assessment',
+      route: routes.assessments,
     },
     {
       tabName: 'testsConstants.addTestbutton',
-      route: routes.addTest,
+      route: routes.addAssessment,
     },
   ]
   const tabs = [
@@ -68,7 +68,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
   }
   const submitAddTest = () => {
     if (typeof name !== 'string' || name.length === 0) {
-      toast.error(t('toastConstants.addTest'))
+      toast.error(t('toastConstants.addAssessment'))
       return
     }
     if (typeof description !== 'string' || description.length === 0) {
@@ -173,7 +173,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
       <div className="flex w-full items-center justify-between">
         <Button
           tabIndex={0}
-          onClick={() => navigate(routes.tests)}
+          onClick={() => navigate(routes.assessments)}
           className="h-9 px-7"
           varient="secondary-solid"
           title={t('commonConstants.cancelAddTest')}

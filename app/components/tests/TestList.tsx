@@ -65,7 +65,7 @@ const TestList = ({
         </h2>
         <Button
           className="px-5"
-          onClick={() => navigate(routes.addTest)}
+          onClick={() => navigate(routes.addAssessment)}
           id="add-test"
           tabIndex={0}
           varient="primary-solid"
@@ -98,7 +98,7 @@ const TestList = ({
                 {t('commonConstants.srNo')}
               </div>
               <div className="w-4/12 text-sm text-gray-500">
-                {t('testsConstants.test')}
+                {t('testsConstants.assessment')}
               </div>
               <div className="w-3/12 text-sm text-gray-500">
                 {t('testsConstants.sectionText')}
@@ -135,7 +135,9 @@ const TestList = ({
           </div>
         </>
       ) : (
-        <div className="p-7 text-center">{t('testsConstants.noTestFound')}</div>
+        <div className="p-7 text-center">
+          {t('testsConstants.noAssessmentFound')}
+        </div>
       )}
     </div>
   )

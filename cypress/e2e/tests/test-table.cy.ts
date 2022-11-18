@@ -20,7 +20,7 @@ describe('Visiting Assessment', () => {
       '/assessments'
     )
     cy.get('#add-test', { timeout: 6000 })
-      .should('have.text', `+ ${testsConstants.addTestbutton}`)
+      .should('have.text', `+ ${testsConstants.addAssessmentbutton}`)
       .click()
     cy.location('pathname').should('include', '/assessments/add-assessment')
   })

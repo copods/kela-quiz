@@ -76,14 +76,19 @@ export const action: ActionFunction = async ({ request }) => {
   await createTest(createdById, workspaceId as string, JSON.parse(data))
     .then((res) => {
       test = json<ActionData>(
-        { resp: { title: 'statusCheck.testAddedSuccessFully', status: 200 } },
+        {
+          resp: {
+            title: 'statusCheck.assessmentAddedSuccessFully',
+            status: 200,
+          },
+        },
         { status: 200 }
       )
     })
     .catch((err) => {
       let title = 'statusCheck.commonError'
       if (err.code === 'P2002') {
-        title = 'statusCheck.testAlreadyExist'
+        title = 'statusCheck.assessmentAlreadyExist'
       }
       test = json<ActionData>(
         {
@@ -106,7 +111,7 @@ const AddTest = () => {
   useEffect(() => {
     if (actionData) {
       if (actionData.resp?.status === 200) {
-        navigate(routes.tests)
+        navigate(routes.assessments)
         toast.success(t(actionData.resp?.title))
       } else if (actionData.errors?.status === 400) {
         toast.error(t(actionData.errors?.title), {

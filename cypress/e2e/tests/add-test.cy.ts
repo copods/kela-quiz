@@ -19,7 +19,7 @@ describe('Creating assessments', () => {
       .should('have.text', testsConstants.assessments)
       .click()
     cy.get('#add-test', { timeout: 6000 })
-      .should('have.text', `+ ${testsConstants.addTestbutton}`)
+      .should('have.text', `+ ${testsConstants.addAssessmentbutton}`)
       .click()
     cy.location('pathname').should('include', '/assessments/add-assessment')
   })
@@ -29,7 +29,7 @@ describe('Creating assessments', () => {
       .should('have.text', testsConstants.assessments)
       .click()
     cy.get('#add-test', { timeout: 6000 })
-      .should('have.text', `+ ${testsConstants.addTestbutton}`)
+      .should('have.text', `+ ${testsConstants.addAssessmentbutton}`)
       .click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
@@ -55,7 +55,9 @@ describe('Creating assessments', () => {
         }
       })
     })
-    cy.get('#0').find('.text-gray-500').should('have.text', cypress.testDetails)
+    cy.get('#0')
+      .find('.text-gray-500')
+      .should('have.text', cypress.assessmentDetails)
     cy.get('#1')
       .find('.text-gray-500')
       .should('have.text', cypress.selectSections)
@@ -68,7 +70,7 @@ describe('Creating assessments', () => {
       .should('have.text', testsConstants.assessments)
       .click()
     cy.get('#add-test', { timeout: 6000 })
-      .should('have.text', `+ ${testsConstants.addTestbutton}`)
+      .should('have.text', `+ ${testsConstants.addAssessmentbutton}`)
       .click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
@@ -85,7 +87,7 @@ describe('Creating assessments', () => {
       .should('have.text', testsConstants.assessments)
       .click()
     cy.get('#add-test', { timeout: 6000 })
-      .should('have.text', `+ ${testsConstants.addTestbutton}`)
+      .should('have.text', `+ ${testsConstants.addAssessmentbutton}`)
       .click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
@@ -122,7 +124,7 @@ describe('Creating assessments', () => {
       .should('have.text', testsConstants.assessments)
       .click()
     cy.get('#add-test', { timeout: 6000 })
-      .should('have.text', `+ ${testsConstants.addTestbutton}`)
+      .should('have.text', `+ ${testsConstants.addAssessmentbutton}`)
       .click()
     cy.location('pathname').should('include', '/assessments/add-assessment')
     cy.get('input[placeholder="Enter assessment name"]', { timeout: 6000 })
@@ -150,7 +152,7 @@ describe('Creating assessments', () => {
       .should('have.text', testsConstants.assessments)
       .click()
     cy.get('#add-test', { timeout: 6000 })
-      .should('have.text', `+ ${testsConstants.addTestbutton}`)
+      .should('have.text', `+ ${testsConstants.addAssessmentbutton}`)
       .click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
@@ -197,7 +199,7 @@ describe('Creating assessments', () => {
       .should('have.text', testsConstants.assessments)
       .click()
     cy.get('#add-test', { timeout: 6000 })
-      .should('have.text', `+ ${testsConstants.addTestbutton}`)
+      .should('have.text', `+ ${testsConstants.addAssessmentbutton}`)
       .click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
@@ -235,7 +237,7 @@ describe('Creating assessments', () => {
       .should('have.text', testsConstants.assessments)
       .click()
     cy.get('#add-test', { timeout: 6000 })
-      .should('have.text', `+ ${testsConstants.addTestbutton}`)
+      .should('have.text', `+ ${testsConstants.addAssessmentbutton}`)
       .click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',

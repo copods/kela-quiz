@@ -36,7 +36,7 @@ describe('Test for Logout, SideNav', () => {
       cy.location('pathname').should((item) => {
         expect([
           routes.resultGroupTest,
-          routes.tests,
+          routes.assessments,
           routes.sections,
           routes.members,
           routes.settings,

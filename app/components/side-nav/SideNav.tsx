@@ -46,7 +46,7 @@ const sideNavGuide = [
         id: 'tests',
         iconClass: 'carbon:result',
         itemName: 'testsConstants.assessments',
-        itemRoute: routes.tests,
+        itemRoute: routes.assessments,
       },
       {
         id: 'sections',
