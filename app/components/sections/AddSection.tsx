@@ -1,9 +1,10 @@
-import { Form, useTransition } from '@remix-run/react'
+import { Form, useActionData, useTransition } from '@remix-run/react'
 import { useEffect, useState } from 'react'
 import Button from '../form/Button'
 import { trimValue } from '~/utils'
 import { useTranslation } from 'react-i18next'
 import DialogWrapper from '../Dialog'
+import type { ActionData } from '~/routes/sections'
 export interface editItem {
   id: string
   name: string
@@ -27,6 +28,7 @@ const AddSection = ({
   const transition = useTransition()
   const [sectionName, setSectionName] = useState('')
   const [description, setDescription] = useState('')
+  const sectionActionData = useActionData() as ActionData
 
   useEffect(() => {
     if (editItem) {
@@ -37,9 +39,17 @@ const AddSection = ({
     setDescription('')
     setSectionName('')
   }, [open, editItem])
+
+  useEffect(() => {
+    if (
+      t(sectionActionData?.resp?.status as string) ===
+      t('statusCheck.sectionUpdatedSuccess')
+    ) {
+      setOpen(false)
+    }
+  }, [sectionActionData?.resp, setOpen, t])
   const handleEdit = (name: string, description: string) => {
     editSection?.(name, description)
-    setOpen(false)
   }
   const handleAdd = (name: string, description: string) => {
     addSection?.(name, description)
@@ -99,7 +109,7 @@ const AddSection = ({
             type="button"
             id="submit-button"
             className="h-9 px-4"
-            name="add-section"
+            name={editItem ? 'edit-section' : 'add-section'}
             value="add"
             isDisabled={transition.state === 'submitting'}
             varient="primary-solid"

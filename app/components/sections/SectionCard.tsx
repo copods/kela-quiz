@@ -20,8 +20,6 @@ const SectionCard = ({
   setDeleted,
   setIsDelete,
   isDelete,
-  editMode,
-  setEditMode,
 }: {
   name: string
   description: string
@@ -35,18 +33,15 @@ const SectionCard = ({
   setDeleted?: (e: boolean) => void
   setIsDelete: (e: boolean) => void
   isDelete: boolean
-  editMode: boolean
-  setEditMode: (e: boolean) => void
 }) => {
   const { t } = useTranslation()
   const submit = useSubmit()
-
+  const [editMode, setEditMode] = useState(false)
   const [editItem, setEditItem] = useState({
     id: '',
     name: '',
     description: '',
   })
-
   const editSection = (name: string, description: string) => {
     submit(
       {
@@ -57,7 +52,6 @@ const SectionCard = ({
       },
       {
         method: 'post',
-        action: `/sections`,
       }
     )
   }

@@ -5,6 +5,8 @@ import {
   Outlet,
   useActionData,
   useLoaderData,
+  useLocation,
+  useNavigate,
   useSubmit,
 } from '@remix-run/react'
 import {
@@ -91,13 +93,12 @@ export const action: ActionFunction = async ({ request }) => {
   const createdById = await requireUserId(request)
   const workspaceId = (await getWorkspaceId(request)) as string
   const formData = await request.formData()
-
   const action =
     formData.get('addSection') ||
     formData.get('editSection') ||
     formData.get('deleteSection')
 
-  if (action === 'sectionAdd') {
+  const handleAddSection = async () => {
     const name = formData.get('name')
     const description = formData.get('description')
     if (typeof name !== 'string' || name.length === 0) {
@@ -141,7 +142,7 @@ export const action: ActionFunction = async ({ request }) => {
 
     return addHandle
   }
-  if (action === 'sectionEdit') {
+  const handleEditSection = async () => {
     const name = formData.get('name')
     const description = formData.get('description')
     const id = formData.get('id') as string
@@ -166,7 +167,6 @@ export const action: ActionFunction = async ({ request }) => {
             resp: {
               status: 'statusCheck.sectionUpdatedSuccess',
               data: res as Section,
-              check: new Date(),
             },
           },
           { status: 200 }
@@ -185,6 +185,15 @@ export const action: ActionFunction = async ({ request }) => {
       })
 
     return editHandle
+  }
+
+  if (action === 'sectionAdd') {
+    const response = await handleAddSection()
+    return response
+  }
+  if (action === 'sectionEdit') {
+    const response = await handleEditSection()
+    return response
   }
 
   let deleteHandle = null
@@ -267,7 +276,6 @@ export default function SectionPage() {
   const [showAddSectionModal, setShowAddSectionModal] = useState(false)
   const [order, setOrder] = useState(sortByOrder.desc as string)
   const [sortBy, setSortBy] = useState(sortByDetails[1].value)
-
   const [selectedSection, setSelectedSection] = useState(
     data.selectedSectionId || data.sections[0]?.id || 'NA'
   )
@@ -295,7 +303,8 @@ export default function SectionPage() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [order, sortBy, data.sections?.length])
-
+  const location = useLocation()
+  const navigate = useNavigate()
   useEffect(() => {
     if (sectionActionData) {
       if (
@@ -315,6 +324,7 @@ export default function SectionPage() {
         toast.success(t(sectionActionData.resp?.status as string), {
           toastId: t(sectionActionData.resp?.status as string),
         })
+        navigate(`${location.pathname}${location.search}`)
       } else if (
         t(sectionActionData.resp?.status as string) ===
         t('statusCheck.deletedSuccess')
@@ -334,7 +344,14 @@ export default function SectionPage() {
         })
       }
     }
-  }, [sectionActionData, data.selectedSectionId, data.sections, t])
+  }, [
+    sectionActionData,
+    data.selectedSectionId,
+    data.sections,
+    t,
+    location,
+    navigate,
+  ])
   return (
     <AdminLayout>
       <div className="flex h-full flex-col gap-6 overflow-hidden p-1">
