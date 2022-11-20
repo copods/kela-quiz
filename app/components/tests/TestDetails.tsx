@@ -11,7 +11,7 @@ const TestDetails = () => {
         <div className="border-b border-solid border-slate-300">
           <div className="flex gap-2 pb-6">
             <Link
-              to={routes.tests}
+              to={routes.assessments}
               className="testPreviewBackButton flex items-center gap-4 "
               tabIndex={0}
             >

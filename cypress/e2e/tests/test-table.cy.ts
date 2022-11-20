@@ -1,26 +1,38 @@
 import { testsConstants } from '~/constants/common.constants'
 
-const test1 = `Aptitude - test1`
-const deleteTest1 = `Aptitude - test2 `
+const test1 = `Aptitude - assessment1`
+const deleteTest1 = `Aptitude - assessment2 `
 
-describe('Visiting Tests', () => {
+describe('Visiting Assessment', () => {
   beforeEach('sign-in', () => {
     cy.login()
 
     cy.customVisit('/members')
   })
-  // creating data to test Test list page
-  it('Visiting Add Test Page', () => {
-    cy.get('a').find('#tests').should('have.text', testsConstants.tests).click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.get('#add-test', { timeout: 6000 })
-      .should('have.text', `+ ${testsConstants.addTestbutton}`)
+  // creating data to test Assessment list page
+  it('Visiting Add Assessment Page', () => {
+    cy.get('a')
+      .find('#tests')
+      .should('have.text', testsConstants.assessments)
       .click()
-    cy.location('pathname').should('include', '/tests/add-test')
+    cy.location('pathname', { timeout: 60000 }).should(
+      'include',
+      '/assessments'
+    )
+    cy.get('#add-test', { timeout: 6000 })
+      .should('have.text', `+ ${testsConstants.addAssessmentbutton}`)
+      .click()
+    cy.location('pathname').should('include', '/assessments/add-assessment')
   })
   it('sort by name in ascending order ', () => {
-    cy.get('a').find('#tests').should('have.text', testsConstants.tests).click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
+    cy.get('a')
+      .find('#tests')
+      .should('have.text', testsConstants.assessments)
+      .click()
+    cy.location('pathname', { timeout: 60000 }).should(
+      'include',
+      '/assessments'
+    )
     cy.get('.dropdownButton span span', { timeout: 6000 })
       .invoke('text')
       .then((el) => {
@@ -35,8 +47,14 @@ describe('Visiting Tests', () => {
       })
   })
   it('sort by name in descending order ', () => {
-    cy.get('a').find('#tests').should('have.text', testsConstants.tests).click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
+    cy.get('a')
+      .find('#tests')
+      .should('have.text', testsConstants.assessments)
+      .click()
+    cy.location('pathname', { timeout: 60000 }).should(
+      'include',
+      '/assessments'
+    )
     cy.get('#sort-filter-body').get('#descend').click()
     cy.get('.dropdownButton span span', { timeout: 6000 })
       .invoke('text')
@@ -52,8 +70,14 @@ describe('Visiting Tests', () => {
       })
   })
   it('sort by created date in ascending order ', () => {
-    cy.get('a').find('#tests').should('have.text', testsConstants.tests).click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
+    cy.get('a')
+      .find('#tests')
+      .should('have.text', testsConstants.assessments)
+      .click()
+    cy.location('pathname', { timeout: 60000 }).should(
+      'include',
+      '/assessments'
+    )
     cy.get('#sort-filter-container').within(() => {
       cy.get('.dropdownButton')
         .click({ multiple: true })
@@ -76,8 +100,14 @@ describe('Visiting Tests', () => {
       })
   })
   it('sort by created date in descending order', () => {
-    cy.get('a').find('#tests').should('have.text', testsConstants.tests).click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
+    cy.get('a')
+      .find('#tests')
+      .should('have.text', testsConstants.assessments)
+      .click()
+    cy.location('pathname', { timeout: 60000 }).should(
+      'include',
+      '/assessments'
+    )
     cy.get('#sort-filter-body').get('#descend').click()
     cy.get('#sort-filter-container').within(() => {
       cy.get('.dropdownButton')
@@ -101,9 +131,15 @@ describe('Visiting Tests', () => {
         }
       })
   })
-  it('By Clicking test name it should navigate to test details page', () => {
-    cy.get('a').find('#tests').should('have.text', testsConstants.tests).click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
+  it('By Clicking test name it should navigate to assessment details page', () => {
+    cy.get('a')
+      .find('#tests')
+      .should('have.text', testsConstants.assessments)
+      .click()
+    cy.location('pathname', { timeout: 60000 }).should(
+      'include',
+      '/assessments'
+    )
     cy.get('.test-table-list', { timeout: 6000 }).should('be.visible')
     cy.get('.test-table-list')
       .each(($el) => {
@@ -117,11 +153,17 @@ describe('Visiting Tests', () => {
         })
       })
       .location('pathname', { timeout: 60000 })
-      .should('include', '/tests')
+      .should('include', '/assessments')
   })
   it('On click of count in sections, menu with all sections should open', () => {
-    cy.get('a').find('#tests').should('have.text', testsConstants.tests).click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
+    cy.get('a')
+      .find('#tests')
+      .should('have.text', testsConstants.assessments)
+      .click()
+    cy.location('pathname', { timeout: 60000 }).should(
+      'include',
+      '/assessments'
+    )
     cy.get('#chip-group-id', { timeout: 10000 }).then((el) => {
       cy.get('.chip-group').then(($elements) => {
         let strings = [...$elements]
@@ -133,9 +175,15 @@ describe('Visiting Tests', () => {
       })
     })
   })
-  it('On click of delete, test should be deleted', () => {
-    cy.get('a').find('#tests').should('have.text', testsConstants.tests).click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
+  it('On click of delete, assessment should be deleted', () => {
+    cy.get('a')
+      .find('#tests')
+      .should('have.text', testsConstants.assessments)
+      .click()
+    cy.location('pathname', { timeout: 60000 }).should(
+      'include',
+      '/assessments'
+    )
     cy.get('.test-table-list', { timeout: 8000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (

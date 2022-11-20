@@ -78,7 +78,7 @@ const GroupByTests = () => {
                   {t('commonConstants.srNo')}
                 </span>
                 <span className="col-span-3 text-sm font-semibold text-gray-500">
-                  {t('testsConstants.test')}
+                  {t('testsConstants.assessment')}
                 </span>
                 <span className="col-span-2 text-sm font-semibold text-gray-500">
                   {t('commonConstants.total')}{' '}
@@ -122,7 +122,7 @@ const GroupByTests = () => {
                 )}
                 {candidateTests.length === 0 && (
                   <div className="flex items-center justify-center p-7">
-                    <span>{t('resultConstants.noTestAlert')}</span>
+                    <span>{t('resultConstants.noAssessmentAlert')}</span>
                   </div>
                 )}
               </div>

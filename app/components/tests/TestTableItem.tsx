@@ -78,10 +78,10 @@ const TestTableItem = ({
           <div
             aria-label={testName}
             title={testName}
-            onClick={() => navigate(`${routes.tests}/${id}`)}
+            onClick={() => navigate(`${routes.assessments}/${id}`)}
             role={'button'}
             onKeyDown={(e) => {
-              if (e.key === 'Enter') navigate(`${routes.tests}/${id}`)
+              if (e.key === 'Enter') navigate(`${routes.assessments}/${id}`)
             }}
             id={`${index}`}
             tabIndex={0}
@@ -135,7 +135,7 @@ const TestTableItem = ({
           setDeleted={setDeleted}
           status={status}
           deleteItem={testName}
-          deleteItemType={t('testsConstants.test')}
+          deleteItemType={t('testsConstants.assessment')}
         />
         <InviteCandidatePopup
           openInvitePopup={candidatePopupOpen}
