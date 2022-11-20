@@ -62,6 +62,7 @@ const SectionLink = ({
       <SectionCard
         isActive={isActive}
         name={section?.name}
+        description={section?.description}
         createdBy={`${section?.createdBy?.firstName} ${section?.createdBy?.lastName}`}
         questionsCount={section?._count?.questions as number}
         createdAt={section.createdAt}
