@@ -71,7 +71,7 @@ const SectionCard = ({
             as="div"
             className="verticalDots relative inline-block text-left"
           >
-            <Menu.Button className={id}>
+            <Menu.Button id="menu-button" className={id}>
               <Icon
                 className="text-2xl text-gray-600"
                 icon={'mdi:dots-vertical'}

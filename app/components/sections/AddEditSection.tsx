@@ -89,6 +89,7 @@ const AddEditSection = ({
             tabIndex={0}
             type="text"
             name="name"
+            id="addEditSection-name"
             className="h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
             placeholder={t('commonConstants.enterSectionName')}
             onChange={(e) => setSectionName(trimValue(e.target.value))}
@@ -112,6 +113,7 @@ const AddEditSection = ({
           <Button
             tabIndex={0}
             type="button"
+            id="cancel-button"
             className="h-9 px-4"
             onClick={() => setOpen(false)}
             varient="primary-outlined"
