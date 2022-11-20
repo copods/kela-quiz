@@ -345,7 +345,7 @@ describe('Test for section-details', () => {
       })
     })
     cy.get('.sectionName').contains(section1).click()
-    cy.get('#section-details-heading', { timeout: 40000 }).should(
+    cy.get('#section-details-heading', { timeout: 40000 }).should('be.visible', { timeout: 4000 }).should(
       'have.text',
       section1
     )
@@ -393,7 +393,7 @@ describe('Test for section-details', () => {
       })
     })
     cy.get('.sectionName').contains(section1).click()
-    cy.get('#section-details-heading', { timeout: 40000 }).should(
+    cy.get('#section-details-heading', { timeout: 40000 }).should('be.visible', { timeout: 4000 }).should(
       'have.text',
       section1
     )
@@ -432,7 +432,7 @@ describe('Test for section-details', () => {
       })
     })
     cy.get('.sectionName').contains(section1).click()
-    cy.get('#section-details-heading', { timeout: 40000 }).should(
+    cy.get('#section-details-heading', { timeout: 40000 }).should('be.visible', { timeout: 4000 }).should(
       'have.text',
       section1
     )

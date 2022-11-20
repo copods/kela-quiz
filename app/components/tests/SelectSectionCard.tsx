@@ -45,6 +45,10 @@ const SelectSectionCard = ({
           toast.error('Cannot add more than available questions')
           return
         }
+        if (parseInt(value || '') == 0) {
+          toast.error('Cannot add section with 0 questions.')
+          return
+        }
         tempSection.totalQuestions = parseInt(value || '')
         break
       case 'time':

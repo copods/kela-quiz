@@ -109,6 +109,29 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
       setCurrentTab(0)
     }
   }, [currentTab, setCurrentTab, name, description])
+  function isQuillEmpty(value: string) {
+    if (
+      value.replace(/<(.|\n)*?>/g, '').trim().length === 0 &&
+      !value.includes('<img')
+    ) {
+      return true
+    }
+    return false
+  }
+
+  const getSectionCheck = () => {
+    if (selectedSections.length < 1) {
+      return true
+    }
+    console.log(selectedSections)
+    for (let section of selectedSections) {
+      if (!section?.totalQuestions) {
+        return true
+      }
+    }
+    return false
+  }
+
   return (
     <div className="flex h-full flex-col gap-6 overflow-hidden">
       {/* header */}
@@ -127,8 +150,8 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
         tabs={tabs}
         disabledTabs={[
           false,
-          !name || !description,
-          selectedSections.length < 1,
+          !name || isQuillEmpty(description),
+          getSectionCheck(),
         ]}
         currentTab={currentTab}
         setCurrentTab={setCurrentTab}
@@ -190,9 +213,10 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
               id="next-button"
               buttonText={t('commonConstants.nextButton')}
               isDisabled={
-                !(name && description) ||
+                !name ||
+                isQuillEmpty(description) ||
                 currentTab == 2 ||
-                (selectedSections.length < 1 && currentTab == 1)
+                (getSectionCheck() && currentTab == 1)
               }
               onClick={() => setCurrentTab(currentTab + 1)}
             />
