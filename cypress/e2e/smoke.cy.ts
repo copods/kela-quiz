@@ -9,10 +9,8 @@ const test1 = `Aptitude - assessment1`
 const deleteTest1 = `Aptitude - assessment2`
 const section2 = `Aptitude - section2`
 const deleteSection = `Aptitude - delete-Section`
-const memberFirstName = 'john'
-const memberLastName = 'dow'
+
 const memberEmail = 'johndoe@example.com'
-const workspaceName = 'Copods workspace'
 
 describe('smoke tests', () => {
   beforeEach(() => {
@@ -22,7 +20,7 @@ describe('smoke tests', () => {
 
   it('Invalid Email Error Message', () => {
     cy.visit('/sign-in')
-    cy.get('#email').clear().type('ayushi@copods.co')
+    cy.get('#email').clear().type('test@copods.co')
     cy.get('#password').clear().type('kQuiz@copods')
     cy.findByRole('button').click()
     cy.get('#email-error').should('have.text', 'Email is invalid')
@@ -360,27 +358,17 @@ describe('smoke tests', () => {
     cy.login()
     cy.customVisit('/members')
 
-    cy.get('#add-member').should('have.text', cypress.addMember).click()
+    cy.get('#invite-member').should('have.text', cypress.addMember).click()
     cy.get('#dialog-wrapper').should('be.visible')
-    cy.get('input[name="firstName"]')
-      .clear()
-      .type(memberFirstName)
-      .should('have.value', memberFirstName)
-    cy.get('input[name="lastName"]')
-      .clear()
-      .type(memberLastName)
-      .should('have.value', memberLastName)
+
     cy.get('input[name="email"]')
       .clear()
       .type(memberEmail)
       .should('have.value', memberEmail)
-    cy.get('#workspace')
-      .clear()
-      .type(workspaceName)
-      .should('have.value', workspaceName)
+
     cy.get('div').get('#add-member-modal').find('.dropdownButton').click()
     cy.get('ul').contains('Recruiter').click()
-    cy.get('#add-button').click()
+    cy.get('#invite-button').click()
   })
 
   it('invite candidate for assessment', () => {

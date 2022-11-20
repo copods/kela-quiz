@@ -14,6 +14,7 @@ export default function MembersHeader({
   const { t } = useTranslation()
 
   const membersData = useLoaderData()
+  const loggedInUser = membersData.getUser.email
   const [open, setOpen] = useState(false)
   useEffect(() => {
     if (actionStatus) {
@@ -29,7 +30,7 @@ export default function MembersHeader({
         </h1>
         <Button
           tabIndex={0}
-          id="add-member"
+          id="invite-member"
           className="h-9 px-4"
           onClick={() => setOpen(!open)}
           varient="primary-solid"
@@ -37,7 +38,12 @@ export default function MembersHeader({
           buttonText={t('members.inviteMember')}
         />
       </div>
-      <AddMemberModal roles={membersData.roles} open={open} setOpen={setOpen} />
+      <AddMemberModal
+        roles={membersData.roles}
+        loggedInUser={loggedInUser}
+        open={open}
+        setOpen={setOpen}
+      />
     </div>
   )
 }

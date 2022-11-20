@@ -8,7 +8,16 @@
     "addedOn": "Added On",
     "action": "Action",
     "member": "member",
-    "memberResendIcon": "Reinvite Icon"
+    "invitedMember": "Invited Member",
+    "joinedMembers": "Joined Members",
+    "noInvitedMember": "No any invited Member Found",
+    "workspaceInvitation": "Workspace Invitation",
+    "invitedOn": "Invited On",
+    "alreadyJoinedWorkspace": "You already joined the workspace",
+    "alreadyRejectedWorkspaceInvitation": "You already reject the workspace joining invitation",
+    "loggedinFromAnotherAccount": "Invalid link, please login from correct account.",
+    "youInvitedBy": "You have been invited by",
+    "toJoin": "to join"
   },
   "commonConstants": {
     "name": "Name",
@@ -58,6 +67,11 @@
     "defaultWorkspaceName": "Default Workspace Name",
     "confirmPassword": "Confirm Password",
     "createPassword": "Create Password",
+    "inviting": "Inviting",
+    "invite": "Invite",
+    "join": "Join",
+    "joining": "Joining",
+    "joinedOn": "Joined On",
     "invitedAt": "Invited At"
   },
   "sideNav": {
@@ -172,7 +186,11 @@
     "switched": "Workspace Switched",
     "enteredReenteredPassword": "Password and Confirm password should be same.",
     "passAlreadyCreated": "You have already created the password",
-    "userNotFound": "User Not Found"
+    "userNotFound": "User Not Found",
+    "workspaceJoinSuccess": "Workspace joined successfully",
+    "workspaceInvitationRejected": "Workspace invitation rejected",
+    "notInviteYourself": "Your can not invite Yourself",
+    "wrongInvitedId": "Your email is not matched with invited id"
   },
   "resultConstants": {
     "order": "Order",
@@ -255,7 +273,8 @@
     "signUpSuccessfull": "Sign Up successfully",
     "workspaceAdded": "Workspace Added",
     "duplicateWorkspace": "Duplicate Workspace",
-    "workspaceNameIsRequired": "Workspace name is required"
+    "workspaceNameIsRequired": "Workspace name is required",
+    "memberAlreadyInvited": "Member already invited"
   },
   "otpConstants": {
     "header": "OTP Verification",
