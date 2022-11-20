@@ -20,7 +20,7 @@ describe('smoke tests', () => {
 
   it('Invalid Email Error Message', () => {
     cy.visit('/sign-in')
-    cy.get('#email').clear().type('ayushi@copods.co')
+    cy.get('#email').clear().type('test@copods.co')
     cy.get('#password').clear().type('kQuiz@copods')
     cy.findByRole('button').click()
     cy.get('#email-error').should('have.text', 'Email is invalid')
@@ -358,7 +358,7 @@ describe('smoke tests', () => {
     cy.login()
     cy.customVisit('/members')
 
-    cy.get('#add-member').should('have.text', cypress.addMember).click()
+    cy.get('#invite-member').should('have.text', cypress.addMember).click()
     cy.get('#dialog-wrapper').should('be.visible')
 
     cy.get('input[name="email"]')

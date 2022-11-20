@@ -230,7 +230,6 @@ const Members = () => {
           <MembersList actionStatus={membersActionData?.resp?.title} />
         </div>
         <div className="flex flex-col gap-4 text-2xl">
-         
           <InvitedMembersList actionStatus={membersActionData?.resp?.title} />
         </div>
       </div>

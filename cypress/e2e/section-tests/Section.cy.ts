@@ -5,7 +5,6 @@ import {
   statusCheck,
 } from '~/constants/common.constants'
 const section1 = `Aptitude - section1`
-const dsecription = `Aptitude`
 const deleteSection = `Aptitude - delete-Section`
 const sectionUpdateSuccess = 'Section updated sucessfully..!'
 const nameIsReq = 'Name is required'
@@ -163,12 +162,8 @@ describe('Test for Section', () => {
       cy.get('#headlessui-menu-button-3').click()
     })
     cy.contains('Edit').click()
-    cy.get('#addEditSection-name')
-      .should('have.value', section1)
-      .type('-edited')
-    cy.get('#section-description')
-      .should('have.value', dsecription)
-      .type('-edited')
+    cy.get('#addEditSection-name').type('-edited')
+    cy.get('#section-description').type('-edited')
     cy.get('#submit-button').click()
     cy.get(toast).should('have.text', sectionUpdateSuccess)
   })

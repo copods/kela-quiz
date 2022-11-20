@@ -1,25 +1,10 @@
-import {
-  cypress,
-  settings,
-  statusCheck,
-  tabs,
-} from '~/constants/common.constants'
+import { settings, statusCheck, tabs } from '~/constants/common.constants'
 
 describe('Test for settings', () => {
   beforeEach('sign-in', () => {
-    cy.visit('/sign-in')
-    cy.get('input[name="email"]')
-      .focus()
-      .clear()
-      .type('copods.demo.sendgrid@gmail.com')
-      .should('have.value', cypress.email)
-    cy.get('input[name="password"]')
-      .focus()
-      .clear()
-      .type('kQuiz@copods')
-      .should('have.value', cypress.password)
-    cy.get('[data-cy="submit"]').click()
-    cy.location('pathname').should('include', '/members')
+    cy.login()
+
+    cy.customVisit('/members')
   })
   it('Checks heading of settings page having a text', () => {
     cy.get('a')

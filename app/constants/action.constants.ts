@@ -7,5 +7,5 @@ export enum actions {
   deleteMember = 'delete',
   switchWorkspace = 'switch',
   addWorkspace = 'Add Workspace',
-  login="login"
+  login = 'login',
 }
