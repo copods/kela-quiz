@@ -73,7 +73,7 @@ const TestListMenuItem = ({
                       {!menuListIcon && resendTestLink ? (
                         <img
                           src={resendTestLink}
-                          alt={t('resultConstants.resendTestInvite')}
+                          alt={t('resultConstants.resendAssessmentInvite')}
                           className="mr-1"
                         />
                       ) : (
