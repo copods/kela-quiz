@@ -5,6 +5,7 @@ import {
   statusCheck,
 } from '~/constants/common.constants'
 const section1 = `Aptitude - section1`
+const dsecription = `Aptitude`
 const deleteSection = `Aptitude - delete-Section`
 const sectionUpdateSuccess = 'Section updated sucessfully..!'
 const nameIsReq = 'Name is required'
