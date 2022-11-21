@@ -9,7 +9,7 @@ const CandidateOtp = ({ email }: { email: string }) => {
   const { t } = useTranslation()
   const [counter, setCounter] = useState(60)
   const [finalTime, setFinalTime] = useState('')
-  const [OTPSegments, setOTPSegments] = useState(['', '', '', ''])
+  const [OTPSegments, setOTPSegments] = useState(Array(4).fill(''))
   const [autoSubmit, setAutoSubmit] = useState(true)
   const btnRef = useRef<HTMLElement>(null)
 
@@ -42,22 +42,59 @@ const CandidateOtp = ({ email }: { email: string }) => {
       btnRef.current.click()
       setAutoSubmit(false)
     }
-  }, [OTPSegments])
+  }, [OTPSegments, autoSubmit])
 
   const onPaste = (event: React.ClipboardEvent) => {
-    console.log(event)
     event.preventDefault()
     const pasted = event.clipboardData.getData('text/plain')
-    setOTPSegments(pasted.split('').slice(0, OTPSegments.length))
+    // Checking for empty field, if the clipboard doesn't have value of length 4
+    let emptyFields = 4 - pasted.length
+
+    if (emptyFields > 0 && emptyFields <= 3) {
+      setOTPSegments([
+        ...pasted.split('').slice(0, OTPSegments.length),
+        ...Array(emptyFields).fill(''),
+      ])
+    } else {
+      setOTPSegments([...pasted.split('').slice(0, OTPSegments.length)])
+    }
+
+    // Focus on the submit button
+    if (pasted.length === 4) {
+      btnRef.current?.focus()
+    }
+    // Focus on the next input field
+    else if (pasted.length < 4) {
+      const foncusOnNextField = document.querySelector(
+        `input[name=field-${pasted.length + 1}]`
+      )
+
+      // @ts-ignore
+      foncusOnNextField && foncusOnNextField.focus()
+    }
   }
 
   const updateOTP = (index: number) => {
-    return (event: React.SyntheticEvent) =>
+    return (event: React.SyntheticEvent) => {
       setOTPSegments([
         ...OTPSegments.slice(0, index),
         (event.target as HTMLInputElement).value,
         ...OTPSegments.slice(index + 1),
       ])
+
+      // Focus on the submit button
+      if (index === 3) {
+        btnRef.current?.focus()
+      }
+      // Focus on the next input field
+      else if (index !== 3) {
+        const foncusOnNextField = document.querySelector(
+          `input[name=field-${index + 2}]`
+        )
+        // @ts-ignore
+        foncusOnNextField && foncusOnNextField.focus()
+      }
+    }
   }
 
   return (
@@ -78,12 +115,13 @@ const CandidateOtp = ({ email }: { email: string }) => {
                 type="text"
                 inputMode="numeric"
                 maxLength={1}
-                name="field-1"
+                name={`field-${idx + 1}`}
                 onPaste={onPaste}
                 className="flex h-12 w-16 justify-center rounded-md border border-gray-200 text-center drop-shadow-sm"
                 key={idx}
                 value={ele}
                 onInput={updateOTP(idx)}
+                tabIndex={idx + 1}
               />
             ))}
           </div>
