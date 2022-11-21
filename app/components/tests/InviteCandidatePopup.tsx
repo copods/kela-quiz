@@ -44,7 +44,7 @@ const InviteCandidatePopup = ({
             toast.success(
               `${actionData?.candidateInviteStatus.neverInvitedCount} out of ${
                 actionData?.candidateInviteStatus.emailCount
-              } ${t('testsConstants.candidateInvited')}. ${t(
+              } ${t('testsConstants.candidatesInvited')}. ${t(
                 'testsConstants.othersWereAlreadyInvited'
               )}`
             )

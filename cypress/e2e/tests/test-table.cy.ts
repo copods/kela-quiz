@@ -4,7 +4,7 @@ const test1 = `Aptitude - test1`
 const deleteTest1 = `Aptitude - test2 `
 const candidateAlreadyInvited =
   'Candidate has already been invited for this Assessment'
-const candidatesInvited = 'Candidates Invited'
+const candidateInvited = 'Candidate Invited'
 const someCandidatesInvited =
   '1 out of 2 Candidates Invited. Others were already invited'
 const allCandidatesInvited = 'All candidates invited.'
@@ -182,21 +182,21 @@ describe('Visiting Assessment', () => {
       })
     })
   })
-  it('Invite single candidate, should show candidates invited toast message', () => {
+  it('On inviting single candidate, show toast message- Candidate Invited', () => {
     cy.visit('/assessments')
     cy.get('#invite-popup-open').click()
     cy.get('.inviteInput').type('ion@ion.co')
     cy.get('[data-cy="submit"]').click()
-    cy.get(toast).should('have.text', candidatesInvited)
+    cy.get(toast).should('have.text', candidateInvited)
   })
-  it('Invite already invited candidate, should show candidate already invited toast message.', () => {
+  it('On inviting already invited candidate, show toast message- Candidate has already been invited for this Assessment', () => {
     cy.visit('/assessments')
     cy.get('#invite-popup-open').click()
     cy.get('.inviteInput').type('ion@ion.co')
     cy.get('[data-cy="submit"]').click()
     cy.get(toast).should('have.text', candidateAlreadyInvited)
   })
-  it('Invite multiple candidates with some already invited, should show few invited toast message.', () => {
+  it('On inviting multiple candidates with some already invited, show toast message- 1 out of 2 Candidates Invited. Others were already invited', () => {
     cy.visit('/assessments')
     cy.get('#invite-popup-open').click()
     cy.get('#invite-more').click()
@@ -205,7 +205,7 @@ describe('Visiting Assessment', () => {
     cy.get('[data-cy="submit"]').click()
     cy.get(toast).should('have.text', someCandidatesInvited)
   })
-  it('invite multiple candidates, all unique, should show all candidates invited toast message.', () => {
+  it('On inviting all unique candidates, show toast message- All candidates invited.', () => {
     cy.visit('/assessments')
     cy.get('#invite-popup-open').click()
     cy.get('#invite-more').click()
