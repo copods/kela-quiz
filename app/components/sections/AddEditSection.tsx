@@ -20,8 +20,8 @@ const AddEditSection = ({
   createSectionError,
 }: {
   open: boolean
-  createSectionError: createSectionErrorType
-  setCreateSectionError: ({
+  createSectionError?: createSectionErrorType
+  setCreateSectionError?: ({
     title,
     description,
   }: createSectionErrorType) => void
@@ -62,7 +62,7 @@ const AddEditSection = ({
     }
     setDescription('')
     setSectionName('')
-    setCreateSectionError({ title: '', description: '' })
+    setCreateSectionError?.({ title: '', description: '' })
   }, [open, editItem, setCreateSectionError])
 
   useEffect(() => {
@@ -136,7 +136,7 @@ const AddEditSection = ({
             className="h-9 px-4"
             onClick={() => {
               setOpen(false)
-              setCreateSectionError({ title: '', description: '' })
+              setCreateSectionError?.({ title: '', description: '' })
             }}
             varient="primary-outlined"
             title={t('commonConstants.cancel')}
