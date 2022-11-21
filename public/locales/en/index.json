@@ -112,6 +112,7 @@
   },
   "sectionsConstants": {
     "addSection": "Add Section",
+    "formNotSubmittedCorrectly": "Form not submitted correctly",
     "editSection": "Edit Section",
     "totalQuestions": "Total Questions:",
     "noQuestionAlert": "No questions found. Add your first question",

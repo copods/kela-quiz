@@ -270,7 +270,10 @@ export interface CandidateResult {
   updatedAt: Date
   workspaceId?: string
 }
-
+export interface createSectionErrorType {
+  title: string
+  description: string
+}
 export enum sortByOrder {
   ascending = 'asc',
   name = 'name',

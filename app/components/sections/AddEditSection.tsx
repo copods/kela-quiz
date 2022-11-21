@@ -4,7 +4,9 @@ import Button from '../form/Button'
 import { trimValue } from '~/utils'
 import { useTranslation } from 'react-i18next'
 import DialogWrapper from '../Dialog'
+import type { createSectionErrorType } from '~/interface/Interface'
 import type { ActionData } from '~/routes/sections'
+
 export interface editItem {
   name: string
   description: string
@@ -14,8 +16,16 @@ const AddEditSection = ({
   setOpen,
   editItem,
   editId,
+  setCreateSectionError,
+  createSectionError,
 }: {
   open: boolean
+  createSectionError?: createSectionErrorType
+  setCreateSectionError?: ({
+    title,
+    description,
+  }: createSectionErrorType) => void
+
   setOpen: (e: boolean) => void
   showErrorMessage?: boolean
   editItem?: editItem
@@ -52,7 +62,8 @@ const AddEditSection = ({
     }
     setDescription('')
     setSectionName('')
-  }, [open, editItem])
+    setCreateSectionError?.({ title: '', description: '' })
+  }, [open, editItem, setCreateSectionError])
 
   useEffect(() => {
     if (
@@ -96,6 +107,9 @@ const AddEditSection = ({
             value={sectionName}
             maxLength={52}
           />
+          {createSectionError?.title ? (
+            <p className="px-3 text-red-500">{t(createSectionError.title)}</p>
+          ) : null}
         </div>
         <div className="pb-6">
           <textarea
@@ -108,6 +122,11 @@ const AddEditSection = ({
             value={description}
             placeholder={t('commonConstants.enterSectionDesc')}
           />
+          {createSectionError?.description ? (
+            <p className="px-3 text-red-500">
+              {t(createSectionError.description)}
+            </p>
+          ) : null}
         </div>
         <div className="flex justify-end gap-2">
           <Button
@@ -115,7 +134,10 @@ const AddEditSection = ({
             type="button"
             id="cancel-button"
             className="h-9 px-4"
-            onClick={() => setOpen(false)}
+            onClick={() => {
+              setOpen(false)
+              setCreateSectionError?.({ title: '', description: '' })
+            }}
             varient="primary-outlined"
             title={t('commonConstants.cancel')}
             buttonText={t('commonConstants.cancel')}

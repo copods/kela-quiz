@@ -21,6 +21,7 @@ import { Icon } from '@iconify/react'
 import { getUserId, getWorkspaceId, requireUserId } from '~/session.server'
 import Sections from '~/components/sections/Sections'
 import AdminLayout from '~/components/layouts/AdminLayout'
+import type { createSectionErrorType } from '~/interface/Interface'
 import AddEditSection from '~/components/sections/AddEditSection'
 import { toast } from 'react-toastify'
 import Button from '~/components/form/Button'
@@ -39,6 +40,7 @@ export type ActionData = {
     name?: string
     description?: string
   }
+  createSectionFieldError?: createSectionErrorType
   resp?: {
     status?: string
     check?: Date
@@ -179,11 +181,22 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     currentWorkspaceId,
   })
 }
+const validateTitle = (title: string) => {
+  if (typeof title !== 'string' || title.length <= 0) {
+    return 'statusCheck.nameIsReq'
+  }
+}
 
+const validateDescription = (description: string) => {
+  if (typeof description !== 'string' || description.length <= 0) {
+    return 'statusCheck.descIsReq'
+  }
+}
 export const action: ActionFunction = async ({ request }) => {
   const createdById = await requireUserId(request)
   const workspaceId = (await getWorkspaceId(request)) as string
   const formData = await request.formData()
+
   const action =
     formData.get('addSection') ||
     formData.get('editSection') ||
@@ -192,6 +205,14 @@ export const action: ActionFunction = async ({ request }) => {
   if (action === 'sectionAdd') {
     const name = formData.get('name') as string
     const description = formData.get('description') as string
+    const createSectionFieldError = {
+      title: validateTitle(name),
+      description: validateDescription(description),
+    }
+
+    if (Object.values(createSectionFieldError).some(Boolean)) {
+      return json({ createSectionFieldError }, { status: 400 })
+    }
     const response = await handleAddSection(
       name,
       description,
@@ -288,6 +309,10 @@ export default function SectionPage() {
   const [showAddSectionModal, setShowAddSectionModal] = useState(false)
   const [order, setOrder] = useState(sortByOrder.desc as string)
   const [sortBy, setSortBy] = useState(sortByDetails[1].value)
+  const [createSectionError, setCreateSectionError] = useState({
+    title: '',
+    description: '',
+  })
   const [selectedSection, setSelectedSection] = useState(
     data.selectedSectionId || data.sections[0]?.id || 'NA'
   )
@@ -321,6 +346,7 @@ export default function SectionPage() {
         t(sectionActionData.resp?.status as string) ===
         t('statusCheck.sectionAddedSuccess')
       ) {
+        setCreateSectionError({ title: '', description: '' })
         setShowAddSectionModal(false)
         setSelectedSection((previous: string) => {
           if (previous != sectionActionData?.resp?.data?.id)
@@ -348,6 +374,12 @@ export default function SectionPage() {
             ? data.sections[1]?.id
             : data.sections[0]?.id) || 'NA'
         )
+      } else if (sectionActionData.createSectionFieldError) {
+        setCreateSectionError({
+          title: sectionActionData?.createSectionFieldError.title || '',
+          description:
+            sectionActionData.createSectionFieldError.description || '',
+        })
       } else if (sectionActionData.errors?.status === 400) {
         toast.error(t(sectionActionData.errors?.title as string), {
           toastId: sectionActionData.errors?.title,
@@ -440,6 +472,8 @@ export default function SectionPage() {
         )}
         <AddEditSection
           open={showAddSectionModal}
+          createSectionError={createSectionError}
+          setCreateSectionError={setCreateSectionError}
           setOpen={setShowAddSectionModal}
           showErrorMessage={sectionActionData?.errors?.status === 400}
         />
