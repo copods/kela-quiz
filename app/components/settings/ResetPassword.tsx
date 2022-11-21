@@ -31,7 +31,19 @@ const ResetPassword = ({
   const [password, setPassword] = useState('')
   const [newPassword, setNewPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
+  const [error, setError] = useState('')
 
+  const comparePasswords = (password: string, confirmPassword: string) => {
+    if (password.length <= 0 || confirmPassword.length <= 0) {
+      setError('')
+      return
+    }
+    if (password === confirmPassword) {
+      setError('')
+    } else {
+      setError(t('settings.passNotMatch'))
+    }
+  }
   const PasswordInputFieldProps = [
     // Input field props
     {
@@ -42,7 +54,7 @@ const ResetPassword = ({
       type: 'password',
       value: password,
       error: generalSettings?.errors?.valid,
-      errorId: 'Password-error',
+      errorId: 'password-error',
       onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
         setPassword(trimValue(event?.target.value))
       },
@@ -57,7 +69,7 @@ const ResetPassword = ({
       error:
         generalSettings?.errors?.maximumPasswordLimit ||
         generalSettings?.errors?.passShouldNotBeSame,
-      errorId: 'New-password-error',
+      errorId: 'new-password-error',
       onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
         setNewPassword(trimValue(event?.target.value))
       },
@@ -69,8 +81,8 @@ const ResetPassword = ({
       required: true,
       type: 'password',
       value: confirmPassword,
-      error: generalSettings?.errors?.passNotMatched,
-      errorId: 'Confirm-password-error',
+      error: error,
+      errorId: 'confirm-password-error',
       onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
         setConfirmPassword(trimValue(event?.target.value))
       },
@@ -80,6 +92,7 @@ const ResetPassword = ({
     setPassword('')
     setNewPassword('')
     setConfirmPassword('')
+    setError('')
   }, [openResetPassModel])
 
   return (
@@ -96,7 +109,13 @@ const ResetPassword = ({
         <div className="flex flex-col gap-8">
           <div className="input-container-wrapper flex flex-col gap-6">
             {PasswordInputFieldProps.map((props) => {
-              return <PasswordInputFields {...props} key={props.name} />
+              return (
+                <PasswordInputFields
+                  onblur={() => comparePasswords(newPassword, confirmPassword)}
+                  {...props}
+                  key={props.name}
+                />
+              )
             })}
           </div>
           <div className="flex items-center justify-center">
