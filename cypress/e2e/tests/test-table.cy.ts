@@ -182,21 +182,21 @@ describe('Visiting Assessment', () => {
       })
     })
   })
-  it('invite single candidate', () => {
+  it('Invite single candidate, should show candidates invited toast message', () => {
     cy.visit('/assessments')
     cy.get('#invite-popup-open').click()
     cy.get('.inviteInput').type('ion@ion.co')
     cy.get('[data-cy="submit"]').click()
     cy.get(toast).should('have.text', candidatesInvited)
   })
-  it('invite already invited candidate', () => {
+  it('Invite already invited candidate, should show candidate already invited toast message.', () => {
     cy.visit('/assessments')
     cy.get('#invite-popup-open').click()
     cy.get('.inviteInput').type('ion@ion.co')
     cy.get('[data-cy="submit"]').click()
     cy.get(toast).should('have.text', candidateAlreadyInvited)
   })
-  it('invite multiple candidates with some already invited', () => {
+  it('Invite multiple candidates with some already invited, should show few invited toast message.', () => {
     cy.visit('/assessments')
     cy.get('#invite-popup-open').click()
     cy.get('#invite-more').click()
@@ -205,7 +205,7 @@ describe('Visiting Assessment', () => {
     cy.get('[data-cy="submit"]').click()
     cy.get(toast).should('have.text', someCandidatesInvited)
   })
-  it('invite multiple candidates, all unique', () => {
+  it('invite multiple candidates, all unique, should show all candidates invited toast message.', () => {
     cy.visit('/assessments')
     cy.get('#invite-popup-open').click()
     cy.get('#invite-more').click()
