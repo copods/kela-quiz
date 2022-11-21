@@ -5,7 +5,9 @@ import { toast } from 'react-toastify'
 import Button from '../form/Button'
 import { useTranslation } from 'react-i18next'
 import DialogWrapper from '../Dialog'
-
+interface error {
+  [key: number]: string
+}
 const InviteCandidatePopup = ({
   openInvitePopup,
   setOpenInvitePopup,
@@ -19,17 +21,37 @@ const InviteCandidatePopup = ({
 }) => {
   const { t } = useTranslation()
   const [emails, setEmails] = useState<Array<string>>([''])
+  const [errors, setError] = useState({})
+
   const actionData = useActionData()
+
   useEffect(() => {
     if (actionData?.status == 401 && testId === actionData?.testId) {
       toast.warn(t(actionData.message))
     }
     if (
-      actionData?.candidateInviteStatus ===
+      actionData?.candidateInviteStatus.created ===
       t('candidateExamConstants.candidateTestCreated')
     ) {
       if (actionData?.testId === testId)
-        toast.success(t('testsConstants.candidateInvited'))
+        if (actionData?.candidateInviteStatus.emailCount > 1) {
+          if (
+            actionData?.candidateInviteStatus.emailCount ===
+            actionData?.candidateInviteStatus.neverInvitedCount
+          ) {
+            toast.success(`${t('testsConstants.allCandidatesInvited')}`)
+          } else {
+            toast.success(
+              `${actionData?.candidateInviteStatus.neverInvitedCount} out of ${
+                actionData?.candidateInviteStatus.emailCount
+              } ${t('testsConstants.candidatesInvited')}. ${t(
+                'testsConstants.othersWereAlreadyInvited'
+              )}`
+            )
+          }
+        } else {
+          toast.success(t('testsConstants.candidateInvited'))
+        }
       setOpenInvitePopup(false)
       setEmails([''])
     } else {
@@ -39,8 +61,6 @@ const InviteCandidatePopup = ({
         if (actionData?.testId === testId) {
           toast.error(t('testsConstants.candidateAlreadyInvited'))
         }
-        setOpenInvitePopup(false)
-        setEmails([''])
       }
     }
   }, [actionData, testId, setOpenInvitePopup, t])
@@ -49,6 +69,37 @@ const InviteCandidatePopup = ({
     setEmails([''])
   }
   const transition = useTransition()
+  useEffect(() => {
+    setEmails([''])
+    setError({})
+  }, [openInvitePopup])
+
+  // regex funtion to check email
+  const isEmail = (email: string) =>
+    /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)
+  const updateEmail = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    index: number
+  ) => {
+    const newEmails = emails.map((email, i) => {
+      if (i === index) {
+        return event.target.value
+      }
+      return email
+    })
+    setEmails(newEmails)
+  }
+  const validateEmails = (emails: string[], index: number) => {
+    const emailError: error = {}
+    emails
+      .map((email, i) => (i === index ? '' : email))
+      .forEach((email, i: number) => {
+        if (email && !isEmail(email)) {
+          emailError[i] = t('statusCheck.emailIsInvalid')
+        }
+        setError(emailError)
+      })
+  }
   return (
     <DialogWrapper
       open={openInvitePopup}
@@ -74,6 +125,7 @@ const InviteCandidatePopup = ({
           </span>
           <span
             role={'button'}
+            id="invite-more"
             tabIndex={0}
             className="cursor-pointer px-0.5 text-sm font-normal text-primary"
             onClick={() => setEmails([...emails, ''])}
@@ -93,11 +145,24 @@ const InviteCandidatePopup = ({
                 tabIndex={0}
                 type="email"
                 name={`email`}
+                onFocus={() => {
+                  validateEmails(emails, i)
+                }}
+                onChange={(e) => updateEmail(e, i)}
                 className="inviteInput h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
                 placeholder="johndoe@example.com"
                 title={t('commonConstants.email')}
                 aria-label={t('commonConstants.email')}
               />
+              {Object.entries(errors).map(([key]) =>
+                Number(key) === i ? (
+                  <p key={key} className="text-red-700">
+                    {t('statusCheck.emailIsInvalid')}
+                  </p>
+                ) : (
+                  ''
+                )
+              )}
             </div>
           )
         })}

@@ -197,10 +197,35 @@ export async function createCandidate({
   testId: string
 }) {
   try {
-    for (const email of emails) {
-      await createCandidateData({ email, createdById, testId })
+    const allInvitedUsers = await prisma.candidateTest.findMany({
+      select: { candidate: { select: { email: true } }, testId: true },
+    })
+    const invitedToSpecificTest = allInvitedUsers
+      .filter((data) => data.testId == testId)
+      .map((data) => data.candidate.email)
+    const neverInvitedToTest = emails.filter(
+      (data) => !invitedToSpecificTest.includes(data)
+    )
+    const emailCount = emails.length
+    const neverInvitedCount = neverInvitedToTest.length
+    if (emails.length > 1) {
+      for (const email of neverInvitedToTest) {
+        await createCandidateData({
+          email,
+          createdById,
+          testId,
+        })
+      }
+    } else {
+      for (const email of emails) {
+        await createCandidateData({
+          email,
+          createdById,
+          testId,
+        })
+      }
     }
-    return 'created'
+    return { created: 'created', emailCount, neverInvitedCount }
   } catch (error) {
     return 'error'
   }

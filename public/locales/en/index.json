@@ -140,10 +140,13 @@
     "createdOn": "Created on",
     "created": "Created",
     "actionsText": "Actions",
+    "othersWereAlreadyInvited": "Others were already invited",
     "noAssessmentFound": "No Assessment Found",
     "noCandidateForAssessment": "No candidate has attempted this Assessment",
     "candidateAlreadyInvited": "Candidate has already been invited for this Assessment",
-    "candidateInvited": "Candidates Invited",
+    "candidateInvited": "Candidate Invited",
+    "candidatesInvited": "Candidates Invited",
+    "allCandidatesInvited": "All candidates invited.",
     "writeDescriptionOfTest": "Write Description of Test"
   },
   "componentGlobalConstants": {

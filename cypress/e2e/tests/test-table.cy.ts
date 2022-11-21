@@ -1,7 +1,14 @@
 import { testsConstants } from '~/constants/common.constants'
 
-const test1 = `Aptitude - assessment1`
-const deleteTest1 = `Aptitude - assessment2 `
+const test1 = `Aptitude - test1`
+const deleteTest1 = `Aptitude - test2 `
+const candidateAlreadyInvited =
+  'Candidate has already been invited for this Assessment'
+const candidateInvited = 'Candidate Invited'
+const someCandidatesInvited =
+  '1 out of 2 Candidates Invited. Others were already invited'
+const allCandidatesInvited = 'All candidates invited.'
+const toast = '.Toastify__toast-body'
 
 describe('Visiting Assessment', () => {
   beforeEach('sign-in', () => {
@@ -174,6 +181,38 @@ describe('Visiting Assessment', () => {
         })
       })
     })
+  })
+  it('On inviting single candidate, show toast message- Candidate Invited', () => {
+    cy.visit('/assessments')
+    cy.get('#invite-popup-open').click()
+    cy.get('.inviteInput').type('ion@ion.co')
+    cy.get('[data-cy="submit"]').click()
+    cy.get(toast).should('have.text', candidateInvited)
+  })
+  it('On inviting already invited candidate, show toast message- Candidate has already been invited for this Assessment', () => {
+    cy.visit('/assessments')
+    cy.get('#invite-popup-open').click()
+    cy.get('.inviteInput').type('ion@ion.co')
+    cy.get('[data-cy="submit"]').click()
+    cy.get(toast).should('have.text', candidateAlreadyInvited)
+  })
+  it('On inviting multiple candidates with some already invited, show toast message- 1 out of 2 Candidates Invited. Others were already invited', () => {
+    cy.visit('/assessments')
+    cy.get('#invite-popup-open').click()
+    cy.get('#invite-more').click()
+    cy.get('.inviteInput').eq(0).type('ion@ion.co')
+    cy.get('.inviteInput').eq(1).type('sam123@gmail.com')
+    cy.get('[data-cy="submit"]').click()
+    cy.get(toast).should('have.text', someCandidatesInvited)
+  })
+  it('On inviting all unique candidates, show toast message- All candidates invited.', () => {
+    cy.visit('/assessments')
+    cy.get('#invite-popup-open').click()
+    cy.get('#invite-more').click()
+    cy.get('.inviteInput').eq(0).type('sally123@gmail.com')
+    cy.get('.inviteInput').eq(1).type('jane123@gmail.com')
+    cy.get('[data-cy="submit"]').click()
+    cy.get(toast).should('have.text', allCandidatesInvited)
   })
   it('On click of delete, assessment should be deleted', () => {
     cy.get('a')
