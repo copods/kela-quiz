@@ -120,8 +120,7 @@
     "sort": "Sort",
     "dropdown": "Select",
     "expand": "Expand",
-    "search": "Search Question",
-    "testName": "test"
+    "search": "Search Question"
   },
   "testsConstants": {
     "addTestbutton": "Add Assessment",
@@ -278,7 +277,9 @@
     "workspaceAdded": "Workspace Added",
     "duplicateWorkspace": "Duplicate Workspace",
     "workspaceNameIsRequired": "Workspace name is required",
-    "memberAlreadyInvited": "Member already invited"
+    "memberAlreadyInvited": "Member already invited",
+    "cannotAddTestZeroQuestion": "Cannot add test with 0 questions.",
+    "notAdMoreThanAvailableQuestion": "Cannot add more than available questions"
   },
   "otpConstants": {
     "header": "OTP Verification",

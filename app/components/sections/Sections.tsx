@@ -4,6 +4,7 @@ import { useResolvedPath, useLocation, useNavigate } from '@remix-run/react'
 import {} from '@remix-run/react'
 import SortFilter from '../SortFilter'
 import { useEffect, useState } from 'react'
+import { routes } from '~/constants/route.constants'
 
 const SectionLink = ({
   section,
@@ -18,7 +19,7 @@ const SectionLink = ({
   filter: string
   setSelectedSection: (e: string) => void
 }) => {
-  const path = `/tests/${section.id}${filter}`
+  const path = `${routes.tests}/${section.id}${filter}`
   const [isDelete, setIsDelete] = useState(false)
   const location = useLocation() // to get current location
   const resolvedPath = useResolvedPath(path) // to get resolved path which would match with current location
