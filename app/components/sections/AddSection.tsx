@@ -55,7 +55,7 @@ const AddSection = ({
             maxLength={52}
           />
           {createSectionError.title ? (
-            <p className="px-3 text-red-500">{createSectionError.title}</p>
+            <p className="px-3 text-red-500">{t(createSectionError.title)}</p>
           ) : null}
         </div>
         <div className="pb-6">
@@ -71,7 +71,7 @@ const AddSection = ({
           />
           {createSectionError.description ? (
             <p className="px-3 text-red-500">
-              {createSectionError.description}
+              {t(createSectionError.description)}
             </p>
           ) : null}
         </div>
