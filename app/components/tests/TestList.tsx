@@ -74,7 +74,7 @@ const TestList = ({
           buttonText={`+ ${t('testsConstants.addTestbutton')}`}
         />
       </header>
-      {tests.length ? (
+      {tests.length > 0 ? (
         <>
           <div id="sort-filter-container">
             <SortFilter
@@ -117,7 +117,7 @@ const TestList = ({
               id="test-list"
               className="rounded-t-0 flex flex-col rounded-md border-solid border-gray-200 shadow-base"
             >
-              {tests.map((test, i) => (
+              {tests?.map((test, i) => (
                 <TestTableItem
                   key={test?.id}
                   id={test?.id}

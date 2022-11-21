@@ -55,7 +55,10 @@ describe('Test for Section', () => {
       .within((el) => {
         cy.get('[data-cy="submit"]').click()
       })
-    cy.get('.Toastify__toast').should('have.text', statusCheck.nameIsReq)
+    cy.get('#addEditSection-title-error').should(
+      'have.text',
+      statusCheck.nameIsReq
+    )
   })
   it('Test for valid error message while adding new section without Description', () => {
     cy.get('a').find('#sections').should('have.text', routeFiles.tests).click()
@@ -70,7 +73,10 @@ describe('Test for Section', () => {
 
         cy.get('[data-cy="submit"]').click()
       })
-    cy.get('.Toastify__toast').should('have.text', statusCheck.descIsReq)
+    cy.get('#addEditSection-description-error').should(
+      'have.text',
+      statusCheck.descIsReq
+    )
   })
   it('Test for valid error message while adding new section with duplicate Title', () => {
     cy.get('#add-section').click()

@@ -108,7 +108,9 @@ const AddEditSection = ({
             maxLength={52}
           />
           {createSectionError?.title ? (
-            <p className="px-3 text-red-500">{t(createSectionError.title)}</p>
+            <p id="addEditSection-title-error" className="px-3 text-red-500">
+              {t(createSectionError.title)}
+            </p>
           ) : null}
         </div>
         <div className="pb-6">
@@ -123,7 +125,10 @@ const AddEditSection = ({
             placeholder={t('commonConstants.enterTestsDesc')}
           />
           {createSectionError?.description ? (
-            <p className="px-3 text-red-500">
+            <p
+              id="addEditSection-description-error"
+              className="px-3 text-red-500"
+            >
               {t(createSectionError.description)}
             </p>
           ) : null}
