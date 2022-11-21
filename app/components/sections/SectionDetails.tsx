@@ -52,7 +52,7 @@ const SectionDetails = () => {
           tabIndex={0}
           onClick={() =>
             navigate(
-              `${routes.sections}/${sectionDetails.sectionDetails?.id}${routes.addQuestion}`
+              `${routes.tests}/${sectionDetails.sectionDetails?.id}${routes.addQuestion}`
             )
           }
           id="add-question"

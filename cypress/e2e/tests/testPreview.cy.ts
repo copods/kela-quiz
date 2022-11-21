@@ -120,7 +120,7 @@ describe('Test for testPreview', () => {
     cy.get('.test-name-navigation', { timeout: 6000 }).contains(test1).click()
     cy.get('#totalSection').should(
       'have.text',
-      testsConstants.totalSectionsText
+      testsConstants.totalTestsText
     )
   })
 })

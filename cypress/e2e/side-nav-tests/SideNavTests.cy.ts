@@ -23,7 +23,7 @@ describe('Test for Logout, SideNav', () => {
       expect([
         commonConstants.results,
         testsConstants.assessments,
-        routeFiles.sections,
+        routeFiles.tests,
         members.members,
         commonConstants.settings,
       ]).to.include(item.text())
@@ -37,7 +37,7 @@ describe('Test for Logout, SideNav', () => {
         expect([
           routes.resultGroupTest,
           routes.assessments,
-          routes.sections,
+          routes.tests,
           routes.members,
           routes.settings,
         ]).to.include(item)

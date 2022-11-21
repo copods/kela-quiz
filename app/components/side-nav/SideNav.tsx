@@ -51,8 +51,8 @@ const sideNavGuide = [
       {
         id: 'sections',
         iconClass: 'ci:list-checklist-alt',
-        itemName: 'routeFiles.sections',
-        itemRoute: routes.sections,
+        itemName: 'routeFiles.tests',
+        itemRoute: routes.tests,
       },
     ],
   },

@@ -91,7 +91,7 @@ describe('smoke tests', () => {
   // creating test data
   it('Adding a first section', () => {
     cy.login()
-    cy.customVisit('/sections')
+    cy.customVisit('/tests')
 
     cy.get('#add-section').click()
     cy.get('form > div')
@@ -105,7 +105,7 @@ describe('smoke tests', () => {
 
   it('Adding a second section', () => {
     cy.login()
-    cy.customVisit('/sections')
+    cy.customVisit('/tests')
 
     cy.get('#add-section').click()
     cy.get('form > div')
@@ -119,7 +119,7 @@ describe('smoke tests', () => {
 
   it('Adding a deleteSection ', () => {
     cy.login()
-    cy.customVisit('/sections')
+    cy.customVisit('/tests')
 
     cy.get('#add-section').click()
     cy.get('form > div')
@@ -133,7 +133,7 @@ describe('smoke tests', () => {
 
   it('Add question to the first section', () => {
     cy.login()
-    cy.customVisit('/sections')
+    cy.customVisit('/tests')
 
     cy.get('#section-card').each(($el) => {
       cy.wrap($el).within((el) => {
@@ -175,7 +175,7 @@ describe('smoke tests', () => {
 
   it('Add question to the second section', () => {
     cy.login()
-    cy.customVisit('/sections')
+    cy.customVisit('/tests')
 
     cy.get('#section-card').each(($el) => {
       cy.wrap($el).within((el) => {

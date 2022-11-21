@@ -51,7 +51,7 @@ const CandidateInstruction = () => {
           <div className="flex gap-12">
             <div className="flex w-438 flex-col gap-10 rounded-lg border border-gray-50 bg-white p-10 shadow-sm">
               <h3 className="text-center text-2xl font-bold text-gray-900">
-                {t('routeFiles.sections')}
+                {t('routeFiles.tests')}
               </h3>
               <div className="flex flex-col gap-6">
                 {candidateSections.map(
@@ -64,7 +64,7 @@ const CandidateInstruction = () => {
                         <div className="flex items-start gap-4">
                           <img src={contactSupport} alt="" className="h-6" />
                           <span className="text-base font-normal text-gray-900">
-                            {t('sectionsConstants.sectionName')} {section.order}{' '}
+                            {t('sectionsConstants.test')} {section.order}{' '}
                             -{section.section.name}
                           </span>
                         </div>

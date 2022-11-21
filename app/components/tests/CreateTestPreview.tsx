@@ -136,7 +136,7 @@ const TestPreview = ({
               id="totalSection"
               className="min-w-200 text-base font-medium text-gray-500"
             >
-              {t('testsConstants.totalSectionsText')}
+              {t('testsConstants.totalTestsText')}
             </div>
             <div className="flex-1 text-base text-gray-700">
               {selectedSections.length}
@@ -146,14 +146,14 @@ const TestPreview = ({
       </div>
       <div className="flex flex-col gap-6">
         <h1 className="text-xl font-semibold">
-          {t('testsConstants.selectedSctionText')}
+          {t('testsConstants.selectedTestsText')}
         </h1>
         <div className="flex flex-col gap-4 text-base">
           {selectedSections.map((section, i) => {
             return (
               <div className="flex items-center gap-4" key={section.id}>
                 <div className="min-w-184 text-base text-gray-500">
-                  {t('testsConstants.sectionText')} {i + 1}
+                  {t('testsConstants.testText')} {i + 1}
                 </div>
                 <div className="flex max-w-2xl flex-1 items-center justify-between gap-6 rounded-lg border border-gray-300 py-3 px-4 text-gray-700">
                   <div className="text-base font-semibold text-gray-700">

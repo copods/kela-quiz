@@ -20,7 +20,7 @@ const SelectSectionCard = ({
     selected?: boolean
   ) => {
     if (section?._count?.questions == 0) {
-      toast.error('Cannot add section with 0 questions')
+      toast.error('Cannot add test with 0 questions')
       return
     }
     let tempSection = {
@@ -46,7 +46,7 @@ const SelectSectionCard = ({
           return
         }
         if (parseInt(value || '') == 0) {
-          toast.error('Cannot add section with 0 questions.')
+          toast.error('Cannot add test with 0 questions.')
           return
         }
         tempSection.totalQuestions = parseInt(value || '')
