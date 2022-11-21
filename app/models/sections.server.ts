@@ -58,7 +58,19 @@ export async function createSection({
     },
   })
 }
-
+export async function editSectionById(
+  id: string,
+  name: string,
+  description: string
+) {
+  return prisma.section.update({
+    where: { id },
+    data: {
+      name: name,
+      description: description,
+    },
+  })
+}
 export async function deleteSectionById(id: string) {
   return prisma.section.update({
     where: { id },

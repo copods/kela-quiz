@@ -111,6 +111,23 @@ export interface User {
   updatedAt: Date
   workspace: Array<Workspace>
 }
+export interface Invites {
+  id: string
+  email: string
+  invitedById: User
+  userId: string
+  invitedForWorkspace: Workspace
+  workspaceId: string
+  role: Role
+  roleId: String
+  invitedOn: Date
+  joined: Boolean
+  joinedAt: string
+  deleted: boolean
+  deletedAt: string
+  createdAt: Date
+  updatedAt: Date
+}
 
 export interface Role {
   id: string
@@ -264,7 +281,7 @@ export enum sortByOrder {
   cancelling = 'Cancelling...',
   cancel = 'Cancel',
   createdAt = 'createdAt',
-  creatingTest = 'Creating Test',
+  creatingAssessment = 'Creating Assessment',
   submit = 'Submit',
 }
 

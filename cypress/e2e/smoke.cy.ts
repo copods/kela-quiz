@@ -5,14 +5,12 @@ import {
   cypress,
 } from '~/constants/common.constants'
 const section1 = `Aptitude - section1`
-const test1 = `Aptitude - test1`
-const deleteTest1 = `Aptitude - test2`
+const test1 = `Aptitude - assessment1`
+const deleteTest1 = `Aptitude - assessment2`
 const section2 = `Aptitude - section2`
 const deleteSection = `Aptitude - delete-Section`
-const memberFirstName = 'john'
-const memberLastName = 'dow'
+
 const memberEmail = 'johndoe@example.com'
-const workspaceName = 'Copods workspace'
 
 describe('smoke tests', () => {
   beforeEach(() => {
@@ -22,7 +20,7 @@ describe('smoke tests', () => {
 
   it('Invalid Email Error Message', () => {
     cy.visit('/sign-in')
-    cy.get('#email').clear().type('ayushi@copods.co')
+    cy.get('#email').clear().type('test@copods.co')
     cy.get('#password').clear().type('kQuiz@copods')
     cy.findByRole('button').click()
     cy.get('#email-error').should('have.text', 'Email is invalid')
@@ -216,13 +214,15 @@ describe('smoke tests', () => {
     cy.get('#save-and-exit').click()
   })
 
-  it('Verify if user able create the test 1', () => {
+  it('Verify if user able create the assesssment 1', () => {
     cy.login()
-    cy.customVisit('/tests')
+    cy.customVisit('/assessments')
 
     cy.get('#add-test').click()
-    cy.location('pathname').should('include', '/tests/add-test')
-    cy.get('input[placeholder="Enter test name"]').clear().type(deleteTest1)
+    cy.location('pathname').should('include', '/assessments/add-assessment')
+    cy.get('input[placeholder="Enter assessment name"]')
+      .clear()
+      .type(deleteTest1)
     cy.get('#quill-editor').within(() => {
       cy.get('.ql-editor').type(`Test Description`)
     })
@@ -285,13 +285,13 @@ describe('smoke tests', () => {
       .click()
   })
 
-  it('Verify if user able create the test 2', () => {
+  it('Verify if user able create the assessment 2', () => {
     cy.login()
-    cy.customVisit('/tests')
+    cy.customVisit('/assessments')
 
     cy.get('#add-test').click()
-    cy.location('pathname').should('include', '/tests/add-test')
-    cy.get('input[placeholder="Enter test name"]').clear().type(test1)
+    cy.location('pathname').should('include', '/assessments/add-assessment')
+    cy.get('input[placeholder="Enter assessment name"]').clear().type(test1)
     cy.get('#quill-editor').within(() => {
       cy.get('.ql-editor').type(`Test Description`)
     })
@@ -358,32 +358,22 @@ describe('smoke tests', () => {
     cy.login()
     cy.customVisit('/members')
 
-    cy.get('#add-member').should('have.text', cypress.addMember).click()
+    cy.get('#invite-member').should('have.text', cypress.addMember).click()
     cy.get('#dialog-wrapper').should('be.visible')
-    cy.get('input[name="firstName"]')
-      .clear()
-      .type(memberFirstName)
-      .should('have.value', memberFirstName)
-    cy.get('input[name="lastName"]')
-      .clear()
-      .type(memberLastName)
-      .should('have.value', memberLastName)
+
     cy.get('input[name="email"]')
       .clear()
       .type(memberEmail)
       .should('have.value', memberEmail)
-    cy.get('#workspace')
-      .clear()
-      .type(workspaceName)
-      .should('have.value', workspaceName)
+
     cy.get('div').get('#add-member-modal').find('.dropdownButton').click()
     cy.get('ul').contains('Recruiter').click()
-    cy.get('#add-button').click()
+    cy.get('#invite-button').click()
   })
 
-  it('invite candidate for test', () => {
+  it('invite candidate for assessment', () => {
     cy.login()
-    cy.customVisit('/tests')
+    cy.customVisit('/assessments')
 
     cy.get('.test-table-list', { timeout: 8000 }).should('be.visible')
     cy.get('.test-table-list').each(($el) => {

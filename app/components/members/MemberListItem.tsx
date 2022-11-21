@@ -1,18 +1,17 @@
 import { Icon } from '@iconify/react'
-import type { Role, User } from '~/interface/Interface'
-import moment from 'moment'
+import type { Invites, Role, User } from '~/interface/Interface'
 import DeletePopUp from '../DeletePopUp'
 import { useEffect, useState } from 'react'
 import { useSubmit } from '@remix-run/react'
 import { t } from 'i18next'
-import memberResendIcon from '~/../public/assets/resend-member-invitation.svg'
+import moment from 'moment'
 
 export default function MemberListItem({
   user,
   loggedInUser,
   actionStatus,
 }: {
-  user: User & { role?: Role }
+  user: User & { role?: Role; invites: Invites }
   loggedInUser: boolean
   actionStatus: string | undefined
 }) {
@@ -29,20 +28,9 @@ export default function MemberListItem({
   const deleteUser = () => {
     submit({ action: 'delete', id: user.id }, { method: 'post' })
   }
-  const resendMail = () => {
-    if (!loggedInUser) {
-      let data = {
-        id: user.id,
-        action: 'resend',
-      }
-      submit(data, {
-        method: 'post',
-      })
-    }
-  }
   return (
     <div className="col-span-full grid grid-cols-10">
-      <div className="memberRows col-span-full grid grid-cols-10 gap-3 border-t border-solid border-gray-200 px-6 py-4">
+      <div className="memberRows col-gap-3 col-span-full grid grid-cols-10 border-t border-solid border-gray-200 px-6 py-4">
         <div className="break-word col-span-2 overflow-ellipsis pl-4">
           <span className="memberName text-base text-gray-700">
             {user.firstName} {user.lastName}
@@ -56,7 +44,7 @@ export default function MemberListItem({
         </div>
         <div className="col-span-2 overflow-ellipsis break-all pl-4">
           <span className="text-base text-gray-700">
-            {moment(user?.createdAt).format('DD MMMM YY')}
+            {moment(user.invites?.joinedAt).format('DD MMMM YY')}
           </span>
         </div>
         <div className="col-span-1 flex gap-4 pl-4">
@@ -72,25 +60,6 @@ export default function MemberListItem({
               loggedInUser && 'cursor-not-allowed text-red-200'
             }`}
           />
-          <span
-            tabIndex={0}
-            role="button"
-            onKeyUp={(e) => {
-              if (e.key === 'Enter' && !loggedInUser) resendMail()
-            }}
-            onClick={() => resendMail()}
-            className={
-              loggedInUser
-                ? 'cursor-not-allowed opacity-40'
-                : 'cursor-pointer opacity-100'
-            }
-          >
-            <img
-              src={memberResendIcon}
-              alt="reinvite"
-              id="resend-member-invite"
-            />
-          </span>
         </div>
         <DeletePopUp
           setOpen={setOpen}

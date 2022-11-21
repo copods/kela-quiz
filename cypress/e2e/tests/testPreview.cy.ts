@@ -1,6 +1,6 @@
 import { cypress, testsConstants } from '~/constants/common.constants'
 
-const test1 = `Aptitude - test2`
+const test1 = `Aptitude - assessment2`
 
 describe('Test for testPreview', () => {
   beforeEach('sign-in', () => {
@@ -11,9 +11,12 @@ describe('Test for testPreview', () => {
   it('test for check preview data match selected test and back button ', () => {
     cy.get('a')
       .find('#tests', { timeout: 6000 })
-      .should('have.text', testsConstants.tests)
+      .should('have.text', testsConstants.assessments)
       .click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
+    cy.location('pathname', { timeout: 60000 }).should(
+      'include',
+      '/assessments'
+    )
     cy.get('.test-table-list', { timeout: 6000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -28,12 +31,15 @@ describe('Test for testPreview', () => {
     cy.get('#title', { timeout: 6000 }).should('have.text', test1)
     cy.get('#back-button').click()
   })
-  it('test for tests name', () => {
+  it('test for assessments name', () => {
     cy.get('a')
       .find('#tests', { timeout: 6000 })
-      .should('have.text', testsConstants.tests)
+      .should('have.text', testsConstants.assessments)
       .click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
+    cy.location('pathname', { timeout: 60000 }).should(
+      'include',
+      '/assessments'
+    )
 
     cy.get('.test-table-list', { timeout: 6000 }).each(($el) => {
       cy.wrap($el).within((el) => {
@@ -51,9 +57,12 @@ describe('Test for testPreview', () => {
   it('test for description', () => {
     cy.get('a')
       .find('#tests', { timeout: 6000 })
-      .should('have.text', testsConstants.tests)
+      .should('have.text', testsConstants.assessments)
       .click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
+    cy.location('pathname', { timeout: 60000 }).should(
+      'include',
+      '/assessments'
+    )
     cy.get('.test-table-list', { timeout: 6000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -70,9 +79,12 @@ describe('Test for testPreview', () => {
   it('test for total time', () => {
     cy.get('a')
       .find('#tests', { timeout: 6000 })
-      .should('have.text', testsConstants.tests)
+      .should('have.text', testsConstants.assessments)
       .click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
+    cy.location('pathname', { timeout: 60000 }).should(
+      'include',
+      '/assessments'
+    )
     cy.get('.test-table-list', { timeout: 6000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -89,9 +101,12 @@ describe('Test for testPreview', () => {
   it('test for Total Sections', () => {
     cy.get('a')
       .find('#tests', { timeout: 6000 })
-      .should('have.text', testsConstants.tests)
+      .should('have.text', testsConstants.assessments)
       .click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
+    cy.location('pathname', { timeout: 60000 }).should(
+      'include',
+      '/assessments'
+    )
     cy.get('.test-table-list', { timeout: 6000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
