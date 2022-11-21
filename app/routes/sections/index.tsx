@@ -20,6 +20,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   const users = await getAllUsers({ currentWorkspaceId })
   return json<LoaderData>({ sections, users, workspaces, currentWorkspaceId })
 }
+
 export default function Section() {
   return (
     <div className="flex h-full w-full flex-col gap-6 overflow-auto rounded-lg border border-gray-200 bg-white px-9 py-6">

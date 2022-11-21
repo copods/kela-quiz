@@ -1,5 +1,5 @@
 import { commonConstants, testsConstants } from '~/constants/common.constants'
-const test1 = `Aptitude - test1`
+const test1 = `Aptitude - assessment1`
 
 describe('Test for GroupByTestTable, Result', () => {
   beforeEach('sign-in', () => {
@@ -62,9 +62,9 @@ describe('Test for GroupByTestTable, Result', () => {
       .should('have.text', commonConstants.results)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')
-    cy.get('#sort-filter-body', { timeout: 60000 })
-      .get('#ascend', { timeout: 6000 })
-      .click()
+    cy.get('h1').should('have.text', 'Results')
+    cy.get('#sort-filter-body', { timeout: 60000 }).should('be.visible')
+    cy.get('#descend', { timeout: 8000 }).click()
     cy.get('.dropdownButton span span', { timeout: 6000 })
       .invoke('text')
       .then((el) => {
@@ -126,7 +126,9 @@ describe('Test for GroupByTestTable, Result', () => {
       .should('have.text', commonConstants.results)
       .click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')
-    cy.get('#sort-filter-body').get('#ascend').click()
+    cy.get('h1').should('have.text', 'Results')
+    cy.get('#sort-filter-body', { timeout: 60000 }).should('be.visible')
+    cy.get('#descend', { timeout: 8000 }).click()
     cy.get('#sort-filter-container').within(() => {
       cy.get('.dropdownButton')
         .click({ multiple: true })

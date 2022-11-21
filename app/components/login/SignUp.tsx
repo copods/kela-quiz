@@ -1,5 +1,6 @@
 import {
   useActionData,
+  useLoaderData,
   useNavigate,
   useSubmit,
   useTransition,
@@ -16,7 +17,7 @@ import { toast } from 'react-toastify'
 
 const SignUp = ({ error }: { error?: string }) => {
   const navigate = useNavigate()
-
+  const signUpLoaderData = useLoaderData()
   const { t } = useTranslation()
   const signUpActionData = useActionData()
   useEffect(() => {
@@ -46,17 +47,23 @@ const SignUp = ({ error }: { error?: string }) => {
       workspace: workspace,
       Password: password,
       confirmPassword: confirmPassword,
+      inviteId: signUpLoaderData.inviteId,
       signUp: JSON.stringify({
         action: 'add',
       }),
     }
     submit(data, {
       method: 'post',
+      action:
+        signUpLoaderData.inviteId === null
+          ? '/sign-up'
+          : `/sign-up?cameFrom=join&id=${signUpLoaderData.inviteId}`,
     })
   }
   const signIn = () => {
     navigate(routes.signIn)
   }
+
   const [onBlurPasswordErr, setOnBlurPasswordErr] = useState('')
   const [onBlurConfPasswordErr, setOnConfBlurPasswordErr] = useState('')
   const onBlurPassError = () => {
@@ -69,7 +76,11 @@ const SignUp = ({ error }: { error?: string }) => {
   const onBlurConfPassError = () => {
     if (password !== confirmPassword && confirmPassword.length !== 0) {
       setOnConfBlurPasswordErr('settings.passNotMatch')
-    } else if (confirmPassword.length == 0 || password.length == 0) {
+    } else if (
+      confirmPassword.length === 0 ||
+      password.length === 0 ||
+      password === confirmPassword
+    ) {
       setOnConfBlurPasswordErr('')
     }
   }

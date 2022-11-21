@@ -124,7 +124,7 @@ const CandidatesList = () => {
         )}
         {testData.length === 0 && (
           <div className="flex justify-center rounded-b-lg bg-white p-7">
-            {t('testsConstants.noCandidateForTest')}
+            {t('testsConstants.noCandidateForAssessment')}
           </div>
         )}
       </div>

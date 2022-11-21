@@ -107,7 +107,7 @@ export const sectionsConstants = {
   sectionName: 'Section',
 }
 export const testsConstants = {
-  addTestbutton: 'Add Test',
+  addAssessmentbutton: 'Add Assessment',
   testDetailsText: 'Test Details',
   descriptionText: 'Description',
   totalTimeText: 'Total Time',
@@ -116,7 +116,7 @@ export const testsConstants = {
   sectionText: 'Section',
   questions: 'Questions',
   totalQuestionsText: 'Total Questions',
-  tests: 'Tests',
+  assessments: 'Assessments',
   srNoText: 'S No.',
   testListColumnLabel: 'Test',
   createdOn: 'Created on',
@@ -247,7 +247,7 @@ export const cypress = {
   step1: 'Step 1',
   step2: 'Step 2',
   step3: 'Step 3',
-  testDetails: 'Test Details',
+  assessmentDetails: 'Assessment Details',
   selectSections: 'Select Sections',
   preview: 'Preview',
   next: 'Next',

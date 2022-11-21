@@ -48,6 +48,7 @@ const AttendedCandidateListItem = ({
       { method: 'post' }
     )
   }
+
   return (
     <div className="col-span-full">
       <div className="col-span-full grid grid-cols-12 gap-1 rounded-b-lg border-t border-solid border-gray-200 bg-white px-8 py-6">
@@ -88,7 +89,7 @@ const AttendedCandidateListItem = ({
           role={'banner'}
           className="col-span-2 flex items-center truncate"
         >
-          {moment(createdAt).format('DD MMMM YY')}
+          {createdAt ? moment(createdAt).format('DD MMMM YY') : '-'}
         </div>
         <div
           title={'startedAt'}
@@ -96,7 +97,7 @@ const AttendedCandidateListItem = ({
           role={'banner'}
           className="col-span-2 flex items-center truncate"
         >
-          {moment(startedAt).format('DD MMMM YY')}
+          {startedAt ? moment(startedAt).format('DD MMMM YY') : '-'}
         </div>
         <div
           title={invitedBy}

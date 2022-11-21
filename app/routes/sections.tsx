@@ -5,12 +5,15 @@ import {
   Outlet,
   useActionData,
   useLoaderData,
+  useLocation,
+  useNavigate,
   useSubmit,
 } from '@remix-run/react'
 import {
   checkSectionById,
   createSection,
   deleteSectionById,
+  editSectionById,
   getAllSections,
 } from '~/models/sections.server'
 import { useState, useEffect } from 'react'
@@ -19,7 +22,7 @@ import { getUserId, getWorkspaceId, requireUserId } from '~/session.server'
 import Sections from '~/components/sections/Sections'
 import AdminLayout from '~/components/layouts/AdminLayout'
 import type { createSectionErrorType } from '~/interface/Interface'
-import AddSection from '~/components/sections/AddSection'
+import AddEditSection from '~/components/sections/AddEditSection'
 import { toast } from 'react-toastify'
 import Button from '~/components/form/Button'
 import { sortByOrder } from '~/interface/Interface'
@@ -27,7 +30,6 @@ import type { Section } from '~/interface/Interface'
 import { routes } from '~/constants/route.constants'
 import { useTranslation } from 'react-i18next'
 import { getUserWorkspaces } from '~/models/workspace.server'
-import { t } from 'i18next'
 
 export type ActionData = {
   errors?: {
@@ -56,7 +58,98 @@ export type LoaderData = {
   workspaces: Awaited<ReturnType<typeof getUserWorkspaces>>
   currentWorkspaceId: Awaited<ReturnType<typeof getWorkspaceId>>
 }
+const handleAddSection = async (
+  name: string,
+  description: string,
+  createdById: string,
+  workspaceId: string
+) => {
+  if (typeof name !== 'string' || name.length === 0) {
+    return json<ActionData>(
+      { errors: { title: 'statusCheck.nameIsReq', status: 400 } },
+      { status: 400 }
+    )
+  }
+  if (typeof description !== 'string' || description.length === 0) {
+    return json<ActionData>(
+      { errors: { title: 'statusCheck.descIsReq', status: 400 } },
+      { status: 400 }
+    )
+  }
 
+  let addHandle = null
+  await createSection({ name, description, createdById, workspaceId })
+    .then((res) => {
+      addHandle = json<ActionData>(
+        {
+          resp: {
+            status: 'statusCheck.sectionAddedSuccess',
+            data: res as Section,
+            check: new Date(),
+          },
+        },
+        { status: 200 }
+      )
+    })
+
+    .catch((err) => {
+      let title = 'statusCheck.commonError'
+      if (err.code === 'P2002') {
+        title = 'statusCheck.duplicate'
+      }
+      addHandle = json<ActionData>(
+        { errors: { title, status: 400, check: new Date() } },
+        { status: 400 }
+      )
+    })
+
+  return addHandle
+}
+const handleEditSection = async (
+  name: string,
+  description: string,
+  id: string
+) => {
+  if (typeof name !== 'string' || name.length === 0) {
+    return json<ActionData>(
+      { errors: { title: 'statusCheck.nameIsReq', status: 400 } },
+      { status: 400 }
+    )
+  }
+  if (typeof description !== 'string' || description.length === 0) {
+    return json<ActionData>(
+      { errors: { title: 'statusCheck.descIsReq', status: 400 } },
+      { status: 400 }
+    )
+  }
+
+  let editHandle = null
+  await editSectionById(id, name, description)
+    .then((res) => {
+      editHandle = json<ActionData>(
+        {
+          resp: {
+            status: 'statusCheck.sectionUpdatedSuccess',
+            data: res as Section,
+          },
+        },
+        { status: 200 }
+      )
+    })
+
+    .catch((err) => {
+      let title = 'statusCheck.commonError'
+      if (err.code === 'P2002') {
+        title = 'statusCheck.duplicate'
+      }
+      editHandle = json<ActionData>(
+        { errors: { title, status: 400, check: new Date() } },
+        { status: 400 }
+      )
+    })
+
+  return editHandle
+}
 export const loader: LoaderFunction = async ({ request, params }) => {
   const userId = await getUserId(request)
   const currentWorkspaceId = await getWorkspaceId(request)
@@ -103,28 +196,15 @@ export const action: ActionFunction = async ({ request }) => {
   const createdById = await requireUserId(request)
   const workspaceId = (await getWorkspaceId(request)) as string
   const formData = await request.formData()
-  const action = formData.get('add-section')
-    ? formData.get('add-section')
-    : formData.get('deleteSection')
-    ? formData.get('deleteSection')
-    : formData.get('action')
-  if (action === 'add') {
-    const name = formData.get('name')
-    const description = formData.get('description')
 
-    // to check type of submitted Data
-    if (typeof name !== 'string' || typeof description !== 'string') {
-      return json<ActionData>(
-        {
-          errors: {
-            title: t('sectionsConstants.FormNotSubmittedCorrectly'),
-            status: 400,
-          },
-        },
-        { status: 400 }
-      )
-    }
+  const action =
+    formData.get('addSection') ||
+    formData.get('editSection') ||
+    formData.get('deleteSection')
 
+  if (action === 'sectionAdd') {
+    const name = formData.get('name') as string
+    const description = formData.get('description') as string
     const createSectionFieldError = {
       title: validateTitle(name),
       description: validateDescription(description),
@@ -133,35 +213,22 @@ export const action: ActionFunction = async ({ request }) => {
     if (Object.values(createSectionFieldError).some(Boolean)) {
       return json({ createSectionFieldError }, { status: 400 })
     }
-
-    let addHandle = null
-    await createSection({ name, description, createdById, workspaceId })
-      .then((res) => {
-        addHandle = json<ActionData>(
-          {
-            resp: {
-              status: 'statusCheck.sectionAddedSuccess',
-              data: res as Section,
-              check: new Date(),
-            },
-          },
-          { status: 200 }
-        )
-      })
-
-      .catch((err) => {
-        let title = 'statusCheck.commonError'
-        if (err.code === 'P2002') {
-          title = 'statusCheck.duplicate'
-        }
-        addHandle = json<ActionData>(
-          { errors: { title, status: 400, check: new Date() } },
-          { status: 400 }
-        )
-      })
-
-    return addHandle
+    const response = await handleAddSection(
+      name,
+      description,
+      createdById,
+      workspaceId
+    )
+    return response
   }
+  if (action === 'sectionEdit') {
+    const name = formData.get('name') as string
+    const description = formData.get('description') as string
+    const id = formData.get('id') as string
+    const response = await handleEditSection(name, description, id)
+    return response
+  }
+
   let deleteHandle = null
   let isSectionDelete = false
   let isTestDeleted: Array<boolean> | undefined
@@ -218,7 +285,7 @@ export const action: ActionFunction = async ({ request }) => {
     }
     return deleteHandle
   }
-  return ''
+  return 'ok'
 }
 
 export default function SectionPage() {
@@ -271,7 +338,8 @@ export default function SectionPage() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [order, sortBy, data.sections?.length])
-
+  const location = useLocation()
+  const navigate = useNavigate()
   useEffect(() => {
     if (sectionActionData) {
       if (
@@ -285,6 +353,14 @@ export default function SectionPage() {
             toast.success(t(sectionActionData.resp?.status as string))
           return sectionActionData?.resp?.data?.id as string
         })
+      } else if (
+        t(sectionActionData.resp?.status as string) ===
+        t('statusCheck.sectionUpdatedSuccess')
+      ) {
+        toast.success(t(sectionActionData.resp?.status as string), {
+          toastId: t(sectionActionData.resp?.status as string),
+        })
+        navigate(`${location.pathname}${location.search}`)
       } else if (
         t(sectionActionData.resp?.status as string) ===
         t('statusCheck.deletedSuccess')
@@ -310,7 +386,14 @@ export default function SectionPage() {
         })
       }
     }
-  }, [sectionActionData, data.selectedSectionId, data.sections, t])
+  }, [
+    sectionActionData,
+    data.selectedSectionId,
+    data.sections,
+    t,
+    location,
+    navigate,
+  ])
   return (
     <AdminLayout>
       <div className="flex h-full flex-col gap-6 overflow-hidden p-1">
@@ -387,7 +470,7 @@ export default function SectionPage() {
             {t('sectionsConstants.noRecordFound')}
           </div>
         )}
-        <AddSection
+        <AddEditSection
           open={showAddSectionModal}
           createSectionError={createSectionError}
           setCreateSectionError={setCreateSectionError}

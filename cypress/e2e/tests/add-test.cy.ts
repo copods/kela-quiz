@@ -4,30 +4,36 @@ import {
   commonConstants,
 } from '~/constants/common.constants'
 
-const test1 = `Aptitude - test1`
+const test1 = `Aptitude - assessment1`
 
-describe('Creating tests', () => {
+describe('Creating assessments', () => {
   beforeEach('sign-in', () => {
     cy.login()
 
     cy.customVisit('/members')
   })
 
-  it('Visiting Add Test Page', () => {
-    cy.get('a').find('#tests').should('have.text', testsConstants.tests).click()
-    cy.get('#add-test', { timeout: 6000 })
-      .should('have.text', `+ ${testsConstants.addTestbutton}`)
+  it('Visiting Add Assessment Page', () => {
+    cy.get('a')
+      .find('#tests')
+      .should('have.text', testsConstants.assessments)
       .click()
-    cy.location('pathname').should('include', '/tests/add-test')
-  })
-  it('Verify if add test page contains 3 tabs', () => {
-    cy.get('a').find('#tests').should('have.text', testsConstants.tests).click()
     cy.get('#add-test', { timeout: 6000 })
-      .should('have.text', `+ ${testsConstants.addTestbutton}`)
+      .should('have.text', `+ ${testsConstants.addAssessmentbutton}`)
+      .click()
+    cy.location('pathname').should('include', '/assessments/add-assessment')
+  })
+  it('Verify if add assessment page contains 3 tabs', () => {
+    cy.get('a')
+      .find('#tests')
+      .should('have.text', testsConstants.assessments)
+      .click()
+    cy.get('#add-test', { timeout: 6000 })
+      .should('have.text', `+ ${testsConstants.addAssessmentbutton}`)
       .click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
-      '/tests/add-test'
+      '/assessments/add-assessment'
     )
     cy.get('.stepsTab').each(($el) => {
       cy.wrap($el).within((el) => {
@@ -49,7 +55,9 @@ describe('Creating tests', () => {
         }
       })
     })
-    cy.get('#0').find('.text-gray-500').should('have.text', cypress.testDetails)
+    cy.get('#0')
+      .find('.text-gray-500')
+      .should('have.text', cypress.assessmentDetails)
     cy.get('#1')
       .find('.text-gray-500')
       .should('have.text', cypress.selectSections)
@@ -57,13 +65,16 @@ describe('Creating tests', () => {
   })
 
   it('Verify if next button is disabled if user do not provide name and description', () => {
-    cy.get('a').find('#tests').should('have.text', testsConstants.tests).click()
+    cy.get('a')
+      .find('#tests')
+      .should('have.text', testsConstants.assessments)
+      .click()
     cy.get('#add-test', { timeout: 6000 })
-      .should('have.text', `+ ${testsConstants.addTestbutton}`)
+      .should('have.text', `+ ${testsConstants.addAssessmentbutton}`)
       .click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
-      '/tests/add-test'
+      '/assessments/add-assessment'
     )
     cy.get('button#next-button')
       .should('have.text', 'Next')
@@ -71,15 +82,18 @@ describe('Creating tests', () => {
   })
   const test = `Aptitude - section`
   it('Verify if user able to navigate to Step 2 by clicking next button if user provide name and description', () => {
-    cy.get('a').find('#tests').should('have.text', testsConstants.tests).click()
+    cy.get('a')
+      .find('#tests')
+      .should('have.text', testsConstants.assessments)
+      .click()
     cy.get('#add-test', { timeout: 6000 })
-      .should('have.text', `+ ${testsConstants.addTestbutton}`)
+      .should('have.text', `+ ${testsConstants.addAssessmentbutton}`)
       .click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
-      '/tests/add-test'
+      '/assessments/add-assessment'
     )
-    cy.get('input[placeholder="Enter test name"]', { timeout: 6000 })
+    cy.get('input[placeholder="Enter assessment name"]', { timeout: 6000 })
       .clear()
       .type(test)
     cy.get('#quill-editor').within(() => {
@@ -105,12 +119,15 @@ describe('Creating tests', () => {
   })
 
   it('Verify on clicking back button on step 2 user navigate back to step 2', () => {
-    cy.get('a').find('#tests').should('have.text', testsConstants.tests).click()
-    cy.get('#add-test', { timeout: 6000 })
-      .should('have.text', `+ ${testsConstants.addTestbutton}`)
+    cy.get('a')
+      .find('#tests')
+      .should('have.text', testsConstants.assessments)
       .click()
-    cy.location('pathname').should('include', '/tests/add-test')
-    cy.get('input[placeholder="Enter test name"]', { timeout: 6000 })
+    cy.get('#add-test', { timeout: 6000 })
+      .should('have.text', `+ ${testsConstants.addAssessmentbutton}`)
+      .click()
+    cy.location('pathname').should('include', '/assessments/add-assessment')
+    cy.get('input[placeholder="Enter assessment name"]', { timeout: 6000 })
       .clear()
       .type(test)
     cy.get('#quill-editor').within(() => {
@@ -130,15 +147,18 @@ describe('Creating tests', () => {
   })
 
   it('Verify if user able to add section and able to input total questions and time', () => {
-    cy.get('a').find('#tests').should('have.text', testsConstants.tests).click()
+    cy.get('a')
+      .find('#tests')
+      .should('have.text', testsConstants.assessments)
+      .click()
     cy.get('#add-test', { timeout: 6000 })
-      .should('have.text', `+ ${testsConstants.addTestbutton}`)
+      .should('have.text', `+ ${testsConstants.addAssessmentbutton}`)
       .click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
-      '/tests/add-test'
+      '/assessments/add-assessment'
     )
-    cy.get('input[placeholder="Enter test name"]', { timeout: 6000 })
+    cy.get('input[placeholder="Enter assessment name"]', { timeout: 6000 })
       .clear()
       .type(test)
     cy.get('#quill-editor').within(() => {
@@ -174,15 +194,18 @@ describe('Creating tests', () => {
   })
 
   it('Verify if user able to remove added section and able to input total questions and time', () => {
-    cy.get('a').find('#tests').should('have.text', testsConstants.tests).click()
+    cy.get('a')
+      .find('#tests')
+      .should('have.text', testsConstants.assessments)
+      .click()
     cy.get('#add-test', { timeout: 6000 })
-      .should('have.text', `+ ${testsConstants.addTestbutton}`)
+      .should('have.text', `+ ${testsConstants.addAssessmentbutton}`)
       .click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
-      '/tests/add-test'
+      '/assessments/add-assessment'
     )
-    cy.get('input[placeholder="Enter test name"]', { timeout: 6000 })
+    cy.get('input[placeholder="Enter assessment name"]', { timeout: 6000 })
       .clear()
       .type(test)
     cy.get('#quill-editor').within(() => {
@@ -209,15 +232,18 @@ describe('Creating tests', () => {
   })
 
   it('Verify if user able to move to preview tab after selecting sections', () => {
-    cy.get('a').find('#tests').should('have.text', testsConstants.tests).click()
+    cy.get('a')
+      .find('#tests')
+      .should('have.text', testsConstants.assessments)
+      .click()
     cy.get('#add-test', { timeout: 6000 })
-      .should('have.text', `+ ${testsConstants.addTestbutton}`)
+      .should('have.text', `+ ${testsConstants.addAssessmentbutton}`)
       .click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
-      '/tests/add-test'
+      '/assessments/add-assessment'
     )
-    cy.get('input[placeholder="Enter test name"]', { timeout: 6000 })
+    cy.get('input[placeholder="Enter assessment name"]', { timeout: 6000 })
       .clear()
       .type(test)
     cy.get('#quill-editor').within(() => {
@@ -265,10 +291,16 @@ describe('Creating tests', () => {
     })
   })
 
-  it('Verify if user is able to create a test and navigates to Tests Page where can see added test', () => {
-    cy.get('a').find('#tests').should('have.text', testsConstants.tests).click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.get('#sort-filter-body').get('#ascend', { timeout: 8000 }).click()
+  it('Verify if user is able to create a assessment and navigates to Tests Page where can see added test', () => {
+    cy.get('a')
+      .find('#tests')
+      .should('have.text', testsConstants.assessments)
+      .click()
+    cy.location('pathname', { timeout: 60000 }).should(
+      'include',
+      '/assessments'
+    )
+    cy.get('#sort-filter-body').get('#descend', { timeout: 8000 }).click()
 
     cy.get('.test-table-list', { timeout: 6000 }).each(($el) => {
       cy.wrap($el).within((el) => {

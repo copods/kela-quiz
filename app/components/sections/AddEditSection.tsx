@@ -1,16 +1,23 @@
-import { Form, useTransition } from '@remix-run/react'
+import { Form, useActionData, useSubmit, useTransition } from '@remix-run/react'
 import { useEffect, useState } from 'react'
 import Button from '../form/Button'
 import { trimValue } from '~/utils'
 import { useTranslation } from 'react-i18next'
 import DialogWrapper from '../Dialog'
 import type { createSectionErrorType } from '~/interface/Interface'
-const AddSection = ({
+import type { ActionData } from '~/routes/sections'
+
+export interface editItem {
+  name: string
+  description: string
+}
+const AddEditSection = ({
   open,
   setOpen,
-  createSectionError,
+  editItem,
+  editId,
   setCreateSectionError,
-  showErrorMessage,
+  createSectionError,
 }: {
   open: boolean
   createSectionError: createSectionErrorType
@@ -20,22 +27,67 @@ const AddSection = ({
   }: createSectionErrorType) => void
 
   setOpen: (e: boolean) => void
-  showErrorMessage: boolean
+  showErrorMessage?: boolean
+  editItem?: editItem
+  editId?: string
+  addSection?: (name: string, description: string) => void
 }) => {
   const { t } = useTranslation()
-
   const transition = useTransition()
   const [sectionName, setSectionName] = useState('')
   const [description, setDescription] = useState('')
+  const submit = useSubmit()
+  const sectionActionData = useActionData() as ActionData
+  const editSection = (name: string, description: string) => {
+    submit(
+      {
+        editSection: 'sectionEdit',
+        id: editId!,
+        name: name,
+        description: description,
+      },
+      {
+        method: 'post',
+      }
+    )
+  }
+  const addSection = (name: string, description: string) => {
+    submit({ addSection: 'sectionAdd', name, description }, { method: 'post' })
+  }
   useEffect(() => {
+    if (editItem) {
+      setSectionName(editItem.name)
+      setDescription(editItem.description)
+      return
+    }
     setDescription('')
     setSectionName('')
     setCreateSectionError({ title: '', description: '' })
-  }, [open, setCreateSectionError])
+  }, [open, editItem, setCreateSectionError])
+
+  useEffect(() => {
+    if (
+      t(sectionActionData?.resp?.status as string) ===
+      t('statusCheck.sectionUpdatedSuccess')
+    ) {
+      setOpen(false)
+    }
+  }, [sectionActionData?.resp, setOpen, t])
+  const handleEdit = (name: string, description: string) => {
+    editSection(name, description)
+  }
+  const handleAdd = (name: string, description: string) => {
+    addSection?.(name, description)
+  }
+
   return (
     <DialogWrapper
       open={open}
-      heading={t('sectionsConstants.addSection')}
+      heading={
+        editItem
+          ? t('sectionsConstants.editSection')
+          : t('sectionsConstants.addSection')
+      }
       setOpen={setOpen}
       header={true}
       role={t('sectionsConstants.addSection')}
@@ -48,13 +100,14 @@ const AddSection = ({
             tabIndex={0}
             type="text"
             name="name"
+            id="addEditSection-name"
             className="h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
             placeholder={t('commonConstants.enterSectionName')}
             onChange={(e) => setSectionName(trimValue(e.target.value))}
             value={sectionName}
             maxLength={52}
           />
-          {createSectionError.title ? (
+          {createSectionError?.title ? (
             <p className="px-3 text-red-500">{t(createSectionError.title)}</p>
           ) : null}
         </div>
@@ -69,7 +122,7 @@ const AddSection = ({
             value={description}
             placeholder={t('commonConstants.enterSectionDesc')}
           />
-          {createSectionError.description ? (
+          {createSectionError?.description ? (
             <p className="px-3 text-red-500">
               {t(createSectionError.description)}
             </p>
@@ -79,6 +132,7 @@ const AddSection = ({
           <Button
             tabIndex={0}
             type="button"
+            id="cancel-button"
             className="h-9 px-4"
             onClick={() => {
               setOpen(false)
@@ -90,22 +144,35 @@ const AddSection = ({
           />
           <Button
             tabIndex={0}
-            type="submit"
+            type="button"
             id="submit-button"
             className="h-9 px-4"
-            name="add-section"
+            name={editItem ? 'edit-section' : 'add-section'}
             value="add"
             isDisabled={transition.state === 'submitting'}
             varient="primary-solid"
             datacy="submit"
+            onClick={() =>
+              editItem
+                ? handleEdit(sectionName, description)
+                : handleAdd(sectionName, description)
+            }
             title={
               transition.state === 'submitting'
-                ? t('commonConstants.adding')
+                ? editItem
+                  ? t('commonConstants.updating')
+                  : t('commonConstants.adding')
+                : editItem
+                ? t('commonConstants.edit')
                 : t('commonConstants.add')
             }
             buttonText={
               transition.state === 'submitting'
-                ? t('commonConstants.adding')
+                ? editItem
+                  ? t('commonConstants.updating')
+                  : t('commonConstants.adding')
+                : editItem
+                ? t('commonConstants.update')
                 : t('commonConstants.add')
             }
           />
@@ -114,4 +181,4 @@ const AddSection = ({
     </DialogWrapper>
   )
 }
-export default AddSection
+export default AddEditSection

@@ -1,8 +1,7 @@
-import type { Password, User } from '@prisma/client'
 import bcrypt from 'bcryptjs'
-
-import { prisma } from '~/db.server'
+import type { Password, User } from '@prisma/client'
 import { sendMail, sendNewPassword } from './sendgrid.servers'
+import { prisma } from '~/db.server'
 import { faker } from '@faker-js/faker'
 import { env } from 'process'
 
@@ -21,7 +20,7 @@ export async function deleteUserById(id: string) {
 }
 
 export async function getUserByEmail(email: User['email']) {
-  return prisma.user.findUnique({ where: { email } })
+  return await prisma.user.findUnique({ where: { email } })
 }
 
 export async function getAllUsers({
@@ -29,7 +28,7 @@ export async function getAllUsers({
 }: {
   currentWorkspaceId: string | undefined
 }) {
-  return prisma.user.findMany({
+  const user = await prisma.user.findMany({
     where: {
       userWorkspace: {
         some: {
@@ -39,8 +38,15 @@ export async function getAllUsers({
     },
     include: {
       role: true,
+      Invites: {
+        select: {
+          email: true,
+          joinedAt: true,
+        },
+      },
     },
   })
+  return user
 }
 
 export async function getAllRoles() {
@@ -195,28 +201,6 @@ export async function createNewUser({
     email,
     firstName,
     role?.name || 'NA'
-  )
-}
-
-export async function reinviteMember({ id }: { id: string }) {
-  const user = await prisma.user.findUnique({ where: { id } })
-  const roleId = user?.roleId as string
-  const role = await prisma.role.findUnique({ where: { id: roleId } })
-  const password = faker.internet.password()
-  const hashedPassword = await bcrypt.hash(password, 10)
-  await prisma.password.update({
-    where: {
-      userId: id,
-    },
-    data: {
-      hash: hashedPassword,
-    },
-  })
-  return await sendMail(
-    user?.email as string,
-    user?.firstName as string,
-    password,
-    role?.name as string
   )
 }
 
