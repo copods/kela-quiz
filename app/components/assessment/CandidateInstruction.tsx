@@ -64,8 +64,8 @@ const CandidateInstruction = () => {
                         <div className="flex items-start gap-4">
                           <img src={contactSupport} alt="" className="h-6" />
                           <span className="text-base font-normal text-gray-900">
-                            {t('sectionsConstants.test')} {section.order}{' '}
-                            -{section.section.name}
+                            {t('sectionsConstants.test')} {section.order} -
+                            {section.section.name}
                           </span>
                         </div>
                       </div>

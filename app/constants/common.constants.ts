@@ -77,7 +77,7 @@ export const logo = {
 
 export const deletePopUp = {
   alert: 'Do you want to delete',
-  "subAlert": "(All the questions for this section will also be deleted)",
+  subAlert: '(All the questions for this section will also be deleted)',
 }
 export const logIn = {
   signInMessage: 'Sign in to your account',
@@ -95,7 +95,7 @@ export const addQuestion = {
 }
 
 export const sectionsConstants = {
-  "addTests": "Add Test",
+  addTests: 'Add Test',
   formNotSubmittedCorrectly: 'Form not submitted correctly',
   totalQuestions: 'Total Questions:',
   noQuestionAlert: 'No questions found. Add your first question',
@@ -104,16 +104,16 @@ export const sectionsConstants = {
   dropdown: 'Select',
   expand: 'Expand',
   search: 'Search Question',
-  "testName": "test"
+  testName: 'test',
 }
 export const testsConstants = {
   addAssessmentbutton: 'Add Assessment',
   testDetailsText: 'Test Details',
   descriptionText: 'Description',
   totalTimeText: 'Total Time',
-  "totalTestsText": "Total Tests",
-  "selectedTestsText": "Selected Tests",
-  "testText": "Test",
+  totalTests: 'Total Tests',
+  selectedTests: 'Selected Tests',
+  testText: 'Test',
   questions: 'Questions',
   totalQuestionsText: 'Total Questions',
   assessments: 'Assessments',
@@ -149,8 +149,8 @@ export const statusCheck = {
   selectCorrOption: 'Select the Correct Option',
   descIsReq: 'Description is required',
   nameIsReq: 'Name is required',
-  "testAddedSuccess": "Test added successfully..!",
-  "testUpdatedSuccess": "Test updated sucessfully..!",
+  testAddedSuccess: 'Test added successfully..!',
+  testUpdatedSuccess: 'Test updated sucessfully..!',
   maxOptions: 'you can add maximum six options.',
   testDependentWarning:
     "Can't be deleted as you have to delete the test containing this test first",
@@ -269,10 +269,10 @@ export const cypress = {
     'The useMemo Hook can be used to keep expensive, resource intensive functions from needlessly running.',
 }
 export const toastConstants = {
-  "addAssessment": "Enter Name to add assessment",
+  addAssessment: 'Enter Name to add assessment',
   resendMemberInvitation: 'Invitation Sent Successfully..!',
   enterDescription: 'Enter description to add test',
-  "addTest": "Add test to add assessment",
+  addTest: 'Add test to add assessment',
   enterQuestion: 'Enter the Question',
   enterOption: 'Enter all the Options',
   firstNameRequired: 'First Name is required',
