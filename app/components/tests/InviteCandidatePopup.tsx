@@ -94,10 +94,8 @@ const InviteCandidatePopup = ({
     emails
       .map((email, i) => (i === index ? '' : email))
       .forEach((email, i: number) => {
-        if (email) {
-          if (!isEmail(email)) {
-            emailError[i] = t('statusCheck.emailIsInvalid')
-          }
+        if (email && !isEmail(email)) {
+          emailError[i] = t('statusCheck.emailIsInvalid')
         }
         setError(emailError)
       })
