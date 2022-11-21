@@ -418,7 +418,7 @@ describe('Test for settings', () => {
       .type('confirmPassword')
     cy.get('[data-cy="submit"]').should('have.text', settings.resetPas)
   })
-  it('Checks if new password and confirm password input fields input values not matched then thowing a proper error', () => {
+  it('Checks if new password and confirm password input fields input values not matched then throwing a proper error', () => {
     cy.get('a')
       .find('#Settings', { timeout: 8000 })
       .should('have.text', settings.settings)
@@ -439,10 +439,8 @@ describe('Test for settings', () => {
       .should('be.visible')
       .clear()
       .type('confirmPassword')
-    cy.get('[data-cy="submit"]')
-      .should('have.class', 'hover:bg-primaryHover')
-      .click()
-    cy.get('#Confirm-password-error').should('have.text', settings.passNotMatch)
+      .blur()
+    cy.get('#confirm-password-error').should('have.text', settings.passNotMatch)
   })
   it('Checks classes of error text if new password and confirm password input fields input values not matched', () => {
     cy.get('a')
@@ -468,7 +466,7 @@ describe('Test for settings', () => {
     cy.get('[data-cy="submit"]')
       .should('have.class', 'hover:bg-primaryHover')
       .click()
-    cy.get('#Confirm-password-error').should('have.class', 'text-red-700')
+    cy.get('#confirm-password-error').should('have.class', 'text-red-700')
   })
   it('Checks if new password and confirm password input fields input values matched but total charactes are less than 8', () => {
     cy.get('a')
@@ -491,7 +489,7 @@ describe('Test for settings', () => {
     cy.get('[data-cy="submit"]')
       .should('have.class', 'hover:bg-primaryHover')
       .click()
-    cy.get('#New-password-error').should('have.text', settings.minPasswordLimit)
+    cy.get('#new-password-error').should('have.text', settings.minPasswordLimit)
   })
   it('Checks if old password is not matched filled input field then throwing a error', () => {
     cy.get('a')
@@ -517,7 +515,7 @@ describe('Test for settings', () => {
     cy.get('[data-cy="submit"]')
       .should('have.class', 'hover:bg-primaryHover')
       .click()
-    cy.get('#Password-error').should('have.text', statusCheck.passIsInvalid)
+    cy.get('#password-error').should('have.text', statusCheck.passIsInvalid)
   })
   it('Checks class of error if old password is not matched filled input field', () => {
     cy.get('a')
@@ -543,7 +541,7 @@ describe('Test for settings', () => {
     cy.get('[data-cy="submit"]')
       .should('have.class', 'hover:bg-primaryHover')
       .click()
-    cy.get('#Password-error').should('have.class', 'text-red-700')
+    cy.get('#password-error').should('have.class', 'text-red-700')
   })
   it('Checks if new password and old password is same then throwing a error', () => {
     cy.get('a')
@@ -569,7 +567,7 @@ describe('Test for settings', () => {
     cy.get('[data-cy="submit"]')
       .should('have.class', 'hover:bg-primaryHover')
       .click()
-    cy.get('#New-password-error').should(
+    cy.get('#new-password-error').should(
       'have.text',
       settings.passShouldNotBeSame
     )
