@@ -30,7 +30,7 @@ const InviteCandidatePopup = ({
       toast.warn(t(actionData.message))
     }
     if (
-      actionData?.candidateInviteStatus.created ===
+      actionData?.candidateInviteStatus?.created ===
       t('candidateExamConstants.candidateTestCreated')
     ) {
       if (actionData?.testId === testId)
