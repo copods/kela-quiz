@@ -54,7 +54,7 @@ const ResetPassword = ({
       type: 'password',
       value: password,
       error: generalSettings?.errors?.valid,
-      errorId: 'Password-error',
+      errorId: 'password-error',
       onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
         setPassword(trimValue(event?.target.value))
       },
@@ -69,7 +69,7 @@ const ResetPassword = ({
       error:
         generalSettings?.errors?.maximumPasswordLimit ||
         generalSettings?.errors?.passShouldNotBeSame,
-      errorId: 'New-password-error',
+      errorId: 'new-password-error',
       onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
         setNewPassword(trimValue(event?.target.value))
       },
@@ -82,7 +82,7 @@ const ResetPassword = ({
       type: 'password',
       value: confirmPassword,
       error: error,
-      errorId: 'Confirm-password-error',
+      errorId: 'confirm-password-error',
       onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
         setConfirmPassword(trimValue(event?.target.value))
       },
