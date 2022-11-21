@@ -9,7 +9,7 @@ describe('Test for section-details', () => {
     cy.customVisit('/sections')
   })
 
-  it('Verifying MCQ to have Check Box in options', () => {
+  xit('Verifying MCQ to have Check Box in options', () => {
     cy.get('a')
       .find('#sections')
       .should('have.text', routeFiles.sections)
@@ -64,7 +64,7 @@ describe('Test for section-details', () => {
     }
   })
 
-  it('Verifying Single Choice to have Radio Button in options', () => {
+  xit('Verifying Single Choice to have Radio Button in options', () => {
     cy.get('a')
       .find('#sections')
       .should('have.text', routeFiles.sections)
@@ -116,7 +116,7 @@ describe('Test for section-details', () => {
     }
   })
 
-  it('Verifying Text to have Textarea in options', () => {
+  xit('Verifying Text to have Textarea in options', () => {
     cy.get('a')
       .find('#sections')
       .should('have.text', routeFiles.sections)
@@ -168,7 +168,7 @@ describe('Test for section-details', () => {
     }
   })
   let lengthBefore: number
-  it('Verifying if Add Option functionality Working on Options', () => {
+  xit('Verifying if Add Option functionality Working on Options', () => {
     cy.get('a')
       .find('#sections')
       .should('have.text', routeFiles.sections)
@@ -224,7 +224,7 @@ describe('Test for section-details', () => {
     })
   })
 
-  it('Verifying if Delete functionality Working on Options', () => {
+  xit('Verifying if Delete functionality Working on Options', () => {
     cy.get('a')
       .find('#sections')
       .should('have.text', routeFiles.sections)
@@ -278,7 +278,7 @@ describe('Test for section-details', () => {
         })
     })
   })
-  it('On Save and Add More visit the Add Question Page', () => {
+  xit('On Save and Add More visit the Add Question Page', () => {
     cy.get('a')
       .find('#sections')
       .should('have.text', routeFiles.sections)
@@ -329,7 +329,7 @@ describe('Test for section-details', () => {
       '/add-question'
     )
   })
-  it('On Save and Continue visit the Sections Page', () => {
+  xit('On Save and Continue visit the Sections Page', () => {
     cy.get('a')
       .find('#sections')
       .should('have.text', routeFiles.sections)
@@ -376,7 +376,7 @@ describe('Test for section-details', () => {
     cy.get('#save-and-exit').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
   })
-  it('Verifying if Question is Empty or not', () => {
+  xit('Verifying if Question is Empty or not', () => {
     cy.get('a')
       .find('#sections')
       .should('have.text', routeFiles.sections)
@@ -411,7 +411,7 @@ describe('Test for section-details', () => {
       .click()
     cy.get('.Toastify__toast').should('have.text', 'Enter the Question')
   })
-  it('Verifying if any Option is empty or not', () => {
+  xit('Verifying if any Option is empty or not', () => {
     cy.get('a')
       .find('#sections')
       .should('have.text', routeFiles.sections)
