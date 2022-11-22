@@ -12,7 +12,7 @@ describe('Test for Section', () => {
   beforeEach('sign-in', () => {
     cy.login()
 
-    cy.customVisit('/sections')
+    cy.customVisit('/tests')
   })
   it('cancel Add section', () => {
     cy.get('#add-section').click()
@@ -44,11 +44,8 @@ describe('Test for Section', () => {
     })
   })
   it('Test for valid error message while adding new section without Title', () => {
-    cy.get('a')
-      .find('#sections')
-      .should('have.text', routeFiles.sections)
-      .click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
+    cy.get('a').find('#sections').should('have.text', routeFiles.tests).click()
+    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('#add-section').click()
     cy.get('form > div')
       .should('be.visible')
@@ -61,16 +58,13 @@ describe('Test for Section', () => {
     )
   })
   it('Test for valid error message while adding new section without Description', () => {
-    cy.get('a')
-      .find('#sections')
-      .should('have.text', routeFiles.sections)
-      .click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
+    cy.get('a').find('#sections').should('have.text', routeFiles.tests).click()
+    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('#add-section').click()
     cy.get('form > div')
       .should('be.visible')
       .within((el) => {
-        cy.get('input[placeholder="Enter Section Name"]').type(
+        cy.get('input[placeholder="Enter Test Name"]').type(
           `${section1} ${new Date().getTime()}`
         )
 
@@ -86,7 +80,7 @@ describe('Test for Section', () => {
     cy.get('form > div')
       .should('be.visible')
       .within((el) => {
-        cy.get('input[placeholder="Enter Section Name"]').type(section1)
+        cy.get('input[placeholder="Enter Test Name"]').type(section1)
         cy.get('textarea').type('Aptitude')
         cy.get('[data-cy="submit"]').click()
       })
@@ -137,6 +131,7 @@ describe('Test for Section', () => {
         }
       })
     })
+
     cy.get('#delete-dialog').should('be.visible')
     cy.get('#confirm-delete')
       .should('have.text', commonConstants.delete)
@@ -146,7 +141,7 @@ describe('Test for Section', () => {
       statusCheck.deletedSuccess
     )
     cy.get('.Toastify__close-button').click()
-    cy.location('pathname').should('include', '/sections')
+    cy.location('pathname').should('include', '/tests')
     cy.get('#section-card', { timeout: 8000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (

@@ -5,7 +5,7 @@ import { trimValue } from '~/utils'
 import { useTranslation } from 'react-i18next'
 import DialogWrapper from '../Dialog'
 import type { createSectionErrorType } from '~/interface/Interface'
-import type { ActionData } from '~/routes/sections'
+import type { ActionData } from '~/routes/tests'
 
 export interface editItem {
   name: string
@@ -68,7 +68,7 @@ const AddEditSection = ({
   useEffect(() => {
     if (
       t(sectionActionData?.resp?.status as string) ===
-      t('statusCheck.sectionUpdatedSuccess')
+      t('statusCheck.testUpdatedSuccess')
     ) {
       setOpen(false)
     }
@@ -85,13 +85,13 @@ const AddEditSection = ({
       open={open}
       heading={
         editItem
-          ? t('sectionsConstants.editSection')
-          : t('sectionsConstants.addSection')
+          ? t('sectionsConstants.editTest')
+          : t('sectionsConstants.addTests')
       }
       setOpen={setOpen}
       header={true}
-      role={t('sectionsConstants.addSection')}
-      aria-label={t('sectionsConstants.addSection')}
+      role={t('sectionsConstants.addTests')}
+      aria-label={t('sectionsConstants.addTests')}
       tabIndex={0}
     >
       <Form method="post">
@@ -102,7 +102,7 @@ const AddEditSection = ({
             name="name"
             id="addEditSection-name"
             className="h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
-            placeholder={t('commonConstants.enterSectionName')}
+            placeholder={t('commonConstants.enterTestsName')}
             onChange={(e) => setSectionName(trimValue(e.target.value))}
             value={sectionName}
             maxLength={52}
@@ -122,7 +122,7 @@ const AddEditSection = ({
             className="w-full rounded-lg border border-gray-200 px-3 py-4 text-base"
             onChange={(e) => setDescription(trimValue(e.target.value))}
             value={description}
-            placeholder={t('commonConstants.enterSectionDesc')}
+            placeholder={t('commonConstants.enterTestsDesc')}
           />
           {createSectionError?.description ? (
             <p

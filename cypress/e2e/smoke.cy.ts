@@ -91,13 +91,13 @@ describe('smoke tests', () => {
   // creating test data
   it('Adding a first section', () => {
     cy.login()
-    cy.customVisit('/sections')
+    cy.customVisit('/tests')
 
     cy.get('#add-section').click()
     cy.get('form > div')
       .should('be.visible')
       .within((el) => {
-        cy.get('input[placeholder="Enter Section Name"]').type(section1)
+        cy.get('input[placeholder="Enter Test Name"]').type(section1)
         cy.get('textarea').type('Aptitude')
         cy.get('[data-cy="submit"]').click()
       })
@@ -105,13 +105,13 @@ describe('smoke tests', () => {
 
   it('Adding a second section', () => {
     cy.login()
-    cy.customVisit('/sections')
+    cy.customVisit('/tests')
 
     cy.get('#add-section').click()
     cy.get('form > div')
       .should('be.visible')
       .within((el) => {
-        cy.get(`input[placeholder='Enter Section Name']`).type(section2)
+        cy.get(`input[placeholder='Enter Test Name']`).type(section2)
         cy.get('textarea').type('Aptitude')
         cy.get('[data-cy="submit"]').click()
       })
@@ -119,13 +119,13 @@ describe('smoke tests', () => {
 
   it('Adding a deleteSection ', () => {
     cy.login()
-    cy.customVisit('/sections')
+    cy.customVisit('/tests')
 
     cy.get('#add-section').click()
     cy.get('form > div')
       .should('be.visible')
       .within((el) => {
-        cy.get('input[placeholder="Enter Section Name"]').type(deleteSection)
+        cy.get('input[placeholder="Enter Test Name"]').type(deleteSection)
         cy.get('textarea').type('Aptitude')
         cy.get('[data-cy="submit"]').click()
       })
@@ -133,7 +133,7 @@ describe('smoke tests', () => {
 
   it('Add question to the first section', () => {
     cy.login()
-    cy.customVisit('/sections')
+    cy.customVisit('/tests')
 
     cy.get('#section-card').each(($el) => {
       cy.wrap($el).within((el) => {
@@ -149,7 +149,7 @@ describe('smoke tests', () => {
       .should('have.text', `+ ${addQuestion.addQuestion}`)
       .click()
     cy.location('pathname').should('include', '/add-question')
-    cy.get('h1').should('be.visible')
+    cy.get('h1', { timeout: 6000 }).should('be.visible')
 
     cy.get('#Question').get('#dropdown-container').click()
     cy.get('ul').within(() => {
@@ -175,7 +175,7 @@ describe('smoke tests', () => {
 
   it('Add question to the second section', () => {
     cy.login()
-    cy.customVisit('/sections')
+    cy.customVisit('/tests')
 
     cy.get('#section-card').each(($el) => {
       cy.wrap($el).within((el) => {
@@ -191,7 +191,7 @@ describe('smoke tests', () => {
       .should('have.text', `+ ${addQuestion.addQuestion}`)
       .click()
     cy.location('pathname').should('include', '/add-question')
-    cy.get('h1').should('be.visible')
+    cy.get('h1', { timeout: 6000 }).should('be.visible')
     cy.get('#Question').get('#dropdown-container').click()
     cy.get('ul').within(() => {
       cy.get('li').within(() => {

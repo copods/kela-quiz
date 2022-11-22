@@ -300,7 +300,7 @@ describe('Creating assessments', () => {
       'include',
       '/assessments'
     )
-    cy.get('#sort-filter-body').get('#descend', { timeout: 8000 }).click()
+    cy.get('#sort-filter-body').get('#descend', { timeout: 10000 }).click()
 
     cy.get('.test-table-list', { timeout: 6000 }).each(($el) => {
       cy.wrap($el).within((el) => {

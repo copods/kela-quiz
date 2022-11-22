@@ -208,6 +208,7 @@ export default function OptionForQuestion({
                     if (e.key === 'Enter') deleteOption(index, option?.id)
                   }}
                   tabIndex={0}
+                  id="delete-option"
                   aria-label={t('commonConstants.delete')}
                   icon="ic:outline-delete-outline"
                   className={`h-6 w-6 ${index} ${

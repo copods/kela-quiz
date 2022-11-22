@@ -62,7 +62,7 @@ describe('Visiting Assessment', () => {
       'include',
       '/assessments'
     )
-    cy.get('#sort-filter-body').get('#descend').click()
+    cy.get('#sort-filter-body', { timeout: 8000 }).get('#descend').click()
     cy.get('.dropdownButton span span', { timeout: 6000 })
       .invoke('text')
       .then((el) => {
@@ -85,7 +85,7 @@ describe('Visiting Assessment', () => {
       'include',
       '/assessments'
     )
-    cy.get('#sort-filter-container').within(() => {
+    cy.get('#sort-filter-container', { timeout: 8000 }).within(() => {
       cy.get('.dropdownButton')
         .click({ multiple: true })
         .get('li div')
@@ -115,7 +115,7 @@ describe('Visiting Assessment', () => {
       'include',
       '/assessments'
     )
-    cy.get('#sort-filter-body').get('#descend').click()
+    cy.get('#sort-filter-body', { timeout: 8000 }).get('#descend').click()
     cy.get('#sort-filter-container').within(() => {
       cy.get('.dropdownButton')
         .click({ multiple: true })
