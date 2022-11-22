@@ -102,7 +102,7 @@ const AddEditSection = ({
             name="name"
             id="addEditSection-name"
             className="h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
-            placeholder={t('commonConstants.enterTestName')}
+            placeholder={t('commonConstants.enterTestsName')}
             onChange={(e) => setSectionName(trimValue(e.target.value))}
             value={sectionName}
             maxLength={52}
