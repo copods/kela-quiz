@@ -150,7 +150,7 @@ const SectionCard = ({
         onDelete={deleteSection}
         subAlert={t('deletePopUp.subAlert')}
         deleteItem={name}
-        deleteItemType={t('sectionsConstants.test')}
+        deleteItemType={t('testsConstants.testText')}
         setDeleted={setDeleted}
       />
       <AddEditSection
