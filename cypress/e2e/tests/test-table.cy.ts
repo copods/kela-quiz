@@ -2,6 +2,16 @@ import { testsConstants } from '~/constants/common.constants'
 
 const test1 = `Aptitude - test1`
 const deleteTest1 = `Aptitude - test2 `
+const assessments = 'Assessments'
+const tableTitles = {
+  srNo: 'Sr.No',
+  assessment: 'Assessment',
+  test: 'Test',
+  createdOn: 'Created on',
+  createdBy: 'Created By',
+  actions: 'Actions',
+}
+
 const candidateAlreadyInvited =
   'Candidate has already been invited for this Assessment'
 const candidateInvited = 'Candidate Invited'
@@ -30,6 +40,56 @@ describe('Visiting Assessment', () => {
       .should('have.text', `+ ${testsConstants.addAssessmentbutton}`)
       .click()
     cy.location('pathname').should('include', '/assessments/add-assessment')
+  })
+  it('Checks heading of assessment page for visibility and css', () => {
+    cy.get('a')
+      .find('#tests')
+      .should('have.text', testsConstants.assessments)
+      .click()
+    cy.get('#assessments-page-title')
+      .should('have.text', assessments)
+      .should('have.css', 'font-size', '30px')
+      .should('have.css', 'font-weight', '700')
+      .should('have.css', 'color', 'rgb(0, 0, 0)')
+  })
+
+  it('Checks table titles of assessments', () => {
+    cy.get('a')
+      .find('#tests')
+      .should('have.text', testsConstants.assessments)
+      .click()
+    cy.get('#assessments-table-srNo')
+      .should('have.text', tableTitles.srNo)
+      .should('have.css', 'color', 'rgb(107, 114, 128)')
+    cy.get('#assessments-table-assessment')
+      .should('have.text', tableTitles.assessment)
+      .should('have.css', 'color', 'rgb(107, 114, 128)')
+    cy.get('#assessments-table-test')
+      .should('have.text', tableTitles.test)
+      .should('have.css', 'color', 'rgb(107, 114, 128)')
+    cy.get('#assessments-table-createdOn')
+      .should('have.text', tableTitles.createdOn)
+      .should('have.css', 'color', 'rgb(107, 114, 128)')
+    cy.get('#assessments-table-createdBy')
+      .should('have.text', tableTitles.createdBy)
+      .should('have.css', 'color', 'rgb(107, 114, 128)')
+    cy.get('#assessments-table-actions')
+      .should('have.text', tableTitles.actions)
+      .should('have.css', 'color', 'rgb(107, 114, 128)')
+  })
+
+  it('Checks add assessment button text and css', () => {
+    cy.get('a')
+      .find('#tests')
+      .should('have.text', testsConstants.assessments)
+      .click()
+    cy.get('#add-test')
+      .should('have.text', '+ Add Assessment')
+      .should('have.css', 'background-color', 'rgb(53, 57, 136)')
+      .should('have.css', 'color', 'rgb(249, 250, 251)')
+      .should('have.css', 'font-size', '12px')
+      .should('have.css', 'font-weight', '500')
+      .should('have.css', 'cursor', 'pointer')
   })
   it('sort by name in ascending order ', () => {
     cy.get('a')
