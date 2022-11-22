@@ -5,6 +5,11 @@ import {
   testsConstants,
 } from '~/constants/common.constants'
 import { routes } from '~/constants/route.constants'
+const sideNavTitle = {
+  results: 'Results',
+  assessments: 'Assessments',
+  general: 'General',
+}
 describe('Test for Logout, SideNav', () => {
   beforeEach('sign-in', () => {
     cy.login()
@@ -44,7 +49,29 @@ describe('Test for Logout, SideNav', () => {
       })
     })
   })
-
+  it('Checks for SideNavTitles', () => {
+    cy.get('#nav-guide-results')
+      .should('have.text', sideNavTitle.results)
+      .should('have.css', 'font-weight', '600')
+      .should('have.css', 'font-size', '12px')
+      .should('have.css', 'color', 'rgb(156, 163, 175)')
+    cy.get('#nav-guide-assessments')
+      .should('have.text', sideNavTitle.assessments)
+      .should('have.css', 'font-weight', '600')
+      .should('have.css', 'font-size', '12px')
+      .should('have.css', 'color', 'rgb(156, 163, 175)')
+    cy.get('#nav-guide-general')
+      .should('have.text', sideNavTitle.general)
+      .should('have.css', 'font-weight', '600')
+      .should('have.css', 'font-size', '12px')
+      .should('have.css', 'color', 'rgb(156, 163, 175)')
+  })
+  it('Check for logout CTA button css', () => {
+    cy.get('#logout-button')
+      .should('have.css', 'background-color', 'rgb(239, 68, 68)')
+      .should('have.css', 'padding', '10px 8px')
+      .should('have.css', 'cursor', 'pointer')
+  })
   it('should render drop down to switch workspace', () => {
     cy.get('#dropdown').should('be.visible')
   })

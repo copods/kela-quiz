@@ -128,7 +128,10 @@ const SideNav = () => {
             {sideNavGuide.map((guide, index) => {
               return (
                 <div className="10px flex flex-col gap-1" key={index}>
-                  <p className="non-italic px-2 pb-2 text-left text-xs font-semibold text-gray-400">
+                  <p
+                    id={`nav-guide-${guide.navGuide.toLowerCase()}`}
+                    className="non-italic px-2 pb-2 text-left text-xs font-semibold text-gray-400"
+                  >
                     {guide.navGuide}
                   </p>
                   {guide.subItem.map((item, index) => {
