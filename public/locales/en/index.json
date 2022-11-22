@@ -57,9 +57,9 @@
     "saveAndExit": "Save & Exit",
     "saveAndAddMore": "Save & Add More",
     "logout": "Logout",
-    "enterSectionName": "Enter Section Name",
-    "enterSectionDesc": "Enter Section Description",
-    "enterTestName": "Enter assessment name",
+    "enterTestsName": "Enter Test Name",
+    "enterTestsDesc": "Enter Test Description",
+    "enterAssessmentName": "Enter assessment name",
     "totalQuestion": "Total Questions",
     "srNo": "Sr.No",
     "verify": "Verify",
@@ -94,7 +94,7 @@
   },
   "deletePopUp": {
     "alert": "Do you want to delete",
-    "subAlert": "(All the questions for this section will also be deleted)"
+    "subAlert": "(All the questions for this Test will also be deleted)"
   },
   "logIn": {
     "signInMessage": "Sign in to your account",
@@ -111,17 +111,16 @@
     "addQuestion": "Add Question"
   },
   "sectionsConstants": {
-    "addSection": "Add Section",
+    "addTests": "Add Test",
     "formNotSubmittedCorrectly": "Form not submitted correctly",
-    "editSection": "Edit Section",
+    "editTest": "Edit Test",
     "totalQuestions": "Total Questions:",
     "noQuestionAlert": "No questions found. Add your first question",
     "noRecordFound": "No Record Found",
     "sort": "Sort",
     "dropdown": "Select",
     "expand": "Expand",
-    "search": "Search Question",
-    "sectionName": "section"
+    "search": "Search Question"
   },
   "testsConstants": {
     "addTestbutton": "Add Assessment",
@@ -131,9 +130,9 @@
     "descriptionText": "Description",
     "totalTimeText": "Total Time",
     "totalQuestionsText": "Total Questions",
-    "totalSectionsText": "Total Sections",
-    "selectedSctionText": "Selected Sections",
-    "sectionText": "Section",
+    "totalTests": "Total Tests",
+    "selectedTests": "Selected Tests",
+    "testText": "Test",
     "questions": "Questions",
     "assessments": "Assessments",
     "assessment": "Assessment",
@@ -154,7 +153,7 @@
     "selected": "Selected"
   },
   "routeFiles": {
-    "sections": "Sections",
+    "tests": "Tests",
     "options": "Options"
   },
   "statusCheck": {
@@ -165,10 +164,10 @@
     "selectCorrOption": "Select the Correct Option",
     "descIsReq": "Description is required",
     "nameIsReq": "Name is required",
-    "sectionAddedSuccess": "Section added successfully..!",
-    "sectionUpdatedSuccess": "Section updated sucessfully..!",
+    "testAddedSuccess": "Test added successfully..!",
+    "testUpdatedSuccess": "Test updated sucessfully..!",
     "maxOptions": "you can add maximum six options.",
-    "testDependentWarning": "Can't be deleted as you have to delete the assessment containing this section first",
+    "testDependentWarning": "Can't be deleted as you have to delete the assessment containing this test first",
     "duplicate": "Duplicate Title",
     "assessmentAddedSuccessFully": "Assessment added successfully..",
     "assessmentAlreadyExist": "Assessment name already exist.",
@@ -263,7 +262,7 @@
   "toastConstants": {
     "addAssessment": "Enter Name to add assessment",
     "enterDescription": "Enter description to add assessment",
-    "addSection": "Add sections to add assessment",
+    "addTest": "Add test to add assessment",
     "enterQuestion": "Enter the Question",
     "enterOption": "Enter all the Options",
     "firstNameRequired": "First Name is required",
@@ -278,7 +277,9 @@
     "workspaceAdded": "Workspace Added",
     "duplicateWorkspace": "Duplicate Workspace",
     "workspaceNameIsRequired": "Workspace name is required",
-    "memberAlreadyInvited": "Member already invited"
+    "memberAlreadyInvited": "Member already invited",
+    "cannotAddTestZeroQuestion": "Cannot add test with 0 questions.",
+    "notAdMoreThanAvailableQuestion": "Cannot add more than available questions"
   },
   "otpConstants": {
     "header": "OTP Verification",

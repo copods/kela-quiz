@@ -76,7 +76,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
       return
     }
     if (selectedSections.length === 0) {
-      toast.error(t('toastConstants.addSection'))
+      toast.error(t('toastConstants.addTest'))
       return
     }
     let sendData: {

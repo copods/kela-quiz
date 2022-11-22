@@ -30,7 +30,7 @@ const TestDetails = ({
           value={name}
           onChange={(e) => onNameChange(trimValue(e.target.value))}
           className="test-base mt-1 h-11 w-full rounded-lg border border-gray-200 px-3"
-          placeholder={t('commonConstants.enterTestName')}
+          placeholder={t('commonConstants.enterAssessmentName')}
         />
       </div>
       <div className="flex-1">

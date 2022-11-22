@@ -6,18 +6,12 @@ describe('Test for section-details', () => {
   beforeEach('sign-in', () => {
     cy.login()
 
-    cy.customVisit('/sections')
+    cy.customVisit('/tests')
   })
 
   xit('Verifying MCQ to have Check Box in options', () => {
-    cy.get('a')
-      .find('#sections')
-      .should('have.text', routeFiles.sections)
-      .click()
-    cy.location('pathname', { timeout: 60000 }).should(
-      'include',
-      routes.sections
-    )
+    cy.get('a').find('#sections').should('have.text', routeFiles.tests).click()
+    cy.location('pathname', { timeout: 60000 }).should('include', routes.tests)
     cy.get('#section-card', { timeout: 8000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -65,11 +59,8 @@ describe('Test for section-details', () => {
   })
 
   xit('Verifying Single Choice to have Radio Button in options', () => {
-    cy.get('a')
-      .find('#sections')
-      .should('have.text', routeFiles.sections)
-      .click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
+    cy.get('a').find('#sections').should('have.text', routeFiles.tests).click()
+    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('#section-card', { timeout: 8000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -117,11 +108,8 @@ describe('Test for section-details', () => {
   })
 
   xit('Verifying Text to have Textarea in options', () => {
-    cy.get('a')
-      .find('#sections')
-      .should('have.text', routeFiles.sections)
-      .click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
+    cy.get('a').find('#sections').should('have.text', routeFiles.tests).click()
+    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('#section-card', { timeout: 10000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -169,11 +157,8 @@ describe('Test for section-details', () => {
   })
   let lengthBefore: number
   xit('Verifying if Add Option functionality Working on Options', () => {
-    cy.get('a')
-      .find('#sections')
-      .should('have.text', routeFiles.sections)
-      .click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
+    cy.get('a').find('#sections').should('have.text', routeFiles.tests).click()
+    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('#section-card', { timeout: 8000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -225,11 +210,8 @@ describe('Test for section-details', () => {
   })
 
   xit('Verifying if Delete functionality Working on Options', () => {
-    cy.get('a')
-      .find('#sections')
-      .should('have.text', routeFiles.sections)
-      .click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
+    cy.get('a').find('#sections').should('have.text', routeFiles.tests).click()
+    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('#section-card', { timeout: 8000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -279,11 +261,8 @@ describe('Test for section-details', () => {
     })
   })
   xit('On Save and Add More visit the Add Question Page', () => {
-    cy.get('a')
-      .find('#sections')
-      .should('have.text', routeFiles.sections)
-      .click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
+    cy.get('a').find('#sections').should('have.text', routeFiles.tests).click()
+    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('#section-card', { timeout: 8000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -330,11 +309,8 @@ describe('Test for section-details', () => {
     )
   })
   xit('On Save and Continue visit the Sections Page', () => {
-    cy.get('a')
-      .find('#sections')
-      .should('have.text', routeFiles.sections)
-      .click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
+    cy.get('a').find('#sections').should('have.text', routeFiles.tests).click()
+    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('#section-card', { timeout: 8000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -374,14 +350,11 @@ describe('Test for section-details', () => {
     })
     cy.get('#optionEditor input').clear().type(cypress.useMemoAns)
     cy.get('#save-and-exit').click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
+    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
   })
   xit('Verifying if Question is Empty or not', () => {
-    cy.get('a')
-      .find('#sections')
-      .should('have.text', routeFiles.sections)
-      .click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/sections')
+    cy.get('a').find('#sections').should('have.text', routeFiles.tests).click()
+    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
     cy.get('#section-card', { timeout: 8000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -412,14 +385,8 @@ describe('Test for section-details', () => {
     cy.get('.Toastify__toast').should('have.text', 'Enter the Question')
   })
   xit('Verifying if any Option is empty or not', () => {
-    cy.get('a')
-      .find('#sections')
-      .should('have.text', routeFiles.sections)
-      .click()
-    cy.location('pathname', { timeout: 60000 }).should(
-      'include',
-      routes.sections
-    )
+    cy.get('a').find('#sections').should('have.text', routeFiles.tests).click()
+    cy.location('pathname', { timeout: 60000 }).should('include', routes.tests)
     cy.get('#section-card', { timeout: 8000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (

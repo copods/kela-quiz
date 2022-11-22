@@ -101,7 +101,7 @@ const TestList = ({
                 {t('testsConstants.assessment')}
               </div>
               <div className="w-3/12 text-sm text-gray-500">
-                {t('testsConstants.sectionText')}
+                {t('testsConstants.testText')}
               </div>
               <div className="w-2/12 text-sm text-gray-500">
                 {t('testsConstants.createdOn')}
