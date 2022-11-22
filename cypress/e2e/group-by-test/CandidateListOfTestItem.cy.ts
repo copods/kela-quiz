@@ -39,7 +39,7 @@ describe('Visiting group by test of results page', () => {
       })
     })
     cy.get('.groupByItemTest').contains(test1).click()
-    cy.get('#title').should('be.visible')
+    cy.get('#title', { timeout: 8000 }).should('be.visible')
   })
   it('Checks, header of candidate list page should have test name', () => {
     cy.get('a').find('#group-by-tests').should('have.text', 'Results').click()
@@ -113,5 +113,4 @@ describe('Visiting group by test of results page', () => {
     cy.get('#back-button', { timeout: 8000 }).should('be.visible').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')
   })
-  
 })
