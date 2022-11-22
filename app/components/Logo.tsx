@@ -11,6 +11,7 @@ const Logo = ({ height, width, styleClass }: LogoProps) => {
       height={height}
       width={width}
       alt={'K-Quiz'}
+      
       className={styleClass}
     />
   )
