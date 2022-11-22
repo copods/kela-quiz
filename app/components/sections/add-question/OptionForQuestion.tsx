@@ -5,6 +5,7 @@ import cuid from 'cuid'
 import QuillEditor from '~/components/QuillEditor.client'
 import { ClientOnly } from 'remix-utils'
 import Toggle from '~/components/form/Toggle'
+import { useEffect } from 'react'
 import type { SetStateAction } from 'react'
 import { toast } from 'react-toastify'
 import Button from '~/components/form/Button'
@@ -25,7 +26,11 @@ export default function OptionForQuestion({
   setTextCorrectAnswer,
   checkOrder,
   setCheckOrder,
+  answerCount,
+  setAnswerCount,
 }: {
+  answerCount: number
+  setAnswerCount: (e: number) => void
   questionTypeList: QuestionType[]
   selectedTypeOfQuestion: string
   options: Array<{ option: string; isCorrect: boolean; id: string }>
@@ -42,7 +47,6 @@ export default function OptionForQuestion({
   setCheckOrder: (e: boolean) => void
 }) {
   const { t } = useTranslation()
-
   const toastId = 'doNotDeleteLastOptions'
   const addOptionArea = () => {
     if (
@@ -113,6 +117,11 @@ export default function OptionForQuestion({
       return [...e]
     })
   }
+  useEffect(() => {
+    let count = 0
+    options.forEach((i) => (i.isCorrect ? count++ : null))
+    setAnswerCount(count)
+  }, [options, setAnswerCount])
   return (
     <div className="flex flex-1 flex-col gap-6">
       <div className="flex h-11 flex-row items-end justify-between p-1">
@@ -256,6 +265,11 @@ export default function OptionForQuestion({
             }
           )}
       </div>
+      {answerCount > 1 ? (
+        <p>Note: multiple answers selected</p>
+      ) : answerCount === 1 ? (
+        <p>Note: only one answer</p>
+      ) : null}
     </div>
   )
 }
