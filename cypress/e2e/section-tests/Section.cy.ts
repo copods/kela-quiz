@@ -6,10 +6,7 @@ import {
 } from '~/constants/common.constants'
 const section1 = `Aptitude - section1`
 const deleteSection = `Aptitude - delete-Section`
-const sectionUpdateSuccess = 'Section updated sucessfully..!'
-const nameIsReq = 'Name is required'
-const descriptionIsReq = 'Description is required'
-const toast = '.Toastify__toast-body'
+
 /// <reference types="Cypress">
 describe('Test for Section', () => {
   beforeEach('sign-in', () => {
@@ -162,29 +159,5 @@ describe('Test for Section', () => {
         }
       })
     })
-  })
-  it('edit section', () => {
-    cy.get('.section-card').within(() => {
-      cy.get('#headlessui-menu-button-3').click()
-    })
-    cy.contains('Edit').click()
-    cy.get('#addEditSection-name').type('-edited')
-    cy.get('#section-description').type('-edited')
-    cy.get('#submit-button').click()
-    cy.get(toast).should('have.text', sectionUpdateSuccess)
-  })
-  it('edit section, name and description fields empty', () => {
-    cy.get('.section-card').within(() => {
-      cy.get('#headlessui-menu-button-3').click()
-    })
-    cy.contains('Edit').click()
-    cy.get('#addEditSection-name').clear()
-    cy.get('#submit-button').click()
-    cy.get(toast).should('have.text', nameIsReq)
-    cy.get('#addEditSection-name').type('demo section')
-    cy.get('.Toastify__close-button').click()
-    cy.get('#section-description').clear()
-    cy.get('#submit-button').click()
-    cy.get(toast).should('have.text', descriptionIsReq)
   })
 })
