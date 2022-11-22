@@ -1,7 +1,9 @@
 import { cypress, testsConstants } from '~/constants/common.constants'
 
 const test1 = `Aptitude - assessment2`
-
+const selectedSectionText = 'Selected Tests'
+const assessmentDetailsText = 'Assessment Details'
+const inviteCandidate = 'Invite Candidate'
 describe('Test for testPreview', () => {
   beforeEach('sign-in', () => {
     cy.login()
@@ -53,6 +55,41 @@ describe('Test for testPreview', () => {
     })
     cy.get('.test-name-navigation', { timeout: 6000 }).contains(test1).click()
     cy.get('#name').should('have.text', cypress.name).click()
+  })
+
+  it('Test for invite candidate text', () => {
+    cy.get('a')
+      .find('#tests', { timeout: 6000 })
+      .should('have.text', testsConstants.assessments)
+      .click()
+    cy.get('.test-name-navigation').contains(test1).click()
+    cy.get('#invite-popup-open-text')
+      .should('have.text', inviteCandidate)
+      .should('have.css', 'color', 'rgb(53, 57, 136)')
+      .should('have.css', 'cursor', 'pointer')
+  })
+  it('Test for assessment details text', () => {
+    cy.get('a')
+      .find('#tests', { timeout: 6000 })
+      .should('have.text', testsConstants.assessments)
+      .click()
+    cy.get('.test-name-navigation').contains(test1).click()
+    cy.get('#test-preview-assessmentDetails')
+      .should('have.text', assessmentDetailsText)
+      .should('have.css', 'font-size', '20px')
+      .should('have.css', 'font-weight', '600')
+  })
+  it('Test for selected section text', () => {
+    cy.get('a')
+      .find('#tests', { timeout: 6000 })
+      .should('have.text', testsConstants.assessments)
+      .click()
+    cy.get('.test-name-navigation').contains(test1).click()
+
+    cy.get('#test-preview-selectedTests')
+      .should('have.text', selectedSectionText)
+      .should('have.css', 'font-size', '20px')
+      .should('have.css', 'font-weight', '600')
   })
   it('test for description', () => {
     cy.get('a')
