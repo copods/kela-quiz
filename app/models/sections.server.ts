@@ -104,9 +104,7 @@ export async function checkSectionById(id: string) {
   })
 }
 export async function getQuestionType() {
-  return prisma.questionType.findMany({
-    where: { NOT: { value: 'SINGLE_CHOICE' } },
-  })
+  return prisma.questionType.findMany()
 }
 
 export async function addQuestion(
