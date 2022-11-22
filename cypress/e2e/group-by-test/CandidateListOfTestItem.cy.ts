@@ -95,7 +95,7 @@ describe('Visiting group by test of results page', () => {
     cy.get('.groupByItemTest').contains(test1).click()
     cy.get('#back-button', { timeout: 8000 }).should('be.visible')
   })
-  xit('Checks, after clicking on back button it should redirect to result page', () => {
+  it('Checks, after clicking on back button it should redirect to result page', () => {
     cy.get('a').find('#group-by-tests').should('have.text', 'Results').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')
     cy.get('h1', { timeout: 6000 }).should('have.text', 'Results')
