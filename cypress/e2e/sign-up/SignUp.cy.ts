@@ -1,5 +1,5 @@
 import { logIn, toastConstants } from '~/constants/common.constants'
-
+const signupPageTitle = 'Sign Up'
 const firstName = 'John'
 const lastName = 'Doe'
 const memberEmail = 'john@example.com'
@@ -34,6 +34,21 @@ describe('Test for Sign Up page', () => {
     cy.get('#Password').should('be.visible').clear().type('newPassword')
     cy.get('#confirmPassword').should('be.visible').clear().type('newPassword')
     cy.get('#add-button').should('have.text', logIn.signUp).click()
+  })
+  it('Checks for signup page title text and css', () => {
+    cy.get('#signup-page-title')
+      .should('have.text', signupPageTitle)
+      .should('have.css', 'font-weight', '700')
+      .should('have.css', 'font-size', '30px')
+      .should('have.css', 'color', 'rgb(17, 24, 39)')
+  })
+  it('Checks for Sign Up CTA button', () => {
+    cy.get('#add-button')
+      .should('have.text', signupPageTitle)
+      .should('have.css', 'background-color', 'rgb(162, 164, 214)')
+      .should('have.css', 'color', 'rgb(249, 250, 251)')
+      .should('have.css', 'font-size', '12px')
+      .should('have.css', 'font-weight', '500')
   })
   it('trying to sign up but member is already exist', () => {
     cy.get('#firstName')
