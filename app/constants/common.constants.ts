@@ -34,9 +34,9 @@ export const commonConstants = {
   saveAndExit: 'Save & Exit',
   saveAndAddMore: 'Save & Add More',
   logout: 'Logout',
-  enterSectionName: 'Enter Section Name',
-  enterSectionDesc: 'Enter Section Description',
-  enterTestName: 'Enter test name',
+  enterTestName: 'Enter Test Name',
+  enterTestsDesc: 'Enter Test Description',
+  enterAssessmentName: 'Enter assessment name',
   totalQuestion: 'Total Questions',
   verify: 'Verify',
   email: 'Email',
@@ -95,7 +95,7 @@ export const addQuestion = {
 }
 
 export const sectionsConstants = {
-  addSection: 'Add Section',
+  addTests: 'Add Test',
   formNotSubmittedCorrectly: 'Form not submitted correctly',
   totalQuestions: 'Total Questions:',
   noQuestionAlert: 'No questions found. Add your first question',
@@ -104,16 +104,16 @@ export const sectionsConstants = {
   dropdown: 'Select',
   expand: 'Expand',
   search: 'Search Question',
-  sectionName: 'Section',
+  testName: 'test',
 }
 export const testsConstants = {
   addAssessmentbutton: 'Add Assessment',
   testDetailsText: 'Test Details',
   descriptionText: 'Description',
   totalTimeText: 'Total Time',
-  totalSectionsText: 'Total Sections',
-  selectedSctionText: 'Selected Sections',
-  sectionText: 'Section',
+  totalTests: 'Total Tests',
+  selectedTests: 'Selected Tests',
+  testText: 'Test',
   questions: 'Questions',
   totalQuestionsText: 'Total Questions',
   assessments: 'Assessments',
@@ -137,7 +137,7 @@ export const componentGlobalConstants = {
   selected: 'Selected',
 }
 export const routeFiles = {
-  sections: 'Sections',
+  tests: 'Tests',
   options: 'Options',
 }
 
@@ -149,10 +149,11 @@ export const statusCheck = {
   selectCorrOption: 'Select the Correct Option',
   descIsReq: 'Description is required',
   nameIsReq: 'Name is required',
-  sectionAddedSuccess: 'Section added successfully..!',
+  testAddedSuccess: 'Test added successfully..!',
+  testUpdatedSuccess: 'Test updated sucessfully..!',
   maxOptions: 'you can add maximum six options.',
   testDependentWarning:
-    "Can't be deleted as you have to delete the test containing this section first",
+    "Can't be deleted as you have to delete the test containing this test first",
   duplicate: 'Duplicate Title',
   testAddedSuccessFully: 'Test added successfully..',
   testAlreadyExist: 'Test name already exist.',
@@ -268,10 +269,10 @@ export const cypress = {
     'The useMemo Hook can be used to keep expensive, resource intensive functions from needlessly running.',
 }
 export const toastConstants = {
-  addTest: 'Enter Name to add test',
+  addAssessment: 'Enter Name to add assessment',
   resendMemberInvitation: 'Invitation Sent Successfully..!',
   enterDescription: 'Enter description to add test',
-  addSection: 'Add sections to add test',
+  addTest: 'Add test to add assessment',
   enterQuestion: 'Enter the Question',
   enterOption: 'Enter all the Options',
   firstNameRequired: 'First Name is required',

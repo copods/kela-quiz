@@ -4,7 +4,7 @@ export const routes = {
   signUp: '/sign-up',
   instructions: 'instructions',
   assessments: '/assessments',
-  sections: '/sections',
+  tests: '/tests',
   addQuestion: '/add-question',
   addAssessment: '/assessments/add-assessment',
   resultGroupTest: '/results/groupByTests',

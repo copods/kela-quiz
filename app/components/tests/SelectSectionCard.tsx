@@ -20,7 +20,7 @@ const SelectSectionCard = ({
     selected?: boolean
   ) => {
     if (section?._count?.questions == 0) {
-      toast.error('Cannot add section with 0 questions')
+      toast.error(t('toastConstants.cannotAddTestZeroQuestion'))
       return
     }
     let tempSection = {
@@ -42,11 +42,11 @@ const SelectSectionCard = ({
         break
       case 'totalQuestions':
         if (parseInt(value || '') > (section?._count?.questions || 0)) {
-          toast.error('Cannot add more than available questions')
+          toast.error(t('toastConstants.notAdMoreThanAvailableQuestion'))
           return
         }
         if (parseInt(value || '') == 0) {
-          toast.error('Cannot add section with 0 questions.')
+          toast.error(t('toastConstants.cannotAddTestZeroQuestion'))
           return
         }
         tempSection.totalQuestions = parseInt(value || '')

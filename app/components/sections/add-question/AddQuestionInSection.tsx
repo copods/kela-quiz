@@ -59,12 +59,12 @@ const AddQuestionInSection = () => {
 
   const breadCrumbArray = [
     {
-      tabName: 'testsConstants.sectionText',
-      route: routes.sections,
+      tabName: 'testsConstants.testText',
+      route: routes.tests,
     },
     {
       tabName: 'addQuestion.addQuestion',
-      route: `${routes.sections}/${sectionDetails?.id}${routes.addQuestion}`,
+      route: `${routes.tests}/${sectionDetails?.id}${routes.addQuestion}`,
     },
   ]
   const getQuestionType = (id: string) => {
@@ -227,7 +227,7 @@ const AddQuestionInSection = () => {
           <Button
             tabIndex={0}
             id="cancel"
-            onClick={() => navigate(`${routes.sections}/${sectionDetails?.id}`)}
+            onClick={() => navigate(`${routes.tests}/${sectionDetails?.id}`)}
             isDisabled={transition.state === 'submitting'}
             className="h-9 px-5"
             title={

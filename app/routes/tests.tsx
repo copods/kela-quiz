@@ -83,7 +83,7 @@ const handleAddSection = async (
       addHandle = json<ActionData>(
         {
           resp: {
-            status: 'statusCheck.sectionAddedSuccess',
+            status: 'statusCheck.testAddedSuccess',
             data: res as Section,
             check: new Date(),
           },
@@ -129,7 +129,7 @@ const handleEditSection = async (
       editHandle = json<ActionData>(
         {
           resp: {
-            status: 'statusCheck.sectionUpdatedSuccess',
+            status: 'statusCheck.testUpdatedSuccess',
             data: res as Section,
           },
         },
@@ -333,7 +333,7 @@ export default function SectionPage() {
       formData.append('filter', JSON.stringify(filter))
       submit(formData, {
         method: 'get',
-        action: `${routes.sections}/${selectedSection}`,
+        action: `${routes.tests}/${selectedSection}`,
       })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -344,7 +344,7 @@ export default function SectionPage() {
     if (sectionActionData) {
       if (
         t(sectionActionData.resp?.status as string) ===
-        t('statusCheck.sectionAddedSuccess')
+        t('statusCheck.testAddedSuccess')
       ) {
         setCreateSectionError({ title: '', description: '' })
         setShowAddSectionModal(false)
@@ -355,7 +355,7 @@ export default function SectionPage() {
         })
       } else if (
         t(sectionActionData.resp?.status as string) ===
-        t('statusCheck.sectionUpdatedSuccess')
+        t('statusCheck.testUpdatedSuccess')
       ) {
         toast.success(t(sectionActionData.resp?.status as string), {
           toastId: t(sectionActionData.resp?.status as string),
@@ -402,11 +402,11 @@ export default function SectionPage() {
           <h2
             className="text-3xl font-bold text-black"
             tabIndex={0}
-            role={t('routeFiles.sections')}
-            title={t('routeFiles.sections')}
-            aria-label={t('routeFiles.sections')}
+            role={t('routeFiles.tests')}
+            title={t('routeFiles.tests')}
+            aria-label={t('routeFiles.tests')}
           >
-            {t('routeFiles.sections')}
+            {t('routeFiles.tests')}
           </h2>
           <Button
             id="add-section"
@@ -414,8 +414,8 @@ export default function SectionPage() {
             className="h-9 px-5"
             varient="primary-solid"
             onClick={() => setShowAddSectionModal(!showAddSectionModal)}
-            title={t('sectionsConstants.addSection')}
-            buttonText={`+ ${t('sectionsConstants.addSection')}`}
+            title={t('sectionsConstants.addTests')}
+            buttonText={`+ ${t('sectionsConstants.addTests')}`}
           />
         </header>
         {data.sections.length > 0 ? (

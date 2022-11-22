@@ -107,7 +107,7 @@ export default function AddQuestion() {
       if (actionData.success.addMoreQuestion) {
         setAddQuestionKey((prev) => (prev += 1))
       } else {
-        navigate(`${routes.sections}/${sectionDetail.sectionDetails?.id}`)
+        navigate(`${routes.tests}/${sectionDetail.sectionDetails?.id}`)
       }
     } else if (actionData?.error) {
       toast.error(t(actionData?.data))
