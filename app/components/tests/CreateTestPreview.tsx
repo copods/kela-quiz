@@ -61,7 +61,7 @@ const TestPreview = ({
       <div className="flex flex-col gap-6">
         <div className="flex justify-between">
           <h1
-            id="test-preview-assessmentDetails"
+            id="test-preview-assessment-details"
             className="text-xl font-semibold"
           >
             {t('testsConstants.testDetailsText')}
@@ -148,7 +148,7 @@ const TestPreview = ({
         </div>
       </div>
       <div className="flex flex-col gap-6">
-        <h1 id="test-preview-selectedTests" className="text-xl font-semibold">
+        <h1 id="test-preview-selected-tests" className="text-xl font-semibold">
           {t('testsConstants.selectedTests')}
         </h1>
         <div className="flex flex-col gap-4 text-base">

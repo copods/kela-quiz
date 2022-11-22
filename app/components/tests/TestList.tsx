@@ -96,7 +96,7 @@ const TestList = ({
                 </div>
               )}
               <div
-                id="assessments-table-srNo"
+                id="assessments-table-sr-no"
                 className="w-1/12 text-sm text-gray-500"
               >
                 {t('commonConstants.srNo')}
@@ -114,13 +114,13 @@ const TestList = ({
                 {t('testsConstants.testText')}
               </div>
               <div
-                id="assessments-table-createdOn"
+                id="assessments-table-created-on"
                 className="w-2/12 text-sm text-gray-500"
               >
                 {t('testsConstants.createdOn')}
               </div>
               <div
-                id="assessments-table-createdBy"
+                id="assessments-table-created-by"
                 className="w-2/12 text-sm text-gray-500"
               >
                 {t('testsConstants.created')} {t('commonConstants.byText')}

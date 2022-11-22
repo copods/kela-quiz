@@ -74,7 +74,7 @@ describe('Test for testPreview', () => {
       .should('have.text', testsConstants.assessments)
       .click()
     cy.get('.test-name-navigation').contains(test1).click()
-    cy.get('#test-preview-assessmentDetails')
+    cy.get('#test-preview-assessment-details')
       .should('have.text', assessmentDetailsText)
       .should('have.css', 'font-size', '20px')
       .should('have.css', 'font-weight', '600')
@@ -86,7 +86,7 @@ describe('Test for testPreview', () => {
       .click()
     cy.get('.test-name-navigation').contains(test1).click()
 
-    cy.get('#test-preview-selectedTests')
+    cy.get('#test-preview-selected-tests')
       .should('have.text', selectedSectionText)
       .should('have.css', 'font-size', '20px')
       .should('have.css', 'font-weight', '600')
