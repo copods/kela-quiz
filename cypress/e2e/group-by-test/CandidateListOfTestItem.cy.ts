@@ -68,7 +68,7 @@ describe('Visiting group by test of results page', () => {
         if (
           el[0].getElementsByClassName('groupByItemTest')[0].innerHTML === test1
         ) {
-          cy.get('.groupByItemTest').should('have.text', test1).click()
+          cy.get('.groupByItemTest').should('have.text', test1)
         }
       })
     })
@@ -84,7 +84,7 @@ describe('Visiting group by test of results page', () => {
         if (
           el[0].getElementsByClassName('groupByItemTest')[0].innerHTML === test1
         ) {
-          cy.get('.groupByItemTest').should('have.text', test1).click()
+          cy.get('.groupByItemTest').should('have.text', test1)
         }
       })
     })
