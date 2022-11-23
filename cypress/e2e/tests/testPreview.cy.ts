@@ -56,41 +56,109 @@ describe('Test for testPreview', () => {
     cy.get('.test-name-navigation', { timeout: 6000 }).contains(test1).click()
     cy.get('#name').should('have.text', cypress.name).click()
   })
+  it('Checks for invite candidate button text', () => {
+    cy.get('a')
+      .find('#tests', { timeout: 6000 })
+      .should('have.text', testsConstants.assessments)
+      .click()
+    cy.get('.test-name-navigation').contains(test1).click()
+    cy.get('#invite-popup-open-text').should('have.text', inviteCandidate)
+  })
+  it('Checks for invite candidate button color', () => {
+    cy.get('a')
+      .find('#tests', { timeout: 6000 })
+      .should('have.text', testsConstants.assessments)
+      .click()
+    cy.get('.test-name-navigation').contains(test1).click()
+    cy.get('#invite-popup-open-text').should(
+      'have.css',
+      'color',
+      'rgb(53, 57, 136)'
+    )
+  })
+  it('Checks for invite candidate button cursor', () => {
+    cy.get('a')
+      .find('#tests', { timeout: 6000 })
+      .should('have.text', testsConstants.assessments)
+      .click()
+    cy.get('.test-name-navigation').contains(test1).click()
+    cy.get('#invite-popup-open-text').should('have.css', 'cursor', 'pointer')
+  })
 
-  it('Test for invite candidate text', () => {
+  it('Checks for assessment details text', () => {
     cy.get('a')
       .find('#tests', { timeout: 6000 })
       .should('have.text', testsConstants.assessments)
       .click()
     cy.get('.test-name-navigation').contains(test1).click()
-    cy.get('#invite-popup-open-text')
-      .should('have.text', inviteCandidate)
-      .should('have.css', 'color', 'rgb(53, 57, 136)')
-      .should('have.css', 'cursor', 'pointer')
+    cy.get('#test-preview-assessment-details').should(
+      'have.text',
+      assessmentDetailsText
+    )
   })
-  it('Test for assessment details text', () => {
+  it('Checks for assessment details text font size', () => {
     cy.get('a')
       .find('#tests', { timeout: 6000 })
       .should('have.text', testsConstants.assessments)
       .click()
     cy.get('.test-name-navigation').contains(test1).click()
-    cy.get('#test-preview-assessment-details')
-      .should('have.text', assessmentDetailsText)
-      .should('have.css', 'font-size', '20px')
-      .should('have.css', 'font-weight', '600')
+    cy.get('#test-preview-assessment-details').should(
+      'have.css',
+      'font-size',
+      '20px'
+    )
   })
-  it('Test for selected section text', () => {
+  it('Checks for assessment details text font weight', () => {
+    cy.get('a')
+      .find('#tests', { timeout: 6000 })
+      .should('have.text', testsConstants.assessments)
+      .click()
+    cy.get('.test-name-navigation').contains(test1).click()
+    cy.get('#test-preview-assessment-details').should(
+      'have.css',
+      'font-weight',
+      '600'
+    )
+  })
+  it('Checks for selected section text', () => {
     cy.get('a')
       .find('#tests', { timeout: 6000 })
       .should('have.text', testsConstants.assessments)
       .click()
     cy.get('.test-name-navigation').contains(test1).click()
 
-    cy.get('#test-preview-selected-tests')
-      .should('have.text', selectedSectionText)
-      .should('have.css', 'font-size', '20px')
-      .should('have.css', 'font-weight', '600')
+    cy.get('#test-preview-selected-tests').should(
+      'have.text',
+      selectedSectionText
+    )
   })
+  it('Checks for selected section text font size', () => {
+    cy.get('a')
+      .find('#tests', { timeout: 6000 })
+      .should('have.text', testsConstants.assessments)
+      .click()
+    cy.get('.test-name-navigation').contains(test1).click()
+
+    cy.get('#test-preview-selected-tests').should(
+      'have.css',
+      'font-size',
+      '20px'
+    )
+  })
+  it('Checks for selected section text font weight', () => {
+    cy.get('a')
+      .find('#tests', { timeout: 6000 })
+      .should('have.text', testsConstants.assessments)
+      .click()
+    cy.get('.test-name-navigation').contains(test1).click()
+
+    cy.get('#test-preview-selected-tests').should(
+      'have.css',
+      'font-weight',
+      '600'
+    )
+  })
+
   it('test for description', () => {
     cy.get('a')
       .find('#tests', { timeout: 6000 })
