@@ -101,12 +101,18 @@ describe('Test for Logout, SideNav', () => {
       'rgb(156, 163, 175)'
     )
   })
-
-  it('Check for logout CTA button css', () => {
-    cy.get('#logout-button')
-      .should('have.css', 'background-color', 'rgb(239, 68, 68)')
-      .should('have.css', 'padding', '10px 8px')
-      .should('have.css', 'cursor', 'pointer')
+  it('Checks for logout CTA button background color', () => {
+    cy.get('#logout-button').should(
+      'have.css',
+      'background-color',
+      'rgb(239, 68, 68)'
+    )
+  })
+  it('Checks for logout CTA button padding', () => {
+    cy.get('#logout-button').should('have.css', 'padding', '10px 8px')
+  })
+  it('Checks for logout CTA button cursor', () => {
+    cy.get('#logout-button').should('have.css', 'cursor', 'pointer')
   })
 
   it('should render drop down to switch workspace', () => {
