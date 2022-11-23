@@ -26,7 +26,6 @@ export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
 
   const invitedId = formData.get('inviteId')
-  console.log(invitedId, typeof invitedId, 'inviteId')
 
   const redirectTo = safeRedirect(
     formData.get('redirectTo'),

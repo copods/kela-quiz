@@ -24,8 +24,8 @@ const TestListMenuItem = ({
   useEffect(() => {
     if (open === false) {
       setTimeout(() => {
-        const menuButton = document.querySelector(`.${id}`) as HTMLElement
-        menuButton?.focus()
+        // const menuButton = document.querySelector(`.${id}`) as HTMLElement
+        // menuButton?.focus()
       }, 50)
     }
   }, [open, id])

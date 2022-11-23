@@ -126,7 +126,6 @@ describe('Test for Section', () => {
           verticalDot.click()
 
           const deletBtn = cy.get('[data-cy="delete-section"]')
-          console.log({ deletBtn })
           deletBtn.click()
         }
       })

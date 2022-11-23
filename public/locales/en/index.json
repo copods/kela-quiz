@@ -146,7 +146,8 @@
     "candidateInvited": "Candidate Invited",
     "candidatesInvited": "Candidates Invited",
     "allCandidatesInvited": "All candidates invited.",
-    "writeDescriptionOfTest": "Write Description of Test"
+    "writeDescriptionOfTest": "Write Description of Test",
+    "searchCandidate": "Search Candidate"
   },
   "componentGlobalConstants": {
     "totalCounts": "Total Counts",
