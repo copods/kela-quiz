@@ -394,6 +394,7 @@ export default function SectionPage() {
     location,
     navigate,
   ])
+
   return (
     <AdminLayout>
       <div className="flex h-full flex-col gap-6 overflow-hidden p-1">
@@ -401,6 +402,7 @@ export default function SectionPage() {
         <header className="flex items-start justify-between">
           <h2
             className="text-3xl font-bold text-black"
+            id="tests-heading"
             tabIndex={0}
             role={t('routeFiles.tests')}
             title={t('routeFiles.tests')}

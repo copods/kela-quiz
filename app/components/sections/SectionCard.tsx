@@ -84,6 +84,7 @@ const SectionCard = ({
                     <div className="flex flex-col gap-1">
                       <button
                         tabIndex={0}
+                        id='edit-test-button'
                         data-cy="edit-section"
                         className="text-gray-primary undefined inline-flex w-36 items-center justify-start bg-white px-2 py-2 text-xs font-medium text-primary transition delay-75 ease-in-out hover:bg-gray-100"
                         onClick={() => {
@@ -108,6 +109,7 @@ const SectionCard = ({
                       </button>
                       <button
                         tabIndex={0}
+                        id='delete-test-button'
                         data-cy="delete-section"
                         className="text-gray-primary undefined inline-flex w-36 items-center justify-start bg-white px-2 py-2 text-xs font-medium text-primary transition delay-75 ease-in-out hover:bg-gray-100"
                         onClick={() => {

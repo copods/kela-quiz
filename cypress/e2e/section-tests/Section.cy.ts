@@ -1,20 +1,129 @@
 import {
   commonConstants,
   cypress,
-  routeFiles,
   statusCheck,
 } from '~/constants/common.constants'
 const section1 = `Aptitude - section1`
 const deleteSection = `Aptitude - delete-Section`
 
 /// <reference types="Cypress">
-describe('Test for Section', () => {
+describe('Test for Tests', () => {
   beforeEach('sign-in', () => {
     cy.login()
 
     cy.customVisit('/tests')
   })
-  it('cancel Add section', () => {
+  it('Check Active State of Tests', () => {
+    cy.location().then((loc) => {
+      cy.location('search').should('include', loc.search)
+    })
+  })
+  it('checks, Tests page have heading and should be visible', () => {
+    cy.wait(1000)
+    cy.get('#tests-heading', { timeout: 60000 }).should('be.visible')
+  })
+  it('checks, Tests page have heading and should have correct test', () => {
+    cy.wait(1000)
+    cy.get('#tests-heading', { timeout: 6000 }).should('have.text', 'Tests')
+  })
+  it('checks, Tests page have heading should have class', () => {
+    cy.wait(1000)
+    cy.get('#tests-heading', { timeout: 6000 }).should(
+      'have.class',
+      'text-3xl font-bold text-black'
+    )
+  })
+  it('checks, Tests page have heading should have tabIndex', () => {
+    cy.wait(1000)
+    cy.get('#tests-heading', { timeout: 6000 }).should(
+      'have.attr',
+      'tabindex',
+      '0'
+    )
+  })
+  it('checks, Tests page have heading should have focus', () => {
+    cy.wait(1000)
+    cy.get('#tests-heading', { timeout: 6000 })
+      .should('have.attr', 'tabindex', '0')
+      .click()
+      .should('have.focus')
+  })
+  it('checks, Add test button should be visible', () => {
+    cy.wait(1000)
+    cy.get('#add-section', { timeout: 6000 }).should('be.visible')
+  })
+  it('checks, Add test button should have correct text', () => {
+    cy.wait(1000)
+    cy.get('#add-section', { timeout: 6000 }).should('have.text', '+ Add Test')
+  })
+
+  it('checks, add test popup heading should be visible', () => {
+    cy.wait(1000)
+    cy.get('#add-section', { timeout: 6000 })
+      .should('have.text', '+ Add Test')
+
+      .click()
+    cy.get('#dialog-header').should('be.visible')
+  })
+  it('checks, add test popup heading should have correct text', () => {
+    cy.wait(1000)
+    cy.get('#add-section', { timeout: 6000 })
+      .should('have.text', '+ Add Test')
+
+      .click()
+    cy.get('#dialog-header').should('have.text', 'Add Test')
+  })
+  it('checks, add test popup heading should have tabIndex', () => {
+    cy.wait(1000)
+    cy.get('#add-section', { timeout: 6000 })
+      .should('have.text', '+ Add Test')
+
+      .click()
+    cy.get('#dialog-header').should('have.attr', 'tabindex', '0')
+  })
+  it('checks, add test popup heading should have aria label', () => {
+    cy.wait(1000)
+    cy.get('#add-section', { timeout: 6000 })
+      .should('have.text', '+ Add Test')
+
+      .click()
+    cy.get('#dialog-header').should('have.attr', 'aria-label', 'Add Test')
+  })
+  it('checks, add test popup heading should have focus', () => {
+    cy.wait(1000)
+    cy.get('#add-section', { timeout: 6000 })
+      .should('have.text', '+ Add Test')
+
+      .click()
+    cy.get('#dialog-header')
+      .should('have.attr', 'aria-label', 'Add Test')
+      .click()
+      .should('have.focus')
+  })
+  it('checks, cancel button should have correct text', () => {
+    cy.wait(1000)
+    cy.get('#add-section', { timeout: 6000 })
+      .should('have.text', '+ Add Test')
+      .click()
+    cy.get('form > div')
+      .should('be.visible')
+      .within(() => {
+        cy.get('#cancel-button').should('have.text', 'Cancel')
+      })
+  })
+
+  it('checks, cancel button should have tabindex', () => {
+    cy.wait(1000)
+    cy.get('#add-section', { timeout: 6000 })
+      .should('have.text', '+ Add Test')
+      .click()
+    cy.get('form > div')
+      .should('be.visible')
+      .within(() => {
+        cy.get('#cancel-button').should('have.attr', 'tabindex', '0')
+      })
+  })
+  it('checks,cancel Add test button functionality', () => {
     cy.get('#add-section').click()
     cy.get('form > div')
       .should('be.visible')
@@ -23,30 +132,196 @@ describe('Test for Section', () => {
       })
   })
 
-  // TODO: whoever pick this file to fix test cases, fix this one also
-
-  // it('allows users to search questions', () => {
-  //   cy.get('input[name="search"]').clear().type(cypress.useMemo)
-  //   cy.get('.ql-editor').each(($el) => {
-  //     cy.wrap($el).within((el) => {
-  //       if (
-  //         el[0].getElementsByClassName('question')[0].innerHTML ===
-  //         cypress.useMemo
-  //       ) {
-  //         cy.get('.question').should('have.text', cypress.useMemo)
-  //       }
-  //     })
-  //   })
-  // })
-  it('Check Active State of Section', () => {
-    cy.location().then((loc) => {
-      cy.location('search').should('include', loc.search)
-    })
+  it('checks, add test popup close icon should be visible', () => {
+    cy.wait(1000)
+    cy.get('#add-section', { timeout: 6000 })
+      .should('have.text', '+ Add Test')
+      .click()
+    cy.get('#dialog-close-icon').should('be.visible')
   })
-  it('Test for valid error message while adding new section without Title', () => {
-    cy.get('a').find('#sections').should('have.text', routeFiles.tests).click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.get('#add-section').click()
+  it('checks, add test popup close icon should have tabIndex', () => {
+    cy.wait(1000)
+    cy.get('#add-section', { timeout: 6000 })
+      .should('have.text', '+ Add Test')
+      .click()
+    cy.get('#dialog-close-icon').should('have.attr', 'tabindex', '0')
+  })
+  it('checks, add test popup close icon should have role image', () => {
+    cy.wait(1000)
+    cy.get('#add-section', { timeout: 6000 })
+      .should('have.text', '+ Add Test')
+      .click()
+    cy.get('#dialog-close-icon').should('have.attr', 'role', 'img')
+  })
+  it('checks, enter test name input field should be visible', () => {
+    cy.wait(1000)
+    cy.get('#add-section', { timeout: 6000 })
+      .should('have.text', '+ Add Test')
+      .click()
+
+    cy.get('form > div')
+      .should('be.visible')
+      .within((el) => {
+        cy.get('input[placeholder="Enter Test Name"]')
+          .type(`${section1} ${new Date().getTime()}`)
+          .should('be.visible')
+      })
+  })
+  it('checks, enter test name input field should have tabIndex', () => {
+    cy.wait(1000)
+    cy.get('#add-section', { timeout: 6000 })
+      .should('have.text', '+ Add Test')
+      .click()
+
+    cy.get('form > div')
+      .should('be.visible')
+      .within((el) => {
+        cy.get('input[placeholder="Enter Test Name"]').should(
+          'have.attr',
+          'tabindex',
+          '0'
+        )
+      })
+  })
+  it('checks, enter test name input field should have focus', () => {
+    cy.wait(1000)
+    cy.get('#add-section', { timeout: 6000 })
+      .should('have.text', '+ Add Test')
+      .click()
+
+    cy.get('form > div')
+      .should('be.visible')
+      .within((el) => {
+        cy.get('input[placeholder="Enter Test Name"]')
+          .click()
+          .should('have.focus')
+      })
+  })
+  it('checks, enter test description test area should be visible', () => {
+    cy.wait(1000)
+    cy.get('#add-section', { timeout: 6000 })
+      .should('have.text', '+ Add Test')
+      .click()
+    cy.get('form > div')
+      .should('be.visible')
+      .within((el) => {
+        cy.get('textarea').should('be.visible')
+      })
+  })
+  it('checks, enter test description test area should be focus', () => {
+    cy.wait(1000)
+    cy.get('#add-section', { timeout: 6000 })
+      .should('have.text', '+ Add Test')
+      .click()
+    cy.get('form > div')
+      .should('be.visible')
+      .within((el) => {
+        cy.get('textarea').click().should('be.focus')
+      })
+  })
+  it('checks, enter test description test area should have tabindex', () => {
+    cy.wait(1000)
+    cy.get('#add-section', { timeout: 6000 })
+      .should('have.text', '+ Add Test')
+      .click()
+    cy.get('form > div')
+      .should('be.visible')
+      .within((el) => {
+        cy.get('textarea').should('have.attr', 'tabindex', '0')
+      })
+  })
+  it('checks,active Tests should have tabIndex', () => {
+    cy.wait(1000)
+    cy.get('.activeSectionCard', { timeout: 6000 }).should(
+      'have.attr',
+      'tabindex',
+      '0'
+    )
+  })
+  it('checks,active Tests should have role button', () => {
+    cy.wait(1000)
+    cy.get('.activeSectionCard', { timeout: 6000 }).should(
+      'have.attr',
+      'role',
+      'button'
+    )
+  })
+  it('checks,active Tests should have white background color', () => {
+    cy.wait(1000)
+    cy.get('.activeSectionCard', { timeout: 6000 })
+      .children()
+      .should('have.css', 'background-color', 'rgb(255, 255, 255)')
+  })
+  it('checks,active Tests should have vertical dots for menu actions', () => {
+    cy.wait(1000)
+    cy.get('.activeSectionCard', { timeout: 6000 })
+      .children()
+      .get('.verticalDots', { timeout: 8000 })
+      .should('be.visible')
+  })
+  it('checks,active Tests ,delete Tests button should be visible', () => {
+    cy.wait(1000)
+    cy.get('.activeSectionCard', { timeout: 6000 })
+      .children()
+      .get('.verticalDots', { timeout: 8000 })
+      .click()
+    cy.get('#delete-test-button').should('be.visible')
+  })
+  it('checks,active Tests ,delete Tests button should be visible', () => {
+    cy.wait(1000)
+    cy.get('.activeSectionCard', { timeout: 6000 })
+      .children()
+      .get('.verticalDots', { timeout: 8000 })
+      .click()
+    cy.get('#edit-test-button').should('be.visible')
+  })
+  it('checks,Tests details heading should be visible', () => {
+    cy.wait(1000)
+    cy.get('#section-details-heading', { timeout: 6000 }).should('be.visible')
+  })
+  it('checks,Tests details heading should have correct class', () => {
+    cy.wait(1000)
+    cy.get('#section-details-heading', { timeout: 6000 }).should(
+      'have.class',
+      'inline-block text-2xl font-semibold text-gray-700'
+    )
+  })
+  it('checks,Tests details heading should have tabIndex', () => {
+    cy.wait(1000)
+    cy.get('#section-details-heading', { timeout: 6000 }).should(
+      'have.attr',
+      'tabindex',
+      '0'
+    )
+  })
+  it('checks,section details heading should have focus', () => {
+    cy.wait(1000)
+    cy.get('#section-details-heading', { timeout: 6000 })
+      .should('have.attr', 'tabindex', '0')
+      .click()
+      .should('have.focus')
+  })
+  it('checks,Tests details search bar should be visible', () => {
+    cy.wait(1000)
+    cy.get('#section-search', { timeout: 6000 }).should('be.visible')
+  })
+  it('checks,Tests details search bar should have tabIndex', () => {
+    cy.wait(1000)
+    cy.get('#section-search', { timeout: 6000 }).should(
+      'have.attr',
+      'tabindex',
+      '0'
+    )
+  })
+  it('checks,Tests details search bar should have focus', () => {
+    cy.wait(1000)
+    cy.get('#section-search', { timeout: 6000 }).click().should('have.focus')
+  })
+  it('Test for valid error message while adding new Tests without Title', () => {
+    cy.wait(1000)
+    cy.get('#add-section', { timeout: 6000 })
+      .should('have.text', '+ Add Test')
+      .click()
     cy.get('form > div')
       .should('be.visible')
       .within((el) => {
@@ -57,10 +332,26 @@ describe('Test for Section', () => {
       statusCheck.nameIsReq
     )
   })
-  it('Test for valid error message while adding new section without Description', () => {
-    cy.get('a').find('#sections').should('have.text', routeFiles.tests).click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.get('#add-section').click()
+  it('Test for valid error message while adding new Tests without Title', () => {
+    cy.wait(1000)
+    cy.get('#add-section', { timeout: 6000 })
+      .should('have.text', '+ Add Test')
+      .click()
+    cy.get('form > div')
+      .should('be.visible')
+      .within((el) => {
+        cy.get('[data-cy="submit"]').click()
+      })
+    cy.get('#addEditSection-title-error').should(
+      'have.text',
+      statusCheck.nameIsReq
+    )
+  })
+  it('Test for valid error message while adding new Tests without Description', () => {
+    cy.wait(1000)
+    cy.get('#add-section', { timeout: 6000 })
+      .should('have.text', '+ Add Test')
+      .click()
     cy.get('form > div')
       .should('be.visible')
       .within((el) => {
@@ -75,8 +366,11 @@ describe('Test for Section', () => {
       statusCheck.descIsReq
     )
   })
-  it('Test for valid error message while adding new section with duplicate Title', () => {
-    cy.get('#add-section').click()
+  it('Test for valid error message while adding new Tests with duplicate Title', () => {
+    cy.wait(1000)
+    cy.get('#add-section', { timeout: 6000 })
+      .should('have.text', '+ Add Test')
+      .click()
     cy.get('form > div')
       .should('be.visible')
       .within((el) => {
@@ -114,7 +408,7 @@ describe('Test for Section', () => {
         })
     })
   })
-  it('Test for deleting the section and check if it is deleted or not', () => {
+  it('Test for deleting the Tests and check if it is deleted or not', () => {
     const sectionCards = cy.get('.section-card')
     sectionCards.each(($element) => {
       cy.wrap($element).within(($el) => {
