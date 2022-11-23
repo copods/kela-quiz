@@ -1,4 +1,4 @@
-import { cypress, addQuestion, routeFiles } from '~/constants/common.constants'
+import { cypress, addQuestion } from '~/constants/common.constants'
 import { routes } from '~/constants/route.constants'
 const section1 = `Aptitude - section1`
 
@@ -11,8 +11,6 @@ describe('Test for section-details', () => {
 
   it('checks, add question button should be visible and have correct text', () => {
     cy.wait(3000)
-    cy.get('a').find('#sections').should('have.text', routeFiles.tests).click()
-    cy.location('pathname', { timeout: 60000 }).should('include', routes.tests)
 
     cy.get('#add-question', { timeout: 40000 }).should(
       'have.text',
@@ -22,8 +20,6 @@ describe('Test for section-details', () => {
 
   it('checks, heading of add question should be visible and have correct text', () => {
     cy.wait(3000)
-    cy.get('a').find('#sections').should('have.text', routeFiles.tests).click()
-    cy.location('pathname', { timeout: 60000 }).should('include', routes.tests)
 
     cy.get('#add-question', { timeout: 20000 }).click()
     cy.location('pathname', { timeout: 60000 }).should(
@@ -36,8 +32,6 @@ describe('Test for section-details', () => {
   })
   it('checks, redirect to section page after clicking on breadscrum link', () => {
     cy.wait(3000)
-    cy.get('a').find('#sections').should('have.text', routeFiles.tests).click()
-    cy.location('pathname', { timeout: 60000 }).should('include', routes.tests)
 
     cy.get('#add-question', { timeout: 20000 }).click()
     cy.location('pathname', { timeout: 60000 }).should(
@@ -52,8 +46,6 @@ describe('Test for section-details', () => {
 
   it('Verifying MCQ to have Check Box in options', () => {
     cy.wait(3000)
-    cy.get('a').find('#sections').should('have.text', routeFiles.tests).click()
-    cy.location('pathname', { timeout: 60000 }).should('include', routes.tests)
 
     cy.get('#add-question', { timeout: 20000 }).click()
 
@@ -88,8 +80,6 @@ describe('Test for section-details', () => {
 
   it('Verifying Single Choice to have Radio Button in options', () => {
     cy.wait(3000)
-    cy.get('a').find('#sections').should('have.text', routeFiles.tests).click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
 
     cy.get('#add-question', { timeout: 12000 }).click()
     cy.location('pathname', { timeout: 60000 }).should(
@@ -123,8 +113,6 @@ describe('Test for section-details', () => {
 
   it('Verifying Text to have Textarea in options and should be in focused after interaction', () => {
     cy.wait(3000)
-    cy.get('a').find('#sections').should('have.text', routeFiles.tests).click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
 
     cy.get('#add-question', { timeout: 12000 }).click()
     cy.location('pathname', { timeout: 60000 }).should(
@@ -161,8 +149,6 @@ describe('Test for section-details', () => {
   let lengthBefore: number
   it('Verifying if Add Option functionality Working on Options', () => {
     cy.wait(3000)
-    cy.get('a').find('#sections').should('have.text', routeFiles.tests).click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
 
     cy.get('#add-question', { timeout: 12000 }).click()
     cy.location('pathname', { timeout: 60000 }).should(
@@ -198,8 +184,6 @@ describe('Test for section-details', () => {
   })
   it('Verifying if Delete button should be visible', () => {
     cy.wait(3000)
-    cy.get('a').find('#sections').should('have.text', routeFiles.tests).click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
 
     cy.get('#add-question', { timeout: 12000 }).click()
     cy.location('pathname', { timeout: 60000 }).should(
@@ -230,8 +214,6 @@ describe('Test for section-details', () => {
   })
   it('Verifying if Delete functionality Working on Options', () => {
     cy.wait(3000)
-    cy.get('a').find('#sections').should('have.text', routeFiles.tests).click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
 
     cy.get('#add-question', { timeout: 12000 }).click()
     cy.location('pathname', { timeout: 60000 }).should(
@@ -267,8 +249,6 @@ describe('Test for section-details', () => {
   })
   it('On Save and Add More visit the Add Question Page', () => {
     cy.wait(3000)
-    cy.get('a').find('#sections').should('have.text', routeFiles.tests).click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
 
     cy.get('#add-question', { timeout: 12000 }).click()
     cy.location('pathname', { timeout: 60000 }).should(
@@ -301,8 +281,7 @@ describe('Test for section-details', () => {
   })
   it('On Save and Continue visit the Sections Page', () => {
     cy.wait(3000)
-    cy.get('a').find('#sections').should('have.text', routeFiles.tests).click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
+
     cy.get('#section-details-heading', { timeout: 40000 })
       .should('be.visible', { timeout: 4000 })
       .should('have.text', section1)
@@ -335,8 +314,7 @@ describe('Test for section-details', () => {
   })
   it('Verifying if Question is Empty or not', () => {
     cy.wait(3000)
-    cy.get('a').find('#sections').should('have.text', routeFiles.tests).click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
+
     cy.get('#section-details-heading', { timeout: 40000 })
       .should('be.visible', { timeout: 4000 })
       .should('have.text', section1)
@@ -356,8 +334,6 @@ describe('Test for section-details', () => {
   })
   it('Verifying if any Option is empty or not', () => {
     cy.wait(3000)
-    cy.get('a').find('#sections').should('have.text', routeFiles.tests).click()
-    cy.location('pathname', { timeout: 60000 }).should('include', routes.tests)
 
     cy.get('#section-details-heading', { timeout: 40000 })
       .should('be.visible', { timeout: 4000 })

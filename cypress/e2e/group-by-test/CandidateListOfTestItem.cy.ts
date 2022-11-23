@@ -3,12 +3,11 @@ describe('Visiting group by test of results page', () => {
   beforeEach('sign-in', () => {
     cy.login()
 
-    cy.customVisit('/members')
+    cy.customVisit('/results')
   })
   const test1 = `Aptitude - assessment1`
   it('checks, test is available for test', () => {
-    cy.get('a').find('#group-by-tests').should('have.text', 'Results').click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/results')
+    
     cy.get('h1', { timeout: 6000 }).should('have.text', 'Results')
     cy.wait(6000)
     cy.get('.groupTestRow').each(($el) => {
@@ -25,8 +24,7 @@ describe('Visiting group by test of results page', () => {
   })
 
   it('Checks, header of candidate list page should be visible', () => {
-    cy.get('a').find('#group-by-tests').should('have.text', 'Results').click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/results')
+    
     cy.get('h1', { timeout: 6000 }).should('have.text', 'Results')
     cy.wait(6000)
     cy.get('.groupTestRow').each(($el) => {
@@ -43,8 +41,7 @@ describe('Visiting group by test of results page', () => {
   })
 
   it('Checks, header of candidate list page should have correct classes', () => {
-    cy.get('a').find('#group-by-tests').should('have.text', 'Results').click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/results')
+    
     cy.get('h1', { timeout: 6000 }).should('have.text', 'Results')
     cy.wait(6000)
     cy.get('.groupTestRow').each(($el) => {
@@ -63,8 +60,7 @@ describe('Visiting group by test of results page', () => {
     )
   })
   it('Checks, back button should be visible', () => {
-    cy.get('a').find('#group-by-tests').should('have.text', 'Results').click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/results')
+    
     cy.get('h1', { timeout: 6000 }).should('have.text', 'Results')
     cy.wait(6000)
     cy.get('.groupTestRow').each(($el) => {
@@ -80,8 +76,7 @@ describe('Visiting group by test of results page', () => {
     cy.get('#back-button', { timeout: 8000 }).should('be.visible')
   })
   it('Checks, after clicking on back button it should redirect to result page', () => {
-    cy.get('a').find('#group-by-tests').should('have.text', 'Results').click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/results')
+    
     cy.get('h1', { timeout: 6000 }).should('have.text', 'Results')
     cy.wait(6000)
     cy.get('.groupTestRow').each(($el) => {
