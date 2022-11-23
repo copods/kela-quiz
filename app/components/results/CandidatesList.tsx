@@ -5,7 +5,7 @@ import { toast } from 'react-toastify'
 import type { Candidate, CandidateResult, User } from '~/interface/Interface'
 import AttendedCandidateListItem from './AttendedCandidateListItem'
 
-const CandidatesList = () => {
+const CandidatesList = ({ searchText }: { searchText: string }) => {
   const { t } = useTranslation()
 
   const { candidatesOfTest, params } = useLoaderData()
@@ -72,56 +72,71 @@ const CandidatesList = () => {
             {t('resultConstants.status')}
           </span>
         </div>
-        {testData?.map(
-          (
-            candidate: CandidateResult & {
-              candidate: Candidate & {
-                createdBy: User
+        {testData
+          ?.filter(
+            (
+              candidate: CandidateResult & {
+                candidate: Candidate & {
+                  createdBy: User
+                }
+                candidateResult: Array<CandidateResult>
               }
-              candidateResult: Array<CandidateResult>
-            },
-            i: number
-          ) => {
-            const getCandidatePercent = () => {
-              for (const el of getCandidateResult()) {
-                if (el.candidateId === candidate?.id) {
-                  return el.candidatePercent
+            ) => {
+              return `${candidate?.candidate?.firstName} ${candidate?.candidate?.lastName} ${candidate?.candidate?.email}`
+                .toLowerCase()
+                .includes(searchText.toLowerCase())
+            }
+          )
+          .map(
+            (
+              candidate: CandidateResult & {
+                candidate: Candidate & {
+                  createdBy: User
+                }
+                candidateResult: Array<CandidateResult>
+              },
+              i: number
+            ) => {
+              const getCandidatePercent = () => {
+                for (const el of getCandidateResult()) {
+                  if (el.candidateId === candidate?.id) {
+                    return el.candidatePercent
+                  }
                 }
               }
+              return (
+                <div
+                  key={candidate.id}
+                  className="memberRow col-span-12 grid rounded-lg"
+                >
+                  <AttendedCandidateListItem
+                    id={candidate?.id}
+                    candidateId={candidate?.candidateId}
+                    testId={params.testId}
+                    candidateResultId={candidate?.candidateResult[0]?.id}
+                    email={candidate?.candidate?.email}
+                    invitedBy={candidate?.candidate?.createdBy?.firstName}
+                    name={`${
+                      candidate?.candidate?.firstName
+                        ? candidate?.candidate?.firstName
+                        : ''
+                    } ${
+                      candidate?.candidate?.lastName
+                        ? candidate?.candidate?.lastName
+                        : ''
+                    }`}
+                    result={getCandidatePercent() as number}
+                    review={candidate?.isQualified}
+                    index={i + 1}
+                    testName={candidate?.candidate?.createdBy?.firstName}
+                    endAt={candidate?.endAt}
+                    startedAt={candidate?.startedAt}
+                    createdAt={candidate?.createdAt}
+                  />
+                </div>
+              )
             }
-            return (
-              <div
-                key={candidate.id}
-                className="memberRow col-span-12 grid rounded-lg"
-              >
-                <AttendedCandidateListItem
-                  id={candidate?.id}
-                  candidateId={candidate?.candidateId}
-                  testId={params.testId}
-                  candidateResultId={candidate?.candidateResult[0]?.id}
-                  email={candidate?.candidate?.email}
-                  invitedBy={candidate?.candidate?.createdBy?.firstName}
-                  name={`${
-                    candidate?.candidate?.firstName
-                      ? candidate?.candidate?.firstName
-                      : ''
-                  } ${
-                    candidate?.candidate?.lastName
-                      ? candidate?.candidate?.lastName
-                      : ''
-                  }`}
-                  result={getCandidatePercent() as number}
-                  review={candidate?.isQualified}
-                  index={i + 1}
-                  testName={candidate?.candidate?.createdBy?.firstName}
-                  endAt={candidate?.endAt}
-                  startedAt={candidate?.startedAt}
-                  createdAt={candidate?.createdAt}
-                />
-              </div>
-            )
-          }
-        )}
+          )}
         {testData.length === 0 && (
           <div className="flex justify-center rounded-b-lg bg-white p-7">
             {t('testsConstants.noCandidateForAssessment')}

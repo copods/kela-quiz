@@ -123,7 +123,6 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
     if (selectedSections.length < 1) {
       return true
     }
-    console.log(selectedSections)
     for (let section of selectedSections) {
       if (!section?.totalQuestions) {
         return true
