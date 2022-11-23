@@ -40,7 +40,7 @@ const UserForgetPassword = ({
         </div>
         <div
           id="forget-pass-header"
-          className="text-3xl text-center font-bold text-gray-900"
+          className="text-center text-3xl font-bold text-gray-900"
         >
           {t('forgotPasswordConstants.header')}
         </div>
@@ -48,15 +48,14 @@ const UserForgetPassword = ({
           <hr className="h-px w-6/12 border-none bg-gray-500 text-center" />
         </div>
 
-        <div id='enter-mail-info' className="text-xs text-gray-500 text-center">
+        <div id="enter-mail-info" className="text-center text-xs text-gray-500">
           {t('forgotPasswordConstants.enterEmail')}
         </div>
         <Form method="post" className="flex flex-col gap-6">
-      
-            {inputFieldsProps.map((props) => {
-              return <InputField {...props} key={props.name} />
-            })}
-         
+          {inputFieldsProps.map((props) => {
+            return <InputField {...props} key={props.name} />
+          })}
+
           <div className="-mt-3 flex justify-end">
             <span
               id="back-to-login"
