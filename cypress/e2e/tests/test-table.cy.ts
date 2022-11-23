@@ -196,8 +196,11 @@ describe('Visiting Assessment', () => {
       .should('have.text', testsConstants.assessments)
       .click()
 
-    cy.get('#assessments-table-actions')
-    .should('have.css', 'color', 'rgb(107, 114, 128)')
+    cy.get('#assessments-table-actions').should(
+      'have.css',
+      'color',
+      'rgb(107, 114, 128)'
+    )
   })
   it('Checks add assessment button text and css', () => {
     cy.get('a')
