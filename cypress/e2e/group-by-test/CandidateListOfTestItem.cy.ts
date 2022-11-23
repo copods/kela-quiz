@@ -39,22 +39,7 @@ describe('Visiting group by test of results page', () => {
     cy.get('.groupByItemTest').contains(test1).click()
     cy.get('#title', { timeout: 20000 }).should('be.visible')
   })
-  it('Checks, header of candidate list page should have test name', () => {
-    cy.wait(1000)
-    cy.get('h1', { timeout: 6000 }).should('have.text', 'Results')
 
-    cy.get('.groupTestRow').each(($el) => {
-      cy.wrap($el).within((el) => {
-        if (
-          el[0].getElementsByClassName('groupByItemTest')[0].innerHTML === test1
-        ) {
-          cy.get('.groupByItemTest').should('have.text', test1).click()
-        }
-      })
-    })
-    cy.get('.groupByItemTest').contains(test1).click()
-    cy.get('#title', { timeout: 8000 }).should('have.text', test1)
-  })
   it('Checks, header of candidate list page should have correct classes', () => {
     cy.wait(1000)
     cy.get('h1', { timeout: 6000 }).should('have.text', 'Results')
