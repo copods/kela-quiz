@@ -49,29 +49,66 @@ describe('Test for Logout, SideNav', () => {
       })
     })
   })
-  it('Checks for SideNavTitles', () => {
-    cy.get('#nav-guide-results')
-      .should('have.text', sideNavTitle.results)
-      .should('have.css', 'font-weight', '600')
-      .should('have.css', 'font-size', '12px')
-      .should('have.css', 'color', 'rgb(156, 163, 175)')
-    cy.get('#nav-guide-assessments')
-      .should('have.text', sideNavTitle.assessments)
-      .should('have.css', 'font-weight', '600')
-      .should('have.css', 'font-size', '12px')
-      .should('have.css', 'color', 'rgb(156, 163, 175)')
-    cy.get('#nav-guide-general')
-      .should('have.text', sideNavTitle.general)
-      .should('have.css', 'font-weight', '600')
-      .should('have.css', 'font-size', '12px')
-      .should('have.css', 'color', 'rgb(156, 163, 175)')
+  it('Checks text SideNavTitle- Results', () => {
+    cy.get('#nav-guide-results').should('have.text', sideNavTitle.results)
   })
+  it('Checks font weight of SideNavTitle- Results', () => {
+    cy.get('#nav-guide-results').should('have.css', 'font-weight', '600')
+  })
+  it('Checks font-size of SideNavTitle- Results ', () => {
+    cy.get('#nav-guide-results').should('have.css', 'font-size', '12px')
+  })
+  it('Checks color of SideNavTitle- Results ', () => {
+    cy.get('#nav-guide-results').should(
+      'have.css',
+      'color',
+      'rgb(156, 163, 175)'
+    )
+  })
+  it('Checks text of SideNavTitle- Assessments ', () => {
+    cy.get('#nav-guide-assessments').should(
+      'have.text',
+      sideNavTitle.assessments
+    )
+  })
+  it('Checks font weight of SideNavTitle- Assessments ', () => {
+    cy.get('#nav-guide-assessments').should('have.css', 'font-weight', '600')
+  })
+  it('Checks font-size of SideNavTitle- Assessments ', () => {
+    cy.get('#nav-guide-assessments').should('have.css', 'font-size', '12px')
+  })
+  it('Checks color of SideNavTitle- Assessments ', () => {
+    cy.get('#nav-guide-assessments').should(
+      'have.css',
+      'color',
+      'rgb(156, 163, 175)'
+    )
+  })
+
+  it('Checks text SideNavTitle- General', () => {
+    cy.get('#nav-guide-general').should('have.text', sideNavTitle.general)
+  })
+  it('Checks font weight of SideNavTitle- General ', () => {
+    cy.get('#nav-guide-general').should('have.css', 'font-weight', '600')
+  })
+  it('Checks font size of SideNavTitle- General ', () => {
+    cy.get('#nav-guide-general').should('have.css', 'font-size', '12px')
+  })
+  it('Checks color of SideNavTitle- General ', () => {
+    cy.get('#nav-guide-general').should(
+      'have.css',
+      'color',
+      'rgb(156, 163, 175)'
+    )
+  })
+
   it('Check for logout CTA button css', () => {
     cy.get('#logout-button')
       .should('have.css', 'background-color', 'rgb(239, 68, 68)')
       .should('have.css', 'padding', '10px 8px')
       .should('have.css', 'cursor', 'pointer')
   })
+
   it('should render drop down to switch workspace', () => {
     cy.get('#dropdown').should('be.visible')
   })
