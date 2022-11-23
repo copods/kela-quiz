@@ -39,7 +39,7 @@ describe('Forgot password', () => {
   it('should display a Heading and also contain correct classes', () => {
     cy.get('#forget-pass-header')
       .should('be.visible')
-      .should('have.class', `text-3xl text-center font-bold text-gray-900`)
+      .should('have.class', `text-center text-3xl font-bold text-gray-900`)
   })
   it('sub-Heading should be visible', () => {
     cy.get('#enter-mail-info').should('be.visible')
@@ -52,7 +52,7 @@ describe('Forgot password', () => {
   it('sub-Heading should be have correct classes', () => {
     cy.get('#enter-mail-info')
       .should('be.visible')
-      .should('have.class', 'text-xs text-gray-500 text-center')
+      .should('have.class', 'text-center text-xs text-gray-500')
   })
   it('checks, label of email input box should be visible', () => {
     cy.get('label').should('be.visible')
