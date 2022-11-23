@@ -11,7 +11,7 @@ const tableTitles = {
   createdBy: 'Created By',
   actions: 'Actions',
 }
-
+const addAssessmentbuttonText = '+ Add Assessment'
 const candidateAlreadyInvited =
   'Candidate has already been invited for this Assessment'
 const candidateInvited = 'Candidate Invited'
@@ -202,18 +202,51 @@ describe('Visiting Assessment', () => {
       'rgb(107, 114, 128)'
     )
   })
-  it('Checks add assessment button text and css', () => {
+  it('Checks add assessment button text', () => {
     cy.get('a')
       .find('#tests')
       .should('have.text', testsConstants.assessments)
       .click()
-    cy.get('#add-test')
-      .should('have.text', '+ Add Assessment')
-      .should('have.css', 'background-color', 'rgb(53, 57, 136)')
-      .should('have.css', 'color', 'rgb(249, 250, 251)')
-      .should('have.css', 'font-size', '12px')
-      .should('have.css', 'font-weight', '500')
-      .should('have.css', 'cursor', 'pointer')
+    cy.get('#add-test').should('have.text', addAssessmentbuttonText)
+  })
+  it('Checks add assessment button background color', () => {
+    cy.get('a')
+      .find('#tests')
+      .should('have.text', testsConstants.assessments)
+      .click()
+    cy.get('#add-test').should(
+      'have.css',
+      'background-color',
+      'rgb(53, 57, 136)'
+    )
+  })
+  it('Checks add assessment button color', () => {
+    cy.get('a')
+      .find('#tests')
+      .should('have.text', testsConstants.assessments)
+      .click()
+    cy.get('#add-test').should('have.css', 'color', 'rgb(249, 250, 251)')
+  })
+  it('Checks add assessment button font size', () => {
+    cy.get('a')
+      .find('#tests')
+      .should('have.text', testsConstants.assessments)
+      .click()
+    cy.get('#add-test').should('have.css', 'font-size', '12px')
+  })
+  it('Checks add assessment button font weight', () => {
+    cy.get('a')
+      .find('#tests')
+      .should('have.text', testsConstants.assessments)
+      .click()
+    cy.get('#add-test').should('have.css', 'font-weight', '500')
+  })
+  it('Checks add assessment button cursor', () => {
+    cy.get('a')
+      .find('#tests')
+      .should('have.text', testsConstants.assessments)
+      .click()
+    cy.get('#add-test').should('have.css', 'cursor', 'pointer')
   })
   it('sort by name in ascending order ', () => {
     cy.get('a')
