@@ -36,7 +36,7 @@ describe('Visiting group by test of results page', () => {
         }
       })
     })
-    cy.get('.groupByItemTest').contains(test1).click()
+    cy.get('.groupByItemTest', { timeout: 8000 }).contains(test1).click()
     cy.get('#title', { timeout: 20000 }).should('be.visible')
   })
 
@@ -53,7 +53,7 @@ describe('Visiting group by test of results page', () => {
         }
       })
     })
-    cy.get('.groupByItemTest').contains(test1).click()
+    cy.get('.groupByItemTest', { timeout: 8000 }).contains(test1).click()
     cy.get('#title', { timeout: 8000 }).should(
       'have.class',
       'text-3xl font-semibold text-gray-900'
@@ -72,7 +72,7 @@ describe('Visiting group by test of results page', () => {
         }
       })
     })
-    cy.get('.groupByItemTest').contains(test1).click()
+    cy.get('.groupByItemTest', { timeout: 8000 }).contains(test1).click()
     cy.get('#back-button', { timeout: 8000 }).should('be.visible')
   })
   it('Checks, after clicking on back button it should redirect to result page', () => {
@@ -88,7 +88,7 @@ describe('Visiting group by test of results page', () => {
         }
       })
     })
-    cy.get('.groupByItemTest').contains(test1).click()
+    cy.get('.groupByItemTest', { timeout: 8000 }).contains(test1).click()
     cy.get('#back-button', { timeout: 8000 }).should('be.visible').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')
   })
