@@ -7,7 +7,7 @@ describe('Visiting group by test of results page', () => {
   })
   const test1 = `Aptitude - assessment1`
   it('checks, test is available for test', () => {
-    cy.wait(1000)
+    cy.wait(3000)
     cy.get('h1', { timeout: 6000 }).should('have.text', 'Results')
 
     cy.get('.groupTestRow').each(($el) => {
@@ -24,7 +24,7 @@ describe('Visiting group by test of results page', () => {
   })
 
   it('Checks, header of candidate list page should be visible', () => {
-    cy.wait(1000)
+    cy.wait(3000)
     cy.get('h1', { timeout: 6000 }).should('have.text', 'Results')
 
     cy.get('.groupTestRow').each(($el) => {
@@ -41,7 +41,7 @@ describe('Visiting group by test of results page', () => {
   })
 
   it('Checks, header of candidate list page should have correct classes', () => {
-    cy.wait(1000)
+    cy.wait(3000)
     cy.get('h1', { timeout: 6000 }).should('have.text', 'Results')
 
     cy.get('.groupTestRow').each(($el) => {
@@ -60,7 +60,7 @@ describe('Visiting group by test of results page', () => {
     )
   })
   it('Checks, back button should be visible', () => {
-    cy.wait(1000)
+    cy.wait(3000)
     cy.get('h1', { timeout: 6000 }).should('have.text', 'Results')
 
     cy.get('.groupTestRow').each(($el) => {
@@ -76,7 +76,7 @@ describe('Visiting group by test of results page', () => {
     cy.get('#back-button', { timeout: 8000 }).should('be.visible')
   })
   it('Checks, after clicking on back button it should redirect to result page', () => {
-    cy.wait(1000)
+    cy.wait(3000)
     cy.get('h1', { timeout: 6000 }).should('have.text', 'Results')
 
     cy.get('.groupTestRow').each(($el) => {
