@@ -19,9 +19,28 @@ describe('Test for section-details', () => {
       'have.text',
       section1
     )
+    cy.get('#add-question', { timeout: 8000 }).should('be.visible')
+    cy.get('#add-question', { timeout: 8000 }).should('be.visible')
     cy.get('#add-question', { timeout: 8000 }).should(
       'have.text',
       `+ ${addQuestion.addQuestion}`
+    )
+  })
+  it('checks, add question button should have correct background', () => {
+    cy.wait(1000)
+
+    cy.get('a').find('#sections').should('have.text', routeFiles.tests).click()
+    cy.location('pathname', { timeout: 60000 }).should('include', routes.tests)
+
+    cy.get('#section-details-heading', { timeout: 40000 }).should(
+      'have.text',
+      section1
+    )
+    cy.get('#add-question', { timeout: 8000 }).should('be.visible')
+    cy.get('#add-question', { timeout: 8000 }).should(
+      'have.css',
+      `background-color`,
+      `#353988`
     )
   })
   it('checks, heading of add question should be visible and have correct text', () => {
@@ -33,6 +52,7 @@ describe('Test for section-details', () => {
       'have.text',
       section1
     )
+    cy.get('#add-question', { timeout: 8000 }).should('be.visible')
     cy.get('#add-question', { timeout: 8000 })
       .should('have.text', `+ ${addQuestion.addQuestion}`)
       .click()
@@ -53,6 +73,7 @@ describe('Test for section-details', () => {
       'have.text',
       section1
     )
+    cy.get('#add-question', { timeout: 8000 }).should('be.visible')
     cy.get('#add-question', { timeout: 8000 })
       .should('have.text', `+ ${addQuestion.addQuestion}`)
       .click()
@@ -75,6 +96,7 @@ describe('Test for section-details', () => {
       'have.text',
       section1
     )
+    cy.get('#add-question', { timeout: 8000 }).should('be.visible')
     cy.get('#add-question', { timeout: 8000 })
       .should('have.text', `+ ${addQuestion.addQuestion}`)
       .click()
@@ -117,6 +139,7 @@ describe('Test for section-details', () => {
       'have.text',
       section1
     )
+    cy.get('#add-question', { timeout: 8000 }).should('be.visible')
     cy.get('#add-question', { timeout: 12000 })
       .should('have.text', `+ ${addQuestion.addQuestion}`)
       .click()
@@ -153,21 +176,12 @@ describe('Test for section-details', () => {
     cy.wait(1000)
     cy.get('a').find('#sections').should('have.text', routeFiles.tests).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.get('#section-card', { timeout: 10000 }).each(($el) => {
-      cy.wrap($el).within((el) => {
-        if (
-          el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
-        ) {
-          cy.get('.sectionName').should('have.text', section1)
-        }
-      })
-    })
-    cy.get('.sectionName').contains(section1).click()
 
     cy.get('#section-details-heading', { timeout: 40000 }).should(
       'have.text',
       section1
     )
+    cy.get('#add-question', { timeout: 8000 }).should('be.visible')
     cy.get('#add-question', { timeout: 12000 })
       .should('have.text', `+ ${addQuestion.addQuestion}`)
       .click()
@@ -212,6 +226,7 @@ describe('Test for section-details', () => {
       'have.text',
       section1
     )
+    cy.get('#add-question', { timeout: 8000 }).should('be.visible')
     cy.get('#add-question', { timeout: 12000 })
       .should('have.text', `+ ${addQuestion.addQuestion}`)
       .click()
@@ -256,6 +271,7 @@ describe('Test for section-details', () => {
       'have.text',
       section1
     )
+    cy.get('#add-question', { timeout: 8000 }).should('be.visible')
     cy.get('#add-question', { timeout: 12000 })
       .should('have.text', `+ ${addQuestion.addQuestion}`)
       .click()
@@ -294,6 +310,7 @@ describe('Test for section-details', () => {
       'have.text',
       section1
     )
+    cy.get('#add-question', { timeout: 8000 }).should('be.visible')
     cy.get('#add-question', { timeout: 12000 })
       .should('have.text', `+ ${addQuestion.addQuestion}`)
       .click()
@@ -337,6 +354,7 @@ describe('Test for section-details', () => {
       'have.text',
       section1
     )
+    cy.get('#add-question', { timeout: 8000 }).should('be.visible')
     cy.get('#add-question', { timeout: 12000 })
       .should('have.text', `+ ${addQuestion.addQuestion}`)
       .click()
@@ -376,6 +394,7 @@ describe('Test for section-details', () => {
     cy.get('#section-details-heading', { timeout: 40000 })
       .should('be.visible', { timeout: 4000 })
       .should('have.text', section1)
+    cy.get('#add-question', { timeout: 8000 }).should('be.visible')
     cy.get('#add-question', { timeout: 12000 })
       .should('have.text', `+ ${addQuestion.addQuestion}`)
       .click()
@@ -412,6 +431,7 @@ describe('Test for section-details', () => {
     cy.get('#section-details-heading', { timeout: 40000 })
       .should('be.visible', { timeout: 4000 })
       .should('have.text', section1)
+    cy.get('#add-question', { timeout: 8000 }).should('be.visible')
     cy.get('#add-question', { timeout: 12000 })
       .should('have.text', `+ ${addQuestion.addQuestion}`)
       .click()
