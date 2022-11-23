@@ -41,43 +41,164 @@ describe('Visiting Assessment', () => {
       .click()
     cy.location('pathname').should('include', '/assessments/add-assessment')
   })
-  it('Checks heading of assessment page for visibility and css', () => {
+  it('Checks text of heading of assessment page', () => {
     cy.get('a')
       .find('#tests')
       .should('have.text', testsConstants.assessments)
       .click()
-    cy.get('#assessments-page-title')
-      .should('have.text', assessments)
-      .should('have.css', 'font-size', '30px')
-      .should('have.css', 'font-weight', '700')
-      .should('have.css', 'color', 'rgb(0, 0, 0)')
+    cy.get('#assessments-page-title').should('have.text', assessments)
+  })
+  it('Checks font size of heading of assessment page', () => {
+    cy.get('a')
+      .find('#tests')
+      .should('have.text', testsConstants.assessments)
+      .click()
+    cy.get('#assessments-page-title').should('have.css', 'font-size', '30px')
+  })
+  it('Checks font weight of heading of assessment page', () => {
+    cy.get('a')
+      .find('#tests')
+      .should('have.text', testsConstants.assessments)
+      .click()
+    cy.get('#assessments-page-title').should('have.css', 'font-weight', '700')
+  })
+  it('Checks color of heading of assessment page', () => {
+    cy.get('a')
+      .find('#tests')
+      .should('have.text', testsConstants.assessments)
+      .click()
+    cy.get('#assessments-page-title').should(
+      'have.css',
+      'color',
+      'rgb(0, 0, 0)'
+    )
+  })
+  it('Checks text of table title - Sr.No', () => {
+    cy.get('a')
+      .find('#tests')
+      .should('have.text', testsConstants.assessments)
+      .click()
+    cy.get('#assessments-table-sr-no').should('have.text', tableTitles.srNo)
+  })
+  it('Checks color of table title- Sr.No', () => {
+    cy.get('a')
+      .find('#tests')
+      .should('have.text', testsConstants.assessments)
+      .click()
+    cy.get('#assessments-table-sr-no').should(
+      'have.css',
+      'color',
+      'rgb(107, 114, 128)'
+    )
   })
 
-  it('Checks table titles of assessments', () => {
+  it('Checks text of table title- assessment', () => {
     cy.get('a')
       .find('#tests')
       .should('have.text', testsConstants.assessments)
       .click()
-    cy.get('#assessments-table-sr-no')
-      .should('have.text', tableTitles.srNo)
-      .should('have.css', 'color', 'rgb(107, 114, 128)')
-    cy.get('#assessments-table-assessment')
-      .should('have.text', tableTitles.assessment)
-      .should('have.css', 'color', 'rgb(107, 114, 128)')
-    cy.get('#assessments-table-test')
-      .should('have.text', tableTitles.test)
-      .should('have.css', 'color', 'rgb(107, 114, 128)')
-    cy.get('#assessments-table-created-on')
-      .should('have.text', tableTitles.createdOn)
-      .should('have.css', 'color', 'rgb(107, 114, 128)')
-    cy.get('#assessments-table-created-by')
-      .should('have.text', tableTitles.createdBy)
-      .should('have.css', 'color', 'rgb(107, 114, 128)')
+
+    cy.get('#assessments-table-assessment').should(
+      'have.text',
+      tableTitles.assessment
+    )
+  })
+  it('Checks color of table-title- assessment', () => {
+    cy.get('a')
+      .find('#tests')
+      .should('have.text', testsConstants.assessments)
+      .click()
+
+    cy.get('#assessments-table-assessment').should(
+      'have.css',
+      'color',
+      'rgb(107, 114, 128)'
+    )
+  })
+
+  it('Checks text of table title- assessment', () => {
+    cy.get('a')
+      .find('#tests')
+      .should('have.text', testsConstants.assessments)
+      .click()
+
+    cy.get('#assessments-table-test').should('have.text', tableTitles.test)
+  })
+  it('Checks color of table-title- test', () => {
+    cy.get('a')
+      .find('#tests')
+      .should('have.text', testsConstants.assessments)
+      .click()
+
+    cy.get('#assessments-table-test').should(
+      'have.css',
+      'color',
+      'rgb(107, 114, 128)'
+    )
+  })
+
+  it('Checks text of table title- Created On', () => {
+    cy.get('a')
+      .find('#tests')
+      .should('have.text', testsConstants.assessments)
+      .click()
+    cy.get('#assessments-table-created-on').should(
+      'have.text',
+      tableTitles.createdOn
+    )
+  })
+  it('Checks color of table title- Created On', () => {
+    cy.get('a')
+      .find('#tests')
+      .should('have.text', testsConstants.assessments)
+      .click()
+
+    cy.get('#assessments-table-created-on').should(
+      'have.css',
+      'color',
+      'rgb(107, 114, 128)'
+    )
+  })
+  it('Checks text of table title- Created By', () => {
+    cy.get('a')
+      .find('#tests')
+      .should('have.text', testsConstants.assessments)
+      .click()
+    cy.get('#assessments-table-created-by').should(
+      'have.text',
+      tableTitles.createdBy
+    )
+  })
+  it('Checks color of table title- Created By', () => {
+    cy.get('a')
+      .find('#tests')
+      .should('have.text', testsConstants.assessments)
+      .click()
+    cy.get('#assessments-table-created-by').should(
+      'have.css',
+      'color',
+      'rgb(107, 114, 128)'
+    )
+  })
+  it('Checks text of table title- Actions', () => {
+    cy.get('a')
+      .find('#tests')
+      .should('have.text', testsConstants.assessments)
+      .click()
+    cy.get('#assessments-table-actions').should(
+      'have.text',
+      tableTitles.actions
+    )
+  })
+  it('Checks color of table title- Actions', () => {
+    cy.get('a')
+      .find('#tests')
+      .should('have.text', testsConstants.assessments)
+      .click()
+
     cy.get('#assessments-table-actions')
-      .should('have.text', tableTitles.actions)
-      .should('have.css', 'color', 'rgb(107, 114, 128)')
+    .should('have.css', 'color', 'rgb(107, 114, 128)')
   })
-
   it('Checks add assessment button text and css', () => {
     cy.get('a')
       .find('#tests')
