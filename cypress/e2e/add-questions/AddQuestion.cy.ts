@@ -27,7 +27,7 @@ describe('Test for section-details', () => {
 
     cy.get('#add-question', { timeout: 20000 })
       .should('be.visible')
-      .should('have.text', `+ ${addQuestion.addQuestion}`)
+
       .click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
@@ -60,9 +60,7 @@ describe('Test for section-details', () => {
     cy.get('a').find('#sections').should('have.text', routeFiles.tests).click()
     cy.location('pathname', { timeout: 60000 }).should('include', routes.tests)
 
-    cy.get('#add-question', { timeout: 20000 })
-      .should('have.text', `+ ${addQuestion.addQuestion}`)
-      .click()
+    cy.get('#add-question', { timeout: 20000 }).should('be.visible').click()
 
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
@@ -214,9 +212,7 @@ describe('Test for section-details', () => {
     cy.get('a').find('#sections').should('have.text', routeFiles.tests).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
 
-    cy.get('#add-question', { timeout: 12000 })
-      .should('have.text', `+ ${addQuestion.addQuestion}`)
-      .click()
+    cy.get('#add-question', { timeout: 12000 }).should('be.visible').click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -248,9 +244,7 @@ describe('Test for section-details', () => {
     cy.get('a').find('#sections').should('have.text', routeFiles.tests).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
 
-    cy.get('#add-question', { timeout: 12000 })
-      .should('have.text', `+ ${addQuestion.addQuestion}`)
-      .click()
+    cy.get('#add-question', { timeout: 12000 }).should('be.visible').click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
@@ -287,9 +281,7 @@ describe('Test for section-details', () => {
     cy.get('a').find('#sections').should('have.text', routeFiles.tests).click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
 
-    cy.get('#add-question', { timeout: 12000 })
-      .should('have.text', `+ ${addQuestion.addQuestion}`)
-      .click()
+    cy.get('#add-question', { timeout: 12000 }).should('be.visible').click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/add-question'
