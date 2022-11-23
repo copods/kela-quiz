@@ -77,10 +77,10 @@ describe('Creating assessments', () => {
     cy.get('#add-test', { timeout: 6000 })
       .should('have.text', `+ ${testsConstants.addAssessmentbutton}`)
       .click()
-    cy.get('#add-assessment-page-title')
-      .should('have.text', addAssessmentPageTitle)
-      .should('have.css', 'color', 'rgb(0, 0, 0)')
-      .should('have.css', 'font-weight', '700')
+    cy.get('#add-assessment-page-title').should(
+      'have.text',
+      addAssessmentPageTitle
+    )
   })
   it('Checks add assessment page title text font weight', () => {
     cy.get('a')
