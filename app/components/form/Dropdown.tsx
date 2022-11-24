@@ -2,7 +2,7 @@ import { Fragment } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import { useTranslation } from 'react-i18next'
-
+import { QuestionTypes } from '../../interface/Interface'
 function DropdownField({
   data,
   displayKey,
@@ -26,7 +26,7 @@ function DropdownField({
 }) {
   const { t } = useTranslation()
   const createQuestionDropdownOptions = data.filter(
-    (item) => item.value !== 'SINGLE_CHOICE'
+    (item) => item.value !== QuestionTypes.singleChoice
   )
 
   function classNames(...classes: Array<string>) {

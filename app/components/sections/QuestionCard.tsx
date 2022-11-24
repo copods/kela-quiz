@@ -7,7 +7,7 @@ import type {
   QuestionType,
 } from '~/interface/Interface'
 import OptionCard from './OptionCard'
-
+import { QuestionTypes } from '../../interface/Interface'
 const QuestionCard = ({
   question,
   isExpanded,
@@ -21,7 +21,7 @@ const QuestionCard = ({
 }) => {
   const { t } = useTranslation()
   const displayName =
-    question.questionType?.displayName === 'Multiple Choice'
+    question.questionType?.displayName === QuestionTypes.multipleChoice
       ? { name: 'MSQ', full: 'Multiple Select Question' }
       : question.questionType?.displayName === 'Single Choice'
       ? { name: 'MCQ', full: 'Multiple Choice Question' }

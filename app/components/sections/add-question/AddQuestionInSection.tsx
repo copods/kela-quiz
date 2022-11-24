@@ -21,9 +21,9 @@ const AddQuestionInSection = () => {
 
   const { sectionDetails, questionTypes } = useLoaderData()
   const [selectedTypeOfQuestion, onQuestionTypeChange] = useState(() => {
-    for (let qt of questionTypes) {
-      if (qt.value == 'MULTIPLE_CHOICE') {
-        return qt.id
+    for (let questionType of questionTypes) {
+      if (questionType.value == 'MULTIPLE_CHOICE') {
+        return questionType.id
       }
     }
   })
@@ -151,8 +151,15 @@ const AddQuestionInSection = () => {
       correctAnswer: [],
       questionTypeId:
         answerCount === 1
-          ? questionTypes.find((item: any) => item.value === 'SINGLE_CHOICE')
-              ?.id
+          ? questionTypes.find(
+              (item: {
+                createdAt: string
+                displayName: string
+                id: string
+                updatedAt: string
+                value: string
+              }) => item.value === QuestionTypes.singleChoice
+            )?.id
           : selectedTypeOfQuestion,
       sectionId: sectionDetails?.id as string,
       addMoreQuestion,
