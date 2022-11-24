@@ -76,6 +76,14 @@ describe('Test for testPreview', () => {
       'rgb(53, 57, 136)'
     )
   })
+  it('Checks for invite candidate button font-size', () => {
+    cy.get('a')
+      .find('#tests', { timeout: 6000 })
+      .should('have.text', testsConstants.assessments)
+      .click()
+    cy.get('.test-name-navigation').contains(test1).click()
+    cy.get('#invite-popup-open-text').should('have.css', 'font-size', '16px')
+  })
   it('Checks for invite candidate button cursor', () => {
     cy.get('a')
       .find('#tests', { timeout: 6000 })
