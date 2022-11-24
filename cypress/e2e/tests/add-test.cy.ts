@@ -110,20 +110,6 @@ describe('Creating assessments', () => {
       'rgb(0, 0, 0)'
     )
   })
-  it('Checks add assessment page title text font weight', () => {
-    cy.get('a')
-      .find('#tests')
-      .should('have.text', testsConstants.assessments)
-      .click()
-    cy.get('#add-test', { timeout: 6000 })
-      .should('have.text', `+ ${testsConstants.addAssessmentbutton}`)
-      .click()
-    cy.get('#add-assessment-page-title').should(
-      'have.css',
-      'color',
-      'rgb(0, 0, 0)'
-    )
-  })
   it('Checks add assessment page title text font size', () => {
     cy.get('a')
       .find('#tests')
