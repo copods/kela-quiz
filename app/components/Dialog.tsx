@@ -46,6 +46,7 @@ const DialogWrapper = ({
                     {/* dialog wrapper heading */}
                     <h2
                       className="text-2xl font-bold text-gray-700"
+                      data-cy="dialog-header"
                       title={heading}
                       {...props}
                     >

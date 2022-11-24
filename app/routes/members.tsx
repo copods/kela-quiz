@@ -226,7 +226,14 @@ const Members = () => {
           setActionStatus={setActionStatus}
         />
         <div className="flex flex-col gap-4 text-2xl">
-          <h1>{t('members.joinedMembers')}</h1>
+          <h1
+            tabIndex={0}
+            role={t('members.joinedMembers')}
+            aria-label={t('members.joinedMembers')}
+            id="joined-member-heading"
+          >
+            {t('members.joinedMembers')}
+          </h1>
           <MembersList actionStatus={membersActionData?.resp?.title} />
         </div>
         <div className="flex flex-col gap-4 text-2xl">

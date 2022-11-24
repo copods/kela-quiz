@@ -25,7 +25,12 @@ export default function MembersHeader({
   return (
     <div>
       <div className="flex items-center justify-between">
-        <h1 className="membersHeading text-3xl font-bold">
+        <h1
+          tabIndex={0}
+          role={t('members.members')}
+          aria-label={t('members.members')}
+          className="membersHeading text-3xl font-bold"
+        >
           {t('members.members')}
         </h1>
         <Button

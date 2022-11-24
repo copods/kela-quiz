@@ -1,20 +1,78 @@
-import { commonConstants, testsConstants } from '~/constants/common.constants'
+import { testsConstants } from '~/constants/common.constants'
 const test1 = `Aptitude - assessment1`
 
 describe('Test for GroupByTestTable, Result', () => {
   beforeEach('sign-in', () => {
     cy.login()
 
-    cy.customVisit('/members')
+    cy.customVisit('/results')
   })
   let value: string
   let strings: Array<string>
-  it('Total Count of Test of groupByTable', () => {
-    cy.get('a')
-      .find('#group-by-tests')
-      .should('have.text', commonConstants.results)
+
+  it('checks, result page contain header and should be visible', () => {
+    cy.get('h1').should('be.visible')
+  })
+  it('checks, result page contain header should have correct text', () => {
+    cy.get('h1').should('have.text', 'Results')
+  })
+  it('checks, result page contain header should have correct classes', () => {
+    cy.get('h1').should('have.class', 'text-3xl font-bold text-gray-900')
+  })
+  it('checks, result page contain header should have tabIndex', () => {
+    cy.get('h1').should('have.attr', 'tabindex', '0') //checking accessibility
+  })
+  it('checks, result page contain header should have aria-label', () => {
+    cy.get('h1').should('have.attr', 'aria-label', 'Results') //checking accessibility
+  })
+  it('checks, result page contain header should have focus', () => {
+    cy.get('h1')
+      .should('have.attr', 'aria-label', 'Results')
       .click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/results')
+      .should('have.focus') //checking accessibility
+  })
+  it('checks, sort button should have tab index', () => {
+    cy.get('h1').should('have.text', 'Results') //checking accessibility
+    cy.get('#descend', { timeout: 60000 }).should('have.attr', 'tabindex', '0')
+  })
+  it('checks, sort button should have tab index', () => {
+    cy.get('h1').should('have.text', 'Results') //checking accessibility
+    cy.get('#descend', { timeout: 60000 }).should(
+      'have.attr',
+      'aria-label',
+      'Sort Descending'
+    )
+  })
+
+  it('checks, sort filter should be visible', () => {
+    cy.get('h1').should('have.text', 'Results')
+    cy.get('#sort-filter-body', { timeout: 60000 }).should('be.visible')
+  })
+  it('checks, dropdown should be visible', () => {
+    cy.get('h1').should('have.text', 'Results')
+    cy.get('#dropdown', { timeout: 60000 }).should('be.visible')
+  })
+
+  it('checks,total count text should be visible', () => {
+    cy.get('h1').should('have.text', 'Results')
+    cy.get('#total-items-value', { timeout: 60000 }).should('be.visible')
+  })
+  it('checks,total count text should have tabIndex', () => {
+    cy.get('h1').should('have.text', 'Results') //checking accessibility
+    cy.get('#total-items-value', { timeout: 60000 }).should(
+      'have.attr',
+      'tabindex',
+      '0'
+    )
+  })
+  it('checks,total count text should have tabIndex', () => {
+    cy.get('h1').should('have.text', 'Results') //checking accessibility
+    cy.get('#total-items-value', { timeout: 60000 })
+      .should('have.attr', 'tabindex', '0')
+      .click()
+      .should('have.focus')
+  })
+  it('Total Count of Test of groupByTable', () => {
     cy.get('#total-items-value', { timeout: 60000 })
       .get('#total-count-value')
       .then(($ele) => {
@@ -33,11 +91,6 @@ describe('Test for GroupByTestTable, Result', () => {
     })
   })
   it('sort by name in ascending order ', () => {
-    cy.get('a', { timeout: 6000 })
-      .find('#group-by-tests')
-      .should('have.text', commonConstants.results)
-      .click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/results')
     cy.get('.dropdownButton span span', { timeout: 6000 })
       .invoke('text')
       .then((el) => {
@@ -57,11 +110,6 @@ describe('Test for GroupByTestTable, Result', () => {
       })
   })
   it('sort by name in descending order ', () => {
-    cy.get('a', { timeout: 6000 })
-      .find('#group-by-tests')
-      .should('have.text', commonConstants.results)
-      .click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/results')
     cy.get('h1').should('have.text', 'Results')
     cy.get('#sort-filter-body', { timeout: 60000 }).should('be.visible')
     cy.get('#descend', { timeout: 8000 }).click()
@@ -86,11 +134,6 @@ describe('Test for GroupByTestTable, Result', () => {
       })
   })
   it('sort by created date in ascending order ', () => {
-    cy.get('a', { timeout: 6000 })
-      .find('#group-by-tests')
-      .should('have.text', commonConstants.results)
-      .click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/results')
     cy.get('#sort-filter-container').within(() => {
       cy.get('.dropdownButton')
         .click({ multiple: true })
@@ -121,11 +164,6 @@ describe('Test for GroupByTestTable, Result', () => {
       })
   })
   it('sort by created date in descending order', () => {
-    cy.get('a', { timeout: 6000 })
-      .find('#group-by-tests')
-      .should('have.text', commonConstants.results)
-      .click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/results')
     cy.get('h1').should('have.text', 'Results')
     cy.get('#sort-filter-body', { timeout: 60000 }).should('be.visible')
     cy.get('#descend', { timeout: 8000 }).click()
@@ -159,10 +197,6 @@ describe('Test for GroupByTestTable, Result', () => {
       })
   })
   it('checks,invite candidate button should be visible', () => {
-    cy.get('a', { timeout: 6000 })
-      .find('#group-by-tests')
-      .should('have.text', commonConstants.results)
-      .click()
     cy.get('.groupTestRow', { timeout: 8000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -176,11 +210,47 @@ describe('Test for GroupByTestTable, Result', () => {
     cy.get('#vertical-icon', { timeout: 8000 }).should('be.visible').click()
     cy.get('.deleteTest').should('be.visible')
   })
+  it('checks,table contains assessment name', () => {
+    cy.get('.groupTestRow', { timeout: 8000 }).each(($el) => {
+      cy.wrap($el).within((el) => {
+        if (
+          el[0].getElementsByClassName('groupByItemTest')[0].innerHTML === test1
+        ) {
+          cy.get('.groupByItemTest').should('have.text', test1)
+        }
+      })
+    })
+    cy.get('.groupByItemTest').contains(test1).should('be.visible')
+  })
+  it('checks,table contains assessment name should be in blue color', () => {
+    cy.get('.groupTestRow', { timeout: 8000 }).each(($el) => {
+      cy.wrap($el).within((el) => {
+        if (
+          el[0].getElementsByClassName('groupByItemTest')[0].innerHTML === test1
+        ) {
+          cy.get('.groupByItemTest').should('have.text', test1)
+        }
+      })
+    })
+    cy.get('.groupByItemTest')
+      .contains(test1)
+      .should('have.css', 'color', 'rgb(53, 57, 136)')
+  })
+  it('checks,table contains assessment name should have tabIndex', () => {
+    cy.get('.groupTestRow', { timeout: 8000 }).each(($el) => {
+      cy.wrap($el).within((el) => {
+        if (
+          el[0].getElementsByClassName('groupByItemTest')[0].innerHTML === test1
+        ) {
+          cy.get('.groupByItemTest').should('have.text', test1)
+        }
+      })
+    })
+    cy.get('.groupByItemTest')
+      .contains(test1)
+      .should('have.attr', 'tabindex', '0')
+  })
   it('checks,invite candidate from result page', () => {
-    cy.get('a', { timeout: 6000 })
-      .find('#group-by-tests')
-      .should('have.text', commonConstants.results)
-      .click()
     cy.get('.groupTestRow', { timeout: 8000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
