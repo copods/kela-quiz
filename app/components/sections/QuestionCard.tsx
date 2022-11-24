@@ -22,10 +22,10 @@ const QuestionCard = ({
   const { t } = useTranslation()
   const displayName =
     question.questionType?.displayName === 'Multiple Choice'
-      ? 'MCQ'
+      ? { name: 'MSQ', full: 'Multiple Select Question' }
       : question.questionType?.displayName === 'Single Choice'
-      ? 'MSQ'
-      : question.questionType?.displayName
+      ? { name: 'MCQ', full: 'Multiple Choice Question' }
+      : { name: question.questionType?.displayName, full: 'Text' }
   return (
     <div
       key={question.id}
@@ -57,8 +57,11 @@ const QuestionCard = ({
         </div>
         <div className="flex min-w-fit items-center justify-between lg:flex-1 lg:justify-end lg:gap-2">
           <div>
-            <span className="flex flex-1 items-center rounded-52 border border-gray-700 px-3 text-sm text-gray-700">
-              {displayName}
+            <span
+              className="flex flex-1 items-center rounded-52 border border-gray-700 px-3 text-sm text-gray-700"
+              title={displayName?.full}
+            >
+              {displayName?.name}
             </span>
           </div>
           {isExpanded === index ? (

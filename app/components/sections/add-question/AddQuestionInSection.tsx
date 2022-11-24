@@ -20,9 +20,14 @@ const AddQuestionInSection = () => {
   const { t } = useTranslation()
 
   const { sectionDetails, questionTypes } = useLoaderData()
-  const [selectedTypeOfQuestion, onQuestionTypeChange] = useState(
-    questionTypes[0].id
-  )
+  const [selectedTypeOfQuestion, onQuestionTypeChange] = useState(() => {
+    for (let qt of questionTypes) {
+      if (qt.value == 'MULTIPLE_CHOICE') {
+        return qt.id
+      }
+    }
+  })
+  console.log(questionTypes)
   const [question, setQuestion] = useState('')
   const [singleChoiceAnswer, setSingleChoiceAnswer] = useState('')
   const [options, setOptions] = useState([
