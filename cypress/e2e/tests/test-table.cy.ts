@@ -41,28 +41,28 @@ describe('Visiting Assessment', () => {
       .click()
     cy.location('pathname').should('include', '/assessments/add-assessment')
   })
-  it('Checks text of heading of assessment page', () => {
+  it('Checks the text of Assessment Page heading', () => {
     cy.get('a')
       .find('#tests')
       .should('have.text', testsConstants.assessments)
       .click()
     cy.get('#assessments-page-title').should('have.text', assessments)
   })
-  it('Checks font size of heading of assessment page', () => {
+  it('Checks the font-size of Assessment Page heading', () => {
     cy.get('a')
       .find('#tests')
       .should('have.text', testsConstants.assessments)
       .click()
     cy.get('#assessments-page-title').should('have.css', 'font-size', '30px')
   })
-  it('Checks font weight of heading of assessment page', () => {
+  it('Checks the font-weight of Assessment Page heading', () => {
     cy.get('a')
       .find('#tests')
       .should('have.text', testsConstants.assessments)
       .click()
     cy.get('#assessments-page-title').should('have.css', 'font-weight', '700')
   })
-  it('Checks color of heading of assessment page', () => {
+  it('Checks the color of Assessment Page heading', () => {
     cy.get('a')
       .find('#tests')
       .should('have.text', testsConstants.assessments)
@@ -73,6 +73,7 @@ describe('Visiting Assessment', () => {
       'rgb(0, 0, 0)'
     )
   })
+  // srNo
   it('Checks text of table title - Sr.No', () => {
     cy.get('a')
       .find('#tests')
@@ -91,7 +92,14 @@ describe('Visiting Assessment', () => {
       'rgb(107, 114, 128)'
     )
   })
-
+  it('Checks font weight of table title- Sr.No', () => {
+    cy.get('a')
+      .find('#tests')
+      .should('have.text', testsConstants.assessments)
+      .click()
+    cy.get('#assessments-table-sr-no').should('have.css', 'font-weight', '600')
+  })
+  //assessment
   it('Checks text of table title- assessment', () => {
     cy.get('a')
       .find('#tests')
@@ -115,8 +123,18 @@ describe('Visiting Assessment', () => {
       'rgb(107, 114, 128)'
     )
   })
-
-  it('Checks text of table title- assessment', () => {
+  it('Checks font-weight of table-title- assessment', () => {
+    cy.get('a')
+      .find('#tests')
+      .should('have.text', testsConstants.assessments)
+      .click()
+    cy.get('#assessments-table-assessment').should(
+      'have.css',
+      'font-weight',
+      '600'
+    )
+  })
+  it('Checks text of table title- test', () => {
     cy.get('a')
       .find('#tests')
       .should('have.text', testsConstants.assessments)
@@ -135,6 +153,14 @@ describe('Visiting Assessment', () => {
       'color',
       'rgb(107, 114, 128)'
     )
+  })
+  it('Checks color of table-title- test', () => {
+    cy.get('a')
+      .find('#tests')
+      .should('have.text', testsConstants.assessments)
+      .click()
+
+    cy.get('#assessments-table-test').should('have.css', 'font-weight', '600')
   })
 
   it('Checks text of table title- Created On', () => {
@@ -159,6 +185,18 @@ describe('Visiting Assessment', () => {
       'rgb(107, 114, 128)'
     )
   })
+  it('Checks font-weight of table title- Created On', () => {
+    cy.get('a')
+      .find('#tests')
+      .should('have.text', testsConstants.assessments)
+      .click()
+
+    cy.get('#assessments-table-created-on').should(
+      'have.css',
+      'font-weight',
+      '600'
+    )
+  })
   it('Checks text of table title- Created By', () => {
     cy.get('a')
       .find('#tests')
@@ -178,6 +216,17 @@ describe('Visiting Assessment', () => {
       'have.css',
       'color',
       'rgb(107, 114, 128)'
+    )
+  })
+  it('Checks font-weight of table title- Created By', () => {
+    cy.get('a')
+      .find('#tests')
+      .should('have.text', testsConstants.assessments)
+      .click()
+    cy.get('#assessments-table-created-by').should(
+      'have.css',
+      'font-weight',
+      '600'
     )
   })
   it('Checks text of table title- Actions', () => {
@@ -200,6 +249,18 @@ describe('Visiting Assessment', () => {
       'have.css',
       'color',
       'rgb(107, 114, 128)'
+    )
+  })
+  it('Checks font-weight of table title- Actions', () => {
+    cy.get('a')
+      .find('#tests')
+      .should('have.text', testsConstants.assessments)
+      .click()
+
+    cy.get('#assessments-table-actions').should(
+      'have.css',
+      'font-weight',
+      '600'
     )
   })
   it('Checks add assessment button text', () => {
