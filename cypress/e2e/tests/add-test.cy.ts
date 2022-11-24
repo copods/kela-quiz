@@ -117,6 +117,16 @@ describe('Creating assessments', () => {
       .click()
     cy.get('#next-button').should('have.text', addTestPageButtons.next)
   })
+  it('Checks next button color', () => {
+    cy.get('a')
+      .find('#tests')
+      .should('have.text', testsConstants.assessments)
+      .click()
+    cy.get('#add-test', { timeout: 6000 })
+      .should('have.text', `+ ${testsConstants.addAssessmentbutton}`)
+      .click()
+    cy.get('#next-button').should('have.css', 'color', 'rgb(249, 250, 251)')
+  })
   it('Checks next button font size', () => {
     cy.get('a')
       .find('#tests')
@@ -172,6 +182,16 @@ describe('Creating assessments', () => {
       .should('have.text', `+ ${testsConstants.addAssessmentbutton}`)
       .click()
     cy.get('#back-button').should('have.text', addTestPageButtons.back)
+  })
+  it('Checks back button color', () => {
+    cy.get('a')
+      .find('#tests')
+      .should('have.text', testsConstants.assessments)
+      .click()
+    cy.get('#add-test', { timeout: 6000 })
+      .should('have.text', `+ ${testsConstants.addAssessmentbutton}`)
+      .click()
+    cy.get('#back-button').should('have.css', 'color', 'rgb(249, 250, 251)')
   })
   it('Checks back button font size', () => {
     cy.get('a')
@@ -246,6 +266,34 @@ describe('Creating assessments', () => {
     })
     cy.get('#next-button').click()
     cy.get('#submit-button').should('have.text', addTestPageButtons.submit)
+  })
+  it('Checks submit button color', () => {
+    cy.get('a')
+      .find('#tests')
+      .should('have.text', testsConstants.assessments)
+      .click()
+    cy.get('#add-test', { timeout: 6000 })
+      .should('have.text', `+ ${testsConstants.addAssessmentbutton}`)
+      .click()
+
+    cy.get('input[placeholder="Enter assessment name"]', { timeout: 6000 })
+      .clear()
+      .type(test)
+    cy.get('#quill-editor').within(() => {
+      cy.get('.ql-editor').type(`Test Description`)
+    })
+    cy.get('#next-button').click()
+    cy.get('div#section', { timeout: 60000 }).each((el) => {
+      cy.wrap(el).within(() => {
+        if (el.find('.count')[0].innerText != '0') {
+          cy.get('button').should('have.text', commonConstants.add).click()
+          cy.get('input#no-of-qu').clear().type('1')
+          cy.get('input#time').clear().type('1')
+        }
+      })
+    })
+    cy.get('#next-button').click()
+    cy.get('#submit-button').should('have.css', 'color', 'rgb(249, 250, 251)')
   })
   it('Checks submit button font size', () => {
     cy.get('a')
