@@ -13,7 +13,8 @@ describe('Test for Tests', () => {
 
     cy.customVisit('/tests')
   })
-  it('Check Active State of Tests', () => {
+
+  it('Checks, Active State of Tests', () => {
     cy.location().then((loc) => {
       cy.location('search').should('include', loc.search)
     })
@@ -99,6 +100,27 @@ describe('Test for Tests', () => {
       .should('have.attr', 'aria-label', 'Add Test')
       .click()
       .should('have.focus')
+  })
+  it('Checks, Add button should be visible', () => {
+    cy.wait(1000)
+    cy.get('#add-section', { timeout: 6000 })
+      .should('have.text', '+ Add Test')
+      .click()
+    cy.get('#submit-button').should('be.visible')
+  })
+  it('Checks, Add button should have correct text', () => {
+    cy.wait(1000)
+    cy.get('#add-section', { timeout: 6000 })
+      .should('have.text', '+ Add Test')
+      .click()
+    cy.get('#submit-button').should('have.text', 'Add')
+  })
+  it('Checks, Add button should have tabindex', () => {
+    cy.wait(1000)
+    cy.get('#add-section', { timeout: 6000 })
+      .should('have.text', '+ Add Test')
+      .click()
+    cy.get('#submit-button').should('have.attr', 'tabindex', '0')
   })
   it('checks, cancel button should have correct text', () => {
     cy.wait(1000)
@@ -259,22 +281,6 @@ describe('Test for Tests', () => {
       .get('.verticalDots', { timeout: 8000 })
       .should('be.visible')
   })
-  it('checks,active Tests ,delete Tests button should be visible', () => {
-    cy.wait(1000)
-    cy.get('.activeSectionCard', { timeout: 6000 })
-      .children()
-      .get('.verticalDots', { timeout: 8000 })
-      .click()
-    cy.get('#delete-test-button').should('be.visible')
-  })
-  it('checks,active Tests ,delete Tests button should be visible', () => {
-    cy.wait(1000)
-    cy.get('.activeSectionCard', { timeout: 6000 })
-      .children()
-      .get('.verticalDots', { timeout: 8000 })
-      .click()
-    cy.get('#edit-test-button').should('be.visible')
-  })
   it('checks,Tests details heading should be visible', () => {
     cy.wait(1000)
     cy.get('#section-details-heading', { timeout: 6000 }).should('be.visible')
@@ -316,6 +322,35 @@ describe('Test for Tests', () => {
   it('checks,Tests details search bar should have focus', () => {
     cy.wait(1000)
     cy.get('#section-search', { timeout: 6000 }).click().should('have.focus')
+  })
+  it('Checks,Question card should be visible', () => {
+    cy.wait(1000)
+    cy.get('#question-card-wrapper').should('be.visible')
+  })
+  it('Checks,Question card should have tabIndex', () => {
+    cy.wait(1000)
+    cy.get('#question-card-wrapper').should('have.attr', 'tabindex', '0')
+  })
+  it('Checks,Question card should have aria-label', () => {
+    cy.wait(1000)
+    cy.get('#question-card-wrapper').should('have.attr', 'aria-label', 'Expand')
+  })
+  it('Checks,initially option card should have max height 0', () => {
+    cy.wait(1000)
+    cy.get('#options-wrapper').should('have.css', 'max-height', '0px')
+  })
+  it('Checks,initially option card should have expand after clicking on question card', () => {
+    cy.wait(1000)
+    cy.get('#question-card-wrapper').should('be.visible').click()
+    cy.get('#options-wrapper').should(
+      'have.class',
+      'overflow-scroll text-base text-gray-600 transition-all h-full'
+    )
+  })
+  it('Checks,question type chip should be visible', () => {
+    cy.wait(1000)
+    cy.get('#question-card-wrapper').should('be.visible').click()
+    cy.get('#question-type').should('be.visible')
   })
   it('Test for valid error message while adding new Tests without Title', () => {
     cy.wait(1000)
@@ -382,6 +417,7 @@ describe('Test for Tests', () => {
     cy.get('.Toastify__close-button').click()
   })
   it('SortBy Name or created Date', () => {
+    cy.wait(1000)
     cy.get('.sectionLSWrapper').within(() => {
       cy.get('#section-cards')
         .get('#section-link')
@@ -409,6 +445,7 @@ describe('Test for Tests', () => {
     })
   })
   it('Test for deleting the Tests and check if it is deleted or not', () => {
+    cy.wait(1000)
     const sectionCards = cy.get('.section-card')
     sectionCards.each(($element) => {
       cy.wrap($element).within(($el) => {

@@ -26,6 +26,7 @@ const QuestionCard = ({
       className="flex cursor-pointer flex-col rounded-lg border border-gray-300 bg-gray-50 px-6 py-7"
       title={t('sectionsConstants.expand')}
       tabIndex={0}
+      id="question-card-wrapper"
       aria-label={t('sectionsConstants.expand')}
       role={t('sectionsConstants.expand')}
       onKeyUp={(e) => {
@@ -51,7 +52,10 @@ const QuestionCard = ({
         </div>
         <div className="flex min-w-fit items-center justify-between lg:flex-1 lg:justify-end lg:gap-2">
           <div>
-            <span className="flex flex-1 items-center rounded-52 border border-gray-700 px-3 text-sm text-gray-700">
+            <span
+              id="question-type"
+              className="flex flex-1 items-center rounded-52 border border-gray-700 px-3 text-sm text-gray-700"
+            >
               {question.questionType?.displayName}
             </span>
           </div>
@@ -73,6 +77,7 @@ const QuestionCard = ({
           'overflow-scroll text-base text-gray-600 transition-all ' +
           (isExpanded === index ? 'h-full' : 'max-h-0')
         }
+        id="options-wrapper"
       >
         {question?.options && (
           <div className="grid grid-cols-1 gap-4 pt-6 ">
