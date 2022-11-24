@@ -64,7 +64,7 @@ describe('Test for Tests', () => {
       .should('have.text', '+ Add Test')
 
       .click()
-    cy.get('#dialog-header').should('be.visible')
+    cy.get('[data-cy="dialog-header"]').should('be.visible')
   })
   it('checks, add test popup heading should have correct text', () => {
     cy.wait(1000)
@@ -72,7 +72,7 @@ describe('Test for Tests', () => {
       .should('have.text', '+ Add Test')
 
       .click()
-    cy.get('#dialog-header').should('have.text', 'Add Test')
+    cy.get('[data-cy="dialog-header"]').should('have.text', 'Add Test')
   })
   it('checks, add test popup heading should have tabIndex', () => {
     cy.wait(1000)
@@ -80,7 +80,7 @@ describe('Test for Tests', () => {
       .should('have.text', '+ Add Test')
 
       .click()
-    cy.get('#dialog-header').should('have.attr', 'tabindex', '0')
+    cy.get('[data-cy="dialog-header"]').should('have.attr', 'tabindex', '0')
   })
   it('checks, add test popup heading should have aria label', () => {
     cy.wait(1000)
@@ -88,7 +88,11 @@ describe('Test for Tests', () => {
       .should('have.text', '+ Add Test')
 
       .click()
-    cy.get('#dialog-header').should('have.attr', 'aria-label', 'Add Test')
+    cy.get('[data-cy="dialog-header"]').should(
+      'have.attr',
+      'aria-label',
+      'Add Test'
+    )
   })
   it('checks, add test popup heading should have focus', () => {
     cy.wait(1000)
@@ -96,7 +100,7 @@ describe('Test for Tests', () => {
       .should('have.text', '+ Add Test')
 
       .click()
-    cy.get('#dialog-header')
+    cy.get('[data-cy="dialog-header"]')
       .should('have.attr', 'aria-label', 'Add Test')
       .click()
       .should('have.focus')

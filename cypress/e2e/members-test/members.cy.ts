@@ -37,18 +37,18 @@ describe('Test for members', () => {
   })
   it('checks,invite member dialog header should be visible', () => {
     cy.get('#invite-member').should('have.text', 'Invite Member').click()
-    cy.get('#dialog-header', { timeout: 8000 }).should('be.visible')
+    cy.get('[data-cy="dialog-header"]', { timeout: 8000 }).should('be.visible')
   })
   it('checks,invite member dialog header should have correct text', () => {
     cy.get('#invite-member').should('have.text', 'Invite Member').click()
-    cy.get('#dialog-header', { timeout: 8000 }).should(
+    cy.get('[data-cy="dialog-header"]', { timeout: 8000 }).should(
       'have.text',
       'Invite Member'
     )
   })
   it('checks,invite member dialog header should have tabIndex', () => {
     cy.get('#invite-member').should('have.text', 'Invite Member').click()
-    cy.get('#dialog-header', { timeout: 8000 }).should(
+    cy.get('[data-cy="dialog-header"]', { timeout: 8000 }).should(
       'have.attr',
       'tabindex',
       '0'
