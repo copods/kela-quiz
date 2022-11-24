@@ -51,7 +51,7 @@ const AttendedCandidateListItem = ({
 
   return (
     <div className="col-span-full">
-      <div className="col-span-full grid grid-cols-12 gap-1 rounded-b-lg border-t border-solid border-gray-200 bg-white px-8 py-6">
+      <div className="testList col-span-full grid grid-cols-12 gap-1 rounded-b-lg border-t border-solid border-gray-200 bg-white px-8 py-6">
         <div className="col-span-1 flex items-center truncate">
           <span className="text-base text-gray-700">{index}</span>
         </div>
@@ -70,7 +70,7 @@ const AttendedCandidateListItem = ({
         ) : (
           <div
             title="No Name"
-            className="align-center col-span-2 flex items-center truncate"
+            className="align-center candidateName col-span-2 flex items-center truncate"
           >
             <i>--No Name--</i>
           </div>
@@ -79,7 +79,7 @@ const AttendedCandidateListItem = ({
           title={email}
           tabIndex={0}
           role={'banner'}
-          className="col-span-2 flex items-center truncate"
+          className="candidateEmaiL col-span-2 flex items-center truncate"
         >
           {email}
         </div>

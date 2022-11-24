@@ -1,4 +1,4 @@
-import { cypress, addQuestion, routeFiles } from '~/constants/common.constants'
+import { cypress, addQuestion } from '~/constants/common.constants'
 import { routes } from '~/constants/route.constants'
 const section1 = `Aptitude - section1`
 
@@ -9,26 +9,52 @@ describe('Test for section-details', () => {
     cy.customVisit('/tests')
   })
 
-  xit('Verifying MCQ to have Check Box in options', () => {
-    cy.get('a').find('#sections').should('have.text', routeFiles.tests).click()
-    cy.location('pathname', { timeout: 60000 }).should('include', routes.tests)
-    cy.get('#section-card', { timeout: 8000 }).each(($el) => {
-      cy.wrap($el).within((el) => {
-        if (
-          el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
-        ) {
-          cy.get('.sectionName').should('have.text', section1)
-        }
-      })
-    })
-    cy.get('.sectionName').contains(section1).click()
-    cy.get('#section-details-heading', { timeout: 40000 }).should(
+  it('checks, add question button should be visible and have correct text', () => {
+    cy.wait(3000)
+
+    cy.get('#add-question', { timeout: 40000 }).should(
       'have.text',
-      section1
+      `+ ${addQuestion.addQuestion}`
     )
-    cy.get('#add-question', { timeout: 8000 })
+  })
+
+  it('checks, heading of add question should be visible and have correct text', () => {
+    cy.wait(3000)
+
+    cy.get('#add-question', { timeout: 20000 })
       .should('have.text', `+ ${addQuestion.addQuestion}`)
       .click()
+    cy.location('pathname', { timeout: 60000 }).should(
+      'include',
+      routes.addQuestion
+    )
+    cy.get('h1', { timeout: 6000 })
+      .should('be.visible')
+      .should('have.text', section1 + ' - Add Question')
+  })
+  it('checks, redirect to section page after clicking on breadscrum link', () => {
+    cy.wait(3000)
+
+    cy.get('#add-question', { timeout: 20000 })
+      .should('have.text', `+ ${addQuestion.addQuestion}`)
+      .click()
+    cy.location('pathname', { timeout: 60000 }).should(
+      'include',
+      routes.addQuestion
+    )
+    cy.get('h1', { timeout: 6000 })
+      .should('be.visible')
+      .should('have.text', section1 + ' - Add Question')
+    cy.get('#Test', { timeout: 20000 }).should('have.text', 'Test').click()
+  })
+
+  it('Verifying MCQ to have Check Box in options', () => {
+    cy.wait(3000)
+
+    cy.get('#add-question', { timeout: 20000 })
+      .should('have.text', `+ ${addQuestion.addQuestion}`)
+      .click()
+
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       routes.addQuestion
@@ -58,23 +84,9 @@ describe('Test for section-details', () => {
     }
   })
 
-  xit('Verifying Single Choice to have Radio Button in options', () => {
-    cy.get('a').find('#sections').should('have.text', routeFiles.tests).click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.get('#section-card', { timeout: 8000 }).each(($el) => {
-      cy.wrap($el).within((el) => {
-        if (
-          el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
-        ) {
-          cy.get('.sectionName').should('have.text', section1)
-        }
-      })
-    })
-    cy.get('.sectionName').contains(section1).click()
-    cy.get('#section-details-heading', { timeout: 40000 }).should(
-      'have.text',
-      section1
-    )
+  it('Verifying Single Choice to have Radio Button in options', () => {
+    cy.wait(3000)
+
     cy.get('#add-question', { timeout: 12000 })
       .should('have.text', `+ ${addQuestion.addQuestion}`)
       .click()
@@ -107,23 +119,9 @@ describe('Test for section-details', () => {
     }
   })
 
-  xit('Verifying Text to have Textarea in options', () => {
-    cy.get('a').find('#sections').should('have.text', routeFiles.tests).click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.get('#section-card', { timeout: 10000 }).each(($el) => {
-      cy.wrap($el).within((el) => {
-        if (
-          el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
-        ) {
-          cy.get('.sectionName').should('have.text', section1)
-        }
-      })
-    })
-    cy.get('.sectionName').contains(section1).click()
-    cy.get('#section-details-heading', { timeout: 40000 }).should(
-      'have.text',
-      section1
-    )
+  it('Verifying Text to have Textarea in options and should be in focused after interaction', () => {
+    cy.wait(3000)
+
     cy.get('#add-question', { timeout: 12000 })
       .should('have.text', `+ ${addQuestion.addQuestion}`)
       .click()
@@ -152,27 +150,16 @@ describe('Test for section-details', () => {
       })
     })
     if (flag === 'TextArea') {
-      cy.get('input[type="textarea"]').should('have.class', 'textOption')
+      cy.get('input[type="textarea"]')
+        .should('have.class', 'textOption')
+        .click()
+        .should('be.focused')
     }
   })
   let lengthBefore: number
-  xit('Verifying if Add Option functionality Working on Options', () => {
-    cy.get('a').find('#sections').should('have.text', routeFiles.tests).click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.get('#section-card', { timeout: 8000 }).each(($el) => {
-      cy.wrap($el).within((el) => {
-        if (
-          el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
-        ) {
-          cy.get('.sectionName').should('have.text', section1)
-        }
-      })
-    })
-    cy.get('.sectionName').contains(section1).click()
-    cy.get('#section-details-heading', { timeout: 40000 }).should(
-      'have.text',
-      section1
-    )
+  it('Verifying if Add Option functionality Working on Options', () => {
+    cy.wait(3000)
+
     cy.get('#add-question', { timeout: 12000 })
       .should('have.text', `+ ${addQuestion.addQuestion}`)
       .click()
@@ -182,7 +169,6 @@ describe('Test for section-details', () => {
     )
     cy.get('h1', { timeout: 6000 }).should('be.visible')
     cy.get('#Question').get('#dropdown-container').click()
-
     cy.get('ul').within(() => {
       cy.get('li').within(() => {
         cy.get('div').then((el) => {
@@ -208,24 +194,41 @@ describe('Test for section-details', () => {
         })
     })
   })
+  it('Verifying if Delete button should be visible', () => {
+    cy.wait(3000)
 
-  xit('Verifying if Delete functionality Working on Options', () => {
-    cy.get('a').find('#sections').should('have.text', routeFiles.tests).click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.get('#section-card', { timeout: 8000 }).each(($el) => {
-      cy.wrap($el).within((el) => {
-        if (
-          el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
-        ) {
-          cy.get('.sectionName').should('have.text', section1)
-        }
+    cy.get('#add-question', { timeout: 12000 })
+      .should('have.text', `+ ${addQuestion.addQuestion}`)
+      .click()
+    cy.location('pathname', { timeout: 60000 }).should(
+      'include',
+      '/add-question'
+    )
+    cy.get('h1', { timeout: 6000 }).should('be.visible')
+    cy.get('#Question').get('#dropdown-container').click()
+    cy.get('ul').within(() => {
+      cy.get('li').within(() => {
+        cy.get('div').then((el) => {
+          ;[...el].forEach((el) => {
+            if (el.innerText === 'Multiple Choice') {
+              el.click()
+            }
+          })
+        })
       })
     })
-    cy.get('.sectionName').contains(section1).click()
-    cy.get('#section-details-heading', { timeout: 40000 }).should(
-      'have.text',
-      section1
-    )
+    cy.get('.h-40 > .gap-6').within(() => {
+      cy.get('#quill-editor')
+        .its('length')
+        .then((len) => {
+          lengthBefore = len
+        })
+      cy.get('#delete-option').should('be.visible')
+    })
+  })
+  it('Verifying if Delete functionality Working on Options', () => {
+    cy.wait(3000)
+
     cy.get('#add-question', { timeout: 12000 })
       .should('have.text', `+ ${addQuestion.addQuestion}`)
       .click()
@@ -260,23 +263,9 @@ describe('Test for section-details', () => {
         })
     })
   })
-  xit('On Save and Add More visit the Add Question Page', () => {
-    cy.get('a').find('#sections').should('have.text', routeFiles.tests).click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.get('#section-card', { timeout: 8000 }).each(($el) => {
-      cy.wrap($el).within((el) => {
-        if (
-          el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
-        ) {
-          cy.get('.sectionName').should('have.text', section1)
-        }
-      })
-    })
-    cy.get('.sectionName').contains(section1).click()
-    cy.get('#section-details-heading', { timeout: 40000 }).should(
-      'have.text',
-      section1
-    )
+  it('On Save and Add More visit the Add Question Page', () => {
+    cy.wait(3000)
+
     cy.get('#add-question', { timeout: 12000 })
       .should('have.text', `+ ${addQuestion.addQuestion}`)
       .click()
@@ -308,22 +297,13 @@ describe('Test for section-details', () => {
       '/add-question'
     )
   })
-  xit('On Save and Continue visit the Sections Page', () => {
-    cy.get('a').find('#sections').should('have.text', routeFiles.tests).click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.get('#section-card', { timeout: 8000 }).each(($el) => {
-      cy.wrap($el).within((el) => {
-        if (
-          el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
-        ) {
-          cy.get('.sectionName').should('have.text', section1)
-        }
-      })
-    })
-    cy.get('.sectionName').contains(section1).click()
+  it('On Save and Continue visit the Sections Page', () => {
+    cy.wait(3000)
+
     cy.get('#section-details-heading', { timeout: 40000 })
       .should('be.visible', { timeout: 4000 })
       .should('have.text', section1)
+
     cy.get('#add-question', { timeout: 12000 })
       .should('have.text', `+ ${addQuestion.addQuestion}`)
       .click()
@@ -352,22 +332,13 @@ describe('Test for section-details', () => {
     cy.get('#save-and-exit').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
   })
-  xit('Verifying if Question is Empty or not', () => {
-    cy.get('a').find('#sections').should('have.text', routeFiles.tests).click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/tests')
-    cy.get('#section-card', { timeout: 8000 }).each(($el) => {
-      cy.wrap($el).within((el) => {
-        if (
-          el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
-        ) {
-          cy.get('.sectionName').should('have.text', section1)
-        }
-      })
-    })
-    cy.get('.sectionName').contains(section1).click()
+  it('Verifying if Question is Empty or not', () => {
+    cy.wait(3000)
+
     cy.get('#section-details-heading', { timeout: 40000 })
       .should('be.visible', { timeout: 4000 })
       .should('have.text', section1)
+
     cy.get('#add-question', { timeout: 12000 })
       .should('have.text', `+ ${addQuestion.addQuestion}`)
       .click()
@@ -378,25 +349,14 @@ describe('Test for section-details', () => {
     cy.get('#question-editor > .rounded-lg > .ql-container > .ql-editor')
       .type('{backspace}')
       .should('have.value', '')
-
     cy.get('#save-and-add-more', { timeout: 6000 })
       .should('have.text', cypress.saveAndAddMore)
       .click()
     cy.get('.Toastify__toast').should('have.text', 'Enter the Question')
   })
-  xit('Verifying if any Option is empty or not', () => {
-    cy.get('a').find('#sections').should('have.text', routeFiles.tests).click()
-    cy.location('pathname', { timeout: 60000 }).should('include', routes.tests)
-    cy.get('#section-card', { timeout: 8000 }).each(($el) => {
-      cy.wrap($el).within((el) => {
-        if (
-          el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
-        ) {
-          cy.get('.sectionName').should('have.text', section1)
-        }
-      })
-    })
-    cy.get('.sectionName').contains(section1).click()
+  it('Verifying if any Option is empty or not', () => {
+    cy.wait(3000)
+
     cy.get('#section-details-heading', { timeout: 40000 })
       .should('be.visible', { timeout: 4000 })
       .should('have.text', section1)

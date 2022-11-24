@@ -16,7 +16,7 @@ const UserForgetPassword = ({
   let navigate = useNavigate()
   const inputFieldsProps = [
     {
-      label: '',
+      label: t('commonConstants.email'),
       placeholder: t('forgotPasswordConstants.enterEmailPlaceholder'),
       type: 'text',
       name: 'email',
@@ -31,13 +31,16 @@ const UserForgetPassword = ({
   ]
   return (
     <div className="flex flex-1 items-center justify-center bg-gray-50">
-      <div className="flex w-full max-w-554 flex-col gap-6 rounded-md border border-gray-50 bg-white px-24 pb-12 text-center drop-shadow-xl">
+      <div
+        id="forget-password-card"
+        className="flex w-full max-w-554 flex-col gap-6 rounded-md border border-gray-50 bg-white px-24 pb-12 drop-shadow-xl"
+      >
         <div className="-mt-9 flex justify-center">
           <Logo height="64" width="64" />
         </div>
         <div
           id="forget-pass-header"
-          className="text-3xl font-bold text-gray-900"
+          className="text-center text-3xl font-bold text-gray-900"
         >
           {t('forgotPasswordConstants.header')}
         </div>
@@ -45,20 +48,14 @@ const UserForgetPassword = ({
           <hr className="h-px w-6/12 border-none bg-gray-500 text-center" />
         </div>
 
-        <div className="text-xs text-gray-500">
+        <div id="enter-mail-info" className="text-center text-xs text-gray-500">
           {t('forgotPasswordConstants.enterEmail')}
         </div>
         <Form method="post" className="flex flex-col gap-6">
-          <div className="flex flex-col">
-            <span className="flex justify-start text-base text-gray-800">
-              {t('commonConstants.email')}
-            </span>
-            <div>
-              {inputFieldsProps.map((props) => {
-                return <InputField {...props} key={props.name} />
-              })}
-            </div>
-          </div>
+          {inputFieldsProps.map((props) => {
+            return <InputField {...props} key={props.name} />
+          })}
+
           <div className="-mt-3 flex justify-end">
             <span
               id="back-to-login"
