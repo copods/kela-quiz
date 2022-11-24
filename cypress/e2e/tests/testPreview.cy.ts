@@ -104,6 +104,18 @@ describe('Test for testPreview', () => {
       assessmentDetailsText
     )
   })
+  it('Checks for assessment details text color', () => {
+    cy.get('a')
+      .find('#tests', { timeout: 6000 })
+      .should('have.text', testsConstants.assessments)
+      .click()
+    cy.get('.test-name-navigation').contains(test1).click()
+    cy.get('#test-preview-assessment-details').should(
+      'have.css',
+      'color',
+      'rgb(0, 0, 0)'
+    )
+  })
   it('Checks for assessment details text font size', () => {
     cy.get('a')
       .find('#tests', { timeout: 6000 })
@@ -138,6 +150,19 @@ describe('Test for testPreview', () => {
     cy.get('#test-preview-selected-tests').should(
       'have.text',
       selectedSectionText
+    )
+  })
+  it('Checks for selected section text color', () => {
+    cy.get('a')
+      .find('#tests', { timeout: 6000 })
+      .should('have.text', testsConstants.assessments)
+      .click()
+    cy.get('.test-name-navigation').contains(test1).click()
+
+    cy.get('#test-preview-selected-tests').should(
+      'have.css',
+      'color',
+      'rgb(0, 0, 0)'
     )
   })
   it('Checks for selected section text font size', () => {

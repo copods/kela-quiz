@@ -99,6 +99,13 @@ describe('Visiting Assessment', () => {
       .click()
     cy.get('#assessments-table-sr-no').should('have.css', 'font-weight', '600')
   })
+  it('Checks font size of table title- Sr.No', () => {
+    cy.get('a')
+      .find('#tests')
+      .should('have.text', testsConstants.assessments)
+      .click()
+    cy.get('#assessments-table-sr-no').should('have.css', 'font-size', '14px')
+  })
   //assessment
   it('Checks text of table title- assessment', () => {
     cy.get('a')
@@ -134,6 +141,18 @@ describe('Visiting Assessment', () => {
       '600'
     )
   })
+  it('Checks font-size of table-title- assessment', () => {
+    cy.get('a')
+      .find('#tests')
+      .should('have.text', testsConstants.assessments)
+      .click()
+    cy.get('#assessments-table-assessment').should(
+      'have.css',
+      'font-size',
+      '14px'
+    )
+  })
+  //test
   it('Checks text of table title- test', () => {
     cy.get('a')
       .find('#tests')
@@ -154,7 +173,7 @@ describe('Visiting Assessment', () => {
       'rgb(107, 114, 128)'
     )
   })
-  it('Checks color of table-title- test', () => {
+  it('Checks font-weight of table-title- test', () => {
     cy.get('a')
       .find('#tests')
       .should('have.text', testsConstants.assessments)
@@ -162,7 +181,15 @@ describe('Visiting Assessment', () => {
 
     cy.get('#assessments-table-test').should('have.css', 'font-weight', '600')
   })
+  it('Checks font-size of table-title- test', () => {
+    cy.get('a')
+      .find('#tests')
+      .should('have.text', testsConstants.assessments)
+      .click()
 
+    cy.get('#assessments-table-test').should('have.css', 'font-size', '14px')
+  })
+  // created on
   it('Checks text of table title- Created On', () => {
     cy.get('a')
       .find('#tests')
@@ -197,6 +224,19 @@ describe('Visiting Assessment', () => {
       '600'
     )
   })
+  it('Checks font-size of table title- Created On', () => {
+    cy.get('a')
+      .find('#tests')
+      .should('have.text', testsConstants.assessments)
+      .click()
+
+    cy.get('#assessments-table-created-on').should(
+      'have.css',
+      'font-size',
+      '14px'
+    )
+  })
+  // Created By
   it('Checks text of table title- Created By', () => {
     cy.get('a')
       .find('#tests')
@@ -229,6 +269,18 @@ describe('Visiting Assessment', () => {
       '600'
     )
   })
+  it('Checks font-size of table title- Created By', () => {
+    cy.get('a')
+      .find('#tests')
+      .should('have.text', testsConstants.assessments)
+      .click()
+    cy.get('#assessments-table-created-by').should(
+      'have.css',
+      'font-size',
+      '14px'
+    )
+  })
+  //Actions
   it('Checks text of table title- Actions', () => {
     cy.get('a')
       .find('#tests')
@@ -262,6 +314,14 @@ describe('Visiting Assessment', () => {
       'font-weight',
       '600'
     )
+  })
+  it('Checks font-size of table title- Actions', () => {
+    cy.get('a')
+      .find('#tests')
+      .should('have.text', testsConstants.assessments)
+      .click()
+
+    cy.get('#assessments-table-actions').should('have.css', 'font-size', '14px')
   })
   it('Checks add assessment button text', () => {
     cy.get('a')
