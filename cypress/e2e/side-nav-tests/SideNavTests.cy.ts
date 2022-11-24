@@ -131,7 +131,7 @@ describe('Test for Logout, SideNav', () => {
     cy.get('#sidenav-user-email').should('have.css', 'font-size', '12px')
   })
   it('Checks for sideNav user email font weight', () => {
-    cy.get('#sidenav-user-email').should('have.css', 'font-weight', '600')
+    cy.get('#sidenav-user-email').should('have.css', 'font-weight', '400')
   })
   // user avatar
   it('Checks for sideNav user avatar text', () => {
