@@ -16,7 +16,14 @@ const InvitedMembersList = ({
     <>
       {invitedMember?.length !== 0 && (
         <div className="flex flex-col gap-4 text-2xl">
-          <h1>{t('members.invitedMember')}</h1>
+          <h1
+            tabIndex={0}
+            role={t('members.invitedMember')}
+            aria-label={t('members.invitedMember')}
+            id="invited-member-heading"
+          >
+            {t('members.invitedMember')}
+          </h1>
 
           <div className="grid grid-cols-12 rounded-lg shadow-base">
             <div className="col-span-full grid grid-cols-10 rounded-lg border border-solid border-gray-200 bg-white">
