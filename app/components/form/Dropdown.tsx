@@ -25,6 +25,9 @@ function DropdownField({
   actionName?: string
 }) {
   const { t } = useTranslation()
+  const createQuestionDropdownOptions = data.filter(
+    (item) => item.value !== 'SINGLE_CHOICE'
+  )
 
   function classNames(...classes: Array<string>) {
     return classes.filter(Boolean).join(' ')
@@ -96,7 +99,7 @@ function DropdownField({
                     </div>
                   </Listbox.Option>
                 )}
-                {data.map((el) => (
+                {createQuestionDropdownOptions.map((el) => (
                   <Listbox.Option
                     key={el[valueKey]}
                     className={({ active }) =>

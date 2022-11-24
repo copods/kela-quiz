@@ -20,9 +20,13 @@ const AddQuestionInSection = () => {
   const { t } = useTranslation()
 
   const { sectionDetails, questionTypes } = useLoaderData()
-  const [selectedTypeOfQuestion, onQuestionTypeChange] = useState(
-    questionTypes[0].id
-  )
+  const [selectedTypeOfQuestion, onQuestionTypeChange] = useState(() => {
+    for (let qt of questionTypes) {
+      if (qt.value == 'MULTIPLE_CHOICE') {
+        return qt.id
+      }
+    }
+  })
   const [question, setQuestion] = useState('')
   const [singleChoiceAnswer, setSingleChoiceAnswer] = useState('')
   const [options, setOptions] = useState([
@@ -56,7 +60,8 @@ const AddQuestionInSection = () => {
   const [checkOrder, setCheckOrder] = useState(false)
   const transition = useTransition()
   const navigate = useNavigate()
-
+  const submit = useSubmit()
+  const [answerCount, setAnswerCount] = useState(0)
   const breadCrumbArray = [
     {
       tabName: 'testsConstants.testText',
@@ -77,7 +82,6 @@ const AddQuestionInSection = () => {
     return quesValue
   }
 
-  const submit = useSubmit()
   const saveQuestion = (addMoreQuestion: boolean) => {
     if (!question.length) {
       toast.error('Enter the Question', { toastId: 'questionRequired' })
@@ -145,13 +149,19 @@ const AddQuestionInSection = () => {
       question,
       options: [],
       correctAnswer: [],
-      questionTypeId: selectedTypeOfQuestion,
+      questionTypeId:
+        answerCount === 1
+          ? questionTypes.find((item: any) => item.value === 'SINGLE_CHOICE')
+              ?.id
+          : selectedTypeOfQuestion,
       sectionId: sectionDetails?.id as string,
       addMoreQuestion,
       checkOrder: false,
     }
     if (
-      getQuestionType(selectedTypeOfQuestion) === QuestionTypes.multipleChoice
+      getQuestionType(selectedTypeOfQuestion) ===
+        QuestionTypes.multipleChoice &&
+      answerCount === 1
     ) {
       options.forEach((option) => {
         let optionForQuestion = {
@@ -162,14 +172,14 @@ const AddQuestionInSection = () => {
         testQuestion.options.push(optionForQuestion)
       })
     } else if (
-      getQuestionType(selectedTypeOfQuestion) === QuestionTypes.singleChoice
+      getQuestionType(selectedTypeOfQuestion) === QuestionTypes.multipleChoice
     ) {
       options.forEach(
         (option: { option: string; isCorrect: boolean; id: string }) => {
           let optionForQuestion = {
             id: option.id,
             option: option.option,
-            isCorrect: singleChoiceAnswer === option.id ? true : false,
+            isCorrect: option.isCorrect,
           }
           testQuestion.options.push(optionForQuestion)
         }
@@ -216,6 +226,8 @@ const AddQuestionInSection = () => {
           setSingleChoiceAnswer={setSingleChoiceAnswer}
           options={options}
           setOptions={setOptions}
+          answerCount={answerCount}
+          setAnswerCount={setAnswerCount}
           selectedTypeOfQuestion={selectedTypeOfQuestion}
           questionTypeList={questionTypes}
           checkOrder={checkOrder}

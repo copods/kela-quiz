@@ -108,7 +108,10 @@
     "createOptions": "Create Options",
     "checkOrder": "Check Order",
     "addOptions": "Add Options",
-    "addQuestion": "Add Question"
+    "addQuestion": "Add Question",
+    "note": "Note",
+    "multipleAnswersSelected": "Multiple answers selected",
+    "oneAnswerSelected": "One answer selected"
   },
   "sectionsConstants": {
     "addTests": "Add Test",
