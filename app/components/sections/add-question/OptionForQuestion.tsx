@@ -266,9 +266,13 @@ export default function OptionForQuestion({
           )}
       </div>
       {answerCount > 1 ? (
-        <p>Note: multiple answers selected</p>
+        <p>{`${t('addQuestion.note')}: ${t(
+          'addQuestion.multipleAnswersSelected'
+        )}`}</p>
       ) : answerCount === 1 ? (
-        <p>Note: only one answer</p>
+        <p>{`${t('addQuestion.note')}: ${t(
+          'addQuestion.oneAnswerSelected'
+        )}`}</p>
       ) : null}
     </div>
   )
