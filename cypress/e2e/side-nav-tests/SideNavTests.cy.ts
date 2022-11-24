@@ -52,7 +52,7 @@ describe('Test for Logout, SideNav', () => {
       })
     })
   })
-  it('Checks text SideNav group title- Results', () => {
+  it('Checks text of SideNav group title- Results', () => {
     cy.get('#nav-guide-results').should('have.text', sideNavGroupTitles.results)
   })
   it('Checks font weight of SideNav group title- Results', () => {
@@ -88,7 +88,7 @@ describe('Test for Logout, SideNav', () => {
     )
   })
 
-  it('Checks text SideNav group title- General', () => {
+  it('Checks text of SideNav group title- General', () => {
     cy.get('#nav-guide-general').should('have.text', sideNavGroupTitles.general)
   })
   it('Checks font weight of SideNav group title- General ', () => {
@@ -129,6 +129,9 @@ describe('Test for Logout, SideNav', () => {
   })
   it('Checks for sideNav user email font size', () => {
     cy.get('#sidenav-user-email').should('have.css', 'font-size', '12px')
+  })
+  it('Checks for sideNav user email font weight', () => {
+    cy.get('#sidenav-user-email').should('have.css', 'font-weight', '600')
   })
   // user avatar
   it('Checks for sideNav user avatar text', () => {
