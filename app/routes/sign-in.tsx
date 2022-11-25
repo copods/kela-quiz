@@ -29,7 +29,7 @@ export const action: ActionFunction = async ({ request }) => {
 
   const redirectTo = safeRedirect(
     formData.get('redirectTo'),
-    invitedId != 'null' ? `/workspace/${invitedId}/join` : routes.members
+    invitedId != 'null' ? `/workspace/${invitedId}/join` : ''
   )
   const remember = formData.get('remember')
   const email = formData.get('email')
@@ -62,12 +62,12 @@ export const action: ActionFunction = async ({ request }) => {
       { status: 400 }
     )
   }
-
+  console.log('user', user)
   return createUserSession({
     request,
     userId: user.id,
     remember: remember === 'on' ? true : false,
-    redirectTo,
+    redirectTo: redirectTo ? redirectTo : `/${user.userWorkspace[0].id}`,
   })
 }
 

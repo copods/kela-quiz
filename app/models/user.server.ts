@@ -239,6 +239,14 @@ export async function loginVerificationResponse(
     where: { email },
     include: {
       password: true,
+      userWorkspace: {
+        where: {
+          isDefault: true
+        },
+        select: {
+          id: true
+        }
+      }
     },
   })
 

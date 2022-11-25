@@ -5,7 +5,6 @@ import { trimValue } from '~/utils'
 import { useTranslation } from 'react-i18next'
 import DialogWrapper from '../Dialog'
 import type { createSectionErrorType } from '~/interface/Interface'
-import type { ActionData } from '~/routes/tests'
 
 export interface editItem {
   name: string
@@ -37,7 +36,7 @@ const AddEditSection = ({
   const [sectionName, setSectionName] = useState('')
   const [description, setDescription] = useState('')
   const submit = useSubmit()
-  const sectionActionData = useActionData() as ActionData
+  const sectionActionData = useActionData()
   const editSection = (name: string, description: string) => {
     submit(
       {
