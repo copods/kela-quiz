@@ -99,16 +99,16 @@ function DropdownField({
                     </div>
                   </Listbox.Option>
                 )}
-                {createQuestionDropdownOptions.map((el) => (
+                {createQuestionDropdownOptions.map((option) => (
                   <Listbox.Option
-                    key={el[valueKey]}
+                    key={option[valueKey]}
                     className={({ active }) =>
                       classNames(
                         active ? 'bg-primary text-white' : 'text-gray-900',
                         'relative z-20 cursor-pointer select-none py-2 px-3'
                       )
                     }
-                    value={el[valueKey]}
+                    value={option[valueKey]}
                   >
                     {({ selected, active }) => (
                       <>
@@ -122,7 +122,7 @@ function DropdownField({
                             )}
                             id="option"
                           >
-                            {el[displayKey]}
+                            {option[displayKey]}
                           </span>
                         </div>
                         {selected ? (

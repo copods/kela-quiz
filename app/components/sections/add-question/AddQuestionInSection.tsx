@@ -22,7 +22,7 @@ const AddQuestionInSection = () => {
   const { sectionDetails, questionTypes } = useLoaderData()
   const [selectedTypeOfQuestion, onQuestionTypeChange] = useState(() => {
     for (let questionType of questionTypes) {
-      if (questionType.value == 'MULTIPLE_CHOICE') {
+      if (questionType.value == QuestionTypes.multipleChoice) {
         return questionType.id
       }
     }
@@ -84,7 +84,9 @@ const AddQuestionInSection = () => {
 
   const saveQuestion = (addMoreQuestion: boolean) => {
     if (!question.length) {
-      toast.error('Enter the Question', { toastId: 'questionRequired' })
+      toast.error(t('addQuestion.enterTheQuestion'), {
+        toastId: 'questionRequired',
+      })
       return
     }
 

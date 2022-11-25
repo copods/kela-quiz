@@ -21,10 +21,16 @@ const QuestionCard = ({
 }) => {
   const { t } = useTranslation()
   const displayName =
-    question.questionType?.displayName === QuestionTypes.multipleChoice
-      ? { name: 'MSQ', full: 'Multiple Select Question' }
-      : question.questionType?.displayName === 'Single Choice'
-      ? { name: 'MCQ', full: 'Multiple Choice Question' }
+    question.questionType?.value === QuestionTypes.multipleChoice
+      ? {
+          name: t('sectionsConstants.msq'),
+          full: t('sectionsConstants.multipleSelectQuestion'),
+        }
+      : question.questionType?.value === QuestionTypes.singleChoice
+      ? {
+          name: t('sectionsConstants.msq'),
+          full: t('sectionsConstants.multipleChoiceQuestion'),
+        }
       : { name: question.questionType?.displayName, full: 'Text' }
   return (
     <div
