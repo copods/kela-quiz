@@ -22,7 +22,7 @@ const AddQuestionInSection = () => {
   const { sectionDetails, questionTypes } = useLoaderData()
   const [selectedTypeOfQuestion, onQuestionTypeChange] = useState(() => {
     for (let questionType of questionTypes) {
-      if (questionType.value == QuestionTypes.multipleChoice) {
+      if (questionType.value === QuestionTypes.multipleChoice) {
         return questionType.id
       }
     }
