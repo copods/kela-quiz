@@ -4,7 +4,6 @@ import { json } from '@remix-run/node'
 import invariant from 'tiny-invariant'
 import { getTestById } from '~/models/tests.server'
 import TestDetails from '~/components/tests/TestDetails'
-import AdminLayout from '~/components/layouts/AdminLayout'
 import { getUserWorkspaces } from '~/models/workspace.server'
 import { getWorkspaceId, getUserId, requireUserId } from '~/session.server'
 import { createCandidate } from '~/models/candidate.server'
@@ -57,9 +56,5 @@ export const action: ActionFunction = async ({ request }) => {
   }
 }
 export default function TestsDetailsRoute() {
-  return (
-    <AdminLayout>
-      <TestDetails />
-    </AdminLayout>
-  )
+  return <TestDetails />
 }

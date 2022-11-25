@@ -4,7 +4,6 @@ import { json, redirect } from '@remix-run/server-runtime'
 import { useEffect } from 'react'
 import { toast } from 'react-toastify'
 import type { Section } from '~/interface/Interface'
-import AdminLayout from '~/components/layouts/AdminLayout'
 import AddTestComponent from '~/components/tests/AddTest'
 import { getAllSections } from '~/models/sections.server'
 import { createTest } from '~/models/tests.server'
@@ -125,11 +124,7 @@ const AddTest = () => {
     toast.success(t('statusCheck.commonError'))
   }
 
-  return (
-    <AdminLayout>
-      <AddTestComponent sections={testData.sections} />
-    </AdminLayout>
-  )
+  return <AddTestComponent sections={testData.sections} />
 }
 
 export default AddTest

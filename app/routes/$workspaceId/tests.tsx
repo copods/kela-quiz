@@ -20,7 +20,6 @@ import { useState, useEffect } from 'react'
 import { Icon } from '@iconify/react'
 import { getUserId, getWorkspaceId, requireUserId } from '~/session.server'
 import Sections from '~/components/sections/Sections'
-import AdminLayout from '~/components/layouts/AdminLayout'
 import type { createSectionErrorType } from '~/interface/Interface'
 import AddEditSection from '~/components/sections/AddEditSection'
 import { toast } from 'react-toastify'
@@ -396,90 +395,87 @@ export default function SectionPage() {
   ])
 
   return (
-    <AdminLayout>
-      <div className="flex h-full flex-col gap-6 overflow-hidden p-1">
-        {/* header */}
-        <header className="flex items-start justify-between">
-          <h2
-            className="text-3xl font-bold text-black"
-            id="tests-heading"
-            tabIndex={0}
-            role={t('routeFiles.tests')}
-            title={t('routeFiles.tests')}
-            aria-label={t('routeFiles.tests')}
-          >
-            {t('routeFiles.tests')}
-          </h2>
-          <Button
-            id="add-section"
-            data-cy="submit"
-            className="h-9 px-5"
-            varient="primary-solid"
-            onClick={() => setShowAddSectionModal(!showAddSectionModal)}
-            title={t('sectionsConstants.addTests')}
-            buttonText={`+ ${t('sectionsConstants.addTests')}`}
-          />
-        </header>
-        {data.sections.length > 0 ? (
-          <div
-            className={`flex flex-1 overflow-hidden ${
-              sectionDetailFull ? '' : 'gap-5'
-            }`}
-          >
-            {/* section list */}
-            <div className={`${sectionDetailFull ? 'hidden' : ''}`}>
-              <Sections
-                sections={data.sections as Section[]}
-                selectedSection={selectedSection}
-                filters={data.filters}
-                sortBy={sortBy}
-                setSortBy={setSortBy}
-                order={order}
-                setOrder={setOrder}
-                setSelectedSection={setSelectedSection}
-                sortByDetails={sortByDetails}
-              />
-            </div>
-            {/* section details */}
-            <div className={`z-10 flex flex-1 items-center `}>
-              <span
-                className="z-20 -mr-5"
-                tabIndex={0}
-                role={'button'}
-                onClick={() => setSectionDetailFull(!sectionDetailFull)}
-                onKeyUp={(e) => {
-                  if (e.key === 'Enter')
-                    setSectionDetailFull(!sectionDetailFull)
-                }}
-              >
-                {sectionDetailFull ? (
-                  <Icon
-                    icon={'akar-icons:circle-chevron-right-fill'}
-                    className="cursor-pointer text-4xl text-primary"
-                  />
-                ) : (
-                  <Icon
-                    icon={'akar-icons:circle-chevron-left-fill'}
-                    className="cursor-pointer text-4xl text-primary"
-                  />
-                )}
-              </span>
-              <Outlet />
-            </div>
-          </div>
-        ) : (
-          <div className="p-7 text-center">
-            {t('sectionsConstants.noRecordFound')}
-          </div>
-        )}
-        <AddEditSection
-          open={showAddSectionModal}
-          createSectionError={createSectionError}
-          setCreateSectionError={setCreateSectionError}
-          setOpen={setShowAddSectionModal}
-          showErrorMessage={sectionActionData?.errors?.status === 400}
+    <div className="flex h-full flex-col gap-6 overflow-hidden p-1">
+      {/* header */}
+      <header className="flex items-start justify-between">
+        <h2
+          className="text-3xl font-bold text-black"
+          id="tests-heading"
+          tabIndex={0}
+          role={t('routeFiles.tests')}
+          title={t('routeFiles.tests')}
+          aria-label={t('routeFiles.tests')}
+        >
+          {t('routeFiles.tests')}
+        </h2>
+        <Button
+          id="add-section"
+          data-cy="submit"
+          className="h-9 px-5"
+          varient="primary-solid"
+          onClick={() => setShowAddSectionModal(!showAddSectionModal)}
+          title={t('sectionsConstants.addTests')}
+          buttonText={`+ ${t('sectionsConstants.addTests')}`}
         />
-      </div>
-    </AdminLayout>
+      </header>
+      {data.sections.length > 0 ? (
+        <div
+          className={`flex flex-1 overflow-hidden ${
+            sectionDetailFull ? '' : 'gap-5'
+          }`}
+        >
+          {/* section list */}
+          <div className={`${sectionDetailFull ? 'hidden' : ''}`}>
+            <Sections
+              sections={data.sections as Section[]}
+              selectedSection={selectedSection}
+              filters={data.filters}
+              sortBy={sortBy}
+              setSortBy={setSortBy}
+              order={order}
+              setOrder={setOrder}
+              setSelectedSection={setSelectedSection}
+              sortByDetails={sortByDetails}
+            />
+          </div>
+          {/* section details */}
+          <div className={`z-10 flex flex-1 items-center `}>
+            <span
+              className="z-20 -mr-5"
+              tabIndex={0}
+              role={'button'}
+              onClick={() => setSectionDetailFull(!sectionDetailFull)}
+              onKeyUp={(e) => {
+                if (e.key === 'Enter') setSectionDetailFull(!sectionDetailFull)
+              }}
+            >
+              {sectionDetailFull ? (
+                <Icon
+                  icon={'akar-icons:circle-chevron-right-fill'}
+                  className="cursor-pointer text-4xl text-primary"
+                />
+              ) : (
+                <Icon
+                  icon={'akar-icons:circle-chevron-left-fill'}
+                  className="cursor-pointer text-4xl text-primary"
+                />
+              )}
+            </span>
+            <Outlet />
+          </div>
+        </div>
+      ) : (
+        <div className="p-7 text-center">
+          {t('sectionsConstants.noRecordFound')}
+        </div>
+      )}
+      <AddEditSection
+        open={showAddSectionModal}
+        createSectionError={createSectionError}
+        setCreateSectionError={setCreateSectionError}
+        setOpen={setShowAddSectionModal}
+        showErrorMessage={sectionActionData?.errors?.status === 400}
+      />
+    </div>
   )
 }

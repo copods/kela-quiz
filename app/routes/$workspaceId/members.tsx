@@ -1,4 +1,3 @@
-import AdminLayout from '~/components/layouts/AdminLayout'
 import { getUserId, getWorkspaceId, requireWorkspaceId } from '~/session.server'
 import { redirect } from '@remix-run/node'
 import type { LoaderFunction, ActionFunction } from '@remix-run/node'
@@ -219,28 +218,26 @@ const Members = () => {
     }
   }, [membersActionData, t])
   return (
-    <AdminLayout>
-      <div className="flex flex-col gap-6 p-1">
-        <MembersHeader
-          actionStatus={actionStatus}
-          setActionStatus={setActionStatus}
-        />
-        <div className="flex flex-col gap-4 text-2xl">
-          <h1
-            tabIndex={0}
-            role={t('members.joinedMembers')}
-            aria-label={t('members.joinedMembers')}
-            id="joined-member-heading"
-          >
-            {t('members.joinedMembers')}
-          </h1>
-          <MembersList actionStatus={membersActionData?.resp?.title} />
-        </div>
-        <div className="flex flex-col gap-4 text-2xl">
-          <InvitedMembersList actionStatus={membersActionData?.resp?.title} />
-        </div>
+    <div className="flex flex-col gap-6 p-1">
+      <MembersHeader
+        actionStatus={actionStatus}
+        setActionStatus={setActionStatus}
+      />
+      <div className="flex flex-col gap-4 text-2xl">
+        <h1
+          tabIndex={0}
+          role={t('members.joinedMembers')}
+          aria-label={t('members.joinedMembers')}
+          id="joined-member-heading"
+        >
+          {t('members.joinedMembers')}
+        </h1>
+        <MembersList actionStatus={membersActionData?.resp?.title} />
       </div>
-    </AdminLayout>
+      <div className="flex flex-col gap-4 text-2xl">
+        <InvitedMembersList actionStatus={membersActionData?.resp?.title} />
+      </div>
+    </div>
   )
 }
 

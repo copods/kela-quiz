@@ -1,4 +1,3 @@
-import AdminLayout from '~/components/layouts/AdminLayout'
 import CandidateListOfTest from '~/components/results/CandidateListOfTest'
 import type { LoaderFunction } from '@remix-run/server-runtime'
 import type { ActionFunction } from '@remix-run/node'
@@ -44,11 +43,7 @@ export const action: ActionFunction = async ({ request }) => {
   }
 }
 function CandidateListRoute() {
-  return (
-    <AdminLayout>
-      <CandidateListOfTest />
-    </AdminLayout>
-  )
+  return <CandidateListOfTest />
 }
 
 export default CandidateListRoute

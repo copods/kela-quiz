@@ -62,12 +62,14 @@ export const action: ActionFunction = async ({ request }) => {
       { status: 400 }
     )
   }
-  console.log('user', user)
+
   return createUserSession({
     request,
     userId: user.id,
     remember: remember === 'on' ? true : false,
-    redirectTo: redirectTo ? redirectTo : `/${user.userWorkspace[0].id}`,
+    redirectTo: redirectTo
+      ? redirectTo
+      : `/${user.userWorkspace[0].workspaceId}`,
   })
 }
 

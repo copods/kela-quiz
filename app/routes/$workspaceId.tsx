@@ -1,19 +1,23 @@
-import type { LoaderFunction } from '@remix-run/node'
+import type { ActionFunction, LoaderFunction } from '@remix-run/node'
 import { json, redirect } from '@remix-run/node'
 import { Outlet } from '@remix-run/react'
 import AdminLayout from '~/components/layouts/AdminLayout'
 import { routes } from '~/constants/route.constants'
+import { getUserWorkspaces } from '~/models/workspace.server'
 import { getUserId } from '~/session.server'
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   const userId = await getUserId(request)
   if (!userId) return redirect(routes.signIn)
 
-  const workspaceId = params.workspaceId
+  const currentWorkspaceId = params.workspaceId
+  const workspaces = await getUserWorkspaces(userId as string)
 
-  console.log('params', workspaceId)
+  return json({ workspaces, currentWorkspaceId })
+}
 
-  return json(null)
+export const action: ActionFunction = async ({ request }) => {
+  return null
 }
 
 const WorkspaceWrapper = () => {

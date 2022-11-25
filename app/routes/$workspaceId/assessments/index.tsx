@@ -1,4 +1,3 @@
-import AdminLayout from '~/components/layouts/AdminLayout'
 import { getUserId, getWorkspaceId, requireUserId } from '~/session.server'
 import { redirect } from '@remix-run/node'
 import type { LoaderFunction, ActionFunction } from '@remix-run/node'
@@ -128,9 +127,5 @@ export default function Tests() {
       }
     }
   }, [testActionData, t])
-  return (
-    <AdminLayout>
-      <TestList tests={data.tests as Test[]} status={data.status} />
-    </AdminLayout>
-  )
+  return <TestList tests={data.tests as Test[]} status={data.status} />
 }

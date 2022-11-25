@@ -1,5 +1,4 @@
-import AdminLayout from '~/components/layouts/AdminLayout'
-import { getUserId, getWorkspaceId, switchWorkspace } from '~/session.server'
+import { createUserSession, getUserId, getWorkspaceId } from '~/session.server'
 import type { ActionFunction } from '@remix-run/node'
 import { redirect } from '@remix-run/node'
 import type { LoaderFunction } from '@remix-run/node'
@@ -45,12 +44,15 @@ export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
   const action = formData.get('action')
   if (action === actions.switchWorkspace) {
-    const workspaceId = formData.get('workspaceId') as string
+    const workspace = formData.get('workspaceId') as string
     const userId = (await getUserId(request)) as string
-    return await switchWorkspace({
+    console.log('workspace', workspace)
+    return await createUserSession({
       request,
-      workspaceId,
+      workspace,
       userId,
+      remember: false,
+      redirectTo: `/${workspace}`,
     })
   }
   if (action === actions.addWorkspace) {
@@ -106,16 +108,12 @@ export default function Settings() {
     if (location.pathname === '/settings') return navigate('/settings/general')
   }, [navigate, location.pathname])
   return (
-    <AdminLayout>
-      <div className="flex flex-col gap-6">
-        <div className="flex items-center justify-between">
-          <h1 className="text-3xl font-bold">
-            {t('commonConstants.settings')}
-          </h1>
-        </div>
-        <SettingsTabs />
-        <Outlet />
+    <div className="flex flex-col gap-6">
+      <div className="flex items-center justify-between">
+        <h1 className="text-3xl font-bold">{t('commonConstants.settings')}</h1>
       </div>
-    </AdminLayout>
+      <SettingsTabs />
+      <Outlet />
+    </div>
   )
 }

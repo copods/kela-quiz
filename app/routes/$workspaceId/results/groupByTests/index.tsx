@@ -4,7 +4,6 @@ import type { LoaderFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
 import GroupByTests from '~/components/results/GroupByTests'
 import { getAllCandidateTests } from '~/models/result.server'
-import AdminLayout from '~/components/layouts/AdminLayout'
 import { getUserWorkspaces } from '~/models/workspace.server'
 type LoaderData = {
   candidateTest: Awaited<ReturnType<typeof getAllCandidateTests>>
@@ -36,9 +35,5 @@ export const loader: LoaderFunction = async ({ request }) => {
 }
 
 export default function Results() {
-  return (
-    <AdminLayout>
-      <GroupByTests />
-    </AdminLayout>
-  )
+  return <GroupByTests />
 }

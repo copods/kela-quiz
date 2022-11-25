@@ -1,7 +1,6 @@
 import type { ActionFunction, LoaderFunction } from '@remix-run/server-runtime'
 import { json } from '@remix-run/server-runtime'
 import invariant from 'tiny-invariant'
-import AdminLayout from '~/components/layouts/AdminLayout'
 import {
   getResultsOfIndividualCandidates,
   getSectionWiseResultsOfIndividualCandidate,
@@ -56,10 +55,6 @@ export const action: ActionFunction = async ({ request }) => {
 }
 
 const ResultDetails = () => {
-  return (
-    <AdminLayout>
-      <ResultDetailsComponent />
-    </AdminLayout>
-  )
+  return <ResultDetailsComponent />
 }
 export default ResultDetails

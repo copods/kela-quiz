@@ -90,7 +90,7 @@ const SideNav = () => {
           workspaceId: val,
           action: actions.switchWorkspace,
         },
-        { method: 'post', action: '/settings' }
+        { method: 'post', action: `/${currentWorkspaceId}/settings` }
       )
     }
   }
@@ -139,6 +139,7 @@ const SideNav = () => {
                         iconClass={item.iconClass}
                         itemName={t(item.itemName)}
                         itemRoute={item.itemRoute}
+                        currentWorkspaceId={currentWorkspaceId}
                       />
                     )
                   })}

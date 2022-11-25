@@ -244,7 +244,7 @@ export async function loginVerificationResponse(
           isDefault: true
         },
         select: {
-          id: true
+          workspaceId: true
         }
       }
     },

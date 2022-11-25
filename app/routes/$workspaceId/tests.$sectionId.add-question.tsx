@@ -2,7 +2,6 @@ import type { ActionFunction, LoaderFunction } from '@remix-run/server-runtime'
 import { useActionData, useLoaderData, useNavigate } from '@remix-run/react'
 import { json } from '@remix-run/node'
 import invariant from 'tiny-invariant'
-import AdminLayout from '~/components/layouts/AdminLayout'
 import {
   getSectionById,
   getQuestionType,
@@ -113,9 +112,5 @@ export default function AddQuestion() {
       toast.error(t(actionData?.data))
     }
   }, [actionData, navigate, sectionDetail.sectionDetails?.id, t])
-  return (
-    <AdminLayout>
-      <AddQuestionInSection key={addQuestionKey} />
-    </AdminLayout>
-  )
+  return <AddQuestionInSection key={addQuestionKey} />
 }
