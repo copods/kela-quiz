@@ -12,14 +12,16 @@ const SectionLink = ({
   err,
   filter,
   setSelectedSection,
+  currentWorkspaceId,
 }: {
   section: Section & { _count?: { questions: number }; createdBy?: User }
   actionStatusData?: string
   err?: string
   filter: string
+  currentWorkspaceId: string
   setSelectedSection: (e: string) => void
 }) => {
-  const path = `${routes.tests}/${section.id}${filter}`
+  const path = `/${currentWorkspaceId}${routes.tests}/${section.id}${filter}`
   const [isDelete, setIsDelete] = useState(false)
   const location = useLocation() // to get current location
   const resolvedPath = useResolvedPath(path) // to get resolved path which would match with current location
@@ -89,6 +91,7 @@ type SectionType = {
   setOrder: (e: string) => void
   setSelectedSection: (e: string) => void
   sortByDetails: Array<{ name: string; value: string }>
+  currentWorkspaceId: string
 }
 const Sections = ({
   sections,
@@ -101,6 +104,7 @@ const Sections = ({
   sortByDetails,
   err,
   actionStatusData,
+  currentWorkspaceId,
 }: SectionType) => {
   return (
     <div className="sectionLSWrapper flex h-full max-w-96 flex-col gap-6">
@@ -131,6 +135,7 @@ const Sections = ({
             setSelectedSection={setSelectedSection}
             actionStatusData={actionStatusData}
             err={err}
+            currentWorkspaceId={currentWorkspaceId}
           />
         ))}
       </div>

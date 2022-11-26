@@ -241,12 +241,12 @@ export async function loginVerificationResponse(
       password: true,
       userWorkspace: {
         where: {
-          isDefault: true
+          isDefault: true,
         },
         select: {
-          workspaceId: true
-        }
-      }
+          workspaceId: true,
+        },
+      },
     },
   })
 
@@ -262,19 +262,6 @@ export async function loginVerificationResponse(
 
   const { password: _password, ...userWithoutPassword } = userWithPassword
   return userWithoutPassword
-}
-
-export async function getDefaultWorkspaceIdForUserQuery(userId: string) {
-  return prisma.user.findUnique({
-    where: { id: userId },
-    select: {
-      workspace: {
-        select: {
-          id: true,
-        },
-      },
-    },
-  })
 }
 
 export async function updatePassword(

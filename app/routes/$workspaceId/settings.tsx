@@ -6,7 +6,12 @@ import { routes } from '~/constants/route.constants'
 import { addWorkspace, getUserWorkspaces } from '~/models/workspace.server'
 import { json } from '@remix-run/node'
 import { actions } from '~/constants/action.constants'
-import { Outlet, useLocation, useNavigate } from '@remix-run/react'
+import {
+  Outlet,
+  useLoaderData,
+  useLocation,
+  useNavigate,
+} from '@remix-run/react'
 import SettingsTabs from '~/components/settings/SettingTab'
 import { useTranslation } from 'react-i18next'
 import { useEffect } from 'react'
@@ -104,6 +109,8 @@ export default function Settings() {
   const { t } = useTranslation()
   const location = useLocation()
   const navigate = useNavigate()
+  const { currentWorkspaceId } = useLoaderData()
+
   useEffect(() => {
     if (location.pathname === '/settings') return navigate('/settings/general')
   }, [navigate, location.pathname])
@@ -112,7 +119,7 @@ export default function Settings() {
       <div className="flex items-center justify-between">
         <h1 className="text-3xl font-bold">{t('commonConstants.settings')}</h1>
       </div>
-      <SettingsTabs />
+      <SettingsTabs currentWorkspaceId={currentWorkspaceId} />
       <Outlet />
     </div>
   )

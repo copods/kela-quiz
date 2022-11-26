@@ -10,7 +10,8 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   if (!sectionDetails) {
     throw new Response('Not Found', { status: 404 })
   }
-  return json({ sectionDetails })
+  const currentWorkspaceId = params.workspaceId
+  return json({ sectionDetails, currentWorkspaceId })
 }
 export default function Section() {
   return <SectionDetails />

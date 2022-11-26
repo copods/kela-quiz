@@ -12,9 +12,11 @@ import { useTranslation } from 'react-i18next'
 const TestList = ({
   tests,
   status,
+  currentWorkspaceId,
 }: {
   tests: Array<Test>
   status: string | undefined
+  currentWorkspaceId: string
 }) => {
   const { t } = useTranslation()
 
@@ -65,7 +67,9 @@ const TestList = ({
         </h2>
         <Button
           className="px-5"
-          onClick={() => navigate(routes.addAssessment)}
+          onClick={() =>
+            navigate(`/${currentWorkspaceId}${routes.addAssessment}`)
+          }
           id="add-test"
           tabIndex={0}
           varient="primary-solid"

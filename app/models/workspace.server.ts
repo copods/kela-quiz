@@ -95,3 +95,35 @@ export async function rejectWorkspaceInvitation({
   })
   return
 }
+
+export async function getDefaultWorkspaceIdForUserQuery(userId: string) {
+  return prisma.user.findUnique({
+    where: { id: userId },
+    select: {
+      workspace: {
+        select: {
+          id: true,
+        },
+      },
+    },
+  })
+}
+
+export async function verifyWorkspaceId({
+  userId,
+  currentWorkspaceId,
+}: {
+  userId: string
+  currentWorkspaceId: string
+}) {
+  return prisma.userWorkspace.findFirst({
+    where: { userId, workspaceId: currentWorkspaceId },
+    select: {
+      workspace: {
+        select: {
+          id: true,
+        },
+      },
+    },
+  })
+}

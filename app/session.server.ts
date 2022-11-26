@@ -2,8 +2,8 @@ import { createCookieSessionStorage, redirect } from '@remix-run/node'
 import invariant from 'tiny-invariant'
 
 import type { User } from '~/models/user.server'
-import { getDefaultWorkspaceIdForUserQuery } from '~/models/user.server'
 import { getUserById } from '~/models/user.server'
+import { getDefaultWorkspaceIdForUserQuery } from './models/workspace.server'
 
 invariant(process.env.SESSION_SECRET, 'SESSION_SECRET must be set')
 
@@ -95,7 +95,7 @@ export async function createUserSession({
   userId,
   remember,
   redirectTo,
-  workspace
+  workspace,
 }: {
   request: Request
   userId: string
@@ -103,7 +103,9 @@ export async function createUserSession({
   redirectTo: string
   workspace?: string
 }) {
-  const workspaceId = workspace ? workspace : await getDefaultWorkspaceIdForUser(userId as string)
+  const workspaceId = workspace
+    ? workspace
+    : await getDefaultWorkspaceIdForUser(userId as string)
   const session = await getSession(request)
   session.set(USER_SESSION_KEY, userId)
   session.set(USER_WORKSPACE_KEY, workspaceId)

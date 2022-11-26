@@ -127,5 +127,11 @@ export default function Tests() {
       }
     }
   }, [testActionData, t])
-  return <TestList tests={data.tests as Test[]} status={data.status} />
+  return (
+    <TestList
+      tests={data.tests as Test[]}
+      status={data.status}
+      currentWorkspaceId={data.currentWorkspaceId as string}
+    />
+  )
 }

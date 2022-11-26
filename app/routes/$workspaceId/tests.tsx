@@ -315,6 +315,8 @@ export default function SectionPage() {
   const [selectedSection, setSelectedSection] = useState(
     data.selectedSectionId || data.sections[0]?.id || 'NA'
   )
+  const location = useLocation()
+  const navigate = useNavigate()
 
   if (t(data.status) != t('statusCheck.success')) {
     toast.error(t('statusCheck.commonError'))
@@ -332,13 +334,11 @@ export default function SectionPage() {
       formData.append('filter', JSON.stringify(filter))
       submit(formData, {
         method: 'get',
-        action: `${routes.tests}/${selectedSection}`,
+        action: `/${data.currentWorkspaceId}${routes.tests}/${selectedSection}`,
       })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [order, sortBy, data.sections?.length])
-  const location = useLocation()
-  const navigate = useNavigate()
   useEffect(() => {
     if (sectionActionData) {
       if (
@@ -436,6 +436,7 @@ export default function SectionPage() {
               setOrder={setOrder}
               setSelectedSection={setSelectedSection}
               sortByDetails={sortByDetails}
+              currentWorkspaceId={data.currentWorkspaceId as string}
             />
           </div>
           {/* section details */}

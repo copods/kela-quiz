@@ -3,17 +3,41 @@ import { json, redirect } from '@remix-run/node'
 import { Outlet } from '@remix-run/react'
 import AdminLayout from '~/components/layouts/AdminLayout'
 import { routes } from '~/constants/route.constants'
-import { getUserWorkspaces } from '~/models/workspace.server'
-import { getUserId } from '~/session.server'
+import { getFirstSection } from '~/models/sections.server'
+import {
+  getDefaultWorkspaceIdForUserQuery,
+  getUserWorkspaces,
+  verifyWorkspaceId,
+} from '~/models/workspace.server'
+import { getUserId, getWorkspaceId } from '~/session.server'
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   const userId = await getUserId(request)
   if (!userId) return redirect(routes.signIn)
 
-  const currentWorkspaceId = params.workspaceId
+  let currentWorkspaceId = params.workspaceId as string
+
+  const verfiedWorkspaceId = await verifyWorkspaceId({
+    userId,
+    currentWorkspaceId,
+  })
+
+  if (!verfiedWorkspaceId) {
+    const lastLoginWorkspaceId = await getWorkspaceId(request)
+    if (lastLoginWorkspaceId) {
+      return redirect(`/${lastLoginWorkspaceId}`)
+    }
+    const defaultWorkspace = await getDefaultWorkspaceIdForUserQuery(userId)
+    currentWorkspaceId = defaultWorkspace?.workspace[0].id as string
+    return redirect(`/${currentWorkspaceId}`)
+  }
+
   const workspaces = await getUserWorkspaces(userId as string)
 
-  return json({ workspaces, currentWorkspaceId })
+  const firstSection = await getFirstSection(currentWorkspaceId)
+  console.log('firstSection', firstSection)
+
+  return json({ workspaces, currentWorkspaceId, firstSection })
 }
 
 export const action: ActionFunction = async ({ request }) => {
