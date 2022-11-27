@@ -1,4 +1,4 @@
-import { getUserId, getWorkspaceId, requireUserId } from '~/session.server'
+import { getUserId, requireUserId } from '~/session.server'
 import { redirect } from '@remix-run/node'
 import type { LoaderFunction, ActionFunction } from '@remix-run/node'
 import TestList from '~/components/tests/TestList'
@@ -18,7 +18,7 @@ type LoaderData = {
   tests: Awaited<Array<Test>>
   status?: string | undefined
   workspaces: Awaited<ReturnType<typeof getUserWorkspaces>>
-  currentWorkspaceId: Awaited<ReturnType<typeof getWorkspaceId>>
+  currentWorkspaceId: string
 }
 export type ActionData = {
   errors?: {
@@ -31,9 +31,9 @@ export type ActionData = {
   }
 }
 
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader: LoaderFunction = async ({ request, params }) => {
   const userId = await getUserId(request)
-  const currentWorkspaceId = await getWorkspaceId(request)
+  const currentWorkspaceId = params.workspaceId as string
   const workspaces = await getUserWorkspaces(userId as string)
 
   if (!userId) return redirect(routes.signIn)

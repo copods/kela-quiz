@@ -8,7 +8,7 @@ import {
   addQuestion,
 } from '~/models/sections.server'
 import AddQuestionInSection from '~/components/sections/add-question/AddQuestionInSection'
-import { getUserId, getWorkspaceId, requireUserId } from '~/session.server'
+import { getUserId, requireUserId } from '~/session.server'
 import { toast } from 'react-toastify'
 import { useEffect, useState } from 'react'
 import { routes } from '~/constants/route.constants'
@@ -19,7 +19,7 @@ type LoaderData = {
   sectionDetails: Awaited<ReturnType<typeof getSectionById>>
   questionTypes: Awaited<ReturnType<typeof getQuestionType>>
   workspaces: Awaited<ReturnType<typeof getUserWorkspaces>>
-  currentWorkspaceId: Awaited<ReturnType<typeof getWorkspaceId>>
+  currentWorkspaceId: string
 }
 type ActionData = {
   error?: {
@@ -36,7 +36,7 @@ type ActionData = {
 export const loader: LoaderFunction = async ({ request, params }) => {
   const questionTypes = await getQuestionType()
   const userId = await getUserId(request)
-  const currentWorkspaceId = await getWorkspaceId(request)
+  const currentWorkspaceId = params.workspaceId as string
   const workspaces = await getUserWorkspaces(userId as string)
 
   invariant(params.sectionId, 'sectionId not found')
@@ -113,6 +113,7 @@ export default function AddQuestion() {
     } else if (actionData?.error) {
       toast.error(t(actionData?.data))
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [actionData, navigate, sectionDetail.sectionDetails?.id, t])
   return <AddQuestionInSection key={addQuestionKey} />
 }

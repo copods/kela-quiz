@@ -18,7 +18,7 @@ import {
 } from '~/models/sections.server'
 import { useState, useEffect } from 'react'
 import { Icon } from '@iconify/react'
-import { getUserId, getWorkspaceId, requireUserId } from '~/session.server'
+import { getUserId, requireUserId } from '~/session.server'
 import Sections from '~/components/sections/Sections'
 import type { createSectionErrorType } from '~/interface/Interface'
 import AddEditSection from '~/components/sections/AddEditSection'
@@ -55,7 +55,7 @@ export type LoaderData = {
   filters: string
   status: string
   workspaces: Awaited<ReturnType<typeof getUserWorkspaces>>
-  currentWorkspaceId: Awaited<ReturnType<typeof getWorkspaceId>>
+  currentWorkspaceId: string
 }
 const handleAddSection = async (
   name: string,
@@ -151,7 +151,7 @@ const handleEditSection = async (
 }
 export const loader: LoaderFunction = async ({ request, params }) => {
   const userId = await getUserId(request)
-  const currentWorkspaceId = await getWorkspaceId(request)
+  const currentWorkspaceId = params.workspaceId as string
   const workspaces = await getUserWorkspaces(userId as string)
   const url = new URL(request.url).searchParams.entries()
   const filterData = Object.fromEntries(url).filter
@@ -191,9 +191,9 @@ const validateDescription = (description: string) => {
     return 'statusCheck.descIsReq'
   }
 }
-export const action: ActionFunction = async ({ request }) => {
+export const action: ActionFunction = async ({ request, params }) => {
   const createdById = await requireUserId(request)
-  const workspaceId = (await getWorkspaceId(request)) as string
+  const workspaceId = params.workspaceId as string
   const formData = await request.formData()
 
   const action =

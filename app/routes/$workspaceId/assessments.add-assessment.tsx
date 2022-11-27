@@ -7,7 +7,7 @@ import type { Section } from '~/interface/Interface'
 import AddTestComponent from '~/components/tests/AddTest'
 import { getAllSections } from '~/models/sections.server'
 import { createTest } from '~/models/tests.server'
-import { getUserId, getWorkspaceId, requireUserId } from '~/session.server'
+import { getUserId, requireUserId } from '~/session.server'
 import { routes } from '~/constants/route.constants'
 import { useTranslation } from 'react-i18next'
 import { getUserWorkspaces } from '~/models/workspace.server'
@@ -16,7 +16,7 @@ type LoaderData = {
   sections: Awaited<ReturnType<typeof getAllSections>>
   status: string
   workspaces: Awaited<ReturnType<typeof getUserWorkspaces>>
-  currentWorkspaceId: Awaited<ReturnType<typeof getWorkspaceId>>
+  currentWorkspaceId: string
 }
 export type ActionData = {
   errors?: {
@@ -28,9 +28,9 @@ export type ActionData = {
     status: number
   }
 }
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader: LoaderFunction = async ({ request, params }) => {
   const userId = await getUserId(request)
-  const currentWorkspaceId = await getWorkspaceId(request)
+  const currentWorkspaceId = params.workspaceId as string
   const workspaces = await getUserWorkspaces(userId as string)
   if (!userId) return redirect(routes.signIn)
 
@@ -54,9 +54,9 @@ export const loader: LoaderFunction = async ({ request }) => {
   return json<LoaderData>({ sections, status, workspaces, currentWorkspaceId })
 }
 
-export const action: ActionFunction = async ({ request }) => {
+export const action: ActionFunction = async ({ request, params }) => {
   const createdById = await requireUserId(request)
-  const workspaceId = await getWorkspaceId(request)
+  const workspaceId = params.workspaceId
   const formData = await request.formData()
 
   const data:

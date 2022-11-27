@@ -1,4 +1,4 @@
-import { createUserSession, getUserId, getWorkspaceId } from '~/session.server'
+import { createUserSession, getUserId } from '~/session.server'
 import type { ActionFunction } from '@remix-run/node'
 import { redirect } from '@remix-run/node'
 import type { LoaderFunction } from '@remix-run/node'
@@ -18,8 +18,8 @@ import { useEffect } from 'react'
 
 export type LoaderData = {
   workspaces: Awaited<ReturnType<typeof getUserWorkspaces>>
-  currentWorkspaceId: Awaited<ReturnType<typeof getWorkspaceId>>
-  userId: Awaited<ReturnType<typeof getWorkspaceId>>
+  currentWorkspaceId: string
+  userId: Awaited<ReturnType<typeof getUserId>>
 }
 export type ActionData = {
   errors?: {
@@ -33,10 +33,10 @@ export type ActionData = {
   }
 }
 
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader: LoaderFunction = async ({ request, params }) => {
   const userId = await getUserId(request)
   if (!userId) return redirect(routes.signIn)
-  const currentWorkspaceId = await getWorkspaceId(request)
+  const currentWorkspaceId = params.workspaceId as string
   const workspaces = await getUserWorkspaces(userId as string)
   return json<LoaderData>({
     workspaces,
