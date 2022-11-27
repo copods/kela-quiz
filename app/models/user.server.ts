@@ -13,7 +13,9 @@ export async function getUserById(id: User['id']) {
 
 export async function deleteUserById(userId: string, workspaceId: string) {
   try {
-    return await prisma.userWorkspace.deleteMany({ where: { userId, workspaceId } })
+    return await prisma.userWorkspace.deleteMany({
+      where: { userId, workspaceId },
+    })
   } catch (error) {
     return 'Something went wrong'
   }

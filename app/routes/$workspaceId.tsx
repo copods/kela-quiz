@@ -35,7 +35,6 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const workspaces = await getUserWorkspaces(userId as string)
 
   const firstSection = await getFirstSection(currentWorkspaceId)
-  console.log('firstSection', firstSection)
 
   return json({ workspaces, currentWorkspaceId, firstSection })
 }

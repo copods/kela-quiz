@@ -20,8 +20,6 @@ const SideNav = () => {
     return { ...userWorkspace, ...userWorkspace.workspace }
   })
 
-  console.log(firstSection)
-
   const sideNavGuide = [
     // {
     //   navGuide: 'Main Menu',

@@ -51,7 +51,6 @@ export const action: ActionFunction = async ({ request }) => {
   if (action === actions.switchWorkspace) {
     const workspace = formData.get('workspaceId') as string
     const userId = (await getUserId(request)) as string
-    console.log('workspace', workspace)
     return await createUserSession({
       request,
       workspace,
