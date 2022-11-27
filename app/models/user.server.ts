@@ -11,9 +11,9 @@ export async function getUserById(id: User['id']) {
   return prisma.user.findUnique({ where: { id }, include: { password: true } })
 }
 
-export async function deleteUserById(id: string) {
+export async function deleteUserById(userId: string, workspaceId: string) {
   try {
-    return await prisma.user.delete({ where: { id } })
+    return await prisma.userWorkspace.deleteMany({ where: { userId, workspaceId } })
   } catch (error) {
     return 'Something went wrong'
   }

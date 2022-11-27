@@ -63,7 +63,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   })
 }
 
-export const action: ActionFunction = async ({ request }) => {
+export const action: ActionFunction = async ({ request, params }) => {
   const invitedByWorkspaceId = await requireWorkspaceId(request)
   const userId = await getUserId(request)
   const getUser = await getUserById(userId as string)
@@ -176,7 +176,10 @@ export const action: ActionFunction = async ({ request }) => {
       )
     }
     let deleteHandle = null
-    await deleteUserById(formData.get('id') as string)
+    await deleteUserById(
+      formData.get('id') as string,
+      params.workspaceId as string
+    )
       .then((res) => {
         deleteHandle = json<ActionData>(
           { resp: { title: 'statusCheck.deletedSuccess', status: 200 } },

@@ -116,6 +116,9 @@ const GroupByTests = () => {
                         testDeletedStatus={candidateTests?.deleted}
                         index={index + 1}
                         id={candidateTests?.id}
+                        currentWorkspaceId={
+                          candidateTestData.currentWorkspaceId
+                        }
                       />
                     </div>
                   )
