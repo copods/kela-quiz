@@ -144,6 +144,25 @@ function Login({ actionData, redirectTo }: LoginProps) {
           </span>
         </div>
       </div>
+      <div className="flex pt-6">
+        <div className="text-base font-medium text-gray-500">
+          {t('logIn.DontHaveAnAccountYet')}{' '}
+          <span
+            id="sign-up"
+            className="cursor-pointer text-primary"
+            tabIndex={0}
+            onClick={() => {
+              signUp()
+            }}
+            onKeyUp={(e) => {
+              if (e.key === 'Enter') signUp()
+            }}
+            role="link"
+          >
+            {t('logIn.signUp')}
+          </span>
+        </div>
+      </div>
     </div>
   )
 }
