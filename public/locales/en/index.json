@@ -108,7 +108,11 @@
     "createOptions": "Create Options",
     "checkOrder": "Check Order",
     "addOptions": "Add Options",
-    "addQuestion": "Add Question"
+    "addQuestion": "Add Question",
+    "note": "Note",
+    "multipleAnswersSelected": "Multiple answers selected",
+    "oneAnswerSelected": "One answer selected",
+    "enterTheQuestion": "Enter the Question"
   },
   "sectionsConstants": {
     "addTests": "Add Test",
@@ -120,6 +124,11 @@
     "sort": "Sort",
     "dropdown": "Select",
     "expand": "Expand",
+    "noQuestionFound": "No Question Found",
+    "msq": "MSQ",
+    "mcq": "MCQ",
+    "multipleSelectQuestion": "Multiple Select Question",
+    "multipleChoiceQuestion": "Multiple Choice Question",
     "search": "Search Question"
   },
   "testsConstants": {
@@ -147,7 +156,8 @@
     "candidatesInvited": "Candidates Invited",
     "allCandidatesInvited": "All candidates invited.",
     "writeDescriptionOfTest": "Write Description of Test",
-    "searchCandidate": "Search Candidate"
+    "searchCandidate": "Search Candidate",
+    "min": "Min"
   },
   "componentGlobalConstants": {
     "totalCounts": "Total Counts",
@@ -177,9 +187,9 @@
     "passIsInvalid": "Password is invalid",
     "questionAddedSuccess": "Question Added Successfully",
     "questionNotAdded": "Question Not Added Successfully",
-    "firstNameReq": "firstName is required",
-    "lastNameReq": "lastName is required",
-    "emailIsReq": "email is required",
+    "firstNameReq": "FirstName is required",
+    "lastNameReq": "LastName is required",
+    "emailIsReq": "Email is required",
     "roleIdIsReq": "roleId is required",
     "memberAddedSuccess": "Member Added Successfully..!",
     "erroSendingOtp": "Error in sending OTP..",

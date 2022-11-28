@@ -58,6 +58,7 @@ const TestList = ({
       {/* <BreadCrumb data={breadCrumbData} /> */}
       <header className="flex items-center justify-between">
         <h2
+          id="assessments-page-title"
           tabIndex={0}
           role={t('testsConstants.assessments')}
           title={t('testsConstants.assessments')}
@@ -98,22 +99,40 @@ const TestList = ({
                   <input type="checkbox" />
                 </div>
               )}
-              <div className="w-1/12 text-sm text-gray-500">
+              <div
+                id="assessments-table-sr-no"
+                className="w-1/12 text-sm text-gray-500"
+              >
                 {t('commonConstants.srNo')}
               </div>
-              <div className="w-4/12 text-sm text-gray-500">
+              <div
+                id="assessments-table-assessment"
+                className="w-4/12 text-sm text-gray-500"
+              >
                 {t('testsConstants.assessment')}
               </div>
-              <div className="w-3/12 text-sm text-gray-500">
+              <div
+                id="assessments-table-test"
+                className="w-3/12 text-sm text-gray-500"
+              >
                 {t('testsConstants.testText')}
               </div>
-              <div className="w-2/12 text-sm text-gray-500">
+              <div
+                id="assessments-table-created-on"
+                className="w-2/12 text-sm text-gray-500"
+              >
                 {t('testsConstants.createdOn')}
               </div>
-              <div className="w-2/12 text-sm text-gray-500">
+              <div
+                id="assessments-table-created-by"
+                className="w-2/12 text-sm text-gray-500"
+              >
                 {t('testsConstants.created')} {t('commonConstants.byText')}
               </div>
-              <div className="flex w-1/12 text-sm text-gray-500">
+              <div
+                id="assessments-table-actions"
+                className="flex w-1/12 text-sm text-gray-500"
+              >
                 {t('testsConstants.actionsText')}
               </div>
             </div>
