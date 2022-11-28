@@ -23,10 +23,10 @@ describe('smoke tests', () => {
     cy.get('#email').clear().type('test@copods.co')
     cy.get('#password').clear().type('kQuiz@copods')
     cy.findByRole('button').click()
-    cy.wait(1000)
+
     cy.get('#email-error', { timeout: 8000 }).should(
       'have.text',
-      'Email is invalid'
+      'Incorrect email or password'
     )
   })
 
@@ -35,10 +35,7 @@ describe('smoke tests', () => {
     cy.get('#email').clear().type('copods.demo.sendgrid@gmail.com')
     cy.get('#password').clear().type('anuragpate')
     cy.findByRole('button').click()
-    cy.get('#password-error').should(
-      'have.text',
-      'Incorrect email or passsword'
-    )
+    cy.get('#password-error').should('have.text', 'Incorrect email or password')
   })
 
   it('Successfully Login', () => {

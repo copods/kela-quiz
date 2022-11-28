@@ -203,8 +203,8 @@
     "userNotFound": "User Not Found",
     "workspaceJoinSuccess": "Workspace joined successfully",
     "workspaceInvitationRejected": "Workspace invitation rejected",
-    "notInviteYourself": "Your can not invite Yourself",
-    "wrongInvitedId": "Your email is not matched with invited id"
+    "notInviteYourself": "You can not invite Yourself",
+    "incorrectEmailOrPassword": "Incorrect email or password"
   },
   "resultConstants": {
     "order": "Order",
