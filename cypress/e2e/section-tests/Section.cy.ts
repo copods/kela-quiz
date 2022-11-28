@@ -1027,7 +1027,7 @@ describe('Test for Tests', () => {
     cy.get('#confirm-delete')
       .should('have.text', commonConstants.delete)
       .click()
-    cy.get('.Toastify__toast', { timeout: 8000 }).should(
+    cy.get('.Toastify__toast', { timeout: 10000 }).should(
       'have.text',
       statusCheck.deletedSuccess
     )
