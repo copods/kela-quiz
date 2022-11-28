@@ -91,7 +91,7 @@ const SelectSections = ({
   const navigate = useNavigate()
   return (
     <div className="flex w-full flex-1 flex-col gap-6 overflow-x-auto rounded-lg bg-white p-6 shadow">
-      {sections.length !== 0 ? (
+      {sections.length > 0 ? (
         <div className="flex flex-col gap-6 overflow-x-auto">
           {/* filters */}
           <SortFilter
