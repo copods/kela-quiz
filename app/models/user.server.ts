@@ -229,7 +229,7 @@ export async function sendResetPassword(email: string) {
     })
     return await sendNewPassword(userEmail?.email as string, password)
   } else {
-    return null
+    return { value: null, time: Date.now() }
   }
 }
 
