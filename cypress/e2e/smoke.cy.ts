@@ -31,7 +31,10 @@ describe('smoke tests', () => {
     cy.get('#email').clear().type('copods.demo.sendgrid@gmail.com')
     cy.get('#password').clear().type('anuragpate')
     cy.findByRole('button').click()
-    cy.get('#password-error').should('have.text', 'Password is invalid')
+    cy.get('#password-error').should(
+      'have.text',
+      'Password is invalid'
+    )
   })
 
   it('Successfully Login', () => {
@@ -293,8 +296,6 @@ describe('smoke tests', () => {
 
           cy.get('input#no-of-qu').clear().type('1')
           cy.get('input#time').clear().type('1')
-          cy.get('input#no-of-qu').should('have.value', '1')
-          cy.get('input#time').should('have.value', '1')
         }
       })
     })
@@ -375,8 +376,6 @@ describe('smoke tests', () => {
 
           cy.get('input#no-of-qu').clear().type('1')
           cy.get('input#time').clear().type('1')
-          cy.get('input#no-of-qu').should('have.value', '1')
-          cy.get('input#time').should('have.value', '1')
         }
       })
     })
