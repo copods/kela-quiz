@@ -17,6 +17,11 @@ const SectionDetails = () => {
   useEffect(() => {
     setSearchText('')
   }, [navigate])
+  const searchedQuestion = sectionDetails.sectionDetails?.questions.filter(
+    (question: Question) => {
+      return question.question.toLowerCase().includes(searchText.toLowerCase())
+    }
+  )
   return (
     <div className="flex h-full w-full flex-col gap-5 overflow-auto break-all rounded-lg border border-gray-200 bg-white px-9 py-6">
       <div className="flex">
@@ -75,13 +80,12 @@ const SectionDetails = () => {
         />
       </div>
       {/* QUESTION LIST  */}
-      {sectionDetails.sectionDetails?.questions
-        .filter((question: Question) => {
-          return question.question
-            .toLowerCase()
-            .includes(searchText.toLowerCase())
-        })
-        .map((question: Question, i: number) => {
+      {searchedQuestion.length === 0 ? (
+        <div className="flex justify-center p-7">
+          {t('sectionsConstants.noQuestionFound')}
+        </div>
+      ) : (
+        searchedQuestion.map((question: Question, i: number) => {
           return (
             <QuestionCard
               key={question.id}
@@ -91,7 +95,8 @@ const SectionDetails = () => {
               index={i}
             />
           )
-        })}
+        })
+      )}
       {sectionDetails.sectionDetails?.questions.length === 0 && (
         <div className="flex justify-center p-7">
           {t('sectionsConstants.noQuestionAlert')}

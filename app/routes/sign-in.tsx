@@ -34,6 +34,12 @@ export const action: ActionFunction = async ({ request }) => {
   const remember = formData.get('remember')
   const email = formData.get('email')
   const password = formData.get('password')
+  if (!email) {
+    return json<ActionData>(
+      { errors: { email: 'statusCheck.emailIsReq' } },
+      { status: 400 }
+    )
+  }
   if (!validateEmail(email)) {
     return json<ActionData>(
       { errors: { email: 'statusCheck.emailIsInvalid' } },

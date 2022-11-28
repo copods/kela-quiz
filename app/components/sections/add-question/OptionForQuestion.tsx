@@ -9,6 +9,7 @@ import type { SetStateAction } from 'react'
 import { toast } from 'react-toastify'
 import Button from '~/components/form/Button'
 import { useTranslation } from 'react-i18next'
+import { trimValue } from '~/utils'
 interface textAnswerType {
   id: string
   answer: string
@@ -235,7 +236,7 @@ export default function OptionForQuestion({
                       )}
                       value={option.answer}
                       onChange={(e) => {
-                        updateTextAnswer(e.target.value, index)
+                        updateTextAnswer(trimValue(e.target.value), index)
                       }}
                     ></input>
                   </div>
