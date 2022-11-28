@@ -128,7 +128,7 @@ const TestPreview = ({
               {t('testsConstants.totalTimeText')}
             </div>
             <div className="flex-1 text-base text-gray-700">
-              {getTotalTime()}
+              {getTotalTime()} {t('testsConstants.min')}
             </div>
           </div>
           <div className="flex">
@@ -169,7 +169,7 @@ const TestPreview = ({
                         ? section.time
                         : section.timeInSeconds &&
                           section.timeInSeconds / 60}{' '}
-                      Min
+                      {t('testsConstants.min')}
                     </span>
                   </div>
                 </div>
