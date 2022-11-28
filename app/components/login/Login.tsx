@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useLoaderData, useNavigate, useSubmit } from '@remix-run/react'
 import Button from '~/components/form/Button'
 import InputField from '~/components/form/InputField'
@@ -13,6 +13,16 @@ function Login({ actionData, redirectTo }: LoginProps) {
   const submit = useSubmit()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [loginFieldError, setLoginFieldError] = useState({
+    email: actionData?.errors?.email,
+    password: actionData?.errors?.password,
+  })
+  useEffect(() => {
+    setLoginFieldError({
+      email: actionData?.errors?.email,
+      password: actionData?.errors?.password,
+    })
+  }, [actionData])
   const inputFieldsProps = [
     {
       label: t('commonConstants.email'),
@@ -21,10 +31,13 @@ function Login({ actionData, redirectTo }: LoginProps) {
       name: 'email',
       required: true,
       value: email,
-      error: actionData?.errors?.email,
+      error: loginFieldError.email,
       errorId: 'email-error',
       onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
         setEmail(event?.target.value)
+        if (event?.target.value === '') {
+          setLoginFieldError({ ...loginFieldError, email: '' })
+        }
       },
     },
     {
@@ -34,10 +47,13 @@ function Login({ actionData, redirectTo }: LoginProps) {
       name: 'password',
       required: true,
       value: password,
-      error: actionData?.errors?.password,
+      error: loginFieldError.password,
       errorId: 'password-error',
       onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
         setPassword(event?.target.value)
+        if (event?.target.value === '') {
+          setLoginFieldError({ ...loginFieldError, password: '' })
+        }
       },
     },
   ]
