@@ -4,15 +4,20 @@ import { sortByOrder } from '~/interface/Interface'
 import type { TestSection } from '~/interface/Interface'
 import SortFilter from '../SortFilter'
 import SelectSectionCard from './SelectSectionCard'
+import { useTranslation } from 'react-i18next'
+import { useNavigate } from '@remix-run/react'
+import { routes } from '~/constants/route.constants'
 
 const SelectSections = ({
   sections,
   setSections,
   updateSectionsList,
+  currentWorkspaceId,
 }: {
   sections: Array<TestSection>
   setSections: (e: Array<TestSection>, i: number) => void
   updateSectionsList: (e: SetStateAction<Array<TestSection>>) => void
+  currentWorkspaceId: string
 }) => {
   const [sortDirection, onSortDirectionChange] = useState(
     sortByOrder.ascending as string
@@ -82,38 +87,59 @@ const SelectSections = ({
     sortData()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sortDirection, sortBy])
+  const { t } = useTranslation()
+  const navigate = useNavigate()
   return (
     <div className="flex w-full flex-1 flex-col gap-6 overflow-x-auto rounded-lg bg-white p-6 shadow">
-      {/* filters */}
-      <SortFilter
-        filterData={filterByType}
-        sortDirection={sortDirection}
-        onSortDirectionChange={onSortDirectionChange}
-        sortBy={sortBy}
-        onSortChange={onSortChange}
-        totalItems={sections?.length}
-        showSelected={false}
-      />
-      {/* Sections list */}
-      <div className="flex flex-wrap gap-6">
-        {sections.map((section: TestSection, i) => {
-          return (
-            <SelectSectionCard
-              section={section}
-              updateSection={(e) => setSections(e, i)}
-              key={section.id}
-            />
-          )
-        })}
-        {pseudoDivs.map((temp) => {
-          return (
-            <div
-              key={temp}
-              className="h-1 min-w-sectionCard flex-1 border border-transparent px-5 py-6"
-            ></div>
-          )
-        })}
-      </div>
+      {sections.length !== 0 ? (
+        <div>
+          {/* filters */}
+          <SortFilter
+            filterData={filterByType}
+            sortDirection={sortDirection}
+            onSortDirectionChange={onSortDirectionChange}
+            sortBy={sortBy}
+            onSortChange={onSortChange}
+            totalItems={sections?.length}
+            showSelected={false}
+          />
+          {/* Sections list */}
+          <div className="flex flex-wrap gap-6">
+            {sections.map((section: TestSection, i) => {
+              return (
+                <SelectSectionCard
+                  section={section}
+                  updateSection={(e) => setSections(e, i)}
+                  key={section.id}
+                />
+              )
+            })}
+            {pseudoDivs.map((temp) => {
+              return (
+                <div
+                  key={temp}
+                  className="h-1 min-w-sectionCard flex-1 border border-transparent px-5 py-6"
+                ></div>
+              )
+            })}
+          </div>
+        </div>
+      ) : (
+        <div className="flex h-full items-center justify-center">
+          <span
+            onClick={() => navigate(`/${currentWorkspaceId}${routes.tests}`)}
+            role={'button'}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter')
+                navigate(`/${currentWorkspaceId}${routes.tests}`)
+            }}
+            tabIndex={0}
+            className="text-primary underline"
+          >
+            {t('sectionsConstants.addTestFirst')}
+          </span>
+        </div>
+      )}
     </div>
   )
 }

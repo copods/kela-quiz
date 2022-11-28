@@ -12,7 +12,13 @@ import Button from '../form/Button'
 import { routes } from '~/constants/route.constants'
 import { useTranslation } from 'react-i18next'
 
-const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
+const AddTestComponent = ({
+  sections,
+  currentWorkspaceId,
+}: {
+  sections: Array<TestSection>
+  currentWorkspaceId: string
+}) => {
   const { t } = useTranslation()
 
   const transition = useTransition()
@@ -170,6 +176,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
             updateSection(e, i)
           }}
           updateSectionsList={setSectionsCopy}
+          currentWorkspaceId={currentWorkspaceId}
         />
       ) : (
         currentTab === tabs[2].id && (

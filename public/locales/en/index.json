@@ -120,7 +120,8 @@
     "sort": "Sort",
     "dropdown": "Select",
     "expand": "Expand",
-    "search": "Search Question"
+    "search": "Search Question",
+    "addTestFirst": "No test found.please add test first"
   },
   "testsConstants": {
     "addTestbutton": "Add Assessment",
