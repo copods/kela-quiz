@@ -97,11 +97,6 @@ const SectionDetails = () => {
           )
         })
       )}
-      {sectionDetails.sectionDetails?.questions.length === 0 && (
-        <div className="flex justify-center p-7">
-          {t('sectionsConstants.noQuestionAlert')}
-        </div>
-      )}
     </div>
   )
 }
