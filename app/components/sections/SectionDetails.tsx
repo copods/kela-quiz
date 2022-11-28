@@ -1,5 +1,5 @@
 import { useLoaderData, useNavigate } from '@remix-run/react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { Question } from '~/interface/Interface'
 import QuestionCard from './QuestionCard'
 import Button from '../form/Button'
@@ -14,6 +14,9 @@ const SectionDetails = () => {
   const [currentAccordian, setCurrentAccordian] = useState(-1)
   const [searchText, setSearchText] = useState('')
   const navigate = useNavigate()
+  useEffect(() => {
+    setSearchText('')
+  }, [navigate])
   const searchedQuestion = sectionDetails.sectionDetails?.questions.filter(
     (question: Question) => {
       return question.question.toLowerCase().includes(searchText.toLowerCase())
@@ -34,24 +37,33 @@ const SectionDetails = () => {
         </h2>
       </div>
       <hr className="-mt-2 h-px w-full bg-gray-300" />
-      <div className="flex items-start justify-between gap-2 ">
-        <div className="relative flex items-center">
-          <Icon
-            id="ascend"
-            icon="charm:search"
-            className="bg-light-200 absolute left-3 text-base text-gray-400"
-          />
-          <input
-            tabIndex={0}
-            id="section-search"
-            type="text"
-            name="search"
-            placeholder={t('sectionsConstants.search')}
-            title={t('sectionsConstants.search')}
-            className="h-9 w-48 rounded-lg border px-5 pl-8 text-sm focus:outline-dotted"
-            onChange={(e) => setSearchText(e.target.value)}
-          />
-        </div>
+      <div
+        className={`flex items-start gap-2 ${
+          sectionDetails?.sectionDetails?.questions.length === 0
+            ? 'justify-end'
+            : 'justify-between'
+        }`}
+      >
+        {sectionDetails?.sectionDetails?.questions.length === 0 ? null : (
+          <div className="relative flex items-center">
+            <Icon
+              id="ascend"
+              icon="charm:search"
+              className="bg-light-200 absolute left-3 text-base text-gray-400"
+            />
+            <input
+              tabIndex={0}
+              id="section-search"
+              type="text"
+              value={searchText}
+              name="search"
+              placeholder={t('sectionsConstants.search')}
+              title={t('sectionsConstants.search')}
+              className="h-9 w-48 rounded-lg border px-5 pl-8 text-sm focus:outline-dotted"
+              onChange={(e) => setSearchText(e.target.value)}
+            />
+          </div>
+        )}
         <Button
           tabIndex={0}
           onClick={() =>
