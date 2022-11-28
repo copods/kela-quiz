@@ -138,34 +138,36 @@ const InviteCandidatePopup = ({
             {t('inviteMemeberPopUpConstants.inviteMore')} +
           </span>
         </div>
-        {emails.map((email, i) => {
-          return (
-            <div className="pb-2" key={i}>
-              <input
-                tabIndex={0}
-                type="email"
-                name={`email`}
-                onFocus={() => {
-                  validateEmails(emails, i)
-                }}
-                onChange={(e) => updateEmail(e, i)}
-                className="inviteInput h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
-                placeholder="johndoe@example.com"
-                title={t('commonConstants.email')}
-                aria-label={t('commonConstants.email')}
-              />
-              {Object.entries(errors).map(([key]) =>
-                Number(key) === i ? (
-                  <p key={key} className="text-red-700">
-                    {t('statusCheck.emailIsInvalid')}
-                  </p>
-                ) : (
-                  ''
-                )
-              )}
-            </div>
-          )
-        })}
+        <div className="max-h-280 overflow-auto">
+          {emails.map((email, i) => {
+            return (
+              <div className="pb-2" key={i}>
+                <input
+                  tabIndex={0}
+                  type="email"
+                  name={`email`}
+                  onFocus={() => {
+                    validateEmails(emails, i)
+                  }}
+                  onChange={(e) => updateEmail(e, i)}
+                  className="inviteInput h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
+                  placeholder="johndoe@example.com"
+                  title={t('commonConstants.email')}
+                  aria-label={t('commonConstants.email')}
+                />
+                {Object.entries(errors).map(([key]) =>
+                  Number(key) === i ? (
+                    <p key={key} className="text-red-700">
+                      {t('statusCheck.emailIsInvalid')}
+                    </p>
+                  ) : (
+                    ''
+                  )
+                )}
+              </div>
+            )
+          })}
+        </div>
         <div className="flex justify-end gap-2 pt-4">
           <Button
             type="button"

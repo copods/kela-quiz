@@ -34,6 +34,12 @@ export const action: ActionFunction = async ({ request }) => {
   const remember = formData.get('remember')
   const email = formData.get('email')
   const password = formData.get('password')
+  if (!email) {
+    return json<ActionData>(
+      { errors: { email: 'statusCheck.emailIsReq' } },
+      { status: 400 }
+    )
+  }
   if (!validateEmail(email)) {
     return json<ActionData>(
       { errors: { email: 'statusCheck.emailIsInvalid' } },
@@ -51,14 +57,14 @@ export const action: ActionFunction = async ({ request }) => {
   const user = await loginVerificationResponse(email, password)
   if (!user) {
     return json<ActionData>(
-      { errors: { email: 'statusCheck.emailIsInvalid' } },
+      { errors: { password: 'statusCheck.incorrectEmailOrPassword' } },
       { status: 400 }
     )
   }
 
   if (user instanceof Error) {
     return json<ActionData>(
-      { errors: { password: 'statusCheck.passIsInvalid' } },
+      { errors: { password: 'statusCheck.incorrectEmailOrPassword' } },
       { status: 400 }
     )
   }

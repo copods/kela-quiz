@@ -6,9 +6,11 @@ import QuillEditor from '~/components/QuillEditor.client'
 import { ClientOnly } from 'remix-utils'
 import Toggle from '~/components/form/Toggle'
 import type { SetStateAction } from 'react'
+import { useEffect } from 'react'
 import { toast } from 'react-toastify'
 import Button from '~/components/form/Button'
 import { useTranslation } from 'react-i18next'
+import { trimValue } from '~/utils'
 interface textAnswerType {
   id: string
   answer: string
@@ -22,12 +24,16 @@ export default function OptionForQuestion({
   singleChoiceAnswer,
   setSingleChoiceAnswer,
   textCorrectAnswer,
+  answerCount,
+  setAnswerCount,
   setTextCorrectAnswer,
   checkOrder,
   setCheckOrder,
 }: {
   questionTypeList: QuestionType[]
   selectedTypeOfQuestion: string
+  answerCount: number
+  setAnswerCount: (e: number) => void
   options: Array<{ option: string; isCorrect: boolean; id: string }>
   setOptions: (
     e: SetStateAction<Array<{ option: string; isCorrect: boolean; id: string }>>
@@ -113,6 +119,11 @@ export default function OptionForQuestion({
       return [...e]
     })
   }
+  useEffect(() => {
+    let count = 0
+    options.forEach((i) => (i.isCorrect ? count++ : null))
+    setAnswerCount(count)
+  }, [options, setAnswerCount])
   return (
     <div className="flex flex-1 flex-col gap-6">
       <div className="flex h-11 flex-row items-end justify-between p-1">
@@ -235,7 +246,7 @@ export default function OptionForQuestion({
                       )}
                       value={option.answer}
                       onChange={(e) => {
-                        updateTextAnswer(e.target.value, index)
+                        updateTextAnswer(trimValue(e.target.value), index)
                       }}
                     ></input>
                   </div>
@@ -256,6 +267,15 @@ export default function OptionForQuestion({
               )
             }
           )}
+        {answerCount > 1 ? (
+          <p>{`${t('addQuestion.note')}: ${t(
+            'addQuestion.multipleAnswersSelected'
+          )}`}</p>
+        ) : answerCount === 1 ? (
+          <p>{`${t('addQuestion.note')}: ${t(
+            'addQuestion.oneAnswerSelected'
+          )}`}</p>
+        ) : null}
       </div>
     </div>
   )

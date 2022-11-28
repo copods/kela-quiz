@@ -142,10 +142,16 @@ const SelectSectionCard = ({
           <input
             tabIndex={0}
             type="number"
+            min={1}
             id="time"
             name="totalTime"
             value={section.time}
-            onChange={(e) => updateThisSection('time', e.target.value)}
+            onChange={(e) => {
+              if (Number(e.target.value) === 0) {
+                return
+              }
+              updateThisSection('time', e.target.value)
+            }}
             className={`mt-1 h-11 w-full rounded-lg border border-gray-300 px-3 text-xs ${
               section.isSelected ? 'bg-white' : 'bg-gray-200'
             }`}
