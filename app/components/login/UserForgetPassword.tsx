@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Button from '../form/Button'
 import InputField from '../form/InputField'
 import Logo from '../Logo'
@@ -8,11 +8,19 @@ import { useTranslation } from 'react-i18next'
 
 const UserForgetPassword = ({
   checkErrorStatus,
+  setCheckErrorStatus,
 }: {
+  setCheckErrorStatus: (e: boolean) => void
   checkErrorStatus: boolean
 }) => {
+  const [emailFieldError, setEmailFieldError] = useState('')
   const [email, setEmail] = useState('')
   const { t } = useTranslation()
+  useEffect(() => {
+    if (checkErrorStatus) {
+      setEmailFieldError(t('statusCheck.resendPasswordError'))
+    }
+  }, [t, checkErrorStatus])
   let navigate = useNavigate()
   const inputFieldsProps = [
     {
@@ -22,10 +30,14 @@ const UserForgetPassword = ({
       name: 'email',
       required: true,
       value: email,
-      error: checkErrorStatus ? t('statusCheck.resendPasswordError') : '',
+      error: emailFieldError,
       errorId: 'email-error',
       onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
         setEmail(event?.target.value)
+        if (event.target.value === '') {
+          setEmailFieldError('')
+          setCheckErrorStatus(false)
+        }
       },
     },
   ]
