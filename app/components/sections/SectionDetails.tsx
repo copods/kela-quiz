@@ -32,26 +32,34 @@ const SectionDetails = () => {
         </h2>
       </div>
       <hr className="-mt-2 h-px w-full bg-gray-300" />
-      <div className="flex items-start justify-between gap-2 ">
-        <div className="relative flex items-center">
-          <Icon
-            id="ascend"
-            icon="charm:search"
-            className="bg-light-200 absolute left-3 text-base text-gray-400"
-          />
-          <input
-            tabIndex={0}
-            id="section-search"
-            type="text"
-            value={searchText}
-            name="search"
-            disabled={!sectionDetails.sectionDetails?.questions.length}
-            placeholder={t('sectionsConstants.search')}
-            title={t('sectionsConstants.search')}
-            className="h-9 w-48 rounded-lg border px-5 pl-8 text-sm focus:outline-dotted"
-            onChange={(e) => setSearchText(e.target.value)}
-          />
-        </div>
+      <div
+        className={`flex items-start gap-2 ${
+          sectionDetails?.sectionDetails?.questions.length === 0
+            ? 'justify-end'
+            : 'justify-between'
+        }`}
+      >
+        {sectionDetails?.sectionDetails?.questions.length === 0 ? null : (
+          <div className="relative flex items-center">
+            <Icon
+              id="ascend"
+              icon="charm:search"
+              className="bg-light-200 absolute left-3 text-base text-gray-400"
+            />
+            <input
+              tabIndex={0}
+              id="section-search"
+              type="text"
+              value={searchText}
+              name="search"
+              // disabled={!sectionDetails.sectionDetails?.questions.length}
+              placeholder={t('sectionsConstants.search')}
+              title={t('sectionsConstants.search')}
+              className="h-9 w-48 rounded-lg border px-5 pl-8 text-sm focus:outline-dotted"
+              onChange={(e) => setSearchText(e.target.value)}
+            />
+          </div>
+        )}
         <Button
           tabIndex={0}
           onClick={() =>
