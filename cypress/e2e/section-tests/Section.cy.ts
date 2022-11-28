@@ -56,6 +56,7 @@ describe('Test for Tests', () => {
       .should('have.focus')
   })
   it('checks, Add test button should be visible', () => {
+    cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
     cy.wait(1000)
     cy.get('#add-section', { timeout: 6000 }).should('be.visible')
   })
@@ -284,6 +285,7 @@ describe('Test for Tests', () => {
       })
   })
   it('checks,active Tests should have tabIndex', () => {
+    cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
     cy.wait(1000)
     cy.get('.activeSectionCard', { timeout: 6000 }).should(
       'have.attr',
@@ -497,6 +499,7 @@ describe('Test for Tests', () => {
     })
   })
   it('Test for deleting the Tests and check if it is deleted or not', () => {
+    cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
     cy.wait(1000)
     const sectionCards = cy.get('.section-card')
     sectionCards.each(($element) => {
