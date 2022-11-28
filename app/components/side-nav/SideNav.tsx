@@ -82,7 +82,7 @@ const SideNav = () => {
           id: 'Settings',
           iconClass: 'mdi:cog',
           itemName: 'commonConstants.settings',
-          itemRoute: routes.settings,
+          itemRoute: routes.generalSettings,
         },
       ],
     },

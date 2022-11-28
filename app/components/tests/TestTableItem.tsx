@@ -8,6 +8,7 @@ import TestListActionMenu from '../TestListActionMenu'
 import { useEffect, useState } from 'react'
 import InviteCandidatePopup from './InviteCandidatePopup'
 import { useTranslation } from 'react-i18next'
+import { routes } from '~/constants/route.constants'
 
 const TestTableItem = ({
   testName,
@@ -79,11 +80,13 @@ const TestTableItem = ({
           <div
             aria-label={testName}
             title={testName}
-            onClick={() => navigate(`/${currentWorkspaceId}/assessments/${id}`)}
+            onClick={() =>
+              navigate(`/${currentWorkspaceId}${routes.assessments}/${id}`)
+            }
             role={'button'}
             onKeyDown={(e) => {
               if (e.key === 'Enter')
-                navigate(`/${currentWorkspaceId}/assessments/${id}`)
+                navigate(`/${currentWorkspaceId}${routes.assessments}/${id}`)
             }}
             id={`${index}`}
             tabIndex={0}
