@@ -248,12 +248,15 @@ describe('smoke tests', () => {
     cy.get('#email').clear().type('copods.demo.sendgrid@gmail.com')
     cy.get('#password').clear().type('kQuiz@copods')
     cy.findByRole('button').click()
-    cy.wait(2000)
+    cy.get('#members', { timeout: 60000 })
+      .should('have.text', 'Members')
+      .click()
     cy.get('#tests', { timeout: 60000 })
       .should('have.text', 'Assessments')
       .click()
     cy.wait(2000)
     cy.get('#add-test', { timeout: 6000 }).click()
+    cy.wait(1000)
     cy.location('pathname').should('include', '/assessments/add-assessment')
     cy.get('input[placeholder="Enter assessment name"]')
       .clear()
@@ -261,8 +264,9 @@ describe('smoke tests', () => {
     cy.get('#quill-editor').within(() => {
       cy.get('.ql-editor').type(`Test Description`)
     })
-    cy.get('button#next-button').should('have.text', cypress.next).click()
     cy.wait(1000)
+    cy.get('button#next-button').should('have.text', cypress.next).click()
+
     cy.get('.stepsTab').each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -294,6 +298,7 @@ describe('smoke tests', () => {
         }
       })
     })
+    cy.wait(1000)
     cy.get('button#next-button', { timeout: 8000 }).should('be.visible')
     cy.get('button#next-button').should('have.text', cypress.next).click()
     cy.wait(1000)
@@ -327,19 +332,23 @@ describe('smoke tests', () => {
     cy.get('#email').clear().type('copods.demo.sendgrid@gmail.com')
     cy.get('#password').clear().type('kQuiz@copods')
     cy.findByRole('button').click()
-    cy.wait(2000)
+    cy.get('#members', { timeout: 60000 })
+      .should('have.text', 'Members')
+      .click()
     cy.get('#tests', { timeout: 60000 })
       .should('have.text', 'Assessments')
       .click()
     cy.wait(2000)
     cy.get('#add-test', { timeout: 6000 }).click()
+    cy.wait(1000)
     cy.location('pathname').should('include', '/assessments/add-assessment')
     cy.get('input[placeholder="Enter assessment name"]').clear().type(test1)
     cy.get('#quill-editor').within(() => {
       cy.get('.ql-editor').type(`Test Description`)
     })
-    cy.get('button#next-button').should('have.text', cypress.next).click()
     cy.wait(1000)
+    cy.get('button#next-button').should('have.text', cypress.next).click()
+
     cy.get('.stepsTab').each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -371,6 +380,7 @@ describe('smoke tests', () => {
         }
       })
     })
+    cy.wait(1000)
     cy.get('button#next-button', { timeout: 8000 }).should('be.visible')
     cy.get('button#next-button').should('have.text', cypress.next).click()
     cy.wait(1000)
