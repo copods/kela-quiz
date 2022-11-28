@@ -61,10 +61,11 @@ const SideNav = () => {
           id: 'sections',
           iconClass: 'ci:list-checklist-alt',
           itemName: 'routeFiles.tests',
-          itemRoute:
-            firstSection !== undefined
-              ? `${routes.tests}/${firstSection}?filter=%7B"orderBy"%3A%7B"createdAt"%3A"desc"%7D%7D`
-              : `${routes.tests}`,
+          itemRoute: `${routes.tests}${
+            firstSection
+              ? `/${firstSection}?filter=%7B"orderBy"%3A%7B"createdAt"%3A"desc"%7D%7D`
+              : ''
+          }`,
         },
       ],
     },

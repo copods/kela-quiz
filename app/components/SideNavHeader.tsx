@@ -7,17 +7,17 @@ const Header = ({ title }: { title: string }) => {
   const { t } = useTranslation()
 
   return (
-    <div className="flex items-center gap-4">
-      <Link
-        to={routes.members}
-        tabIndex={0}
-        aria-label={t('commonConstants.goToDashboard')}
-        title={t('commonConstants.logo')}
-      >
+    <Link
+      to={routes.members}
+      tabIndex={0}
+      aria-label={t('commonConstants.goToDashboard')}
+      title={t('commonConstants.logo')}
+    >
+      <div className="flex items-center gap-4">
         <img src={logo} alt={t('commonConstants.logo')} />
-      </Link>
-      <span className="text-3xl">{t('sideNav.sideNavHeading')}</span>
-    </div>
+        <span className="text-3xl">{t('sideNav.sideNavHeading')}</span>
+      </div>
+    </Link>
   )
 }
 
