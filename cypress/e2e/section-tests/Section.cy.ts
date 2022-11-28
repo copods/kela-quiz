@@ -369,28 +369,42 @@ describe('Test for Tests', () => {
   it('Checks,Question card should be visible', () => {
     cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
     cy.wait(1000)
-    cy.get('#question-card-wrapper').should('be.visible')
+    cy.get('#question-card-wrapper', { timeout: 6000 }).should('be.visible')
   })
   it('Checks,Question card should have tabIndex', () => {
     cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
     cy.wait(1000)
-    cy.get('#question-card-wrapper').should('have.attr', 'tabindex', '0')
+    cy.get('#question-card-wrapper', { timeout: 6000 }).should(
+      'have.attr',
+      'tabindex',
+      '0'
+    )
   })
   it('Checks,Question card should have aria-label', () => {
     cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
     cy.wait(1000)
-    cy.get('#question-card-wrapper').should('have.attr', 'aria-label', 'Expand')
+    cy.get('#question-card-wrapper', { timeout: 6000 }).should(
+      'have.attr',
+      'aria-label',
+      'Expand'
+    )
   })
   it('Checks,initially option card should have max height 0', () => {
     cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
     cy.wait(1000)
-    cy.get('#options-wrapper').should('have.css', 'max-height', '0px')
+    cy.get('#options-wrapper', { timeout: 6000 }).should(
+      'have.css',
+      'max-height',
+      '0px'
+    )
   })
   it('Checks,initially option card should have expand after clicking on question card', () => {
     cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
     cy.wait(1000)
-    cy.get('#question-card-wrapper').should('be.visible').click()
-    cy.get('#options-wrapper').should(
+    cy.get('#question-card-wrapper', { timeout: 6000 })
+      .should('be.visible')
+      .click()
+    cy.get('#options-wrapper', { timeout: 6000 }).should(
       'have.class',
       'overflow-scroll text-base text-gray-600 transition-all h-full'
     )
@@ -398,7 +412,9 @@ describe('Test for Tests', () => {
   it('Checks,question type chip should be visible', () => {
     cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
     cy.wait(1000)
-    cy.get('#question-card-wrapper').should('be.visible').click()
+    cy.get('#question-card-wrapper', { timeout: 6000 })
+      .should('be.visible')
+      .click()
     cy.get('#question-type').should('be.visible')
   })
   it('Test for valid error message while adding new Tests without Title', () => {
