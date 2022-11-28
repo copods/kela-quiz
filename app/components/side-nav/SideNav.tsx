@@ -19,7 +19,6 @@ const SideNav = () => {
   const tempWorkspaces = workspaces.map((userWorkspace: UserWorkspace) => {
     return { ...userWorkspace, ...userWorkspace.workspace }
   })
-
   const sideNavGuide = [
     // {
     //   navGuide: 'Main Menu',
@@ -62,7 +61,10 @@ const SideNav = () => {
           id: 'sections',
           iconClass: 'ci:list-checklist-alt',
           itemName: 'routeFiles.tests',
-          itemRoute: `${routes.tests}/${firstSection}?filter=%7B"orderBy"%3A%7B"createdAt"%3A"desc"%7D%7D`,
+          itemRoute:
+            firstSection !== undefined
+              ? `${routes.tests}/${firstSection}?filter=%7B"orderBy"%3A%7B"createdAt"%3A"desc"%7D%7D`
+              : `${routes.tests}`,
         },
       ],
     },
