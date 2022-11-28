@@ -186,6 +186,7 @@ const SignUp = ({ error }: { error?: string }) => {
             <Logo height="64" width="64" />
           </div>
           <h2
+            id="signup-page-title"
             className="text-center text-3xl font-bold text-gray-900"
             tabIndex={0}
             title={t('logIn.signUp')}

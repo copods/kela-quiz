@@ -118,15 +118,24 @@ export async function getAllInvitedMember(workspaceId: string) {
 export async function reinviteMemberForWorkspace({ id }: { id: string }) {
   const user = await prisma.invites.findUnique({
     where: { id },
-    include: { invitedForWorkspace: true },
+    include: {
+      invitedForWorkspace: true,
+      invitedById: {
+        select: {
+          firstName: true,
+          lastName: true,
+        },
+      },
+    },
   })
-  const roleId = user?.roleId as string
-  const role = await prisma.role.findUnique({ where: { id: roleId } })
   const workspaceJoinLink = env.PUBLIC_URL + '/workspace/' + user?.id + '/join'
-  return await sendMail(
+  const name = ((user?.invitedById?.firstName as string) +
+    ' ' +
+    user?.invitedById?.lastName) as string
+  return await sendMemberInvite(
     user?.email as string,
     user?.invitedForWorkspace?.name as string,
-    role?.name as string,
+    name as string,
     workspaceJoinLink as string
   )
 }

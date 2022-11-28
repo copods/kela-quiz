@@ -7,7 +7,7 @@ import type {
   QuestionType,
 } from '~/interface/Interface'
 import OptionCard from './OptionCard'
-
+import { QuestionTypes } from '../../interface/Interface'
 const QuestionCard = ({
   question,
   isExpanded,
@@ -20,6 +20,18 @@ const QuestionCard = ({
   index: number
 }) => {
   const { t } = useTranslation()
+  const displayName =
+    question.questionType?.value === QuestionTypes.multipleChoice
+      ? {
+          name: t('sectionsConstants.msq'),
+          full: t('sectionsConstants.multipleSelectQuestion'),
+        }
+      : question.questionType?.value === QuestionTypes.singleChoice
+      ? {
+          name: t('sectionsConstants.msq'),
+          full: t('sectionsConstants.multipleChoiceQuestion'),
+        }
+      : { name: question.questionType?.displayName, full: 'Text' }
   return (
     <div
       key={question.id}
@@ -54,9 +66,10 @@ const QuestionCard = ({
           <div>
             <span
               id="question-type"
+              title={displayName?.full}
               className="flex flex-1 items-center rounded-52 border border-gray-700 px-3 text-sm text-gray-700"
             >
-              {question.questionType?.displayName}
+              {displayName?.name}
             </span>
           </div>
           {isExpanded === index ? (

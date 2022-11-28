@@ -60,7 +60,10 @@ const TestPreview = ({
     <div className="flex flex-1 flex-col gap-9 overflow-scroll rounded-lg bg-white p-6 shadow-base">
       <div className="flex flex-col gap-6">
         <div className="flex justify-between">
-          <h1 className="text-xl font-semibold">
+          <h1
+            id="test-preview-assessment-details"
+            className="text-xl font-semibold"
+          >
             {t('testsConstants.testDetailsText')}
           </h1>
           {showInviteAction && (
@@ -82,7 +85,7 @@ const TestPreview = ({
                   icon={'ant-design:user-add-outlined'}
                   aria-label={t('members.inviteMember')}
                 />
-                <span className="text-primary">
+                <span id="invite-popup-open-text" className="text-primary">
                   {t('inviteMemeberPopUpConstants.inviteCandidate')}
                 </span>
               </div>
@@ -145,7 +148,7 @@ const TestPreview = ({
         </div>
       </div>
       <div className="flex flex-col gap-6">
-        <h1 className="text-xl font-semibold">
+        <h1 id="test-preview-selected-tests" className="text-xl font-semibold">
           {t('testsConstants.selectedTests')}
         </h1>
         <div className="flex flex-col gap-4 text-base">

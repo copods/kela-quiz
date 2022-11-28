@@ -16,6 +16,7 @@ export async function getSectionById({ id }: Pick<Section, 'id'>) {
           questionType: {
             select: {
               displayName: true,
+              value: true,
             },
           },
         },

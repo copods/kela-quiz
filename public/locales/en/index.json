@@ -108,7 +108,11 @@
     "createOptions": "Create Options",
     "checkOrder": "Check Order",
     "addOptions": "Add Options",
-    "addQuestion": "Add Question"
+    "addQuestion": "Add Question",
+    "note": "Note",
+    "multipleAnswersSelected": "Multiple answers selected",
+    "oneAnswerSelected": "One answer selected",
+    "enterTheQuestion": "Enter the Question"
   },
   "sectionsConstants": {
     "addTests": "Add Test",
@@ -120,8 +124,12 @@
     "sort": "Sort",
     "dropdown": "Select",
     "expand": "Expand",
-    "search": "Search Question",
     "noQuestionFound": "No Question Found"
+    "msq": "MSQ",
+    "mcq": "MCQ",
+    "multipleSelectQuestion": "Multiple Select Question",
+    "multipleChoiceQuestion": "Multiple Choice Question",
+    "search": "Search Question"
   },
   "testsConstants": {
     "addTestbutton": "Add Assessment",

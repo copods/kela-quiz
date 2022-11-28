@@ -2,7 +2,7 @@ import { Fragment } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import { useTranslation } from 'react-i18next'
-
+import { QuestionTypes } from '../../interface/Interface'
 function DropdownField({
   data,
   displayKey,
@@ -25,6 +25,9 @@ function DropdownField({
   actionName?: string
 }) {
   const { t } = useTranslation()
+  const createQuestionDropdownOptions = data.filter(
+    (item) => item.value !== QuestionTypes.singleChoice
+  )
 
   function classNames(...classes: Array<string>) {
     return classes.filter(Boolean).join(' ')
@@ -96,16 +99,16 @@ function DropdownField({
                     </div>
                   </Listbox.Option>
                 )}
-                {data.map((el) => (
+                {createQuestionDropdownOptions.map((option) => (
                   <Listbox.Option
-                    key={el[valueKey]}
+                    key={option[valueKey]}
                     className={({ active }) =>
                       classNames(
                         active ? 'bg-primary text-white' : 'text-gray-900',
                         'relative z-20 cursor-pointer select-none py-2 px-3'
                       )
                     }
-                    value={el[valueKey]}
+                    value={option[valueKey]}
                   >
                     {({ selected, active }) => (
                       <>
@@ -119,7 +122,7 @@ function DropdownField({
                             )}
                             id="option"
                           >
-                            {el[displayKey]}
+                            {option[displayKey]}
                           </span>
                         </div>
                         {selected ? (

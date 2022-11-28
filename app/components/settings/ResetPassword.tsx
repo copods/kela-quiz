@@ -16,6 +16,7 @@ const ResetPassword = ({
 }) => {
   const { t } = useTranslation()
   const generalSettings = useActionData()
+
   useEffect(() => {
     if (generalSettings) {
       if (generalSettings === 'DONE') {
@@ -31,17 +32,39 @@ const ResetPassword = ({
   const [password, setPassword] = useState('')
   const [newPassword, setNewPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
-  const [error, setError] = useState('')
+  const [error, setError] = useState({
+    passMinLengthError: '',
+    passNotMatchError: '',
+    passIsInvalid: generalSettings?.errors?.valid,
+    passShouldNotBeSame: generalSettings?.errors?.passShouldNotBeSame,
+  })
 
   const comparePasswords = (password: string, confirmPassword: string) => {
     if (password.length <= 0 || confirmPassword.length <= 0) {
-      setError('')
-      return
+      if (password.length !== 0 && password.length < 8) {
+        setError({
+          ...error,
+          passMinLengthError: t('settings.minPasswordLimit'),
+        })
+        return
+      } else {
+        setError({ ...error, passMinLengthError: '' })
+        return
+      }
     }
     if (password === confirmPassword) {
-      setError('')
+      setError({ ...error, passNotMatchError: '' })
+    } else if (password !== confirmPassword && password.length >= 8) {
+      setError({
+        ...error,
+        passMinLengthError: '',
+        passNotMatchError: t('settings.passNotMatch'),
+      })
     } else {
-      setError(t('settings.passNotMatch'))
+      setError({
+        ...error,
+        passNotMatchError: t('settings.passNotMatch'),
+      })
     }
   }
   const PasswordInputFieldProps = [
@@ -53,7 +76,7 @@ const ResetPassword = ({
       required: true,
       type: 'password',
       value: password,
-      error: generalSettings?.errors?.valid,
+      error: error.passIsInvalid,
       errorId: 'password-error',
       onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
         setPassword(trimValue(event?.target.value))
@@ -66,9 +89,7 @@ const ResetPassword = ({
       required: true,
       type: 'password',
       value: newPassword,
-      error:
-        generalSettings?.errors?.maximumPasswordLimit ||
-        generalSettings?.errors?.passShouldNotBeSame,
+      error: error?.passMinLengthError || error?.passShouldNotBeSame,
       errorId: 'new-password-error',
       onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
         setNewPassword(trimValue(event?.target.value))
@@ -81,7 +102,7 @@ const ResetPassword = ({
       required: true,
       type: 'password',
       value: confirmPassword,
-      error: error,
+      error: error?.passNotMatchError,
       errorId: 'confirm-password-error',
       onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
         setConfirmPassword(trimValue(event?.target.value))
@@ -92,9 +113,20 @@ const ResetPassword = ({
     setPassword('')
     setNewPassword('')
     setConfirmPassword('')
-    setError('')
+    setError({
+      passShouldNotBeSame: '',
+      passIsInvalid: '',
+      passMinLengthError: '',
+      passNotMatchError: '',
+    })
   }, [openResetPassModel])
-
+  useEffect(() => {
+    setError({
+      ...error,
+      passIsInvalid: generalSettings?.errors?.valid,
+      passShouldNotBeSame: generalSettings?.errors?.passShouldNotBeSame,
+    })
+  }, [generalSettings])
   return (
     <DialogWrapper
       open={openResetPassModel}

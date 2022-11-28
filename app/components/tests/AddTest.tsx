@@ -136,6 +136,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
       {/* header */}
       <header className="flex items-center justify-between">
         <h2
+          id="add-assessment-page-title"
           role={t('testsConstants.addTestbutton')}
           tabIndex={0}
           title={t('testsConstants.addTestbutton')}
