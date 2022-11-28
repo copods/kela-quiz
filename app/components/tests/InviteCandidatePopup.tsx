@@ -115,7 +115,6 @@ const InviteCandidatePopup = ({
         className=" items-end justify-center p-4 sm:items-center sm:p-0"
       >
         <div className="max-h-410 overflow-auto">
-          {' '}
           <p className="pb-4 text-base font-normal text-gray-700">
             {t('inviteMemeberPopUpConstants.enterCandidatesEmail')}{' '}
             <span className="font-semibold">`{testName}`</span>{' '}
