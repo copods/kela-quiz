@@ -92,7 +92,7 @@ const SelectSections = ({
   return (
     <div className="flex w-full flex-1 flex-col gap-6 overflow-x-auto rounded-lg bg-white p-6 shadow">
       {sections.length !== 0 ? (
-        <div>
+        <div className="flex flex-col gap-6 overflow-x-auto">
           {/* filters */}
           <SortFilter
             filterData={filterByType}
