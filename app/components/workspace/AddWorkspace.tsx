@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import InputField from '../form/InputField'
 import { actions } from '~/constants/action.constants'
+import { routes } from '~/constants/route.constants'
 
 export default function AddWorkspace({
   showAddWorkspaceModal,
@@ -30,7 +31,7 @@ export default function AddWorkspace({
         workspaceName: workspace,
         action: actions.addWorkspace,
       },
-      { method: 'post', action: `/${currentWorkspaceId}/settings` }
+      { method: 'post', action: `/${currentWorkspaceId}${routes.settings}` }
     )
   }
   useEffect(() => {

@@ -4,6 +4,7 @@ import { useLoaderData } from '@remix-run/react'
 import CandidatesList from './CandidatesList'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { routes } from '~/constants/route.constants'
 
 const CandidateListOfTest = () => {
   const { candidatesOfTest, currentWorkspaceId } = useLoaderData()
@@ -19,14 +20,14 @@ const CandidateListOfTest = () => {
         <div className="flex gap-2 pb-6">
           <div
             onClick={() =>
-              navigate(`/${currentWorkspaceId}/results/groupByTests`)
+              navigate(`/${currentWorkspaceId}${routes.resultGroupTest}`)
             }
             role={'button'}
             tabIndex={0}
             className="flex items-center gap-4 "
             onKeyDown={(e) => {
               if (e.key === 'Enter')
-                navigate(`/${currentWorkspaceId}/results/groupByTests`)
+                navigate(`/${currentWorkspaceId}${routes.resultGroupTest}`)
             }}
           >
             <Icon
