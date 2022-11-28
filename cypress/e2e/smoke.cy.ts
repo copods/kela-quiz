@@ -292,6 +292,7 @@ describe('smoke tests', () => {
     })
     cy.get('button#next-button', { timeout: 8000 }).should('be.visible')
     cy.get('button#next-button').should('have.text', cypress.next).click()
+    cy.wait(1000)
     cy.get('.stepsTab').each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -334,6 +335,7 @@ describe('smoke tests', () => {
       cy.get('.ql-editor').type(`Test Description`)
     })
     cy.get('button#next-button').should('have.text', cypress.next).click()
+    cy.wait(1000)
     cy.get('.stepsTab').each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -397,8 +399,10 @@ describe('smoke tests', () => {
     cy.get('#email').clear().type('copods.demo.sendgrid@gmail.com')
     cy.get('#password').clear().type('kQuiz@copods')
     cy.findByRole('button').click()
-cy.wait(1000)
-    cy.get('#invite-member',{timeout:6000}).should('have.text', cypress.addMember).click()
+    cy.wait(1000)
+    cy.get('#invite-member', { timeout: 6000 })
+      .should('have.text', cypress.addMember)
+      .click()
     cy.get('#dialog-wrapper').should('be.visible')
 
     cy.get('input[name="email"]')
@@ -420,7 +424,7 @@ cy.wait(1000)
     cy.get('#tests', { timeout: 8000 })
       .should('have.text', 'Assessments')
       .click()
-cy.wait(1000)
+    cy.wait(1000)
     cy.get('.test-table-list', { timeout: 8000 }).should('be.visible')
     cy.get('.test-table-list').each(($el) => {
       cy.wrap($el).within((el) => {
