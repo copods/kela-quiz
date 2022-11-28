@@ -48,13 +48,17 @@ describe('smoke tests', () => {
 
   it('should add workspace', () => {
     cy.visit('/sign-in')
-    cy.get('#email').clear().type('copods.demo.sendgrid@gmail.com')
+    cy.get('#email', { timeout: 8000 })
+      .clear()
+      .type('copods.demo.sendgrid@gmail.com')
     cy.get('#password').clear().type('kQuiz@copods')
     cy.findByRole('button').click()
-    cy.get('#members', { timeout: 8000 }).should('have.text', 'Members').click()
+    cy.get('#members', { timeout: 60000 })
+      .should('have.text', 'Members')
+      .click()
     cy.location('pathname').should('include', '/members')
 
-    let dropdown = cy.get('#dropdown')
+    let dropdown = cy.get('#dropdown', { timeout: 8000 })
 
     dropdown
       .click()
@@ -77,7 +81,7 @@ describe('smoke tests', () => {
       .should('have.attr', 'value', randomWorkSpaceName)
 
     cy.get('button[name="addWorkspace"]').click()
-
+    cy.wait(1000)
     // Check for workspace length
     dropdown = cy.get('#dropdown')
 
@@ -96,6 +100,7 @@ describe('smoke tests', () => {
     cy.get('#email').clear().type('copods.demo.sendgrid@gmail.com')
     cy.get('#password').clear().type('kQuiz@copods')
     cy.findByRole('button').click()
+    cy.wait(1000)
     cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
 
     cy.get('#add-section').click()
@@ -113,6 +118,7 @@ describe('smoke tests', () => {
     cy.get('#email').clear().type('copods.demo.sendgrid@gmail.com')
     cy.get('#password').clear().type('kQuiz@copods')
     cy.findByRole('button').click()
+    cy.wait(1000)
     cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
 
     cy.get('#add-section').click()
@@ -130,6 +136,7 @@ describe('smoke tests', () => {
     cy.get('#email').clear().type('copods.demo.sendgrid@gmail.com')
     cy.get('#password').clear().type('kQuiz@copods')
     cy.findByRole('button').click()
+    cy.wait(1000)
     cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
 
     cy.get('#add-section').click()
@@ -147,6 +154,7 @@ describe('smoke tests', () => {
     cy.get('#email').clear().type('copods.demo.sendgrid@gmail.com')
     cy.get('#password').clear().type('kQuiz@copods')
     cy.findByRole('button').click()
+    cy.wait(1000)
     cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
 
     cy.get('#section-card').each(($el) => {
@@ -192,6 +200,7 @@ describe('smoke tests', () => {
     cy.get('#email').clear().type('copods.demo.sendgrid@gmail.com')
     cy.get('#password').clear().type('kQuiz@copods')
     cy.findByRole('button').click()
+    cy.wait(1000)
     cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
 
     cy.get('#section-card').each(($el) => {
@@ -236,6 +245,7 @@ describe('smoke tests', () => {
     cy.get('#email').clear().type('copods.demo.sendgrid@gmail.com')
     cy.get('#password').clear().type('kQuiz@copods')
     cy.findByRole('button').click()
+    cy.wait(1000)
     cy.get('#tests', { timeout: 8000 })
       .should('have.text', 'Assessments')
       .click()
@@ -312,6 +322,7 @@ describe('smoke tests', () => {
     cy.get('#email').clear().type('copods.demo.sendgrid@gmail.com')
     cy.get('#password').clear().type('kQuiz@copods')
     cy.findByRole('button').click()
+    cy.wait(1000)
     cy.get('#tests', { timeout: 8000 })
       .should('have.text', 'Assessments')
       .click()
