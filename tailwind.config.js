@@ -44,6 +44,7 @@ module.exports = {
       },
       maxHeight: {
         352: '352px',
+        410: '410px',
       },
       borderRadius: {
         1: '1px',

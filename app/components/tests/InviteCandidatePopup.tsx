@@ -114,58 +114,61 @@ const InviteCandidatePopup = ({
         method="post"
         className=" items-end justify-center p-4 sm:items-center sm:p-0"
       >
-        <p className="pb-4 text-base font-normal text-gray-700">
-          {t('inviteMemeberPopUpConstants.enterCandidatesEmail')}{' '}
-          <span className="font-semibold">`{testName}`</span>{' '}
-          {t('testsConstants.assessment')}.
-        </p>
-        <div className="flex flex-row justify-between pb-2">
-          <span className="text-sm font-medium text-gray-500">
-            {t('inviteMemeberPopUpConstants.candidateEmail')}
-          </span>
-          <span
-            role={'button'}
-            id="invite-more"
-            tabIndex={0}
-            className="cursor-pointer px-0.5 text-sm font-normal text-primary"
-            onClick={() => setEmails([...emails, ''])}
-            onKeyUp={(e) => {
-              if (e.key === 'Enter') setEmails([...emails, ''])
-            }}
-            title={t('inviteMemeberPopUpConstants.inviteMore')}
-            aria-label={t('inviteMemeberPopUpConstants.inviteMore')}
-          >
-            {t('inviteMemeberPopUpConstants.inviteMore')} +
-          </span>
+        <div className="max-h-410 overflow-auto">
+          {' '}
+          <p className="pb-4 text-base font-normal text-gray-700">
+            {t('inviteMemeberPopUpConstants.enterCandidatesEmail')}{' '}
+            <span className="font-semibold">`{testName}`</span>{' '}
+            {t('testsConstants.assessment')}.
+          </p>
+          <div className="flex flex-row justify-between pb-2">
+            <span className="text-sm font-medium text-gray-500">
+              {t('inviteMemeberPopUpConstants.candidateEmail')}
+            </span>
+            <span
+              role={'button'}
+              id="invite-more"
+              tabIndex={0}
+              className="cursor-pointer px-0.5 text-sm font-normal text-primary"
+              onClick={() => setEmails([...emails, ''])}
+              onKeyUp={(e) => {
+                if (e.key === 'Enter') setEmails([...emails, ''])
+              }}
+              title={t('inviteMemeberPopUpConstants.inviteMore')}
+              aria-label={t('inviteMemeberPopUpConstants.inviteMore')}
+            >
+              {t('inviteMemeberPopUpConstants.inviteMore')} +
+            </span>
+          </div>
+          {emails.map((email, i) => {
+            return (
+              <div className="pb-2" key={i}>
+                <input
+                  tabIndex={0}
+                  type="email"
+                  name={`email`}
+                  onFocus={() => {
+                    validateEmails(emails, i)
+                  }}
+                  onChange={(e) => updateEmail(e, i)}
+                  className="inviteInput h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
+                  placeholder="johndoe@example.com"
+                  title={t('commonConstants.email')}
+                  aria-label={t('commonConstants.email')}
+                />
+                {Object.entries(errors).map(([key]) =>
+                  Number(key) === i ? (
+                    <p key={key} className="text-red-700">
+                      {t('statusCheck.emailIsInvalid')}
+                    </p>
+                  ) : (
+                    ''
+                  )
+                )}
+              </div>
+            )
+          })}
         </div>
-        {emails.map((email, i) => {
-          return (
-            <div className="pb-2" key={i}>
-              <input
-                tabIndex={0}
-                type="email"
-                name={`email`}
-                onFocus={() => {
-                  validateEmails(emails, i)
-                }}
-                onChange={(e) => updateEmail(e, i)}
-                className="inviteInput h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
-                placeholder="johndoe@example.com"
-                title={t('commonConstants.email')}
-                aria-label={t('commonConstants.email')}
-              />
-              {Object.entries(errors).map(([key]) =>
-                Number(key) === i ? (
-                  <p key={key} className="text-red-700">
-                    {t('statusCheck.emailIsInvalid')}
-                  </p>
-                ) : (
-                  ''
-                )
-              )}
-            </div>
-          )
-        })}
         <div className="flex justify-end gap-2 pt-4">
           <Button
             type="button"
