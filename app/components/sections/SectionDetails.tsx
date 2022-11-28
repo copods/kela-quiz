@@ -52,7 +52,6 @@ const SectionDetails = () => {
               type="text"
               value={searchText}
               name="search"
-              // disabled={!sectionDetails.sectionDetails?.questions.length}
               placeholder={t('sectionsConstants.search')}
               title={t('sectionsConstants.search')}
               className="h-9 w-48 rounded-lg border px-5 pl-8 text-sm focus:outline-dotted"
