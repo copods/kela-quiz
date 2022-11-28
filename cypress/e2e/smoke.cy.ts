@@ -24,7 +24,7 @@ describe('smoke tests', () => {
     cy.get('#password').clear().type('kQuiz@copods')
     cy.findByRole('button').click()
 
-    cy.get('#email-error', { timeout: 8000 }).should(
+    cy.get('#password-error', { timeout: 8000 }).should(
       'have.text',
       'Incorrect email or password'
     )
