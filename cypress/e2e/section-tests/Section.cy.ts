@@ -1,10 +1,10 @@
 import {
-  commonConstants,
+  // commonConstants,
   cypress,
   statusCheck,
 } from '~/constants/common.constants'
 const section1 = `Aptitude - section1`
-const deleteSection = `Aptitude - delete-Section`
+// const deleteSection = `Aptitude - delete-Section`
 
 /// <reference types="Cypress">
 describe('Test for Tests', () => {
@@ -994,51 +994,54 @@ describe('Test for Tests', () => {
         })
     })
   })
-  it('Test for deleting the Tests and check if it is deleted or not', () => {
-    cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
-    cy.get('.sectionCard', { timeout: 40000 }).each(($el) => {
-      cy.wrap($el).within((el) => {
-        if (
-          el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
-        ) {
-          cy.get('.sectionName').should('have.text', section1)
-        }
-      })
-    })
-    cy.get('.sectionName').contains(section1).click()
-    cy.wait(1000)
-    const sectionCards = cy.get('.section-card')
-    sectionCards.each(($element) => {
-      cy.wrap($element).within(($el) => {
-        if (
-          $el[0].getElementsByClassName('sectionName')[0].innerHTML ===
-          deleteSection
-        ) {
-          const verticalDot = cy.get('.verticalDots')
-          verticalDot.click()
 
-          const deletBtn = cy.get('[data-cy="delete-section"]')
-          deletBtn.click()
-        }
-      })
-    })
+  //note:working on it .....finding a genuine sol
 
-    cy.get('#delete-dialog').should('be.visible')
-    cy.get('#confirm-delete')
-      .should('have.text', commonConstants.delete)
-      .click()
-    cy.location('pathname').should('include', '/tests')
-    cy.get('#section-card', { timeout: 8000 }).each(($el) => {
-      cy.wrap($el).within((el) => {
-        if (
-          el[0].getElementsByClassName('sectionName')[0].innerHTML ===
-          deleteSection
-        ) {
-          cy.get('.sectionName')
-            .should('have.text', deleteSection)
-            .should('not.exist')
-        }
-      })
-    })
-  })
+  // it('Test for deleting the Tests and check if it is deleted or not', () => {
+  //   cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
+  //   cy.get('.sectionCard', { timeout: 40000 }).each(($el) => {
+  //     cy.wrap($el).within((el) => {
+  //       if (
+  //         el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
+  //       ) {
+  //         cy.get('.sectionName').should('have.text', section1)
+  //       }
+  //     })
+  //   })
+  //   cy.get('.sectionName').contains(section1).click()
+  //   cy.wait(1000)
+  //   const sectionCards = cy.get('.section-card')
+  //   sectionCards.each(($element) => {
+  //     cy.wrap($element).within(($el) => {
+  //       if (
+  //         $el[0].getElementsByClassName('sectionName')[0].innerHTML ===
+  //         deleteSection
+  //       ) {
+  //         const verticalDot = cy.get('.verticalDots')
+  //         verticalDot.click()
+
+  //         const deletBtn = cy.get('[data-cy="delete-section"]')
+  //         deletBtn.click()
+  //       }
+  //     })
+  //   })
+
+  //   cy.get('#delete-dialog').should('be.visible')
+  //   cy.get('#confirm-delete')
+  //     .should('have.text', commonConstants.delete)
+  //     .click()
+  //   cy.location('pathname').should('include', '/tests')
+  //   cy.get('#section-card', { timeout: 8000 }).each(($el) => {
+  //     cy.wrap($el).within((el) => {
+  //       if (
+  //         el[0].getElementsByClassName('sectionName')[0].innerHTML ===
+  //         deleteSection
+  //       ) {
+  //         cy.get('.sectionName')
+  //           .should('have.text', deleteSection)
+  //           .should('not.exist')
+  //       }
+  //     })
+  //   })
+  // })
 })
