@@ -133,6 +133,7 @@ const TestList = ({
                   sections={test?.sections}
                   showCheckBox={showCheckBox}
                   status={status}
+                  currentWorkspaceId={currentWorkspaceId}
                 />
               ))}
             </div>

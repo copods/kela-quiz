@@ -8,7 +8,6 @@ import TestListActionMenu from '../TestListActionMenu'
 import { useEffect, useState } from 'react'
 import InviteCandidatePopup from './InviteCandidatePopup'
 import { useTranslation } from 'react-i18next'
-import { routes } from '~/constants/route.constants'
 
 const TestTableItem = ({
   testName,
@@ -20,6 +19,7 @@ const TestTableItem = ({
   showCheckBox,
   totalCount,
   status,
+  currentWorkspaceId,
 }: {
   index: number
   testName: string
@@ -30,6 +30,7 @@ const TestTableItem = ({
   showCheckBox: boolean
   totalCount: number
   status: string | undefined
+  currentWorkspaceId: string
 }) => {
   const { t } = useTranslation()
 
@@ -78,10 +79,11 @@ const TestTableItem = ({
           <div
             aria-label={testName}
             title={testName}
-            onClick={() => navigate(`${routes.assessments}/${id}`)}
+            onClick={() => navigate(`/${currentWorkspaceId}/assessments/${id}`)}
             role={'button'}
             onKeyDown={(e) => {
-              if (e.key === 'Enter') navigate(`${routes.assessments}/${id}`)
+              if (e.key === 'Enter')
+                navigate(`/${currentWorkspaceId}/assessments/${id}`)
             }}
             id={`${index}`}
             tabIndex={0}

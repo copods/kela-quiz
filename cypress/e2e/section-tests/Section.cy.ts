@@ -11,7 +11,7 @@ describe('Test for Tests', () => {
   beforeEach('sign-in', () => {
     cy.login()
 
-    cy.customVisit('/tests')
+    cy.customVisit('/members')
   })
 
   it('Checks, Active State of Tests', () => {

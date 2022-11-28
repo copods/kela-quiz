@@ -158,6 +158,7 @@ const SideNav = () => {
         showAddWorkspaceModal={showAddWorkspaceModal}
         setShowAddWorkspaceModal={setShowAddWorkspaceModal}
         setWorkspaceId={setWorkspace}
+        currentWorkspaceId={currentWorkspaceId}
       />
     </>
   )
