@@ -1,5 +1,5 @@
 import { useLoaderData, useNavigate } from '@remix-run/react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { Question } from '~/interface/Interface'
 import QuestionCard from './QuestionCard'
 import Button from '../form/Button'
@@ -14,7 +14,9 @@ const SectionDetails = () => {
   const [currentAccordian, setCurrentAccordian] = useState(-1)
   const [searchText, setSearchText] = useState('')
   const navigate = useNavigate()
-
+  useEffect(() => {
+    setSearchText('')
+  }, [navigate])
   return (
     <div className="flex h-full w-full flex-col gap-5 overflow-auto break-all rounded-lg border border-gray-200 bg-white px-9 py-6">
       <div className="flex">
@@ -41,7 +43,9 @@ const SectionDetails = () => {
             tabIndex={0}
             id="section-search"
             type="text"
+            value={searchText}
             name="search"
+            disabled={!sectionDetails.sectionDetails?.questions.length}
             placeholder={t('sectionsConstants.search')}
             title={t('sectionsConstants.search')}
             className="h-9 w-48 rounded-lg border px-5 pl-8 text-sm focus:outline-dotted"
