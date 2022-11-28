@@ -249,8 +249,8 @@ describe('smoke tests', () => {
     cy.get('#tests', { timeout: 8000 })
       .should('have.text', 'Assessments')
       .click()
-
-    cy.get('#add-test').click()
+    cy.wait(1000)
+    cy.get('#add-test', { timeout: 6000 }).click()
     cy.location('pathname').should('include', '/assessments/add-assessment')
     cy.get('input[placeholder="Enter assessment name"]')
       .clear()
@@ -326,7 +326,8 @@ describe('smoke tests', () => {
     cy.get('#tests', { timeout: 8000 })
       .should('have.text', 'Assessments')
       .click()
-    cy.get('#add-test').click()
+    cy.wait(1000)
+    cy.get('#add-test', { timeout: 6000 }).click()
     cy.location('pathname').should('include', '/assessments/add-assessment')
     cy.get('input[placeholder="Enter assessment name"]').clear().type(test1)
     cy.get('#quill-editor').within(() => {
@@ -396,8 +397,8 @@ describe('smoke tests', () => {
     cy.get('#email').clear().type('copods.demo.sendgrid@gmail.com')
     cy.get('#password').clear().type('kQuiz@copods')
     cy.findByRole('button').click()
-
-    cy.get('#invite-member').should('have.text', cypress.addMember).click()
+cy.wait(1000)
+    cy.get('#invite-member',{timeout:6000}).should('have.text', cypress.addMember).click()
     cy.get('#dialog-wrapper').should('be.visible')
 
     cy.get('input[name="email"]')
@@ -415,10 +416,11 @@ describe('smoke tests', () => {
     cy.get('#email').clear().type('copods.demo.sendgrid@gmail.com')
     cy.get('#password').clear().type('kQuiz@copods')
     cy.findByRole('button').click()
+    cy.wait(1000)
     cy.get('#tests', { timeout: 8000 })
       .should('have.text', 'Assessments')
       .click()
-
+cy.wait(1000)
     cy.get('.test-table-list', { timeout: 8000 }).should('be.visible')
     cy.get('.test-table-list').each(($el) => {
       cy.wrap($el).within((el) => {
