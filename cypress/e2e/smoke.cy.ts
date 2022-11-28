@@ -39,6 +39,8 @@ describe('smoke tests', () => {
     cy.get('#email').clear().type('copods.demo.sendgrid@gmail.com')
     cy.get('#password').clear().type('kQuiz@copods')
     cy.findByRole('button').click()
+    cy.wait(1000)
+
     cy.getCookies()
       .should('have.length', 1)
       .then((cookies) => {
@@ -101,6 +103,7 @@ describe('smoke tests', () => {
     cy.get('#password').clear().type('kQuiz@copods')
     cy.findByRole('button').click()
     cy.wait(1000)
+
     cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
 
     cy.get('#add-section').click()
