@@ -9,7 +9,6 @@ import { routes } from '~/constants/route.constants'
 const CandidateListOfTest = () => {
   const { candidatesOfTest, currentWorkspaceId } = useLoaderData()
   const [searchText, setSearchText] = useState('')
-  console.log(currentWorkspaceId, 'currentWorkspaceId')
   let navigate = useNavigate()
 
   const { t } = useTranslation()
