@@ -4,7 +4,7 @@ import { json } from '@remix-run/node'
 import Header from '~/components/assessment/Header'
 import JoinWorkspace from '~/components/workspace/JoinWorkspace'
 import { getUserId } from '~/session.server'
-import { useActionData, useNavigate } from '@remix-run/react'
+import { useActionData, useLoaderData, useNavigate } from '@remix-run/react'
 import { useTranslation } from 'react-i18next'
 import { useEffect } from 'react'
 import { toast } from 'react-toastify'
@@ -117,20 +117,22 @@ export const action: ActionFunction = async ({ request, params }) => {
 const InviteMember = () => {
   const { t } = useTranslation()
   const joinWorkspaceActionData = useActionData() as ActionData
+  const workspaceInvitationData = useLoaderData()
   const navigate = useNavigate()
-
   useEffect(() => {
     if (joinWorkspaceActionData) {
       if (joinWorkspaceActionData.resp?.status === 200) {
         toast.success(t(joinWorkspaceActionData.resp?.title))
-        return navigate(routes.signIn)
+        return navigate(
+          `/${workspaceInvitationData?.invitedMember.invitedForWorkspace?.id}/members`
+        )
       } else if (joinWorkspaceActionData.errors?.status === 400) {
         toast.error(t(joinWorkspaceActionData.errors?.title), {
           toastId: joinWorkspaceActionData.errors?.title,
         })
       }
     }
-  }, [joinWorkspaceActionData, t, navigate])
+  }, [joinWorkspaceActionData, t, navigate, workspaceInvitationData])
 
   return (
     <div className="flex h-full flex-col bg-gray-50">
