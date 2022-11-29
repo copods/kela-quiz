@@ -20,6 +20,7 @@ const TestTableItem = ({
   showCheckBox,
   totalCount,
   status,
+  currentWorkspaceId,
 }: {
   index: number
   testName: string
@@ -30,6 +31,7 @@ const TestTableItem = ({
   showCheckBox: boolean
   totalCount: number
   status: string | undefined
+  currentWorkspaceId: string
 }) => {
   const { t } = useTranslation()
 
@@ -78,10 +80,13 @@ const TestTableItem = ({
           <div
             aria-label={testName}
             title={testName}
-            onClick={() => navigate(`${routes.assessments}/${id}`)}
+            onClick={() =>
+              navigate(`/${currentWorkspaceId}${routes.assessments}/${id}`)
+            }
             role={'button'}
             onKeyDown={(e) => {
-              if (e.key === 'Enter') navigate(`${routes.assessments}/${id}`)
+              if (e.key === 'Enter')
+                navigate(`/${currentWorkspaceId}${routes.assessments}/${id}`)
             }}
             id={`${index}`}
             tabIndex={0}

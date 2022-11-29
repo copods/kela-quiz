@@ -8,15 +8,18 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import InputField from '../form/InputField'
 import { actions } from '~/constants/action.constants'
+import { routes } from '~/constants/route.constants'
 
 export default function AddWorkspace({
   showAddWorkspaceModal,
   setShowAddWorkspaceModal,
   setWorkspaceId,
+  currentWorkspaceId,
 }: {
   showAddWorkspaceModal: boolean
   setShowAddWorkspaceModal?: (e: boolean) => void
   setWorkspaceId?: (e: string) => void
+  currentWorkspaceId: string
 }) {
   const { t } = useTranslation()
   const fetcher = useFetcher()
@@ -28,7 +31,7 @@ export default function AddWorkspace({
         workspaceName: workspace,
         action: actions.addWorkspace,
       },
-      { method: 'post', action: '/settings' }
+      { method: 'post', action: `/${currentWorkspaceId}${routes.settings}` }
     )
   }
   useEffect(() => {

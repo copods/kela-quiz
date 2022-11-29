@@ -19,7 +19,6 @@ const SideNav = () => {
   const tempWorkspaces = workspaces.map((userWorkspace: UserWorkspace) => {
     return { ...userWorkspace, ...userWorkspace.workspace }
   })
-
   const sideNavGuide = [
     // {
     //   navGuide: 'Main Menu',
@@ -83,7 +82,7 @@ const SideNav = () => {
           id: 'Settings',
           iconClass: 'mdi:cog',
           itemName: 'commonConstants.settings',
-          itemRoute: routes.settings,
+          itemRoute: routes.generalSettings,
         },
       ],
     },
@@ -165,6 +164,7 @@ const SideNav = () => {
         showAddWorkspaceModal={showAddWorkspaceModal}
         setShowAddWorkspaceModal={setShowAddWorkspaceModal}
         setWorkspaceId={setWorkspace}
+        currentWorkspaceId={currentWorkspaceId}
       />
     </>
   )

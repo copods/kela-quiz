@@ -9,7 +9,8 @@ export const routes = {
   addAssessment: '/assessments/add-assessment',
   resultGroupTest: '/results/groupByTests',
   members: '/members',
-  settings: '/settings/general',
+  generalSettings: '/settings/general',
+  settings: '/settings',
   forgotPassword: '/forgot-password',
   endExam: '/end-assessment',
 }

@@ -204,7 +204,7 @@
     "workspaceJoinSuccess": "Workspace joined successfully",
     "workspaceInvitationRejected": "Workspace invitation rejected",
     "notInviteYourself": "You can not invite Yourself",
-    "incorrectEmailOrPassword": "Incorrect email or passsword"
+    "incorrectEmailOrPassword": "Incorrect email or password"
   },
   "resultConstants": {
     "order": "Order",

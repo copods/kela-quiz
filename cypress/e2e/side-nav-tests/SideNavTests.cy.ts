@@ -1,10 +1,3 @@
-import {
-  commonConstants,
-  members,
-  routeFiles,
-  testsConstants,
-} from '~/constants/common.constants'
-import { routes } from '~/constants/route.constants'
 const sideNavGroupTitles = {
   results: 'Results',
   assessments: 'Assessments',
@@ -19,37 +12,18 @@ describe('Test for Logout, SideNav', () => {
 
     cy.customVisit('/members')
   })
+
   it('click all links with loop', () => {
-    const menu = cy.get('#sideNavMenu')
-    const menuItems = menu.find('.menuItem')
+    const pages = ['members', 'tests', 'sections', 'group-by-tests', 'Settings']
 
-    menuItems.should((item) => {
-      expect(item).to.have.length(5)
-    })
+    cy.login()
 
-    menuItems.each((item) => {
-      expect([
-        commonConstants.results,
-        testsConstants.assessments,
-        routeFiles.tests,
-        members.members,
-        commonConstants.settings,
-      ]).to.include(item.text())
+    cy.customVisit('/members')
 
-      // @TODO:
-      // Need to evalute this, we can use cy.wrap() but it is failling during iteration
-      // Will look into this.
-      item.click()
+    pages.forEach((page) => {
+      cy.get(`#${page}`).click()
 
-      cy.location('pathname').should((item) => {
-        expect([
-          routes.resultGroupTest,
-          routes.assessments,
-          routes.tests,
-          routes.members,
-          routes.settings,
-        ]).to.include(item)
-      })
+      cy.customVisit('/members')
     })
   })
   it('Checks text of SideNav group title- Results', () => {
