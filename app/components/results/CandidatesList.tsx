@@ -43,6 +43,22 @@ const CandidatesList = ({ searchText }: { searchText: string }) => {
       toast.error(t('testsConstants.testEnded'))
     }
   }, [actionData, t])
+
+  const filteredData = testData?.filter(
+    (
+      candidate: CandidateResult & {
+        candidate: Candidate & {
+          createdBy: User
+        }
+        candidateResult: Array<CandidateResult>
+      }
+    ) => {
+      return `${candidate?.candidate?.firstName} ${candidate?.candidate?.lastName} ${candidate?.candidate?.email}`
+        .toLowerCase()
+        .includes(searchText.toLowerCase())
+    }
+  )
+
   return (
     <div className="bg-gray-50 pb-4">
       <div className="bg-tableHeader rounded-lg border border-solid border-gray-200 shadow-base">
@@ -72,22 +88,8 @@ const CandidatesList = ({ searchText }: { searchText: string }) => {
             {t('resultConstants.status')}
           </span>
         </div>
-        {testData
-          ?.filter(
-            (
-              candidate: CandidateResult & {
-                candidate: Candidate & {
-                  createdBy: User
-                }
-                candidateResult: Array<CandidateResult>
-              }
-            ) => {
-              return `${candidate?.candidate?.firstName} ${candidate?.candidate?.lastName} ${candidate?.candidate?.email}`
-                .toLowerCase()
-                .includes(searchText.toLowerCase())
-            }
-          )
-          .map(
+        {filteredData.length ? (
+          filteredData.map(
             (
               candidate: CandidateResult & {
                 candidate: Candidate & {
@@ -136,7 +138,12 @@ const CandidatesList = ({ searchText }: { searchText: string }) => {
                 </div>
               )
             }
-          )}
+          )
+        ) : (
+          <div className="flex h-60 items-center justify-center">
+            No data found
+          </div>
+        )}
         {testData.length === 0 && (
           <div className="flex justify-center rounded-b-lg bg-white p-7">
             {t('testsConstants.noCandidateForAssessment')}
