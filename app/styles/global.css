@@ -21,7 +21,6 @@
   display: table !important;
   word-break: break-all !important;
 }
-
 .ql-container {
   height: 100% !important;
   flex: 1 1 0% !important;
@@ -58,4 +57,8 @@ input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
+}
+.ql-editor {
+  overflow: inherit !important;
+  min-height: 85px;
 }
