@@ -124,7 +124,7 @@ const InviteMember = () => {
       if (joinWorkspaceActionData.resp?.status === 200) {
         toast.success(t(joinWorkspaceActionData.resp?.title))
         return navigate(
-          `/${workspaceInvitationData?.invitedMember.invitedForWorkspace?.id}/members`
+          `/${workspaceInvitationData?.invitedMember.invitedForWorkspace?.id}${routes.members}`
         )
       } else if (joinWorkspaceActionData.errors?.status === 400) {
         toast.error(t(joinWorkspaceActionData.errors?.title), {
