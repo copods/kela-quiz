@@ -20,7 +20,7 @@ import { useState, useEffect } from 'react'
 import { Icon } from '@iconify/react'
 import { getUserId, requireUserId } from '~/session.server'
 import Sections from '~/components/sections/Sections'
-import type { createEditSectionErrorType } from '~/interface/Interface'
+import type { sectionActionErrorsType } from '~/interface/Interface'
 import AddEditSection from '~/components/sections/AddEditSection'
 import { toast } from 'react-toastify'
 import Button from '~/components/form/Button'
@@ -39,7 +39,7 @@ export type ActionData = {
     name?: string
     description?: string
   }
-  createSectionFieldError?: createEditSectionErrorType
+  createSectionFieldError?: sectionActionErrorsType
   resp?: {
     status?: string
     check?: Date
@@ -315,7 +315,7 @@ export default function SectionPage() {
   const [showAddSectionModal, setShowAddSectionModal] = useState(false)
   const [order, setOrder] = useState(sortByOrder.desc as string)
   const [sortBy, setSortBy] = useState(sortByDetails[1].value)
-  const [createEditSectionError, setCreateEditSectionError] = useState({
+  const [sectionActionErrors, setSectionActionErrors] = useState({
     title: '',
     description: '',
   })
@@ -352,7 +352,7 @@ export default function SectionPage() {
         t(sectionActionData.resp?.status as string) ===
         t('statusCheck.testAddedSuccess')
       ) {
-        setCreateEditSectionError({ title: '', description: '' })
+        setSectionActionErrors({ title: '', description: '' })
         setShowAddSectionModal(false)
         setSelectedSection((previous: string) => {
           if (previous != sectionActionData?.resp?.data?.id)
@@ -381,7 +381,7 @@ export default function SectionPage() {
             : data.sections[0]?.id) || 'NA'
         )
       } else if (sectionActionData.createSectionFieldError) {
-        setCreateEditSectionError({
+        setSectionActionErrors({
           title: sectionActionData?.createSectionFieldError.title || '',
           description:
             sectionActionData.createSectionFieldError.description || '',
@@ -440,8 +440,8 @@ export default function SectionPage() {
               setSelectedSection={setSelectedSection}
               sortByDetails={sortByDetails}
               currentWorkspaceId={data.currentWorkspaceId as string}
-              createEditSectionError={createEditSectionError}
-              setCreateEditSectionError={setCreateEditSectionError}
+              sectionActionErrors={sectionActionErrors}
+              setSectionActionErrors={setSectionActionErrors}
             />
           </div>
           {/* section details */}
@@ -477,8 +477,8 @@ export default function SectionPage() {
       )}
       <AddEditSection
         open={showAddSectionModal}
-        createEditSectionError={createEditSectionError}
-        setCreateEditSectionError={setCreateEditSectionError}
+        sectionActionErrors={sectionActionErrors}
+        setSectionActionErrors={setSectionActionErrors}
         setOpen={setShowAddSectionModal}
         showErrorMessage={sectionActionData?.errors?.status === 400}
       />

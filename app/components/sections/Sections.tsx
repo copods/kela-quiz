@@ -5,7 +5,7 @@ import {} from '@remix-run/react'
 import SortFilter from '../SortFilter'
 import { useEffect, useState } from 'react'
 import { routes } from '~/constants/route.constants'
-import type { createEditSectionErrorType } from '~/interface/Interface'
+import type { sectionActionErrorsType } from '~/interface/Interface'
 
 const SectionLink = ({
   section,
@@ -14,8 +14,8 @@ const SectionLink = ({
   filter,
   setSelectedSection,
   currentWorkspaceId,
-  createEditSectionError,
-  setCreateEditSectionError,
+  sectionActionErrors,
+  setSectionActionErrors,
 }: {
   section: Section & { _count?: { questions: number }; createdBy?: User }
   actionStatusData?: string
@@ -23,11 +23,11 @@ const SectionLink = ({
   filter: string
   currentWorkspaceId: string
   setSelectedSection: (e: string) => void
-  createEditSectionError?: createEditSectionErrorType
-  setCreateEditSectionError?: ({
+  sectionActionErrors?: sectionActionErrorsType
+  setSectionActionErrors?: ({
     title,
     description,
-  }: createEditSectionErrorType) => void
+  }: sectionActionErrorsType) => void
 }) => {
   const path = `/${currentWorkspaceId}${routes.tests}/${section.id}${filter}`
   const [isDelete, setIsDelete] = useState(false)
@@ -83,8 +83,8 @@ const SectionLink = ({
         setDeleted={setDeleted}
         setIsDelete={setIsDelete}
         isDelete={isDelete}
-        createEditSectionError={createEditSectionError}
-        setCreateEditSectionError={setCreateEditSectionError}
+        sectionActionErrors={sectionActionErrors}
+        setSectionActionErrors={setSectionActionErrors}
       />
     </div>
   )
@@ -102,11 +102,11 @@ type SectionType = {
   setSelectedSection: (e: string) => void
   sortByDetails: Array<{ name: string; value: string }>
   currentWorkspaceId: string
-  createEditSectionError?: createEditSectionErrorType
-  setCreateEditSectionError?: ({
+  sectionActionErrors?: sectionActionErrorsType
+  setSectionActionErrors?: ({
     title,
     description,
-  }: createEditSectionErrorType) => void
+  }: sectionActionErrorsType) => void
 }
 const Sections = ({
   sections,
@@ -120,8 +120,8 @@ const Sections = ({
   err,
   actionStatusData,
   currentWorkspaceId,
-  createEditSectionError,
-  setCreateEditSectionError,
+  sectionActionErrors,
+  setSectionActionErrors,
 }: SectionType) => {
   return (
     <div className="sectionLSWrapper flex h-full max-w-96 flex-col gap-6">
@@ -152,8 +152,8 @@ const Sections = ({
             setSelectedSection={setSelectedSection}
             actionStatusData={actionStatusData}
             err={err}
-            createEditSectionError={createEditSectionError}
-            setCreateEditSectionError={setCreateEditSectionError}
+            sectionActionErrors={sectionActionErrors}
+            setSectionActionErrors={setSectionActionErrors}
             currentWorkspaceId={currentWorkspaceId}
           />
         ))}

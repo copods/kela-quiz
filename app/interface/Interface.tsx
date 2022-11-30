@@ -271,7 +271,7 @@ export interface CandidateResult {
   updatedAt: Date
   workspaceId?: string
 }
-export interface createEditSectionErrorType {
+export interface sectionActionErrorsType {
   title: string
   description: string
 }

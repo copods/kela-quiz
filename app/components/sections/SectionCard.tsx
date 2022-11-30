@@ -4,7 +4,7 @@ import { Menu } from '@headlessui/react'
 import { useSubmit } from '@remix-run/react'
 import DeletePopUp from '../DeletePopUp'
 import { useEffect, useState } from 'react'
-import type { createEditSectionErrorType } from '~/interface/Interface'
+import type { sectionActionErrorsType } from '~/interface/Interface'
 import { useTranslation } from 'react-i18next'
 import AddEditSection from './AddEditSection'
 const SectionCard = ({
@@ -20,8 +20,8 @@ const SectionCard = ({
   setDeleted,
   setIsDelete,
   isDelete,
-  setCreateEditSectionError,
-  createEditSectionError,
+  setSectionActionErrors,
+  sectionActionErrors,
 }: {
   name: string
   description: string
@@ -35,11 +35,11 @@ const SectionCard = ({
   setDeleted?: (e: boolean) => void
   setIsDelete: (e: boolean) => void
   isDelete: boolean
-  createEditSectionError?: createEditSectionErrorType
-  setCreateEditSectionError?: ({
+  sectionActionErrors?: sectionActionErrorsType
+  setSectionActionErrors?: ({
     title,
     description,
-  }: createEditSectionErrorType) => void
+  }: sectionActionErrorsType) => void
 }) => {
   const { t } = useTranslation()
   const submit = useSubmit()
@@ -165,8 +165,8 @@ const SectionCard = ({
       <AddEditSection
         open={editMode}
         setOpen={setEditMode}
-        createEditSectionError={createEditSectionError}
-        setCreateEditSectionError={setCreateEditSectionError}
+        sectionActionErrors={sectionActionErrors}
+        setSectionActionErrors={setSectionActionErrors}
         showErrorMessage={false}
         editItem={editItem}
         editId={id}
