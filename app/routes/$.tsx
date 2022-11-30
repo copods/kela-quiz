@@ -34,7 +34,7 @@ const NotFound = () => {
               if (e.key === 'Enter') navigateToHomepage()
             }}
           >
-            {t('404.gotoHomepage')}
+            {t('404.gotoDashboard')}
           </div>
         </div>
       </div>

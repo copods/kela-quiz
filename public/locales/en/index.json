@@ -323,6 +323,6 @@
     "error": "That's an error.",
     "notFound": "Not Found",
     "urlNotFound": "The requested URL was not found on this server.",
-    "gotoHomepage": "Goto Homepage"
+    "gotoDashboard": "GoTo Dashboard"
   }
 }
