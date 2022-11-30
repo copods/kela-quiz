@@ -1,7 +1,5 @@
 /*  TODO: Remove unused font weight on the end of development/ design compleyte */
-
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
-
 * {
   font-family: 'Poppins', sans-serif;
 }
@@ -13,26 +11,7 @@
   -khtml-user-select: none;
   user-select: none;
 }
-.ql-container {
-  height: 100% !important;
-  flex: 1 1 0% !important;
-  /* display: block !important; */
-  /* overflow-y: auto !important; */
-  display: table !important;
-  word-break: break-all !important;
-}
-.ql-container {
-  height: 100% !important;
-  flex: 1 1 0% !important;
-}
 
-.Toastify__close-button {
-  align-self: center !important;
-  padding-right: 6px !important;
-}
-.Toastify__toast-container {
-  width: auto !important;
-}
 *:focus-visible {
   outline: 2px dotted rgb(91, 91, 91);
   border-radius: 3px;
@@ -46,19 +25,8 @@
   border-radius: 8px;
 }
 
-.ql-editor pre {
-  background-color: #f5f5f5 !important;
-  color: black !important;
-  border: 1px solid #cccccc;
-  padding-left: 4px !important;
-  border-radius: 4px !important;
-}
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
-}
-.ql-editor {
-  overflow: inherit !important;
-  min-height: 85px;
 }
