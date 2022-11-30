@@ -318,5 +318,11 @@
   "tabs": {
     "general": "General",
     "workspaces": "Workspaces"
+  },
+  "404": {
+    "error": "That's an error.",
+    "notFound": "Not Found",
+    "urlNotFound": "The requested URL was not found on this server.",
+    "gotoDashboard": "GoTo Dashboard"
   }
 }
