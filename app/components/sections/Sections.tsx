@@ -5,6 +5,7 @@ import {} from '@remix-run/react'
 import SortFilter from '../SortFilter'
 import { useEffect, useState } from 'react'
 import { routes } from '~/constants/route.constants'
+import type { sectionActionErrorsType } from '~/interface/Interface'
 
 const SectionLink = ({
   section,
@@ -13,6 +14,8 @@ const SectionLink = ({
   filter,
   setSelectedSection,
   currentWorkspaceId,
+  sectionActionErrors,
+  setSectionActionErrors,
 }: {
   section: Section & { _count?: { questions: number }; createdBy?: User }
   actionStatusData?: string
@@ -20,6 +23,11 @@ const SectionLink = ({
   filter: string
   currentWorkspaceId: string
   setSelectedSection: (e: string) => void
+  sectionActionErrors?: sectionActionErrorsType
+  setSectionActionErrors?: ({
+    title,
+    description,
+  }: sectionActionErrorsType) => void
 }) => {
   const path = `/${currentWorkspaceId}${routes.tests}/${section.id}${filter}`
   const [isDelete, setIsDelete] = useState(false)
@@ -75,6 +83,8 @@ const SectionLink = ({
         setDeleted={setDeleted}
         setIsDelete={setIsDelete}
         isDelete={isDelete}
+        sectionActionErrors={sectionActionErrors}
+        setSectionActionErrors={setSectionActionErrors}
       />
     </div>
   )
@@ -92,6 +102,11 @@ type SectionType = {
   setSelectedSection: (e: string) => void
   sortByDetails: Array<{ name: string; value: string }>
   currentWorkspaceId: string
+  sectionActionErrors?: sectionActionErrorsType
+  setSectionActionErrors?: ({
+    title,
+    description,
+  }: sectionActionErrorsType) => void
 }
 const Sections = ({
   sections,
@@ -105,6 +120,8 @@ const Sections = ({
   err,
   actionStatusData,
   currentWorkspaceId,
+  sectionActionErrors,
+  setSectionActionErrors,
 }: SectionType) => {
   return (
     <div className="sectionLSWrapper flex h-full max-w-96 flex-col gap-6">
@@ -135,6 +152,8 @@ const Sections = ({
             setSelectedSection={setSelectedSection}
             actionStatusData={actionStatusData}
             err={err}
+            sectionActionErrors={sectionActionErrors}
+            setSectionActionErrors={setSectionActionErrors}
             currentWorkspaceId={currentWorkspaceId}
           />
         ))}
