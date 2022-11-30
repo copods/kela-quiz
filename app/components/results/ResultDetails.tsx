@@ -1,7 +1,7 @@
 import { useLoaderData, useNavigate } from '@remix-run/react'
 import { Icon } from '@iconify/react'
 import SectionCardForResultDetail from './SectionCardForResultDetail'
-import Divider from '../divider'
+import Divider from '../common_components/divider'
 import BarGraph from '../barGraph/barGraph'
 import type { SectionWiseResults } from '~/interface/Interface'
 import { routes } from '~/constants/route.constants'

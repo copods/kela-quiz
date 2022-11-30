@@ -3,7 +3,7 @@ import moment from 'moment'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { Invites } from '~/interface/Interface'
-import DeletePopUp from '../DeletePopUp'
+import DeletePopUp from '../common_components/DeletePopUp'
 import memberResendIcon from '~/../public/assets/resend-member-invitation.svg'
 
 const InvitedMembersListItem = ({

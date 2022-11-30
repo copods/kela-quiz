@@ -2,9 +2,9 @@ import { Form, useActionData, useTransition } from '@remix-run/react'
 import { useEffect, useState } from 'react'
 
 import { toast } from 'react-toastify'
-import Button from '../form/Button'
+import Button from '../common_components/Button'
 import { useTranslation } from 'react-i18next'
-import DialogWrapper from '../Dialog'
+import DialogWrapper from '../common_components/Dialog'
 interface error {
   [key: number]: string
 }

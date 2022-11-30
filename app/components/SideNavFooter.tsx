@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 import { useUser } from '~/utils'
 import { Form } from '@remix-run/react'
-import Button from './form/Button'
+import Button from './common_components/Button'
 import { useTranslation } from 'react-i18next'
 
 function Footer() {

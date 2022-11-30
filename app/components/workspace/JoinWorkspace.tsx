@@ -5,7 +5,7 @@ import {
   useTransition,
 } from '@remix-run/react'
 import { useTranslation } from 'react-i18next'
-import Button from '../form/Button'
+import Button from '../common_components/Button'
 import logo from '../../../public/assets/member-invitation.svg'
 
 const JoinWorkspace = () => {

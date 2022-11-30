@@ -6,13 +6,13 @@ import {
   useTransition,
 } from '@remix-run/react'
 import { useEffect, useState } from 'react'
-import Button from '~/components/form/Button'
+import Button from '~/components/common_components/Button'
 import Logo from '~/components/Logo'
 import { trimValue } from '~/utils'
 import { routes } from '~/constants/route.constants'
 import { useTranslation } from 'react-i18next'
-import InputField from '../form/InputField'
-import PasswordInputFields from '../form/PasswordInputField'
+import InputField from '../common_components/InputField'
+import PasswordInputFields from '../common_components/PasswordInputField'
 import { toast } from 'react-toastify'
 
 const SignUp = ({ error }: { error?: string }) => {

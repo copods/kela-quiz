@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import TabComponent from '../TabsComponent'
+import TabComponent from '../common_components/TabsComponent'
 
 const SettingsTabs = ({
   currentWorkspaceId,

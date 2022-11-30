@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Form, useTransition } from '@remix-run/react'
-import Button from '~/components/form/Button'
-import InputField from '~/components/form/InputField'
+import Button from '~/components/common_components/Button'
+import InputField from '~/components/common_components/InputField'
 import { useTranslation } from 'react-i18next'
 
 function CandidateRegister() {
