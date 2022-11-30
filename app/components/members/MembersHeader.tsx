@@ -22,11 +22,16 @@ export default function MembersHeader({
       setActionStatus(false)
     }
   }, [actionStatus, setActionStatus])
+  useEffect(() => {
+    const heading = document.getElementById('members-heading')
+    heading?.focus()
+  }, [])
   return (
     <div>
       <div className="flex items-center justify-between">
         <h1
           tabIndex={0}
+          id="members-heading"
           role={t('members.members')}
           aria-label={t('members.members')}
           className="membersHeading text-3xl font-bold"
