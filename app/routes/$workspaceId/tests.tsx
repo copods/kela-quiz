@@ -393,7 +393,10 @@ export default function SectionPage() {
     location,
     navigate,
   ])
-
+  useEffect(() => {
+    const heading = document.getElementById('tests-heading')
+    heading?.focus()
+  }, [])
   return (
     <div className="flex h-full flex-col gap-6 overflow-hidden p-1">
       {/* header */}

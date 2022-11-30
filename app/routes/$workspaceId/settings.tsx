@@ -113,10 +113,22 @@ export default function Settings() {
   useEffect(() => {
     if (location.pathname === '/settings') return navigate('/settings/general')
   }, [navigate, location.pathname])
+  useEffect(() => {
+    const heading = document.getElementById('settings-heading')
+    heading?.focus()
+  }, [])
   return (
     <div className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold">{t('commonConstants.settings')}</h1>
+        <h1
+          id="settings-heading"
+          tabIndex={0}
+          role= {t('commonConstants.settings')}
+          aria-label= {t('commonConstants.settings')}
+          className="text-3xl font-bold"
+        >
+          {t('commonConstants.settings')}
+        </h1>
       </div>
       <SettingsTabs currentWorkspaceId={currentWorkspaceId} />
       <Outlet />
