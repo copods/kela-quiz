@@ -463,7 +463,7 @@ describe('smoke tests', () => {
   })
   it('check for not found page', () => {
     cy.login()
-    cy.customVisit('/asdasdasd')
+    cy.customVisit('/not-our-url')
 
     cy.contains("That's an error.")
   })
