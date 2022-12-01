@@ -11,6 +11,7 @@ const Pagination = ({
   setPageSize,
   firstPageIndex,
   testDataLength,
+  itemsList,
 }: {
   onPageChange: (e: number) => void
   totalLength: number
@@ -19,6 +20,7 @@ const Pagination = ({
   setPageSize: (e: number) => void
   firstPageIndex: number
   testDataLength: number
+  itemsList: Array<{ name: string; pageSize: number }>
 }) => {
   const totalCount = Math.ceil(totalLength / pageSize)
   const siblingCount = 1
@@ -58,12 +60,7 @@ const Pagination = ({
       }
     })
   }
-  const itemsList = [
-    { name: '5 Items', pageSize: 5 },
-    { name: '10 Items', pageSize: 10 },
-    { name: '15 Items', pageSize: 15 },
-    { name: '20 Items', pageSize: 20 },
-  ]
+
   const [selected, setSelected] = useState(itemsList[0])
   const dropDown = () => {
     return (
@@ -80,7 +77,7 @@ const Pagination = ({
             leaveTo="opacity-0"
           >
             <Listbox.Options className="absolute mt-1 max-h-60 rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-              {itemsList.map((item, index) => (
+              {itemsList.map((item: any, index: number) => (
                 <Listbox.Option
                   key={index}
                   onClick={() => {
