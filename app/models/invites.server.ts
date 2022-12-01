@@ -75,6 +75,7 @@ export async function getInvitedMemberById(id: Invites['id']) {
       invitedForWorkspace: {
         select: {
           name: true,
+          id: true,
         },
       },
     },

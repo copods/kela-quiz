@@ -46,10 +46,16 @@ const GroupByTests = () => {
     }
     submit({ data: JSON.stringify(filter) }, { method: 'get' })
   }, [sortDirection, sortBy, submit])
+
+  useEffect(() => {
+    const heading = document.getElementById('heading')
+    heading?.focus()
+  }, [])
   return (
     <div className="flex flex-col gap-6 p-1" id="group-by-test-container">
       <h1
         tabIndex={0}
+        id="heading"
         title={t('commonConstants.results')}
         role={t('commonConstants.results')}
         aria-label={t('commonConstants.results')}

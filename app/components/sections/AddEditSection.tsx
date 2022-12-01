@@ -4,7 +4,7 @@ import Button from '../common-components/Button'
 import { trimValue } from '~/utils'
 import { useTranslation } from 'react-i18next'
 import DialogWrapper from '../common-components/Dialog'
-import type { createSectionErrorType } from '~/interface/Interface'
+import type { sectionActionErrorsType } from '~/interface/Interface'
 
 export interface editItem {
   name: string
@@ -15,15 +15,15 @@ const AddEditSection = ({
   setOpen,
   editItem,
   editId,
-  setCreateSectionError,
-  createSectionError,
+  setSectionActionErrors,
+  sectionActionErrors,
 }: {
   open: boolean
-  createSectionError?: createSectionErrorType
-  setCreateSectionError?: ({
+  sectionActionErrors?: sectionActionErrorsType
+  setSectionActionErrors?: ({
     title,
     description,
-  }: createSectionErrorType) => void
+  }: sectionActionErrorsType) => void
 
   setOpen: (e: boolean) => void
   showErrorMessage?: boolean
@@ -55,14 +55,15 @@ const AddEditSection = ({
   }
   useEffect(() => {
     if (editItem) {
+      setSectionActionErrors?.({ title: '', description: '' })
       setSectionName(editItem.name)
       setDescription(editItem.description)
       return
     }
     setDescription('')
     setSectionName('')
-    setCreateSectionError?.({ title: '', description: '' })
-  }, [open, editItem, setCreateSectionError])
+    setSectionActionErrors?.({ title: '', description: '' })
+  }, [open, editItem, setSectionActionErrors])
 
   useEffect(() => {
     if (
@@ -106,9 +107,9 @@ const AddEditSection = ({
             value={sectionName}
             maxLength={52}
           />
-          {createSectionError?.title ? (
+          {sectionActionErrors?.title ? (
             <p id="addEditSection-title-error" className="px-3 text-red-500">
-              {t(createSectionError.title)}
+              {t(sectionActionErrors.title)}
             </p>
           ) : null}
         </div>
@@ -123,12 +124,12 @@ const AddEditSection = ({
             value={description}
             placeholder={t('commonConstants.enterTestsDesc')}
           />
-          {createSectionError?.description ? (
+          {sectionActionErrors?.description ? (
             <p
               id="addEditSection-description-error"
               className="px-3 text-red-500"
             >
-              {t(createSectionError.description)}
+              {t(sectionActionErrors.description)}
             </p>
           ) : null}
         </div>
@@ -140,7 +141,7 @@ const AddEditSection = ({
             className="h-9 px-4"
             onClick={() => {
               setOpen(false)
-              setCreateSectionError?.({ title: '', description: '' })
+              setSectionActionErrors?.({ title: '', description: '' })
             }}
             varient="primary-outlined"
             title={t('commonConstants.cancel')}

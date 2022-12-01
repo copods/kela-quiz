@@ -1,5 +1,5 @@
 import { useSubmit } from '@remix-run/react'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import type { Test } from '~/interface/Interface'
 import { sortByOrder } from '~/interface/Interface'
@@ -8,7 +8,6 @@ import TestTableItem from './TestTableItem'
 import Button from '../common-components/Button'
 import { routes } from '~/constants/route.constants'
 import { useTranslation } from 'react-i18next'
-import Pagination from '../common-components/pagination/Pagination'
 // import Checkbox from '../form/CheckBox'
 const TestList = ({
   tests,
@@ -24,8 +23,6 @@ const TestList = ({
   const [sortDirection, onSortDirectionChange] = useState(
     sortByOrder.desc as string
   )
-  const [pageSize, setPageSize] = useState(5)
-  const [currentPage, setCurrentPage] = useState(1)
   const navigate = useNavigate()
   const sortByDetails = [
     {
@@ -55,20 +52,10 @@ const TestList = ({
     }
   }, [sortDirection, sortBy, submit])
   const showCheckBox = false
-  const firstPageIndex = (currentPage - 1) * pageSize
-  console.log(firstPageIndex)
-  const lastPageIndex = firstPageIndex + pageSize
-  console.log(lastPageIndex, 'lastPageIndex')
-  const currentTestData = useMemo(() => {
-    return tests.slice(firstPageIndex, lastPageIndex)
-  }, [tests, firstPageIndex, lastPageIndex])
-  console.log(currentTestData, 'j')
-  const itemsList = [
-    { name: '5 Items', pageSize: 5 },
-    { name: '10 Items', pageSize: 10 },
-    { name: '15 Items', pageSize: 15 },
-    { name: '20 Items', pageSize: 20 },
-  ]
+  useEffect(() => {
+    const heading = document.getElementById('assessments-page-title')
+    heading?.focus()
+  }, [])
   return (
     <div className="test-list-container flex h-full flex-col gap-6 p-1">
       {/* header */}
@@ -172,16 +159,6 @@ const TestList = ({
                   currentWorkspaceId={currentWorkspaceId}
                 />
               ))}
-              <Pagination
-                onPageChange={(page) => setCurrentPage(page)}
-                totalLength={tests.length}
-                currentPage={currentPage}
-                pageSize={pageSize}
-                setPageSize={setPageSize}
-                firstPageIndex={firstPageIndex}
-                testDataLength={currentTestData.length}
-                itemsList={itemsList}
-              />
             </div>
           </div>
         </>

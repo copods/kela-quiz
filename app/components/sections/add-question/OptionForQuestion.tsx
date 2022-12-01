@@ -190,7 +190,7 @@ export default function OptionForQuestion({
                     />
                   )
                 )}
-                <div className="textOption h-32 flex-1" id="optionEditor">
+                <div className="textOption h-auto flex-1" id="optionEditor">
                   {
                     <ClientOnly fallback={<div></div>}>
                       {() => (

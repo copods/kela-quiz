@@ -461,4 +461,10 @@ describe('smoke tests', () => {
       .should('have.value', 'johndoe@example.com')
     cy.get('[data-cy="submit"]').click()
   })
+  it('check for not found page', () => {
+    cy.login()
+    cy.customVisit('/not-our-url')
+
+    cy.contains("That's an error.")
+  })
 })
