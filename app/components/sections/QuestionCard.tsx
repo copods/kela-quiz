@@ -54,7 +54,7 @@ const QuestionCard = ({
       }}
     >
       <div className="break flex flex-col-reverse items-start justify-between gap-6 text-base text-gray-600 xl:flex-row">
-        <div className="ql-editor p-0">
+        <div className="ql-editor question-block p-0">
           <div
             className="question flex-1 cursor-pointer flex-row"
             dangerouslySetInnerHTML={{
