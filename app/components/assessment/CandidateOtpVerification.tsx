@@ -1,7 +1,7 @@
 import { useSubmit } from '@remix-run/react'
 import React, { useEffect, useRef, useState } from 'react'
 import { Form } from '@remix-run/react'
-import Button from '../common_components/Button'
+import Button from '../common-components/Button'
 import otpImage from '~/../public/assets/otp.svg'
 import { useTranslation } from 'react-i18next'
 

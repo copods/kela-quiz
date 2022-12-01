@@ -8,7 +8,7 @@ import Toggle from '~/components/form/Toggle'
 import type { SetStateAction } from 'react'
 import { useEffect } from 'react'
 import { toast } from 'react-toastify'
-import Button from '~/components/common_components/Button'
+import Button from '~/components/common-components/Button'
 import { useTranslation } from 'react-i18next'
 import { trimValue } from '~/utils'
 interface textAnswerType {

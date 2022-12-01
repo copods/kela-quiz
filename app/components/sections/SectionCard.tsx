@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react'
 import moment from 'moment'
 import { Menu } from '@headlessui/react'
 import { useSubmit } from '@remix-run/react'
-import DeletePopUp from '../common_components/DeletePopUp'
+import DeletePopUp from '../common-components/DeletePopUp'
 import { useEffect, useState } from 'react'
 
 import { useTranslation } from 'react-i18next'

@@ -2,7 +2,7 @@ import SectionCard from './SectionCard'
 import type { Section, User } from '~/interface/Interface'
 import { useResolvedPath, useLocation, useNavigate } from '@remix-run/react'
 import {} from '@remix-run/react'
-import SortFilter from '../common_components/SortFilter'
+import SortFilter from '../common-components/SortFilter'
 import { useEffect, useState } from 'react'
 import { routes } from '~/constants/route.constants'
 

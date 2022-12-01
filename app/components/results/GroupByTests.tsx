@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import SortFilter from '../common_components/SortFilter'
+import SortFilter from '../common-components/SortFilter'
 
 import { useLoaderData, useSubmit } from '@remix-run/react'
 import GroupByTestItems from './GroupByTestItems'

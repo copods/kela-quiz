@@ -4,13 +4,19 @@ export const DOTS = '...'
 export const usePagination = ({
   totalLength,
   pageSize,
-  siblingCount = 1,
+  siblingCount,
   currentPage,
+}: {
+  totalLength: number
+  pageSize: number
+  siblingCount: number
+  currentPage: number
 }) => {
   const paginationRange = useMemo(() => {
     const totalPageCount = Math.ceil(totalLength / pageSize)
-    const totalPageNumbers = siblingCount + 5
-    const range = (start, end) => {
+    const totalPageNumbers = 
+     Math.ceil(totalLength / pageSize)
+    const range = (start: number, end: number) => {
       let length = end - start + 1
       return Array.from({ length }, (_, idx) => idx + start)
     }

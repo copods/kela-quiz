@@ -2,7 +2,7 @@ import type { SetStateAction } from 'react'
 import { useEffect, useState } from 'react'
 import { sortByOrder } from '~/interface/Interface'
 import type { TestSection } from '~/interface/Interface'
-import SortFilter from '../common_components/SortFilter'
+import SortFilter from '../common-components/SortFilter'
 import SelectSectionCard from './SelectSectionCard'
 
 const SelectSections = ({

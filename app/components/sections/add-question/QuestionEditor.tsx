@@ -1,7 +1,7 @@
 import { ClientOnly } from 'remix-utils'
 import QuillEditor from '../../QuillEditor.client'
 import type { QuestionType } from '~/interface/Interface'
-import DropdownField from '~/components/common_components/Dropdown'
+import DropdownField from '~/components/common-components/Dropdown'
 
 export default function QuestionEditor({
   questionTypeList,
