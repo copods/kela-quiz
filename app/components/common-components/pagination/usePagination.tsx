@@ -49,6 +49,5 @@ export const usePagination = ({
       return [firstPageIndex, DOTS, ...middleRange, DOTS, lastPageIndex]
     }
   }, [totalLength, pageSize, siblingCount, currentPage])
-
   return paginationRange
 }

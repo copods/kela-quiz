@@ -24,7 +24,7 @@ const Pagination = ({
 }) => {
   const totalCount = Math.ceil(totalLength / pageSize)
   const siblingCount = 1
-  const paginationRange: any[] | undefined = usePagination({
+  const paginationRange: Array<any> | undefined = usePagination({
     currentPage,
     totalLength,
     siblingCount,
@@ -77,27 +77,29 @@ const Pagination = ({
             leaveTo="opacity-0"
           >
             <Listbox.Options className="absolute mt-1 max-h-60 rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-              {itemsList.map((item: any, index: number) => (
-                <Listbox.Option
-                  key={index}
-                  onClick={() => {
-                    setPageSize(item.pageSize)
-                    onPageChange(1)
-                  }}
-                  className={({ active }) =>
-                    `relative cursor-pointer select-none py-2 px-8 text-xs text-gray-600 ${
-                      selected.name === item.name
-                        ? ' bg-gray-100'
-                        : active
-                        ? 'bg-gray-100'
-                        : ''
-                    }`
-                  }
-                  value={item}
-                >
-                  <span className="block truncate">{item.name}</span>
-                </Listbox.Option>
-              ))}
+              {itemsList?.map(
+                (item: { name: string; pageSize: number }, index: number) => (
+                  <Listbox.Option
+                    key={index}
+                    onClick={() => {
+                      setPageSize(item.pageSize)
+                      onPageChange(1)
+                    }}
+                    className={({ active }) =>
+                      `relative cursor-pointer select-none py-2 px-8 text-xs text-gray-600 ${
+                        selected.name === item.name
+                          ? ' bg-gray-100'
+                          : active
+                          ? 'bg-gray-100'
+                          : ''
+                      }`
+                    }
+                    value={item}
+                  >
+                    <span className="block truncate">{item.name}</span>
+                  </Listbox.Option>
+                )
+              )}
             </Listbox.Options>
           </Transition>
         </div>
