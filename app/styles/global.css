@@ -30,7 +30,3 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-
-.question-block{
-  min-height:auto !important;
-}
