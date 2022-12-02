@@ -1,5 +1,5 @@
 import { useSubmit } from '@remix-run/react'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import type { Test } from '~/interface/Interface'
 import { sortByOrder } from '~/interface/Interface'
@@ -8,6 +8,7 @@ import TestTableItem from './TestTableItem'
 import Button from '../common-components/Button'
 import { routes } from '~/constants/route.constants'
 import { useTranslation } from 'react-i18next'
+import Pagination from '../common-components/pagination/Pagination'
 // import Checkbox from '../form/CheckBox'
 const TestList = ({
   tests,
@@ -56,6 +57,20 @@ const TestList = ({
     const heading = document.getElementById('assessments-page-title')
     heading?.focus()
   }, [])
+  const itemsList = [
+    { pageSize: 1 },
+    { pageSize: 10 },
+    { pageSize: 15 },
+    { pageSize: 20 },
+  ]
+  const [pageSize, setPageSize] = useState(itemsList[0].pageSize)
+  const [currentPage, setCurrentPage] = useState(1)
+  const firstPageIndex = (currentPage > 1 ? currentPage - 1 : 1) * pageSize
+  const lastPageIndex = firstPageIndex + pageSize
+  const currentTestData = useMemo(() => {
+    return tests.slice(firstPageIndex, lastPageIndex)
+  }, [tests, firstPageIndex, lastPageIndex])
+
   return (
     <div className="test-list-container flex h-full flex-col gap-6 p-1">
       {/* header */}
@@ -159,6 +174,16 @@ const TestList = ({
                   currentWorkspaceId={currentWorkspaceId}
                 />
               ))}
+              <Pagination
+                onPageChange={(page) => setCurrentPage(page)}
+                totalLength={tests.length}
+                currentPage={currentPage}
+                pageSize={pageSize}
+                setPageSize={setPageSize}
+                firstPageIndex={firstPageIndex}
+                testDataLength={currentTestData.length}
+                itemsList={itemsList}
+              />
             </div>
           </div>
         </>

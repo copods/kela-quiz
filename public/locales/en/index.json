@@ -72,7 +72,8 @@
     "join": "Join",
     "joining": "Joining",
     "joinedOn": "Joined On",
-    "invitedAt": "Invited At"
+    "invitedAt": "Invited At",
+    "items": "Items"
   },
   "sideNav": {
     "sideNavHeading": "Quiz",

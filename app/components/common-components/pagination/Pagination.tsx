@@ -2,6 +2,7 @@ import { Icon } from '@iconify/react'
 import { Fragment, useState } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { DOTS, usePagination } from './usePagination'
+import { useTranslation } from 'react-i18next'
 
 const Pagination = ({
   onPageChange,
@@ -20,8 +21,15 @@ const Pagination = ({
   setPageSize: (e: number) => void
   firstPageIndex: number
   testDataLength: number
-  itemsList: Array<{ name: string; pageSize: number }>
+  itemsList?: Array<{ pageSize: number }>
 }) => {
+  const defaultPaginationItems = [
+    { pageSize: 5 },
+    { pageSize: 10 },
+    { pageSize: 15 },
+    { pageSize: 20 },
+  ]
+  const { t } = useTranslation()
   const totalCount = Math.ceil(totalLength / pageSize)
   const siblingCount = 1
   const paginationRange: Array<any> | undefined = usePagination({
@@ -60,14 +68,18 @@ const Pagination = ({
       }
     })
   }
+  const paginationList =
+    itemsList === undefined ? defaultPaginationItems : itemsList
+  const [selected, setSelected] = useState(paginationList[0])
 
-  const [selected, setSelected] = useState(itemsList[0])
   const dropDown = () => {
     return (
       <Listbox value={selected} onChange={setSelected}>
         <div className="relative mt-1">
           <Listbox.Button className="flex cursor-pointer items-center text-xs text-gray-600">
-            <span className="block truncate">{selected.name}</span>
+            <span className="block truncate">
+              {selected.pageSize} {t('commonConstants.items')}
+            </span>
             <Icon className="text-2xl" icon="gridicons:dropdown" />
           </Listbox.Button>
           <Transition
@@ -77,8 +89,8 @@ const Pagination = ({
             leaveTo="opacity-0"
           >
             <Listbox.Options className="absolute mt-1 max-h-60 rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-              {itemsList?.map(
-                (item: { name: string; pageSize: number }, index: number) => (
+              {paginationList?.map(
+                (item: { pageSize: number }, index: number) => (
                   <Listbox.Option
                     key={index}
                     onClick={() => {
@@ -87,7 +99,7 @@ const Pagination = ({
                     }}
                     className={({ active }) =>
                       `relative cursor-pointer select-none py-2 px-8 text-xs text-gray-600 ${
-                        selected.name === item.name
+                        selected.pageSize === item.pageSize
                           ? ' bg-gray-100'
                           : active
                           ? 'bg-gray-100'
@@ -96,7 +108,9 @@ const Pagination = ({
                     }
                     value={item}
                   >
-                    <span className="block truncate">{item.name}</span>
+                    <span className="block truncate">
+                      {item.pageSize} {t('commonConstants.items')}
+                    </span>
                   </Listbox.Option>
                 )
               )}
@@ -111,7 +125,7 @@ const Pagination = ({
       <div className="paginationInfo flex items-center gap-6">
         {dropDown()}
         <span className="flex text-xs text-gray-600">
-          Showing {currentPage} of {totalCount}
+          Showing {firstPageIndex} to {totalCount}
         </span>
       </div>
       <div className="pagination flex items-center gap-2">
