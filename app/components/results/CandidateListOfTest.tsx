@@ -34,7 +34,7 @@ const CandidateListOfTest = () => {
             />
           </div>
           <span className="text-3xl font-semibold text-gray-900" id="title">
-            {candidatesOfTest?.name} dd
+            {candidatesOfTest?.name}
           </span>
         </div>
       </header>
