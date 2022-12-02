@@ -5,6 +5,7 @@ const Button = ({
   className,
   onClick,
   isDisabled,
+  btnRef,
   ...props
 }: ButtonProps) => {
   const getCommonClasses = () => {
@@ -34,6 +35,7 @@ const Button = ({
   }
   return (
     <button
+      ref={btnRef}
       className={`${getCommonClasses()} ${getButtonVarient()} ${className}`}
       title={props?.title}
       data-cy={props?.datacy}

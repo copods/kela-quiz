@@ -26,7 +26,7 @@ function CandidateRegister() {
       required: true,
       value: firstName,
       errorId: 'name-error',
-      onChange: function (event: any) {
+      onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
         setFirstName(event?.target.value)
       },
     },
@@ -38,7 +38,7 @@ function CandidateRegister() {
       required: true,
       value: lastName,
       errorId: 'name-error',
-      onChange: function (event: any) {
+      onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
         setLastName(event?.target.value)
       },
     },
@@ -54,8 +54,8 @@ function CandidateRegister() {
             })}
           </div>
           <Button
-            title={t('commonConstants.proceed')}
-            buttonText={busy ? 'Processing...' : t('commonConstants.proceed')}
+            title={t('commonConstants.submit')}
+            buttonText={busy ? 'Processing...' : t('commonConstants.submit')}
             type="submit"
             className="h-12 w-full text-base"
             isDisabled={!canSubmitBtnBeEnabled() || busy}

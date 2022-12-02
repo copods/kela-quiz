@@ -44,7 +44,7 @@ export const action: ActionFunction = async ({ request, params }) => {
   let checkStatus = null
   if (resendOtp) {
     await resendOtpCode({
-      assesmentId: params.assessmentId as string,
+      assessmentId: params.assessmentId as string,
     })
       .then((res) => {
         checkStatus = 'success'

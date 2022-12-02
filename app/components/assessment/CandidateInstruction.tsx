@@ -1,7 +1,6 @@
 import { useLoaderData, useSubmit } from '@remix-run/react'
 import type { SectionInTest, TestSection } from '~/interface/Interface'
 import Button from '../form/Button'
-
 import contactSupport from '~/../public/assets/contactSupport.svg'
 import checkIcon from '~/../public/assets/checkIcon.svg'
 import Header from './Header'
@@ -52,7 +51,7 @@ const CandidateInstruction = () => {
           <div className="flex gap-12">
             <div className="flex w-438 flex-col gap-10 rounded-lg border border-gray-50 bg-white p-10 shadow-sm">
               <h3 className="text-center text-2xl font-bold text-gray-900">
-                {t('routeFiles.sections')}
+                {t('routeFiles.tests')}
               </h3>
               <div className="flex flex-col gap-6">
                 {candidateSections.map(
@@ -65,8 +64,8 @@ const CandidateInstruction = () => {
                         <div className="flex items-start gap-4">
                           <img src={contactSupport} alt="" className="h-6" />
                           <span className="text-base font-normal text-gray-900">
-                            {t('sectionsConstants.sectionName')} {section.order}{' '}
-                            -{section.section.name}
+                            {t('testsConstants.testText')} {section.order} -
+                            {section.section.name}
                           </span>
                         </div>
                       </div>
@@ -128,8 +127,8 @@ const CandidateInstruction = () => {
               id="start"
               className="w-356 py-3"
               varient="primary-solid"
-              title={t('candidateExamConstants.beginAssesment')}
-              buttonText={t('candidateExamConstants.beginAssesment')}
+              title={t('candidateExamConstants.beginAssessment')}
+              buttonText={t('candidateExamConstants.beginAssessment')}
               onClick={startTestForCandidate}
               aria-label="start"
             />

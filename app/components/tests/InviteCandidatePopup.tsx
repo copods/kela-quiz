@@ -1,11 +1,13 @@
-import { Form, useActionData } from '@remix-run/react'
-import { Fragment, useEffect, useState } from 'react'
-import { Dialog, Transition } from '@headlessui/react'
-import { Icon } from '@iconify/react'
+import { Form, useActionData, useTransition } from '@remix-run/react'
+import { useEffect, useState } from 'react'
+
 import { toast } from 'react-toastify'
 import Button from '../form/Button'
 import { useTranslation } from 'react-i18next'
-
+import DialogWrapper from '../Dialog'
+interface error {
+  [key: number]: string
+}
 const InviteCandidatePopup = ({
   openInvitePopup,
   setOpenInvitePopup,
@@ -15,22 +17,41 @@ const InviteCandidatePopup = ({
   openInvitePopup: boolean
   setOpenInvitePopup: (e: boolean) => void
   testName: string
-  testId: string
+  testId?: string
 }) => {
   const { t } = useTranslation()
-
   const [emails, setEmails] = useState<Array<string>>([''])
+  const [errors, setError] = useState({})
+
   const actionData = useActionData()
+
   useEffect(() => {
     if (actionData?.status == 401 && testId === actionData?.testId) {
       toast.warn(t(actionData.message))
     }
     if (
-      actionData?.candidateInviteStatus ===
+      actionData?.candidateInviteStatus?.created ===
       t('candidateExamConstants.candidateTestCreated')
     ) {
       if (actionData?.testId === testId)
-        toast.success(t('testsConstants.candidateInvited'))
+        if (actionData?.candidateInviteStatus.emailCount > 1) {
+          if (
+            actionData?.candidateInviteStatus.emailCount ===
+            actionData?.candidateInviteStatus.neverInvitedCount
+          ) {
+            toast.success(`${t('testsConstants.allCandidatesInvited')}`)
+          } else {
+            toast.success(
+              `${actionData?.candidateInviteStatus.neverInvitedCount} out of ${
+                actionData?.candidateInviteStatus.emailCount
+              } ${t('testsConstants.candidatesInvited')}. ${t(
+                'testsConstants.othersWereAlreadyInvited'
+              )}`
+            )
+          }
+        } else {
+          toast.success(t('testsConstants.candidateInvited'))
+        }
       setOpenInvitePopup(false)
       setEmails([''])
     } else {
@@ -40,8 +61,6 @@ const InviteCandidatePopup = ({
         if (actionData?.testId === testId) {
           toast.error(t('testsConstants.candidateAlreadyInvited'))
         }
-        setOpenInvitePopup(false)
-        setEmails([''])
       }
     }
   }, [actionData, testId, setOpenInvitePopup, t])
@@ -49,119 +68,135 @@ const InviteCandidatePopup = ({
     setOpenInvitePopup(false)
     setEmails([''])
   }
+  const transition = useTransition()
+  useEffect(() => {
+    setEmails([''])
+    setError({})
+  }, [openInvitePopup])
+
+  // regex funtion to check email
+  const isEmail = (email: string) =>
+    /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)
+  const updateEmail = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    index: number
+  ) => {
+    const newEmails = emails.map((email, i) => {
+      if (i === index) {
+        return event.target.value
+      }
+      return email
+    })
+    setEmails(newEmails)
+  }
+  const validateEmails = (emails: string[], index: number) => {
+    const emailError: error = {}
+    emails
+      .map((email, i) => (i === index ? '' : email))
+      .forEach((email, i: number) => {
+        if (email && !isEmail(email)) {
+          emailError[i] = t('statusCheck.emailIsInvalid')
+        }
+        setError(emailError)
+      })
+  }
   return (
-    <Transition.Root show={openInvitePopup} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={setOpenInvitePopup}>
-        <Transition.Child
-          as={Fragment}
-          enter="ease-out duration-300"
-          enterFrom="opacity-0"
-          enterTo="opacity-100"
-          leave="ease-in duration-200"
-          leaveFrom="opacity-100"
-          leaveTo="opacity-0"
-        >
-          <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
-        </Transition.Child>
-        <div className="fixed inset-0 z-10 overflow-y-auto">
-          <Form
-            method="post"
-            className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0"
+    <DialogWrapper
+      open={openInvitePopup}
+      heading={t('inviteMemeberPopUpConstants.inviteCandidate')}
+      setOpen={setOpenInvitePopup}
+      header={true}
+      role={t('inviteMemeberPopUpConstants.inviteCandidate')}
+      ariaLabel={t('inviteMemeberPopUpConstants.inviteCandidate')}
+      tabIndex={0}
+    >
+      <Form
+        method="post"
+        className=" items-end justify-center p-4 sm:items-center sm:p-0"
+      >
+        <p className="pb-4 text-base font-normal text-gray-700">
+          {t('inviteMemeberPopUpConstants.enterCandidatesEmail')}{' '}
+          <span className="font-semibold">`{testName}`</span>{' '}
+          {t('testsConstants.assessment')}.
+        </p>
+        <div className="flex flex-row justify-between pb-2">
+          <span className="text-sm font-medium text-gray-500">
+            {t('inviteMemeberPopUpConstants.candidateEmail')}
+          </span>
+          <span
+            role={'button'}
+            id="invite-more"
+            tabIndex={0}
+            className="cursor-pointer px-0.5 text-sm font-normal text-primary"
+            onClick={() => setEmails([...emails, ''])}
+            onKeyUp={(e) => {
+              if (e.key === 'Enter') setEmails([...emails, ''])
+            }}
+            title={t('inviteMemeberPopUpConstants.inviteMore')}
+            aria-label={t('inviteMemeberPopUpConstants.inviteMore')}
           >
-            <Transition.Child
-              as={Fragment}
-              enter="ease-out duration-300"
-              enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-              enterTo="opacity-100 translate-y-0 sm:scale-100"
-              leave="ease-in duration-200"
-              leaveFrom="opacity-100 translate-y-0 sm:scale-100"
-              leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-            >
-              <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white p-6 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                <div className="flex items-center justify-between pt-1">
-                  <h2
-                    role={t('inviteMemeberPopUpConstants.inviteCandidate')}
-                    tabIndex={0}
-                    className="text-2xl font-bold text-gray-700"
-                  >
-                    {t('inviteMemeberPopUpConstants.inviteCandidate')}
-                  </h2>
-                  <Icon
-                    tabIndex={0}
-                    className="cursor-pointer text-2xl text-gray-600"
-                    icon={'carbon:close'}
-                    onClick={updatePopupAndEmailState}
-                    onKeyUp={(e) => {
-                      if (e.key === 'Enter') updatePopupAndEmailState()
-                    }}
-                    aria-label={t('inviteMemeberPopUpConstants.closePopUp')}
-                  />
-                </div>
-                <hr className="mt-4 mb-6 h-px w-full border-0 bg-gray-300" />
-                <p className="pb-4 text-base font-normal text-gray-700">
-                  {t('inviteMemeberPopUpConstants.enterCandidatesEmail')}{' '}
-                  <span className="font-semibold">`{testName}`</span> Test.
-                </p>
-                <div className="flex flex-row justify-between pb-2">
-                  <span className="text-sm font-medium text-gray-500">
-                    {t('inviteMemeberPopUpConstants.candidateEmail')}
-                  </span>
-                  <span
-                    role={'button'}
-                    tabIndex={0}
-                    className="cursor-pointer px-0.5 text-sm font-normal text-primary"
-                    onClick={() => setEmails([...emails, ''])}
-                    onKeyUp={(e) => {
-                      if (e.key === 'Enter') setEmails([...emails, ''])
-                    }}
-                    title={t('inviteMemeberPopUpConstants.inviteMore')}
-                    aria-label={t('inviteMemeberPopUpConstants.inviteMore')}
-                  >
-                    {t('inviteMemeberPopUpConstants.inviteMore')} +
-                  </span>
-                </div>
-                {emails.map((email, i) => {
-                  return (
-                    <div className="pb-2" key={i}>
-                      <input
-                        tabIndex={0}
-                        type="email"
-                        name={`email`}
-                        className="inviteInput h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
-                        placeholder="johndoe@example.com"
-                        title={t('commonConstants.email')}
-                        aria-label={t('commonConstants.email')}
-                      />
-                    </div>
-                  )
-                })}
-                <div className="flex justify-end gap-2 pt-4">
-                  <Button
-                    type="button"
-                    className="h-9 px-4"
-                    varient="primary-outlined"
-                    title={t('commonConstants.cancel')}
-                    buttonText={t('commonConstants.cancel')}
-                    onClick={updatePopupAndEmailState}
-                  />
-                  <Button
-                    type="submit"
-                    name="inviteCandidates"
-                    value={testId}
-                    id="submit-button"
-                    className="h-9 px-4"
-                    varient="primary-solid"
-                    title={t('inviteMemeberPopUpConstants.invite')}
-                    buttonText={t('inviteMemeberPopUpConstants.invite')}
-                    datacy="submit"
-                  />
-                </div>
-              </Dialog.Panel>
-            </Transition.Child>
-          </Form>
+            {t('inviteMemeberPopUpConstants.inviteMore')} +
+          </span>
         </div>
-      </Dialog>
-    </Transition.Root>
+        {emails.map((email, i) => {
+          return (
+            <div className="pb-2" key={i}>
+              <input
+                tabIndex={0}
+                type="email"
+                name={`email`}
+                onFocus={() => {
+                  validateEmails(emails, i)
+                }}
+                onChange={(e) => updateEmail(e, i)}
+                className="inviteInput h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
+                placeholder="johndoe@example.com"
+                title={t('commonConstants.email')}
+                aria-label={t('commonConstants.email')}
+              />
+              {Object.entries(errors).map(([key]) =>
+                Number(key) === i ? (
+                  <p key={key} className="text-red-700">
+                    {t('statusCheck.emailIsInvalid')}
+                  </p>
+                ) : (
+                  ''
+                )
+              )}
+            </div>
+          )
+        })}
+        <div className="flex justify-end gap-2 pt-4">
+          <Button
+            type="button"
+            className="h-9 px-4"
+            varient="primary-outlined"
+            title={t('commonConstants.cancel')}
+            buttonText={t('commonConstants.cancel')}
+            onClick={updatePopupAndEmailState}
+          />
+          <Button
+            type="submit"
+            name="inviteCandidates"
+            value={testId}
+            id="submit-button"
+            className="h-9 px-4"
+            varient="primary-solid"
+            title={
+              transition.state === 'submitting'
+                ? t('inviteMemeberPopUpConstants.inviting')
+                : t('inviteMemeberPopUpConstants.invite')
+            }
+            buttonText={
+              transition.state === 'submitting'
+                ? t('inviteMemeberPopUpConstants.inviting')
+                : t('inviteMemeberPopUpConstants.invite')
+            }
+            datacy="submit"
+          />
+        </div>
+      </Form>
+    </DialogWrapper>
   )
 }
 

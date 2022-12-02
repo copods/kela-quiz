@@ -23,19 +23,19 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
   }, [sections])
   const breadCrumbData = [
     {
-      tabName: 'testsConstants.test',
-      route: routes.tests,
+      tabName: 'testsConstants.assessment',
+      route: routes.assessments,
     },
     {
       tabName: 'testsConstants.addTestbutton',
-      route: routes.addTest,
+      route: routes.addAssessment,
     },
   ]
   const tabs = [
     {
       id: 0,
       name: 'Step 1',
-      description: 'Test Details',
+      description: 'Assessment Details',
     },
     {
       id: 1,
@@ -68,7 +68,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
   }
   const submitAddTest = () => {
     if (typeof name !== 'string' || name.length === 0) {
-      toast.error(t('toastConstants.addTest'))
+      toast.error(t('toastConstants.addAssessment'))
       return
     }
     if (typeof description !== 'string' || description.length === 0) {
@@ -76,7 +76,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
       return
     }
     if (selectedSections.length === 0) {
-      toast.error(t('toastConstants.addSection'))
+      toast.error(t('toastConstants.addTest'))
       return
     }
     let sendData: {
@@ -109,12 +109,34 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
       setCurrentTab(0)
     }
   }, [currentTab, setCurrentTab, name, description])
+  function isQuillEmpty(value: string) {
+    if (
+      value.replace(/<(.|\n)*?>/g, '').trim().length === 0 &&
+      !value.includes('<img')
+    ) {
+      return true
+    }
+    return false
+  }
+
+  const getSectionCheck = () => {
+    if (selectedSections.length < 1) {
+      return true
+    }
+    for (let section of selectedSections) {
+      if (!section?.totalQuestions) {
+        return true
+      }
+    }
+    return false
+  }
 
   return (
     <div className="flex h-full flex-col gap-6 overflow-hidden">
       {/* header */}
       <header className="flex items-center justify-between">
         <h2
+          id="add-assessment-page-title"
           role={t('testsConstants.addTestbutton')}
           tabIndex={0}
           title={t('testsConstants.addTestbutton')}
@@ -126,7 +148,11 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
       <BreadCrumb data={breadCrumbData} />
       <StepsTabComponent
         tabs={tabs}
-        isDisabled={!name || !description}
+        disabledTabs={[
+          false,
+          !name || isQuillEmpty(description),
+          getSectionCheck(),
+        ]}
         currentTab={currentTab}
         setCurrentTab={setCurrentTab}
       />
@@ -161,7 +187,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
       <div className="flex w-full items-center justify-between">
         <Button
           tabIndex={0}
-          onClick={() => navigate(routes.tests)}
+          onClick={() => navigate(routes.assessments)}
           className="h-9 px-7"
           varient="secondary-solid"
           title={t('commonConstants.cancelAddTest')}
@@ -186,7 +212,12 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
               varient="primary-solid"
               id="next-button"
               buttonText={t('commonConstants.nextButton')}
-              isDisabled={!(name && description) || currentTab == 2}
+              isDisabled={
+                !name ||
+                isQuillEmpty(description) ||
+                currentTab == 2 ||
+                (getSectionCheck() && currentTab == 1)
+              }
               onClick={() => setCurrentTab(currentTab + 1)}
             />
           ) : (
@@ -198,7 +229,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
               varient="primary-solid"
               buttonText={
                 transition.state === 'submitting'
-                  ? sortByOrder.creatingTest
+                  ? sortByOrder.creatingAssessment
                   : sortByOrder.submit
               }
               isDisabled={currentTab != 2}

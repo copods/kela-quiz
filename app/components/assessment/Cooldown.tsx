@@ -9,7 +9,6 @@ const Cooldown = () => {
   const { t } = useTranslation()
   const { candidateSection, candidateTests } = useLoaderData()
   const submit = useSubmit()
-  console.log('ca', candidateTests.sections, candidateSection)
   const startSection = async () => {
     //getting first test of this section
 

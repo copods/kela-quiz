@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Form, useNavigate } from '@remix-run/react'
+import { useLoaderData, useNavigate, useSubmit } from '@remix-run/react'
 import Button from '~/components/form/Button'
 import InputField from '~/components/form/InputField'
 import Logo from '~/components/Logo'
@@ -9,6 +9,8 @@ import { routes } from '~/constants/route.constants'
 function Login({ actionData, redirectTo }: LoginProps) {
   const { t } = useTranslation()
 
+  const loginLoaderData = useLoaderData()
+  const submit = useSubmit()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const inputFieldsProps = [
@@ -21,7 +23,7 @@ function Login({ actionData, redirectTo }: LoginProps) {
       value: email,
       error: actionData?.errors?.email,
       errorId: 'email-error',
-      onChange: function (event: any) {
+      onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
         setEmail(event?.target.value)
       },
     },
@@ -34,7 +36,7 @@ function Login({ actionData, redirectTo }: LoginProps) {
       value: password,
       error: actionData?.errors?.password,
       errorId: 'password-error',
-      onChange: function (event: any) {
+      onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
         setPassword(event?.target.value)
       },
     },
@@ -43,12 +45,26 @@ function Login({ actionData, redirectTo }: LoginProps) {
   const signUp = () => {
     navigate(routes.signUp)
   }
+  const submitSignInForm = () => {
+    let data = {
+      email: email,
+      password: password,
+      inviteId: loginLoaderData.inviteId,
+    }
+    submit(data, {
+      method: 'post',
+      action:
+        loginLoaderData.inviteId === null
+          ? '/sign-in'
+          : `/sign-in?cameFrom=join&id=${loginLoaderData.inviteId}`,
+    })
+  }
   const forgetPassword = () => {
     navigate(routes.forgotPassword)
   }
   return (
-    <div className="z-10 flex	min-h-480 w-full max-w-554 flex-col items-center justify-center rounded-2xl bg-white px-24 drop-shadow-xl">
-      <div className="z-20 -mt-24 mb-6">
+    <div className="z-10 flex	min-h-480 w-full max-w-554 flex-col items-center justify-center rounded-lg bg-white px-24 drop-shadow-xl">
+      <div className="z-20 -mt-12 mb-6">
         <Logo height="64" width="64" />
       </div>
       <div className="w-full">
@@ -58,7 +74,7 @@ function Login({ actionData, redirectTo }: LoginProps) {
         <div className="flex justify-center">
           <hr className="mt-7 mb-5 h-px w-6/12 border-none bg-gray-500 text-center" />
         </div>
-        <Form method="post">
+        <div>
           <div className="flex flex-col gap-6">
             {inputFieldsProps.map((props) => {
               return <InputField {...props} key={props.name} />
@@ -101,13 +117,13 @@ function Login({ actionData, redirectTo }: LoginProps) {
               tabIndex={0}
               title={t('logIn.signIn')}
               buttonText={t('logIn.signIn')}
-              type="submit"
               varient="primary-solid"
               className="h-11 w-full"
-              datacy="submit"
+              value={'login'}
+              onClick={() => submitSignInForm()}
             />
           </div>
-        </Form>
+        </div>
       </div>
       <div className="flex pt-6">
         <div className="text-base font-medium text-gray-500">

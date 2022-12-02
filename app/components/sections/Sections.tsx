@@ -4,6 +4,7 @@ import { useResolvedPath, useLocation, useNavigate } from '@remix-run/react'
 import {} from '@remix-run/react'
 import SortFilter from '../SortFilter'
 import { useEffect, useState } from 'react'
+import { routes } from '~/constants/route.constants'
 
 const SectionLink = ({
   section,
@@ -18,7 +19,7 @@ const SectionLink = ({
   filter: string
   setSelectedSection: (e: string) => void
 }) => {
-  const path = `/sections/${section.id}`
+  const path = `${routes.tests}/${section.id}${filter}`
   const [isDelete, setIsDelete] = useState(false)
   const location = useLocation() // to get current location
   const resolvedPath = useResolvedPath(path) // to get resolved path which would match with current location
@@ -36,26 +37,18 @@ const SectionLink = ({
       }, 500)
     }
   }, [deleted])
-  useEffect(() => {
-    if (isDelete === false && deleted === false) {
-      setTimeout(() => {
-        const menuButton = document.querySelector(
-          `.${section?.id}`
-        ) as HTMLElement
-        menuButton?.focus()
-      }, 100)
-    }
-  }, [isDelete, deleted, section.id])
+
   return (
     <div
       onClick={() => {
         setSelectedSection(section.id)
+        if (isActive) {
+          return
+        }
         navigate(path)
       }}
       id="section-link"
-      className={
-        location.pathname === resolvedPath.pathname ? 'activeSectionCard' : ''
-      }
+      className={isActive ? 'activeSectionCard' : ''}
       role={'button'}
       tabIndex={0}
       key={section.id}
@@ -63,12 +56,14 @@ const SectionLink = ({
         if (e.key === 'Tab' && e.altKey) {
           window.location.href = '#section-search'
           // alt + Tab combination key for moving focus to section detail
-        } else if (e.key === 'Enter') setSelectedSection(section.id)
+        } else if (e.key === 'Enter') navigate(path)
+        setSelectedSection(section.id)
       }}
     >
       <SectionCard
         isActive={isActive}
         name={section?.name}
+        description={section?.description}
         createdBy={`${section?.createdBy?.firstName} ${section?.createdBy?.lastName}`}
         questionsCount={section?._count?.questions as number}
         createdAt={section.createdAt}

@@ -1,6 +1,7 @@
 import { ClientOnly } from 'remix-utils'
 import QuillEditor from '../QuillEditor.client'
 import { useTranslation } from 'react-i18next'
+import { trimValue } from '~/utils'
 
 const TestDetails = ({
   name,
@@ -27,9 +28,9 @@ const TestDetails = ({
           id="name"
           name="testName"
           value={name}
-          onChange={(e) => onNameChange(e.target.value)}
+          onChange={(e) => onNameChange(trimValue(e.target.value))}
           className="test-base mt-1 h-11 w-full rounded-lg border border-gray-200 px-3"
-          placeholder={t('commonConstants.enterTestName')}
+          placeholder={t('commonConstants.enterAssessmentName')}
         />
       </div>
       <div className="flex-1">

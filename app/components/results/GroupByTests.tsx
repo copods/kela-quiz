@@ -11,10 +11,9 @@ const GroupByTests = () => {
   const { t } = useTranslation()
 
   const [sortDirection, onSortDirectionChange] = useState(
-    sortByOrder.ascending as string
+    sortByOrder.desc as string
   )
-  const [sortBy, onSortChange] = useState('name')
-  const filterByType = [
+  const sortByDetails = [
     {
       name: 'Name',
       value: 'name',
@@ -24,8 +23,19 @@ const GroupByTests = () => {
       value: 'createdAt',
     },
   ]
+  const [sortBy, onSortChange] = useState(sortByDetails[1].value)
   const candidateTestData = useLoaderData()
   const candidateTests = candidateTestData.candidateTest
+  const candidateTestsArray = candidateTests.filter(
+    (
+      items: Test & {
+        count?: number | undefined
+        candidateTest?: CandidateTest
+      }
+    ) => {
+      return items.candidateTest?.length !== 0 || items.deleted === false
+    }
+  )
 
   const submit = useSubmit()
   useEffect(() => {
@@ -51,12 +61,12 @@ const GroupByTests = () => {
         <div className="flex flex-col gap-6">
           <div id="sort-filter-container" className="w-48">
             <SortFilter
-              filterData={filterByType}
+              filterData={sortByDetails}
               sortDirection={sortDirection}
               onSortDirectionChange={onSortDirectionChange}
               sortBy={sortBy}
               onSortChange={onSortChange}
-              totalItems={candidateTests?.length}
+              totalItems={candidateTestsArray.length}
               showSelected={false}
             />
           </div>
@@ -68,7 +78,7 @@ const GroupByTests = () => {
                   {t('commonConstants.srNo')}
                 </span>
                 <span className="col-span-3 text-sm font-semibold text-gray-500">
-                  {t('testsConstants.test')}
+                  {t('testsConstants.assessment')}
                 </span>
                 <span className="col-span-2 text-sm font-semibold text-gray-500">
                   {t('commonConstants.total')}{' '}
@@ -83,7 +93,7 @@ const GroupByTests = () => {
                 </span>
               </div>
               <div id="group-by-test-items" className="col-span-10 grid">
-                {candidateTests.map(
+                {candidateTestsArray.map(
                   (
                     candidateTests: Test & {
                       count?: number | undefined
@@ -112,7 +122,7 @@ const GroupByTests = () => {
                 )}
                 {candidateTests.length === 0 && (
                   <div className="flex items-center justify-center p-7">
-                    <span>{t('resultConstants.noTestAlert')}</span>
+                    <span>{t('resultConstants.noAssessmentAlert')}</span>
                   </div>
                 )}
               </div>

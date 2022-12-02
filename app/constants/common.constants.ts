@@ -34,12 +34,13 @@ export const commonConstants = {
   saveAndExit: 'Save & Exit',
   saveAndAddMore: 'Save & Add More',
   logout: 'Logout',
-  enterSectionName: 'Enter Section Name',
-  enterSectionDesc: 'Enter Section Description',
-  enterTestName: 'Enter test name',
+  enterTestName: 'Enter Test Name',
+  enterTestsDesc: 'Enter Test Description',
+  enterAssessmentName: 'Enter assessment name',
   totalQuestion: 'Total Questions',
   verify: 'Verify',
   email: 'Email',
+  createPassword: 'Create Password',
 }
 export const sideNav = {
   sideNavHeading: 'Quiz',
@@ -48,7 +49,7 @@ export const candidateHeader = {
   headerHeading: 'Quiz',
 }
 export const members = {
-  addMember: 'Add Member',
+  inviteMembers: 'Invite Member',
   firstName: 'First Name',
   lastName: ' Last Name',
   name: 'Name',
@@ -94,7 +95,8 @@ export const addQuestion = {
 }
 
 export const sectionsConstants = {
-  addSection: 'Add Section',
+  addTests: 'Add Test',
+  formNotSubmittedCorrectly: 'Form not submitted correctly',
   totalQuestions: 'Total Questions:',
   noQuestionAlert: 'No questions found. Add your first question',
   noRecordFound: 'No Record Found',
@@ -102,19 +104,19 @@ export const sectionsConstants = {
   dropdown: 'Select',
   expand: 'Expand',
   search: 'Search Question',
-  sectionName: 'Section',
+  testName: 'test',
 }
 export const testsConstants = {
-  addTestbutton: 'Add Test',
+  addAssessmentbutton: 'Add Assessment',
   testDetailsText: 'Test Details',
   descriptionText: 'Description',
   totalTimeText: 'Total Time',
-  totalSectionsText: 'Total Sections',
-  selectedSctionText: 'Selected Sections',
-  sectionText: 'Section',
+  totalTests: 'Total Tests',
+  selectedTests: 'Selected Tests',
+  testText: 'Test',
   questions: 'Questions',
   totalQuestionsText: 'Total Questions',
-  tests: 'Tests',
+  assessments: 'Assessments',
   srNoText: 'S No.',
   testListColumnLabel: 'Test',
   createdOn: 'Created on',
@@ -123,16 +125,19 @@ export const testsConstants = {
   noTestFound: 'No Test Found',
   noCandidateForTest: 'No candidate has attempted this test',
   candidateAlreadyInvited: 'Candidate has already been invited for this test',
+  othersWereAlreadyInvited: 'Others were already invited',
   candidateInvited: 'Candidates Invited',
+  allCandidatesInvited: 'All candidates invited.',
   writeDescriptionOfTest: 'Write Description of Test',
   testName: 'test',
+  reinvited: 'Candidate Invited Successfully',
 }
 export const componentGlobalConstants = {
   totalCounts: 'Total Counts',
   selected: 'Selected',
 }
 export const routeFiles = {
-  sections: 'Sections',
+  tests: 'Tests',
   options: 'Options',
 }
 
@@ -144,10 +149,11 @@ export const statusCheck = {
   selectCorrOption: 'Select the Correct Option',
   descIsReq: 'Description is required',
   nameIsReq: 'Name is required',
-  sectionAddedSuccess: 'Section added successfully..!',
+  testAddedSuccess: 'Test added successfully..!',
+  testUpdatedSuccess: 'Test updated sucessfully..!',
   maxOptions: 'you can add maximum six options.',
   testDependentWarning:
-    "Can't be deleted as you have to delete the test containing this section first",
+    "Can't be deleted as you have to delete the test containing this test first",
   duplicate: 'Duplicate Title',
   testAddedSuccessFully: 'Test added successfully..',
   testAlreadyExist: 'Test name already exist.',
@@ -166,6 +172,8 @@ export const statusCheck = {
   correctOtp: 'Please enter correct OTP',
   resendPasswordSuccess: 'New password has been sent to email successfully',
   resendPasswordError: 'Account not found. Please enter valid email',
+  enteredReenteredPassword: 'Entered and Re-Entered Password should be equal.',
+  userNotFound: 'User Not Found',
 }
 export const resultConstants = {
   order: 'Order',
@@ -211,7 +219,7 @@ export const candidateExamConstants = {
   assessmentDetails: 'Assessment Details',
   assessmentTests: 'Assessment Tests',
   assessmentEnd: 'Assessment Ended',
-  endAssesment: 'End Assesment SVG',
+  endAssessment: 'End Assessment SVG',
   wrongLink: 'Wrong Link',
   minutes: 'Mins',
   description: 'Description',
@@ -222,7 +230,7 @@ export const candidateExamConstants = {
   nextSection: 'Next Section',
   candidateAcceptance:
     'I understand that once I begin the assessment I cannot leave and  return to this assessment at a later time.',
-  beginAssesment: 'Begin Assesment',
+  beginAssessment: 'Begin Assessment',
   instructions: 'Instructions',
   startSection: 'Start Now',
   candidateLogo: 'Candidate Logo',
@@ -237,12 +245,12 @@ export const candidateExamConstants = {
   candidateInsWelcome: 'Welcome',
 }
 export const cypress = {
-  email: 'careers@copods.co',
+  email: 'copods.demo.sendgrid@gmail.com',
   password: 'kQuiz@copods',
   step1: 'Step 1',
   step2: 'Step 2',
   step3: 'Step 3',
-  testDetails: 'Test Details',
+  assessmentDetails: 'Assessment Details',
   selectSections: 'Select Sections',
   preview: 'Preview',
   next: 'Next',
@@ -250,7 +258,7 @@ export const cypress = {
   back: 'Back',
   duplicateTitle: 'Duplicate Title',
   saveAndAddMore: 'Save & Add More',
-  addMember: 'Add Member',
+  addMember: 'Invite Member',
   name: 'Name',
   description: 'Description',
   totalTime: 'Total Time',
@@ -261,9 +269,10 @@ export const cypress = {
     'The useMemo Hook can be used to keep expensive, resource intensive functions from needlessly running.',
 }
 export const toastConstants = {
-  addTest: 'Enter Name to add test',
+  addAssessment: 'Enter Name to add assessment',
+  resendMemberInvitation: 'Invitation Sent Successfully..!',
   enterDescription: 'Enter description to add test',
-  addSection: 'Add sections to add test',
+  addTest: 'Add test to add assessment',
   enterQuestion: 'Enter the Question',
   enterOption: 'Enter all the Options',
   firstNameRequired: 'First Name is required',
@@ -274,6 +283,7 @@ export const toastConstants = {
   memberAdded: 'Member Added Successfully..!',
   memberAlreadyExist: 'Member with this email id already exists!',
   signUpSuccessfull: 'Sign Up successfully',
+  workspaceNameIsRequired: 'Workspace name is required',
 }
 export const otpConstants = {
   header: 'OTP Verification',
@@ -282,4 +292,19 @@ export const otpConstants = {
   didntGetCode: "Didn't get a code",
   resendCodeIn: 'Resend code in',
   otp: 'OTP',
+}
+export const settings = {
+  settings: 'Settings',
+  clickToChange: 'Click to change',
+  resetPas: 'Reset Password',
+  passNotMatch: 'Password do not match',
+  enterNewPass: 'Enter New Password',
+  reEnterPass: 'Re-Enter Password',
+  enterOldPassword: 'Enter Old Password',
+  minPasswordLimit: 'Password should have minimum 8 characters',
+  passShouldNotBeSame: 'Current Password and New Password should not be same',
+}
+export const tabs = {
+  general: 'General',
+  workspace: 'Workspaces',
 }

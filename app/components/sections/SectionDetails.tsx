@@ -5,6 +5,7 @@ import QuestionCard from './QuestionCard'
 import Button from '../form/Button'
 import { routes } from '~/constants/route.constants'
 import { useTranslation } from 'react-i18next'
+import { Icon } from '@iconify/react'
 
 const SectionDetails = () => {
   const { t } = useTranslation()
@@ -23,27 +24,35 @@ const SectionDetails = () => {
           role={sectionDetails.sectionDetails?.name}
           title={sectionDetails.sectionDetails?.name}
           aria-label={sectionDetails.sectionDetails?.name}
+          id="section-details-heading"
         >
           {sectionDetails.sectionDetails?.name}
         </h2>
       </div>
       <hr className="-mt-2 h-px w-full bg-gray-300" />
       <div className="flex items-start justify-between gap-2 ">
-        <input
-          tabIndex={0}
-          id="section-search"
-          type="text"
-          name="search"
-          placeholder={t('sectionsConstants.search')}
-          title={t('sectionsConstants.search')}
-          className="h-9 w-48 rounded-lg border border-gray-200 px-3 text-sm focus:outline-dotted"
-          onChange={(e) => setSearchText(e.target.value)}
-        />
+        <div className="relative flex items-center">
+          <Icon
+            id="ascend"
+            icon="charm:search"
+            className="bg-light-200 absolute left-3 text-base text-gray-400"
+          />
+          <input
+            tabIndex={0}
+            id="section-search"
+            type="text"
+            name="search"
+            placeholder={t('sectionsConstants.search')}
+            title={t('sectionsConstants.search')}
+            className="h-9 w-48 rounded-lg border px-5 pl-8 text-sm focus:outline-dotted"
+            onChange={(e) => setSearchText(e.target.value)}
+          />
+        </div>
         <Button
           tabIndex={0}
           onClick={() =>
             navigate(
-              `${routes.sections}/${sectionDetails.sectionDetails?.id}${routes.addQuestion}`
+              `${routes.tests}/${sectionDetails.sectionDetails?.id}${routes.addQuestion}`
             )
           }
           id="add-question"

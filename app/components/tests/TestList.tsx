@@ -2,6 +2,7 @@ import { useSubmit } from '@remix-run/react'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import type { Test } from '~/interface/Interface'
+import { sortByOrder } from '~/interface/Interface'
 import SortFilter from '../SortFilter'
 import TestTableItem from './TestTableItem'
 import Button from '../form/Button'
@@ -17,10 +18,11 @@ const TestList = ({
 }) => {
   const { t } = useTranslation()
 
-  const [sortDirection, onSortDirectionChange] = useState('asc')
-  const [sortBy, onSortChange] = useState('name')
+  const [sortDirection, onSortDirectionChange] = useState(
+    sortByOrder.desc as string
+  )
   const navigate = useNavigate()
-  const filterByType = [
+  const sortByDetails = [
     {
       name: 'Name',
       value: 'name',
@@ -30,6 +32,7 @@ const TestList = ({
       value: 'createdAt',
     },
   ]
+  const [sortBy, onSortChange] = useState(sortByDetails[1].value)
   const submit = useSubmit()
   useEffect(() => {
     let filter = {
@@ -53,16 +56,17 @@ const TestList = ({
       {/* <BreadCrumb data={breadCrumbData} /> */}
       <header className="flex items-center justify-between">
         <h2
+          id="assessments-page-title"
           tabIndex={0}
-          role={t('testsConstants.tests')}
-          title={t('testsConstants.tests')}
+          role={t('testsConstants.assessments')}
+          title={t('testsConstants.assessments')}
           className="text-3xl font-bold text-black"
         >
-          {t('testsConstants.tests')}
+          {t('testsConstants.assessments')}
         </h2>
         <Button
           className="px-5"
-          onClick={() => navigate(routes.addTest)}
+          onClick={() => navigate(routes.addAssessment)}
           id="add-test"
           tabIndex={0}
           varient="primary-solid"
@@ -71,11 +75,11 @@ const TestList = ({
           buttonText={`+ ${t('testsConstants.addTestbutton')}`}
         />
       </header>
-      {tests.length ? (
+      {tests.length > 0 ? (
         <>
           <div id="sort-filter-container">
             <SortFilter
-              filterData={filterByType}
+              filterData={sortByDetails}
               sortDirection={sortDirection}
               onSortDirectionChange={onSortDirectionChange}
               sortBy={sortBy}
@@ -91,22 +95,40 @@ const TestList = ({
                   <input type="checkbox" />
                 </div>
               )}
-              <div className="w-1/12 text-sm text-gray-500">
+              <div
+                id="assessments-table-sr-no"
+                className="w-1/12 text-sm text-gray-500"
+              >
                 {t('commonConstants.srNo')}
               </div>
-              <div className="w-4/12 text-sm text-gray-500">
-                {t('testsConstants.test')}
+              <div
+                id="assessments-table-assessment"
+                className="w-4/12 text-sm text-gray-500"
+              >
+                {t('testsConstants.assessment')}
               </div>
-              <div className="w-3/12 text-sm text-gray-500">
-                {t('testsConstants.sectionText')}
+              <div
+                id="assessments-table-test"
+                className="w-3/12 text-sm text-gray-500"
+              >
+                {t('testsConstants.testText')}
               </div>
-              <div className="w-2/12 text-sm text-gray-500">
+              <div
+                id="assessments-table-created-on"
+                className="w-2/12 text-sm text-gray-500"
+              >
                 {t('testsConstants.createdOn')}
               </div>
-              <div className="w-2/12 text-sm text-gray-500">
+              <div
+                id="assessments-table-created-by"
+                className="w-2/12 text-sm text-gray-500"
+              >
                 {t('testsConstants.created')} {t('commonConstants.byText')}
               </div>
-              <div className="flex w-1/12 text-sm text-gray-500">
+              <div
+                id="assessments-table-actions"
+                className="flex w-1/12 text-sm text-gray-500"
+              >
                 {t('testsConstants.actionsText')}
               </div>
             </div>
@@ -114,7 +136,7 @@ const TestList = ({
               id="test-list"
               className="rounded-t-0 flex flex-col rounded-md border-solid border-gray-200 shadow-base"
             >
-              {tests.map((test, i) => (
+              {tests?.map((test, i) => (
                 <TestTableItem
                   key={test?.id}
                   id={test?.id}
@@ -132,7 +154,9 @@ const TestList = ({
           </div>
         </>
       ) : (
-        <div className="p-7 text-center">{t('testsConstants.noTestFound')}</div>
+        <div className="p-7 text-center">
+          {t('testsConstants.noAssessmentFound')}
+        </div>
       )}
     </div>
   )

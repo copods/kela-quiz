@@ -1,19 +1,25 @@
 import { Icon } from '@iconify/react'
 import type { TestSection } from '~/interface/Interface'
 import { useTranslation } from 'react-i18next'
+import { useState } from 'react'
+import InviteCandidatePopup from './InviteCandidatePopup'
 
 const TestPreview = ({
   name,
+  testId,
   description,
   onSelectedSectionChange,
   selectedSections,
   isPreviewEditable = true,
+  showInviteAction,
 }: {
   name: string
+  testId?: string
   description: string
   selectedSections: Array<TestSection>
   onSelectedSectionChange: (e: any) => void
   isPreviewEditable: boolean
+  showInviteAction?: boolean
 }) => {
   const { t } = useTranslation()
 
@@ -49,12 +55,50 @@ const TestPreview = ({
     )
     return isPreviewEditable ? time : time / 60
   }
+  const [candidatePopupOpen, setCandidatePopupOpen] = useState<boolean>(false)
   return (
     <div className="flex flex-1 flex-col gap-9 overflow-scroll rounded-lg bg-white p-6 shadow-base">
       <div className="flex flex-col gap-6">
-        <h1 className="text-xl font-semibold">
-          {t('testsConstants.testDetailsText')}
-        </h1>
+        <div className="flex justify-between">
+          <h1
+            id="test-preview-assessment-details"
+            className="text-xl font-semibold"
+          >
+            {t('testsConstants.testDetailsText')}
+          </h1>
+          {showInviteAction && (
+            <div>
+              <div
+                role={'button'}
+                tabIndex={0}
+                onClick={() => {
+                  setCandidatePopupOpen(true)
+                }}
+                onKeyUp={(e) => {
+                  if (e.key === 'Enter') setCandidatePopupOpen(true)
+                }}
+                className="flex gap-2"
+              >
+                <Icon
+                  id="invite-popup-open"
+                  className="h-6 w-6 cursor-pointer text-primary "
+                  icon={'ant-design:user-add-outlined'}
+                  aria-label={t('members.inviteMember')}
+                />
+                <span id="invite-popup-open-text" className="text-primary">
+                  {t('inviteMemeberPopUpConstants.inviteCandidate')}
+                </span>
+              </div>
+              <InviteCandidatePopup
+                openInvitePopup={candidatePopupOpen}
+                setOpenInvitePopup={setCandidatePopupOpen}
+                testName={name}
+                testId={testId}
+              />
+            </div>
+          )}
+        </div>
+
         <div className="flex flex-col gap-4 text-base">
           <div className="flex">
             <div
@@ -95,7 +139,7 @@ const TestPreview = ({
               id="totalSection"
               className="min-w-200 text-base font-medium text-gray-500"
             >
-              {t('testsConstants.totalSectionsText')}
+              {t('testsConstants.totalTests')}
             </div>
             <div className="flex-1 text-base text-gray-700">
               {selectedSections.length}
@@ -104,15 +148,15 @@ const TestPreview = ({
         </div>
       </div>
       <div className="flex flex-col gap-6">
-        <h1 className="text-xl font-semibold">
-          {t('testsConstants.selectedSctionText')}
+        <h1 id="test-preview-selected-tests" className="text-xl font-semibold">
+          {t('testsConstants.selectedTests')}
         </h1>
         <div className="flex flex-col gap-4 text-base">
           {selectedSections.map((section, i) => {
             return (
               <div className="flex items-center gap-4" key={section.id}>
                 <div className="min-w-184 text-base text-gray-500">
-                  {t('testsConstants.sectionText')} {i + 1}
+                  {t('testsConstants.testText')} {i + 1}
                 </div>
                 <div className="flex max-w-2xl flex-1 items-center justify-between gap-6 rounded-lg border border-gray-300 py-3 px-4 text-gray-700">
                   <div className="text-base font-semibold text-gray-700">
@@ -132,28 +176,30 @@ const TestPreview = ({
                     </span>
                   </div>
                 </div>
-                {isPreviewEditable && (
-                  <div className="flex gap-2">
-                    <Icon
-                      icon="fa:long-arrow-up"
-                      className="cursor-pointer"
-                      onClick={() => moveSection(i, 'up')}
-                      tabIndex={0}
-                      onKeyUp={(e) => {
-                        if (e.key === 'Enter') moveSection(i, 'up')
-                      }}
-                    />
-                    <Icon
-                      icon="fa:long-arrow-down"
-                      className="cursor-pointer"
-                      onClick={() => moveSection(i, 'down')}
-                      tabIndex={0}
-                      onKeyUp={(e) => {
-                        if (e.key === 'Enter') moveSection(i, 'up')
-                      }}
-                    />
-                  </div>
-                )}
+                {selectedSections.length > 1
+                  ? isPreviewEditable && (
+                      <div className="flex gap-2">
+                        <Icon
+                          icon="fa:long-arrow-up"
+                          className="cursor-pointer"
+                          onClick={() => moveSection(i, 'up')}
+                          tabIndex={0}
+                          onKeyUp={(e) => {
+                            if (e.key === 'Enter') moveSection(i, 'up')
+                          }}
+                        />
+                        <Icon
+                          icon="fa:long-arrow-down"
+                          className="cursor-pointer"
+                          onClick={() => moveSection(i, 'down')}
+                          tabIndex={0}
+                          onKeyUp={(e) => {
+                            if (e.key === 'Enter') moveSection(i, 'up')
+                          }}
+                        />
+                      </div>
+                    )
+                  : ''}
               </div>
             )
           })}

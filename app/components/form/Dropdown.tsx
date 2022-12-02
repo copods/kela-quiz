@@ -2,7 +2,7 @@ import { Fragment } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import { useTranslation } from 'react-i18next'
-
+import { QuestionTypes } from '../../interface/Interface'
 function DropdownField({
   data,
   displayKey,
@@ -10,15 +10,24 @@ function DropdownField({
   valueKey,
   value,
   setValue,
+  callToAction,
+  actionName,
+  setOpen,
 }: {
   data: Array<any>
   displayKey: string
   valueKey: string
   name?: string
-  value: any
-  setValue: (e: any) => void
+  value: string
+  setValue: (e: string) => void
+  setOpen?: (e: boolean) => void
+  callToAction?: boolean
+  actionName?: string
 }) {
   const { t } = useTranslation()
+  const createQuestionDropdownOptions = data.filter(
+    (item) => item.value !== QuestionTypes.singleChoice
+  )
 
   function classNames(...classes: Array<string>) {
     return classes.filter(Boolean).join(' ')
@@ -30,8 +39,14 @@ function DropdownField({
       }
     }
   }
+
   return (
-    <Listbox value={value} onChange={setValue}>
+    <Listbox
+      value={value}
+      onChange={(val: string) => {
+        val !== actionName ? setValue(val) : setValue(value)
+      }}
+    >
       {({ open }) => (
         <>
           <div
@@ -48,7 +63,7 @@ function DropdownField({
                 <span className="block truncate">{getName(value)}</span>
               </span>
               <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
-                <Icon icon="ic:round-keyboard-arrow-down" />
+                <Icon icon="ic:round-keyboard-arrow-down" id="icon" />
               </span>
             </Listbox.Button>
             <Transition
@@ -59,16 +74,41 @@ function DropdownField({
               leaveTo="opacity-0"
             >
               <Listbox.Options className="dropDownSelect absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                {data.map((el) => (
+                {callToAction && (
                   <Listbox.Option
-                    key={el[valueKey]}
+                    key={actionName}
                     className={({ active }) =>
                       classNames(
                         active ? 'bg-primary text-white' : 'text-gray-900',
                         'relative z-20 cursor-pointer select-none py-2 px-3'
                       )
                     }
-                    value={el[valueKey]}
+                    value={actionName}
+                    onClick={() => {
+                      setOpen && setOpen(true)
+                    }}
+                  >
+                    <div className="flex items-center">
+                      <Icon icon="akar-icons:circle-plus" />
+                      <span
+                        className="dropdown-option ml-2 block truncate font-normal"
+                        id="option"
+                      >
+                        {actionName}
+                      </span>
+                    </div>
+                  </Listbox.Option>
+                )}
+                {createQuestionDropdownOptions.map((option) => (
+                  <Listbox.Option
+                    key={option[valueKey]}
+                    className={({ active }) =>
+                      classNames(
+                        active ? 'bg-primary text-white' : 'text-gray-900',
+                        'relative z-20 cursor-pointer select-none py-2 px-3'
+                      )
+                    }
+                    value={option[valueKey]}
                   >
                     {({ selected, active }) => (
                       <>
@@ -82,7 +122,7 @@ function DropdownField({
                             )}
                             id="option"
                           >
-                            {el[displayKey]}
+                            {option[displayKey]}
                           </span>
                         </div>
                         {selected ? (

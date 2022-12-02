@@ -7,21 +7,55 @@ generator client {
   provider = "prisma-client-js"
 }
 
+model Workspace {
+  id              String            @id @default(uuid())
+  name            String
+  createdBy       User              @relation(fields: [createdById], references: [id])
+  createdById     String
+  userWorkspace   UserWorkspace[]
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  section         Section[]
+  test            Test[]
+  candidateResult CandidateResult[]
+
+  Invites Invites[]
+  @@unique([name, createdById])
+}
+
+model UserWorkspace {
+  id          String    @id @default(uuid())
+  workspace   Workspace @relation(fields: [workspaceId], references: [id])
+  workspaceId String
+  user        User      @relation(fields: [userId], references: [id])
+  userId      String
+  role        Role      @relation(fields: [roleId], references: [id])
+  roleId      String
+  isDefault   Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@unique([workspaceId, userId])
+}
+
 model User {
-  id        String      @id @default(cuid())
-  email     String      @unique
-  firstName String
-  lastName  String
-  role      Role        @relation(fields: [roleId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  roleId    String
-  password  Password?
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
-  Section   Section[]
-  Question  Question[]
-  Option    Option[]
-  Test      Test[]
-  Candidate Candidate[]
+  id            String          @id @default(cuid())
+  email         String          @unique
+  firstName     String
+  lastName      String
+  role          Role            @relation(fields: [roleId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  roleId        String
+  password      Password?
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  Section       Section[]
+  Question      Question[]
+  Option        Option[]
+  Test          Test[]
+  Candidate     Candidate[]
+  userWorkspace UserWorkspace[]
+  workspace     Workspace[]
+  Invites       Invites[]
 }
 
 model Password {
@@ -31,11 +65,33 @@ model Password {
 }
 
 model Role {
-  id        String   @id @default(cuid())
-  name      String   @unique
-  users     User[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id            String          @id @default(cuid())
+  name          String          @unique
+  users         User[]
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  userWorkspace UserWorkspace[]
+  Invites       Invites[]
+}
+
+model Invites {
+  id                  String     @id @default(cuid())
+  email               String
+  invitedById         User?      @relation(fields: [userId], references: [id])
+  userId              String?
+  invitedForWorkspace Workspace? @relation(fields: [workspaceId], references: [id])
+  workspaceId         String?
+  role                Role       @relation(fields: [roleId], references: [id])
+  roleId              String
+  invitedOn           DateTime   @default(now())
+  deleted             Boolean    @default(false)
+  deletedAt           String?    @default("na")
+  joined              Boolean?
+  joinedAt            String?    @default("na")
+  createdAt           DateTime   @default(now())
+  updatedAt           DateTime   @updatedAt
+
+  @@unique([email, deletedAt, deleted,workspaceId])
 }
 
 model Section {
@@ -51,8 +107,10 @@ model Section {
   deletedAt              String?                  @default("na")
   createdAt              DateTime                 @default(now())
   updatedAt              DateTime                 @updatedAt
+  workspace              Workspace?               @relation(fields: [workspaceId], references: [id])
+  workspaceId            String?
 
-  @@unique([name, deletedAt, deleted])
+  @@unique([name, deletedAt, deleted, workspaceId])
 }
 
 model Question {
@@ -121,8 +179,10 @@ model Test {
   deleted           Boolean             @default(false)
   deletedAt         String?             @default("na")
   SectionWiseResult SectionWiseResult[]
+  workspace         Workspace?          @relation(fields: [workspaceId], references: [id])
+  workspaceId       String?
 
-  @@unique([name, deletedAt, deleted])
+  @@unique([name, deletedAt, deleted, workspaceId])
 }
 
 model SectionInTest {
@@ -231,11 +291,13 @@ model CandidateResult {
   skipped         Int? @default(0)
 
   // easier access of test and results
-  test        Test     @relation(fields: [testId], references: [id])
+  test        Test       @relation(fields: [testId], references: [id])
   testId      String
   isQualified Boolean
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  workspace   Workspace? @relation(fields: [workspaceId], references: [id])
+  workspaceId String?
 }
 
 model SectionWiseResult {
