@@ -309,6 +309,17 @@ export interface SectionWiseResults {
   section: SectionInCandidateTest
   test: Test
 }
+export interface column<T> {
+  title: string
+  field: string
+  render?: (rowData: T) => JSX.Element
+  width?: string
+}
+export interface TableType<T> {
+  columns: column<T>[]
+  data: T[]
+  title?: string
+}
 export interface Workspace {
   id: string
   name: string
