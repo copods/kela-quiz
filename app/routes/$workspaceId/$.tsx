@@ -1,7 +1,7 @@
 import { useNavigate } from '@remix-run/react'
 import { useTranslation } from 'react-i18next'
 
-import notFound from '../../public/assets/404.svg'
+import notFound from '~/../public/assets/404.svg'
 
 const NotFound = () => {
   const { t } = useTranslation()
