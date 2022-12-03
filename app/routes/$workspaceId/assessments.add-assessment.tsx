@@ -118,6 +118,7 @@ const AddTest = () => {
         })
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [actionData, navigate, t])
 
   if (t(testData.status) != t('statusCheck.success')) {
