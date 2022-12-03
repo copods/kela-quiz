@@ -61,6 +61,9 @@ export default function OptionForQuestion({
       }
       setOptions([...options, { option: '', isCorrect: false, id: cuid() }])
     } else if (getQuestionType(selectedTypeOfQuestion) === QuestionTypes.text) {
+      if (textCorrectAnswer.length > 5) {
+        return toast.error(t('statusCheck.maxOptions'), { toastId })
+      }
       setTextCorrectAnswer([...textCorrectAnswer, { id: cuid(), answer: '' }])
     }
   }
