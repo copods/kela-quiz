@@ -29,11 +29,17 @@ export const action: ActionFunction = async ({ request }) => {
 
   const redirectTo = safeRedirect(
     formData.get('redirectTo'),
-    invitedId != 'null' ? `/workspace/${invitedId}/join` : routes.members
+    invitedId != 'null' ? `/workspace/${invitedId}/join` : ''
   )
   const remember = formData.get('remember')
   const email = formData.get('email')
   const password = formData.get('password')
+  if (!email) {
+    return json<ActionData>(
+      { errors: { email: 'statusCheck.emailIsReq' } },
+      { status: 400 }
+    )
+  }
   if (!validateEmail(email)) {
     return json<ActionData>(
       { errors: { email: 'statusCheck.emailIsInvalid' } },
@@ -51,14 +57,14 @@ export const action: ActionFunction = async ({ request }) => {
   const user = await loginVerificationResponse(email, password)
   if (!user) {
     return json<ActionData>(
-      { errors: { email: 'statusCheck.emailIsInvalid' } },
+      { errors: { password: 'statusCheck.incorrectEmailOrPassword' } },
       { status: 400 }
     )
   }
 
   if (user instanceof Error) {
     return json<ActionData>(
-      { errors: { password: 'statusCheck.passIsInvalid' } },
+      { errors: { password: 'statusCheck.incorrectEmailOrPassword' } },
       { status: 400 }
     )
   }
@@ -67,7 +73,9 @@ export const action: ActionFunction = async ({ request }) => {
     request,
     userId: user.id,
     remember: remember === 'on' ? true : false,
-    redirectTo,
+    redirectTo: redirectTo
+      ? redirectTo
+      : `/${user.userWorkspace[0].workspaceId}`,
   })
 }
 

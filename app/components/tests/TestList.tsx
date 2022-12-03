@@ -12,9 +12,11 @@ import { useTranslation } from 'react-i18next'
 const TestList = ({
   tests,
   status,
+  currentWorkspaceId,
 }: {
   tests: Array<Test>
   status: string | undefined
+  currentWorkspaceId: string
 }) => {
   const { t } = useTranslation()
 
@@ -50,6 +52,10 @@ const TestList = ({
     }
   }, [sortDirection, sortBy, submit])
   const showCheckBox = false
+  useEffect(() => {
+    const heading = document.getElementById('assessments-page-title')
+    heading?.focus()
+  }, [])
   return (
     <div className="test-list-container flex h-full flex-col gap-6 p-1">
       {/* header */}
@@ -66,7 +72,9 @@ const TestList = ({
         </h2>
         <Button
           className="px-5"
-          onClick={() => navigate(routes.addAssessment)}
+          onClick={() =>
+            navigate(`/${currentWorkspaceId}${routes.addAssessment}`)
+          }
           id="add-test"
           tabIndex={0}
           varient="primary-solid"
@@ -148,6 +156,7 @@ const TestList = ({
                   sections={test?.sections}
                   showCheckBox={showCheckBox}
                   status={status}
+                  currentWorkspaceId={currentWorkspaceId}
                 />
               ))}
             </div>

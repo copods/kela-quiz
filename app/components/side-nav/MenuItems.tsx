@@ -5,19 +5,26 @@ export interface tabProps {
   itemName: string
   itemRoute: string
   id: string
+  currentWorkspaceId: string
 }
 
-function MenuItems({ iconClass, itemName, itemRoute, id }: tabProps) {
+function MenuItems({
+  iconClass,
+  itemName,
+  itemRoute,
+  id,
+  currentWorkspaceId,
+}: tabProps) {
   // const resolvedPath = useResolvedPath(itemRoute) // to get resolved path which would match with current location
   const location = useLocation() // to get current location
   return (
     <div className="menuItem">
       <NavLink
         tabIndex={0}
-        to={itemRoute}
+        to={`/${currentWorkspaceId}${itemRoute}`}
         className={({ isActive }) =>
           `flex flex-row items-start gap-2 rounded-lg p-3.5 ${
-            isActive ? 'active_nav_link bg-blue-50' : ' '
+            isActive ? 'active_nav_link bg-blue-50' : ''
           }`
         }
       >

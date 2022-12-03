@@ -1,16 +1,20 @@
 import { useTranslation } from 'react-i18next'
 import TabComponent from '../TabsComponent'
 
-const SettingsTabs = () => {
+const SettingsTabs = ({
+  currentWorkspaceId,
+}: {
+  currentWorkspaceId: string
+}) => {
   const { t } = useTranslation()
   const tabs = [
     {
       name: t('tabs.general'),
-      route: '/settings/general',
+      route: `/${currentWorkspaceId}/settings/general`,
     },
     {
       name: t('tabs.workspaces'),
-      route: '/settings/workspace',
+      route: `/${currentWorkspaceId}/settings/workspace`,
     },
   ]
   return (

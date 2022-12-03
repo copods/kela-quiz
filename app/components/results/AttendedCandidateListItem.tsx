@@ -19,6 +19,7 @@ const AttendedCandidateListItem = ({
   endAt,
   startedAt,
   createdAt,
+  currentWorkspaceId,
 }: {
   id: string
   candidateId: string
@@ -34,6 +35,7 @@ const AttendedCandidateListItem = ({
   endAt: Date
   startedAt: Date
   createdAt: Date
+  currentWorkspaceId: string
 }) => {
   const { t } = useTranslation()
   const [menuListOpen, setmenuListOpen] = useState<boolean>(false)
@@ -57,7 +59,7 @@ const AttendedCandidateListItem = ({
         </div>
         {endAt ? (
           <Link
-            to={`/results/groupByTests/${testId}/${candidateResultId}`}
+            to={`/${currentWorkspaceId}/results/groupByTests/${testId}/${candidateResultId}`}
             className="col-span-2 flex  truncate font-semibold text-primary"
             title={name}
           >

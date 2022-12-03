@@ -63,7 +63,10 @@ const SignUp = ({ error }: { error?: string }) => {
   const signIn = () => {
     navigate(routes.signIn)
   }
-
+  const [emailFieldError, setEmailFieldError] = useState(
+    signUpActionData?.errors?.enterVaildMailAddress ||
+      signUpActionData?.errors?.emailRequired
+  )
   const [onBlurPasswordErr, setOnBlurPasswordErr] = useState('')
   const [onBlurConfPasswordErr, setOnConfBlurPasswordErr] = useState('')
   const onBlurPassError = () => {
@@ -84,6 +87,12 @@ const SignUp = ({ error }: { error?: string }) => {
       setOnConfBlurPasswordErr('')
     }
   }
+  useEffect(() => {
+    setEmailFieldError(
+      signUpActionData?.errors?.enterVaildMailAddress ||
+        signUpActionData?.errors?.emailRequired
+    )
+  }, [signUpActionData?.errors])
   const inputFieldsProps = [
     {
       label: t('members.firstName'),
@@ -118,12 +127,13 @@ const SignUp = ({ error }: { error?: string }) => {
       name: 'email',
       required: true,
       value: email,
-      error:
-        signUpActionData?.errors?.emailRequired ||
-        signUpActionData?.errors?.enterVaildMailAddress,
+      error: emailFieldError,
       errorId: 'email-error',
       onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
         setEmail(trimValue(event.target.value))
+        if (event.target.value === '') {
+          setEmailFieldError('')
+        }
       },
     },
     {

@@ -606,8 +606,6 @@ describe('Creating assessments', () => {
           cy.get('button').should('have.text', cypress.remove)
           cy.get('input#no-of-qu').clear().type('1')
           cy.get('input#time').clear().type('1')
-          cy.get('input#no-of-qu').should('have.value', '1')
-          cy.get('input#time').should('have.value', '1')
         }
       })
     })
@@ -644,8 +642,6 @@ describe('Creating assessments', () => {
           cy.get('button').should('have.text', cypress.remove)
           cy.get('input#no-of-qu').clear().type('1')
           cy.get('input#time').clear().type('1')
-          cy.get('input#no-of-qu').should('have.value', '1')
-          cy.get('input#time').should('have.value', '1')
         }
       })
     })
@@ -683,8 +679,6 @@ describe('Creating assessments', () => {
           cy.get('button').should('have.text', cypress.remove)
           cy.get('input#no-of-qu').clear().type('1')
           cy.get('input#time').clear().type('1')
-          cy.get('input#no-of-qu').should('have.value', '1')
-          cy.get('input#time').should('have.value', '1')
         }
       })
     })

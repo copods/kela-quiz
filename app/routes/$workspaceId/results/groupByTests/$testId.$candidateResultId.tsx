@@ -1,7 +1,6 @@
 import type { ActionFunction, LoaderFunction } from '@remix-run/server-runtime'
 import { json } from '@remix-run/server-runtime'
 import invariant from 'tiny-invariant'
-import AdminLayout from '~/components/layouts/AdminLayout'
 import {
   getResultsOfIndividualCandidates,
   getSectionWiseResultsOfIndividualCandidate,
@@ -9,11 +8,11 @@ import {
 } from '~/models/result.server'
 import ResultDetailsComponent from '~/components/results/ResultDetails'
 import { getUserWorkspaces } from '~/models/workspace.server'
-import { getUserId, getWorkspaceId } from '~/session.server'
+import { getUserId } from '~/session.server'
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   const userId = await getUserId(request)
-  const currentWorkspaceId = await getWorkspaceId(request)
+  const currentWorkspaceId = params.workspaceId as string
   const workspaces = await getUserWorkspaces(userId as string)
   invariant(params.testId, 'resultId not found')
   const candidateResult = await getResultsOfIndividualCandidates({
@@ -56,10 +55,6 @@ export const action: ActionFunction = async ({ request }) => {
 }
 
 const ResultDetails = () => {
-  return (
-    <AdminLayout>
-      <ResultDetailsComponent />
-    </AdminLayout>
-  )
+  return <ResultDetailsComponent />
 }
 export default ResultDetails

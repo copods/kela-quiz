@@ -2,8 +2,8 @@ import { createCookieSessionStorage, redirect } from '@remix-run/node'
 import invariant from 'tiny-invariant'
 
 import type { User } from '~/models/user.server'
-import { getDefaultWorkspaceIdForUserQuery } from '~/models/user.server'
 import { getUserById } from '~/models/user.server'
+import { getDefaultWorkspaceIdForUserQuery } from './models/workspace.server'
 
 invariant(process.env.SESSION_SECRET, 'SESSION_SECRET must be set')
 
@@ -95,13 +95,17 @@ export async function createUserSession({
   userId,
   remember,
   redirectTo,
+  workspace,
 }: {
   request: Request
   userId: string
   remember: boolean
   redirectTo: string
+  workspace?: string
 }) {
-  const workspaceId = await getDefaultWorkspaceIdForUser(userId as string)
+  const workspaceId = workspace
+    ? workspace
+    : await getDefaultWorkspaceIdForUser(userId as string)
   const session = await getSession(request)
   session.set(USER_SESSION_KEY, userId)
   session.set(USER_WORKSPACE_KEY, workspaceId)
@@ -111,27 +115,6 @@ export async function createUserSession({
         maxAge: remember
           ? 60 * 60 * 24 * 7 // 7 days
           : undefined,
-      }),
-    },
-  })
-}
-
-export async function switchWorkspace({
-  request,
-  workspaceId,
-  userId,
-}: {
-  request: Request
-  workspaceId: string
-  userId: string
-}) {
-  const session = await getSession(request)
-  await session.set(USER_SESSION_KEY, userId)
-  await session.set(USER_WORKSPACE_KEY, workspaceId)
-  return redirect('/', {
-    headers: {
-      'Set-Cookie': await sessionStorage.commitSession(session, {
-        maxAge: false ? 60 * 60 * 24 * 7 : undefined,
       }),
     },
   })

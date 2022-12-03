@@ -4,11 +4,10 @@ import { json, redirect } from '@remix-run/server-runtime'
 import { useEffect } from 'react'
 import { toast } from 'react-toastify'
 import type { Section } from '~/interface/Interface'
-import AdminLayout from '~/components/layouts/AdminLayout'
 import AddTestComponent from '~/components/tests/AddTest'
 import { getAllSections } from '~/models/sections.server'
 import { createTest } from '~/models/tests.server'
-import { getUserId, getWorkspaceId, requireUserId } from '~/session.server'
+import { getUserId, requireUserId } from '~/session.server'
 import { routes } from '~/constants/route.constants'
 import { useTranslation } from 'react-i18next'
 import { getUserWorkspaces } from '~/models/workspace.server'
@@ -17,7 +16,7 @@ type LoaderData = {
   sections: Awaited<ReturnType<typeof getAllSections>>
   status: string
   workspaces: Awaited<ReturnType<typeof getUserWorkspaces>>
-  currentWorkspaceId: Awaited<ReturnType<typeof getWorkspaceId>>
+  currentWorkspaceId: string
 }
 export type ActionData = {
   errors?: {
@@ -29,9 +28,9 @@ export type ActionData = {
     status: number
   }
 }
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader: LoaderFunction = async ({ request, params }) => {
   const userId = await getUserId(request)
-  const currentWorkspaceId = await getWorkspaceId(request)
+  const currentWorkspaceId = params.workspaceId as string
   const workspaces = await getUserWorkspaces(userId as string)
   if (!userId) return redirect(routes.signIn)
 
@@ -55,9 +54,9 @@ export const loader: LoaderFunction = async ({ request }) => {
   return json<LoaderData>({ sections, status, workspaces, currentWorkspaceId })
 }
 
-export const action: ActionFunction = async ({ request }) => {
+export const action: ActionFunction = async ({ request, params }) => {
   const createdById = await requireUserId(request)
-  const workspaceId = await getWorkspaceId(request)
+  const workspaceId = params.workspaceId
   const formData = await request.formData()
 
   const data:
@@ -111,7 +110,7 @@ const AddTest = () => {
   useEffect(() => {
     if (actionData) {
       if (actionData.resp?.status === 200) {
-        navigate(routes.assessments)
+        navigate(`/${testData.currentWorkspaceId}${routes.assessments}`)
         toast.success(t(actionData.resp?.title))
       } else if (actionData.errors?.status === 400) {
         toast.error(t(actionData.errors?.title), {
@@ -126,9 +125,10 @@ const AddTest = () => {
   }
 
   return (
-    <AdminLayout>
-      <AddTestComponent sections={testData.sections} />
-    </AdminLayout>
+    <AddTestComponent
+      currentWorkspaceId={testData.currentWorkspaceId}
+      sections={testData.sections}
+    />
   )
 }
 

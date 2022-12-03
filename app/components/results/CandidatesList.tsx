@@ -8,7 +8,7 @@ import AttendedCandidateListItem from './AttendedCandidateListItem'
 const CandidatesList = ({ searchText }: { searchText: string }) => {
   const { t } = useTranslation()
 
-  const { candidatesOfTest, params } = useLoaderData()
+  const { candidatesOfTest, params, currentWorkspaceId } = useLoaderData()
   const actionData = useActionData()
   const testData = candidatesOfTest?.candidateTest
 
@@ -134,6 +134,7 @@ const CandidatesList = ({ searchText }: { searchText: string }) => {
                     endAt={candidate?.endAt}
                     startedAt={candidate?.startedAt}
                     createdAt={candidate?.createdAt}
+                    currentWorkspaceId={currentWorkspaceId}
                   />
                 </div>
               )

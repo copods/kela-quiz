@@ -8,6 +8,7 @@ const GroupByTestItems = ({
   candidateInvitedCount,
   candidateAttendedCount,
   testDeletedStatus,
+  currentWorkspaceId,
 }: {
   index: number
   id: string
@@ -15,6 +16,7 @@ const GroupByTestItems = ({
   candidateInvitedCount: number
   candidateAttendedCount: number | undefined
   testDeletedStatus: boolean
+  currentWorkspaceId: string
 }) => {
   const { t } = useTranslation()
   return (
@@ -26,7 +28,7 @@ const GroupByTestItems = ({
         <div className="candidate-name col-span-3">
           <Link
             tabIndex={0}
-            to={`/results/groupByTests/${id}`}
+            to={`/${currentWorkspaceId}/results/groupByTests/${id}`}
             id="group-by-item-test"
             data-cy="group-by-item-test"
             className="groupByItemTest text-base font-semibold text-primary"

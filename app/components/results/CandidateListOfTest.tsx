@@ -1,15 +1,14 @@
 import { useNavigate } from '@remix-run/react'
 import { Icon } from '@iconify/react'
 import { useLoaderData } from '@remix-run/react'
-import { routes } from '~/constants/route.constants'
 import CandidatesList from './CandidatesList'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { routes } from '~/constants/route.constants'
 
 const CandidateListOfTest = () => {
-  const { candidatesOfTest } = useLoaderData()
+  const { candidatesOfTest, currentWorkspaceId } = useLoaderData()
   const [searchText, setSearchText] = useState('')
-
   let navigate = useNavigate()
 
   const { t } = useTranslation()
@@ -19,12 +18,15 @@ const CandidateListOfTest = () => {
       <header className="border-b border-solid border-slate-300">
         <div className="flex gap-2 pb-6">
           <div
-            onClick={() => navigate(routes.resultGroupTest)}
+            onClick={() =>
+              navigate(`/${currentWorkspaceId}${routes.resultGroupTest}`)
+            }
             role={'button'}
             tabIndex={0}
             className="flex items-center gap-4 "
             onKeyDown={(e) => {
-              if (e.key === 'Enter') navigate(routes.resultGroupTest)
+              if (e.key === 'Enter')
+                navigate(`/${currentWorkspaceId}${routes.resultGroupTest}`)
             }}
           >
             <Icon

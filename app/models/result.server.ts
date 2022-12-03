@@ -95,6 +95,7 @@ export async function getAllCandidatesOfTest({
     },
     include: {
       candidateTest: {
+        orderBy: { createdAt: 'desc' },
         include: {
           candidateResult: true,
           candidate: {

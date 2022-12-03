@@ -4,20 +4,19 @@ import { json } from '@remix-run/node'
 import invariant from 'tiny-invariant'
 import { getTestById } from '~/models/tests.server'
 import TestDetails from '~/components/tests/TestDetails'
-import AdminLayout from '~/components/layouts/AdminLayout'
 import { getUserWorkspaces } from '~/models/workspace.server'
-import { getWorkspaceId, getUserId, requireUserId } from '~/session.server'
+import { getUserId, requireUserId } from '~/session.server'
 import { createCandidate } from '~/models/candidate.server'
 
 type LoaderData = {
   testPreview: Awaited<ReturnType<typeof getTestById>>
   workspaces: Awaited<ReturnType<typeof getUserWorkspaces>>
-  currentWorkspaceId: Awaited<ReturnType<typeof getWorkspaceId>>
+  currentWorkspaceId: string
 }
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   const userId = await getUserId(request)
-  const currentWorkspaceId = await getWorkspaceId(request)
+  const currentWorkspaceId = params.workspaceId as string
   const workspaces = await getUserWorkspaces(userId as string)
   invariant(params.testId, 'testId not found')
   const testPreview = await getTestById({ id: params.testId })
@@ -57,9 +56,5 @@ export const action: ActionFunction = async ({ request }) => {
   }
 }
 export default function TestsDetailsRoute() {
-  return (
-    <AdminLayout>
-      <TestDetails />
-    </AdminLayout>
-  )
+  return <TestDetails />
 }

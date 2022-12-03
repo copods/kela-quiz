@@ -11,9 +11,11 @@ export async function getUserById(id: User['id']) {
   return prisma.user.findUnique({ where: { id }, include: { password: true } })
 }
 
-export async function deleteUserById(id: string) {
+export async function deleteUserById(userId: string, workspaceId: string) {
   try {
-    return await prisma.user.delete({ where: { id } })
+    return await prisma.userWorkspace.deleteMany({
+      where: { userId, workspaceId },
+    })
   } catch (error) {
     return 'Something went wrong'
   }
@@ -227,7 +229,7 @@ export async function sendResetPassword(email: string) {
     })
     return await sendNewPassword(userEmail?.email as string, password)
   } else {
-    return null
+    return { value: null, time: Date.now() }
   }
 }
 
@@ -239,6 +241,14 @@ export async function loginVerificationResponse(
     where: { email },
     include: {
       password: true,
+      userWorkspace: {
+        where: {
+          isDefault: true,
+        },
+        select: {
+          workspaceId: true,
+        },
+      },
     },
   })
 
@@ -254,19 +264,6 @@ export async function loginVerificationResponse(
 
   const { password: _password, ...userWithoutPassword } = userWithPassword
   return userWithoutPassword
-}
-
-export async function getDefaultWorkspaceIdForUserQuery(userId: string) {
-  return prisma.user.findUnique({
-    where: { id: userId },
-    select: {
-      workspace: {
-        select: {
-          id: true,
-        },
-      },
-    },
-  })
 }
 
 export async function updatePassword(

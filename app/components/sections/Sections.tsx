@@ -5,6 +5,7 @@ import {} from '@remix-run/react'
 import SortFilter from '../SortFilter'
 import { useEffect, useState } from 'react'
 import { routes } from '~/constants/route.constants'
+import type { sectionActionErrorsType } from '~/interface/Interface'
 
 const SectionLink = ({
   section,
@@ -12,14 +13,23 @@ const SectionLink = ({
   err,
   filter,
   setSelectedSection,
+  currentWorkspaceId,
+  sectionActionErrors,
+  setSectionActionErrors,
 }: {
   section: Section & { _count?: { questions: number }; createdBy?: User }
   actionStatusData?: string
   err?: string
   filter: string
+  currentWorkspaceId: string
   setSelectedSection: (e: string) => void
+  sectionActionErrors?: sectionActionErrorsType
+  setSectionActionErrors?: ({
+    title,
+    description,
+  }: sectionActionErrorsType) => void
 }) => {
-  const path = `${routes.tests}/${section.id}${filter}`
+  const path = `/${currentWorkspaceId}${routes.tests}/${section.id}${filter}`
   const [isDelete, setIsDelete] = useState(false)
   const location = useLocation() // to get current location
   const resolvedPath = useResolvedPath(path) // to get resolved path which would match with current location
@@ -73,6 +83,8 @@ const SectionLink = ({
         setDeleted={setDeleted}
         setIsDelete={setIsDelete}
         isDelete={isDelete}
+        sectionActionErrors={sectionActionErrors}
+        setSectionActionErrors={setSectionActionErrors}
       />
     </div>
   )
@@ -89,6 +101,12 @@ type SectionType = {
   setOrder: (e: string) => void
   setSelectedSection: (e: string) => void
   sortByDetails: Array<{ name: string; value: string }>
+  currentWorkspaceId: string
+  sectionActionErrors?: sectionActionErrorsType
+  setSectionActionErrors?: ({
+    title,
+    description,
+  }: sectionActionErrorsType) => void
 }
 const Sections = ({
   sections,
@@ -101,6 +119,9 @@ const Sections = ({
   sortByDetails,
   err,
   actionStatusData,
+  currentWorkspaceId,
+  sectionActionErrors,
+  setSectionActionErrors,
 }: SectionType) => {
   return (
     <div className="sectionLSWrapper flex h-full max-w-96 flex-col gap-6">
@@ -131,6 +152,9 @@ const Sections = ({
             setSelectedSection={setSelectedSection}
             actionStatusData={actionStatusData}
             err={err}
+            sectionActionErrors={sectionActionErrors}
+            setSectionActionErrors={setSectionActionErrors}
+            currentWorkspaceId={currentWorkspaceId}
           />
         ))}
       </div>

@@ -10,79 +10,84 @@ import AddWorkspace from '../workspace/AddWorkspace'
 import { useEffect, useState } from 'react'
 import { actions } from '~/constants/action.constants'
 
-const sideNavGuide = [
-  // {
-  //   navGuide: 'Main Menu',
-  //   subItem: [
-  //     {
-  //       id: 'Dashboard',
-  //       iconClass: 'mdi:view-dashboard',
-  //       itemName: 'Dashboard',
-  //       itemRoute: routes.dashboard,
-  //     },
-  //   ],
-  // },
-  {
-    navGuide: 'Results',
-    subItem: [
-      {
-        id: 'group-by-tests',
-        iconClass: 'mdi:chart-box-outline',
-        itemName: 'commonConstants.results',
-        itemRoute: routes.resultGroupTest,
-      },
-      // {
-      //   id: 'Group_By_Candidate',
-      //   iconClass: 'mdi:chart-box-outline',
-      //   itemName: commonConstants.groupByCandidate,
-      //   itemRoute: 'groupByCandidate',
-      // },
-    ],
-  },
-  {
-    navGuide: 'Assessments',
-    subItem: [
-      {
-        id: 'tests',
-        iconClass: 'carbon:result',
-        itemName: 'testsConstants.assessments',
-        itemRoute: routes.assessments,
-      },
-      {
-        id: 'sections',
-        iconClass: 'ci:list-checklist-alt',
-        itemName: 'routeFiles.tests',
-        itemRoute: routes.tests,
-      },
-    ],
-  },
-  {
-    navGuide: 'General',
-    subItem: [
-      {
-        id: 'members',
-        iconClass: 'mdi:account-group',
-        itemName: 'members.members',
-        itemRoute: routes.members,
-      },
-      {
-        id: 'Settings',
-        iconClass: 'mdi:cog',
-        itemName: 'commonConstants.settings',
-        itemRoute: routes.settings,
-      },
-    ],
-  },
-]
 const SideNav = () => {
   const { t } = useTranslation()
   const [showAddWorkspaceModal, setShowAddWorkspaceModal] = useState(false)
-  const { workspaces = [], currentWorkspaceId } = useLoaderData()
+  const { workspaces = [], currentWorkspaceId, firstSection } = useLoaderData()
   const [workspace, setWorkspace] = useState<string>(currentWorkspaceId)
   const fetcher = useFetcher()
   const tempWorkspaces = workspaces.map((userWorkspace: UserWorkspace) => {
     return { ...userWorkspace, ...userWorkspace.workspace }
   })
+  const sideNavGuide = [
+    // {
+    //   navGuide: 'Main Menu',
+    //   subItem: [
+    //     {
+    //       id: 'Dashboard',
+    //       iconClass: 'mdi:view-dashboard',
+    //       itemName: 'Dashboard',
+    //       itemRoute: routes.dashboard,
+    //     },
+    //   ],
+    // },
+    {
+      navGuide: 'Results',
+      subItem: [
+        {
+          id: 'group-by-tests',
+          iconClass: 'mdi:chart-box-outline',
+          itemName: 'commonConstants.results',
+          itemRoute: `${routes.resultGroupTest}?index=&data=%7B"orderBy"%3A%7B"createdAt"%3A"desc"%7D%7D`,
+        },
+        // {
+        //   id: 'Group_By_Candidate',
+        //   iconClass: 'mdi:chart-box-outline',
+        //   itemName: commonConstants.groupByCandidate,
+        //   itemRoute: 'groupByCandidate',
+        // },
+      ],
+    },
+    {
+      navGuide: 'Assessments',
+      subItem: [
+        {
+          id: 'tests',
+          iconClass: 'carbon:result',
+          itemName: 'testsConstants.assessments',
+          itemRoute: `${routes.assessments}?index=&data=%7B"orderBy"%3A%7B"createdAt"%3A"desc"%7D%7D`,
+        },
+        {
+          id: 'sections',
+          iconClass: 'ci:list-checklist-alt',
+          itemName: 'routeFiles.tests',
+          itemRoute: `${routes.tests}${
+            firstSection
+              ? `/${firstSection}?filter=%7B"orderBy"%3A%7B"createdAt"%3A"desc"%7D%7D`
+              : ''
+          }`,
+        },
+      ],
+    },
+    {
+      navGuide: 'General',
+      subItem: [
+        {
+          id: 'members',
+          iconClass: 'mdi:account-group',
+          itemName: 'members.members',
+          itemRoute: routes.members,
+        },
+        {
+          id: 'Settings',
+          iconClass: 'mdi:cog',
+          itemName: 'commonConstants.settings',
+          itemRoute: routes.generalSettings,
+        },
+      ],
+    },
+  ]
+
   function switchWorkpace(val: string) {
     if (val !== t('sideNav.addWorkspace') && workspace !== currentWorkspaceId) {
       fetcher.submit(
@@ -90,7 +95,7 @@ const SideNav = () => {
           workspaceId: val,
           action: actions.switchWorkspace,
         },
-        { method: 'post', action: '/settings' }
+        { method: 'post', action: `/${currentWorkspaceId}/settings` }
       )
     }
   }
@@ -142,6 +147,7 @@ const SideNav = () => {
                         iconClass={item.iconClass}
                         itemName={t(item.itemName)}
                         itemRoute={item.itemRoute}
+                        currentWorkspaceId={currentWorkspaceId}
                       />
                     )
                   })}
@@ -158,6 +164,7 @@ const SideNav = () => {
         showAddWorkspaceModal={showAddWorkspaceModal}
         setShowAddWorkspaceModal={setShowAddWorkspaceModal}
         setWorkspaceId={setWorkspace}
+        currentWorkspaceId={currentWorkspaceId}
       />
     </>
   )

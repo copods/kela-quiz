@@ -1,5 +1,4 @@
-import AdminLayout from '~/components/layouts/AdminLayout'
-import { getUserId, getWorkspaceId, requireWorkspaceId } from '~/session.server'
+import { getUserId, requireWorkspaceId } from '~/session.server'
 import { redirect } from '@remix-run/node'
 import type { LoaderFunction, ActionFunction } from '@remix-run/node'
 import MembersList from '~/components/members/MembersList'
@@ -40,14 +39,14 @@ type LoaderData = {
   userId: Awaited<ReturnType<typeof getUserId>>
   roles: Awaited<ReturnType<typeof getAllRoles>>
   workspaces: Awaited<ReturnType<typeof getUserWorkspaces>>
-  currentWorkspaceId: Awaited<ReturnType<typeof getWorkspaceId>>
+  currentWorkspaceId: string
   invitedMembers: Awaited<ReturnType<typeof getAllInvitedMember>>
   getUser: Awaited<ReturnType<typeof getUserById>>
 }
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader: LoaderFunction = async ({ request, params }) => {
   const userId = await getUserId(request)
   const getUser = await getUserById(userId as string)
-  const currentWorkspaceId = await getWorkspaceId(request)
+  const currentWorkspaceId = params.workspaceId as string
   const invitedMembers = await getAllInvitedMember(currentWorkspaceId as string)
   const workspaces = await getUserWorkspaces(userId as string)
   const roles = await getAllRoles()
@@ -64,7 +63,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   })
 }
 
-export const action: ActionFunction = async ({ request }) => {
+export const action: ActionFunction = async ({ request, params }) => {
   const invitedByWorkspaceId = await requireWorkspaceId(request)
   const userId = await getUserId(request)
   const getUser = await getUserById(userId as string)
@@ -177,7 +176,10 @@ export const action: ActionFunction = async ({ request }) => {
       )
     }
     let deleteHandle = null
-    await deleteUserById(formData.get('id') as string)
+    await deleteUserById(
+      formData.get('id') as string,
+      params.workspaceId as string
+    )
       .then((res) => {
         deleteHandle = json<ActionData>(
           { resp: { title: 'statusCheck.deletedSuccess', status: 200 } },
@@ -219,28 +221,26 @@ const Members = () => {
     }
   }, [membersActionData, t])
   return (
-    <AdminLayout>
-      <div className="flex flex-col gap-6 p-1">
-        <MembersHeader
-          actionStatus={actionStatus}
-          setActionStatus={setActionStatus}
-        />
-        <div className="flex flex-col gap-4 text-2xl">
-          <h1
-            tabIndex={0}
-            role={t('members.joinedMembers')}
-            aria-label={t('members.joinedMembers')}
-            id="joined-member-heading"
-          >
-            {t('members.joinedMembers')}
-          </h1>
-          <MembersList actionStatus={membersActionData?.resp?.title} />
-        </div>
-        <div className="flex flex-col gap-4 text-2xl">
-          <InvitedMembersList actionStatus={membersActionData?.resp?.title} />
-        </div>
+    <div className="flex flex-col gap-6 p-1">
+      <MembersHeader
+        actionStatus={actionStatus}
+        setActionStatus={setActionStatus}
+      />
+      <div className="flex flex-col gap-4 text-2xl">
+        <h1
+          tabIndex={0}
+          role={t('members.joinedMembers')}
+          aria-label={t('members.joinedMembers')}
+          id="joined-member-heading"
+        >
+          {t('members.joinedMembers')}
+        </h1>
+        <MembersList actionStatus={membersActionData?.resp?.title} />
       </div>
-    </AdminLayout>
+      <div className="flex flex-col gap-4 text-2xl">
+        <InvitedMembersList actionStatus={membersActionData?.resp?.title} />
+      </div>
+    </div>
   )
 }
 

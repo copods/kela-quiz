@@ -124,11 +124,13 @@
     "sort": "Sort",
     "dropdown": "Select",
     "expand": "Expand",
+    "search": "Search Question",
+    "addTestFirst": "No test found. Please add test first",
+    "noQuestionFound": "No Question Found",
     "msq": "MSQ",
     "mcq": "MCQ",
     "multipleSelectQuestion": "Multiple Select Question",
-    "multipleChoiceQuestion": "Multiple Choice Question",
-    "search": "Search Question"
+    "multipleChoiceQuestion": "Multiple Choice Question"
   },
   "testsConstants": {
     "addTestbutton": "Add Assessment",
@@ -155,7 +157,8 @@
     "candidatesInvited": "Candidates Invited",
     "allCandidatesInvited": "All candidates invited.",
     "writeDescriptionOfTest": "Write Description of Test",
-    "searchCandidate": "Search Candidate"
+    "searchCandidate": "Search Candidate",
+    "min": "Min"
   },
   "componentGlobalConstants": {
     "totalCounts": "Total Counts",
@@ -185,9 +188,9 @@
     "passIsInvalid": "Password is invalid",
     "questionAddedSuccess": "Question Added Successfully",
     "questionNotAdded": "Question Not Added Successfully",
-    "firstNameReq": "firstName is required",
-    "lastNameReq": "lastName is required",
-    "emailIsReq": "email is required",
+    "firstNameReq": "FirstName is required",
+    "lastNameReq": "LastName is required",
+    "emailIsReq": "Email is required",
     "roleIdIsReq": "roleId is required",
     "memberAddedSuccess": "Member Added Successfully..!",
     "erroSendingOtp": "Error in sending OTP..",
@@ -201,8 +204,8 @@
     "userNotFound": "User Not Found",
     "workspaceJoinSuccess": "Workspace joined successfully",
     "workspaceInvitationRejected": "Workspace invitation rejected",
-    "notInviteYourself": "Your can not invite Yourself",
-    "wrongInvitedId": "Your email is not matched with invited id"
+    "notInviteYourself": "You can not invite Yourself",
+    "incorrectEmailOrPassword": "Incorrect email or password"
   },
   "resultConstants": {
     "order": "Order",
@@ -316,5 +319,11 @@
   "tabs": {
     "general": "General",
     "workspaces": "Workspaces"
+  },
+  "404": {
+    "error": "That's an error.",
+    "notFound": "Not Found",
+    "urlNotFound": "The requested URL was not found on this server.",
+    "gotoDashboard": "GoTo Dashboard"
   }
 }

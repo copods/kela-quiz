@@ -10,6 +10,7 @@ import { useEffect } from 'react'
 import { toast } from 'react-toastify'
 import Button from '~/components/form/Button'
 import { useTranslation } from 'react-i18next'
+import { trimValue } from '~/utils'
 interface textAnswerType {
   id: string
   answer: string
@@ -60,6 +61,9 @@ export default function OptionForQuestion({
       }
       setOptions([...options, { option: '', isCorrect: false, id: cuid() }])
     } else if (getQuestionType(selectedTypeOfQuestion) === QuestionTypes.text) {
+      if (textCorrectAnswer.length > 5) {
+        return toast.error(t('statusCheck.maxOptions'), { toastId })
+      }
       setTextCorrectAnswer([...textCorrectAnswer, { id: cuid(), answer: '' }])
     }
   }
@@ -189,7 +193,7 @@ export default function OptionForQuestion({
                     />
                   )
                 )}
-                <div className="textOption h-32 flex-1" id="optionEditor">
+                <div className="textOption h-auto flex-1" id="optionEditor">
                   {
                     <ClientOnly fallback={<div></div>}>
                       {() => (
@@ -245,7 +249,7 @@ export default function OptionForQuestion({
                       )}
                       value={option.answer}
                       onChange={(e) => {
-                        updateTextAnswer(e.target.value, index)
+                        updateTextAnswer(trimValue(e.target.value), index)
                       }}
                     ></input>
                   </div>
