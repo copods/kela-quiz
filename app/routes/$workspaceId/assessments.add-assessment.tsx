@@ -124,7 +124,12 @@ const AddTest = () => {
     toast.success(t('statusCheck.commonError'))
   }
 
-  return <AddTestComponent sections={testData.sections} />
+  return (
+    <AddTestComponent
+      currentWorkspaceId={testData.currentWorkspaceId}
+      sections={testData.sections}
+    />
+  )
 }
 
 export default AddTest
