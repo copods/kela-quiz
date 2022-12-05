@@ -1,3 +1,4 @@
+import { t } from 'i18next'
 import type { TableType } from '~/interface/Interface'
 
 function Table<T extends { id?: string }>({ columns, data }: TableType<T>) {
@@ -16,40 +17,48 @@ function Table<T extends { id?: string }>({ columns, data }: TableType<T>) {
           ))}
         </tr>
       </thead>
-      <tbody className="rounded-lg">
-        {data.map((rowData: T) => (
-          <tr
-            className=" border-t border-solid border-gray-200 "
-            key={rowData.id}
-          >
-            {columns.map((column) => (
-              <>
-                {column.render ? (
-                  <td
-                    className={`break-word ${
-                      column.width ? `w-[${column.width}]` : ``
-                    } overflow-ellipsis px-12 py-8 text-left text-base text-gray-700`}
-                    key={column.title}
-                  >
-                    {column?.render(rowData)}
-                  </td>
-                ) : (
-                  <td
-                    className={`overflow-hidden ${
-                      column.width ? `w-[${column.width}]` : ''
-                    } truncate px-12 py-8 text-left text-base text-gray-700`}
-                    key={column.title}
-                    title={String(
-                      rowData[column.field as keyof typeof rowData]
-                    )}
-                  >
-                    {rowData[column.field as keyof typeof rowData]}
-                  </td>
-                )}
-              </>
-            ))}
+      <tbody className="h-48 rounded-lg">
+        {data.length === 0 ? (
+          <tr>
+            <td colSpan={4} className="text-center text-sm">
+              {t('commonConstants.noRowsToShow')}
+            </td>
           </tr>
-        ))}
+        ) : (
+          data.map((rowData: T) => (
+            <tr
+              className=" border-t border-solid border-gray-200 "
+              key={rowData.id}
+            >
+              {columns.map((column) => (
+                <>
+                  {column.render ? (
+                    <td
+                      className={`break-word ${
+                        column.width ? `w-[${column.width}]` : ``
+                      } overflow-ellipsis px-12 py-8 text-left text-base text-gray-700`}
+                      key={column.title}
+                    >
+                      {column?.render(rowData)}
+                    </td>
+                  ) : (
+                    <td
+                      className={`overflow-hidden ${
+                        column.width ? `w-[${column.width}]` : ''
+                      } truncate px-12 py-8 text-left text-base text-gray-700`}
+                      key={column.title}
+                      title={String(
+                        rowData[column.field as keyof typeof rowData]
+                      )}
+                    >
+                      {rowData[column.field as keyof typeof rowData]}
+                    </td>
+                  )}
+                </>
+              ))}
+            </tr>
+          ))
+        )}
       </tbody>
     </table>
   )
