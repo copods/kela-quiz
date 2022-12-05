@@ -6,23 +6,20 @@ import { useTranslation } from 'react-i18next'
 
 const Pagination = ({
   onPageChange,
-  totalLength,
   currentPage,
+  totalItems,
   pageSize,
   setPageSize,
-  firstPageIndex,
-  testDataLength,
   itemsList,
 }: {
   onPageChange: (e: number) => void
-  totalLength: number
+  totalItems: number
   currentPage: number
   pageSize: number
   setPageSize: (e: number) => void
-  firstPageIndex: number
-  testDataLength: number
   itemsList?: Array<{ pageSize: number }>
 }) => {
+  const firstPageIndex = (currentPage - 1) * pageSize
   const defaultPaginationItems = [
     { pageSize: 5 },
     { pageSize: 10 },
@@ -30,11 +27,10 @@ const Pagination = ({
     { pageSize: 20 },
   ]
   const { t } = useTranslation()
-  const totalCount = Math.ceil(totalLength / pageSize)
   const siblingCount = 1
   const paginationRange: Array<any> | undefined = usePagination({
     currentPage,
-    totalLength,
+    totalItems,
     siblingCount,
     pageSize,
   })
@@ -125,7 +121,9 @@ const Pagination = ({
       <div className="paginationInfo flex items-center gap-6">
         {dropDown()}
         <span className="flex text-xs text-gray-600">
-          Showing {firstPageIndex} to {totalCount}
+          Showing {firstPageIndex + 1} to{' '}
+          {currentPage === lastPage ? totalItems : firstPageIndex + pageSize} of{' '}
+          {totalItems}
         </span>
       </div>
       <div className="pagination flex items-center gap-2">

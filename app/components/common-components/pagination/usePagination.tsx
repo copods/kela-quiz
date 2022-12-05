@@ -2,18 +2,18 @@ import { useMemo } from 'react'
 export const DOTS = '...'
 
 export const usePagination = ({
-  totalLength,
+  totalItems,
   pageSize,
   siblingCount,
   currentPage,
 }: {
-  totalLength: number
+  totalItems: number
   pageSize: number
   siblingCount: number
   currentPage: number
 }) => {
   const paginationRange = useMemo(() => {
-    const totalPageCount = Math.ceil(totalLength / pageSize)
+    const totalPageCount = Math.ceil(totalItems / pageSize)
     const totalPageNumbers = siblingCount + 5
     const range = (start: number, end: number) => {
       let length = end - start + 1
@@ -48,6 +48,6 @@ export const usePagination = ({
       let middleRange = range(leftSiblingIndex, rightSiblingIndex)
       return [firstPageIndex, DOTS, ...middleRange, DOTS, lastPageIndex]
     }
-  }, [totalLength, pageSize, siblingCount, currentPage])
+  }, [totalItems, pageSize, siblingCount, currentPage])
   return paginationRange
 }

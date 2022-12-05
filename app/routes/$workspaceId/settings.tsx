@@ -123,8 +123,8 @@ export default function Settings() {
         <h1
           id="settings-heading"
           tabIndex={0}
-          role= {t('commonConstants.settings')}
-          aria-label= {t('commonConstants.settings')}
+          role={t('commonConstants.settings')}
+          aria-label={t('commonConstants.settings')}
           className="text-3xl font-bold"
         >
           {t('commonConstants.settings')}

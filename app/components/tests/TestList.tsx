@@ -1,5 +1,5 @@
 import { useSubmit } from '@remix-run/react'
-import { useEffect, useState, useMemo } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import type { Test } from '~/interface/Interface'
 import { sortByOrder } from '~/interface/Interface'
@@ -58,18 +58,13 @@ const TestList = ({
     heading?.focus()
   }, [])
   const itemsList = [
-    { pageSize: 1 },
+    { pageSize: 5 },
     { pageSize: 10 },
     { pageSize: 15 },
     { pageSize: 20 },
   ]
   const [pageSize, setPageSize] = useState(itemsList[0].pageSize)
   const [currentPage, setCurrentPage] = useState(1)
-  const firstPageIndex = (currentPage > 1 ? currentPage - 1 : 1) * pageSize
-  const lastPageIndex = firstPageIndex + pageSize
-  const currentTestData = useMemo(() => {
-    return tests.slice(firstPageIndex, lastPageIndex)
-  }, [tests, firstPageIndex, lastPageIndex])
 
   return (
     <div className="test-list-container flex h-full flex-col gap-6 p-1">
@@ -176,12 +171,10 @@ const TestList = ({
               ))}
               <Pagination
                 onPageChange={(page) => setCurrentPage(page)}
-                totalLength={tests.length}
                 currentPage={currentPage}
+                totalItems={tests.length}
                 pageSize={pageSize}
                 setPageSize={setPageSize}
-                firstPageIndex={firstPageIndex}
-                testDataLength={currentTestData.length}
                 itemsList={itemsList}
               />
             </div>
