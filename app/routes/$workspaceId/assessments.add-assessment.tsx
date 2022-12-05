@@ -118,13 +118,19 @@ const AddTest = () => {
         })
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [actionData, navigate, t])
 
   if (t(testData.status) != t('statusCheck.success')) {
     toast.success(t('statusCheck.commonError'))
   }
 
-  return <AddTestComponent sections={testData.sections} />
+  return (
+    <AddTestComponent
+      currentWorkspaceId={testData.currentWorkspaceId}
+      sections={testData.sections}
+    />
+  )
 }
 
 export default AddTest

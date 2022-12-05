@@ -125,12 +125,13 @@
     "sort": "Sort",
     "dropdown": "Select",
     "expand": "Expand",
+    "search": "Search Question",
+    "addTestFirst": "No test found. Please add test first",
     "noQuestionFound": "No Question Found",
     "msq": "MSQ",
     "mcq": "MCQ",
     "multipleSelectQuestion": "Multiple Select Question",
-    "multipleChoiceQuestion": "Multiple Choice Question",
-    "search": "Search Question"
+    "multipleChoiceQuestion": "Multiple Choice Question"
   },
   "testsConstants": {
     "addTestbutton": "Add Assessment",
