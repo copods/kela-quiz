@@ -29,10 +29,6 @@ const Pagination = ({
     siblingCount,
     pageSize,
   })
-  let lastPage =
-    paginationRange === undefined
-      ? 0
-      : paginationRange[paginationRange?.length - 1]
   const buttons = () => {
     return paginationRange?.map((paginationRangeItems: number, index) => {
       if (paginationRangeItems === DOTS) {
@@ -117,8 +113,10 @@ const Pagination = ({
         {dropDown()}
         <span className="flex text-xs text-gray-600">
           Showing {firstPageIndex + 1} to{' '}
-          {currentPage === lastPage ? totalItems : firstPageIndex + pageSize} of{' '}
-          {totalItems}
+          {pageSize * currentPage > totalItems
+            ? totalItems
+            : pageSize * currentPage}{' '}
+          of {totalItems}
         </span>
       </div>
       <div className="pagination flex items-center gap-2">
@@ -132,7 +130,9 @@ const Pagination = ({
         {buttons()}
         <Icon
           className={`cursor-pointer text-sm ${
-            currentPage === lastPage ? 'pointer-events-none text-slate-300' : ''
+            pageSize * currentPage >= totalItems
+              ? 'pointer-events-none text-slate-300'
+              : ''
           }`}
           icon="ooui:previous-rtl"
           onClick={() => onPageChange(currentPage + 1)}
