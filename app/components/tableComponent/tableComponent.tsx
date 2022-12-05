@@ -1,8 +1,7 @@
 import { t } from 'i18next'
 import type { TableType } from '~/interface/Interface'
 
-function Table<T extends { id?: string }>({ columns, data }: TableType<T>) {
-  // const Table = <T>({ columns, data }: TableType<T>) => {
+const Table = <T extends { id?: string }>({ columns, data }: TableType<T>) => {
   return (
     <table className=" w-full border-collapse rounded-lg border-gray-200 bg-white shadow-base">
       <thead className="relative">
