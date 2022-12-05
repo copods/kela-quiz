@@ -3,7 +3,7 @@ import type { TableType } from '~/interface/Interface'
 function Table<T extends { id?: string }>({ columns, data }: TableType<T>) {
   // const Table = <T>({ columns, data }: TableType<T>) => {
   return (
-    <table className=" w-full  border-collapse rounded-3xl  border-gray-200 bg-white shadow-base">
+    <table className=" w-full border-collapse rounded-lg border-gray-200 bg-white shadow-base">
       <thead className="relative">
         <tr>
           {columns.map((header) => (
@@ -16,7 +16,7 @@ function Table<T extends { id?: string }>({ columns, data }: TableType<T>) {
           ))}
         </tr>
       </thead>
-      <tbody className=" rounded-lg">
+      <tbody className="rounded-lg">
         {data.map((rowData: T) => (
           <tr
             className=" border-t border-solid border-gray-200 "
