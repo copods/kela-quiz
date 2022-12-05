@@ -22,7 +22,7 @@ const Pagination = ({
   const firstPageIndex = (currentPage - 1) * pageSize
   const { t } = useTranslation()
   const siblingCount = 1
-  const paginationRange: Array<any> | undefined = usePagination({
+  const paginationRange = usePagination({
     currentPage,
     totalItems,
     siblingCount,
@@ -45,11 +45,11 @@ const Pagination = ({
             className={`cursor-pointer py-1 px-3 text-sm ${
               currentPage === pageNumber ? ' rounded-md bg-gray-200' : ''
             }`}
-            onClick={() => onPageChange(pageNumber)}
+            onClick={() => onPageChange(Number(pageNumber))}
             role="button"
             tabIndex={0}
             onKeyDown={(e) => {
-              if (e.key === 'Enter') onPageChange(pageNumber)
+              if (e.key === 'Enter') onPageChange(Number(pageNumber))
             }}
           >
             {pageNumber}
