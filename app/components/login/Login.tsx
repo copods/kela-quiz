@@ -119,7 +119,7 @@ function Login({ actionData, redirectTo }: LoginProps) {
               {t('forgotPasswordConstants.header')}
             </span>
           </div>
-          <div className="flex items-center justify-center" id="login-button">
+          <div className="flex items-center justify-center">
             <input type="hidden" name="redirectTo" value={redirectTo} />
             <Button
               tabIndex={0}
