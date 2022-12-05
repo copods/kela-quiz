@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useLoaderData, useNavigate, useSubmit } from '@remix-run/react'
+import { Form, useLoaderData, useNavigate } from '@remix-run/react'
 import Button from '~/components/form/Button'
 import InputField from '~/components/form/InputField'
 import Logo from '~/components/Logo'
@@ -10,7 +10,6 @@ function Login({ actionData, redirectTo }: LoginProps) {
   const { t } = useTranslation()
 
   const loginLoaderData = useLoaderData()
-  const submit = useSubmit()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loginFieldError, setLoginFieldError] = useState({
@@ -61,31 +60,9 @@ function Login({ actionData, redirectTo }: LoginProps) {
   const signUp = () => {
     navigate(routes.signUp)
   }
-  const submitSignInForm = () => {
-    let data = {
-      email: email,
-      password: password,
-      inviteId: loginLoaderData.inviteId,
-    }
-    submit(data, {
-      method: 'post',
-      action:
-        loginLoaderData.inviteId === null
-          ? '/sign-in'
-          : `/sign-in?cameFrom=join&id=${loginLoaderData.inviteId}`,
-    })
-  }
   const forgetPassword = () => {
     navigate(routes.forgotPassword)
   }
-  useEffect(() => {
-    window.addEventListener('keydown', function (event) {
-      if (event.key === 'Enter') {
-        console.log('goku')
-        return submitSignInForm()
-      }
-    })
-  }, [])
   return (
     <div className="z-10 flex	min-h-480 w-full max-w-554 flex-col items-center justify-center rounded-lg bg-white px-24 drop-shadow-xl">
       <div className="z-20 -mt-12 mb-6">
@@ -98,7 +75,14 @@ function Login({ actionData, redirectTo }: LoginProps) {
         <div className="flex justify-center">
           <hr className="mt-7 mb-5 h-px w-6/12 border-none bg-gray-500 text-center" />
         </div>
-        <div>
+        <Form
+          method="post"
+          action={
+            loginLoaderData.inviteId === null
+              ? '/sign-in'
+              : `/sign-in?cameFrom=join&id=${loginLoaderData.inviteId}`
+          }
+        >
           <div className="flex flex-col gap-6">
             {inputFieldsProps.map((props) => {
               return <InputField {...props} key={props.name} />
@@ -139,15 +123,15 @@ function Login({ actionData, redirectTo }: LoginProps) {
             <input type="hidden" name="redirectTo" value={redirectTo} />
             <Button
               tabIndex={0}
+              type="submit"
               title={t('logIn.signIn')}
               buttonText={t('logIn.signIn')}
               varient="primary-solid"
               className="h-11 w-full"
               value={'login'}
-              onClick={() => submitSignInForm()}
             />
           </div>
-        </div>
+        </Form>
       </div>
       <div className="flex pt-6">
         <div className="text-base font-medium text-gray-500">
