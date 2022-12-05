@@ -1,26 +1,27 @@
 import { Icon } from '@iconify/react'
 import { Fragment, useState } from 'react'
-import { Listbox, Transition } from '@headlessui/react'
 import { DOTS, usePagination } from './usePagination'
+import { Listbox, Transition } from '@headlessui/react'
 import { useTranslation } from 'react-i18next'
 
 const Pagination = ({
   onPageChange,
   currentPage,
   totalItems,
-  itemsList,
+  pageSizeOptions,
+  pageSize,
+  setPageSize,
 }: {
   onPageChange: (e: number) => void
   totalItems: number
   currentPage: number
-  itemsList?: Array<number>
+  pageSizeOptions?: Array<number>
+  pageSize: number
+  setPageSize: (e: number) => void
 }) => {
   const defaultPaginationItems = [5, 10, 15, 20]
-  const [pageSize, setPageSize] = useState(
-    itemsList === undefined ? defaultPaginationItems[0] : itemsList[0]
-  )
-  const firstPageIndex = (currentPage - 1) * pageSize
   const { t } = useTranslation()
+  const firstPageIndex = (currentPage - 1) * pageSize
   const siblingCount = 1
   const paginationRange = usePagination({
     currentPage,
@@ -33,8 +34,8 @@ const Pagination = ({
       ? 0
       : paginationRange[paginationRange?.length - 1]
   const buttons = () => {
-    return paginationRange?.map((pageNumber, index) => {
-      if (pageNumber === DOTS) {
+    return paginationRange?.map((paginationRangeItems: number, index) => {
+      if (paginationRangeItems === DOTS) {
         return (
           <Icon className="text-gray-500" icon="bx:dots-horizontal-rounded" />
         )
@@ -43,24 +44,26 @@ const Pagination = ({
           <span
             key={index}
             className={`cursor-pointer py-1 px-3 text-sm ${
-              currentPage === pageNumber ? ' rounded-md bg-gray-200' : ''
+              currentPage === paginationRangeItems
+                ? ' rounded-md bg-gray-200'
+                : ''
             }`}
-            onClick={() => onPageChange(Number(pageNumber))}
+            onClick={() => onPageChange(paginationRangeItems)}
             role="button"
             tabIndex={0}
             onKeyDown={(e) => {
-              if (e.key === 'Enter') onPageChange(Number(pageNumber))
+              if (e.key === 'Enter') onPageChange(paginationRangeItems)
             }}
           >
-            {pageNumber}
+            {paginationRangeItems}
           </span>
         )
       }
     })
   }
   const paginationList =
-    itemsList === undefined ? defaultPaginationItems : itemsList
-  const [selected, setSelected] = useState(paginationList[0])
+    pageSizeOptions === undefined ? defaultPaginationItems : pageSizeOptions
+  const [selected, setSelected] = useState(pageSize)
 
   const dropDown = () => {
     return (

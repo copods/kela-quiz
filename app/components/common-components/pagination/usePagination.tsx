@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-export const DOTS = '...'
+export const DOTS = -1
 
 export const usePagination = ({
   totalItems,
