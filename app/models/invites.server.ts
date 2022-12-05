@@ -44,13 +44,11 @@ export async function inviteNewUser({
 
       const workspaceJoinLink =
         env.PUBLIC_URL + '/workspace/' + invite.id + '/join'
-      const invitedForWorkspaceName = invite.invitedForWorkspace?.name
       const name = ((invite.invitedById?.firstName as string) +
         ' ' +
         invite.invitedById?.lastName) as string
       return await sendMemberInvite(
         email,
-        invitedForWorkspaceName as string,
         name as string,
         workspaceJoinLink as string
       )
@@ -135,7 +133,6 @@ export async function reinviteMemberForWorkspace({ id }: { id: string }) {
     user?.invitedById?.lastName) as string
   return await sendMemberInvite(
     user?.email as string,
-    user?.invitedForWorkspace?.name as string,
     name as string,
     workspaceJoinLink as string
   )
