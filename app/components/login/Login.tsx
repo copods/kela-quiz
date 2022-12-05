@@ -78,6 +78,14 @@ function Login({ actionData, redirectTo }: LoginProps) {
   const forgetPassword = () => {
     navigate(routes.forgotPassword)
   }
+  useEffect(() => {
+    window.addEventListener('keydown', function (event) {
+      if (event.key === 'Enter') {
+        console.log('goku')
+        return submitSignInForm()
+      }
+    })
+  }, [])
   return (
     <div className="z-10 flex	min-h-480 w-full max-w-554 flex-col items-center justify-center rounded-lg bg-white px-24 drop-shadow-xl">
       <div className="z-20 -mt-12 mb-6">
@@ -127,7 +135,7 @@ function Login({ actionData, redirectTo }: LoginProps) {
               {t('forgotPasswordConstants.header')}
             </span>
           </div>
-          <div className="flex items-center justify-center">
+          <div className="flex items-center justify-center" id="login-button">
             <input type="hidden" name="redirectTo" value={redirectTo} />
             <Button
               tabIndex={0}
