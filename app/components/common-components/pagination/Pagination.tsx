@@ -8,24 +8,18 @@ const Pagination = ({
   onPageChange,
   currentPage,
   totalItems,
-  pageSize,
-  setPageSize,
   itemsList,
 }: {
   onPageChange: (e: number) => void
   totalItems: number
   currentPage: number
-  pageSize: number
-  setPageSize: (e: number) => void
-  itemsList?: Array<{ pageSize: number }>
+  itemsList?: Array<number>
 }) => {
+  const defaultPaginationItems = [5, 10, 15, 20]
+  const [pageSize, setPageSize] = useState(
+    itemsList === undefined ? defaultPaginationItems[0] : itemsList[0]
+  )
   const firstPageIndex = (currentPage - 1) * pageSize
-  const defaultPaginationItems = [
-    { pageSize: 5 },
-    { pageSize: 10 },
-    { pageSize: 15 },
-    { pageSize: 20 },
-  ]
   const { t } = useTranslation()
   const siblingCount = 1
   const paginationRange: Array<any> | undefined = usePagination({
@@ -74,7 +68,7 @@ const Pagination = ({
         <div className="relative mt-1">
           <Listbox.Button className="flex cursor-pointer items-center text-xs text-gray-600">
             <span className="block truncate">
-              {selected.pageSize} {t('commonConstants.items')}
+              {selected} {t('commonConstants.items')}
             </span>
             <Icon className="text-2xl" icon="gridicons:dropdown" />
           </Listbox.Button>
@@ -85,31 +79,29 @@ const Pagination = ({
             leaveTo="opacity-0"
           >
             <Listbox.Options className="absolute mt-1 max-h-60 rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-              {paginationList?.map(
-                (item: { pageSize: number }, index: number) => (
-                  <Listbox.Option
-                    key={index}
-                    onClick={() => {
-                      setPageSize(item.pageSize)
-                      onPageChange(1)
-                    }}
-                    className={({ active }) =>
-                      `relative cursor-pointer select-none py-2 px-8 text-xs text-gray-600 ${
-                        selected.pageSize === item.pageSize
-                          ? ' bg-gray-100'
-                          : active
-                          ? 'bg-gray-100'
-                          : ''
-                      }`
-                    }
-                    value={item}
-                  >
-                    <span className="block truncate">
-                      {item.pageSize} {t('commonConstants.items')}
-                    </span>
-                  </Listbox.Option>
-                )
-              )}
+              {paginationList?.map((item: number, index: number) => (
+                <Listbox.Option
+                  key={index}
+                  onClick={() => {
+                    setPageSize(item)
+                    onPageChange(1)
+                  }}
+                  className={({ active }) =>
+                    `relative cursor-pointer select-none py-2 px-8 text-xs text-gray-600 ${
+                      selected === item
+                        ? ' bg-gray-100'
+                        : active
+                        ? 'bg-gray-100'
+                        : ''
+                    }`
+                  }
+                  value={item}
+                >
+                  <span className="block truncate">
+                    {item} {t('commonConstants.items')}
+                  </span>
+                </Listbox.Option>
+              ))}
             </Listbox.Options>
           </Transition>
         </div>
