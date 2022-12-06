@@ -929,7 +929,31 @@ describe('Test for Tests', () => {
       statusCheck.descIsReq
     )
   })
-
+  it('Test for valid error message while adding new Tests with duplicate Title', () => {
+    cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
+    cy.get('.sectionCard', { timeout: 40000 }).each(($el) => {
+      cy.wrap($el).within((el) => {
+        if (
+          el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
+        ) {
+          cy.get('.sectionName').should('have.text', section1)
+        }
+      })
+    })
+    cy.get('.sectionName').contains(section1).click()
+    cy.wait(1000)
+    cy.get('#add-section', { timeout: 6000 })
+      .should('have.text', '+ Add Test')
+      .click()
+    cy.get('form > div')
+      .should('be.visible')
+      .within((el) => {
+        cy.get('input[placeholder="Enter Test Name"]').type(section1)
+        cy.get('textarea').type('Aptitude')
+        cy.get('[data-cy="submit"]').click()
+      })
+    cy.get('#duplicete-title-error').should('have.text', statusCheck.duplicate)
+  })
   it('SortBy Name or created Date', () => {
     cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
     cy.get('.sectionCard', { timeout: 40000 }).each(($el) => {
