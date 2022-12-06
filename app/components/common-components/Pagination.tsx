@@ -9,7 +9,7 @@ const Pagination = ({
   onPageChange,
   currentPage,
   totalItems,
-  pageSizeOptions,
+  pageSizeOptions = [5, 10, 15, 20],
   pageSize,
   setPageSize,
 }: {
@@ -20,7 +20,6 @@ const Pagination = ({
   pageSize: number
   setPageSize: (e: number) => void
 }) => {
-  const defaultPaginationItems = [5, 10, 15, 20]
   const { t } = useTranslation()
   const firstPageIndex = (currentPage - 1) * pageSize
   const siblingCount = 1
@@ -34,13 +33,16 @@ const Pagination = ({
     return paginationRange?.map((paginationRangeItems: number, index) => {
       if (paginationRangeItems === DOTS) {
         return (
-          <Icon className="text-gray-500" icon="bx:dots-horizontal-rounded" />
+          <Icon
+            className="w-8 text-gray-500 "
+            icon="bx:dots-horizontal-rounded"
+          />
         )
       } else {
         return (
           <span
             key={index}
-            className={`cursor-pointer py-1 px-3 text-sm ${
+            className={`cursor-pointer w-8 py-1 px-3 text-sm ${
               currentPage === paginationRangeItems
                 ? ' rounded-md bg-gray-200'
                 : ''
@@ -58,8 +60,6 @@ const Pagination = ({
       }
     })
   }
-  const paginationList =
-    pageSizeOptions === undefined ? defaultPaginationItems : pageSizeOptions
   const [selected, setSelected] = useState(pageSize)
 
   const dropDown = () => {
@@ -79,7 +79,7 @@ const Pagination = ({
             leaveTo="opacity-0"
           >
             <Listbox.Options className="absolute mt-1 max-h-60 rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-              {paginationList?.map((item: number, index: number) => (
+              {pageSizeOptions?.map((item: number, index: number) => (
                 <Listbox.Option
                   key={index}
                   onClick={() => {
