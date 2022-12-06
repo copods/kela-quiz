@@ -110,6 +110,7 @@
     "addOptions": "Add Options",
     "addQuestion": "Add Question",
     "note": "Note",
+    "mimimumTwoOptionsRequired": "Minimum 2 Options Required",
     "multipleAnswersSelected": "Multiple answers selected",
     "oneAnswerSelected": "One answer selected",
     "enterTheQuestion": "Enter the Question"

@@ -95,13 +95,18 @@ const AddQuestionInSection = () => {
         QuestionTypes.multipleChoice ||
       getQuestionType(selectedTypeOfQuestion) === QuestionTypes.singleChoice
     ) {
+      let optionCount = 0
       for (let option of options) {
-        if (!option.option.length) {
-          toast.error('Enter all the Options', { toastId: 'optionsRequired' })
-          return
+        if (option.option.length !== 0) {
+          optionCount = optionCount + 1
         }
       }
-
+      if (optionCount < 2) {
+        toast.error(t('addQuestion.mimimumTwoOptionsRequired'), {
+          toastId: 'optionsRequired',
+        })
+        return
+      }
       let flag = 0
       for (let option of options) {
         if (option.isCorrect) {
@@ -178,7 +183,9 @@ const AddQuestionInSection = () => {
           option: option.option,
           isCorrect: option.isCorrect,
         }
-        testQuestion.options.push(optionForQuestion)
+        if (option.option) {
+          testQuestion.options.push(optionForQuestion)
+        }
       })
     } else if (
       getQuestionType(selectedTypeOfQuestion) === QuestionTypes.multipleChoice
