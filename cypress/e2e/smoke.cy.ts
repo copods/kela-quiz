@@ -467,6 +467,6 @@ describe('smoke tests', () => {
     cy.location().then((res) => {
       cy.visit(`${res.pathname}-error`)
     })
-    cy.contains("That's an error.")
+    cy.contains("That's an error.",{timeout:8000})
   })
 })
