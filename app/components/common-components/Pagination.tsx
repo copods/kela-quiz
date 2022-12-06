@@ -1,8 +1,9 @@
 import { Icon } from '@iconify/react'
 import { Fragment, useState } from 'react'
-import { DOTS, usePagination } from './usePagination'
+
 import { Listbox, Transition } from '@headlessui/react'
 import { useTranslation } from 'react-i18next'
+import { DOTS, usePagination } from '~/utils'
 
 const Pagination = ({
   onPageChange,
