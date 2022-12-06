@@ -29,6 +29,7 @@ const UserForgetPassword = ({
       type: 'text',
       name: 'email',
       required: true,
+      isRequired: true,
       value: email,
       error: emailFieldError,
       errorId: 'email-error',

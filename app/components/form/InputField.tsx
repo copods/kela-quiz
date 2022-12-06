@@ -6,6 +6,7 @@ function InputField({
   label,
   error,
   errorId,
+  isRequired = false,
   ...props
 }: InputFieldProps) {
   const { t } = useTranslation()
@@ -13,6 +14,7 @@ function InputField({
     <div className="flex flex-col gap-1.5">
       <label htmlFor={name} className="block text-gray-800">
         {label}
+        {isRequired ? <span className="text-red-500">*</span> : null}
       </label>
       <input
         tabIndex={0}

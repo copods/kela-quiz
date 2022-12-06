@@ -65,6 +65,7 @@ export default function AddWorkspace({
       type: 'text',
       name: 'addWorkspace',
       required: true,
+      isRequired: true,
       value: workspace,
       errorId: 'name-error',
       onChange: function (event: React.ChangeEvent<HTMLInputElement>) {

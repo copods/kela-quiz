@@ -49,6 +49,7 @@ export default function AddMemberModal({
       type: 'text',
       name: 'email',
       required: true,
+      isRequired: true,
       value: email,
       errorId: 'email-error',
       onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
