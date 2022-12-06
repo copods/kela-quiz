@@ -21,7 +21,7 @@ const PasswordInputFields = ({
     <div className="flex flex-col gap-1.5">
       <label htmlFor={name} className="text-gray-800">
         {label}
-        {isRequired ? <span className="text-red-500">*</span> : null}
+        {isRequired ? <span className="text-red-600">*</span> : null}
       </label>
       <div className="relative flex rounded-lg border border-gray-200">
         <input

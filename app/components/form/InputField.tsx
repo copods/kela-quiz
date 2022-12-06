@@ -14,7 +14,7 @@ function InputField({
     <div className="flex flex-col gap-1.5">
       <label htmlFor={name} className="block text-gray-800">
         {label}
-        {isRequired ? <span className="text-red-500">*</span> : null}
+        {isRequired ? <span className="text-red-600">*</span> : null}
       </label>
       <input
         tabIndex={0}

@@ -77,6 +77,7 @@ export default function AddMemberModal({
             <div>
               <label htmlFor="" className="text-gray-800">
                 {t('members.role')}
+                <span className="text-red-600">*</span>
               </label>
             </div>
             <DropdownField
