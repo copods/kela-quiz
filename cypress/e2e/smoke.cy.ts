@@ -463,8 +463,10 @@ describe('smoke tests', () => {
   })
   it('check for not found page', () => {
     cy.login()
-    cy.customVisit('/id/not-our-url')
-
+    cy.customVisit('/members')
+    cy.location().then((res) => {
+      cy.visit(`${res.pathname}-error`)
+    })
     cy.contains("That's an error.")
   })
 })
