@@ -17,7 +17,6 @@ describe('smoke tests', () => {
     // This will clear the local storage for every test
     window.localStorage.clear()
   })
-
   it('Invalid Email Error Message', () => {
     cy.visit('/sign-in')
     cy.get('#email').clear().type('test@copods.co')
@@ -466,7 +465,7 @@ describe('smoke tests', () => {
     cy.customVisit('/members')
     cy.location().then((res) => {
       cy.visit(`${res.pathname}-error`, { timeout: 8000 })
-      cy.contains("That's an error.", { timeout: 8000 })
+      cy.get('[data-cy="404-error"]').should('have.text', "That's an error.")
     })
   })
 })
