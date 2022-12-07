@@ -17,7 +17,7 @@ describe('smoke tests', () => {
     // This will clear the local storage for every test
     window.localStorage.clear()
   })
- 
+
   it('Invalid Email Error Message', () => {
     cy.visit('/sign-in')
     cy.get('#email').clear().type('test@copods.co')
@@ -464,11 +464,10 @@ describe('smoke tests', () => {
   it('check for not found page', () => {
     cy.login()
     cy.customVisit('/members')
+    cy.wait(1000)
     cy.location().then((res) => {
-      cy.visit(`${res.pathname}-error`)
+      cy.customVisit(`${res.pathname}-error`)
     })
-    cy.location('pathname').should('include', '-error')
-    cy.get('[data-cy="404-error"]').should('be.visible')
-    cy.get('[data-cy="404-error"]').should('have.text', "That's an error.")
+    cy.contains("That's an error.")
   })
 })

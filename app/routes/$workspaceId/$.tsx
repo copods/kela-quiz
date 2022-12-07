@@ -23,9 +23,7 @@ const NotFound = () => {
           />
         </div>
         <div className="text-center leading-8">
-          <p data-cy="404-error" className="text-2xl font-bold">
-            {t('404.error')}
-          </p>
+          <p className="text-2xl font-bold">{t('404.error')}</p>
           <p className="text-2xl font-bold">{t('404.urlNotFound')}</p>
           <div
             className="font-semibold text-primary underline"
