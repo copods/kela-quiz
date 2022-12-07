@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react'
 import Moment from 'moment'
 import { toast } from 'react-toastify'
 import type { TestSection } from '~/interface/Interface'
-import Button from '../form/Button'
+import Button from '../common-components/Button'
 import { useTranslation } from 'react-i18next'
 
 const SelectSectionCard = ({

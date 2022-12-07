@@ -73,7 +73,8 @@
     "joining": "Joining",
     "joinedOn": "Joined On",
     "invitedAt": "Invited At",
-    "noRowsToShow": "No Rows To Show"
+    "noRowsToShow": "No Rows To Show",
+    "items": "Items"
   },
   "sideNav": {
     "sideNavHeading": "Quiz",
