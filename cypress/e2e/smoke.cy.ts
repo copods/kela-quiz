@@ -465,8 +465,8 @@ describe('smoke tests', () => {
     cy.login()
     cy.customVisit('/members')
     cy.location().then((res) => {
-      cy.visit(`${res.pathname}-error`)
+      cy.visit(`${res.pathname}-error`, { timeout: 8000 })
+      cy.contains("That's an error.", { timeout: 8000 })
     })
-    cy.contains("That's an error.",{timeout:8000})
   })
 })
