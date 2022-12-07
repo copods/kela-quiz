@@ -126,7 +126,7 @@ const ResetPassword = ({
       passIsInvalid: generalSettings?.errors?.valid,
       passShouldNotBeSame: generalSettings?.errors?.passShouldNotBeSame,
     })
-  }, [generalSettings, error])
+  }, [generalSettings])
   return (
     <DialogWrapper
       open={openResetPassModel}
