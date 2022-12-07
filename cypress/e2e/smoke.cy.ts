@@ -469,7 +469,8 @@ describe('smoke tests', () => {
     cy.wait(1000)
     cy.location('pathname').should('include', '/members')
     cy.location().then((res) => {
-      cy.visit(res.pathname + '/members-error', { timeout: 8000 })
+      const errorRoute = res + '/members-error'
+      cy.visit(errorRoute + '/members-error', { timeout: 8000 })
       cy.get('[data-cy="404-error"]').contains("That's an error.")
     })
   })
