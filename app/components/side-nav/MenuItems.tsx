@@ -24,7 +24,9 @@ function MenuItems({
         to={`/${currentWorkspaceId}${itemRoute}`}
         className={({ isActive }) =>
           `flex flex-row items-start gap-2 rounded-lg p-3.5 ${
-            isActive ? 'active_nav_link bg-blue-50' : ''
+            isActive || location.pathname.includes(itemName.toLowerCase())
+              ? 'active_nav_link bg-blue-50'
+              : ''
           }`
         }
       >
@@ -33,7 +35,7 @@ function MenuItems({
             id="tabIcon"
             icon={iconClass}
             className={`order-none flex-none grow-0 text-2xl  ${
-              location.pathname.includes(`/${itemRoute}`)
+              location.pathname.includes(itemName.toLowerCase())
                 ? 'text-primary'
                 : 'text-gray-400'
             }`}
@@ -42,7 +44,7 @@ function MenuItems({
             <p
               id={id}
               className={`non-italic text-base font-semibold ${
-                location.pathname.includes(`/${itemRoute}`)
+                location.pathname.includes(itemName.toLowerCase())
                   ? 'text-primary'
                   : 'text-gray-500'
               }`}
