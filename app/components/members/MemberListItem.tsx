@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 import type { Invites, Role, User } from '~/interface/Interface'
-import DeletePopUp from '../DeletePopUp'
+import DeletePopUp from '../common-components/DeletePopUp'
 import { useEffect, useState } from 'react'
 import { useSubmit } from '@remix-run/react'
 import { t } from 'i18next'

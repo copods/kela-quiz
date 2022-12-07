@@ -3,9 +3,9 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { trimValue } from '~/utils'
-import DialogWrapper from '../Dialog'
-import Button from '../form/Button'
-import PasswordInputFields from '../form/PasswordInputField'
+import DialogWrapper from '../common-components/Dialog'
+import Button from '../common-components/Button'
+import PasswordInputFields from '../common-components/PasswordInputField'
 
 const ResetPassword = ({
   openResetPassModel,
@@ -126,7 +126,7 @@ const ResetPassword = ({
       passIsInvalid: generalSettings?.errors?.valid,
       passShouldNotBeSame: generalSettings?.errors?.passShouldNotBeSame,
     })
-  }, [generalSettings])
+  }, [generalSettings, error])
   return (
     <DialogWrapper
       open={openResetPassModel}

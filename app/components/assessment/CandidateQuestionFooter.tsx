@@ -1,6 +1,6 @@
 import { useLoaderData } from '@remix-run/react'
 import { useTranslation } from 'react-i18next'
-import Button from '../form/Button'
+import Button from '../common-components/Button'
 // import CandidateQuestionStepper from './CandidateQuestionStepper'
 
 const CandidateQuestionFooter = () => {
