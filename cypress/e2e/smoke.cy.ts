@@ -472,6 +472,6 @@ describe('smoke tests', () => {
     cy.visit('/0427fbae-0b07-4c22-9358-8486b615eaf4/members-error', {
       timeout: 8000,
     })
-    cy.get('[data-cy="404-error"]').contains("That's an error.")
+    cy.get('.404Error').should('have.text', "That's an error.")
   })
 })
