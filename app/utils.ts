@@ -1,7 +1,6 @@
 import { useMatches } from '@remix-run/react'
 import { useMemo } from 'react'
 import type { User } from '~/models/user.server'
-export const DOTS = -1
 
 const DEFAULT_REDIRECT = '/'
 
@@ -118,7 +117,7 @@ export const usePagination = ({
     if (!shouldShowLeftDots && shouldShowRightDots) {
       let leftItemCount = 3 + 2 * siblingCount
       let leftRange = range(1, leftItemCount)
-      return [...leftRange, DOTS, totalPageCount]
+      return [...leftRange, -1, totalPageCount]
     }
     if (shouldShowLeftDots && !shouldShowRightDots) {
       let rightItemCount = 3 + 2 * siblingCount
@@ -126,11 +125,11 @@ export const usePagination = ({
         totalPageCount - rightItemCount + 1,
         totalPageCount
       )
-      return [firstPageIndex, DOTS, ...rightRange]
+      return [firstPageIndex, -1, ...rightRange]
     }
     if (shouldShowLeftDots && shouldShowRightDots) {
       let middleRange = range(leftSiblingIndex, rightSiblingIndex)
-      return [firstPageIndex, DOTS, ...middleRange, DOTS, lastPageIndex]
+      return [firstPageIndex, -1, ...middleRange, -1, lastPageIndex]
     }
   }, [totalItems, pageSize, siblingCount, currentPage])
   return paginationRange

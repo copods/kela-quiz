@@ -3,7 +3,7 @@ import { Fragment, useState } from 'react'
 
 import { Listbox, Transition } from '@headlessui/react'
 import { useTranslation } from 'react-i18next'
-import { DOTS, usePagination } from '~/utils'
+import { usePagination } from '~/utils'
 
 const PaginationButtons = ({
   paginationRange,
@@ -15,7 +15,7 @@ const PaginationButtons = ({
   onPageChange: (e: number) => void
 }) => {
   return paginationRange?.map((paginationRangeItems: number, index) => {
-    if (paginationRangeItems === DOTS) {
+    if (paginationRangeItems === -1) {
       return (
         <Icon
           className="w-8 text-gray-500 "
@@ -132,7 +132,7 @@ const Pagination = ({
   const [selected, setSelected] = useState(pageSize)
 
   return (
-    <div className="test-table-list flex items-center justify-between gap-3 rounded-b-md border-b border-gray-200 bg-white py-6 px-9">
+    <div className="test-table-list b flex items-center justify-between gap-3">
       <div className="paginationInfo flex items-center gap-6">
         {PaginationDropDown({
           selected,
