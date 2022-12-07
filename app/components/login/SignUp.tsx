@@ -126,7 +126,8 @@ const SignUp = ({ error }: { error?: string }) => {
       type: 'text',
       name: 'email',
       required: true,
-      value: email,
+      disabled: signUpLoaderData?.userData?.email ?? false,
+      value: signUpLoaderData?.userData?.email ?? email,
       error: emailFieldError,
       errorId: 'email-error',
       onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
