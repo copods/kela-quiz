@@ -101,7 +101,7 @@ export async function getAllInvitedMember(workspaceId: string) {
       deleted: false,
       workspaceId,
       joined: {
-        equals: null,
+        not: true,
       },
     },
     include: {

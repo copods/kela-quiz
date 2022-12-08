@@ -1,5 +1,6 @@
 import {
   // commonConstants,
+  cypress,
   statusCheck,
 } from '~/constants/common.constants'
 const section1 = `Aptitude - section1`
