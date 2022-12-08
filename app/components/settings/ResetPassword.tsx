@@ -165,7 +165,7 @@ const ResetPassword = ({
           </div>
           {newPassword ? (
             <span className="text-sm">
-              Password Strength: {passwordStrength}
+              {t('commonConstants.passwordStrength')}: {passwordStrength}
             </span>
           ) : null}
           <div className="flex items-center justify-center">

@@ -228,7 +228,9 @@ const SignUp = ({ error }: { error?: string }) => {
           </div>
         </div>
         {password ? (
-          <span className="text-sm">Password Strength: {passwordStrength}</span>
+          <span className="text-sm">
+            {t('commonConstants.passwordStrength')}: {passwordStrength}
+          </span>
         ) : null}
         <div className="flex flex-col items-center justify-center gap-6">
           <Button
