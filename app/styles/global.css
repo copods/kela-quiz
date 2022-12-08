@@ -30,11 +30,3 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-
-th:nth-child(1) {
-  border-top-left-radius: 1rem;
-}
-
-th:nth-last-child(1) {
-  border-top-right-radius: 1rem;
-}
