@@ -8,7 +8,7 @@ import {
 import { useEffect, useState } from 'react'
 import Button from '~/components/form/Button'
 import Logo from '~/components/Logo'
-import { trimValue } from '~/utils'
+import { checkStrength, trimValue } from '~/utils'
 import { routes } from '~/constants/route.constants'
 import { useTranslation } from 'react-i18next'
 import InputField from '../form/InputField'
@@ -38,7 +38,7 @@ const SignUp = ({ error }: { error?: string }) => {
   const [workspace, setWorkspace] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
-
+  const [passwordStrength, setPasswordStrength] = useState('')
   const submitMemberForm = () => {
     let data = {
       firstName: firstName,
@@ -93,6 +93,15 @@ const SignUp = ({ error }: { error?: string }) => {
         signUpActionData?.errors?.emailRequired
     )
   }, [signUpActionData?.errors])
+  useEffect(() => {
+    if (checkStrength(password) < 2) {
+      setPasswordStrength('Weak')
+    } else if (2 < checkStrength(password) && checkStrength(password) < 4) {
+      setPasswordStrength('Medium')
+    } else if (checkStrength(password) === 5) {
+      setPasswordStrength('Strong')
+    }
+  }, [password])
   const inputFieldsProps = [
     {
       label: t('members.firstName'),
@@ -215,7 +224,9 @@ const SignUp = ({ error }: { error?: string }) => {
             })}
           </div>
         </div>
-
+        {password ? (
+          <span className="text-sm">Password Strength: {passwordStrength}</span>
+        ) : null}
         <div className="flex flex-col items-center justify-center gap-6">
           <Button
             tabIndex={0}

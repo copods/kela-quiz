@@ -2,7 +2,7 @@ import { Form, useActionData, useTransition } from '@remix-run/react'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import { trimValue } from '~/utils'
+import { checkStrength, trimValue } from '~/utils'
 import DialogWrapper from '../Dialog'
 import Button from '../form/Button'
 import PasswordInputFields from '../form/PasswordInputField'
@@ -32,6 +32,7 @@ const ResetPassword = ({
   const [password, setPassword] = useState('')
   const [newPassword, setNewPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
+  const [passwordStrength, setPasswordStrength] = useState('')
   const [error, setError] = useState({
     passMinLengthError: '',
     passNotMatchError: '',
@@ -127,6 +128,18 @@ const ResetPassword = ({
       passShouldNotBeSame: generalSettings?.errors?.passShouldNotBeSame,
     })
   }, [generalSettings])
+  useEffect(() => {
+    if (checkStrength(newPassword) < 2) {
+      setPasswordStrength('Weak')
+    } else if (
+      2 < checkStrength(newPassword) &&
+      checkStrength(newPassword) < 4
+    ) {
+      setPasswordStrength('Medium')
+    } else if (checkStrength(newPassword) === 5) {
+      setPasswordStrength('Strong')
+    }
+  }, [newPassword])
   return (
     <DialogWrapper
       open={openResetPassModel}
@@ -150,6 +163,11 @@ const ResetPassword = ({
               )
             })}
           </div>
+          {newPassword ? (
+            <span className="text-sm">
+              Password Strength: {passwordStrength}
+            </span>
+          ) : null}
           <div className="flex items-center justify-center">
             <Button
               tabIndex={0}
