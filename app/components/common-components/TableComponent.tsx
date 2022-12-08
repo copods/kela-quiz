@@ -1,7 +1,51 @@
-// import { t } from 'i18next'
+import { t } from 'i18next'
 import type { TableType } from '~/interface/Interface'
 import Pagination from './Pagination'
+/**
+* Table parameters : 
+* columns-
+    type:array
+    description: Column definitions  
+    Example: [{ title: 'Name', field: 'name', width: '20%' }] Note: width should be in percentage.
+  
+* data -
+    type: array
+    description: Data to be rendered
+    Example: [
+    {
+      id: '1',
+      name: 'Akshay',
+      email: 'akshay@copods.co',
+      role: 'Admin',
+      joined_on: '22',
+    }]
+* PagenationEnabled (Optional)-
+    type: boolean
+    description: Enables pagination based boolean value
+    
+NOTE: if you enable pagination, then pass all props related to pagination.
 
+ PAGINATION PROPS:
+
+* currentPage (Optional)- 
+    type: Number
+    description: Takes current page number
+* onPageChange (Optional) -
+    type:(e: number) => void
+    description: Takes function to change page number
+* totalItems(Optional) - 
+    type: number
+    description: Takes data length
+* pageSizeOptions (Optional): 
+    type: Array<number>
+    description: Takes array of numbers to for dropdown menu
+* pageSize (Optional):
+    type: number
+    description: Takes a number, determines how many items will shown on page
+* setPageSize (Optional): 
+    type: (e: number) => void
+    description: Takes function to set page size.    
+ */
 const Table = <T extends { id?: string }>({
   columns,
   data,
@@ -11,38 +55,25 @@ const Table = <T extends { id?: string }>({
   pageSize,
   setPageSize,
 }: TableType<T>) => {
+  if (!columns.length) {
+    return null
+  }
   return (
-    // <div className="table w-full rounded-2xl bg-white shadow ">
-    //   <div id="thead" className="table-header-group">
-    //     <div className="x table-row  border-b py-4 px-12">
-    //       <div className="table-cell  text-sm font-semibold text-gray-500">
-    //         Name
-    //       </div>
-    //       <div className="table-cell  text-sm font-semibold text-gray-500">
-    //         Age
-    //       </div>
-    //     </div>
-    //   </div>
-    //   <div id="tbody" className="table-row-group">
-    //     <div className="table-row">
-    //       <div className="table-cell border">Jacke</div>
-    //       <div className="table-cell border">10</div>
-    //     </div>
-    //   </div>
-    // </div>
-    // USING FLEX
-    <div id="table" className=" rounded-2xl bg-white shadow">
+    <div id="table" className="rounded-2xl bg-white shadow">
       {/* Table head */}
       <div className="overflow-auto">
         <div id="table-head">
-          <div id="table-header-row" className="flex ">
+          <div
+            id="table-header-row"
+            className="sticky top-0 flex border-b px-12"
+          >
             {columns.map((header, i) => (
               <div
-                key={i}
+                key={header.field}
                 id="table-th"
                 className={` min-w-[${
                   header.width ? header.width : '30%'
-                }] flex-1  border-b py-4 text-sm font-semibold text-gray-500 first:pl-12`}
+                }] flex-1 py-4 text-sm font-semibold text-gray-500 `}
               >
                 {header.title}
               </div>
@@ -50,112 +81,59 @@ const Table = <T extends { id?: string }>({
           </div>
         </div>
         {/* Table body */}
-        <div id="table-body" className="">
-          {data.map((rowData: T, i) => (
-            <div id="table-row" className="flex" key={i}>
-              {columns.map((column, j) => (
-                <div
-                  key={j}
-                  id="table-datacell"
-                  className={`min-w-[${
-                    column.width ? column.width : '30%'
-                  }]   flex-1 border-b border-gray-200 py-7  text-base font-medium text-gray-700 `}
-                >
-                  {rowData[column.field as keyof typeof rowData]}
-                </div>
-              ))}
+        <div id="table-body" className="px-9">
+          {data.length === 0 ? (
+            <div id="table-row" className="flex justify-center">
+              <div
+                id="table-datacell"
+                className={`truncate py-7 text-base font-medium text-gray-700 first:pl-3`}
+              >
+                {t('commonConstants.noRowsToShow')}
+              </div>
             </div>
-          ))}
+          ) : (
+            data.map((rowData: T, i) => (
+              <div id="table-row" className="flex" key={i}>
+                {columns.map((column, j) =>
+                  column.render ? (
+                    <div
+                      key={rowData.id}
+                      id="table-datacell"
+                      className={`min-w-[${
+                        column.width ? column.width : '30%'
+                      }] flex-1 truncate border-b border-gray-200 py-7 text-base font-medium text-gray-700 first:pl-3 `}
+                    >
+                      {column?.render(rowData)}
+                    </div>
+                  ) : (
+                    <div
+                      key={rowData.id}
+                      id="table-datacell"
+                      className={`min-w-[${
+                        column.width ? column.width : '30%'
+                      }] flex-1 truncate border-b border-gray-200 py-7 text-base font-medium text-gray-700 first:pl-3`}
+                    >
+                      {rowData[column.field as keyof typeof rowData]}
+                    </div>
+                  )
+                )}
+              </div>
+            ))
+          )}
         </div>
       </div>
-
-      <div id="table-footer" className="px-12 py-5">
-        <Pagination
-          currentPage={currentPage!}
-          onPageChange={(page) => onPageChange?.(page)}
-          pageSize={pageSize!}
-          setPageSize={setPageSize!}
-          totalItems={data.length!}
-        />
-      </div>
+      {paginationEnabled ? (
+        <div id="table-footer" className="px-12 py-5">
+          <Pagination
+            currentPage={currentPage!}
+            onPageChange={(page) => onPageChange?.(page)}
+            pageSize={pageSize!}
+            setPageSize={setPageSize!}
+            totalItems={data.length!}
+          />
+        </div>
+      ) : null}
     </div>
-    // TABLE TAG
-    // <table className="w-full table-auto  rounded-2xl bg-white shadow ">
-    //   <thead className="relative">
-    //     <tr className="border-b border-solid border-gray-200">
-    //       {columns.map((header, i) => (
-    //         <th
-    //           className={`sticky top-0 bg-white py-4 pl-9 text-left text-sm  font-semibold text-gray-500 `}
-    //           key={header.field}
-    //         >
-    //           {header.title}
-    //         </th>
-    //       ))}
-    //     </tr>
-    //   </thead>
-    //   <tbody className="h-48 rounded-lg">
-    //     {data.length === 0 ? (
-    //       <tr>
-    //         <td colSpan={4} className="text-center text-sm">
-    //           {t('commonConstants.noRowsToShow')}
-    //         </td>
-    //       </tr>
-    //     ) : (
-    //       data.map((rowData: T, i) => (
-    //         <tr
-    //           className={` border-solid border-gray-200 ${
-    //             i == 0 && `border-none`
-    //           }`}
-    //           key={rowData.id}
-    //         >
-    //           {columns.map((column, i) => (
-    //             <>
-    //               {column.render ? (
-    //                 <td
-    //                   width={column.width}
-    //                   className={` truncate overflow-ellipsis text-base text-gray-700`}
-    //                   key={column.title}
-    //                 >
-    //                   {column?.render(rowData)}
-    //                 </td>
-    //               ) : (
-    //                 <td
-    //                   className={`border-t py-7 pl-9 text-base text-gray-700`}
-    //                   width={column.width}
-    //                   key={column.title}
-    //                   title={String(
-    //                     rowData[column.field as keyof typeof rowData]
-    //                   )}
-    //                 >
-    //                   {rowData[column.field as keyof typeof rowData]}
-    //                 </td>
-    //               )}
-    //             </>
-    //           ))}
-    //         </tr>
-    //       ))
-    //     )}
-    //   </tbody>
-
-    //   {paginationEnabled ? (
-    //     <tfoot>
-    //       <tr>
-    //         <td
-    //           colSpan={data.length + 1}
-    //           className="border-t-[1px] px-12 py-5 align-middle"
-    //         >
-    //           <Pagination
-    //             currentPage={currentPage!}
-    //             onPageChange={(page) => onPageChange?.(page)}
-    //             pageSize={pageSize!}
-    //             setPageSize={setPageSize!}
-    //             totalItems={data.length!}
-    //           />
-    //         </td>
-    //       </tr>
-    //     </tfoot>
-    //   ) : null}
-    // </table>
   )
 }
 
