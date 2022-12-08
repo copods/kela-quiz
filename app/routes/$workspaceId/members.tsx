@@ -17,12 +17,13 @@ import { routes } from '~/constants/route.constants'
 import { useTranslation } from 'react-i18next'
 import { getUserWorkspaces } from '~/models/workspace.server'
 import { actions } from '~/constants/action.constants'
-import InvitedMembersList from '~/components/members/InvitedMembersList'
+// import InvitedMembersList from '~/components/members/InvitedMembersList'
 import {
   getAllInvitedMember,
   inviteNewUser,
   reinviteMemberForWorkspace,
 } from '~/models/invites.server'
+import Table from '~/components/common-components/TableComponent'
 
 export type ActionData = {
   errors?: {
@@ -220,6 +221,80 @@ const Members = () => {
       }
     }
   }, [membersActionData, t])
+  const column = [
+    { title: 'Name', field: 'name', width: '20%' },
+    { title: 'Email', field: 'email', width: '20%' },
+    { title: 'Role', field: 'role', width: '20%' },
+    { title: 'Joined On', field: 'joined_on', width: '20%' },
+    { title: 'Joined On', field: 'joined_on', width: '20%' },
+  ]
+  const data = [
+    {
+      id: '1',
+      name: 'Akshay',
+      email: 'akshay@copods.co',
+      role: 'Admin',
+      joined_on: '22',
+    },
+    {
+      id: '2',
+      name: 'Akshay',
+      email: 'akshay@copods.co',
+      role: 'Admin',
+      joined_on: '22',
+    },
+    {
+      id: '2',
+      name: 'Akshay',
+      email: 'akshay@copods.co',
+      role: 'Admin',
+      joined_on: '22',
+    },
+    {
+      id: '2',
+      name: 'Akshay',
+      email: 'akshay@copods.co',
+      role: 'Admin',
+      joined_on: '22',
+    },
+    {
+      id: '2',
+      name: 'Akshay',
+      email: 'akshay@copods.co',
+      role: 'Admin',
+      joined_on: '22',
+    },
+    {
+      id: '2',
+      name: 'Akshay',
+      email: 'akshay@copods.co',
+      role: 'Admin',
+      joined_on: '22',
+    },
+    {
+      id: '2',
+      name: 'Akshay',
+      email: 'akshay@copods.co',
+      role: 'Admin',
+      joined_on: '22',
+    },
+    {
+      id: '3',
+      name: 'Jack',
+      email: 'Jack@copods.co',
+      role: 'Admin',
+      joined_on: '22',
+    },
+    {
+      id: '4',
+      name: 'tim',
+      email: 'tim@copods.co',
+      role: 'Admin',
+      joined_on: '22',
+    },
+  ]
+  const [currentPage, setCurrentPage] = useState(1)
+  const [pageSize, setPageSize] = useState(5)
   return (
     <div className="flex flex-col gap-6 p-1">
       <MembersHeader
@@ -237,10 +312,21 @@ const Members = () => {
         </h1>
         <MembersList actionStatus={membersActionData?.resp?.title} />
       </div>
-      <div className="flex flex-col gap-4 text-2xl">
-        <InvitedMembersList actionStatus={membersActionData?.resp?.title} />
-      </div>
+      {/* <div className="flex  flex-col gap-4 text-2xl"> */}
+      {/* <div className="max-h-72 overflow-auto"> */}
+      <Table
+        data={data}
+        columns={column}
+        paginationEnabled={true}
+        currentPage={currentPage}
+        onPageChange={setCurrentPage}
+        pageSize={pageSize}
+        setPageSize={setPageSize}
+      />
+      {/* </div> */}
+      {/* <InvitedMembersList actionStatus={membersActionData?.resp?.title} /> */}
     </div>
+    // </div>
   )
 }
 

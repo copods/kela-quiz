@@ -61,7 +61,7 @@ const PaginationDropDown = ({
   const { t } = useTranslation()
   return (
     <Listbox value={selected} onChange={setSelected}>
-      <div className="relative mt-1">
+      <div className="relative">
         <Listbox.Button className="flex cursor-pointer items-center text-xs text-gray-600">
           <span className="block truncate">
             {selected} {t('commonConstants.items')}

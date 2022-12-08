@@ -313,12 +313,19 @@ export interface column<T> {
   title: string
   field: string
   render?: (rowData: T) => JSX.Element
-  width?: string
+  width: string
 }
 export interface TableType<T> {
   columns: column<T>[]
   data: T[]
   title?: string
+  paginationEnabled?: boolean
+  onPageChange?: (e: number) => void
+  totalItems?: number
+  currentPage?: number
+  pageSizeOptions?: Array<number>
+  pageSize?: number
+  setPageSize?: (e: number) => void
 }
 export interface Workspace {
   id: string
