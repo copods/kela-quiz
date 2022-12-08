@@ -84,7 +84,7 @@ export function trimValue(value: string) {
   }
   return str
 }
-export function checkStrength(newPassword: string) {
+export function checkPasswordStrength(newPassword: string) {
   let passwordStrengthCount = 0
   if (/.{8}/.test(newPassword)) {
     passwordStrengthCount = passwordStrengthCount + 1

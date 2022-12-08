@@ -8,7 +8,7 @@ import {
 import { useEffect, useState } from 'react'
 import Button from '~/components/form/Button'
 import Logo from '~/components/Logo'
-import { checkStrength, trimValue } from '~/utils'
+import { checkPasswordStrength, trimValue } from '~/utils'
 import { routes } from '~/constants/route.constants'
 import { useTranslation } from 'react-i18next'
 import InputField from '../form/InputField'
@@ -94,11 +94,14 @@ const SignUp = ({ error }: { error?: string }) => {
     )
   }, [signUpActionData?.errors])
   useEffect(() => {
-    if (checkStrength(password) < 2) {
+    if (checkPasswordStrength(password) < 2) {
       setPasswordStrength('Weak')
-    } else if (2 < checkStrength(password) && checkStrength(password) < 4) {
+    } else if (
+      2 < checkPasswordStrength(password) &&
+      checkPasswordStrength(password) < 4
+    ) {
       setPasswordStrength('Medium')
-    } else if (checkStrength(password) === 5) {
+    } else if (checkPasswordStrength(password) === 5) {
       setPasswordStrength('Strong')
     }
   }, [password])

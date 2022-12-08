@@ -2,7 +2,7 @@ import { Form, useActionData, useTransition } from '@remix-run/react'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import { checkStrength, trimValue } from '~/utils'
+import { checkPasswordStrength, trimValue } from '~/utils'
 import DialogWrapper from '../Dialog'
 import Button from '../form/Button'
 import PasswordInputFields from '../form/PasswordInputField'
@@ -129,14 +129,14 @@ const ResetPassword = ({
     })
   }, [generalSettings])
   useEffect(() => {
-    if (checkStrength(newPassword) < 2) {
+    if (checkPasswordStrength(newPassword) < 2) {
       setPasswordStrength('Weak')
     } else if (
-      2 < checkStrength(newPassword) &&
-      checkStrength(newPassword) < 4
+      2 < checkPasswordStrength(newPassword) &&
+      checkPasswordStrength(newPassword) < 4
     ) {
       setPasswordStrength('Medium')
-    } else if (checkStrength(newPassword) === 5) {
+    } else if (checkPasswordStrength(newPassword) === 5) {
       setPasswordStrength('Strong')
     }
   }, [newPassword])
