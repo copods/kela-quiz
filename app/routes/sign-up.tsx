@@ -7,6 +7,7 @@ import SignUp from '~/components/login/SignUp'
 import { createUserSession } from '~/session.server'
 import { safeRedirect } from '~/utils'
 import { routes } from '~/constants/route.constants'
+import { getInvitedMemberById } from '~/models/invites.server'
 
 export type ActionData = {
   errors?: {
@@ -26,8 +27,12 @@ export type ActionData = {
   }
 }
 export const loader: LoaderFunction = async ({ request }) => {
+  let userData
   const inviteId = new URL(request.url).searchParams.get('id')
-  return json({ inviteId })
+  if (inviteId) {
+    userData = await getInvitedMemberById(inviteId)
+  }
+  return json({ inviteId, userData })
 }
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
