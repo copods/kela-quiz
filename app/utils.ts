@@ -84,3 +84,22 @@ export function trimValue(value: string) {
   }
   return str
 }
+export function checkStrength(newPassword: string) {
+  let passwordStrengthCount = 0
+  if (/.{8}/.test(newPassword)) {
+    passwordStrengthCount = passwordStrengthCount + 1
+  }
+  if (/[A-Z]/.test(newPassword)) {
+    passwordStrengthCount = passwordStrengthCount + 1
+  }
+  if (/[!@#$&*]/.test(newPassword)) {
+    passwordStrengthCount = passwordStrengthCount + 1
+  }
+  if (/[0-9]/.test(newPassword)) {
+    passwordStrengthCount = passwordStrengthCount + 1
+  }
+  if (/[a-z]/.test(newPassword)) {
+    passwordStrengthCount = passwordStrengthCount + 1
+  }
+  return passwordStrengthCount
+}
