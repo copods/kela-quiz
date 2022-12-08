@@ -97,7 +97,7 @@ const AddQuestionInSection = () => {
     ) {
       let optionCount = 0
       for (let option of options) {
-        if (option.option.length !== 0) {
+        if (option.option.length) {
           optionCount = optionCount + 1
         }
       }
