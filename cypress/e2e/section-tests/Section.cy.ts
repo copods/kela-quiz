@@ -1,6 +1,6 @@
 import {
   // commonConstants,
-  cypress,
+
   statusCheck,
 } from '~/constants/common.constants'
 const section1 = `Aptitude - section1`
@@ -952,8 +952,7 @@ describe('Test for Tests', () => {
         cy.get('textarea').type('Aptitude')
         cy.get('[data-cy="submit"]').click()
       })
-    cy.get('.Toastify__toast').should('have.text', cypress.duplicateTitle)
-    cy.get('.Toastify__close-button').click()
+    cy.get('#duplicete-title-error').should('have.text', statusCheck.duplicate)
   })
   it('SortBy Name or created Date', () => {
     cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()

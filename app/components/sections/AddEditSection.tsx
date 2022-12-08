@@ -111,6 +111,10 @@ const AddEditSection = ({
             <p id="addEditSection-title-error" className="px-3 text-red-500">
               {t(sectionActionErrors.title)}
             </p>
+          ) : sectionActionData?.errors ? (
+            <p id="duplicete-title-error" className="px-3 text-red-500">
+              {t(sectionActionData?.errors?.title)}
+            </p>
           ) : null}
         </div>
         <div className="pb-6">
