@@ -1,12 +1,12 @@
 import type { Role } from '~/interface/Interface'
 import { useSubmit, useTransition } from '@remix-run/react'
 import { useState, useEffect } from 'react'
-import Button from '../form/Button'
+import Button from '../common-components/Button'
 import { trimValue } from '~/utils'
-import DropdownField from '../form/Dropdown'
-import InputField from '~/components/form/InputField'
+import DropdownField from '../common-components/Dropdown'
+import InputField from '~/components/common-components/InputField'
 import { useTranslation } from 'react-i18next'
-import DialogWrapper from '../Dialog'
+import DialogWrapper from '../common-components/Dialog'
 
 export default function AddMemberModal({
   roles,

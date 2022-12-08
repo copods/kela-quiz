@@ -1,4 +1,4 @@
-.setDynamicHeight .ql-editor {
+.ql-editor {
   overflow: inherit !important;
   min-height: 85px;
 }
