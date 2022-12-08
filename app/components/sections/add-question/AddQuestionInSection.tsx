@@ -109,7 +109,13 @@ const AddQuestionInSection = () => {
       }
       let flag = 0
       for (let option of options) {
-        if (option.isCorrect) {
+        if (option.isCorrect && !option.option) {
+          toast.error(t('statusCheck.selectCorrOption'), {
+            toastId: 'correctOptionRequired',
+          })
+          return
+        }
+        if (option.isCorrect && option.option) {
           flag = 1
         }
       }
@@ -197,7 +203,9 @@ const AddQuestionInSection = () => {
             option: option.option,
             isCorrect: option.isCorrect,
           }
-          testQuestion.options.push(optionForQuestion)
+          if (option.option) {
+            testQuestion.options.push(optionForQuestion)
+          }
         }
       )
     } else if (getQuestionType(selectedTypeOfQuestion) === QuestionTypes.text) {
