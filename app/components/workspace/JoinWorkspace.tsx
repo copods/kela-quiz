@@ -7,6 +7,7 @@ import {
 import { useTranslation } from 'react-i18next'
 import Button from '../common-components/Button'
 import logo from '../../../public/assets/member-invitation.svg'
+import {useEffect} from 'react'
 
 const JoinWorkspace = () => {
   const { t } = useTranslation()
@@ -20,18 +21,16 @@ const JoinWorkspace = () => {
       method: 'post',
     })
   }
-  const rejectInvitedWorkspace = () => {
-    let data = {
-      action: 'reject',
-    }
-    submit(data, {
-      method: 'post',
-    })
-  }
+
   const transition = useTransition()
   const workspcaceInvitationData = useLoaderData()
   let navigate = useNavigate()
   const workspaceInvitation = workspcaceInvitationData.invitedMember
+  useEffect(()=>{
+    if(workspcaceInvitationData.loginWithWrongId===false){
+      return joinInvitedWorkspace()
+    }
+  },[workspcaceInvitationData.loginWithWrongId])
 
   return (
     <div className="flex h-full flex-col items-center justify-center gap-6 rounded-lg">
@@ -52,11 +51,7 @@ const JoinWorkspace = () => {
                 <span className="text-center text-primary">
                   {t('members.alreadyJoinedWorkspace')}
                 </span>
-              ) : workspaceInvitation.joined === false ? (
-                <span className="text-center text-primary">
-                  {t('members.alreadyRejectedWorkspaceInvitation')}
-                </span>
-              ) : workspcaceInvitationData.loginWithWrongId === true ? (
+              ): workspcaceInvitationData.loginWithWrongId === true ? (
                 <span className="text-center text-primary">
                   {t('members.loggedinFromAnotherAccount')}
                 </span>
@@ -97,18 +92,6 @@ const JoinWorkspace = () => {
                 ''
               ) : (
                 <div className="flex justify-center gap-8">
-                  <Button
-                    tabIndex={0}
-                    title="Reject"
-                    id="reject-button"
-                    buttonText="Reject"
-                    name="reject-workspace"
-                    varient="primary-outlined"
-                    value={'reject'}
-                    className="h-9 px-24"
-                    onClick={() => rejectInvitedWorkspace()}
-                  />
-
                   <Button
                     tabIndex={0}
                     id="join-button"

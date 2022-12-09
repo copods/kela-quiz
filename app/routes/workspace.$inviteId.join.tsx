@@ -10,7 +10,6 @@ import { useEffect } from 'react'
 import { toast } from 'react-toastify'
 import { routes } from '~/constants/route.constants'
 import { joinWorkspace } from '~/models/workspace.server'
-import { rejectWorkspaceInvitation } from '../models/workspace.server'
 import { getInvitedMemberById } from '~/models/invites.server'
 import { getUserByEmail } from '~/models/user.server'
 
@@ -81,37 +80,6 @@ export const action: ActionFunction = async ({ request, params }) => {
       })
 
     return join
-  }
-  if (action === 'reject') {
-    let reject = null
-
-    await rejectWorkspaceInvitation({
-      invitedId: params.inviteId as string,
-    })
-      .then((res) => {
-        reject = json<ActionData>(
-          {
-            resp: {
-              title: 'statusCheck.workspaceInvitationRejected',
-              status: 200,
-            },
-          },
-          { status: 200 }
-        )
-      })
-      .catch((err) => {
-        reject = json<ActionData>(
-          {
-            errors: {
-              title: 'statusCheck.commonError',
-              status: 400,
-            },
-          },
-          { status: 400 }
-        )
-      })
-
-    return reject
   }
 }
 const InviteMember = () => {
