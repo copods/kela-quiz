@@ -1,6 +1,6 @@
 // import { t } from 'i18next'
 import type { TableType } from '~/interface/Interface'
-// import Pagination from './Pagination'
+import Pagination from './Pagination'
 /**
 * Table parameters : 
 * columns-
@@ -74,10 +74,14 @@ const Table = <T extends { id?: string }>({
   return (
     <div
       id="table"
-      className="relative  w-full overflow-hidden rounded-2xl bg-white px-8 shadow"
+      style={{ maxHeight: 'inherit' }}
+      className="relative w-full rounded-2xl bg-white  shadow"
     >
-      <div className=" overflow-x-auto ">
-        <div id="table-header-row" className="flex">
+      <div style={{ maxHeight: 'inherit' }} className=" flex flex-col">
+        <div
+          id="table-header-row"
+          className="sticky top-0 z-10 flex w-full border-b bg-white px-8"
+        >
           {columns.map((header, i) => (
             <div
               key={header.field}
@@ -86,32 +90,58 @@ const Table = <T extends { id?: string }>({
                 maxWidth: `${header.width}`,
               }}
               id="table-th"
-              className={'flex-1 py-4 px-2 text-sm font-semibold text-gray-500'}
+              className={
+                'flex-1  bg-white py-4 px-2 text-sm font-semibold text-gray-500'
+              }
             >
               {header.title}
             </div>
           ))}
         </div>
-
-        <hr className="absolute -mx-8 h-[1px] w-full border-0 bg-gray-400" />
-
-        {data.map((rowData: T, j) => (
-          <div id="table-row" key={j} className="flex ">
-            {columns.map((column, i) => (
-              <div
-                id="table-data-cell"
-                style={{
-                  minWidth: `${column.width}`,
-                  maxWidth: `${column.width}`,
-                }}
-                className="relative flex-1 overflow-auto truncate border-b py-4 px-2"
-                key={i}
-              >
-                {rowData[column.field as keyof typeof rowData]}
-              </div>
-            ))}
+        <div id="table-body" className="overflow-auto px-8">
+          {data.map((rowData: T, j) => (
+            <div id="table-row" key={j} className="flex ">
+              {columns.map((column, i) =>
+                column.render ? (
+                  <div
+                    id="table-data-cell"
+                    style={{
+                      minWidth: `${column.width}`,
+                      maxWidth: `${column.width}`,
+                    }}
+                    className="relative flex-1 overflow-auto truncate border-b py-4 px-2"
+                    key={i}
+                  >
+                    {column.render(rowData)}
+                  </div>
+                ) : (
+                  <div
+                    id="table-data-cell"
+                    style={{
+                      minWidth: `${column.width}`,
+                      maxWidth: `${column.width}`,
+                    }}
+                    className="relative flex-1 overflow-auto truncate border-b py-4 px-2"
+                    key={i}
+                  >
+                    {rowData[column.field as keyof typeof rowData]}
+                  </div>
+                )
+              )}
+            </div>
+          ))}
+        </div>
+        {paginationEnabled ? (
+          <div className="px-8 py-5">
+            <Pagination
+              currentPage={currentPage!}
+              onPageChange={(page) => onPageChange?.(page)}
+              pageSize={pageSize!}
+              setPageSize={setPageSize!}
+              totalItems={data.length!}
+            />
           </div>
-        ))}
+        ) : null}
       </div>
     </div>
     // <div id="table" className="w-full rounded-2xl bg-white shadow">
