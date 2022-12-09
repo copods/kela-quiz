@@ -72,8 +72,11 @@ const Table = <T extends { id?: string }>({
     return null
   }
   return (
-    <div id="table" className="w-full  rounded-2xl bg-white shadow">
-      <div className=" overflow-x-auto">
+    <div
+      id="table"
+      className="relative  w-full overflow-hidden rounded-2xl bg-white px-8 shadow"
+    >
+      <div className=" overflow-x-auto ">
         <div id="table-header-row" className="flex">
           {columns.map((header, i) => (
             <div
@@ -83,14 +86,14 @@ const Table = <T extends { id?: string }>({
                 maxWidth: `${header.width}`,
               }}
               id="table-th"
-              className={
-                'flex-1 border-b py-4 text-sm font-semibold text-gray-500 first:pl-12 '
-              }
+              className={'flex-1 py-4 px-2 text-sm font-semibold text-gray-500'}
             >
               {header.title}
             </div>
           ))}
         </div>
+
+        <hr className="absolute -mx-8 h-[1px] w-full border-0 bg-gray-400" />
 
         {data.map((rowData: T, j) => (
           <div id="table-row" key={j} className="flex ">
@@ -101,21 +104,10 @@ const Table = <T extends { id?: string }>({
                   minWidth: `${column.width}`,
                   maxWidth: `${column.width}`,
                 }}
-                className="relative flex-1 overflow-auto truncate first:pl-12 "
+                className="relative flex-1 overflow-auto truncate border-b py-4 px-2"
                 key={i}
               >
                 {rowData[column.field as keyof typeof rowData]}
-                {j !== data.length - 1 && (
-                  <div
-                    className={`absolute  border-b   ${
-                      i === 0
-                        ? 'bottom-0 right-0 w-[calc(100%-36px)]'
-                        : i === columns.length - 1
-                        ? 'bottom-0 left-0 w-[calc(100%-36px)]'
-                        : 'bottom-0 right-0 left-0 w-full'
-                    }`}
-                  ></div>
-                )}
               </div>
             ))}
           </div>
