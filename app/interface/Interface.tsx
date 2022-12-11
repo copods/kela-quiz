@@ -313,7 +313,7 @@ export interface column<T> {
   title: string
   field: string
   render?: (rowData: T) => JSX.Element
-  width: string
+  width?: string
 }
 export interface TableType<T> {
   columns: column<T>[]

@@ -49,30 +49,17 @@ NOTE: if you enable pagination, then pass all props related to pagination.
 const Table = <T extends { id?: string }>({
   columns,
   data,
-  paginationEnabled,
+  paginationEnabled = false,
   currentPage,
   onPageChange,
   pageSize,
   setPageSize,
 }: TableType<T>) => {
-  // function getHeaderClasses(width: string) {
-  //   console.log(width)
-  //   return `min-w-[${width ? width : ''}] max-w-[${
-  //     width ? width : ''
-  //   }] flex-1 py-4 text-sm font-semibold text-gray-500 pr-3`
-  // }
-  // function getDataCellClasses(width: string) {
-  //   console.log(width)
-
-  //   return `min-w-[${width ? width : ''}] max-w-[${
-  //     width ? width : ''
-  //   }] flex-1 truncate border-b border-gray-200 py-7 text-base font-medium text-gray-700 first:pl-3 pr-3`
-  // }
   if (!columns.length) {
     return null
   }
   return (
-    <>
+    <div style={{ maxHeight: 'inherit' }}>
       <div
         id="table"
         style={{ maxHeight: 'inherit' }}
@@ -95,32 +82,49 @@ const Table = <T extends { id?: string }>({
         </div>
 
         {data.map((rowData: T, i) => (
-          <div key={i} className="flex ">
-            {columns.map((column, j) => (
-              <div
-                style={{
-                  minWidth: `${column.width}`,
-                  maxWidth: `${column.width}`,
-                }}
-                key={j}
-                className="flex-1 truncate border-b bg-white px-9 py-7 text-gray-700"
-              >
-                {rowData[column.field as keyof typeof rowData]}
-              </div>
-            ))}
+          <div key={rowData.id} className="flex ">
+            {columns.map((column, j) =>
+              column.render ? (
+                <div
+                  id="table-td"
+                  style={{
+                    minWidth: `${column.width}`,
+                    maxWidth: `${column.width}`,
+                  }}
+                  key={column.field}
+                  className="flex-1 truncate border-b bg-white px-8 py-7 text-gray-700"
+                >
+                  {column.render(rowData)}
+                </div>
+              ) : (
+                <div
+                  id="table-td"
+                  style={{
+                    minWidth: `${column.width}`,
+                    maxWidth: `${column.width}`,
+                  }}
+                  key={column.field}
+                  className="flex-1 truncate border-b bg-white px-8 py-7 text-gray-700"
+                >
+                  {rowData[column.field as keyof typeof rowData]}
+                </div>
+              )
+            )}
           </div>
         ))}
       </div>
-      <div className="rounded-b-2xl border bg-white px-9 py-5 shadow">
-        <Pagination
-          currentPage={currentPage!}
-          onPageChange={(page) => onPageChange?.(page)}
-          pageSize={pageSize!}
-          setPageSize={setPageSize!}
-          totalItems={data.length!}
-        />
-      </div>
-    </>
+      {paginationEnabled ? (
+        <div className="rounded-b-2xl border bg-white px-9 py-5 shadow">
+          <Pagination
+            currentPage={currentPage!}
+            onPageChange={(page) => onPageChange?.(page)}
+            pageSize={pageSize!}
+            setPageSize={setPageSize!}
+            totalItems={data.length!}
+          />
+        </div>
+      ) : null}
+    </div>
     // <div id="table" className="w-full rounded-2xl bg-white shadow">
     //   {/* Table head */}
 
