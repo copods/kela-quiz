@@ -1,12 +1,12 @@
-// import { t } from 'i18next'
+import { t } from 'i18next'
 import type { TableType } from '~/interface/Interface'
 import Pagination from './Pagination'
 /**
 * Table parameters : 
 * columns-
     type:array
-    description: Column definitions  
-    Example: [{ title: 'Name', field: 'name', width: '20%' }] Note: width should be in percentage.
+    description: Column definitions   
+    Example: [{ title: 'Name', field: 'name', width: '20%',render:yourComponent }]  Note: width should be in percentage. width and render are optional .
   
 * data -
     type: array
@@ -80,38 +80,43 @@ const Table = <T extends { id?: string }>({
             </div>
           ))}
         </div>
-
-        {data.map((rowData: T, i) => (
-          <div key={rowData.id} className="flex ">
-            {columns.map((column, j) =>
-              column.render ? (
-                <div
-                  id="table-td"
-                  style={{
-                    minWidth: `${column.width}`,
-                    maxWidth: `${column.width}`,
-                  }}
-                  key={column.field}
-                  className="flex-1 truncate border-b bg-white px-8 py-7 text-gray-700"
-                >
-                  {column.render(rowData)}
-                </div>
-              ) : (
-                <div
-                  id="table-td"
-                  style={{
-                    minWidth: `${column.width}`,
-                    maxWidth: `${column.width}`,
-                  }}
-                  key={column.field}
-                  className="flex-1 truncate border-b bg-white px-8 py-7 text-gray-700"
-                >
-                  {rowData[column.field as keyof typeof rowData]}
-                </div>
-              )
-            )}
+        {data.length === 0 ? (
+          <div className="flex justify-center py-7 text-gray-700">
+            <span>{t('commonConstants.noRowsToShow')}</span>
           </div>
-        ))}
+        ) : (
+          data.map((rowData: T, i) => (
+            <div key={rowData.id} className="flex ">
+              {columns.map((column, j) =>
+                column.render ? (
+                  <div
+                    id="table-td"
+                    style={{
+                      minWidth: `${column.width}`,
+                      maxWidth: `${column.width}`,
+                    }}
+                    key={column.field}
+                    className="flex-1 truncate border-b bg-white px-8 py-7 text-gray-700"
+                  >
+                    {column.render(rowData)}
+                  </div>
+                ) : (
+                  <div
+                    id="table-td"
+                    style={{
+                      minWidth: `${column.width}`,
+                      maxWidth: `${column.width}`,
+                    }}
+                    key={column.field}
+                    className="flex-1 truncate border-b bg-white px-8 py-7 text-gray-700"
+                  >
+                    {rowData[column.field as keyof typeof rowData]}
+                  </div>
+                )
+              )}
+            </div>
+          ))
+        )}
       </div>
       {paginationEnabled ? (
         <div className="rounded-b-2xl border bg-white px-9 py-5 shadow">
@@ -125,82 +130,6 @@ const Table = <T extends { id?: string }>({
         </div>
       ) : null}
     </div>
-    // <div id="table" className="w-full rounded-2xl bg-white shadow">
-    //   {/* Table head */}
-
-    //   <div id="table-head"></div>
-    //   {/* Table body */}
-    //   <div id="table-body" className="w-full overflow-auto px-9">
-    //     <div id="table-header-row" className="flex border-b px-12">
-    //       {columns.map((header, i) => (
-    //         <div
-    //           key={header.field}
-    //           style={{
-    //             minWidth: `${header.width}`,
-    //             maxWidth: `${header.width}`,
-    //           }}
-    //           id="table-th"
-    //           className={getHeaderClasses(header.width)}
-    //         >
-    //           {header.title}
-    //         </div>
-    //       ))}
-    //     </div>
-    //     {data.length === 0 ? (
-    //       <div id="table-row" className="flex justify-center">
-    //         <div
-    //           id="table-datacell"
-    //           className={`truncate py-7 text-base font-medium text-gray-700 first:pl-3`}
-    //         >
-    //           {t('commonConstants.noRowsToShow')}
-    //         </div>
-    //       </div>
-    //     ) : (
-    //       data.map((rowData: T, i) => (
-    //         <div id="table-row" className="flex" key={i}>
-    //           {columns.map((column, j) =>
-    //             column.render ? (
-    //               <div
-    //                 key={rowData.id}
-    //                 style={{
-    //                   minWidth: `${column.width}`,
-    //                   maxWidth: `${column.width}`,
-    //                 }}
-    //                 id="table-datacell"
-    //                 className={getDataCellClasses(column.width)}
-    //               >
-    //                 {column?.render(rowData)}
-    //               </div>
-    //             ) : (
-    //               <div
-    //                 key={rowData.id}
-    //                 id="table-datacell"
-    //                 style={{
-    //                   minWidth: `${column.width}`,
-    //                   maxWidth: `${column.width}`,
-    //                 }}
-    //                 className={getDataCellClasses(column.width)}
-    //               >
-    //                 {rowData[column.field as keyof typeof rowData]}
-    //               </div>
-    //             )
-    //           )}
-    //         </div>
-    //       ))
-    //     )}
-    //   </div>
-    //   {paginationEnabled ? (
-    //     <div id="table-footer" className="px-12 py-5">
-    //       <Pagination
-    //         currentPage={currentPage!}
-    //         onPageChange={(page) => onPageChange?.(page)}
-    //         pageSize={pageSize!}
-    //         setPageSize={setPageSize!}
-    //         totalItems={data.length!}
-    //       />
-    //     </div>
-    //   ) : null}
-    // </div>
   )
 }
 
