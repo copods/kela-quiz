@@ -72,16 +72,13 @@ const Table = <T extends { id?: string }>({
     return null
   }
   return (
-    <div
-      id="table"
-      style={{ maxHeight: 'inherit' }}
-      className="relative w-full rounded-2xl bg-white  shadow"
-    >
-      <div style={{ maxHeight: 'inherit' }} className=" flex flex-col">
-        <div
-          id="table-header-row"
-          className="sticky top-0 z-10 flex w-full border-b bg-white px-8"
-        >
+    <>
+      <div
+        id="table"
+        style={{ maxHeight: 'inherit' }}
+        className=" overflow-x-auto rounded-t-2xl border-t border-r border-l shadow"
+      >
+        <div id="table-head-row" className="sticky top-0 flex bg-gray-100">
           {columns.map((header, i) => (
             <div
               key={header.field}
@@ -90,60 +87,40 @@ const Table = <T extends { id?: string }>({
                 maxWidth: `${header.width}`,
               }}
               id="table-th"
-              className={
-                'flex-1  bg-white py-4 px-2 text-sm font-semibold text-gray-500'
-              }
+              className="flex-1 border-b bg-gray-100 py-4 px-9 text-sm font-semibold text-gray-500"
             >
               {header.title}
             </div>
           ))}
         </div>
-        <div id="table-body" className="overflow-auto px-8">
-          {data.map((rowData: T, j) => (
-            <div id="table-row" key={j} className="flex ">
-              {columns.map((column, i) =>
-                column.render ? (
-                  <div
-                    id="table-data-cell"
-                    style={{
-                      minWidth: `${column.width}`,
-                      maxWidth: `${column.width}`,
-                    }}
-                    className="relative flex-1 overflow-auto truncate border-b py-4 px-2"
-                    key={i}
-                  >
-                    {column.render(rowData)}
-                  </div>
-                ) : (
-                  <div
-                    id="table-data-cell"
-                    style={{
-                      minWidth: `${column.width}`,
-                      maxWidth: `${column.width}`,
-                    }}
-                    className="relative flex-1 overflow-auto truncate border-b py-4 px-2"
-                    key={i}
-                  >
-                    {rowData[column.field as keyof typeof rowData]}
-                  </div>
-                )
-              )}
-            </div>
-          ))}
-        </div>
-        {paginationEnabled ? (
-          <div className="px-8 py-5">
-            <Pagination
-              currentPage={currentPage!}
-              onPageChange={(page) => onPageChange?.(page)}
-              pageSize={pageSize!}
-              setPageSize={setPageSize!}
-              totalItems={data.length!}
-            />
+
+        {data.map((rowData: T, i) => (
+          <div key={i} className="flex ">
+            {columns.map((column, j) => (
+              <div
+                style={{
+                  minWidth: `${column.width}`,
+                  maxWidth: `${column.width}`,
+                }}
+                key={j}
+                className="flex-1 truncate border-b bg-white px-9 py-7 text-gray-700"
+              >
+                {rowData[column.field as keyof typeof rowData]}
+              </div>
+            ))}
           </div>
-        ) : null}
+        ))}
       </div>
-    </div>
+      <div className="rounded-b-2xl border bg-white px-9 py-5 shadow">
+        <Pagination
+          currentPage={currentPage!}
+          onPageChange={(page) => onPageChange?.(page)}
+          pageSize={pageSize!}
+          setPageSize={setPageSize!}
+          totalItems={data.length!}
+        />
+      </div>
+    </>
     // <div id="table" className="w-full rounded-2xl bg-white shadow">
     //   {/* Table head */}
 
