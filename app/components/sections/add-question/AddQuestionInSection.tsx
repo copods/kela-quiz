@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 import { useState } from 'react'
-import BreadCrumb from '../../BreadCrumb'
+import BreadCrumb from '../../common-components/BreadCrumb'
 import QuestionEditor from './QuestionEditor'
 import OptionForQuestion from './OptionForQuestion'
 import cuid from 'cuid'
@@ -11,7 +11,7 @@ import {
   useTransition,
 } from '@remix-run/react'
 import { toast } from 'react-toastify'
-import Button from '~/components/form/Button'
+import Button from '~/components/common-components/Button'
 import { routes } from '~/constants/route.constants'
 import { QuestionTypes, sortByOrder } from '~/interface/Interface'
 import { useTranslation } from 'react-i18next'

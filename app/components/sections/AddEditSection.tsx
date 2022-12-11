@@ -1,9 +1,9 @@
 import { Form, useActionData, useSubmit, useTransition } from '@remix-run/react'
 import { useEffect, useState } from 'react'
-import Button from '../form/Button'
+import Button from '../common-components/Button'
 import { trimValue } from '~/utils'
 import { useTranslation } from 'react-i18next'
-import DialogWrapper from '../Dialog'
+import DialogWrapper from '../common-components/Dialog'
 import type { sectionActionErrorsType } from '~/interface/Interface'
 
 export interface editItem {
@@ -110,6 +110,10 @@ const AddEditSection = ({
           {sectionActionErrors?.title ? (
             <p id="addEditSection-title-error" className="px-3 text-red-500">
               {t(sectionActionErrors.title)}
+            </p>
+          ) : sectionActionData?.errors ? (
+            <p id="duplicete-title-error" className="px-3 text-red-500">
+              {t(sectionActionData?.errors?.title)}
             </p>
           ) : null}
         </div>
