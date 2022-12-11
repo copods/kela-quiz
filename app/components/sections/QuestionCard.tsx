@@ -8,6 +8,8 @@ import type {
 } from '~/interface/Interface'
 import OptionCard from './OptionCard'
 import { QuestionTypes } from '../../interface/Interface'
+import { useLoaderData, useNavigate } from '@remix-run/react'
+
 const QuestionCard = ({
   question,
   isExpanded,
@@ -20,6 +22,7 @@ const QuestionCard = ({
   index: number
 }) => {
   const { t } = useTranslation()
+  const loaderData = useLoaderData()
   const displayName =
     question.questionType?.value === QuestionTypes.multipleChoice
       ? {
@@ -32,6 +35,7 @@ const QuestionCard = ({
           full: t('sectionsConstants.multipleChoiceQuestion'),
         }
       : { name: question.questionType?.displayName, full: 'Text' }
+  const navigate = useNavigate()
   return (
     <div
       key={question.id}
@@ -64,6 +68,16 @@ const QuestionCard = ({
         </div>
         <div className="flex min-w-fit items-center justify-between lg:flex-1 lg:justify-end lg:gap-2">
           <div>
+            <button
+              title="Edit question"
+              onClick={(e) => {
+                navigate(
+                  `/${loaderData.currentWorkspaceId}/tests/${loaderData.sectionDetails.id}/add-question?questionid=${question.id}`
+                )
+              }}
+            >
+              Edit
+            </button>
             <span
               id="question-type"
               title={displayName?.full}

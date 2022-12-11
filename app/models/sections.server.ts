@@ -165,3 +165,12 @@ export async function addQuestion(
       return err
     })
 }
+
+export async function updateQuestion(
+  id: string,
+  question: string,
+  options: Array<{ id: string; option: string; isCorrect: boolean }>,
+  correctAnswer: Array<{ id: string; answer: string; order: number }>
+) {
+  console.log({ id, question, options, correctAnswer })
+}

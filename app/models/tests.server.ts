@@ -90,3 +90,12 @@ export async function deleteTestById(id: string) {
     },
   })
 }
+
+export async function getQuestionById(id: string) {
+  return prisma.question.findUnique({
+    where: { id },
+    include: {
+      options: true,
+    },
+  })
+}

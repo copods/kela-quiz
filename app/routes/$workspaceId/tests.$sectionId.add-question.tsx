@@ -6,6 +6,7 @@ import {
   getSectionById,
   getQuestionType,
   addQuestion,
+  updateQuestion,
 } from '~/models/sections.server'
 import AddQuestionInSection from '~/components/sections/add-question/AddQuestionInSection'
 import { getUserId, requireUserId } from '~/session.server'
@@ -14,12 +15,13 @@ import { useEffect, useState } from 'react'
 import { routes } from '~/constants/route.constants'
 import { useTranslation } from 'react-i18next'
 import { getUserWorkspaces } from '~/models/workspace.server'
-
+import { getQuestionById } from '~/models/tests.server'
 type LoaderData = {
   sectionDetails: Awaited<ReturnType<typeof getSectionById>>
   questionTypes: Awaited<ReturnType<typeof getQuestionType>>
   workspaces: Awaited<ReturnType<typeof getUserWorkspaces>>
   currentWorkspaceId: string
+  question?: any
 }
 type ActionData = {
   error?: {
@@ -38,13 +40,28 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const userId = await getUserId(request)
   const currentWorkspaceId = params.workspaceId as string
   const workspaces = await getUserWorkspaces(userId as string)
-
+  const questionId = new URL(request.url).searchParams.get('questionid')
+  // console.log('---', questionId)
+  let question
+  if (questionId) {
+    question = await getQuestionById(questionId!)
+  }
+  // console.log('++', question)
   invariant(params.sectionId, 'sectionId not found')
 
   const sectionDetails = await getSectionById({ id: params.sectionId })
 
   if (!sectionDetails) {
     throw new Response('Not Found', { status: 404 })
+  }
+  if (question) {
+    return json<LoaderData>({
+      sectionDetails,
+      questionTypes,
+      workspaces,
+      currentWorkspaceId,
+      question,
+    })
   }
   return json<LoaderData>({
     sectionDetails,
@@ -57,39 +74,56 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 export const action: ActionFunction = async ({ request }) => {
   const createdById = await requireUserId(request)
   const formData = await request.formData()
+  const questionId = formData.get('questionId') as string
+  const action = formData.get('action')
+  // console.log('++++++++++++++++++++', questionId)
   const question = JSON.parse(formData.get('quesData') as string)
-
-  let ques
-  await addQuestion(
-    question.question.replace(
-      /<p><br[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|]?><[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|]?p>/g,
-      ''
-    ),
-    question.options,
-    question.correctAnswer,
-    question.questionTypeId,
-    question.sectionId,
-    createdById,
-    question.checkOrder
-  )
-    .then((res) => {
-      ques = json<ActionData>(
-        {
-          success: {
-            data: 'statusCheck.questionAddedSuccess',
-            addMoreQuestion: question?.addMoreQuestion,
+  console.log('======', question)
+  if (action === 'edit') {
+    // let ques
+    await updateQuestion(
+      questionId,
+      question.question.replace(
+        /<p><br[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|]?><[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|]?p>/g,
+        ''
+      ),
+      question.options,
+      question.correctAnswer
+    )
+    return null
+  } else {
+    let ques
+    await addQuestion(
+      question.question.replace(
+        /<p><br[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|]?><[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|]?p>/g,
+        ''
+      ),
+      question.options,
+      question.correctAnswer,
+      question.questionTypeId,
+      question.sectionId,
+      createdById,
+      question.checkOrder
+    )
+      .then((res) => {
+        ques = json<ActionData>(
+          {
+            success: {
+              data: 'statusCheck.questionAddedSuccess',
+              addMoreQuestion: question?.addMoreQuestion,
+            },
           },
-        },
-        { status: 200 }
-      )
-    })
-    .catch((err) => {
-      ques = json<ActionData>(
-        { error: { data: 'statusCheck.questionNotAdded' } },
-        { status: 400 }
-      )
-    })
-  return ques
+          { status: 200 }
+        )
+      })
+      .catch((err) => {
+        ques = json<ActionData>(
+          { error: { data: 'statusCheck.questionNotAdded' } },
+          { status: 400 }
+        )
+      })
+    return ques
+  }
 }
 
 export default function AddQuestion() {

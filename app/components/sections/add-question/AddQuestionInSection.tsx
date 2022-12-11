@@ -18,7 +18,8 @@ import { useTranslation } from 'react-i18next'
 
 const AddQuestionInSection = () => {
   const { t } = useTranslation()
-
+  const LoaderData = useLoaderData()
+  // console.log(LoaderData)
   const { sectionDetails, questionTypes } = useLoaderData()
   const [selectedTypeOfQuestion, onQuestionTypeChange] = useState(() => {
     for (let questionType of questionTypes) {
@@ -27,30 +28,32 @@ const AddQuestionInSection = () => {
       }
     }
   })
-  const [question, setQuestion] = useState('')
+  const [question, setQuestion] = useState(LoaderData?.question?.question ?? '')
   const [singleChoiceAnswer, setSingleChoiceAnswer] = useState('')
-  const [options, setOptions] = useState([
-    {
-      option: '',
-      isCorrect: false,
-      id: cuid(),
-    },
-    {
-      option: '',
-      isCorrect: false,
-      id: cuid(),
-    },
-    {
-      option: '',
-      isCorrect: false,
-      id: cuid(),
-    },
-    {
-      option: '',
-      isCorrect: false,
-      id: cuid(),
-    },
-  ])
+  const [options, setOptions] = useState(
+    LoaderData?.question?.options ?? [
+      {
+        option: '',
+        isCorrect: false,
+        id: cuid(),
+      },
+      {
+        option: '',
+        isCorrect: false,
+        id: cuid(),
+      },
+      {
+        option: '',
+        isCorrect: false,
+        id: cuid(),
+      },
+      {
+        option: '',
+        isCorrect: false,
+        id: cuid(),
+      },
+    ]
+  )
   const [textCorrectAnswer, setTextCorrectAnswer] = useState([
     {
       id: cuid(),
@@ -172,14 +175,16 @@ const AddQuestionInSection = () => {
         QuestionTypes.multipleChoice &&
       answerCount === 1
     ) {
-      options.forEach((option) => {
-        let optionForQuestion = {
-          id: option.id,
-          option: option.option,
-          isCorrect: option.isCorrect,
+      options.forEach(
+        (option: { option: string; isCorrect: boolean; id: string }) => {
+          let optionForQuestion = {
+            id: option.id,
+            option: option.option,
+            isCorrect: option.isCorrect,
+          }
+          testQuestion.options.push(optionForQuestion)
         }
-        testQuestion.options.push(optionForQuestion)
-      })
+      )
     } else if (
       getQuestionType(selectedTypeOfQuestion) === QuestionTypes.multipleChoice
     ) {
@@ -204,7 +209,17 @@ const AddQuestionInSection = () => {
         testQuestion.correctAnswer.push(optionForQuestion)
       })
     }
-    submit({ quesData: JSON.stringify(testQuestion) }, { method: 'post' })
+    // console.log('TEST', testQuestion)
+    const questionId = location.search
+    // console.log('QUESTION ID', questionId.slice(12))
+    submit(
+      {
+        action: LoaderData.question ? 'edit' : 'add',
+        questionId: questionId.slice(12),
+        quesData: JSON.stringify(testQuestion),
+      },
+      { method: 'post' }
+    )
   }
   return (
     <div className="flex h-full flex-col gap-6">
@@ -217,7 +232,8 @@ const AddQuestionInSection = () => {
           tabIndex={0}
           className="inline-block text-3xl font-bold text-gray-900"
         >
-          {sectionDetails?.name} - {t('addQuestion.addQuestion')}
+          {sectionDetails?.name} -{' '}
+          {LoaderData.question ? 'Edit Question' : t('addQuestion.addQuestion')}
         </h1>
       </div>
       <div className="flex h-40 flex-1 flex-row gap-6">
@@ -278,23 +294,25 @@ const AddQuestionInSection = () => {
               </>
             }
           />
-          <Button
-            tabIndex={0}
-            id="save-and-add-more"
-            isDisabled={transition.state === 'submitting'}
-            className="h-9 px-5"
-            onClick={() => saveQuestion(true)}
-            varient="primary-solid"
-            title={sortByOrder.saveAndAddMore}
-            buttonText={
-              <>
-                <Icon icon="ic:round-save" className="mr-1" />
-                {transition.state === 'submitting'
-                  ? sortByOrder.saving
-                  : sortByOrder.saveAndAddMore}
-              </>
-            }
-          />
+          {LoaderData.question ? null : (
+            <Button
+              tabIndex={0}
+              id="save-and-add-more"
+              isDisabled={transition.state === 'submitting'}
+              className="h-9 px-5"
+              onClick={() => saveQuestion(true)}
+              varient="primary-solid"
+              title={sortByOrder.saveAndAddMore}
+              buttonText={
+                <>
+                  <Icon icon="ic:round-save" className="mr-1" />
+                  {transition.state === 'submitting'
+                    ? sortByOrder.saving
+                    : sortByOrder.saveAndAddMore}
+                </>
+              }
+            />
+          )}
         </div>
       </div>
     </div>
