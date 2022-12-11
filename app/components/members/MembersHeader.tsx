@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import AddMemberModal from './AddMemberModal'
 import { useLoaderData } from '@remix-run/react'
-import Button from '../form/Button'
+import Button from '../common-components/Button'
 import { useTranslation } from 'react-i18next'
 
 export default function MembersHeader({
