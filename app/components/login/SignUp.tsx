@@ -97,6 +97,7 @@ const SignUp = ({ error }: { error?: string }) => {
     {
       label: t('members.firstName'),
       placeholder: t('members.firstName'),
+      isRequired: true,
       type: 'text',
       name: 'firstName',
       required: true,
@@ -110,6 +111,7 @@ const SignUp = ({ error }: { error?: string }) => {
     {
       label: t('members.lastName'),
       placeholder: t('members.lastName'),
+      isRequired: true,
       type: 'text',
       name: 'lastName',
       required: true,
@@ -123,6 +125,7 @@ const SignUp = ({ error }: { error?: string }) => {
     {
       label: t('commonConstants.email'),
       placeholder: t('commonConstants.email'),
+      isRequired: true,
       type: 'text',
       name: 'email',
       required: true,
@@ -140,6 +143,7 @@ const SignUp = ({ error }: { error?: string }) => {
     {
       label: t('commonConstants.defaultWorkspaceName'),
       placeholder: t('commonConstants.defaultWorkspaceName'),
+      isRequired: true,
       type: 'text',
       name: 'workspace',
       required: true,
@@ -155,6 +159,7 @@ const SignUp = ({ error }: { error?: string }) => {
       placeholder: t('settings.password'),
       name: 'Password',
       required: true,
+      isRequired: true,
       type: 'password',
       value: password,
       onblur: onBlurPassError,
@@ -169,6 +174,7 @@ const SignUp = ({ error }: { error?: string }) => {
       placeholder: t('settings.reEnterPass'),
       name: 'confirmPassword',
       required: true,
+      isRequired: true,
       type: 'password',
       value: confirmPassword,
       onblur: onBlurConfPassError,

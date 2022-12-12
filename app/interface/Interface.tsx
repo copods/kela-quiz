@@ -5,6 +5,7 @@ export interface InputFieldProps {
   label: string
   placeholder: string
   type: string
+  isRequired?: boolean
   required: boolean
   value: string
   error?: string
@@ -17,6 +18,7 @@ export interface PasswordFieldProps {
   label: string
   placeholder: string
   required: boolean
+  isRequired: boolean
   value: string
   type: string
   error?: string
