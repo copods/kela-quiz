@@ -162,6 +162,7 @@ const Table = <T extends { id?: string }>({
                     key={column.field}
                     width={column.width}
                     rowData={rowData}
+                    render={column.render}
                   />
                 ) : (
                   <TableDataCell
