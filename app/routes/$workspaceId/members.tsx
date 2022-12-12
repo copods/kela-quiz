@@ -220,6 +220,7 @@ const Members = () => {
       }
     }
   }, [membersActionData, t])
+
   return (
     <div className="flex flex-col gap-6 p-1">
       <MembersHeader
