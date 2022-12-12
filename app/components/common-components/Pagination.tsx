@@ -26,7 +26,7 @@ const PaginationButtons = ({
       return (
         <span
           key={index}
-          className={`w-8 cursor-pointer py-1 px-3 text-sm ${
+          className={`flex w-8 cursor-pointer justify-center py-1 text-sm ${
             currentPage === paginationRangeItems
               ? ' rounded-md bg-gray-200'
               : ''

@@ -74,7 +74,7 @@ const Table = <T extends { id?: string }>({
                 maxWidth: `${header.width}`,
               }}
               id="table-th"
-              className="flex-1 border-b bg-gray-100 py-4 px-9 text-sm font-semibold text-gray-500"
+              className="flex-1 border-b bg-gray-100 py-4 px-3 text-sm font-semibold text-gray-500 first:pl-9 last:pr-9"
             >
               {header.title}
             </div>
@@ -96,7 +96,7 @@ const Table = <T extends { id?: string }>({
                       maxWidth: `${column.width}`,
                     }}
                     key={column.field}
-                    className="flex-1 truncate border-b bg-white px-8 py-7 text-gray-700"
+                    className="flex-1 truncate border-b bg-white px-3 py-7  text-gray-700 first:pl-9 last:pr-9"
                   >
                     {column.render(rowData)}
                   </div>
@@ -108,7 +108,7 @@ const Table = <T extends { id?: string }>({
                       maxWidth: `${column.width}`,
                     }}
                     key={column.field}
-                    className="flex-1 truncate border-b bg-white px-8 py-7 text-gray-700"
+                    className="flex-1 truncate border-b bg-white px-3 py-7 text-gray-700  first:pl-9 last:pr-9"
                   >
                     {rowData[column.field as keyof typeof rowData]}
                   </div>

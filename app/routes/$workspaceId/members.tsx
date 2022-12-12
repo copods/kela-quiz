@@ -223,7 +223,7 @@ const Members = () => {
   }, [membersActionData, t])
   const column = [
     { title: 'Name', field: 'name', width: '30%' },
-    { title: 'Email', field: 'email', width: '20%' },
+    { title: 'Email', field: 'email', width: '40%' },
     { title: 'Role', field: 'role', width: '20%' },
     { title: 'Joined On', field: 'joined_on', width: '20%' },
     { title: 'Joined On', field: 'joined_on', width: '20%' },
