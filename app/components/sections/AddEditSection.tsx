@@ -102,7 +102,7 @@ const AddEditSection = ({
             name="name"
             id="addEditSection-name"
             className="h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
-            placeholder={t('commonConstants.enterTestsName')}
+            placeholder={`${t('commonConstants.enterTestsName')}*`}
             onChange={(e) => setSectionName(trimValue(e.target.value))}
             value={sectionName}
             maxLength={52}
@@ -110,6 +110,10 @@ const AddEditSection = ({
           {sectionActionErrors?.title ? (
             <p id="addEditSection-title-error" className="px-3 text-red-500">
               {t(sectionActionErrors.title)}
+            </p>
+          ) : sectionActionData?.errors ? (
+            <p id="duplicete-title-error" className="px-3 text-red-500">
+              {t(sectionActionData?.errors?.title)}
             </p>
           ) : null}
         </div>
@@ -122,7 +126,7 @@ const AddEditSection = ({
             className="w-full rounded-lg border border-gray-200 px-3 py-4 text-base"
             onChange={(e) => setDescription(trimValue(e.target.value))}
             value={description}
-            placeholder={t('commonConstants.enterTestsDesc')}
+            placeholder={`${t('commonConstants.enterTestsDesc')}*`}
           />
           {sectionActionErrors?.description ? (
             <p

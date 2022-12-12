@@ -28,7 +28,7 @@ const QuestionCard = ({
         }
       : question.questionType?.value === QuestionTypes.singleChoice
       ? {
-          name: t('sectionsConstants.msq'),
+          name: t('sectionsConstants.mcq'),
           full: t('sectionsConstants.multipleChoiceQuestion'),
         }
       : { name: question.questionType?.displayName, full: 'Text' }

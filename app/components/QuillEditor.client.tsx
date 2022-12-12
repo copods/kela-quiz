@@ -83,7 +83,9 @@ export default function QuillEditor({
   }, [quill, onTextChange])
   return (
     <div
-      className="flex h-full w-full flex-col rounded-lg bg-white"
+      className={`flex h-full w-full flex-col rounded-lg bg-white ${
+        fullAccess ? '' : 'setDynamicHeight'
+      }`}
       id="quill-editor"
       ref={editorRef}
     >
