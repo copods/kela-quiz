@@ -100,9 +100,18 @@ export async function getAllInvitedMember(workspaceId: string) {
     where: {
       deleted: false,
       workspaceId,
-      joined: {
-        not: true,
-      },
+      OR: [
+        {
+          joined: {
+            equals: null,
+          },
+        },
+        {
+          joined: {
+            equals: false,
+          },
+        },
+      ],
     },
     include: {
       invitedForWorkspace: true,

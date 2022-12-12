@@ -257,7 +257,7 @@ describe('Test for settings', () => {
       .parent()
       .parent()
       .within(() => {
-        cy.get('label').should('have.text', settings.enterOldPassword)
+        cy.get('label').should('have.text', settings.enterOldPassword + '*')
       })
   })
   it('Checks reset password pop up new password label have correct text', () => {
@@ -276,7 +276,7 @@ describe('Test for settings', () => {
       .parent()
       .parent()
       .within(() => {
-        cy.get('label').should('have.text', settings.enterNewPass)
+        cy.get('label').should('have.text', settings.enterNewPass + '*')
       })
   })
   it('Checks reset password pop up confirm new password label have correct text', () => {
@@ -295,7 +295,7 @@ describe('Test for settings', () => {
       .parent()
       .parent()
       .within(() => {
-        cy.get('label').should('have.text', settings.reEnterPass)
+        cy.get('label').should('have.text', settings.reEnterPass + '*')
       })
   })
   it('Checks reset password pop up old password label have correct classes', () => {
