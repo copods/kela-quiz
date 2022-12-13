@@ -7,6 +7,7 @@ import {
   getQuestionType,
   addQuestion,
   updateQuestion,
+  deleteOptionById,
 } from '~/models/sections.server'
 import AddQuestionInSection from '~/components/sections/add-question/AddQuestionInSection'
 import { getUserId, requireUserId } from '~/session.server'
@@ -46,7 +47,6 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   if (questionId) {
     question = await getQuestionById(questionId!)
   }
-  // console.log('++', question)
   invariant(params.sectionId, 'sectionId not found')
 
   const sectionDetails = await getSectionById({ id: params.sectionId })
@@ -76,11 +76,17 @@ export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
   const questionId = formData.get('questionId') as string
   const action = formData.get('action')
+  const optionId = formData.get('id') as string
+
   // console.log('++++++++++++++++++++', questionId)
   const question = JSON.parse(formData.get('quesData') as string)
-  console.log('======', question)
+  console.log('======', action)
+  if (action === 'delete') {
+    await deleteOptionById(optionId)
+    return null
+  }
   if (action === 'edit') {
-    // let ques
+    let ques
     await updateQuestion(
       questionId,
       question.question.replace(
@@ -88,10 +94,21 @@ export const action: ActionFunction = async ({ request }) => {
         ''
       ),
       question.options,
-      question.correctAnswer
-    )
-    return null
-  } else {
+      question.correctAnswer,
+      createdById
+    ).then((res) => {
+      ques = json<ActionData>(
+        {
+          success: {
+            data: 'statusCheck.questionAddedSuccess',
+            addMoreQuestion: question?.addMoreQuestion,
+          },
+        },
+        { status: 200 }
+      )
+    })
+    return ques
+  } else if (action === 'add') {
     let ques
     await addQuestion(
       question.question.replace(

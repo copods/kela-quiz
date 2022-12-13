@@ -71,6 +71,7 @@ const QuestionCard = ({
             <button
               title="Edit question"
               onClick={(e) => {
+                e.stopPropagation()
                 navigate(
                   `/${loaderData.currentWorkspaceId}/tests/${loaderData.sectionDetails.id}/add-question?questionid=${question.id}`
                 )
@@ -109,6 +110,9 @@ const QuestionCard = ({
         {question?.options && (
           <div className="grid grid-cols-1 gap-4 pt-6 ">
             {question.options?.map((option: Option) => {
+              if (option.deleted) {
+                return null
+              }
               return (
                 <div key={option.id}>
                   <OptionCard

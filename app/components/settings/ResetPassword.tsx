@@ -126,6 +126,7 @@ const ResetPassword = ({
       passIsInvalid: generalSettings?.errors?.valid,
       passShouldNotBeSame: generalSettings?.errors?.passShouldNotBeSame,
     })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [generalSettings])
   return (
     <DialogWrapper

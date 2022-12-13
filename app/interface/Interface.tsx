@@ -183,6 +183,7 @@ export interface Option {
   coInQuestionId?: string
   createdById?: string
   questionId?: string
+  deleted: boolean
   order: number
   updatedAt?: Date
   createdAt?: Date

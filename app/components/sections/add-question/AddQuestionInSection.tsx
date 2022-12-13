@@ -13,18 +13,38 @@ import {
 import { toast } from 'react-toastify'
 import Button from '~/components/form/Button'
 import { routes } from '~/constants/route.constants'
+import type { CorrectAnswer } from '~/interface/Interface'
 import { QuestionTypes, sortByOrder } from '~/interface/Interface'
 import { useTranslation } from 'react-i18next'
 
 const AddQuestionInSection = () => {
   const { t } = useTranslation()
   const LoaderData = useLoaderData()
-  // console.log(LoaderData)
   const { sectionDetails, questionTypes } = useLoaderData()
-  const [selectedTypeOfQuestion, onQuestionTypeChange] = useState(() => {
+  const [isDeleted, setIsDeleted] = useState(false)
+  console.log(questionTypes)
+  const [selectedTypeOfQuestion, onQuestionTypeChange] = useState(function () {
     for (let questionType of questionTypes) {
       if (questionType.value === QuestionTypes.multipleChoice) {
         return questionType.id
+      }
+      if (
+        questionType.id === LoaderData?.question?.questionTypeId &&
+        questionType.value === QuestionTypes.singleChoice
+      ) {
+        return questionTypes.find(
+          (question: { id: string; value: string }) =>
+            question.value === QuestionTypes.multipleChoice
+        ).id
+      }
+      if (
+        questionType.id === LoaderData?.question?.questionTypeId &&
+        questionType.value === QuestionTypes.text
+      ) {
+        return questionTypes.find(
+          (question: { id: string; value: string }) =>
+            question.value === QuestionTypes.text
+        ).id
       }
     }
   })
@@ -54,12 +74,14 @@ const AddQuestionInSection = () => {
       },
     ]
   )
-  const [textCorrectAnswer, setTextCorrectAnswer] = useState([
-    {
-      id: cuid(),
-      answer: '',
-    },
-  ])
+  const [textCorrectAnswer, setTextCorrectAnswer] = useState(
+    LoaderData?.question?.correctAnswer ?? [
+      {
+        id: cuid(),
+        answer: '',
+      },
+    ]
+  )
   const [checkOrder, setCheckOrder] = useState(false)
   const transition = useTransition()
   const navigate = useNavigate()
@@ -200,18 +222,18 @@ const AddQuestionInSection = () => {
       )
     } else if (getQuestionType(selectedTypeOfQuestion) === QuestionTypes.text) {
       testQuestion.checkOrder = checkOrder
-      textCorrectAnswer.forEach((correctAnswer, index) => {
-        let optionForQuestion = {
-          id: correctAnswer.id,
-          answer: correctAnswer.answer,
-          order: index,
+      textCorrectAnswer.forEach(
+        (correctAnswer: CorrectAnswer, index: number) => {
+          let optionForQuestion = {
+            id: correctAnswer.id,
+            answer: correctAnswer.answer,
+            order: index,
+          }
+          testQuestion.correctAnswer.push(optionForQuestion)
         }
-        testQuestion.correctAnswer.push(optionForQuestion)
-      })
+      )
     }
-    // console.log('TEST', testQuestion)
     const questionId = location.search
-    // console.log('QUESTION ID', questionId.slice(12))
     submit(
       {
         action: LoaderData.question ? 'edit' : 'add',
@@ -246,6 +268,8 @@ const AddQuestionInSection = () => {
         />
         <OptionForQuestion
           textCorrectAnswer={textCorrectAnswer}
+          isDeleted={isDeleted}
+          setIsDeleted={setIsDeleted}
           setTextCorrectAnswer={setTextCorrectAnswer}
           singleChoiceAnswer={singleChoiceAnswer}
           setSingleChoiceAnswer={setSingleChoiceAnswer}

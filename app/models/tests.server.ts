@@ -96,6 +96,8 @@ export async function getQuestionById(id: string) {
     where: { id },
     include: {
       options: true,
+      correctAnswer: true,
+      correctOptions: true,
     },
   })
 }

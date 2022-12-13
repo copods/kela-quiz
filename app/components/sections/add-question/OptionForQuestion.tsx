@@ -11,6 +11,7 @@ import { toast } from 'react-toastify'
 import Button from '~/components/form/Button'
 import { useTranslation } from 'react-i18next'
 import { trimValue } from '~/utils'
+import { useFetcher } from '@remix-run/react'
 interface textAnswerType {
   id: string
   answer: string
@@ -29,12 +30,21 @@ export default function OptionForQuestion({
   setTextCorrectAnswer,
   checkOrder,
   setCheckOrder,
+  isDeleted,
+  setIsDeleted,
 }: {
   questionTypeList: QuestionType[]
+  isDeleted: boolean
+  setIsDeleted: (e: boolean) => void
   selectedTypeOfQuestion: string
   answerCount: number
   setAnswerCount: (e: number) => void
-  options: Array<{ option: string; isCorrect: boolean; id: string }>
+  options: Array<{
+    option: string
+    isCorrect: boolean
+    id: string
+    deleted: boolean
+  }>
   setOptions: (
     e: SetStateAction<Array<{ option: string; isCorrect: boolean; id: string }>>
   ) => void
@@ -67,7 +77,9 @@ export default function OptionForQuestion({
       setTextCorrectAnswer([...textCorrectAnswer, { id: cuid(), answer: '' }])
     }
   }
+  const fetcher = useFetcher()
   const deleteOption = (index: number, id?: string) => {
+    // setIsDeleted(true)
     if (
       getQuestionType(selectedTypeOfQuestion) ===
         QuestionTypes.multipleChoice ||
@@ -92,7 +104,9 @@ export default function OptionForQuestion({
         return [...e]
       })
     }
+    fetcher.submit({ action: 'delete', id: id! }, { method: 'post' })
   }
+
   const getQuestionType = (id: string) => {
     for (let quesType of questionTypeList) {
       if (id === quesType.id) {
@@ -127,6 +141,7 @@ export default function OptionForQuestion({
     options.forEach((i) => (i.isCorrect ? count++ : null))
     setAnswerCount(count)
   }, [options, setAnswerCount])
+
   return (
     <div className="flex flex-1 flex-col gap-6">
       <div className="flex h-11 flex-row items-end justify-between p-1">
@@ -165,6 +180,9 @@ export default function OptionForQuestion({
           getQuestionType(selectedTypeOfQuestion) ===
             QuestionTypes.singleChoice) &&
           options.map((option, index) => {
+            if (option.deleted) {
+              return null
+            }
             return (
               <div className="flex items-center gap-2.5 p-1" key={option.id}>
                 {getQuestionType(selectedTypeOfQuestion) ===

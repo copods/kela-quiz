@@ -165,12 +165,45 @@ export async function addQuestion(
       return err
     })
 }
-
+export async function deleteOptionById(id: string) {
+  return prisma.option.update({ where: { id }, data: { deleted: true } })
+}
 export async function updateQuestion(
   id: string,
   question: string,
   options: Array<{ id: string; option: string; isCorrect: boolean }>,
-  correctAnswer: Array<{ id: string; answer: string; order: number }>
+  correctAnswer: Array<{ id: string; answer: string; order: number }>,
+  createdById: string
 ) {
-  console.log({ id, question, options, correctAnswer })
+  await prisma.question.update({
+    where: { id },
+    data: {
+      question: question,
+    },
+  })
+  correctAnswer.forEach(
+    async (i) =>
+      await prisma.correctAnswer.upsert({
+        where: { id: i.id },
+        update: { answer: i.answer },
+        create: { id: i.id, answer: i.answer, order: i.order, questionId: id },
+      })
+  )
+  options.forEach(
+    async (i) =>
+      await prisma.option.upsert({
+        where: { id: i.id },
+        update: {
+          option: i.option,
+          coInQuestionId: i.isCorrect ? id : null,
+        },
+        create: {
+          id: i.id,
+          option: i.option,
+          questionId: id,
+          createdById: createdById,
+          coInQuestionId: i.isCorrect ? id : null,
+        },
+      })
+  )
 }
