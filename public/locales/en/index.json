@@ -74,7 +74,10 @@
     "joinedOn": "Joined On",
     "invitedAt": "Invited At",
     "passwordStrength": "Password Strength",
-    "items": "Items"
+    "items": "Items",
+    "strong": "Strong",
+    "medium": "Medium",
+    "weak": "Weak"
   },
   "sideNav": {
     "sideNavHeading": "Quiz",

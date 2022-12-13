@@ -1,7 +1,7 @@
 import { useMatches } from '@remix-run/react'
+import { t } from 'i18next'
 import { useMemo } from 'react'
 import type { User } from '~/models/user.server'
-
 const DEFAULT_REDIRECT = '/'
 
 /**
@@ -100,7 +100,27 @@ export function checkPasswordStrength(newPassword: string) {
   if (/[a-z]/.test(newPassword)) {
     passwordStrengthCount = passwordStrengthCount + 1
   }
-  return passwordStrengthCount
+  for (let character of newPassword) {
+    if (/[!@#$&*]/.test(character)) {
+      passwordStrengthCount = passwordStrengthCount + 4
+    }
+    if (/[a-z]/.test(character)) {
+      passwordStrengthCount = passwordStrengthCount + 2
+    }
+    if (/[A-Z]/.test(character)) {
+      passwordStrengthCount = passwordStrengthCount + 2
+    }
+    if (/[0-9]/.test(character)) {
+      passwordStrengthCount = passwordStrengthCount + 1
+    }
+  }
+  if (passwordStrengthCount <= 15) {
+    return t('commonConstants.weak')
+  } else if (passwordStrengthCount > 15 && passwordStrengthCount <= 25) {
+    return t('commonConstants.medium')
+  } else if (passwordStrengthCount > 25) {
+    return t('commonConstants.strong')
+  }
 }
 export const usePagination = ({
   totalItems,

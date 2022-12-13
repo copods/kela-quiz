@@ -129,16 +129,8 @@ const ResetPassword = ({
     })
   }, [generalSettings])
   useEffect(() => {
-    if (checkPasswordStrength(newPassword) < 2) {
-      setPasswordStrength('Weak')
-    } else if (
-      2 < checkPasswordStrength(newPassword) &&
-      checkPasswordStrength(newPassword) < 4
-    ) {
-      setPasswordStrength('Medium')
-    } else if (checkPasswordStrength(newPassword) === 5) {
-      setPasswordStrength('Strong')
-    }
+    const value = String(checkPasswordStrength(newPassword))
+    setPasswordStrength(value)
   }, [newPassword])
   return (
     <DialogWrapper

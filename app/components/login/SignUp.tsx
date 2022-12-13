@@ -94,16 +94,8 @@ const SignUp = ({ error }: { error?: string }) => {
     )
   }, [signUpActionData?.errors])
   useEffect(() => {
-    if (checkPasswordStrength(password) < 2) {
-      setPasswordStrength('Weak')
-    } else if (
-      2 < checkPasswordStrength(password) &&
-      checkPasswordStrength(password) < 4
-    ) {
-      setPasswordStrength('Medium')
-    } else if (checkPasswordStrength(password) === 5) {
-      setPasswordStrength('Strong')
-    }
+    const value = String(checkPasswordStrength(password))
+    setPasswordStrength(value)
   }, [password])
   const inputFieldsProps = [
     {
