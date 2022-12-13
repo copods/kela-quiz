@@ -103,7 +103,6 @@ export async function getAllInvitedMember(workspaceId: string) {
       joined: {
         equals: null,
       },
-     
     },
     include: {
       invitedForWorkspace: true,

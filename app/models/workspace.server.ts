@@ -79,7 +79,6 @@ export async function addWorkspace(workspaceName: string, userId: string) {
   })
 }
 
-
 export async function getDefaultWorkspaceIdForUserQuery(userId: string) {
   return prisma.user.findUnique({
     where: { id: userId },

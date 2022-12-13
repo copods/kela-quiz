@@ -9,20 +9,11 @@ import { joinWorkspace } from '~/models/workspace.server'
 import { getInvitedMemberById } from '~/models/invites.server'
 import { getUserByEmail } from '~/models/user.server'
 
-export type ActionData = {
-  errors?: {
-    title: string
-    status: number
-  }
-  resp?: {
-    title: string
-    status: number
-  }
-}
 type LoaderData = {
   invitedMember: Awaited<ReturnType<typeof getInvitedMemberById>>
   loginWithWrongId: string
   inviteId: string
+  joined?: string | undefined
 }
 export const loader: LoaderFunction = async ({ request, params }) => {
   const invitedMember = await getInvitedMemberById(params.inviteId as string)
@@ -32,6 +23,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
   const user = await getUserByEmail(invitedMember.email) //checking if user exist or not
   let loginWithWrongId
+  let joined
   if (user) {
     const userId = await getUserId(request)
     if (!userId) {
@@ -39,22 +31,22 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     }
 
     loginWithWrongId = userId && userId != user?.id
-
     if (loginWithWrongId === false) {
       await joinWorkspace({
         invitedId: params.inviteId as string, //taking invited id from params
       })
         .then((res) => {
-          console.log(invitedMember,'invitedMember')
-          if (res || invitedMember.joined === true) return redirect(`/${invitedMember.invitedForWorkspace?.id}`)
+          joined = 'joined'
+          if (res) return joined
         })
         .catch((err) => {
           return err
         })
     }
   }
+
   if (!user) {
-    if (invitedMember && !user) {
+    if (invitedMember) {
       return redirect(`${routes.signUp}?cameFrom=join&id=${params.inviteId}`)
     }
   }
@@ -63,9 +55,9 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     invitedMember,
     loginWithWrongId: loginWithWrongId as string,
     inviteId: inviteId as string,
+    joined,
   })
 }
-
 const InviteMember = () => {
   return (
     <div className="flex h-full flex-col bg-gray-50">
