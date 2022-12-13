@@ -10,10 +10,12 @@ export default function MemberListItem({
   user,
   loggedInUser,
   actionStatus,
+  owner,
 }: {
   user: User & { role?: Role; invites: Invites }
   loggedInUser: boolean
   actionStatus: string | undefined
+  owner: boolean
 }) {
   const [open, setOpen] = useState(false)
   useEffect(() => {
@@ -33,7 +35,12 @@ export default function MemberListItem({
       <div className="memberRows col-gap-3 col-span-full grid grid-cols-10 border-t border-solid border-gray-200 px-6 py-4">
         <div className="break-word col-span-2 overflow-ellipsis pl-4">
           <span className="memberName text-base text-gray-700">
-            {user.firstName} {user.lastName}
+            {user.firstName} {user.lastName}{' '}
+            {owner ? (
+              <span className="mr-1 inline-block rounded bg-gray-600 py-1 px-2 text-xs font-semibold uppercase text-white last:mr-0">
+                owner
+              </span>
+            ) : null}
           </span>
         </div>
         <div className="memberMail col-span-3 overflow-ellipsis break-all pl-4">
