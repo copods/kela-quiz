@@ -14,6 +14,12 @@ export default function MembersList({
   const users = membersData.users
 
   const loggedInUser = membersData.userId
+  const currentWorkspaceId = membersData.currentWorkspaceId
+  const currentWorkspaceUserId = membersData.workspaces.find(
+    // @TODO: Need to check if there's already Interface for single workspace object
+    (el: any) => el.workspaceId === currentWorkspaceId
+  ).workspace.createdById
+  console.log(currentWorkspaceUserId)
   return (
     <div className="grid grid-cols-12 rounded-lg shadow-base">
       <div className="col-span-full grid grid-cols-10 rounded-lg border border-solid border-gray-200 bg-white">
@@ -34,15 +40,18 @@ export default function MembersList({
             {t('members.action')}
           </h1>
         </div>
-        {users.map((user: User & { role?: Role; invites: Invites }) => (
-          <div key={user.id} className="memberRow col-span-10 grid">
-            <MemberListItem
-              user={user}
-              loggedInUser={loggedInUser === user.id}
-              actionStatus={actionStatus}
-            />
-          </div>
-        ))}
+        {users.map((user: User & { role?: Role; invites: Invites }) => {
+          return (
+            <div key={user.id} className="memberRow col-span-10 grid">
+              <MemberListItem
+                user={user}
+                loggedInUser={loggedInUser === user.id}
+                actionStatus={actionStatus}
+                owner={currentWorkspaceUserId === user.id}
+              />
+            </div>
+          )
+        })}
       </div>
     </div>
   )
