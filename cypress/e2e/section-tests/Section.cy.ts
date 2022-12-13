@@ -420,7 +420,7 @@ describe('Test for Tests', () => {
     cy.get('form > div')
       .should('be.visible')
       .within((el) => {
-        cy.get('input[placeholder="Enter Test Name"]')
+        cy.get('input[placeholder="Enter Test Name*"]')
           .type(`${section1} ${new Date().getTime()}`)
           .should('be.visible')
       })
@@ -445,7 +445,7 @@ describe('Test for Tests', () => {
     cy.get('form > div')
       .should('be.visible')
       .within((el) => {
-        cy.get('input[placeholder="Enter Test Name"]').should(
+        cy.get('input[placeholder="Enter Test Name*"]').should(
           'have.attr',
           'tabindex',
           '0'
@@ -472,7 +472,7 @@ describe('Test for Tests', () => {
     cy.get('form > div')
       .should('be.visible')
       .within((el) => {
-        cy.get('input[placeholder="Enter Test Name"]')
+        cy.get('input[placeholder="Enter Test Name*"]')
           .click()
           .should('have.focus')
       })
@@ -917,7 +917,7 @@ describe('Test for Tests', () => {
     cy.get('form > div')
       .should('be.visible')
       .within((el) => {
-        cy.get('input[placeholder="Enter Test Name"]').type(
+        cy.get('input[placeholder="Enter Test Name*"]').type(
           `${section1} ${new Date().getTime()}`
         )
 
@@ -947,7 +947,7 @@ describe('Test for Tests', () => {
     cy.get('form > div')
       .should('be.visible')
       .within((el) => {
-        cy.get('input[placeholder="Enter Test Name"]').type(section1)
+        cy.get('input[placeholder="Enter Test Name*"]').type(section1)
         cy.get('textarea').type('Aptitude')
         cy.get('[data-cy="submit"]').click()
       })

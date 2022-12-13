@@ -114,7 +114,7 @@ describe('smoke tests', () => {
     cy.get('form > div')
       .should('be.visible')
       .within((el) => {
-        cy.get('input[placeholder="Enter Test Name"]').type(section1)
+        cy.get('input[placeholder="Enter Test Name*"]').type(section1)
         cy.get('textarea').type('Aptitude')
         cy.get('[data-cy="submit"]').click()
       })
@@ -132,7 +132,7 @@ describe('smoke tests', () => {
     cy.get('form > div')
       .should('be.visible')
       .within((el) => {
-        cy.get(`input[placeholder='Enter Test Name']`).type(section2)
+        cy.get(`input[placeholder='Enter Test Name*']`).type(section2)
         cy.get('textarea').type('Aptitude')
         cy.get('[data-cy="submit"]').click()
       })
@@ -150,7 +150,7 @@ describe('smoke tests', () => {
     cy.get('form > div')
       .should('be.visible')
       .within((el) => {
-        cy.get('input[placeholder="Enter Test Name"]').type(deleteSection)
+        cy.get('input[placeholder="Enter Test Name*"]').type(deleteSection)
         cy.get('textarea').type('Aptitude')
         cy.get('[data-cy="submit"]').click()
       })

@@ -49,6 +49,7 @@ export default function AddMemberModal({
       type: 'text',
       name: 'email',
       required: true,
+      isRequired: true,
       value: email,
       errorId: 'email-error',
       onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
@@ -76,6 +77,7 @@ export default function AddMemberModal({
             <div>
               <label htmlFor="" className="text-gray-800">
                 {t('members.role')}
+                <span className="text-red-600">*</span>
               </label>
             </div>
             <DropdownField

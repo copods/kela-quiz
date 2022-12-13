@@ -26,7 +26,7 @@ const PaginationButtons = ({
       return (
         <span
           key={index}
-          className={`w-8 cursor-pointer py-1 px-3 text-sm ${
+          className={`flex w-8 cursor-pointer justify-center py-1 text-sm ${
             currentPage === paginationRangeItems
               ? ' rounded-md bg-gray-200'
               : ''
@@ -61,7 +61,7 @@ const PaginationDropDown = ({
   const { t } = useTranslation()
   return (
     <Listbox value={selected} onChange={setSelected}>
-      <div className="relative mt-1">
+      <div className="relative">
         <Listbox.Button className="flex cursor-pointer items-center text-xs text-gray-600">
           <span className="block truncate">
             {selected} {t('commonConstants.items')}

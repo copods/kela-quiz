@@ -58,7 +58,7 @@ describe('Forgot password', () => {
     cy.get('label').should('be.visible')
   })
   it('checks, label of email input box should have correct text', () => {
-    cy.get('label').should('be.visible').should('have.text', 'Email')
+    cy.get('label').should('be.visible').should('have.text', 'Email*')
   })
   it('checks, email input field should be visible', () => {
     cy.get('input').should('be.visible')

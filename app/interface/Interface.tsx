@@ -5,6 +5,7 @@ export interface InputFieldProps {
   label: string
   placeholder: string
   type: string
+  isRequired?: boolean
   required: boolean
   value: string
   error?: string
@@ -17,6 +18,7 @@ export interface PasswordFieldProps {
   label: string
   placeholder: string
   required: boolean
+  isRequired: boolean
   value: string
   type: string
   error?: string
@@ -308,6 +310,24 @@ export interface SectionWiseResults {
   updatedAt: Date
   section: SectionInCandidateTest
   test: Test
+}
+export interface column<T> {
+  title: string
+  field: string
+  render?: (rowData: T) => JSX.Element
+  width?: string
+}
+export interface TableType<T> {
+  columns: column<T>[]
+  data: T[]
+  title?: string
+  paginationEnabled?: boolean
+  onPageChange?: (e: number) => void
+  totalItems?: number
+  currentPage?: number
+  pageSizeOptions?: Array<number>
+  pageSize?: number
+  setPageSize?: (e: number) => void
 }
 export interface Workspace {
   id: string
