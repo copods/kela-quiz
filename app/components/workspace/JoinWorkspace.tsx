@@ -7,7 +7,6 @@ import {
 import { useTranslation } from 'react-i18next'
 import Button from '../common-components/Button'
 import logo from '../../../public/assets/member-invitation.svg'
-import {useEffect} from 'react'
 
 const JoinWorkspace = () => {
   const { t } = useTranslation()
@@ -25,12 +24,8 @@ const JoinWorkspace = () => {
   const transition = useTransition()
   const workspcaceInvitationData = useLoaderData()
   let navigate = useNavigate()
+  console.log(workspcaceInvitationData, 'workspcaceInvitationData')
   const workspaceInvitation = workspcaceInvitationData.invitedMember
-  useEffect(()=>{
-    if(workspcaceInvitationData.loginWithWrongId===false){
-      return joinInvitedWorkspace()
-    }
-  },[workspcaceInvitationData.loginWithWrongId])
 
   return (
     <div className="flex h-full flex-col items-center justify-center gap-6 rounded-lg">
@@ -51,7 +46,7 @@ const JoinWorkspace = () => {
                 <span className="text-center text-primary">
                   {t('members.alreadyJoinedWorkspace')}
                 </span>
-              ): workspcaceInvitationData.loginWithWrongId === true ? (
+              ) : workspcaceInvitationData.loginWithWrongId === true ? (
                 <span className="text-center text-primary">
                   {t('members.loggedinFromAnotherAccount')}
                 </span>
