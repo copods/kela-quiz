@@ -518,7 +518,6 @@ export async function endCurrentSection(
   id: SectionInTest['id']
 ) {
   const testSection = await prisma.sectionInTest.findUnique({ where: { id } })
-
   const section = await prisma.sectionInCandidateTest.findFirst({
     where: { candidateTestId, sectionId: testSection?.sectionId },
     select: {
@@ -531,7 +530,7 @@ export async function endCurrentSection(
   if (section?.endAt) {
     return { msg: 'Section already ended' }
   }
-
+  calculateResult(candidateTestId)
   return await prisma.sectionInCandidateTest.updateMany({
     where: { candidateTestId, sectionId: testSection?.sectionId },
     data: { endAt: new Date() },
