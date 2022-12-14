@@ -11,7 +11,6 @@ import { toast } from 'react-toastify'
 import Button from '~/components/form/Button'
 import { useTranslation } from 'react-i18next'
 import { trimValue } from '~/utils'
-import { useFetcher } from '@remix-run/react'
 interface textAnswerType {
   id: string
   answer: string
@@ -77,26 +76,28 @@ export default function OptionForQuestion({
       setTextCorrectAnswer([...textCorrectAnswer, { id: cuid(), answer: '' }])
     }
   }
-  const fetcher = useFetcher()
   const deleteOption = (index: number, id?: string) => {
-    // setIsDeleted(true)
     if (
       getQuestionType(selectedTypeOfQuestion) ===
         QuestionTypes.multipleChoice ||
       getQuestionType(selectedTypeOfQuestion) === QuestionTypes.singleChoice
     ) {
-      if (options.length === 2) {
+      let optionCount = 0
+      for (let option of options) {
+        if (!option.deleted) {
+          optionCount = optionCount + 1
+        }
+      }
+      if (optionCount === 2) {
         return toast.error('There should be at least two options.', { toastId })
       }
       if (id === singleChoiceAnswer) {
         setSingleChoiceAnswer('')
       }
-      setOptions(
-        (e: Array<{ option: string; isCorrect: boolean; id: string }>) => {
-          e.splice(index, 1)
-          return [...e]
-        }
+      const newData = options.map((i, j) =>
+        j === index ? { ...i, deleted: true } : i
       )
+      setOptions(newData)
     } else if (getQuestionType(selectedTypeOfQuestion) === QuestionTypes.text) {
       if (textCorrectAnswer.length === 1) return
       setTextCorrectAnswer((e: Array<{ id: string; answer: string }>) => {
@@ -104,7 +105,6 @@ export default function OptionForQuestion({
         return [...e]
       })
     }
-    fetcher.submit({ action: 'delete', id: id! }, { method: 'post' })
   }
 
   const getQuestionType = (id: string) => {
@@ -123,6 +123,7 @@ export default function OptionForQuestion({
     }
   }
   const checkBoxToggle = (index: number) => {
+    console.log('KKKK', options)
     setOptions(
       (e: Array<{ option: string; isCorrect: boolean; id: string }>) => {
         e[index].isCorrect = !e[index].isCorrect
@@ -141,7 +142,7 @@ export default function OptionForQuestion({
     options.forEach((i) => (i.isCorrect ? count++ : null))
     setAnswerCount(count)
   }, [options, setAnswerCount])
-
+  console.log('OPTIONS', options)
   return (
     <div className="flex flex-1 flex-col gap-6">
       <div className="flex h-11 flex-row items-end justify-between p-1">

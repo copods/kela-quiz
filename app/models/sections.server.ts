@@ -171,16 +171,15 @@ export async function deleteOptionById(id: string) {
 export async function updateQuestion(
   id: string,
   question: string,
-  options: Array<{ id: string; option: string; isCorrect: boolean }>,
+  options: Array<{
+    id: string
+    option: string
+    isCorrect: boolean
+    deleted: boolean
+  }>,
   correctAnswer: Array<{ id: string; answer: string; order: number }>,
   createdById: string
 ) {
-  await prisma.question.update({
-    where: { id },
-    data: {
-      question: question,
-    },
-  })
   correctAnswer.forEach(
     async (i) =>
       await prisma.correctAnswer.upsert({
@@ -189,21 +188,27 @@ export async function updateQuestion(
         create: { id: i.id, answer: i.answer, order: i.order, questionId: id },
       })
   )
-  options.forEach(
-    async (i) =>
-      await prisma.option.upsert({
-        where: { id: i.id },
-        update: {
-          option: i.option,
-          coInQuestionId: i.isCorrect ? id : null,
-        },
-        create: {
-          id: i.id,
-          option: i.option,
-          questionId: id,
-          createdById: createdById,
-          coInQuestionId: i.isCorrect ? id : null,
-        },
-      })
+  await prisma.question.update({ where: { id }, data: { question: question } })
+
+  options.forEach(async (i) =>
+    i.deleted
+      ? await prisma.option.update({
+          where: { id: i.id },
+          data: { deleted: true },
+        })
+      : await prisma.option.upsert({
+          where: { id: i.id },
+          update: {
+            option: i.option,
+            coInQuestionId: i.isCorrect ? id : null,
+          },
+          create: {
+            id: i.id,
+            option: i.option,
+            questionId: id,
+            createdById: createdById,
+            coInQuestionId: i.isCorrect ? id : null,
+          },
+        })
   )
 }

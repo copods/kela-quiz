@@ -22,7 +22,6 @@ const AddQuestionInSection = () => {
   const LoaderData = useLoaderData()
   const { sectionDetails, questionTypes } = useLoaderData()
   const [isDeleted, setIsDeleted] = useState(false)
-  console.log(questionTypes)
   const [selectedTypeOfQuestion, onQuestionTypeChange] = useState(function () {
     for (let questionType of questionTypes) {
       if (questionType.value === QuestionTypes.multipleChoice) {
@@ -198,11 +197,17 @@ const AddQuestionInSection = () => {
       answerCount === 1
     ) {
       options.forEach(
-        (option: { option: string; isCorrect: boolean; id: string }) => {
+        (option: {
+          option: string
+          isCorrect: boolean
+          id: string
+          deleted: boolean
+        }) => {
           let optionForQuestion = {
             id: option.id,
             option: option.option,
             isCorrect: option.isCorrect,
+            deleted: option.deleted,
           }
           testQuestion.options.push(optionForQuestion)
         }
@@ -211,11 +216,17 @@ const AddQuestionInSection = () => {
       getQuestionType(selectedTypeOfQuestion) === QuestionTypes.multipleChoice
     ) {
       options.forEach(
-        (option: { option: string; isCorrect: boolean; id: string }) => {
+        (option: {
+          option: string
+          isCorrect: boolean
+          id: string
+          deleted: boolean
+        }) => {
           let optionForQuestion = {
             id: option.id,
             option: option.option,
             isCorrect: option.isCorrect,
+            deleted: option.deleted,
           }
           testQuestion.options.push(optionForQuestion)
         }
