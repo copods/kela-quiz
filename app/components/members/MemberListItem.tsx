@@ -37,7 +37,7 @@ export default function MemberListItem({
           <span className="memberName text-base text-gray-700">
             {user.firstName} {user.lastName}{' '}
             {owner ? (
-              <span className="mr-1 inline-block rounded bg-gray-600 py-1 px-2 text-xs font-semibold uppercase text-white last:mr-0">
+              <span className="mr-1 inline-block rounded bg-blue-50 py-1 px-2 text-xs font-semibold uppercase text-gray-700 last:mr-0">
                 owner
               </span>
             ) : null}

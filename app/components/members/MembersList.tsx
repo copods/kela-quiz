@@ -19,7 +19,6 @@ export default function MembersList({
     // @TODO: Need to check if there's already Interface for single workspace object
     (el: any) => el.workspaceId === currentWorkspaceId
   ).workspace.createdById
-  console.log(currentWorkspaceUserId)
   return (
     <div className="grid grid-cols-12 rounded-lg shadow-base">
       <div className="col-span-full grid grid-cols-10 rounded-lg border border-solid border-gray-200 bg-white">
