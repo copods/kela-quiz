@@ -167,6 +167,9 @@ const SignUp = ({ error }: { error?: string }) => {
       errorId: 'New-password-error',
       onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
         setPassword(trimValue(event?.target.value))
+        if (event.target.value === '') {
+          setOnBlurPasswordErr('')
+        }
       },
     },
     {
