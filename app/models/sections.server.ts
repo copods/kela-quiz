@@ -187,7 +187,7 @@ export async function updateQuestion(
     answer.deleted
       ? await prisma.correctAnswer.update({
           where: { id: answer.id },
-          data: { deleted: true },
+          data: { deleted: true, deletedAt: new Date().toString() },
         })
       : await prisma.correctAnswer.upsert({
           where: { id: answer.id },
@@ -206,7 +206,7 @@ export async function updateQuestion(
     option.deleted
       ? await prisma.option.update({
           where: { id: option.id },
-          data: { deleted: true },
+          data: { deleted: true, deletedAt: new Date().toString() },
         })
       : await prisma.option.upsert({
           where: { id: option.id },

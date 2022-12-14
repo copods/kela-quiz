@@ -20,7 +20,6 @@ import { useTranslation } from 'react-i18next'
 const AddQuestionInSection = () => {
   const { t } = useTranslation()
   const LoaderData = useLoaderData()
-  console.log('LOADER', LoaderData)
   const { sectionDetails, questionTypes } = useLoaderData()
   const [selectedTypeOfQuestion, onQuestionTypeChange] = useState(function () {
     for (let questionType of questionTypes) {
