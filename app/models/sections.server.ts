@@ -165,9 +165,7 @@ export async function addQuestion(
       return err
     })
 }
-export async function deleteOptionById(id: string) {
-  return prisma.option.update({ where: { id }, data: { deleted: true } })
-}
+
 export async function updateQuestion(
   id: string,
   question: string,
@@ -225,4 +223,15 @@ export async function updateQuestion(
           },
         })
   )
+}
+
+export async function getQuestionById(id: string) {
+  return prisma.question.findUnique({
+    where: { id },
+    include: {
+      options: true,
+      correctAnswer: true,
+      correctOptions: true,
+    },
+  })
 }

@@ -15,7 +15,7 @@ import { useEffect, useState } from 'react'
 import { routes } from '~/constants/route.constants'
 import { useTranslation } from 'react-i18next'
 import { getUserWorkspaces } from '~/models/workspace.server'
-import { getQuestionById } from '~/models/tests.server'
+import { getQuestionById } from '~/models/sections.server'
 type LoaderData = {
   sectionDetails: Awaited<ReturnType<typeof getSectionById>>
   questionTypes: Awaited<ReturnType<typeof getQuestionType>>

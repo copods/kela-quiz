@@ -210,16 +210,23 @@ const AddQuestionInSection = () => {
         QuestionTypes.multipleChoice &&
       answerCount === 1
     ) {
-      options.forEach((option) => {
-        let optionForQuestion = {
-          id: option.id,
-          option: option.option,
-          isCorrect: option.isCorrect,
+      options.forEach(
+        (option: {
+          option: string
+          isCorrect: boolean
+          id: string
+          deleted: boolean
+        }) => {
+          let optionForQuestion = {
+            id: option.id,
+            option: option.option,
+            isCorrect: option.isCorrect,
+          }
+          if (option.option) {
+            testQuestion.options.push(optionForQuestion)
+          }
         }
-        if (option.option) {
-          testQuestion.options.push(optionForQuestion)
-        }
-      })
+      )
     } else if (
       getQuestionType(selectedTypeOfQuestion) === QuestionTypes.multipleChoice
     ) {
