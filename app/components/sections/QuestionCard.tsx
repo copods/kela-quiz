@@ -8,6 +8,9 @@ import type {
 } from '~/interface/Interface'
 import OptionCard from './OptionCard'
 import { QuestionTypes } from '../../interface/Interface'
+import { useState } from 'react'
+import { useSubmit } from '@remix-run/react'
+import DeletePopUp from '../common-components/DeletePopUp'
 const QuestionCard = ({
   question,
   isExpanded,
@@ -19,6 +22,11 @@ const QuestionCard = ({
   onAccordianToggle: (e: number) => void
   index: number
 }) => {
+  const [open, setOpen] = useState(false)
+  const submit = useSubmit()
+  const deleteQuestion = () => {
+    submit({ action: 'deleteQuestion', id: question.id }, { method: 'post' })
+  }
   const { t } = useTranslation()
   const displayName =
     question.questionType?.value === QuestionTypes.multipleChoice
@@ -83,6 +91,19 @@ const QuestionCard = ({
               className="cursor-pointer text-xl text-gray-400"
             />
           )}
+          <span
+            tabIndex={0}
+            role="button"
+            aria-label=""
+            onClick={() => {
+              setOpen(!open)
+            }}
+            onKeyUp={() => {
+              setOpen(!open)
+            }}
+          >
+            delete
+          </span>
         </div>
       </div>
       <div
@@ -118,6 +139,15 @@ const QuestionCard = ({
             ))}
           </div>
         )}
+        {
+          <DeletePopUp
+            setOpen={setOpen}
+            open={open}
+            onDelete={deleteQuestion}
+            deleteItem={`${question.question}`}
+            deleteItemType={t('members.invitedMember')}
+          />
+        }
       </div>
     </div>
   )

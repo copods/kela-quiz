@@ -9,6 +9,9 @@ export async function getSectionById({ id }: Pick<Section, 'id'>) {
     },
     include: {
       questions: {
+        where: {
+          deleted: false,
+        },
         include: {
           correctOptions: true,
           options: true,
@@ -164,4 +167,16 @@ export async function addQuestion(
     .catch((err) => {
       return err
     })
+}
+export async function deleteQuestion(id: string) {
+  console.log(id, 'id')
+  return prisma.question.update({
+    where: {
+      id,
+    },
+    data: {
+      deleted: true,
+      deletedAt: new Date().toString(),
+    },
+  })
 }

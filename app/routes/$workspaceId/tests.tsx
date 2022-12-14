@@ -195,7 +195,6 @@ export const action: ActionFunction = async ({ request, params }) => {
   const createdById = await requireUserId(request)
   const workspaceId = params.workspaceId as string
   const formData = await request.formData()
-
   const action =
     formData.get('addSection') ||
     formData.get('editSection') ||
