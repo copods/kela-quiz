@@ -29,12 +29,8 @@ export default function OptionForQuestion({
   setTextCorrectAnswer,
   checkOrder,
   setCheckOrder,
-  isDeleted,
-  setIsDeleted,
 }: {
   questionTypeList: QuestionType[]
-  isDeleted: boolean
-  setIsDeleted: (e: boolean) => void
   selectedTypeOfQuestion: string
   answerCount: number
   setAnswerCount: (e: number) => void

@@ -21,7 +21,6 @@ const AddQuestionInSection = () => {
   const { t } = useTranslation()
   const LoaderData = useLoaderData()
   const { sectionDetails, questionTypes } = useLoaderData()
-  const [isDeleted, setIsDeleted] = useState(false)
   const [selectedTypeOfQuestion, onQuestionTypeChange] = useState(function () {
     for (let questionType of questionTypes) {
       if (
@@ -46,6 +45,15 @@ const AddQuestionInSection = () => {
         return questionTypes.find(
           (question: { id: string; value: string }) =>
             question.value === QuestionTypes.text
+        ).id
+      }
+      if (
+        questionType.id === LoaderData?.question?.questionTypeId &&
+        questionType.value === QuestionTypes.multipleChoice
+      ) {
+        return questionTypes.find(
+          (question: { id: string; value: string }) =>
+            question.value === QuestionTypes.multipleChoice
         ).id
       }
     }
@@ -221,6 +229,7 @@ const AddQuestionInSection = () => {
             id: option.id,
             option: option.option,
             isCorrect: option.isCorrect,
+            deleted: option.deleted,
           }
           if (option.option) {
             testQuestion.options.push(optionForQuestion)
@@ -316,8 +325,6 @@ const AddQuestionInSection = () => {
         />
         <OptionForQuestion
           textCorrectAnswer={textCorrectAnswer}
-          isDeleted={isDeleted}
-          setIsDeleted={setIsDeleted}
           setTextCorrectAnswer={setTextCorrectAnswer}
           singleChoiceAnswer={singleChoiceAnswer}
           setSingleChoiceAnswer={setSingleChoiceAnswer}
