@@ -74,7 +74,9 @@
     "joinedOn": "Joined On",
     "invitedAt": "Invited At",
     "noRowsToShow": "No Rows To Show",
-    "items": "Items"
+    "items": "Items",
+    "onGoing": "On Going",
+    "notAttempted":"Not attempted"
   },
   "sideNav": {
     "sideNavHeading": "Quiz",

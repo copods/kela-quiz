@@ -58,7 +58,6 @@ const CandidatesList = ({ searchText }: { searchText: string }) => {
         .includes(searchText.toLowerCase())
     }
   )
-
   return (
     <div className="bg-gray-50 pb-4">
       <div className="bg-tableHeader rounded-lg border border-solid border-gray-200 shadow-base">

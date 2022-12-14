@@ -10,24 +10,27 @@ import { routes } from '~/constants/route.constants'
 const ResultDetailsComponent = () => {
   // const { t } = useTranslation()
 
-  const { candidateResult, params, sectionWiseResult } = useLoaderData()
-
+  const { candidateResult, params, sectionWiseResult, currentWorkspaceId } =
+    useLoaderData()
   let navigate = useNavigate()
-
   return (
     <div id="test-details" className="flex h-full flex-col gap-6">
       <header>
         <div className="flex gap-2">
           <div
             onClick={() =>
-              navigate(`${routes.resultGroupTest}/${params?.testId}`)
+              navigate(
+                `/${currentWorkspaceId}${routes.resultGroupTest}/${params?.testId}`
+              )
             }
             className="flex items-center gap-4 "
             role={'button'}
             tabIndex={0}
             onKeyDown={(e) => {
               if (e.key === 'Enter')
-                navigate(`${routes.resultGroupTest}/${params?.testId}`)
+                navigate(
+                  `/${currentWorkspaceId}${routes.resultGroupTest}/${params?.testId}`
+                )
             }}
           >
             <Icon
@@ -56,6 +59,7 @@ const ResultDetailsComponent = () => {
               skippedQuestions={section?.skipped}
               incorrectQuestions={section?.incorrect}
               unansweredQuestions={section?.unanswered}
+              startedAt={section?.section.startedAt}
             />
           )
         })}

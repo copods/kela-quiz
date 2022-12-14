@@ -57,7 +57,7 @@ const AttendedCandidateListItem = ({
         <div className="col-span-1 flex items-center truncate">
           <span className="text-base text-gray-700">{index}</span>
         </div>
-        {endAt ? (
+        {name != ' ' ? (
           <Link
             to={`/${currentWorkspaceId}/results/groupByTests/${testId}/${candidateResultId}`}
             className="col-span-2 flex  truncate font-semibold text-primary"
@@ -65,10 +65,6 @@ const AttendedCandidateListItem = ({
           >
             {name}
           </Link>
-        ) : name != ' ' ? (
-          <span className="col-span-2 flex items-center truncate" title={name}>
-            {name}
-          </span>
         ) : (
           <div
             title="No Name"
@@ -115,7 +111,7 @@ const AttendedCandidateListItem = ({
             role={'banner'}
             className="text-base text-gray-700"
           >
-            {result >= 0 ? `${result}%` : 'NA'}
+            {endAt ? `${result}%` : 'NA'}
           </span>
         </div>
         <div
@@ -123,15 +119,21 @@ const AttendedCandidateListItem = ({
           role={'banner'}
           className="flex items-center justify-between"
         >
-          <span
-            className={`rounded-full px-2 py-1 text-xs text-gray-900 ${
-              result >= 0 ? 'bg-green-200' : 'bg-yellow-200'
-            }`}
-          >
-            {result >= 0
-              ? t('commonConstants.complete')
-              : t('commonConstants.pending')}
-          </span>
+          {startedAt === null ? (
+            <span className="rounded-full bg-yellow-200 px-2 py-1 text-xs">
+              {t('commonConstants.pending')}
+            </span>
+          ) : startedAt != null ? (
+            <span className="rounded-full bg-blue-50 px-2 py-1 text-xs">
+              {t('commonConstants.onGoing')}
+            </span>
+          ) : endAt != null ? (
+            <span className="rounded-full bg-green-200 px-2 py-1 text-xs">
+              {t('commonConstants.complete')}
+            </span>
+          ) : (
+            ''
+          )}
           {result >= 0 ? (
             ''
           ) : (
