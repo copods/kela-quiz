@@ -125,13 +125,12 @@ export default function OptionForQuestion({
     }
   }
   const checkBoxToggle = (index: number) => {
-    setOptions(
-      (e: Array<{ option: string; isCorrect: boolean; id: string }>) => {
-        e[index].isCorrect = !e[index].isCorrect
-        return [...e]
-      }
-    )
+    setOptions((e) => {
+      e[index].isCorrect = !e[index].isCorrect
+      return [...e]
+    })
   }
+  console.log('STATE', options)
   const updateTextAnswer = (textAns: string, index: number) => {
     setTextCorrectAnswer((e: textAnswerType[]) => {
       e[index].answer = textAns

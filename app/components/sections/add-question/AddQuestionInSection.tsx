@@ -20,6 +20,7 @@ import { useTranslation } from 'react-i18next'
 const AddQuestionInSection = () => {
   const { t } = useTranslation()
   const LoaderData = useLoaderData()
+  console.log('LOADER', LoaderData)
   const { sectionDetails, questionTypes } = useLoaderData()
   const [selectedTypeOfQuestion, onQuestionTypeChange] = useState(function () {
     for (let questionType of questionTypes) {
@@ -61,7 +62,12 @@ const AddQuestionInSection = () => {
   const [question, setQuestion] = useState(LoaderData?.question?.question ?? '')
   const [singleChoiceAnswer, setSingleChoiceAnswer] = useState('')
   const [options, setOptions] = useState(
-    LoaderData?.question?.options ?? [
+    LoaderData?.question?.options.map(
+      (option: { isCorrect: boolean; coInQuestionId: string }) =>
+        option.coInQuestionId
+          ? { ...option, isCorrect: true }
+          : { ...option, isCorrect: false }
+    ) ?? [
       {
         option: '',
         isCorrect: false,

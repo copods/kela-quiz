@@ -9,6 +9,7 @@ import type {
 import OptionCard from './OptionCard'
 import { QuestionTypes } from '../../interface/Interface'
 import { useLoaderData, useNavigate } from '@remix-run/react'
+import { useState } from 'react'
 
 const QuestionCard = ({
   question,
@@ -23,6 +24,8 @@ const QuestionCard = ({
 }) => {
   const { t } = useTranslation()
   const loaderData = useLoaderData()
+  const navigate = useNavigate()
+  const [hoverState, setHoverState] = useState(false)
   const displayName =
     question.questionType?.value === QuestionTypes.multipleChoice
       ? {
@@ -35,10 +38,11 @@ const QuestionCard = ({
           full: t('sectionsConstants.multipleChoiceQuestion'),
         }
       : { name: question.questionType?.displayName, full: 'Text' }
-  const navigate = useNavigate()
   return (
     <div
       key={question.id}
+      onMouseEnter={() => setHoverState(true)}
+      onMouseLeave={() => setHoverState(false)}
       className="flex cursor-pointer flex-col rounded-lg border border-gray-300 bg-gray-50 px-6 py-7"
       title={t('sectionsConstants.expand')}
       tabIndex={0}
@@ -68,24 +72,27 @@ const QuestionCard = ({
         </div>
         <div className="flex min-w-fit items-center justify-between lg:flex-1 lg:justify-end lg:gap-2">
           <div>
-            <button
-              title="Edit question"
-              onClick={(e) => {
-                e.stopPropagation()
-                navigate(
-                  `/${loaderData.currentWorkspaceId}/tests/${loaderData.sectionDetails.id}/add-question?questionid=${question.id}`
-                )
-              }}
-            >
-              Edit
-            </button>
-            <span
-              id="question-type"
-              title={displayName?.full}
-              className="flex flex-1 items-center rounded-52 border border-gray-700 px-3 text-sm text-gray-700"
-            >
-              {displayName?.name}
-            </span>
+            {hoverState ? (
+              <Icon
+                tabIndex={0}
+                onClick={(e) => {
+                  e.stopPropagation()
+                  navigate(
+                    `/${loaderData.currentWorkspaceId}/tests/${loaderData.sectionDetails.id}/add-question?questionid=${question.id}`
+                  )
+                }}
+                icon="material-symbols:edit-outline-rounded"
+                className="text-xl"
+              />
+            ) : (
+              <span
+                id="question-type"
+                title={displayName?.full}
+                className="flex flex-1 items-center rounded-52 border border-gray-700 px-3 text-sm text-gray-700"
+              >
+                {displayName?.name}
+              </span>
+            )}
           </div>
           {isExpanded === index ? (
             <Icon

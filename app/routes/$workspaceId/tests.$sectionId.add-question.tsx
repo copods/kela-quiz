@@ -75,14 +75,10 @@ export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
   const questionId = formData.get('questionId') as string
   const action = formData.get('action')
-  // const optionId = formData.get('id') as string
 
   const question = JSON.parse(formData.get('quesData') as string)
   console.log('======', question)
-  // if (action === 'delete') {
-  //   await deleteOptionById(optionId)
-  //   return null
-  // }
+
   if (action === 'edit') {
     let ques
     await updateQuestion(
