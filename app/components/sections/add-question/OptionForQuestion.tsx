@@ -49,7 +49,7 @@ export default function OptionForQuestion({
   ) => void
   singleChoiceAnswer: string
   setSingleChoiceAnswer: (e: string) => void
-  textCorrectAnswer: Array<{ id: string; answer: string }>
+  textCorrectAnswer: Array<{ id: string; answer: string; deleted: boolean }>
   setTextCorrectAnswer: (
     e: SetStateAction<Array<{ id: string; answer: string }>>
   ) => void
@@ -94,16 +94,22 @@ export default function OptionForQuestion({
       if (id === singleChoiceAnswer) {
         setSingleChoiceAnswer('')
       }
-      const newData = options.map((i, j) =>
-        j === index ? { ...i, deleted: true } : i
+      const newData = options.map((option, j) =>
+        j === index ? { ...option, deleted: true } : option
       )
       setOptions(newData)
     } else if (getQuestionType(selectedTypeOfQuestion) === QuestionTypes.text) {
-      if (textCorrectAnswer.length === 1) return
-      setTextCorrectAnswer((e: Array<{ id: string; answer: string }>) => {
-        e.splice(index, 1)
-        return [...e]
-      })
+      const newData = textCorrectAnswer.map((answer, i) =>
+        i === index ? { ...answer, deleted: true } : answer
+      )
+      let optionCount = 0
+      for (let option of textCorrectAnswer) {
+        if (!option.deleted) {
+          optionCount = optionCount + 1
+        }
+      }
+      if (optionCount === 1) return
+      setTextCorrectAnswer(newData)
     }
   }
 
@@ -123,7 +129,6 @@ export default function OptionForQuestion({
     }
   }
   const checkBoxToggle = (index: number) => {
-    console.log('KKKK', options)
     setOptions(
       (e: Array<{ option: string; isCorrect: boolean; id: string }>) => {
         e[index].isCorrect = !e[index].isCorrect
@@ -142,7 +147,6 @@ export default function OptionForQuestion({
     options.forEach((i) => (i.isCorrect ? count++ : null))
     setAnswerCount(count)
   }, [options, setAnswerCount])
-  console.log('OPTIONS', options)
   return (
     <div className="flex flex-1 flex-col gap-6">
       <div className="flex h-11 flex-row items-end justify-between p-1">
@@ -256,7 +260,13 @@ export default function OptionForQuestion({
           })}
         {getQuestionType(selectedTypeOfQuestion) === QuestionTypes.text &&
           textCorrectAnswer.map(
-            (option: { id: string; answer: string }, index: number) => {
+            (
+              option: { id: string; answer: string; deleted: boolean },
+              index: number
+            ) => {
+              if (option.deleted) {
+                return null
+              }
               return (
                 <div className="flex items-center gap-2.5" key={option.id}>
                   <div className="flex-1" id="optionEditor">

@@ -136,6 +136,7 @@ model CorrectAnswer {
   id         String    @id @default(cuid())
   answer     String
   order      Int
+  deleted           Boolean             @default(false)
   question   Question? @relation(fields: [questionId], references: [id])
   questionId String?
   createdAt  DateTime  @default(now())

@@ -126,14 +126,16 @@ const QuestionCard = ({
         )}
         {question?.correctAnswer && (
           <div className="grid grid-cols-1 gap-4 pt-6 ">
-            {question.correctAnswer?.map((answer: CorrectAnswer) => (
-              <div key={answer.id}>
-                <OptionCard
-                  option={answer}
-                  Questiontype={question.questionType}
-                />
-              </div>
-            ))}
+            {question.correctAnswer?.map((answer: CorrectAnswer) =>
+              answer.deleted ? null : (
+                <div key={answer.id}>
+                  <OptionCard
+                    option={answer}
+                    Questiontype={question.questionType}
+                  />
+                </div>
+              )
+            )}
           </div>
         )}
       </div>

@@ -177,37 +177,51 @@ export async function updateQuestion(
     isCorrect: boolean
     deleted: boolean
   }>,
-  correctAnswer: Array<{ id: string; answer: string; order: number }>,
+  correctAnswer: Array<{
+    id: string
+    answer: string
+    order: number
+    deleted: boolean
+  }>,
   createdById: string
 ) {
-  correctAnswer.forEach(
-    async (i) =>
-      await prisma.correctAnswer.upsert({
-        where: { id: i.id },
-        update: { answer: i.answer },
-        create: { id: i.id, answer: i.answer, order: i.order, questionId: id },
-      })
+  correctAnswer.forEach(async (answer) =>
+    answer.deleted
+      ? await prisma.correctAnswer.update({
+          where: { id: answer.id },
+          data: { deleted: true },
+        })
+      : await prisma.correctAnswer.upsert({
+          where: { id: answer.id },
+          update: { answer: answer.answer, order: answer.order },
+          create: {
+            id: answer.id,
+            answer: answer.answer,
+            order: answer.order,
+            questionId: id,
+          },
+        })
   )
   await prisma.question.update({ where: { id }, data: { question: question } })
 
-  options.forEach(async (i) =>
-    i.deleted
+  options.forEach(async (option) =>
+    option.deleted
       ? await prisma.option.update({
-          where: { id: i.id },
+          where: { id: option.id },
           data: { deleted: true },
         })
       : await prisma.option.upsert({
-          where: { id: i.id },
+          where: { id: option.id },
           update: {
-            option: i.option,
-            coInQuestionId: i.isCorrect ? id : null,
+            option: option.option,
+            coInQuestionId: option.isCorrect ? id : null,
           },
           create: {
-            id: i.id,
-            option: i.option,
+            id: option.id,
+            option: option.option,
             questionId: id,
             createdById: createdById,
-            coInQuestionId: i.isCorrect ? id : null,
+            coInQuestionId: option.isCorrect ? id : null,
           },
         })
   )

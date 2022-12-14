@@ -24,7 +24,10 @@ const AddQuestionInSection = () => {
   const [isDeleted, setIsDeleted] = useState(false)
   const [selectedTypeOfQuestion, onQuestionTypeChange] = useState(function () {
     for (let questionType of questionTypes) {
-      if (questionType.value === QuestionTypes.multipleChoice) {
+      if (
+        !LoaderData?.question?.questionTypeId &&
+        questionType.value === QuestionTypes.multipleChoice
+      ) {
         return questionType.id
       }
       if (
@@ -239,6 +242,7 @@ const AddQuestionInSection = () => {
             id: correctAnswer.id,
             answer: correctAnswer.answer,
             order: index,
+            deleted: correctAnswer.deleted,
           }
           testQuestion.correctAnswer.push(optionForQuestion)
         }

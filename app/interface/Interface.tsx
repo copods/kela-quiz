@@ -194,6 +194,7 @@ export interface CorrectAnswer {
   answer: string
   order: number
   question?: string
+  deleted?: boolean
   questionId?: string
   createdAt: Date
   updatedAt: Date
