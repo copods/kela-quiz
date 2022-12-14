@@ -133,7 +133,7 @@ describe('Test for Logout, SideNav', () => {
     )
   })
   it('Checks for logout CTA button padding', () => {
-    cy.get('#logout-button').should('have.css', 'padding', '10px 8px')
+    cy.get('#logout-button').should('have.css', 'padding', '10px 20px')
   })
   it('Checks for logout CTA button cursor', () => {
     cy.get('#logout-button').should('have.css', 'cursor', 'pointer')

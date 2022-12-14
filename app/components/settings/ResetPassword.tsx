@@ -3,9 +3,9 @@ import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { trimValue } from '~/utils'
-import DialogWrapper from '../Dialog'
-import Button from '../form/Button'
-import PasswordInputFields from '../form/PasswordInputField'
+import DialogWrapper from '../common-components/Dialog'
+import Button from '../common-components/Button'
+import PasswordInputFields from '../common-components/PasswordInputField'
 
 const ResetPassword = ({
   openResetPassModel,
@@ -74,6 +74,7 @@ const ResetPassword = ({
       placeholder: t('settings.enterOldPassword'),
       name: 'oldPassword',
       required: true,
+      isRequired: true,
       type: 'password',
       value: password,
       error: error.passIsInvalid,
@@ -87,6 +88,7 @@ const ResetPassword = ({
       placeholder: t('settings.enterNewPass'),
       name: 'newPassword',
       required: true,
+      isRequired: true,
       type: 'password',
       value: newPassword,
       error: error?.passMinLengthError || error?.passShouldNotBeSame,
@@ -100,6 +102,7 @@ const ResetPassword = ({
       placeholder: t('settings.reEnterPass'),
       name: 'confirmNewPassword',
       required: true,
+      isRequired: true,
       type: 'password',
       value: confirmPassword,
       error: error?.passNotMatchError,

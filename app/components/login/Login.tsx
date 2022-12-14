@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useLoaderData, useNavigate, useSubmit } from '@remix-run/react'
-import Button from '~/components/form/Button'
-import InputField from '~/components/form/InputField'
+import Button from '~/components/common-components/Button'
+import InputField from '~/components/common-components/InputField'
 import Logo from '~/components/Logo'
 import type { LoginProps } from '~/interface/Interface'
 import { useTranslation } from 'react-i18next'
@@ -30,6 +30,7 @@ function Login({ actionData, redirectTo }: LoginProps) {
       type: 'text',
       name: 'email',
       required: true,
+      isRequired: true,
       value: email,
       error: loginFieldError.email,
       errorId: 'email-error',
@@ -46,6 +47,7 @@ function Login({ actionData, redirectTo }: LoginProps) {
       type: 'password',
       name: 'password',
       required: true,
+      isRequired: true,
       value: password,
       error: loginFieldError.password,
       errorId: 'password-error',
