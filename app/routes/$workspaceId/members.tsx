@@ -3,7 +3,7 @@ import { redirect } from '@remix-run/node'
 import type { LoaderFunction, ActionFunction } from '@remix-run/node'
 import MembersList from '~/components/members/MembersList'
 import { json } from '@remix-run/node'
-import { useActionData } from '@remix-run/react'
+import { useActionData, useLoaderData } from '@remix-run/react'
 import {
   deleteUserById,
   getAllRoles,
@@ -23,6 +23,7 @@ import {
   inviteNewUser,
   reinviteMemberForWorkspace,
 } from '~/models/invites.server'
+import EmptyStateComponent from '~/components/common-components/EmptyStateComponent'
 
 export type ActionData = {
   errors?: {
@@ -220,7 +221,7 @@ const Members = () => {
       }
     }
   }, [membersActionData, t])
-
+  const loader = useLoaderData()
   return (
     <div className="flex flex-col gap-6 p-1">
       <MembersHeader
@@ -236,7 +237,12 @@ const Members = () => {
         >
           {t('members.joinedMembers')}
         </h1>
-        <MembersList actionStatus={membersActionData?.resp?.title} />
+
+        {loader.users.length === 0 ? (
+          <EmptyStateComponent />
+        ) : (
+          <MembersList actionStatus={membersActionData?.resp?.title} />
+        )}
       </div>
       <div className="flex flex-col gap-4 text-2xl">
         <InvitedMembersList actionStatus={membersActionData?.resp?.title} />
