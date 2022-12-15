@@ -83,43 +83,87 @@ export function trimValue(value: string) {
   }
   return str
 }
-export function checkPasswordStrength(newPassword: string) {
-  let passwordStrengthCount = 0
-  if (/.{8}/.test(newPassword)) {
-    passwordStrengthCount = passwordStrengthCount + 1
-  }
-  if (/[A-Z]/.test(newPassword)) {
-    passwordStrengthCount = passwordStrengthCount + 1
-  }
-  if (/[!@#$&*]/.test(newPassword)) {
-    passwordStrengthCount = passwordStrengthCount + 1
-  }
-  if (/[0-9]/.test(newPassword)) {
-    passwordStrengthCount = passwordStrengthCount + 1
-  }
-  if (/[a-z]/.test(newPassword)) {
-    passwordStrengthCount = passwordStrengthCount + 1
-  }
-  for (let character of newPassword) {
-    if (/[!@#$&*]/.test(character)) {
-      passwordStrengthCount = passwordStrengthCount + 4
-    }
-    if (/[a-z]/.test(character)) {
-      passwordStrengthCount = passwordStrengthCount + 2
-    }
-    if (/[A-Z]/.test(character)) {
-      passwordStrengthCount = passwordStrengthCount + 2
-    }
-    if (/[0-9]/.test(character)) {
-      passwordStrengthCount = passwordStrengthCount + 1
-    }
-  }
-  if (passwordStrengthCount <= 15) {
+export function checkPasswordStrength(password: string) {
+  let weaknesses = []
+  let strength = 100
+  weaknesses.push(lengthWeakness(password))
+  weaknesses.push(lowercaseWeakness(password))
+  weaknesses.push(uppercaseWeakness(password))
+  weaknesses.push(numberWeakness(password))
+  weaknesses.push(specialCharactersWeakness(password))
+  weaknesses.push(repeatCharactersWeakness(password))
+  weaknesses.forEach((weakness) => {
+    if (weakness == null) return
+    strength -= weakness.deduction
+  })
+  if (strength <= 50) {
     return t('commonConstants.weak')
-  } else if (passwordStrengthCount > 15 && passwordStrengthCount <= 25) {
+  } else if (strength > 50 && strength <= 80) {
     return t('commonConstants.medium')
-  } else if (passwordStrengthCount > 25) {
+  } else if (strength > 80) {
     return t('commonConstants.strong')
+  }
+  // all functions to check different aspects
+  function lengthWeakness(password: String) {
+    const length = password.length
+    if (length <= 5) {
+      return {
+        reasong: 'length is short',
+        deduction: 40,
+      }
+    }
+    if (length <= 10) {
+      return {
+        reasong: 'length can be better',
+        deduction: 15,
+      }
+    }
+  }
+
+  function uppercaseWeakness(password: string) {
+    return characterTypeWeakness(password, /[A-Z]/g, 'uppercase')
+  }
+
+  function lowercaseWeakness(password: string) {
+    return characterTypeWeakness(password, /[a-z]/g, 'lowercase')
+  }
+
+  function numberWeakness(password: string) {
+    return characterTypeWeakness(password, /[0-9]/g, 'numbers')
+  }
+
+  function specialCharactersWeakness(password: string) {
+    return characterTypeWeakness(password, /[^0-9a-zA-Z\s]/g, 'special chars')
+  }
+  function repeatCharactersWeakness(password: string) {
+    const matches = password.match(/(.)\1/g) || []
+    if (matches.length > 0) {
+      return {
+        reasong: 'repeat characters',
+        deduction: matches.length * 10,
+      }
+    }
+  }
+  function characterTypeWeakness(
+    password: string,
+    regex: RegExp,
+    type: string
+  ) {
+    const matches = password.match(regex) || []
+
+    if (matches.length === 0) {
+      return {
+        message: `Your password has no ${type}`,
+        deduction: 20,
+      }
+    }
+
+    if (matches.length <= 2) {
+      return {
+        message: `Your password could use more ${type}`,
+        deduction: 5,
+      }
+    }
   }
 }
 export const usePagination = ({
