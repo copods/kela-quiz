@@ -34,13 +34,20 @@ export default function MemberListItem({
     <div className="col-span-full grid grid-cols-10">
       <div className="memberRows col-gap-3 col-span-full grid grid-cols-10 border-t border-solid border-gray-200 px-6 py-4">
         <div className="break-word col-span-2 overflow-ellipsis pl-4">
-          <span className="memberName text-base text-gray-700">
-            {user.firstName} {user.lastName}{' '}
-            {owner ? (
-              <span className="mr-1 inline-block rounded bg-blue-50 py-1 px-2 text-xs font-semibold uppercase text-gray-700 last:mr-0">
-                owner
-              </span>
-            ) : null}
+          <span className="memberName flex gap-1 text-base text-gray-700">
+            <div>
+              {user.firstName} {user.lastName}
+            </div>
+            <div>
+              {owner ? (
+                <span
+                  className="mr-1 ml-1 inline-block rounded bg-blue-50 py-1 px-2 text-xs font-semibold uppercase text-gray-700 last:mr-0"
+                  data-cy="owner-tag"
+                >
+                  owner
+                </span>
+              ) : null}
+            </div>
           </span>
         </div>
         <div className="memberMail col-span-3 overflow-ellipsis break-all pl-4">

@@ -1,4 +1,4 @@
-import type { User, Role, Invites } from '~/interface/Interface'
+import type { User, Role, Invites, UserWorkspace } from '~/interface/Interface'
 import MemberListItem from './MemberListItem'
 import { useLoaderData } from '@remix-run/react'
 import { useTranslation } from 'react-i18next'
@@ -16,8 +16,7 @@ export default function MembersList({
   const loggedInUser = membersData.userId
   const currentWorkspaceId = membersData.currentWorkspaceId
   const currentWorkspaceUserId = membersData.workspaces.find(
-    // @TODO: Need to check if there's already Interface for single workspace object
-    (el: any) => el.workspaceId === currentWorkspaceId
+    (el: UserWorkspace) => el.workspaceId === currentWorkspaceId
   ).workspace.createdById
   return (
     <div className="grid grid-cols-12 rounded-lg shadow-base">
@@ -41,7 +40,7 @@ export default function MembersList({
         </div>
         {users.map((user: User & { role?: Role; invites: Invites }) => {
           return (
-            <div key={user.id} className="memberRow col-span-10 grid">
+            <div key={user.id} className="col-span-10 grid">
               <MemberListItem
                 user={user}
                 loggedInUser={loggedInUser === user.id}
