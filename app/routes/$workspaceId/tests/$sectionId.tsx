@@ -4,6 +4,10 @@ import { getSectionById } from '~/models/sections.server'
 import invariant from 'tiny-invariant'
 import SectionDetails from '~/components/sections/SectionDetails'
 import { deleteQuestionById } from '~/models/sections.server'
+import { useActionData } from '@remix-run/react'
+import { toast } from 'react-toastify'
+import { useTranslation } from 'react-i18next'
+import {useEffect} from 'react'
 
 export type ActionData = {
   errors?: {
@@ -55,5 +59,18 @@ export const action: ActionFunction = async ({ request, params }) => {
   return null
 }
 export default function Section() {
+  const { t } = useTranslation()
+  const section = useActionData() as ActionData
+  useEffect(() => {
+    if (section) {
+      if (section.resp?.status === 200) {
+        toast.success(t(section.resp?.title))
+      } else if (section.errors?.status === 400) {
+        toast.error(t(section.errors?.title), {
+          toastId: section.errors?.title,
+        })
+      }
+    }
+  }, [section, t])
   return <SectionDetails />
 }
