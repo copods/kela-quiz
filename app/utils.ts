@@ -108,7 +108,7 @@ export function checkPasswordStrength(password: string) {
     const length = password.length
     if (length <= 5) {
       return {
-        reasong: 'length is short',
+        reason: 'length is short',
         deduction: 40,
       }
     }
