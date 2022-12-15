@@ -43,7 +43,7 @@ const QuestionCard = ({
   return (
     <div
       key={question.id}
-      className="flex cursor-pointer flex-col rounded-lg border border-gray-300 bg-gray-50 px-6 py-7"
+      className="group flex cursor-pointer flex-col rounded-lg border border-gray-300 bg-gray-50 px-6 py-7"
       title={t('sectionsConstants.expand')}
       tabIndex={0}
       id="question-card-wrapper"
@@ -71,15 +71,33 @@ const QuestionCard = ({
           ></div>
         </div>
         <div className="flex min-w-fit items-center justify-between lg:flex-1 lg:justify-end lg:gap-2">
-          <div>
+          <div className='flex items-center justify-center'>
             <span
               id="question-type"
               title={displayName?.full}
-              className="flex flex-1 items-center rounded-52 border border-gray-700 px-3 text-sm text-gray-700"
+              className="flex flex-1 items-center rounded-52 border border-gray-700 px-3 text-sm text-gray-700 group-hover:hidden"
             >
               {displayName?.name}
             </span>
+            <div  className="hidden h-5 w-5 group-hover:flex group-hover:block"> <Icon
+              tabIndex={0}
+              role="button"
+              aria-label="delete question button"
+              onClick={() => {
+                setOpen(!open)
+              }}
+              onKeyUp={() => {
+                setOpen(!open)
+              }}
+              icon="ic:outline-delete-outline"
+              className="h-5 w-5"
+             
+            /></div>
+
+           
           </div>
+          <div>
+
           {isExpanded === index ? (
             <Icon
               icon={'akar-icons:circle-chevron-up'}
@@ -91,19 +109,7 @@ const QuestionCard = ({
               className="cursor-pointer text-xl text-gray-400"
             />
           )}
-          <span
-            tabIndex={0}
-            role="button"
-            aria-label=""
-            onClick={() => {
-              setOpen(!open)
-            }}
-            onKeyUp={() => {
-              setOpen(!open)
-            }}
-          >
-            delete
-          </span>
+          </div>
         </div>
       </div>
       <div

@@ -67,6 +67,7 @@ module.exports = {
         54: '54px',
         86: '86px',
       },
+      visibility: ['group-hover'],
     },
   },
   plugins: [],
