@@ -3,7 +3,7 @@ import { json } from '@remix-run/node'
 import { getSectionById } from '~/models/sections.server'
 import invariant from 'tiny-invariant'
 import SectionDetails from '~/components/sections/SectionDetails'
-import { deleteQuestion } from '~/models/sections.server'
+import { deleteQuestionById } from '~/models/sections.server'
 
 export type ActionData = {
   errors?: {
@@ -30,7 +30,7 @@ export const action: ActionFunction = async ({ request, params }) => {
   const id = formData.get('id') as string
   if (action === 'deleteQuestion') {
     let deleteHandle = null
-    await deleteQuestion(id)
+    await deleteQuestionById(id)
       .then(() => {
         deleteHandle = json<ActionData>(
           { resp: { title: 'statusCheck.deletedSuccess', status: 200 } },

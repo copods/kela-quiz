@@ -22,7 +22,7 @@ const QuestionCard = ({
   onAccordianToggle: (e: number) => void
   index: number
 }) => {
-  const [open, setOpen] = useState(false)
+  const [openDeleteQuestionPopUp, setOpenDeleteQuestionPopUp] = useState(false)
   const submit = useSubmit()
   const deleteQuestion = () => {
     submit({ action: 'deleteQuestion', id: question.id }, { method: 'post' })
@@ -71,44 +71,46 @@ const QuestionCard = ({
           ></div>
         </div>
         <div className="flex min-w-fit items-center justify-between lg:flex-1 lg:justify-end lg:gap-2">
-          <div className='flex items-center justify-center'>
+          <div className="flex items-center">
             <span
               id="question-type"
               title={displayName?.full}
-              className="flex flex-1 items-center rounded-52 border border-gray-700 px-3 text-sm text-gray-700 group-hover:hidden"
+              className="flex flex-1 items-center rounded-52 border border-gray-700 px-3 text-sm text-gray-700 group-hover:invisible"
             >
               {displayName?.name}
             </span>
-            <div  className="hidden h-5 w-5 group-hover:flex group-hover:block"> <Icon
-              tabIndex={0}
-              role="button"
-              aria-label="delete question button"
-              onClick={() => {
-                setOpen(!open)
-              }}
-              onKeyUp={() => {
-                setOpen(!open)
-              }}
-              icon="ic:outline-delete-outline"
-              className="h-5 w-5"
-             
-            /></div>
-
-           
+            <div className="invisible w-0 group-hover:visible group-hover:w-fit">
+              <Icon
+                tabIndex={0}
+                data-cy="delete-question"
+                role="button"
+                aria-label="delete question button"
+                onClick={(e) => {
+                  setOpenDeleteQuestionPopUp(!openDeleteQuestionPopUp)
+                  e.stopPropagation()
+                }}
+                onKeyUp={(e) => {
+                  if (e.key === 'Enter')
+                    setOpenDeleteQuestionPopUp(!openDeleteQuestionPopUp)
+                  e.stopPropagation()
+                }}
+                icon="ic:outline-delete-outline"
+                className="h-5 w-5"
+              />
+            </div>
           </div>
           <div>
-
-          {isExpanded === index ? (
-            <Icon
-              icon={'akar-icons:circle-chevron-up'}
-              className="cursor-pointer text-xl text-gray-400"
-            />
-          ) : (
-            <Icon
-              icon={'akar-icons:circle-chevron-down'}
-              className="cursor-pointer text-xl text-gray-400"
-            />
-          )}
+            {isExpanded === index ? (
+              <Icon
+                icon={'akar-icons:circle-chevron-up'}
+                className="cursor-pointer text-xl text-gray-400"
+              />
+            ) : (
+              <Icon
+                icon={'akar-icons:circle-chevron-down'}
+                className="cursor-pointer text-xl text-gray-400"
+              />
+            )}
           </div>
         </div>
       </div>
@@ -147,11 +149,12 @@ const QuestionCard = ({
         )}
         {
           <DeletePopUp
-            setOpen={setOpen}
-            open={open}
+            setOpen={setOpenDeleteQuestionPopUp}
+            open={openDeleteQuestionPopUp}
             onDelete={deleteQuestion}
-            deleteItem={`${question.question}`}
-            deleteItemType={t('members.invitedMember')}
+            deleteItem={question.question}
+            deleteItemType={t('candidateExamConstants.question')}
+            dangerousHtmlContent={true}
           />
         }
       </div>

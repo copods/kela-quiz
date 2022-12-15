@@ -168,8 +168,7 @@ export async function addQuestion(
       return err
     })
 }
-export async function deleteQuestion(id: string) {
-  console.log(id, 'id')
+export async function deleteQuestionById(id: string) {
   return prisma.question.update({
     where: {
       id,
