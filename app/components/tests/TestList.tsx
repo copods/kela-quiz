@@ -8,6 +8,7 @@ import TestTableItem from './TestTableItem'
 import Button from '../common-components/Button'
 import { routes } from '~/constants/route.constants'
 import { useTranslation } from 'react-i18next'
+import EmptyStateComponent from '../common-components/EmptyStateComponent'
 // import Checkbox from '../form/CheckBox'
 const TestList = ({
   tests,
@@ -163,9 +164,7 @@ const TestList = ({
           </div>
         </>
       ) : (
-        <div className="p-7 text-center">
-          {t('testsConstants.noAssessmentFound')}
-        </div>
+        <EmptyStateComponent />
       )}
     </div>
   )
