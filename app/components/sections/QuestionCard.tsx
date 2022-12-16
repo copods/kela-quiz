@@ -152,9 +152,7 @@ const QuestionCard = ({
             setOpen={setOpenDeleteQuestionPopUp}
             open={openDeleteQuestionPopUp}
             onDelete={deleteQuestion}
-            deleteItem={question.question}
             deleteItemType={t('candidateExamConstants.question')}
-            dangerousHtmlContent={true}
           />
         }
       </div>

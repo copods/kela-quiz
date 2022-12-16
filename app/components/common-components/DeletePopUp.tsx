@@ -13,7 +13,6 @@ export default function DeletePopUp({
   status,
   deleteItemType,
   deleteItem,
-  dangerousHtmlContent,
 }: {
   open: boolean
   setOpen: (e: boolean) => void
@@ -22,8 +21,7 @@ export default function DeletePopUp({
   setDeleted?: (e: boolean) => void
   status?: string | undefined
   deleteItemType: string
-  deleteItem: string
-  dangerousHtmlContent?: boolean
+  deleteItem?: string
 }) {
   const { t } = useTranslation()
 
@@ -45,7 +43,7 @@ export default function DeletePopUp({
         <div>
           <div
             id="delete-dialog"
-            className="max-h-280 overflow-auto bg-white sm:pb-4"
+            className="bg-white sm:pb-4"
           >
             <div className="sm:flex sm:items-start ">
               <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
@@ -59,19 +57,9 @@ export default function DeletePopUp({
                 <span className="text-sm text-gray-500">
                   {t('deletePopUp.alert')} {deleteItemType}
                 </span>
-
-                {dangerousHtmlContent ? (
-                  <div
-                    className="text-sm text-gray-500"
-                    dangerouslySetInnerHTML={{
-                      __html: deleteItem,
-                    }}
-                  ></div>
-                ) : (
                   <p className="text-sm text-gray-500">
                     {deleteItem} {subAlert}
                   </p>
-                )}
               </div>
             </div>
           </div>

@@ -9,7 +9,7 @@ const test1 = `Aptitude - assessment1`
 const deleteTest1 = `Aptitude - assessment2`
 const section2 = `Aptitude - section2`
 const deleteSection = `Aptitude - delete-Section`
-
+const question = 'first-question'
 const memberEmail = 'johndoe@example.com'
 
 describe('smoke tests', () => {
@@ -246,7 +246,51 @@ describe('smoke tests', () => {
       .type(cypress.useMemoAns)
     cy.get('#save-and-exit').click()
   })
+  it('Add second question to the first section', () => {
+    cy.visit('/sign-in')
+    cy.get('#email').clear().type('copods.demo.sendgrid@gmail.com')
+    cy.get('#password').clear().type('kQuiz@copods')
+    cy.findByRole('button').click()
+    cy.wait(1000)
+    cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
 
+    cy.get('#section-card').each(($el) => {
+      cy.wrap($el).within((el) => {
+        if (
+          el[0].getElementsByClassName('sectionName')[0].innerHTML === section2
+        ) {
+          cy.get('.sectionName').contains(section2).click()
+        }
+      })
+    })
+    cy.get('.sectionName').contains(section2).click()
+    cy.get('#add-question')
+      .should('have.text', `+ ${addQuestion.addQuestion}`)
+      .click()
+    cy.location('pathname').should('include', '/add-question')
+    cy.get('h1', { timeout: 6000 }).should('be.visible')
+
+    cy.get('#Question').get('#dropdown-container').click()
+    cy.get('ul').within(() => {
+      cy.get('li').within(() => {
+        cy.get('div').then((el) => {
+          ;[...el].map((el) => {
+            if (el.innerText === 'Text') {
+              el.click()
+            }
+            return null
+          })
+        })
+      })
+    })
+    cy.get('#question-editor #quill-editor').within(() => {
+      cy.get('.ql-editor').type(question)
+    })
+    cy.get('input[placeholder="Write your option here"]')
+      .clear()
+      .type(cypress.useRefAns)
+    cy.get('#save-and-exit').click()
+  })
   it('Verify if user able create the assesssment 1', () => {
     cy.visit('/sign-in')
     cy.get('#email').clear().type('copods.demo.sendgrid@gmail.com')

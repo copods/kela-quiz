@@ -1,6 +1,8 @@
 import { cypress, addQuestion } from '~/constants/common.constants'
 import { routes } from '~/constants/route.constants'
 const section1 = `Aptitude - section1`
+const section2 = `Aptitude - section2`
+const question = 'first-question'
 
 describe('Test for section-details', () => {
   beforeEach('sign-in', () => {
@@ -528,5 +530,90 @@ describe('Test for section-details', () => {
         .click()
       cy.get('.Toastify__toast').should('have.text', '')
     }
+  })
+  it('checks, delete question button should be visible', () => {
+    cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
+    cy.get('.sectionCard', { timeout: 40000 }).each(($el) => {
+      cy.wrap($el).within((el) => {
+        if (
+          el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
+        ) {
+          cy.get('.sectionName').should('have.text', section1)
+        }
+      })
+    })
+    cy.get('.sectionName').contains(section1).click()
+    cy.wait(2000)
+    cy.get('[data-cy="delete-question"]').should('be.exist')
+  })
+  it('checks, delete question button should be clickable', () => {
+    cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
+    cy.get('.sectionCard', { timeout: 40000 }).each(($el) => {
+      cy.wrap($el).within((el) => {
+        if (
+          el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
+        ) {
+          cy.get('.sectionName').should('have.text', section1)
+        }
+      })
+    })
+    cy.get('.sectionName').contains(section1).click()
+    cy.wait(2000)
+    cy.get('.group', { timeout: 40000 }).each(($el) => {
+      cy.wrap($el).within((el) => {
+        if (
+          el[0].getElementsByClassName('question')[0].innerHTML === question
+        ) {
+          cy.get('.question').should('have.text', question)
+        }
+      })
+    })
+    cy.get('.question')
+      .contains(question)
+      .parent()
+      .parent()
+      .parent()
+      .parent()
+      .within(() => {
+        cy.get('[data-cy="delete-question"]')
+          .should('be.exist')
+          .click({ force: true })
+      })
+  })
+  it('checks, delete question button should be working properly', () => {
+    cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
+    cy.get('.sectionCard', { timeout: 40000 }).each(($el) => {
+      cy.wrap($el).within((el) => {
+        if (
+          el[0].getElementsByClassName('sectionName')[0].innerHTML === section2
+        ) {
+          cy.get('.sectionName').should('have.text', section2)
+        }
+      })
+    })
+    cy.get('.sectionName').contains(section2).click()
+    cy.wait(2000)
+    cy.get('.group', { timeout: 40000 }).each(($el) => {
+      cy.wrap($el).within((el) => {
+        if (
+          el[0].getElementsByClassName('question')[0].innerHTML === question
+        ) {
+          cy.get('.question').should('have.text', question)
+        }
+      })
+    })
+    cy.get('.question')
+      .contains(question)
+      .parent()
+      .parent()
+      .parent()
+      .parent()
+      .within(() => {
+        cy.get('[data-cy="delete-question"]')
+          .should('be.exist')
+          .click({ force: true })
+      })
+    cy.get('#delete-dialog').should('be.visible')
+    cy.get('#confirm-delete').should('have.text', 'Delete').click()
   })
 })
