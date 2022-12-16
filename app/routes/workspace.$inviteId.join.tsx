@@ -8,8 +8,7 @@ import { routes } from '~/constants/route.constants'
 import { joinWorkspace } from '~/models/workspace.server'
 import { getInvitedMemberById } from '~/models/invites.server'
 import { getUserByEmail } from '~/models/user.server'
-import { useEffect } from 'react'
-import { useLoaderData, useNavigate } from '@remix-run/react'
+import { useLoaderData } from '@remix-run/react'
 
 export type LoaderData = {
   invitedMember: Awaited<ReturnType<typeof getInvitedMemberById>>
@@ -26,6 +25,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const user = await getUserByEmail(invitedMember.email) //checking if user exist or not
   let loginWithWrongId
   let joined
+
   if (user) {
     const userId = await getUserId(request)
     if (!userId) {
@@ -34,24 +34,25 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
     loginWithWrongId = userId && userId != user?.id
     if (loginWithWrongId === false) {
-      await joinWorkspace({
+      const joining = await joinWorkspace({
         invitedId: params.inviteId as string, //taking invited id from params
       })
-        .then((res) => {
-          joined = 'joined'
-          if (res) return joined
-        })
-        .catch((err) => {
-          return err
-        })
+      // .then((res) => {
+      //   joined = 'joined'
+      //   if (res) return redirect(`${invitedMember?.invitedForWorkspace?.id}`)
+      // })
+      // .catch((err) => {
+      //   return err
+      // })
+      console.log('joining', joining)
+      return redirect(`${invitedMember?.invitedForWorkspace?.id}`)
     }
   }
 
-  if (!user) {
-    if (invitedMember) {
-      return redirect(`${routes.signUp}?cameFrom=join&id=${params.inviteId}`)
-    }
+  if (!user && invitedMember) {
+    return redirect(`${routes.signUp}?cameFrom=join&id=${params.inviteId}`)
   }
+
   const inviteId = new URL(request.url).searchParams.get('id')
   return json<LoaderData>({
     invitedMember,
@@ -61,15 +62,15 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   })
 }
 const InviteMember = () => {
-  let navigate = useNavigate()
+  // let navigate = useNavigate()
   const workspcaceInvitationData = useLoaderData() as LoaderData
-  useEffect(() => {
-    if (workspcaceInvitationData.joined === 'joined') {
-      return navigate(
-        `/${workspcaceInvitationData?.invitedMember?.invitedForWorkspace?.id}`
-      )
-    }
-  }, [navigate, workspcaceInvitationData])
+  // useEffect(() => {
+  //   if (workspcaceInvitationData.joined === 'joined') {
+  //     return navigate(
+  //       `/${workspcaceInvitationData?.invitedMember?.invitedForWorkspace?.id}`
+  //     )
+  //   }
+  // }, [navigate, workspcaceInvitationData])
   return (
     <div className="flex h-full flex-col bg-gray-50">
       <Header />
