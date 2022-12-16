@@ -23,12 +23,13 @@ import Sections from '~/components/sections/Sections'
 import type { sectionActionErrorsType } from '~/interface/Interface'
 import AddEditSection from '~/components/sections/AddEditSection'
 import { toast } from 'react-toastify'
-import Button from '~/components/form/Button'
+import Button from '~/components/common-components/Button'
 import { sortByOrder } from '~/interface/Interface'
 import type { Section } from '~/interface/Interface'
 import { routes } from '~/constants/route.constants'
 import { useTranslation } from 'react-i18next'
 import { getUserWorkspaces } from '~/models/workspace.server'
+import EmptyStateComponent from '~/components/common-components/EmptyStateComponent'
 
 export type ActionData = {
   errors?: {
@@ -474,9 +475,7 @@ export default function SectionPage() {
           </div>
         </div>
       ) : (
-        <div className="p-7 text-center">
-          {t('sectionsConstants.noRecordFound')}
-        </div>
+        <EmptyStateComponent />
       )}
       <AddEditSection
         open={showAddSectionModal}

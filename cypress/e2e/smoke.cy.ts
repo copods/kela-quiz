@@ -114,7 +114,7 @@ describe('smoke tests', () => {
     cy.get('form > div')
       .should('be.visible')
       .within((el) => {
-        cy.get('input[placeholder="Enter Test Name"]').type(section1)
+        cy.get('input[placeholder="Enter Test Name*"]').type(section1)
         cy.get('textarea').type('Aptitude')
         cy.get('[data-cy="submit"]').click()
       })
@@ -132,7 +132,7 @@ describe('smoke tests', () => {
     cy.get('form > div')
       .should('be.visible')
       .within((el) => {
-        cy.get(`input[placeholder='Enter Test Name']`).type(section2)
+        cy.get(`input[placeholder='Enter Test Name*']`).type(section2)
         cy.get('textarea').type('Aptitude')
         cy.get('[data-cy="submit"]').click()
       })
@@ -150,7 +150,7 @@ describe('smoke tests', () => {
     cy.get('form > div')
       .should('be.visible')
       .within((el) => {
-        cy.get('input[placeholder="Enter Test Name"]').type(deleteSection)
+        cy.get('input[placeholder="Enter Test Name*"]').type(deleteSection)
         cy.get('textarea').type('Aptitude')
         cy.get('[data-cy="submit"]').click()
       })
@@ -463,8 +463,11 @@ describe('smoke tests', () => {
   })
   it('check for not found page', () => {
     cy.login()
-    cy.customVisit('/id/not-our-url')
-
+    cy.customVisit('/members')
+    cy.wait(1000)
+    cy.location().then((res) => {
+      cy.customVisit(`${res.pathname}-error`)
+    })
     cy.contains("That's an error.")
   })
 })

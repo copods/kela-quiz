@@ -2,10 +2,11 @@ import { useLoaderData, useNavigate } from '@remix-run/react'
 import { useEffect, useState } from 'react'
 import type { Question } from '~/interface/Interface'
 import QuestionCard from './QuestionCard'
-import Button from '../form/Button'
+import Button from '../common-components/Button'
 import { routes } from '~/constants/route.constants'
 import { useTranslation } from 'react-i18next'
 import { Icon } from '@iconify/react'
+import EmptyStateComponent from '../common-components/EmptyStateComponent'
 
 const SectionDetails = () => {
   const { t } = useTranslation()
@@ -81,9 +82,7 @@ const SectionDetails = () => {
       </div>
       {/* QUESTION LIST  */}
       {searchedQuestion.length === 0 ? (
-        <div className="flex justify-center p-7">
-          {t('sectionsConstants.noQuestionFound')}
-        </div>
+        <EmptyStateComponent />
       ) : (
         searchedQuestion.map((question: Question, i: number) => {
           return (

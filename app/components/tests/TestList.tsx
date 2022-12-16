@@ -3,11 +3,12 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import type { Test } from '~/interface/Interface'
 import { sortByOrder } from '~/interface/Interface'
-import SortFilter from '../SortFilter'
+import SortFilter from '../common-components/SortFilter'
 import TestTableItem from './TestTableItem'
-import Button from '../form/Button'
+import Button from '../common-components/Button'
 import { routes } from '~/constants/route.constants'
 import { useTranslation } from 'react-i18next'
+import EmptyStateComponent from '../common-components/EmptyStateComponent'
 // import Checkbox from '../form/CheckBox'
 const TestList = ({
   tests,
@@ -163,9 +164,7 @@ const TestList = ({
           </div>
         </>
       ) : (
-        <div className="p-7 text-center">
-          {t('testsConstants.noAssessmentFound')}
-        </div>
+        <EmptyStateComponent />
       )}
     </div>
   )

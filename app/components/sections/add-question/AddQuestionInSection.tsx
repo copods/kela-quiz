@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react'
 import { useState } from 'react'
-import BreadCrumb from '../../BreadCrumb'
+import BreadCrumb from '../../common-components/BreadCrumb'
 import QuestionEditor from './QuestionEditor'
 import OptionForQuestion from './OptionForQuestion'
 import cuid from 'cuid'
@@ -11,7 +11,7 @@ import {
   useTransition,
 } from '@remix-run/react'
 import { toast } from 'react-toastify'
-import Button from '~/components/form/Button'
+import Button from '~/components/common-components/Button'
 import { routes } from '~/constants/route.constants'
 import { QuestionTypes, sortByOrder } from '~/interface/Interface'
 import { useTranslation } from 'react-i18next'
@@ -95,16 +95,27 @@ const AddQuestionInSection = () => {
         QuestionTypes.multipleChoice ||
       getQuestionType(selectedTypeOfQuestion) === QuestionTypes.singleChoice
     ) {
+      let optionCount = 0
       for (let option of options) {
-        if (!option.option.length) {
-          toast.error('Enter all the Options', { toastId: 'optionsRequired' })
-          return
+        if (option.option.length) {
+          optionCount = optionCount + 1
         }
       }
-
+      if (optionCount < 2) {
+        toast.error(t('addQuestion.mimimumTwoOptionsRequired'), {
+          toastId: 'optionsRequired',
+        })
+        return
+      }
       let flag = 0
       for (let option of options) {
-        if (option.isCorrect) {
+        if (option.isCorrect && !option.option) {
+          toast.error(t('statusCheck.selectCorrOption'), {
+            toastId: 'correctOptionRequired',
+          })
+          return
+        }
+        if (option.isCorrect && option.option) {
           flag = 1
         }
       }
@@ -178,7 +189,9 @@ const AddQuestionInSection = () => {
           option: option.option,
           isCorrect: option.isCorrect,
         }
-        testQuestion.options.push(optionForQuestion)
+        if (option.option) {
+          testQuestion.options.push(optionForQuestion)
+        }
       })
     } else if (
       getQuestionType(selectedTypeOfQuestion) === QuestionTypes.multipleChoice
@@ -190,7 +203,9 @@ const AddQuestionInSection = () => {
             option: option.option,
             isCorrect: option.isCorrect,
           }
-          testQuestion.options.push(optionForQuestion)
+          if (option.option) {
+            testQuestion.options.push(optionForQuestion)
+          }
         }
       )
     } else if (getQuestionType(selectedTypeOfQuestion) === QuestionTypes.text) {

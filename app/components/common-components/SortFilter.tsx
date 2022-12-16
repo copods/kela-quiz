@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react'
-import DropdownField from './form/Dropdown'
+import DropdownField from './Dropdown'
 import { sortByOrder } from '~/interface/Interface'
 import { useTranslation } from 'react-i18next'
 

@@ -1,12 +1,12 @@
 import type { Role } from '~/interface/Interface'
 import { useSubmit, useTransition } from '@remix-run/react'
 import { useState, useEffect } from 'react'
-import Button from '../form/Button'
+import Button from '../common-components/Button'
 import { trimValue } from '~/utils'
-import DropdownField from '../form/Dropdown'
-import InputField from '~/components/form/InputField'
+import DropdownField from '../common-components/Dropdown'
+import InputField from '~/components/common-components/InputField'
 import { useTranslation } from 'react-i18next'
-import DialogWrapper from '../Dialog'
+import DialogWrapper from '../common-components/Dialog'
 
 export default function AddMemberModal({
   roles,
@@ -49,6 +49,7 @@ export default function AddMemberModal({
       type: 'text',
       name: 'email',
       required: true,
+      isRequired: true,
       value: email,
       errorId: 'email-error',
       onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
@@ -76,6 +77,7 @@ export default function AddMemberModal({
             <div>
               <label htmlFor="" className="text-gray-800">
                 {t('members.role')}
+                <span className="text-red-600">*</span>
               </label>
             </div>
             <DropdownField

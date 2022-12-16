@@ -1,6 +1,6 @@
 import { useLoaderData, useSubmit } from '@remix-run/react'
 import type { SectionInTest, TestSection } from '~/interface/Interface'
-import Button from '../form/Button'
+import Button from '../common-components/Button'
 import contactSupport from '~/../public/assets/contactSupport.svg'
 import checkIcon from '~/../public/assets/checkIcon.svg'
 import Header from './Header'
