@@ -167,6 +167,9 @@ const SignUp = ({ error }: { error?: string }) => {
       errorId: 'New-password-error',
       onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
         setPassword(trimValue(event?.target.value))
+        if (event.target.value === '') {
+          setOnBlurPasswordErr('')
+        }
       },
     },
     {
@@ -182,6 +185,9 @@ const SignUp = ({ error }: { error?: string }) => {
       errorId: 'Confirm-password-error',
       onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
         setConfirmPassword(trimValue(event?.target.value))
+        if (event.target.value === '') {
+          setOnConfBlurPasswordErr('')
+        }
       },
     },
   ]
