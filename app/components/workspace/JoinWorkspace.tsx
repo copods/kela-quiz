@@ -1,38 +1,18 @@
-import {
-  useLoaderData,
-  useNavigate,
-  useSubmit,
-  useTransition,
-} from '@remix-run/react'
+import { useNavigate } from '@remix-run/react'
 import { useTranslation } from 'react-i18next'
 import Button from '../common-components/Button'
 import logo from '../../../public/assets/member-invitation.svg'
-import { useEffect } from 'react'
+import { LoaderData } from '~/routes/workspace.$inviteId.join'
 
-const JoinWorkspace = () => {
+const JoinWorkspace = ({
+  workspcaceInvitationData,
+}: {
+  workspcaceInvitationData: LoaderData
+}) => {
   const { t } = useTranslation()
 
-  const submit = useSubmit()
-  const joinInvitedWorkspace = () => {
-    let data = {
-      action: 'join',
-    }
-    submit(data, {
-      method: 'post',
-    })
-  }
-
-  const transition = useTransition()
-  const workspcaceInvitationData = useLoaderData()
   let navigate = useNavigate()
   const workspaceInvitation = workspcaceInvitationData.invitedMember
-  useEffect(() => {
-    if (workspcaceInvitationData.joined === 'joined') {
-      return navigate(
-        `/${workspcaceInvitationData?.invitedMember.invitedForWorkspace?.id}`
-      )
-    }
-  }, [navigate, workspcaceInvitationData])
 
   return (
     <div className="flex h-full flex-col items-center justify-center gap-6 rounded-lg">
@@ -49,11 +29,11 @@ const JoinWorkspace = () => {
               >
                 {t('members.workspaceInvitation')}
               </span>
-              {workspaceInvitation.joined === true ? (
+              {workspaceInvitation?.joined === true ? (
                 <span className="text-center text-primary">
                   {t('members.alreadyJoinedWorkspace')}
                 </span>
-              ) : workspcaceInvitationData.loginWithWrongId === true ? (
+              ) : workspcaceInvitationData?.loginWithWrongId ? (
                 <span className="text-center text-primary">
                   {t('members.loggedinFromAnotherAccount')}
                 </span>
@@ -66,13 +46,13 @@ const JoinWorkspace = () => {
                   </span>{' '}
                   {t('members.toJoin')}{' '}
                   <span className="text-primary">
-                    {workspaceInvitation.invitedForWorkspace.name}
+                    {workspaceInvitation?.invitedForWorkspace?.name}
                   </span>
                 </span>
               )}
             </div>
             <div className="flex justify-center gap-8">
-              {workspaceInvitation.joined === true ? (
+              {workspaceInvitation?.joined === true ? (
                 <Button
                   tabIndex={0}
                   title="Go to Dashboard"
@@ -88,33 +68,11 @@ const JoinWorkspace = () => {
                     )
                   }
                 />
-              ) : workspaceInvitation.joined === false ? (
+              ) : workspaceInvitation?.joined === false ? (
                 ''
-              ) : workspcaceInvitationData.loginWithWrongId === true ? (
+              ) : workspcaceInvitationData.loginWithWrongId ? (
                 ''
-              ) : (
-                <div className="flex justify-center gap-8">
-                  <Button
-                    tabIndex={0}
-                    id="join-button"
-                    name="join-workspace"
-                    value={'join'}
-                    title={
-                      transition.state === 'submitting'
-                        ? t('commonConstants.joining')
-                        : t('commonConstants.join')
-                    }
-                    buttonText={
-                      transition.state === 'submitting'
-                        ? t('commonConstants.joining')
-                        : t('commonConstants.join')
-                    }
-                    className="h-9  px-24"
-                    varient="primary-solid"
-                    onClick={() => joinInvitedWorkspace()}
-                  />
-                </div>
-              )}
+              ) : null}
             </div>
           </div>
         </div>

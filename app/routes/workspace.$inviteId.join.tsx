@@ -8,8 +8,10 @@ import { routes } from '~/constants/route.constants'
 import { joinWorkspace } from '~/models/workspace.server'
 import { getInvitedMemberById } from '~/models/invites.server'
 import { getUserByEmail } from '~/models/user.server'
+import { useEffect } from 'react'
+import { useLoaderData, useNavigate } from '@remix-run/react'
 
-type LoaderData = {
+export type LoaderData = {
   invitedMember: Awaited<ReturnType<typeof getInvitedMemberById>>
   loginWithWrongId: string
   inviteId: string
@@ -59,10 +61,19 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   })
 }
 const InviteMember = () => {
+  let navigate = useNavigate()
+  const workspcaceInvitationData = useLoaderData() as LoaderData
+  useEffect(() => {
+    if (workspcaceInvitationData.joined === 'joined') {
+      return navigate(
+        `/${workspcaceInvitationData?.invitedMember?.invitedForWorkspace?.id}`
+      )
+    }
+  }, [navigate, workspcaceInvitationData])
   return (
     <div className="flex h-full flex-col bg-gray-50">
       <Header />
-      <JoinWorkspace />
+      <JoinWorkspace workspcaceInvitationData={workspcaceInvitationData} />
     </div>
   )
 }
