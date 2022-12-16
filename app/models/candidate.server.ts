@@ -177,6 +177,14 @@ export async function resendTestLink({
       },
     })
     if (candidateTest?.startedAt === null && candidateTest?.endAt === null) {
+      await prisma.candidateTest.update({
+        where: {
+          id: testId,
+        },
+        data: {
+          linkSentOn: new Date(),
+        },
+      })
       await sendMailToCandidate(candidate?.email as string, candidateLink)
       return 'created'
     } else {
