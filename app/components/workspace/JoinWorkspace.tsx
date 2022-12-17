@@ -2,16 +2,12 @@ import { useNavigate } from '@remix-run/react'
 import { useTranslation } from 'react-i18next'
 import Button from '../common-components/Button'
 import logo from '../../../public/assets/member-invitation.svg'
-import { LoaderData } from '~/routes/workspace.$inviteId.join'
+import { useLoaderData } from '@remix-run/react'
 
-const JoinWorkspace = ({
-  workspcaceInvitationData,
-}: {
-  workspcaceInvitationData: LoaderData
-}) => {
+const JoinWorkspace = () => {
   const { t } = useTranslation()
-
   let navigate = useNavigate()
+  const workspcaceInvitationData = useLoaderData()
   const workspaceInvitation = workspcaceInvitationData.invitedMember
 
   return (
@@ -29,7 +25,7 @@ const JoinWorkspace = ({
               >
                 {t('members.workspaceInvitation')}
               </span>
-              {workspaceInvitation?.joined === true ? (
+              {workspcaceInvitationData === 'joined' ? (
                 <span className="text-center text-primary">
                   {t('members.alreadyJoinedWorkspace')}
                 </span>
@@ -37,22 +33,10 @@ const JoinWorkspace = ({
                 <span className="text-center text-primary">
                   {t('members.loggedinFromAnotherAccount')}
                 </span>
-              ) : (
-                <span className="break-word text-center text-base font-medium text-gray-500">
-                  {t('members.youInvitedBy')}{' '}
-                  <span className="text-center text-primary">
-                    {workspaceInvitation?.invitedById?.firstName}{' '}
-                    {workspaceInvitation?.invitedById?.lastName}
-                  </span>{' '}
-                  {t('members.toJoin')}{' '}
-                  <span className="text-primary">
-                    {workspaceInvitation?.invitedForWorkspace?.name}
-                  </span>
-                </span>
-              )}
+              ) : null}
             </div>
             <div className="flex justify-center gap-8">
-              {workspaceInvitation?.joined === true ? (
+              {workspcaceInvitationData === 'joined' ? (
                 <Button
                   tabIndex={0}
                   title="Go to Dashboard"
@@ -70,7 +54,7 @@ const JoinWorkspace = ({
                 />
               ) : workspaceInvitation?.joined === false ? (
                 ''
-              ) : workspcaceInvitationData.loginWithWrongId ? (
+              ) : workspcaceInvitationData?.loginWithWrongId ? (
                 ''
               ) : null}
             </div>

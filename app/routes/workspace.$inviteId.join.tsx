@@ -8,13 +8,12 @@ import { routes } from '~/constants/route.constants'
 import { joinWorkspace } from '~/models/workspace.server'
 import { getInvitedMemberById } from '~/models/invites.server'
 import { getUserByEmail } from '~/models/user.server'
-import { useLoaderData } from '@remix-run/react'
 
 export type LoaderData = {
   invitedMember: Awaited<ReturnType<typeof getInvitedMemberById>>
   loginWithWrongId: string
   inviteId: string
-  joined?: string | undefined
+  joined?: string
 }
 export const loader: LoaderFunction = async ({ request, params }) => {
   const invitedMember = await getInvitedMemberById(params.inviteId as string)
@@ -33,18 +32,15 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     }
 
     loginWithWrongId = userId && userId != user?.id
+    if (loginWithWrongId === false && invitedMember.joined === true) {
+      joined = 'joined'
+      return joined
+    }
+
     if (loginWithWrongId === false) {
-      const joining = await joinWorkspace({
+      await joinWorkspace({
         invitedId: params.inviteId as string, //taking invited id from params
       })
-      // .then((res) => {
-      //   joined = 'joined'
-      //   if (res) return redirect(`${invitedMember?.invitedForWorkspace?.id}`)
-      // })
-      // .catch((err) => {
-      //   return err
-      // })
-      console.log('joining', joining)
       return redirect(`${invitedMember?.invitedForWorkspace?.id}`)
     }
   }
@@ -62,19 +58,11 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   })
 }
 const InviteMember = () => {
-  // let navigate = useNavigate()
-  const workspcaceInvitationData = useLoaderData() as LoaderData
-  // useEffect(() => {
-  //   if (workspcaceInvitationData.joined === 'joined') {
-  //     return navigate(
-  //       `/${workspcaceInvitationData?.invitedMember?.invitedForWorkspace?.id}`
-  //     )
-  //   }
-  // }, [navigate, workspcaceInvitationData])
+
   return (
     <div className="flex h-full flex-col bg-gray-50">
       <Header />
-      <JoinWorkspace workspcaceInvitationData={workspcaceInvitationData} />
+      <JoinWorkspace/>
     </div>
   )
 }
