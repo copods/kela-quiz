@@ -73,10 +73,12 @@ const RenderDataCell = <T,>({
   width,
   rowData,
   render,
+  index,
 }: {
   width?: string
   rowData: T
-  render?: (rowData: T) => JSX.Element
+  render?: (data: T, index: number) => any
+  index: number
 }) => {
   return (
     <div
@@ -87,7 +89,7 @@ const RenderDataCell = <T,>({
       }}
       className="flex-1 truncate border-b bg-white px-3 py-7  text-gray-700 first:pl-9 last:pr-9"
     >
-      {render?.(rowData)}
+      {render?.(rowData, index)}
     </div>
   )
 }
@@ -164,6 +166,7 @@ const Table = <T extends object>({
                     key={column.field}
                     width={column.width}
                     rowData={rowData}
+                    index={i}
                     render={column.render}
                   />
                 ) : (
