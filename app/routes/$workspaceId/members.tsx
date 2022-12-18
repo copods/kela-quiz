@@ -384,14 +384,14 @@ const Members = () => {
     )
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pageSize, currentPage, invitedMemberCurrentPage, invitedMemberPageSize])
-
+  console.log(loader)
   return (
     <div className="flex flex-col gap-6 p-1">
       <MembersHeader
         actionStatus={actionStatus}
         setActionStatus={setActionStatus}
       />
-      <div className=" text-2xl">
+      <div className="flex flex-col gap-4 text-2xl">
         <h1
           tabIndex={0}
           role={t('members.joinedMembers')}
@@ -414,9 +414,9 @@ const Members = () => {
         </div>
       </div>
       {loader.invitedUsersCount > 0 ? (
-        <>
+        <div className="flex flex-col gap-4">
           <h2
-            className="pb-4 text-2xl"
+            className=" text-2xl"
             tabIndex={0}
             role={t('members.invitedMember')}
             aria-label={t('members.invitedMember')}
@@ -436,7 +436,7 @@ const Members = () => {
               totalItems={loader.invitedUsersCount}
             />
           </div>
-        </>
+        </div>
       ) : null}
     </div>
   )
