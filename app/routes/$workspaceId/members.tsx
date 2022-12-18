@@ -385,7 +385,6 @@ const Members = () => {
     )
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pageSize, currentPage, invitedMemberCurrentPage, invitedMemberPageSize])
-  console.log(loader)
   return (
     <div className="flex flex-col gap-6 p-1">
       <MembersHeader
