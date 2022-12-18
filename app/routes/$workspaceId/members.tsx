@@ -33,6 +33,7 @@ import Table from '~/components/common-components/TableComponent'
 import { Icon } from '@iconify/react'
 import DeletePopUp from '~/components/common-components/DeletePopUp'
 import moment from 'moment'
+import EmptyStateComponent from '~/components/common-components/EmptyStateComponent'
 
 export type ActionData = {
   errors?: {
@@ -400,18 +401,22 @@ const Members = () => {
         >
           {t('members.joinedMembers')}
         </h1>
-        <div className="text-base">
-          <Table
-            columns={membersColumn}
-            data={loader.users}
-            paginationEnabled={true}
-            pageSize={pageSize}
-            setPageSize={setPageSize}
-            currentPage={currentPage}
-            onPageChange={setCurrentPage}
-            totalItems={loader.allUsersCount}
-          />
-        </div>
+        {loader.users.length === 0 ? (
+          <EmptyStateComponent />
+        ) : (
+          <div className="text-base">
+            <Table
+              columns={membersColumn}
+              data={loader.users}
+              paginationEnabled={true}
+              pageSize={pageSize}
+              setPageSize={setPageSize}
+              currentPage={currentPage}
+              onPageChange={setCurrentPage}
+              totalItems={loader.allUsersCount}
+            />
+          </div>
+        )}
       </div>
       {loader.invitedUsersCount > 0 ? (
         <div className="flex flex-col gap-4">
