@@ -22,15 +22,17 @@ import { routes } from '~/constants/route.constants'
 import { useTranslation } from 'react-i18next'
 import { getUserWorkspaces } from '~/models/workspace.server'
 import { actions } from '~/constants/action.constants'
-import InvitedMembersList from '~/components/members/InvitedMembersList'
+import memberResendIcon from '~/../public/assets/resend-member-invitation.svg'
 import {
   getAllInvitedMember,
+  getAllInvitedMemberCount,
   inviteNewUser,
   reinviteMemberForWorkspace,
 } from '~/models/invites.server'
 import Table from '~/components/common-components/TableComponent'
 import { Icon } from '@iconify/react'
 import DeletePopUp from '~/components/common-components/DeletePopUp'
+import moment from 'moment'
 
 export type ActionData = {
   errors?: {
@@ -52,17 +54,32 @@ type LoaderData = {
   getUser: Awaited<ReturnType<typeof getUserById>>
   MembersCurrentPage: number
   MembersItemsPerPage: number
+  invitedMembersItemsPerPage: number
+  invitedMembersCurrentPage: number
   allUsersCount: number
+  invitedUsersCount: number
 }
 export const loader: LoaderFunction = async ({ request, params }) => {
   const url = new URL(request.url)
   const query = url.searchParams
   const MembersItemsPerPage = Math.max(Number(query.get('MemberItems') || 5), 5)
   const MembersCurrentPage = Math.max(Number(query.get('MemberPage') || 1), 1)
+  const invitedMembersCurrentPage = Math.max(
+    Number(query.get('InvitedMemberPage') || 1),
+    1
+  )
+  const invitedMembersItemsPerPage = Math.max(
+    Number(query.get('InvitedMemberItems') || 5),
+    5
+  )
   const userId = await getUserId(request)
   const getUser = await getUserById(userId as string)
   const currentWorkspaceId = params.workspaceId as string
-  const invitedMembers = await getAllInvitedMember(currentWorkspaceId as string)
+  const invitedMembers = await getAllInvitedMember(
+    currentWorkspaceId as string,
+    invitedMembersCurrentPage,
+    invitedMembersItemsPerPage
+  )
   const workspaces = await getUserWorkspaces(userId as string)
   const roles = await getAllRoles()
   if (!userId) return redirect(routes.signIn)
@@ -73,7 +90,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   })
 
   const allUsersCount = await getAllUsersCount(currentWorkspaceId)
-
+  const invitedUsersCount = await getAllInvitedMemberCount(currentWorkspaceId)
   return json<LoaderData>({
     users,
     roles,
@@ -84,7 +101,10 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     getUser,
     MembersCurrentPage,
     MembersItemsPerPage,
+    invitedMembersCurrentPage,
+    invitedMembersItemsPerPage,
     allUsersCount,
+    invitedUsersCount,
   })
 }
 
@@ -232,7 +252,11 @@ const Members = () => {
   const { t } = useTranslation()
   const membersActionData = useActionData() as ActionData
   const [actionStatus, setActionStatus] = useState<boolean>(false)
+  const loader = useLoaderData()
   const submit = useSubmit()
+  const loggedInUser = loader.userId
+  const [openDeleteModal, setOpenDeleteModal] = useState(false)
+
   useEffect(() => {
     if (membersActionData) {
       if (membersActionData.resp?.status === 200) {
@@ -246,7 +270,6 @@ const Members = () => {
       }
     }
   }, [membersActionData, t])
-  const loader = useLoaderData()
   const NameDataCell = (data: { [key: string]: any }) => {
     return (
       <span>
@@ -257,15 +280,32 @@ const Members = () => {
   const RoleDataCell = (data: { [key: string]: any }) => {
     return <span>{data.role.name}</span>
   }
-  const loggedInUser = loader.userId
-  const [open, setOpen] = useState(false)
+  const InvitedByCell = (data: { [key: string]: any }) => {
+    return (
+      <span>
+        {data.invitedById.firstName} {data.invitedById.lastName}
+      </span>
+    )
+  }
+  const InvitedOnCell = (data: { [key: string]: any }) => {
+    return <span>{moment(data?.invitedOn).format('DD MMMM YY')}</span>
+  }
   const deleteUser = (id: string) => {
     submit({ action: 'delete', id: id }, { method: 'post' })
+  }
+  const resendMail = (id: string) => {
+    let data = {
+      id: id,
+      action: 'resendMember',
+    }
+    submit(data, {
+      method: 'post',
+    })
   }
   const DeleteIcon = (data: { [key: string]: any }) => {
     const openPopUp = () => {
       if (loggedInUser !== data.id) {
-        setOpen(!open)
+        setOpenDeleteModal(!openDeleteModal)
       }
     }
     return (
@@ -283,8 +323,8 @@ const Members = () => {
           }`}
         />
         <DeletePopUp
-          setOpen={setOpen}
-          open={open}
+          setOpen={setOpenDeleteModal}
+          open={openDeleteModal}
           onDelete={() => deleteUser(data.id)}
           deleteItem={`${data.firstName} ${data.lastName}`}
           deleteItemType={t('members.member')}
@@ -292,7 +332,21 @@ const Members = () => {
       </>
     )
   }
-
+  const InviteIcon = (data: { [key: string]: any }) => {
+    return (
+      <span
+        tabIndex={0}
+        role="button"
+        onKeyUp={(e) => {
+          if (e.key === 'Enter') resendMail(data.id)
+        }}
+        onClick={() => resendMail(data.id)}
+        className="cursor-pointer opacity-100"
+      >
+        <img src={memberResendIcon} alt="reinvite" id="resend-member-invite" />
+      </span>
+    )
+  }
   const membersColumn = [
     { title: 'Name', field: 'name', render: NameDataCell, width: '25%' },
     { title: 'Email', field: 'email', width: '30%' },
@@ -300,21 +354,44 @@ const Members = () => {
     { title: 'Joined On', field: 'createdAt', width: '20%' },
     { title: 'Action', field: 'action', render: DeleteIcon },
   ]
-  console.log(loader)
+  const invitedMembersColumn = [
+    { title: 'Email', field: 'email', width: '30%' },
+    { title: 'Role', field: 'role', render: RoleDataCell },
+    {
+      title: 'Invited By',
+      field: 'invitedById',
+      render: InvitedByCell,
+      width: '25%',
+    },
+    {
+      title: 'Invited On',
+      field: 'invitedOn',
+      width: '20%',
+      render: InvitedOnCell,
+    },
+    { title: 'Action', field: 'action', render: InviteIcon },
+  ]
   const [currentPage, setCurrentPage] = useState(loader.MembersCurrentPage)
   const [pageSize, setPageSize] = useState(5)
+  const [invitedMemberCurrentPage, setInvitedMemberPage] = useState(
+    loader.invitedMembersCurrentPage
+  )
+  const [invitedMemberPageSize, setInvitedMemberPageSize] = useState(5)
   const navigate = useNavigate()
   useEffect(() => {
-    navigate(`?MemberPage=${currentPage}&MemberItems=${pageSize}`)
+    navigate(
+      `?MemberPage=${currentPage}&MemberItems=${pageSize}&InvitedMemberPage=${invitedMemberCurrentPage}&InvitedMemberItems=${invitedMemberPageSize}`
+    )
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pageSize, currentPage])
+  }, [pageSize, currentPage, invitedMemberCurrentPage, invitedMemberPageSize])
+
   return (
     <div className="flex flex-col gap-6 p-1">
       <MembersHeader
         actionStatus={actionStatus}
         setActionStatus={setActionStatus}
       />
-      <div className="flex flex-col gap-4 text-2xl">
+      <div className=" text-2xl">
         <h1
           tabIndex={0}
           role={t('members.joinedMembers')}
@@ -336,19 +413,31 @@ const Members = () => {
           />
         </div>
       </div>
-      <div className="">
-        <div>
-          <h1
+      {loader.invitedUsersCount > 0 ? (
+        <>
+          <h2
+            className="pb-4 text-2xl"
             tabIndex={0}
             role={t('members.invitedMember')}
             aria-label={t('members.invitedMember')}
             id="invited-member-heading"
           >
             {t('members.invitedMember')}
-          </h1>
-          <InvitedMembersList actionStatus={membersActionData?.resp?.title} />
-        </div>
-      </div>
+          </h2>
+          <div className="pb-4">
+            <Table
+              columns={invitedMembersColumn}
+              data={loader.invitedMembers}
+              paginationEnabled={true}
+              pageSize={invitedMemberPageSize}
+              setPageSize={setInvitedMemberPageSize}
+              currentPage={invitedMemberCurrentPage}
+              onPageChange={setInvitedMemberPage}
+              totalItems={loader.invitedUsersCount}
+            />
+          </div>
+        </>
+      ) : null}
     </div>
   )
 }
