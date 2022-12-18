@@ -7,6 +7,22 @@ import { routes } from '~/constants/route.constants'
 import Table from '../common-components/TableComponent'
 import moment from 'moment'
 import TestListActionMenu from '../../components/TestListActionMenu'
+import DropdownField from '../common-components/Dropdown'
+
+const filterByStatus = [
+  {
+    name: 'All',
+    value: 'all',
+  },
+  {
+    name: 'Pending',
+    value: 'pending',
+  },
+  {
+    name: 'Complete',
+    value: 'complete',
+  },
+]
 
 const CandidateListOfTest = () => {
   const { candidatesOfTest, currentWorkspaceId } = useLoaderData()
@@ -16,6 +32,8 @@ const CandidateListOfTest = () => {
   const submit = useSubmit()
   const [menuListOpen, setmenuListOpen] = useState<boolean>(false)
   const [searchText, setSearchText] = useState('')
+  const [statusFilter, setStatusFilter] = useState(filterByStatus[0].value)
+
   const filteredData = loader.candidatesOfTest.candidateTest?.filter(
     (candidate: {
       candidate: { firstName: string; lastName: string; email: string }
@@ -25,8 +43,8 @@ const CandidateListOfTest = () => {
         .includes(searchText.toLowerCase())
     }
   )
-  const [pageSize, setPageSize] = useState(5)
-  const [currentPage, setCurrentPage] = useState(1)
+  const [pageSize, setPageSize] = useState(loader.pageSize)
+  const [currentPage, setCurrentPage] = useState(loader.currentPage)
   const resendInvite = (candidateId: string, testId: string) => {
     submit(
       {
@@ -147,9 +165,11 @@ const CandidateListOfTest = () => {
   ]
 
   useEffect(() => {
-    navigate(`?page=${currentPage}&pageSize=${pageSize}`)
+    navigate(
+      `?page=${currentPage}&pageSize=${pageSize}&filterByStatus=${statusFilter}`
+    )
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pageSize, currentPage])
+  }, [pageSize, currentPage, statusFilter])
 
   return (
     <div id="test-details" className="flex h-full flex-col gap-4 ">
@@ -178,7 +198,7 @@ const CandidateListOfTest = () => {
           </span>
         </div>
       </header>
-      <div className="relative flex items-center">
+      <div className="relative flex items-center gap-4">
         <Icon
           id="ascend"
           icon="charm:search"
@@ -194,6 +214,15 @@ const CandidateListOfTest = () => {
           className="h-9 w-48 rounded-lg border px-5 pl-8 text-sm focus:outline-dotted"
           onChange={(e) => setSearchText(e.target.value)}
         />
+        <div className="w-36">
+          <DropdownField
+            data={filterByStatus}
+            displayKey={'name'}
+            valueKey={'value'}
+            value={statusFilter}
+            setValue={setStatusFilter}
+          />
+        </div>
       </div>
       <Table
         columns={column}

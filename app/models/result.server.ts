@@ -91,11 +91,13 @@ export async function getAllCandidatesOfTest({
   workspaceId,
   currentPage,
   pageSize,
+  statusFilter,
 }: {
   id: string
   workspaceId: string
   currentPage?: number
   pageSize?: number
+  statusFilter?: string
 }) {
   return prisma.test.findFirst({
     where: {
@@ -105,6 +107,13 @@ export async function getAllCandidatesOfTest({
     include: {
       candidateTest: {
         take: pageSize,
+        where: {
+          ...(statusFilter === 'complete'
+            ? { NOT: { endAt: { equals: null } } }
+            : statusFilter === 'pending'
+            ? { endAt: { equals: null } }
+            : {}),
+        },
         skip: (currentPage! - 1) * pageSize!,
         orderBy: { createdAt: 'desc' },
         include: {
