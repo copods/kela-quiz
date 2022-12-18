@@ -1,18 +1,141 @@
-import { useNavigate } from '@remix-run/react'
+import { Link, useNavigate, useSubmit } from '@remix-run/react'
 import { Icon } from '@iconify/react'
 import { useLoaderData } from '@remix-run/react'
 import CandidatesList from './CandidatesList'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { routes } from '~/constants/route.constants'
+import Table from '../common-components/TableComponent'
+import moment from 'moment'
+import TestListActionMenu from '../../components/TestListActionMenu'
 
 const CandidateListOfTest = () => {
   const { candidatesOfTest, currentWorkspaceId } = useLoaderData()
+  const loader = useLoaderData()
   const [searchText, setSearchText] = useState('')
   let navigate = useNavigate()
+  const submit = useSubmit()
+  const [menuListOpen, setmenuListOpen] = useState<boolean>(false)
 
   const { t } = useTranslation()
+  const resendInvite = (candidateId: string, testId: string) => {
+    submit(
+      {
+        action: 'resendInvite',
+        candidateId: candidateId,
+        testId: testId,
+      },
+      { method: 'post' }
+    )
+  }
 
+  const SeriaLNoCell = (data: { [key: string]: any }, index: number) => {
+    return <span>{index + 1}</span>
+  }
+  const NameDataCell = (data: { [key: string]: any }) => {
+    return (
+      <span>
+        {data.candidate.firstName && data.candidate.lastName && data.endAt ? (
+          <Link
+            to={`/${currentWorkspaceId}/results/groupByTests/${data?.testId}/${data?.candidateResult[0]?.id}`}
+            className="col-span-2 flex  truncate font-semibold text-primary"
+            title={data.candidate.firstName + ' ' + data.candidate.lastName}
+          >
+            {data.candidate.firstName + ' ' + data.candidate.lastName}
+          </Link>
+        ) : (
+          <i>--No Name--</i>
+        )}
+      </span>
+    )
+  }
+  const EmailDataCell = (data: { [key: string]: any }) => {
+    return <span title={data.candidate.email}>{data.candidate.email}</span>
+  }
+  const InvitedAtCell = (data: { [key: string]: any }) => {
+    return (
+      <span
+        title={
+          data.createdAt ? moment(data.createdAt).format('DD MMMM YY') : '-'
+        }
+      >
+        {data.createdAt ? moment(data.createdAt).format('DD MMMM YY') : '-'}
+      </span>
+    )
+  }
+  const StartedAtCell = (data: { [key: string]: any }) => {
+    return (
+      <span>
+        {data.startedAt ? moment(data.startedAt).format('DD MMMM YY') : '-'}
+      </span>
+    )
+  }
+  const InvitedByCell = (data: { [key: string]: any }) => {
+    return <span>{data.candidate.createdBy.firstName}</span>
+  }
+  const ResultCell = (data: { [key: string]: any }) => {
+    function getPercent() {
+      let result = 0
+      for (let i of data.candidateResult) {
+        result = (i.correctQuestion / i.totalQuestion) * 100
+        return `${parseInt(result.toFixed(2))}%`
+      }
+    }
+    return <span>{getPercent() ?? 'NA'}</span>
+  }
+  const StatusCell = (data: { [key: string]: any }) => {
+    return (
+      <div className="absolute z-10 flex items-center">
+        <span
+          className={`rounded-full px-2 py-1 text-xs text-gray-900 ${
+            data?.candidateResult.length > 0 ? 'bg-green-200' : 'bg-yellow-200'
+          }`}
+        >
+          {data?.candidateResult.length > 0
+            ? t('commonConstants.complete')
+            : t('commonConstants.pending')}
+        </span>
+        {data?.candidateResult.length > 0 ? (
+          ''
+        ) : (
+          <TestListActionMenu
+            menuIcon={'mdi:dots-vertical'}
+            onItemClick={setmenuListOpen}
+            open={menuListOpen}
+            menuListText={t('resultConstants.resendInvite')}
+            aria-label={t('testTableItem.menu')}
+            id={data.id}
+            resendInvite={() => resendInvite(data.candidateId, data.testId)}
+          />
+        )}
+      </div>
+    )
+  }
+  const column = [
+    { title: 'Sr.No', field: 'sr_no', render: SeriaLNoCell },
+    { title: 'Name', field: 'name', render: NameDataCell, width: '15%' },
+    { title: 'Email', field: 'email', render: EmailDataCell, width: '20%' },
+    {
+      title: 'Invited At',
+      field: 'invitedAt',
+      render: InvitedAtCell,
+      width: '15%',
+    },
+    {
+      title: 'Started At',
+      field: 'invitedAt',
+      render: StartedAtCell,
+      width: '15%',
+    },
+    {
+      title: 'Invited By',
+      field: 'invitedBy',
+      render: InvitedByCell,
+      width: '10%',
+    },
+    { title: 'Result', field: 'Result', render: ResultCell },
+    { title: 'Status', field: 'status', render: StatusCell, width: '10%' },
+  ]
   return (
     <div id="test-details" className="flex h-full flex-col gap-4 ">
       <header className="border-b border-solid border-slate-300">
@@ -57,6 +180,7 @@ const CandidateListOfTest = () => {
           onChange={(e) => setSearchText(e.target.value)}
         />
       </div>
+      <Table columns={column} data={loader.candidatesOfTest.candidateTest} />
       <CandidatesList searchText={searchText} />
     </div>
   )
