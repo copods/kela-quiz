@@ -1,13 +1,18 @@
 import { getUserId, requireWorkspaceId } from '~/session.server'
 import { redirect } from '@remix-run/node'
 import type { LoaderFunction, ActionFunction } from '@remix-run/node'
-import MembersList from '~/components/members/MembersList'
 import { json } from '@remix-run/node'
-import { useActionData } from '@remix-run/react'
+import {
+  useActionData,
+  useLoaderData,
+  useNavigate,
+  useSubmit,
+} from '@remix-run/react'
 import {
   deleteUserById,
   getAllRoles,
   getAllUsers,
+  getAllUsersCount,
   getUserById,
 } from '~/models/user.server'
 import MembersHeader from '~/components/members/MembersHeader'
@@ -23,6 +28,9 @@ import {
   inviteNewUser,
   reinviteMemberForWorkspace,
 } from '~/models/invites.server'
+import Table from '~/components/common-components/TableComponent'
+import { Icon } from '@iconify/react'
+import DeletePopUp from '~/components/common-components/DeletePopUp'
 
 export type ActionData = {
   errors?: {
@@ -42,8 +50,15 @@ type LoaderData = {
   currentWorkspaceId: string
   invitedMembers: Awaited<ReturnType<typeof getAllInvitedMember>>
   getUser: Awaited<ReturnType<typeof getUserById>>
+  MembersCurrentPage: number
+  MembersItemsPerPage: number
+  allUsersCount: number
 }
 export const loader: LoaderFunction = async ({ request, params }) => {
+  const url = new URL(request.url)
+  const query = url.searchParams
+  const MembersItemsPerPage = Math.max(Number(query.get('MemberItems') || 5), 5)
+  const MembersCurrentPage = Math.max(Number(query.get('MemberPage') || 1), 1)
   const userId = await getUserId(request)
   const getUser = await getUserById(userId as string)
   const currentWorkspaceId = params.workspaceId as string
@@ -51,7 +66,14 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const workspaces = await getUserWorkspaces(userId as string)
   const roles = await getAllRoles()
   if (!userId) return redirect(routes.signIn)
-  const users = await getAllUsers({ currentWorkspaceId })
+  const users = await getAllUsers({
+    currentWorkspaceId,
+    MembersCurrentPage,
+    MembersItemsPerPage,
+  })
+
+  const allUsersCount = await getAllUsersCount(currentWorkspaceId)
+
   return json<LoaderData>({
     users,
     roles,
@@ -60,6 +82,9 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     currentWorkspaceId,
     invitedMembers,
     getUser,
+    MembersCurrentPage,
+    MembersItemsPerPage,
+    allUsersCount,
   })
 }
 
@@ -207,6 +232,7 @@ const Members = () => {
   const { t } = useTranslation()
   const membersActionData = useActionData() as ActionData
   const [actionStatus, setActionStatus] = useState<boolean>(false)
+  const submit = useSubmit()
   useEffect(() => {
     if (membersActionData) {
       if (membersActionData.resp?.status === 200) {
@@ -220,7 +246,68 @@ const Members = () => {
       }
     }
   }, [membersActionData, t])
+  const loader = useLoaderData()
+  const NameDataCell = (data: { [key: string]: any }) => {
+    return (
+      <span>
+        {data.firstName} {data.lastName}
+      </span>
+    )
+  }
+  const RoleDataCell = (data: { [key: string]: any }) => {
+    return <span>{data.role.name}</span>
+  }
+  const loggedInUser = loader.userId
+  const [open, setOpen] = useState(false)
+  const deleteUser = (id: string) => {
+    submit({ action: 'delete', id: id }, { method: 'post' })
+  }
+  const DeleteIcon = (data: { [key: string]: any }) => {
+    const openPopUp = () => {
+      if (loggedInUser !== data.id) {
+        setOpen(!open)
+      }
+    }
+    return (
+      <>
+        <Icon
+          id="delete-button"
+          tabIndex={0}
+          onClick={openPopUp}
+          onKeyUp={(e) => {
+            if (e.key === 'Enter') openPopUp()
+          }}
+          icon="ic:outline-delete-outline"
+          className={`h-6 w-6 cursor-pointer text-red-500  ${
+            loggedInUser === data.id && 'cursor-not-allowed text-red-200'
+          }`}
+        />
+        <DeletePopUp
+          setOpen={setOpen}
+          open={open}
+          onDelete={() => deleteUser(data.id)}
+          deleteItem={`${data.firstName} ${data.lastName}`}
+          deleteItemType={t('members.member')}
+        />
+      </>
+    )
+  }
 
+  const membersColumn = [
+    { title: 'Name', field: 'name', render: NameDataCell, width: '25%' },
+    { title: 'Email', field: 'email', width: '30%' },
+    { title: 'Role', field: 'role', render: RoleDataCell },
+    { title: 'Joined On', field: 'createdAt', width: '20%' },
+    { title: 'Action', field: 'action', render: DeleteIcon },
+  ]
+  console.log(loader)
+  const [currentPage, setCurrentPage] = useState(loader.MembersCurrentPage)
+  const [pageSize, setPageSize] = useState(5)
+  const navigate = useNavigate()
+  useEffect(() => {
+    navigate(`?MemberPage=${currentPage}&MemberItems=${pageSize}`)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pageSize, currentPage])
   return (
     <div className="flex flex-col gap-6 p-1">
       <MembersHeader
@@ -236,10 +323,31 @@ const Members = () => {
         >
           {t('members.joinedMembers')}
         </h1>
-        <MembersList actionStatus={membersActionData?.resp?.title} />
+        <div className="text-base">
+          <Table
+            columns={membersColumn}
+            data={loader.users}
+            paginationEnabled={true}
+            pageSize={pageSize}
+            setPageSize={setPageSize}
+            currentPage={currentPage}
+            onPageChange={setCurrentPage}
+            totalItems={loader.allUsersCount}
+          />
+        </div>
       </div>
-      <div className="flex flex-col gap-4 text-2xl">
-        <InvitedMembersList actionStatus={membersActionData?.resp?.title} />
+      <div className="">
+        <div>
+          <h1
+            tabIndex={0}
+            role={t('members.invitedMember')}
+            aria-label={t('members.invitedMember')}
+            id="invited-member-heading"
+          >
+            {t('members.invitedMember')}
+          </h1>
+          <InvitedMembersList actionStatus={membersActionData?.resp?.title} />
+        </div>
       </div>
     </div>
   )
