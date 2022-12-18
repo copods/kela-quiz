@@ -311,13 +311,13 @@ export interface SectionWiseResults {
   section: SectionInCandidateTest
   test: Test
 }
-export interface column<T> {
+export interface column<T extends object> {
   title: string
   field: string
-  render?: (rowData: T) => JSX.Element
+  render?: (data: T) => any
   width?: string
 }
-export interface TableType<T> {
+export interface TableType<T extends object> {
   columns: column<T>[]
   data: T[]
   title?: string

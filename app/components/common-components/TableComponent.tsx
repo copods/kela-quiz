@@ -122,8 +122,7 @@ const TableEmptyState = () => {
     </div>
   )
 }
-
-const Table = <T extends { id?: string }>({
+const Table = <T extends object>({
   columns,
   data,
   paginationEnabled = false,
@@ -131,6 +130,7 @@ const Table = <T extends { id?: string }>({
   onPageChange,
   pageSize,
   setPageSize,
+  totalItems,
 }: TableType<T>) => {
   if (!columns.length) {
     return null
@@ -140,7 +140,9 @@ const Table = <T extends { id?: string }>({
       <div
         id="table"
         style={{ maxHeight: 'inherit' }}
-        className=" overflow-x-auto rounded-t-2xl border-t border-r border-l shadow"
+        className={`overflow-x-auto border-t border-r border-l shadow ${
+          paginationEnabled ? 'rounded-t-2xl' : 'rounded-2xl'
+        }`}
       >
         <div id="table-head-row" className="sticky top-0 flex bg-gray-100">
           {columns.map((header) => (
@@ -154,8 +156,8 @@ const Table = <T extends { id?: string }>({
         {data.length === 0 ? (
           <TableEmptyState />
         ) : (
-          data.map((rowData: T, i) => (
-            <div id="table-row" key={rowData.id} className="flex ">
+          data.map((rowData: T & { id?: number }, i) => (
+            <div id="table-row" key={String(rowData.id)} className="flex ">
               {columns.map((column, j) =>
                 column.render ? (
                   <RenderDataCell
@@ -184,7 +186,7 @@ const Table = <T extends { id?: string }>({
             onPageChange={(page) => onPageChange?.(page)}
             pageSize={pageSize!}
             setPageSize={setPageSize!}
-            totalItems={data.length!}
+            totalItems={totalItems!}
           />
         </div>
       ) : null}
