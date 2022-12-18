@@ -1,8 +1,7 @@
 import { Link, useNavigate, useSubmit } from '@remix-run/react'
 import { Icon } from '@iconify/react'
 import { useLoaderData } from '@remix-run/react'
-import CandidatesList from './CandidatesList'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { routes } from '~/constants/route.constants'
 import Table from '../common-components/TableComponent'
@@ -12,12 +11,22 @@ import TestListActionMenu from '../../components/TestListActionMenu'
 const CandidateListOfTest = () => {
   const { candidatesOfTest, currentWorkspaceId } = useLoaderData()
   const loader = useLoaderData()
-  const [searchText, setSearchText] = useState('')
+  const { t } = useTranslation()
   let navigate = useNavigate()
   const submit = useSubmit()
   const [menuListOpen, setmenuListOpen] = useState<boolean>(false)
-
-  const { t } = useTranslation()
+  const [searchText, setSearchText] = useState('')
+  const filteredData = loader.candidatesOfTest.candidateTest?.filter(
+    (candidate: {
+      candidate: { firstName: string; lastName: string; email: string }
+    }) => {
+      return `${candidate?.candidate?.firstName} ${candidate?.candidate?.lastName} ${candidate?.candidate?.email}`
+        .toLowerCase()
+        .includes(searchText.toLowerCase())
+    }
+  )
+  const [pageSize, setPageSize] = useState(5)
+  const [currentPage, setCurrentPage] = useState(1)
   const resendInvite = (candidateId: string, testId: string) => {
     submit(
       {
@@ -136,6 +145,12 @@ const CandidateListOfTest = () => {
     { title: 'Result', field: 'Result', render: ResultCell },
     { title: 'Status', field: 'status', render: StatusCell, width: '10%' },
   ]
+
+  useEffect(() => {
+    navigate(`?page=${currentPage}&pageSize=${pageSize}`)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pageSize, currentPage])
+
   return (
     <div id="test-details" className="flex h-full flex-col gap-4 ">
       <header className="border-b border-solid border-slate-300">
@@ -180,8 +195,16 @@ const CandidateListOfTest = () => {
           onChange={(e) => setSearchText(e.target.value)}
         />
       </div>
-      <Table columns={column} data={loader.candidatesOfTest.candidateTest} />
-      <CandidatesList searchText={searchText} />
+      <Table
+        columns={column}
+        data={filteredData}
+        paginationEnabled={true}
+        pageSize={pageSize}
+        setPageSize={setPageSize}
+        currentPage={currentPage}
+        onPageChange={setCurrentPage}
+        totalItems={loader.candidatesCount}
+      />
     </div>
   )
 }
