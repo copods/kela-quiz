@@ -41,7 +41,6 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const currentWorkspaceId = params.workspaceId as string
   const workspaces = await getUserWorkspaces(userId as string)
   const questionId = new URL(request.url).searchParams.get('questionid')
-  // console.log('---', questionId)
   let question
   if (questionId) {
     question = await getQuestionById(questionId!)
@@ -75,9 +74,7 @@ export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
   const questionId = formData.get('questionId') as string
   const action = formData.get('action')
-
   const question = JSON.parse(formData.get('quesData') as string)
-  console.log('======', question)
 
   if (action === 'edit') {
     let ques

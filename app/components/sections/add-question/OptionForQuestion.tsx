@@ -130,7 +130,6 @@ export default function OptionForQuestion({
       return [...e]
     })
   }
-  console.log('STATE', options)
   const updateTextAnswer = (textAns: string, index: number) => {
     setTextCorrectAnswer((e: textAnswerType[]) => {
       e[index].answer = textAns
