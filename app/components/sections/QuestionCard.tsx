@@ -46,6 +46,7 @@ const QuestionCard = ({
       className="flex cursor-pointer flex-col rounded-lg border border-gray-300 bg-gray-50 px-6 py-7"
       title={t('sectionsConstants.expand')}
       tabIndex={0}
+      data-cy="question-card-wrapper"
       id="question-card-wrapper"
       aria-label={t('sectionsConstants.expand')}
       role={t('sectionsConstants.expand')}
@@ -75,6 +76,7 @@ const QuestionCard = ({
             {hoverState ? (
               <Icon
                 tabIndex={0}
+                id="edit-icon"
                 onClick={(e) => {
                   e.stopPropagation()
                   navigate(
