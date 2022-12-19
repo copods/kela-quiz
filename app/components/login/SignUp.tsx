@@ -94,8 +94,8 @@ const SignUp = ({ error }: { error?: string }) => {
     )
   }, [signUpActionData?.errors])
   useEffect(() => {
-    const value = String(checkPasswordStrength(password))
-    setPasswordStrength(value)
+    const value = checkPasswordStrength(password)
+    setPasswordStrength(value as string)
   }, [password])
   const inputFieldsProps = [
     {

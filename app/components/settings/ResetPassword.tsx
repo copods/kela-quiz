@@ -133,8 +133,8 @@ const ResetPassword = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [generalSettings])
   useEffect(() => {
-    const value = String(checkPasswordStrength(newPassword))
-    setPasswordStrength(value)
+    const value = checkPasswordStrength(newPassword)
+    setPasswordStrength(value as string)
   }, [newPassword])
   return (
     <DialogWrapper
