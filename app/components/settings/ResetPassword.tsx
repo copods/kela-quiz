@@ -74,6 +74,7 @@ const ResetPassword = ({
       placeholder: t('settings.enterOldPassword'),
       name: 'oldPassword',
       required: true,
+      isRequired: true,
       type: 'password',
       value: password,
       error: error.passIsInvalid,
@@ -87,6 +88,7 @@ const ResetPassword = ({
       placeholder: t('settings.enterNewPass'),
       name: 'newPassword',
       required: true,
+      isRequired: true,
       type: 'password',
       value: newPassword,
       error: error?.passMinLengthError || error?.passShouldNotBeSame,
@@ -100,6 +102,7 @@ const ResetPassword = ({
       placeholder: t('settings.reEnterPass'),
       name: 'confirmNewPassword',
       required: true,
+      isRequired: true,
       type: 'password',
       value: confirmPassword,
       error: error?.passNotMatchError,
@@ -126,6 +129,7 @@ const ResetPassword = ({
       passIsInvalid: generalSettings?.errors?.valid,
       passShouldNotBeSame: generalSettings?.errors?.passShouldNotBeSame,
     })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [generalSettings])
   return (
     <DialogWrapper

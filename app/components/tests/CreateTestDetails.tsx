@@ -21,6 +21,7 @@ const TestDetails = ({
       <div>
         <label htmlFor="name" className="text-base font-medium text-gray-800">
           {t('commonConstants.name')}
+          <span className="text-red-600">*</span>
         </label>
         <input
           tabIndex={0}
@@ -39,6 +40,7 @@ const TestDetails = ({
           className="text-base font-medium text-gray-800"
         >
           {t('testsConstants.descriptionText')}
+          <span className="text-red-600">*</span>
         </label>
         <div className="h-full pt-2 pb-4">
           <ClientOnly fallback={<div></div>}>

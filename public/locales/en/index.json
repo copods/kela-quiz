@@ -73,6 +73,7 @@
     "joining": "Joining",
     "joinedOn": "Joined On",
     "invitedAt": "Invited At",
+    "noRowsToShow": "No Rows To Show",
     "items": "Items"
   },
   "sideNav": {
@@ -111,6 +112,7 @@
     "addOptions": "Add Options",
     "addQuestion": "Add Question",
     "note": "Note",
+    "mimimumTwoOptionsRequired": "Minimum 2 Options Required",
     "multipleAnswersSelected": "Multiple answers selected",
     "oneAnswerSelected": "One answer selected",
     "enterTheQuestion": "Enter the Question"
@@ -121,7 +123,7 @@
     "editTest": "Edit Test",
     "totalQuestions": "Total Questions:",
     "noQuestionAlert": "No questions found. Add your first question",
-    "noRecordFound": "No Record Found",
+    "noDataToShow": "No data to show",
     "sort": "Sort",
     "dropdown": "Select",
     "expand": "Expand",
