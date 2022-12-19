@@ -5,6 +5,7 @@ import Divider from '../common-components/divider'
 import BarGraph from '../barGraph/barGraph'
 import type { SectionWiseResults } from '~/interface/Interface'
 import { routes } from '~/constants/route.constants'
+import EmptyStateComponent from '../common-components/EmptyStateComponent'
 // import { useTranslation } from 'react-i18next'
 
 const ResultDetailsComponent = () => {
@@ -46,24 +47,33 @@ const ResultDetailsComponent = () => {
         </div>
       </header>
       <Divider height="1px" />
-      <BarGraph sectionWiseResult={sectionWiseResult} />
-      <Divider height="1px" />
-      <div id="results-test-candidate-list-tab" className="flex flex-col gap-6">
-        {sectionWiseResult.map((section: SectionWiseResults) => {
-          return (
-            <SectionCardForResultDetail
-              key={section?.id}
-              name={section?.section?.section?.name}
-              totalQuestions={section?.totalQuestion}
-              correctQuestions={section?.correctQuestion}
-              skippedQuestions={section?.skipped}
-              incorrectQuestions={section?.incorrect}
-              unansweredQuestions={section?.unanswered}
-              startedAt={section?.section.startedAt}
-            />
-          )
-        })}
-      </div>
+      {sectionWiseResult ? (
+        <>
+          <BarGraph sectionWiseResult={sectionWiseResult} />
+          <Divider height="1px" />
+          <div
+            id="results-test-candidate-list-tab"
+            className="flex flex-col gap-6"
+          >
+            {sectionWiseResult.map((section: SectionWiseResults) => {
+              return (
+                <SectionCardForResultDetail
+                  key={section?.id}
+                  name={section?.section?.section?.name}
+                  totalQuestions={section?.totalQuestion}
+                  correctQuestions={section?.correctQuestion}
+                  skippedQuestions={section?.skipped}
+                  incorrectQuestions={section?.incorrect}
+                  unansweredQuestions={section?.unanswered}
+                  startedAt={section?.section.startedAt}
+                />
+              )
+            })}
+          </div>
+        </>
+      ) : (
+        <EmptyStateComponent />
+      )}
     </div>
   )
 }
