@@ -8,9 +8,11 @@ import { useTranslation } from 'react-i18next'
 const SelectSectionCard = ({
   section,
   updateSection,
+  sectionCount
 }: {
   section: TestSection
   updateSection: (e: any) => void
+  sectionCount?:number
 }) => {
   const { t } = useTranslation()
 
@@ -19,7 +21,7 @@ const SelectSectionCard = ({
     value?: string,
     selected?: boolean
   ) => {
-    if (section?._count?.questions == 0) {
+    if (sectionCount == 0) {
       toast.error(t('toastConstants.cannotAddTestZeroQuestion'))
       return
     }
@@ -27,13 +29,13 @@ const SelectSectionCard = ({
       isSelected: section.isSelected,
       totalQuestions: section.totalQuestions
         ? section.totalQuestions
-        : section._count && section._count?.questions < 11
-        ? section._count?.questions
+        : sectionCount && sectionCount < 11
+        ? sectionCount
         : 10,
       time: section.time
         ? section.time
-        : section._count && section._count?.questions < 11
-        ? section._count?.questions
+        : sectionCount && sectionCount < 11
+        ? sectionCount
         : 10,
     }
     switch (target) {
@@ -105,7 +107,7 @@ const SelectSectionCard = ({
       </div>
       <div className="flex text-xs text-gray-400">
         {t('testsConstants.totalQuestionsText')}:{' '}
-        <span className="count">{section?._count?.questions}</span>
+        <span className="count">{sectionCount}</span>
       </div>
       <hr className="h-px w-full border-0 bg-gray-300" />
       <div className="flex gap-4 pt-1">
