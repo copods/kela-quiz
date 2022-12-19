@@ -34,7 +34,9 @@ const SignUp = ({ error }: { error?: string }) => {
 
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
-  const [email, setEmail] = useState('')
+  const [email, setEmail] = useState(
+    signUpLoaderData?.userData?.email ? signUpLoaderData?.userData?.email : ''
+  )
   const [workspace, setWorkspace] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
