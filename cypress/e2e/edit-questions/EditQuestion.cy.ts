@@ -1,5 +1,3 @@
-// const question = 'What is question?'
-// const editedQuestion = 'Question is edited'
 const question = 'What is the question?'
 const option1 = 'Option 1'
 const option2 = 'Option 2'
