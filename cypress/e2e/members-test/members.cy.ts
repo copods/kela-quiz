@@ -190,7 +190,7 @@ describe('Test for members', () => {
   })
 
   it('Check for owner tag', () => {
-    const getElement = cy.get('[data-cy="owner-tag"]')
+    const getElement = cy.get('[data-cy="badge-tag"]')
 
     getElement.should('have.length', 1)
   })

@@ -17,7 +17,8 @@
     "alreadyRejectedWorkspaceInvitation": "You already reject the workspace joining invitation",
     "loggedinFromAnotherAccount": "Invalid link, please login from correct account.",
     "youInvitedBy": "You have been invited by",
-    "toJoin": "to join"
+    "toJoin": "to join",
+    "owner": "Owner"
   },
   "commonConstants": {
     "name": "Name",
