@@ -23,6 +23,7 @@ const QuestionCard = ({
   index: number
 }) => {
   const [openDeleteQuestionPopUp, setOpenDeleteQuestionPopUp] = useState(false)
+  const [hoverState, setHoverState] = useState(false)
   const submit = useSubmit()
   const deleteQuestion = () => {
     submit({ action: 'deleteQuestion', id: question.id }, { method: 'post' })
@@ -43,10 +44,13 @@ const QuestionCard = ({
   return (
     <div
       key={question.id}
-      className="group flex cursor-pointer flex-col rounded-lg border border-gray-300 bg-gray-50 px-6 py-7"
+      onMouseEnter={() => setHoverState(true)}
+      onMouseLeave={() => setHoverState(false)}
+      className="flex cursor-pointer flex-col rounded-lg border border-gray-300 bg-gray-50 px-6 py-7"
       title={t('sectionsConstants.expand')}
       tabIndex={0}
       id="question-card-wrapper"
+      data-cy="question-card-wrapper"
       aria-label={t('sectionsConstants.expand')}
       role={t('sectionsConstants.expand')}
       onKeyUp={(e) => {
@@ -72,32 +76,35 @@ const QuestionCard = ({
         </div>
         <div className="flex min-w-fit items-center justify-between lg:flex-1 lg:justify-end lg:gap-2">
           <div className="flex items-center">
-            <span
+          {hoverState ? (
+ <Icon
+   tabIndex={0}
+   data-cy="delete-question"
+   role="button"
+   aria-label="delete question button"
+   onClick={(e) => {
+     setOpenDeleteQuestionPopUp(!openDeleteQuestionPopUp)
+     e.stopPropagation()
+   }}
+   onKeyUp={(e) => {
+     if (e.key === 'Enter')
+       setOpenDeleteQuestionPopUp(!openDeleteQuestionPopUp)
+     e.stopPropagation()
+   }}
+   icon="ic:outline-delete-outline"
+   className="h-5 w-5"
+ />
+          ):(
+<span
               id="question-type"
               title={displayName?.full}
-              className="flex flex-1 items-center rounded-52 border border-gray-700 px-3 text-sm text-gray-700 group-hover:invisible"
+              className="flex flex-1 items-center rounded-52 border border-gray-700 px-3 text-sm text-gray-700"
             >
               {displayName?.name}
             </span>
-            <div className="invisible w-0 group-hover:visible group-hover:w-fit">
-              <Icon
-                tabIndex={0}
-                data-cy="delete-question"
-                role="button"
-                aria-label="delete question button"
-                onClick={(e) => {
-                  setOpenDeleteQuestionPopUp(!openDeleteQuestionPopUp)
-                  e.stopPropagation()
-                }}
-                onKeyUp={(e) => {
-                  if (e.key === 'Enter')
-                    setOpenDeleteQuestionPopUp(!openDeleteQuestionPopUp)
-                  e.stopPropagation()
-                }}
-                icon="ic:outline-delete-outline"
-                className="h-5 w-5"
-              />
-            </div>
+          )}
+            
+           
           </div>
           <div>
             {isExpanded === index ? (
