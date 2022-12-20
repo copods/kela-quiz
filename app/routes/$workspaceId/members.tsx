@@ -293,6 +293,9 @@ const Members = () => {
   const InvitedOnCell = (data: Invites) => {
     return <span>{moment(data?.invitedOn).format('DD MMMM YY')}</span>
   }
+  const JoinedOnCell = (data: Invites) => {
+    return <span>{moment(data?.createdAt).format('DD MMMM YY')}</span>
+  }
   const deleteUser = (id: string) => {
     submit({ action: 'delete', id: id }, { method: 'post' })
   }
@@ -354,7 +357,12 @@ const Members = () => {
     { title: 'Name', field: 'name', render: NameDataCell, width: '25%' },
     { title: 'Email', field: 'email', width: '30%' },
     { title: 'Role', field: 'role', render: RoleDataCell },
-    { title: 'Joined On', field: 'createdAt', width: '20%' },
+    {
+      title: 'Joined On',
+      field: 'createdAt',
+      width: '20%',
+      render: JoinedOnCell,
+    },
     { title: 'Action', field: 'action', render: DeleteAction },
   ]
 
@@ -395,6 +403,7 @@ const Members = () => {
     invitedMemberCurrentPage,
     invitedMemberPageSize,
   ])
+  console.log(memberLoaderData)
   return (
     <div className="flex flex-col gap-6 p-1">
       <MembersHeader
