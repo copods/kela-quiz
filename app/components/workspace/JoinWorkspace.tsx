@@ -4,6 +4,7 @@ import Button from '../common-components/Button'
 import logo from '../../../public/assets/member-invitation.svg'
 import { useLoaderData } from '@remix-run/react'
 import { Form } from '@remix-run/react'
+import { routes } from '~/constants/route.constants'
 
 const JoinWorkspace = () => {
   const { t } = useTranslation()
@@ -62,11 +63,7 @@ const JoinWorkspace = () => {
                     varient="primary-outlined"
                     value={'reject'}
                     className="py-3 px-9"
-                    onClick={() =>
-                      navigate(
-                        `/sign-in??cameFrom=join&id=${workspcaceInvitationData.inviteId}`
-                      )
-                    }
+                    onClick={() => navigate(`${routes.signIn}`)}
                   />
                   <Form
                     action={`/logout??cameFrom=join&id=${workspcaceInvitationData.invitedMember.id}`}

@@ -123,13 +123,18 @@ export async function createUserSession({
 export async function logout(request: Request) {
   const session = await getSession(request)
   const joinId = new URL(request.url).searchParams.get('?cameFrom') === 'join'
-if(joinId){
-  return redirect(`/sign-in?cameFrom=join&id=${new URL(request.url).searchParams.get('id')}`, {
-    headers: {
-      'Set-Cookie': await sessionStorage.destroySession(session),
-    },
-  })
-}
+  if (joinId) {
+    return redirect(
+      `/sign-in?cameFrom=join&id=${new URL(request.url).searchParams.get(
+        'id'
+      )}`,
+      {
+        headers: {
+          'Set-Cookie': await sessionStorage.destroySession(session),
+        },
+      }
+    )
+  }
   return redirect('/sign-in', {
     headers: {
       'Set-Cookie': await sessionStorage.destroySession(session),
