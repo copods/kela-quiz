@@ -3,6 +3,7 @@ import { useState } from 'react'
 import moment from 'moment'
 import { useTranslation } from 'react-i18next'
 import TestListActionMenu from '../TestListActionMenu'
+import type { CandidateResult } from '~/interface/Interface'
 
 const AttendedCandidateListItem = ({
   id,
@@ -20,6 +21,7 @@ const AttendedCandidateListItem = ({
   startedAt,
   createdAt,
   currentWorkspaceId,
+  candidateResult,
 }: {
   id: string
   candidateId: string
@@ -36,6 +38,7 @@ const AttendedCandidateListItem = ({
   startedAt: Date
   createdAt: Date
   currentWorkspaceId: string
+  candidateResult:  Array<CandidateResult>
 }) => {
   const { t } = useTranslation()
   const [menuListOpen, setmenuListOpen] = useState<boolean>(false)
@@ -50,14 +53,13 @@ const AttendedCandidateListItem = ({
       { method: 'post' }
     )
   }
-
   return (
     <div className="col-span-full">
       <div className="testList col-span-full grid grid-cols-12 gap-1 rounded-b-lg border-t border-solid border-gray-200 bg-white px-8 py-6">
         <div className="col-span-1 flex items-center truncate">
           <span className="text-base text-gray-700">{index}</span>
         </div>
-        {name != ' ' ? (
+        {candidateResult.length > 0 ? (
           <Link
             to={`/${currentWorkspaceId}/results/groupByTests/${testId}/${candidateResultId}`}
             className="col-span-2 flex  truncate font-semibold text-primary"
@@ -123,7 +125,7 @@ const AttendedCandidateListItem = ({
             <span className="rounded-full bg-yellow-200 px-2 py-1 text-xs">
               {t('commonConstants.pending')}
             </span>
-          ) : startedAt != null ? (
+          ) : startedAt != null && endAt === null ? (
             <span className="rounded-full bg-blue-50 px-2 py-1 text-xs">
               {t('commonConstants.onGoing')}
             </span>

@@ -11,7 +11,6 @@ const CandidatesList = ({ searchText }: { searchText: string }) => {
   const { candidatesOfTest, params, currentWorkspaceId } = useLoaderData()
   const actionData = useActionData()
   const testData = candidatesOfTest?.candidateTest
-
   const getCandidateResult = () => {
     let resultData = []
     for (let i = 0; i < testData.length; i++) {
@@ -134,6 +133,7 @@ const CandidatesList = ({ searchText }: { searchText: string }) => {
                     startedAt={candidate?.startedAt}
                     createdAt={candidate?.createdAt}
                     currentWorkspaceId={currentWorkspaceId}
+                    candidateResult = {candidate?.candidateResult}
                   />
                 </div>
               )
