@@ -21,7 +21,7 @@ const OptionCard = ({
         </div>
       ) : (
         <div
-          className="ql-editor flex-1"
+          className="correct-answer ql-editor flex-1"
           dangerouslySetInnerHTML={{
             __html: `${
               (option as Option)?.option || (option as CorrectAnswer)?.answer
