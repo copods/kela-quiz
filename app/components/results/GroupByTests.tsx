@@ -6,6 +6,7 @@ import GroupByTestItems from './GroupByTestItems'
 import type { CandidateTest, Test } from '~/interface/Interface'
 import { sortByOrder } from '~/interface/Interface'
 import { useTranslation } from 'react-i18next'
+import EmptyStateComponent from '../common-components/EmptyStateComponent'
 
 const GroupByTests = () => {
   const { t } = useTranslation()
@@ -52,7 +53,10 @@ const GroupByTests = () => {
     heading?.focus()
   }, [])
   return (
-    <div className="flex flex-col gap-6 p-1" id="group-by-test-container">
+    <div
+      className="flex h-full flex-col gap-6 p-1"
+      id="group-by-test-container"
+    >
       <h1
         tabIndex={0}
         id="heading"
@@ -139,9 +143,7 @@ const GroupByTests = () => {
           </div>
         </div>
       ) : (
-        <div className="p-7 text-center">
-          {t('sectionsConstants.noRecordFound')}
-        </div>
+        <EmptyStateComponent />
       )}
     </div>
   )
