@@ -34,6 +34,7 @@ import { Icon } from '@iconify/react'
 import DeletePopUp from '~/components/common-components/DeletePopUp'
 import moment from 'moment'
 import EmptyStateComponent from '~/components/common-components/EmptyStateComponent'
+import type { Invites, Role, User } from '~/interface/Interface'
 
 export type ActionData = {
   errors?: {
@@ -53,8 +54,8 @@ type LoaderData = {
   currentWorkspaceId: string
   invitedMembers: Awaited<ReturnType<typeof getAllInvitedMember>>
   getUser: Awaited<ReturnType<typeof getUserById>>
-  MembersCurrentPage: number
-  MembersItemsPerPage: number
+  membersCurrentPage: number
+  membersItemsPerPage: number
   invitedMembersItemsPerPage: number
   invitedMembersCurrentPage: number
   allUsersCount: number
@@ -63,8 +64,8 @@ type LoaderData = {
 export const loader: LoaderFunction = async ({ request, params }) => {
   const url = new URL(request.url)
   const query = url.searchParams
-  const MembersItemsPerPage = Math.max(Number(query.get('MemberItems') || 5), 5)
-  const MembersCurrentPage = Math.max(Number(query.get('MemberPage') || 1), 1)
+  const membersItemsPerPage = Math.max(Number(query.get('MemberItems') || 5), 5)
+  const membersCurrentPage = Math.max(Number(query.get('MemberPage') || 1), 1)
   const invitedMembersCurrentPage = Math.max(
     Number(query.get('InvitedMemberPage') || 1),
     1
@@ -86,8 +87,8 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   if (!userId) return redirect(routes.signIn)
   const users = await getAllUsers({
     currentWorkspaceId,
-    MembersCurrentPage,
-    MembersItemsPerPage,
+    membersCurrentPage,
+    membersItemsPerPage,
   })
 
   const allUsersCount = await getAllUsersCount(currentWorkspaceId)
@@ -100,8 +101,8 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     currentWorkspaceId,
     invitedMembers,
     getUser,
-    MembersCurrentPage,
-    MembersItemsPerPage,
+    membersCurrentPage,
+    membersItemsPerPage,
     invitedMembersCurrentPage,
     invitedMembersItemsPerPage,
     allUsersCount,
@@ -253,9 +254,9 @@ const Members = () => {
   const { t } = useTranslation()
   const membersActionData = useActionData() as ActionData
   const [actionStatus, setActionStatus] = useState<boolean>(false)
-  const loader = useLoaderData()
+  const memberLoaderData = useLoaderData()
   const submit = useSubmit()
-  const loggedInUser = loader.userId
+  const loggedInUser = memberLoaderData.userId
   const [openDeleteModal, setOpenDeleteModal] = useState(false)
 
   useEffect(() => {
@@ -271,25 +272,29 @@ const Members = () => {
       }
     }
   }, [membersActionData, t])
-  const NameDataCell = (data: { [key: string]: any }) => {
+  const NameDataCell = (data: User) => {
     return (
       <span>
         {data.firstName} {data.lastName}
       </span>
     )
   }
-  const RoleDataCell = (data: { [key: string]: any }) => {
+
+  const RoleDataCell = (data: { role: Role }) => {
     return <span>{data.role.name}</span>
   }
-  const InvitedByCell = (data: { [key: string]: any }) => {
+  const InvitedByCell = (data: Invites) => {
     return (
       <span>
         {data.invitedById.firstName} {data.invitedById.lastName}
       </span>
     )
   }
-  const InvitedOnCell = (data: { [key: string]: any }) => {
+  const InvitedOnCell = (data: Invites) => {
     return <span>{moment(data?.invitedOn).format('DD MMMM YY')}</span>
+  }
+  const JoinedOnCell = (data: Invites) => {
+    return <span>{moment(data?.createdAt).format('DD MMMM YY')}</span>
   }
   const deleteUser = (id: string) => {
     submit({ action: 'delete', id: id }, { method: 'post' })
@@ -303,7 +308,7 @@ const Members = () => {
       method: 'post',
     })
   }
-  const DeleteIcon = (data: { [key: string]: any }) => {
+  const DeleteAction = (data: User) => {
     const openPopUp = () => {
       if (loggedInUser !== data.id) {
         setOpenDeleteModal(!openDeleteModal)
@@ -333,7 +338,7 @@ const Members = () => {
       </>
     )
   }
-  const InviteIcon = (data: { [key: string]: any }) => {
+  const InviteAction = (data: User) => {
     return (
       <span
         tabIndex={0}
@@ -352,9 +357,15 @@ const Members = () => {
     { title: 'Name', field: 'name', render: NameDataCell, width: '25%' },
     { title: 'Email', field: 'email', width: '30%' },
     { title: 'Role', field: 'role', render: RoleDataCell },
-    { title: 'Joined On', field: 'createdAt', width: '20%' },
-    { title: 'Action', field: 'action', render: DeleteIcon },
+    {
+      title: 'Joined On',
+      field: 'createdAt',
+      width: '20%',
+      render: JoinedOnCell,
+    },
+    { title: 'Action', field: 'action', render: DeleteAction },
   ]
+
   const invitedMembersColumn = [
     { title: 'Email', field: 'email', width: '30%' },
     { title: 'Role', field: 'role', render: RoleDataCell },
@@ -370,22 +381,28 @@ const Members = () => {
       width: '20%',
       render: InvitedOnCell,
     },
-    { title: 'Action', field: 'action', render: InviteIcon },
+    { title: 'Action', field: 'action', render: InviteAction },
   ]
-  const [currentPage, setCurrentPage] = useState(loader.MembersCurrentPage)
-  const [pageSize, setPageSize] = useState(5)
+  const [membersCurrentPage, setMembersCurrentPage] = useState(
+    memberLoaderData.membersCurrentPage
+  )
+  const [membersPageSize, setMembersPageSize] = useState(5)
   const [invitedMemberCurrentPage, setInvitedMemberPage] = useState(
-    loader.invitedMembersCurrentPage
+    memberLoaderData.invitedMembersCurrentPage
   )
   const [invitedMemberPageSize, setInvitedMemberPageSize] = useState(5)
   const navigate = useNavigate()
   useEffect(() => {
     navigate(
-      `?MemberPage=${currentPage}&MemberItems=${pageSize}&InvitedMemberPage=${invitedMemberCurrentPage}&InvitedMemberItems=${invitedMemberPageSize}`
+      `?MemberPage=${membersCurrentPage}&MemberItems=${membersPageSize}&InvitedMemberPage=${invitedMemberCurrentPage}&InvitedMemberItems=${invitedMemberPageSize}`
     )
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pageSize, currentPage, invitedMemberCurrentPage, invitedMemberPageSize])
-  console.log(loader)
+  }, [
+    membersPageSize,
+    membersCurrentPage,
+    invitedMemberCurrentPage,
+    invitedMemberPageSize,
+  ])
   return (
     <div className="flex flex-col gap-6 p-1">
       <MembersHeader
@@ -401,24 +418,24 @@ const Members = () => {
         >
           {t('members.joinedMembers')}
         </h1>
-        {loader.users.length === 0 ? (
+        {memberLoaderData.users.length === 0 ? (
           <EmptyStateComponent />
         ) : (
           <div className="text-base">
             <Table
               columns={membersColumn}
-              data={loader.users}
+              data={memberLoaderData.users}
               paginationEnabled={true}
-              pageSize={pageSize}
-              setPageSize={setPageSize}
-              currentPage={currentPage}
-              onPageChange={setCurrentPage}
-              totalItems={loader.allUsersCount}
+              pageSize={membersPageSize}
+              setPageSize={setMembersPageSize}
+              currentPage={membersCurrentPage}
+              onPageChange={setMembersCurrentPage}
+              totalItems={memberLoaderData.allUsersCount}
             />
           </div>
         )}
       </div>
-      {loader.invitedUsersCount > 0 ? (
+      {memberLoaderData.invitedUsersCount > 0 ? (
         <div className="flex flex-col gap-4">
           <h2
             className=" text-2xl"
@@ -432,13 +449,13 @@ const Members = () => {
           <div className="pb-4">
             <Table
               columns={invitedMembersColumn}
-              data={loader.invitedMembers}
+              data={memberLoaderData.invitedMembers}
               paginationEnabled={true}
               pageSize={invitedMemberPageSize}
               setPageSize={setInvitedMemberPageSize}
               currentPage={invitedMemberCurrentPage}
               onPageChange={setInvitedMemberPage}
-              totalItems={loader.invitedUsersCount}
+              totalItems={memberLoaderData.invitedUsersCount}
             />
           </div>
         </div>

@@ -38,17 +38,17 @@ export async function getAllUsersCount(currentWorkspaceId: string | undefined) {
 }
 export async function getAllUsers({
   currentWorkspaceId,
-  MembersCurrentPage,
-  MembersItemsPerPage,
+  membersCurrentPage = 1,
+  membersItemsPerPage = 5,
 }: {
   currentWorkspaceId: string | undefined
-  MembersCurrentPage?: number
-  MembersItemsPerPage?: number
+  membersCurrentPage?: number
+  membersItemsPerPage?: number
 }) {
-  const PER_PAGE = MembersItemsPerPage
+  const PER_PAGE = membersItemsPerPage
   const user = await prisma.user.findMany({
     take: PER_PAGE,
-    skip: (MembersCurrentPage! - 1) * PER_PAGE!,
+    skip: (membersCurrentPage - 1) * PER_PAGE,
     where: {
       userWorkspace: {
         some: {
