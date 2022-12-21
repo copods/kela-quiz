@@ -52,6 +52,7 @@ export default function MembersList({
       <>
         <Icon
           id="delete-button"
+          aria-label="delete member"
           tabIndex={0}
           onClick={openPopUp}
           onKeyUp={(e) => {

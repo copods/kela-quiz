@@ -53,8 +53,7 @@ type LoaderData = {
   invitedUsersCount: number
 }
 export const loader: LoaderFunction = async ({ request, params }) => {
-  const url = new URL(request.url)
-  const query = url.searchParams
+  const query = new URL(request.url).searchParams
   const membersItemsPerPage = Math.max(Number(query.get('MemberItems') || 5), 5)
   const membersCurrentPage = Math.max(Number(query.get('MemberPage') || 1), 1)
   const invitedMembersCurrentPage = Math.max(
