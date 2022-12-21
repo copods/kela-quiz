@@ -251,8 +251,11 @@ describe('smoke tests', () => {
     cy.get('#email').clear().type('copods.demo.sendgrid@gmail.com')
     cy.get('#password').clear().type('kQuiz@copods')
     cy.findByRole('button').click()
-    cy.wait(1000)
-    cy.get('#add-test', { timeout: 6000 }).click()
+    cy.get('#members', { timeout: 60000 })
+      .should('have.text', 'Members')
+      .click()
+    cy.wait(2000)
+    cy.get('#add-test', { timeout: 60000 }).click()
     cy.wait(1000)
     cy.location('pathname').should('include', '/assessments/add-assessment')
     cy.get('input[placeholder="Enter assessment name"]')
@@ -263,7 +266,9 @@ describe('smoke tests', () => {
     })
     cy.wait(2000)
     cy.get('#next-button', { timeout: 6000 }).should('be.visible')
-    cy.get('#next-button').should('have.text', cypress.next).click()
+    cy.get('#next-button')
+      .should('have.text', cypress.next)
+      .click({ force: true })
 
     cy.get('.stepsTab').each(($el) => {
       cy.wrap($el).within((el) => {
