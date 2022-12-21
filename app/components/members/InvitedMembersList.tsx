@@ -57,7 +57,12 @@ const InvitedMembersList = ({
         onClick={() => resendMail(data.id)}
         className="cursor-pointer opacity-100"
       >
-        <img src={memberResendIcon} alt="reinvite" id="resend-member-invite" />
+        <img
+          aria-label="resend invite"
+          src={memberResendIcon}
+          alt="reinvite"
+          id="resend-member-invite"
+        />
       </span>
     )
   }
