@@ -1,36 +1,13 @@
-import {
-  useLoaderData,
-  useNavigate,
-  useSubmit,
-  useTransition,
-} from '@remix-run/react'
+import { useNavigate } from '@remix-run/react'
 import { useTranslation } from 'react-i18next'
 import Button from '../common-components/Button'
 import logo from '../../../public/assets/member-invitation.svg'
+import { useLoaderData } from '@remix-run/react'
 
 const JoinWorkspace = () => {
   const { t } = useTranslation()
-
-  const submit = useSubmit()
-  const joinInvitedWorkspace = () => {
-    let data = {
-      action: 'join',
-    }
-    submit(data, {
-      method: 'post',
-    })
-  }
-  const rejectInvitedWorkspace = () => {
-    let data = {
-      action: 'reject',
-    }
-    submit(data, {
-      method: 'post',
-    })
-  }
-  const transition = useTransition()
-  const workspcaceInvitationData = useLoaderData()
   let navigate = useNavigate()
+  const workspcaceInvitationData = useLoaderData()
   const workspaceInvitation = workspcaceInvitationData.invitedMember
 
   return (
@@ -48,34 +25,18 @@ const JoinWorkspace = () => {
               >
                 {t('members.workspaceInvitation')}
               </span>
-              {workspaceInvitation.joined === true ? (
+              {workspcaceInvitationData === 'joined' ? (
                 <span className="text-center text-primary">
                   {t('members.alreadyJoinedWorkspace')}
                 </span>
-              ) : workspaceInvitation.joined === false ? (
-                <span className="text-center text-primary">
-                  {t('members.alreadyRejectedWorkspaceInvitation')}
-                </span>
-              ) : workspcaceInvitationData.loginWithWrongId === true ? (
+              ) : workspcaceInvitationData?.loginWithWrongId ? (
                 <span className="text-center text-primary">
                   {t('members.loggedinFromAnotherAccount')}
                 </span>
-              ) : (
-                <span className="break-word text-center text-base font-medium text-gray-500">
-                  {t('members.youInvitedBy')}{' '}
-                  <span className="text-center text-primary">
-                    {workspaceInvitation?.invitedById?.firstName}{' '}
-                    {workspaceInvitation?.invitedById?.lastName}
-                  </span>{' '}
-                  {t('members.toJoin')}{' '}
-                  <span className="text-primary">
-                    {workspaceInvitation.invitedForWorkspace.name}
-                  </span>
-                </span>
-              )}
+              ) : null}
             </div>
             <div className="flex justify-center gap-8">
-              {workspaceInvitation.joined === true ? (
+              {workspcaceInvitationData === 'joined' ? (
                 <Button
                   tabIndex={0}
                   title="Go to Dashboard"
@@ -91,45 +52,11 @@ const JoinWorkspace = () => {
                     )
                   }
                 />
-              ) : workspaceInvitation.joined === false ? (
+              ) : workspaceInvitation?.joined === false ? (
                 ''
-              ) : workspcaceInvitationData.loginWithWrongId === true ? (
+              ) : workspcaceInvitationData?.loginWithWrongId ? (
                 ''
-              ) : (
-                <div className="flex justify-center gap-8">
-                  <Button
-                    tabIndex={0}
-                    title="Reject"
-                    id="reject-button"
-                    buttonText="Reject"
-                    name="reject-workspace"
-                    varient="primary-outlined"
-                    value={'reject'}
-                    className="h-9 px-24"
-                    onClick={() => rejectInvitedWorkspace()}
-                  />
-
-                  <Button
-                    tabIndex={0}
-                    id="join-button"
-                    name="join-workspace"
-                    value={'join'}
-                    title={
-                      transition.state === 'submitting'
-                        ? t('commonConstants.joining')
-                        : t('commonConstants.join')
-                    }
-                    buttonText={
-                      transition.state === 'submitting'
-                        ? t('commonConstants.joining')
-                        : t('commonConstants.join')
-                    }
-                    className="h-9  px-24"
-                    varient="primary-solid"
-                    onClick={() => joinInvitedWorkspace()}
-                  />
-                </div>
-              )}
+              ) : null}
             </div>
           </div>
         </div>
