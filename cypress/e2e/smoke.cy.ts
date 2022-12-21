@@ -296,9 +296,9 @@ describe('smoke tests', () => {
         }
       })
     })
-    cy.wait(1000)
-    cy.get('button#next-button', { timeout: 8000 }).should('be.visible')
-    cy.get('button#next-button').should('have.text', cypress.next).click()
+    cy.wait(2000)
+    cy.get('#next-button', { timeout: 6000 }).should('be.visible')
+    cy.get('#next-button').should('have.text', cypress.next).click()
     cy.wait(1000)
     cy.get('.stepsTab').each(($el) => {
       cy.wrap($el).within((el) => {
@@ -340,8 +340,9 @@ describe('smoke tests', () => {
     cy.get('#quill-editor').within(() => {
       cy.get('.ql-editor').type(`Test Description`)
     })
-    cy.wait(1000)
-    cy.get('button#next-button').should('have.text', cypress.next).click()
+    cy.wait(2000)
+    cy.get('#next-button', { timeout: 6000 }).should('be.visible')
+    cy.get('#next-button').should('have.text', cypress.next).click()
 
     cy.get('.stepsTab').each(($el) => {
       cy.wrap($el).within((el) => {
