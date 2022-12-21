@@ -1,49 +1,103 @@
 import type { User, Role, Invites } from '~/interface/Interface'
-import MemberListItem from './MemberListItem'
-import { useLoaderData } from '@remix-run/react'
+import { useLoaderData, useSubmit } from '@remix-run/react'
 import { useTranslation } from 'react-i18next'
+import Table from '../common-components/TableComponent'
+import DeletePopUp from '../common-components/DeletePopUp'
+import { Icon } from '@iconify/react'
+import moment from 'moment'
+import { useState } from 'react'
 
 export default function MembersList({
   actionStatus,
+  membersCurrentPage,
+  setMembersCurrentPage,
+  membersPageSize,
+  setMembersPageSize,
 }: {
   actionStatus: string | undefined
+  membersCurrentPage: number
+  setMembersCurrentPage: (e: number) => void
+  membersPageSize: number
+  setMembersPageSize: (e: number) => void
 }) {
   const { t } = useTranslation()
+  const submit = useSubmit()
+  const memberLoaderData = useLoaderData()
+  const loggedInUser = memberLoaderData.userId
+  const [openDeleteModal, setOpenDeleteModal] = useState(false)
 
-  const membersData = useLoaderData()
-  const users = membersData.users
+  const NameDataCell = (data: User) => {
+    return (
+      <span>
+        {data.firstName} {data.lastName}
+      </span>
+    )
+  }
+  const RoleDataCell = (data: { role: Role }) => {
+    return <span>{data.role.name}</span>
+  }
+  const JoinedOnCell = (data: Invites) => {
+    return <span>{moment(data?.createdAt).format('DD MMMM YY')}</span>
+  }
+  const deleteUser = (id: string) => {
+    submit({ action: 'delete', id: id }, { method: 'post' })
+  }
+  const DeleteAction = (data: User) => {
+    const openPopUp = () => {
+      if (loggedInUser !== data.id) {
+        setOpenDeleteModal(!openDeleteModal)
+      }
+    }
+    return (
+      <>
+        <Icon
+          id="delete-button"
+          tabIndex={0}
+          onClick={openPopUp}
+          onKeyUp={(e) => {
+            if (e.key === 'Enter') openPopUp()
+          }}
+          icon="ic:outline-delete-outline"
+          className={`h-6 w-6 cursor-pointer text-red-500  ${
+            loggedInUser === data.id && 'cursor-not-allowed text-red-200'
+          }`}
+        />
+        <DeletePopUp
+          setOpen={setOpenDeleteModal}
+          open={openDeleteModal}
+          onDelete={() => deleteUser(data.id)}
+          deleteItem={`${data.firstName} ${data.lastName}`}
+          deleteItemType={t('members.member')}
+        />
+      </>
+    )
+  }
 
-  const loggedInUser = membersData.userId
+  const membersColumn = [
+    { title: 'Name', field: 'name', render: NameDataCell, width: '25%' },
+    { title: 'Email', field: 'email', width: '30%' },
+    { title: 'Role', field: 'role', render: RoleDataCell },
+    {
+      title: 'Joined On',
+      field: 'createdAt',
+      width: '20%',
+      render: JoinedOnCell,
+    },
+    { title: 'Action', field: 'action', render: DeleteAction },
+  ]
+
   return (
-    <div className="grid grid-cols-12 rounded-lg shadow-base">
-      <div className="col-span-full grid grid-cols-10 rounded-lg border border-solid border-gray-200 bg-white">
-        <div className="col-gap-3 col-span-full grid grid-cols-10 bg-gray-100 py-4 px-6">
-          <h1 className="col-span-2 pl-4 text-sm text-gray-500">
-            {t('commonConstants.name')}
-          </h1>
-          <h1 className="col-span-3 pl-4 text-sm text-gray-500">
-            {t('commonConstants.email')}
-          </h1>
-          <h1 className="col-span-2 pl-4 text-sm text-gray-500">
-            {t('members.role')}
-          </h1>
-          <h1 className="col-span-2 pl-4 text-sm text-gray-500">
-            {t('commonConstants.joinedOn')}
-          </h1>
-          <h1 className="col-span-1 pl-4 text-sm text-gray-500">
-            {t('members.action')}
-          </h1>
-        </div>
-        {users.map((user: User & { role?: Role; invites: Invites }) => (
-          <div key={user.id} className="memberRow col-span-10 grid">
-            <MemberListItem
-              user={user}
-              loggedInUser={loggedInUser === user.id}
-              actionStatus={actionStatus}
-            />
-          </div>
-        ))}
-      </div>
+    <div className="text-base">
+      <Table
+        columns={membersColumn}
+        data={memberLoaderData.users}
+        paginationEnabled={true}
+        pageSize={membersPageSize}
+        setPageSize={setMembersPageSize}
+        currentPage={membersCurrentPage}
+        onPageChange={setMembersCurrentPage}
+        totalItems={memberLoaderData.allUsersCount}
+      />
     </div>
   )
 }

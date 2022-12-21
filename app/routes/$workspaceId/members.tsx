@@ -2,12 +2,7 @@ import { getUserId, requireWorkspaceId } from '~/session.server'
 import { redirect } from '@remix-run/node'
 import type { LoaderFunction, ActionFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
-import {
-  useActionData,
-  useLoaderData,
-  useNavigate,
-  useSubmit,
-} from '@remix-run/react'
+import { useActionData, useLoaderData, useNavigate } from '@remix-run/react'
 import {
   deleteUserById,
   getAllRoles,
@@ -22,19 +17,15 @@ import { routes } from '~/constants/route.constants'
 import { useTranslation } from 'react-i18next'
 import { getUserWorkspaces } from '~/models/workspace.server'
 import { actions } from '~/constants/action.constants'
-import memberResendIcon from '~/../public/assets/resend-member-invitation.svg'
 import {
   getAllInvitedMember,
   getAllInvitedMemberCount,
   inviteNewUser,
   reinviteMemberForWorkspace,
 } from '~/models/invites.server'
-import Table from '~/components/common-components/TableComponent'
-import { Icon } from '@iconify/react'
-import DeletePopUp from '~/components/common-components/DeletePopUp'
-import moment from 'moment'
 import EmptyStateComponent from '~/components/common-components/EmptyStateComponent'
-import type { Invites, Role, User } from '~/interface/Interface'
+import MembersList from '~/components/members/MembersList'
+import InvitedMembersList from '~/components/members/InvitedMembersList'
 
 export type ActionData = {
   errors?: {
@@ -255,9 +246,6 @@ const Members = () => {
   const membersActionData = useActionData() as ActionData
   const [actionStatus, setActionStatus] = useState<boolean>(false)
   const memberLoaderData = useLoaderData()
-  const submit = useSubmit()
-  const loggedInUser = memberLoaderData.userId
-  const [openDeleteModal, setOpenDeleteModal] = useState(false)
 
   useEffect(() => {
     if (membersActionData) {
@@ -272,117 +260,7 @@ const Members = () => {
       }
     }
   }, [membersActionData, t])
-  const NameDataCell = (data: User) => {
-    return (
-      <span>
-        {data.firstName} {data.lastName}
-      </span>
-    )
-  }
 
-  const RoleDataCell = (data: { role: Role }) => {
-    return <span>{data.role.name}</span>
-  }
-  const InvitedByCell = (data: Invites) => {
-    return (
-      <span>
-        {data.invitedById.firstName} {data.invitedById.lastName}
-      </span>
-    )
-  }
-  const InvitedOnCell = (data: Invites) => {
-    return <span>{moment(data?.invitedOn).format('DD MMMM YY')}</span>
-  }
-  const JoinedOnCell = (data: Invites) => {
-    return <span>{moment(data?.createdAt).format('DD MMMM YY')}</span>
-  }
-  const deleteUser = (id: string) => {
-    submit({ action: 'delete', id: id }, { method: 'post' })
-  }
-  const resendMail = (id: string) => {
-    let data = {
-      id: id,
-      action: 'resendMember',
-    }
-    submit(data, {
-      method: 'post',
-    })
-  }
-  const DeleteAction = (data: User) => {
-    const openPopUp = () => {
-      if (loggedInUser !== data.id) {
-        setOpenDeleteModal(!openDeleteModal)
-      }
-    }
-    return (
-      <>
-        <Icon
-          id="delete-button"
-          tabIndex={0}
-          onClick={openPopUp}
-          onKeyUp={(e) => {
-            if (e.key === 'Enter') openPopUp()
-          }}
-          icon="ic:outline-delete-outline"
-          className={`h-6 w-6 cursor-pointer text-red-500  ${
-            loggedInUser === data.id && 'cursor-not-allowed text-red-200'
-          }`}
-        />
-        <DeletePopUp
-          setOpen={setOpenDeleteModal}
-          open={openDeleteModal}
-          onDelete={() => deleteUser(data.id)}
-          deleteItem={`${data.firstName} ${data.lastName}`}
-          deleteItemType={t('members.member')}
-        />
-      </>
-    )
-  }
-  const InviteAction = (data: User) => {
-    return (
-      <span
-        tabIndex={0}
-        role="button"
-        onKeyUp={(e) => {
-          if (e.key === 'Enter') resendMail(data.id)
-        }}
-        onClick={() => resendMail(data.id)}
-        className="cursor-pointer opacity-100"
-      >
-        <img src={memberResendIcon} alt="reinvite" id="resend-member-invite" />
-      </span>
-    )
-  }
-  const membersColumn = [
-    { title: 'Name', field: 'name', render: NameDataCell, width: '25%' },
-    { title: 'Email', field: 'email', width: '30%' },
-    { title: 'Role', field: 'role', render: RoleDataCell },
-    {
-      title: 'Joined On',
-      field: 'createdAt',
-      width: '20%',
-      render: JoinedOnCell,
-    },
-    { title: 'Action', field: 'action', render: DeleteAction },
-  ]
-
-  const invitedMembersColumn = [
-    { title: 'Email', field: 'email', width: '30%' },
-    { title: 'Role', field: 'role', render: RoleDataCell },
-    {
-      title: 'Invited By',
-      field: 'invitedById',
-      render: InvitedByCell,
-      width: '25%',
-    },
-    {
-      title: 'Invited On',
-      field: 'invitedOn',
-      width: '20%',
-      render: InvitedOnCell,
-    },
-    { title: 'Action', field: 'action', render: InviteAction },
-  ]
   const [membersCurrentPage, setMembersCurrentPage] = useState(
     memberLoaderData.membersCurrentPage
   )
@@ -421,45 +299,24 @@ const Members = () => {
         {memberLoaderData.users.length === 0 ? (
           <EmptyStateComponent />
         ) : (
-          <div className="text-base">
-            <Table
-              columns={membersColumn}
-              data={memberLoaderData.users}
-              paginationEnabled={true}
-              pageSize={membersPageSize}
-              setPageSize={setMembersPageSize}
-              currentPage={membersCurrentPage}
-              onPageChange={setMembersCurrentPage}
-              totalItems={memberLoaderData.allUsersCount}
-            />
-          </div>
+          <MembersList
+            actionStatus={membersActionData?.resp?.title}
+            membersCurrentPage={membersCurrentPage}
+            setMembersCurrentPage={setMembersCurrentPage}
+            membersPageSize={membersPageSize}
+            setMembersPageSize={setMembersPageSize}
+          />
         )}
       </div>
-      {memberLoaderData.invitedUsersCount > 0 ? (
-        <div className="flex flex-col gap-4">
-          <h2
-            className=" text-2xl"
-            tabIndex={0}
-            role={t('members.invitedMember')}
-            aria-label={t('members.invitedMember')}
-            id="invited-member-heading"
-          >
-            {t('members.invitedMember')}
-          </h2>
-          <div className="pb-4">
-            <Table
-              columns={invitedMembersColumn}
-              data={memberLoaderData.invitedMembers}
-              paginationEnabled={true}
-              pageSize={invitedMemberPageSize}
-              setPageSize={setInvitedMemberPageSize}
-              currentPage={invitedMemberCurrentPage}
-              onPageChange={setInvitedMemberPage}
-              totalItems={memberLoaderData.invitedUsersCount}
-            />
-          </div>
-        </div>
-      ) : null}
+      <div>
+        <InvitedMembersList
+          actionStatus={membersActionData?.resp?.title}
+          invitedMemberCurrentPage={invitedMemberCurrentPage}
+          setInvitedMemberPage={setInvitedMemberPage}
+          invitedMemberPageSize={invitedMemberPageSize}
+          setInvitedMemberPageSize={setInvitedMemberPageSize}
+        />
+      </div>
     </div>
   )
 }
