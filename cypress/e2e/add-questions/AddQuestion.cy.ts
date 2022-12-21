@@ -558,33 +558,4 @@ describe('Test for section-details', () => {
     cy.get('.question').contains(question).trigger('mouseover')
     cy.get('[data-cy="delete-question"]').should('be.exist')
   })
-  it('checks, delete question button should be working properly', () => {
-    cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
-    cy.get('.sectionCard', { timeout: 40000 }).each(($el) => {
-      cy.wrap($el).within((el) => {
-        if (
-          el[0].getElementsByClassName('sectionName')[0].innerHTML === section2
-        ) {
-          cy.get('.sectionName').should('have.text', section2)
-        }
-      })
-    })
-    cy.get('.sectionName').contains(section2).click()
-    cy.wait(2000)
-    cy.get('[data-cy="question-card-wrapper"]', { timeout: 40000 }).each(
-      ($el) => {
-        cy.wrap($el).within((el) => {
-          if (
-            el[0].getElementsByClassName('question')[0].innerHTML === question
-          ) {
-            cy.get('.question').should('have.text', question)
-          }
-        })
-      }
-    )
-    cy.get('.question').contains(question).trigger('mouseover')
-    cy.get('[data-cy="delete-question"]').should('be.exist')
-    cy.get('#delete-dialog').should('be.visible')
-    cy.get('#confirm-delete').should('have.text', 'Delete').click()
-  })
 })
