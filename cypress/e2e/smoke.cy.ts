@@ -252,7 +252,7 @@ describe('smoke tests', () => {
     cy.findByRole('button').click()
     cy.wait(1000)
     cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
-
+    cy.wait(2000)
     cy.get('#section-card').each(($el) => {
       cy.wrap($el).within((el) => {
         if (

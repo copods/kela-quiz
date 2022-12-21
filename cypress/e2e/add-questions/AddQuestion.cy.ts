@@ -536,13 +536,13 @@ describe('Test for section-details', () => {
     cy.get('.sectionCard', { timeout: 40000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
-          el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
+          el[0].getElementsByClassName('sectionName')[0].innerHTML === section2
         ) {
-          cy.get('.sectionName').should('have.text', section1)
+          cy.get('.sectionName').should('have.text', section2)
         }
       })
     })
-    cy.get('.sectionName').contains(section1).click()
+    cy.get('.sectionName').contains(section2).click()
     cy.wait(2000)
     cy.get('[data-cy="question-card-wrapper"]', { timeout: 40000 }).each(
       ($el) => {
