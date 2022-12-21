@@ -123,7 +123,7 @@ const AddEditSection = ({
             name="description"
             id="section-description"
             rows={4}
-            className="w-full rounded-lg border border-gray-200 px-3 py-4 text-base"
+            className="max-h-280 w-full overflow-auto rounded-lg border border-gray-200 px-3 py-4 text-base"
             onChange={(e) => setDescription(trimValue(e.target.value))}
             value={description}
             placeholder={`${t('commonConstants.enterTestsDesc')}*`}
