@@ -248,13 +248,9 @@ describe('smoke tests', () => {
   })
 
   it('Verify if user able create the assesssment 1', () => {
-    cy.visit('/sign-in')
-    cy.get('#email').clear().type('copods.demo.sendgrid@gmail.com')
-    cy.get('#password').clear().type('kQuiz@copods')
-    cy.findByRole('button').click()
-    cy.get('#members', { timeout: 60000 })
-      .should('have.text', 'Members')
-      .click()
+    cy.login()
+
+    cy.customVisit('/members')
     cy.get('#tests', { timeout: 60000 })
       .should('have.text', 'Assessments')
       .click()
@@ -330,13 +326,9 @@ describe('smoke tests', () => {
   })
 
   it('Verify if user able create the assessment 2', () => {
-    cy.visit('/sign-in')
-    cy.get('#email').clear().type('copods.demo.sendgrid@gmail.com')
-    cy.get('#password').clear().type('kQuiz@copods')
-    cy.findByRole('button').click()
-    cy.get('#members', { timeout: 60000 })
-      .should('have.text', 'Members')
-      .click()
+    cy.login()
+
+    cy.customVisit('/members')
     cy.get('#tests', { timeout: 60000 })
       .should('have.text', 'Assessments')
       .click()
