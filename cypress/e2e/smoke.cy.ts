@@ -18,9 +18,15 @@ describe('smoke tests', () => {
     window.localStorage.clear()
   })
   it('Verify if user able create the assesssment 1', () => {
-    cy.login()
-
-    cy.customVisit('/members')
+    cy.visit('/sign-in')
+    cy.get('#email', { timeout: 8000 })
+      .clear()
+      .type('copods.demo.sendgrid@gmail.com')
+    cy.get('#password').clear().type('kQuiz@copods')
+    cy.findByRole('button').click()
+    cy.get('#members', { timeout: 60000 })
+      .should('have.text', 'Members')
+      .click()
     cy.get('a').find('#tests').should('have.text', 'Assessments').click()
     cy.get('#add-test', { timeout: 6000 }).click()
     cy.location('pathname').should('include', '/assessments/add-assessment')
