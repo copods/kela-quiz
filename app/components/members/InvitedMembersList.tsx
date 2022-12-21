@@ -46,7 +46,7 @@ const InvitedMembersList = ({
       method: 'post',
     })
   }
-  const InviteAction = (data: User) => {
+  const MemberReinvite = (data: User) => {
     return (
       <span
         tabIndex={0}
@@ -76,7 +76,7 @@ const InvitedMembersList = ({
       width: '20%',
       render: InvitedOnCell,
     },
-    { title: 'Action', field: 'action', render: InviteAction },
+    { title: 'Action', field: 'action', render: MemberReinvite },
   ]
   return (
     <>

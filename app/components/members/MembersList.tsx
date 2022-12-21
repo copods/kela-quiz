@@ -42,7 +42,7 @@ export default function MembersList({
   const deleteUser = (id: string) => {
     submit({ action: 'delete', id: id }, { method: 'post' })
   }
-  const DeleteAction = (data: User) => {
+  const MemberDelete = (data: User) => {
     const openPopUp = () => {
       if (loggedInUser !== data.id) {
         setOpenDeleteModal(!openDeleteModal)
@@ -83,7 +83,7 @@ export default function MembersList({
       width: '20%',
       render: JoinedOnCell,
     },
-    { title: 'Action', field: 'action', render: DeleteAction },
+    { title: 'Action', field: 'action', render: MemberDelete },
   ]
 
   return (
