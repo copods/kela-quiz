@@ -1,4 +1,4 @@
-import { Link, useNavigate, useSubmit } from '@remix-run/react'
+import { Link, useActionData, useNavigate, useSubmit } from '@remix-run/react'
 import { Icon } from '@iconify/react'
 import { useLoaderData } from '@remix-run/react'
 import { useEffect, useState } from 'react'
@@ -12,6 +12,7 @@ import type {
   Candidate,
   CandidateResult,
 } from '~/interface/Interface'
+import { toast } from 'react-toastify'
 
 const CandidateListOfTest = () => {
   const { candidatesOfTest, currentWorkspaceId } = useLoaderData()
@@ -19,6 +20,7 @@ const CandidateListOfTest = () => {
   const { t } = useTranslation()
   let navigate = useNavigate()
   const submit = useSubmit()
+  const actionData = useActionData()
   const [menuListOpen, setmenuListOpen] = useState<boolean>(false)
   const [searchText, setSearchText] = useState('')
   const filteredData =
@@ -33,10 +35,11 @@ const CandidateListOfTest = () => {
     )
   const [pageSize, setPageSize] = useState(5)
   const [currentPage, setCurrentPage] = useState(1)
-  const resendInvite = (candidateId: string, testId: string) => {
+  const resendInvite = (id: string, candidateId: string, testId: string) => {
     submit(
       {
         action: 'resendInvite',
+        id: id,
         candidateId: candidateId,
         testId: testId,
       },
@@ -108,7 +111,7 @@ const CandidateListOfTest = () => {
     data: { candidateResult: CandidateResult[] } & CandidateResult
   ) => {
     return (
-      <div className="absolute z-10 flex items-center">
+      <div className="absolute flex items-center">
         <span
           className={`rounded-full px-2 py-1 text-xs text-gray-900 ${
             data?.candidateResult.length > 0 ? 'bg-green-200' : 'bg-yellow-200'
@@ -128,7 +131,9 @@ const CandidateListOfTest = () => {
             menuListText={t('resultConstants.resendInvite')}
             aria-label={t('testTableItem.menu')}
             id={data.id}
-            resendInvite={() => resendInvite(data.candidateId, data.testId)}
+            resendInvite={() =>
+              resendInvite(data.id, data.candidateId, data.testId)
+            }
           />
         )}
       </div>
@@ -164,7 +169,19 @@ const CandidateListOfTest = () => {
     navigate(`?page=${currentPage}&pageSize=${pageSize}`)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pageSize, currentPage])
-
+  useEffect(() => {
+    if (
+      actionData?.candidateInviteStatus ===
+      t('candidateExamConstants.candidateTestCreated')
+    ) {
+      toast.success(t('testsConstants.reinvited'))
+    }
+    if (
+      actionData?.candidateInviteStatus === t('candidateExamConstants.endTest')
+    ) {
+      toast.error(t('testsConstants.testEnded'))
+    }
+  }, [actionData, t])
   return (
     <div id="test-details" className="flex h-full flex-col gap-4 ">
       <header className="border-b border-solid border-slate-300">
