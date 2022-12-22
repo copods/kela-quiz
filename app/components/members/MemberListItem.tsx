@@ -35,13 +35,11 @@ export default function MemberListItem({
   return (
     <div className="col-span-full grid grid-cols-10">
       <div className="memberRows col-gap-3 col-span-full grid grid-cols-10 border-t border-solid border-gray-200 px-6 py-4">
-        <div className="break-word col-span-2 overflow-ellipsis pl-4">
-          <span className="flex gap-1.5 text-base text-gray-700">
-            <div>
-              {user.firstName} {user.lastName}
-            </div>
-            <div>{owner ? <Badge>{t('members.owner')}</Badge> : null}</div>
-          </span>
+        <div className="break-word col-span-2 flex gap-1.5 overflow-ellipsis pl-4 text-base text-gray-700">
+          <div>
+            {user.firstName} {user.lastName}
+          </div>
+          <div>{owner ? <Badge>{t('members.owner')}</Badge> : null}</div>
         </div>
         <div className="memberMail col-span-3 flex overflow-ellipsis break-all pl-4">
           <span className="text-base text-gray-700">{user.email}</span>

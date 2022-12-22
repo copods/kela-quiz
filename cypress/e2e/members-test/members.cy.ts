@@ -188,10 +188,12 @@ describe('Test for members', () => {
     cy.get('#invite-member').should('have.text', cypress.addMember).click()
     cy.get('#cancel-add-button').should('have.text', 'Cancel').click()
   })
-
-  it('Check for owner tag', () => {
-    const getElement = cy.get('[data-cy="badge-tag"]')
-
-    getElement.should('have.length', 1)
+  it('checks,owner batch should be visible', () => {
+    cy.get('.membersHeading').should('be.visible')
+    cy.get('[data-cy="badge-tag"]').should('be.visible')
+  })
+  it('checks,owner batch should have correct text', () => {
+    cy.get('.membersHeading').should('be.visible')
+    cy.get('[data-cy="badge-tag"]').should('have.text', 'Owner')
   })
 })
