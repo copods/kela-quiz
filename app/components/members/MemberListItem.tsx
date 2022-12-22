@@ -36,20 +36,20 @@ export default function MemberListItem({
     <div className="col-span-full grid grid-cols-10">
       <div className="memberRows col-gap-3 col-span-full grid grid-cols-10 border-t border-solid border-gray-200 px-6 py-4">
         <div className="break-word col-span-2 overflow-ellipsis pl-4">
-          <span className="flex gap-1 text-base text-gray-700">
+          <span className="flex gap-1.5 text-base text-gray-700">
             <div>
               {user.firstName} {user.lastName}
             </div>
             <div>{owner ? <Badge>{t('members.owner')}</Badge> : null}</div>
           </span>
         </div>
-        <div className="memberMail col-span-3 overflow-ellipsis break-all pl-4">
+        <div className="memberMail col-span-3 flex overflow-ellipsis break-all pl-4">
           <span className="text-base text-gray-700">{user.email}</span>
         </div>
-        <div className="break-word col-span-2 overflow-ellipsis pl-4">
+        <div className="break-word col-span-2 flex overflow-ellipsis pl-4">
           <span className="text-base text-gray-700">{user?.role?.name}</span>
         </div>
-        <div className="col-span-2 overflow-ellipsis break-all pl-4">
+        <div className="col-span-2 flex overflow-ellipsis break-all pl-4">
           <span className="text-base text-gray-700">
             {moment(user.invites?.joinedAt).format('DD MMMM YY')}
           </span>
