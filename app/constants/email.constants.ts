@@ -1,3 +1,5 @@
+export const sendGridFailed = 'send grid failed'
+
 export const WELCOME_TEMPLATE = ({
   passwordGenerationLink,
   logo,

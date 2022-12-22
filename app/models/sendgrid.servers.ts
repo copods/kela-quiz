@@ -8,6 +8,7 @@ import {
   RECRUITER_TEMPLATE,
   NEW_OTP_TEMPLATE,
   MEMBER_INVITE_TEMPLATE,
+  sendGridFailed,
 } from '~/constants/email.constants'
 
 const callSengridAPI = ({
@@ -26,16 +27,17 @@ const callSengridAPI = ({
     text,
     html,
   }
-  return sendgrid.send(msg).then(
-    (res: any) => {
+  return sendgrid
+    .send(msg)
+    .then((res: any) => {
       if (res[0].statusCode === 202) return 'Done'
-    },
-    (error) => {
+    })
+    .catch((error) => {
       if (error.response) {
         console.error('Sendgrid Error: ', error.response.body)
+        throw new Error(sendGridFailed)
       }
-    }
-  )
+    })
 }
 
 export async function sendMail(
@@ -58,13 +60,17 @@ export async function sendMail(
 
   sendgrid.setApiKey(env.SENDGRID_API_KEY as string)
 
-  return await callSengridAPI({
-    to,
-    from, // Use the email address or domain you verified above
-    subject,
-    text,
-    html,
-  })
+  try {
+    return await callSengridAPI({
+      to,
+      from, // Use the email address or domain you verified above
+      subject,
+      text,
+      html,
+    })
+  } catch (err) {
+    throw new Error(sendGridFailed)
+  }
 }
 
 export async function sendTestInviteMail(email: string, link: string) {
@@ -75,13 +81,17 @@ export async function sendTestInviteMail(email: string, link: string) {
   const logo = 'K - Quiz logo'
   const html = TEST_INVITE_TEMPLATE({ logo, link })
 
-  return await callSengridAPI({
-    to,
-    from, // Use the email address or domain you verified above
-    subject,
-    text,
-    html,
-  })
+  try {
+    return await callSengridAPI({
+      to,
+      from, // Use the email address or domain you verified above
+      subject,
+      text,
+      html,
+    })
+  } catch (err) {
+    throw new Error(sendGridFailed)
+  }
 }
 
 export async function sendOTPMail(email: string, otp: number) {
@@ -92,13 +102,17 @@ export async function sendOTPMail(email: string, otp: number) {
   const logo = 'K - Quiz logo'
   const html = OTP_TEMPLATE({ logo, otp })
 
-  return await callSengridAPI({
-    to,
-    from, // Use the email address or domain you verified above
-    subject,
-    text,
-    html,
-  })
+  try {
+    return await callSengridAPI({
+      to,
+      from, // Use the email address or domain you verified above
+      subject,
+      text,
+      html,
+    })
+  } catch (err) {
+    throw new Error(sendGridFailed)
+  }
 }
 
 export async function sendMailToRecruiter(
@@ -118,13 +132,17 @@ export async function sendMailToRecruiter(
     PUBLIC_URL: env.PUBLIC_URL,
   })
 
-  return await callSengridAPI({
-    to,
-    from, // Use the email address or domain you verified above
-    subject,
-    text,
-    html,
-  })
+  try {
+    return await callSengridAPI({
+      to,
+      from, // Use the email address or domain you verified above
+      subject,
+      text,
+      html,
+    })
+  } catch (err) {
+    throw new Error(sendGridFailed)
+  }
 }
 
 export async function sendNewPassword(email: string, password: string) {
@@ -135,13 +153,17 @@ export async function sendNewPassword(email: string, password: string) {
   const logo = 'K - Quiz logo'
   const html = NEW_OTP_TEMPLATE({ logo, password })
 
-  return await callSengridAPI({
-    to,
-    from, // Use the email address or domain you verified above
-    subject,
-    text,
-    html,
-  })
+  try {
+    return await callSengridAPI({
+      to,
+      from, // Use the email address or domain you verified above
+      subject,
+      text,
+      html,
+    })
+  } catch (err) {
+    throw new Error(sendGridFailed)
+  }
 }
 
 export async function sendMemberInvite(
@@ -156,11 +178,15 @@ export async function sendMemberInvite(
   const logo = 'K - Quiz logo'
   const html = MEMBER_INVITE_TEMPLATE({ logo, name, workspaceJoinLink })
 
-  return await callSengridAPI({
-    to,
-    from, // Use the email address or domain you verified above
-    subject,
-    text,
-    html,
-  })
+  try {
+    return await callSengridAPI({
+      to,
+      from, // Use the email address or domain you verified above
+      subject,
+      text,
+      html,
+    })
+  } catch (err) {
+    throw new Error(sendGridFailed)
+  }
 }
