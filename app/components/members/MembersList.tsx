@@ -8,13 +8,11 @@ import moment from 'moment'
 import { useState } from 'react'
 
 export default function MembersList({
-  actionStatus,
   membersCurrentPage,
   setMembersCurrentPage,
   membersPageSize,
   setMembersPageSize,
 }: {
-  actionStatus: string | undefined
   membersCurrentPage: number
   setMembersCurrentPage: (e: number) => void
   membersPageSize: number

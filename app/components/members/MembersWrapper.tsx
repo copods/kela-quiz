@@ -18,10 +18,22 @@ type ActionData = {
 }
 const MembersWrapper = () => {
   const { t } = useTranslation()
+  const navigate = useNavigate()
   const membersActionData = useActionData() as ActionData
-  const [actionStatus, setActionStatus] = useState<boolean>(false)
   const memberLoaderData = useLoaderData()
 
+  //states
+  const [actionStatus, setActionStatus] = useState<boolean>(false)
+  const [membersCurrentPage, setMembersCurrentPage] = useState(
+    memberLoaderData.membersCurrentPage
+  )
+  const [membersPageSize, setMembersPageSize] = useState(5)
+  const [invitedMemberCurrentPage, setInvitedMemberPage] = useState(
+    memberLoaderData.invitedMembersCurrentPage
+  )
+  const [invitedMemberPageSize, setInvitedMemberPageSize] = useState(5)
+
+  //useEffects
   useEffect(() => {
     if (membersActionData) {
       if (membersActionData.resp?.status === 200) {
@@ -36,15 +48,6 @@ const MembersWrapper = () => {
     }
   }, [membersActionData, t])
 
-  const [membersCurrentPage, setMembersCurrentPage] = useState(
-    memberLoaderData.membersCurrentPage
-  )
-  const [membersPageSize, setMembersPageSize] = useState(5)
-  const [invitedMemberCurrentPage, setInvitedMemberPage] = useState(
-    memberLoaderData.invitedMembersCurrentPage
-  )
-  const [invitedMemberPageSize, setInvitedMemberPageSize] = useState(5)
-  const navigate = useNavigate()
   useEffect(() => {
     navigate(
       `?MemberPage=${membersCurrentPage}&MemberItems=${membersPageSize}&InvitedMemberPage=${invitedMemberCurrentPage}&InvitedMemberItems=${invitedMemberPageSize}`
@@ -75,7 +78,6 @@ const MembersWrapper = () => {
           <EmptyStateComponent />
         ) : (
           <MembersList
-            actionStatus={membersActionData?.resp?.title}
             membersCurrentPage={membersCurrentPage}
             setMembersCurrentPage={setMembersCurrentPage}
             membersPageSize={membersPageSize}
