@@ -88,7 +88,7 @@ export default function MembersList({
   ]
 
   return (
-    <div className="text-base">
+    <div className="z-10 text-base">
       <Table
         columns={membersColumn}
         data={memberLoaderData.users}
