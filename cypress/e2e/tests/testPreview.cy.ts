@@ -19,16 +19,7 @@ describe('Test for testPreview', () => {
       'include',
       '/assessments'
     )
-    cy.get('.test-table-list', { timeout: 6000 }).each(($el) => {
-      cy.wrap($el).within((el) => {
-        if (
-          el[0].getElementsByClassName('test-name-navigation')[0].innerHTML ===
-          test1
-        ) {
-          cy.get('.test-name-navigation').should('have.text', test1)
-        }
-      })
-    })
+    cy.get('.test-name-navigation').contains(test1).should('have.text', test1)
     cy.get('.test-name-navigation').contains(test1).click()
     cy.get('#title', { timeout: 6000 }).should('have.text', test1)
     cy.get('#back-button').click()
@@ -42,19 +33,8 @@ describe('Test for testPreview', () => {
       'include',
       '/assessments'
     )
-
-    cy.get('.test-table-list', { timeout: 6000 }).each(($el) => {
-      cy.wrap($el).within((el) => {
-        if (
-          el[0].getElementsByClassName('test-name-navigation')[0].innerHTML ===
-          test1
-        ) {
-          cy.get('.test-name-navigation').should('have.text', test1)
-        }
-      })
-    })
     cy.get('.test-name-navigation', { timeout: 6000 }).contains(test1).click()
-    cy.get('#name').should('have.text', cypress.name).click()
+    cy.get('#name').should('have.text', cypress.name)
   })
   it('Checks for invite candidate button text', () => {
     cy.get('a')
@@ -201,16 +181,6 @@ describe('Test for testPreview', () => {
       'include',
       '/assessments'
     )
-    cy.get('.test-table-list', { timeout: 6000 }).each(($el) => {
-      cy.wrap($el).within((el) => {
-        if (
-          el[0].getElementsByClassName('test-name-navigation')[0].innerHTML ===
-          test1
-        ) {
-          cy.get('.test-name-navigation').should('have.text', test1)
-        }
-      })
-    })
     cy.get('.test-name-navigation', { timeout: 6000 }).contains(test1).click()
     cy.get('#description').should('have.text', cypress.description).click()
   })
@@ -223,16 +193,6 @@ describe('Test for testPreview', () => {
       'include',
       '/assessments'
     )
-    cy.get('.test-table-list', { timeout: 6000 }).each(($el) => {
-      cy.wrap($el).within((el) => {
-        if (
-          el[0].getElementsByClassName('test-name-navigation')[0].innerHTML ===
-          test1
-        ) {
-          cy.get('.test-name-navigation').should('have.text', test1)
-        }
-      })
-    })
     cy.get('.test-name-navigation', { timeout: 6000 }).contains(test1).click()
     cy.get('#totalTime').should('have.text', cypress.totalTime).click()
   })
@@ -245,16 +205,7 @@ describe('Test for testPreview', () => {
       'include',
       '/assessments'
     )
-    cy.get('.test-table-list', { timeout: 6000 }).each(($el) => {
-      cy.wrap($el).within((el) => {
-        if (
-          el[0].getElementsByClassName('test-name-navigation')[0].innerHTML ===
-          test1
-        ) {
-          cy.get('.test-name-navigation').should('have.text', test1)
-        }
-      })
-    })
+
     cy.get('.test-name-navigation', { timeout: 6000 }).contains(test1).click()
     cy.get('#totalSection').should('have.text', testsConstants.totalTests)
   })

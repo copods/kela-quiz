@@ -1,4 +1,4 @@
-import { Link, useNavigate, useSubmit } from '@remix-run/react'
+import { Link, useActionData, useNavigate, useSubmit } from '@remix-run/react'
 import { Icon } from '@iconify/react'
 import { useLoaderData } from '@remix-run/react'
 import { useEffect, useState } from 'react'
@@ -8,7 +8,12 @@ import Table from '../common-components/TableComponent'
 import moment from 'moment'
 import TestListActionMenu from '../../components/TestListActionMenu'
 import DropdownField from '../common-components/Dropdown'
-
+import type {
+  CandidateTest,
+  Candidate,
+  CandidateResult,
+} from '~/interface/Interface'
+import { toast } from 'react-toastify'
 const filterByStatus = [
   {
     name: 'All',
@@ -26,29 +31,32 @@ const filterByStatus = [
 
 const CandidateListOfTest = () => {
   const { candidatesOfTest, currentWorkspaceId } = useLoaderData()
-  const loader = useLoaderData()
+  const candidatesLoaderData = useLoaderData()
   const { t } = useTranslation()
   let navigate = useNavigate()
   const submit = useSubmit()
+  const actionData = useActionData()
   const [menuListOpen, setmenuListOpen] = useState<boolean>(false)
   const [searchText, setSearchText] = useState('')
   const [statusFilter, setStatusFilter] = useState(filterByStatus[0].value)
 
-  const filteredData = loader.candidatesOfTest.candidateTest?.filter(
-    (candidate: {
-      candidate: { firstName: string; lastName: string; email: string }
-    }) => {
-      return `${candidate?.candidate?.firstName} ${candidate?.candidate?.lastName} ${candidate?.candidate?.email}`
-        .toLowerCase()
-        .includes(searchText.toLowerCase())
-    }
-  )
-  const [pageSize, setPageSize] = useState(loader.pageSize)
-  const [currentPage, setCurrentPage] = useState(loader.currentPage)
-  const resendInvite = (candidateId: string, testId: string) => {
+  const filteredData =
+    candidatesLoaderData.candidatesOfTest.candidateTest?.filter(
+      (candidate: {
+        candidate: { firstName: string; lastName: string; email: string }
+      }) => {
+        return `${candidate?.candidate?.firstName} ${candidate?.candidate?.lastName} ${candidate?.candidate?.email}`
+          .toLowerCase()
+          .includes(searchText.toLowerCase())
+      }
+    )
+  const [pageSize, setPageSize] = useState(5)
+  const [currentPage, setCurrentPage] = useState(1)
+  const resendInvite = (id: string, candidateId: string, testId: string) => {
     submit(
       {
         action: 'resendInvite',
+        id: id,
         candidateId: candidateId,
         testId: testId,
       },
@@ -56,10 +64,14 @@ const CandidateListOfTest = () => {
     )
   }
 
-  const SeriaLNoCell = (data: { [key: string]: any }, index: number) => {
+  const SeriaLNoCell = (data: { [key: string]: string }, index: number) => {
     return <span>{index + 1}</span>
   }
-  const NameDataCell = (data: { [key: string]: any }) => {
+  const NameDataCell = (
+    data: CandidateTest & { candidate: Candidate } & {
+      candidateResult: CandidateResult[]
+    }
+  ) => {
     return (
       <span>
         {data.candidate.firstName && data.candidate.lastName && data.endAt ? (
@@ -76,10 +88,10 @@ const CandidateListOfTest = () => {
       </span>
     )
   }
-  const EmailDataCell = (data: { [key: string]: any }) => {
+  const EmailDataCell = (data: { candidate: Candidate }) => {
     return <span title={data.candidate.email}>{data.candidate.email}</span>
   }
-  const InvitedAtCell = (data: { [key: string]: any }) => {
+  const InvitedAtCell = (data: CandidateResult) => {
     return (
       <span
         title={
@@ -90,17 +102,19 @@ const CandidateListOfTest = () => {
       </span>
     )
   }
-  const StartedAtCell = (data: { [key: string]: any }) => {
+  const StartedAtCell = (data: CandidateResult) => {
     return (
       <span>
         {data.startedAt ? moment(data.startedAt).format('DD MMMM YY') : '-'}
       </span>
     )
   }
-  const InvitedByCell = (data: { [key: string]: any }) => {
+  const InvitedByCell = (data: {
+    candidate: { createdBy: { firstName: string } }
+  }) => {
     return <span>{data.candidate.createdBy.firstName}</span>
   }
-  const ResultCell = (data: { [key: string]: any }) => {
+  const ResultCell = (data: { candidateResult: CandidateResult[] }) => {
     function getPercent() {
       let result = 0
       for (let i of data.candidateResult) {
@@ -110,9 +124,11 @@ const CandidateListOfTest = () => {
     }
     return <span>{getPercent() ?? 'NA'}</span>
   }
-  const StatusCell = (data: { [key: string]: any }) => {
+  const StatusCell = (
+    data: { candidateResult: CandidateResult[] } & CandidateResult
+  ) => {
     return (
-      <div className="absolute z-10 flex items-center">
+      <div className="absolute flex items-center">
         <span
           className={`rounded-full px-2 py-1 text-xs text-gray-900 ${
             data?.candidateResult.length > 0 ? 'bg-green-200' : 'bg-yellow-200'
@@ -132,7 +148,9 @@ const CandidateListOfTest = () => {
             menuListText={t('resultConstants.resendInvite')}
             aria-label={t('testTableItem.menu')}
             id={data.id}
-            resendInvite={() => resendInvite(data.candidateId, data.testId)}
+            resendInvite={() =>
+              resendInvite(data.id, data.candidateId, data.testId)
+            }
           />
         )}
       </div>
@@ -171,6 +189,19 @@ const CandidateListOfTest = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pageSize, currentPage, statusFilter])
 
+  useEffect(() => {
+    if (
+      actionData?.candidateInviteStatus ===
+      t('candidateExamConstants.candidateTestCreated')
+    ) {
+      toast.success(t('testsConstants.reinvited'))
+    }
+    if (
+      actionData?.candidateInviteStatus === t('candidateExamConstants.endTest')
+    ) {
+      toast.error(t('testsConstants.testEnded'))
+    }
+  }, [actionData, t])
   return (
     <div id="test-details" className="flex h-full flex-col gap-4 ">
       <header className="border-b border-solid border-slate-300">
@@ -232,7 +263,7 @@ const CandidateListOfTest = () => {
         setPageSize={setPageSize}
         currentPage={currentPage}
         onPageChange={setCurrentPage}
-        totalItems={loader.candidatesCount}
+        totalItems={candidatesLoaderData.candidatesCount}
       />
     </div>
   )

@@ -24,7 +24,6 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
-
   const invitedId = formData.get('inviteId')
 
   const redirectTo = safeRedirect(

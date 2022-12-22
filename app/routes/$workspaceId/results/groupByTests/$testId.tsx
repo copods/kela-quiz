@@ -50,7 +50,9 @@ export const action: ActionFunction = async ({ request }) => {
   if (action === actions.resendTestLink) {
     const testId = formData.get('testId') as string
     const candidateId = formData.get('candidateId') as string
+    const id = formData.get('id') as string
     const candidateInviteStatus = await resendTestLink({
+      id,
       candidateId,
       testId,
     })

@@ -17,7 +17,6 @@ describe('smoke tests', () => {
     // This will clear the local storage for every test
     window.localStorage.clear()
   })
-
   it('Invalid Email Error Message', () => {
     cy.visit('/sign-in')
     cy.get('#email').clear().type('test@copods.co')
@@ -258,18 +257,18 @@ describe('smoke tests', () => {
     cy.get('#tests', { timeout: 60000 })
       .should('have.text', 'Assessments')
       .click()
-    cy.wait(2000)
-    cy.get('#add-test', { timeout: 6000 }).click()
     cy.wait(1000)
+    cy.get('#add-test', { timeout: 60000 }).click()
     cy.location('pathname').should('include', '/assessments/add-assessment')
+    cy.wait(1000)
     cy.get('input[placeholder="Enter assessment name"]')
       .clear()
       .type(deleteTest1)
     cy.get('#quill-editor').within(() => {
       cy.get('.ql-editor').type(`Test Description`)
     })
-    cy.wait(1000)
-    cy.get('button#next-button').should('have.text', cypress.next).click()
+    cy.get('#next-button', { timeout: 6000 }).should('be.visible')
+    cy.get('#next-button').should('have.text', cypress.next).click()
 
     cy.get('.stepsTab').each(($el) => {
       cy.wrap($el).within((el) => {
@@ -300,9 +299,9 @@ describe('smoke tests', () => {
         }
       })
     })
-    cy.wait(1000)
-    cy.get('button#next-button', { timeout: 8000 }).should('be.visible')
-    cy.get('button#next-button').should('have.text', cypress.next).click()
+    cy.wait(2000)
+    cy.get('#next-button', { timeout: 6000 }).should('be.visible')
+    cy.get('#next-button').should('have.text', cypress.next).click()
     cy.wait(1000)
     cy.get('.stepsTab').each(($el) => {
       cy.wrap($el).within((el) => {
@@ -334,22 +333,21 @@ describe('smoke tests', () => {
     cy.get('#email').clear().type('copods.demo.sendgrid@gmail.com')
     cy.get('#password').clear().type('kQuiz@copods')
     cy.findByRole('button').click()
-    cy.get('#members', { timeout: 60000 })
-      .should('have.text', 'Members')
-      .click()
+    cy.wait(1000)
     cy.get('#tests', { timeout: 60000 })
       .should('have.text', 'Assessments')
       .click()
-    cy.wait(2000)
-    cy.get('#add-test', { timeout: 6000 }).click()
     cy.wait(1000)
+    cy.get('#add-test', { timeout: 6000 }).click()
     cy.location('pathname').should('include', '/assessments/add-assessment')
+    cy.wait(1000)
     cy.get('input[placeholder="Enter assessment name"]').clear().type(test1)
     cy.get('#quill-editor').within(() => {
       cy.get('.ql-editor').type(`Test Description`)
     })
-    cy.wait(1000)
-    cy.get('button#next-button').should('have.text', cypress.next).click()
+    cy.wait(2000)
+    cy.get('#next-button', { timeout: 6000 }).should('be.visible')
+    cy.get('#next-button').should('have.text', cypress.next).click()
 
     cy.get('.stepsTab').each(($el) => {
       cy.wrap($el).within((el) => {
