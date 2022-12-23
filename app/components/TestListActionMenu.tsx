@@ -31,7 +31,7 @@ const TestListMenuItem = ({
   }, [open, id])
   return (
     <>
-      <Menu as="div" className="relative mt-2">
+      <Menu as="div" className="mt-2">
         <Menu.Button className={id}>
           <Icon
             className="text-2xl text-gray-600"
