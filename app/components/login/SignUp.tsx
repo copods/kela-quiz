@@ -37,7 +37,6 @@ const SignUp = ({ error }: { error?: string }) => {
   const [email, setEmail] = useState(
     signUpLoaderData?.userData?.email ? signUpLoaderData?.userData?.email : ''
   )
-  const [workspace, setWorkspace] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
 
@@ -46,7 +45,6 @@ const SignUp = ({ error }: { error?: string }) => {
       firstName: firstName,
       lastName: lastName,
       email: email,
-      workspace: workspace,
       Password: password,
       confirmPassword: confirmPassword,
       inviteId: signUpLoaderData.inviteId,
@@ -143,20 +141,6 @@ const SignUp = ({ error }: { error?: string }) => {
       },
     },
     {
-      label: t('commonConstants.defaultWorkspaceName'),
-      placeholder: t('commonConstants.defaultWorkspaceName'),
-      isRequired: true,
-      type: 'text',
-      name: 'workspace',
-      required: true,
-      value: workspace,
-      error: signUpActionData?.errors?.workspaceNameRequired,
-      errorId: 'workspace-error',
-      onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
-        setWorkspace(trimValue(event.target.value))
-      },
-    },
-    {
       label: t('settings.password'),
       placeholder: t('settings.password'),
       name: 'Password',
@@ -243,7 +227,6 @@ const SignUp = ({ error }: { error?: string }) => {
                 firstName &&
                 lastName &&
                 email &&
-                workspace &&
                 password &&
                 confirmPassword &&
                 password === confirmPassword
