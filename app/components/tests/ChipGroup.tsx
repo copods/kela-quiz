@@ -8,7 +8,7 @@ const ChipGroup = ({
 }: {
   sections: Array<SectionInTest>
   totalCount: number
-  index: number
+  index?: number
 }) => {
   return (
     <div className="chip-group mr-3 flex items-center gap-2">

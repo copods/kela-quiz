@@ -16,15 +16,28 @@ export async function getTestById({ id }: Pick<Section, 'id'>) {
     },
   })
 }
-
+export async function getAllTestsCount(currentWorkspaceId: string | undefined) {
+  const testCount = await prisma.test.count({
+    where: {
+      deleted: false,
+      workspaceId: currentWorkspaceId,
+    },
+  })
+  return testCount
+}
 export async function getAllTests(
   filterData: { orderBy: { name?: string; createdAt?: string } },
-  workspaceId: string
+  workspaceId: string,
+  testsItemsPerPage = 1,
+  testsCurrentPage = 5
 ) {
   let filter = filterData
     ? filterData
     : ({ orderBy: { name: sortByOrder.ascending } } as object)
+  const PER_PAGE_ITEMS = testsItemsPerPage
   return await prisma.test.findMany({
+    take: PER_PAGE_ITEMS,
+    skip: (testsCurrentPage - 1) * PER_PAGE_ITEMS,
     ...filter,
     where: {
       deleted: false,
