@@ -137,48 +137,69 @@ export async function getSectionWiseResultsOfIndividualCandidate({
   testId: string
   candidateTestId: string
 }) {
-  return await prisma.sectionWiseResult.findMany({
+  return await prisma.candidateTest.findMany({
     where: {
       testId,
-      candidateTestId,
     },
     select: {
-      id: true,
-      section: {
+      candidateResult: {
         select: {
-          startedAt: true,
-          endAt: true,
+          candidate: true,
+          testId: true,
+          candidateTestId: true,
+        },
+      },
+      sections: {
+        select: {
           section: {
             select: {
               id: true,
               name: true,
             },
           },
-        },
-      },
 
-      test: {
-        select: {
-          id: true,
-          sections: {
+          SectionWiseResult: {
             select: {
               id: true,
-              timeInSeconds: true,
               section: {
                 select: {
-                  id: true,
+                  startedAt: true,
+                  endAt: true,
+                  section: {
+                    select: {
+                      id: true,
+                      name: true,
+                    },
+                  },
                 },
               },
+
+              test: {
+                select: {
+                  id: true,
+                  sections: {
+                    select: {
+                      id: true,
+                      timeInSeconds: true,
+                      section: {
+                        select: {
+                          id: true,
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+
+              totalQuestion: true,
+              correctQuestion: true,
+              unanswered: true,
+              incorrect: true,
+              skipped: true,
             },
           },
         },
       },
-
-      totalQuestion: true,
-      correctQuestion: true,
-      unanswered: true,
-      incorrect: true,
-      skipped: true,
     },
   })
 }

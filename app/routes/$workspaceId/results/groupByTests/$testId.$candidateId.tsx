@@ -2,7 +2,6 @@ import type { ActionFunction, LoaderFunction } from '@remix-run/server-runtime'
 import { json } from '@remix-run/server-runtime'
 import invariant from 'tiny-invariant'
 import {
-  getResultsOfIndividualCandidates,
   getSectionWiseResultsOfIndividualCandidate,
   updateCandidateStatus,
 } from '~/models/result.server'
@@ -15,21 +14,15 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const currentWorkspaceId = params.workspaceId as string
   const workspaces = await getUserWorkspaces(userId as string)
   invariant(params.testId, 'resultId not found')
-  const candidateResult = await getResultsOfIndividualCandidates({
-    id: params.candidateResultId as string,
+
+  const candidateTestWiseResult = await getSectionWiseResultsOfIndividualCandidate({
+    testId: params?.testId as string,
+    candidateTestId: params?.candidateTestId as string,
   })
-  const sectionWiseResult = await getSectionWiseResultsOfIndividualCandidate({
-    testId: candidateResult?.testId as string,
-    candidateTestId: candidateResult?.candidateTestId as string,
-  })
-  if (!candidateResult) {
-    throw new Response('Not Found', { status: 404 })
-  }
 
   return json({
-    candidateResult,
     params,
-    sectionWiseResult,
+    candidateTestWiseResult,
     workspaces,
     currentWorkspaceId,
   })

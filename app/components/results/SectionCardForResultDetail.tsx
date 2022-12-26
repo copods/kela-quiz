@@ -1,26 +1,26 @@
 import { useTranslation } from 'react-i18next'
 
 const SectionCardForResultDetail = ({
-  name,
-  totalQuestions,
-  correctQuestions,
-  skippedQuestions,
-  incorrectQuestions,
-  unansweredQuestions,
+  sectionName,
   startedAt,
+  correctQuestions,
+  incorrectQuestions,
+  skippedQuestions,
+  totalQuestions,
+  unansweredQuestions
 }: {
-  name: string
-  totalQuestions: number
-  correctQuestions: number
-  skippedQuestions: number
-  incorrectQuestions: number
-  unansweredQuestions: number
-  startedAt: Date | null
+  sectionName:string
+  startedAt:Date  | null
+  correctQuestions?:number
+  incorrectQuestions?:number
+  skippedQuestions?:number
+  totalQuestions?:number,
+  unansweredQuestions?:number
 }) => {
   const { t } = useTranslation()
   return (
     <div className="flex h-12 w-full items-center justify-between rounded-lg border border-gray-300 bg-white px-6">
-      <div className="text-base font-semibold text-gray-700">{name}</div>
+      <div className="text-base font-semibold text-gray-700">{sectionName}</div>
       {startedAt ? (
         <>
           <div className="flex gap-9">

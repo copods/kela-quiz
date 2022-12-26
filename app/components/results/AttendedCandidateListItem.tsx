@@ -59,9 +59,9 @@ const AttendedCandidateListItem = ({
         <div className="col-span-1 flex items-center truncate">
           <span className="text-base text-gray-700">{index}</span>
         </div>
-        {candidateResult.length > 0 ? (
+        {startedAt ? (
           <Link
-            to={`/${currentWorkspaceId}/results/groupByTests/${testId}/${candidateResultId}`}
+            to={`/${currentWorkspaceId}/results/groupByTests/${testId}/${candidateId}`}
             className="col-span-2 flex  truncate font-semibold text-primary"
             title={name}
           >
