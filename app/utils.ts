@@ -96,15 +96,15 @@ export function checkPasswordStrength(password: string) {
       strength = strength + 6
     }
     if (!/^\d+$/.test(password) && isNaN(Number(char))) {
-      // adding points if password is not only digits, but contains digits
+      // adding points if password is not only digits, but contains digits and other characters
       strength = strength + 4
     }
     if (password.toUpperCase() !== password && /[A-Z]/.test(char)) {
-      // adding points if password is not entirely uppercase and contains uppercase letters
+      // adding points if password is not entirely uppercase and contains uppercase letters and other characters
       strength = strength + (password.length - 1) * 2
     }
     if (password.toLowerCase() !== password && /[a-z]/.test(char)) {
-      // adding points if password is not entirely lowercase and contains lowercase letters
+      // adding points if password is not entirely lowercase and contains lowercase letters and other characters
       strength = strength + (password.length - 1) * 2
     }
   }
