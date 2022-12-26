@@ -531,9 +531,9 @@ describe('Test for section-details', () => {
       cy.get('.Toastify__toast').should('have.text', '')
     }
   })
-  it('checks, delete question button should be exist', () => {
+  it('"Checks if Delete Question button exists"', () => {
     cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
-    cy.get('.sectionCard', { timeout: 40000 }).each(($el) => {
+    cy.get('.sectionCard', { timeout: 8000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
           el[0].getElementsByClassName('sectionName')[0].innerHTML === section2

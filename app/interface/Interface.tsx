@@ -149,6 +149,8 @@ export interface Question {
   createdById?: string
   createdAt?: Date
   updatedAt?: Date
+  deleted: boolean
+  deletedAt: string
   options?: Array<Option>
   correctOptions?: Array<Option>
 }

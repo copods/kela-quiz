@@ -106,7 +106,7 @@ const SelectSections = ({
           {/* Sections list */}
           <div className="flex flex-wrap gap-6">
             {sections.map(
-              (section: TestSection & { count?: number | undefined }, i) => {
+              (section: TestSection & { count?: number }, i) => {
                 return (
                   <SelectSectionCard
                     section={section}

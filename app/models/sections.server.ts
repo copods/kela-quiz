@@ -1,4 +1,4 @@
-import type { User, Section,Question } from '@prisma/client'
+import type { User, Section, Question } from '@prisma/client'
 import cuid from 'cuid'
 import { prisma } from '~/db.server'
 
@@ -44,15 +44,15 @@ export async function getFirstSection(workspaceId: string) {
 
 export async function getAllSections(filterData: string, workspaceId: string) {
   let filter = filterData ? filterData : '{"orderBy":{"createdAt":"desc"}}'
- const res =  await prisma.section.findMany({
+  const res = await prisma.section.findMany({
     ...JSON.parse(filter),
     where: {
       deleted: false,
       workspaceId,
     },
     include: {
-      createdBy: true,  
-      questions:true
+      createdBy: true,
+      questions: true,
     },
   })
   if (res) {

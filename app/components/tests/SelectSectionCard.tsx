@@ -21,7 +21,7 @@ const SelectSectionCard = ({
     value?: string,
     selected?: boolean
   ) => {
-    if (sectionCount == 0) {
+    if (sectionCount === 0) {
       toast.error(t('toastConstants.cannotAddTestZeroQuestion'))
       return
     }
