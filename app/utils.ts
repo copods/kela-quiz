@@ -88,72 +88,77 @@ export function checkPasswordStrength(password: string) {
   // for length
   for (let char of password) {
     if (char) {
+      // adding points for character
       strength = strength + 4
     }
-  }
-  // for special character
-  for (let char of password) {
     if (/[^0-9a-zA-Z\s]/.test(char)) {
+      // adding points if character is special character
       strength = strength + 6
     }
-  }
-  // not only numbers but mixture
-  for (let char of password) {
     if (!/^\d+$/.test(password) && isNaN(Number(char))) {
+      // adding points if password is not only digits, but contains digits
       strength = strength + 4
     }
-  }
-  // not only uppercase but mixture
-  for (let char of password) {
     if (password.toUpperCase() !== password && /[A-Z]/.test(char)) {
+      // adding points if password is not entirely uppercase and contains uppercase letters
+      strength = strength + (password.length - 1) * 2
+    }
+    if (password.toLowerCase() !== password && /[a-z]/.test(char)) {
+      // adding points if password is not entirely lowercase and contains lowercase letters
       strength = strength + (password.length - 1) * 2
     }
   }
 
-  //not only lowercase but mixture
-  for (let char of password) {
-    if (password.toLowerCase() !== password && /[a-z]/.test(char)) {
-      strength = strength + (password.length - 1) * 2
-    }
-  }
-  //requirement
-  let requirementCount = 0
+  //Minimum requirements - Lowercase, Uppercase, Minimum length 8, Special character, Numeric
+
+  let requirementCount = 0 // fulfilled requirements count
   if (/[a-z]/.test(password)) {
+    //adding to requirement count if password contains lowercase letter
     requirementCount++
   }
   if (/[A-Z]/.test(password)) {
+    //adding to requirement count if password contains uppercase letter
     requirementCount++
   }
   if (password.length >= 8) {
+    //adding to requirement count if password has minimum length 8
     requirementCount++
   }
   if (/[^0-9a-zA-Z\s]/.test(password)) {
+    //adding to requirement count if password has special character
     requirementCount++
   }
   if (/[0-9]/.test(password)) {
+    //adding to requirement count if password has numeric
     requirementCount++
   }
   if (requirementCount >= 4) {
+    // adding points if minimum 4 requirements are fulfilled
     strength = strength + requirementCount * 2
   }
 
   //DEDUCTIONS
   if (/^[A-Za-z]\S*$/.test(password)) {
+    // Subtracting points if password contains only alphabets
     strength = strength - password.length
   }
   if (/^\d+$/.test(password)) {
+    //Subtracting points if password contains only digits
     strength = strength - password.length
   }
-  const repeated = password.match(/(.)\1/g)
+  const repeated = password.match(/(.)\1/g) // to get repeated characters or digits in group of 2.
   if (repeated !== null) {
     for (let charList of repeated) {
       if (charList.toLowerCase() === charList && isNaN(Number(charList))) {
+        //Subtracting points if repeated lowercase letters
         strength = strength - 2
       }
       if (charList.toUpperCase() === charList && isNaN(Number(charList))) {
+        //Subtracting points if repeated uppercase letters
         strength = strength - 2
       }
       if (!isNaN(Number(charList))) {
+        //Subtracting points if repeated digits
         strength = strength - 2
       }
     }
@@ -170,18 +175,20 @@ export function checkPasswordStrength(password: string) {
     },
     0
   )
+
   strength = strength - TotalRepeatCount * (TotalRepeatCount - 1)
 
-  // sequential
   const sequentialRegex =
     /(abc|bcd|cde|def|efg|fgh|ghi|hij|ijk|jkl|klm|lmn|mno|nop|opq|pqr|qrs|rst|stu|tuv|uvw|vwx|wxy|xyz|012|123|234|345|456|567|678|789)/gi
-  const sequentialValues = password.match(sequentialRegex)
+  const sequentialValues = password.match(sequentialRegex) // to get sequential letters or numbers in group of 3
   if (sequentialValues !== null) {
     for (let charList of sequentialValues) {
       if (charList.toLowerCase() === charList && !isNaN(Number(charList))) {
+        //Subtracting points if sequential letters
         strength = strength - 3
       }
       if (isNaN(Number(charList))) {
+        //Subtracting points if sequential digits
         strength = strength - 3
       }
     }
