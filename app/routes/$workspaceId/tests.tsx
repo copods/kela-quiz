@@ -15,6 +15,7 @@ import {
   deleteSectionById,
   editSectionById,
   getAllSections,
+  getAllTestsCounts,
 } from '~/models/sections.server'
 import { useState, useEffect } from 'react'
 import { Icon } from '@iconify/react'
@@ -57,6 +58,9 @@ export type LoaderData = {
   status: string
   workspaces: Awaited<ReturnType<typeof getUserWorkspaces>>
   currentWorkspaceId: string
+  testCurrentPage: number
+  testItemsPerPage: number
+  getAllTestsCount: number
 }
 const handleAddSection = async (
   name: string,
@@ -151,18 +155,25 @@ const handleEditSection = async (
   return editHandle
 }
 export const loader: LoaderFunction = async ({ request, params }) => {
+  const query = new URL(request.url).searchParams
+  const testItemsPerPage = Math.max(Number(query.get('testItems') || 5), 5) //To set the lower bound, so that minimum count will always be 1 for current page and 5 for items per page.
+  const testCurrentPage = Math.max(Number(query.get('testPage') || 1), 1)
+
   const userId = await getUserId(request)
   const currentWorkspaceId = params.workspaceId as string
+  console.log(testCurrentPage, 'testCurrentPage')
   const workspaces = await getUserWorkspaces(userId as string)
   const url = new URL(request.url).searchParams.entries()
   const filterData = Object.fromEntries(url).filter
-  const selectedSectionId = params.sectionId
-    ? params.sectionId?.toString()
-    : undefined
 
   let sections: Array<Section> = []
   let status: string = ''
-  await getAllSections(filterData, currentWorkspaceId as string)
+  await getAllSections(
+    filterData,
+    currentWorkspaceId as string,
+    testCurrentPage,
+    testItemsPerPage
+  )
     .then((res) => {
       sections = res as Section[]
       status = 'statusCheck.success'
@@ -170,6 +181,10 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     .catch((err) => {
       status = err
     })
+  const selectedSectionId = params.sectionId
+    ? params.sectionId?.toString()
+    : undefined
+  const getAllTestsCount = await getAllTestsCounts(currentWorkspaceId)
   if (!userId) return redirect(routes.signIn)
   const filters = new URL(request.url).search
   return json<LoaderData>({
@@ -179,6 +194,9 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     status,
     workspaces,
     currentWorkspaceId,
+    testCurrentPage,
+    testItemsPerPage,
+    getAllTestsCount,
   })
 }
 const validateTitle = (title: string) => {
@@ -297,7 +315,7 @@ export const action: ActionFunction = async ({ request, params }) => {
 
 export default function SectionPage() {
   const data = useLoaderData() as unknown as LoaderData
-
+  console.log(data, 'data')
   const { t } = useTranslation()
   const sectionActionData = useActionData() as ActionData
   const submit = useSubmit()
@@ -321,7 +339,7 @@ export default function SectionPage() {
     description: '',
   })
   const [selectedSection, setSelectedSection] = useState(
-    data.selectedSectionId || data.sections[0]?.id || 'NA'
+    data.selectedSectionId || data.sections[6]?.id || 'NA'
   )
   const location = useLocation()
   const navigate = useNavigate()
@@ -391,7 +409,7 @@ export default function SectionPage() {
     }
   }, [
     sectionActionData,
-    data.selectedSectionId,
+    // data.selectedSectionId,
     data.sections,
     t,
     location,
@@ -446,6 +464,9 @@ export default function SectionPage() {
               currentWorkspaceId={data.currentWorkspaceId as string}
               sectionActionErrors={sectionActionErrors}
               setSectionActionErrors={setSectionActionErrors}
+              testCurrentPage={data.testCurrentPage}
+              testCurrentItems={data.testCurrentPage}
+              totalCount={data.getAllTestsCount}
             />
           </div>
           {/* section details */}

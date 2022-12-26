@@ -38,11 +38,28 @@ export async function getFirstSection(workspaceId: string) {
 
   return firstSection?.id
 }
-
-export async function getAllSections(filterData: string, workspaceId: string) {
+export async function getAllTestsCounts(
+  currentWorkspaceId: string | undefined
+) {
+  const userCount = await prisma.section.count({
+    where: {
+      workspaceId: currentWorkspaceId,
+    },
+  })
+  return userCount
+}
+export async function getAllSections(
+  filterData: string,
+  workspaceId: string,
+  testCurrentPage = 1,
+  testItemsPerPage = 5
+) {
   let filter = filterData ? filterData : '{"orderBy":{"createdAt":"desc"}}'
+  const PER_PAGE_ITEMS = testItemsPerPage
   return await prisma.section.findMany({
     ...JSON.parse(filter),
+    take: PER_PAGE_ITEMS,
+    skip: (testCurrentPage - 1) * PER_PAGE_ITEMS,
     where: {
       deleted: false,
       workspaceId,
