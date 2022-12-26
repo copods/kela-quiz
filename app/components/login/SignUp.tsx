@@ -189,6 +189,16 @@ const SignUp = ({ error }: { error?: string }) => {
       },
     },
   ]
+  const getPasswordStrengthColor = (passwordStrength: string) => {
+    switch (passwordStrength) {
+      case 'Weak':
+        return 'text-red-600'
+      case 'Good':
+        return 'text-yellow-500'
+      case 'Strong':
+        return 'text-green-600'
+    }
+  }
   return (
     <div className="flex items-center justify-center">
       <div className="flex flex-col gap-6 rounded-2xl bg-white px-20 py-12 pb-8 text-left drop-shadow-2xl transition-all sm:w-full sm:max-w-xl">
@@ -227,8 +237,11 @@ const SignUp = ({ error }: { error?: string }) => {
           </div>
         </div>
         {password ? (
-          <span className="text-sm">
-            {t('commonConstants.passwordStrength')}: {passwordStrength}
+          <span className=" flex gap-1 text-sm">
+            {t('commonConstants.passwordStrength')}:
+            <span className={getPasswordStrengthColor(passwordStrength)}>
+              {passwordStrength}
+            </span>
           </span>
         ) : null}
         <div className="flex flex-col items-center justify-center gap-6">

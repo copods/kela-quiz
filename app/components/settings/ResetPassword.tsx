@@ -132,10 +132,21 @@ const ResetPassword = ({
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [generalSettings])
+
   useEffect(() => {
     const value = checkPasswordStrength(newPassword)
     setPasswordStrength(value as string)
   }, [newPassword])
+  const getPasswordStrengthColor = (passwordStrength: string) => {
+    switch (passwordStrength) {
+      case 'Weak':
+        return 'text-red-600'
+      case 'Good':
+        return 'text-yellow-500'
+      case 'Strong':
+        return 'text-green-600'
+    }
+  }
   return (
     <DialogWrapper
       open={openResetPassModel}
@@ -160,8 +171,11 @@ const ResetPassword = ({
             })}
           </div>
           {newPassword ? (
-            <span className="text-sm">
-              {t('commonConstants.passwordStrength')}: {passwordStrength}
+            <span className="flex gap-1 text-sm">
+              {t('commonConstants.passwordStrength')}:
+              <span className={getPasswordStrengthColor(passwordStrength)}>
+                {passwordStrength}
+              </span>
             </span>
           ) : null}
           <div className="flex items-center justify-center">
