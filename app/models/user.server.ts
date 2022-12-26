@@ -24,13 +24,31 @@ export async function deleteUserById(userId: string, workspaceId: string) {
 export async function getUserByEmail(email: User['email']) {
   return await prisma.user.findUnique({ where: { email } })
 }
-
+export async function getAllUsersCount(currentWorkspaceId: string | undefined) {
+  const userCount = await prisma.user.count({
+    where: {
+      userWorkspace: {
+        some: {
+          workspaceId: currentWorkspaceId,
+        },
+      },
+    },
+  })
+  return userCount
+}
 export async function getAllUsers({
   currentWorkspaceId,
+  membersCurrentPage = 1,
+  membersItemsPerPage = 5,
 }: {
   currentWorkspaceId: string | undefined
+  membersCurrentPage?: number
+  membersItemsPerPage?: number
 }) {
+  const PER_PAGE_ITEMS = membersItemsPerPage
   const user = await prisma.user.findMany({
+    take: PER_PAGE_ITEMS,
+    skip: (membersCurrentPage - 1) * PER_PAGE_ITEMS,
     where: {
       userWorkspace: {
         some: {

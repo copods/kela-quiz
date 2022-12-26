@@ -93,8 +93,36 @@ export async function deleteMemberInvite(id: string) {
   }
 }
 
-export async function getAllInvitedMember(workspaceId: string) {
+export async function getAllInvitedMemberCount(workspaceId: string) {
+  const invitedMemberCount = await prisma.invites.count({
+    where: {
+      deleted: false,
+      workspaceId,
+      OR: [
+        {
+          joined: {
+            equals: null,
+          },
+        },
+        {
+          joined: {
+            equals: false,
+          },
+        },
+      ],
+    },
+  })
+  return invitedMemberCount
+}
+
+export async function getAllInvitedMember(
+  workspaceId: string,
+  invitedMembersCurrentPage?: number,
+  invitedMembersItemsPerPage?: number
+) {
   return await prisma.invites.findMany({
+    take: invitedMembersItemsPerPage,
+    skip: (invitedMembersCurrentPage! - 1) * invitedMembersItemsPerPage!,
     where: {
       deleted: false,
       workspaceId,

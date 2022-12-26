@@ -1,29 +1,24 @@
 import { getUserId, requireWorkspaceId } from '~/session.server'
 import { redirect } from '@remix-run/node'
 import type { LoaderFunction, ActionFunction } from '@remix-run/node'
-import MembersList from '~/components/members/MembersList'
 import { json } from '@remix-run/node'
-import { useActionData, useLoaderData } from '@remix-run/react'
 import {
   deleteUserById,
   getAllRoles,
   getAllUsers,
+  getAllUsersCount,
   getUserById,
 } from '~/models/user.server'
-import MembersHeader from '~/components/members/MembersHeader'
-import { toast } from 'react-toastify'
-import { useEffect, useState } from 'react'
 import { routes } from '~/constants/route.constants'
-import { useTranslation } from 'react-i18next'
 import { getUserWorkspaces } from '~/models/workspace.server'
 import { actions } from '~/constants/action.constants'
-import InvitedMembersList from '~/components/members/InvitedMembersList'
 import {
   getAllInvitedMember,
+  getAllInvitedMemberCount,
   inviteNewUser,
   reinviteMemberForWorkspace,
 } from '~/models/invites.server'
-import EmptyStateComponent from '~/components/common-components/EmptyStateComponent'
+import MembersWrapper from '~/components/members/MembersWrapper'
 
 export type ActionData = {
   errors?: {
@@ -43,16 +38,44 @@ type LoaderData = {
   currentWorkspaceId: string
   invitedMembers: Awaited<ReturnType<typeof getAllInvitedMember>>
   getUser: Awaited<ReturnType<typeof getUserById>>
+  membersCurrentPage: number
+  membersItemsPerPage: number
+  invitedMembersItemsPerPage: number
+  invitedMembersCurrentPage: number
+  allUsersCount: number
+  invitedUsersCount: number
 }
 export const loader: LoaderFunction = async ({ request, params }) => {
+  const query = new URL(request.url).searchParams
+  const membersItemsPerPage = Math.max(Number(query.get('MemberItems') || 5), 5) //To set the lower bound, so that minimum count will always be 1 for current page and 5 for items per page.
+  const membersCurrentPage = Math.max(Number(query.get('MemberPage') || 1), 1)
+  const invitedMembersCurrentPage = Math.max(
+    Number(query.get('InvitedMemberPage') || 1),
+    1
+  )
+  const invitedMembersItemsPerPage = Math.max(
+    Number(query.get('InvitedMemberItems') || 5),
+    5
+  )
   const userId = await getUserId(request)
   const getUser = await getUserById(userId as string)
   const currentWorkspaceId = params.workspaceId as string
-  const invitedMembers = await getAllInvitedMember(currentWorkspaceId as string)
+  const invitedMembers = await getAllInvitedMember(
+    currentWorkspaceId as string,
+    invitedMembersCurrentPage,
+    invitedMembersItemsPerPage
+  )
   const workspaces = await getUserWorkspaces(userId as string)
   const roles = await getAllRoles()
   if (!userId) return redirect(routes.signIn)
-  const users = await getAllUsers({ currentWorkspaceId })
+  const users = await getAllUsers({
+    currentWorkspaceId,
+    membersCurrentPage,
+    membersItemsPerPage,
+  })
+
+  const allUsersCount = await getAllUsersCount(currentWorkspaceId)
+  const invitedUsersCount = await getAllInvitedMemberCount(currentWorkspaceId)
   return json<LoaderData>({
     users,
     roles,
@@ -61,6 +84,12 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     currentWorkspaceId,
     invitedMembers,
     getUser,
+    membersCurrentPage,
+    membersItemsPerPage,
+    invitedMembersCurrentPage,
+    invitedMembersItemsPerPage,
+    allUsersCount,
+    invitedUsersCount,
   })
 }
 
@@ -205,50 +234,7 @@ export const action: ActionFunction = async ({ request, params }) => {
   return null
 }
 const Members = () => {
-  const { t } = useTranslation()
-  const membersActionData = useActionData() as ActionData
-  const [actionStatus, setActionStatus] = useState<boolean>(false)
-  useEffect(() => {
-    if (membersActionData) {
-      if (membersActionData.resp?.status === 200) {
-        setActionStatus(true)
-        toast.success(t(membersActionData.resp?.title))
-      } else if (membersActionData.errors?.status === 400) {
-        setActionStatus(false)
-        toast.error(t(membersActionData.errors?.title), {
-          toastId: membersActionData.errors?.title,
-        })
-      }
-    }
-  }, [membersActionData, t])
-  const loader = useLoaderData()
-  return (
-    <div className="flex flex-col gap-6 p-1">
-      <MembersHeader
-        actionStatus={actionStatus}
-        setActionStatus={setActionStatus}
-      />
-      <div className="flex flex-col gap-4 text-2xl">
-        <h1
-          tabIndex={0}
-          role={t('members.joinedMembers')}
-          aria-label={t('members.joinedMembers')}
-          id="joined-member-heading"
-        >
-          {t('members.joinedMembers')}
-        </h1>
-
-        {loader.users.length === 0 ? (
-          <EmptyStateComponent />
-        ) : (
-          <MembersList actionStatus={membersActionData?.resp?.title} />
-        )}
-      </div>
-      <div className="flex flex-col gap-4 text-2xl">
-        <InvitedMembersList actionStatus={membersActionData?.resp?.title} />
-      </div>
-    </div>
-  )
+  return <MembersWrapper />
 }
 
 export default Members

@@ -173,16 +173,9 @@ describe('Test for members', () => {
       .should('have.attr', 'tabindex', '0')
   })
   it('Test for conforming ,new member is added in a list or not', () => {
-    cy.get('.inviteMemberRow', { timeout: 8000 }).each(($el) => {
-      cy.wrap($el).within((el) => {
-        if (
-          el[0].getElementsByClassName('memberMail')[0].innerHTML ===
-          memberEmail
-        ) {
-          cy.get('.memberMail').should('have.text', memberEmail)
-        }
-      })
-    })
+    cy.get('#table-row #table-td', { timeout: 8000 })
+      .eq(5)
+      .should('have.text', memberEmail)
   })
   it('Test for add-members popUp cancel button', () => {
     cy.get('#invite-member').should('have.text', cypress.addMember).click()
