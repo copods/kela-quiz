@@ -2,7 +2,14 @@ import { Icon } from '@iconify/react'
 import DropdownField from './Dropdown'
 import { sortByOrder } from '~/interface/Interface'
 import { useTranslation } from 'react-i18next'
-
+interface OtherFilters {
+  id: string
+  data: Array<{ name: string; value: string }>
+  displayKey: string
+  valueKey: string
+  value: string
+  setValue: (e: string) => void
+}
 const SortFilter = ({
   filterData,
   sortDirection,
@@ -11,6 +18,7 @@ const SortFilter = ({
   onSortChange,
   totalItems,
   showSelected,
+  otherFilters = [],
 }: {
   filterData: Array<any>
   sortDirection: string
@@ -19,6 +27,7 @@ const SortFilter = ({
   onSortChange: (e: string) => void
   totalItems: number
   showSelected: boolean
+  otherFilters?: OtherFilters[]
 }) => {
   const { t } = useTranslation()
 
@@ -53,14 +62,30 @@ const SortFilter = ({
             />
           )}
         </span>
-        <div className="w-48">
-          <DropdownField
-            data={filterData}
-            displayKey={'name'}
-            valueKey={'value'}
-            value={sortBy}
-            setValue={onSortChange}
-          />
+        <div className="flex  gap-2">
+          <div className="w-48">
+            <DropdownField
+              data={filterData}
+              displayKey={'name'}
+              valueKey={'value'}
+              value={sortBy}
+              setValue={onSortChange}
+            />
+          </div>
+
+          {otherFilters.length > 0
+            ? otherFilters.map((filterData) => (
+                <div key={filterData.id} className="w-48">
+                  <DropdownField
+                    data={filterData.data}
+                    displayKey={filterData.displayKey}
+                    valueKey={filterData.valueKey}
+                    value={filterData.value}
+                    setValue={filterData.setValue}
+                  />
+                </div>
+              ))
+            : null}
         </div>
       </div>
       <span

@@ -7,7 +7,6 @@ import { sortByOrder } from '~/interface/Interface'
 import { useTranslation } from 'react-i18next'
 import EmptyStateComponent from '../common-components/EmptyStateComponent'
 import Table from '../common-components/TableComponent'
-import DropdownField from '../common-components/Dropdown'
 const sortByDetails = [
   {
     name: 'Name',
@@ -114,6 +113,17 @@ const GroupByTests = () => {
       </div>
     )
   }
+  const otherFilters = [
+    {
+      id: '1',
+      data: filterByStatus,
+      displayKey: 'name',
+      valueKey: 'value',
+      value: statusFilter,
+      setValue: setStatusFilter,
+    },
+  ]
+
   const resultsColumn = [
     { title: 'Sr.No', field: 'sr_no', render: SrNoDataCell, width: '12%' },
     {
@@ -162,15 +172,7 @@ const GroupByTests = () => {
               onSortChange={onSortChange}
               totalItems={candidateTestsArray.length}
               showSelected={false}
-            />
-          </div>
-          <div className="w-36">
-            <DropdownField
-              data={filterByStatus}
-              displayKey={'name'}
-              valueKey={'value'}
-              value={statusFilter}
-              setValue={setStatusFilter}
+              otherFilters={otherFilters}
             />
           </div>
           <Table
