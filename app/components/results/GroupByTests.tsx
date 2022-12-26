@@ -1,31 +1,36 @@
 import { useEffect, useState } from 'react'
 import SortFilter from '../common-components/SortFilter'
 
-import { useLoaderData, useSubmit } from '@remix-run/react'
-import GroupByTestItems from './GroupByTestItems'
+import { Link, useLoaderData, useNavigate, useSubmit } from '@remix-run/react'
 import type { CandidateTest, Test } from '~/interface/Interface'
 import { sortByOrder } from '~/interface/Interface'
 import { useTranslation } from 'react-i18next'
 import EmptyStateComponent from '../common-components/EmptyStateComponent'
-
+import Table from '../common-components/TableComponent'
+const sortByDetails = [
+  {
+    name: 'Name',
+    value: 'name',
+  },
+  {
+    name: 'Created Date',
+    value: 'createdAt',
+  },
+]
 const GroupByTests = () => {
   const { t } = useTranslation()
-
+  const navigate = useNavigate()
+  const candidateTestData = useLoaderData()
   const [sortDirection, onSortDirectionChange] = useState(
     sortByOrder.desc as string
   )
-  const sortByDetails = [
-    {
-      name: 'Name',
-      value: 'name',
-    },
-    {
-      name: 'Created Date',
-      value: 'createdAt',
-    },
-  ]
+  const [resultsPageSize, setResultsPageSize] = useState(
+    candidateTestData.resultsItemsPerPage
+  )
+  const [resultsCurrentPage, setResultsCurrentPage] = useState(
+    candidateTestData.resultsCurrentPage
+  )
   const [sortBy, onSortChange] = useState(sortByDetails[1].value)
-  const candidateTestData = useLoaderData()
   const candidateTests = candidateTestData.candidateTest
   const candidateTestsArray = candidateTests.filter(
     (
@@ -52,6 +57,66 @@ const GroupByTests = () => {
     const heading = document.getElementById('heading')
     heading?.focus()
   }, [])
+
+  const SrNoDataCell = (data: Test, index: number) => {
+    return <span>{index + 1}</span>
+  }
+  const AssessmentDataCell = (data: Test) => {
+    return (
+      <Link
+        tabIndex={0}
+        to={`/${candidateTestData.currentWorkspaceId}/results/groupByTests/${data.id}`}
+        id="group-by-item-test"
+        data-cy="group-by-item-test"
+        className="groupByItemTest text-base font-semibold text-primary"
+      >
+        {data.name}
+      </Link>
+    )
+  }
+  const TotalInvitedDataCell = (
+    data: Test & { _count: { candidateTest: number } }
+  ) => {
+    return <span>{data._count.candidateTest}</span>
+  }
+  const TotalAttendedDataCell = (
+    data: Test & { _count: { candidateResult: number } }
+  ) => {
+    return <span>{data._count.candidateResult}</span>
+  }
+  const StatusDataCell = (data: Test) => {
+    return (
+      <div
+        className={`${
+          data.deleted ? 'text-yellow-500' : 'text-green-500'
+        } col-span-1 text-base`}
+      >
+        {data.deleted
+          ? t('resultConstants.inactive')
+          : t('resultConstants.active')}
+      </div>
+    )
+  }
+  const resultsColumn = [
+    { title: 'Sr.No', field: 'sr_no', render: SrNoDataCell, width: '12%' },
+    {
+      title: 'Assessment',
+      field: 'name',
+      render: AssessmentDataCell,
+      width: '28%',
+    },
+    { title: 'Total Invited', field: 'role', render: TotalInvitedDataCell },
+    {
+      title: 'Total Attended',
+      field: 'createdAt',
+      render: TotalAttendedDataCell,
+    },
+    { title: 'Status', field: 'action', render: StatusDataCell },
+  ]
+  useEffect(() => {
+    navigate(`?ResultPage=${resultsCurrentPage}&ResultItems=${resultsPageSize}`)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [resultsPageSize, resultsCurrentPage])
   return (
     <div
       className="flex h-full flex-col gap-6 p-1"
@@ -80,8 +145,17 @@ const GroupByTests = () => {
               showSelected={false}
             />
           </div>
-
-          <div className="rounded-lg shadow-base">
+          <Table
+            columns={resultsColumn}
+            data={candidateTestData.candidateTest}
+            paginationEnabled={true}
+            pageSize={resultsPageSize}
+            setPageSize={setResultsPageSize}
+            currentPage={resultsCurrentPage}
+            onPageChange={setResultsCurrentPage}
+            totalItems={candidateTestData.testCount}
+          />
+          {/* <div className="rounded-lg shadow-base">
             <div className="col-span-full grid grid-cols-10 rounded-lg border border-solid border-gray-200 bg-white">
               <div className="col-span-full grid grid-cols-10 gap-3 bg-gray-100 py-4 px-12">
                 <span className="col-span-1 text-sm font-semibold text-gray-500">
@@ -140,7 +214,7 @@ const GroupByTests = () => {
                 )}
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       ) : (
         <EmptyStateComponent />

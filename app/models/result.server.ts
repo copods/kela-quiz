@@ -210,13 +210,32 @@ export async function updateCandidateStatus({
     },
   })
 }
-
+export async function getAllCandidateTestsCount(workspaceId: string) {
+  const testCount = await prisma.test.count({
+    where: {
+      workspaceId,
+      candidateTest: {
+        some: {
+          id: {
+            not: undefined,
+          },
+        },
+      },
+    },
+  })
+  return testCount
+}
 export async function getAllCandidateTests(
   filterData: string,
-  workspaceId: string
+  workspaceId: string,
+  resultsItemsPerPage: number = 5,
+  resultsCurrentPage: number = 1
 ) {
+  const PER_PAGE_ITEMS = resultsItemsPerPage
   const filter = filterData ? filterData : {}
   const res: Array<Test> = await prisma.test.findMany({
+    take: PER_PAGE_ITEMS,
+    skip: (resultsCurrentPage - 1) * PER_PAGE_ITEMS,
     ...filter,
     where: {
       workspaceId,
