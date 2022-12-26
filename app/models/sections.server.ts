@@ -43,6 +43,7 @@ export async function getAllTestsCounts(
 ) {
   const userCount = await prisma.section.count({
     where: {
+      deleted: false,
       workspaceId: currentWorkspaceId,
     },
   })

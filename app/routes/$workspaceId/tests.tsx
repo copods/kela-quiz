@@ -360,7 +360,7 @@ export default function SectionPage() {
       formData.append('filter', JSON.stringify(filter))
       submit(formData, {
         method: 'get',
-        action: `/${data.currentWorkspaceId}${routes.tests}/${selectedSection}`,
+        action: `/${data.currentWorkspaceId}${routes.tests}/${data.sections[0].id}?filter=%7B"orderBy"%3A%7B"createdAt"%3A"desc"%7D%7D&testPage=${data.testCurrentPage}&testItems=${data.testItemsPerPage}`,
       })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

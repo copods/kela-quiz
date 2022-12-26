@@ -41,6 +41,8 @@ const SectionLink = ({
   const location = useLocation() // to get current location
   const resolvedPath = useResolvedPath(path) // to get resolved path which would match with current location
   const isActive = location.pathname === resolvedPath.pathname
+  console.log(isActive, 'isActive')
+  console.log(location.pathname, 'location')
   let navigate = useNavigate()
   const [deleted, setDeleted] = useState(false)
   useEffect(() => {
