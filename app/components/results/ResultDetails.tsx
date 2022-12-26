@@ -10,7 +10,8 @@ import EmptyStateComponent from '../common-components/EmptyStateComponent'
 const ResultDetailsComponent = () => {
   // const { t } = useTranslation()
 
-  const { params, candidateTestWiseResult, currentWorkspaceId } = useLoaderData()
+  const { params, candidateTestWiseResult, currentWorkspaceId } =
+    useLoaderData()
   let navigate = useNavigate()
   return (
     <div id="test-details" className="flex h-full flex-col gap-6">
@@ -39,7 +40,8 @@ const ResultDetailsComponent = () => {
             ></Icon>
           </div>
           <span className="text-3xl font-semibold text-gray-900" id="title">
-            {candidateTestWiseResult[0].candidateResult?.candidate?.firstName}&nbsp;
+            {candidateTestWiseResult[0].candidateResult?.candidate?.firstName}
+            &nbsp;
             {candidateTestWiseResult[0].candidateResult?.candidate?.lastName}
           </span>
         </div>
@@ -59,7 +61,9 @@ const ResultDetailsComponent = () => {
                   key={section?.id}
                   sectionName={section.section?.name}
                   startedAt={section.SectionWiseResult[0]?.section?.startedAt}
-                  correctQuestions={section.SectionWiseResult[0]?.correctQuestion}
+                  correctQuestions={
+                    section.SectionWiseResult[0]?.correctQuestion
+                  }
                   incorrectQuestions={section.SectionWiseResult[0]?.incorrect}
                   skippedQuestions={section.SectionWiseResult[0]?.skipped}
                   totalQuestions={section.SectionWiseResult[0]?.totalQuestion}

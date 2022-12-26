@@ -133,7 +133,7 @@ const CandidatesList = ({ searchText }: { searchText: string }) => {
                     startedAt={candidate?.startedAt}
                     createdAt={candidate?.createdAt}
                     currentWorkspaceId={currentWorkspaceId}
-                    candidateResult = {candidate?.candidateResult}
+                    candidateResult={candidate?.candidateResult}
                   />
                 </div>
               )

@@ -7,15 +7,15 @@ const SectionCardForResultDetail = ({
   incorrectQuestions,
   skippedQuestions,
   totalQuestions,
-  unansweredQuestions
+  unansweredQuestions,
 }: {
-  sectionName:string
-  startedAt:Date  | null
-  correctQuestions?:number
-  incorrectQuestions?:number
-  skippedQuestions?:number
-  totalQuestions?:number,
-  unansweredQuestions?:number
+  sectionName: string
+  startedAt: Date | null
+  correctQuestions?: number
+  incorrectQuestions?: number
+  skippedQuestions?: number
+  totalQuestions?: number
+  unansweredQuestions?: number
 }) => {
   const { t } = useTranslation()
   return (
@@ -65,7 +65,10 @@ const SectionCardForResultDetail = ({
           </div>
         </>
       ) : (
-        <span className='text-gray-500 text-start text-sm'>  {t('commonConstants.notAttempted')}</span>
+        <span className="text-start text-sm text-gray-500">
+          {' '}
+          {t('commonConstants.notAttempted')}
+        </span>
       )}
     </div>
   )

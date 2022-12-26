@@ -38,7 +38,7 @@ const AttendedCandidateListItem = ({
   startedAt: Date
   createdAt: Date
   currentWorkspaceId: string
-  candidateResult:  Array<CandidateResult>
+  candidateResult: Array<CandidateResult>
 }) => {
   const { t } = useTranslation()
   const [menuListOpen, setmenuListOpen] = useState<boolean>(false)

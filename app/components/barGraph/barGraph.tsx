@@ -8,9 +8,11 @@ const BarGraph = ({
 }: {
   candidateTestWiseResult: Array<any>
 }) => {
-  const calculateResult = candidateTestWiseResult[0]?.sections.filter((data:any)=>{
-   return data.SectionWiseResult.length >0
-  })
+  const calculateResult = candidateTestWiseResult[0]?.sections.filter(
+    (data: any) => {
+      return data.SectionWiseResult.length > 0
+    }
+  )
   const getDifferenceMin = () => {
     let finalResult: Array<number> = []
     calculateResult.map((result: any) => {
@@ -38,16 +40,10 @@ const BarGraph = ({
     }
   }
   const getLabelData = (sectionName: string, resultKind: string) => {
-    const getRequiredSection = calculateResult.filter(
-      (result: any) =>
-    {
-      return(
-        result?.section?.name === sectionName
-      )
-    }
-    )
+    const getRequiredSection = calculateResult.filter((result: any) => {
+      return result?.section?.name === sectionName
+    })
     if (resultKind === 'total') {
- 
       return getRequiredSection[0]?.SectionWiseResult[0]?.totalQuestion
     } else if (resultKind === 'correct') {
       return getRequiredSection[0]?.SectionWiseResult[0]?.correctQuestion
@@ -66,13 +62,9 @@ const BarGraph = ({
       text: '',
     },
     xAxis: {
-      categories: calculateResult.map(
-        (result: any) => {
-          return(
-            result?.section.name
-          )
-        }
-      ),
+      categories: calculateResult.map((result: any) => {
+        return result?.section.name
+      }),
     },
     yAxis: [
       {

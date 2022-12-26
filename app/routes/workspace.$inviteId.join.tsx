@@ -58,11 +58,10 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   })
 }
 const InviteMember = () => {
-
   return (
     <div className="flex h-full flex-col bg-gray-50">
       <Header />
-      <JoinWorkspace/>
+      <JoinWorkspace />
     </div>
   )
 }
