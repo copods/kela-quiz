@@ -1,6 +1,6 @@
 import { testsConstants } from '~/constants/common.constants'
 
-const test1 = `Aptitude - test1`
+const test1 = `Aptitude - assessment1`
 const deleteTest1 = `Aptitude - test2 `
 const assessments = 'Assessments'
 const tableTitles = {
@@ -486,17 +486,9 @@ describe('Visiting Assessment', () => {
       '/assessments'
     )
     cy.get('.test-table-list', { timeout: 6000 }).should('be.visible')
-    cy.get('.test-table-list')
-      .each(($el) => {
-        cy.wrap($el).within((el) => {
-          if (
-            el[0].getElementsByClassName('test-name-navigation')[0]
-              .innerHTML === test1
-          ) {
-            cy.get('.test-name-navigation').should('have.text', test1).click()
-          }
-        })
-      })
+    cy.get('#test-name-navigation')
+      .should('have.text', test1)
+      .click()
       .location('pathname', { timeout: 60000 })
       .should('include', '/assessments')
   })
@@ -573,16 +565,6 @@ describe('Visiting Assessment', () => {
       'include',
       '/assessments'
     )
-    cy.get('.test-table-list', { timeout: 8000 }).each(($el) => {
-      cy.wrap($el).within((el) => {
-        if (
-          el[0].getElementsByClassName('test-name-navigation')[0].innerHTML ===
-          deleteTest1
-        ) {
-          cy.get('.test-name-navigation').should('have.text', deleteTest1)
-        }
-      })
-    })
     cy.get('#vertical-icon', { timeout: 6000 }).click()
     cy.get('.deleteTest').click()
     cy.get('#confirm-delete').click()

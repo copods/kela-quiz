@@ -311,14 +311,14 @@ export interface SectionWiseResults {
   section: SectionInCandidateTest
   test: Test
 }
-export interface column<T> {
+export interface column {
   title: string
   field: string
-  render?: (rowData: T) => JSX.Element
+  render?: (data: any) => JSX.Element
   width?: string
 }
-export interface TableType<T> {
-  columns: column<T>[]
+export interface TableType<T extends object> {
+  columns: column[]
   data: T[]
   title?: string
   paginationEnabled?: boolean
