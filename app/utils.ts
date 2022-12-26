@@ -150,15 +150,15 @@ export function checkPasswordStrength(password: string) {
   if (repeated !== null) {
     for (let charList of repeated) {
       if (charList.toLowerCase() === charList && isNaN(Number(charList))) {
-        //Subtracting points if repeated lowercase letters
+        //Subtracting points if repeated consecutive lowercase letters
         strength = strength - 2
       }
       if (charList.toUpperCase() === charList && isNaN(Number(charList))) {
-        //Subtracting points if repeated uppercase letters
+        //Subtracting points if repeated consecutive uppercase letters
         strength = strength - 2
       }
       if (!isNaN(Number(charList))) {
-        //Subtracting points if repeated digits
+        //Subtracting points if repeated consecutive  digits
         strength = strength - 2
       }
     }
