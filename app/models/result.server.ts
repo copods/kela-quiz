@@ -81,8 +81,20 @@ export async function getResultsOfCandidatesByTestId({
   })
 }
 
-export async function getAllCandidatesOfTestCount(id: string) {
-  const count = prisma.candidateTest.count({ where: { testId: id } })
+export async function getAllCandidatesOfTestCount(
+  id: string,
+  statusFilter: string
+) {
+  const count = prisma.candidateTest.count({
+    where: {
+      ...(statusFilter === 'complete'
+        ? { NOT: { endAt: { equals: null } } }
+        : statusFilter === 'pending'
+        ? { endAt: { equals: null } }
+        : {}),
+      testId: id,
+    },
+  })
   return count
 }
 

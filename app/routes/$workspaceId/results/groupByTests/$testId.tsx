@@ -15,10 +15,13 @@ import { actions } from '~/constants/action.constants'
 export const loader: LoaderFunction = async ({ request, params }) => {
   const url = new URL(request.url)
   const query = url.searchParams
-  const candidatesCount = await getAllCandidatesOfTestCount(params.testId!)
   const pageSize = Math.max(Number(query.get('pageSize') || 5), 5)
   const currentPage = Math.max(Number(query.get('page') || 1), 1)
   const statusFilter = query.get('filterByStatus') as string
+  const candidatesCount = await getAllCandidatesOfTestCount(
+    params.testId!,
+    statusFilter
+  )
   const userId = await getUserId(request)
   const currentWorkspaceId = params.workspaceId
   const workspaces = await getUserWorkspaces(userId as string)
