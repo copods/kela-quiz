@@ -85,7 +85,6 @@ export function trimValue(value: string) {
 }
 export function checkPasswordStrength(password: string) {
   let strength = 0
-  // for length
   for (let char of password) {
     if (char) {
       // adding points for character
