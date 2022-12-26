@@ -210,9 +210,17 @@ export async function updateCandidateStatus({
     },
   })
 }
-export async function getAllCandidateTestsCount(workspaceId: string) {
+export async function getAllCandidateTestsCount(
+  workspaceId: string,
+  statusFilter: string
+) {
   const testCount = await prisma.test.count({
     where: {
+      ...(statusFilter === 'active'
+        ? { NOT: { deleted: { equals: true } } }
+        : statusFilter === 'inactive'
+        ? { deleted: { equals: true } }
+        : {}),
       workspaceId,
       candidateTest: {
         some: {
@@ -229,7 +237,8 @@ export async function getAllCandidateTests(
   filterData: string,
   workspaceId: string,
   resultsItemsPerPage: number = 5,
-  resultsCurrentPage: number = 1
+  resultsCurrentPage: number = 1,
+  statusFilter: string
 ) {
   const PER_PAGE_ITEMS = resultsItemsPerPage
   const filter = filterData ? filterData : {}
@@ -238,6 +247,11 @@ export async function getAllCandidateTests(
     skip: (resultsCurrentPage - 1) * PER_PAGE_ITEMS,
     ...filter,
     where: {
+      ...(statusFilter === 'active'
+        ? { NOT: { deleted: { equals: true } } }
+        : statusFilter === 'inactive'
+        ? { deleted: { equals: true } }
+        : {}),
       workspaceId,
       candidateTest: {
         some: {

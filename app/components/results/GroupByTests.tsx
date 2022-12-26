@@ -7,6 +7,7 @@ import { sortByOrder } from '~/interface/Interface'
 import { useTranslation } from 'react-i18next'
 import EmptyStateComponent from '../common-components/EmptyStateComponent'
 import Table from '../common-components/TableComponent'
+import DropdownField from '../common-components/Dropdown'
 const sortByDetails = [
   {
     name: 'Name',
@@ -15,6 +16,20 @@ const sortByDetails = [
   {
     name: 'Created Date',
     value: 'createdAt',
+  },
+]
+const filterByStatus = [
+  {
+    name: 'All',
+    value: 'all',
+  },
+  {
+    name: 'Active',
+    value: 'active',
+  },
+  {
+    name: 'Inactive',
+    value: 'inactive',
   },
 ]
 const GroupByTests = () => {
@@ -31,6 +46,8 @@ const GroupByTests = () => {
     candidateTestData.resultsCurrentPage
   )
   const [sortBy, onSortChange] = useState(sortByDetails[1].value)
+  const [statusFilter, setStatusFilter] = useState(filterByStatus[0].value)
+
   const candidateTests = candidateTestData.candidateTest
   const candidateTestsArray = candidateTests.filter(
     (
@@ -114,9 +131,11 @@ const GroupByTests = () => {
     { title: 'Status', field: 'action', render: StatusDataCell },
   ]
   useEffect(() => {
-    navigate(`?ResultPage=${resultsCurrentPage}&ResultItems=${resultsPageSize}`)
+    navigate(
+      `?ResultPage=${resultsCurrentPage}&ResultItems=${resultsPageSize}&filterByStatus=${statusFilter}`
+    )
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [resultsPageSize, resultsCurrentPage])
+  }, [resultsPageSize, resultsCurrentPage, statusFilter])
   return (
     <div
       className="flex h-full flex-col gap-6 p-1"
@@ -143,6 +162,15 @@ const GroupByTests = () => {
               onSortChange={onSortChange}
               totalItems={candidateTestsArray.length}
               showSelected={false}
+            />
+          </div>
+          <div className="w-36">
+            <DropdownField
+              data={filterByStatus}
+              displayKey={'name'}
+              valueKey={'value'}
+              value={statusFilter}
+              setValue={setStatusFilter}
             />
           </div>
           <Table

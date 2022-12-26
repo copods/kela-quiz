@@ -15,7 +15,11 @@ type LoaderData = {
 }
 export const loader: LoaderFunction = async ({ request, params }) => {
   const userId = await getUserId(request)
+  const query = new URL(request.url).searchParams
   const currentWorkspaceId = params.workspaceId as string
+  const resultsItemsPerPage = Math.max(Number(query.get('ResultItems') || 5), 5) //To set the lower bound, so that minimum count will always be 1 for current page and 5 for items per page.
+  const resultsCurrentPage = Math.max(Number(query.get('ResultPage') || 1), 1)
+  const statusFilter = query.get('filterByStatus') as string
   const workspaces = await getUserWorkspaces(userId as string)
   if (!userId) return redirect(routes.signIn)
   const filter = Object.fromEntries(new URL(request.url).searchParams.entries())
@@ -26,7 +30,10 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     : {}
   const candidateTest = await getAllCandidateTests(
     filter,
-    currentWorkspaceId as string
+    currentWorkspaceId as string,
+    resultsItemsPerPage,
+    resultsCurrentPage,
+    statusFilter
   )
   return json<LoaderData>({
     candidateTest,
