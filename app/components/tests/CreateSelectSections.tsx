@@ -105,18 +105,16 @@ const SelectSections = ({
           />
           {/* Sections list */}
           <div className="flex flex-wrap gap-6">
-            {sections.map(
-              (section: TestSection & { count?: number }, i) => {
-                return (
-                  <SelectSectionCard
-                    section={section}
-                    updateSection={(e) => setSections(e, i)}
-                    sectionCount={section.count}
-                    key={section.id}
-                  />
-                )
-              }
-            )}
+            {sections.map((section: TestSection & { count?: number }, i) => {
+              return (
+                <SelectSectionCard
+                  section={section}
+                  updateSection={(e) => setSections(e, i)}
+                  sectionCount={section.count}
+                  key={section.id}
+                />
+              )
+            })}
             {pseudoDivs.map((temp) => {
               return (
                 <div

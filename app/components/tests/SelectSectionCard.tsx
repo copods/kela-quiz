@@ -8,11 +8,11 @@ import { useTranslation } from 'react-i18next'
 const SelectSectionCard = ({
   section,
   updateSection,
-  sectionCount
+  sectionCount,
 }: {
   section: TestSection
   updateSection: (e: any) => void
-  sectionCount?:number
+  sectionCount?: number
 }) => {
   const { t } = useTranslation()
 
