@@ -74,9 +74,8 @@
     "joinedOn": "Joined On",
     "invitedAt": "Invited At",
     "passwordStrength": "Password Strength",
-    "items": "Items",
     "strong": "Strong",
-    "medium": "Medium",
+    "good": "Good",
     "weak": "Weak",
     "noRowsToShow": "No Rows To Show",
     "items": "Items"

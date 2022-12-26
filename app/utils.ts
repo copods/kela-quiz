@@ -196,7 +196,7 @@ export function checkPasswordStrength(password: string) {
   if (strength <= 30) {
     return t('commonConstants.weak')
   } else if (strength >= 31 && strength <= 80) {
-    return t('commonConstants.medium')
+    return t('commonConstants.good')
   } else if (strength > 80) {
     return t('commonConstants.strong')
   }
