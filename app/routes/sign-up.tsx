@@ -47,7 +47,6 @@ export const action: ActionFunction = async ({ request }) => {
     const firstName = formData.get('firstName')
     const lastName = formData.get('lastName')
     const email = formData.get('email')
-    const workspaceName = formData.get('workspace')
     const password = formData.get('Password')
     const confirmPassword = formData.get('confirmPassword')
     // eslint-disable-next-line no-useless-escape
@@ -87,17 +86,6 @@ export const action: ActionFunction = async ({ request }) => {
       )
     }
 
-    if (typeof workspaceName !== 'string' || workspaceName.length === 0) {
-      return json<ActionData>(
-        {
-          errors: {
-            workspaceNameRequired: 'toastConstants.workspaceNameIsRequired',
-            status: 400,
-          },
-        },
-        { status: 400 }
-      )
-    }
     if (!emailFilter.test(email)) {
       return json<ActionData>(
         {
@@ -134,14 +122,13 @@ export const action: ActionFunction = async ({ request }) => {
         { status: 400 }
       )
     }
-    let addHandle = null
 
+    let addHandle = null
     await createUserBySignUp({
       firstName,
       lastName,
       email,
       password,
-      workspaceName,
     })
       .then((res) => {
         addHandle = createUserSession({
