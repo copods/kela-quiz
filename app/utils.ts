@@ -250,3 +250,13 @@ export const usePagination = ({
   }, [totalItems, pageSize, siblingCount, currentPage])
   return paginationRange
 }
+export const getPasswordStrengthColor = (passwordStrength: string) => {
+  switch (passwordStrength) {
+    case 'Weak':
+      return 'text-red-600'
+    case 'Good':
+      return 'text-yellow-500'
+    case 'Strong':
+      return 'text-green-600'
+  }
+}

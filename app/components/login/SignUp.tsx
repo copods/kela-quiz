@@ -8,7 +8,11 @@ import {
 import { useEffect, useState } from 'react'
 import Button from '~/components/common-components/Button'
 import Logo from '~/components/Logo'
-import { checkPasswordStrength, trimValue } from '~/utils'
+import {
+  checkPasswordStrength,
+  getPasswordStrengthColor,
+  trimValue,
+} from '~/utils'
 import { routes } from '~/constants/route.constants'
 import { useTranslation } from 'react-i18next'
 import InputField from '../common-components/InputField'
@@ -189,16 +193,7 @@ const SignUp = ({ error }: { error?: string }) => {
       },
     },
   ]
-  const getPasswordStrengthColor = (passwordStrength: string) => {
-    switch (passwordStrength) {
-      case 'Weak':
-        return 'text-red-600'
-      case 'Good':
-        return 'text-yellow-500'
-      case 'Strong':
-        return 'text-green-600'
-    }
-  }
+
   return (
     <div className="flex items-center justify-center">
       <div className="flex flex-col gap-2 rounded-2xl bg-white px-20 py-12 pb-8 text-left drop-shadow-2xl transition-all sm:w-full sm:max-w-xl">

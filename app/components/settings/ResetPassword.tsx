@@ -2,7 +2,11 @@ import { Form, useActionData, useTransition } from '@remix-run/react'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import { checkPasswordStrength, trimValue } from '~/utils'
+import {
+  checkPasswordStrength,
+  getPasswordStrengthColor,
+  trimValue,
+} from '~/utils'
 import DialogWrapper from '../common-components/Dialog'
 import Button from '../common-components/Button'
 import PasswordInputFields from '../common-components/PasswordInputField'
@@ -137,16 +141,7 @@ const ResetPassword = ({
     const value = checkPasswordStrength(newPassword)
     setPasswordStrength(value as string)
   }, [newPassword])
-  const getPasswordStrengthColor = (passwordStrength: string) => {
-    switch (passwordStrength) {
-      case 'Weak':
-        return 'text-red-600'
-      case 'Good':
-        return 'text-yellow-500'
-      case 'Strong':
-        return 'text-green-600'
-    }
-  }
+
   return (
     <DialogWrapper
       open={openResetPassModel}
