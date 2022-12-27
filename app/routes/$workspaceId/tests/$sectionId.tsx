@@ -33,16 +33,15 @@ export const action: ActionFunction = async ({ request, params }) => {
   const action = await formData.get('action')
   const id = formData.get('id') as string
   if (action === 'deleteQuestion') {
-    let deleteHandle = null
-    await deleteQuestionById(id)
+ const deleteQuestion = await deleteQuestionById(id)
       .then(() => {
-        deleteHandle = json<ActionData>(
+        return json<ActionData>(
           { resp: { title: 'statusCheck.deletedSuccess', status: 200 } },
           { status: 200 }
         )
       })
       .catch(() => {
-        deleteHandle = json<ActionData>(
+        return json<ActionData>(
           {
             errors: {
               title: 'statusCheck.commonError',
@@ -52,8 +51,8 @@ export const action: ActionFunction = async ({ request, params }) => {
           { status: 400 }
         )
       })
-
-    return deleteHandle
+      
+return deleteQuestion
   }
 
   return null

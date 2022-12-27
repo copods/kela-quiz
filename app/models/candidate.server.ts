@@ -94,8 +94,7 @@ export async function createSectionInTest({
       },
     })
     let randomQuestionsOfSections: Array<Question> =
-      await prisma.$queryRaw`SELECT * FROM "Question" WHERE "sectionId" = ${sectionId} ORDER BY RANDOM() LIMIT ${totalQuestions};`
-
+      await prisma.$queryRaw`SELECT * FROM "Question" WHERE "sectionId" = ${sectionId} AND "deleted" = FALSE  ORDER BY RANDOM() LIMIT ${totalQuestions};`
     for (let i = 0; i < randomQuestionsOfSections.length; i++) {
       await prisma.candidateQuestion.create({
         data: {

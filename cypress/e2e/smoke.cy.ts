@@ -53,9 +53,7 @@ describe('smoke tests', () => {
 
   it('should add workspace', () => {
     cy.login()
-    cy.get('#members', { timeout: 60000 })
-      .should('have.text', 'Members')
-      .click()
+    cy.customVisit('/members')
     cy.location('pathname').should('include', '/members')
 
     let dropdown = cy.get('#dropdown', { timeout: 8000 })
@@ -97,6 +95,7 @@ describe('smoke tests', () => {
   // creating test data
   it('Adding a first section', () => {
     cy.login()
+    cy.customVisit('/members')
     cy.wait(1000)
 
     cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
@@ -113,6 +112,7 @@ describe('smoke tests', () => {
 
   it('Adding a second section', () => {
     cy.login()
+        cy.customVisit('/members')
     cy.wait(1000)
     cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
 
@@ -128,6 +128,7 @@ describe('smoke tests', () => {
 
   it('Adding a deleteSection ', () => {
     cy.login()
+    cy.customVisit('/members')
     cy.wait(1000)
     cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
 
@@ -143,6 +144,7 @@ describe('smoke tests', () => {
 
   it('Add question to the first section', () => {
     cy.login()
+    cy.customVisit('/members')
     cy.wait(1000)
     cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
 
@@ -186,6 +188,7 @@ describe('smoke tests', () => {
 
   it('Add question to the second section', () => {
     cy.login()
+    cy.customVisit('/members')
     cy.wait(1000)
     cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
 
@@ -227,6 +230,7 @@ describe('smoke tests', () => {
   })
   it('Add second question to the first section', () => {
     cy.login()
+    cy.customVisit('/members')
     cy.wait(1000)
     cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
     cy.wait(2000)
@@ -269,9 +273,7 @@ describe('smoke tests', () => {
   })
   it('Verify if user able create the assesssment 1', () => {
     cy.login()
-    cy.get('#members', { timeout: 60000 })
-      .should('have.text', 'Members')
-      .click()
+    cy.customVisit('/members')
     cy.get('#tests', { timeout: 60000 })
       .should('have.text', 'Assessments')
       .click()
@@ -348,6 +350,7 @@ describe('smoke tests', () => {
 
   it('Verify if user able create the assessment 2', () => {
     cy.login()
+    cy.customVisit('/members')
     cy.wait(1000)
     cy.get('#tests', { timeout: 60000 })
       .should('have.text', 'Assessments')
@@ -424,6 +427,7 @@ describe('smoke tests', () => {
 
   it('Test for adding a new member', () => {
     cy.login()
+    cy.customVisit('/members')
     cy.wait(1000)
     cy.get('#invite-member', { timeout: 6000 })
       .should('have.text', cypress.addMember)
@@ -442,6 +446,7 @@ describe('smoke tests', () => {
 
   it('invite candidate for assessment', () => {
     cy.login()
+    cy.customVisit('/members')
     cy.wait(1000)
     cy.get('#tests', { timeout: 8000 })
       .should('have.text', 'Assessments')
