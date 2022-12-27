@@ -73,6 +73,10 @@
     "joining": "Joining",
     "joinedOn": "Joined On",
     "invitedAt": "Invited At",
+    "passwordStrength": "Password Strength",
+    "strong": "Strong",
+    "good": "Good",
+    "weak": "Weak",
     "noRowsToShow": "No Rows To Show",
     "items": "Items",
     "switchAccount": "Switch Account"
