@@ -81,12 +81,21 @@ export async function getResultsOfCandidatesByTestId({
   })
 }
 
+export async function getAllCandidatesOfTestCount(id: string) {
+  const count = prisma.candidateTest.count({ where: { testId: id } })
+  return count
+}
+
 export async function getAllCandidatesOfTest({
   id,
   workspaceId,
+  currentPage,
+  pageSize,
 }: {
   id: string
   workspaceId: string
+  currentPage?: number
+  pageSize?: number
 }) {
   return prisma.test.findFirst({
     where: {
@@ -95,6 +104,8 @@ export async function getAllCandidatesOfTest({
     },
     include: {
       candidateTest: {
+        take: pageSize,
+        skip: (currentPage! - 1) * pageSize!,
         orderBy: { createdAt: 'desc' },
         include: {
           candidateResult: true,

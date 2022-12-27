@@ -314,7 +314,7 @@ export interface SectionWiseResults {
 export interface column {
   title: string
   field: string
-  render?: (data: any) => JSX.Element
+  render?: (data: any, index: number) => JSX.Element
   width?: string
 }
 export interface TableType<T extends object> {
