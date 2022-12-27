@@ -158,7 +158,7 @@ const ResetPassword = ({
       tabIndex={0}
     >
       <Form method="post">
-        <div className="flex flex-col gap-8">
+        <div className="flex flex-col gap-2">
           <div className="input-container-wrapper flex flex-col gap-6">
             {PasswordInputFieldProps.map((props) => {
               return (
@@ -178,7 +178,7 @@ const ResetPassword = ({
               </span>
             </span>
           ) : null}
-          <div className="flex items-center justify-center">
+          <div className="mt-6 flex items-center justify-center">
             <Button
               tabIndex={0}
               name="resetPassword"

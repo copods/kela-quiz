@@ -201,7 +201,7 @@ const SignUp = ({ error }: { error?: string }) => {
   }
   return (
     <div className="flex items-center justify-center">
-      <div className="flex flex-col gap-6 rounded-2xl bg-white px-20 py-12 pb-8 text-left drop-shadow-2xl transition-all sm:w-full sm:max-w-xl">
+      <div className="flex flex-col gap-2 rounded-2xl bg-white px-20 py-12 pb-8 text-left drop-shadow-2xl transition-all sm:w-full sm:max-w-xl">
         <div className="flex flex-col items-center justify-center gap-6">
           <div className="-mt-20 flex justify-center">
             <Logo height="64" width="64" />
@@ -219,7 +219,7 @@ const SignUp = ({ error }: { error?: string }) => {
           <hr className="h-px w-6/12 border-none bg-gray-500 text-center" />
         </div>
 
-        <div className="flex flex-col gap-6">
+        <div className="mt-4 flex flex-col gap-6">
           <div className="flex gap-6">
             {inputFieldsProps.slice(0, 2).map((props) => {
               return <InputField {...props} key={props.name} />
@@ -244,7 +244,7 @@ const SignUp = ({ error }: { error?: string }) => {
             </span>
           </span>
         ) : null}
-        <div className="flex flex-col items-center justify-center gap-6">
+        <div className="mt-4 flex flex-col items-center justify-center gap-6">
           <Button
             tabIndex={0}
             id="add-button"
