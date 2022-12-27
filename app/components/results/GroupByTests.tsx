@@ -115,7 +115,7 @@ const GroupByTests = () => {
   }
   const otherFilters = [
     {
-      id: '1',
+      id: 'filterByStatus',
       data: filterByStatus,
       displayKey: 'name',
       valueKey: 'value',
