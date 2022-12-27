@@ -106,7 +106,7 @@ export async function createUserBySignUp({
       },
       workspace: {
         create: {
-          name: `${firstName}'s default workspace`,
+          name: `${firstName}'s workspace`,
         },
       },
     },
