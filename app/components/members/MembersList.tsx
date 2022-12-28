@@ -31,11 +31,9 @@ export default function MembersList({
         <span>
           {data.firstName} {data.lastName}
         </span>
-        <span>
           {workspaceOwner === data.id ? (
             <Badge>{t('members.owner')}</Badge>
           ) : null}
-        </span>
       </div>
     )
   }
