@@ -50,7 +50,7 @@ const GroupByTests = () => {
     candidateTestData.resultsCurrentPage
   )
   const [sortBy, onSortChange] = useState(sortByDetails[1].value)
-  const [statusFilter, setStatusFilter] = useState(filterByStatus[0].value)
+  const [statusFilter, setStatusFilter] = useState(filterByStatus[1].value)
 
   const candidateTests = candidateTestData.candidateTest
   const candidateTestsArray = candidateTests.filter(
