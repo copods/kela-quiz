@@ -2,7 +2,11 @@ import { Form, useActionData, useTransition } from '@remix-run/react'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-import { trimValue } from '~/utils'
+import {
+  checkPasswordStrength,
+  getPasswordStrengthColor,
+  trimValue,
+} from '~/utils'
 import DialogWrapper from '../common-components/Dialog'
 import Button from '../common-components/Button'
 import PasswordInputFields from '../common-components/PasswordInputField'
@@ -32,6 +36,7 @@ const ResetPassword = ({
   const [password, setPassword] = useState('')
   const [newPassword, setNewPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
+  const [passwordStrength, setPasswordStrength] = useState('')
   const [error, setError] = useState({
     passMinLengthError: '',
     passNotMatchError: '',
@@ -131,6 +136,12 @@ const ResetPassword = ({
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [generalSettings])
+
+  useEffect(() => {
+    const value = checkPasswordStrength(newPassword)
+    setPasswordStrength(value as string)
+  }, [newPassword])
+
   return (
     <DialogWrapper
       open={openResetPassModel}
@@ -142,7 +153,7 @@ const ResetPassword = ({
       tabIndex={0}
     >
       <Form method="post">
-        <div className="flex flex-col gap-8">
+        <div className="flex flex-col gap-2">
           <div className="input-container-wrapper flex flex-col gap-6">
             {PasswordInputFieldProps.map((props) => {
               return (
@@ -154,7 +165,15 @@ const ResetPassword = ({
               )
             })}
           </div>
-          <div className="flex items-center justify-center">
+          {newPassword ? (
+            <span className="flex gap-1 text-sm">
+              {t('commonConstants.passwordStrength')}:
+              <span className={getPasswordStrengthColor(passwordStrength)}>
+                {passwordStrength}
+              </span>
+            </span>
+          ) : null}
+          <div className="mt-6 flex items-center justify-center">
             <Button
               tabIndex={0}
               name="resetPassword"

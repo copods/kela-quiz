@@ -15,9 +15,10 @@
     "invitedOn": "Invited On",
     "alreadyJoinedWorkspace": "You already joined the workspace",
     "alreadyRejectedWorkspaceInvitation": "You already reject the workspace joining invitation",
-    "loggedinFromAnotherAccount": "Invalid link, please login from correct account.",
+    "loggedinFromAnotherAccount": "This link is not valid for this account.",
     "youInvitedBy": "You have been invited by",
-    "toJoin": "to join"
+    "toJoin": "to join",
+    "owner": "Owner"
   },
   "commonConstants": {
     "name": "Name",
@@ -73,8 +74,13 @@
     "joining": "Joining",
     "joinedOn": "Joined On",
     "invitedAt": "Invited At",
+    "passwordStrength": "Password Strength",
+    "strong": "Strong",
+    "good": "Good",
+    "weak": "Weak",
     "noRowsToShow": "No Rows To Show",
-    "items": "Items"
+    "items": "Items",
+    "switchAccount": "Switch Account"
   },
   "sideNav": {
     "sideNavHeading": "Quiz",

@@ -361,3 +361,9 @@ export interface OtherFilters {
   value: string
   setValue: (e: string) => void
 }
+
+export interface BadgeComponent {
+  children: React.ReactNode
+  bgColor?: string
+  textColor?: string
+}

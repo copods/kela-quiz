@@ -130,7 +130,7 @@ const AddTestComponent = ({
       return true
     }
     for (let section of selectedSections) {
-      if (!section?.totalQuestions) {
+      if (!section?.totalQuestions || !section?.time) {
         return true
       }
     }
