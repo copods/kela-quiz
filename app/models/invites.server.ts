@@ -1,9 +1,7 @@
 import type { Invites } from '@prisma/client'
 import { prisma } from '~/db.server'
-import { sendMail, sendMemberInvite } from './sendgrid.servers'
+import { sendMemberInvite } from './sendgrid.servers'
 import { env } from 'process'
-import faker from '@faker-js/faker'
-import bcrypt from 'bcryptjs'
 
 export async function inviteNewUser({
   email,
@@ -172,26 +170,5 @@ export async function reinviteMemberForWorkspace({ id }: { id: string }) {
     user?.email as string,
     name as string,
     workspaceJoinLink as string
-  )
-}
-export async function reinviteMember({ id }: { id: string }) {
-  const user = await prisma.user.findUnique({ where: { id } })
-  const roleId = user?.roleId as string
-  const role = await prisma.role.findUnique({ where: { id: roleId } })
-  const password = faker.internet.password()
-  const hashedPassword = await bcrypt.hash(password, 10)
-  await prisma.password.update({
-    where: {
-      userId: id,
-    },
-    data: {
-      hash: hashedPassword,
-    },
-  })
-  return await sendMail(
-    user?.email as string,
-    user?.firstName as string,
-    password,
-    role?.name as string
   )
 }
