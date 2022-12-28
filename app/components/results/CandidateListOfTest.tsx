@@ -24,7 +24,7 @@ const filterByStatus = [
     value: 'pending',
   },
   {
-    name: 'Complete',
+    name: 'Completed',
     value: 'complete',
   },
 ]
@@ -135,7 +135,7 @@ const CandidateListOfTest = () => {
           }`}
         >
           {data?.candidateResult.length > 0
-            ? t('commonConstants.complete')
+            ? t('commonConstants.completed')
             : t('commonConstants.pending')}
         </span>
         {data?.candidateResult.length > 0 ? (
