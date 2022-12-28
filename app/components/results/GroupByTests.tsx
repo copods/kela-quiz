@@ -2,7 +2,12 @@ import { useEffect, useState } from 'react'
 import SortFilter from '../common-components/SortFilter'
 
 import { Link, useLoaderData, useNavigate, useSubmit } from '@remix-run/react'
-import type { CandidateTest, Test } from '~/interface/Interface'
+import type {
+  CandidateTest,
+  column,
+  OtherFilters,
+  Test,
+} from '~/interface/Interface'
 import { sortByOrder } from '~/interface/Interface'
 import { useTranslation } from 'react-i18next'
 import EmptyStateComponent from '../common-components/EmptyStateComponent'
@@ -113,7 +118,7 @@ const GroupByTests = () => {
       </div>
     )
   }
-  const otherFilters = [
+  const otherFilters: OtherFilters[] = [
     {
       id: 'filterByStatus',
       data: filterByStatus,
@@ -124,7 +129,7 @@ const GroupByTests = () => {
     },
   ]
 
-  const resultsColumn = [
+  const resultsColumn: column[] = [
     { title: 'Sr.No', field: 'sr_no', render: SrNoDataCell, width: '12%' },
     {
       title: 'Assessment',
@@ -142,7 +147,7 @@ const GroupByTests = () => {
   ]
   useEffect(() => {
     navigate(
-      `?ResultPage=${resultsCurrentPage}&ResultItems=${resultsPageSize}&filterByStatus=${statusFilter}`
+      `?resultPage=${resultsCurrentPage}&resultItems=${resultsPageSize}&filterByStatus=${statusFilter}`
     )
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resultsPageSize, resultsCurrentPage, statusFilter])
@@ -185,66 +190,6 @@ const GroupByTests = () => {
             onPageChange={setResultsCurrentPage}
             totalItems={candidateTestData.testCount}
           />
-          {/* <div className="rounded-lg shadow-base">
-            <div className="col-span-full grid grid-cols-10 rounded-lg border border-solid border-gray-200 bg-white">
-              <div className="col-span-full grid grid-cols-10 gap-3 bg-gray-100 py-4 px-12">
-                <span className="col-span-1 text-sm font-semibold text-gray-500">
-                  {t('commonConstants.srNo')}
-                </span>
-                <span className="col-span-3 text-sm font-semibold text-gray-500">
-                  {t('testsConstants.assessment')}
-                </span>
-                <span className="col-span-2 text-sm font-semibold text-gray-500">
-                  {t('commonConstants.total')}{' '}
-                  {t('resultConstants.totalInvited')}
-                </span>
-                <span className="col-span-2 text-sm font-semibold text-gray-500">
-                  {t('commonConstants.total')}{' '}
-                  {t('resultConstants.totalAttended')}
-                </span>
-                <span className="col-span-1 text-sm font-semibold text-gray-500">
-                  {t('resultConstants.status')}
-                </span>
-              </div>
-              <div id="group-by-test-items" className="col-span-10 grid">
-                {candidateTestsArray.map(
-                  (
-                    candidateTests: Test & {
-                      count?: number | undefined
-                      candidateTest?: CandidateTest
-                    },
-                    index: number
-                  ) => (
-                    <div
-                      key={candidateTests.id}
-                      className="GroupByTestRow col-span-10 grid"
-                      id="group-by-items-container"
-                      data-cy="group-by-items-container"
-                    >
-                      <GroupByTestItems
-                        candidateName={candidateTests?.name}
-                        candidateInvitedCount={
-                          candidateTests?.candidateTest?.length as number
-                        }
-                        candidateAttendedCount={candidateTests?.count}
-                        testDeletedStatus={candidateTests?.deleted}
-                        index={index + 1}
-                        id={candidateTests?.id}
-                        currentWorkspaceId={
-                          candidateTestData.currentWorkspaceId
-                        }
-                      />
-                    </div>
-                  )
-                )}
-                {candidateTests.length === 0 && (
-                  <div className="flex items-center justify-center p-7">
-                    <span>{t('resultConstants.noAssessmentAlert')}</span>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div> */}
         </div>
       ) : (
         <EmptyStateComponent />

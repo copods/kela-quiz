@@ -352,3 +352,12 @@ export interface TabsComponent {
   name: string
   route: string
 }
+
+export interface OtherFilters {
+  id: string
+  data: Array<{ name: string; value: string }>
+  displayKey: string
+  valueKey: string
+  value: string
+  setValue: (e: string) => void
+}

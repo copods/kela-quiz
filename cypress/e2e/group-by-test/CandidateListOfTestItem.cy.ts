@@ -6,7 +6,7 @@ describe('Visiting group by test of results page', () => {
     cy.customVisit('/members')
   })
   const test1 = `Aptitude - assessment1`
-  it('Checks, test is available for test', () => {
+  it('Checks, if assessment has correct name', () => {
     cy.wait(3000)
     cy.get('#group-by-tests').should('have.text', 'Results').click()
     cy.get('h1', { timeout: 6000 }).should('have.text', 'Results')
