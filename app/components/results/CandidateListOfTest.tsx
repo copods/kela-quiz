@@ -233,7 +233,7 @@ const CandidateListOfTest = () => {
         <Icon
           id="ascend"
           icon="charm:search"
-          className="bg-light-200 absolute left-3 text-base text-gray-400"
+          className="bg-light-200 absolute left-3 text-base text-gray-500"
         />
         <input
           tabIndex={0}
