@@ -12,6 +12,7 @@ export async function getUserWorkspaces(userId: string) {
       workspace: {
         select: {
           name: true,
+          createdById: true,
         },
       },
     },

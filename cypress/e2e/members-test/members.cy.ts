@@ -181,4 +181,13 @@ describe('Test for members', () => {
     cy.get('#invite-member').should('have.text', cypress.addMember).click()
     cy.get('#cancel-add-button').should('have.text', 'Cancel').click()
   })
+
+  it('checks,owner batch should be visible', () => {
+    cy.get('.membersHeading').should('be.visible')
+    cy.get('[data-cy="badge-tag"]').should('be.visible')
+  })
+  it('checks,owner batch should have correct text', () => {
+    cy.get('.membersHeading').should('be.visible')
+    cy.get('[data-cy="badge-tag"]').should('have.text', 'Owner')
+  })
 })

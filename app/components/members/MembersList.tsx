@@ -1,4 +1,3 @@
-import type { User, Role, Invites } from '~/interface/Interface'
 import { useLoaderData, useSubmit } from '@remix-run/react'
 import { useTranslation } from 'react-i18next'
 import Table from '../common-components/TableComponent'
@@ -6,6 +5,9 @@ import DeletePopUp from '../common-components/DeletePopUp'
 import { Icon } from '@iconify/react'
 import moment from 'moment'
 import { useState } from 'react'
+
+import type { User, Role, Invites, UserWorkspace } from '~/interface/Interface'
+import Badge from '~/components/common-components/Badge'
 
 export default function MembersList({
   membersCurrentPage,
@@ -24,11 +26,21 @@ export default function MembersList({
   const loggedInUser = memberLoaderData.userId
   const [openDeleteModal, setOpenDeleteModal] = useState(false)
 
+  const currentWorkspaceId = memberLoaderData.currentWorkspaceId
+  const currentWorkspaceOwner = memberLoaderData.workspaces.find(
+    (el: UserWorkspace) => el.workspaceId === currentWorkspaceId
+  ).workspace.createdById
+
   const NameDataCell = (data: User) => {
     return (
-      <span>
-        {data.firstName} {data.lastName}
-      </span>
+      <div className="flex gap-1.5">
+        <div>
+          {data.firstName} {data.lastName}
+        </div>
+        <div>
+          {currentWorkspaceOwner ? <Badge>{t('members.owner')}</Badge> : null}
+        </div>
+      </div>
     )
   }
   const RoleDataCell = (data: { role: Role }) => {
