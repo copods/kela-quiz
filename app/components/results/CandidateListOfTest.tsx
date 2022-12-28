@@ -242,14 +242,14 @@ const CandidateListOfTest = () => {
           name="search"
           placeholder={t('testsConstants.searchCandidate')}
           title={t('testsConstants.searchCandidate')}
-          className="h-9 w-48 rounded-lg border px-5 pl-8 text-sm focus:outline-dotted"
+          className="h-11 w-48 rounded-lg border px-5 pl-8 text-sm shadow-sm focus:outline-dotted"
           onChange={(e) => setSearchText(e.target.value)}
         />
         <div className="w-36">
           <DropdownField
             data={filterByStatus}
-            displayKey={'name'}
-            valueKey={'value'}
+            displayKey="name"
+            valueKey="value"
             value={statusFilter}
             setValue={setStatusFilter}
           />
