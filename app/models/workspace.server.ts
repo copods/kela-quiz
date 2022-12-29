@@ -1,6 +1,12 @@
 import { prisma } from '~/db.server'
 import { getAdminId } from './user.server'
-
+export async function getCurrentWorkspaceOwner(currentWorkspaceId: string) {
+  const workspaceOwner = await prisma.workspace.findUnique({
+    where: { id: currentWorkspaceId },
+    select: { createdById: true },
+  })
+  return workspaceOwner
+}
 export async function getUserWorkspaces(userId: string) {
   return await prisma.userWorkspace.findMany({
     where: {
