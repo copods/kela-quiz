@@ -61,9 +61,9 @@ export default function Section() {
   const { t } = useTranslation()
   const section = useActionData() as ActionData
   useEffect(() => {
-    if (section && section.resp?.status === 200) {
+    if (section?.resp?.status === 200) {
       toast.success(t(section.resp?.title))
-    } else if (section && section.errors?.status === 400) {
+    } else if (section?.errors?.status === 400) {
       toast.error(t(section.errors?.title), {
         toastId: section.errors?.title,
       })
