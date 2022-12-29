@@ -352,3 +352,8 @@ export interface TabsComponent {
   name: string
   route: string
 }
+export interface BadgeComponent {
+  children: React.ReactNode
+  bgColor?: string
+  textColor?: string
+}

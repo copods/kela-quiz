@@ -77,7 +77,7 @@ const RenderDataCell = <T,>({
 }: {
   width?: string
   rowData: T
-  render?: (data: T, index: number) => any
+  render?: (data: T, index: number) => JSX.Element
   index: number
 }) => {
   return (

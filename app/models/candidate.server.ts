@@ -158,9 +158,11 @@ async function createCandidateData({
 }
 // Resend a test link to user
 export async function resendTestLink({
+  id,
   candidateId,
   testId,
 }: {
+  id: string
   candidateId: string
   testId: string
 }) {
@@ -170,7 +172,7 @@ export async function resendTestLink({
       where: { id: candidateId },
     })
     const candidateTest = await prisma.candidateTest.findUnique({
-      where: { id: testId },
+      where: { id: id },
       select: {
         startedAt: true,
         endAt: true,
@@ -178,9 +180,7 @@ export async function resendTestLink({
     })
     if (candidateTest?.startedAt === null && candidateTest?.endAt === null) {
       await prisma.candidateTest.update({
-        where: {
-          id: testId,
-        },
+        where: { id: id },
         data: {
           linkSentOn: new Date(),
         },

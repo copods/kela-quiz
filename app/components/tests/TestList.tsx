@@ -98,7 +98,7 @@ const TestList = () => {
   }
 
   //render functions for table
-  const SeriaLNoCell = (data: any, index: number) => {
+  const SeriaLNoCell = (data: Test, index: number) => {
     return <span>{index + 1}</span>
   }
   const TestDataCell = (data: Test) => {
@@ -164,7 +164,7 @@ const TestList = () => {
       </>
     )
   }
-  const testsColumn = [
+  const testColumns = [
     { title: 'Sr.No', field: 'Sr_No', render: SeriaLNoCell, width: '10%' },
     { title: 'Assessment', field: 'name', width: '20%' },
     { title: 'Test', field: 'test', render: TestDataCell, width: '20%' },
@@ -236,7 +236,7 @@ const TestList = () => {
           </div>
           <div className="flex flex-1 flex-col rounded-lg pb-6">
             <Table
-              columns={testsColumn}
+              columns={testColumns}
               data={tests}
               paginationEnabled={true}
               pageSize={testsPageSize}
