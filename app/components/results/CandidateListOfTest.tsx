@@ -128,7 +128,7 @@ const CandidateListOfTest = () => {
     data: { candidateResult: CandidateResult[] } & CandidateResult
   ) => {
     return (
-      <div className="absolute flex items-center">
+      <div id="status-cell" className="flex items-center">
         <span
           className={`rounded-full px-2 py-1 text-xs text-gray-900 ${
             data?.candidateResult.length > 0 ? 'bg-green-200' : 'bg-yellow-200'
