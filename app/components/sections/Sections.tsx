@@ -41,9 +41,7 @@ const SectionLink = ({
   const location = useLocation() // to get current location
   const resolvedPath = useResolvedPath(path) // to get resolved path which would match with current location
   const isActive = location.pathname === resolvedPath.pathname
-  console.log(isActive, 'isActive')
-  console.log(location.pathname, 'location')
-  let navigate = useNavigate()
+  const navigate = useNavigate()
   const [deleted, setDeleted] = useState(false)
   useEffect(() => {
     if (deleted === true) {
@@ -142,7 +140,6 @@ const Sections = ({
   const [testsPageSize, setTestPageSize] = useState(5)
   const [testsCurrentPage, setTestsCurrentPage] = useState(testCurrentPage)
   useEffect(() => {
-    console.log('navigate')
     navigate(
       `?filter=%7B"orderBy"%3A%7B"createdAt"%3A"desc"%7D%7D&testPage=${testsCurrentPage}&testItems=${testsPageSize}`
     )
