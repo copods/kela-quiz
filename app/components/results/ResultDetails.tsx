@@ -48,7 +48,6 @@ const ResultDetailsComponent = () => {
       </header>
       <Divider height="1px" />
       {candidateTestWiseResult ? (
-       
         <>
           <BarGraph candidateTestWiseResult={candidateTestWiseResult} />
           <Divider height="1px" />
