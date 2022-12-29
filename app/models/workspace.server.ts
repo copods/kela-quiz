@@ -110,3 +110,8 @@ export async function verifyWorkspaceId({
     },
   })
 }
+export async function leaveWorkspace(workspaceId: string, userId: string) {
+  await prisma.userWorkspace.deleteMany({
+    where: { workspaceId: workspaceId, userId: userId },
+  })
+}
