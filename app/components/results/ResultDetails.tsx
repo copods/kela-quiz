@@ -40,9 +40,9 @@ const ResultDetailsComponent = () => {
             ></Icon>
           </div>
           <span className="text-3xl font-semibold text-gray-900" id="title">
-            {candidateTestWiseResult[0].candidateResult?.candidate?.firstName}
+            {candidateTestWiseResult.candidate?.firstName}
             &nbsp;
-            {candidateTestWiseResult[0].candidateResult?.candidate?.lastName}
+            {candidateTestWiseResult.candidate?.lastName}
           </span>
         </div>
       </header>
@@ -55,7 +55,7 @@ const ResultDetailsComponent = () => {
             id="results-test-candidate-list-tab"
             className="flex flex-col gap-6"
           >
-            {candidateTestWiseResult[0].sections.map((section: any) => {
+            {candidateTestWiseResult?.sections?.map((section: any) => {
               return (
                 <SectionCardForResultDetail
                   key={section?.id}

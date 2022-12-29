@@ -14,13 +14,11 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const currentWorkspaceId = params.workspaceId as string
   const workspaces = await getUserWorkspaces(userId as string)
   invariant(params.testId, 'resultId not found')
-
   const candidateTestWiseResult =
     await getSectionWiseResultsOfIndividualCandidate({
       testId: params?.testId as string,
-      candidateTestId: params?.candidateTestId as string,
+      candidateId: params?.candidateId as string,
     })
-
   return json({
     params,
     candidateTestWiseResult,

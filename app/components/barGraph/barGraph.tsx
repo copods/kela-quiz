@@ -6,13 +6,14 @@ import moment from 'moment'
 const BarGraph = ({
   candidateTestWiseResult,
 }: {
-  candidateTestWiseResult: Array<any>
+  candidateTestWiseResult: any
 }) => {
-  const calculateResult = candidateTestWiseResult[0]?.sections.filter(
+  const calculateResult = candidateTestWiseResult.sections.filter(
     (data: any) => {
       return data.SectionWiseResult.length > 0
     }
   )
+
   const getDifferenceMin = () => {
     let finalResult: Array<number> = []
     calculateResult.map((result: any) => {
@@ -26,17 +27,19 @@ const BarGraph = ({
 
     return finalResult
   }
+  const getSectionsFromResult = calculateResult[0].SectionWiseResult?.map(
+    (result: any) => result.test.sections
+  )
   let result: Array<number> = []
 
   // finding specific section in data
-  for (let j = 0; j < calculateResult?.length; j++) {
-    for (let k = 0; k < calculateResult[j]?.length; k++) {
-      if (
-        calculateResult[j].section.section?.id ===
-        calculateResult[j][k].section.id
-      ) {
-        result.push(Math.floor(calculateResult[j][k].timeInSeconds / 60))
-      }
+
+  for (let j = 0; j < getSectionsFromResult?.length; j++) {
+    for (let k = 0; k < getSectionsFromResult[j]?.length; k++) {
+      const section = getSectionsFromResult[j].filter((result: any) => {
+        return result.section.id === getSectionsFromResult[j][k].section.id
+      })
+      result.push(Math.floor(section[0].timeInSeconds / 60))
     }
   }
   const getLabelData = (sectionName: string, resultKind: string) => {
@@ -54,6 +57,7 @@ const BarGraph = ({
       )
     }
   }
+
   const options: Highcharts.Options = {
     chart: {
       type: 'column',
@@ -74,6 +78,7 @@ const BarGraph = ({
         },
       },
     ],
+
     legend: {
       shadow: false,
     },
@@ -88,7 +93,7 @@ const BarGraph = ({
       padding: 15,
       followTouchMove: true,
       formatter: function (): any {
-        return this.points?.map(
+        return this.points?.reduce(
           (
             acc: TooltipFormatterContextObject
           ): TooltipFormatterContextObject => {
