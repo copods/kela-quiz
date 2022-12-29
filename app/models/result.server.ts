@@ -142,12 +142,6 @@ export async function getSectionWiseResultsOfIndividualCandidate({
       candidateId_testId:{candidateId,testId}
     },
     select: {
-      candidateResult: {
-        select: {
-          testId: true,
-          candidateTestId: true,
-        },
-      },
       candidate:{
         select:{
           firstName:true,
@@ -160,6 +154,7 @@ export async function getSectionWiseResultsOfIndividualCandidate({
             select: {
               id: true,
               name: true,
+             
             },
           },
 
@@ -174,28 +169,15 @@ export async function getSectionWiseResultsOfIndividualCandidate({
                     select: {
                       id: true,
                       name: true,
+                      sectionInTest:{
+                        select:{
+                          timeInSeconds:true
+                        }
+                      }
                     },
                   },
                 },
               },
-
-              test: {
-                select: {
-                  id: true,
-                  sections: {
-                    select: {
-                      id: true,
-                      timeInSeconds: true,
-                      section: {
-                        select: {
-                          id: true,
-                        },
-                      },
-                    },
-                  },
-                },
-              },
-
               totalQuestion: true,
               correctQuestion: true,
               unanswered: true,

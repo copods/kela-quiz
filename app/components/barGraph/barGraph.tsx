@@ -2,50 +2,55 @@ import Highcharts from 'highcharts'
 import type { TooltipFormatterContextObject } from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 import moment from 'moment'
+import type {
+  CandidateTest,
+  SectionInCandidateTest,
+  SectionInTest,
+  SectionWiseResults,
+} from '~/interface/Interface'
 
 const BarGraph = ({
   candidateTestWiseResult,
 }: {
-  candidateTestWiseResult: any
+  candidateTestWiseResult: CandidateTest
 }) => {
   const calculateResult = candidateTestWiseResult.sections.filter(
-    (data: any) => {
+    (data: SectionInCandidateTest) => {
       return data.SectionWiseResult.length > 0
     }
   )
 
   const getDifferenceMin = () => {
     let finalResult: Array<number> = []
-    calculateResult.map((result: any) => {
-      let startingTime = moment(result.SectionWiseResult[0]?.section?.startedAt)
-      let endingTime = moment(result.SectionWiseResult[0]?.section?.endAt)
-
-      let difference = endingTime.diff(startingTime)
-
-      finalResult.push(parseFloat((difference / 60000).toFixed(1)))
+    calculateResult.map((result: SectionInCandidateTest) => {
+      result.SectionWiseResult.map((data: SectionWiseResults) => {
+        let startingTime = moment(data?.section?.startedAt)
+        let endingTime = moment(data?.section?.endAt)
+        let difference = endingTime.diff(startingTime)
+        finalResult.push(parseFloat((difference / 60000).toFixed(1)))
+      })
     })
 
     return finalResult
   }
-  const getSectionsFromResult = calculateResult[0].SectionWiseResult?.map(
-    (result: any) => result.test.sections
-  )
   let result: Array<number> = []
-
-  // finding specific section in data
-
-  for (let j = 0; j < getSectionsFromResult?.length; j++) {
-    for (let k = 0; k < getSectionsFromResult[j]?.length; k++) {
-      const section = getSectionsFromResult[j].filter((result: any) => {
-        return result.section.id === getSectionsFromResult[j][k].section.id
-      })
-      result.push(Math.floor(section[0].timeInSeconds / 60))
-    }
-  }
-  const getLabelData = (sectionName: string, resultKind: string) => {
-    const getRequiredSection = calculateResult.filter((result: any) => {
-      return result?.section?.name === sectionName
+  calculateResult.map((data: SectionInCandidateTest) => {
+    return data.SectionWiseResult?.map((results: SectionWiseResults) => {
+      let data = results.section.section.sectionInTest.map(
+        (data: SectionInTest) => {
+          return data
+        }
+      )
+      result.push(Math.floor(data[0].timeInSeconds / 60))
     })
+  })
+
+  const getLabelData = (sectionName: string, resultKind: string) => {
+    const getRequiredSection = calculateResult.filter(
+      (result: SectionInCandidateTest) => {
+        return result?.section?.name === sectionName
+      }
+    )
     if (resultKind === 'total') {
       return getRequiredSection[0]?.SectionWiseResult[0]?.totalQuestion
     } else if (resultKind === 'correct') {
@@ -57,7 +62,6 @@ const BarGraph = ({
       )
     }
   }
-
   const options: Highcharts.Options = {
     chart: {
       type: 'column',
@@ -66,7 +70,7 @@ const BarGraph = ({
       text: '',
     },
     xAxis: {
-      categories: calculateResult.map((result: any) => {
+      categories: calculateResult.map((result: SectionInCandidateTest) => {
         return result?.section.name
       }),
     },
