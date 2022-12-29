@@ -159,7 +159,7 @@ export const action: ActionFunction = async ({ request }) => {
 }
 const SignUpPage = () => {
   return (
-    <div className="flex h-full flex-col justify-center">
+    <div className="flex min-h-[800px] flex-col justify-center overflow-auto">
       <SignUp />
     </div>
   )
