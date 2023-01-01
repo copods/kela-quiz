@@ -91,53 +91,57 @@ export async function createUserBySignUp({
   email: string
   password: string
 }) {
-  const hashedPassword = await bcrypt.hash(password, 10)
-  const roleId = await getAdminId()
-  const user = await prisma.user.create({
-    data: {
-      firstName,
-      lastName,
-      email,
-      roleId: roleId as string,
-      password: {
-        create: {
-          hash: hashedPassword,
+  try {
+    const hashedPassword = await bcrypt.hash(password, 10)
+    const roleId = await getAdminId()
+    const user = await prisma.user.create({
+      data: {
+        firstName,
+        lastName,
+        email,
+        roleId: roleId as string,
+        password: {
+          create: {
+            hash: hashedPassword,
+          },
+        },
+        workspace: {
+          create: {
+            name: `${firstName}'s workspace`,
+          },
         },
       },
-      workspace: {
-        create: {
-          name: `${firstName}'s workspace`,
+      select: {
+        id: true,
+        roleId: true,
+        workspace: {
+          select: {
+            id: true,
+          },
         },
       },
-    },
-    select: {
-      id: true,
-      roleId: true,
-      workspace: {
-        select: {
-          id: true,
-        },
+    })
+
+    await prisma.userWorkspace.create({
+      data: {
+        userId: user.id as string,
+        workspaceId: user.workspace[0].id,
+        roleId: user?.roleId,
+        isDefault: true,
       },
-    },
-  })
+    })
 
-  await prisma.userWorkspace.create({
-    data: {
-      userId: user.id as string,
-      workspaceId: user.workspace[0].id,
-      roleId: user?.roleId,
-      isDefault: true,
-    },
-  })
+    const role = await prisma.role.findUnique({
+      where: {
+        id: roleId,
+      },
+    })
 
-  const role = await prisma.role.findUnique({
-    where: {
-      id: roleId,
-    },
-  })
-
-  await sendMail(email, firstName, password, role?.name as string)
-  return user
+    await sendMail(email, firstName, password, role?.name as string)
+    return user
+  } catch (err) {
+    throw new Error('Something went wrong!')
+  }
 }
 
 export async function createNewUser({
@@ -225,27 +229,38 @@ export async function createNewUser({
 export async function sendResetPassword(email: string) {
   const password = faker.internet.password()
   const hashedPassword = await bcrypt.hash(password, 10)
-  const userEmail = await prisma.user.findUnique({
-    where: {
-      email: email,
-    },
-    select: {
-      email: true,
-      id: true,
-    },
-  })
-  if (userEmail) {
-    await prisma.password.update({
+  try {
+    const userEmail = await prisma.user.findUnique({
       where: {
-        userId: userEmail?.id,
+        email: email,
       },
-      data: {
-        hash: hashedPassword,
+      select: {
+        email: true,
+        id: true,
       },
     })
-    return await sendNewPassword(userEmail?.email as string, password)
-  } else {
-    return { value: null, time: Date.now() }
+
+    if (userEmail) {
+      await prisma.password.update({
+        where: {
+          userId: userEmail?.id,
+        },
+        data: {
+          hash: hashedPassword,
+        },
+      })
+
+      const newPassword = await sendNewPassword(
+        userEmail?.email as string,
+        password
+      )
+
+      return newPassword
+    } else {
+      throw new Error('something went wrong')
+    }
+  } catch (err) {
+    throw new Error('something went wrong')
   }
 }
 

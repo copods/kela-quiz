@@ -145,7 +145,11 @@ export async function updateCandidateDetail({
   firstName: string
   lastName: string
 }) {
-  return await updateCandidateFirstLastName(candidateId, firstName, lastName)
+  try {
+    return await updateCandidateFirstLastName(candidateId, firstName, lastName)
+  } catch (error) {
+    throw new Error('Something went wrong..!')
+  }
 }
 
 /**

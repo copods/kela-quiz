@@ -119,7 +119,11 @@ export async function getTestById(id: string) {
 }
 
 export async function sendMailToCandidate(email: string, link: string) {
-  sendTestInviteMail(email, link)
+  try {
+    await sendTestInviteMail(email, link)
+  } catch (err) {
+    throw new Error('Something went wrong!')
+  }
 }
 
 async function createCandidateData({
@@ -131,30 +135,34 @@ async function createCandidateData({
   createdById: User['id']
   testId: string
 }) {
-  const user = await createIndividualCandidate({ email, createdById })
-  const candidateTest = await createCandidateTest({
-    testId,
-    candidateId: user.id,
-  })
-  // generating random link
-  const candidateLink = `${candidateTestLink}${candidateTest.id}`
-  const updatedCandidateTest = await updateTestLink({
-    id: candidateTest.id,
-    link: candidateLink,
-  })
-  const test = await getTestById(testId)
-  // creating section in test
-  if (test?.sections) {
-    for (const section of test.sections) {
-      await createSectionInTest({
-        sectionId: section.sectionId,
-        candidateTestId: candidateTest.id,
-        order: section.order,
-        totalQuestions: section.totalQuestions,
-      })
+  try {
+    const user = await createIndividualCandidate({ email, createdById })
+    const candidateTest = await createCandidateTest({
+      testId,
+      candidateId: user.id,
+    })
+    // generating random link
+    const candidateLink = `${candidateTestLink}${candidateTest.id}`
+    const updatedCandidateTest = await updateTestLink({
+      id: candidateTest.id,
+      link: candidateLink,
+    })
+    const test = await getTestById(testId)
+    // creating section in test
+    if (test?.sections) {
+      for (const section of test.sections) {
+        await createSectionInTest({
+          sectionId: section.sectionId,
+          candidateTestId: candidateTest.id,
+          order: section.order,
+          totalQuestions: section.totalQuestions,
+        })
+      }
     }
+    await sendMailToCandidate(user?.email, updatedCandidateTest?.link as string)
+  } catch (err) {
+    throw new Error('Something went wrong!')
   }
-  await sendMailToCandidate(user?.email, updatedCandidateTest?.link as string)
 }
 // Resend a test link to user
 export async function resendTestLink({
@@ -191,7 +199,7 @@ export async function resendTestLink({
       return 'End Test'
     }
   } catch (error) {
-    return 'error'
+    throw new Error('Somwthing went wrong!')
   }
 }
 
@@ -235,6 +243,6 @@ export async function createCandidate({
     }
     return { created: 'created', emailCount, neverInvitedCount }
   } catch (error) {
-    return 'error'
+    throw new Error('something went wrong!')
   }
 }

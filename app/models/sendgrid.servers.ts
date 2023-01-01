@@ -185,7 +185,6 @@ export async function sendMemberInvite(
       html,
     })
   } catch (err) {
-    console.log(err)
     throw new Error(sendGridFailed)
   }
 }

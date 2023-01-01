@@ -14,8 +14,8 @@ export async function inviteNewUser({
   userId?: string
   invitedByWorkspaceId: string
 }) {
-  await prisma.invites
-    .create({
+  try {
+    const inviteCreated = await prisma.invites.create({
       data: {
         email,
         roleId,
@@ -37,23 +37,23 @@ export async function inviteNewUser({
         },
       },
     })
-    .then(async (res) => {
-      const invite = res
 
-      const workspaceJoinLink =
-        env.PUBLIC_URL + '/workspace/' + invite.id + '/join'
-      const name = ((invite.invitedById?.firstName as string) +
-        ' ' +
-        invite.invitedById?.lastName) as string
-      return await sendMemberInvite(
-        email,
-        name as string,
-        workspaceJoinLink as string
-      )
-    })
-    .catch((err) => {
-      console.log('error', err)
-    })
+    const workspaceJoinLink =
+      env.PUBLIC_URL + '/workspace/' + inviteCreated.id + '/join'
+    const name = ((inviteCreated.invitedById?.firstName as string) +
+      ' ' +
+      inviteCreated.invitedById?.lastName) as string
+
+    const emailSentRes = await sendMemberInvite(
+      email,
+      name as string,
+      workspaceJoinLink as string
+    )
+
+    return emailSentRes
+  } catch (err) {
+    throw new Error('Something went wrong!')
+  }
 }
 export async function getInvitedMemberById(id: Invites['id']) {
   return prisma.invites.findUnique({
@@ -150,25 +150,33 @@ export async function getAllInvitedMember(
   })
 }
 export async function reinviteMemberForWorkspace({ id }: { id: string }) {
-  const user = await prisma.invites.findUnique({
-    where: { id },
-    include: {
-      invitedForWorkspace: true,
-      invitedById: {
-        select: {
-          firstName: true,
-          lastName: true,
+  try {
+    const user = await prisma.invites.findUnique({
+      where: { id },
+      include: {
+        invitedForWorkspace: true,
+        invitedById: {
+          select: {
+            firstName: true,
+            lastName: true,
+          },
         },
       },
-    },
-  })
-  const workspaceJoinLink = env.PUBLIC_URL + '/workspace/' + user?.id + '/join'
-  const name = ((user?.invitedById?.firstName as string) +
-    ' ' +
-    user?.invitedById?.lastName) as string
-  return await sendMemberInvite(
-    user?.email as string,
-    name as string,
-    workspaceJoinLink as string
-  )
+    })
+    const workspaceJoinLink =
+      env.PUBLIC_URL + '/workspace/' + user?.id + '/join'
+    const name = ((user?.invitedById?.firstName as string) +
+      ' ' +
+      user?.invitedById?.lastName) as string
+
+    const emailSentRes = await sendMemberInvite(
+      user?.email as string,
+      name as string,
+      workspaceJoinLink as string
+    )
+
+    return emailSentRes
+  } catch (err) {
+    throw new Error('Something went wrong!')
+  }
 }

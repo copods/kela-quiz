@@ -150,7 +150,7 @@ export const action: ActionFunction = async ({ request, params }) => {
         )
       })
       .catch((err) => {
-        let title = 'statusCheck.commonError'
+        let title = 'statusCheck.sendGridError'
         if (err.code === 'P2002') {
           title = 'toastConstants.memberAlreadyInvited'
         }
@@ -185,7 +185,7 @@ export const action: ActionFunction = async ({ request, params }) => {
         )
       })
       .catch((err) => {
-        let title = 'statusCheck.commonError'
+        let title = 'statusCheck.sendGridError'
         resendMember = json<ActionData>(
           {
             errors: {
