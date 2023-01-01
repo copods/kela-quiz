@@ -121,3 +121,10 @@ export async function leaveWorkspace(workspaceId: string, userId: string) {
     where: { workspaceId: workspaceId, userId: userId },
   })
 }
+
+export async function getOwnersWorkspace(userId: string) {
+  const ownerWorkspaceId = await prisma.workspace.findFirst({
+    where: { createdById: userId },
+  })
+  return ownerWorkspaceId
+}

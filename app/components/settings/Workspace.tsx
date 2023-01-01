@@ -6,17 +6,18 @@ const Workspace = () => {
   const [open, setOpen] = useState(false)
   const submit = useSubmit()
   const loaderData = useLoaderData()
-  console.log(loaderData)
   const leaveWorkspace = () => {
     submit({ addSection: 'sectionAdd' }, { method: 'post' })
   }
   return (
     <div className="flex justify-center p-18">
-      <div>
-        <button onClick={() => setOpen(!open)} className="text-red-500">
-          Leave Workspace
-        </button>
-      </div>
+      {loaderData?.ownersWorkspace?.id !== loaderData?.currentWorkspaceId ? (
+        <div>
+          <button onClick={() => setOpen(!open)} className="text-red-500">
+            Leave Workspace
+          </button>
+        </div>
+      ) : null}
       <DialogWrapper open={open} setOpen={setOpen} header={true}>
         <div className="flex flex-col">
           <div>

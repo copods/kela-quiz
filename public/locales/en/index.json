@@ -18,7 +18,8 @@
     "loggedinFromAnotherAccount": "This link is not valid for this account.",
     "youInvitedBy": "You have been invited by",
     "toJoin": "to join",
-    "owner": "Owner"
+    "owner": "Owner",
+    "workspaceLeft": "You left the workspace"
   },
   "commonConstants": {
     "name": "Name",
