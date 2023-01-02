@@ -8,13 +8,14 @@ const Workspace = () => {
   const [open, setOpen] = useState(false)
   const { t } = useTranslation()
   const submit = useSubmit()
-  const loaderData = useLoaderData()
+  const workspaceLoaderData = useLoaderData()
   const leaveWorkspace = () => {
-    submit({ addSection: 'sectionAdd' }, { method: 'post' })
+    submit({ leaveWorkspace: 'leaveWorkspace' }, { method: 'post' })
   }
   return (
     <div className="flex justify-start ">
-      {loaderData?.ownersWorkspace?.id !== loaderData?.currentWorkspaceId ? (
+      {workspaceLoaderData?.ownersWorkspace?.id !==
+      workspaceLoaderData?.currentWorkspaceId ? (
         <div>
           <Button
             tabIndex={0}

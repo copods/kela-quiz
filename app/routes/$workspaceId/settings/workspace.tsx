@@ -1,7 +1,6 @@
 import Workspace from '~/components/settings/Workspace'
 import type { LoaderFunction, ActionFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
-// import { redirect } from '@remix-run/node'
 import { getUserId } from '~/session.server'
 import {
   getCurrentWorkspaceOwner,
@@ -12,13 +11,33 @@ import { useActionData, useLoaderData, useNavigate } from '@remix-run/react'
 import { useEffect } from 'react'
 import { toast } from 'react-toastify'
 import { t } from 'i18next'
+import { routes } from '../../../constants/route.constants'
+interface LoaderData {
+  workspaceOwner: Awaited<ReturnType<typeof getCurrentWorkspaceOwner>>
+  ownersWorkspace: Awaited<ReturnType<typeof getOwnersWorkspace>>
+  currentWorkspaceId: string
+}
+export type ActionData = {
+  errors?: {
+    title: string
+    status: number
+  }
+  resp?: {
+    title: string
+    status: number
+  }
+}
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   const currentWorkspaceId = params.workspaceId as string
   const userId = (await getUserId(request)) as string
   const workspaceOwner = await getCurrentWorkspaceOwner(currentWorkspaceId)
   const ownersWorkspace = await getOwnersWorkspace(userId)
-  return { workspaceOwner, ownersWorkspace, currentWorkspaceId }
+  return json<LoaderData>({
+    workspaceOwner,
+    ownersWorkspace,
+    currentWorkspaceId,
+  })
 }
 export const action: ActionFunction = async ({ request, params }) => {
   const workspaceId = params.workspaceId as string
@@ -26,7 +45,7 @@ export const action: ActionFunction = async ({ request, params }) => {
   let response = null
   await leaveWorkspace(workspaceId, userId)
     .then((res) => {
-      response = json(
+      response = json<ActionData>(
         {
           resp: {
             title: 'members.workspaceLeft',
@@ -38,7 +57,7 @@ export const action: ActionFunction = async ({ request, params }) => {
     })
     .catch((err) => {
       let title = 'statusCheck.commonError'
-      response = json(
+      response = json<ActionData>(
         {
           errors: {
             title,
@@ -52,16 +71,14 @@ export const action: ActionFunction = async ({ request, params }) => {
 }
 const WorkspaceSetting = () => {
   const actionData = useActionData()
-  const loaderData = useLoaderData()
+  const workspaceLoaderData = useLoaderData()
   const navigate = useNavigate()
   useEffect(() => {
-    if (actionData) {
-      if (actionData?.resp?.status === 200) {
-        toast.success(t(actionData.resp.title))
-        navigate(`/${loaderData?.ownersWorkspace?.id}/members`)
-      } else {
-        toast.error(t(actionData.resp.title))
-      }
+    if (actionData?.resp?.status === 200) {
+      toast.success(t(actionData?.resp?.title))
+      navigate(`/${workspaceLoaderData?.ownersWorkspace?.id}${routes.members}`)
+    } else if (actionData?.resp?.status === 400) {
+      toast.error(t(actionData?.resp?.title))
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [actionData?.resp])
