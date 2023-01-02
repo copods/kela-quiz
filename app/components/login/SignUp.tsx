@@ -156,7 +156,7 @@ const SignUp = ({ error }: { error?: string }) => {
       isRequired: true,
       type: 'password',
       value: password,
-      onblur: onBlurPassError,
+      onBlur: onBlurPassError,
       error: signUpActionData?.errors?.minPasswordLimit || onBlurPasswordErr,
       errorId: 'New-password-error',
       onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
@@ -174,7 +174,7 @@ const SignUp = ({ error }: { error?: string }) => {
       isRequired: true,
       type: 'password',
       value: confirmPassword,
-      onblur: onBlurConfPassError,
+      onBlur: onBlurConfPassError,
       error: signUpActionData?.errors?.passNotMatched || onBlurConfPasswordErr,
       errorId: 'Confirm-password-error',
       onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
