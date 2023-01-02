@@ -24,7 +24,7 @@ export interface PasswordFieldProps {
   error?: string
   errorId: string
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
-  onblur?: (e: React.FocusEvent<HTMLInputElement>) => void
+  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void
 }
 
 export interface DialogWrapperProps {

@@ -158,7 +158,7 @@ const ResetPassword = ({
             {PasswordInputFieldProps.map((props) => {
               return (
                 <PasswordInputFields
-                  onblur={() => comparePasswords(newPassword, confirmPassword)}
+                  onBlur={() => comparePasswords(newPassword, confirmPassword)}
                   {...props}
                   key={props.name}
                 />
