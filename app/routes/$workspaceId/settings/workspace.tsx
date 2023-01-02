@@ -42,10 +42,9 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 export const action: ActionFunction = async ({ request, params }) => {
   const workspaceId = params.workspaceId as string
   const userId = (await getUserId(request)) as string
-  let response = null
-  await leaveWorkspace(workspaceId, userId)
+  const response = await leaveWorkspace(workspaceId, userId)
     .then((res) => {
-      response = json<ActionData>(
+      return json<ActionData>(
         {
           resp: {
             title: 'members.workspaceLeft',
@@ -57,7 +56,7 @@ export const action: ActionFunction = async ({ request, params }) => {
     })
     .catch((err) => {
       let title = 'statusCheck.commonError'
-      response = json<ActionData>(
+      return json<ActionData>(
         {
           errors: {
             title,
