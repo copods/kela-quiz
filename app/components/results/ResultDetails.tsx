@@ -5,6 +5,7 @@ import Divider from '../common-components/divider'
 import BarGraph from '../barGraph/barGraph'
 import { routes } from '~/constants/route.constants'
 import EmptyStateComponent from '../common-components/EmptyStateComponent'
+import type { SectionInCandidateTest } from '~/interface/Interface'
 // import { useTranslation } from 'react-i18next'
 
 const ResultDetailsComponent = () => {
@@ -13,12 +14,11 @@ const ResultDetailsComponent = () => {
   const { params, candidateTestWiseResult, currentWorkspaceId } =
     useLoaderData()
   let navigate = useNavigate()
-  const sortSections =candidateTestWiseResult.sections.sort((a:any,b:any)=>{
-  return(
-    a.SectionWiseResult.length-b.SectionWiseResult.length
-  ) 
-  })
- 
+  const sortSections = candidateTestWiseResult.sections.sort(
+    (a: SectionInCandidateTest, b: SectionInCandidateTest) => {
+      return a.SectionWiseResult.length - b.SectionWiseResult.length
+    }
+  )
 
   return (
     <div id="test-details" className="flex h-full flex-col gap-6">
@@ -62,7 +62,7 @@ const ResultDetailsComponent = () => {
             id="results-test-candidate-list-tab"
             className="flex flex-col gap-6"
           >
-            {sortSections.reverse().map((section: any) => {
+            {sortSections.reverse().map((section: SectionInCandidateTest) => {
               return (
                 <SectionCardForResultDetail
                   key={section?.id}
