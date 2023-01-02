@@ -13,6 +13,13 @@ const ResultDetailsComponent = () => {
   const { params, candidateTestWiseResult, currentWorkspaceId } =
     useLoaderData()
   let navigate = useNavigate()
+  const sortSections =candidateTestWiseResult.sections.sort((a:any,b:any)=>{
+  return(
+    a.SectionWiseResult.length-b.SectionWiseResult.length
+  ) 
+  })
+ 
+
   return (
     <div id="test-details" className="flex h-full flex-col gap-6">
       <header>
@@ -55,7 +62,7 @@ const ResultDetailsComponent = () => {
             id="results-test-candidate-list-tab"
             className="flex flex-col gap-6"
           >
-            {candidateTestWiseResult?.sections?.map((section: any) => {
+            {sortSections.reverse().map((section: any) => {
               return (
                 <SectionCardForResultDetail
                   key={section?.id}

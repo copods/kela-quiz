@@ -698,7 +698,7 @@ async function calculateResultByIdSection(sectionid?: string) {
           incorrect += 1
         }
       }
-      const sec=await prisma.sectionWiseResult.create({
+      const sec = await prisma.sectionWiseResult.create({
         data: {
           sectionInCandidateTestId: section?.id,
           totalQuestion,
