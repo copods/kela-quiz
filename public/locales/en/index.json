@@ -324,7 +324,10 @@
     "passResetSuccessfully": "Password changed successfully !",
     "basicInfo": "Basic Info",
     "minPasswordLimit": "Password should have minimum 8 characters",
-    "passShouldNotBeSame": "Current Password and New Password should not be same"
+    "passShouldNotBeSame": "Current Password and New Password should not be same",
+    "leaveWorkspace": "Leave workspace",
+    "leave": "Leave",
+    "leaveWorkspaceConfirmation": "Are you sure you want to leave this workspace?"
   },
   "tabs": {
     "general": "General",
