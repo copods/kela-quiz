@@ -1,6 +1,7 @@
-import type { User, Section, Question } from '@prisma/client'
+import type { User, Section } from '@prisma/client'
 import cuid from 'cuid'
 import { prisma } from '~/db.server'
+import type{ Question } from '~/interface/Interface'
 
 export async function getSectionById({ id }: Pick<Section, 'id'>) {
   return prisma.section.findUnique({
@@ -107,6 +108,7 @@ export async function editSectionById(
   })
 }
 export async function deleteSectionById(id: string) {
+  console.log(id, 'id')
   return prisma.section.update({
     where: { id },
     data: {

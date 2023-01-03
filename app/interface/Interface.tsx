@@ -95,6 +95,7 @@ export interface TestSection {
 export interface Section {
   id: string
   name: string
+  questions: Array<Question>
   description: string
   createdById: string
   createdAt: Date
