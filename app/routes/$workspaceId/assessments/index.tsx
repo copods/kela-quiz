@@ -32,8 +32,8 @@ export type ActionData = {
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   const query = new URL(request.url).searchParams
-  const testsItemsPerPage = Math.max(Number(query.get('TestItems') || 5), 5) //To set the lower bound, so that minimum count will always be 1 for current page and 5 for items per page.
-  const testsCurrentPage = Math.max(Number(query.get('TestPage') || 1), 1)
+  const testsItemsPerPage = Math.max(Number(query.get('testItems') || 5), 5) //To set the lower bound, so that minimum count will always be 1 for current page and 5 for items per page.
+  const testsCurrentPage = Math.max(Number(query.get('testPage') || 1), 1)
   const userId = await getUserId(request)
   const currentWorkspaceId = params.workspaceId as string
   const workspaces = await getUserWorkspaces(userId as string)
