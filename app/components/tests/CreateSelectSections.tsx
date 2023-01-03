@@ -15,7 +15,7 @@ const SelectSections = ({
   currentWorkspaceId,
 }: {
   sections: Array<TestSection>
-  setSections: (e: Array<TestSection>, i: number) => void
+  setSections: <T>(e: T, i: number) => void
   updateSectionsList: (e: SetStateAction<Array<TestSection>>) => void
   currentWorkspaceId: string
 }) => {

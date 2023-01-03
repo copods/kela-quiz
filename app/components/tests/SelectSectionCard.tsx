@@ -11,7 +11,7 @@ const SelectSectionCard = ({
   sectionCount,
 }: {
   section: TestSection
-  updateSection: (e: any) => void
+  updateSection:<T>(e: T) => void
   sectionCount?: number
 }) => {
   const { t } = useTranslation()

@@ -61,7 +61,7 @@ const AddTestComponent = ({
     []
   )
   const navigate = useNavigate()
-  const updateSection = (data: Array<TestSection>, i: number) => {
+  const updateSection = <T,>(data: T, i: number) => {
     setSectionsCopy((sec) => {
       sec[i] = { ...sec[i], ...data }
       onSelectedSectionChange(
