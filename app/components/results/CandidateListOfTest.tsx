@@ -11,7 +11,7 @@ import type {
   CandidateTest,
   Candidate,
   CandidateResult,
-  column,
+  tableColumnType,
 } from '~/interface/Interface'
 import { toast } from 'react-toastify'
 
@@ -58,7 +58,7 @@ const CandidateListOfTest = () => {
   ) => {
     return (
       <span>
-        {data.candidate.firstName && data.candidate.lastName && data.endAt ? (
+        {data.candidate.firstName && data.candidate.lastName ? (
           <Link
             to={`/${currentWorkspaceId}/results/groupByTests/${data?.testId}/${data?.candidateResult[0]?.id}`}
             className="col-span-2 flex  truncate font-semibold text-primary"
@@ -140,7 +140,7 @@ const CandidateListOfTest = () => {
       </div>
     )
   }
-  const column: column[] = [
+  const column: tableColumnType[] = [
     { title: 'Sr.No', field: 'sr_no', render: SeriaLNoCell },
     { title: 'Name', field: 'name', render: NameDataCell, width: '15%' },
     { title: 'Email', field: 'email', render: EmailDataCell, width: '20%' },

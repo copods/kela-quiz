@@ -4,7 +4,7 @@ import SortFilter from '../common-components/SortFilter'
 import { Link, useLoaderData, useNavigate, useSubmit } from '@remix-run/react'
 import type {
   CandidateTest,
-  column,
+  tableColumnType,
   OtherFilters,
   Test,
 } from '~/interface/Interface'
@@ -129,7 +129,7 @@ const GroupByTests = () => {
     },
   ]
 
-  const resultsColumn: column[] = [
+  const resultsColumn: tableColumnType[] = [
     { title: 'Sr.No', field: 'sr_no', render: SrNoDataCell, width: '12%' },
     {
       title: 'Assessment',
