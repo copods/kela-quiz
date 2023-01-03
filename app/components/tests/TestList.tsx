@@ -1,7 +1,7 @@
 import { useActionData, useLoaderData, useSubmit } from '@remix-run/react'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import type { Test, User } from '~/interface/Interface'
+import type { Test, User, tableColumnType } from '~/interface/Interface'
 import { sortByOrder } from '~/interface/Interface'
 import SortFilter from '../common-components/SortFilter'
 import Button from '../common-components/Button'
@@ -79,7 +79,7 @@ const TestList = () => {
   const [deleted, setDeleted] = useState(false)
 
   useEffect(() => {
-    if (deleted === true) {
+    if (deleted) {
       setTimeout(() => {
         document.getElementById('1')?.focus()
         setDeleted(false)
@@ -164,7 +164,7 @@ const TestList = () => {
       </>
     )
   }
-  const testColumns = [
+  const testColumns: tableColumnType[] = [
     { title: 'Sr.No', field: 'Sr_No', render: SeriaLNoCell, width: '10%' },
     { title: 'Assessment', field: 'name', width: '20%' },
     { title: 'Test', field: 'test', render: TestDataCell, width: '20%' },
@@ -184,7 +184,7 @@ const TestList = () => {
   ]
   useEffect(() => {
     navigate(
-      `?index=&data=%7B"orderBy"%3A%7B"createdAt"%3A"desc"%7D%7D&TestPage=${testsCurrentPage}&TestItems=${testsPageSize}`
+      `?index=&data=%7B"orderBy"%3A%7B"createdAt"%3A"desc"%7D%7D&testPage=${testsCurrentPage}&testItems=${testsPageSize}`
     )
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [testsPageSize, testsCurrentPage])
