@@ -250,18 +250,18 @@ export async function getAllCandidateTestsCount(
   return testCount
 }
 export async function getAllCandidateTests(
-  filterData: string,
   workspaceId: string,
   resultsItemsPerPage: number = 5,
   resultsCurrentPage: number = 1,
-  statusFilter: string
+  statusFilter: string,
+  sortBy: string,
+  sortOrder: string
 ) {
   const PER_PAGE_ITEMS = resultsItemsPerPage
-  const filter = filterData ? filterData : {}
   const res: Array<Test> = await prisma.test.findMany({
     take: PER_PAGE_ITEMS,
     skip: (resultsCurrentPage - 1) * PER_PAGE_ITEMS,
-    ...filter,
+    orderBy: { [sortBy]: sortOrder },
     where: {
       ...(statusFilter === 'active'
         ? { NOT: { deleted: { equals: true } } }

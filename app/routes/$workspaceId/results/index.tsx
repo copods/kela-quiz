@@ -21,19 +21,16 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const resultsCurrentPage = Math.max(Number(query.get('resultPage') || 1), 1)
   const statusFilter = query.get('filterByStatus') as string
   const workspaces = await getUserWorkspaces(userId as string)
+  const sortBy = query.get('sortBy')
+  const sortOrder = query.get('sort')
   if (!userId) return redirect(routes.signIn)
-  const filter = Object.fromEntries(new URL(request.url).searchParams.entries())
-    .data
-    ? JSON.parse(
-        Object.fromEntries(new URL(request.url).searchParams.entries()).data
-      )
-    : {}
   const candidateTest = await getAllCandidateTests(
-    filter,
     currentWorkspaceId as string,
     resultsItemsPerPage,
     resultsCurrentPage,
-    statusFilter
+    statusFilter,
+    sortBy as string,
+    sortOrder as string
   )
   return json<LoaderData>({
     candidateTest,

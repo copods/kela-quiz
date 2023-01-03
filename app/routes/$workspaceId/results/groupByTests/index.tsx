@@ -25,6 +25,8 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const resultsItemsPerPage = Math.max(Number(query.get('resultItems') || 5), 5) //To set the lower bound, so that minimum count will always be 1 for current page and 5 for items per page.
   const resultsCurrentPage = Math.max(Number(query.get('resultPage') || 1), 1)
   const statusFilter = query.get('filterByStatus') as string
+  const sortBy = query.get('sortBy')
+  const sortOrder = query.get('sort')
   const currentWorkspaceId = params.workspaceId as string
   const testCount = await getAllCandidateTestsCount(
     currentWorkspaceId,
@@ -33,18 +35,13 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const totalTestCount = await getTotalTestCount(params.testId!)
   const workspaces = await getUserWorkspaces(userId as string)
   if (!userId) return redirect('/sign-in')
-  const filter = Object.fromEntries(new URL(request.url).searchParams.entries())
-    .data
-    ? JSON.parse(
-        Object.fromEntries(new URL(request.url).searchParams.entries()).data
-      )
-    : {}
   const candidateTest = await getAllCandidateTests(
-    filter,
     currentWorkspaceId as string,
     resultsItemsPerPage,
     resultsCurrentPage,
-    statusFilter
+    statusFilter,
+    sortBy as string,
+    sortOrder as string
   )
   return json<LoaderData>({
     candidateTest,

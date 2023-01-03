@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import SortFilter from '../common-components/SortFilter'
 
-import { Link, useLoaderData, useNavigate, useSubmit } from '@remix-run/react'
+import { Link, useLoaderData, useNavigate } from '@remix-run/react'
 import type {
   CandidateTest,
   tableColumnType,
@@ -63,16 +63,6 @@ const GroupByTests = () => {
       return items.candidateTest?.length !== 0 || items.deleted === false
     }
   )
-
-  const submit = useSubmit()
-  useEffect(() => {
-    const filter = {
-      orderBy: {
-        [sortBy]: sortDirection,
-      },
-    }
-    submit({ data: JSON.stringify(filter) }, { method: 'get' })
-  }, [sortDirection, sortBy, submit])
 
   useEffect(() => {
     const heading = document.getElementById('heading')
@@ -147,10 +137,10 @@ const GroupByTests = () => {
   ]
   useEffect(() => {
     navigate(
-      `?resultPage=${resultsCurrentPage}&resultItems=${resultsPageSize}&filterByStatus=${statusFilter}`
+      `?sortBy=${sortBy}&sort=${sortDirection}&resultPage=${resultsCurrentPage}&resultItems=${resultsPageSize}&filterByStatus=${statusFilter}`
     )
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [resultsPageSize, resultsCurrentPage, statusFilter])
+  }, [resultsPageSize, resultsCurrentPage, statusFilter, sortBy, sortDirection])
   return (
     <div
       className="flex h-full flex-col gap-6 p-1"

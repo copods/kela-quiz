@@ -38,7 +38,7 @@ const SideNav = () => {
           id: 'group-by-tests',
           iconClass: 'mdi:chart-box-outline',
           itemName: 'commonConstants.results',
-          itemRoute: `${routes.resultGroupTest}?index=&data=%7B"orderBy"%3A%7B"createdAt"%3A"desc"%7D%7D`,
+          itemRoute: `${routes.resultGroupTest}`,
         },
         // {
         //   id: 'Group_By_Candidate',
