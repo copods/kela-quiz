@@ -119,7 +119,7 @@ const TableDataCell = <T,>({
 
 const TableEmptyState = () => {
   return (
-    <div className="flex justify-center py-7 text-gray-700">
+    <div className="flex justify-center bg-white py-7 text-gray-700">
       <span>{t('commonConstants.noRowsToShow')}</span>
     </div>
   )

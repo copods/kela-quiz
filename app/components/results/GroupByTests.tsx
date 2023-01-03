@@ -40,7 +40,6 @@ const GroupByTests = () => {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const candidateTestData = useLoaderData()
-  console.log(candidateTestData, 'BANKAI')
   const [sortDirection, onSortDirectionChange] = useState(
     sortByOrder.desc as string
   )
