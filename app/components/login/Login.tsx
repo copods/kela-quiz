@@ -123,6 +123,11 @@ function Login({ actionData, redirectTo }: LoginProps) {
           </div>
           <div className="flex items-center justify-center">
             <input type="hidden" name="redirectTo" value={redirectTo} />
+            <input
+              type="hidden"
+              name="inviteId"
+              value={loginLoaderData.inviteId}
+            />
             <Button
               tabIndex={0}
               type="submit"

@@ -1,7 +1,7 @@
 /// <reference types="Cypress"/>
 import { cypress } from '~/constants/common.constants'
 const memberEmail = 'johndoe@example.com'
-
+const owner = 'Owner'
 describe('Test for members', () => {
   beforeEach('sign-in', () => {
     cy.login()
@@ -180,5 +180,13 @@ describe('Test for members', () => {
   it('Test for add-members popUp cancel button', () => {
     cy.get('#invite-member').should('have.text', cypress.addMember).click()
     cy.get('#cancel-add-button').should('have.text', 'Cancel').click()
+  })
+  it('checks,owner badge should be visible', () => {
+    cy.viewport(1280, 720)
+    cy.get('.membersHeading').should('be.visible')
+    cy.get('[data-cy="badge-tag"]').should('be.visible')
+  })
+  it('checks,owner badge should have correct text', () => {
+    cy.get('[data-cy="badge-tag"]').should('have.text', owner)
   })
 })

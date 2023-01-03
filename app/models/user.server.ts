@@ -85,13 +85,11 @@ export async function createUserBySignUp({
   lastName,
   email,
   password,
-  workspaceName,
 }: {
   firstName: string
   lastName: string
   email: string
   password: string
-  workspaceName: string
 }) {
   const hashedPassword = await bcrypt.hash(password, 10)
   const roleId = await getAdminId()
@@ -108,7 +106,7 @@ export async function createUserBySignUp({
       },
       workspace: {
         create: {
-          name: workspaceName,
+          name: `${firstName}'s workspace`,
         },
       },
     },
