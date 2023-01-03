@@ -35,8 +35,8 @@ const CandidateInstruction = () => {
 
   const setOfInstructions = [
     `The duration of this exam is ${getTotalTimeInMin()} minutes`,
-    'Each question is worth the same marks',
-    "After submitting the section, you won't be able to make any changes",
+    `Each question is worth the same marks`,
+    `After submitting the section, you won't be able to make any changes`,
   ]
 
   return (
@@ -85,14 +85,13 @@ const CandidateInstruction = () => {
                 {t('candidateExamConstants.instructions')}
               </h3>
               <div className="flex flex-col gap-6">
-                {' '}
                 {setOfInstructions.map((instruction: string, index: number) => {
                   return (
                     <div
                       className="flex items-start gap-4"
                       key={`instruction-${index}`}
                     >
-                      <img src={checkIcon} alt="" className="h-6" />
+                      <img src={checkIcon} alt="checked icon" className="h-6" />
                       <span className="text-base font-normal text-gray-900">
                         {instruction}
                       </span>
