@@ -136,7 +136,7 @@ const Sections = ({
   testCurrentItems,
   totalCount,
 }: SectionType) => {
-  let navigate = useNavigate()
+  const navigate = useNavigate()
   const [testsPageSize, setTestPageSize] = useState(5)
   const [testsCurrentPage, setTestsCurrentPage] = useState(testCurrentPage)
   useEffect(() => {
