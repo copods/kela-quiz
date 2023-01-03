@@ -40,6 +40,7 @@ const GroupByTests = () => {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const candidateTestData = useLoaderData()
+  console.log(candidateTestData, 'BANKAI')
   const [sortDirection, onSortDirectionChange] = useState(
     sortByOrder.desc as string
   )
@@ -166,7 +167,7 @@ const GroupByTests = () => {
       >
         {t('commonConstants.results')}
       </h1>
-      {candidateTests.length ? (
+      {candidateTestData.totalTestCount ? (
         <div className="flex flex-col gap-6">
           <div id="sort-filter-container" className="w-48">
             <SortFilter
@@ -183,7 +184,7 @@ const GroupByTests = () => {
           <Table
             columns={resultsColumn}
             data={candidateTestData.candidateTest}
-            paginationEnabled={true}
+            paginationEnabled={candidateTests.length > 0 ? true : false}
             pageSize={resultsPageSize}
             setPageSize={setResultsPageSize}
             currentPage={resultsCurrentPage}

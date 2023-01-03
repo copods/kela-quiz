@@ -6,6 +6,7 @@ import GroupByTests from '~/components/results/GroupByTests'
 import {
   getAllCandidateTests,
   getAllCandidateTestsCount,
+  getTotalTestCount,
 } from '~/models/result.server'
 import { getUserWorkspaces } from '~/models/workspace.server'
 type LoaderData = {
@@ -16,6 +17,7 @@ type LoaderData = {
   resultsItemsPerPage: number
   resultsCurrentPage: number
   testCount: number
+  totalTestCount: number
 }
 export const loader: LoaderFunction = async ({ request, params }) => {
   const userId = await getUserId(request)
@@ -28,6 +30,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     currentWorkspaceId,
     statusFilter
   )
+  const totalTestCount = await getTotalTestCount(params.testId!)
   const workspaces = await getUserWorkspaces(userId as string)
   if (!userId) return redirect('/sign-in')
   const filter = Object.fromEntries(new URL(request.url).searchParams.entries())
@@ -51,6 +54,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     resultsCurrentPage,
     resultsItemsPerPage,
     testCount,
+    totalTestCount,
   })
 }
 

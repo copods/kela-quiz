@@ -210,6 +210,22 @@ export async function updateCandidateStatus({
     },
   })
 }
+export async function getTotalTestCount(workspaceId: string) {
+  const totalCount = await prisma.test.count({
+    where: {
+      workspaceId,
+
+      candidateTest: {
+        some: {
+          id: {
+            not: undefined,
+          },
+        },
+      },
+    },
+  })
+  return totalCount
+}
 export async function getAllCandidateTestsCount(
   workspaceId: string,
   statusFilter: string
