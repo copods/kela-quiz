@@ -137,7 +137,7 @@ const GroupByTests = () => {
   ]
   useEffect(() => {
     navigate(
-      `?sortBy=${sortBy}&sort=${sortDirection}&resultPage=${resultsCurrentPage}&resultItems=${resultsPageSize}&filterByStatus=${statusFilter}`
+      `?sortBy=${sortBy}&sort=${sortDirection}&page=${resultsCurrentPage}&limit=${resultsPageSize}&status=${statusFilter}`
     )
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resultsPageSize, resultsCurrentPage, statusFilter, sortBy, sortDirection])
