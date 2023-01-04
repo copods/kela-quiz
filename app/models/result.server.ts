@@ -261,7 +261,7 @@ export async function getAllCandidateTests(
   const res: Array<Test> = await prisma.test.findMany({
     take: PER_PAGE_ITEMS,
     skip: (resultsCurrentPage - 1) * PER_PAGE_ITEMS,
-    orderBy: { [sortBy]: sortOrder },
+    orderBy: { [sortBy ?? 'createdAt']: sortOrder ?? 'asc' },
     where: {
       ...(statusFilter === 'active'
         ? { NOT: { deleted: { equals: true } } }
