@@ -12,24 +12,26 @@ const Workspace = () => {
   const leaveWorkspace = () => {
     submit({ leaveWorkspace: 'leaveWorkspace' }, { method: 'post' })
   }
+  console.log(workspaceLoaderData?.ownersWorkspace, workspaceLoaderData)
   return (
     <div className="flex justify-start ">
-      {workspaceLoaderData?.ownersWorkspace?.id !==
-      workspaceLoaderData?.currentWorkspaceId ? (
-        <div>
-          <Button
-            tabIndex={0}
-            id="leave-workspace"
-            variant="secondary-solid"
-            type="button"
-            name="leave"
-            className="px-5"
-            title={t('settings.leaveWorkspace')}
-            buttonText={t('settings.leaveWorkspace')}
-            onClick={() => setOpenLeavePopup(!openLeavePopup)}
-          />
-        </div>
-      ) : null}
+      <div>
+        <Button
+          tabIndex={0}
+          id="leave-workspace"
+          variant="secondary-solid"
+          type="button"
+          name="leave"
+          className="px-5"
+          title={t('settings.leaveWorkspace')}
+          buttonText={t('settings.leaveWorkspace')}
+          onClick={() => setOpenLeavePopup(!openLeavePopup)}
+          isDisabled={
+            workspaceLoaderData?.ownersWorkspace?.id ===
+            workspaceLoaderData?.currentWorkspaceId
+          }
+        />
+      </div>
       <DialogWrapper
         open={openLeavePopup}
         setOpen={setOpenLeavePopup}
@@ -39,7 +41,7 @@ const Workspace = () => {
           <div>
             <p>{t('settings.leaveWorkspaceConfirmation')}</p>
           </div>
-          <div className="mr-5 flex justify-end gap-4">
+          <div className="flex justify-end gap-4">
             <Button
               tabIndex={0}
               id="cancel-leave-workspace"
