@@ -19,7 +19,6 @@ const ResultDetailsComponent = () => {
       return a.SectionWiseResult.length - b.SectionWiseResult.length
     }
   )
-
   return (
     <div id="test-details" className="flex h-full flex-col gap-6">
       <header>
@@ -66,8 +65,9 @@ const ResultDetailsComponent = () => {
               return (
                 <SectionCardForResultDetail
                   key={section?.id}
+                  startedAt={section?.startedAt}
+                  endAt={section?.endAt}
                   sectionName={section.section?.name}
-                  startedAt={section.SectionWiseResult[0]?.section?.startedAt}
                   correctQuestions={
                     section.SectionWiseResult[0]?.correctQuestion
                   }

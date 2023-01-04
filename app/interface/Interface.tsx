@@ -24,7 +24,7 @@ export interface PasswordFieldProps {
   error?: string
   errorId: string
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
-  onblur?: (e: React.FocusEvent<HTMLInputElement>) => void
+  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void
 }
 
 export interface DialogWrapperProps {
@@ -316,7 +316,7 @@ export interface SectionWiseResults {
 export interface column {
   title: string
   field: string
-  render?: (data: any) => JSX.Element
+  render?: (data: any, index: number) => JSX.Element
   width?: string
 }
 export interface TableType<T extends object> {
@@ -353,4 +353,9 @@ export interface UserWorkspace {
 export interface TabsComponent {
   name: string
   route: string
+}
+export interface BadgeComponent {
+  children: React.ReactNode
+  bgColor?: string
+  textColor?: string
 }

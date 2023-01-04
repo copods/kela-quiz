@@ -15,9 +15,10 @@
     "invitedOn": "Invited On",
     "alreadyJoinedWorkspace": "You already joined the workspace",
     "alreadyRejectedWorkspaceInvitation": "You already reject the workspace joining invitation",
-    "loggedinFromAnotherAccount": "Invalid link, please login from correct account.",
+    "loggedinFromAnotherAccount": "This link is not valid for this account.",
     "youInvitedBy": "You have been invited by",
-    "toJoin": "to join"
+    "toJoin": "to join",
+    "owner": "Owner"
   },
   "commonConstants": {
     "name": "Name",
@@ -47,7 +48,7 @@
     "results": "Results",
     "goToDashboard": "Go to Dashboard",
     "checkOrder": "Check Order",
-    "complete": "Complete",
+    "completed": "Completed",
     "pending": "Pending",
     "createTest": "Creating Assessment",
     "cancelAddTest": "Cancel Add Assessment",
@@ -73,10 +74,15 @@
     "joining": "Joining",
     "joinedOn": "Joined On",
     "invitedAt": "Invited At",
+    "passwordStrength": "Password Strength",
+    "strong": "Strong",
+    "good": "Good",
+    "weak": "Weak",
     "noRowsToShow": "No Rows To Show",
     "items": "Items",
     "onGoing": "Ongoing",
-    "notAttempted": "Not attempted"
+    "notAttempted": "Not attempted",
+    "switchAccount": "Switch Account"
   },
   "sideNav": {
     "sideNavHeading": "Quiz",

@@ -242,19 +242,10 @@ describe('Test for GroupByTestTable, Result', () => {
       })
   })
   it('checks,invite candidate button should be visible', () => {
-    cy.wait(3000)
+    cy.viewport(1280, 720)
     cy.get('#group-by-tests').should('have.text', 'Results').click()
-    cy.get('.groupTestRow', { timeout: 8000 }).each(($el) => {
-      cy.wrap($el).within((el) => {
-        if (
-          el[0].getElementsByClassName('groupByItemTest')[0].innerHTML === test1
-        ) {
-          cy.get('.groupByItemTest').should('have.text', test1)
-        }
-      })
-    })
     cy.get('.groupByItemTest').contains(test1).click()
-    cy.get('#vertical-icon', { timeout: 8000 }).should('be.visible').click()
+    cy.get('#vertical-icon').click()
     cy.get('.deleteTest').should('be.visible')
   })
   it('checks,table contains assessment name', () => {
@@ -305,6 +296,7 @@ describe('Test for GroupByTestTable, Result', () => {
   })
   it('checks,invite candidate from result page', () => {
     cy.wait(3000)
+    cy.viewport(1280, 720)
     cy.get('#group-by-tests').should('have.text', 'Results').click()
     cy.get('.groupTestRow', { timeout: 8000 }).each(($el) => {
       cy.wrap($el).within((el) => {
@@ -316,7 +308,7 @@ describe('Test for GroupByTestTable, Result', () => {
       })
     })
     cy.get('.groupByItemTest').contains(test1).click()
-    cy.get('#vertical-icon', { timeout: 8000 }).should('be.visible').click()
+    cy.get('#vertical-icon', { timeout: 8000 }).click()
     cy.get('.deleteTest').should('be.visible').click()
     cy.get('.Toastify__toast').should('have.text', testsConstants.reinvited)
   })

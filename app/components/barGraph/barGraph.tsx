@@ -19,7 +19,6 @@ const BarGraph = ({
       return data.SectionWiseResult.length > 0
     }
   )
-
   const getDifferenceMin = () => {
     let finalResult: Array<number> = []
     calculateResult.map((result: SectionInCandidateTest) => {

@@ -1,16 +1,18 @@
 import { useTranslation } from 'react-i18next'
 
 const SectionCardForResultDetail = ({
-  sectionName,
   startedAt,
+  endAt,
+  sectionName,
   correctQuestions,
   incorrectQuestions,
   skippedQuestions,
   totalQuestions,
   unansweredQuestions,
 }: {
+  startedAt:Date | null
+  endAt:Date | null
   sectionName: string
-  startedAt: Date | null
   correctQuestions?: number
   incorrectQuestions?: number
   skippedQuestions?: number
@@ -21,7 +23,7 @@ const SectionCardForResultDetail = ({
   return (
     <div className="flex h-12 w-full items-center justify-between rounded-lg border border-gray-300 bg-white px-6">
       <div className="text-base font-semibold text-gray-700">{sectionName}</div>
-      {startedAt ? (
+      {startedAt && endAt? (
         <>
           <div className="flex gap-9">
             <div className="flex gap-2 text-sm">
@@ -64,12 +66,9 @@ const SectionCardForResultDetail = ({
             </div>
           </div>
         </>
-      ) : (
-        <span className="text-start text-sm text-gray-500">
-          {' '}
-          {t('commonConstants.notAttempted')}
-        </span>
-      )}
+      ) : startedAt?(
+        <span>{t('commonConstants.onGoing')}</span>
+      ):t('commonConstants.pending')}
     </div>
   )
 }
