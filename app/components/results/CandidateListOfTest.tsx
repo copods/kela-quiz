@@ -74,7 +74,9 @@ const CandidateListOfTest = () => {
   ) => {
     return (
       <span>
-        {data.candidate.firstName && data.candidate.lastName && data.startedAt ? (
+        {data.candidate.firstName &&
+        data.candidate.lastName &&
+        data.startedAt ? (
           <Link
             to={`/${currentWorkspaceId}/results/groupByTests/${data?.testId}/${data?.candidateId}`}
             className="col-span-2 flex  truncate font-semibold text-primary"
