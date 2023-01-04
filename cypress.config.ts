@@ -1,6 +1,7 @@
 import { defineConfig } from 'cypress'
 
 export default defineConfig({
+  projectId: "2tujvs",
   e2e: {
     setupNodeEvents: (on, config) => {
       const isDev = config.watchForFileChanges
