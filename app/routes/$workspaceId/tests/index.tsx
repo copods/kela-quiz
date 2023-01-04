@@ -16,7 +16,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const userId = await getUserId(request)
   const currentWorkspaceId = params.workspaceId as string
   const workspaces = await getUserWorkspaces(userId as string)
-  const sections = await getAllSections('', currentWorkspaceId as string)
+  const sections = await getAllSections('','', currentWorkspaceId as string)
   const users = await getAllUsers({ currentWorkspaceId })
   return json<LoaderData>({ sections, users, workspaces, currentWorkspaceId })
 }

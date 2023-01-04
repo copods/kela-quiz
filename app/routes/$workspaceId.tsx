@@ -3,7 +3,6 @@ import { json, redirect } from '@remix-run/node'
 import { Outlet } from '@remix-run/react'
 import AdminLayout from '~/components/layouts/AdminLayout'
 import { routes } from '~/constants/route.constants'
-import { getFirstSection } from '~/models/sections.server'
 import {
   getDefaultWorkspaceIdForUserQuery,
   getUserWorkspaces,
@@ -35,9 +34,8 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
   const workspaces = await getUserWorkspaces(userId as string)
 
-  const firstSection = await getFirstSection(currentWorkspaceId)
 
-  return json({ workspaces, currentWorkspaceId, firstSection })
+  return json({ workspaces, currentWorkspaceId })
 }
 
 export const action: ActionFunction = async ({ request }) => {

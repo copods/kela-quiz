@@ -17,9 +17,6 @@ const SectionLink = ({
   currentWorkspaceId,
   sectionActionErrors,
   setSectionActionErrors,
-  testCurrentPage,
-  testCurrentItems,
-  totalCount,
 }: {
   section: Section & { _count?: { questions: number }; createdBy?: User }
   actionStatusData?: string
@@ -32,9 +29,6 @@ const SectionLink = ({
     title,
     description,
   }: sectionActionErrorsType) => void
-  testCurrentPage: number
-  testCurrentItems: number
-  totalCount: number
 }) => {
   const path = `/${currentWorkspaceId}${routes.tests}/${section.id}${filter}`
   const [isDelete, setIsDelete] = useState(false)
@@ -117,6 +111,10 @@ type SectionType = {
   testCurrentPage: number
   testCurrentItems: number
   totalCount: number
+  testsPageSize:number
+  testsCurrentPage:number
+  setTestPageSize:(e: number) => void
+  setTestsCurrentPage:(e: number) => void
 }
 const Sections = ({
   sections,
@@ -135,15 +133,12 @@ const Sections = ({
   testCurrentPage,
   testCurrentItems,
   totalCount,
+  testsPageSize,
+  testsCurrentPage,
+  setTestPageSize,
+  setTestsCurrentPage
 }: SectionType) => {
-  const navigate = useNavigate()
-  const [testsPageSize, setTestPageSize] = useState(5)
-  const [testsCurrentPage, setTestsCurrentPage] = useState(testCurrentPage)
-  useEffect(() => {
-    navigate(
-      `?filter=%7B"orderBy"%3A%7B"createdAt"%3A"desc"%7D%7D&testPage=${testsCurrentPage}&testItems=${testsPageSize}`
-    )
-  }, [testsPageSize, testsCurrentPage, navigate])
+
   return (
     <div className="sectionLSWrapper flex h-full max-w-96 flex-col gap-6">
       {/* filters */}
@@ -176,9 +171,7 @@ const Sections = ({
             sectionActionErrors={sectionActionErrors}
             setSectionActionErrors={setSectionActionErrors}
             currentWorkspaceId={currentWorkspaceId}
-            testCurrentPage={testCurrentPage}
-            testCurrentItems={testCurrentItems}
-            totalCount={totalCount}
+          
           />
         ))}
         <Pagination

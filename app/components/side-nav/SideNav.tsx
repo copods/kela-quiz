@@ -12,8 +12,8 @@ import { actions } from '~/constants/action.constants'
 
 const SideNav = () => {
   const { t } = useTranslation()
-  const [showAddWorkspaceModal, setShowAddWorkspaceModal] = useState(false)
-  const { workspaces = [], currentWorkspaceId, firstSection } = useLoaderData()
+const [showAddWorkspaceModal, setShowAddWorkspaceModal] = useState(false)
+  const { workspaces = [], currentWorkspaceId } = useLoaderData()
   const [workspace, setWorkspace] = useState<string>(currentWorkspaceId)
   const fetcher = useFetcher()
   const tempWorkspaces = workspaces.map((userWorkspace: UserWorkspace) => {
@@ -61,11 +61,7 @@ const SideNav = () => {
           id: 'sections',
           iconClass: 'ci:list-checklist-alt',
           itemName: 'routeFiles.tests',
-          itemRoute: `${routes.tests}${
-            firstSection
-              ? `/${firstSection}?filter=%7B"orderBy"%3A%7B"createdAt"%3A"desc"%7D%7D`
-              : ''
-          }`,
+          itemRoute: `${routes.tests}`,
         },
       ],
     },

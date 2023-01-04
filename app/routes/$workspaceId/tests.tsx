@@ -7,7 +7,6 @@ import {
   useLoaderData,
   useLocation,
   useNavigate,
-  useSubmit,
 } from '@remix-run/react'
 import {
   checkSectionById,
@@ -52,7 +51,7 @@ export type ActionData = {
 }
 
 export type LoaderData = {
-  sections: Awaited<ReturnType<typeof getAllSections>>
+  sections: Section[]
   selectedSectionId?: string
   filters: string
   status: string
@@ -158,17 +157,16 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const query = new URL(request.url).searchParams
   const testItemsPerPage = Math.max(Number(query.get('testItems') || 5), 5) //To set the lower bound, so that minimum count will always be 1 for current page and 5 for items per page.
   const testCurrentPage = Math.max(Number(query.get('testPage') || 1), 1)
-
+  const sortBy = query.get('sortBy')
+  const sortOrder = query.get('sort')
   const userId = await getUserId(request)
   const currentWorkspaceId = params.workspaceId as string
   const workspaces = await getUserWorkspaces(userId as string)
-  const url = new URL(request.url).searchParams.entries()
-  const filterData = Object.fromEntries(url).filter
-
   let sections: Array<Section> = []
   let status: string = ''
   await getAllSections(
-    filterData,
+    sortBy,
+    sortOrder,
     currentWorkspaceId as string,
     testCurrentPage,
     testItemsPerPage
@@ -185,7 +183,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     : undefined
   const getAllTestsCount = await getAllTestsCounts(currentWorkspaceId)
   if (!userId) return redirect(routes.signIn)
-  const filters = new URL(request.url).search
+  const filters = `?sortBy=${sortBy}&sort=${sortOrder}&testPage=${testCurrentPage}&testItems=${testItemsPerPage}`
   return json<LoaderData>({
     sections,
     selectedSectionId,
@@ -316,7 +314,6 @@ export default function SectionPage() {
   const data = useLoaderData() as unknown as LoaderData
   const { t } = useTranslation()
   const sectionActionData = useActionData() as ActionData
-  const submit = useSubmit()
   const sortByDetails = [
     {
       name: 'Name',
@@ -339,30 +336,20 @@ export default function SectionPage() {
   const [selectedSection, setSelectedSection] = useState(
     data.selectedSectionId || data.sections[0]?.id || 'NA'
   )
+  const [testsPageSize, setTestPageSize] = useState(5)
+  const [testsCurrentPage, setTestsCurrentPage] = useState(data.testCurrentPage)
   const location = useLocation()
   const navigate = useNavigate()
 
   if (t(data.status) != t('statusCheck.success')) {
     toast.error(t('statusCheck.commonError'))
   }
-
   useEffect(() => {
-    if (data.sections.length) {
-      const formData = new FormData()
-      let filter = {
-        orderBy: {
-          [sortBy]: order,
-        },
-      }
-
-      formData.append('filter', JSON.stringify(filter))
-      submit(formData, {
-        method: 'get',
-        action: `/${data.currentWorkspaceId}${routes.tests}/${data.sections[0].id}?filter=%7B"orderBy"%3A%7B"createdAt"%3A"desc"%7D%7D&testPage=${data.testCurrentPage}&testItems=${data.testItemsPerPage}`,
-      })
-    }
+    navigate(
+      `/${data.currentWorkspaceId}${routes.tests}/${data.sections[0].id}?sortBy=${sortBy}&sort=${order}&testPage=${testsCurrentPage}&testItems=${testsPageSize}`
+    )
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [order, sortBy, data.sections?.length])
+  }, [testsCurrentPage, testsPageSize, sortBy, order, data.sections[0].id])
   useEffect(() => {
     if (sectionActionData) {
       if (
@@ -465,6 +452,10 @@ export default function SectionPage() {
               testCurrentPage={data.testCurrentPage}
               testCurrentItems={data.testCurrentPage}
               totalCount={data.getAllTestsCount}
+              testsPageSize={testsPageSize}
+              testsCurrentPage={testsCurrentPage}
+              setTestPageSize={setTestPageSize}
+              setTestsCurrentPage={setTestsCurrentPage}
             />
           </div>
           {/* section details */}

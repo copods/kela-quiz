@@ -48,17 +48,18 @@ export async function getAllTestsCounts(currentWorkspaceId: string) {
   return userCount
 }
 export async function getAllSections(
-  filterData: string,
+  sortBy: string | null,
+  sortOrder: string | null,
   workspaceId: string,
   testCurrentPage = 1,
-  testItemsPerPage = 5
+  testItemsPerPage= 5
 ) {
-  let filter = filterData ? filterData : '{"orderBy":{"createdAt":"desc"}}'
   const PER_PAGE_ITEMS = testItemsPerPage
   return await prisma.section.findMany({
-    ...JSON.parse(filter),
+    orderBy: { [sortBy ?sortBy:'createdAt']: sortOrder ?sortOrder: 'asc' },
     take: PER_PAGE_ITEMS,
     skip: (testCurrentPage - 1) * PER_PAGE_ITEMS,
+    
     where: {
       deleted: false,
       workspaceId,

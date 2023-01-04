@@ -13,7 +13,7 @@ import { useTranslation } from 'react-i18next'
 import { getUserWorkspaces } from '~/models/workspace.server'
 
 type LoaderData = {
-  sections: Awaited<ReturnType<typeof getAllSections>>
+  sections: Section[]
   status: string
   workspaces: Awaited<ReturnType<typeof getUserWorkspaces>>
   currentWorkspaceId: string
@@ -34,16 +34,9 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const workspaces = await getUserWorkspaces(userId as string)
   if (!userId) return redirect(routes.signIn)
 
-  const filter = Object.fromEntries(new URL(request.url).searchParams.entries())
-    .data
-    ? JSON.parse(
-        Object.fromEntries(new URL(request.url).searchParams.entries()).data
-      )
-    : '{}'
-
   let sections: Array<Section> = []
   let status: string = ''
-  await getAllSections(filter, currentWorkspaceId as string)
+  await getAllSections('', '', currentWorkspaceId as string)
     .then((res) => {
       sections = res as Section[]
       status = 'statusCheck.success'
