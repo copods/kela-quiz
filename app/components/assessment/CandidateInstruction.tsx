@@ -126,7 +126,7 @@ const CandidateInstruction = () => {
               tabIndex={0}
               id="start"
               className="w-356 py-3"
-              varient="primary-solid"
+              variant="primary-solid"
               title={t('candidateExamConstants.beginAssessment')}
               buttonText={t('candidateExamConstants.beginAssessment')}
               onClick={startTestForCandidate}

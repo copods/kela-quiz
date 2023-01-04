@@ -14,7 +14,7 @@ const Button = ({
     }`
   }
   const getButtonVarient = () => {
-    switch (props.varient) {
+    switch (props.variant) {
       case 'primary-solid':
         return `bg-primary text-gray-50 ${
           !isDisabled && 'hover:bg-primaryHover transition ease-in-out delay-75'

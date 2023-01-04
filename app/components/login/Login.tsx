@@ -133,7 +133,7 @@ function Login({ actionData, redirectTo }: LoginProps) {
               type="submit"
               title={t('logIn.signIn')}
               buttonText={t('logIn.signIn')}
-              varient="primary-solid"
+              variant="primary-solid"
               className="h-11 w-full"
               value={'login'}
             />

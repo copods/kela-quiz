@@ -20,7 +20,7 @@ const Workspace = () => {
           <Button
             tabIndex={0}
             id="leave-workspace"
-            varient="secondary-solid"
+            variant="secondary-solid"
             type="button"
             name="leave"
             className="px-5"
@@ -43,7 +43,7 @@ const Workspace = () => {
             <Button
               tabIndex={0}
               id="cancel-leave-workspace"
-              varient="primary-outlined"
+              variant="primary-outlined"
               type="button"
               name="cancel"
               className="px-5"
@@ -54,7 +54,7 @@ const Workspace = () => {
             <Button
               tabIndex={0}
               id="confirm-leave-workspace"
-              varient="secondary-solid"
+              variant="secondary-solid"
               type="button"
               name="leave"
               className="px-5"

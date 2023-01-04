@@ -153,7 +153,7 @@ export default function OptionForQuestion({
           tabIndex={0}
           id="add-option"
           className="h-9 px-5"
-          varient="primary-solid"
+          variant="primary-solid"
           onClick={addOptionArea}
           title={t('addQuestion.addOptions')}
           buttonText={`+ ${t('addQuestion.addOptions')}`}
