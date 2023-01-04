@@ -33,7 +33,7 @@ export const action: ActionFunction = async ({ request, params }) => {
   const action = await formData.get('action')
   const id = formData.get('id') as string
   if (action === 'deleteQuestion') {
- const deleteQuestion = await deleteQuestionById(id)
+    const deleteQuestion = await deleteQuestionById(id)
       .then(() => {
         return json<ActionData>(
           { resp: { title: 'statusCheck.deletedSuccess', status: 200 } },
@@ -51,8 +51,7 @@ export const action: ActionFunction = async ({ request, params }) => {
           { status: 400 }
         )
       })
-      
-return deleteQuestion
+    return deleteQuestion
   }
 
   return null

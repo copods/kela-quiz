@@ -97,6 +97,7 @@ export interface Section {
   name: string
   questions: Array<Question>
   description: string
+  createdBy: User
   createdById: string
   createdAt: Date
   updatedAt: Date

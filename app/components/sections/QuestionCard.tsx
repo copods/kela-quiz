@@ -56,7 +56,7 @@ const QuestionCard = ({
       onKeyUp={(e) => {
         if (e.key === 'Enter')
           onAccordianToggle(
-            isExpanded === -1 ? index : isExpanded === index ? -1 : index
+          isExpanded === -1 ? index : isExpanded === index ? -1 : index
           )
       }}
       onClick={() => {
