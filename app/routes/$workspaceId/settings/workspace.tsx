@@ -4,7 +4,7 @@ import { json } from '@remix-run/node'
 import { getUserId } from '~/session.server'
 import {
   getCurrentWorkspaceOwner,
-  getOwnersWorkspace,
+  getOwnersWorkspaces,
   leaveWorkspace,
 } from '~/models/workspace.server'
 import { useActionData, useLoaderData, useNavigate } from '@remix-run/react'
@@ -14,7 +14,7 @@ import { t } from 'i18next'
 import { routes } from '../../../constants/route.constants'
 interface LoaderData {
   workspaceOwner: Awaited<ReturnType<typeof getCurrentWorkspaceOwner>>
-  ownersWorkspace: Awaited<ReturnType<typeof getOwnersWorkspace>>
+  ownersWorkspaces: Awaited<ReturnType<typeof getOwnersWorkspaces>>
   currentWorkspaceId: string
 }
 export type ActionData = {
@@ -32,10 +32,10 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const currentWorkspaceId = params.workspaceId as string
   const userId = (await getUserId(request)) as string
   const workspaceOwner = await getCurrentWorkspaceOwner(currentWorkspaceId)
-  const ownersWorkspace = await getOwnersWorkspace(userId)
+  const ownersWorkspaces = await getOwnersWorkspaces(userId)
   return json<LoaderData>({
     workspaceOwner,
-    ownersWorkspace,
+    ownersWorkspaces,
     currentWorkspaceId,
   })
 }

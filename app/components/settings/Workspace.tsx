@@ -12,7 +12,7 @@ const Workspace = () => {
   const leaveWorkspace = () => {
     submit({ leaveWorkspace: 'leaveWorkspace' }, { method: 'post' })
   }
-  console.log(workspaceLoaderData?.ownersWorkspace, workspaceLoaderData)
+
   return (
     <div className="flex justify-start ">
       <div>
@@ -26,10 +26,9 @@ const Workspace = () => {
           title={t('settings.leaveWorkspace')}
           buttonText={t('settings.leaveWorkspace')}
           onClick={() => setOpenLeavePopup(!openLeavePopup)}
-          isDisabled={
-            workspaceLoaderData?.ownersWorkspace?.id ===
-            workspaceLoaderData?.currentWorkspaceId
-          }
+          isDisabled={workspaceLoaderData?.ownersWorkspaces
+            ?.map((workspace: { id: string }) => workspace.id)
+            .includes(workspaceLoaderData?.currentWorkspaceId)}
         />
       </div>
       <DialogWrapper

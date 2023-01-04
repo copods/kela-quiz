@@ -122,8 +122,8 @@ export async function leaveWorkspace(workspaceId: string, userId: string) {
   })
 }
 
-export async function getOwnersWorkspace(userId: string) {
-  const ownerWorkspaceId = await prisma.workspace.findFirst({
+export async function getOwnersWorkspaces(userId: string) {
+  const ownerWorkspaceId = await prisma.workspace.findMany({
     where: { createdById: userId },
   })
   return ownerWorkspaceId
