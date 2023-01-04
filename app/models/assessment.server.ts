@@ -535,8 +535,7 @@ export async function endCurrentSection(
   if (section?.endAt) {
     return { msg: 'Section already ended' }
   }
-  const sectionId = section?.id
-  calculateResultByIdSection(sectionId)
+  calculateResultByIdSection(section?.id)
 
   return await prisma.sectionInCandidateTest.updateMany({
     where: { candidateTestId, sectionId: testSection?.sectionId },

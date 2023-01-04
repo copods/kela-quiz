@@ -19,6 +19,9 @@ export const loader: LoaderFunction = async ({ request, params }) => {
       testId: params?.testId as string,
       candidateId: params?.candidateId as string,
     })
+  if(!candidateTestWiseResult){
+    throw new Response('Not Found', { status: 404 })
+  }
   return json({
     params,
     candidateTestWiseResult,
