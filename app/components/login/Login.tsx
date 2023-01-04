@@ -6,6 +6,7 @@ import Logo from '~/components/Logo'
 import type { LoginProps } from '~/interface/Interface'
 import { useTranslation } from 'react-i18next'
 import { routes } from '~/constants/route.constants'
+import Checkbox from '../form/CheckBox'
 function Login({ actionData, redirectTo }: LoginProps) {
   const { t } = useTranslation()
 
@@ -13,6 +14,7 @@ function Login({ actionData, redirectTo }: LoginProps) {
   const submit = useSubmit()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [rememberMe, setRememberMe] = useState(false)
   const inputFieldsProps = [
     {
       label: t('commonConstants.email'),
@@ -45,10 +47,19 @@ function Login({ actionData, redirectTo }: LoginProps) {
   const signUp = () => {
     navigate(routes.signUp)
   }
+
+  const checkboxProps = {
+    isChecked: rememberMe,
+    handleChange: function (event: React.ChangeEvent<HTMLInputElement>) {
+      setRememberMe(event.target.checked)
+    },
+  }
+
   const submitSignInForm = () => {
     let data = {
       email: email,
       password: password,
+      remember: rememberMe ? 'on' : 'off',
       inviteId: loginLoaderData.inviteId,
     }
     submit(data, {
@@ -80,22 +91,16 @@ function Login({ actionData, redirectTo }: LoginProps) {
               return <InputField {...props} key={props.name} />
             })}
           </div>
-          {/* TODO: may be needed in future
-           <div className="mt-4 flex items-center justify-between">
+          <div className="flex justify-between pt-4 pb-7">
             <div className="flex">
-              <Checkbox {...checkboxProps} />
+              <Checkbox {...checkboxProps} id="remember" />
               <label
                 htmlFor="remember"
-                className="ml-2 block text-xs text-gray-800"
+                className="ml-2 cursor-pointer pt-0.5 text-xs  text-gray-800"
               >
-                Remember Me
+                {t('logIn.RememberMe')}
               </label>
             </div>
-            <div className="cursor-pointer text-center text-xs text-indigo-600">
-              Forget your password?
-            </div>
-          </div> */}
-          <div className="flex justify-end pt-4 pb-7">
             <span
               id="forgot-password"
               tabIndex={0}
