@@ -110,7 +110,8 @@
     "signUp": "Sign Up",
     "signingUp": "Signing up...",
     "AlreadyHaveAnAccount": "Already have an account?",
-    "DontHaveAnAccountYet": "Don’t have an account yet?"
+    "DontHaveAnAccountYet": "Don’t have an account yet?",
+    "RememberMe": "Remember Me"
   },
   "addQuestion": {
     "createOptions": "Create Options",
