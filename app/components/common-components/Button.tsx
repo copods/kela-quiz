@@ -13,7 +13,7 @@ const Button = ({
       props.alignment ? props.alignment : 'justify-center'
     }`
   }
-  const getButtonVarient = () => {
+  const getButtonVariant = () => {
     switch (props.variant) {
       case 'primary-solid':
         return `bg-primary text-gray-50 ${
@@ -36,7 +36,7 @@ const Button = ({
   return (
     <button
       ref={btnRef}
-      className={`${getCommonClasses()} ${getButtonVarient()} ${className}`}
+      className={`${getCommonClasses()} ${getButtonVariant()} ${className}`}
       title={props?.title}
       data-cy={props?.datacy}
       tabIndex={props?.tabIndex}
