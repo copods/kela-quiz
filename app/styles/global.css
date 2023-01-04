@@ -32,4 +32,5 @@ input::-webkit-inner-spin-button {
 }
 #table-td:has(#status-cell) {
   overflow: visible !important;
+  display: flex;
 }
