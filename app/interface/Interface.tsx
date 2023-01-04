@@ -311,14 +311,14 @@ export interface SectionWiseResults {
   section: SectionInCandidateTest
   test: Test
 }
-export interface column {
+export interface tableColumnType {
   title: string
   field: string
   render?: (data: any, index: number) => JSX.Element
   width?: string
 }
 export interface TableType<T extends object> {
-  columns: column[]
+  columns: tableColumnType[]
   data: T[]
   title?: string
   paginationEnabled?: boolean
@@ -352,6 +352,16 @@ export interface TabsComponent {
   name: string
   route: string
 }
+
+export interface OtherFilters {
+  id: string
+  data: Array<{ name: string; value: string }>
+  displayKey: string
+  valueKey: string
+  value: string
+  setValue: (e: string) => void
+}
+
 export interface BadgeComponent {
   children: React.ReactNode
   bgColor?: string
