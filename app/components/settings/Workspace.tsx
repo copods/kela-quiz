@@ -5,7 +5,7 @@ import Button from '../common-components/Button'
 import DialogWrapper from '../common-components/Dialog'
 
 const Workspace = () => {
-  const [openLeavePopup, setOpenLeavePopup] = useState(false)
+  const [showLeaveWorkspacePopup, setShowLeaveWorkspacePopup] = useState(false)
   const { t } = useTranslation()
   const submit = useSubmit()
   const workspaceLoaderData = useLoaderData()
@@ -25,15 +25,15 @@ const Workspace = () => {
           className="px-5"
           title={t('settings.leaveWorkspace')}
           buttonText={t('settings.leaveWorkspace')}
-          onClick={() => setOpenLeavePopup(!openLeavePopup)}
+          onClick={() => setShowLeaveWorkspacePopup(!showLeaveWorkspacePopup)}
           isDisabled={workspaceLoaderData?.ownersWorkspaces
             ?.map((workspace: { id: string }) => workspace.id)
             .includes(workspaceLoaderData?.currentWorkspaceId)}
         />
       </div>
       <DialogWrapper
-        open={openLeavePopup}
-        setOpen={setOpenLeavePopup}
+        open={showLeaveWorkspacePopup}
+        setOpen={setShowLeaveWorkspacePopup}
         header={false}
       >
         <div className="flex flex-col gap-4">
@@ -50,7 +50,9 @@ const Workspace = () => {
               className="px-5"
               title={t('commonConstants.cancel')}
               buttonText={t('commonConstants.cancel')}
-              onClick={() => setOpenLeavePopup(!openLeavePopup)}
+              onClick={() =>
+                setShowLeaveWorkspacePopup(!showLeaveWorkspacePopup)
+              }
             />
             <Button
               tabIndex={0}
