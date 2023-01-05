@@ -227,6 +227,7 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     if: ${{ (github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/main') && github.event_name == 'push' }}
+    needs: [lint, typecheck, vitest, cypress, build, deploy]
     steps:
       - uses: actions/checkout@v3
       - name: Use Node.js
