@@ -262,7 +262,7 @@ const SignUp = ({ error }: { error?: string }) => {
             onClick={() => submitMemberForm()}
           />
           <div className="text-base font-medium text-gray-500">
-            {t('logIn.AlreadyHaveAnAccount')}{' '}
+            {t('logIn.alreadyHaveAnAccount')}{' '}
             <span
               className="cursor-pointer text-primary"
               tabIndex={0}

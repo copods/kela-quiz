@@ -6,12 +6,14 @@ import { useTranslation } from 'react-i18next'
 import { routes } from '~/constants/route.constants'
 import InputField from '../common-components/InputField'
 import Button from '../common-components/Button'
+import Checkbox from '../form/CheckBox'
 function Login({ actionData, redirectTo }: LoginProps) {
   const { t } = useTranslation()
 
   const loginLoaderData = useLoaderData()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [rememberMe, setRememberMe] = useState(false)
   const [loginFieldError, setLoginFieldError] = useState({
     email: actionData?.errors?.email,
     password: actionData?.errors?.password,
@@ -58,6 +60,13 @@ function Login({ actionData, redirectTo }: LoginProps) {
       },
     },
   ]
+
+  const checkboxProps = {
+    isChecked: rememberMe,
+    handleChange: function (event: React.ChangeEvent<HTMLInputElement>) {
+      setRememberMe(event.target.checked)
+    },
+  }
   const navigate = useNavigate()
   const signUp = () => {
     navigate(routes.signUp)
@@ -90,22 +99,16 @@ function Login({ actionData, redirectTo }: LoginProps) {
               return <InputField {...props} key={props.name} />
             })}
           </div>
-          {/* TODO: may be needed in future
-           <div className="mt-4 flex items-center justify-between">
+          <div className="flex justify-between pt-4 pb-7">
             <div className="flex">
-              <Checkbox {...checkboxProps} />
+              <Checkbox {...checkboxProps} name="remember" id="remember" />
               <label
                 htmlFor="remember"
-                className="ml-2 block text-xs text-gray-800"
+                className="ml-2  block cursor-pointer pt-0.5 text-xs text-gray-800"
               >
-                Remember Me
+                {t('logIn.rememberMe')}
               </label>
             </div>
-            <div className="cursor-pointer text-center text-xs text-indigo-600">
-              Forget your password?
-            </div>
-          </div> */}
-          <div className="flex justify-end pt-4 pb-7">
             <span
               id="forgot-password"
               tabIndex={0}
@@ -142,7 +145,7 @@ function Login({ actionData, redirectTo }: LoginProps) {
       </div>
       <div className="flex pt-6">
         <div className="text-base font-medium text-gray-500">
-          {t('logIn.DontHaveAnAccountYet')}{' '}
+          {t('logIn.dontHaveAnAccountYet')}{' '}
           <span
             id="sign-up"
             className="cursor-pointer text-primary"
