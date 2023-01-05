@@ -5,19 +5,28 @@ export interface tabProps {
   itemName: string
   itemRoute: string
   id: string
+  currentWorkspaceId: string
 }
 
-function MenuItems({ iconClass, itemName, itemRoute, id }: tabProps) {
+function MenuItems({
+  iconClass,
+  itemName,
+  itemRoute,
+  id,
+  currentWorkspaceId,
+}: tabProps) {
   // const resolvedPath = useResolvedPath(itemRoute) // to get resolved path which would match with current location
   const location = useLocation() // to get current location
   return (
-    <div id="menuItem">
+    <div className="menuItem">
       <NavLink
         tabIndex={0}
-        to={itemRoute}
+        to={`/${currentWorkspaceId}${itemRoute}`}
         className={({ isActive }) =>
           `flex flex-row items-start gap-2 rounded-lg p-3.5 ${
-            isActive ? 'active_nav_link bg-blue-50' : ' '
+            isActive || location.pathname.includes(itemName.toLowerCase())
+              ? 'active_nav_link bg-blue-50'
+              : ''
           }`
         }
       >
@@ -26,7 +35,7 @@ function MenuItems({ iconClass, itemName, itemRoute, id }: tabProps) {
             id="tabIcon"
             icon={iconClass}
             className={`order-none flex-none grow-0 text-2xl  ${
-              location.pathname.includes(`/${itemRoute}`)
+              location.pathname.includes(itemName.toLowerCase())
                 ? 'text-primary'
                 : 'text-gray-400'
             }`}
@@ -35,7 +44,7 @@ function MenuItems({ iconClass, itemName, itemRoute, id }: tabProps) {
             <p
               id={id}
               className={`non-italic text-base font-semibold ${
-                location.pathname.includes(`/${itemRoute}`)
+                location.pathname.includes(itemName.toLowerCase())
                   ? 'text-primary'
                   : 'text-gray-500'
               }`}

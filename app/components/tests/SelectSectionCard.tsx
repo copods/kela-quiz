@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react'
 import Moment from 'moment'
 import { toast } from 'react-toastify'
 import type { TestSection } from '~/interface/Interface'
-import Button from '../form/Button'
+import Button from '../common-components/Button'
 import { useTranslation } from 'react-i18next'
 
 const SelectSectionCard = ({
@@ -20,7 +20,7 @@ const SelectSectionCard = ({
     selected?: boolean
   ) => {
     if (section?._count?.questions == 0) {
-      toast.error('Cannot add section with 0 questions')
+      toast.error(t('toastConstants.cannotAddTestZeroQuestion'))
       return
     }
     let tempSection = {
@@ -42,7 +42,11 @@ const SelectSectionCard = ({
         break
       case 'totalQuestions':
         if (parseInt(value || '') > (section?._count?.questions || 0)) {
-          toast.error('Cannot add more than available questions')
+          toast.error(t('toastConstants.notAdMoreThanAvailableQuestion'))
+          return
+        }
+        if (parseInt(value || '') == 0) {
+          toast.error(t('toastConstants.cannotAddTestZeroQuestion'))
           return
         }
         tempSection.totalQuestions = parseInt(value || '')
@@ -73,7 +77,7 @@ const SelectSectionCard = ({
           <Button
             tabIndex={0}
             className="h-7 px-4"
-            varient="secondary-solid"
+            variant="secondary-solid"
             onClick={() => updateThisSection('isSelected', '', false)}
             title={t('commonConstants.removeButton')}
             buttonText={t('commonConstants.removeButton')}
@@ -83,7 +87,7 @@ const SelectSectionCard = ({
             tabIndex={0}
             className="h-7 px-4"
             onClick={() => updateThisSection('isSelected', '', true)}
-            varient="primary-solid"
+            variant="primary-solid"
             title={t('commonConstants.add')}
             buttonText={t('commonConstants.add')}
           />
@@ -138,10 +142,13 @@ const SelectSectionCard = ({
           <input
             tabIndex={0}
             type="number"
+            min={1}
             id="time"
             name="totalTime"
             value={section.time}
-            onChange={(e) => updateThisSection('time', e.target.value)}
+            onChange={(e) => {
+              updateThisSection('time', e.target.value)
+            }}
             className={`mt-1 h-11 w-full rounded-lg border border-gray-300 px-3 text-xs ${
               section.isSelected ? 'bg-white' : 'bg-gray-200'
             }`}

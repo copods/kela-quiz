@@ -81,13 +81,53 @@ export async function getResultsOfCandidatesByTestId({
   })
 }
 
-export async function getAllCandidatesOfTest({ id }: { id: string }) {
+export async function getAllCandidatesOfTestCount(
+  id: string,
+  statusFilter: string
+) {
+  const count = prisma.candidateTest.count({
+    where: {
+      ...(statusFilter === 'complete'
+        ? { NOT: { endAt: { equals: null } } }
+        : statusFilter === 'pending'
+        ? { endAt: { equals: null } }
+        : {}),
+      testId: id,
+    },
+  })
+  return count
+}
+
+export async function getAllCandidatesOfTest({
+  id,
+  workspaceId,
+  currentPage,
+  pageSize,
+  statusFilter,
+}: {
+  id: string
+  workspaceId: string
+  currentPage?: number
+  pageSize?: number
+  statusFilter?: string
+}) {
   return prisma.test.findFirst({
     where: {
       id,
+      workspaceId,
     },
     include: {
       candidateTest: {
+        take: pageSize,
+        where: {
+          ...(statusFilter === 'complete'
+            ? { NOT: { endAt: { equals: null } } }
+            : statusFilter === 'pending'
+            ? { endAt: { equals: null } }
+            : {}),
+        },
+        skip: (currentPage! - 1) * pageSize!,
+        orderBy: { createdAt: 'desc' },
         include: {
           candidateResult: true,
           candidate: {
@@ -169,6 +209,8 @@ export async function getSectionWiseResultsOfIndividualCandidate({
       totalQuestion: true,
       correctQuestion: true,
       unanswered: true,
+      incorrect: true,
+      skipped: true,
     },
   })
 }
@@ -189,17 +231,78 @@ export async function updateCandidateStatus({
     },
   })
 }
+export async function getTotalTestCount(workspaceId: string) {
+  const totalCount = await prisma.test.count({
+    where: {
+      workspaceId,
 
-export async function getAllCandidateTests(obj: object) {
-  const filter = obj ? obj : {}
+      candidateTest: {
+        some: {
+          id: {
+            not: undefined,
+          },
+        },
+      },
+    },
+  })
+  return totalCount
+}
+export async function getAllCandidateTestsCount(
+  workspaceId: string,
+  statusFilter: string
+) {
+  const testCount = await prisma.test.count({
+    where: {
+      ...(statusFilter === 'active'
+        ? { NOT: { deleted: { equals: true } } }
+        : statusFilter === 'inactive'
+        ? { deleted: { equals: true } }
+        : {}),
+      workspaceId,
+      candidateTest: {
+        some: {
+          id: {
+            not: undefined,
+          },
+        },
+      },
+    },
+  })
+  return testCount
+}
+export async function getAllCandidateTests(
+  workspaceId: string,
+  resultsItemsPerPage: number = 5,
+  resultsCurrentPage: number = 1,
+  statusFilter: string,
+  sortBy: string,
+  sortOrder: string
+) {
+  const PER_PAGE_ITEMS = resultsItemsPerPage
   const res: Array<Test> = await prisma.test.findMany({
-    ...filter,
+    take: PER_PAGE_ITEMS,
+    skip: (resultsCurrentPage - 1) * PER_PAGE_ITEMS,
+    orderBy: { [sortBy ?? 'createdAt']: sortOrder ?? 'asc' },
+    where: {
+      ...(statusFilter === 'active'
+        ? { NOT: { deleted: { equals: true } } }
+        : statusFilter === 'inactive'
+        ? { deleted: { equals: true } }
+        : {}),
+      workspaceId,
+      candidateTest: {
+        some: {
+          id: {
+            not: undefined,
+          },
+        },
+      },
+    },
     include: {
       _count: {
         select: {
           candidateResult: true,
           candidateTest: true,
-          // sections: true,
         },
       },
       candidateTest: {
@@ -213,7 +316,10 @@ export async function getAllCandidateTests(obj: object) {
   if (res) {
     res.forEach(
       (
-        test: Test & { count?: number; candidateTest?: Array<CandidateTest> }
+        test: Test & {
+          count?: number
+          candidateTest?: Array<CandidateTest>
+        }
       ) => {
         let count = 0
         test?.candidateTest?.forEach((candidateTest: CandidateTest) => {
@@ -225,5 +331,6 @@ export async function getAllCandidateTests(obj: object) {
       }
     )
   }
+
   return res
 }

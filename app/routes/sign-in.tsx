@@ -16,16 +16,28 @@ import { routes } from '~/constants/route.constants'
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await getUserId(request)
   if (userId) return redirect(routes.members)
-  return json({})
+
+  const inviteId = new URL(request.url).searchParams.get('id')
+  return json({ inviteId })
 }
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
+  const invitedId = formData.get('inviteId')
+  const redirectTo = safeRedirect(
+    invitedId?.toString().length !== 0
+      ? `/workspace/${invitedId}/join`
+      : formData.get('redirectTo')
+  )
+  const remember = formData.get('remember')
   const email = formData.get('email')
   const password = formData.get('password')
-  const redirectTo = safeRedirect(formData.get('redirectTo'), routes.members)
-  const remember = formData.get('remember')
-
+  if (!email) {
+    return json<ActionData>(
+      { errors: { email: 'statusCheck.emailIsReq' } },
+      { status: 400 }
+    )
+  }
   if (!validateEmail(email)) {
     return json<ActionData>(
       { errors: { email: 'statusCheck.emailIsInvalid' } },
@@ -43,14 +55,14 @@ export const action: ActionFunction = async ({ request }) => {
   const user = await loginVerificationResponse(email, password)
   if (!user) {
     return json<ActionData>(
-      { errors: { email: 'statusCheck.emailIsInvalid' } },
+      { errors: { password: 'statusCheck.incorrectEmailOrPassword' } },
       { status: 400 }
     )
   }
 
   if (user instanceof Error) {
     return json<ActionData>(
-      { errors: { password: 'statusCheck.passIsInvalid' } },
+      { errors: { password: 'statusCheck.incorrectEmailOrPassword' } },
       { status: 400 }
     )
   }
@@ -59,7 +71,9 @@ export const action: ActionFunction = async ({ request }) => {
     request,
     userId: user.id,
     remember: remember === 'on' ? true : false,
-    redirectTo,
+    redirectTo: redirectTo
+      ? redirectTo
+      : `/${user.userWorkspace[0].workspaceId}`,
   })
 }
 

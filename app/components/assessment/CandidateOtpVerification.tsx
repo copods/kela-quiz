@@ -1,7 +1,7 @@
 import { useSubmit } from '@remix-run/react'
-import { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Form } from '@remix-run/react'
-import Button from '../form/Button'
+import Button from '../common-components/Button'
 import otpImage from '~/../public/assets/otp.svg'
 import { useTranslation } from 'react-i18next'
 
@@ -9,6 +9,10 @@ const CandidateOtp = ({ email }: { email: string }) => {
   const { t } = useTranslation()
   const [counter, setCounter] = useState(60)
   const [finalTime, setFinalTime] = useState('')
+  const [OTPSegments, setOTPSegments] = useState(Array(4).fill(''))
+  const [autoSubmit, setAutoSubmit] = useState(true)
+  const btnRef = useRef<HTMLElement>(null)
+
   useEffect(() => {
     counter > 0 && setTimeout(() => setCounter(counter - 1), 1000)
     var minutes = Math.floor(counter / 60)
@@ -23,26 +27,76 @@ const CandidateOtp = ({ email }: { email: string }) => {
     setFinalTime(timer)
   }, [counter])
 
-  const handleChange = (e: any) => {
-    const { value, name } = e.target
-    const [fieldName, fieldIndex] = name.split('-') // eslint-disable-line @typescript-eslint/no-unused-vars
-    let fieldIntIndex = parseInt(fieldIndex, 10)
-    if (value.length >= 1) {
-      if (fieldIntIndex < 4) {
-        const nextfield = document.querySelector(
-          `input[name=field-${fieldIntIndex + 1}]`
-        ) as HTMLElement | null
-        if (nextfield !== null) {
-          nextfield.focus()
-        }
-      }
-    }
-  }
-
   const submit = useSubmit()
   const resend = () => {
     submit({ resendOTP: 'Resend' }, { method: 'post' })
   }
+
+  useEffect(() => {
+    const blankFields = OTPSegments.some(
+      (ele) => ele === '' || ele === undefined || ele === null
+    )
+
+    if (!blankFields && autoSubmit) {
+      // @ts-ignore
+      btnRef.current.click()
+      setAutoSubmit(false)
+    }
+  }, [OTPSegments, autoSubmit])
+
+  const onPaste = (event: React.ClipboardEvent) => {
+    event.preventDefault()
+    const pasted = event.clipboardData.getData('text/plain')
+    // Checking for empty field, if the clipboard doesn't have value of length 4
+    let emptyFields = 4 - pasted.length
+
+    if (emptyFields > 0 && emptyFields <= 3) {
+      setOTPSegments([
+        ...pasted.split('').slice(0, OTPSegments.length),
+        ...Array(emptyFields).fill(''),
+      ])
+    } else {
+      setOTPSegments([...pasted.split('').slice(0, OTPSegments.length)])
+    }
+
+    // Focus on the submit button
+    if (pasted.length === 4) {
+      btnRef.current?.focus()
+    }
+    // Focus on the next input field
+    else if (pasted.length < 4) {
+      const foncusOnNextField = document.querySelector(
+        `input[name=field-${pasted.length + 1}]`
+      )
+
+      // @ts-ignore
+      foncusOnNextField && foncusOnNextField.focus()
+    }
+  }
+
+  const updateOTP = (index: number) => {
+    return (event: React.SyntheticEvent) => {
+      setOTPSegments([
+        ...OTPSegments.slice(0, index),
+        (event.target as HTMLInputElement).value,
+        ...OTPSegments.slice(index + 1),
+      ])
+
+      // Focus on the submit button
+      if (index === 3) {
+        btnRef.current?.focus()
+      }
+      // Focus on the next input field
+      else if (index !== 3) {
+        const foncusOnNextField = document.querySelector(
+          `input[name=field-${index + 2}]`
+        )
+        // @ts-ignore
+        foncusOnNextField && foncusOnNextField.focus()
+      }
+    }
+  }
+
   return (
     <div className="flex flex-1 items-center justify-center bg-gray-50">
       <div className="flex max-w-454 flex-1 flex-col gap-10 rounded-md border border-gray-50 bg-white p-12 text-center drop-shadow-sm">
@@ -56,38 +110,20 @@ const CandidateOtp = ({ email }: { email: string }) => {
         </div>
         <Form method="post">
           <div className="flex justify-center gap-4 pb-4">
-            <input
-              type="text"
-              inputMode="numeric"
-              maxLength={1}
-              name="field-1"
-              onChange={(e) => handleChange(e)}
-              className="flex h-12 w-16 justify-center rounded-md border border-gray-200 text-center drop-shadow-sm"
-            />
-            <input
-              type="text"
-              inputMode="numeric"
-              maxLength={1}
-              name="field-2"
-              onChange={(e) => handleChange(e)}
-              className="flex h-12 w-16 justify-center rounded-md border border-gray-200 text-center drop-shadow-sm"
-            />
-            <input
-              type="text"
-              inputMode="numeric"
-              maxLength={1}
-              name="field-3"
-              onChange={(e) => handleChange(e)}
-              className="flex h-12 w-16 justify-center rounded-md border border-gray-200 text-center drop-shadow-sm"
-            />
-            <input
-              type="text"
-              inputMode="numeric"
-              maxLength={1}
-              name="field-4"
-              onChange={(e) => handleChange(e)}
-              className="flex h-12 w-16 justify-center rounded-md border border-gray-200 text-center drop-shadow-sm"
-            />
+            {OTPSegments.map((ele, idx) => (
+              <input
+                type="text"
+                inputMode="numeric"
+                maxLength={1}
+                name={`field-${idx + 1}`}
+                onPaste={onPaste}
+                className="flex h-12 w-16 justify-center rounded-md border border-gray-200 text-center drop-shadow-sm"
+                key={idx}
+                value={ele}
+                onInput={updateOTP(idx)}
+                tabIndex={idx + 1}
+              />
+            ))}
           </div>
 
           <div className="pb-10 text-base text-gray-500">
@@ -115,9 +151,10 @@ const CandidateOtp = ({ email }: { email: string }) => {
           </div>
           <div>
             <Button
+              btnRef={btnRef}
               tabIndex={0}
               id={t('commonConstants.verify')}
-              varient="primary-solid"
+              variant="primary-solid"
               type="submit"
               name={t('commonConstants.verify')}
               value="proceed"

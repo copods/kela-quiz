@@ -4,7 +4,7 @@ import { prisma } from '~/db.server'
 import { sendTestInviteMail } from './sendgrid.servers'
 
 // inviting candidate
-
+const candidateTestLink = `${env.PUBLIC_URL}/assessment/`
 export async function createIndividualCandidate({
   email,
   createdById,
@@ -131,23 +131,18 @@ async function createCandidateData({
   createdById: User['id']
   testId: string
 }) {
-  let user = await createIndividualCandidate({ email, createdById })
-
-  let candidateTest = await createCandidateTest({
+  const user = await createIndividualCandidate({ email, createdById })
+  const candidateTest = await createCandidateTest({
     testId,
     candidateId: user.id,
   })
-
   // generating random link
-  const candidateLink = env.PUBLIC_URL + '/assessment/' + candidateTest.id
-
-  let updatedCandidateTest = await updateTestLink({
+  const candidateLink = `${candidateTestLink}${candidateTest.id}`
+  const updatedCandidateTest = await updateTestLink({
     id: candidateTest.id,
     link: candidateLink,
   })
-
-  let test = await getTestById(testId)
-
+  const test = await getTestById(testId)
   // creating section in test
   if (test?.sections) {
     for (const section of test.sections) {
@@ -159,8 +154,45 @@ async function createCandidateData({
       })
     }
   }
-
   await sendMailToCandidate(user?.email, updatedCandidateTest?.link as string)
+}
+// Resend a test link to user
+export async function resendTestLink({
+  id,
+  candidateId,
+  testId,
+}: {
+  id: string
+  candidateId: string
+  testId: string
+}) {
+  try {
+    const candidateLink = `${candidateTestLink}${testId}`
+    const candidate = await prisma.candidate.findUnique({
+      where: { id: candidateId },
+    })
+    const candidateTest = await prisma.candidateTest.findUnique({
+      where: { id: id },
+      select: {
+        startedAt: true,
+        endAt: true,
+      },
+    })
+    if (candidateTest?.startedAt === null && candidateTest?.endAt === null) {
+      await prisma.candidateTest.update({
+        where: { id: id },
+        data: {
+          linkSentOn: new Date(),
+        },
+      })
+      await sendMailToCandidate(candidate?.email as string, candidateLink)
+      return 'created'
+    } else {
+      return 'End Test'
+    }
+  } catch (error) {
+    return 'error'
+  }
 }
 
 export async function createCandidate({
@@ -173,10 +205,35 @@ export async function createCandidate({
   testId: string
 }) {
   try {
-    for (const email of emails) {
-      await createCandidateData({ email, createdById, testId })
+    const allInvitedUsers = await prisma.candidateTest.findMany({
+      select: { candidate: { select: { email: true } }, testId: true },
+    })
+    const invitedToSpecificTest = allInvitedUsers
+      .filter((data) => data.testId == testId)
+      .map((data) => data.candidate.email)
+    const neverInvitedToTest = emails.filter(
+      (data) => !invitedToSpecificTest.includes(data)
+    )
+    const emailCount = emails.length
+    const neverInvitedCount = neverInvitedToTest.length
+    if (emails.length > 1) {
+      for (const email of neverInvitedToTest) {
+        await createCandidateData({
+          email,
+          createdById,
+          testId,
+        })
+      }
+    } else {
+      for (const email of emails) {
+        await createCandidateData({
+          email,
+          createdById,
+          testId,
+        })
+      }
     }
-    return 'created'
+    return { created: 'created', emailCount, neverInvitedCount }
   } catch (error) {
     return 'error'
   }

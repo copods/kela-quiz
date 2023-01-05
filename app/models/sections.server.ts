@@ -16,6 +16,7 @@ export async function getSectionById({ id }: Pick<Section, 'id'>) {
           questionType: {
             select: {
               displayName: true,
+              value: true,
             },
           },
         },
@@ -24,12 +25,27 @@ export async function getSectionById({ id }: Pick<Section, 'id'>) {
   })
 }
 
-export async function getAllSections(obj: string) {
-  let filter = obj ? obj : '{"orderBy":{"createdAt":"asc"}}'
+export async function getFirstSection(workspaceId: string) {
+  const firstSection = await prisma.section.findFirst({
+    where: {
+      workspaceId,
+      deleted: false,
+    },
+    orderBy: {
+      createdAt: 'desc',
+    },
+  })
+
+  return firstSection?.id
+}
+
+export async function getAllSections(filterData: string, workspaceId: string) {
+  let filter = filterData ? filterData : '{"orderBy":{"createdAt":"desc"}}'
   return await prisma.section.findMany({
     ...JSON.parse(filter),
     where: {
       deleted: false,
+      workspaceId,
     },
     include: {
       createdBy: true,
@@ -44,16 +60,32 @@ export async function createSection({
   name,
   description,
   createdById,
-}: Pick<Section, 'name' | 'description'> & { createdById: User['id'] }) {
+  workspaceId,
+}: Pick<Section, 'name' | 'description' | 'workspaceId'> & {
+  createdById: User['id']
+}) {
   return await prisma.section.create({
     data: {
       name,
       description,
       createdById,
+      workspaceId,
     },
   })
 }
-
+export async function editSectionById(
+  id: string,
+  name: string,
+  description: string
+) {
+  return prisma.section.update({
+    where: { id },
+    data: {
+      name: name,
+      description: description,
+    },
+  })
+}
 export async function deleteSectionById(id: string) {
   return prisma.section.update({
     where: { id },

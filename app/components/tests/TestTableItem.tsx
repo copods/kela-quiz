@@ -2,7 +2,7 @@ import moment from 'moment'
 import { Icon } from '@iconify/react'
 import ChipGroup from './ChipGroup'
 import type { SectionInTest } from '~/interface/Interface'
-import DeletePopUp from '../DeletePopUp'
+import DeletePopUp from '../common-components/DeletePopUp'
 import { useNavigate, useSubmit } from '@remix-run/react'
 import TestListActionMenu from '../TestListActionMenu'
 import { useEffect, useState } from 'react'
@@ -20,6 +20,7 @@ const TestTableItem = ({
   showCheckBox,
   totalCount,
   status,
+  currentWorkspaceId,
 }: {
   index: number
   testName: string
@@ -30,6 +31,7 @@ const TestTableItem = ({
   showCheckBox: boolean
   totalCount: number
   status: string | undefined
+  currentWorkspaceId: string
 }) => {
   const { t } = useTranslation()
 
@@ -40,7 +42,7 @@ const TestTableItem = ({
   const deleteTest = () => {
     submit(
       {
-        deleteTest: 'testDelete',
+        action: 'testDelete',
         id: id,
       },
       { method: 'post' }
@@ -61,7 +63,7 @@ const TestTableItem = ({
         key={id}
         className={`${
           index === totalCount ? 'rounded-b-md' : ''
-        } test-table-list flex items-start gap-3 border-b border-gray-200 bg-white py-6 px-9`}
+        } test-table-list flex items-center gap-3 border-b border-gray-200 bg-white py-6 px-9`}
       >
         {showCheckBox && (
           <div className="w-1/12 text-base font-normal text-gray-700">
@@ -78,10 +80,13 @@ const TestTableItem = ({
           <div
             aria-label={testName}
             title={testName}
-            onClick={() => navigate(`${routes.tests}/${id}`)}
+            onClick={() =>
+              navigate(`/${currentWorkspaceId}${routes.assessments}/${id}`)
+            }
             role={'button'}
             onKeyDown={(e) => {
-              if (e.key === 'Enter') navigate(`${routes.tests}/${id}`)
+              if (e.key === 'Enter')
+                navigate(`/${currentWorkspaceId}${routes.assessments}/${id}`)
             }}
             id={`${index}`}
             tabIndex={0}
@@ -108,7 +113,7 @@ const TestTableItem = ({
             id="invite-popup-open"
             role={'button'}
             tabIndex={0}
-            className="candidateInviteIcon cursor-pointer text-2xl text-primary focus:outline-dotted focus:outline-2"
+            className="candidateInviteIcon mt-2 cursor-pointer text-2xl text-primary focus:outline-dotted focus:outline-2"
             icon={'ant-design:user-add-outlined'}
             onClick={() => {
               setCandidatePopupOpen(true)
@@ -116,7 +121,7 @@ const TestTableItem = ({
             onKeyUp={(e) => {
               if (e.key === 'Enter') setCandidatePopupOpen(true)
             }}
-            aria-label={t('testTableItem.inviteMember')}
+            aria-label={t('members.inviteMember')}
           />
           <TestListActionMenu
             menuIcon={'mdi:dots-vertical'}
@@ -135,7 +140,7 @@ const TestTableItem = ({
           setDeleted={setDeleted}
           status={status}
           deleteItem={testName}
-          deleteItemType={t('testsConstants.test')}
+          deleteItemType={t('testsConstants.assessment')}
         />
         <InviteCandidatePopup
           openInvitePopup={candidatePopupOpen}

@@ -2,12 +2,14 @@ import { Icon } from '@iconify/react'
 import moment from 'moment'
 import { Menu } from '@headlessui/react'
 import { useSubmit } from '@remix-run/react'
-import DeletePopUp from '../DeletePopUp'
-import { useEffect } from 'react'
-
+import DeletePopUp from '../common-components/DeletePopUp'
+import { useEffect, useState } from 'react'
+import type { sectionActionErrorsType } from '~/interface/Interface'
 import { useTranslation } from 'react-i18next'
+import AddEditSection from './AddEditSection'
 const SectionCard = ({
   name,
+  description,
   isActive,
   questionsCount,
   createdBy,
@@ -18,8 +20,11 @@ const SectionCard = ({
   setDeleted,
   setIsDelete,
   isDelete,
+  setSectionActionErrors,
+  sectionActionErrors,
 }: {
   name: string
+  description: string
   isActive: boolean
   questionsCount?: number
   createdBy: string
@@ -28,22 +33,25 @@ const SectionCard = ({
   err?: string
   actionStatusData?: string
   setDeleted?: (e: boolean) => void
-  setIsDelete?: (e: boolean) => void | undefined
+  setIsDelete: (e: boolean) => void
   isDelete: boolean
+  sectionActionErrors?: sectionActionErrorsType
+  setSectionActionErrors?: ({
+    title,
+    description,
+  }: sectionActionErrorsType) => void
 }) => {
   const { t } = useTranslation()
   const submit = useSubmit()
+  const [editMode, setEditMode] = useState(false)
+  const [editItem, setEditItem] = useState({
+    name: '',
+    description: '',
+  })
+
   const deleteSection = () => {
     submit({ deleteSection: 'sectionDelete', id: id }, { method: 'post' })
   }
-  // useEffect(() => {
-  //   if (
-  //     actionStatusData == statusCheck.deletedSuccess &&
-  //     setIsDelete !== undefined
-  //   ) {
-  //     // setIsDelete(false)
-  //   }
-  // }, [actionStatusData])
   // shift + alt + Tab combination key for get back focus to selected section card
   useEffect(() => {
     window.addEventListener('keydown', function (event) {
@@ -54,7 +62,7 @@ const SectionCard = ({
   }, [])
   return (
     <div
-      className={`sectionCard flex flex-col gap-2 rounded-lg p-5 pt-4 ${
+      className={`sectionCard section-card flex flex-col gap-2 rounded-lg p-5 pt-4 ${
         isActive
           ? 'border border-l-8 border-transparent border-l-primary bg-white pl-13 shadow-md'
           : 'border border-gray-300 bg-gray-100'
@@ -70,36 +78,64 @@ const SectionCard = ({
             as="div"
             className="verticalDots relative inline-block text-left"
           >
-            <Menu.Button className={id}>
+            <Menu.Button id="menu-button" className={id}>
               <Icon
                 className="text-2xl text-gray-600"
                 icon={'mdi:dots-vertical'}
               />
             </Menu.Button>
             <Menu.Items className="absolute right-0 mt-2 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5">
-              <div className="px-1 py-1">
+              <div className="py-1">
                 <Menu.Item>
                   {({ active }) => (
-                    <button
-                      tabIndex={0}
-                      data-cy="delete-section"
-                      className="text-gray-primary undefined inline-flex w-36 items-center justify-start rounded-md rounded-md border border-primary bg-white py-2.5 px-5 px-2 py-2 text-xs font-medium text-primary shadow-sm transition delay-75 ease-in-out hover:bg-gray-100"
-                      onClick={() => {
-                        if (setIsDelete !== undefined) setIsDelete(true)
-                      }}
-                      name="deleteSection"
-                      title={t('commonConstants.delete')}
-                    >
-                      <>
-                        <Icon
-                          icon={'ic:outline-delete-outline'}
-                          className="mr-2 h-5 w-5
+                    <div className="flex flex-col gap-1">
+                      <button
+                        tabIndex={0}
+                        id="edit-test-button"
+                        data-cy="edit-section"
+                        className="text-gray-primary undefined inline-flex w-36 items-center justify-start bg-white px-2 py-2 text-xs font-medium text-primary transition delay-75 ease-in-out hover:bg-gray-100"
+                        onClick={() => {
+                          setEditMode(true)
+                          setEditItem({
+                            name: name,
+                            description: description,
+                          })
+                        }}
+                        name="editSection"
+                        title={t('commonConstants.edit')}
+                      >
+                        <>
+                          <Icon
+                            icon={'material-symbols:edit-outline-sharp'}
+                            className="mr-2 h-5 w-5
+                        text-black"
+                            aria-hidden="true"
+                          />
+                          {t('commonConstants.edit')}
+                        </>
+                      </button>
+                      <button
+                        tabIndex={0}
+                        id="delete-test-button"
+                        data-cy="delete-section"
+                        className="text-gray-primary undefined inline-flex w-36 items-center justify-start bg-white px-2 py-2 text-xs font-medium text-primary transition delay-75 ease-in-out hover:bg-gray-100"
+                        onClick={() => {
+                          setIsDelete(true)
+                        }}
+                        name="deleteSection"
+                        title={t('commonConstants.delete')}
+                      >
+                        <>
+                          <Icon
+                            icon={'ic:outline-delete-outline'}
+                            className="mr-2 h-5 w-5
                         text-red-500"
-                          aria-hidden="true"
-                        />
-                        {t('commonConstants.delete')}
-                      </>
-                    </button>
+                            aria-hidden="true"
+                          />
+                          {t('commonConstants.delete')}
+                        </>
+                      </button>
+                    </div>
                   )}
                 </Menu.Item>
               </div>
@@ -123,8 +159,17 @@ const SectionCard = ({
         onDelete={deleteSection}
         subAlert={t('deletePopUp.subAlert')}
         deleteItem={name}
-        deleteItemType={t('sectionsConstants.sectionName')}
+        deleteItemType={t('testsConstants.testText')}
         setDeleted={setDeleted}
+      />
+      <AddEditSection
+        open={editMode}
+        setOpen={setEditMode}
+        sectionActionErrors={sectionActionErrors}
+        setSectionActionErrors={setSectionActionErrors}
+        showErrorMessage={false}
+        editItem={editItem}
+        editId={id}
       />
     </div>
   )

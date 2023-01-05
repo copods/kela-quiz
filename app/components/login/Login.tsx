@@ -1,16 +1,27 @@
-import React, { useState } from 'react'
-import { Form, useNavigate } from '@remix-run/react'
-import Button from '~/components/form/Button'
-import InputField from '~/components/form/InputField'
+import React, { useEffect, useState } from 'react'
+import { Form, useLoaderData, useNavigate } from '@remix-run/react'
 import Logo from '~/components/Logo'
 import type { LoginProps } from '~/interface/Interface'
 import { useTranslation } from 'react-i18next'
 import { routes } from '~/constants/route.constants'
+import InputField from '../common-components/InputField'
+import Button from '../common-components/Button'
 function Login({ actionData, redirectTo }: LoginProps) {
   const { t } = useTranslation()
 
+  const loginLoaderData = useLoaderData()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [loginFieldError, setLoginFieldError] = useState({
+    email: actionData?.errors?.email,
+    password: actionData?.errors?.password,
+  })
+  useEffect(() => {
+    setLoginFieldError({
+      email: actionData?.errors?.email,
+      password: actionData?.errors?.password,
+    })
+  }, [actionData])
   const inputFieldsProps = [
     {
       label: t('commonConstants.email'),
@@ -18,11 +29,15 @@ function Login({ actionData, redirectTo }: LoginProps) {
       type: 'text',
       name: 'email',
       required: true,
+      isRequired: true,
       value: email,
-      error: actionData?.errors?.email,
+      error: loginFieldError.email,
       errorId: 'email-error',
-      onChange: function (event: any) {
+      onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
         setEmail(event?.target.value)
+        if (event?.target.value === '') {
+          setLoginFieldError({ ...loginFieldError, email: '' })
+        }
       },
     },
     {
@@ -31,11 +46,15 @@ function Login({ actionData, redirectTo }: LoginProps) {
       type: 'password',
       name: 'password',
       required: true,
+      isRequired: true,
       value: password,
-      error: actionData?.errors?.password,
+      error: loginFieldError.password,
       errorId: 'password-error',
-      onChange: function (event: any) {
+      onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
         setPassword(event?.target.value)
+        if (event?.target.value === '') {
+          setLoginFieldError({ ...loginFieldError, password: '' })
+        }
       },
     },
   ]
@@ -47,8 +66,8 @@ function Login({ actionData, redirectTo }: LoginProps) {
     navigate(routes.forgotPassword)
   }
   return (
-    <div className="z-10 flex	min-h-480 w-full max-w-554 flex-col items-center justify-center rounded-2xl bg-white px-24 drop-shadow-xl">
-      <div className="z-20 -mt-24 mb-6">
+    <div className="z-10 flex	min-h-480 w-full max-w-554 flex-col items-center justify-center rounded-lg bg-white px-24 drop-shadow-xl">
+      <div className="z-20 -mt-12 mb-6">
         <Logo height="64" width="64" />
       </div>
       <div className="w-full">
@@ -58,7 +77,14 @@ function Login({ actionData, redirectTo }: LoginProps) {
         <div className="flex justify-center">
           <hr className="mt-7 mb-5 h-px w-6/12 border-none bg-gray-500 text-center" />
         </div>
-        <Form method="post">
+        <Form
+          method="post"
+          action={
+            loginLoaderData.inviteId === null
+              ? '/sign-in'
+              : `/sign-in?cameFrom=join&id=${loginLoaderData.inviteId}`
+          }
+        >
           <div className="flex flex-col gap-6">
             {inputFieldsProps.map((props) => {
               return <InputField {...props} key={props.name} />
@@ -97,14 +123,19 @@ function Login({ actionData, redirectTo }: LoginProps) {
           </div>
           <div className="flex items-center justify-center">
             <input type="hidden" name="redirectTo" value={redirectTo} />
+            <input
+              type="hidden"
+              name="inviteId"
+              value={loginLoaderData.inviteId}
+            />
             <Button
               tabIndex={0}
+              type="submit"
               title={t('logIn.signIn')}
               buttonText={t('logIn.signIn')}
-              type="submit"
-              varient="primary-solid"
+              variant="primary-solid"
               className="h-11 w-full"
-              datacy="submit"
+              value={'login'}
             />
           </div>
         </Form>

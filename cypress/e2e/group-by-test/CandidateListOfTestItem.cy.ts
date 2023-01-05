@@ -1,34 +1,49 @@
 describe('Visiting group by test of results page', () => {
   // creating data to test Test list page
   beforeEach('sign-in', () => {
-    cy.visit('/sign-in')
-    cy.get('input[name="email"]')
-      .clear()
-      .type(Cypress.env('email'))
-      .should('have.focus')
-      .should('have.value', Cypress.env('email'))
-    cy.get('input[name="password"]')
-      .clear()
-      .type(Cypress.env('password'))
-      .should('have.focus')
-      .should('have.value', Cypress.env('password'))
-    cy.get('[data-cy="submit"]').click()
-    cy.location('pathname').should('include', '/members')
+    cy.login()
+
+    cy.customVisit('/members')
   })
-  const test1 = `Aptitude - test1`
-  it('Check  that if list of candidate is coming after clicking a test in group byt test in results page ', () => {
-    cy.get('a').find('#group-by-tests').should('have.text', 'Results').click()
-    cy.location('pathname', { timeout: 60000 }).should('include', '/results')
+  const test1 = `Aptitude - assessment1`
+  it('Checks, if assessment has correct name', () => {
+    cy.wait(3000)
+    cy.get('#group-by-tests').should('have.text', 'Results').click()
     cy.get('h1', { timeout: 6000 }).should('have.text', 'Results')
-    cy.wait(6000)
-    cy.get('.groupTestRow').each(($el) => {
-      cy.wrap($el).within((el) => {
-        if (
-          el[0].getElementsByClassName('groupByItemTest')[0].innerHTML === test1
-        ) {
-          cy.get('.groupByItemTest').should('have.text', test1)
-        }
-      })
-    })
+    cy.get('[data-cy="group-by-item-test"]').should('have.text', test1)
+  })
+
+  it('Checks, header of candidate list page should be visible', () => {
+    cy.wait(3000)
+    cy.get('#group-by-tests').should('have.text', 'Results').click()
+    cy.get('h1', { timeout: 6000 }).should('have.text', 'Results')
+    cy.get('.groupByItemTest', { timeout: 8000 }).contains(test1).click()
+    cy.get('#title', { timeout: 20000 }).should('be.visible')
+  })
+
+  it('Checks, header of candidate list page should have correct classes', () => {
+    cy.wait(3000)
+    cy.get('#group-by-tests').should('have.text', 'Results').click()
+    cy.get('h1', { timeout: 6000 }).should('have.text', 'Results')
+    cy.get('.groupByItemTest', { timeout: 8000 }).contains(test1).click()
+    cy.get('#title', { timeout: 8000 }).should(
+      'have.class',
+      'text-3xl font-semibold text-gray-900'
+    )
+  })
+  it('Checks, back button should be visible', () => {
+    cy.wait(3000)
+    cy.get('#group-by-tests').should('have.text', 'Results').click()
+    cy.get('h1').should('have.text', 'Results')
+    cy.get('[data-cy="group-by-item-test"]').click()
+    cy.get('#back-button', { timeout: 8000 }).should('be.visible')
+  })
+  it('Checks, after clicking on back button it should redirect to result page', () => {
+    cy.wait(3000)
+    cy.get('#group-by-tests').should('have.text', 'Results').click()
+    cy.get('h1', { timeout: 6000 }).should('have.text', 'Results')
+    cy.get('[data-cy="group-by-item-test"]').click()
+    cy.get('#back-button', { timeout: 8000 }).should('be.visible').click()
+    cy.location('pathname', { timeout: 60000 }).should('include', '/results')
   })
 })

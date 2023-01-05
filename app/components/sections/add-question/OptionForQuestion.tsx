@@ -6,9 +6,11 @@ import QuillEditor from '~/components/QuillEditor.client'
 import { ClientOnly } from 'remix-utils'
 import Toggle from '~/components/form/Toggle'
 import type { SetStateAction } from 'react'
+import { useEffect } from 'react'
 import { toast } from 'react-toastify'
-import Button from '~/components/form/Button'
+import Button from '~/components/common-components/Button'
 import { useTranslation } from 'react-i18next'
+import { trimValue } from '~/utils'
 interface textAnswerType {
   id: string
   answer: string
@@ -22,12 +24,16 @@ export default function OptionForQuestion({
   singleChoiceAnswer,
   setSingleChoiceAnswer,
   textCorrectAnswer,
+  answerCount,
+  setAnswerCount,
   setTextCorrectAnswer,
   checkOrder,
   setCheckOrder,
 }: {
   questionTypeList: QuestionType[]
   selectedTypeOfQuestion: string
+  answerCount: number
+  setAnswerCount: (e: number) => void
   options: Array<{ option: string; isCorrect: boolean; id: string }>
   setOptions: (
     e: SetStateAction<Array<{ option: string; isCorrect: boolean; id: string }>>
@@ -55,6 +61,9 @@ export default function OptionForQuestion({
       }
       setOptions([...options, { option: '', isCorrect: false, id: cuid() }])
     } else if (getQuestionType(selectedTypeOfQuestion) === QuestionTypes.text) {
+      if (textCorrectAnswer.length > 5) {
+        return toast.error(t('statusCheck.maxOptions'), { toastId })
+      }
       setTextCorrectAnswer([...textCorrectAnswer, { id: cuid(), answer: '' }])
     }
   }
@@ -113,6 +122,11 @@ export default function OptionForQuestion({
       return [...e]
     })
   }
+  useEffect(() => {
+    let count = 0
+    options.forEach((i) => (i.isCorrect ? count++ : null))
+    setAnswerCount(count)
+  }, [options, setAnswerCount])
   return (
     <div className="flex flex-1 flex-col gap-6">
       <div className="flex h-11 flex-row items-end justify-between p-1">
@@ -139,7 +153,7 @@ export default function OptionForQuestion({
           tabIndex={0}
           id="add-option"
           className="h-9 px-5"
-          varient="primary-solid"
+          variant="primary-solid"
           onClick={addOptionArea}
           title={t('addQuestion.addOptions')}
           buttonText={`+ ${t('addQuestion.addOptions')}`}
@@ -179,7 +193,7 @@ export default function OptionForQuestion({
                     />
                   )
                 )}
-                <div className="textOption h-32 flex-1" id="optionEditor">
+                <div className="textOption h-auto flex-1" id="optionEditor">
                   {
                     <ClientOnly fallback={<div></div>}>
                       {() => (
@@ -208,6 +222,7 @@ export default function OptionForQuestion({
                     if (e.key === 'Enter') deleteOption(index, option?.id)
                   }}
                   tabIndex={0}
+                  id="delete-option"
                   aria-label={t('commonConstants.delete')}
                   icon="ic:outline-delete-outline"
                   className={`h-6 w-6 ${index} ${
@@ -234,7 +249,7 @@ export default function OptionForQuestion({
                       )}
                       value={option.answer}
                       onChange={(e) => {
-                        updateTextAnswer(e.target.value, index)
+                        updateTextAnswer(trimValue(e.target.value), index)
                       }}
                     ></input>
                   </div>
@@ -255,6 +270,15 @@ export default function OptionForQuestion({
               )
             }
           )}
+        {answerCount > 1 ? (
+          <p>{`${t('addQuestion.note')}: ${t(
+            'addQuestion.multipleAnswersSelected'
+          )}`}</p>
+        ) : answerCount === 1 ? (
+          <p>{`${t('addQuestion.note')}: ${t(
+            'addQuestion.oneAnswerSelected'
+          )}`}</p>
+        ) : null}
       </div>
     </div>
   )

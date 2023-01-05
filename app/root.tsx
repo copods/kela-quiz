@@ -15,9 +15,11 @@ import {
 
 import tailwindStylesheetUrl from './styles/tailwind.css'
 import globalStyles from './styles/global.css'
+import quillStyles from './styles/quill.css'
+import toastifyStyles from './styles/toastify.css'
 import quillEditorStyles from 'quill/dist/quill.snow.css'
 import { getUser } from './session.server'
-import toastrStyles from 'react-toastify/dist/ReactToastify.css'
+import toasterStyles from 'react-toastify/dist/ReactToastify.css'
 import { ToastContainer } from 'react-toastify'
 import { useTranslation } from 'react-i18next'
 
@@ -25,8 +27,10 @@ export const links: LinksFunction = () => {
   return [
     { rel: 'stylesheet', href: tailwindStylesheetUrl },
     { rel: 'stylesheet', href: globalStyles },
+    { rel: 'stylesheet', href: quillStyles },
+    { rel: 'stylesheet', href: toastifyStyles },
     { rel: 'stylesheet', href: quillEditorStyles },
-    { rel: 'stylesheet', href: toastrStyles },
+    { rel: 'stylesheet', href: toasterStyles },
   ]
 }
 

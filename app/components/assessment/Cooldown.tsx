@@ -1,6 +1,6 @@
 // import { Icon } from '@iconify/react'
 import { useLoaderData, useSubmit } from '@remix-run/react'
-import Button from '../form/Button'
+import Button from '../common-components/Button'
 import Header from './Header'
 import cooldownImage from '~/../public/assets/cooldown.svg'
 import { useTranslation } from 'react-i18next'
@@ -9,7 +9,6 @@ const Cooldown = () => {
   const { t } = useTranslation()
   const { candidateSection, candidateTests } = useLoaderData()
   const submit = useSubmit()
-  console.log('ca', candidateTests.sections, candidateSection)
   const startSection = async () => {
     //getting first test of this section
 
@@ -69,7 +68,7 @@ const Cooldown = () => {
             onClick={startSection}
             title={t('candidateExamConstants.startNewSection')}
             buttonText={t('candidateExamConstants.startNewSection')}
-            varient="primary-solid"
+            variant="primary-solid"
           />
         </div>
       </div>

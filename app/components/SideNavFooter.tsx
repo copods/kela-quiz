@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 import { useUser } from '~/utils'
 import { Form } from '@remix-run/react'
-import Button from './form/Button'
+import Button from './common-components/Button'
 import { useTranslation } from 'react-i18next'
 
 function Footer() {
@@ -14,16 +14,27 @@ function Footer() {
       <div className="flex items-center justify-between gap-1">
         <div className="flex items-center gap-1">
           <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary">
-            <span className="text-lg font-medium text-white">
+            <span
+              id="sidenav-user-avatar"
+              className="text-lg font-medium text-white"
+            >
               {user.firstName.slice(0, 1)}
               {user.lastName.slice(0, 1)}
             </span>
           </div>
           <div className="flex-col gap-2">
-            <p className="w-32 truncate text-xs font-semibold text-gray-900">
+            <p
+              id="sidenav-username"
+              className="w-32 truncate text-xs font-semibold text-gray-900"
+            >
               {user.firstName} {user.lastName}
             </p>
-            <p className="w-32 truncate text-xs text-gray-500">{user.email}</p>
+            <p
+              id="sidenav-user-email"
+              className="w-32 truncate text-xs text-gray-500"
+            >
+              {user.email}
+            </p>
           </div>
         </div>
         <Form action="/logout" method="post">
@@ -31,7 +42,7 @@ function Footer() {
             tabIndex={0}
             type="submit"
             id="logout-button"
-            varient="secondary-solid"
+            variant="secondary-solid"
             className="px-2"
             title={t('commonConstants.logout')}
             buttonText={

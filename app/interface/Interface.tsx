@@ -5,11 +5,37 @@ export interface InputFieldProps {
   label: string
   placeholder: string
   type: string
+  isRequired?: boolean
   required: boolean
   value: string
   error?: string
   errorId: string
-  onChange: (e: React.ChangeEvent) => void
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+}
+
+export interface PasswordFieldProps {
+  name: string
+  label: string
+  placeholder: string
+  required: boolean
+  isRequired: boolean
+  value: string
+  type: string
+  error?: string
+  errorId: string
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void
+}
+
+export interface DialogWrapperProps {
+  heading?: string
+  role?: string
+  ariaLabel?: string
+  children: JSX.Element
+  open: boolean
+  setOpen: (e: boolean) => void
+  header: boolean
+  tabIndex?: number
 }
 
 export interface ButtonProps {
@@ -22,10 +48,11 @@ export interface ButtonProps {
   datacy?: string
   alignment?: string
   type?: 'button' | 'submit' | 'reset'
-  varient: 'primary-solid' | 'primary-outlined' | 'secondary-solid'
+  variant: 'primary-solid' | 'primary-outlined' | 'secondary-solid'
   buttonText: string | JSX.Element
   onClick?: React.MouseEventHandler<HTMLButtonElement>
   isDisabled?: boolean
+  btnRef?: any
 }
 
 export interface LoginProps {
@@ -74,6 +101,7 @@ export interface Section {
   updatedAt: Date
   deleted: boolean
   deletedAt: string
+  workspaceId: string
 }
 
 export interface User {
@@ -82,6 +110,24 @@ export interface User {
   firstName: string
   lastName: string
   roleId: string
+  createdAt: Date
+  updatedAt: Date
+  workspace: Array<Workspace>
+}
+export interface Invites {
+  id: string
+  email: string
+  invitedById: User
+  userId: string
+  invitedForWorkspace: Workspace
+  workspaceId: string
+  role: Role
+  roleId: String
+  invitedOn: Date
+  joined: Boolean
+  joinedAt: string
+  deleted: boolean
+  deletedAt: string
   createdAt: Date
   updatedAt: Date
 }
@@ -119,6 +165,7 @@ export interface Test {
   deleted: boolean
   deletedAt: string
   candidateTest?: Array<CandidateTest>
+  workspaceId: string
 }
 
 export interface SectionInTest {
@@ -222,9 +269,14 @@ export interface CandidateResult {
   testId: string
   isQualified: boolean
   createdAt: Date
+  startedAt: Date
   updatedAt: Date
+  workspaceId?: string
 }
-
+export interface sectionActionErrorsType {
+  title: string
+  description: string
+}
 export enum sortByOrder {
   ascending = 'asc',
   name = 'name',
@@ -235,7 +287,7 @@ export enum sortByOrder {
   cancelling = 'Cancelling...',
   cancel = 'Cancel',
   createdAt = 'createdAt',
-  creatingTest = 'Creating Test',
+  creatingAssessment = 'Creating Assessment',
   submit = 'Submit',
 }
 
@@ -250,10 +302,68 @@ export interface SectionWiseResults {
   totalQuestion: number
   correctQuestion: number
   unanswered: number
+  skipped: number
+  incorrect: number
   testId: string
   candidateTestId: string
   createdAt: Date
   updatedAt: Date
   section: SectionInCandidateTest
   test: Test
+}
+export interface tableColumnType {
+  title: string
+  field: string
+  render?: (data: any, index: number) => JSX.Element
+  width?: string
+}
+export interface TableType<T extends object> {
+  columns: tableColumnType[]
+  data: T[]
+  title?: string
+  paginationEnabled?: boolean
+  onPageChange?: (e: number) => void
+  totalItems?: number
+  currentPage?: number
+  pageSizeOptions?: Array<number>
+  pageSize?: number
+  setPageSize?: (e: number) => void
+}
+export interface Workspace {
+  id: string
+  name: string
+  createdBy: User
+  createdById: string
+  createdAt: Date
+  updatedAt: Date
+}
+export interface UserWorkspace {
+  id: String
+  workspace: Array<Workspace>
+  workspaceId: string
+  userId: string
+  role: Role
+  roleId: string
+  isDefault: Boolean
+  createdAt: Date
+  updatedAt: Date
+}
+export interface TabsComponent {
+  name: string
+  route: string
+}
+
+export interface OtherFilters {
+  id: string
+  data: Array<{ name: string; value: string }>
+  displayKey: string
+  valueKey: string
+  value: string
+  setValue: (e: string) => void
+}
+
+export interface BadgeComponent {
+  children: React.ReactNode
+  bgColor?: string
+  textColor?: string
 }

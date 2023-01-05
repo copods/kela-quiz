@@ -1,6 +1,6 @@
 import { useLoaderData, useSubmit } from '@remix-run/react'
 import type { SectionInTest, TestSection } from '~/interface/Interface'
-import Button from '../form/Button'
+import Button from '../common-components/Button'
 import contactSupport from '~/../public/assets/contactSupport.svg'
 import checkIcon from '~/../public/assets/checkIcon.svg'
 import Header from './Header'
@@ -33,6 +33,12 @@ const CandidateInstruction = () => {
     return time / 60
   }
 
+  const setOfInstructions = [
+    `The duration of this exam is ${getTotalTimeInMin()} minutes`,
+    `Each question is worth the same marks`,
+    `After submitting the section, you won't be able to make any changes`,
+  ]
+
   return (
     <div className="flex h-screen flex-col overflow-auto bg-gray-50">
       <Header />
@@ -51,7 +57,7 @@ const CandidateInstruction = () => {
           <div className="flex gap-12">
             <div className="flex w-438 flex-col gap-10 rounded-lg border border-gray-50 bg-white p-10 shadow-sm">
               <h3 className="text-center text-2xl font-bold text-gray-900">
-                {t('routeFiles.sections')}
+                {t('routeFiles.tests')}
               </h3>
               <div className="flex flex-col gap-6">
                 {candidateSections.map(
@@ -64,8 +70,8 @@ const CandidateInstruction = () => {
                         <div className="flex items-start gap-4">
                           <img src={contactSupport} alt="" className="h-6" />
                           <span className="text-base font-normal text-gray-900">
-                            {t('sectionsConstants.sectionName')} {section.order}{' '}
-                            -{section.section.name}
+                            {t('testsConstants.testText')} {section.order} -
+                            {section.section.name}
                           </span>
                         </div>
                       </div>
@@ -79,39 +85,19 @@ const CandidateInstruction = () => {
                 {t('candidateExamConstants.instructions')}
               </h3>
               <div className="flex flex-col gap-6">
-                {' '}
-                <div className="flex items-start gap-4">
-                  <img src={checkIcon} alt="" className="h-6" />
-                  <span className="text-base font-normal text-gray-900">
-                    The duration of this exam is  {getTotalTimeInMin()} minutes.
-                  </span>
-                </div>
-                <div className="flex items-start gap-4">
-                  <img src={checkIcon} alt="" className="h-6" />
-                  <span className="text-base font-normal text-gray-900">
-                    This is a restricted open book exam.
-                  </span>
-                </div>
-                {/* <div className="flex items-start gap-4">
-                  <img src={checkIcon} alt="" className="h-6" />
-                  <span className="text-base font-normal text-gray-900">
-                    There are X questions in this exam and will be presented one
-                    at a time.
-                  </span>
-                </div> */}
-                <div className="flex items-start gap-4">
-                  <img src={checkIcon} alt="" className="h-6" />
-                  <span className="text-base font-normal text-gray-900">
-                    Each question is worth the same marks.
-                  </span>
-                </div>
-                <div className="flex items-start gap-4">
-                  <img src={checkIcon} alt="" className="h-6" />
-                  <span className="text-base font-normal text-gray-900">
-                    During this exam you will be permitted to review previous
-                    questions.
-                  </span>
-                </div>
+                {setOfInstructions.map((instruction: string, index: number) => {
+                  return (
+                    <div
+                      className="flex items-start gap-4"
+                      key={`instruction-${index}`}
+                    >
+                      <img src={checkIcon} alt="checked icon" className="h-6" />
+                      <span className="text-base font-normal text-gray-900">
+                        {instruction}
+                      </span>
+                    </div>
+                  )
+                })}
               </div>
             </div>
           </div>
@@ -126,9 +112,9 @@ const CandidateInstruction = () => {
               tabIndex={0}
               id="start"
               className="w-356 py-3"
-              varient="primary-solid"
-              title={t('candidateExamConstants.beginAssesment')}
-              buttonText={t('candidateExamConstants.beginAssesment')}
+              variant="primary-solid"
+              title={t('candidateExamConstants.beginAssessment')}
+              buttonText={t('candidateExamConstants.beginAssessment')}
               onClick={startTestForCandidate}
               aria-label="start"
             />
