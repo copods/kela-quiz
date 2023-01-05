@@ -106,7 +106,7 @@ function Login({ actionData, redirectTo }: LoginProps) {
                 htmlFor="remember"
                 className="ml-2  block cursor-pointer pt-0.5 text-xs text-gray-800"
               >
-                {t('logIn.RememberMe')}
+                {t('logIn.rememberMe')}
               </label>
             </div>
             <span
@@ -145,7 +145,7 @@ function Login({ actionData, redirectTo }: LoginProps) {
       </div>
       <div className="flex pt-6">
         <div className="text-base font-medium text-gray-500">
-          {t('logIn.DontHaveAnAccountYet')}{' '}
+          {t('logIn.dontHaveAnAccountYet')}{' '}
           <span
             id="sign-up"
             className="cursor-pointer text-primary"
