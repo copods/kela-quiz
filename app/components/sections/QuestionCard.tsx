@@ -13,12 +13,12 @@ import { useSubmit } from '@remix-run/react'
 import DeletePopUp from '../common-components/DeletePopUp'
 const QuestionCard = ({
   question,
-  isExpanded,
+  expandedIndex,
   onAccordianToggle,
   index,
 }: {
   question: Question & { questionType?: QuestionType }
-  isExpanded: number
+  expandedIndex: number
   onAccordianToggle: (e: number) => void
   index: number
 }) => {
@@ -56,12 +56,12 @@ const QuestionCard = ({
       onKeyUp={(e) => {
         if (e.key === 'Enter')
           onAccordianToggle(
-          isExpanded === -1 ? index : isExpanded === index ? -1 : index
+            expandedIndex === -1 ? index : expandedIndex === index ? -1 : index
           )
       }}
       onClick={() => {
         onAccordianToggle(
-          isExpanded === -1 ? index : isExpanded === index ? -1 : index
+          expandedIndex === -1 ? index : expandedIndex === index ? -1 : index
         )
       }}
     >
@@ -105,7 +105,7 @@ const QuestionCard = ({
             )}
           </div>
           <div>
-            {isExpanded === index ? (
+            {expandedIndex === index ? (
               <Icon
                 icon={'akar-icons:circle-chevron-up'}
                 className="cursor-pointer text-xl text-gray-400"
@@ -122,7 +122,7 @@ const QuestionCard = ({
       <div
         className={
           'overflow-scroll text-base text-gray-600 transition-all ' +
-          (isExpanded === index ? 'h-full' : 'max-h-0')
+          (expandedIndex === index ? 'h-full' : 'max-h-0')
         }
         id="options-wrapper"
       >

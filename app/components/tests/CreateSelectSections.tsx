@@ -110,7 +110,7 @@ const SelectSections = ({
                 <SelectSectionCard
                   section={section}
                   updateSection={(e) => setSections(e, i)}
-                  sectionCount={section.count}
+                  sectionCount={section?.count}
                   key={section.id}
                 />
               )
