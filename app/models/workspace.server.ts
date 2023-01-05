@@ -116,3 +116,15 @@ export async function verifyWorkspaceId({
     },
   })
 }
+export async function leaveWorkspace(workspaceId: string, userId: string) {
+  await prisma.userWorkspace.deleteMany({
+    where: { workspaceId: workspaceId, userId: userId },
+  })
+}
+
+export async function getOwnersWorkspaces(userId: string) {
+  const ownerWorkspaceId = await prisma.workspace.findMany({
+    where: { createdById: userId },
+  })
+  return ownerWorkspaceId
+}

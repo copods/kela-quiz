@@ -75,7 +75,7 @@ const SectionDetails = () => {
           id="add-question"
           className="h-9 w-36 px-5"
           buttonText={`+ ${t('addQuestion.addQuestion')}`}
-          varient="primary-solid"
+          variant="primary-solid"
           title={t('addQuestion.addQuestion')}
           aria-label={t('addQuestion.addQuestion')}
         />

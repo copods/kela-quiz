@@ -154,7 +154,7 @@ const CandidateOtp = ({ email }: { email: string }) => {
               btnRef={btnRef}
               tabIndex={0}
               id={t('commonConstants.verify')}
-              varient="primary-solid"
+              variant="primary-solid"
               type="submit"
               name={t('commonConstants.verify')}
               value="proceed"

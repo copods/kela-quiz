@@ -272,7 +272,7 @@ const AddQuestionInSection = () => {
             buttonText={
               transition.state === 'submitting' ? 'Canceling...' : 'Cancel'
             }
-            varient="secondary-solid"
+            variant="secondary-solid"
           />
         </div>
         <div className="flex gap-2">
@@ -282,7 +282,7 @@ const AddQuestionInSection = () => {
             isDisabled={transition.state === 'submitting'}
             className="h-9 px-5"
             onClick={() => saveQuestion(false)}
-            varient="primary-solid"
+            variant="primary-solid"
             title={sortByOrder.saveAndExit}
             buttonText={
               <>
@@ -299,7 +299,7 @@ const AddQuestionInSection = () => {
             isDisabled={transition.state === 'submitting'}
             className="h-9 px-5"
             onClick={() => saveQuestion(true)}
-            varient="primary-solid"
+            variant="primary-solid"
             title={sortByOrder.saveAndAddMore}
             buttonText={
               <>
