@@ -396,11 +396,14 @@ export default function SectionPage() {
     navigate,
   ])
   useEffect(() => {
-    navigate(
-      `/${data.currentWorkspaceId}${routes.tests}/${data.sections[0].id}?sortBy=${sortBy}&sort=${order}&testPage=${testsCurrentPage}&testItems=${testsPageSize}`
-    )
+    if(data.sections.length>0){
+      navigate(
+        `/${data.currentWorkspaceId}${routes.tests}/${data.sections[0]?.id}?sortBy=${sortBy}&sort=${order}&testPage=${testsCurrentPage}&testItems=${testsPageSize}`
+      )
+    }
+   
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [testsCurrentPage, testsPageSize, sortBy, order, data.sections[0].id])
+  }, [testsCurrentPage, testsPageSize, sortBy, order, data.sections[0]?.id])
   useEffect(() => {
     const heading = document.getElementById('tests-heading')
     heading?.focus()
