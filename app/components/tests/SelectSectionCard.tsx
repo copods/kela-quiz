@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next'
 const SelectSectionCard = ({
   section,
   updateSection,
-  sectionCount,
+  sectionCount=0,
 }: {
   section: TestSection
   updateSection:<T>(e: T) => void
