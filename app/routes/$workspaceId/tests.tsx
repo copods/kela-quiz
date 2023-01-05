@@ -344,12 +344,7 @@ export default function SectionPage() {
   if (t(data.status) != t('statusCheck.success')) {
     toast.error(t('statusCheck.commonError'))
   }
-  useEffect(() => {
-    navigate(
-      `/${data.currentWorkspaceId}${routes.tests}/${data.sections[0].id}?sortBy=${sortBy}&sort=${order}&testPage=${testsCurrentPage}&testItems=${testsPageSize}`
-    )
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [testsCurrentPage, testsPageSize, sortBy, order, data.sections[0].id])
+ 
   useEffect(() => {
     if (sectionActionData) {
       if (
@@ -400,6 +395,12 @@ export default function SectionPage() {
     location,
     navigate,
   ])
+  useEffect(() => {
+    navigate(
+      `/${data.currentWorkspaceId}${routes.tests}/${data.sections[0].id}?sortBy=${sortBy}&sort=${order}&testPage=${testsCurrentPage}&testItems=${testsPageSize}`
+    )
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [testsCurrentPage, testsPageSize, sortBy, order, data.sections[0].id])
   useEffect(() => {
     const heading = document.getElementById('tests-heading')
     heading?.focus()
