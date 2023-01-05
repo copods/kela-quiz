@@ -8,23 +8,25 @@ import {
 import ResultDetailsComponent from '~/components/results/ResultDetails'
 import { getUserWorkspaces } from '~/models/workspace.server'
 import { getUserId } from '~/session.server'
+import type{CandidateTest,Candidate } from '~/interface/Interface'
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   const userId = await getUserId(request)
   const currentWorkspaceId = params.workspaceId as string
   const workspaces = await getUserWorkspaces(userId as string)
   invariant(params.testId, 'resultId not found')
-  const candidateTestWiseResult =
+  const { sections, candidate } =
     await getSectionWiseResultsOfIndividualCandidate({
       testId: params?.testId as string,
       candidateId: params?.candidateId as string,
-    })
-  if(!candidateTestWiseResult){
+    })||{} as CandidateTest&{candidate:Candidate}
+  if (!sections || !candidate) {
     throw new Response('Not Found', { status: 404 })
   }
   return json({
     params,
-    candidateTestWiseResult,
+    sections,
+    candidate,
     workspaces,
     currentWorkspaceId,
   })

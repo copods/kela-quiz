@@ -240,15 +240,64 @@ export async function updateCandidateStatus({
     },
   })
 }
-
-export async function getAllCandidateTests(
-  filterData: string,
-  workspaceId: string
-) {
-  const filter = filterData ? filterData : {}
-  const res: Array<Test> = await prisma.test.findMany({
-    ...filter,
+export async function getTotalTestCount(workspaceId: string) {
+  const totalCount = await prisma.test.count({
     where: {
+      workspaceId,
+
+      candidateTest: {
+        some: {
+          id: {
+            not: undefined,
+          },
+        },
+      },
+    },
+  })
+  return totalCount
+}
+export async function getAllCandidateTestsCount(
+  workspaceId: string,
+  statusFilter: string
+) {
+  const testCount = await prisma.test.count({
+    where: {
+      ...(statusFilter === 'active'
+        ? { NOT: { deleted: { equals: true } } }
+        : statusFilter === 'inactive'
+        ? { deleted: { equals: true } }
+        : {}),
+      workspaceId,
+      candidateTest: {
+        some: {
+          id: {
+            not: undefined,
+          },
+        },
+      },
+    },
+  })
+  return testCount
+}
+export async function getAllCandidateTests(
+  workspaceId: string,
+  resultsItemsPerPage: number = 5,
+  resultsCurrentPage: number = 1,
+  statusFilter: string,
+  sortBy: string,
+  sortOrder: string
+) {
+  const PER_PAGE_ITEMS = resultsItemsPerPage
+  const res: Array<Test> = await prisma.test.findMany({
+    take: PER_PAGE_ITEMS,
+    skip: (resultsCurrentPage - 1) * PER_PAGE_ITEMS,
+    orderBy: { [sortBy ?? 'createdAt']: sortOrder ?? 'asc' },
+    where: {
+      ...(statusFilter === 'active'
+        ? { NOT: { deleted: { equals: true } } }
+        : statusFilter === 'inactive'
+        ? { deleted: { equals: true } }
+        : {}),
       workspaceId,
       candidateTest: {
         some: {

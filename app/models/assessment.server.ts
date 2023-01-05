@@ -535,7 +535,7 @@ export async function endCurrentSection(
   if (section?.endAt) {
     return { msg: 'Section already ended' }
   }
-  calculateResultByIdSection(section?.id)
+  calculateResultBySectionId(section?.id)
 
   return await prisma.sectionInCandidateTest.updateMany({
     where: { candidateTestId, sectionId: testSection?.sectionId },
@@ -578,7 +578,7 @@ export async function endAssessment(id: string) {
   if (candidateTest?.endAt) {
     return { msg: 'Exam already ended' }
   }
-  calculateResult(id)
+  calculateOverallResult(id)
   let endExam = await prisma.candidateTest.update({
     where: {
       id,
@@ -591,7 +591,7 @@ export async function endAssessment(id: string) {
     await sendMailToRecruiter(recruiterEmail, testName, candidateName)
   return endExam
 }
-async function calculateResultByIdSection(sectionid?: string) {
+async function calculateResultBySectionId(sectionid?: string) {
   const section = await prisma.sectionInCandidateTest.findUnique({
     where: {
       id: sectionid,
@@ -631,8 +631,8 @@ async function calculateResultByIdSection(sectionid?: string) {
     for (let question of section?.questions || []) {
       // counting unanswered questions
       if (
-        question?.answers.length == 0 &&
-        question?.selectedOptions?.length == 0 &&
+        question?.answers.length === 0 &&
+        question?.selectedOptions?.length === 0 &&
         question.status != 'SKIPPED'
       ) {
         unanswered += 1
@@ -665,7 +665,7 @@ async function calculateResultByIdSection(sectionid?: string) {
             incorrect += 1
           }
         }
-      } else if (question?.question?.questionType?.value == 'SINGLE_CHOICE') {
+      } else if (question?.question?.questionType?.value === 'SINGLE_CHOICE') {
         if (
           question?.selectedOptions[0].id ===
           question?.question?.correctOptions[0].id
@@ -674,7 +674,9 @@ async function calculateResultByIdSection(sectionid?: string) {
         } else {
           incorrect += 1
         }
-      } else if (question?.question?.questionType?.value == 'MULTIPLE_CHOICE') {
+      } else if (
+        question?.question?.questionType?.value === 'MULTIPLE_CHOICE'
+      ) {
         const correctOptionsId = question?.question?.correctOptions
           ?.flatMap((opt) => opt?.id)
           .sort()
@@ -682,7 +684,7 @@ async function calculateResultByIdSection(sectionid?: string) {
           ?.flatMap((opt) => opt.id)
           .sort()
         let correctFlag = false
-        if (correctOptionsId?.length == userAnswers?.length) {
+        if (correctOptionsId?.length === userAnswers?.length) {
           correctFlag = true
           for (let i = 0; i < correctOptionsId?.length; i++) {
             if (correctOptionsId[i].localeCompare(userAnswers[i]) != 0) {
@@ -697,23 +699,23 @@ async function calculateResultByIdSection(sectionid?: string) {
           incorrect += 1
         }
       }
-      const sec = await prisma.sectionWiseResult.create({
-        data: {
-          sectionInCandidateTestId: section?.id,
-          totalQuestion,
-          correctQuestion: correct,
-          unanswered,
-          skipped,
-          incorrect,
-          testId: section?.candidateTest.testId,
-          candidateTestId: section?.candidateTest.id,
-        },
-      })
-      return sec
     }
+    const sec = await prisma.sectionWiseResult.create({
+      data: {
+        sectionInCandidateTestId: section?.id,
+        totalQuestion,
+        correctQuestion: correct,
+        unanswered,
+        skipped,
+        incorrect,
+        testId: section?.candidateTest.testId,
+        candidateTestId: section?.candidateTest.id,
+      },
+    })
+    return sec
   }
 }
-async function calculateResult(id: CandidateTest['id']) {
+async function calculateOverallResult(id: CandidateTest['id']) {
   let totalQuestionInTest = 0
   let unansweredInTest = 0
   let correctInTest = 0
@@ -770,12 +772,12 @@ async function calculateResult(id: CandidateTest['id']) {
         totalQuestionInTest += section.SectionWiseResult[0].totalQuestion
         unansweredInTest += section.SectionWiseResult[0].unanswered
         correctInTest += section.SectionWiseResult[0].correctQuestion
-        section.SectionWiseResult[0].skipped
-          ? (skippedInTest += section.SectionWiseResult[0].skipped)
-          : ''
-        section.SectionWiseResult[0].incorrect
-          ? (incorrectInTest += section.SectionWiseResult[0].incorrect)
-          : ''
+        skippedInTest += section.SectionWiseResult[0].skipped
+          ? section.SectionWiseResult[0].skipped
+          : 0
+        incorrectInTest = section.SectionWiseResult[0].incorrect
+          ? section.SectionWiseResult[0].incorrect
+          : 0
       }
     }
     await prisma.candidateResult.create({

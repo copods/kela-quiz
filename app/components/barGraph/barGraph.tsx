@@ -3,18 +3,17 @@ import type { TooltipFormatterContextObject } from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 import moment from 'moment'
 import type {
-  CandidateTest,
   SectionInCandidateTest,
   SectionInTest,
   SectionWiseResults,
 } from '~/interface/Interface'
 
 const BarGraph = ({
-  candidateTestWiseResult,
+  candidateTestResult,
 }: {
-  candidateTestWiseResult: CandidateTest
+  candidateTestResult: SectionInCandidateTest[]
 }) => {
-  const calculateResult = candidateTestWiseResult.sections.filter(
+  const calculateResult = candidateTestResult.filter(
     (data: SectionInCandidateTest) => {
       return data.SectionWiseResult.length > 0
     }
@@ -23,9 +22,9 @@ const BarGraph = ({
     let finalResult: Array<number> = []
     calculateResult.map((result: SectionInCandidateTest) => {
       result.SectionWiseResult.map((data: SectionWiseResults) => {
-        let startingTime = moment(data?.section?.startedAt)
-        let endingTime = moment(data?.section?.endAt)
-        let difference = endingTime.diff(startingTime)
+        const startingTime = moment(data?.section?.startedAt)
+        const endingTime = moment(data?.section?.endAt)
+        const difference = endingTime.diff(startingTime)
         finalResult.push(parseFloat((difference / 60000).toFixed(1)))
       })
     })
@@ -35,15 +34,14 @@ const BarGraph = ({
   let result: Array<number> = []
   calculateResult.map((data: SectionInCandidateTest) => {
     return data.SectionWiseResult?.map((results: SectionWiseResults) => {
-      let data = results.section.section.sectionInTest.map(
+      const sectionInTestData = results.section.section.sectionInTest.map(
         (data: SectionInTest) => {
           return data
         }
       )
-      result.push(Math.floor(data[0].timeInSeconds / 60))
+      result.push(Math.floor(sectionInTestData[0].timeInSeconds / 60))
     })
   })
-
   const getLabelData = (sectionName: string, resultKind: string) => {
     const getRequiredSection = calculateResult.filter(
       (result: SectionInCandidateTest) => {

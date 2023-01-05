@@ -319,4 +319,6 @@ model SectionWiseResult {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+   @@unique([sectionInCandidateTestId, testId])
 }

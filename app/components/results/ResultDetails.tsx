@@ -11,12 +11,11 @@ import type { SectionInCandidateTest } from '~/interface/Interface'
 const ResultDetailsComponent = () => {
   // const { t } = useTranslation()
 
-  const { params, candidateTestWiseResult, currentWorkspaceId } =
-    useLoaderData()
+  const { params, sections, candidate, currentWorkspaceId } = useLoaderData()
   let navigate = useNavigate()
-  const sortSections = candidateTestWiseResult.sections.sort(
+  const sortSections = sections.sort(
     (a: SectionInCandidateTest, b: SectionInCandidateTest) => {
-      return a.SectionWiseResult.length - b.SectionWiseResult.length
+      return b.SectionWiseResult.length - a.SectionWiseResult.length
     }
   )
   return (
@@ -46,22 +45,20 @@ const ResultDetailsComponent = () => {
             ></Icon>
           </div>
           <span className="text-3xl font-semibold text-gray-900" id="title">
-            {candidateTestWiseResult.candidate?.firstName}
-            &nbsp;
-            {candidateTestWiseResult.candidate?.lastName}
+            {candidate?.firstName} {candidate?.lastName}
           </span>
         </div>
       </header>
       <Divider height="1px" />
-      {candidateTestWiseResult ? (
+      {sections ? (
         <>
-          <BarGraph candidateTestWiseResult={candidateTestWiseResult} />
+          <BarGraph candidateTestResult={sections} />
           <Divider height="1px" />
           <div
             id="results-test-candidate-list-tab"
             className="flex flex-col gap-6"
           >
-            {sortSections.reverse().map((section: SectionInCandidateTest) => {
+            {sortSections.map((section: SectionInCandidateTest) => {
               return (
                 <SectionCardForResultDetail
                   key={section?.id}
