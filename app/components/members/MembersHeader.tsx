@@ -43,7 +43,7 @@ export default function MembersHeader({
           id="invite-member"
           className="h-9 px-4"
           onClick={() => setOpen(!open)}
-          varient="primary-solid"
+          variant="primary-solid"
           title={t('members.inviteMember')}
           buttonText={t('members.inviteMember')}
         />

@@ -158,7 +158,7 @@ const ResetPassword = ({
             {PasswordInputFieldProps.map((props) => {
               return (
                 <PasswordInputFields
-                  onblur={() => comparePasswords(newPassword, confirmPassword)}
+                  onBlur={() => comparePasswords(newPassword, confirmPassword)}
                   {...props}
                   key={props.name}
                 />
@@ -189,7 +189,7 @@ const ResetPassword = ({
                   : t('settings.resetPas')
               }
               type="submit"
-              varient="primary-solid"
+              variant="primary-solid"
               className="h-11 w-full text-base"
               isDisabled={!(newPassword && confirmPassword && password)}
               datacy="submit"

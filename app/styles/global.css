@@ -30,3 +30,7 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+#table-td:has(#status-cell) {
+  overflow: visible !important;
+  display: flex;
+}

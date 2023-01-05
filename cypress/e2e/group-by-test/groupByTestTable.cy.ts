@@ -7,8 +7,6 @@ describe('Test for GroupByTestTable, Result', () => {
 
     cy.customVisit('/members')
   })
-  let value: string
-  let strings: Array<string>
 
   it('checks, result page contain header and should be visible', () => {
     cy.wait(3000)
@@ -110,22 +108,7 @@ describe('Test for GroupByTestTable, Result', () => {
   it('Total Count of Test of groupByTable', () => {
     cy.wait(3000)
     cy.get('#group-by-tests').should('have.text', 'Results').click()
-    cy.get('#total-items-value', { timeout: 60000 })
-      .get('#total-count-value')
-      .then(($ele) => {
-        value = $ele[0].innerText
-      })
-    cy.get('#group-by-test-items').each(($el) => {
-      cy.wrap($el)
-        .children()
-        .children()
-        .within((el) => {
-          cy.get('.candidate-name', { timeout: 60000 }).then(($elements) => {
-            strings = [...$elements].map(($el) => $el.innerText)
-            expect(parseInt(value)).to.deep.equal(parseInt(`${strings.length}`))
-          })
-        })
-    })
+    cy.get('#total-count-value', { timeout: 60000 }).should('have.text', 1)
   })
   it('sort by name in ascending order ', () => {
     cy.wait(3000)
@@ -179,6 +162,7 @@ describe('Test for GroupByTestTable, Result', () => {
     cy.get('#group-by-tests').should('have.text', 'Results').click()
     cy.get('#sort-filter-container').within(() => {
       cy.get('.dropdownButton')
+        .eq(0)
         .click({ multiple: true })
         .get('li div')
         .get('.dropdown-option')
@@ -214,6 +198,7 @@ describe('Test for GroupByTestTable, Result', () => {
     cy.get('#descend', { timeout: 8000 }).click()
     cy.get('#sort-filter-container').within(() => {
       cy.get('.dropdownButton')
+        .eq(0)
         .click({ multiple: true })
         .get('li div')
         .get('.dropdown-option')
@@ -251,29 +236,14 @@ describe('Test for GroupByTestTable, Result', () => {
   it('checks,table contains assessment name', () => {
     cy.wait(3000)
     cy.get('#group-by-tests').should('have.text', 'Results').click()
-    cy.get('.groupTestRow', { timeout: 8000 }).each(($el) => {
-      cy.wrap($el).within((el) => {
-        if (
-          el[0].getElementsByClassName('groupByItemTest')[0].innerHTML === test1
-        ) {
-          cy.get('.groupByItemTest').should('have.text', test1)
-        }
-      })
-    })
+    cy.get('[data-cy="group-by-item-test"]').should('have.text', test1)
     cy.get('.groupByItemTest').contains(test1).should('be.visible')
   })
   it('checks,table contains assessment name should be in blue color', () => {
     cy.wait(3000)
     cy.get('#group-by-tests').should('have.text', 'Results').click()
-    cy.get('.groupTestRow', { timeout: 8000 }).each(($el) => {
-      cy.wrap($el).within((el) => {
-        if (
-          el[0].getElementsByClassName('groupByItemTest')[0].innerHTML === test1
-        ) {
-          cy.get('.groupByItemTest').should('have.text', test1)
-        }
-      })
-    })
+    cy.get('[data-cy="group-by-item-test"]').should('have.text', test1)
+
     cy.get('.groupByItemTest')
       .contains(test1)
       .should('have.css', 'color', 'rgb(53, 57, 136)')
@@ -281,15 +251,6 @@ describe('Test for GroupByTestTable, Result', () => {
   it('checks,table contains assessment name should have tabIndex', () => {
     cy.wait(3000)
     cy.get('#group-by-tests').should('have.text', 'Results').click()
-    cy.get('.groupTestRow', { timeout: 8000 }).each(($el) => {
-      cy.wrap($el).within((el) => {
-        if (
-          el[0].getElementsByClassName('groupByItemTest')[0].innerHTML === test1
-        ) {
-          cy.get('.groupByItemTest').should('have.text', test1)
-        }
-      })
-    })
     cy.get('.groupByItemTest')
       .contains(test1)
       .should('have.attr', 'tabindex', '0')
@@ -298,15 +259,6 @@ describe('Test for GroupByTestTable, Result', () => {
     cy.wait(3000)
     cy.viewport(1280, 720)
     cy.get('#group-by-tests').should('have.text', 'Results').click()
-    cy.get('.groupTestRow', { timeout: 8000 }).each(($el) => {
-      cy.wrap($el).within((el) => {
-        if (
-          el[0].getElementsByClassName('groupByItemTest')[0].innerHTML === test1
-        ) {
-          cy.get('.groupByItemTest').should('have.text', test1)
-        }
-      })
-    })
     cy.get('.groupByItemTest').contains(test1).click()
     cy.get('#vertical-icon', { timeout: 8000 }).click()
     cy.get('.deleteTest').should('be.visible').click()

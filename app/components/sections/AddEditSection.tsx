@@ -147,7 +147,7 @@ const AddEditSection = ({
               setOpen(false)
               setSectionActionErrors?.({ title: '', description: '' })
             }}
-            varient="primary-outlined"
+            variant="primary-outlined"
             title={t('commonConstants.cancel')}
             buttonText={t('commonConstants.cancel')}
           />
@@ -159,7 +159,7 @@ const AddEditSection = ({
             name={editItem ? 'edit-section' : 'add-section'}
             value="add"
             isDisabled={transition.state === 'submitting'}
-            varient="primary-solid"
+            variant="primary-solid"
             datacy="submit"
             onClick={() =>
               editItem

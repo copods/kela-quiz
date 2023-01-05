@@ -172,7 +172,7 @@ const InviteCandidatePopup = ({
           <Button
             type="button"
             className="h-9 px-4"
-            varient="primary-outlined"
+            variant="primary-outlined"
             title={t('commonConstants.cancel')}
             buttonText={t('commonConstants.cancel')}
             onClick={updatePopupAndEmailState}
@@ -183,7 +183,7 @@ const InviteCandidatePopup = ({
             value={testId}
             id="submit-button"
             className="h-9 px-4"
-            varient="primary-solid"
+            variant="primary-solid"
             title={
               transition.state === 'submitting'
                 ? t('inviteMemeberPopUpConstants.inviting')

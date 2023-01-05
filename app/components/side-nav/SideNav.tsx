@@ -4,7 +4,7 @@ import Footer from '~/components/SideNavFooter'
 import { routes } from '~/constants/route.constants'
 import { useTranslation } from 'react-i18next'
 import DropdownField from '../common-components/Dropdown'
-import { useFetcher, useLoaderData } from '@remix-run/react'
+import { useFetcher, useLoaderData, useParams } from '@remix-run/react'
 import type { UserWorkspace } from '~/interface/Interface'
 import AddWorkspace from '../workspace/AddWorkspace'
 import { useEffect, useState } from 'react'
@@ -12,9 +12,10 @@ import { actions } from '~/constants/action.constants'
 
 const SideNav = () => {
   const { t } = useTranslation()
-const [showAddWorkspaceModal, setShowAddWorkspaceModal] = useState(false)
+  const param = useParams()
+  const [showAddWorkspaceModal, setShowAddWorkspaceModal] = useState(false)
   const { workspaces = [], currentWorkspaceId } = useLoaderData()
-  const [workspace, setWorkspace] = useState<string>(currentWorkspaceId)
+  const [workspace, setWorkspace] = useState<string>(param.workspaceId!)
   const fetcher = useFetcher()
   const tempWorkspaces = workspaces.map((userWorkspace: UserWorkspace) => {
     return { ...userWorkspace, ...userWorkspace.workspace }
@@ -38,7 +39,7 @@ const [showAddWorkspaceModal, setShowAddWorkspaceModal] = useState(false)
           id: 'group-by-tests',
           iconClass: 'mdi:chart-box-outline',
           itemName: 'commonConstants.results',
-          itemRoute: `${routes.resultGroupTest}?index=&data=%7B"orderBy"%3A%7B"createdAt"%3A"desc"%7D%7D`,
+          itemRoute: `${routes.resultGroupTest}`,
         },
         // {
         //   id: 'Group_By_Candidate',
@@ -83,7 +84,6 @@ const [showAddWorkspaceModal, setShowAddWorkspaceModal] = useState(false)
       ],
     },
   ]
-
   function switchWorkpace(val: string) {
     if (val !== t('sideNav.addWorkspace') && workspace !== currentWorkspaceId) {
       fetcher.submit(
@@ -102,6 +102,12 @@ const [showAddWorkspaceModal, setShowAddWorkspaceModal] = useState(false)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [workspace])
 
+  useEffect(() => {
+    if (workspace) {
+      setWorkspace(param.workspaceId!)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [param.workspaceId])
   return (
     <>
       <div
