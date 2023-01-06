@@ -8,6 +8,7 @@ import Table from '../common-components/TableComponent'
 import moment from 'moment'
 import TestListActionMenu from '../../components/TestListActionMenu'
 import DropdownField from '../common-components/Dropdown'
+import resendTestLink from '~/../public/assets/resend-test-invitation.svg'
 import type {
   CandidateTest,
   Candidate,
@@ -64,7 +65,10 @@ const CandidateListOfTest = () => {
       { method: 'post' }
     )
   }
-
+  const copyLink = (link: string) => {
+    navigator.clipboard.writeText(link)
+    toast.success('Link Copied')
+  }
   const SeriaLNoCell = (data: { [key: string]: string }, index: number) => {
     return <span>{index + 1}</span>
   }
@@ -128,8 +132,24 @@ const CandidateListOfTest = () => {
   const StatusCell = (
     data: { candidateResult: CandidateResult[] } & CandidateResult
   ) => {
+    const menuItemsDetailsList = [
+      {
+        id: 'resendInvite',
+        menuListText: t('resultConstants.resendInvite'),
+        menuListLink: resendTestLink,
+        menuLinkAltTagLine: t('resultConstants.resendAssessmentInvite'),
+        onClickOfButton: () =>
+          resendInvite(data.id, data.candidateId, data.testId),
+      },
+      {
+        id: 'copyLink',
+        menuListText: t('resultConstants.copyLink'),
+        menuListIcon: 'material-symbols:content-copy-outline',
+        onClickOfButton: () => copyLink(data.link as string),
+      },
+    ]
     return (
-      <div id="status-cell" className="flex items-center">
+      <div id="status-cell" className="relat flex items-center">
         <span
           className={`rounded-full px-2 py-1 text-xs text-gray-900 ${
             data?.candidateResult.length > 0 ? 'bg-green-200' : 'bg-yellow-200'
@@ -146,12 +166,9 @@ const CandidateListOfTest = () => {
             menuIcon={'mdi:dots-vertical'}
             onItemClick={setmenuListOpen}
             open={menuListOpen}
-            menuListText={t('resultConstants.resendInvite')}
+            menuDetails={menuItemsDetailsList}
             aria-label={t('testTableItem.menu')}
             id={data.id}
-            resendInvite={() =>
-              resendInvite(data.id, data.candidateId, data.testId)
-            }
           />
         )}
       </div>

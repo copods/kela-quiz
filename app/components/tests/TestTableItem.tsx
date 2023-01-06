@@ -48,6 +48,15 @@ const TestTableItem = ({
       { method: 'post' }
     )
   }
+
+  const menuItemsDetailsList = [
+    {
+      id: 'Delete',
+      menuListText: 'Delete',
+      menuListIcon: 'ic:outline-delete-outline',
+    },
+  ]
+
   useEffect(() => {
     if (deleted === true) {
       setTimeout(() => {
@@ -113,7 +122,7 @@ const TestTableItem = ({
             id="invite-popup-open"
             role={'button'}
             tabIndex={0}
-            className="candidateInviteIcon mt-2 cursor-pointer text-2xl text-primary focus:outline-dotted focus:outline-2"
+            className="candidateInviteIcon cursor-pointer text-2xl text-primary focus:outline-dotted focus:outline-2"
             icon={'ant-design:user-add-outlined'}
             onClick={() => {
               setCandidatePopupOpen(true)
@@ -127,9 +136,7 @@ const TestTableItem = ({
             menuIcon={'mdi:dots-vertical'}
             onItemClick={setShowDeletePopup}
             open={showDeletePopup}
-            menuListIcon={'ic:outline-delete-outline'}
-            menuListText={'Delete'}
-            aria-label={t('testTableItem.menu')}
+            menuDetails={menuItemsDetailsList}
             id={id}
           />
         </div>

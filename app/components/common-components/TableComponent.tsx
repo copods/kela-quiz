@@ -147,9 +147,9 @@ const Table = <T extends object>({
         }`}
       >
         <div id="table-head-row" className="sticky top-0 flex bg-gray-100">
-          {columns.map((header) => (
+          {columns.map((header, index) => (
             <HeaderDataCell
-              key={header.field}
+              key={header.field + index}
               width={header.width}
               title={header.title}
             />
@@ -159,11 +159,11 @@ const Table = <T extends object>({
           <TableEmptyState />
         ) : (
           data.map((rowData: T & { id?: number }, i) => (
-            <div id="table-row" key={String(rowData.id)} className="flex ">
+            <div id="table-row" key={String(rowData.id) + i} className="flex ">
               {columns.map((column, j) =>
                 column.render ? (
                   <RenderDataCell
-                    key={column.field}
+                    key={column.field + j}
                     width={column.width}
                     rowData={rowData}
                     index={i}
@@ -171,7 +171,7 @@ const Table = <T extends object>({
                   />
                 ) : (
                   <TableDataCell
-                    key={column.field}
+                    key={column.field + i}
                     field={column.field}
                     width={column.width}
                     rowData={rowData}

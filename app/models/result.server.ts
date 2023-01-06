@@ -128,7 +128,8 @@ export async function getAllCandidatesOfTest({
         },
         skip: (currentPage! - 1) * pageSize!,
         orderBy: { createdAt: 'desc' },
-        include: {
+        select: {
+          link: true,
           candidateResult: true,
           candidate: {
             select: {
@@ -331,6 +332,6 @@ export async function getAllCandidateTests(
       }
     )
   }
-
+  console.log('candidate test result', res)
   return res
 }
