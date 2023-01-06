@@ -72,7 +72,7 @@ const SectionCardForResultDetail = ({
         </span>
       ) : (
         <span className="rounded-full bg-orange-100 px-2 py-1 text-xs">
-          {t('commonConstants.pending')}
+          {t('commonConstants.notAttempted')}
         </span>
       )}
     </div>
