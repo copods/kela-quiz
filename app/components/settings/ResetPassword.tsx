@@ -189,7 +189,7 @@ const ResetPassword = ({
                   : t('settings.resetPas')
               }
               type="submit"
-              varient="primary-solid"
+              variant="primary-solid"
               className="h-11 w-full text-base"
               isDisabled={!(newPassword && confirmPassword && password)}
               datacy="submit"

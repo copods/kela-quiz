@@ -48,7 +48,7 @@ export interface ButtonProps {
   datacy?: string
   alignment?: string
   type?: 'button' | 'submit' | 'reset'
-  varient: 'primary-solid' | 'primary-outlined' | 'secondary-solid'
+  variant: 'primary-solid' | 'primary-outlined' | 'secondary-solid'
   buttonText: string | JSX.Element
   onClick?: React.MouseEventHandler<HTMLButtonElement>
   isDisabled?: boolean
@@ -98,6 +98,7 @@ export interface Section {
   description: string
   createdById: string
   createdAt: Date
+  sectionInTest: SectionInTest[]
   updatedAt: Date
   deleted: boolean
   deletedAt: string
@@ -223,6 +224,7 @@ export interface CandidateTest {
 }
 
 export interface SectionInCandidateTest {
+  SectionWiseResult: SectionWiseResults[]
   id: string
   sectionId: string
   section: Section

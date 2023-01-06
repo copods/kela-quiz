@@ -258,11 +258,11 @@ const SignUp = ({ error }: { error?: string }) => {
                 ? t('logIn.signingUp')
                 : t('logIn.signUp')
             }
-            varient="primary-solid"
+            variant="primary-solid"
             onClick={() => submitMemberForm()}
           />
           <div className="text-base font-medium text-gray-500">
-            {t('logIn.AlreadyHaveAnAccount')}{' '}
+            {t('logIn.alreadyHaveAnAccount')}{' '}
             <span
               className="cursor-pointer text-primary"
               tabIndex={0}

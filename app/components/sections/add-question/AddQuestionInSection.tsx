@@ -19,7 +19,7 @@ import { useTranslation } from 'react-i18next'
 const AddQuestionInSection = () => {
   const { t } = useTranslation()
 
-  const { sectionDetails, questionTypes } = useLoaderData()
+  const { sectionDetails, questionTypes, currentWorkspaceId } = useLoaderData()
   const [selectedTypeOfQuestion, onQuestionTypeChange] = useState(() => {
     for (let questionType of questionTypes) {
       if (questionType.value === QuestionTypes.multipleChoice) {
@@ -263,7 +263,11 @@ const AddQuestionInSection = () => {
           <Button
             tabIndex={0}
             id="cancel"
-            onClick={() => navigate(`${routes.tests}/${sectionDetails?.id}`)}
+            onClick={() =>
+              navigate(
+                `/${currentWorkspaceId}${routes.tests}/${sectionDetails?.id}`
+              )
+            }
             isDisabled={transition.state === 'submitting'}
             className="h-9 px-5"
             title={
@@ -272,7 +276,7 @@ const AddQuestionInSection = () => {
             buttonText={
               transition.state === 'submitting' ? 'Canceling...' : 'Cancel'
             }
-            varient="secondary-solid"
+            variant="secondary-solid"
           />
         </div>
         <div className="flex gap-2">
@@ -282,7 +286,7 @@ const AddQuestionInSection = () => {
             isDisabled={transition.state === 'submitting'}
             className="h-9 px-5"
             onClick={() => saveQuestion(false)}
-            varient="primary-solid"
+            variant="primary-solid"
             title={sortByOrder.saveAndExit}
             buttonText={
               <>
@@ -299,7 +303,7 @@ const AddQuestionInSection = () => {
             isDisabled={transition.state === 'submitting'}
             className="h-9 px-5"
             onClick={() => saveQuestion(true)}
-            varient="primary-solid"
+            variant="primary-solid"
             title={sortByOrder.saveAndAddMore}
             buttonText={
               <>

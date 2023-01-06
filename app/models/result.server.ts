@@ -165,53 +165,63 @@ export async function getResultsOfIndividualCandidates({ id }: { id: string }) {
 
 export async function getSectionWiseResultsOfIndividualCandidate({
   testId,
-  candidateTestId,
+  candidateId,
 }: {
   testId: string
-  candidateTestId: string
+  candidateId: string
 }) {
-  return await prisma.sectionWiseResult.findMany({
+  return await prisma.candidateTest.findUnique({
     where: {
-      testId,
-      candidateTestId,
+      candidateId_testId: { candidateId, testId },
     },
     select: {
-      id: true,
-      section: {
+      candidate: {
+        select: {
+          firstName: true,
+          lastName: true,
+        },
+      },
+      sections: {
         select: {
           startedAt: true,
           endAt: true,
+          order: true,
           section: {
             select: {
               id: true,
               name: true,
             },
           },
-        },
-      },
 
-      test: {
-        select: {
-          id: true,
-          sections: {
+          SectionWiseResult: {
             select: {
               id: true,
-              timeInSeconds: true,
               section: {
                 select: {
-                  id: true,
+                  startedAt: true,
+                  endAt: true,
+                  section: {
+                    select: {
+                      id: true,
+                      name: true,
+                      sectionInTest: {
+                        select: {
+                          timeInSeconds: true,
+                        },
+                      },
+                    },
+                  },
                 },
               },
+              totalQuestion: true,
+              correctQuestion: true,
+              unanswered: true,
+              incorrect: true,
+              skipped: true,
             },
           },
         },
       },
-
-      totalQuestion: true,
-      correctQuestion: true,
-      unanswered: true,
-      incorrect: true,
-      skipped: true,
     },
   })
 }
@@ -332,6 +342,5 @@ export async function getAllCandidateTests(
       }
     )
   }
-  console.log('candidate test result', res)
   return res
 }

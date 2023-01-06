@@ -3,32 +3,39 @@ import { Icon } from '@iconify/react'
 import SectionCardForResultDetail from './SectionCardForResultDetail'
 import Divider from '../common-components/divider'
 import BarGraph from '../barGraph/barGraph'
-import type { SectionWiseResults } from '~/interface/Interface'
 import { routes } from '~/constants/route.constants'
 import EmptyStateComponent from '../common-components/EmptyStateComponent'
+import type { SectionInCandidateTest } from '~/interface/Interface'
 // import { useTranslation } from 'react-i18next'
 
 const ResultDetailsComponent = () => {
   // const { t } = useTranslation()
 
-  const { candidateResult, params, sectionWiseResult } = useLoaderData()
-
+  const { params, sections, candidate, currentWorkspaceId } = useLoaderData()
   let navigate = useNavigate()
-
+  const sortedSections = sections.sort(
+    (a: SectionInCandidateTest, b: SectionInCandidateTest) => {
+      return a.order - b.order
+    }
+  )
   return (
     <div id="test-details" className="flex h-full flex-col gap-6">
       <header>
         <div className="flex gap-2">
           <div
             onClick={() =>
-              navigate(`${routes.resultGroupTest}/${params?.testId}`)
+              navigate(
+                `/${currentWorkspaceId}${routes.resultGroupTest}/${params?.testId}`
+              )
             }
             className="flex items-center gap-4 "
             role={'button'}
             tabIndex={0}
             onKeyDown={(e) => {
               if (e.key === 'Enter')
-                navigate(`${routes.resultGroupTest}/${params?.testId}`)
+                navigate(
+                  `/${currentWorkspaceId}${routes.resultGroupTest}/${params?.testId}`
+                )
             }}
           >
             <Icon
@@ -38,30 +45,33 @@ const ResultDetailsComponent = () => {
             ></Icon>
           </div>
           <span className="text-3xl font-semibold text-gray-900" id="title">
-            {candidateResult?.candidate?.firstName}&nbsp;
-            {candidateResult?.candidate?.lastName}
+            {candidate?.firstName} {candidate?.lastName}
           </span>
         </div>
       </header>
       <Divider height="1px" />
-      {sectionWiseResult ? (
+      {sections ? (
         <>
-          <BarGraph sectionWiseResult={sectionWiseResult} />
+          <BarGraph candidateTestResult={sortedSections} />
           <Divider height="1px" />
           <div
             id="results-test-candidate-list-tab"
             className="flex flex-col gap-6"
           >
-            {sectionWiseResult.map((section: SectionWiseResults) => {
+            {sortedSections.map((section: SectionInCandidateTest) => {
               return (
                 <SectionCardForResultDetail
                   key={section?.id}
-                  name={section?.section?.section?.name}
-                  totalQuestions={section?.totalQuestion}
-                  correctQuestions={section?.correctQuestion}
-                  skippedQuestions={section?.skipped}
-                  incorrectQuestions={section?.incorrect}
-                  unansweredQuestions={section?.unanswered}
+                  startedAt={section?.startedAt}
+                  endAt={section?.endAt}
+                  sectionName={section.section?.name}
+                  correctQuestions={
+                    section.SectionWiseResult[0]?.correctQuestion
+                  }
+                  incorrectQuestions={section.SectionWiseResult[0]?.incorrect}
+                  skippedQuestions={section.SectionWiseResult[0]?.skipped}
+                  totalQuestions={section.SectionWiseResult[0]?.totalQuestion}
+                  unansweredQuestions={section.SectionWiseResult[0]?.unanswered}
                 />
               )
             })}

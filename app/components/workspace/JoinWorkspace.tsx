@@ -43,7 +43,7 @@ const JoinWorkspace = () => {
                   id="go-to-dashboard"
                   buttonText={t('404.gotoDashboard')}
                   name="go-to-workspace"
-                  varient="primary-outlined"
+                  variant="primary-outlined"
                   value={'reject'}
                   className="h-9 px-24"
                   onClick={() =>
@@ -60,7 +60,7 @@ const JoinWorkspace = () => {
                     id="go-to-dashboard"
                     buttonText={t('404.gotoDashboard')}
                     name="go-to-workspace"
-                    varient="primary-outlined"
+                    variant="primary-outlined"
                     value={'reject'}
                     className="py-3 px-9"
                     onClick={() => navigate(`${routes.signIn}`)}
@@ -75,7 +75,7 @@ const JoinWorkspace = () => {
                       id={t('commonConstants.switchAccount')}
                       buttonText={t('commonConstants.switchAccount')}
                       name="logout"
-                      varient="primary-solid"
+                      variant="primary-solid"
                       value={t('commonConstants.switchAccount')}
                       className="py-3 px-9"
                     />
