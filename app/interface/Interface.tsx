@@ -98,6 +98,7 @@ export interface Section {
   description: string
   createdById: string
   createdAt: Date
+  sectionInTest: SectionInTest[]
   updatedAt: Date
   deleted: boolean
   deletedAt: string
@@ -223,6 +224,7 @@ export interface CandidateTest {
 }
 
 export interface SectionInCandidateTest {
+  SectionWiseResult: SectionWiseResults[]
   id: string
   sectionId: string
   section: Section

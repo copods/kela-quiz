@@ -73,16 +73,24 @@ const CandidateListOfTest = () => {
       candidateResult: CandidateResult[]
     }
   ) => {
+    const candidateName =
+      data.candidate.firstName + ' ' + data.candidate.lastName
     return (
       <span>
-        {data.candidate.firstName && data.candidate.lastName ? (
+        {data.candidate.firstName &&
+        data.candidate.lastName &&
+        data.startedAt ? (
           <Link
-            to={`/${currentWorkspaceId}/results/groupByTests/${data?.testId}/${data?.candidateResult[0]?.id}`}
+            to={`/${currentWorkspaceId}/results/groupByTests/${data?.testId}/${data?.candidateId}`}
             className="col-span-2 flex  truncate font-semibold text-primary"
-            title={data.candidate.firstName + ' ' + data.candidate.lastName}
+            title={candidateName}
           >
-            {data.candidate.firstName + ' ' + data.candidate.lastName}
+            {candidateName}
           </Link>
+        ) : data.candidate.firstName &&
+          data.candidate.lastName &&
+          !data.startedAt ? (
+          <span>{candidateName}</span>
         ) : (
           <i>--No Name--</i>
         )}
@@ -130,30 +138,40 @@ const CandidateListOfTest = () => {
   ) => {
     return (
       <div id="status-cell" className="flex items-center">
-        <span
-          className={`rounded-full px-2 py-1 text-xs text-gray-900 ${
-            data?.candidateResult.length > 0 ? 'bg-green-200' : 'bg-yellow-200'
-          }`}
+        <div
+          tabIndex={0}
+          role={'banner'}
+          className="flex items-center justify-between"
         >
-          {data?.candidateResult.length > 0
-            ? t('commonConstants.completed')
-            : t('commonConstants.pending')}
-        </span>
-        {data?.candidateResult.length > 0 ? (
-          ''
-        ) : (
-          <TestListActionMenu
-            menuIcon={'mdi:dots-vertical'}
-            onItemClick={setmenuListOpen}
-            open={menuListOpen}
-            menuListText={t('resultConstants.resendInvite')}
-            aria-label={t('testTableItem.menu')}
-            id={data.id}
-            resendInvite={() =>
-              resendInvite(data.id, data.candidateId, data.testId)
-            }
-          />
-        )}
+          {data.startedAt === null ? (
+            <span className="rounded-full bg-yellow-200 px-2 py-1 text-xs">
+              {t('commonConstants.pending')}
+            </span>
+          ) : data.startedAt != null && data.endAt === null ? (
+            <span className="rounded-full bg-blue-50 px-2 py-1 text-xs">
+              {t('commonConstants.onGoing')}
+            </span>
+          ) : (
+            data.endAt != null && (
+              <span className="rounded-full bg-green-200 px-2 py-1 text-xs">
+                {t('commonConstants.completed')}
+              </span>
+            )
+          )}
+          {data?.candidateResult.length <= 0 && (
+            <TestListActionMenu
+              menuIcon={'mdi:dots-vertical'}
+              onItemClick={setmenuListOpen}
+              open={menuListOpen}
+              menuListText={t('resultConstants.resendInvite')}
+              aria-label={t('testTableItem.menu')}
+              id={data.id}
+              resendInvite={() =>
+                resendInvite(data.id, data.candidateId, data.testId)
+              }
+            />
+          )}
+        </div>
       </div>
     )
   }

@@ -81,6 +81,8 @@
     "weak": "Weak",
     "noRowsToShow": "No Rows To Show",
     "items": "Items",
+    "onGoing": "Ongoing",
+    "notAttempted": "Not attempted",
     "switchAccount": "Switch Account"
   },
   "sideNav": {
