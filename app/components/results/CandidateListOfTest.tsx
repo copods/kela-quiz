@@ -87,7 +87,9 @@ const CandidateListOfTest = () => {
           >
             {candidateName}
           </Link>
-        ) : data.candidate.firstName && data.candidate.lastName && !data.startedAt ? (
+        ) : data.candidate.firstName &&
+          data.candidate.lastName &&
+          !data.startedAt ? (
           <span>{candidateName}</span>
         ) : (
           <i>--No Name--</i>
@@ -136,7 +138,7 @@ const CandidateListOfTest = () => {
   ) => {
     return (
       <div id="status-cell" className="flex items-center">
-       <div
+        <div
           tabIndex={0}
           role={'banner'}
           className="flex items-center justify-between"
@@ -152,22 +154,22 @@ const CandidateListOfTest = () => {
           ) : (
             data.endAt != null && (
               <span className="rounded-full bg-green-200 px-2 py-1 text-xs">
-                {t('commonConstants.complete')}
+                {t('commonConstants.completed')}
               </span>
             )
           )}
-          {data?.candidateResult.length <0 && (
-           <TestListActionMenu
-           menuIcon={'mdi:dots-vertical'}
-           onItemClick={setmenuListOpen}
-           open={menuListOpen}
-           menuListText={t('resultConstants.resendInvite')}
-           aria-label={t('testTableItem.menu')}
-           id={data.id}
-           resendInvite={() =>
-             resendInvite(data.id, data.candidateId, data.testId)
-           }
-         />
+          {data?.candidateResult.length < 0 && (
+            <TestListActionMenu
+              menuIcon={'mdi:dots-vertical'}
+              onItemClick={setmenuListOpen}
+              open={menuListOpen}
+              menuListText={t('resultConstants.resendInvite')}
+              aria-label={t('testTableItem.menu')}
+              id={data.id}
+              resendInvite={() =>
+                resendInvite(data.id, data.candidateId, data.testId)
+              }
+            />
           )}
         </div>
       </div>

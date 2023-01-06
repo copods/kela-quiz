@@ -8,7 +8,7 @@ import {
 import ResultDetailsComponent from '~/components/results/ResultDetails'
 import { getUserWorkspaces } from '~/models/workspace.server'
 import { getUserId } from '~/session.server'
-import type{CandidateTest,Candidate } from '~/interface/Interface'
+import type { CandidateTest, Candidate } from '~/interface/Interface'
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   const userId = await getUserId(request)
@@ -16,10 +16,10 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const workspaces = await getUserWorkspaces(userId as string)
   invariant(params.testId, 'resultId not found')
   const { sections, candidate } =
-    await getSectionWiseResultsOfIndividualCandidate({
+    (await getSectionWiseResultsOfIndividualCandidate({
       testId: params?.testId as string,
       candidateId: params?.candidateId as string,
-    })||{} as CandidateTest&{candidate:Candidate}
+    })) || ({} as CandidateTest & { candidate: Candidate })
   if (!sections || !candidate) {
     throw new Response('Not Found', { status: 404 })
   }
