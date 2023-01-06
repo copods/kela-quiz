@@ -167,7 +167,7 @@ const TestList = () => {
   const testColumns: tableColumnType[] = [
     { title: 'Sr.No', field: 'Sr_No', render: SeriaLNoCell, width: '10%' },
     { title: 'Assessment', field: 'name', width: '20%' },
-    { title: 'Test', field: 'test', render: TestDataCell, width: '20%' },
+    { title: 'Test', field: 'test', render: TestDataCell, width: '25%' },
     {
       title: 'Created On',
       field: 'createdAt',
@@ -178,9 +178,9 @@ const TestList = () => {
       title: 'Created By',
       field: 'createdAt',
       render: CreatedByDataCell,
-      width: '20%',
+      width: '15%',
     },
-    { title: 'Action', field: 'action', render: TestInvite, width: '10%' },
+    { title: 'Action', field: 'action', render: TestInvite, width: '15%' },
   ]
   useEffect(() => {
     navigate(
