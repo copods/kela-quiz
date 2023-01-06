@@ -13,9 +13,9 @@ const ResultDetailsComponent = () => {
 
   const { params, sections, candidate, currentWorkspaceId } = useLoaderData()
   let navigate = useNavigate()
-  const sortSections = sections.sort(
+  const sortedSections = sections.sort(
     (a: SectionInCandidateTest, b: SectionInCandidateTest) => {
-      return b.SectionWiseResult.length - a.SectionWiseResult.length
+      return a.order - b.order
     }
   )
   return (
@@ -52,13 +52,13 @@ const ResultDetailsComponent = () => {
       <Divider height="1px" />
       {sections ? (
         <>
-          <BarGraph candidateTestResult={sections} />
+          <BarGraph candidateTestResult={sortedSections} />
           <Divider height="1px" />
           <div
             id="results-test-candidate-list-tab"
             className="flex flex-col gap-6"
           >
-            {sortSections.map((section: SectionInCandidateTest) => {
+            {sortedSections.map((section: SectionInCandidateTest) => {
               return (
                 <SectionCardForResultDetail
                   key={section?.id}

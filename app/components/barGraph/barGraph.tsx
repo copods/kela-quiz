@@ -20,8 +20,8 @@ const BarGraph = ({
   )
   const getDifferenceMin = () => {
     let finalResult: Array<number> = []
-    calculateResult.map((result: SectionInCandidateTest) => {
-      result.SectionWiseResult.map((data: SectionWiseResults) => {
+    calculateResult.forEach((result: SectionInCandidateTest) => {
+      result.SectionWiseResult.forEach((data: SectionWiseResults) => {
         const startingTime = moment(data?.section?.startedAt)
         const endingTime = moment(data?.section?.endAt)
         const difference = endingTime.diff(startingTime)

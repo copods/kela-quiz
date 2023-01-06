@@ -184,6 +184,7 @@ export async function getSectionWiseResultsOfIndividualCandidate({
         select: {
           startedAt: true,
           endAt: true,
+          order: true,
           section: {
             select: {
               id: true,

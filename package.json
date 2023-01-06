@@ -189,8 +189,7 @@
   "homepage": "https://github.com/copods/kela-quiz#readme",
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged",
-      "commit-msg": "lint-staged"
+      "pre-commit": "lint-staged"
     }
   },
   "lint-staged": {

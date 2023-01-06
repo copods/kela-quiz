@@ -772,12 +772,8 @@ async function calculateOverallResult(id: CandidateTest['id']) {
         totalQuestionInTest += section.SectionWiseResult[0].totalQuestion
         unansweredInTest += section.SectionWiseResult[0].unanswered
         correctInTest += section.SectionWiseResult[0].correctQuestion
-        skippedInTest += section.SectionWiseResult[0].skipped
-          ? section.SectionWiseResult[0].skipped
-          : 0
-        incorrectInTest = section.SectionWiseResult[0].incorrect
-          ? section.SectionWiseResult[0].incorrect
-          : 0
+        skippedInTest += section.SectionWiseResult[0].skipped!
+        incorrectInTest += section.SectionWiseResult[0].incorrect!
       }
     }
     await prisma.candidateResult.create({
