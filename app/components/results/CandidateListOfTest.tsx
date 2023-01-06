@@ -158,7 +158,7 @@ const CandidateListOfTest = () => {
               </span>
             )
           )}
-          {data?.candidateResult.length < 0 && (
+          {data?.candidateResult.length <= 0 && (
             <TestListActionMenu
               menuIcon={'mdi:dots-vertical'}
               onItemClick={setmenuListOpen}

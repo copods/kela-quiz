@@ -367,7 +367,7 @@ export async function startAndGetQuestion(id: CandidateQuestion['id']) {
     return prisma.candidateQuestion.update({
       where: { id },
       data: {
-        status: question?.status == 'NOT_VIEWED' ? 'VIEWED' : question?.status,
+        status: question?.status === 'NOT_VIEWED' ? 'VIEWED' : question?.status,
       },
       select: {
         id: true,
@@ -438,7 +438,7 @@ export async function skipAnswerAndNextQuestion({
 
     // create data according to action taken i.e. next, prev or skip
     let updateData = null
-    if (nextOrPrev == 'skip') {
+    if (nextOrPrev === 'skip') {
       updateData = null
     } else {
       updateData = {
@@ -460,8 +460,8 @@ export async function skipAnswerAndNextQuestion({
           selectedOptions?.length || answers?.length
             ? 'ANSWERED'
             : question?.status === 'ANSWERED'
-            ? 'ANSWERED'
-            : 'SKIPPED',
+              ? 'ANSWERED'
+              : 'SKIPPED',
         answeredAt: new Date(),
       },
       select: {
@@ -487,8 +487,8 @@ export async function skipAnswerAndNextQuestion({
     }
     // checking last question
     if (
-      currentQuestion?.order == section?.totalQuestions &&
-      nextOrPrev == 'next'
+      currentQuestion?.order === section?.totalQuestions &&
+      nextOrPrev === 'next'
     ) {
       return currentQuestionId
     }
@@ -500,7 +500,7 @@ export async function skipAnswerAndNextQuestion({
           currentQuestion?.sectionInCandidateTestId || '',
         order:
           (currentQuestion?.order || 0) +
-          (nextOrPrev == 'next' || nextOrPrev == 'skip' ? 1 : -1),
+          (nextOrPrev === 'next' || nextOrPrev === 'skip' ? 1 : -1),
       },
       select: {
         id: true,
@@ -639,19 +639,19 @@ async function calculateResultBySectionId(sectionid?: string) {
         continue
       }
 
-      if (question.status == 'SKIPPED') {
+      if (question.status === 'SKIPPED') {
         skipped += 1
         continue
       }
 
-      if (question?.question?.questionType?.value == 'TEXT') {
+      if (question?.question?.questionType?.value === 'TEXT') {
         const correctAnswers = question?.question?.correctAnswer
           ?.flatMap((opt) => opt?.answer.toLowerCase())
           .sort()
         const userAnswers = question?.answers
           ?.flatMap((opt) => opt.toLowerCase())
           .sort()
-        if (correctAnswers?.length == userAnswers?.length) {
+        if (correctAnswers?.length === userAnswers?.length) {
           let correctFlag = true
           for (let i = 0; i < correctAnswers?.length; i++) {
             if (correctAnswers[i].localeCompare(userAnswers[i]) != 0) {

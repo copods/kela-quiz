@@ -67,9 +67,13 @@ const SectionCardForResultDetail = ({
           </div>
         </>
       ) : startedAt ? (
-        <span>{t('commonConstants.onGoing')}</span>
+        <span className="rounded-full bg-blue-100 px-2 py-1 text-xs">
+          {t('commonConstants.onGoing')}
+        </span>
       ) : (
-        t('commonConstants.pending')
+        <span className="rounded-full bg-orange-100 px-2 py-1 text-xs">
+          {t('commonConstants.pending')}
+        </span>
       )}
     </div>
   )
