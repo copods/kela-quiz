@@ -18,7 +18,8 @@
     "loggedinFromAnotherAccount": "This link is not valid for this account.",
     "youInvitedBy": "You have been invited by",
     "toJoin": "to join",
-    "owner": "Owner"
+    "owner": "Owner",
+    "workspaceLeft": "You left the workspace"
   },
   "commonConstants": {
     "name": "Name",
@@ -111,8 +112,9 @@
     "signIn": "Sign In",
     "signUp": "Sign Up",
     "signingUp": "Signing up...",
-    "AlreadyHaveAnAccount": "Already have an account?",
-    "DontHaveAnAccountYet": "Don’t have an account yet?"
+    "alreadyHaveAnAccount": "Already have an account?",
+    "dontHaveAnAccountYet": "Don’t have an account yet?",
+    "rememberMe": "Remember Me"
   },
   "addQuestion": {
     "createOptions": "Create Options",
@@ -325,7 +327,10 @@
     "passResetSuccessfully": "Password changed successfully !",
     "basicInfo": "Basic Info",
     "minPasswordLimit": "Password should have minimum 8 characters",
-    "passShouldNotBeSame": "Current Password and New Password should not be same"
+    "passShouldNotBeSame": "Current Password and New Password should not be same",
+    "leaveWorkspace": "Leave workspace",
+    "leave": "Leave",
+    "leaveWorkspaceConfirmation": "Are you sure you want to leave this workspace?"
   },
   "tabs": {
     "general": "General",

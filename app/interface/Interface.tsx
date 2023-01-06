@@ -48,7 +48,7 @@ export interface ButtonProps {
   datacy?: string
   alignment?: string
   type?: 'button' | 'submit' | 'reset'
-  varient: 'primary-solid' | 'primary-outlined' | 'secondary-solid'
+  variant: 'primary-solid' | 'primary-outlined' | 'secondary-solid'
   buttonText: string | JSX.Element
   onClick?: React.MouseEventHandler<HTMLButtonElement>
   isDisabled?: boolean

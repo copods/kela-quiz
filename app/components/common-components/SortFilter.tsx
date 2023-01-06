@@ -1,6 +1,7 @@
 import { Icon } from '@iconify/react'
 import DropdownField from './Dropdown'
-import { OtherFilters, sortByOrder } from '~/interface/Interface'
+import type { OtherFilters } from '~/interface/Interface'
+import { sortByOrder } from '~/interface/Interface'
 import { useTranslation } from 'react-i18next'
 
 const SortFilter = ({

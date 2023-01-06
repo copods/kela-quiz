@@ -147,7 +147,7 @@ export default function AddWorkspace({
                       setShowAddWorkspaceModal &&
                       setShowAddWorkspaceModal(false)
                     }
-                    varient="primary-outlined"
+                    variant="primary-outlined"
                     title={t('commonConstants.cancel')}
                     buttonText={t('commonConstants.cancel')}
                   />
@@ -168,7 +168,7 @@ export default function AddWorkspace({
                         ? t('commonConstants.adding')
                         : t('commonConstants.add')
                     }
-                    varient="primary-solid"
+                    variant="primary-solid"
                     onClick={() => submitWorkspaceForm()}
                   />
                 </div>

@@ -28,7 +28,37 @@
     "validate": "run-p \"test -- --run\" lint typecheck test:e2e:run",
     "prepare": "husky install",
     "prisma:reset": "prisma migrate reset",
-    "cypress": "cypress open"
+    "cypress": "cypress open",
+    "release": "semantic-release --branches dev main"
+  },
+  "plugins": [
+    "@semantic-release/github",
+    "@semantic-release/npm",
+    {
+      "npmPublish": false
+    },
+    [
+      "@semantic-release/changelog",
+      {
+        "changelogFile": "CHANGELOG.md"
+      }
+    ],
+    [
+      "@semantic-release/git",
+      {
+        "assets": [
+          "package.json",
+          "package-lock.json",
+          "CHANGELOG.md"
+        ]
+      }
+    ]
+  ],
+  "release": {
+    "branches": [
+      "main",
+      "dev"
+    ]
   },
   "prettier": {
     "trailingComma": "es5",
@@ -51,6 +81,10 @@
     "@remix-run/node": "^1.6.0",
     "@remix-run/react": "^1.6.0",
     "@remix-run/server-runtime": "^1.6.0",
+    "@semantic-release/changelog": "github:semantic-release/changelog",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^8.0.6",
+    "@semantic-release/npm": "^9.0.1",
     "@sendgrid/mail": "^7.7.0",
     "@tinymce/tinymce-react": "^4.1.0",
     "@types/quill": "^2.0.9",
@@ -70,6 +104,7 @@
     "i18next-http-backend": "^1.4.1",
     "moment": "^2.29.3",
     "morgan": "^1.10.0",
+    "node-fetch": "^3.2.10",
     "quill": "^1.3.7",
     "quill-blot-formatter": "^1.0.5",
     "quill-image-resize": "^3.0.9",
@@ -84,6 +119,8 @@
     "tiny-invariant": "^1.2.0"
   },
   "devDependencies": {
+    "@commitlint/cli": "^17.1.2",
+    "@commitlint/config-conventional": "^17.1.0",
     "@remix-run/dev": "^1.6.0",
     "@remix-run/eslint-config": "^1.6.0",
     "@testing-library/cypress": "^8.0.3",
@@ -118,6 +155,7 @@
     "prettier": "^2.7.1",
     "prettier-plugin-tailwindcss": "^0.1.11",
     "prisma": "^3.15.0",
+    "semantic-release": "^19.0.5",
     "start-server-and-test": "^1.14.0",
     "tailwindcss": "^3.1.0",
     "ts-node": "^10.8.1",
@@ -134,14 +172,14 @@
     "seed": "node --require tsconfig-paths/register prisma/seed.js"
   },
   "description": "![The Remix Blues Stack](https://repository-images.githubusercontent.com/461012689/37d5bd8b-fa9c-4ab0-893c-f0a199d5012d)",
-  "version": "1.0.0",
+  "version": "1.0.0-development",
   "main": ".eslintrc.js",
   "directories": {
     "test": "test"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/copods/kela-quiz.git"
+    "url": "https://github.com/copods/kela-quiz.git"
   },
   "author": "",
   "license": "ISC",
@@ -151,7 +189,8 @@
   "homepage": "https://github.com/copods/kela-quiz#readme",
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "lint-staged",
+      "commit-msg": "lint-staged"
     }
   },
   "lint-staged": {
