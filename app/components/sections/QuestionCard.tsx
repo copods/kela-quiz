@@ -88,7 +88,7 @@ const QuestionCard = ({
                 }}
                 onKeyUp={(e) => {
                   if (e.key === 'Enter')
-                    setOpenDeleteQuestionPopUp(!openDeleteQuestionPopUp)
+                  setOpenDeleteQuestionPopUp(!openDeleteQuestionPopUp)
                   e.stopPropagation()
                 }}
                 icon="ic:outline-delete-outline"

@@ -274,11 +274,11 @@ describe('smoke tests', () => {
   it('Verify if user able create the assesssment 1', () => {
     cy.login()
     cy.customVisit('/members')
-    cy.get('#tests', { timeout: 60000 })
+    cy.get('#tests', { timeout: 6000 })
       .should('have.text', 'Assessments')
       .click()
     cy.wait(1000)
-    cy.get('#add-test', { timeout: 60000 }).click()
+    cy.get('#add-test', { timeout: 6000 }).click()
     cy.location('pathname').should('include', '/assessments/add-assessment')
     cy.wait(1000)
     cy.get('input[placeholder="Enter assessment name"]')
