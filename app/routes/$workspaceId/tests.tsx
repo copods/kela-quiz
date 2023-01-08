@@ -13,6 +13,7 @@ import {
   createSection,
   deleteSectionById,
   editSectionById,
+  getFirstSectionIdOfLastPage,
   getAllSections,
   getAllTestsCounts,
 } from '~/models/sections.server'
@@ -60,6 +61,7 @@ export type LoaderData = {
   testCurrentPage: number
   testItemsPerPage: number
   getAllTestsCount: number
+  lastSectionId: Awaited<ReturnType<typeof getFirstSectionIdOfLastPage>>
 }
 const handleAddSection = async (
   name: string,
@@ -182,6 +184,13 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     ? params.sectionId?.toString()
     : undefined
   const getAllTestsCount = await getAllTestsCounts(currentWorkspaceId)
+  const lastSectionId = await getFirstSectionIdOfLastPage(
+    sortBy,
+    sortOrder,
+    currentWorkspaceId as string,
+    testCurrentPage,
+    testItemsPerPage
+  )
   if (!userId) return redirect(routes.signIn)
   const filters = `?sortBy=${sortBy}&sort=${sortOrder}&testPage=${testCurrentPage}&testItems=${testItemsPerPage}`
   return json<LoaderData>({
@@ -194,6 +203,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     testCurrentPage,
     testItemsPerPage,
     getAllTestsCount,
+    lastSectionId,
   })
 }
 const validateTitle = (title: string) => {
@@ -344,7 +354,7 @@ export default function SectionPage() {
   if (t(data.status) != t('statusCheck.success')) {
     toast.error(t('statusCheck.commonError'))
   }
- 
+
   useEffect(() => {
     if (sectionActionData) {
       if (
@@ -395,12 +405,41 @@ export default function SectionPage() {
     location,
     navigate,
   ])
+  console.log(data, 'data')
   useEffect(() => {
-    navigate(
-      `/${data.currentWorkspaceId}${routes.tests}/${data.sections[0].id}?sortBy=${sortBy}&sort=${order}&testPage=${testsCurrentPage}&testItems=${testsPageSize}`
-    )
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [testsCurrentPage, testsPageSize, sortBy, order, data.sections[0].id])
+    if (data.getAllTestsCount === 0) {
+      navigate(`/${data.currentWorkspaceId}${routes.tests}`)
+    } else if (
+      data.getAllTestsCount <=
+        testsCurrentPage * testsPageSize - testsPageSize &&
+      testsCurrentPage > 1
+    ) {
+      navigate(
+        `/${data.currentWorkspaceId}${routes.tests}/${
+          data.lastSectionId?.id
+        }?sortBy=${sortBy}&sort=${order}&testPage=${
+          testsCurrentPage - 1
+        }&testItems=${testsPageSize}`
+      )
+    } else if (
+      (data.getAllTestsCount > 0 &&
+        t(sectionActionData?.resp?.status as string) ===
+          t('statusCheck.testAddedSuccess')) ||
+      data.sections.length >= 0
+    ) {
+      navigate(
+        `/${data.currentWorkspaceId}${routes.tests}/${data.sections[0]?.id}?sortBy=${sortBy}&sort=${order}&testPage=${testsCurrentPage}&testItems=${testsPageSize}`
+      )
+    }
+  }, [
+    testsCurrentPage,
+    testsPageSize,
+    sortBy,
+    order,
+    data.sections[0]?.id,
+    sectionActionData,
+  ])
+
   useEffect(() => {
     const heading = document.getElementById('tests-heading')
     heading?.focus()

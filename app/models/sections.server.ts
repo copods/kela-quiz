@@ -72,6 +72,29 @@ export async function getAllSections(
     },
   })
 }
+export async function getFirstSectionIdOfLastPage(
+  sortBy: string | null,
+  sortOrder: string | null,
+  workspaceId: string,
+  testCurrentPage = 1,
+  testItemsPerPage= 5
+) {
+  const PER_PAGE_ITEMS = testItemsPerPage
+  return await prisma.section.findFirst({
+    orderBy: { [sortBy ?sortBy:'createdAt']: sortOrder ?sortOrder: 'asc' },
+    take: PER_PAGE_ITEMS,
+    skip:testCurrentPage===1? (testCurrentPage - 1) * PER_PAGE_ITEMS:(testCurrentPage - 2) * PER_PAGE_ITEMS,
+    
+    where: {
+      deleted: false,
+      workspaceId,
+    },
+    
+    select:{
+      id:true
+    }
+  })
+}
 
 export async function createSection({
   name,
