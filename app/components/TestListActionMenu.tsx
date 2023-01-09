@@ -50,7 +50,7 @@ const TestListMenuItem = ({
           leaveTo="transform opacity-0 scale-95"
         >
           <Menu.Items className="absolute right-6 z-40  origin-bottom-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5">
-            <div className="flex flex-col px-1 py-1" id="bundle">
+            <div className="flex flex-col px-1 py-1">
               {menuDetails?.map((menuItem) => {
                 return (
                   <Menu.Item key={menuItem.id}>
