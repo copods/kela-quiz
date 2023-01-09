@@ -32,7 +32,7 @@ const TestListMenuItem = ({
   }, [open, id])
   return (
     <>
-      <Menu as="div" className="relative flex">
+      <Menu as="div" className="flex">
         <Menu.Button className={`${id} self-center`}>
           <Icon
             className="text-2xl text-gray-600"
@@ -49,8 +49,8 @@ const TestListMenuItem = ({
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95"
         >
-          <Menu.Items className="absolute top-10 right-0 z-40  origin-bottom-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5">
-            <div className="flex flex-col px-1 py-1">
+          <Menu.Items className="absolute right-6 z-40  origin-bottom-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5">
+            <div className="flex flex-col px-1 py-1" id="bundle">
               {menuDetails?.map((menuItem) => {
                 return (
                   <Menu.Item key={menuItem.id}>
@@ -63,6 +63,7 @@ const TestListMenuItem = ({
                           onItemClick(true)
                           menuItem.onClickOfButton && menuItem.onClickOfButton()
                         }}
+                        data-cy={menuItem.id}
                       >
                         <>
                           {menuItem?.menuListIcon && (

@@ -66,8 +66,10 @@ const CandidateListOfTest = () => {
     )
   }
   const copyLink = (link: string) => {
-    navigator.clipboard.writeText(link)
-    toast.success('Link Copied')
+    navigator.clipboard.writeText(link).then(
+      (v) => toast.success(t('testsConstants.copyLink')),
+      (e) => toast.error(`Fail ${e}`)
+    )
   }
   const SeriaLNoCell = (data: { [key: string]: string }, index: number) => {
     return <span>{index + 1}</span>
@@ -142,7 +144,7 @@ const CandidateListOfTest = () => {
   ) => {
     const menuItemsDetailsList = [
       {
-        id: 'resendInvite',
+        id: 'resend-invite',
         menuListText: t('resultConstants.resendInvite'),
         menuListLink: resendTestLink,
         menuLinkAltTagLine: t('resultConstants.resendAssessmentInvite'),
@@ -150,7 +152,7 @@ const CandidateListOfTest = () => {
           resendInvite(data.id, data.candidateId, data.testId),
       },
       {
-        id: 'copyLink',
+        id: 'copy-link',
         menuListText: t('resultConstants.copyLink'),
         menuListIcon: 'material-symbols:content-copy-outline',
         onClickOfButton: () => copyLink(data.link as string),

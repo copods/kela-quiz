@@ -1,4 +1,3 @@
-import { testsConstants } from '~/constants/common.constants'
 const test1 = `Aptitude - assessment1`
 
 describe('Test for GroupByTestTable, Result', () => {
@@ -230,8 +229,16 @@ describe('Test for GroupByTestTable, Result', () => {
     cy.viewport(1280, 720)
     cy.get('#group-by-tests').should('have.text', 'Results').click()
     cy.get('.groupByItemTest').contains(test1).click()
-    cy.get('#vertical-icon').click()
-    cy.get('.deleteTest').should('be.visible')
+    cy.get('#vertical-icon', { timeout: 8000 }).click()
+    cy.get('[data-cy="resend-invite"]').should('be.visible')
+  })
+
+  it('checks,copy Link button should be visible', () => {
+    cy.viewport(1280, 720)
+    cy.get('#group-by-tests').should('have.text', 'Results').click()
+    cy.get('.groupByItemTest').contains(test1).click()
+    cy.get('#vertical-icon', { timeout: 8000 }).click()
+    cy.get('[data-cy="copy-link"]').should('be.visible')
   })
   it('checks,table contains assessment name', () => {
     cy.wait(3000)
@@ -261,7 +268,34 @@ describe('Test for GroupByTestTable, Result', () => {
     cy.get('#group-by-tests').should('have.text', 'Results').click()
     cy.get('.groupByItemTest').contains(test1).click()
     cy.get('#vertical-icon', { timeout: 8000 }).click()
-    cy.get('.deleteTest').should('be.visible').click()
-    cy.get('.Toastify__toast').should('have.text', testsConstants.reinvited)
+    cy.get('[data-cy="resend-invite"]').should('be.visible').click()
+    cy.get('.Toastify__toast').should(
+      'have.text',
+      'Candidate Invited Successfully'
+    )
+  })
+  it('checks, copy Link from result page', () => {
+    cy.wait(3000)
+    cy.viewport(1280, 720)
+    //permission from browser for clipboard access
+    cy.wrap(
+      Cypress.automation('remote:debugger:protocol', {
+        command: 'Browser.grantPermissions',
+        params: {
+          permissions: ['clipboardReadWrite', 'clipboardSanitizedWrite'],
+          origin: window.location.origin,
+        },
+      })
+    )
+    cy.get('#group-by-tests').click()
+    cy.get('.groupByItemTest').contains(test1).click()
+    cy.get('#vertical-icon', { timeout: 8000 }).click()
+    cy.get('[data-cy="copy-link"]').should('be.visible').click()
+    cy.get('.Toastify__toast').should('have.text', 'Link Copied Successfully')
+    cy.window().then((win) => {
+      win.navigator.clipboard.readText().then((text) => {
+        expect(text).to.include('/assessment')
+      })
+    })
   })
 })

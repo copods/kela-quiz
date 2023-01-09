@@ -171,7 +171,8 @@
     "allCandidatesInvited": "All candidates invited.",
     "writeDescriptionOfTest": "Write Description of Test",
     "searchCandidate": "Search Candidate",
-    "min": "Min"
+    "min": "Min",
+    "copyLink": "Link Copied Successfully"
   },
   "componentGlobalConstants": {
     "totalCounts": "Total Counts",
