@@ -238,7 +238,8 @@
     "resendInvite": "Resend Invite",
     "resendAssessmentInvite": "Resend assessment Invite Icon",
     "unanswered": "Unanswered",
-    "incorrect": "Incorrect"
+    "incorrect": "Incorrect",
+    "ViewDetails":"View details"
   },
   "forgotPasswordConstants": {
     "header": "Forgot password?",

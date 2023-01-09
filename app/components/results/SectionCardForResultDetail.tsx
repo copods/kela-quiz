@@ -1,6 +1,8 @@
 import { useTranslation } from 'react-i18next'
+import { Link } from '@remix-run/react'
 
 const SectionCardForResultDetail = ({
+  sectionId,
   startedAt,
   endAt,
   sectionName,
@@ -9,7 +11,11 @@ const SectionCardForResultDetail = ({
   skippedQuestions,
   totalQuestions,
   unansweredQuestions,
+  currentWorkspaceId,
+  candidateId,
+  testId
 }: {
+  sectionId:string
   startedAt: Date | null
   endAt: Date | null
   sectionName: string
@@ -18,8 +24,12 @@ const SectionCardForResultDetail = ({
   skippedQuestions?: number
   totalQuestions?: number
   unansweredQuestions?: number
+  currentWorkspaceId:string
+  candidateId?:string
+  testId:string
 }) => {
   const { t } = useTranslation()
+  console.log(candidateId,'candidateId')
   return (
     <div className="flex h-12 w-full items-center justify-between rounded-lg border border-gray-300 bg-white px-6">
       <div className="text-base font-semibold text-gray-700">{sectionName}</div>
@@ -63,6 +73,17 @@ const SectionCardForResultDetail = ({
                 {t('resultConstants.total')}:
               </span>
               <span className="font-bold text-primary">{totalQuestions}</span>
+            </div>
+            <span></span>
+            <div className="flex gap-2 text-sm">
+              <Link  tabIndex={0}
+        to={`/${currentWorkspaceId}/results/groupByTests/${testId}/${candidateId}/${sectionId}`}
+        id="result-detail-by-section"
+        data-cy="result-details"
+        className="groupByItemTest text-base font-semibold text-primary">
+                {t('resultConstants.ViewDetails')}
+              </Link>
+              
             </div>
           </div>
         </>

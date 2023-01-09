@@ -15,7 +15,7 @@ const ResultDetailsComponent = () => {
   let navigate = useNavigate()
   const sortedSections = sections.sort(
     (a: SectionInCandidateTest, b: SectionInCandidateTest) => {
-      return a.order - b.order
+      return  a.order-b.order
     }
   )
   return (
@@ -62,6 +62,7 @@ const ResultDetailsComponent = () => {
               return (
                 <SectionCardForResultDetail
                   key={section?.id}
+                  sectionId={section?.id}
                   startedAt={section?.startedAt}
                   endAt={section?.endAt}
                   sectionName={section.section?.name}
@@ -72,6 +73,9 @@ const ResultDetailsComponent = () => {
                   skippedQuestions={section.SectionWiseResult[0]?.skipped}
                   totalQuestions={section.SectionWiseResult[0]?.totalQuestion}
                   unansweredQuestions={section.SectionWiseResult[0]?.unanswered}
+                  currentWorkspaceId={currentWorkspaceId}
+                  candidateId={params.candidateId}
+                  testId={params.testId}
                 />
               )
             })}
