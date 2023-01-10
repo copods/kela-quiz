@@ -12,7 +12,7 @@ const PasswordInputFields = ({
   isRequired = false,
   required,
   value,
-  onblur,
+  onBlur,
   onChange,
 }: PasswordFieldProps) => {
   const { t } = useTranslation()
@@ -32,7 +32,7 @@ const PasswordInputFields = ({
           required={required}
           value={value}
           onChange={onChange}
-          onBlur={onblur}
+          onBlur={onBlur}
           className="h-11 w-full px-3.5 py-2.5 text-lg"
         />
         <button

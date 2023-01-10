@@ -95,7 +95,7 @@ export default function AddMemberModal({
               id="cancel-add-button"
               className="h-9 px-4"
               onClick={() => setOpen(false)}
-              varient="primary-outlined"
+              variant="primary-outlined"
               title={t('commonConstants.cancel')}
               buttonText={t('commonConstants.cancel')}
             />
@@ -120,7 +120,7 @@ export default function AddMemberModal({
                   ? t('commonConstants.inviting')
                   : t('commonConstants.invite')
               }
-              varient="primary-solid"
+              variant="primary-solid"
               onClick={() => submitMemberForm()}
             />
           </div>

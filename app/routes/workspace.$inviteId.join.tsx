@@ -41,7 +41,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
       await joinWorkspace({
         invitedId: params.inviteId as string, //taking invited id from params
       })
-      return redirect(`${invitedMember?.invitedForWorkspace?.id}`)
+      return redirect(`/${invitedMember?.invitedForWorkspace?.id}`)
     }
   }
 

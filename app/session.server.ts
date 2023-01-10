@@ -113,8 +113,8 @@ export async function createUserSession({
     headers: {
       'Set-Cookie': await sessionStorage.commitSession(session, {
         maxAge: remember
-          ? 60 * 60 * 24 * 7 // 7 days
-          : undefined,
+          ? 60 * 60 * 24 * 30 // 30 days
+          : 60 * 60 * 24 * 7, //7 days,
       }),
     },
   })
@@ -122,6 +122,19 @@ export async function createUserSession({
 
 export async function logout(request: Request) {
   const session = await getSession(request)
+  const joinId = new URL(request.url).searchParams.get('?cameFrom') === 'join'
+  if (joinId) {
+    return redirect(
+      `/sign-in?cameFrom=join&id=${new URL(request.url).searchParams.get(
+        'id'
+      )}`,
+      {
+        headers: {
+          'Set-Cookie': await sessionStorage.destroySession(session),
+        },
+      }
+    )
+  }
   return redirect('/sign-in', {
     headers: {
       'Set-Cookie': await sessionStorage.destroySession(session),

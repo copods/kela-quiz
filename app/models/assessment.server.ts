@@ -367,7 +367,7 @@ export async function startAndGetQuestion(id: CandidateQuestion['id']) {
     return prisma.candidateQuestion.update({
       where: { id },
       data: {
-        status: question?.status == 'NOT_VIEWED' ? 'VIEWED' : question?.status,
+        status: question?.status === 'NOT_VIEWED' ? 'VIEWED' : question?.status,
       },
       select: {
         id: true,
@@ -438,7 +438,7 @@ export async function skipAnswerAndNextQuestion({
 
     // create data according to action taken i.e. next, prev or skip
     let updateData = null
-    if (nextOrPrev == 'skip') {
+    if (nextOrPrev === 'skip') {
       updateData = null
     } else {
       updateData = {
@@ -460,8 +460,8 @@ export async function skipAnswerAndNextQuestion({
           selectedOptions?.length || answers?.length
             ? 'ANSWERED'
             : question?.status === 'ANSWERED'
-            ? 'ANSWERED'
-            : 'SKIPPED',
+              ? 'ANSWERED'
+              : 'SKIPPED',
         answeredAt: new Date(),
       },
       select: {
@@ -487,8 +487,8 @@ export async function skipAnswerAndNextQuestion({
     }
     // checking last question
     if (
-      currentQuestion?.order == section?.totalQuestions &&
-      nextOrPrev == 'next'
+      currentQuestion?.order === section?.totalQuestions &&
+      nextOrPrev === 'next'
     ) {
       return currentQuestionId
     }
@@ -500,7 +500,7 @@ export async function skipAnswerAndNextQuestion({
           currentQuestion?.sectionInCandidateTestId || '',
         order:
           (currentQuestion?.order || 0) +
-          (nextOrPrev == 'next' || nextOrPrev == 'skip' ? 1 : -1),
+          (nextOrPrev === 'next' || nextOrPrev === 'skip' ? 1 : -1),
       },
       select: {
         id: true,
@@ -518,19 +518,24 @@ export async function endCurrentSection(
   id: SectionInTest['id']
 ) {
   const testSection = await prisma.sectionInTest.findUnique({ where: { id } })
-
   const section = await prisma.sectionInCandidateTest.findFirst({
     where: { candidateTestId, sectionId: testSection?.sectionId },
     select: {
       id: true,
       startedAt: true,
       endAt: true,
+      candidateTest: {
+        select: {
+          endAt: true,
+        },
+      },
     },
   })
 
   if (section?.endAt) {
     return { msg: 'Section already ended' }
   }
+  calculateResultBySectionId(section?.id)
 
   return await prisma.sectionInCandidateTest.updateMany({
     where: { candidateTestId, sectionId: testSection?.sectionId },
@@ -573,7 +578,7 @@ export async function endAssessment(id: string) {
   if (candidateTest?.endAt) {
     return { msg: 'Exam already ended' }
   }
-  calculateResult(id)
+  calculateOverallResult(id)
   let endExam = await prisma.candidateTest.update({
     where: {
       id,
@@ -586,8 +591,136 @@ export async function endAssessment(id: string) {
     await sendMailToRecruiter(recruiterEmail, testName, candidateName)
   return endExam
 }
+async function calculateResultBySectionId(sectionid?: string) {
+  const section = await prisma.sectionInCandidateTest.findUnique({
+    where: {
+      id: sectionid,
+    },
+    select: {
+      id: true,
+      endAt: true,
+      candidateTest: {
+        select: { testId: true, id: true, candidateId: true },
+      },
+      questions: {
+        select: {
+          id: true,
+          questionId: true,
+          status: true,
+          answers: true,
+          selectedOptions: true,
+          question: {
+            select: {
+              correctAnswer: true,
+              correctOptions: true,
+              questionType: true,
+            },
+          },
+        },
+      },
+    },
+  })
+  if (section) {
+    const totalQuestion = section?.questions?.length
+      ? section?.questions?.length
+      : 0
+    let unanswered = 0
+    let correct = 0
+    let incorrect = 0
+    let skipped = 0
+    for (let question of section?.questions || []) {
+      // counting unanswered questions
+      if (
+        question?.answers.length === 0 &&
+        question?.selectedOptions?.length === 0 &&
+        question.status != 'SKIPPED'
+      ) {
+        unanswered += 1
+        continue
+      }
 
-async function calculateResult(id: CandidateTest['id']) {
+      if (question.status === 'SKIPPED') {
+        skipped += 1
+        continue
+      }
+
+      if (question?.question?.questionType?.value === 'TEXT') {
+        const correctAnswers = question?.question?.correctAnswer
+          ?.flatMap((opt) => opt?.answer.toLowerCase())
+          .sort()
+        const userAnswers = question?.answers
+          ?.flatMap((opt) => opt.toLowerCase())
+          .sort()
+        if (correctAnswers?.length === userAnswers?.length) {
+          let correctFlag = true
+          for (let i = 0; i < correctAnswers?.length; i++) {
+            if (correctAnswers[i].localeCompare(userAnswers[i]) != 0) {
+              correctFlag = false
+              break
+            }
+          }
+          if (correctFlag) {
+            correct += 1
+          } else {
+            incorrect += 1
+          }
+        }
+      } else if (question?.question?.questionType?.value === 'SINGLE_CHOICE') {
+        if (
+          question?.selectedOptions[0].id ===
+          question?.question?.correctOptions[0].id
+        ) {
+          correct += 1
+        } else {
+          incorrect += 1
+        }
+      } else if (
+        question?.question?.questionType?.value === 'MULTIPLE_CHOICE'
+      ) {
+        const correctOptionsId = question?.question?.correctOptions
+          ?.flatMap((opt) => opt?.id)
+          .sort()
+        const userAnswers = question.selectedOptions
+          ?.flatMap((opt) => opt.id)
+          .sort()
+        let correctFlag = false
+        if (correctOptionsId?.length === userAnswers?.length) {
+          correctFlag = true
+          for (let i = 0; i < correctOptionsId?.length; i++) {
+            if (correctOptionsId[i].localeCompare(userAnswers[i]) != 0) {
+              correctFlag = false
+              break
+            }
+          }
+        }
+        if (correctFlag) {
+          correct += 1
+        } else {
+          incorrect += 1
+        }
+      }
+    }
+    const sec = await prisma.sectionWiseResult.create({
+      data: {
+        sectionInCandidateTestId: section?.id,
+        totalQuestion,
+        correctQuestion: correct,
+        unanswered,
+        skipped,
+        incorrect,
+        testId: section?.candidateTest.testId,
+        candidateTestId: section?.candidateTest.id,
+      },
+    })
+    return sec
+  }
+}
+async function calculateOverallResult(id: CandidateTest['id']) {
+  let totalQuestionInTest = 0
+  let unansweredInTest = 0
+  let correctInTest = 0
+  let skippedInTest = 0
+  let incorrectInTest = 0
   const candidateTest = await prisma.candidateTest.findUnique({
     where: {
       id,
@@ -599,11 +732,6 @@ async function calculateResult(id: CandidateTest['id']) {
       candidateId: true,
     },
   })
-  let totalQuestionInTest = 0
-  let unansweredInTest = 0
-  let correctInTest = 0
-  let skippedInTest = 0
-  let incorrectInTest = 0
 
   if (candidateTest) {
     for (let sec of candidateTest?.sections || []) {
@@ -629,138 +757,37 @@ async function calculateResult(id: CandidateTest['id']) {
               },
             },
           },
+          SectionWiseResult: {
+            select: {
+              totalQuestion: true,
+              incorrect: true,
+              correctQuestion: true,
+              skipped: true,
+              unanswered: true,
+            },
+          },
         },
       })
       if (section) {
-        const totalQuestion = section?.questions?.length
-          ? section?.questions?.length
-          : 0
-        let unanswered = 0
-        let correct = 0
-        let incorrect = 0
-        let skipped = 0
-        for (let question of section?.questions || []) {
-          // counting unanswered questions
-          if (
-            question?.answers.length == 0 &&
-            question?.selectedOptions?.length == 0 &&
-            question.status != 'SKIPPED'
-          ) {
-            unanswered += 1
-            continue
-          }
-
-          if (question.status == 'SKIPPED') {
-            skipped += 1
-            continue
-          }
-
-          if (question?.question?.questionType?.value == 'TEXT') {
-            const correctAnswers = question?.question?.correctAnswer
-              ?.flatMap((opt) => opt?.answer.toLowerCase())
-              .sort()
-            const userAnswers = question?.answers
-              ?.flatMap((opt) => opt.toLowerCase())
-              .sort()
-            if (correctAnswers?.length == userAnswers?.length) {
-              let correctFlag = true
-              for (let i = 0; i < correctAnswers?.length; i++) {
-                if (correctAnswers[i].localeCompare(userAnswers[i]) != 0) {
-                  correctFlag = false
-                  break
-                }
-              }
-              if (correctFlag) {
-                correct += 1
-              } else {
-                incorrect += 1
-              }
-            }
-          } else if (
-            question?.question?.questionType?.value == 'SINGLE_CHOICE'
-          ) {
-            if (
-              question?.selectedOptions[0].id ===
-              question?.question?.correctOptions[0].id
-            ) {
-              correct += 1
-            } else {
-              incorrect += 1
-            }
-          } else if (
-            question?.question?.questionType?.value == 'MULTIPLE_CHOICE'
-          ) {
-            const correctOptionsId = question?.question?.correctOptions
-              ?.flatMap((opt) => opt?.id)
-              .sort()
-            const userAnswers = question.selectedOptions
-              ?.flatMap((opt) => opt.id)
-              .sort()
-            let correctFlag = false
-            if (correctOptionsId?.length == userAnswers?.length) {
-              correctFlag = true
-              for (let i = 0; i < correctOptionsId?.length; i++) {
-                if (correctOptionsId[i].localeCompare(userAnswers[i]) != 0) {
-                  correctFlag = false
-                  break
-                }
-              }
-            }
-            if (correctFlag) {
-              correct += 1
-            } else {
-              incorrect += 1
-            }
-          }
-        }
-
-        totalQuestionInTest += totalQuestion
-        unansweredInTest += unanswered
-        correctInTest += correct
-        skippedInTest += skipped
-        incorrectInTest += incorrect
-
-        const sectionResult = await prisma.candidateResult.findFirst({
-          where: {
-            candidateId: candidateTest?.candidateId,
-            testId: candidateTest?.testId,
-          },
-        })
-        !sectionResult &&
-          (await prisma.sectionWiseResult.create({
-            data: {
-              sectionInCandidateTestId: section?.id,
-              totalQuestion,
-              correctQuestion: correct,
-              unanswered,
-              skipped,
-              incorrect,
-              testId: candidateTest?.testId,
-              candidateTestId: candidateTest?.id,
-            },
-          }))
+        totalQuestionInTest += section.SectionWiseResult[0].totalQuestion
+        unansweredInTest += section.SectionWiseResult[0].unanswered
+        correctInTest += section.SectionWiseResult[0].correctQuestion
+        skippedInTest += section.SectionWiseResult[0].skipped!
+        incorrectInTest += section.SectionWiseResult[0].incorrect!
       }
     }
-
-    const candidateResult = await prisma.candidateResult.findFirst({
-      where: {
+    await prisma.candidateResult.create({
+      data: {
         candidateId: candidateTest?.candidateId,
+        candidateTestId: id,
+        totalQuestion: totalQuestionInTest,
+        correctQuestion: correctInTest,
+        unanswered: unansweredInTest,
+        skipped: skippedInTest,
+        incorrect: incorrectInTest,
         testId: candidateTest?.testId,
+        isQualified: false,
       },
     })
-    !candidateResult &&
-      (await prisma.candidateResult.create({
-        data: {
-          candidateId: candidateTest?.candidateId,
-          candidateTestId: id,
-          totalQuestion: totalQuestionInTest,
-          correctQuestion: correctInTest,
-          unanswered: unansweredInTest,
-          skipped: skippedInTest,
-          incorrect: incorrectInTest,
-          testId: candidateTest?.testId,
-          isQualified: false,
-        },
-      }))
   }
 }

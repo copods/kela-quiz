@@ -6,6 +6,7 @@ import DeletePopUp from '../common-components/DeletePopUp'
 import { Icon } from '@iconify/react'
 import moment from 'moment'
 import { useState } from 'react'
+import Badge from '../common-components/Badge'
 
 export default function MembersList({
   membersCurrentPage,
@@ -23,12 +24,17 @@ export default function MembersList({
   const memberLoaderData = useLoaderData()
   const loggedInUser = memberLoaderData.userId
   const [openDeleteModal, setOpenDeleteModal] = useState(false)
-
+  const workspaceOwner = memberLoaderData.currentWorkspaceOwner.createdById
   const NameDataCell = (data: User) => {
     return (
-      <span>
-        {data.firstName} {data.lastName}
-      </span>
+      <div className="flex gap-2">
+        <span>
+          {data.firstName} {data.lastName}
+        </span>
+        {workspaceOwner === data.id ? (
+          <Badge>{t('members.owner')}</Badge>
+        ) : null}
+      </div>
     )
   }
   const RoleDataCell = (data: { role: Role }) => {

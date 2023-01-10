@@ -24,7 +24,7 @@ export interface PasswordFieldProps {
   error?: string
   errorId: string
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
-  onblur?: (e: React.FocusEvent<HTMLInputElement>) => void
+  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void
 }
 
 export interface DialogWrapperProps {
@@ -48,7 +48,7 @@ export interface ButtonProps {
   datacy?: string
   alignment?: string
   type?: 'button' | 'submit' | 'reset'
-  varient: 'primary-solid' | 'primary-outlined' | 'secondary-solid'
+  variant: 'primary-solid' | 'primary-outlined' | 'secondary-solid'
   buttonText: string | JSX.Element
   onClick?: React.MouseEventHandler<HTMLButtonElement>
   isDisabled?: boolean
@@ -100,6 +100,7 @@ export interface Section {
   createdBy: User
   createdById: string
   createdAt: Date
+  sectionInTest: SectionInTest[]
   updatedAt: Date
   deleted: boolean
   deletedAt: string
@@ -227,6 +228,7 @@ export interface CandidateTest {
 }
 
 export interface SectionInCandidateTest {
+  SectionWiseResult: SectionWiseResults[]
   id: string
   sectionId: string
   section: Section
@@ -315,14 +317,14 @@ export interface SectionWiseResults {
   section: SectionInCandidateTest
   test: Test
 }
-export interface column {
+export interface tableColumnType {
   title: string
   field: string
-  render?: (data: any) => JSX.Element
+  render?: (data: any, index: number) => JSX.Element
   width?: string
 }
 export interface TableType<T extends object> {
-  columns: column[]
+  columns: tableColumnType[]
   data: T[]
   title?: string
   paginationEnabled?: boolean
@@ -355,4 +357,19 @@ export interface UserWorkspace {
 export interface TabsComponent {
   name: string
   route: string
+}
+
+export interface OtherFilters {
+  id: string
+  data: Array<{ name: string; value: string }>
+  displayKey: string
+  valueKey: string
+  value: string
+  setValue: (e: string) => void
+}
+
+export interface BadgeComponent {
+  children: React.ReactNode
+  bgColor?: string
+  textColor?: string
 }

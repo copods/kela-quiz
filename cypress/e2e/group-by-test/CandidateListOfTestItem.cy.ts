@@ -6,37 +6,17 @@ describe('Visiting group by test of results page', () => {
     cy.customVisit('/members')
   })
   const test1 = `Aptitude - assessment1`
-  it('checks, test is available for test', () => {
+  it('Checks, if assessment has correct name', () => {
     cy.wait(3000)
     cy.get('#group-by-tests').should('have.text', 'Results').click()
     cy.get('h1', { timeout: 6000 }).should('have.text', 'Results')
-    cy.get('.groupTestRow').each(($el) => {
-      cy.wrap($el).within((el) => {
-        if (
-          el[0].getElementsByClassName('groupByItemTest')[0].innerHTML === test1
-        ) {
-          cy.get('.groupByItemTest')
-            .should('have.text', test1)
-            .should('be.visible')
-        }
-      })
-    })
+    cy.get('[data-cy="group-by-item-test"]').should('have.text', test1)
   })
 
   it('Checks, header of candidate list page should be visible', () => {
     cy.wait(3000)
     cy.get('#group-by-tests').should('have.text', 'Results').click()
     cy.get('h1', { timeout: 6000 }).should('have.text', 'Results')
-
-    cy.get('.groupTestRow').each(($el) => {
-      cy.wrap($el).within((el) => {
-        if (
-          el[0].getElementsByClassName('groupByItemTest')[0].innerHTML === test1
-        ) {
-          cy.get('.groupByItemTest').should('have.text', test1)
-        }
-      })
-    })
     cy.get('.groupByItemTest', { timeout: 8000 }).contains(test1).click()
     cy.get('#title', { timeout: 20000 }).should('be.visible')
   })
@@ -45,16 +25,6 @@ describe('Visiting group by test of results page', () => {
     cy.wait(3000)
     cy.get('#group-by-tests').should('have.text', 'Results').click()
     cy.get('h1', { timeout: 6000 }).should('have.text', 'Results')
-
-    cy.get('.groupTestRow').each(($el) => {
-      cy.wrap($el).within((el) => {
-        if (
-          el[0].getElementsByClassName('groupByItemTest')[0].innerHTML === test1
-        ) {
-          cy.get('.groupByItemTest').should('have.text', test1)
-        }
-      })
-    })
     cy.get('.groupByItemTest', { timeout: 8000 }).contains(test1).click()
     cy.get('#title', { timeout: 8000 }).should(
       'have.class',
@@ -64,35 +34,15 @@ describe('Visiting group by test of results page', () => {
   it('Checks, back button should be visible', () => {
     cy.wait(3000)
     cy.get('#group-by-tests').should('have.text', 'Results').click()
-    cy.get('h1', { timeout: 6000 }).should('have.text', 'Results')
-
-    cy.get('.groupTestRow').each(($el) => {
-      cy.wrap($el).within((el) => {
-        if (
-          el[0].getElementsByClassName('groupByItemTest')[0].innerHTML === test1
-        ) {
-          cy.get('.groupByItemTest').should('have.text', test1)
-        }
-      })
-    })
-    cy.get('.groupByItemTest', { timeout: 8000 }).contains(test1).click()
+    cy.get('h1').should('have.text', 'Results')
+    cy.get('[data-cy="group-by-item-test"]').click()
     cy.get('#back-button', { timeout: 8000 }).should('be.visible')
   })
   it('Checks, after clicking on back button it should redirect to result page', () => {
     cy.wait(3000)
     cy.get('#group-by-tests').should('have.text', 'Results').click()
     cy.get('h1', { timeout: 6000 }).should('have.text', 'Results')
-
-    cy.get('.groupTestRow').each(($el) => {
-      cy.wrap($el).within((el) => {
-        if (
-          el[0].getElementsByClassName('groupByItemTest')[0].innerHTML === test1
-        ) {
-          cy.get('.groupByItemTest').should('have.text', test1)
-        }
-      })
-    })
-    cy.get('.groupByItemTest', { timeout: 8000 }).contains(test1).click()
+    cy.get('[data-cy="group-by-item-test"]').click()
     cy.get('#back-button', { timeout: 8000 }).should('be.visible').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')
   })

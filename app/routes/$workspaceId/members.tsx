@@ -10,7 +10,10 @@ import {
   getUserById,
 } from '~/models/user.server'
 import { routes } from '~/constants/route.constants'
-import { getUserWorkspaces } from '~/models/workspace.server'
+import {
+  getCurrentWorkspaceOwner,
+  getUserWorkspaces,
+} from '~/models/workspace.server'
 import { actions } from '~/constants/action.constants'
 import {
   getAllInvitedMember,
@@ -44,6 +47,7 @@ type LoaderData = {
   invitedMembersCurrentPage: number
   allUsersCount: number
   invitedUsersCount: number
+  currentWorkspaceOwner: { createdById: string } | null
 }
 export const loader: LoaderFunction = async ({ request, params }) => {
   const query = new URL(request.url).searchParams
@@ -60,6 +64,9 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const userId = await getUserId(request)
   const getUser = await getUserById(userId as string)
   const currentWorkspaceId = params.workspaceId as string
+  const currentWorkspaceOwner = await getCurrentWorkspaceOwner(
+    currentWorkspaceId
+  )
   const invitedMembers = await getAllInvitedMember(
     currentWorkspaceId as string,
     invitedMembersCurrentPage,
@@ -90,6 +97,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     invitedMembersItemsPerPage,
     allUsersCount,
     invitedUsersCount,
+    currentWorkspaceOwner,
   })
 }
 

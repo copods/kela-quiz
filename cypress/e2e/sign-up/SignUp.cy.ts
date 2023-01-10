@@ -3,7 +3,6 @@ const signupPageTitle = 'Sign Up'
 const firstName = 'John'
 const lastName = 'Doe'
 const memberEmail = 'john@example.com'
-const workspaceName = 'Copods workspace'
 
 describe('Test for Sign Up page', () => {
   beforeEach('/sign-up', () => {
@@ -26,11 +25,6 @@ describe('Test for Sign Up page', () => {
       .clear()
       .type(memberEmail)
       .should('have.value', memberEmail)
-    cy.get('#workspace')
-      .should('be.visible', { timeout: 60000 })
-      .clear()
-      .type(workspaceName)
-      .should('have.value', workspaceName)
     cy.get('#Password').should('be.visible').clear().type('newPassword')
     cy.get('#confirmPassword').should('be.visible').clear().type('newPassword')
     cy.get('#add-button').should('have.text', logIn.signUp).click()
@@ -77,11 +71,7 @@ describe('Test for Sign Up page', () => {
       .clear()
       .type(memberEmail)
       .should('have.value', memberEmail)
-    cy.get('#workspace')
-      .should('be.visible', { timeout: 60000 })
-      .clear()
-      .type(workspaceName)
-      .should('have.value', workspaceName)
+
     cy.get('#Password').should('be.visible').clear().type('newPassword')
     cy.get('#confirmPassword').should('be.visible').clear().type('newPassword')
     cy.get('#add-button').should('have.css', 'cursor', 'pointer')
@@ -111,11 +101,7 @@ describe('Test for Sign Up page', () => {
       .clear()
       .type(memberEmail)
       .should('have.value', memberEmail)
-    cy.get('#workspace')
-      .should('be.visible', { timeout: 60000 })
-      .clear()
-      .type(workspaceName)
-      .should('have.value', workspaceName)
+
     cy.get('#Password').should('be.visible').clear().type('newPassword')
     cy.get('#confirmPassword').should('be.visible').clear().type('newPassword')
     cy.get('#add-button').should('have.text', logIn.signUp).click()

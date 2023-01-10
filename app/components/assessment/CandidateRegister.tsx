@@ -59,7 +59,7 @@ function CandidateRegister() {
             type="submit"
             className="h-12 w-full text-base"
             isDisabled={!canSubmitBtnBeEnabled() || busy}
-            varient="primary-solid"
+            variant="primary-solid"
           />
         </Form>
       </div>

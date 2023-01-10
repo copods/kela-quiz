@@ -88,7 +88,7 @@ const UserForgetPassword = ({
           <Button
             tabIndex={0}
             id="reset-password"
-            varient="primary-solid"
+            variant="primary-solid"
             type="submit"
             className="h-11 w-358"
             title={t('forgotPasswordConstants.resetPassword')}

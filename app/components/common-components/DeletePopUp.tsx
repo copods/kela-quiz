@@ -65,7 +65,7 @@ export default function DeletePopUp({
               <Button
                 tabIndex={0}
                 id="confirm-delete"
-                varient="secondary-solid"
+                variant="secondary-solid"
                 type="button"
                 name="delete"
                 className="px-5"
@@ -83,7 +83,7 @@ export default function DeletePopUp({
               tabIndex={0}
               type="button"
               id="cancel-delete-pop-up"
-              varient="primary-outlined"
+              variant="primary-outlined"
               className="px-5"
               title={t('commonConstants.cancel')}
               buttonText={t('commonConstants.cancel')}
