@@ -354,7 +354,25 @@ export default function SectionPage() {
   if (t(data.status) != t('statusCheck.success')) {
     toast.error(t('statusCheck.commonError'))
   }
-
+  const [flag,setFlag]=useState(false)
+useEffect(()=>{
+  if (
+      data.getAllTestsCount <=
+        testsCurrentPage * testsPageSize - testsPageSize &&
+      testsCurrentPage > 1
+    ) {
+       
+      navigate(
+        `/${data.currentWorkspaceId}${routes.tests}/${
+          data.lastSectionId?.id
+        }?sortBy=${sortBy}&sort=${order}&testPage=${
+          testsCurrentPage - 1
+        }&testItems=${testsPageSize}`
+      )
+      setFlag(true)
+    } 
+},[testsCurrentPage,data.lastSectionId?.id])
+console.log(flag,'flag')
   useEffect(() => {
     if (sectionActionData) {
       if (
@@ -384,11 +402,6 @@ export default function SectionPage() {
           toastId: t(sectionActionData.resp?.status as string),
         })
 
-        setSelectedSection(
-          (sectionActionData?.resp?.id === data.sections[0]?.id
-            ? data.sections[1]?.id
-            : data.sections[0]?.id) || 'NA'
-        )
       } else if (sectionActionData.createSectionFieldError) {
         setSectionActionErrors({
           title: sectionActionData?.createSectionFieldError.title || '',
@@ -405,7 +418,6 @@ export default function SectionPage() {
     location,
     navigate,
   ])
-  console.log(data, 'data')
   useEffect(() => {
     if (data.getAllTestsCount === 0) {
       navigate(`/${data.currentWorkspaceId}${routes.tests}`)
@@ -439,7 +451,15 @@ export default function SectionPage() {
     data.sections[0]?.id,
     sectionActionData,
   ])
-
+useEffect(()=>{
+  if(flag===true){
+    console.log('j')
+    navigate(
+      `/${data.currentWorkspaceId}${routes.tests}/${data.sections[0]?.id}?sortBy=${sortBy}&sort=${order}&testPage=${testsCurrentPage}&testItems=${testsPageSize}`
+    )
+     
+  }
+},[data.sections[0]?.id])
   useEffect(() => {
     const heading = document.getElementById('tests-heading')
     heading?.focus()
