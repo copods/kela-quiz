@@ -8,11 +8,11 @@ import { useTranslation } from 'react-i18next'
 const SelectSectionCard = ({
   section,
   updateSection,
-  sectionCount=0,
+  questionCount=0,
 }: {
   section: TestSection
   updateSection:<T>(e: T) => void
-  sectionCount?: number
+  questionCount?: number
 }) => {
   const { t } = useTranslation()
 
@@ -21,7 +21,7 @@ const SelectSectionCard = ({
     value?: string,
     selected?: boolean
   ) => {
-    if (sectionCount === 0) {
+    if (questionCount === 0) {
       toast.error(t('toastConstants.cannotAddTestZeroQuestion'))
       return
     }
@@ -29,13 +29,13 @@ const SelectSectionCard = ({
       isSelected: section.isSelected,
       totalQuestions: section.totalQuestions
         ? section.totalQuestions
-        : sectionCount && sectionCount < 11
-        ? sectionCount
+        : questionCount && questionCount < 11
+        ? questionCount
         : 10,
       time: section.time
         ? section.time
-        : sectionCount && sectionCount < 11
-        ? sectionCount
+        : questionCount && questionCount < 11
+        ? questionCount
         : 10,
     }
     switch (target) {
@@ -43,7 +43,7 @@ const SelectSectionCard = ({
         tempSection.isSelected = selected
         break
       case 'totalQuestions':
-        if (parseInt(value || '') > (sectionCount|| 0)) {
+        if (parseInt(value || '') > (questionCount|| 0)) {
           toast.error(t('toastConstants.notAdMoreThanAvailableQuestion'),{
             toastId: t('toastConstants.notAdMoreThanAvailableQuestion'),
           })
@@ -109,7 +109,7 @@ const SelectSectionCard = ({
       </div>
       <div className="flex text-xs text-gray-400">
         {t('testsConstants.totalQuestionsText')}:{' '}
-        <span className="count">{sectionCount}</span>
+        <span className="count">{questionCount}</span>
       </div>
       <hr className="h-px w-full border-0 bg-gray-300" />
       <div className="flex gap-4 pt-1">
