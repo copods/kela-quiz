@@ -101,6 +101,32 @@ const TestList = () => {
   const SeriaLNoCell = (data: Test, index: number) => {
     return <span>{index + 1}</span>
   }
+  const TestNameDataCell = (data: Test, index: number) => {
+    return (
+      <div
+        className="test-name-navigation w-4/12 cursor-pointer p-1 text-base font-medium text-primary"
+        aria-label={data.name}
+        title={data.name}
+        onClick={() =>
+          navigate(
+            `/${testLoaderData.currentWorkspaceId}${routes.assessments}/${data.id}`
+          )
+        }
+        role={'button'}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter')
+            navigate(
+              `/${testLoaderData.currentWorkspaceId}${routes.assessments}/${data.id}`
+            )
+        }}
+        id={`${index}`}
+        tabIndex={0}
+        key={data.id}
+      >
+        <span id="test-name-navigation">{data.name}</span>
+      </div>
+    )
+  }
   const TestDataCell = (data: Test) => {
     return (
       <span>
@@ -118,12 +144,12 @@ const TestList = () => {
   const JoinedOnCell = (data: Test) => {
     return <span>{moment(data?.createdAt).format('DD MMMM YY')}</span>
   }
-  const TestInvite = (data: Test) => {
+  const TestInvite = (data: Test, index: number) => {
     return (
       <>
         <div className="flex">
           <Icon
-            id="invite-popup-open"
+            id={`invite-popup-open${index}`}
             role={'button'}
             tabIndex={0}
             className="candidateInviteIcon mt-2 cursor-pointer text-2xl text-primary focus:outline-dotted focus:outline-2"
@@ -166,7 +192,12 @@ const TestList = () => {
   }
   const testColumns: tableColumnType[] = [
     { title: 'Sr.No', field: 'Sr_No', render: SeriaLNoCell, width: '10%' },
-    { title: 'Assessment', field: 'name', width: '20%' },
+    {
+      title: 'Assessment',
+      field: 'name',
+      render: TestNameDataCell,
+      width: '20%',
+    },
     { title: 'Test', field: 'test', render: TestDataCell, width: '25%' },
     {
       title: 'Created On',

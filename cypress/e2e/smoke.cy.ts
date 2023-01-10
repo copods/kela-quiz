@@ -169,11 +169,12 @@ describe('smoke tests', () => {
         if (
           el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
         ) {
-          cy.get('.sectionName').contains(section1).click()
+          cy.get('.sectionName').contains(section1)
         }
       })
     })
     cy.get('.sectionName').contains(section1).click()
+    cy.wait(3000)
     cy.get('#add-question')
       .should('have.text', `+ ${addQuestion.addQuestion}`)
       .click()
@@ -413,9 +414,9 @@ describe('smoke tests', () => {
     cy.get('#email').clear().type('copods.demo.sendgrid@gmail.com')
     cy.get('#password').clear().type('kQuiz@copods')
     cy.findByRole('button').click()
-    cy.wait(1000)
+ cy.wait(2000)
     cy.get('#invite-member', { timeout: 6000 })
-      .should('have.text', cypress.addMember)
+      .should('have.text', 'Invite Member')
       .click()
     cy.get('#dialog-wrapper').should('be.visible')
 
@@ -440,15 +441,15 @@ describe('smoke tests', () => {
       .click()
     cy.wait(1000)
     cy.get('#assessments-page-title').should('have.text', 'Assessments')
-    cy.get('#invite-popup-open', { timeout: 6000 }).should('be.visible')
-    cy.get('#invite-popup-open', { timeout: 6000 }).should('be.visible').click()
+    cy.get('#invite-popup-open0', { timeout: 6000 }).should('be.visible')
+    cy.get('#invite-popup-open0', { timeout: 6000 }).should('be.visible').click()
 
     cy.get('input[name="email"]')
       .first()
-      .type('johndoe@example.com', { force: true })
+      .type('johndoe@example.com')
       .should('have.focus')
       .should('have.value', 'johndoe@example.com')
-    cy.get('[data-cy="submit"]').first().click({ force: true })
+    cy.get('[data-cy="submit"]').first().click()
   })
   it('check for not found page', () => {
     cy.login()

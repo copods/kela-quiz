@@ -61,6 +61,7 @@ const HeaderDataCell = ({
         minWidth: `${width}`,
         maxWidth: `${width}`,
       }}
+      data-cy={title}
       id="table-th"
       className="flex-1 border-b bg-gray-100 py-4 px-3 text-sm font-semibold text-gray-500 first:pl-9 last:pr-9"
     >
@@ -159,7 +160,7 @@ const Table = <T extends object>({
           <TableEmptyState />
         ) : (
           data.map((rowData: T & { id?: number }, i) => (
-            <div id="table-row" key={String(rowData.id)} className="flex ">
+            <div id="table-row" key={String(rowData.id)} className="tableRow flex">
               {columns.map((column, j) =>
                 column.render ? (
                   <RenderDataCell
