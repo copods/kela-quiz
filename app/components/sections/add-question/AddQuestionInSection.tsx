@@ -65,11 +65,11 @@ const AddQuestionInSection = () => {
   const breadCrumbArray = [
     {
       tabName: 'testsConstants.testText',
-      route: routes.tests,
+      route: `/${currentWorkspaceId}${routes.tests}`,
     },
     {
       tabName: 'addQuestion.addQuestion',
-      route: `${routes.tests}/${sectionDetails?.id}${routes.addQuestion}`,
+      route: `/${currentWorkspaceId}${routes.tests}/${sectionDetails?.id}${routes.addQuestion}`,
     },
   ]
   const getQuestionType = (id: string) => {
