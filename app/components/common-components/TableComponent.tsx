@@ -88,7 +88,7 @@ const RenderDataCell = <T,>({
         minWidth: `${width}`,
         maxWidth: `${width}`,
       }}
-      className="flex-1 truncate border-b bg-white px-3 py-7  text-gray-700 first:pl-9 last:pr-9"
+      className="max-h-20 flex-1 truncate border-b bg-white py-7 px-3  text-gray-700 first:pl-9 last:pr-9"
     >
       {render?.(rowData, index)}
     </div>
@@ -111,7 +111,7 @@ const TableDataCell = <T,>({
         minWidth: `${width}`,
         maxWidth: `${width}`,
       }}
-      className="flex-1 truncate border-b bg-white px-3 py-7 text-gray-700  first:pl-9 last:pr-9"
+      className="max-h-20 flex-1 truncate border-b bg-white py-7 px-3 text-gray-700  first:pl-9 last:pr-9"
     >
       {rowData[field as keyof typeof rowData]}
     </div>
@@ -120,7 +120,7 @@ const TableDataCell = <T,>({
 
 const TableEmptyState = () => {
   return (
-    <div className="flex justify-center py-7 text-gray-700">
+    <div className="flex justify-center bg-white py-7 text-gray-700">
       <span>{t('commonConstants.noRowsToShow')}</span>
     </div>
   )

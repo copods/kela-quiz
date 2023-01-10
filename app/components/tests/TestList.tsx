@@ -246,7 +246,7 @@ const TestList = () => {
           }
           id="add-test"
           tabIndex={0}
-          varient="primary-solid"
+          variant="primary-solid"
           title={t('testsConstants.addTestbutton')}
           aria-label={t('testsConstants.addTestbutton')}
           buttonText={`+ ${t('testsConstants.addTestbutton')}`}

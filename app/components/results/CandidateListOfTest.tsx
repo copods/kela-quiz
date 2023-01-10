@@ -7,12 +7,28 @@ import { routes } from '~/constants/route.constants'
 import Table from '../common-components/TableComponent'
 import moment from 'moment'
 import TestListActionMenu from '../../components/TestListActionMenu'
+import DropdownField from '../common-components/Dropdown'
 import type {
   CandidateTest,
   Candidate,
   CandidateResult,
+  tableColumnType,
 } from '~/interface/Interface'
 import { toast } from 'react-toastify'
+const filterByStatus = [
+  {
+    name: 'All',
+    value: 'all',
+  },
+  {
+    name: 'Pending',
+    value: 'pending',
+  },
+  {
+    name: 'Completed',
+    value: 'complete',
+  },
+]
 
 const CandidateListOfTest = () => {
   const { candidatesOfTest, currentWorkspaceId } = useLoaderData()
@@ -23,6 +39,8 @@ const CandidateListOfTest = () => {
   const actionData = useActionData()
   const [menuListOpen, setmenuListOpen] = useState<boolean>(false)
   const [searchText, setSearchText] = useState('')
+  const [statusFilter, setStatusFilter] = useState(filterByStatus[0].value)
+
   const filteredData =
     candidatesLoaderData.candidatesOfTest.candidateTest?.filter(
       (candidate: {
@@ -55,16 +73,24 @@ const CandidateListOfTest = () => {
       candidateResult: CandidateResult[]
     }
   ) => {
+    const candidateName =
+      data.candidate.firstName + ' ' + data.candidate.lastName
     return (
       <span>
-        {data.candidate.firstName && data.candidate.lastName && data.endAt ? (
+        {data.candidate.firstName &&
+        data.candidate.lastName &&
+        data.startedAt ? (
           <Link
-            to={`/${currentWorkspaceId}/results/groupByTests/${data?.testId}/${data?.candidateResult[0]?.id}`}
+            to={`/${currentWorkspaceId}/results/groupByTests/${data?.testId}/${data?.candidateId}`}
             className="col-span-2 flex  truncate font-semibold text-primary"
-            title={data.candidate.firstName + ' ' + data.candidate.lastName}
+            title={candidateName}
           >
-            {data.candidate.firstName + ' ' + data.candidate.lastName}
+            {candidateName}
           </Link>
+        ) : data.candidate.firstName &&
+          data.candidate.lastName &&
+          !data.startedAt ? (
+          <span>{candidateName}</span>
         ) : (
           <i>--No Name--</i>
         )}
@@ -111,35 +137,45 @@ const CandidateListOfTest = () => {
     data: { candidateResult: CandidateResult[] } & CandidateResult
   ) => {
     return (
-      <div className="absolute flex items-center">
-        <span
-          className={`rounded-full px-2 py-1 text-xs text-gray-900 ${
-            data?.candidateResult.length > 0 ? 'bg-green-200' : 'bg-yellow-200'
-          }`}
+      <div id="status-cell" className="flex items-center">
+        <div
+          tabIndex={0}
+          role={'banner'}
+          className="flex items-center justify-between"
         >
-          {data?.candidateResult.length > 0
-            ? t('commonConstants.complete')
-            : t('commonConstants.pending')}
-        </span>
-        {data?.candidateResult.length > 0 ? (
-          ''
-        ) : (
-          <TestListActionMenu
-            menuIcon={'mdi:dots-vertical'}
-            onItemClick={setmenuListOpen}
-            open={menuListOpen}
-            menuListText={t('resultConstants.resendInvite')}
-            aria-label={t('testTableItem.menu')}
-            id={data.id}
-            resendInvite={() =>
-              resendInvite(data.id, data.candidateId, data.testId)
-            }
-          />
-        )}
+          {data.startedAt === null ? (
+            <span className="rounded-full bg-yellow-200 px-2 py-1 text-xs">
+              {t('commonConstants.pending')}
+            </span>
+          ) : data.startedAt != null && data.endAt === null ? (
+            <span className="rounded-full bg-blue-50 px-2 py-1 text-xs">
+              {t('commonConstants.onGoing')}
+            </span>
+          ) : (
+            data.endAt != null && (
+              <span className="rounded-full bg-green-200 px-2 py-1 text-xs">
+                {t('commonConstants.completed')}
+              </span>
+            )
+          )}
+          {data?.candidateResult.length <= 0 && (
+            <TestListActionMenu
+              menuIcon={'mdi:dots-vertical'}
+              onItemClick={setmenuListOpen}
+              open={menuListOpen}
+              menuListText={t('resultConstants.resendInvite')}
+              aria-label={t('testTableItem.menu')}
+              id={data.id}
+              resendInvite={() =>
+                resendInvite(data.id, data.candidateId, data.testId)
+              }
+            />
+          )}
+        </div>
       </div>
     )
   }
-  const column = [
+  const column: tableColumnType[] = [
     { title: 'Sr.No', field: 'sr_no', render: SeriaLNoCell },
     { title: 'Name', field: 'name', render: NameDataCell, width: '15%' },
     { title: 'Email', field: 'email', render: EmailDataCell, width: '20%' },
@@ -166,9 +202,12 @@ const CandidateListOfTest = () => {
   ]
 
   useEffect(() => {
-    navigate(`?page=${currentPage}&pageSize=${pageSize}`)
+    navigate(
+      `?page=${currentPage}&pageSize=${pageSize}&filterByStatus=${statusFilter}`
+    )
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pageSize, currentPage])
+  }, [pageSize, currentPage, statusFilter])
+
   useEffect(() => {
     if (
       actionData?.candidateInviteStatus ===
@@ -209,11 +248,11 @@ const CandidateListOfTest = () => {
           </span>
         </div>
       </header>
-      <div className="relative flex items-center">
+      <div className="relative flex items-center gap-4">
         <Icon
           id="ascend"
           icon="charm:search"
-          className="bg-light-200 absolute left-3 text-base text-gray-400"
+          className="bg-light-200 absolute left-3 text-base text-gray-500"
         />
         <input
           tabIndex={0}
@@ -222,9 +261,18 @@ const CandidateListOfTest = () => {
           name="search"
           placeholder={t('testsConstants.searchCandidate')}
           title={t('testsConstants.searchCandidate')}
-          className="h-9 w-48 rounded-lg border px-5 pl-8 text-sm focus:outline-dotted"
+          className="h-11 w-48 rounded-lg border px-5 pl-8 text-sm shadow-sm focus:outline-dotted"
           onChange={(e) => setSearchText(e.target.value)}
         />
+        <div className="w-36">
+          <DropdownField
+            data={filterByStatus}
+            displayKey="name"
+            valueKey="value"
+            value={statusFilter}
+            setValue={setStatusFilter}
+          />
+        </div>
       </div>
       <Table
         columns={column}

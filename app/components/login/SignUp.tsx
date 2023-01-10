@@ -156,7 +156,7 @@ const SignUp = ({ error }: { error?: string }) => {
       isRequired: true,
       type: 'password',
       value: password,
-      onblur: onBlurPassError,
+      onBlur: onBlurPassError,
       error: signUpActionData?.errors?.minPasswordLimit || onBlurPasswordErr,
       errorId: 'New-password-error',
       onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
@@ -174,7 +174,7 @@ const SignUp = ({ error }: { error?: string }) => {
       isRequired: true,
       type: 'password',
       value: confirmPassword,
-      onblur: onBlurConfPassError,
+      onBlur: onBlurConfPassError,
       error: signUpActionData?.errors?.passNotMatched || onBlurConfPasswordErr,
       errorId: 'Confirm-password-error',
       onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
@@ -258,11 +258,11 @@ const SignUp = ({ error }: { error?: string }) => {
                 ? t('logIn.signingUp')
                 : t('logIn.signUp')
             }
-            varient="primary-solid"
+            variant="primary-solid"
             onClick={() => submitMemberForm()}
           />
           <div className="text-base font-medium text-gray-500">
-            {t('logIn.AlreadyHaveAnAccount')}{' '}
+            {t('logIn.alreadyHaveAnAccount')}{' '}
             <span
               className="cursor-pointer text-primary"
               tabIndex={0}

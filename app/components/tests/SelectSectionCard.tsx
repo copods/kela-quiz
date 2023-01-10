@@ -77,7 +77,7 @@ const SelectSectionCard = ({
           <Button
             tabIndex={0}
             className="h-7 px-4"
-            varient="secondary-solid"
+            variant="secondary-solid"
             onClick={() => updateThisSection('isSelected', '', false)}
             title={t('commonConstants.removeButton')}
             buttonText={t('commonConstants.removeButton')}
@@ -87,7 +87,7 @@ const SelectSectionCard = ({
             tabIndex={0}
             className="h-7 px-4"
             onClick={() => updateThisSection('isSelected', '', true)}
-            varient="primary-solid"
+            variant="primary-solid"
             title={t('commonConstants.add')}
             buttonText={t('commonConstants.add')}
           />

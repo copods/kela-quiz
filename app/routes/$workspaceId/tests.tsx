@@ -419,7 +419,7 @@ export default function SectionPage() {
           id="add-section"
           data-cy="submit"
           className="h-9 px-5"
-          varient="primary-solid"
+          variant="primary-solid"
           onClick={() => setShowAddSectionModal(!showAddSectionModal)}
           title={t('sectionsConstants.addTests')}
           buttonText={`+ ${t('sectionsConstants.addTests')}`}

@@ -68,7 +68,7 @@ const Cooldown = () => {
             onClick={startSection}
             title={t('candidateExamConstants.startNewSection')}
             buttonText={t('candidateExamConstants.startNewSection')}
-            varient="primary-solid"
+            variant="primary-solid"
           />
         </div>
       </div>
