@@ -43,8 +43,10 @@ const SelectSectionCard = ({
         tempSection.isSelected = selected
         break
       case 'totalQuestions':
-        if (parseInt(value || '') > (section?._count?.questions || 0)) {
-          toast.error(t('toastConstants.notAdMoreThanAvailableQuestion'))
+        if (parseInt(value || '') > (sectionCount|| 0)) {
+          toast.error(t('toastConstants.notAdMoreThanAvailableQuestion'),{
+            toastId: t('toastConstants.notAdMoreThanAvailableQuestion'),
+          })
           return
         }
         if (parseInt(value || '') == 0) {
