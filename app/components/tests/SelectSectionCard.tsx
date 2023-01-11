@@ -8,10 +8,10 @@ import { useTranslation } from 'react-i18next'
 const SelectSectionCard = ({
   section,
   updateSection,
-  questionCount=0,
+  questionCount = 0,
 }: {
   section: TestSection
-  updateSection:<T>(e: T) => void
+  updateSection: <T>(e: T) => void
   questionCount?: number
 }) => {
   const { t } = useTranslation()
@@ -43,8 +43,8 @@ const SelectSectionCard = ({
         tempSection.isSelected = selected
         break
       case 'totalQuestions':
-        if (parseInt(value || '') > (questionCount|| 0)) {
-          toast.error(t('toastConstants.notAdMoreThanAvailableQuestion'),{
+        if (parseInt(value || '') > (questionCount || 0)) {
+          toast.error(t('toastConstants.notAdMoreThanAvailableQuestion'), {
             toastId: t('toastConstants.notAdMoreThanAvailableQuestion'),
           })
           return

@@ -23,7 +23,7 @@ const SectionLink = ({
   }
   actionStatusData?: string
   err?: string
-  filter: string 
+  filter: string
   currentWorkspaceId: string
   setSelectedSection: (e: string) => void
   sectionActionErrors?: sectionActionErrorsType

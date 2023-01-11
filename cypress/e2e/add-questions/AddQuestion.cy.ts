@@ -547,18 +547,7 @@ describe('Test for section-details', () => {
     })
     cy.get('.sectionName').contains('Aptitude - delete-Section').click()
     cy.wait(2000)
-    cy.get('[data-cy="question-card-wrapper"]', { timeout: 6000 }).each(
-      ($el) => {
-        cy.wrap($el).within((el) => {
-          if (
-            el[0].getElementsByClassName('question')[0].innerHTML === question
-          ) {
-            cy.get('.question').should('have.text', question)
-          }
-        })
-      }
-    )
-    cy.get('.question').contains(question).trigger('mouseover')
+    cy.get('.question',{timeout:6000}).contains(question).trigger('mouseover')
     cy.get('[data-cy="delete-question"]').should('be.exist')
   })
 })

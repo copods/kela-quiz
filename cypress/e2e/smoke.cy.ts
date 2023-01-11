@@ -112,7 +112,7 @@ describe('smoke tests', () => {
 
   it('Adding a second section', () => {
     cy.login()
-        cy.customVisit('/members')
+    cy.customVisit('/members')
     cy.wait(1000)
     cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
 

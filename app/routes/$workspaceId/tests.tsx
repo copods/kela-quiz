@@ -234,35 +234,34 @@ export const action: ActionFunction = async ({ request, params }) => {
     return response
   }
 
-  
   if (action === 'sectionDelete') {
-      const deleteSectionId = formData.get('id') as string
-      const deleteHandle=  await deleteSectionById(deleteSectionId)
-        .then((res) => {
-       return json<ActionData>(
-            {
-              resp: {
-                status: 'statusCheck.deletedSuccess',
-                id: deleteSectionId,
-              },
+    const deleteSectionId = formData.get('id') as string
+    const deleteHandle = await deleteSectionById(deleteSectionId)
+      .then((res) => {
+        return json<ActionData>(
+          {
+            resp: {
+              status: 'statusCheck.deletedSuccess',
+              id: deleteSectionId,
             },
+          },
 
-            { status: 200 }
-          )
-        })
-        .catch((err) => {
-         return json<ActionData>(
-            {
-              errors: {
-                title: 'statusCheck.commonError',
-                status: 400,
-                check: new Date(),
-              },
+          { status: 200 }
+        )
+      })
+      .catch((err) => {
+        return json<ActionData>(
+          {
+            errors: {
+              title: 'statusCheck.commonError',
+              status: 400,
+              check: new Date(),
             },
-            { status: 400 }
-          )
-        })
-    
+          },
+          { status: 400 }
+        )
+      })
+
     return deleteHandle
   }
   return 'ok'
