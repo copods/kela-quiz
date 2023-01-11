@@ -1,7 +1,6 @@
 import { cypress, addQuestion } from '~/constants/common.constants'
 import { routes } from '~/constants/route.constants'
 const section1 = `Aptitude - section1`
-const section2 = `Aptitude - section2`
 const question = 'first-question'
 
 describe('Test for section-details', () => {
@@ -536,13 +535,17 @@ describe('Test for section-details', () => {
     cy.get('.sectionCard', { timeout: 6000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
-          el[0].getElementsByClassName('sectionName')[0].innerHTML === section2
+          el[0].getElementsByClassName('sectionName')[0].innerHTML ===
+          'Aptitude - delete-Section'
         ) {
-          cy.get('.sectionName').should('have.text', section2)
+          cy.get('.sectionName').should(
+            'have.text',
+            'Aptitude - delete-Section'
+          )
         }
       })
     })
-    cy.get('.sectionName').contains(section2).click()
+    cy.get('.sectionName').contains('Aptitude - delete-Section').click()
     cy.wait(2000)
     cy.get('[data-cy="question-card-wrapper"]', { timeout: 6000 }).each(
       ($el) => {
