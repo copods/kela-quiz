@@ -30,11 +30,11 @@ const AddTestComponent = ({
   const breadCrumbData = [
     {
       tabName: 'testsConstants.assessment',
-      route: routes.assessments,
+      route: `/${currentWorkspaceId}${routes.assessments}`,
     },
     {
       tabName: 'testsConstants.addTestbutton',
-      route: routes.addAssessment,
+      route: `/${currentWorkspaceId}${routes.addAssessment}`,
     },
   ]
   const tabs = [
@@ -194,7 +194,7 @@ const AddTestComponent = ({
       <div className="flex w-full items-center justify-between">
         <Button
           tabIndex={0}
-          onClick={() => navigate(routes.assessments)}
+          onClick={() => navigate(`/${currentWorkspaceId}${routes.assessments}`)}
           className="h-9 px-7"
           variant="secondary-solid"
           title={t('commonConstants.cancelAddTest')}
