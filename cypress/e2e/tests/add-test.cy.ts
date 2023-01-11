@@ -18,7 +18,7 @@ describe('Creating assessments', () => {
 
     cy.customVisit('/members')
   })
-  
+
   it('Visiting Add Assessment Page', () => {
     cy.get('a')
       .find('#tests')
@@ -721,7 +721,7 @@ describe('Creating assessments', () => {
         if (
           el[0].getElementsByClassName('test-name-navigation')[0].innerHTML ===
           cypress.step1
-        ){
+        ) {
           cy.get('.test-name-navigation').should('have.text', test1)
         }
       })

@@ -160,7 +160,11 @@ const Table = <T extends object>({
           <TableEmptyState />
         ) : (
           data.map((rowData: T & { id?: number }, i) => (
-            <div id="table-row" key={String(rowData.id)} className="tableRow flex">
+            <div
+              id="table-row"
+              key={String(rowData.id)}
+              className="tableRow flex"
+            >
               {columns.map((column, j) =>
                 column.render ? (
                   <RenderDataCell

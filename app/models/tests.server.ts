@@ -31,7 +31,6 @@ export async function getAllTests(
   testsItemsPerPage = 5,
   testsCurrentPage = 1
 ) {
-
   const PER_PAGE_ITEMS = testsItemsPerPage
   return await prisma.test.findMany({
     take: PER_PAGE_ITEMS,

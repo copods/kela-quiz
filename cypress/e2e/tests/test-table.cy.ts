@@ -519,10 +519,7 @@ describe('Visiting Assessment', () => {
       .click()
     cy.get('#invite-more').first().click({ force: true })
     cy.get('.inviteInput').eq(0).type('ion@ion.co', { force: true })
-    cy.get('.inviteInput')
-      .eq(1)
-
-      .type('sam123@gmail.com', { force: true })
+    cy.get('.inviteInput').eq(1).type('sam123@gmail.com', { force: true })
 
     cy.get('[data-cy="submit"]').first().click({ force: true })
   })
@@ -535,8 +532,8 @@ describe('Visiting Assessment', () => {
       .should('be.visible')
       .click()
     cy.get('#invite-more').first().click({ force: true })
-    cy.get('.inviteInput').eq(0).type('ion@ion.co', { force: true })
-    cy.get('.inviteInput').eq(1).type('sam123@gmail.com', { force: true })
+    cy.get('.inviteInput').eq(0).type('ion@ionn.co', { force: true })
+    cy.get('.inviteInput').eq(1).type('sam1233@gmail.com', { force: true })
 
     cy.get('[data-cy="submit"]').first().click({ force: true })
 

@@ -17,7 +17,7 @@ describe('smoke tests', () => {
     // This will clear the local storage for every test
     window.localStorage.clear()
   })
- 
+
   it('Invalid Email Error Message', () => {
     cy.visit('/sign-in')
     cy.get('#email').clear().type('test@copods.co')
@@ -414,7 +414,7 @@ describe('smoke tests', () => {
     cy.get('#email').clear().type('copods.demo.sendgrid@gmail.com')
     cy.get('#password').clear().type('kQuiz@copods')
     cy.findByRole('button').click()
- cy.wait(2000)
+    cy.wait(2000)
     cy.get('#invite-member', { timeout: 6000 })
       .should('have.text', 'Invite Member')
       .click()
@@ -442,14 +442,16 @@ describe('smoke tests', () => {
     cy.wait(1000)
     cy.get('#assessments-page-title').should('have.text', 'Assessments')
     cy.get('#invite-popup-open0', { timeout: 6000 }).should('be.visible')
-    cy.get('#invite-popup-open0', { timeout: 6000 }).should('be.visible').click()
+    cy.get('#invite-popup-open0', { timeout: 6000 })
+      .should('be.visible')
+      .click()
 
     cy.get('input[name="email"]')
       .first()
-      .type('johndoe@example.com',{force:true})
+      .type('johndoe@example.com', { force: true })
       .should('have.focus')
       .should('have.value', 'johndoe@example.com')
-    cy.get('[data-cy="submit"]').first().click({force:true})
+    cy.get('[data-cy="submit"]').first().click({ force: true })
   })
   it('check for not found page', () => {
     cy.login()
