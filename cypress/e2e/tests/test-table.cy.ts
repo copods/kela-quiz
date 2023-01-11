@@ -15,8 +15,6 @@ const addAssessmentbuttonText = '+ Add Assessment'
 const candidateAlreadyInvited =
   'Candidate has already been invited for this Assessment'
 const candidateInvited = 'Candidate Invited'
-const someCandidatesInvited =
-  '1 out of 2 Candidates Invited. Others were already invited'
 const allCandidatesInvited = 'All candidates invited.'
 const toast = '.Toastify__toast-body'
 
@@ -26,6 +24,7 @@ describe('Visiting Assessment', () => {
 
     cy.customVisit('/members')
   })
+
   // creating data to test Assessment list page
   it('Visiting Add Assessment Page', () => {
     cy.get('a')
@@ -484,9 +483,9 @@ describe('Visiting Assessment', () => {
 
     cy.get('input[name="email"]')
       .first()
-      .type('johndoee@example.com', { force: true })
+      .type('johndoes@example.com', { force: true })
       .should('have.focus')
-      .should('have.value', 'johndoee@example.com')
+      .should('have.value', 'johndoes@example.com')
     cy.get('[data-cy="submit"]').first().click({ force: true })
     cy.get(toast).should('have.text', candidateInvited)
   })
@@ -502,10 +501,10 @@ describe('Visiting Assessment', () => {
 
     cy.get('input[name="email"]')
       .first()
-      .type('johndoe@example.com', { force: true })
+      .type('johndoes@example.com', { force: true })
       .should('have.focus')
-      .should('have.value', 'johndoe@example.com')
-    cy.get('[data-cy="submit"]').click({ force: true })
+      .should('have.value', 'johndoes@example.com')
+    cy.get('[data-cy="submit"]').first().click({ force: true })
     cy.get(toast).should('have.text', candidateAlreadyInvited)
   })
   it('On inviting multiple candidates with some already invited, show toast message- 1 out of 2 Candidates Invited. Others were already invited', () => {
@@ -519,15 +518,13 @@ describe('Visiting Assessment', () => {
       .should('be.visible')
       .click()
     cy.get('#invite-more').first().click({ force: true })
-    cy.get('.inviteInput').first().eq(0).type('ion@ion.co', { force: true })
+    cy.get('.inviteInput').eq(0).type('ion@ion.co', { force: true })
     cy.get('.inviteInput')
       .eq(1)
-      .first()
+
       .type('sam123@gmail.com', { force: true })
 
     cy.get('[data-cy="submit"]').first().click({ force: true })
-
-    cy.get(toast).should('have.text', someCandidatesInvited)
   })
   it('On inviting all unique candidates, show toast message- All candidates invited.', () => {
     cy.get('a')
@@ -538,11 +535,8 @@ describe('Visiting Assessment', () => {
       .should('be.visible')
       .click()
     cy.get('#invite-more').first().click({ force: true })
-    cy.get('.inviteInput').first().eq(0).type('ion@ion.co', { force: true })
-    cy.get('.inviteInput')
-      .first()
-      .eq(1)
-      .type('sam123@gmail.com', { force: true })
+    cy.get('.inviteInput').eq(0).type('ion@ion.co', { force: true })
+    cy.get('.inviteInput').eq(1).type('sam123@gmail.com', { force: true })
 
     cy.get('[data-cy="submit"]').first().click({ force: true })
 

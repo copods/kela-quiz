@@ -152,7 +152,7 @@ const TestList = () => {
             id={`invite-popup-open${index}`}
             role={'button'}
             tabIndex={0}
-            className="candidateInviteIcon mt-2 cursor-pointer text-2xl text-primary focus:outline-dotted focus:outline-2"
+            className="candidateInviteIcon cursor-pointer text-2xl text-primary focus:outline-dotted focus:outline-2"
             icon={'ant-design:user-add-outlined'}
             onClick={() => {
               setCandidatePopupOpen(true)
@@ -215,10 +215,10 @@ const TestList = () => {
   ]
   useEffect(() => {
     navigate(
-      `?index=&data=%7B"orderBy"%3A%7B"createdAt"%3A"desc"%7D%7D&testPage=${testsCurrentPage}&testItems=${testsPageSize}`
+      `?sortBy=${sortBy}&sort=${sortDirection}&page=${testsCurrentPage}&limit=${testsPageSize}`
     )
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [testsPageSize, testsCurrentPage])
+  }, [testsPageSize, testsCurrentPage, sortBy, sortDirection])
   useEffect(() => {
     const heading = document.getElementById('assessments-page-title')
     heading?.focus()

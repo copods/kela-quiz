@@ -32,26 +32,19 @@ export type ActionData = {
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   const query = new URL(request.url).searchParams
-  const testsItemsPerPage = Math.max(Number(query.get('testItems') || 5), 5) //To set the lower bound, so that minimum count will always be 1 for current page and 5 for items per page.
-  const testsCurrentPage = Math.max(Number(query.get('testPage') || 1), 1)
+  const testsItemsPerPage = Math.max(Number(query.get('limit') || 5), 5) //To set the lower bound, so that minimum count will always be 1 for current page and 5 for items per page.
+  const testsCurrentPage = Math.max(Number(query.get('page') || 1), 1)
   const userId = await getUserId(request)
   const currentWorkspaceId = params.workspaceId as string
   const workspaces = await getUserWorkspaces(userId as string)
-
   if (!userId) return redirect(routes.signIn)
-
   let tests: Array<Test> = []
   let status: string = ''
-
-  const filter = Object.fromEntries(new URL(request.url).searchParams.entries())
-    .data
-    ? JSON.parse(
-        Object.fromEntries(new URL(request.url).searchParams.entries()).data
-      )
-    : {}
-
+  const sortBy = query.get('sortBy')
+  const sortOrder = query.get('sort')
   await getAllTests(
-    filter,
+    sortBy as string,
+    sortOrder as string,
     currentWorkspaceId as string,
     testsItemsPerPage,
     testsCurrentPage
