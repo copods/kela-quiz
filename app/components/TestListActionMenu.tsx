@@ -74,14 +74,12 @@ const TestListMenuItem = ({
                               aria-hidden="true"
                             />
                           )}
-                          {menuItem?.menuListLink ? (
+                          {menuItem?.menuListLink && (
                             <img
                               src={menuItem?.menuListLink}
                               alt={menuItem?.menuLinkAltTagLine}
                               className="mr-1"
                             />
-                          ) : (
-                            ''
                           )}
                           {menuItem?.menuListText}
                         </>
