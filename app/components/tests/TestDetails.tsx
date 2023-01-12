@@ -11,12 +11,10 @@ const TestDetails = () => {
   const { t } = useTranslation()
 
   useEffect(() => {
-    if (action) {
-      if (action.errors?.statusCode === 400) {
-        toast.error(t(action.errors?.message), {
-          toastId: action.errors?.message,
-        })
-      }
+    if (action?.errors?.statusCode === 400) {
+      toast.error(t(action?.errors?.message), {
+        toastId: action?.errors?.message,
+      })
     }
   }, [action, t])
 

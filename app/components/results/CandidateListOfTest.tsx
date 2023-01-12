@@ -223,13 +223,11 @@ const CandidateListOfTest = () => {
   }, [actionData, t])
 
   useEffect(() => {
-    if (actionData) {
-      if (actionData.errors?.statusCode === 400) {
-        toast.error(t(actionData.errors?.message), {
-          toastId: actionData.errors?.message,
+      if (actionData?.errors?.statusCode === 400) {
+        toast.error(t(actionData?.errors?.message), {
+          toastId: actionData?.errors?.message,
         })
       }
-    }
   }, [actionData, t])
   return (
     <div id="test-details" className="flex h-full flex-col gap-4 ">

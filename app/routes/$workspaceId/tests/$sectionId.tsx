@@ -1,9 +1,24 @@
-import type { LoaderFunction } from '@remix-run/server-runtime'
+import type { LoaderFunction, ActionFunction } from '@remix-run/server-runtime'
 import { json } from '@remix-run/node'
 import { getSectionById } from '~/models/sections.server'
 import invariant from 'tiny-invariant'
 import SectionDetails from '~/components/sections/SectionDetails'
+import { deleteQuestionById } from '~/models/sections.server'
+import { useActionData } from '@remix-run/react'
+import { toast } from 'react-toastify'
+import { useTranslation } from 'react-i18next'
+import { useEffect } from 'react'
 
+export type ActionData = {
+  errors?: {
+    title: string
+    status: number
+  }
+  resp?: {
+    title: string
+    status: number
+  }
+}
 export const loader: LoaderFunction = async ({ request, params }) => {
   invariant(params.sectionId, 'sectionId not found')
   const sectionDetails = await getSectionById({ id: params.sectionId })
@@ -13,6 +28,45 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const currentWorkspaceId = params.workspaceId
   return json({ sectionDetails, currentWorkspaceId })
 }
+export const action: ActionFunction = async ({ request, params }) => {
+  const formData = await request.formData()
+  const action = await formData.get('action')
+  const id = formData.get('id') as string
+  if (action === 'deleteQuestion') {
+    const deleteQuestion = await deleteQuestionById(id)
+      .then(() => {
+        return json<ActionData>(
+          { resp: { title: 'statusCheck.deletedSuccess', status: 200 } },
+          { status: 200 }
+        )
+      })
+      .catch(() => {
+        return json<ActionData>(
+          {
+            errors: {
+              title: 'statusCheck.commonError',
+              status: 400,
+            },
+          },
+          { status: 400 }
+        )
+      })
+    return deleteQuestion
+  }
+
+  return null
+}
 export default function Section() {
+  const { t } = useTranslation()
+  const section = useActionData() as ActionData
+  useEffect(() => {
+    if (section?.resp?.status === 200) {
+      toast.success(t(section.resp?.title))
+    } else if (section?.errors?.status === 400) {
+      toast.error(t(section.errors?.title), {
+        toastId: section.errors?.title,
+      })
+    }
+  }, [section, t])
   return <SectionDetails />
 }

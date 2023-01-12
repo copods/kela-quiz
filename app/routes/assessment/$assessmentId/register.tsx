@@ -73,7 +73,7 @@ export const action: ActionFunction = async ({ params, request }) => {
 }
 
 const CandidateOnboard = () => {
-  const action = useActionData()
+  const action = useActionData() as ActionData
   const { t } = useTranslation()
   useEffect(() => {
     if (action) {

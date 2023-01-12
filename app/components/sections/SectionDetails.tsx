@@ -89,7 +89,7 @@ const SectionDetails = () => {
             <QuestionCard
               key={question.id}
               question={question}
-              isExpanded={currentAccordian}
+              expandedIndex={currentAccordian}
               onAccordianToggle={setCurrentAccordian}
               index={i}
             />

@@ -71,16 +71,14 @@ const ForgetPassword = () => {
   const [checkErrorStatus, setCheckErrorStatus] = useState(false)
   const action = useActionData()
   useEffect(() => {
-    if (action) {
-      if (action.resp?.status === 200) {
-        toast.success(t(action.resp?.title))
-        navigate(routes.signIn)
-      } else if (action.errors?.status === 400) {
-        action.errors?.emailNotFound && setCheckErrorStatus(true)
-        toast.error(t(action.errors?.title), {
-          toastId: action.errors?.title,
-        })
-      }
+    if (action?.resp?.status === 200) {
+      toast.success(t(action?.resp?.title))
+      navigate(routes.signIn)
+    } else if (action?.errors?.status === 400) {
+      action?.errors?.emailNotFound && setCheckErrorStatus(true)
+      toast.error(t(action?.errors?.title), {
+        toastId: action?.errors?.title,
+      })
     }
   }, [action, navigate, t, action?.time])
   return (

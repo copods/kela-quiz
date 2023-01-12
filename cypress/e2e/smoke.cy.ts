@@ -9,7 +9,7 @@ const test1 = `Aptitude - assessment1`
 const deleteTest1 = `Aptitude - assessment2`
 const section2 = `Aptitude - section2`
 const deleteSection = `Aptitude - delete-Section`
-
+const question = 'first-question'
 const memberEmail = 'johndoe@example.com'
 
 describe('smoke tests', () => {
@@ -52,15 +52,8 @@ describe('smoke tests', () => {
   })
 
   it('should add workspace', () => {
-    cy.visit('/sign-in')
-    cy.get('#email', { timeout: 8000 })
-      .clear()
-      .type('copods.demo.sendgrid@gmail.com')
-    cy.get('#password').clear().type('kQuiz@copods')
-    cy.findByRole('button').click()
-    cy.get('#members', { timeout: 60000 })
-      .should('have.text', 'Members')
-      .click()
+    cy.login()
+    cy.customVisit('/members')
     cy.location('pathname').should('include', '/members')
 
     let dropdown = cy.get('#dropdown', { timeout: 8000 })
@@ -85,7 +78,7 @@ describe('smoke tests', () => {
       .type(randomWorkSpaceName)
       .should('have.attr', 'value', randomWorkSpaceName)
 
-    cy.get('button[name="addWorkspace"]').click()
+    cy.get('button[name="addWorkspace"]', { timeout: 6000 }).click()
     cy.wait(1000)
     // Check for workspace length
     dropdown = cy.get('#dropdown')
@@ -101,10 +94,8 @@ describe('smoke tests', () => {
 
   // creating test data
   it('Adding a first section', () => {
-    cy.visit('/sign-in')
-    cy.get('#email').clear().type('copods.demo.sendgrid@gmail.com')
-    cy.get('#password').clear().type('kQuiz@copods')
-    cy.findByRole('button').click()
+    cy.login()
+    cy.customVisit('/members')
     cy.wait(1000)
 
     cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
@@ -120,10 +111,8 @@ describe('smoke tests', () => {
   })
 
   it('Adding a second section', () => {
-    cy.visit('/sign-in')
-    cy.get('#email').clear().type('copods.demo.sendgrid@gmail.com')
-    cy.get('#password').clear().type('kQuiz@copods')
-    cy.findByRole('button').click()
+    cy.login()
+    cy.customVisit('/members')
     cy.wait(1000)
     cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
 
@@ -138,10 +127,8 @@ describe('smoke tests', () => {
   })
 
   it('Adding a deleteSection ', () => {
-    cy.visit('/sign-in')
-    cy.get('#email').clear().type('copods.demo.sendgrid@gmail.com')
-    cy.get('#password').clear().type('kQuiz@copods')
-    cy.findByRole('button').click()
+    cy.login()
+    cy.customVisit('/members')
     cy.wait(1000)
     cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
 
@@ -156,10 +143,8 @@ describe('smoke tests', () => {
   })
 
   it('Add question to the first section', () => {
-    cy.visit('/sign-in')
-    cy.get('#email').clear().type('copods.demo.sendgrid@gmail.com')
-    cy.get('#password').clear().type('kQuiz@copods')
-    cy.findByRole('button').click()
+    cy.login()
+    cy.customVisit('/members')
     cy.wait(1000)
     cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
 
@@ -202,10 +187,8 @@ describe('smoke tests', () => {
   })
 
   it('Add question to the second section', () => {
-    cy.visit('/sign-in')
-    cy.get('#email').clear().type('copods.demo.sendgrid@gmail.com')
-    cy.get('#password').clear().type('kQuiz@copods')
-    cy.findByRole('button').click()
+    cy.login()
+    cy.customVisit('/members')
     cy.wait(1000)
     cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
 
@@ -245,20 +228,57 @@ describe('smoke tests', () => {
       .type(cypress.useMemoAns)
     cy.get('#save-and-exit').click()
   })
-
-  it('Verify if user able create the assesssment 1', () => {
-    cy.visit('/sign-in')
-    cy.get('#email').clear().type('copods.demo.sendgrid@gmail.com')
-    cy.get('#password').clear().type('kQuiz@copods')
-    cy.findByRole('button').click()
-    cy.get('#members', { timeout: 60000 })
-      .should('have.text', 'Members')
+  it('Add second question to the first section', () => {
+    cy.login()
+    cy.customVisit('/members')
+    cy.wait(1000)
+    cy.get('#sections', { timeout: 6000 }).should('have.text', 'Tests').click()
+    cy.wait(2000)
+    cy.get('#section-card').each(($el) => {
+      cy.wrap($el).within((el) => {
+        if (
+          el[0].getElementsByClassName('sectionName')[0].innerHTML === section2
+        ) {
+          cy.get('.sectionName').contains(section2).click()
+        }
+      })
+    })
+    cy.get('.sectionName').contains(section2).click()
+    cy.get('#add-question')
+      .should('have.text', `+ ${addQuestion.addQuestion}`)
       .click()
-    cy.get('#tests', { timeout: 60000 })
+    cy.location('pathname').should('include', '/add-question')
+    cy.get('h1', { timeout: 6000 }).should('be.visible')
+
+    cy.get('#Question').get('#dropdown-container').click()
+    cy.get('ul').within(() => {
+      cy.get('li').within(() => {
+        cy.get('div').then((el) => {
+          ;[...el].map((el) => {
+            if (el.innerText === 'Text') {
+              el.click()
+            }
+            return null
+          })
+        })
+      })
+    })
+    cy.get('#question-editor #quill-editor').within(() => {
+      cy.get('.ql-editor').type(question)
+    })
+    cy.get('input[placeholder="Write your option here"]')
+      .clear()
+      .type(cypress.useRefAns)
+    cy.get('#save-and-exit').click()
+  })
+  it('Verify if user able create the assesssment 1', () => {
+    cy.login()
+    cy.customVisit('/members')
+    cy.get('#tests', { timeout: 6000 })
       .should('have.text', 'Assessments')
       .click()
     cy.wait(1000)
-    cy.get('#add-test', { timeout: 60000 }).click()
+    cy.get('#add-test', { timeout: 6000 }).click()
     cy.location('pathname').should('include', '/assessments/add-assessment')
     cy.wait(1000)
     cy.get('input[placeholder="Enter assessment name"]')
@@ -329,10 +349,8 @@ describe('smoke tests', () => {
   })
 
   it('Verify if user able create the assessment 2', () => {
-    cy.visit('/sign-in')
-    cy.get('#email').clear().type('copods.demo.sendgrid@gmail.com')
-    cy.get('#password').clear().type('kQuiz@copods')
-    cy.findByRole('button').click()
+    cy.login()
+    cy.customVisit('/members')
     cy.wait(1000)
     cy.get('#tests', { timeout: 60000 })
       .should('have.text', 'Assessments')
@@ -408,10 +426,8 @@ describe('smoke tests', () => {
   })
 
   it('Test for adding a new member', () => {
-    cy.visit('/sign-in')
-    cy.get('#email').clear().type('copods.demo.sendgrid@gmail.com')
-    cy.get('#password').clear().type('kQuiz@copods')
-    cy.findByRole('button').click()
+    cy.login()
+    cy.customVisit('/members')
     cy.wait(1000)
     cy.get('#invite-member', { timeout: 6000 })
       .should('have.text', cypress.addMember)
@@ -429,10 +445,8 @@ describe('smoke tests', () => {
   })
 
   it('invite candidate for assessment', () => {
-    cy.visit('/sign-in')
-    cy.get('#email').clear().type('copods.demo.sendgrid@gmail.com')
-    cy.get('#password').clear().type('kQuiz@copods')
-    cy.findByRole('button').click()
+    cy.login()
+    cy.customVisit('/members')
     cy.wait(1000)
     cy.get('#tests', { timeout: 8000 })
       .should('have.text', 'Assessments')
