@@ -194,7 +194,9 @@ const AddTestComponent = ({
       <div className="flex w-full items-center justify-between">
         <Button
           tabIndex={0}
-          onClick={() => navigate(`/${currentWorkspaceId}${routes.assessments}`)}
+          onClick={() =>
+            navigate(`/${currentWorkspaceId}${routes.assessments}`)
+          }
           className="h-9 px-7"
           variant="secondary-solid"
           title={t('commonConstants.cancelAddTest')}
