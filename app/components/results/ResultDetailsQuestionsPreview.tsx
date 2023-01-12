@@ -1,5 +1,4 @@
-import type {Option } from '~/interface/Interface'
-import Divider from '../common-components/divider'
+import type { Option } from '~/interface/Interface'
 const ResultDetailsQuestionsPreview = ({
   textAnswer,
   status,
@@ -17,26 +16,28 @@ const ResultDetailsQuestionsPreview = ({
   correctOption: any
   checkOrder: boolean
 }) => {
-  const compare = () => {
-    const correctAnswers = correctAnswer
-      ?.flatMap((opt: any) => opt?.answer.toLowerCase())
-      .sort()
-    const userAnswers = textAnswer
-      ?.flatMap((opt: any) => opt.toLowerCase())
-      .sort()
-    if (correctAnswers?.length === userAnswers?.length) {
-      let correctFlag = true
-      for (let i = 0; i < correctAnswers?.length; i++) {
-        if (correctAnswers[i].localeCompare(userAnswers[i]) != 0) {
-          correctFlag = false
-          break
-        }
-      }
-      if (correctFlag) {
-        return 'correct'
-      }
-    }
+  const correctAnswersArray = correctAnswer.map((a: any) => a.answer)
+  function areEqual(textAnswer: any, correctAnswersArray: any) {
+    let N = textAnswer.length
+    let M = correctAnswersArray.length
+
+    // If lengths of array are not equal means
+    // array are not equal
+    if (N != M) return false
+
+    // Sort both arrays
+    textAnswer.sort()
+    correctAnswersArray.sort()
+
+    // Linearly compare elements
+    for (let i = 0; i < N; i++)
+      if (textAnswer[i] != correctAnswersArray[i]) return false
+
+    // If all elements were same.
+    return true
   }
+  if (areEqual(textAnswer, correctAnswersArray))
+    console.log(areEqual(textAnswer, correctAnswersArray), 'kk')
 
   return (
     <div className="flex w-full  rounded-lg  border border-gray-300 bg-gray-50">
@@ -53,158 +54,101 @@ const ResultDetailsQuestionsPreview = ({
       <div className="w-6/12 p-6">
         {status === 'ANSWERED' && (
           <div className="flex flex-col gap-2">
-            {textAnswer.length === 1 &&
-              checkOrder === false &&
-              textAnswer[0] === correctAnswer[0]?.answer && (
-                <div className="flex flex-col gap-7">
-                  <div className="flex items-center  justify-between">
-                    <h3 className="text-xl">Given answer</h3>
-                    <span className="rounded-full bg-green-100 px-2.5 py-2.5 text-sm">
-                      Correct
-                    </span>
-                  </div>
-                  <div className="rounded border border-solid bg-green-100 p-6">
-                    {textAnswer}
-                  </div>
-                </div>
-              )}
-            {textAnswer.length === 1 &&
-              checkOrder === false &&
-              textAnswer[0] !== correctAnswer[0]?.answer && (
-                <div>
-                  <div className="flex flex-col gap-7">
-                    <div className="flex items-center  justify-between">
-                      <h3 className="text-xl">Given Answer</h3>
-                      <span className="rounded-full bg-[#FAD1E5] px-2.5 py-2.5 text-sm">
-                        Wrong
-                      </span>
-                    </div>
-                    <div className="rounded border border-solid bg-[#FAD1E5] p-6">
-                      {textAnswer}
-                    </div>
-                    <Divider height="1px" />
-                    <div className="flex items-center  justify-between">
-                      <h3 className="text-xl">Correct</h3>
-                    </div>
-                    <div className="rounded border border-solid bg-green-100 p-6">
-                      {correctAnswer[0]?.answer}
-                    </div>
-                  </div>
-                </div>
-              )}
-
-            {textAnswer.length > 0 && checkOrder === true && compare() && (
-              <div className="flex flex-col gap-7">
-                <div className="flex items-center  justify-between">
-                  <h3 className="text-xl">Given answer</h3>
-                  <span className="rounded-full bg-green-100 px-2.5 py-2.5 text-sm">
-                    Correct
-                  </span>
-                </div>
-                <div className="flex flex-col gap-7">
-                  {textAnswer.map((textAnswer: any) => {
-                    return (
-                      <div className="rounded border border-solid bg-green-100 p-6">
-                        {textAnswer}
-                      </div>
-                    )
-                  })}
-                </div>
-              </div>
-            )}
-            {selectedOptions.length > 0 && selectedOptions.length < 2 && (
-              <div>
-                {selectedOptions.map((selectedOptions: Option) => {
-                  return (
-                    <div key={selectedOptions.questionId}>
-                      {selectedOptions.questionId ===
-                        selectedOptions.coInQuestionId && (
-                        <div className="flex flex-col gap-7">
-                          <div className="flex items-center  justify-between">
-                            <h3 className="text-xl">Given answer</h3>
-                            <span className="rounded-full bg-green-100 px-2.5 py-2.5 text-sm">
-                              Correct
-                            </span>
-                          </div>
-                          <div
-                            className="ql-editor rounded border border-solid bg-green-100 p-6"
-                            dangerouslySetInnerHTML={{
-                              __html: `${selectedOptions.option}`,
-                            }}
-                          ></div>
-                        </div>
-                      )}
-                      {selectedOptions.coInQuestionId !==
-                        selectedOptions.questionId && (
-                        <div className="flex flex-col gap-7">
-                          <div className="flex items-center  justify-between">
-                            <h3 className="text-xl">Given answer</h3>
-                            <span className="rounded-full bg-[#FAD1E5] px-2.5 py-2.5 text-sm">
-                              Wrong
-                            </span>
-                          </div>
-                          <div
-                            className="ql-editor rounded border border-solid bg-[#FAD1E5] p-6"
-                            dangerouslySetInnerHTML={{
-                              __html: `${selectedOptions.option}`,
-                            }}
-                          ></div>
-                          <Divider height="1px" />
-                          <div className="flex items-center  justify-between">
-                            <span className="rounded-full bg-green-100 px-2.5 py-2.5 text-sm">
-                              Correct
-                            </span>
-                          </div>
-                          <div
-                            className="ql-editor rounded border border-solid bg-[#FAD1E5] p-6"
-                            dangerouslySetInnerHTML={{
-                              __html: `${correctAnswer[0]?.option}`,
-                            }}
-                          ></div>
-                        </div>
-                      )}
-                    </div>
-                  )
-                })}
-              </div>
-            )}
-            {selectedOptions.length >= 2 && (
-              <div className="flex flex-col gap-2">
-                <span>selected Answers</span>
-                {selectedOptions.map((selectedOptions: any) => {
-                  return (
-                    <div key={selectedOptions.questionId}>
-                      <div className="flex flex-col gap-7">
-                        <div
-                          className={`${
-                            selectedOptions.questionId ===
-                            selectedOptions.coInQuestionId
-                              ? 'ql-editor rounded border border-solid bg-green-100 p-6'
-                              : 'bg-[#FAD1E5] p-6'
-                          }`}
-                          dangerouslySetInnerHTML={{
-                            __html: `${selectedOptions.option}`,
-                          }}
-                        ></div>
-                      </div>
-                    </div>
-                  )
-                })}
-
-                <span>correct options</span>
-                {correctOption.map((correctOption: Option) => {
+            <div>
+              {checkOrder === true &&
+                textAnswer.map((textAnswer: any, index: number) => {
+                  console.log(textAnswer === correctAnswer[index].answer, 'l')
                   return (
                     <div
-                      key={correctOption.id}
-                      className="ql-editor rounded border border-solid bg-green-100 p-6"
-                      dangerouslySetInnerHTML={{
-                        __html: `${correctOption?.option}`,
-                      }}
-                    ></div>
+                      key={index}
+                      className={`${
+                        textAnswer === correctAnswer[index].answer
+                          ? 'rounded border border-solid bg-green-100 p-6'
+                          : 'rounded border border-solid bg-[#FAD1E5] p-6'
+                      }`}
+                    >
+                      {textAnswer}
+                    </div>
                   )
                 })}
+              {
+                <div>
+                  {checkOrder === false &&
+                    areEqual(textAnswer, correctAnswersArray) === true &&
+                    textAnswer.map((textAnswer: any, index: number) => {
+                      return (
+                        <div
+                          key={index}
+                          className={
+                            'rounded border border-solid bg-green-100 p-6'
+                          }
+                        >
+                          {textAnswer}
+                        </div>
+                      )
+                    })}
+
+                  {checkOrder === false &&
+                    areEqual(textAnswer, correctAnswersArray) === false &&
+                    textAnswer.map((textAnswer: any, index: number) => {
+                      return (
+                        <div
+                          key={index}
+                          className={
+                            'rounded border border-solid bg-[#FAD1E5] p-6'
+                          }
+                        >
+                          {textAnswer}
+                        </div>
+                      )
+                    })}
+                </div>
+              }
+            </div>
+            <div className="flex flex-col gap-6">
+              {selectedOptions.map((selectedOptions: Option, index: number) => {
+                console.log(correctOption[index]?.option, 'lll')
+                return (
+                  <div key={selectedOptions.questionId}>
+                    <div className="flex flex-col gap-7">
+                      <div
+                        className={`${
+                          selectedOptions.option ===
+                          correctOption[index]?.option
+                            ? 'ql-editor rounded border border-solid bg-green-100 p-6'
+                            : 'ql-editor rounded border border-solid bg-[#FAD1E5] p-6'
+                        }`}
+                        dangerouslySetInnerHTML={{
+                          __html: `${selectedOptions.option}`,
+                        }}
+                      ></div>
+                    </div>
+                  </div>
+                )
+              })}
+              <div className="flex flex-col gap-6">
+                {selectedOptions.map(
+                  (selectedOptions: Option, index: number) => {
+                    return (
+                      <div key={index}>
+                        {selectedOptions.questionId !==
+                          selectedOptions.coInQuestionId && (
+                          <div
+                            key={index}
+                            className={
+                              'ql-editor rounded border border-solid bg-green-100 p-6'
+                            }
+                            dangerouslySetInnerHTML={{
+                              __html: `${correctOption[index]?.option}`,
+                            }}
+                          ></div>
+                        )}
+                      </div>
+                    )
+                  }
+                )}
               </div>
-            )}
+            </div>
           </div>
         )}
         {status === 'SKIPPED' && <span>skipped</span>}

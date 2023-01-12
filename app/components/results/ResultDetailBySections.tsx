@@ -48,6 +48,7 @@ const ResultDetailBySections = () => {
       </header>
       <div className='flex flex-col gap-6'>
         {sectionDetail.questions.map((questions: any) => {
+          console.log(questions,'questions')
           return <ResultDetailsQuestionsPreview key={questions.id} textAnswer={questions.answers} status={questions.status} selectedOptions={questions.selectedOptions} question={questions.question.question} correctAnswer={questions.question.correctAnswer} correctOption={questions.question.correctOptions} checkOrder={questions.question.checkOrder}/>
         })}
       </div>
