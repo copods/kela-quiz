@@ -1,6 +1,7 @@
 import type { User, Section } from '@prisma/client'
 import cuid from 'cuid'
 import { prisma } from '~/db.server'
+import type { Question } from '~/interface/Interface'
 
 export async function getSectionById({ id }: Pick<Section, 'id'>) {
   return prisma.section.findUnique({
@@ -9,6 +10,9 @@ export async function getSectionById({ id }: Pick<Section, 'id'>) {
     },
     include: {
       questions: {
+        where: {
+          deleted: false,
+        },
         include: {
           correctOptions: true,
           options: true,
@@ -38,6 +42,7 @@ export async function getFirstSection(workspaceId: string) {
 
   return firstSection?.id
 }
+
 export async function getAllTestsCounts(currentWorkspaceId: string) {
   const userCount = await prisma.section.count({
     where: {
@@ -52,47 +57,64 @@ export async function getAllSections(
   sortOrder: string | null,
   workspaceId: string,
   testCurrentPage = 1,
-  testItemsPerPage= 5
+  testItemsPerPage = 5
 ) {
   const PER_PAGE_ITEMS = testItemsPerPage
-  return await prisma.section.findMany({
-    orderBy: { [sortBy ?sortBy:'createdAt']: sortOrder ?sortOrder: 'asc' },
+  const res = await prisma.section.findMany({
+    orderBy: { [sortBy ? sortBy : 'createdAt']: sortOrder ? sortOrder : 'asc' },
     take: PER_PAGE_ITEMS,
     skip: (testCurrentPage - 1) * PER_PAGE_ITEMS,
-    
+
     where: {
       deleted: false,
       workspaceId,
     },
     include: {
       createdBy: true,
-      _count: {
-        select: { questions: true },
-      },
+      questions: true,
     },
   })
+  if (res) {
+    res.forEach(
+      (
+        section: Section & {
+          count?: number
+          question?: Question[]
+        }
+      ) => {
+        let count = 0
+        section?.question?.forEach((questions: Question) => {
+          if (questions?.deleted == false) {
+            count = count + 1
+          }
+        })
+        section['count'] = count
+      }
+    )
+  }
+  return res
 }
 export async function getFirstSectionIdOfLastPage(
-  sortBy: string | null,
-  sortOrder: string | null,
   workspaceId: string,
   testCurrentPage = 1,
-  testItemsPerPage= 5
+  testItemsPerPage = 5
 ) {
   const PER_PAGE_ITEMS = testItemsPerPage
   return await prisma.section.findFirst({
-    orderBy: { [sortBy ?sortBy:'createdAt']: sortOrder ?sortOrder: 'asc' },
     take: PER_PAGE_ITEMS,
-    skip:testCurrentPage===1? (testCurrentPage - 1) * PER_PAGE_ITEMS:(testCurrentPage - 2) * PER_PAGE_ITEMS,
-    
+    skip:
+      testCurrentPage === 1
+        ? (testCurrentPage - 1) * PER_PAGE_ITEMS
+        : (testCurrentPage - 2) * PER_PAGE_ITEMS,
+
     where: {
       deleted: false,
       workspaceId,
     },
-    
-    select:{
-      id:true
-    }
+
+    select: {
+      id: true,
+    },
   })
 }
 
@@ -204,4 +226,15 @@ export async function addQuestion(
     .catch((err) => {
       return err
     })
+}
+export async function deleteQuestionById(id: string) {
+  return prisma.question.update({
+    where: {
+      id,
+    },
+    data: {
+      deleted: true,
+      deletedAt: new Date().toString(),
+    },
+  })
 }

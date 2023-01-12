@@ -9,7 +9,6 @@ import {
   useNavigate,
 } from '@remix-run/react'
 import {
-  checkSectionById,
   createSection,
   deleteSectionById,
   editSectionById,
@@ -174,7 +173,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     testItemsPerPage
   )
     .then((res) => {
-      sections = res as Section[]
+      sections = res as unknown as Section[]
       status = 'statusCheck.success'
     })
     .catch((err) => {
@@ -185,8 +184,6 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     : undefined
   const getAllTestsCount = await getAllTestsCounts(currentWorkspaceId)
   const lastSectionId = await getFirstSectionIdOfLastPage(
-    sortBy,
-    sortOrder,
     currentWorkspaceId as string,
     testCurrentPage,
     testItemsPerPage
@@ -221,7 +218,6 @@ export const action: ActionFunction = async ({ request, params }) => {
   const createdById = await requireUserId(request)
   const workspaceId = params.workspaceId as string
   const formData = await request.formData()
-
   const action =
     formData.get('addSection') ||
     formData.get('editSection') ||
@@ -261,60 +257,34 @@ export const action: ActionFunction = async ({ request, params }) => {
     return response
   }
 
-  let deleteHandle = null
-  let isSectionDelete = false
-  let isTestDeleted: Array<boolean> | undefined
   if (action === 'sectionDelete') {
-    await checkSectionById(formData.get('id') as string).then((res) => {
-      if (res?._count.sectionInTest !== 0) {
-        isTestDeleted = res?.sectionInTest?.map((e) => {
-          return e.test.deleted
-        })
-      }
-      if (res?._count.sectionInTest === 0 || isTestDeleted?.includes(true)) {
-        isSectionDelete = true
-      } else {
-        deleteHandle = json<ActionData>(
+    const deleteSectionId = formData.get('id') as string
+    const deleteHandle = await deleteSectionById(deleteSectionId)
+      .then((res) => {
+        return json<ActionData>(
+          {
+            resp: {
+              status: 'statusCheck.deletedSuccess',
+              id: deleteSectionId,
+            },
+          },
+
+          { status: 200 }
+        )
+      })
+      .catch((err) => {
+        return json<ActionData>(
           {
             errors: {
-              title: 'statusCheck.testDependentWarning',
+              title: 'statusCheck.commonError',
               status: 400,
               check: new Date(),
             },
           },
           { status: 400 }
         )
-      }
-    })
+      })
 
-    if (isSectionDelete) {
-      const deleteSectionId = formData.get('id') as string
-      await deleteSectionById(deleteSectionId)
-        .then((res) => {
-          deleteHandle = json<ActionData>(
-            {
-              resp: {
-                status: 'statusCheck.deletedSuccess',
-                id: deleteSectionId,
-              },
-            },
-
-            { status: 200 }
-          )
-        })
-        .catch((err) => {
-          deleteHandle = json<ActionData>(
-            {
-              errors: {
-                title: 'statusCheck.commonError',
-                status: 400,
-                check: new Date(),
-              },
-            },
-            { status: 400 }
-          )
-        })
-    }
     return deleteHandle
   }
   return 'ok'
@@ -354,25 +324,7 @@ export default function SectionPage() {
   if (t(data.status) != t('statusCheck.success')) {
     toast.error(t('statusCheck.commonError'))
   }
-  const [flag,setFlag]=useState(false)
-useEffect(()=>{
-  if (
-      data.getAllTestsCount <=
-        testsCurrentPage * testsPageSize - testsPageSize &&
-      testsCurrentPage > 1
-    ) {
-       
-      navigate(
-        `/${data.currentWorkspaceId}${routes.tests}/${
-          data.lastSectionId?.id
-        }?sortBy=${sortBy}&sort=${order}&testPage=${
-          testsCurrentPage - 1
-        }&testItems=${testsPageSize}`
-      )
-      setFlag(true)
-    } 
-},[testsCurrentPage,data.lastSectionId?.id])
-console.log(flag,'flag')
+
   useEffect(() => {
     if (sectionActionData) {
       if (
@@ -401,7 +353,6 @@ console.log(flag,'flag')
         toast.success(t(sectionActionData.resp?.status as string), {
           toastId: t(sectionActionData.resp?.status as string),
         })
-
       } else if (sectionActionData.createSectionFieldError) {
         setSectionActionErrors({
           title: sectionActionData?.createSectionFieldError.title || '',
@@ -451,15 +402,7 @@ console.log(flag,'flag')
     data.sections[0]?.id,
     sectionActionData,
   ])
-useEffect(()=>{
-  if(flag===true){
-    console.log('j')
-    navigate(
-      `/${data.currentWorkspaceId}${routes.tests}/${data.sections[0]?.id}?sortBy=${sortBy}&sort=${order}&testPage=${testsCurrentPage}&testItems=${testsPageSize}`
-    )
-     
-  }
-},[data.sections[0]?.id])
+
   useEffect(() => {
     const heading = document.getElementById('tests-heading')
     heading?.focus()

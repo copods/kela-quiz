@@ -1,5 +1,5 @@
 import SectionCard from './SectionCard'
-import type { Section, User } from '~/interface/Interface'
+import type { Question, Section, SectionInTest } from '~/interface/Interface'
 import { useResolvedPath, useLocation, useNavigate } from '@remix-run/react'
 import {} from '@remix-run/react'
 import SortFilter from '../common-components/SortFilter'
@@ -18,7 +18,11 @@ const SectionLink = ({
   sectionActionErrors,
   setSectionActionErrors,
 }: {
-  section: Section & { _count?: { questions: number }; createdBy?: User }
+  section: Section & {
+    count?: number
+    questions?: Array<Question>
+    sectionInTest: Array<SectionInTest>
+  }
   actionStatusData?: string
   err?: string
   filter: string
@@ -76,7 +80,7 @@ const SectionLink = ({
         name={section?.name}
         description={section?.description}
         createdBy={`${section?.createdBy?.firstName} ${section?.createdBy?.lastName}`}
-        questionsCount={section?._count?.questions as number}
+        questionsCount={section?.count as number}
         createdAt={section.createdAt}
         id={section?.id}
         actionStatusData={actionStatusData}
@@ -111,10 +115,10 @@ type SectionType = {
   testCurrentPage: number
   testCurrentItems: number
   totalCount: number
-  testsPageSize:number
-  testsCurrentPage:number
-  setTestPageSize:(e: number) => void
-  setTestsCurrentPage:(e: number) => void
+  testsPageSize: number
+  testsCurrentPage: number
+  setTestPageSize: (e: number) => void
+  setTestsCurrentPage: (e: number) => void
 }
 const Sections = ({
   sections,
@@ -136,9 +140,8 @@ const Sections = ({
   testsPageSize,
   testsCurrentPage,
   setTestPageSize,
-  setTestsCurrentPage
+  setTestsCurrentPage,
 }: SectionType) => {
-
   return (
     <div className="sectionLSWrapper flex h-full max-w-96 flex-col gap-6">
       {/* filters */}
@@ -171,7 +174,6 @@ const Sections = ({
             sectionActionErrors={sectionActionErrors}
             setSectionActionErrors={setSectionActionErrors}
             currentWorkspaceId={currentWorkspaceId}
-          
           />
         ))}
         <Pagination

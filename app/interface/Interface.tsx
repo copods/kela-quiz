@@ -95,9 +95,12 @@ export interface TestSection {
 export interface Section {
   id: string
   name: string
+  questions: Array<Question>
   description: string
+  createdBy: User
   createdById: string
   createdAt: Date
+  sectionInTest: SectionInTest[]
   updatedAt: Date
   deleted: boolean
   deletedAt: string
@@ -147,8 +150,11 @@ export interface Question {
   questionTypeId?: string
   sectionId?: string
   createdById?: string
+  createdBy: User
   createdAt?: Date
   updatedAt?: Date
+  deleted: boolean
+  deletedAt: string
   options?: Array<Option>
   correctOptions?: Array<Option>
 }
@@ -223,6 +229,7 @@ export interface CandidateTest {
 }
 
 export interface SectionInCandidateTest {
+  SectionWiseResult: SectionWiseResults[]
   id: string
   sectionId: string
   section: Section

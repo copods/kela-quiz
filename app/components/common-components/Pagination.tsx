@@ -151,7 +151,7 @@ const Pagination = ({
       </div>
       <div className="pagination flex items-center gap-2">
         <Icon
-          className={`cursor-pointer text-sm ${
+          className={`cursor-pointer w-3 text-sm ${
             currentPage === 1 ? 'pointer-events-none text-slate-300' : ''
           }`}
           icon="ooui:previous-ltr"
@@ -160,7 +160,7 @@ const Pagination = ({
         {PaginationButtons({ paginationRange, currentPage, onPageChange })}
 
         <Icon
-          className={`cursor-pointer text-sm ${
+          className={`cursor-pointer w-3 text-sm ${
             pageSize * currentPage >= totalItems
               ? 'pointer-events-none text-slate-300'
               : ''

@@ -19,7 +19,7 @@ import { useTranslation } from 'react-i18next'
 const AddQuestionInSection = () => {
   const { t } = useTranslation()
 
-  const { sectionDetails, questionTypes } = useLoaderData()
+  const { sectionDetails, questionTypes, currentWorkspaceId } = useLoaderData()
   const [selectedTypeOfQuestion, onQuestionTypeChange] = useState(() => {
     for (let questionType of questionTypes) {
       if (questionType.value === QuestionTypes.multipleChoice) {
@@ -65,11 +65,11 @@ const AddQuestionInSection = () => {
   const breadCrumbArray = [
     {
       tabName: 'testsConstants.testText',
-      route: routes.tests,
+      route: `/${currentWorkspaceId}${routes.tests}`,
     },
     {
       tabName: 'addQuestion.addQuestion',
-      route: `${routes.tests}/${sectionDetails?.id}${routes.addQuestion}`,
+      route: `/${currentWorkspaceId}${routes.tests}/${sectionDetails?.id}${routes.addQuestion}`,
     },
   ]
   const getQuestionType = (id: string) => {
@@ -263,7 +263,11 @@ const AddQuestionInSection = () => {
           <Button
             tabIndex={0}
             id="cancel"
-            onClick={() => navigate(`${routes.tests}/${sectionDetails?.id}`)}
+            onClick={() =>
+              navigate(
+                `/${currentWorkspaceId}${routes.tests}/${sectionDetails?.id}`
+              )
+            }
             isDisabled={transition.state === 'submitting'}
             className="h-9 px-5"
             title={
