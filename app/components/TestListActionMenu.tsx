@@ -18,7 +18,7 @@ const TestListMenuItem = ({
     menuListIcon?: string
     menuListLink?: string
     menuLinkAltTagLine?: string
-    onClickOfButton?: () => void
+    handleItemAction?: () => void
   }>
   id: string
 }) => {
@@ -49,7 +49,7 @@ const TestListMenuItem = ({
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95"
         >
-          <Menu.Items className="absolute right-6 z-40  origin-bottom-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5">
+          <Menu.Items className="absolute right-6 z-40 mt-10 origin-bottom-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5">
             <div className="flex flex-col px-1 py-1">
               {menuDetails?.map((menuItem) => {
                 return (
@@ -61,7 +61,8 @@ const TestListMenuItem = ({
                         className="deleteTest text-gray-primary inline-flex w-36 items-center justify-start rounded-md border border-none bg-white px-2 py-2 text-xs font-medium text-primary shadow-sm transition delay-75 ease-in-out hover:bg-gray-100"
                         onClick={() => {
                           onItemClick(true)
-                          menuItem.onClickOfButton && menuItem.onClickOfButton()
+                          menuItem.handleItemAction &&
+                            menuItem.handleItemAction()
                         }}
                         data-cy={menuItem.id}
                       >
