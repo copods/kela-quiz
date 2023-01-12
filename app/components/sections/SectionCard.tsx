@@ -48,7 +48,6 @@ const SectionCard = ({
     name: '',
     description: '',
   })
-
   const deleteSection = () => {
     submit({ deleteSection: 'sectionDelete', id: id }, { method: 'post' })
   }
