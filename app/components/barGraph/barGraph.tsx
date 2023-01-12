@@ -33,7 +33,7 @@ const BarGraph = ({
   }
   let result: Array<number> = []
   calculateResult.map((data: SectionInCandidateTest) => {
-    return data.SectionWiseResult?.map((results: SectionWiseResults) => {
+    return data.SectionWiseResult?.forEach((results: SectionWiseResults) => {
       const sectionInTestData = results.section.section.sectionInTest.map(
         (data: SectionInTest) => {
           return data
