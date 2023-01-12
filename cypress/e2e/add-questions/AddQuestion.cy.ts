@@ -1,7 +1,6 @@
 import { cypress, addQuestion } from '~/constants/common.constants'
 import { routes } from '~/constants/route.constants'
 const section1 = `Aptitude - section1`
-const question = 'first-question'
 
 describe('Test for section-details', () => {
   beforeEach('sign-in', () => {
@@ -542,8 +541,9 @@ describe('Test for section-details', () => {
       })
     })
     cy.get('.sectionName').contains(section1).click()
+    cy.wait(2000)
     cy.get('.question', { timeout: 8000 })
-      .contains(question)
+      .contains('What is useRef() ?')
       .trigger('mouseover')
     cy.get('[data-cy="delete-question"]').should('be.exist')
   })
