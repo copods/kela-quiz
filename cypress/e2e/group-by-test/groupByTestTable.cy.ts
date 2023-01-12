@@ -277,30 +277,14 @@ describe('Test for GroupByTestTable, Result', () => {
   it('checks, copy Link from result page', () => {
     cy.wait(3000)
     cy.viewport(1280, 720)
-    //permission from browser for clipboard access
-    cy.wrap(
-      Cypress.automation('remote:debugger:protocol', {
-        command: 'Browser.grantPermissions',
-        params: {
-          permissions: ['clipboardReadWrite', 'clipboardSanitizedWrite'],
-          origin: window.location.origin,
-        },
-      })
-    )
     cy.get('#group-by-tests').click()
     cy.get('.groupByItemTest').contains(test1).click()
     cy.get('#vertical-icon', { timeout: 8000 }).click()
     cy.get('[data-cy="copy-link"]').should('be.visible').click()
     cy.get('.Toastify__toast').should('have.text', 'Link Copied Successfully')
-    cy.window().then((win) => {
-      win.navigator.clipboard
-        .readText()
-        .then((text) => {
-          expect(text).to.include('/assessment')
-        })
-        .catch((e) => {
-          console.log('copy link is failing', e)
-        })
-    })
+    cy.window()
+      .its('navigator.clipboard')
+      .invoke('readText')
+      .should('include', '/assessment')
   })
 })
