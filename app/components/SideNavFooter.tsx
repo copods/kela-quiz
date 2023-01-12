@@ -42,7 +42,7 @@ function Footer() {
             tabIndex={0}
             type="submit"
             id="logout-button"
-            varient="secondary-solid"
+            variant="secondary-solid"
             className="px-2"
             title={t('commonConstants.logout')}
             buttonText={

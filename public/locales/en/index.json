@@ -17,7 +17,9 @@
     "alreadyRejectedWorkspaceInvitation": "You already reject the workspace joining invitation",
     "loggedinFromAnotherAccount": "This link is not valid for this account.",
     "youInvitedBy": "You have been invited by",
-    "toJoin": "to join"
+    "toJoin": "to join",
+    "owner": "Owner",
+    "workspaceLeft": "You left the workspace"
   },
   "commonConstants": {
     "name": "Name",
@@ -47,7 +49,7 @@
     "results": "Results",
     "goToDashboard": "Go to Dashboard",
     "checkOrder": "Check Order",
-    "complete": "Complete",
+    "completed": "Completed",
     "pending": "Pending",
     "createTest": "Creating Assessment",
     "cancelAddTest": "Cancel Add Assessment",
@@ -79,6 +81,8 @@
     "weak": "Weak",
     "noRowsToShow": "No Rows To Show",
     "items": "Items",
+    "onGoing": "Ongoing",
+    "notAttempted": "Not attempted",
     "switchAccount": "Switch Account"
   },
   "sideNav": {
@@ -108,8 +112,9 @@
     "signIn": "Sign In",
     "signUp": "Sign Up",
     "signingUp": "Signing up...",
-    "AlreadyHaveAnAccount": "Already have an account?",
-    "DontHaveAnAccountYet": "Don’t have an account yet?"
+    "alreadyHaveAnAccount": "Already have an account?",
+    "dontHaveAnAccountYet": "Don’t have an account yet?",
+    "rememberMe": "Remember Me"
   },
   "addQuestion": {
     "createOptions": "Create Options",
@@ -323,7 +328,10 @@
     "passResetSuccessfully": "Password changed successfully !",
     "basicInfo": "Basic Info",
     "minPasswordLimit": "Password should have minimum 8 characters",
-    "passShouldNotBeSame": "Current Password and New Password should not be same"
+    "passShouldNotBeSame": "Current Password and New Password should not be same",
+    "leaveWorkspace": "Leave workspace",
+    "leave": "Leave",
+    "leaveWorkspaceConfirmation": "Are you sure you want to leave this workspace?"
   },
   "tabs": {
     "general": "General",

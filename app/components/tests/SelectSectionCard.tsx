@@ -77,7 +77,7 @@ const SelectSectionCard = ({
           <Button
             tabIndex={0}
             className="h-7 px-4"
-            varient="secondary-solid"
+            variant="secondary-solid"
             onClick={() => updateThisSection('isSelected', '', false)}
             title={t('commonConstants.removeButton')}
             buttonText={t('commonConstants.removeButton')}
@@ -87,7 +87,7 @@ const SelectSectionCard = ({
             tabIndex={0}
             className="h-7 px-4"
             onClick={() => updateThisSection('isSelected', '', true)}
-            varient="primary-solid"
+            variant="primary-solid"
             title={t('commonConstants.add')}
             buttonText={t('commonConstants.add')}
           />
@@ -147,9 +147,6 @@ const SelectSectionCard = ({
             name="totalTime"
             value={section.time}
             onChange={(e) => {
-              if (Number(e.target.value) === 0) {
-                return
-              }
               updateThisSection('time', e.target.value)
             }}
             className={`mt-1 h-11 w-full rounded-lg border border-gray-300 px-3 text-xs ${

@@ -1,6 +1,12 @@
 import { prisma } from '~/db.server'
 import { getAdminId } from './user.server'
-
+export async function getCurrentWorkspaceOwner(currentWorkspaceId: string) {
+  const workspaceOwner = await prisma.workspace.findUnique({
+    where: { id: currentWorkspaceId },
+    select: { createdById: true },
+  })
+  return workspaceOwner
+}
 export async function getUserWorkspaces(userId: string) {
   return await prisma.userWorkspace.findMany({
     where: {
@@ -109,4 +115,16 @@ export async function verifyWorkspaceId({
       },
     },
   })
+}
+export async function leaveWorkspace(workspaceId: string, userId: string) {
+  await prisma.userWorkspace.deleteMany({
+    where: { workspaceId: workspaceId, userId: userId },
+  })
+}
+
+export async function getOwnersWorkspaces(userId: string) {
+  const ownerWorkspaceId = await prisma.workspace.findMany({
+    where: { createdById: userId },
+  })
+  return ownerWorkspaceId
 }

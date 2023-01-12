@@ -30,11 +30,11 @@ const AddTestComponent = ({
   const breadCrumbData = [
     {
       tabName: 'testsConstants.assessment',
-      route: routes.assessments,
+      route: `/${currentWorkspaceId}${routes.assessments}`,
     },
     {
       tabName: 'testsConstants.addTestbutton',
-      route: routes.addAssessment,
+      route: `/${currentWorkspaceId}${routes.addAssessment}`,
     },
   ]
   const tabs = [
@@ -130,7 +130,7 @@ const AddTestComponent = ({
       return true
     }
     for (let section of selectedSections) {
-      if (!section?.totalQuestions) {
+      if (!section?.totalQuestions || !section?.time) {
         return true
       }
     }
@@ -194,9 +194,9 @@ const AddTestComponent = ({
       <div className="flex w-full items-center justify-between">
         <Button
           tabIndex={0}
-          onClick={() => navigate(routes.assessments)}
+          onClick={() => navigate(`/${currentWorkspaceId}${routes.assessments}`)}
           className="h-9 px-7"
-          varient="secondary-solid"
+          variant="secondary-solid"
           title={t('commonConstants.cancelAddTest')}
           buttonText={t('commonConstants.cancel')}
         />
@@ -205,7 +205,7 @@ const AddTestComponent = ({
             tabIndex={0}
             title={t('commonConstants.previousTab')}
             className="h-9 px-7"
-            varient="primary-solid"
+            variant="primary-solid"
             id="back-button"
             buttonText={t('commonConstants.backButton')}
             isDisabled={currentTab === tabs[0].id}
@@ -216,7 +216,7 @@ const AddTestComponent = ({
               tabIndex={0}
               title={t('commonConstants.nextTab')}
               className="h-9 px-7"
-              varient="primary-solid"
+              variant="primary-solid"
               id="next-button"
               buttonText={t('commonConstants.nextButton')}
               isDisabled={
@@ -233,7 +233,7 @@ const AddTestComponent = ({
               title={t('commonConstants.nextTab')}
               id="submit-button"
               className="h-9 px-7"
-              varient="primary-solid"
+              variant="primary-solid"
               buttonText={
                 transition.state === 'submitting'
                   ? sortByOrder.creatingAssessment
