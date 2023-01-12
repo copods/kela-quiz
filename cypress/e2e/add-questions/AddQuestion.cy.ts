@@ -535,17 +535,13 @@ describe('Test for section-details', () => {
     cy.get('.sectionCard', { timeout: 6000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
-          el[0].getElementsByClassName('sectionName')[0].innerHTML ===
-          'Aptitude - delete-Section'
+          el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
         ) {
-          cy.get('.sectionName').should(
-            'have.text',
-            'Aptitude - delete-Section'
-          )
+          cy.get('.sectionName').should('have.text', section1)
         }
       })
     })
-    cy.get('.sectionName').contains('Aptitude - delete-Section').click()
+    cy.get('.sectionName').contains(section1).click()
     cy.get('.question', { timeout: 8000 })
       .contains(question)
       .trigger('mouseover')
