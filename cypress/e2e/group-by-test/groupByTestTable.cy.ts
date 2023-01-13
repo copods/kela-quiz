@@ -229,7 +229,8 @@ describe('Test for GroupByTestTable, Result', () => {
     cy.viewport(1280, 720)
     cy.get('#group-by-tests').should('have.text', 'Results').click()
     cy.get('.groupByItemTest').contains(test1).click()
-    cy.get('#vertical-icon', { timeout: 8000 }).click()
+    cy.get('#vertical-icon', { timeout: 6000 }).should('be.visible')
+    cy.get('#vertical-icon', { timeout: 6000 }).click()
     cy.get('[data-cy="resend-invite"]').should('be.visible')
   })
 
@@ -237,7 +238,8 @@ describe('Test for GroupByTestTable, Result', () => {
     cy.viewport(1280, 720)
     cy.get('#group-by-tests').should('have.text', 'Results').click()
     cy.get('.groupByItemTest').contains(test1).click()
-    cy.get('#vertical-icon', { timeout: 8000 }).click()
+    cy.get('#vertical-icon', { timeout: 6000 }).should('be.visible')
+    cy.get('#vertical-icon', { timeout: 6000 }).click()
     cy.get('[data-cy="copy-link"]').should('be.visible')
   })
   it('checks,table contains assessment name', () => {
@@ -262,12 +264,12 @@ describe('Test for GroupByTestTable, Result', () => {
       .contains(test1)
       .should('have.attr', 'tabindex', '0')
   })
-  it.only('checks,invite candidate from result page', () => {
+  it('checks,invite candidate from result page', () => {
     cy.wait(3000)
     cy.viewport(1280, 720)
     cy.get('#group-by-tests').should('have.text', 'Results').click()
     cy.get('.groupByItemTest').contains(test1).click()
-    cy.get('#vertical-icon').should('be.visible')
+    cy.get('#vertical-icon', { timeout: 6000 }).should('be.visible')
     cy.get('#vertical-icon', { timeout: 6000 }).click()
     cy.get('[data-cy="resend-invite"]').should('be.visible').click()
     cy.get('.Toastify__toast').should(
@@ -280,7 +282,7 @@ describe('Test for GroupByTestTable, Result', () => {
     cy.viewport(1280, 720)
     cy.get('#group-by-tests').click()
     cy.get('.groupByItemTest').contains(test1).click()
-    cy.get('#vertical-icon').should('be.visible')
+    cy.get('#vertical-icon', { timeout: 6000 }).should('be.visible')
     cy.get('#vertical-icon', { timeout: 6000 }).click()
     cy.get('[data-cy="copy-link"]').should('be.visible').click()
     cy.get('.Toastify__toast').should('have.text', 'Link Copied Successfully')
