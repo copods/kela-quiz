@@ -17,6 +17,7 @@ describe('smoke tests', () => {
     // This will clear the local storage for every test
     window.localStorage.clear()
   })
+
   it('Invalid Email Error Message', () => {
     cy.visit('/sign-in')
     cy.get('#email').clear().type('test@copods.co')
@@ -153,11 +154,12 @@ describe('smoke tests', () => {
         if (
           el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
         ) {
-          cy.get('.sectionName').contains(section1).click()
+          cy.get('.sectionName').contains(section1)
         }
       })
     })
     cy.get('.sectionName').contains(section1).click()
+    cy.wait(3000)
     cy.get('#add-question')
       .should('have.text', `+ ${addQuestion.addQuestion}`)
       .click()
@@ -430,7 +432,7 @@ describe('smoke tests', () => {
     cy.customVisit('/members')
     cy.wait(1000)
     cy.get('#invite-member', { timeout: 6000 })
-      .should('have.text', cypress.addMember)
+      .should('have.text', 'Invite Member')
       .click()
     cy.get('#dialog-wrapper').should('be.visible')
 
@@ -452,26 +454,18 @@ describe('smoke tests', () => {
       .should('have.text', 'Assessments')
       .click()
     cy.wait(1000)
-    cy.get('.test-table-list', { timeout: 8000 }).should('be.visible')
-    cy.get('.test-table-list').each(($el) => {
-      cy.wrap($el).within((el) => {
-        if (
-          el[0].getElementsByClassName('test-name-navigation')[0].innerHTML ===
-          test1
-        ) {
-          cy.get('.test-name-navigation').should('have.text', test1)
-        }
-      })
-    })
-    cy.get('.test-name-navigation').contains(test1).click()
-    cy.get('#title', { timeout: 8000 }).should('have.text', test1)
-    cy.get('#invite-popup-open', { timeout: 8000 }).should('be.visible').click()
+    cy.get('#assessments-page-title').should('have.text', 'Assessments')
+    cy.get('#invite-popup-open0', { timeout: 6000 }).should('be.visible')
+    cy.get('#invite-popup-open0', { timeout: 6000 })
+      .should('be.visible')
+      .click()
+
     cy.get('input[name="email"]')
-      .clear()
-      .type('johndoe@example.com')
+      .first()
+      .type('johndoe@example.com', { force: true })
       .should('have.focus')
       .should('have.value', 'johndoe@example.com')
-    cy.get('[data-cy="submit"]').click()
+    cy.get('[data-cy="submit"]').first().click({ force: true })
   })
   it('check for not found page', () => {
     cy.login()

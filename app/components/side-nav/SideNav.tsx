@@ -56,7 +56,7 @@ const SideNav = () => {
           id: 'tests',
           iconClass: 'carbon:result',
           itemName: 'testsConstants.assessments',
-          itemRoute: `${routes.assessments}?index=&data=%7B"orderBy"%3A%7B"createdAt"%3A"desc"%7D%7D`,
+          itemRoute: `${routes.assessments}`,
         },
         {
           id: 'sections',

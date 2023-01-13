@@ -31,8 +31,8 @@ const TestListMenuItem = ({
   }, [open, id])
   return (
     <>
-      <Menu as="div" className="relative mt-2">
-        <Menu.Button className={id}>
+      <Menu as="div" className="flex">
+        <Menu.Button className={`${id} self-center`}>
           <Icon
             className="text-2xl text-gray-600"
             icon={menuIcon}
@@ -48,14 +48,14 @@ const TestListMenuItem = ({
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95"
         >
-          <Menu.Items className="absolute right-0 z-40 origin-bottom-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5">
+          <Menu.Items className="absolute right-0 z-40 mr-20 mt-8 origin-bottom-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5">
             <div className="px-1 py-1">
               <Menu.Item>
                 {({ active }) => (
                   <button
                     tabIndex={0}
                     name="deleteTest"
-                    className="deleteTest text-gray-primary undefined inline-flex w-36 items-center justify-start rounded-md rounded-md border border-primary bg-white py-2.5 px-5 px-2 py-2 text-xs font-medium text-primary shadow-sm transition delay-75 ease-in-out hover:bg-gray-100"
+                    className="deleteTest text-gray-primary inline-flex w-36 items-center justify-start rounded-md border border-none bg-white px-2 py-2 text-xs font-medium text-primary shadow-sm transition delay-75 ease-in-out hover:bg-gray-100"
                     onClick={() => {
                       onItemClick(true)
                       resendInvite && resendInvite()
