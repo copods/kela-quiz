@@ -9,8 +9,8 @@ const ResultDetailBySections = () => {
   let navigate = useNavigate()
   return (
     <div className="flex h-full flex-col gap-6">
-      <header>
-        <div className="flex gap-2 p-6">
+      <header className="flex flex-col gap-6">
+        <div className="flex gap-2">
           <div
             onClick={() =>
               navigate(
@@ -46,10 +46,21 @@ const ResultDetailBySections = () => {
         </div>
         <hr className="h-px w-full bg-gray-900" />
       </header>
-      <div className='flex flex-col gap-6'>
+      <div className="flex flex-col gap-6">
         {sectionDetail.questions.map((questions: any) => {
-          console.log(questions,'questions')
-          return <ResultDetailsQuestionsPreview key={questions.id} textAnswer={questions.answers} status={questions.status} selectedOptions={questions.selectedOptions} question={questions.question.question} correctAnswer={questions.question.correctAnswer} correctOption={questions.question.correctOptions} checkOrder={questions.question.checkOrder}/>
+          return (
+            <ResultDetailsQuestionsPreview
+              key={questions.id}
+              textAnswer={questions.answers}
+              status={questions.status}
+              selectedOptions={questions.selectedOptions}
+              question={questions.question.question}
+              correctAnswer={questions.question.correctAnswer}
+              correctOption={questions.question.correctOptions}
+              checkOrder={questions.question.checkOrder}
+              questionType={questions.question.questionType}
+            />
+          )
         })}
       </div>
     </div>

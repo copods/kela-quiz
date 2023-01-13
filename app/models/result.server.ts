@@ -373,14 +373,19 @@ export async function getResultDetailBySection(id?: string) {
             select: {
               question: true,
               correctOptions: {
-             select:{ 
-                id: true,
-              option: true
-            }
+                select: {
+                  id: true,
+                  option: true,
+                },
+              },
+              questionType: {
+                select: {
+                  displayName: true,
+                },
               },
               options: true,
               correctAnswer: true,
-              checkOrder:true
+              checkOrder: true,
             },
           },
           answers: true,
