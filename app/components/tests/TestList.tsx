@@ -1,6 +1,6 @@
 import { useActionData, useLoaderData, useSubmit } from '@remix-run/react'
 import { useEffect, useState } from 'react'
-import { useNavigate,useLocation } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import type { Test, User, tableColumnType } from '~/interface/Interface'
 import { sortByOrder } from '~/interface/Interface'
 import SortFilter from '../common-components/SortFilter'
@@ -29,7 +29,7 @@ const TestList = () => {
     toast.warn(t('statusCheck.commonError'))
   }
   useEffect(() => {
-    if(testActionData){
+    if (testActionData) {
       if (testActionData?.resp?.statusCode === 200) {
         toast.success(t(testActionData?.resp?.message))
       } else if (testActionData?.errors?.statusCode === 400) {
@@ -38,7 +38,6 @@ const TestList = () => {
         })
       }
     }
-      
   }, [testActionData, t])
   const tests = testLoaderData.tests
   //sort filter data
@@ -198,27 +197,28 @@ const TestList = () => {
       render: CreatedByDataCell,
       width: '15%',
     },
-    { title: 'Action', field: 'action', render: TestInvite, width: '15%' },
+    { title: 'Action', field: 'action', render: TestInvite, width: '10%' },
   ]
- 
+
   useEffect(() => {
-     console.log(location,'location')
-     if(testLoaderData.allTestsCount===0){
-      navigate(
-        `/${testLoaderData.currentWorkspaceId}${routes.assessments}`
-      )
-    }
-   else if(testLoaderData.allTestsCount>0&&tests.length>0){
+    console.log(location, 'location')
+    if (testLoaderData.allTestsCount === 0) {
+      navigate(`/${testLoaderData.currentWorkspaceId}${routes.assessments}`)
+    } else if (testLoaderData.allTestsCount > 0 && tests.length > 0) {
       navigate(
         `?sortBy=${sortBy}&sort=${sortDirection}&page=${testsCurrentPage}&limit=${testsPageSize}`
       )
     }
-    // navigate(
-    //   `?sortBy=${sortBy}&sort=${sortDirection}&page=${testsCurrentPage}&limit=${testsPageSize}`
-    // )
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [testsPageSize, testsCurrentPage, sortBy, sortDirection,navigate,testLoaderData.allTestsCount])
- 
+  }, [
+    testsPageSize,
+    testsCurrentPage,
+    sortBy,
+    sortDirection,
+    navigate,
+    testLoaderData.allTestsCount,
+  ])
+
   useEffect(() => {
     const heading = document.getElementById('assessments-page-title')
     heading?.focus()

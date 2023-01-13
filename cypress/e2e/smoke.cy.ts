@@ -428,7 +428,6 @@ describe('smoke tests', () => {
   })
 
   it('Test for adding a new member', () => {
-
     cy.login()
     cy.customVisit('/members')
     cy.wait(1000)
