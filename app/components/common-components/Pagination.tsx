@@ -130,7 +130,6 @@ const Pagination = ({
   })
 
   const [selected, setSelected] = useState(pageSize)
-
   return (
     <div className="test-table-list b flex items-center justify-between gap-3">
       <div className="paginationInfo flex items-center gap-6">

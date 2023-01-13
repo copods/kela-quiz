@@ -1,6 +1,7 @@
 import type { User, Section } from '@prisma/client'
 import cuid from 'cuid'
 import { prisma } from '~/db.server'
+import type { Question } from '~/interface/Interface'
 
 export async function getSectionById({ id }: Pick<Section, 'id'>) {
   return prisma.section.findUnique({
@@ -9,6 +10,9 @@ export async function getSectionById({ id }: Pick<Section, 'id'>) {
     },
     include: {
       questions: {
+        where: {
+          deleted: false,
+        },
         include: {
           correctOptions: true,
           options: true,
@@ -41,7 +45,7 @@ export async function getFirstSection(workspaceId: string) {
 
 export async function getAllSections(filterData: string, workspaceId: string) {
   let filter = filterData ? filterData : '{"orderBy":{"createdAt":"desc"}}'
-  return await prisma.section.findMany({
+  const res = await prisma.section.findMany({
     ...JSON.parse(filter),
     where: {
       deleted: false,
@@ -49,11 +53,28 @@ export async function getAllSections(filterData: string, workspaceId: string) {
     },
     include: {
       createdBy: true,
-      _count: {
-        select: { questions: true },
-      },
+      questions: true,
     },
   })
+  if (res) {
+    res.forEach(
+      (
+        section: Section & {
+          count?: number
+          questions?: Array<Question>
+        }
+      ) => {
+        let count = 0
+        section?.questions?.forEach((questions: Question) => {
+          if (questions?.deleted == false) {
+            count = count + 1
+          }
+        })
+        section['count'] = count
+      }
+    )
+  }
+  return res
 }
 
 export async function createSection({
@@ -164,4 +185,15 @@ export async function addQuestion(
     .catch((err) => {
       return err
     })
+}
+export async function deleteQuestionById(id: string) {
+  return prisma.question.update({
+    where: {
+      id,
+    },
+    data: {
+      deleted: true,
+      deletedAt: new Date().toString(),
+    },
+  })
 }
