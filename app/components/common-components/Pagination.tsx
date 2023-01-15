@@ -112,7 +112,7 @@ const Pagination = ({
   pageSizeOptions = [5, 10, 15, 20],
   pageSize,
   setPageSize,
-  isSmallWidth
+  isSmallWidth,
 }: {
   onPageChange: (e: number) => void
   totalItems: number
@@ -120,16 +120,16 @@ const Pagination = ({
   pageSizeOptions?: Array<number>
   pageSize: number
   setPageSize: (e: number) => void
-  isSmallWidth?:boolean
+  isSmallWidth?: boolean
 }) => {
   const firstPageIndex = (currentPage - 1) * pageSize
-  const siblingCount =isSmallWidth?0: 1
+  const siblingCount = isSmallWidth ? 0 : 1
   const paginationRange = usePagination({
     currentPage,
     totalItems,
     siblingCount,
     pageSize,
-    isSmallWidth
+    isSmallWidth,
   })
   const [selected, setSelected] = useState(pageSize)
 
@@ -143,20 +143,19 @@ const Pagination = ({
           setPageSize,
           onPageChange,
         })}
-        {!isSmallWidth&&(
- <span className="flex text-xs text-gray-600">
- Showing {firstPageIndex + 1} to{' '}
- {pageSize * currentPage > totalItems
-   ? totalItems
-   : pageSize * currentPage}{' '}
- of {totalItems}
-</span>
+        {!isSmallWidth && (
+          <span className="flex text-xs text-gray-600">
+            Showing {firstPageIndex + 1} to{' '}
+            {pageSize * currentPage > totalItems
+              ? totalItems
+              : pageSize * currentPage}{' '}
+            of {totalItems}
+          </span>
         )}
-       
       </div>
       <div className="pagination flex items-center gap-2">
         <Icon
-          className={`cursor-pointer w-3 text-sm ${
+          className={`w-3 cursor-pointer text-sm ${
             currentPage === 1 ? 'pointer-events-none text-slate-300' : ''
           }`}
           icon="ooui:previous-ltr"
@@ -165,7 +164,7 @@ const Pagination = ({
         {PaginationButtons({ paginationRange, currentPage, onPageChange })}
 
         <Icon
-          className={`cursor-pointer w-3 text-sm ${
+          className={`w-3 cursor-pointer text-sm ${
             pageSize * currentPage >= totalItems
               ? 'pointer-events-none text-slate-300'
               : ''

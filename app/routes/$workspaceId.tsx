@@ -34,7 +34,6 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
   const workspaces = await getUserWorkspaces(userId as string)
 
-
   return json({ workspaces, currentWorkspaceId })
 }
 

@@ -38,7 +38,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   let status: string = ''
   await getAllSections('', '', currentWorkspaceId as string)
     .then((res) => {
-      sections = res as unknown as  Section[]
+      sections = res as unknown as Section[]
       status = 'statusCheck.success'
     })
     .catch((err) => {
