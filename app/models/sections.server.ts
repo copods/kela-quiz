@@ -1,7 +1,6 @@
-import type { User, Section } from '@prisma/client'
+import type { User, Section, Question } from '@prisma/client'
 import cuid from 'cuid'
 import { prisma } from '~/db.server'
-import type { Question } from '~/interface/Interface'
 
 export async function getSectionById({ id }: Pick<Section, 'id'>) {
   return prisma.section.findUnique({
@@ -79,12 +78,12 @@ export async function getAllSections(
       (
         section: Section & {
           count?: number
-          question?: Question[]
         }
       ) => {
         let count = 0
-        section?.question?.forEach((questions: Question) => {
-          if (questions?.deleted == false) {
+        section?.questions?.forEach((question: Question) => {
+          console.log(question, 'questions')
+          if (question?.deleted == false) {
             count = count + 1
           }
         })
@@ -94,7 +93,7 @@ export async function getAllSections(
   }
   return res
 }
-export async function getFirstSectionIdOfLastPage(
+export async function getFirstSectionIdOfPreviousPage(
   workspaceId: string,
   testCurrentPage = 1,
   testItemsPerPage = 5

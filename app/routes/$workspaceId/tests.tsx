@@ -12,8 +12,7 @@ import {
   createSection,
   deleteSectionById,
   editSectionById,
-  getFirstSectionIdOfLastPage,
-  getAllSections,
+  getFirstSectionIdOfPreviousPage,
   getAllTestsCounts,
 } from '~/models/sections.server'
 import { useState, useEffect } from 'react'
@@ -30,6 +29,7 @@ import { routes } from '~/constants/route.constants'
 import { useTranslation } from 'react-i18next'
 import { getUserWorkspaces } from '~/models/workspace.server'
 import EmptyStateComponent from '~/components/common-components/EmptyStateComponent'
+import { getAllSectionsData } from '~/components/sections/tests.helper'
 
 export type ActionData = {
   errors?: {
@@ -60,7 +60,7 @@ export type LoaderData = {
   testCurrentPage: number
   testItemsPerPage: number
   getAllTestsCount: number
-  lastSectionId: Awaited<ReturnType<typeof getFirstSectionIdOfLastPage>>
+  lastSectionId: Awaited<ReturnType<typeof getFirstSectionIdOfPreviousPage>>
 }
 const handleAddSection = async (
   name: string,
@@ -88,7 +88,7 @@ const handleAddSection = async (
         {
           resp: {
             status: 'statusCheck.testAddedSuccess',
-            data: res as Section,
+            data: res as unknown as Section,
             check: new Date(),
           },
         },
@@ -134,7 +134,7 @@ const handleEditSection = async (
         {
           resp: {
             status: 'statusCheck.testUpdatedSuccess',
-            data: res as Section,
+            data: res as unknown as Section,
           },
         },
         { status: 200 }
@@ -155,53 +155,64 @@ const handleEditSection = async (
   return editHandle
 }
 export const loader: LoaderFunction = async ({ request, params }) => {
-  const query = new URL(request.url).searchParams
-  const testItemsPerPage = Math.max(Number(query.get('testItems') || 5), 5) //To set the lower bound, so that minimum count will always be 1 for current page and 5 for items per page.
-  const testCurrentPage = Math.max(Number(query.get('testPage') || 1), 1)
-  const sortBy = query.get('sortBy')
-  const sortOrder = query.get('sort')
-  const userId = await getUserId(request)
-  const currentWorkspaceId = params.workspaceId as string
-  const workspaces = await getUserWorkspaces(userId as string)
-  let sections: Array<Section> = []
-  let status: string = ''
-  await getAllSections(
-    sortBy,
-    sortOrder,
-    currentWorkspaceId as string,
-    testCurrentPage,
-    testItemsPerPage
-  )
-    .then((res) => {
-      sections = res as unknown as Section[]
-      status = 'statusCheck.success'
+  try {
+    // taking search params from URL
+    const query = new URL(request.url).searchParams
+    // taking number of items per page and current page number from query
+    const testItemsPerPage = Math.max(Number(query.get('testItems') || 5), 5) //To set the lower bound, so that minimum count will always be 1 for current page and 5 for items per page.
+    const testCurrentPage = Math.max(Number(query.get('testPage') || 1), 1)
+    // taking sortBy and order
+    const sortBy = query.get('sortBy')
+    const sortOrder = query.get('sort')
+    const userId = await getUserId(request)
+    const currentWorkspaceId = params.workspaceId as string
+    const workspaces = await getUserWorkspaces(userId as string)
+
+    let sections: Array<Section> = []
+    let status: string = ''
+    let callBack = (sectionUpdate: Section[], statusUpdate: string) => {
+      sections = sectionUpdate
+      status = statusUpdate
+    }
+    // import function from helper which return number of sections based on
+    // sort : sortBy ('name' / 'Created Date')
+    // PaginationData : current page number (testCurrentPage) and number of items per page(testItemsPerPage)
+    await getAllSectionsData(
+      sortBy,
+      sortOrder,
+      currentWorkspaceId as string,
+      testCurrentPage,
+      testItemsPerPage,
+      callBack
+    )
+    const selectedSectionId = params.sectionId
+      ? params.sectionId?.toString()
+      : undefined
+    const getAllTestsCount = await getAllTestsCounts(currentWorkspaceId)
+    // taking sectionId of PREVIOUS page (useCase: if there's only single test on perticular
+    // page and user delete this , navigate to previous page and select the first card)
+    const lastSectionId = await getFirstSectionIdOfPreviousPage(
+      currentWorkspaceId as string,
+      testCurrentPage,
+      testItemsPerPage
+    )
+    if (!userId) return redirect(routes.signIn)
+    const filters = `?sortBy=${sortBy}&sort=${sortOrder}&testPage=${testCurrentPage}&testItems=${testItemsPerPage}`
+    return json<LoaderData>({
+      sections,
+      selectedSectionId,
+      filters,
+      status,
+      workspaces,
+      currentWorkspaceId,
+      testCurrentPage,
+      testItemsPerPage,
+      getAllTestsCount,
+      lastSectionId,
     })
-    .catch((err) => {
-      status = err
-    })
-  const selectedSectionId = params.sectionId
-    ? params.sectionId?.toString()
-    : undefined
-  const getAllTestsCount = await getAllTestsCounts(currentWorkspaceId)
-  const lastSectionId = await getFirstSectionIdOfLastPage(
-    currentWorkspaceId as string,
-    testCurrentPage,
-    testItemsPerPage
-  )
-  if (!userId) return redirect(routes.signIn)
-  const filters = `?sortBy=${sortBy}&sort=${sortOrder}&testPage=${testCurrentPage}&testItems=${testItemsPerPage}`
-  return json<LoaderData>({
-    sections,
-    selectedSectionId,
-    filters,
-    status,
-    workspaces,
-    currentWorkspaceId,
-    testCurrentPage,
-    testItemsPerPage,
-    getAllTestsCount,
-    lastSectionId,
-  })
+  } catch (err) {
+    console.log(err)
+  }
 }
 const validateTitle = (title: string) => {
   if (typeof title !== 'string' || title.length <= 0) {
@@ -320,7 +331,9 @@ export default function SectionPage() {
   const [testsCurrentPage, setTestsCurrentPage] = useState(data.testCurrentPage)
   const location = useLocation()
   const navigate = useNavigate()
-
+  useEffect(() => {
+    setTestsCurrentPage(data.testCurrentPage)
+  }, [data])
   if (t(data.status) != t('statusCheck.success')) {
     toast.error(t('statusCheck.commonError'))
   }
@@ -370,9 +383,11 @@ export default function SectionPage() {
     navigate,
   ])
   useEffect(() => {
+    //checking if tests are zero then redirect to /tests
     if (data.getAllTestsCount === 0) {
       navigate(`/${data.currentWorkspaceId}${routes.tests}`)
     } else if (
+      //checking if there is an no data for that page then redirect to the previous page
       data.getAllTestsCount <=
         testsCurrentPage * testsPageSize - testsPageSize &&
       testsCurrentPage > 1
@@ -385,6 +400,8 @@ export default function SectionPage() {
         }&testItems=${testsPageSize}`
       )
     } else if (
+      // checking if new test added && total count of tests are not zero or data is present for present page
+      // navigate to given path
       (data.getAllTestsCount > 0 &&
         t(sectionActionData?.resp?.status as string) ===
           t('statusCheck.testAddedSuccess')) ||
@@ -399,8 +416,13 @@ export default function SectionPage() {
     testsPageSize,
     sortBy,
     order,
-    data.sections[0]?.id,
     sectionActionData,
+    data.getAllTestsCount,
+    data.sections,
+    data.currentWorkspaceId,
+    data.lastSectionId?.id,
+    t,
+    navigate,
   ])
 
   useEffect(() => {

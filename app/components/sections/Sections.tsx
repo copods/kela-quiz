@@ -182,6 +182,7 @@ const Sections = ({
           pageSize={testsPageSize!}
           setPageSize={setTestPageSize!}
           totalItems={totalCount}
+          isSmallWidth={true}
         />
       </div>
     </div>

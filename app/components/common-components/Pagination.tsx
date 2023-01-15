@@ -112,6 +112,7 @@ const Pagination = ({
   pageSizeOptions = [5, 10, 15, 20],
   pageSize,
   setPageSize,
+  isSmallWidth
 }: {
   onPageChange: (e: number) => void
   totalItems: number
@@ -119,16 +120,17 @@ const Pagination = ({
   pageSizeOptions?: Array<number>
   pageSize: number
   setPageSize: (e: number) => void
+  isSmallWidth?:boolean
 }) => {
   const firstPageIndex = (currentPage - 1) * pageSize
-  const siblingCount = 1
+  const siblingCount =isSmallWidth?0: 1
   const paginationRange = usePagination({
     currentPage,
     totalItems,
     siblingCount,
     pageSize,
+    isSmallWidth
   })
-
   const [selected, setSelected] = useState(pageSize)
 
   return (
@@ -141,13 +143,16 @@ const Pagination = ({
           setPageSize,
           onPageChange,
         })}
-        <span className="flex text-xs text-gray-600">
-          Showing {firstPageIndex + 1} to{' '}
-          {pageSize * currentPage > totalItems
-            ? totalItems
-            : pageSize * currentPage}{' '}
-          of {totalItems}
-        </span>
+        {!isSmallWidth&&(
+ <span className="flex text-xs text-gray-600">
+ Showing {firstPageIndex + 1} to{' '}
+ {pageSize * currentPage > totalItems
+   ? totalItems
+   : pageSize * currentPage}{' '}
+ of {totalItems}
+</span>
+        )}
+       
       </div>
       <div className="pagination flex items-center gap-2">
         <Icon

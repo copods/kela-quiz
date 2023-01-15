@@ -205,11 +205,13 @@ export const usePagination = ({
   pageSize,
   siblingCount,
   currentPage,
+  isSmallWidth
 }: {
   totalItems: number
   pageSize: number
   siblingCount: number
   currentPage: number
+  isSmallWidth?:boolean
 }) => {
   const paginationRange = useMemo(() => {
     const totalPageCount = Math.ceil(totalItems / pageSize)
@@ -226,17 +228,17 @@ export const usePagination = ({
       currentPage + siblingCount,
       totalPageCount
     )
-    const shouldShowLeftDots = leftSiblingIndex > 2
-    const shouldShowRightDots = rightSiblingIndex < totalPageCount - 2
+    const shouldShowLeftDots = leftSiblingIndex >2
+    const shouldShowRightDots =isSmallWidth?rightSiblingIndex < totalPageCount - 1:rightSiblingIndex < totalPageCount - 2
     const firstPageIndex = 1
     const lastPageIndex = totalPageCount
     if (!shouldShowLeftDots && shouldShowRightDots) {
-      let leftItemCount = 3 + 2 * siblingCount
+      let leftItemCount =isSmallWidth?3: 3 + 2 * siblingCount
       let leftRange = range(1, leftItemCount)
       return [...leftRange, -1, totalPageCount]
     }
     if (shouldShowLeftDots && !shouldShowRightDots) {
-      let rightItemCount = 3 + 2 * siblingCount
+      let rightItemCount =isSmallWidth?3: 3 + 2 * siblingCount
       let rightRange = range(
         totalPageCount - rightItemCount + 1,
         totalPageCount

@@ -108,6 +108,7 @@ describe('smoke tests', () => {
         cy.get('textarea').type('Aptitude')
         cy.get('[data-cy="submit"]').click()
       })
+      cy.wait(2000)
   })
 
   it('Adding a second section', () => {
