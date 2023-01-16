@@ -716,11 +716,11 @@ describe('Creating assessments', () => {
     )
     cy.get('#sort-filter-body').get('#descend', { timeout: 10000 }).click()
 
-    cy.get('.test-table-list', { timeout: 6000 }).each(($el) => {
+    cy.get('.tableRow', { timeout: 6000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
           el[0].getElementsByClassName('test-name-navigation')[0].innerHTML ===
-          test1
+          cypress.step1
         ) {
           cy.get('.test-name-navigation').should('have.text', test1)
         }

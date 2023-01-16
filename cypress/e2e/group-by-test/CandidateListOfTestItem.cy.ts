@@ -10,7 +10,7 @@ describe('Visiting group by test of results page', () => {
     cy.wait(3000)
     cy.get('#group-by-tests').should('have.text', 'Results').click()
     cy.get('h1', { timeout: 6000 }).should('have.text', 'Results')
-    cy.get('[data-cy="group-by-item-test"]').should('have.text', test1)
+    cy.get('.groupByItemTest', { timeout: 6000 }).contains(test1).click()
   })
 
   it('Checks, header of candidate list page should be visible', () => {
@@ -35,14 +35,14 @@ describe('Visiting group by test of results page', () => {
     cy.wait(3000)
     cy.get('#group-by-tests').should('have.text', 'Results').click()
     cy.get('h1').should('have.text', 'Results')
-    cy.get('[data-cy="group-by-item-test"]').click()
+    cy.get('.groupByItemTest', { timeout: 8000 }).contains(test1).click()
     cy.get('#back-button', { timeout: 8000 }).should('be.visible')
   })
   it('Checks, after clicking on back button it should redirect to result page', () => {
     cy.wait(3000)
     cy.get('#group-by-tests').should('have.text', 'Results').click()
     cy.get('h1', { timeout: 6000 }).should('have.text', 'Results')
-    cy.get('[data-cy="group-by-item-test"]').click()
+    cy.get('.groupByItemTest', { timeout: 8000 }).contains(test1).click()
     cy.get('#back-button', { timeout: 8000 }).should('be.visible').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')
   })
