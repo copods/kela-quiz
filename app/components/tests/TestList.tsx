@@ -63,6 +63,9 @@ const TestList = () => {
   const [candidatePopupOpen, setCandidatePopupOpen] = useState<boolean>(false)
   const [showDeletePopup, setShowDeletePopup] = useState(false)
   const [deleted, setDeleted] = useState(false)
+  useEffect(() => {
+    setTestsCurrentPage(testLoaderData.testsCurrentPage)
+  }, [testLoaderData.testsCurrentPage])
 
   useEffect(() => {
     if (deleted) {
@@ -201,14 +204,18 @@ const TestList = () => {
   ]
 
   useEffect(() => {
-    console.log(location, 'location')
-    if (testLoaderData.allTestsCount === 0) {
+    if (!location.search && testLoaderData.allTestsCount > 0) {
+      navigate(
+        `?sortBy=${sortBy}&sort=${sortDirection}&page=${testsCurrentPage}&limit=${testsPageSize}`
+      )
+    } else if (testLoaderData.allTestsCount === 0) {
       navigate(`/${testLoaderData.currentWorkspaceId}${routes.assessments}`)
     } else if (testLoaderData.allTestsCount > 0 && tests.length > 0) {
       navigate(
         `?sortBy=${sortBy}&sort=${sortDirection}&page=${testsCurrentPage}&limit=${testsPageSize}`
       )
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     testsPageSize,
@@ -217,6 +224,7 @@ const TestList = () => {
     sortDirection,
     navigate,
     testLoaderData.allTestsCount,
+    location.search,
   ])
 
   useEffect(() => {
