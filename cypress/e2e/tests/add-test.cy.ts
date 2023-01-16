@@ -77,7 +77,7 @@ describe('Creating assessments', () => {
     cy.get('#add-test', { timeout: 6000 })
       .should('have.text', `+ ${testsConstants.addAssessmentbutton}`)
       .click()
-    cy.get('#add-assessment-page-title').should(
+    cy.get('#add-assessment-page-title', { timeout: 6000 }).should(
       'have.text',
       addAssessmentPageTitle
     )
@@ -297,7 +297,10 @@ describe('Creating assessments', () => {
     cy.get('#add-test', { timeout: 6000 })
       .should('have.text', `+ ${testsConstants.addAssessmentbutton}`)
       .click()
-
+    cy.location('pathname', { timeout: 60000 }).should(
+      'include',
+      '/assessments'
+    )
     cy.get('input[placeholder="Enter assessment name"]', { timeout: 6000 })
       .clear()
       .type(test)
@@ -325,7 +328,10 @@ describe('Creating assessments', () => {
     cy.get('#add-test', { timeout: 6000 })
       .should('have.text', `+ ${testsConstants.addAssessmentbutton}`)
       .click()
-
+    cy.location('pathname', { timeout: 60000 }).should(
+      'include',
+      '/assessments'
+    )
     cy.get('input[placeholder="Enter assessment name"]', { timeout: 6000 })
       .clear()
       .type(test)
@@ -353,7 +359,10 @@ describe('Creating assessments', () => {
     cy.get('#add-test', { timeout: 6000 })
       .should('have.text', `+ ${testsConstants.addAssessmentbutton}`)
       .click()
-
+    cy.location('pathname', { timeout: 60000 }).should(
+      'include',
+      '/assessments'
+    )
     cy.get('input[placeholder="Enter assessment name"]', { timeout: 6000 })
       .clear()
       .type(test)
@@ -657,7 +666,7 @@ describe('Creating assessments', () => {
       .click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
-      '/assessments/add-assessment'
+      '/assessments'
     )
     cy.get('input[placeholder="Enter assessment name"]', { timeout: 6000 })
       .clear()

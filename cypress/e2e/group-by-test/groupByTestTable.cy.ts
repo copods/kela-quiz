@@ -261,6 +261,7 @@ describe('Test for GroupByTestTable, Result', () => {
     cy.get('#group-by-tests').should('have.text', 'Results').click()
     cy.get('.groupByItemTest').contains(test1).click()
     cy.wait(2000)
+    cy.get('#title', { timeout: 6000 }).should('be.visible')
     cy.get('#vertical-icon', { timeout: 6000 }).click()
     cy.get('.deleteTest').should('be.visible').click()
     cy.get('.Toastify__toast').should('have.text', testsConstants.reinvited)
