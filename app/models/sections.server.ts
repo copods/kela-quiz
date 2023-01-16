@@ -78,11 +78,11 @@ export async function getAllSections(
       (
         section: Section & {
           count?: number
+          questions?: Array<Question>
         }
       ) => {
         let count = 0
         section?.questions?.forEach((question: Question) => {
-          console.log(question, 'questions')
           if (question?.deleted == false) {
             count = count + 1
           }

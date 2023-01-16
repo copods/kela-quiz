@@ -333,7 +333,7 @@ export default function SectionPage() {
   const navigate = useNavigate()
   useEffect(() => {
     setTestsCurrentPage(data.testCurrentPage)
-  }, [data])
+  }, [data.testCurrentPage])
   if (t(data.status) != t('statusCheck.success')) {
     toast.error(t('statusCheck.commonError'))
   }
@@ -379,7 +379,6 @@ export default function SectionPage() {
     data.selectedSectionId,
     data.sections,
     t,
-    location,
     navigate,
   ])
   useEffect(() => {
@@ -416,13 +415,10 @@ export default function SectionPage() {
     testsPageSize,
     sortBy,
     order,
-    sectionActionData,
-    data.getAllTestsCount,
-    data.sections,
-    data.currentWorkspaceId,
     data.lastSectionId?.id,
     t,
-    navigate,
+    data.sections[0]?.id,
+    data.getAllTestsCount
   ])
 
   useEffect(() => {
