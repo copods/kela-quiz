@@ -149,7 +149,7 @@ describe('smoke tests', () => {
     cy.customVisit('/members')
     cy.wait(1000)
     cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
-
+    cy.wait(3000)
     cy.get('#section-card').each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -194,7 +194,7 @@ describe('smoke tests', () => {
     cy.customVisit('/members')
     cy.wait(1000)
     cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
-
+    cy.wait(3000)
     cy.get('#section-card').each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -236,7 +236,7 @@ describe('smoke tests', () => {
     cy.customVisit('/members')
     cy.wait(1000)
     cy.get('#sections', { timeout: 6000 }).should('have.text', 'Tests').click()
-    cy.wait(2000)
+    cy.wait(3000)
     cy.get('#section-card').each(($el) => {
       cy.wrap($el).within((el) => {
         if (
