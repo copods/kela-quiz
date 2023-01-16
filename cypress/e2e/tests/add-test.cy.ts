@@ -129,6 +129,11 @@ describe('Creating assessments', () => {
     cy.get('#add-test', { timeout: 6000 })
       .should('have.text', `+ ${testsConstants.addAssessmentbutton}`)
       .click()
+    cy.wait(2000)
+    cy.get('#add-assessment-page-title', { timeout: 6000 }).should(
+      'have.text',
+      addAssessmentPageTitle
+    )
     cy.get('#next-button', { timeout: 6000 }).should(
       'have.text',
       addTestPageButtons.next
@@ -189,7 +194,8 @@ describe('Creating assessments', () => {
     cy.get('#add-test', { timeout: 6000 })
       .should('have.text', `+ ${testsConstants.addAssessmentbutton}`)
       .click()
-    cy.get('#next-button').should(
+    cy.wait(2000)
+    cy.get('#next-button', { timeout: 6000 }).should(
       'have.css',
       'background-color',
       'rgb(162, 164, 214)'

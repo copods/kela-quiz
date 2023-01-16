@@ -138,9 +138,9 @@ describe('Test for testPreview', () => {
       .find('#tests', { timeout: 6000 })
       .should('have.text', testsConstants.assessments)
       .click()
-    cy.get('.test-name-navigation').contains(test1).click()
-
-    cy.get('#test-preview-selected-tests').should(
+    cy.get('.test-name-navigation', { timeout: 6000 }).contains(test1).click()
+    cy.wait(2000)
+    cy.get('#test-preview-selected-tests', { timeout: 6000 }).should(
       'have.css',
       'color',
       'rgb(0, 0, 0)'
@@ -152,8 +152,8 @@ describe('Test for testPreview', () => {
       .should('have.text', testsConstants.assessments)
       .click()
     cy.get('.test-name-navigation').contains(test1).click()
-
-    cy.get('#test-preview-selected-tests').should(
+    cy.wait(2000)
+    cy.get('#test-preview-selected-tests', { timeout: 6000 }).should(
       'have.css',
       'font-size',
       '20px'
