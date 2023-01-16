@@ -374,13 +374,7 @@ export default function SectionPage() {
         })
       }
     }
-  }, [
-    sectionActionData,
-    data.selectedSectionId,
-    data.sections,
-    t,
-    navigate,
-  ])
+  }, [sectionActionData, data.selectedSectionId, data.sections, t, navigate])
   useEffect(() => {
     //checking if tests are zero then redirect to /tests
     if (data.getAllTestsCount === 0) {
@@ -417,8 +411,8 @@ export default function SectionPage() {
     order,
     data.lastSectionId?.id,
     t,
-    data.sections[0]?.id,
-    data.getAllTestsCount
+    data.getAllTestsCount,
+    data.sections[0].id,
   ])
 
   useEffect(() => {
