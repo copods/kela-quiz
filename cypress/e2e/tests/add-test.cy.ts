@@ -417,6 +417,10 @@ describe('Creating assessments', () => {
     cy.get('#add-test', { timeout: 6000 })
       .should('have.text', `+ ${testsConstants.addAssessmentbutton}`)
       .click()
+      cy.location('pathname', { timeout: 60000 }).should(
+        'include',
+        '/assessments'
+      )
     cy.get('input[placeholder="Enter assessment name"]', { timeout: 6000 })
       .clear()
       .type(test)
