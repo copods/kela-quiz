@@ -61,7 +61,7 @@ describe('Test for testPreview', () => {
       .find('#tests', { timeout: 6000 })
       .should('have.text', testsConstants.assessments)
       .click()
-    cy.get('.test-name-navigation').contains(test1).click()
+    cy.get('.test-name-navigation', { timeout: 6000 }).contains(test1).click()
     cy.get('#invite-popup-open-text').should('have.css', 'font-size', '16px')
   })
   it('Checks for invite candidate button cursor', () => {
@@ -101,7 +101,8 @@ describe('Test for testPreview', () => {
       .find('#tests', { timeout: 6000 })
       .should('have.text', testsConstants.assessments)
       .click()
-    cy.get('.test-name-navigation').contains(test1).click()
+    cy.get('.test-name-navigation', { timeout: 6000 }).contains(test1).click()
+    cy.wait(1000)
     cy.get('#test-preview-assessment-details', { timeout: 6000 }).should(
       'have.css',
       'font-size',
@@ -163,9 +164,9 @@ describe('Test for testPreview', () => {
       .find('#tests', { timeout: 6000 })
       .should('have.text', testsConstants.assessments)
       .click()
-    cy.get('.test-name-navigation').contains(test1).click()
-
-    cy.get('#test-preview-selected-tests').should(
+    cy.get('.test-name-navigation', { timeout: 6000 }).contains(test1).click()
+    cy.wait(1000)
+    cy.get('#test-preview-selected-tests', { timeout: 6000 }).should(
       'have.css',
       'font-weight',
       '600'
