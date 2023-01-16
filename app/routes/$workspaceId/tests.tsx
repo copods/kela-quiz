@@ -412,7 +412,7 @@ export default function SectionPage() {
     data.lastSectionId?.id,
     t,
     data.getAllTestsCount,
-    data.sections[0].id,
+    data.sections[0]?.id,
   ])
 
   useEffect(() => {
