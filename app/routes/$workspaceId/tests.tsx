@@ -403,6 +403,14 @@ export default function SectionPage() {
       navigate(
         `/${data.currentWorkspaceId}${routes.tests}/${data.sections[0]?.id}?sortBy=${sortBy}&sort=${order}&testPage=${testsCurrentPage}&testItems=${testsPageSize}`
       )
+    } else if (
+      location.pathname === `/${data.currentWorkspaceId}${routes.tests}` &&
+      !location.search &&
+      data.getAllTestsCount > 0
+    ) {
+      navigate(
+        `/${data.currentWorkspaceId}${routes.tests}/${data.sections[0]?.id}?sortBy=${sortBy}&sort=${order}&testPage=${testsCurrentPage}&testItems=${testsPageSize}`
+      )
     }
   }, [
     testsCurrentPage,
@@ -413,6 +421,7 @@ export default function SectionPage() {
     t,
     data.getAllTestsCount,
     data.sections[0]?.id,
+    location.search
   ])
 
   useEffect(() => {

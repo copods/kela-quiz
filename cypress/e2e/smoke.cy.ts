@@ -83,7 +83,7 @@ describe('smoke tests', () => {
     cy.wait(1000)
     // Check for workspace length
     dropdown = cy.get('#dropdown')
-
+    cy.wait(1000)
     dropdown
       .click()
       .find('ul')
