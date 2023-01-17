@@ -40,6 +40,10 @@ const CandidateListOfTest = () => {
   const [menuListOpen, setmenuListOpen] = useState<boolean>(false)
   const [searchText, setSearchText] = useState('')
   const [statusFilter, setStatusFilter] = useState(filterByStatus[0].value)
+  useEffect(() => {
+    navigate(`?page=${1}&pageSize=${pageSize}&filterByStatus=${statusFilter}`)
+    setStatusFilter(statusFilter)
+  }, [statusFilter])
 
   const filteredData =
     candidatesLoaderData.candidatesOfTest.candidateTest?.filter(
@@ -52,7 +56,12 @@ const CandidateListOfTest = () => {
       }
     )
   const [pageSize, setPageSize] = useState(5)
-  const [currentPage, setCurrentPage] = useState(1)
+  const [currentPage, setCurrentPage] = useState(
+    candidatesLoaderData.currentPage
+  )
+  useEffect(() => {
+    setCurrentPage(candidatesLoaderData.currentPage)
+  }, [candidatesLoaderData.currentPage])
   const resendInvite = (id: string, candidateId: string, testId: string) => {
     submit(
       {
@@ -206,7 +215,7 @@ const CandidateListOfTest = () => {
       `?page=${currentPage}&pageSize=${pageSize}&filterByStatus=${statusFilter}`
     )
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pageSize, currentPage, statusFilter])
+  }, [pageSize, currentPage])
 
   useEffect(() => {
     if (
