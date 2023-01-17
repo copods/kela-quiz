@@ -21,7 +21,7 @@ describe('Test for testPreview', () => {
     )
     cy.get('.test-name-navigation').contains(test1).should('have.text', test1)
     cy.get('.test-name-navigation').contains(test1).click()
-    cy.wait(2000)
+    cy.wait(3000)
     cy.get('#title', { timeout: 6000 }).should('have.text', test1)
     cy.get('#back-button').click()
   })
@@ -44,6 +44,7 @@ describe('Test for testPreview', () => {
       .should('have.text', testsConstants.assessments)
       .click()
     cy.get('.test-name-navigation').contains(test1).click()
+    cy.wait(2000)
     cy.get('#invite-popup-open-text').should('have.text', inviteCandidate)
   })
   it('Checks for invite candidate button color', () => {
