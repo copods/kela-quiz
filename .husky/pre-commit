@@ -1,3 +1,15 @@
+#!/bin/bash
+# Prevents force-pushing to master
+
+BRANCH=`git rev-parse --abbrev-ref HEAD`
+PROTECTED_BRANCHES="^(main|dev)"
+
+if [[ "$BRANCH" =~ $PROTECTED_BRANCHES ]]
+then
+  echo -e "\n🚫 Cannot commit/push to $BRANCH branch, please create your own branch and use PR.\n"
+  exit 1
+fi
+
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
