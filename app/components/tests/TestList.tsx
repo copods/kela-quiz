@@ -63,6 +63,7 @@ const TestList = () => {
   const [candidatePopupOpen, setCandidatePopupOpen] = useState<boolean>(false)
   const [showDeletePopup, setShowDeletePopup] = useState(false)
   const [deleted, setDeleted] = useState(false)
+  const [id, setId] = useState('')
 
   useEffect(() => {
     if (deleted) {
@@ -140,11 +141,13 @@ const TestList = () => {
             tabIndex={0}
             className="candidateInviteIcon cursor-pointer text-2xl text-primary focus:outline-dotted focus:outline-2"
             icon={'ant-design:user-add-outlined'}
-            onClick={() => {
+            onClick={(e) => {
               setCandidatePopupOpen(true)
+              setId(data.id)
             }}
             onKeyUp={(e) => {
               if (e.key === 'Enter') setCandidatePopupOpen(true)
+              setId(data.id)
             }}
             aria-label={t('members.inviteMember')}
           />
@@ -156,23 +159,29 @@ const TestList = () => {
             menuListText={'Delete'}
             aria-label={t('testTableItem.menu')}
             id={data.id}
+            setId={setId}
           />
         </div>
-        <DeletePopUp
-          setOpen={setShowDeletePopup}
-          open={showDeletePopup}
-          onDelete={() => deleteTest(data.id)}
-          setDeleted={setDeleted}
-          status={testLoaderData.status}
-          deleteItem={data.name}
-          deleteItemType={t('testsConstants.assessment')}
-        />
-        <InviteCandidatePopup
-          openInvitePopup={candidatePopupOpen}
-          setOpenInvitePopup={setCandidatePopupOpen}
-          testName={data.name}
-          testId={data.id}
-        />
+        {id === data.id && (
+          <DeletePopUp
+            setOpen={setShowDeletePopup}
+            open={showDeletePopup}
+            onDelete={() => deleteTest(data.id)}
+            setDeleted={setDeleted}
+            status={testLoaderData.status}
+            deleteItem={data.name}
+            deleteItemType={t('testsConstants.assessment')}
+          />
+        )}
+
+        {id === data.id && (
+          <InviteCandidatePopup
+            openInvitePopup={candidatePopupOpen}
+            setOpenInvitePopup={setCandidatePopupOpen}
+            testName={data.name}
+            testId={id}
+          />
+        )}
       </>
     )
   }
@@ -223,6 +232,7 @@ const TestList = () => {
     const heading = document.getElementById('assessments-page-title')
     heading?.focus()
   }, [])
+
   return (
     <div className="test-list-container flex h-full flex-col gap-6 p-1">
       {/* header */}
