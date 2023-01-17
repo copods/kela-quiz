@@ -80,6 +80,7 @@ describe('Test for testPreview', () => {
       .should('have.text', testsConstants.assessments)
       .click()
     cy.get('.test-name-navigation').contains(test1).click()
+    cy.wait(1000)
     cy.get('#test-preview-assessment-details').should(
       'have.text',
       assessmentDetailsText
@@ -91,6 +92,7 @@ describe('Test for testPreview', () => {
       .should('have.text', testsConstants.assessments)
       .click()
     cy.get('.test-name-navigation').contains(test1).click()
+    cy.wait(1000)
     cy.get('#test-preview-assessment-details').should(
       'have.css',
       'color',
@@ -129,7 +131,7 @@ describe('Test for testPreview', () => {
       .should('have.text', testsConstants.assessments)
       .click()
     cy.get('.test-name-navigation').contains(test1).click()
-
+    cy.wait(1000)
     cy.get('#test-preview-selected-tests', { timeout: 6000 }).should(
       'have.text',
       selectedSectionText
@@ -185,6 +187,7 @@ describe('Test for testPreview', () => {
       '/assessments'
     )
     cy.get('.test-name-navigation', { timeout: 6000 }).contains(test1).click()
+    cy.wait(1000)
     cy.get('#description', { timeout: 6000 })
       .should('have.text', cypress.description)
       .click()
@@ -199,6 +202,7 @@ describe('Test for testPreview', () => {
       '/assessments'
     )
     cy.get('.test-name-navigation', { timeout: 6000 }).contains(test1).click()
+    cy.wait(1000)
     cy.get('#totalTime', { timeout: 6000 })
       .should('have.text', cypress.totalTime)
       .click()
@@ -214,6 +218,7 @@ describe('Test for testPreview', () => {
     )
 
     cy.get('.test-name-navigation', { timeout: 6000 }).contains(test1).click()
+    cy.wait(1000)
     cy.get('#totalSection').should('have.text', testsConstants.totalTests)
   })
 })

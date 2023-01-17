@@ -230,6 +230,7 @@ describe('Test for GroupByTestTable, Result', () => {
     cy.viewport(1280, 720)
     cy.get('#group-by-tests').should('have.text', 'Results').click()
     cy.get('.groupByItemTest').contains(test1).click()
+    cy.wait(1000)
     cy.get('#vertical-icon').click()
     cy.get('.deleteTest').should('be.visible')
   })
