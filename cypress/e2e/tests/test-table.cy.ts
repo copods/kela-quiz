@@ -477,9 +477,9 @@ describe('Visiting Assessment', () => {
       .click()
 
     cy.get('#invite-popup-open0', { timeout: 6000 }).should('be.visible')
-    cy.get('#invite-popup-open0', { timeout: 6000 })
+    cy.get('#invite-popup-open0', { timeout: 6000 }).first()
       .should('be.visible')
-      .click()
+      .click({force:true})
 
     cy.get('input[name="email"]')
       .first()
@@ -495,9 +495,9 @@ describe('Visiting Assessment', () => {
       .should('have.text', testsConstants.assessments)
       .click()
     cy.get('#invite-popup-open0', { timeout: 6000 }).should('be.visible')
-    cy.get('#invite-popup-open0', { timeout: 6000 })
+    cy.get('#invite-popup-open0', { timeout: 6000 }).first()
       .should('be.visible')
-      .click()
+      .click({force:true})
 
     cy.get('input[name="email"]')
       .first()
@@ -515,8 +515,8 @@ describe('Visiting Assessment', () => {
     cy.wait(2000)
 
     cy.get('#invite-popup-open0', { timeout: 6000 })
-      .should('be.visible')
-      .click()
+      .should('be.visible').first()
+      .click({force:true})
     cy.get('#invite-more').first().click({ force: true })
     cy.get('.inviteInput').eq(0).type('ion@ion.co', { force: true })
     cy.get('.inviteInput').eq(1).type('sam123@gmail.com', { force: true })

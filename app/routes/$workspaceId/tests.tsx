@@ -421,7 +421,7 @@ export default function SectionPage() {
     t,
     data.getAllTestsCount,
     data.sections[0]?.id,
-    location.search
+    location.search,
   ])
 
   useEffect(() => {
