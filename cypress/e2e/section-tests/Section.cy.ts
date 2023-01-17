@@ -844,7 +844,7 @@ describe('Test for Tests', () => {
     cy.get('#question-card-wrapper', { timeout: 6000 })
       .should('be.visible')
       .click()
-    cy.get('#question-type').should('be.visible')
+    cy.get('#question-type', { timeout: 6000 }).should('be.visible')
   })
   it('Test for valid error message while adding new Tests without Title', () => {
     cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
