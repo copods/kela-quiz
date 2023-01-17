@@ -461,11 +461,10 @@ describe('smoke tests', () => {
       .click()
 
     cy.get('input[name="email"]')
-      .first()
-      .type('johndoe@example.com', { force: true })
+      .type('johndoe@example.com')
       .should('have.focus')
       .should('have.value', 'johndoe@example.com')
-    cy.get('[data-cy="submit"]').first().click({ force: true })
+    cy.get('[data-cy="submit"]').click()
   })
   it('check for not found page', () => {
     cy.login()
