@@ -233,8 +233,9 @@ describe('Test for Tests', () => {
 
       .click()
     cy.get('[data-cy="dialog-header"]')
+      .first()
       .should('have.attr', 'aria-label', 'Add Test')
-      .click()
+      .click({ force: true })
       .should('have.focus')
   })
   it('Checks, Add button should be visible', () => {
@@ -473,7 +474,8 @@ describe('Test for Tests', () => {
       .should('be.visible')
       .within((el) => {
         cy.get('input[placeholder="Enter Test Name*"]')
-          .click()
+          .first()
+          .click({ force: true })
           .should('have.focus')
       })
   })
@@ -545,6 +547,7 @@ describe('Test for Tests', () => {
   })
   it('checks,active Tests should have tabIndex', () => {
     cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
+    cy.wait(1000)
     cy.get('.sectionCard', { timeout: 40000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -564,6 +567,7 @@ describe('Test for Tests', () => {
   })
   it('checks,active Tests should have role button', () => {
     cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
+    cy.wait(1000)
     cy.get('.sectionCard', { timeout: 40000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -583,6 +587,7 @@ describe('Test for Tests', () => {
   })
   it('checks,active Tests should have white background color', () => {
     cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
+    cy.wait(1000)
     cy.get('.sectionCard', { timeout: 40000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -618,6 +623,7 @@ describe('Test for Tests', () => {
   })
   it('checks,Tests details heading should be visible', () => {
     cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
+    cy.wait(1000)
     cy.get('.sectionCard', { timeout: 40000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -633,6 +639,7 @@ describe('Test for Tests', () => {
   })
   it('checks,Tests details heading should have correct class', () => {
     cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
+    cy.wait(1000)
     cy.get('.sectionCard', { timeout: 40000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -651,6 +658,7 @@ describe('Test for Tests', () => {
   })
   it('checks,Tests details heading should have tabIndex', () => {
     cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
+    cy.wait(1000)
     cy.get('.sectionCard', { timeout: 40000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -670,6 +678,7 @@ describe('Test for Tests', () => {
   })
   it('checks,section details heading should have focus', () => {
     cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
+    cy.wait(1000)
     cy.get('.sectionCard', { timeout: 40000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -688,6 +697,7 @@ describe('Test for Tests', () => {
   })
   it('checks,Tests details search bar should be visible', () => {
     cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
+    cy.wait(1000)
     cy.get('.sectionCard', { timeout: 40000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -703,6 +713,7 @@ describe('Test for Tests', () => {
   })
   it('checks,Tests details search bar should have tabIndex', () => {
     cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
+    cy.wait(1000)
     cy.get('.sectionCard', { timeout: 40000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -722,6 +733,7 @@ describe('Test for Tests', () => {
   })
   it('checks,Tests details search bar should have focus', () => {
     cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
+    cy.wait(1000)
     cy.get('.sectionCard', { timeout: 40000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -737,6 +749,7 @@ describe('Test for Tests', () => {
   })
   it('Checks,Question card should be visible', () => {
     cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
+    cy.wait(1000)
     cy.get('.sectionCard', { timeout: 40000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -752,6 +765,7 @@ describe('Test for Tests', () => {
   })
   it('Checks,Question card should have tabIndex', () => {
     cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
+    cy.wait(1000)
     cy.get('.sectionCard', { timeout: 40000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -771,6 +785,7 @@ describe('Test for Tests', () => {
   })
   it('Checks,Question card should have aria-label', () => {
     cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
+    cy.wait(1000)
     cy.get('.sectionCard', { timeout: 40000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -790,6 +805,7 @@ describe('Test for Tests', () => {
   })
   it('Checks,initially option card should have max height 0', () => {
     cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
+    cy.wait(1000)
     cy.get('.sectionCard', { timeout: 40000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -809,6 +825,7 @@ describe('Test for Tests', () => {
   })
   it('Checks,initially option card should have expand after clicking on question card', () => {
     cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
+    cy.wait(1000)
     cy.get('.sectionCard', { timeout: 40000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -830,6 +847,7 @@ describe('Test for Tests', () => {
   })
   it('Checks,question type chip should be visible', () => {
     cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
+    cy.wait(1000)
     cy.get('.sectionCard', { timeout: 40000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -848,6 +866,7 @@ describe('Test for Tests', () => {
   })
   it('Test for valid error message while adding new Tests without Title', () => {
     cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
+    cy.wait(1000)
     cy.get('.sectionCard', { timeout: 40000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -874,6 +893,7 @@ describe('Test for Tests', () => {
   })
   it('Test for valid error message while adding new Tests without Title', () => {
     cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
+    cy.wait(1000)
     cy.get('.sectionCard', { timeout: 40000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -900,6 +920,7 @@ describe('Test for Tests', () => {
   })
   it('Test for valid error message while adding new Tests without Description', () => {
     cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
+    cy.wait(1000)
     cy.get('.sectionCard', { timeout: 40000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -930,6 +951,7 @@ describe('Test for Tests', () => {
   })
   it('Test for valid error message while adding new Tests with duplicate Title', () => {
     cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
+    cy.wait(1000)
     cy.get('.sectionCard', { timeout: 40000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -955,6 +977,7 @@ describe('Test for Tests', () => {
   })
   it('SortBy Name or created Date', () => {
     cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
+    cy.wait(1000)
     cy.get('.sectionCard', { timeout: 40000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (

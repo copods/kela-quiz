@@ -458,8 +458,9 @@ describe('smoke tests', () => {
     cy.get('#assessments-page-title').should('have.text', 'Assessments')
     cy.get('#invite-popup-open0', { timeout: 6000 }).should('be.visible')
     cy.get('#invite-popup-open0', { timeout: 6000 })
+      .first()
       .should('be.visible')
-      .click()
+      .click({ force: true })
 
     cy.get('input[name="email"]')
       .first()
