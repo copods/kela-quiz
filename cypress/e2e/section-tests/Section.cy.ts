@@ -631,6 +631,7 @@ describe('Test for Tests', () => {
   })
   it('checks,active Tests should have vertical dots for menu actions', () => {
     cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
+    cy.wait(2000)
     cy.get('.sectionCard', { timeout: 40000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
