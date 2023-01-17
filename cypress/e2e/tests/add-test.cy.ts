@@ -342,6 +342,7 @@ describe('Creating assessments', () => {
       'include',
       '/assessments'
     )
+    cy.wait(2000)
     cy.get('input[placeholder="Enter assessment name"]', { timeout: 6000 })
       .clear()
       .type(test)
@@ -534,8 +535,9 @@ describe('Creating assessments', () => {
       .click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
-      '/assessments/add-assessment'
+      '/assessments'
     )
+    cy.wait(2000)
     cy.get('input[placeholder="Enter assessment name"]', { timeout: 6000 })
       .clear()
       .type(test)

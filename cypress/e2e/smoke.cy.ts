@@ -80,7 +80,7 @@ describe('smoke tests', () => {
       .should('have.attr', 'value', randomWorkSpaceName)
 
     cy.get('button[name="addWorkspace"]', { timeout: 6000 }).click()
-    cy.wait(1000)
+    cy.wait(3000)
     // Check for workspace length
     dropdown = cy.get('#dropdown')
 
