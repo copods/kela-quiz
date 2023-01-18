@@ -208,11 +208,7 @@ const TestList = () => {
   ]
 
   useEffect(() => {
-    if (!location.search && testLoaderData.allTestsCount > 0) {
-      navigate(
-        `?sortBy=${sortBy}&sort=${sortDirection}&page=${testsCurrentPage}&limit=${testsPageSize}`
-      )
-    } else if (testLoaderData.allTestsCount === 0) {
+    if (testLoaderData.allTestsCount === 0) {
       navigate(`/${testLoaderData.currentWorkspaceId}${routes.assessments}`)
     } else if (testLoaderData.allTestsCount > 0 && tests.length > 0) {
       navigate(
@@ -231,7 +227,7 @@ const TestList = () => {
     location.search,
   ])
   useEffect(() => {
-    if (!location.search) {
+    if (!location.search && testLoaderData.allTestsCount > 0) {
       navigate(
         `?sortBy=${sortBy}&sort=${sortDirection}&page=${testsCurrentPage}&limit=${testsPageSize}`
       )
