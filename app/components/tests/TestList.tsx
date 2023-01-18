@@ -63,6 +63,8 @@ const TestList = () => {
   const [candidatePopupOpen, setCandidatePopupOpen] = useState<boolean>(false)
   const [showDeletePopup, setShowDeletePopup] = useState(false)
   const [deleted, setDeleted] = useState(false)
+  const [id, setId] = useState('')
+  const [selectedTest, setSelectedTest] = useState({ id: '', name: '' })
 
   useEffect(() => {
     if (deleted) {
@@ -130,6 +132,7 @@ const TestList = () => {
   const JoinedOnCell = (data: Test) => {
     return <span>{moment(data?.createdAt).format('DD MMMM YY')}</span>
   }
+
   const TestInvite = (data: Test, index: number) => {
     return (
       <>
@@ -140,11 +143,15 @@ const TestList = () => {
             tabIndex={0}
             className="candidateInviteIcon cursor-pointer text-2xl text-primary focus:outline-dotted focus:outline-2"
             icon={'ant-design:user-add-outlined'}
-            onClick={() => {
+            onClick={(e) => {
+              setSelectedTest({ id: data.id, name: data.name })
               setCandidatePopupOpen(true)
             }}
             onKeyUp={(e) => {
-              if (e.key === 'Enter') setCandidatePopupOpen(true)
+              if (e.key === 'Enter') {
+                setSelectedTest({ id: data.id, name: data.name })
+                setCandidatePopupOpen(true)
+              }
             }}
             aria-label={t('members.inviteMember')}
           />
@@ -156,23 +163,20 @@ const TestList = () => {
             menuListText={'Delete'}
             aria-label={t('testTableItem.menu')}
             id={data.id}
+            setId={setId}
           />
         </div>
-        <DeletePopUp
-          setOpen={setShowDeletePopup}
-          open={showDeletePopup}
-          onDelete={() => deleteTest(data.id)}
-          setDeleted={setDeleted}
-          status={testLoaderData.status}
-          deleteItem={data.name}
-          deleteItemType={t('testsConstants.assessment')}
-        />
-        <InviteCandidatePopup
-          openInvitePopup={candidatePopupOpen}
-          setOpenInvitePopup={setCandidatePopupOpen}
-          testName={data.name}
-          testId={data.id}
-        />
+        {id === data.id && (
+          <DeletePopUp
+            setOpen={setShowDeletePopup}
+            open={showDeletePopup}
+            onDelete={() => deleteTest(data.id)}
+            setDeleted={setDeleted}
+            status={testLoaderData.status}
+            deleteItem={data.name}
+            deleteItemType={t('testsConstants.assessment')}
+          />
+        )}
       </>
     )
   }
@@ -193,7 +197,7 @@ const TestList = () => {
     },
     {
       title: 'Created By',
-      field: 'createdAt',
+      field: 'createdBy',
       render: CreatedByDataCell,
       width: '15%',
     },
@@ -223,6 +227,7 @@ const TestList = () => {
     const heading = document.getElementById('assessments-page-title')
     heading?.focus()
   }, [])
+
   return (
     <div className="test-list-container flex h-full flex-col gap-6 p-1">
       {/* header */}
@@ -281,6 +286,12 @@ const TestList = () => {
       ) : (
         <EmptyStateComponent />
       )}
+      <InviteCandidatePopup
+        openInvitePopup={candidatePopupOpen}
+        setOpenInvitePopup={setCandidatePopupOpen}
+        testName={selectedTest.name}
+        testId={selectedTest.id}
+      />
     </div>
   )
 }

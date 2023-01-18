@@ -54,7 +54,7 @@ export default function DeletePopUp({
                 <span className="text-sm text-gray-500">
                   {t('deletePopUp.alert')} {deleteItemType}
                 </span>
-                <p className="text-sm text-gray-500">
+                <p className="bold text-sm text-gray-500">
                   {deleteItem} {subAlert}
                 </p>
               </div>
