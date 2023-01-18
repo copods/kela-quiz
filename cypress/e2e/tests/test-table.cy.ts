@@ -79,7 +79,7 @@ describe('Visiting Assessment', () => {
       .should('have.text', testsConstants.assessments)
       .click()
     cy.get('#assessments-page-title').should('have.text', assessments)
-    cy.get('#table-th').first().should('have.text', tableTitles.srNo)
+    cy.get('#table-th').should('have.text', tableTitles.srNo)
   })
   it('Checks color of table title- Sr.No', () => {
     cy.get('a')
@@ -87,9 +87,7 @@ describe('Visiting Assessment', () => {
       .should('have.text', testsConstants.assessments)
       .click()
     cy.get('#assessments-page-title').should('have.text', assessments)
-    cy.get('#table-th')
-      .first()
-      .should('have.css', 'color', 'rgb(107, 114, 128)')
+    cy.get('#table-th').should('have.css', 'color', 'rgb(107, 114, 128)')
   })
   it('Checks font weight of table title- Sr.No', () => {
     cy.get('a')
@@ -97,7 +95,7 @@ describe('Visiting Assessment', () => {
       .should('have.text', testsConstants.assessments)
       .click()
     cy.get('#assessments-page-title').should('have.text', assessments)
-    cy.get('#table-th').first().should('have.css', 'font-weight', '600')
+    cy.get('#table-th').should('have.css', 'font-weight', '600')
   })
   it('Checks font size of table title- Sr.No', () => {
     cy.get('a')
@@ -105,7 +103,7 @@ describe('Visiting Assessment', () => {
       .should('have.text', testsConstants.assessments)
       .click()
     cy.get('#assessments-page-title').should('have.text', assessments)
-    cy.get('#table-th').first().should('have.css', 'font-size', '14px')
+    cy.get('#table-th').should('have.css', 'font-size', '14px')
   })
   //assessment
   it('Checks text of table title- assessment', () => {
@@ -330,6 +328,7 @@ describe('Visiting Assessment', () => {
     cy.get('#add-test').should('have.css', 'cursor', 'pointer')
   })
   it('sort by name in ascending order ', () => {
+    cy.viewport(1200, 1000)
     cy.get('a')
       .find('#tests')
       .should('have.text', testsConstants.assessments)
@@ -352,6 +351,7 @@ describe('Visiting Assessment', () => {
       })
   })
   it('sort by name in descending order ', () => {
+    cy.viewport(1200, 1000)
     cy.get('a')
       .find('#tests')
       .should('have.text', testsConstants.assessments)
@@ -375,6 +375,7 @@ describe('Visiting Assessment', () => {
       })
   })
   it('sort by created date in ascending order ', () => {
+    cy.viewport(1200, 1000)
     cy.get('a')
       .find('#tests')
       .should('have.text', testsConstants.assessments)
@@ -405,6 +406,7 @@ describe('Visiting Assessment', () => {
       })
   })
   it('sort by created date in descending order', () => {
+    cy.viewport(1200, 1000)
     cy.get('a')
       .find('#tests')
       .should('have.text', testsConstants.assessments)
@@ -437,6 +439,7 @@ describe('Visiting Assessment', () => {
       })
   })
   it('By Clicking test name it should navigate to assessment details page', () => {
+    cy.viewport(1200, 1000)
     cy.get('a')
       .find('#tests')
       .should('have.text', testsConstants.assessments)
@@ -453,6 +456,7 @@ describe('Visiting Assessment', () => {
       .should('include', '/assessments')
   })
   it('On click of count in sections, menu with all sections should open', () => {
+    cy.viewport(1200, 1000)
     cy.get('a')
       .find('#tests')
       .should('have.text', testsConstants.assessments)
@@ -471,71 +475,77 @@ describe('Visiting Assessment', () => {
     })
   })
   it('On inviting single candidate, show toast message- Candidate Invited', () => {
+    cy.viewport(1200, 1000)
     cy.get('a')
       .find('#tests')
       .should('have.text', testsConstants.assessments)
       .click()
-
+    cy.wait(1000)
     cy.get('#invite-popup-open0', { timeout: 6000 }).should('be.visible')
     cy.get('#invite-popup-open0', { timeout: 6000 })
       .should('be.visible')
       .click()
 
     cy.get('input[name="email"]')
-      .first()
-      .type('johndoes@example.com', { force: true })
+
+      .type('johndoes@example.com')
       .should('have.focus')
       .should('have.value', 'johndoes@example.com')
-    cy.get('[data-cy="submit"]').first().click({ force: true })
+    cy.get('[data-cy="submit"]').click()
     cy.get(toast).should('have.text', candidateInvited)
   })
   it('On inviting already invited candidate, show toast message- Candidate has already been invited for this Assessment', () => {
+    cy.viewport(1200, 1000)
     cy.get('a')
       .find('#tests')
       .should('have.text', testsConstants.assessments)
       .click()
+    cy.wait(1000)
     cy.get('#invite-popup-open0', { timeout: 6000 }).should('be.visible')
     cy.get('#invite-popup-open0', { timeout: 6000 })
       .should('be.visible')
       .click()
 
     cy.get('input[name="email"]')
-      .first()
-      .type('johndoes@example.com', { force: true })
+
+      .type('johndoes@example.com')
       .should('have.focus')
       .should('have.value', 'johndoes@example.com')
-    cy.get('[data-cy="submit"]').first().click({ force: true })
+    cy.get('[data-cy="submit"]').click()
     cy.get(toast).should('have.text', candidateAlreadyInvited)
   })
   it('On inviting multiple candidates with some already invited, show toast message- 1 out of 2 Candidates Invited. Others were already invited', () => {
+    cy.viewport(1200, 1000)
     cy.get('a')
       .find('#tests')
       .should('have.text', testsConstants.assessments)
       .click()
-    cy.wait(2000)
+    cy.wait(1000)
 
     cy.get('#invite-popup-open0', { timeout: 6000 })
       .should('be.visible')
       .click()
-    cy.get('#invite-more').first().click({ force: true })
-    cy.get('.inviteInput').eq(0).type('ion@ion.co', { force: true })
-    cy.get('.inviteInput').eq(1).type('sam123@gmail.com', { force: true })
+    cy.get('#invite-more').click()
+    cy.get('.inviteInput').eq(0).type('ion@ion.co')
+    cy.get('.inviteInput').eq(1).type('sam123@gmail.com')
 
-    cy.get('[data-cy="submit"]').first().click({ force: true })
+    cy.get('[data-cy="submit"]').click()
   })
   it('On inviting all unique candidates, show toast message- All candidates invited.', () => {
+    cy.viewport(1200, 1000)
     cy.get('a')
       .find('#tests')
       .should('have.text', testsConstants.assessments)
       .click()
+    cy.wait(1000)
     cy.get('#invite-popup-open0', { timeout: 6000 })
       .should('be.visible')
       .click()
-    cy.get('#invite-more').first().click({ force: true })
-    cy.get('.inviteInput').eq(0).type('ion@ionn.co', { force: true })
-    cy.get('.inviteInput').eq(1).type('sam1233@gmail.com', { force: true })
+    cy.get('#invite-more').click()
+    cy.get('.inviteInput').eq(0).type('ion@ionn.co')
+    cy.get('.inviteInput').eq(1).type('sam1233@gmail.com')
 
-    cy.get('[data-cy="submit"]').first().click({ force: true })
+    cy.get('[data-cy="submit"]').click()
 
     cy.get(toast).should('have.text', allCandidatesInvited)
   })
@@ -548,9 +558,10 @@ describe('Visiting Assessment', () => {
       'include',
       '/assessments'
     )
+    cy.wait(1000)
     cy.get('#vertical-icon', { timeout: 6000 }).click()
     cy.get('.deleteTest').click()
-    cy.get('#confirm-delete').first().click({ force: true })
+    cy.get('#confirm-delete').click()
     cy.get('.tableRow', { timeout: 6000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
