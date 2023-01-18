@@ -447,6 +447,7 @@ describe('smoke tests', () => {
   })
 
   it('invite candidate for assessment', () => {
+    cy.viewport(1200, 1000)
     cy.login()
     cy.customVisit('/members')
     cy.wait(1000)
@@ -461,11 +462,10 @@ describe('smoke tests', () => {
       .click()
 
     cy.get('input[name="email"]')
-      .first()
-      .type('johndoe@example.com', { force: true })
+      .type('johndoe@example.com')
       .should('have.focus')
       .should('have.value', 'johndoe@example.com')
-    cy.get('[data-cy="submit"]').first().click({ force: true })
+    cy.get('[data-cy="submit"]').click()
   })
   it('check for not found page', () => {
     cy.login()
