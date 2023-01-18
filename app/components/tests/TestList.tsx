@@ -230,7 +230,13 @@ const TestList = () => {
     testLoaderData.allTestsCount,
     location.search,
   ])
-
+  useEffect(() => {
+    if (!location.search) {
+      navigate(
+        `?sortBy=${sortBy}&sort=${sortDirection}&page=${testsCurrentPage}&limit=${testsPageSize}`
+      )
+    }
+  }, [location])
   useEffect(() => {
     const heading = document.getElementById('assessments-page-title')
     heading?.focus()
