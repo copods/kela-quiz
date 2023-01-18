@@ -527,17 +527,10 @@ describe('Visiting Assessment', () => {
     cy.get('#invite-popup-open0', { timeout: 6000 })
       .first()
       .should('be.visible')
-<<<<<<< HEAD
-      .click({ force: true })
-    cy.get('#invite-more').first().click({ force: true })
-    cy.get('.inviteInput').eq(0).type('ion@ion.co', { force: true })
-    cy.get('.inviteInput').eq(1).type('sam123@gmail.com', { force: true })
-=======
       .click()
     cy.get('#invite-more').click()
     cy.get('.inviteInput').eq(0).type('ion@ion.co')
     cy.get('.inviteInput').eq(1).type('sam123@gmail.com')
->>>>>>> f876001264c0298aa38d7534025d493affbd7214
 
     cy.get('[data-cy="submit"]').click()
   })
@@ -551,17 +544,10 @@ describe('Visiting Assessment', () => {
     cy.get('#invite-popup-open0', { timeout: 6000 })
       .first()
       .should('be.visible')
-<<<<<<< HEAD
-      .click({ force: true })
-    cy.get('#invite-more').first().click({ force: true })
-    cy.get('.inviteInput').eq(0).type('ion@ionn.co', { force: true })
-    cy.get('.inviteInput').eq(1).type('sam1233@gmail.com', { force: true })
-=======
       .click()
     cy.get('#invite-more').click()
     cy.get('.inviteInput').eq(0).type('ion@ionn.co')
     cy.get('.inviteInput').eq(1).type('sam1233@gmail.com')
->>>>>>> f876001264c0298aa38d7534025d493affbd7214
 
     cy.get('[data-cy="submit"]').click()
 

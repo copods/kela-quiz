@@ -447,11 +447,7 @@ describe('smoke tests', () => {
   })
 
   it('invite candidate for assessment', () => {
-<<<<<<< HEAD
-    cy.viewport(1280, 720)
-=======
     cy.viewport(1200, 1000)
->>>>>>> f876001264c0298aa38d7534025d493affbd7214
     cy.login()
     cy.customVisit('/members')
     cy.wait(1000)

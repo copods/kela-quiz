@@ -63,14 +63,11 @@ const TestList = () => {
   const [candidatePopupOpen, setCandidatePopupOpen] = useState<boolean>(false)
   const [showDeletePopup, setShowDeletePopup] = useState(false)
   const [deleted, setDeleted] = useState(false)
-<<<<<<< HEAD
   useEffect(() => {
     setTestsCurrentPage(testLoaderData.testsCurrentPage)
   }, [testLoaderData.testsCurrentPage])
-=======
   const [id, setId] = useState('')
   const [selectedTest, setSelectedTest] = useState({ id: '', name: '' })
->>>>>>> f876001264c0298aa38d7534025d493affbd7214
 
   useEffect(() => {
     if (deleted) {
