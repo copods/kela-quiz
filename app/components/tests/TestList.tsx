@@ -1,6 +1,6 @@
 import { useActionData, useLoaderData, useSubmit } from '@remix-run/react'
 import { useEffect, useState } from 'react'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import type { Test, User, tableColumnType } from '~/interface/Interface'
 import { sortByOrder } from '~/interface/Interface'
 import SortFilter from '../common-components/SortFilter'
@@ -20,7 +20,6 @@ import { toast } from 'react-toastify'
 const TestList = () => {
   const { t } = useTranslation()
   const navigate = useNavigate()
-  const location = useLocation()
   const submit = useSubmit()
   //loader and action data
   const testLoaderData = useLoaderData()
@@ -63,7 +62,8 @@ const TestList = () => {
   const [candidatePopupOpen, setCandidatePopupOpen] = useState<boolean>(false)
   const [showDeletePopup, setShowDeletePopup] = useState(false)
   const [deleted, setDeleted] = useState(false)
-
+  const [id, setId] = useState('')
+  const [selectedTest, setSelectedTest] = useState({ id: '', name: '' })
   useEffect(() => {
     if (deleted) {
       setTimeout(() => {
@@ -130,6 +130,7 @@ const TestList = () => {
   const JoinedOnCell = (data: Test) => {
     return <span>{moment(data?.createdAt).format('DD MMMM YY')}</span>
   }
+
   const TestInvite = (data: Test, index: number) => {
     return (
       <>
@@ -140,11 +141,15 @@ const TestList = () => {
             tabIndex={0}
             className="candidateInviteIcon cursor-pointer text-2xl text-primary focus:outline-dotted focus:outline-2"
             icon={'ant-design:user-add-outlined'}
-            onClick={() => {
+            onClick={(e) => {
               setCandidatePopupOpen(true)
+              setSelectedTest({ id: data.id, name: data.name })
             }}
             onKeyUp={(e) => {
-              if (e.key === 'Enter') setCandidatePopupOpen(true)
+              if (e.key === 'Enter') {
+                setCandidatePopupOpen(true)
+                setSelectedTest({ id: data.id, name: data.name })
+              }
             }}
             aria-label={t('members.inviteMember')}
           />
@@ -156,23 +161,20 @@ const TestList = () => {
             menuListText={'Delete'}
             aria-label={t('testTableItem.menu')}
             id={data.id}
+            setId={setId}
           />
         </div>
-        <DeletePopUp
-          setOpen={setShowDeletePopup}
-          open={showDeletePopup}
-          onDelete={() => deleteTest(data.id)}
-          setDeleted={setDeleted}
-          status={testLoaderData.status}
-          deleteItem={data.name}
-          deleteItemType={t('testsConstants.assessment')}
-        />
-        <InviteCandidatePopup
-          openInvitePopup={candidatePopupOpen}
-          setOpenInvitePopup={setCandidatePopupOpen}
-          testName={data.name}
-          testId={data.id}
-        />
+        {id === data.id && (
+          <DeletePopUp
+            setOpen={setShowDeletePopup}
+            open={showDeletePopup}
+            onDelete={() => deleteTest(data.id)}
+            setDeleted={setDeleted}
+            status={testLoaderData.status}
+            deleteItem={data.name}
+            deleteItemType={t('testsConstants.assessment')}
+          />
+        )}
       </>
     )
   }
@@ -193,7 +195,7 @@ const TestList = () => {
     },
     {
       title: 'Created By',
-      field: 'createdAt',
+      field: 'createdBy',
       render: CreatedByDataCell,
       width: '15%',
     },
@@ -201,7 +203,6 @@ const TestList = () => {
   ]
 
   useEffect(() => {
-    console.log(location, 'location')
     if (testLoaderData.allTestsCount === 0) {
       navigate(`/${testLoaderData.currentWorkspaceId}${routes.assessments}`)
     } else if (testLoaderData.allTestsCount > 0 && tests.length > 0) {
@@ -223,6 +224,7 @@ const TestList = () => {
     const heading = document.getElementById('assessments-page-title')
     heading?.focus()
   }, [])
+
   return (
     <div className="test-list-container flex h-full flex-col gap-6 p-1">
       {/* header */}
@@ -281,6 +283,16 @@ const TestList = () => {
       ) : (
         <EmptyStateComponent />
       )}
+      <InviteCandidatePopup
+        openInvitePopup={candidatePopupOpen}
+        setOpenInvitePopup={setCandidatePopupOpen}
+        testName={selectedTest.name}
+        testId={selectedTest.id}
+        testsPageSize={testsPageSize}
+        testsCurrentPage={testsCurrentPage}
+        sortBy={sortBy}
+        sortDirection={sortDirection}
+      />
     </div>
   )
 }

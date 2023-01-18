@@ -1,6 +1,6 @@
 import { Form, useActionData, useTransition } from '@remix-run/react'
 import { useEffect, useState } from 'react'
-
+import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import Button from '../common-components/Button'
 import { useTranslation } from 'react-i18next'
@@ -13,18 +13,25 @@ const InviteCandidatePopup = ({
   setOpenInvitePopup,
   testName,
   testId,
+  testsPageSize,
+  testsCurrentPage,
+  sortBy,
+  sortDirection,
 }: {
   openInvitePopup: boolean
   setOpenInvitePopup: (e: boolean) => void
   testName: string
   testId?: string
+  testsPageSize?: number
+  testsCurrentPage?: number
+  sortBy?: string
+  sortDirection?: string
 }) => {
   const { t } = useTranslation()
   const [emails, setEmails] = useState<Array<string>>([''])
   const [errors, setError] = useState({})
-
   const actionData = useActionData()
-
+  const navigate = useNavigate()
   useEffect(() => {
     if (actionData?.status == 401 && testId === actionData?.testId) {
       toast.warn(t(actionData.message))
@@ -52,6 +59,9 @@ const InviteCandidatePopup = ({
         } else {
           toast.success(t('testsConstants.candidateInvited'))
         }
+      navigate(
+        `?sortBy=${sortBy}&sort=${sortDirection}&page=${testsCurrentPage}&limit=${testsPageSize}`
+      )
       setOpenInvitePopup(false)
       setEmails([''])
     } else {

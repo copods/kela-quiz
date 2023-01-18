@@ -12,6 +12,7 @@ const TestListMenuItem = ({
   menuListText,
   id,
   resendInvite,
+  setId,
 }: {
   menuIcon: string
   onItemClick: (e: boolean) => void
@@ -20,6 +21,7 @@ const TestListMenuItem = ({
   menuListText: string
   id: string
   resendInvite?: () => void
+  setId?: (e: string) => void
 }) => {
   useEffect(() => {
     if (open === false) {
@@ -34,6 +36,7 @@ const TestListMenuItem = ({
       <Menu as="div" className="flex">
         <Menu.Button className={`${id} self-center`}>
           <Icon
+            onClick={() => setId && setId(id)}
             className="text-2xl text-gray-600"
             icon={menuIcon}
             id="vertical-icon"
