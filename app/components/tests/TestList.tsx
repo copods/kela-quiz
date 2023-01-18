@@ -64,6 +64,7 @@ const TestList = () => {
   const [showDeletePopup, setShowDeletePopup] = useState(false)
   const [deleted, setDeleted] = useState(false)
   const [id, setId] = useState('')
+  const [selectedTest, setSelectedTest] = useState({ id: '', name: '' })
 
   useEffect(() => {
     if (deleted) {
@@ -131,6 +132,7 @@ const TestList = () => {
   const JoinedOnCell = (data: Test) => {
     return <span>{moment(data?.createdAt).format('DD MMMM YY')}</span>
   }
+
   const TestInvite = (data: Test, index: number) => {
     return (
       <>
@@ -142,12 +144,14 @@ const TestList = () => {
             className="candidateInviteIcon cursor-pointer text-2xl text-primary focus:outline-dotted focus:outline-2"
             icon={'ant-design:user-add-outlined'}
             onClick={(e) => {
+              setSelectedTest({ id: data.id, name: data.name })
               setCandidatePopupOpen(true)
-              setId(data.id)
             }}
             onKeyUp={(e) => {
-              if (e.key === 'Enter') setCandidatePopupOpen(true)
-              setId(data.id)
+              if (e.key === 'Enter') {
+                setSelectedTest({ id: data.id, name: data.name })
+                setCandidatePopupOpen(true)
+              }
             }}
             aria-label={t('members.inviteMember')}
           />
@@ -173,15 +177,6 @@ const TestList = () => {
             deleteItemType={t('testsConstants.assessment')}
           />
         )}
-
-        {id === data.id && (
-          <InviteCandidatePopup
-            openInvitePopup={candidatePopupOpen}
-            setOpenInvitePopup={setCandidatePopupOpen}
-            testName={data.name}
-            testId={id}
-          />
-        )}
       </>
     )
   }
@@ -202,7 +197,7 @@ const TestList = () => {
     },
     {
       title: 'Created By',
-      field: 'createdAt',
+      field: 'createdBy',
       render: CreatedByDataCell,
       width: '15%',
     },
@@ -291,6 +286,12 @@ const TestList = () => {
       ) : (
         <EmptyStateComponent />
       )}
+      <InviteCandidatePopup
+        openInvitePopup={candidatePopupOpen}
+        setOpenInvitePopup={setCandidatePopupOpen}
+        testName={selectedTest.name}
+        testId={selectedTest.id}
+      />
     </div>
   )
 }
