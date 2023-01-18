@@ -31,6 +31,7 @@ export type ActionData = {
   resp?: {
     title: string
     status: number
+    data?: any
   }
 }
 type LoaderData = {
@@ -151,6 +152,7 @@ export const action: ActionFunction = async ({ request, params }) => {
           {
             resp: {
               title: 'toastConstants.invitationSent',
+              data: res as any,
               status: 200,
             },
           },
@@ -207,6 +209,9 @@ export const action: ActionFunction = async ({ request, params }) => {
     return resendMember
   }
   if (action === actions.deleteMember) {
+    const id = formData.get('id')
+    const user = await getUserById(id as string)
+    const userEmail = user?.email
     if (typeof formData.get('id') !== 'string') {
       return json<ActionData>(
         { errors: { title: 'statusCheck.descIsReq', status: 400 } },
@@ -216,7 +221,8 @@ export const action: ActionFunction = async ({ request, params }) => {
     let deleteHandle = null
     await deleteUserById(
       formData.get('id') as string,
-      params.workspaceId as string
+      params.workspaceId as string,
+      userEmail as string
     )
       .then((res) => {
         deleteHandle = json<ActionData>(

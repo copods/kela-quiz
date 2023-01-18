@@ -21,7 +21,6 @@ const MembersWrapper = () => {
   const navigate = useNavigate()
   const membersActionData = useActionData() as ActionData
   const memberLoaderData = useLoaderData()
-
   //states
   const [actionStatus, setActionStatus] = useState<boolean>(false)
   const [membersCurrentPage, setMembersCurrentPage] = useState(
