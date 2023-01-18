@@ -38,7 +38,10 @@ describe('Visiting Assessment', () => {
     cy.get('#add-test', { timeout: 6000 })
       .should('have.text', `+ ${testsConstants.addAssessmentbutton}`)
       .click()
-    cy.location('pathname').should('include', '/assessments/add-assessment')
+    cy.location('pathname', { timeout: 6000 }).should(
+      'include',
+      '/assessments/add-assessment'
+    )
   })
   it('Checks the text of Assessment Page heading', () => {
     cy.get('a')

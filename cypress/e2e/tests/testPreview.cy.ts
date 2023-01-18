@@ -36,7 +36,7 @@ describe('Test for testPreview', () => {
     )
     cy.get('.test-name-navigation', { timeout: 6000 }).contains(test1).click()
     cy.wait(2000)
-    cy.get('#name').should('have.text', cypress.name)
+    cy.get('#name', { timeout: 6000 }).should('have.text', cypress.name)
   })
   it('Checks for invite candidate button text', () => {
     cy.get('a')
