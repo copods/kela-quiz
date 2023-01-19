@@ -35,6 +35,7 @@ describe('Visiting Assessment', () => {
       'include',
       '/assessments'
     )
+    cy.wait(1500)
     cy.get('#add-test', { timeout: 6000 })
       .should('have.text', `+ ${testsConstants.addAssessmentbutton}`)
       .click()
