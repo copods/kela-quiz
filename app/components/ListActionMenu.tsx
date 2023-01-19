@@ -2,7 +2,7 @@ import { Menu, Transition } from '@headlessui/react'
 import { Icon } from '@iconify/react'
 import { Fragment, useEffect } from 'react'
 
-const TestListMenuItem = ({
+const ListMenuItem = ({
   menuIcon,
   onItemClick,
   open,
@@ -73,8 +73,7 @@ const TestListMenuItem = ({
                           {menuItem?.menuListIcon && (
                             <Icon
                               icon={menuItem?.menuListIcon as string}
-                              className="mr-2 h-5 w-5
-                          text-red-500"
+                              className="mr-2 h-5 w-5"
                               aria-hidden="true"
                             />
                           )}
@@ -100,4 +99,4 @@ const TestListMenuItem = ({
   )
 }
 
-export default TestListMenuItem
+export default ListMenuItem

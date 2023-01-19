@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next'
 import { routes } from '~/constants/route.constants'
 import Table from '../common-components/TableComponent'
 import moment from 'moment'
-import TestListActionMenu from '../../components/TestListActionMenu'
+import ListActionMenu from '../../components/ListActionMenu'
 import DropdownField from '../common-components/Dropdown'
 import resendTestLink from '~/../public/assets/resend-test-invitation.svg'
 import type {
@@ -181,7 +181,7 @@ const CandidateListOfTest = () => {
             )
           )}
           {data?.candidateResult.length <= 0 && (
-            <TestListActionMenu
+            <ListActionMenu
               menuIcon={'mdi:dots-vertical'}
               onItemClick={setmenuListOpen}
               open={menuListOpen}

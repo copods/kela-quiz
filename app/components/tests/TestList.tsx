@@ -11,7 +11,7 @@ import EmptyStateComponent from '../common-components/EmptyStateComponent'
 import Table from '../common-components/TableComponent'
 import ChipGroup from './ChipGroup'
 import moment from 'moment'
-import TestListActionMenu from '../TestListActionMenu'
+import ListActionMenu from '../ListActionMenu'
 import { Icon } from '@iconify/react'
 import DeletePopUp from '../common-components/DeletePopUp'
 import InviteCandidatePopup from './InviteCandidatePopup'
@@ -162,7 +162,7 @@ const TestList = () => {
             }}
             aria-label={t('members.inviteMember')}
           />
-          <TestListActionMenu
+          <ListActionMenu
             menuIcon={'mdi:dots-vertical'}
             onItemClick={setShowDeletePopup}
             open={showDeletePopup}
