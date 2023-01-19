@@ -172,7 +172,8 @@
     "writeDescriptionOfTest": "Write Description of Test",
     "searchCandidate": "Search Candidate",
     "min": "Min",
-    "copyLink": "Link Copied Successfully"
+    "copyLink": "Link Copied Successfully",
+    "copyLinkFailed": "Fail"
   },
   "componentGlobalConstants": {
     "totalCounts": "Total Counts",

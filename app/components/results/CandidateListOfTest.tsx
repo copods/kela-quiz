@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next'
 import { routes } from '~/constants/route.constants'
 import Table from '../common-components/TableComponent'
 import moment from 'moment'
-import TestListActionMenu from '../../components/TestListActionMenu'
+import ListActionMenu from '../../components/ListActionMenu'
 import DropdownField from '../common-components/Dropdown'
 import resendTestLink from '~/../public/assets/resend-test-invitation.svg'
 import type {
@@ -67,8 +67,8 @@ const CandidateListOfTest = () => {
   }
   const copyLink = (link: string) => {
     navigator.clipboard.writeText(link).then(
-      (v) => toast.success(t('testsConstants.copyLink')),
-      (e) => toast.error(`Fail ${e}`)
+      () => toast.success(t('testsConstants.copyLink')),
+      (error) => toast.error(`${t('testConstants.copyLinkFailed')}${error}`)
     )
   }
   const SeriaLNoCell = (data: { [key: string]: string }, index: number) => {
@@ -148,14 +148,14 @@ const CandidateListOfTest = () => {
         menuListText: t('resultConstants.resendInvite'),
         menuListLink: resendTestLink,
         menuLinkAltTagLine: t('resultConstants.resendAssessmentInvite'),
-        onClickOfButton: () =>
+        handleItemAction: () =>
           resendInvite(data.id, data.candidateId, data.testId),
       },
       {
         id: 'copy-link',
         menuListText: t('resultConstants.copyLink'),
         menuListIcon: 'material-symbols:content-copy-outline',
-        onClickOfButton: () => copyLink(data.link as string),
+        handleItemAction: () => copyLink(data.link as string),
       },
     ]
     return (
@@ -181,7 +181,7 @@ const CandidateListOfTest = () => {
             )
           )}
           {data?.candidateResult.length <= 0 && (
-            <TestListActionMenu
+            <ListActionMenu
               menuIcon={'mdi:dots-vertical'}
               onItemClick={setmenuListOpen}
               open={menuListOpen}

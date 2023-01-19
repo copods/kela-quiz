@@ -15,7 +15,7 @@ const SelectSections = ({
   currentWorkspaceId,
 }: {
   sections: Array<TestSection>
-  setSections: (e: Array<TestSection>, i: number) => void
+  setSections: <T>(e: T, i: number) => void
   updateSectionsList: (e: SetStateAction<Array<TestSection>>) => void
   currentWorkspaceId: string
 }) => {
@@ -105,11 +105,12 @@ const SelectSections = ({
           />
           {/* Sections list */}
           <div className="flex flex-wrap gap-6">
-            {sections.map((section: TestSection, i) => {
+            {sections.map((section: TestSection & { count?: number }, i) => {
               return (
                 <SelectSectionCard
                   section={section}
                   updateSection={(e) => setSections(e, i)}
+                  questionCount={section?.count}
                   key={section.id}
                 />
               )

@@ -91,7 +91,7 @@ model Invites {
   createdAt           DateTime   @default(now())
   updatedAt           DateTime   @updatedAt
 
-  @@unique([email, deletedAt, deleted,workspaceId])
+  @@unique([email, deletedAt, deleted, workspaceId])
 }
 
 model Section {
@@ -129,6 +129,8 @@ model Question {
   createdById       String
   candidateQuestion CandidateQuestion[]
   createdAt         DateTime            @default(now())
+  deleted           Boolean             @default(false)
+  deletedAt         String?             @default("na")
   updatedAt         DateTime            @updatedAt
 }
 
