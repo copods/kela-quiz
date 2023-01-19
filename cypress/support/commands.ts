@@ -26,9 +26,21 @@ declare global {
        * Logs in function for cypress testing.
        */
       customVisit: typeof Function
+
+      /**
+       * candidate Registration for Cypress testing
+       */
+
+      candidateRegistration: typeof Function
+
+      /**
+       *  candidate Registration for Cypress testing
+       */
+      CustomVisitOnCandidateSide: typeof Function
     }
   }
 }
+let ExamLink = ''
 
 function login() {
   let formData = new FormData()
@@ -85,9 +97,45 @@ function deleteUserByEmail(email: string) {
   cy.clearCookie('__session')
 }
 
+function candidateRegistration() {
+  const emailId = Math.random()
+  cy.viewport(1280, 720)
+  cy.login()
+  cy.customVisit('/members')
+  cy.get('#group-by-tests').click()
+  cy.get('a').find('#tests').click()
+  cy.get('#invite-popup-open').click()
+  cy.get('.inviteInput').type(`ki${emailId}@copds.co`)
+  cy.get('[data-cy="submit"]').click()
+  cy.get('#group-by-tests').click()
+  cy.get('.groupByItemTest').eq(0).click()
+  cy.get('#vertical-icon', { timeout: 8000 }).click()
+  cy.get('[data-cy="copy-link"]').should('be.visible').click()
+  cy.window()
+    .its('navigator.clipboard')
+    .invoke('readText')
+    .then((text) => {
+      ExamLink = text
+      cy.visit(text)
+      cy.get('#firstName').type('aa')
+      cy.get('#lastName').type('Jain')
+      cy.get("[data-cy='submit-button']")
+        .should('be.visible')
+        .should('have.css', 'background-color', 'rgb(53, 57, 136)')
+        .click()
+      cy.url().should('eq', `${ExamLink}/verification`)
+    })
+}
+
+function CustomVisitOnCandidateSide(path = '') {
+  ExamLink && cy.visit(`${ExamLink}/${path}`)
+}
+
 Cypress.Commands.add('login', login)
 Cypress.Commands.add('cleanupUser', cleanupUser)
 Cypress.Commands.add('customVisit', customVisit)
+Cypress.Commands.add('candidateRegistration', candidateRegistration)
+Cypress.Commands.add('CustomVisitOnCandidateSide', CustomVisitOnCandidateSide)
 
 /*
 eslint
