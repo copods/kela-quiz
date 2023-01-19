@@ -11,7 +11,7 @@ describe('Test for section-details', () => {
 
   it('checks, add question button should be visible and have correct text', () => {
     cy.get('#sections', { timeout: 6000 }).should('have.text', 'Tests').click()
-    
+    cy.wait(1500)
     cy.get('.sectionCard', { timeout: 6000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -31,7 +31,7 @@ describe('Test for section-details', () => {
 
   it('checks, heading of add question should be visible and have correct text', () => {
     cy.get('#sections', { timeout: 6000 }).should('have.text', 'Tests').click()
-    
+    cy.wait(1500)
     cy.get('.sectionCard', { timeout: 6000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -56,7 +56,7 @@ describe('Test for section-details', () => {
   })
   it('checks, redirect to section page after clicking on breadscrum link', () => {
     cy.get('#sections', { timeout: 6000 }).should('have.text', 'Tests').click()
-    
+    cy.wait(1500)
     cy.get('.sectionCard', { timeout: 6000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -83,7 +83,7 @@ describe('Test for section-details', () => {
 
   it('Verifying MCQ to have Check Box in options', () => {
     cy.get('#sections', { timeout: 6000 }).should('have.text', 'Tests').click()
-    
+    cy.wait(1500)
     cy.get('.sectionCard', { timeout: 6000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -130,7 +130,7 @@ describe('Test for section-details', () => {
 
   it('Verifying Single Choice to have Radio Button in options', () => {
     cy.get('#sections', { timeout: 6000 }).should('have.text', 'Tests').click()
-    
+    cy.wait(1500)
     cy.get('.sectionCard', { timeout: 6000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -176,7 +176,7 @@ describe('Test for section-details', () => {
 
   it('Verifying Text to have Textarea in options and should be in focused after interaction', () => {
     cy.get('#sections', { timeout: 6000 }).should('have.text', 'Tests').click()
-    
+    cy.wait(1500)
     cy.get('.sectionCard', { timeout: 6000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -225,7 +225,7 @@ describe('Test for section-details', () => {
   let lengthBefore: number
   it('Verifying if Add Option functionality Working on Options', () => {
     cy.get('#sections', { timeout: 6000 }).should('have.text', 'Tests').click()
-    
+    cy.wait(1500)
     cy.get('.sectionCard', { timeout: 6000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -273,7 +273,7 @@ describe('Test for section-details', () => {
   })
   it('Verifying if Delete button should be visible', () => {
     cy.get('#sections', { timeout: 6000 }).should('have.text', 'Tests').click()
-    
+    cy.wait(1500)
     cy.get('.sectionCard', { timeout: 6000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -316,7 +316,7 @@ describe('Test for section-details', () => {
   })
   it('Verifying if Delete functionality Working on Options', () => {
     cy.get('#sections', { timeout: 6000 }).should('have.text', 'Tests').click()
-    
+    cy.wait(1500)
     cy.get('.sectionCard', { timeout: 6000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -364,7 +364,7 @@ describe('Test for section-details', () => {
   })
   it('On Save and Add More visit the Add Question Page', () => {
     cy.get('#sections', { timeout: 6000 }).should('have.text', 'Tests').click()
-    
+    cy.wait(1500)
     cy.get('.sectionCard', { timeout: 6000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -410,7 +410,7 @@ describe('Test for section-details', () => {
   })
   it('On Save and Continue visit the Sections Page', () => {
     cy.get('#sections', { timeout: 6000 }).should('have.text', 'Tests').click()
-    
+    cy.wait(1500)
     cy.get('.sectionCard', { timeout: 6000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -456,7 +456,7 @@ describe('Test for section-details', () => {
   })
   it('Verifying if Question is Empty or not', () => {
     cy.get('#sections', { timeout: 6000 }).should('have.text', 'Tests').click()
-    
+    cy.wait(1500)
     cy.get('.sectionCard', { timeout: 6000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -489,7 +489,7 @@ describe('Test for section-details', () => {
   })
   it('Verifying if any Option is empty or not', () => {
     cy.get('#sections', { timeout: 6000 }).should('have.text', 'Tests').click()
-    
+    cy.wait(1500)
     cy.get('.sectionCard', { timeout: 6000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -543,7 +543,7 @@ describe('Test for section-details', () => {
   })
   it('Checks if Delete Question button exists', () => {
     cy.get('#sections', { timeout: 6000 }).should('have.text', 'Tests').click()
-    
+    cy.wait(1500)
     cy.get('.sectionCard', { timeout: 6000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
