@@ -14,14 +14,15 @@ export async function getUserById(id: User['id']) {
 export async function deleteUserById(
   userId: string,
   workspaceId: string,
-  userEmail: string
+  email: string
 ) {
   const deleteUserWorkspace = await prisma.userWorkspace.deleteMany({
     where: { userId, workspaceId },
   })
   const invitedIdByEmail = await prisma.invites.findMany({
     where: {
-      email: userEmail,
+      email: email,
+      workspaceId,
     },
     select: {
       id: true,

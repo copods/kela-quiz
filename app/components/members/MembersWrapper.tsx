@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next'
 import EmptyStateComponent from '~/components/common-components/EmptyStateComponent'
 import MembersList from '~/components/members/MembersList'
 import InvitedMembersList from '~/components/members/InvitedMembersList'
+import { useLocation } from 'react-router-dom'
 type ActionData = {
   errors?: {
     title: string
@@ -21,6 +22,7 @@ const MembersWrapper = () => {
   const navigate = useNavigate()
   const membersActionData = useActionData() as ActionData
   const memberLoaderData = useLoaderData()
+  const location = useLocation()
   //states
   const [actionStatus, setActionStatus] = useState<boolean>(false)
   const [membersCurrentPage, setMembersCurrentPage] = useState(
@@ -46,7 +48,16 @@ const MembersWrapper = () => {
       }
     }
   }, [membersActionData, t])
-
+  useEffect(() => {
+    if (
+      (!location.search && memberLoaderData.invitedMembers.length > 0) ||
+      (!location.search && memberLoaderData.users.length > 0)
+    ) {
+      navigate(
+        `?MemberPage=${membersCurrentPage}&MemberItems=${membersPageSize}&InvitedMemberPage=${invitedMemberCurrentPage}&InvitedMemberItems=${invitedMemberPageSize}`
+      )
+    }
+  }, [location])
   useEffect(() => {
     navigate(
       `?MemberPage=${membersCurrentPage}&MemberItems=${membersPageSize}&InvitedMemberPage=${invitedMemberCurrentPage}&InvitedMemberItems=${invitedMemberPageSize}`

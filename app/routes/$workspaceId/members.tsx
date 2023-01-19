@@ -2,8 +2,8 @@ import { getUserId, requireWorkspaceId } from '~/session.server'
 import { redirect } from '@remix-run/node'
 import type { LoaderFunction, ActionFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
+import type { User } from '~/models/user.server'
 import {
-  deleteUserById,
   getAllRoles,
   getAllUsers,
   getAllUsersCount,
@@ -18,38 +18,15 @@ import { actions } from '~/constants/action.constants'
 import {
   getAllInvitedMember,
   getAllInvitedMemberCount,
-  inviteNewUser,
-  reinviteMemberForWorkspace,
 } from '~/models/invites.server'
 import MembersWrapper from '~/components/members/MembersWrapper'
+import type { LoaderData } from 'helper/members.helper'
+import {
+  deleteMemberById,
+  inviteNewMember,
+  reinviteMember,
+} from 'helper/members.helper'
 
-export type ActionData = {
-  errors?: {
-    title: string
-    status: number
-  }
-  resp?: {
-    title: string
-    status: number
-    data?: any
-  }
-}
-type LoaderData = {
-  users: Awaited<ReturnType<typeof getAllUsers>>
-  userId: Awaited<ReturnType<typeof getUserId>>
-  roles: Awaited<ReturnType<typeof getAllRoles>>
-  workspaces: Awaited<ReturnType<typeof getUserWorkspaces>>
-  currentWorkspaceId: string
-  invitedMembers: Awaited<ReturnType<typeof getAllInvitedMember>>
-  getUser: Awaited<ReturnType<typeof getUserById>>
-  membersCurrentPage: number
-  membersItemsPerPage: number
-  invitedMembersItemsPerPage: number
-  invitedMembersCurrentPage: number
-  allUsersCount: number
-  invitedUsersCount: number
-  currentWorkspaceOwner: { createdById: string } | null
-}
 export const loader: LoaderFunction = async ({ request, params }) => {
   const query = new URL(request.url).searchParams
   const membersItemsPerPage = Math.max(Number(query.get('MemberItems') || 5), 5) //To set the lower bound, so that minimum count will always be 1 for current page and 5 for items per page.
@@ -105,144 +82,34 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 export const action: ActionFunction = async ({ request, params }) => {
   const invitedByWorkspaceId = await requireWorkspaceId(request)
   const userId = await getUserId(request)
-  const getUser = await getUserById(userId as string)
   const formData = await request.formData()
   const action = await formData.get('action')
   if (action === actions.inviteMember) {
     const email = formData.get('email')
     const roleId = formData.get('roleId')
     // eslint-disable-next-line no-useless-escape
-    const emailFilter = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
-
-    if (typeof email !== 'string' || email.length === 0) {
-      return json<ActionData>(
-        { errors: { title: 'toastConstants.emailRequired', status: 400 } },
-        { status: 400 }
-      )
-    }
-    if (!emailFilter.test(email)) {
-      return json<ActionData>(
-        { errors: { title: 'toastConstants.correctEmail', status: 400 } },
-        { status: 400 }
-      )
-    }
-    if (typeof roleId !== 'string' || roleId.length === 0) {
-      return json<ActionData>(
-        { errors: { title: 'toastConstants.roleRequired', status: 400 } },
-        { status: 400 }
-      )
-    }
-    if (email === getUser?.email) {
-      return json<ActionData>(
-        { errors: { title: 'statusCheck.notInviteYourself', status: 400 } },
-        { status: 400 }
-      )
-    }
-
-    let addHandle = null
-
-    await inviteNewUser({
-      email,
-      roleId,
-      invitedByWorkspaceId,
-      userId,
-    })
-      .then((res) => {
-        addHandle = json<ActionData>(
-          {
-            resp: {
-              title: 'toastConstants.invitationSent',
-              data: res as any,
-              status: 200,
-            },
-          },
-          { status: 200 }
-        )
-      })
-      .catch((err) => {
-        let title = 'statusCheck.commonError'
-        if (err.code === 'P2002') {
-          title = 'toastConstants.memberAlreadyInvited'
-        }
-        addHandle = json<ActionData>(
-          {
-            errors: {
-              title,
-              status: 400,
-            },
-          },
-          { status: 400 }
-        )
-      })
-    return addHandle
+    const response = await inviteNewMember(
+      email as string,
+      roleId as string,
+      invitedByWorkspaceId as string,
+      userId as string
+    )
+    return response
   }
 
   if (action === actions.resendMember) {
-    const id = formData.get('id')
-    let resendMember = null
-    await reinviteMemberForWorkspace({
-      id: id as string,
-    })
-      .then(() => {
-        resendMember = json<ActionData>(
-          {
-            resp: {
-              title: 'toastConstants.invitationSent',
-              status: 200,
-            },
-          },
-          { status: 200 }
-        )
-      })
-      .catch((err) => {
-        let title = 'statusCheck.commonError'
-        resendMember = json<ActionData>(
-          {
-            errors: {
-              title,
-              status: 400,
-            },
-          },
-          { status: 400 }
-        )
-      })
-    return resendMember
+    const response = await reinviteMember(formData.get('id') as string)
+    return response
   }
   if (action === actions.deleteMember) {
-    const id = formData.get('id')
-    const user = await getUserById(id as string)
-    const userEmail = user?.email
-    if (typeof formData.get('id') !== 'string') {
-      return json<ActionData>(
-        { errors: { title: 'statusCheck.descIsReq', status: 400 } },
-        { status: 400 }
-      )
-    }
-    let deleteHandle = null
-    await deleteUserById(
+    const { email } = (await getUserById(formData.get('id') as string)) as User
+
+    const response = await deleteMemberById(
       formData.get('id') as string,
       params.workspaceId as string,
-      userEmail as string
+      email
     )
-      .then((res) => {
-        deleteHandle = json<ActionData>(
-          { resp: { title: 'statusCheck.deletedSuccess', status: 200 } },
-          { status: 200 }
-        )
-      })
-      .catch((err) => {
-        deleteHandle = json<ActionData>(
-          {
-            errors: {
-              title: 'statusCheck.commonError',
-              status: 400,
-            },
-          },
-          { status: 400 }
-        )
-      })
-
-    return deleteHandle
+    return response
   }
 
   return null
