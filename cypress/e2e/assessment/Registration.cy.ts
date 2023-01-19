@@ -23,12 +23,12 @@ describe('Test for Candidate assessment Registration', () => {
       })
   })
 
-  it('checks, register heading should be visible', () => {
+  it('Checks, register heading should be visible', () => {
     cy.visit(examLink)
     cy.get('h1').should('be.visible')
   })
 
-  it('checks, First and Last Name field of the page and button should be disable', () => {
+  it('Checks, First and Last Name field of the page and button should be disable', () => {
     cy.visit(examLink)
     cy.get('#firstName')
       .should('be.visible')
@@ -41,7 +41,7 @@ describe('Test for Candidate assessment Registration', () => {
     cy.get("[data-cy='submit-button']").should('be.disabled')
   })
 
-  it('checks, button color when it is disabled', () => {
+  it('Checks, button color when it is disabled', () => {
     cy.visit(examLink)
     cy.get("[data-cy='submit-button']").should(
       'have.css',
@@ -50,21 +50,21 @@ describe('Test for Candidate assessment Registration', () => {
     )
   })
 
-  it('checks, when first name is empty', () => {
+  it('Checks, first name is empty button should be disabled', () => {
     cy.visit(examLink)
     cy.get('#firstName').should('be.visible').should('be.empty')
     cy.get('#lastName').should('be.visible').type('jain')
     cy.get("[data-cy='submit-button']").should('be.disabled')
   })
 
-  it('checks, when last name is empty', () => {
+  it('Checks, last name is empty submit buttom should be disabled', () => {
     cy.visit(examLink)
     cy.get('#firstName').should('be.visible').type('ayushi')
     cy.get('#lastName').should('be.visible').should('be.empty')
     cy.get("[data-cy='submit-button']").should('be.disabled')
   })
 
-  it('checks, submitting the registeration form', () => {
+  it('Checks, submitting the registeration form', () => {
     cy.visit(examLink)
     cy.get('#firstName').type('aa')
     cy.get('#lastName').type('Jain')

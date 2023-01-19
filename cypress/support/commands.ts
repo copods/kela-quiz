@@ -37,10 +37,19 @@ declare global {
        *  candidate Registration for Cypress testing
        */
       CustomVisitOnCandidateSide: typeof Function
+      /**
+       *  candidate Verification for Cypress Testing
+       */
+      candidateVerification: typeof Function
+      /**
+       * candidate Name for Cypress testing
+       */
+      checkCandidateName: typeof Function
     }
   }
 }
 let ExamLink = ''
+let candidateName = 'Ayushi'
 
 function login() {
   let formData = new FormData()
@@ -117,7 +126,7 @@ function candidateRegistration() {
     .then((text) => {
       ExamLink = text
       cy.visit(text)
-      cy.get('#firstName').type('aa')
+      cy.get('#firstName').type(candidateName)
       cy.get('#lastName').type('Jain')
       cy.get("[data-cy='submit-button']")
         .should('be.visible')
@@ -130,12 +139,28 @@ function candidateRegistration() {
 function CustomVisitOnCandidateSide(path = '') {
   ExamLink && cy.visit(`${ExamLink}/${path}`)
 }
+function candidateVerification() {
+  cy.CustomVisitOnCandidateSide('verification')
+  cy.get('input[name="field-1"]').type('0')
+  cy.get('input[name="field-2"]').type('0')
+  cy.get('input[name="field-3"]').type('0')
+  cy.get('input[name="field-4"]').type('0')
+  cy.url().should('include', 'instructions')
+}
+
+function checkCandidateName() {
+  cy.get('.heading')
+    .should('be.visible')
+    .should('have.text', `Welcome ${candidateName}`)
+}
 
 Cypress.Commands.add('login', login)
 Cypress.Commands.add('cleanupUser', cleanupUser)
 Cypress.Commands.add('customVisit', customVisit)
 Cypress.Commands.add('candidateRegistration', candidateRegistration)
 Cypress.Commands.add('CustomVisitOnCandidateSide', CustomVisitOnCandidateSide)
+Cypress.Commands.add('candidateVerification', candidateVerification)
+Cypress.Commands.add('checkCandidateName', checkCandidateName)
 
 /*
 eslint
