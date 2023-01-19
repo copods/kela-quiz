@@ -11,7 +11,7 @@ import EmptyStateComponent from '../common-components/EmptyStateComponent'
 import Table from '../common-components/TableComponent'
 import ChipGroup from './ChipGroup'
 import moment from 'moment'
-import TestListActionMenu from '../TestListActionMenu'
+import ListActionMenu from '../ListActionMenu'
 import { Icon } from '@iconify/react'
 import DeletePopUp from '../common-components/DeletePopUp'
 import InviteCandidatePopup from './InviteCandidatePopup'
@@ -137,6 +137,13 @@ const TestList = () => {
   }
 
   const TestInvite = (data: Test, index: number) => {
+    const menuItemsDetailsList = [
+      {
+        id: 'Delete',
+        menuListText: `${t('commonConstants.delete')}`,
+        menuListIcon: 'ic:outline-delete-outline',
+      },
+    ]
     return (
       <>
         <div className="flex">
@@ -158,12 +165,11 @@ const TestList = () => {
             }}
             aria-label={t('members.inviteMember')}
           />
-          <TestListActionMenu
+          <ListActionMenu
             menuIcon={'mdi:dots-vertical'}
             onItemClick={setShowDeletePopup}
             open={showDeletePopup}
-            menuListIcon={'ic:outline-delete-outline'}
-            menuListText={'Delete'}
+            menuDetails={menuItemsDetailsList}
             aria-label={t('testTableItem.menu')}
             id={data.id}
             setId={setId}

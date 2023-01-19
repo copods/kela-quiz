@@ -171,7 +171,9 @@
     "allCandidatesInvited": "All candidates invited.",
     "writeDescriptionOfTest": "Write Description of Test",
     "searchCandidate": "Search Candidate",
-    "min": "Min"
+    "min": "Min",
+    "copyLink": "Link Copied Successfully",
+    "copyLinkFailed": "Fail"
   },
   "componentGlobalConstants": {
     "totalCounts": "Total Counts",
@@ -238,7 +240,8 @@
     "resendInvite": "Resend Invite",
     "resendAssessmentInvite": "Resend assessment Invite Icon",
     "unanswered": "Unanswered",
-    "incorrect": "Incorrect"
+    "incorrect": "Incorrect",
+    "copyLink": "Copy Link"
   },
   "forgotPasswordConstants": {
     "header": "Forgot password?",
