@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 import moment from 'moment'
 import { Menu } from '@headlessui/react'
-import { useSubmit } from '@remix-run/react'
+import { useSubmit, useLoaderData } from '@remix-run/react'
 import DeletePopUp from '../common-components/DeletePopUp'
 import { useEffect, useState } from 'react'
 import type { sectionActionErrorsType } from '~/interface/Interface'
@@ -43,13 +43,22 @@ const SectionCard = ({
 }) => {
   const { t } = useTranslation()
   const submit = useSubmit()
+  const data = useLoaderData()
   const [editMode, setEditMode] = useState(false)
   const [editItem, setEditItem] = useState({
     name: '',
     description: '',
   })
   const deleteSection = () => {
-    submit({ deleteSection: 'sectionDelete', id: id }, { method: 'post' })
+    submit(
+      {
+        deleteSection: 'sectionDelete',
+        id: id,
+        currentPage: data.testCurrentPage,
+        pageSize: data.testItemsPerPage,
+      },
+      { method: 'post' }
+    )
   }
   // shift + alt + Tab combination key for get back focus to selected section card
   useEffect(() => {

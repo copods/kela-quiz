@@ -9,9 +9,6 @@ import {
   useNavigate,
 } from '@remix-run/react'
 import {
-  createSection,
-  deleteSectionById,
-  editSectionById,
   getFirstSectionIdOfPreviousPage,
   getAllTestsCounts,
 } from '~/models/sections.server'
@@ -29,7 +26,12 @@ import { routes } from '~/constants/route.constants'
 import { useTranslation } from 'react-i18next'
 import { getUserWorkspaces } from '~/models/workspace.server'
 import EmptyStateComponent from '~/components/common-components/EmptyStateComponent'
-import { getAllSectionsData } from '~/components/sections/tests.helper'
+import {
+  getAllSectionsData,
+  handleAddSection,
+  handleDeleteSection,
+  handleEditSection,
+} from 'helper/tests.helper'
 
 export type ActionData = {
   errors?: {
@@ -47,6 +49,7 @@ export type ActionData = {
     title?: string
     data?: Section
     id?: string
+    lastSectionId?: Awaited<ReturnType<typeof getFirstSectionIdOfPreviousPage>>
   }
 }
 
@@ -60,100 +63,8 @@ export type LoaderData = {
   testCurrentPage: number
   testItemsPerPage: number
   getAllTestsCount: number
-  lastSectionId: Awaited<ReturnType<typeof getFirstSectionIdOfPreviousPage>>
 }
-const handleAddSection = async (
-  name: string,
-  description: string,
-  createdById: string,
-  workspaceId: string
-) => {
-  if (typeof name !== 'string' || name.length === 0) {
-    return json<ActionData>(
-      { errors: { title: 'statusCheck.nameIsReq', status: 400 } },
-      { status: 400 }
-    )
-  }
-  if (typeof description !== 'string' || description.length === 0) {
-    return json<ActionData>(
-      { errors: { title: 'statusCheck.descIsReq', status: 400 } },
-      { status: 400 }
-    )
-  }
 
-  let addHandle = null
-  await createSection({ name, description, createdById, workspaceId })
-    .then((res) => {
-      addHandle = json<ActionData>(
-        {
-          resp: {
-            status: 'statusCheck.testAddedSuccess',
-            data: res as unknown as Section,
-            check: new Date(),
-          },
-        },
-        { status: 200 }
-      )
-    })
-
-    .catch((err) => {
-      let title = 'statusCheck.commonError'
-      if (err.code === 'P2002') {
-        title = 'statusCheck.duplicate'
-      }
-      addHandle = json<ActionData>(
-        { errors: { title, status: 400, check: new Date() } },
-        { status: 400 }
-      )
-    })
-
-  return addHandle
-}
-const handleEditSection = async (
-  name: string,
-  description: string,
-  id: string
-) => {
-  if (typeof name !== 'string' || name.length === 0) {
-    return json<ActionData>(
-      { errors: { title: 'statusCheck.nameIsReq', status: 400 } },
-      { status: 400 }
-    )
-  }
-  if (typeof description !== 'string' || description.length === 0) {
-    return json<ActionData>(
-      { errors: { title: 'statusCheck.descIsReq', status: 400 } },
-      { status: 400 }
-    )
-  }
-
-  let editHandle = null
-  await editSectionById(id, name, description)
-    .then((res) => {
-      editHandle = json<ActionData>(
-        {
-          resp: {
-            status: 'statusCheck.testUpdatedSuccess',
-            data: res as unknown as Section,
-          },
-        },
-        { status: 200 }
-      )
-    })
-
-    .catch((err) => {
-      let title = 'statusCheck.commonError'
-      if (err.code === 'P2002') {
-        title = 'statusCheck.duplicate'
-      }
-      editHandle = json<ActionData>(
-        { errors: { title, status: 400, check: new Date() } },
-        { status: 400 }
-      )
-    })
-
-  return editHandle
-}
 export const loader: LoaderFunction = async ({ request, params }) => {
   try {
     // taking search params from URL
@@ -189,13 +100,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
       ? params.sectionId?.toString()
       : undefined
     const getAllTestsCount = await getAllTestsCounts(currentWorkspaceId)
-    // taking sectionId of PREVIOUS page (useCase: if there's only single test on perticular
-    // page and user delete this , navigate to previous page and select the first card)
-    const lastSectionId = await getFirstSectionIdOfPreviousPage(
-      currentWorkspaceId as string,
-      testCurrentPage,
-      testItemsPerPage
-    )
+
     if (!userId) return redirect(routes.signIn)
     const filters = `?sortBy=${sortBy}&sort=${sortOrder}&testPage=${testCurrentPage}&testItems=${testItemsPerPage}`
     return json<LoaderData>({
@@ -208,23 +113,12 @@ export const loader: LoaderFunction = async ({ request, params }) => {
       testCurrentPage,
       testItemsPerPage,
       getAllTestsCount,
-      lastSectionId,
     })
   } catch (err) {
     console.log(err)
   }
 }
-const validateTitle = (title: string) => {
-  if (typeof title !== 'string' || title.length <= 0) {
-    return 'statusCheck.nameIsReq'
-  }
-}
 
-const validateDescription = (description: string) => {
-  if (typeof description !== 'string' || description.length <= 0) {
-    return 'statusCheck.descIsReq'
-  }
-}
 export const action: ActionFunction = async ({ request, params }) => {
   const createdById = await requireUserId(request)
   const workspaceId = params.workspaceId as string
@@ -237,14 +131,6 @@ export const action: ActionFunction = async ({ request, params }) => {
   if (action === 'sectionAdd') {
     const name = formData.get('name') as string
     const description = formData.get('description') as string
-    const createSectionFieldError = {
-      title: validateTitle(name),
-      description: validateDescription(description),
-    }
-
-    if (Object.values(createSectionFieldError).some(Boolean)) {
-      return json({ createSectionFieldError }, { status: 400 })
-    }
     const response = await handleAddSection(
       name,
       description,
@@ -257,46 +143,21 @@ export const action: ActionFunction = async ({ request, params }) => {
     const name = formData.get('name') as string
     const description = formData.get('description') as string
     const id = formData.get('id') as string
-    const createSectionFieldError = {
-      title: validateTitle(name),
-      description: validateDescription(description),
-    }
-    if (Object.values(createSectionFieldError).some(Boolean)) {
-      return json({ createSectionFieldError }, { status: 400 })
-    }
     const response = await handleEditSection(name, description, id)
     return response
   }
 
   if (action === 'sectionDelete') {
+    const currentPage = formData.get('currentPage') as string
+    const pagePerItems = formData.get('pageSize') as string
+    const lastSectionId = await getFirstSectionIdOfPreviousPage(
+      workspaceId as string,
+      parseInt(currentPage),
+      parseInt(pagePerItems)
+    )
     const deleteSectionId = formData.get('id') as string
-    const deleteHandle = await deleteSectionById(deleteSectionId)
-      .then((res) => {
-        return json<ActionData>(
-          {
-            resp: {
-              status: 'statusCheck.deletedSuccess',
-              id: deleteSectionId,
-            },
-          },
-
-          { status: 200 }
-        )
-      })
-      .catch((err) => {
-        return json<ActionData>(
-          {
-            errors: {
-              title: 'statusCheck.commonError',
-              status: 400,
-              check: new Date(),
-            },
-          },
-          { status: 400 }
-        )
-      })
-
-    return deleteHandle
+    const response = await handleDeleteSection(deleteSectionId, lastSectionId)
+    return response
   }
   return 'ok'
 }
@@ -315,7 +176,6 @@ export default function SectionPage() {
       value: 'createdAt',
     },
   ]
-
   const [sectionDetailFull, setSectionDetailFull] = useState(false)
   const [showAddSectionModal, setShowAddSectionModal] = useState(false)
   const [order, setOrder] = useState(sortByOrder.desc as string)
@@ -331,9 +191,6 @@ export default function SectionPage() {
   const [testsCurrentPage, setTestsCurrentPage] = useState(data.testCurrentPage)
   const location = useLocation()
   const navigate = useNavigate()
-  useEffect(() => {
-    setTestsCurrentPage(data.testCurrentPage)
-  }, [data.testCurrentPage])
   if (t(data.status) != t('statusCheck.success')) {
     toast.error(t('statusCheck.commonError'))
   }
@@ -351,6 +208,9 @@ export default function SectionPage() {
             toast.success(t(sectionActionData.resp?.status as string))
           return sectionActionData?.resp?.data?.id as string
         })
+        navigate(
+          `/${data.currentWorkspaceId}${routes.tests}/${sectionActionData?.resp?.data?.id}?sortBy=${sortBy}&sort=${order}&testPage=${testsCurrentPage}&testItems=${testsPageSize}`
+        )
       } else if (
         t(sectionActionData.resp?.status as string) ===
         t('statusCheck.testUpdatedSuccess')
@@ -363,6 +223,23 @@ export default function SectionPage() {
         t(sectionActionData.resp?.status as string) ===
         t('statusCheck.deletedSuccess')
       ) {
+        if (
+          //checking if there is an no data for that page then redirect to the previous page
+          data.sections.length === 1 &&
+          data.sections[0].id === sectionActionData?.resp?.id
+        ) {
+          navigate(
+            `/${data.currentWorkspaceId}${routes.tests}/${
+              sectionActionData.resp?.lastSectionId?.id
+            }?sortBy=${sortBy}&sort=${order}&testPage=${
+              testsCurrentPage - 1
+            }&testItems=${testsPageSize}`
+          )
+        } else if (data.sections.length > 1) {
+          navigate(
+            `/${data.currentWorkspaceId}${routes.tests}/${data.sections[0]?.id}?sortBy=${sortBy}&sort=${order}&testPage=${testsCurrentPage}&testItems=${testsPageSize}`
+          )
+        }
         toast.success(t(sectionActionData.resp?.status as string), {
           toastId: t(sectionActionData.resp?.status as string),
         })
@@ -374,24 +251,20 @@ export default function SectionPage() {
         })
       }
     }
-  }, [sectionActionData, data.selectedSectionId, data.sections, t, navigate])
+  }, [
+    sectionActionData,
+    data.selectedSectionId,
+    data.sections,
+    t,
+    navigate,
+    testsCurrentPage,
+    sectionActionData?.resp?.lastSectionId?.id,
+    data.getAllTestsCount,
+  ])
   useEffect(() => {
     //checking if tests are zero then redirect to /tests
     if (data.getAllTestsCount === 0) {
       navigate(`/${data.currentWorkspaceId}${routes.tests}`)
-    } else if (
-      //checking if there is an no data for that page then redirect to the previous page
-      data.getAllTestsCount <=
-        testsCurrentPage * testsPageSize - testsPageSize &&
-      testsCurrentPage > 1
-    ) {
-      navigate(
-        `/${data.currentWorkspaceId}${routes.tests}/${
-          data.lastSectionId?.id
-        }?sortBy=${sortBy}&sort=${order}&testPage=${
-          testsCurrentPage - 1
-        }&testItems=${testsPageSize}`
-      )
     } else if (
       // checking if new test added && total count of tests are not zero or data is present for present page
       // navigate to given path
@@ -403,26 +276,19 @@ export default function SectionPage() {
       navigate(
         `/${data.currentWorkspaceId}${routes.tests}/${data.sections[0]?.id}?sortBy=${sortBy}&sort=${order}&testPage=${testsCurrentPage}&testItems=${testsPageSize}`
       )
-    } else if (
-      location.pathname === `/${data.currentWorkspaceId}${routes.tests}` &&
-      !location.search &&
-      data.getAllTestsCount > 0
-    ) {
-      navigate(
-        `/${data.currentWorkspaceId}${routes.tests}/${data.sections[0]?.id}?sortBy=${sortBy}&sort=${order}&testPage=${testsCurrentPage}&testItems=${testsPageSize}`
-      )
     }
   }, [
     testsCurrentPage,
     testsPageSize,
     sortBy,
     order,
-    data.lastSectionId?.id,
     t,
     data.getAllTestsCount,
     data.sections[0]?.id,
-    location.search,
   ])
+  useEffect(() => {
+    setTestsCurrentPage(data.testCurrentPage)
+  }, [data])
 
   useEffect(() => {
     const heading = document.getElementById('tests-heading')

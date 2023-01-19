@@ -3,7 +3,6 @@ import type { ActionFunction, LoaderFunction } from '@remix-run/server-runtime'
 import { json, redirect } from '@remix-run/server-runtime'
 import { useEffect } from 'react'
 import { toast } from 'react-toastify'
-import type { Section } from '~/interface/Interface'
 import AddTestComponent from '~/components/tests/AddTest'
 import { getAllSections } from '~/models/sections.server'
 import { createTest } from '~/models/tests.server'
@@ -11,6 +10,7 @@ import { getUserId, requireUserId } from '~/session.server'
 import { routes } from '~/constants/route.constants'
 import { useTranslation } from 'react-i18next'
 import { getUserWorkspaces } from '~/models/workspace.server'
+import type {  Section } from '@prisma/client'
 
 type LoaderData = {
   sections: Section[]
@@ -38,7 +38,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   let status: string = ''
   await getAllSections('', '', currentWorkspaceId as string)
     .then((res) => {
-      sections = res as unknown as Section[]
+      sections = res as Section[]
       status = 'statusCheck.success'
     })
     .catch((err) => {

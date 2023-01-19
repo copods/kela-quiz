@@ -51,7 +51,7 @@ describe('Test for GroupByTestTable, Result', () => {
 
     cy.get('#group-by-tests').should('have.text', 'Results').click()
     cy.get('h1').should('have.text', 'Results') //checking accessibility
-    cy.wait(2000)
+    
     cy.get('#descend', { timeout: 60000 }).should('have.attr', 'tabindex', '0')
   })
   it('checks, sort button should have aria label', () => {
@@ -61,7 +61,7 @@ describe('Test for GroupByTestTable, Result', () => {
       .should('have.text', 'Results')
       .click()
     cy.get('h1').should('have.text', 'Results') //checking accessibility
-    cy.wait(2000)
+    
     cy.get('#descend', { timeout: 60000 }).should(
       'have.attr',
       'aria-label',
@@ -73,7 +73,7 @@ describe('Test for GroupByTestTable, Result', () => {
     cy.wait(3000)
     cy.get('#group-by-tests').should('have.text', 'Results').click()
     cy.get('h1').should('have.text', 'Results')
-    cy.wait(2000)
+    
     cy.get('#sort-filter-body', { timeout: 60000 }).should('be.visible')
   })
   it('checks, dropdown should be visible', () => {
@@ -87,14 +87,14 @@ describe('Test for GroupByTestTable, Result', () => {
     cy.wait(3000)
     cy.get('#group-by-tests').should('have.text', 'Results').click()
     cy.get('h1').should('have.text', 'Results')
-    cy.wait(2000)
+    
     cy.get('#total-items-value', { timeout: 60000 }).should('be.visible')
   })
   it('checks,total count text should have tabIndex', () => {
     cy.wait(3000)
     cy.get('#group-by-tests').should('have.text', 'Results').click()
     cy.get('h1').should('have.text', 'Results') //checking accessibility
-    cy.wait(2000)
+    
     cy.get('#total-items-value', { timeout: 60000 }).should(
       'have.attr',
       'tabindex',
@@ -105,7 +105,7 @@ describe('Test for GroupByTestTable, Result', () => {
     cy.wait(3000)
     cy.get('#group-by-tests').should('have.text', 'Results').click()
     cy.get('h1').should('have.text', 'Results') //checking accessibility
-    cy.wait(2000)
+    
     cy.get('#total-items-value', { timeout: 60000 })
       .should('have.attr', 'tabindex', '0')
       .click()
@@ -114,7 +114,7 @@ describe('Test for GroupByTestTable, Result', () => {
   it('Total Count of Test of groupByTable', () => {
     cy.wait(3000)
     cy.get('#group-by-tests').should('have.text', 'Results').click()
-    cy.wait(2000)
+    
     cy.get('#total-count-value', { timeout: 60000 }).should('have.text', 1)
   })
   it('sort by name in ascending order ', () => {
@@ -167,7 +167,7 @@ describe('Test for GroupByTestTable, Result', () => {
   it('sort by created date in ascending order ', () => {
     cy.wait(3000)
     cy.get('#group-by-tests').should('have.text', 'Results').click()
-    cy.wait(2000)
+    
     cy.get('#sort-filter-container').within(() => {
       cy.get('.dropdownButton')
         .eq(0)
@@ -202,7 +202,7 @@ describe('Test for GroupByTestTable, Result', () => {
     cy.wait(3000)
     cy.get('#group-by-tests').should('have.text', 'Results').click()
     cy.get('h1').should('have.text', 'Results')
-    cy.wait(2000)
+    
     cy.get('#sort-filter-body', { timeout: 60000 }).should('be.visible')
     cy.get('#descend', { timeout: 8000 }).click()
     cy.get('#sort-filter-container').within(() => {
@@ -238,7 +238,7 @@ describe('Test for GroupByTestTable, Result', () => {
   it('checks,invite candidate button should be visible', () => {
     cy.viewport(1280, 720)
     cy.get('#group-by-tests').should('have.text', 'Results').click()
-    cy.wait(2000)
+    
     cy.get('.groupByItemTest').contains(test1).click()
     cy.get('#vertical-icon').click()
     cy.get('.deleteTest').should('be.visible')
@@ -246,14 +246,14 @@ describe('Test for GroupByTestTable, Result', () => {
   it('checks,table contains assessment name', () => {
     cy.wait(3000)
     cy.get('#group-by-tests').should('have.text', 'Results').click()
-    cy.wait(2000)
+    
     cy.get('[data-cy="group-by-item-test"]').should('have.text', test1)
     cy.get('.groupByItemTest').contains(test1).should('be.visible')
   })
   it('checks,table contains assessment name should be in blue color', () => {
     cy.wait(3000)
     cy.get('#group-by-tests').should('have.text', 'Results').click()
-    cy.wait(2000)
+    
     cy.get('[data-cy="group-by-item-test"]').should('have.text', test1)
 
     cy.get('.groupByItemTest')
@@ -263,7 +263,7 @@ describe('Test for GroupByTestTable, Result', () => {
   it('checks,table contains assessment name should have tabIndex', () => {
     cy.wait(3000)
     cy.get('#group-by-tests').should('have.text', 'Results').click()
-    cy.wait(2000)
+    
     cy.get('.groupByItemTest')
       .contains(test1)
       .should('have.attr', 'tabindex', '0')
@@ -272,7 +272,7 @@ describe('Test for GroupByTestTable, Result', () => {
     cy.wait(3000)
     cy.viewport(1280, 720)
     cy.get('#group-by-tests').should('have.text', 'Results').click()
-    cy.wait(2000)
+    
     cy.get('.groupByItemTest').contains(test1).click()
     cy.get('#vertical-icon', { timeout: 8000 }).click()
     cy.get('.deleteTest').should('be.visible').click()
