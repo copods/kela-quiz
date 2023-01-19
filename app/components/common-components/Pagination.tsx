@@ -112,7 +112,7 @@ const Pagination = ({
   pageSizeOptions = [5, 10, 15, 20],
   pageSize,
   setPageSize,
-  isSmallWidth,
+  hideRange,
 }: {
   onPageChange: (e: number) => void
   totalItems: number
@@ -120,16 +120,16 @@ const Pagination = ({
   pageSizeOptions?: Array<number>
   pageSize: number
   setPageSize: (e: number) => void
-  isSmallWidth?: boolean
+  hideRange?: boolean
 }) => {
   const firstPageIndex = (currentPage - 1) * pageSize
-  const siblingCount = isSmallWidth ? 0 : 1
+  const siblingCount = hideRange ? 0 : 1
   const paginationRange = usePagination({
     currentPage,
     totalItems,
     siblingCount,
     pageSize,
-    isSmallWidth,
+    hideRange,
   })
   const [selected, setSelected] = useState(pageSize)
   return (
@@ -142,7 +142,7 @@ const Pagination = ({
           setPageSize,
           onPageChange,
         })}
-        {!isSmallWidth && (
+        {!hideRange && (
           <span className="flex text-xs text-gray-600">
             Showing {firstPageIndex + 1} to{' '}
             {pageSize * currentPage > totalItems

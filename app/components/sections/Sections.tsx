@@ -182,7 +182,7 @@ const Sections = ({
           pageSize={testsPageSize!}
           setPageSize={setTestPageSize!}
           totalItems={totalCount}
-          isSmallWidth={true}
+          hideRange={true}
         />
       </div>
     </div>
