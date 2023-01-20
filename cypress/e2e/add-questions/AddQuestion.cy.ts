@@ -531,6 +531,7 @@ describe('Test for section-details', () => {
   })
   it('Checks if Delete Question button exists', () => {
     cy.get('#sections', { timeout: 6000 }).should('have.text', 'Tests').click()
+    cy.wait(1000)
     cy.get('.sectionCard', { timeout: 6000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
