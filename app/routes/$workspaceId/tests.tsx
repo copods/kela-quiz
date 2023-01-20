@@ -208,9 +208,15 @@ export default function SectionPage() {
             toast.success(t(sectionActionData.resp?.status as string))
           return sectionActionData?.resp?.data?.id as string
         })
-        navigate(
-          `/${data.currentWorkspaceId}${routes.tests}/${sectionActionData?.resp?.data?.id}?sortBy=${sortBy}&sort=${order}&testPage=${testsCurrentPage}&testItems=${testsPageSize}`
-        )
+        if (data.getAllTestsCount === 0) {
+          navigate(
+            `/${data.currentWorkspaceId}${routes.tests}/${sectionActionData?.resp?.data?.id}?sortBy=${sortBy}&sort=${order}&testPage=${testsCurrentPage}&testItems=${testsPageSize}`
+          )
+        } else {
+          navigate(
+            `/${data.currentWorkspaceId}${routes.tests}/${data.sections[0]?.id}?sortBy=${sortBy}&sort=${order}&testPage=${testsCurrentPage}&testItems=${testsPageSize}`
+          )
+        }
       } else if (
         t(sectionActionData.resp?.status as string) ===
         t('statusCheck.testUpdatedSuccess')
@@ -276,6 +282,10 @@ export default function SectionPage() {
       navigate(
         `/${data.currentWorkspaceId}${routes.tests}/${data.sections[0]?.id}?sortBy=${sortBy}&sort=${order}&testPage=${testsCurrentPage}&testItems=${testsPageSize}`
       )
+    } else if (!location.search && data.getAllTestsCount > 0) {
+      navigate(
+        `/${data.currentWorkspaceId}${routes.tests}/${data.sections[0]?.id}?sortBy=${sortBy}&sort=${order}&testPage=${testsCurrentPage}&testItems=${testsPageSize}`
+      )
     }
   }, [
     testsCurrentPage,
@@ -285,6 +295,7 @@ export default function SectionPage() {
     t,
     data.getAllTestsCount,
     data.sections[0]?.id,
+    location.search
   ])
   useEffect(() => {
     setTestsCurrentPage(data.testCurrentPage)
