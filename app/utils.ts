@@ -251,6 +251,7 @@ export const usePagination = ({
       let middleRange = range(leftSiblingIndex, rightSiblingIndex)
       return [firstPageIndex, -1, ...middleRange, -1, lastPageIndex]
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [totalItems, pageSize, siblingCount, currentPage])
   return paginationRange
 }

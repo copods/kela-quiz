@@ -73,6 +73,7 @@ const InviteCandidatePopup = ({
         }
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [actionData, testId, setOpenInvitePopup, t])
   const updatePopupAndEmailState = () => {
     setOpenInvitePopup(false)

@@ -28,11 +28,13 @@ export async function getSectionById({ id }: Pick<Section, 'id'>) {
   })
 }
 
-export async function getFirstSection(sortBy: string | null,
+export async function getFirstSection(
+  sortBy: string | null,
   sortOrder: string | null,
   workspaceId: string,
   testCurrentPage = 1,
-  testItemsPerPage = 5) {
+  testItemsPerPage = 5
+) {
   const firstSection = await prisma.section.findFirst({
     orderBy: { [sortBy ? sortBy : 'createdAt']: sortOrder ? sortOrder : 'asc' },
     take: testItemsPerPage,
@@ -41,7 +43,7 @@ export async function getFirstSection(sortBy: string | null,
     where: {
       workspaceId,
       deleted: false,
-    }
+    },
   })
 
   return firstSection?.id

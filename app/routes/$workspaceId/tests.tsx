@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import type { ActionFunction, LoaderFunction } from '@remix-run/server-runtime'
 import { redirect } from '@remix-run/server-runtime'
 import { json } from '@remix-run/node'
@@ -225,20 +226,6 @@ export default function SectionPage() {
       ) {
         setSectionActionErrors({ title: '', description: '' })
         setShowAddSectionModal(false)
-        // setSelectedSection((previous: string) => {
-        //   if (previous != sectionActionData?.resp?.data?.id)
-        //     toast.success(t(sectionActionData.resp?.status as string))
-        //   return sectionActionData?.resp?.data?.id as string
-        // })
-        if (data.getAllTestsCount === 0) {
-          navigate(
-            `/${data.currentWorkspaceId}${routes.tests}/${sectionActionData?.resp?.data?.id}?sortBy=${sortBy}&sort=${order}&testPage=${testsCurrentPage}&testItems=${testsPageSize}`
-          )
-        } else {
-          navigate(
-            `/${data.currentWorkspaceId}${routes.tests}/${data.sections[0]?.id}?sortBy=${sortBy}&sort=${order}&testPage=${testsCurrentPage}&testItems=${testsPageSize}`
-          )
-        }
       } else if (
         t(sectionActionData.resp?.status as string) ===
         t('statusCheck.testUpdatedSuccess')
@@ -262,16 +249,8 @@ export default function SectionPage() {
         })
       }
     }
-  }, [
-    sectionActionData,
-    data.selectedSectionId,
-    data.sections,
-    t,
-    navigate,
-    testsCurrentPage,
-    sectionActionData?.resp,
-    data.getAllTestsCount,
-  ])
+  }, [sectionActionData, t, navigate, sectionActionData?.resp])
+
   useEffect(() => {
     //checking if tests are zero then redirect to /tests
     if (data.getAllTestsCount === 0) {
@@ -295,12 +274,9 @@ export default function SectionPage() {
   }, [
     testsCurrentPage,
     testsPageSize,
-    sortBy,
-    order,
     t,
     data.getAllTestsCount,
     data.sections[0]?.id,
-    location.search,
   ])
   useEffect(() => {
     setTestsCurrentPage(data.testCurrentPage)
@@ -310,6 +286,7 @@ export default function SectionPage() {
     const heading = document.getElementById('tests-heading')
     heading?.focus()
   }, [])
+
   return (
     <div className="flex h-full flex-col gap-6 overflow-hidden p-1">
       {/* header */}
