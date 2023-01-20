@@ -722,7 +722,7 @@ describe('Test for Tests', () => {
   })
   it('checks,Tests details search bar should be visible', () => {
     cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
-    cy.wait(1000)
+    cy.wait(1500)
     cy.get('.sectionCard', { timeout: 40000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -733,12 +733,11 @@ describe('Test for Tests', () => {
       })
     })
     cy.get('.sectionName').contains(section1).click()
-    cy.wait(2000)
     cy.get('#section-search', { timeout: 6000 }).should('be.visible')
   })
   it('checks,Tests details search bar should have tabIndex', () => {
     cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
-    cy.wait(1000)
+    cy.wait(1500)
     cy.get('.sectionCard', { timeout: 40000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -749,7 +748,6 @@ describe('Test for Tests', () => {
       })
     })
     cy.get('.sectionName').contains(section1).click()
-    cy.wait(2000)
     cy.get('#section-search', { timeout: 6000 }).should(
       'have.attr',
       'tabindex',
@@ -758,7 +756,7 @@ describe('Test for Tests', () => {
   })
   it('checks,Tests details search bar should have focus', () => {
     cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
-    cy.wait(1000)
+    cy.wait(1500)
     cy.get('.sectionCard', { timeout: 40000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -769,12 +767,11 @@ describe('Test for Tests', () => {
       })
     })
     cy.get('.sectionName').contains(section1).click()
-    cy.wait(2000)
     cy.get('#section-search', { timeout: 6000 }).click().should('have.focus')
   })
   it('Checks,Question card should be visible', () => {
     cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
-    cy.wait(1000)
+    cy.wait(1500)
     cy.get('.sectionCard', { timeout: 40000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -785,12 +782,11 @@ describe('Test for Tests', () => {
       })
     })
     cy.get('.sectionName').contains(section1).click()
-    cy.wait(2000)
     cy.get('#question-card-wrapper', { timeout: 6000 }).should('be.visible')
   })
   it('Checks,Question card should have tabIndex', () => {
     cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
-    cy.wait(1000)
+    cy.wait(1500)
     cy.get('.sectionCard', { timeout: 40000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -801,7 +797,6 @@ describe('Test for Tests', () => {
       })
     })
     cy.get('.sectionName').contains(section1).click()
-    cy.wait(2000)
     cy.get('#question-card-wrapper', { timeout: 6000 }).should(
       'have.attr',
       'tabindex',
@@ -810,7 +805,7 @@ describe('Test for Tests', () => {
   })
   it('Checks,Question card should have aria-label', () => {
     cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
-    cy.wait(1000)
+    cy.wait(1500)
     cy.get('.sectionCard', { timeout: 40000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -821,7 +816,6 @@ describe('Test for Tests', () => {
       })
     })
     cy.get('.sectionName').contains(section1).click()
-    cy.wait(2000)
     cy.get('#question-card-wrapper', { timeout: 6000 }).should(
       'have.attr',
       'aria-label',
@@ -830,7 +824,7 @@ describe('Test for Tests', () => {
   })
   it('Checks,initially option card should have max height 0', () => {
     cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
-    cy.wait(1000)
+    cy.wait(1500)
     cy.get('.sectionCard', { timeout: 40000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -841,7 +835,6 @@ describe('Test for Tests', () => {
       })
     })
     cy.get('.sectionName').contains(section1).click()
-    cy.wait(2000)
     cy.get('#options-wrapper', { timeout: 6000 }).should(
       'have.css',
       'max-height',
@@ -850,7 +843,7 @@ describe('Test for Tests', () => {
   })
   it('Checks,initially option card should have expand after clicking on question card', () => {
     cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
-    cy.wait(1000)
+    cy.wait(1500)
     cy.get('.sectionCard', { timeout: 40000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -861,7 +854,6 @@ describe('Test for Tests', () => {
       })
     })
     cy.get('.sectionName').contains(section1).click()
-    cy.wait(2000)
     cy.get('#question-card-wrapper', { timeout: 6000 })
       .should('be.visible')
       .click()
@@ -872,7 +864,7 @@ describe('Test for Tests', () => {
   })
   it('Checks,question type chip should be visible', () => {
     cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
-    cy.wait(1000)
+    cy.wait(1500)
     cy.get('.sectionCard', { timeout: 40000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -883,7 +875,6 @@ describe('Test for Tests', () => {
       })
     })
     cy.get('.sectionName').contains(section1).click()
-    cy.wait(2000)
     cy.get('#question-card-wrapper', { timeout: 6000 })
       .should('be.visible')
       .click()

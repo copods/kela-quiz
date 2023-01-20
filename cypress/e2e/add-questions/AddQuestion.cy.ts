@@ -553,7 +553,7 @@ describe('Test for section-details', () => {
       })
     })
     cy.get('.sectionName').contains(section1).click()
-
+    cy.wait(1500)
     cy.get('.question', { timeout: 8000 })
       .contains('What is useRef() ?')
       .trigger('mouseover')
