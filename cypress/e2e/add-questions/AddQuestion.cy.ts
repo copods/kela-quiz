@@ -22,7 +22,7 @@ describe('Test for section-details', () => {
       })
     })
     cy.get('.sectionName').contains(section1).click()
-    
+
     cy.get('#add-question', { timeout: 6000 }).should(
       'have.text',
       `+ ${addQuestion.addQuestion}`
@@ -42,7 +42,7 @@ describe('Test for section-details', () => {
       })
     })
     cy.get('.sectionName').contains(section1).click()
-    
+
     cy.get('#add-question', { timeout: 20000 })
       .should('have.text', `+ ${addQuestion.addQuestion}`)
       .click()
@@ -67,7 +67,7 @@ describe('Test for section-details', () => {
       })
     })
     cy.get('.sectionName').contains(section1).click()
-    
+
     cy.get('#add-question', { timeout: 20000 })
       .should('have.text', `+ ${addQuestion.addQuestion}`)
       .click()
@@ -94,7 +94,7 @@ describe('Test for section-details', () => {
       })
     })
     cy.get('.sectionName').contains(section1).click()
-    
+
     cy.get('#add-question', { timeout: 20000 })
       .should('have.text', `+ ${addQuestion.addQuestion}`)
       .click()
@@ -141,7 +141,7 @@ describe('Test for section-details', () => {
       })
     })
     cy.get('.sectionName').contains(section1).click()
-    
+
     cy.get('#add-question', { timeout: 6000 })
       .should('have.text', `+ ${addQuestion.addQuestion}`)
       .click()
@@ -187,7 +187,7 @@ describe('Test for section-details', () => {
       })
     })
     cy.get('.sectionName').contains(section1).click()
-    
+
     cy.get('#add-question', { timeout: 6000 })
       .should('have.text', `+ ${addQuestion.addQuestion}`)
       .click()
@@ -236,7 +236,7 @@ describe('Test for section-details', () => {
       })
     })
     cy.get('.sectionName').contains(section1).click()
-    
+
     cy.get('#add-question', { timeout: 6000 })
       .should('have.text', `+ ${addQuestion.addQuestion}`)
       .click()
@@ -284,7 +284,7 @@ describe('Test for section-details', () => {
       })
     })
     cy.get('.sectionName').contains(section1).click()
-    
+
     cy.get('#add-question', { timeout: 6000 })
       .should('have.text', `+ ${addQuestion.addQuestion}`)
       .click()
@@ -327,7 +327,7 @@ describe('Test for section-details', () => {
       })
     })
     cy.get('.sectionName').contains(section1).click()
-    
+
     cy.get('#add-question', { timeout: 6000 })
       .should('have.text', `+ ${addQuestion.addQuestion}`)
       .click()
@@ -375,7 +375,6 @@ describe('Test for section-details', () => {
       })
     })
     cy.get('.sectionName').contains(section1).click()
-    
 
     cy.get('#add-question', { timeout: 6000 })
       .should('have.text', `+ ${addQuestion.addQuestion}`)
@@ -421,7 +420,7 @@ describe('Test for section-details', () => {
       })
     })
     cy.get('.sectionName').contains(section1).click()
-    
+
     cy.get('#section-details-heading', { timeout: 6000 })
       .should('be.visible', { timeout: 4000 })
       .should('have.text', section1)
@@ -467,7 +466,7 @@ describe('Test for section-details', () => {
       })
     })
     cy.get('.sectionName').contains(section1).click()
-    
+
     cy.get('#section-details-heading', { timeout: 6000 })
       .should('be.visible', { timeout: 4000 })
       .should('have.text', section1)
@@ -500,7 +499,7 @@ describe('Test for section-details', () => {
       })
     })
     cy.get('.sectionName').contains(section1).click()
-    
+
     cy.get('#section-details-heading', { timeout: 6000 })
       .should('be.visible', { timeout: 4000 })
       .should('have.text', section1)
@@ -554,7 +553,7 @@ describe('Test for section-details', () => {
       })
     })
     cy.get('.sectionName').contains(section1).click()
-    
+
     cy.get('.question', { timeout: 8000 })
       .contains('What is useRef() ?')
       .trigger('mouseover')
