@@ -138,12 +138,7 @@ export const deleteMemberById = async (
   workspaceId: string,
   email: string
 ) => {
-  // if (typeof id !== 'string') {
-  //   return json<ActionData>(
-  //     { errors: { title: 'statusCheck.descIsReq', status: 400 } },
-  //     { status: 400 }
-  //   )
-  // }
+
   const deleteHandle = deleteUserById(id, workspaceId, email)
     .then((res) => {
       return json<ActionData>(

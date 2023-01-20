@@ -40,7 +40,6 @@ export async function inviteNewUser({
   })
   if (res) {
     const invite = res
-
     const workspaceJoinLink =
       env.PUBLIC_URL + '/workspace/' + invite.id + '/join'
     const name = ((invite.invitedById?.firstName as string) +

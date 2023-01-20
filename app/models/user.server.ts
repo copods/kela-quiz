@@ -23,6 +23,7 @@ export async function deleteUserById(
     where: {
       email: email,
       workspaceId,
+      deleted: false,
     },
     select: {
       id: true,
