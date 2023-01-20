@@ -204,6 +204,7 @@ describe('Test for GroupByTestTable, Result', () => {
     cy.viewport(1280, 720)
     cy.get('#group-by-tests').should('have.text', 'Results').click()
     cy.get('.groupByItemTest').contains(test1).click()
+    cy.wait(1000)
     cy.get('#vertical-icon', { timeout: 6000 }).should('be.visible')
     cy.get('#vertical-icon', { timeout: 6000 }).click()
     cy.get('[data-cy="resend-invite"]').should('be.visible')

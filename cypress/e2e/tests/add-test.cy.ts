@@ -139,7 +139,11 @@ describe('Creating assessments', () => {
     cy.get('#add-test', { timeout: 6000 })
       .should('have.text', `+ ${testsConstants.addAssessmentbutton}`)
       .click()
-    cy.get('#next-button').should('have.css', 'color', 'rgb(249, 250, 251)')
+    cy.get('#next-button', { timeout: 6000 }).should(
+      'have.css',
+      'color',
+      'rgb(249, 250, 251)'
+    )
   })
   it('Checks next button cursor', () => {
     cy.get('a')
@@ -186,7 +190,7 @@ describe('Creating assessments', () => {
     cy.get('#add-test', { timeout: 6000 })
       .should('have.text', `+ ${testsConstants.addAssessmentbutton}`)
       .click()
-    cy.get('#next-button').should(
+    cy.get('#next-button', { timeout: 6000 }).should(
       'have.css',
       'background-color',
       'rgb(162, 164, 214)'
@@ -261,7 +265,11 @@ describe('Creating assessments', () => {
     cy.get('#add-test', { timeout: 6000 })
       .should('have.text', `+ ${testsConstants.addAssessmentbutton}`)
       .click()
-    cy.get('#back-button').should('have.css', 'font-weight', '500')
+    cy.get('#back-button', { timeout: 6000 }).should(
+      'have.css',
+      'font-weight',
+      '500'
+    )
   })
   it('Checks back button background color', () => {
     cy.get('a')
@@ -497,7 +505,7 @@ describe('Creating assessments', () => {
       'include',
       '/assessments/add-assessment'
     )
-    cy.get('button#next-button')
+    cy.get('button#next-button', { timeout: 6000 })
       .should('have.text', 'Next')
       .should('have.disabled', true)
   })
@@ -546,7 +554,10 @@ describe('Creating assessments', () => {
     cy.get('#add-test', { timeout: 6000 })
       .should('have.text', `+ ${testsConstants.addAssessmentbutton}`)
       .click()
-    cy.location('pathname').should('include', '/assessments/add-assessment')
+    cy.location('pathname', { timeout: 6000 }).should(
+      'include',
+      '/assessments/add-assessment'
+    )
     cy.get('input[placeholder="Enter assessment name"]', { timeout: 6000 })
       .clear()
       .type(test)
