@@ -1,5 +1,3 @@
-import { testsConstants } from "~/constants/common.constants"
-
 const test1 = `Aptitude - assessment1`
 
 describe('Test for GroupByTestTable, Result', () => {
@@ -206,9 +204,6 @@ describe('Test for GroupByTestTable, Result', () => {
     cy.viewport(1280, 720)
     cy.get('#group-by-tests').should('have.text', 'Results').click()
     cy.get('.groupByItemTest').contains(test1).click()
-    cy.wait(1000)
-    cy.get('#vertical-icon').click()
-    cy.get('.deleteTest').should('be.visible')
     cy.get('#vertical-icon', { timeout: 6000 }).should('be.visible')
     cy.get('#vertical-icon', { timeout: 6000 }).click()
     cy.get('[data-cy="resend-invite"]').should('be.visible')
@@ -245,11 +240,6 @@ describe('Test for GroupByTestTable, Result', () => {
     cy.viewport(1280, 720)
     cy.get('#group-by-tests').should('have.text', 'Results').click()
     cy.get('.groupByItemTest').contains(test1).click()
-    cy.wait(2000)
-    cy.get('#title', { timeout: 6000 }).should('be.visible')
-    cy.get('#vertical-icon', { timeout: 6000 }).click()
-    cy.get('.deleteTest').should('be.visible').click()
-    cy.get('.Toastify__toast').should('have.text', testsConstants.reinvited)
     cy.get('#vertical-icon', { timeout: 6000 }).should('be.visible')
     cy.get('#vertical-icon', { timeout: 6000 }).click()
     cy.get('[data-cy="resend-invite"]').should('be.visible').click()
