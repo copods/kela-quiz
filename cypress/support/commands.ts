@@ -113,7 +113,7 @@ function candidateRegistration() {
   cy.customVisit('/members')
   cy.get('#group-by-tests').click()
   cy.get('a').find('#tests').click()
-  cy.get('#invite-popup-open').click()
+  cy.get('#invite-popup-open0').click()
   cy.get('.inviteInput').type(`ki${emailId}@copds.co`)
   cy.get('[data-cy="submit"]').click()
   cy.get('#group-by-tests').click()

@@ -24,7 +24,7 @@ describe('Test for candidate assessment verfication', () => {
     cy.tick(1000)
     cy.get('.resendOTP').should('have.text', ' 00:58')
     cy.tick(1000)
-    cy.get('.resendOTP').should('have.text', ' 00:58')
+    cy.get('.resendOTP').should('have.text', ' 00:57')
   })
 
   it('Checks, Timer ends and text Changes', () => {
