@@ -278,6 +278,7 @@ export interface CandidateResult {
   startedAt: Date
   updatedAt: Date
   workspaceId?: string
+  link?: string
 }
 export interface sectionActionErrorsType {
   title: string
