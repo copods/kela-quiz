@@ -15,13 +15,13 @@ const SectionCard = ({
   createdBy,
   createdAt,
   id,
-  err,
-  actionStatusData,
   setDeleted,
   setIsDelete,
   isDelete,
   setSectionActionErrors,
   sectionActionErrors,
+  currentPageCount,
+  filter,
 }: {
   name: string
   description: string
@@ -30,8 +30,6 @@ const SectionCard = ({
   createdBy: string
   createdAt: Date
   id: string
-  err?: string
-  actionStatusData?: string
   setDeleted?: (e: boolean) => void
   setIsDelete: (e: boolean) => void
   isDelete: boolean
@@ -40,6 +38,8 @@ const SectionCard = ({
     title,
     description,
   }: sectionActionErrorsType) => void
+  currentPageCount: number
+  filter: string
 }) => {
   const { t } = useTranslation()
   const submit = useSubmit()
@@ -56,6 +56,12 @@ const SectionCard = ({
         id: id,
         currentPage: data.testCurrentPage,
         pageSize: data.testItemsPerPage,
+        totalSectionsOnCurrentPage: String(currentPageCount),
+        filter: filter
+          .split('?')[1]
+          .split('&')
+          .filter((res) => res.includes('sortBy') || res.includes('sort'))
+          .join('&'),
       },
       { method: 'post' }
     )

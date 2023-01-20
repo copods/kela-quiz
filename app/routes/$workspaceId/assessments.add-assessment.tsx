@@ -10,7 +10,7 @@ import { getUserId, requireUserId } from '~/session.server'
 import { routes } from '~/constants/route.constants'
 import { useTranslation } from 'react-i18next'
 import { getUserWorkspaces } from '~/models/workspace.server'
-import type {  Section } from '@prisma/client'
+import type { Section } from '@prisma/client'
 
 type LoaderData = {
   sections: Section[]

@@ -4,7 +4,6 @@ import {
   getAllSections,
   deleteSectionById,
 } from '~/models/sections.server'
-import type { getFirstSectionIdOfPreviousPage } from '~/models/sections.server'
 import type { sectionActionErrorsType } from '~/interface/Interface'
 import { json } from '@remix-run/node'
 import type { Section } from '@prisma/client'
@@ -26,7 +25,6 @@ export type ActionData = {
     title?: string
     data?: Section
     id?: string
-    lastSectionId?: Awaited<ReturnType<typeof getFirstSectionIdOfPreviousPage>>
   }
 }
 
@@ -168,10 +166,7 @@ export const handleEditSection = async (
 
   return editHandle
 }
-export const handleDeleteSection = async (
-  deleteSectionId: string,
-  lastSectionId: Awaited<ReturnType<typeof getFirstSectionIdOfPreviousPage>>
-) => {
+export const handleDeleteSection = async (deleteSectionId: string) => {
   const deleteHandle = await deleteSectionById(deleteSectionId)
     .then((res) => {
       return json<ActionData>(
@@ -179,7 +174,6 @@ export const handleDeleteSection = async (
           resp: {
             status: 'statusCheck.deletedSuccess',
             id: deleteSectionId,
-            lastSectionId: lastSectionId,
           },
         },
 

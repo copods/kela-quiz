@@ -8,10 +8,7 @@ import {
   useLocation,
   useNavigate,
 } from '@remix-run/react'
-import {
-  getFirstSectionIdOfPreviousPage,
-  getAllTestsCounts,
-} from '~/models/sections.server'
+import { getAllTestsCounts, getFirstSection } from '~/models/sections.server'
 import { useState, useEffect } from 'react'
 import { Icon } from '@iconify/react'
 import { getUserId, requireUserId } from '~/session.server'
@@ -49,7 +46,6 @@ export type ActionData = {
     title?: string
     data?: Section
     id?: string
-    lastSectionId?: Awaited<ReturnType<typeof getFirstSectionIdOfPreviousPage>>
   }
 }
 
@@ -150,14 +146,43 @@ export const action: ActionFunction = async ({ request, params }) => {
   if (action === 'sectionDelete') {
     const currentPage = formData.get('currentPage') as string
     const pagePerItems = formData.get('pageSize') as string
-    const lastSectionId = await getFirstSectionIdOfPreviousPage(
-      workspaceId as string,
-      parseInt(currentPage),
-      parseInt(pagePerItems)
-    )
+    const totalItems = formData.get('totalSectionsOnCurrentPage') as string
+    const sortFilter = formData.get('filter') as string
     const deleteSectionId = formData.get('id') as string
-    const response = await handleDeleteSection(deleteSectionId, lastSectionId)
-    return response
+    await handleDeleteSection(deleteSectionId)
+
+    const sectionId = await getFirstSection(
+      sortFilter
+        .split('&')
+        .filter((res) => res.includes('sortBy'))[0]
+        .split('=')[1],
+      sortFilter
+        .split('&')
+        .filter((res) => res.includes('sort='))[0]
+        .split('=')[1],
+      params.workspaceId as string,
+      totalItems === '1' && currentPage !== '1'
+        ? Number(currentPage) - 1
+        : Number(currentPage),
+      Number(pagePerItems)
+    )
+    if (sectionId && totalItems === '1' && currentPage !== '1') {
+      return redirect(
+        `/${params.workspaceId}${
+          routes.tests
+        }/${sectionId}?${sortFilter}&testPage=${
+          Number(currentPage) - 1
+        }&testItems=${pagePerItems}`
+      )
+    } else {
+      if (sectionId) {
+        return redirect(
+          `/${params.workspaceId}${routes.tests}/${sectionId}?${sortFilter}&testPage=${currentPage}&testItems=${pagePerItems}`
+        )
+      } else {
+        return redirect(`/${params.workspaceId}${routes.tests}`)
+      }
+    }
   }
   return 'ok'
 }
@@ -184,9 +209,6 @@ export default function SectionPage() {
     title: '',
     description: '',
   })
-  const [selectedSection, setSelectedSection] = useState(
-    data.selectedSectionId || data.sections[0]?.id || 'NA'
-  )
   const [testsPageSize, setTestPageSize] = useState(5)
   const [testsCurrentPage, setTestsCurrentPage] = useState(data.testCurrentPage)
   const location = useLocation()
@@ -203,11 +225,11 @@ export default function SectionPage() {
       ) {
         setSectionActionErrors({ title: '', description: '' })
         setShowAddSectionModal(false)
-        setSelectedSection((previous: string) => {
-          if (previous != sectionActionData?.resp?.data?.id)
-            toast.success(t(sectionActionData.resp?.status as string))
-          return sectionActionData?.resp?.data?.id as string
-        })
+        // setSelectedSection((previous: string) => {
+        //   if (previous != sectionActionData?.resp?.data?.id)
+        //     toast.success(t(sectionActionData.resp?.status as string))
+        //   return sectionActionData?.resp?.data?.id as string
+        // })
         if (data.getAllTestsCount === 0) {
           navigate(
             `/${data.currentWorkspaceId}${routes.tests}/${sectionActionData?.resp?.data?.id}?sortBy=${sortBy}&sort=${order}&testPage=${testsCurrentPage}&testItems=${testsPageSize}`
@@ -229,23 +251,6 @@ export default function SectionPage() {
         t(sectionActionData.resp?.status as string) ===
         t('statusCheck.deletedSuccess')
       ) {
-        if (
-          //checking if there is an no data for that page then redirect to the previous page
-          data.sections.length === 1 &&
-          data.sections[0].id === sectionActionData?.resp?.id
-        ) {
-          navigate(
-            `/${data.currentWorkspaceId}${routes.tests}/${
-              sectionActionData.resp?.lastSectionId?.id
-            }?sortBy=${sortBy}&sort=${order}&testPage=${
-              testsCurrentPage - 1
-            }&testItems=${testsPageSize}`
-          )
-        } else if (data.sections.length > 1) {
-          navigate(
-            `/${data.currentWorkspaceId}${routes.tests}/${data.sections[0]?.id}?sortBy=${sortBy}&sort=${order}&testPage=${testsCurrentPage}&testItems=${testsPageSize}`
-          )
-        }
         toast.success(t(sectionActionData.resp?.status as string), {
           toastId: t(sectionActionData.resp?.status as string),
         })
@@ -264,7 +269,7 @@ export default function SectionPage() {
     t,
     navigate,
     testsCurrentPage,
-    sectionActionData?.resp?.lastSectionId?.id,
+    sectionActionData?.resp,
     data.getAllTestsCount,
   ])
   useEffect(() => {
@@ -295,7 +300,7 @@ export default function SectionPage() {
     t,
     data.getAllTestsCount,
     data.sections[0]?.id,
-    location.search
+    location.search,
   ])
   useEffect(() => {
     setTestsCurrentPage(data.testCurrentPage)
@@ -339,19 +344,15 @@ export default function SectionPage() {
           <div className={`${sectionDetailFull ? 'hidden' : ''}`}>
             <Sections
               sections={data.sections as Section[]}
-              selectedSection={selectedSection}
               filters={data.filters}
               sortBy={sortBy}
               setSortBy={setSortBy}
               order={order}
               setOrder={setOrder}
-              setSelectedSection={setSelectedSection}
               sortByDetails={sortByDetails}
               currentWorkspaceId={data.currentWorkspaceId as string}
               sectionActionErrors={sectionActionErrors}
               setSectionActionErrors={setSectionActionErrors}
-              testCurrentPage={data.testCurrentPage}
-              testCurrentItems={data.testCurrentPage}
               totalCount={data.getAllTestsCount}
               testsPageSize={testsPageSize}
               testsCurrentPage={testsCurrentPage}

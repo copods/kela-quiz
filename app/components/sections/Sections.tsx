@@ -10,29 +10,25 @@ import Pagination from '../common-components/Pagination'
 
 const SectionLink = ({
   section,
-  actionStatusData,
-  err,
   filter,
-  setSelectedSection,
   currentWorkspaceId,
   sectionActionErrors,
   setSectionActionErrors,
+  currentPageCount,
 }: {
   section: Section & {
     count?: number
     questions?: Array<Question>
     sectionInTest: Array<SectionInTest>
   }
-  actionStatusData?: string
-  err?: string
   filter: string
   currentWorkspaceId: string
-  setSelectedSection: (e: string) => void
   sectionActionErrors?: sectionActionErrorsType
   setSectionActionErrors?: ({
     title,
     description,
   }: sectionActionErrorsType) => void
+  currentPageCount: number
 }) => {
   const path = `/${currentWorkspaceId}${routes.tests}/${section.id}${filter}`
   const [isDelete, setIsDelete] = useState(false)
@@ -52,11 +48,9 @@ const SectionLink = ({
       }, 500)
     }
   }, [deleted])
-
   return (
     <div
       onClick={() => {
-        setSelectedSection(section.id)
         if (isActive) {
           return
         }
@@ -72,7 +66,6 @@ const SectionLink = ({
           window.location.href = '#section-search'
           // alt + Tab combination key for moving focus to section detail
         } else if (e.key === 'Enter') navigate(path)
-        setSelectedSection(section.id)
       }}
     >
       <SectionCard
@@ -83,13 +76,13 @@ const SectionLink = ({
         questionsCount={section?.count as number}
         createdAt={section.createdAt}
         id={section?.id}
-        actionStatusData={actionStatusData}
-        err={err}
         setDeleted={setDeleted}
         setIsDelete={setIsDelete}
         isDelete={isDelete}
         sectionActionErrors={sectionActionErrors}
         setSectionActionErrors={setSectionActionErrors}
+        currentPageCount={currentPageCount}
+        filter={filter}
       />
     </div>
   )
@@ -97,14 +90,10 @@ const SectionLink = ({
 type SectionType = {
   sections: Section[]
   sortBy: string
-  selectedSection: string
   filters: string
   setSortBy: (e: string) => void
   order: string
-  err?: string
-  actionStatusData?: string
   setOrder: (e: string) => void
-  setSelectedSection: (e: string) => void
   sortByDetails: Array<{ name: string; value: string }>
   currentWorkspaceId: string
   sectionActionErrors?: sectionActionErrorsType
@@ -112,8 +101,6 @@ type SectionType = {
     title,
     description,
   }: sectionActionErrorsType) => void
-  testCurrentPage: number
-  testCurrentItems: number
   totalCount: number
   testsPageSize: number
   testsCurrentPage: number
@@ -127,15 +114,10 @@ const Sections = ({
   setSortBy,
   order,
   setOrder,
-  setSelectedSection,
   sortByDetails,
-  err,
-  actionStatusData,
   currentWorkspaceId,
   sectionActionErrors,
   setSectionActionErrors,
-  testCurrentPage,
-  testCurrentItems,
   totalCount,
   testsPageSize,
   testsCurrentPage,
@@ -168,12 +150,10 @@ const Sections = ({
             key={section.id}
             section={section}
             filter={filters}
-            setSelectedSection={setSelectedSection}
-            actionStatusData={actionStatusData}
-            err={err}
             sectionActionErrors={sectionActionErrors}
             setSectionActionErrors={setSectionActionErrors}
             currentWorkspaceId={currentWorkspaceId}
+            currentPageCount={sections?.length}
           />
         ))}
         <Pagination

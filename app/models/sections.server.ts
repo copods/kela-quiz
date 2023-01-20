@@ -28,15 +28,20 @@ export async function getSectionById({ id }: Pick<Section, 'id'>) {
   })
 }
 
-export async function getFirstSection(workspaceId: string) {
+export async function getFirstSection(sortBy: string | null,
+  sortOrder: string | null,
+  workspaceId: string,
+  testCurrentPage = 1,
+  testItemsPerPage = 5) {
   const firstSection = await prisma.section.findFirst({
+    orderBy: { [sortBy ? sortBy : 'createdAt']: sortOrder ? sortOrder : 'asc' },
+    take: testItemsPerPage,
+    skip: (testCurrentPage - 1) * testItemsPerPage,
+
     where: {
       workspaceId,
       deleted: false,
-    },
-    orderBy: {
-      createdAt: 'desc',
-    },
+    }
   })
 
   return firstSection?.id
@@ -92,29 +97,6 @@ export async function getAllSections(
     )
   }
   return res
-}
-export async function getFirstSectionIdOfPreviousPage(
-  workspaceId: string,
-  testCurrentPage = 1,
-  testItemsPerPage = 5
-) {
-  const PER_PAGE_ITEMS = testItemsPerPage
-  return await prisma.section.findFirst({
-    take: PER_PAGE_ITEMS,
-    skip:
-      testCurrentPage === 1
-        ? (testCurrentPage - 1) * PER_PAGE_ITEMS
-        : (testCurrentPage - 2) * PER_PAGE_ITEMS,
-
-    where: {
-      deleted: false,
-      workspaceId,
-    },
-
-    select: {
-      id: true,
-    },
-  })
 }
 
 export async function createSection({
