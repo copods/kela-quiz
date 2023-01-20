@@ -40,10 +40,6 @@ const CandidateListOfTest = () => {
   const [menuListOpen, setmenuListOpen] = useState<boolean>(false)
   const [searchText, setSearchText] = useState('')
   const [statusFilter, setStatusFilter] = useState(filterByStatus[0].value)
-  useEffect(() => {
-    navigate(`?page=${1}&pageSize=${pageSize}&filterByStatus=${statusFilter}`)
-    setStatusFilter(statusFilter)
-  }, [statusFilter])
 
   const filteredData =
     candidatesLoaderData.candidatesOfTest.candidateTest?.filter(
@@ -59,9 +55,24 @@ const CandidateListOfTest = () => {
   const [currentPage, setCurrentPage] = useState(
     candidatesLoaderData.currentPage
   )
+
+  useEffect(() => {
+    navigate(`?page=${1}&pageSize=${pageSize}&filterByStatus=${statusFilter}`)
+    setStatusFilter(statusFilter)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [statusFilter])
+
+  useEffect(() => {
+    navigate(
+      `?page=${currentPage}&pageSize=${pageSize}&filterByStatus=${statusFilter}`
+    )
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pageSize, currentPage])
+
   useEffect(() => {
     setCurrentPage(candidatesLoaderData.currentPage)
   }, [candidatesLoaderData.currentPage])
+
   const resendInvite = (id: string, candidateId: string, testId: string) => {
     submit(
       {
@@ -73,6 +84,20 @@ const CandidateListOfTest = () => {
       { method: 'post' }
     )
   }
+
+  useEffect(() => {
+    if (
+      actionData?.candidateInviteStatus ===
+      t('candidateExamConstants.candidateTestCreated')
+    ) {
+      toast.success(t('testsConstants.reinvited'))
+    }
+    if (
+      actionData?.candidateInviteStatus === t('candidateExamConstants.endTest')
+    ) {
+      toast.error(t('testsConstants.testEnded'))
+    }
+  }, [actionData, t])
 
   const SeriaLNoCell = (data: { [key: string]: string }, index: number) => {
     return <span>{index + 1}</span>
@@ -210,26 +235,6 @@ const CandidateListOfTest = () => {
     { title: 'Status', field: 'status', render: StatusCell, width: '10%' },
   ]
 
-  useEffect(() => {
-    navigate(
-      `?page=${currentPage}&pageSize=${pageSize}&filterByStatus=${statusFilter}`
-    )
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pageSize, currentPage])
-
-  useEffect(() => {
-    if (
-      actionData?.candidateInviteStatus ===
-      t('candidateExamConstants.candidateTestCreated')
-    ) {
-      toast.success(t('testsConstants.reinvited'))
-    }
-    if (
-      actionData?.candidateInviteStatus === t('candidateExamConstants.endTest')
-    ) {
-      toast.error(t('testsConstants.testEnded'))
-    }
-  }, [actionData, t])
   return (
     <div id="test-details" className="flex h-full flex-col gap-4 ">
       <header className="border-b border-solid border-slate-300">
