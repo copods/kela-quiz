@@ -2,6 +2,7 @@ import { Icon } from '@iconify/react'
 import { useLoaderData, useNavigate } from '@remix-run/react'
 import { routes } from '~/constants/route.constants'
 import ResultDetailsQuestionsPreview from './ResultDetailsQuestionsPreview'
+import Divider from '../common-components/divider'
 
 const ResultDetailBySections = () => {
   const resultDetailsLoaderData = useLoaderData()
@@ -44,7 +45,7 @@ const ResultDetailBySections = () => {
             </h1>
           </div>
         </div>
-        <hr className="h-px w-full bg-gray-900" />
+        <Divider height="1px" />
       </header>
       <div className="flex flex-col gap-6">
         {sectionDetail.questions.map((questions: any) => {

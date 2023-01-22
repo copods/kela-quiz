@@ -1,4 +1,7 @@
-import type { Option } from '~/interface/Interface'
+import { areEqual } from 'helper/results.helper'
+import { useTranslation } from 'react-i18next'
+import type { Option, CorrectAnswer, QuestionType } from '~/interface/Interface'
+import Divider from '../common-components/divider'
 const ResultDetailsQuestionsPreview = ({
   textAnswer,
   status,
@@ -9,83 +12,56 @@ const ResultDetailsQuestionsPreview = ({
   checkOrder,
   questionType,
 }: {
-  textAnswer: any
+  textAnswer: Array<CorrectAnswer>
   status: string
-  selectedOptions: any
-  question: any
-  correctAnswer: any
-  correctOption: any
+  selectedOptions: Array<Option>
+  question: string
+  correctAnswer: Array<CorrectAnswer>
+  correctOption: Array<Option>
   checkOrder: boolean
-  questionType: any
+  questionType: QuestionType
 }) => {
+  const { t } = useTranslation()
   const correctAnswersArray = correctAnswer.map((a: any) => a.answer)
-  function areEqual(textAnswer: any, correctAnswersArray: any) {
-    let N = textAnswer.length
-    let M = correctAnswersArray.length
-
-    // If lengths of array are not equal means
-    // array are not equal
-    if (N != M) return false
-
-    // Sort both arrays
-    textAnswer.sort()
-    correctAnswersArray.sort()
-
-    // Linearly compare elements
-    for (let i = 0; i < N; i++)
-      if (textAnswer[i] != correctAnswersArray[i]) return false
-
-    // If all elements were same.
-    return true
-  }
-  const mcq = (correctOptionsId: any, userAnswers: any) => {
-    let correctFlag = false
-    if (correctOptionsId?.length === userAnswers?.length) {
-      correctFlag = true
-      for (let i = 0; i < correctOptionsId?.length; i++) {
-        if (correctOptionsId[i].localeCompare(userAnswers[i]) != 0) {
-          correctFlag = false
-          break
-        }
-      }
-    }
-    if (correctFlag) {
-      return 'correct'
-    } else {
-      return 'incorrect'
-    }
-  }
+  let flag = selectedOptions.map((selectedOptions: Option, index: number) => {
+    return selectedOptions.option === correctOption[index]?.option
+      ? 'correct'
+      : 'incorrect'
+  })
   return (
     <div className="flex w-full  rounded-lg  border border-gray-300 bg-gray-50">
-      <div className="flex w-6/12 flex-col gap-2 p-6">
-        <div>
-        <span  className="rounded-52 border border-gray-700 px-3 text-sm text-gray-700">{questionType.displayName==='text'?'TEXT':'MCQ'}</span>
-        {questionType.displayName==='text'&&(
-          <span>{checkOrder?'ordered':'unordered'}</span>
-        )}
+      <div className="flex w-6/12 flex-col gap-6 p-6">
+        <div className="flex items-center gap-8">
+          <span className="rounded-52 border border-gray-700 px-3 text-sm text-gray-700">
+            {questionType.displayName === 'Text' ? 'TEXT' : 'MCQ'}
+          </span>
+          {questionType.displayName === 'Text' && (
+            <span className="list-item text-xs text-gray-800">
+              {checkOrder ? 'ordered' : 'unordered'}
+            </span>
+          )}
         </div>
-       
-    
-        <div className='flex gap-2'>
+        <div className="flex gap-6">
           <span>Q1.</span>
-       
-         <div
-         className="question flex-1   flex-row"
-         dangerouslySetInnerHTML={{
-           __html: question,
-         }}
-         ></div>
-       </div>
-        
+          <div
+            className="question flex-1   flex-row"
+            dangerouslySetInnerHTML={{
+              __html: question,
+            }}
+          ></div>
+        </div>
       </div>
       <hr className="h-[auto] w-px bg-gray-300" />
       <div className="w-6/12 p-6">
         {status === 'ANSWERED' && (
-          <div className="flex flex-col gap-2">
-            <div>
+          <div className="flex flex-col gap-7">
+            <div className="flex flex-col gap-6">
+              <div className="flex items-center justify-between">
+                <h3 className="text-xl text-gray-800">Given answer</h3>
+              </div>
+
               {checkOrder === true &&
                 textAnswer.map((textAnswer: any, index: number) => {
-                  console.log(textAnswer === correctAnswer[index].answer, 'l')
                   return (
                     <div
                       key={index}
@@ -100,7 +76,7 @@ const ResultDetailsQuestionsPreview = ({
                   )
                 })}
               {
-                <div>
+                <div className="flex flex-col gap-6">
                   {checkOrder === false &&
                     areEqual(textAnswer, correctAnswersArray) === true &&
                     textAnswer.map((textAnswer: any, index: number) => {
@@ -123,7 +99,9 @@ const ResultDetailsQuestionsPreview = ({
                         <div
                           key={index}
                           className={
-                            'rounded border border-solid bg-[#FAD1E5] p-6'
+                            correctAnswersArray.includes(textAnswer)
+                              ? 'rounded border border-solid bg-green-100 p-6'
+                              : 'rounded border border-solid bg-[#FAD1E5] p-6'
                           }
                         >
                           {textAnswer}
@@ -135,8 +113,6 @@ const ResultDetailsQuestionsPreview = ({
             </div>
             <div className="flex flex-col gap-6">
               {selectedOptions.map((selectedOptions: Option, index: number) => {
-                 console.log(mcq(selectedOptions.id, correctOption[index].id) ===
-                 'incorrect','l') 
                 return (
                   <div key={selectedOptions.questionId}>
                     <div className="flex flex-col gap-7">
@@ -155,47 +131,66 @@ const ResultDetailsQuestionsPreview = ({
                   </div>
                 )
               })}
-              <div className="flex flex-col gap-6">
-                {correctOption.map((correctOption: Option, index: number) => {    
-                              
-                  return (
-                    <div key={index}>
-                      {mcq(selectedOptions[index].id, correctOption.id) ===
-                        'incorrect' && (
+              <div className="flex flex-col gap-7">
+                {areEqual(textAnswer, correctAnswersArray) === false && (
+                  <div className="flex flex-col gap-7">
+                    <Divider height="1px" />
+                    <h3 className="text-xl text-gray-800">
+                      {t('resultConstants.correctAnswer')}
+                    </h3>
+                  </div>
+                )}
+                {flag.includes('incorrect') && (
+                  <div className="flex flex-col gap-7">
+                    <Divider height="1px" />
+                    <h3 className="text-xl text-gray-800">
+                      {t('resultConstants.correctAnswer')}
+                    </h3>
+                  </div>
+                )}
+
+                {/* {if MCQ is incorrrect} */}
+                <div className="flex flex-col gap-6">
+                  {flag.includes('incorrect') &&
+                    correctOption.map(
+                      (correctOption: Option, index: number) => {
+                        return (
+                          <div key={index}>
+                            <div
+                              key={index}
+                              className={
+                                'ql-editor rounded border border-solid bg-green-100 p-6'
+                              }
+                              dangerouslySetInnerHTML={{
+                                __html: `${correctOption?.option}`,
+                              }}
+                            ></div>
+                          </div>
+                        )
+                      }
+                    )}
+
+                  {/* {if TEXT type question is wrong } */}
+                  {checkOrder === false &&
+                    areEqual(textAnswer, correctAnswersArray) === false &&
+                    correctAnswer.map((correctAnswer: any, index: number) => {
+                      return (
                         <div
                           key={index}
                           className={
                             'ql-editor rounded border border-solid bg-green-100 p-6'
                           }
-                          dangerouslySetInnerHTML={{
-                            __html: `${correctOption?.option}`,
-                          }}
-                        ></div>
-                      )}
-                    </div>
-                  )
-                })}
-                {checkOrder === false &&
-                  areEqual(textAnswer, correctAnswersArray) === false &&
-                  correctAnswer.map((correctAnswer: any, index: number) => {
-                    console.log(correctAnswer, 'correctAnswer')
-                    return (
-                      <div
-                        key={index}
-                        className={
-                          'ql-editor rounded border border-solid bg-green-100 p-6'
-                        }
-                        dangerouslySetInnerHTML={{
-                          __html: `${correctAnswer.answer}`,
-                        }}
-                      ></div>
-                    )
-                  })}
+                        >
+                          {correctAnswer.answer}
+                        </div>
+                      )
+                    })}
+                </div>
               </div>
             </div>
           </div>
         )}
-        {status === 'SKIPPED' && <span>skipped</span>}
+        {status === 'SKIPPED' && <span>{t('resultConstants.skipped')}</span>}
       </div>
     </div>
   )

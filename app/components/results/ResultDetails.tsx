@@ -15,7 +15,7 @@ const ResultDetailsComponent = () => {
   let navigate = useNavigate()
   const sortedSections = sections.sort(
     (a: SectionInCandidateTest, b: SectionInCandidateTest) => {
-      return  a.order-b.order
+      return a.order - b.order
     }
   )
   return (
