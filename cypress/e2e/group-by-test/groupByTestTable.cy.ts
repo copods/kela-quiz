@@ -203,6 +203,7 @@ describe('Test for GroupByTestTable, Result', () => {
   it('checks,invite candidate button should be visible', () => {
     cy.viewport(1280, 720)
     cy.get('#group-by-tests').should('have.text', 'Results').click()
+    cy.wait(1500)
     cy.get('.groupByItemTest').contains(test1).click()
     cy.wait(1000)
     cy.get('#vertical-icon', { timeout: 6000 }).should('be.visible')

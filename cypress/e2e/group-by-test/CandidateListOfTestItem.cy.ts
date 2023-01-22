@@ -22,6 +22,7 @@ describe('Visiting group by test of results page', () => {
 
   it('Checks, header of candidate list page should have correct classes', () => {
     cy.get('#group-by-tests').should('have.text', 'Results').click()
+    cy.wait(1500)
     cy.get('h1', { timeout: 6000 }).should('have.text', 'Results')
     cy.get('.groupByItemTest', { timeout: 8000 }).contains(test1).click()
     cy.get('#title', { timeout: 8000 }).should(

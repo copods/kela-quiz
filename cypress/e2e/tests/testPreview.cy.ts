@@ -15,6 +15,7 @@ describe('Test for testPreview', () => {
       .find('#tests', { timeout: 6000 })
       .should('have.text', testsConstants.assessments)
       .click()
+    cy.wait(1500)
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/assessments'
@@ -29,6 +30,7 @@ describe('Test for testPreview', () => {
       .find('#tests', { timeout: 6000 })
       .should('have.text', testsConstants.assessments)
       .click()
+    cy.wait(1500)
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/assessments'
@@ -41,6 +43,7 @@ describe('Test for testPreview', () => {
       .find('#tests', { timeout: 6000 })
       .should('have.text', testsConstants.assessments)
       .click()
+    cy.wait(1500)
     cy.get('.test-name-navigation').contains(test1).click()
     cy.get('#invite-popup-open-text').should('have.text', inviteCandidate)
   })
@@ -49,6 +52,7 @@ describe('Test for testPreview', () => {
       .find('#tests', { timeout: 6000 })
       .should('have.text', testsConstants.assessments)
       .click()
+    cy.wait(1500)
     cy.get('.test-name-navigation').contains(test1).click()
     cy.get('#invite-popup-open-text').should(
       'have.css',
@@ -61,6 +65,7 @@ describe('Test for testPreview', () => {
       .find('#tests', { timeout: 6000 })
       .should('have.text', testsConstants.assessments)
       .click()
+    cy.wait(1500)
     cy.get('.test-name-navigation').contains(test1).click()
     cy.get('#invite-popup-open-text').should('have.css', 'font-size', '16px')
   })
@@ -69,6 +74,7 @@ describe('Test for testPreview', () => {
       .find('#tests', { timeout: 6000 })
       .should('have.text', testsConstants.assessments)
       .click()
+    cy.wait(1500)
     cy.get('.test-name-navigation').contains(test1).click()
     cy.get('#invite-popup-open-text').should('have.css', 'cursor', 'pointer')
   })
@@ -78,6 +84,7 @@ describe('Test for testPreview', () => {
       .find('#tests', { timeout: 6000 })
       .should('have.text', testsConstants.assessments)
       .click()
+    cy.wait(1500)
     cy.get('.test-name-navigation').contains(test1).click()
     cy.get('#test-preview-assessment-details').should(
       'have.text',
@@ -89,6 +96,7 @@ describe('Test for testPreview', () => {
       .find('#tests', { timeout: 6000 })
       .should('have.text', testsConstants.assessments)
       .click()
+    cy.wait(1500)
     cy.get('.test-name-navigation').contains(test1).click()
     cy.get('#test-preview-assessment-details').should(
       'have.css',
@@ -101,6 +109,7 @@ describe('Test for testPreview', () => {
       .find('#tests', { timeout: 6000 })
       .should('have.text', testsConstants.assessments)
       .click()
+    cy.wait(1500)
     cy.get('.test-name-navigation').contains(test1).click()
     cy.get('#test-preview-assessment-details', { timeout: 6000 }).should(
       'have.css',
@@ -113,6 +122,7 @@ describe('Test for testPreview', () => {
       .find('#tests', { timeout: 6000 })
       .should('have.text', testsConstants.assessments)
       .click()
+    cy.wait(1500)
     cy.get('.test-name-navigation').contains(test1).click()
     cy.get('#test-preview-assessment-details').should(
       'have.css',
@@ -125,6 +135,7 @@ describe('Test for testPreview', () => {
       .find('#tests', { timeout: 6000 })
       .should('have.text', testsConstants.assessments)
       .click()
+    cy.wait(1500)
     cy.get('.test-name-navigation').contains(test1).click()
 
     cy.get('#test-preview-selected-tests').should(
@@ -137,6 +148,7 @@ describe('Test for testPreview', () => {
       .find('#tests', { timeout: 6000 })
       .should('have.text', testsConstants.assessments)
       .click()
+    cy.wait(1500)
     cy.get('.test-name-navigation').contains(test1).click()
 
     cy.get('#test-preview-selected-tests').should(
@@ -150,6 +162,7 @@ describe('Test for testPreview', () => {
       .find('#tests', { timeout: 6000 })
       .should('have.text', testsConstants.assessments)
       .click()
+    cy.wait(1500)
     cy.get('.test-name-navigation').contains(test1).click()
 
     cy.get('#test-preview-selected-tests').should(
@@ -163,6 +176,7 @@ describe('Test for testPreview', () => {
       .find('#tests', { timeout: 6000 })
       .should('have.text', testsConstants.assessments)
       .click()
+    cy.wait(1500)
     cy.get('.test-name-navigation').contains(test1).click()
 
     cy.get('#test-preview-selected-tests').should(
@@ -177,6 +191,7 @@ describe('Test for testPreview', () => {
       .find('#tests', { timeout: 6000 })
       .should('have.text', testsConstants.assessments)
       .click()
+    cy.wait(1500)
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/assessments'
@@ -189,6 +204,7 @@ describe('Test for testPreview', () => {
       .find('#tests', { timeout: 6000 })
       .should('have.text', testsConstants.assessments)
       .click()
+    cy.wait(1500)
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/assessments'
@@ -201,6 +217,7 @@ describe('Test for testPreview', () => {
       .find('#tests', { timeout: 6000 })
       .should('have.text', testsConstants.assessments)
       .click()
+    cy.wait(1500)
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/assessments'
