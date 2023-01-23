@@ -205,11 +205,13 @@ export const usePagination = ({
   pageSize,
   siblingCount,
   currentPage,
+  hideRange,
 }: {
   totalItems: number
   pageSize: number
   siblingCount: number
   currentPage: number
+  hideRange?: boolean
 }) => {
   const paginationRange = useMemo(() => {
     const totalPageCount = Math.ceil(totalItems / pageSize)
@@ -227,16 +229,18 @@ export const usePagination = ({
       totalPageCount
     )
     const shouldShowLeftDots = leftSiblingIndex > 2
-    const shouldShowRightDots = rightSiblingIndex < totalPageCount - 2
+    const shouldShowRightDots = hideRange
+      ? rightSiblingIndex < totalPageCount - 1
+      : rightSiblingIndex < totalPageCount - 2
     const firstPageIndex = 1
     const lastPageIndex = totalPageCount
     if (!shouldShowLeftDots && shouldShowRightDots) {
-      let leftItemCount = 3 + 2 * siblingCount
+      let leftItemCount = hideRange ? 3 : 3 + 2 * siblingCount
       let leftRange = range(1, leftItemCount)
       return [...leftRange, -1, totalPageCount]
     }
     if (shouldShowLeftDots && !shouldShowRightDots) {
-      let rightItemCount = 3 + 2 * siblingCount
+      let rightItemCount = hideRange ? 3 : 3 + 2 * siblingCount
       let rightRange = range(
         totalPageCount - rightItemCount + 1,
         totalPageCount
@@ -247,6 +251,7 @@ export const usePagination = ({
       let middleRange = range(leftSiblingIndex, rightSiblingIndex)
       return [firstPageIndex, -1, ...middleRange, -1, lastPageIndex]
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [totalItems, pageSize, siblingCount, currentPage])
   return paginationRange
 }
