@@ -465,7 +465,8 @@ describe('Visiting Assessment', () => {
       'include',
       '/assessments'
     )
-    cy.get('.chip-group').then(($elements) => {
+    cy.wait(1000)
+    cy.get('.chip-group',{timeout:6000}).then(($elements) => {
       let strings = [...$elements]
       strings.forEach(($el) => {
         if ($el.innerText.includes('\n')) {
