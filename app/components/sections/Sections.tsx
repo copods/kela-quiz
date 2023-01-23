@@ -135,7 +135,7 @@ const Sections = ({
             onSortDirectionChange={setOrder}
             sortBy={sortBy}
             onSortChange={setSortBy}
-            totalItems={sections?.length}
+            totalItems={totalCount}
             showSelected={false}
           />
         </div>
