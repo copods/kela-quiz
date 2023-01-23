@@ -121,7 +121,12 @@ function candidateRegistration() {
   cy.get('.inviteInput').type(`ki${emailId}@copds.co`)
   cy.get('[data-cy="submit"]').click()
   cy.get('#group-by-tests').click()
-  cy.get('.groupByItemTest').eq(0).click()
+  cy.get('.groupByItemTest').each((el) => {
+    const itemText = el.text()
+    if (itemText === 'Quantitative - assessment1') {
+      cy.wrap(el).click()
+    }
+  })
   cy.get('#vertical-icon', { timeout: 8000 }).click()
   cy.get('[data-cy="copy-link"]').should('be.visible').click()
   cy.window()
@@ -129,7 +134,7 @@ function candidateRegistration() {
     .invoke('readText')
     .then((text) => {
       ExamLink = text
-      cy.visit(text)
+      text && cy.visit(text)
       cy.get('#firstName').type(candidateName)
       cy.get('#lastName').type('Jain')
       cy.get("[data-cy='submit-button']")
@@ -162,9 +167,6 @@ function assessmentInstruction() {
   cy.get('#start').should('be.visible')
   cy.get('#start').should('have.text', 'Begin Assessment')
   cy.get('#start').click()
-  // cy.CustomVisitOnCandidateSide(
-  //   'cld44v2oo6743noh4xfv9o55s/cld46i89q17385noh4m07faxet'
-  // )
 }
 
 Cypress.Commands.add('login', login)

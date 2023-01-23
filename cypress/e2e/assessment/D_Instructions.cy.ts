@@ -1,7 +1,7 @@
 describe('Test for Assessment Verification', () => {
   let commonContants = {
     Begin: 'Begin Assessment',
-    BestWishes: "'Best of Luck'",
+    BestWishes: 'Best of Luck',
   }
 
   it('Check, Assessment registration and verification', () => {
@@ -24,7 +24,7 @@ describe('Test for Assessment Verification', () => {
       'Test 2 -Aptitude - section1',
       'Test 3 -Aptitude - section2',
     ]
-    cy.get('[data-cy="testSectionContent"]').children().should('have.length', 2)
+    cy.get('[data-cy="testSectionContent"]').children().should('have.length', 3)
     cy.get('[data-cy="testSectionContent"]')
       .children()
       .each(($el, index) => {

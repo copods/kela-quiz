@@ -11,7 +11,12 @@ describe('Test for Candidate assessment Registration', () => {
     cy.get('.inviteInput').type(`ki${emailId}@copds.co`)
     cy.get('[data-cy="submit"]').click()
     cy.get('#group-by-tests').click()
-    cy.get('.groupByItemTest').eq(0).click()
+    cy.get('.groupByItemTest').each((el) => {
+      const itemText = el.text()
+      if (itemText === 'Quantitative - assessment1') {
+        cy.wrap(el).click()
+      }
+    })
     cy.get('#vertical-icon', { timeout: 8000 }).click()
     cy.get('[data-cy="copy-link"]').should('be.visible').click()
     cy.window()
@@ -19,7 +24,7 @@ describe('Test for Candidate assessment Registration', () => {
       .invoke('readText')
       .then((text) => {
         examLink = text
-        cy.visit(text)
+        cy.visit(examLink)
       })
   })
 

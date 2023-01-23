@@ -1,7 +1,7 @@
 const commonContants = {
-  sectionHeadingOne: 'Section 1 - 3: Aptitude - assessment1',
-  sectionHeadingTwo: 'Section 2 - 3: Aptitude - assessment1',
-  sectionHeadingThree: 'Section 3 - 3: Aptitude - assessment1',
+  sectionHeadingOne: 'Section 1 - 3: Quantitative - assessment1',
+  sectionHeadingTwo: 'Section 2 - 3: Quantitative - assessment1',
+  sectionHeadingThree: 'Section 3 - 3: Quantitative - assessment1',
   coolDown: 'cooldown',
   congratulationText: 'Congratulations! You have completed the exam',
   Next: 'Next',
