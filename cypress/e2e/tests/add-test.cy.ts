@@ -139,11 +139,7 @@ describe('Creating assessments', () => {
     cy.get('#add-test', { timeout: 6000 })
       .should('have.text', `+ ${testsConstants.addAssessmentbutton}`)
       .click()
-    cy.get('#next-button', { timeout: 6000 }).should(
-      'have.css',
-      'color',
-      'rgb(249, 250, 251)'
-    )
+    cy.get('#next-button').should('have.css', 'color', 'rgb(249, 250, 251)')
   })
   it('Checks next button cursor', () => {
     cy.get('a')
@@ -190,7 +186,7 @@ describe('Creating assessments', () => {
     cy.get('#add-test', { timeout: 6000 })
       .should('have.text', `+ ${testsConstants.addAssessmentbutton}`)
       .click()
-    cy.get('#next-button', { timeout: 6000 }).should(
+    cy.get('#next-button').should(
       'have.css',
       'background-color',
       'rgb(162, 164, 214)'
@@ -265,22 +261,17 @@ describe('Creating assessments', () => {
     cy.get('#add-test', { timeout: 6000 })
       .should('have.text', `+ ${testsConstants.addAssessmentbutton}`)
       .click()
-    cy.get('#back-button', { timeout: 6000 }).should(
-      'have.css',
-      'font-weight',
-      '500'
-    )
+    cy.get('#back-button').should('have.css', 'font-weight', '500')
   })
   it('Checks back button background color', () => {
     cy.get('a')
       .find('#tests')
       .should('have.text', testsConstants.assessments)
       .click()
-    cy.wait(1500)
     cy.get('#add-test', { timeout: 6000 })
       .should('have.text', `+ ${testsConstants.addAssessmentbutton}`)
       .click()
-    cy.get('#back-button', { timeout: 6000 }).should(
+    cy.get('#back-button').should(
       'have.css',
       'background-color',
       'rgb(162, 164, 214)'
@@ -303,7 +294,6 @@ describe('Creating assessments', () => {
       .find('#tests')
       .should('have.text', testsConstants.assessments)
       .click()
-    cy.wait(1500)
     cy.get('#add-test', { timeout: 6000 })
       .should('have.text', `+ ${testsConstants.addAssessmentbutton}`)
       .click()
@@ -332,7 +322,6 @@ describe('Creating assessments', () => {
       .find('#tests')
       .should('have.text', testsConstants.assessments)
       .click()
-    cy.wait(1500)
     cy.get('#add-test', { timeout: 6000 })
       .should('have.text', `+ ${testsConstants.addAssessmentbutton}`)
       .click()
@@ -389,7 +378,6 @@ describe('Creating assessments', () => {
       .find('#tests')
       .should('have.text', testsConstants.assessments)
       .click()
-    cy.wait(1500)
     cy.get('#add-test', { timeout: 6000 })
       .should('have.text', `+ ${testsConstants.addAssessmentbutton}`)
       .click()
@@ -505,12 +493,11 @@ describe('Creating assessments', () => {
     cy.get('#add-test', { timeout: 6000 })
       .should('have.text', `+ ${testsConstants.addAssessmentbutton}`)
       .click()
-    cy.wait(1000)
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/assessments/add-assessment'
     )
-    cy.get('button#next-button', { timeout: 6000 })
+    cy.get('button#next-button')
       .should('have.text', 'Next')
       .should('have.disabled', true)
   })
@@ -559,10 +546,7 @@ describe('Creating assessments', () => {
     cy.get('#add-test', { timeout: 6000 })
       .should('have.text', `+ ${testsConstants.addAssessmentbutton}`)
       .click()
-    cy.location('pathname', { timeout: 6000 }).should(
-      'include',
-      '/assessments/add-assessment'
-    )
+    cy.location('pathname').should('include', '/assessments/add-assessment')
     cy.get('input[placeholder="Enter assessment name"]', { timeout: 6000 })
       .clear()
       .type(test)
@@ -668,7 +652,6 @@ describe('Creating assessments', () => {
       .find('#tests')
       .should('have.text', testsConstants.assessments)
       .click()
-    cy.wait(1500)
     cy.get('#add-test', { timeout: 6000 })
       .should('have.text', `+ ${testsConstants.addAssessmentbutton}`)
       .click()
