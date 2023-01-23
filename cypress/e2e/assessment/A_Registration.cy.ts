@@ -72,6 +72,6 @@ describe('Test for Candidate assessment Registration', () => {
       .should('be.visible')
       .should('have.css', 'background-color', 'rgb(53, 57, 136)')
       .click()
-    cy.url().should('eq', `${examLink}/com`)
+    cy.url().should('eq', `${examLink}/verification`)
   })
 })

@@ -45,6 +45,10 @@ declare global {
        * candidate Name for Cypress testing
        */
       checkCandidateName: typeof Function
+      /**
+       * assessment instruction for Cypress Testing
+       */
+      assessmentInstruction: typeof Function
     }
   }
 }
@@ -154,6 +158,15 @@ function checkCandidateName() {
     .should('have.text', `Welcome ${candidateName}`)
 }
 
+function assessmentInstruction() {
+  cy.get('#start').should('be.visible')
+  cy.get('#start').should('have.text', 'Begin Assessment')
+  cy.get('#start').click()
+  // cy.CustomVisitOnCandidateSide(
+  //   'cld44v2oo6743noh4xfv9o55s/cld46i89q17385noh4m07faxet'
+  // )
+}
+
 Cypress.Commands.add('login', login)
 Cypress.Commands.add('cleanupUser', cleanupUser)
 Cypress.Commands.add('customVisit', customVisit)
@@ -161,6 +174,7 @@ Cypress.Commands.add('candidateRegistration', candidateRegistration)
 Cypress.Commands.add('CustomVisitOnCandidateSide', CustomVisitOnCandidateSide)
 Cypress.Commands.add('candidateVerification', candidateVerification)
 Cypress.Commands.add('checkCandidateName', checkCandidateName)
+Cypress.Commands.add('assessmentInstruction', assessmentInstruction)
 
 /*
 eslint

@@ -5,33 +5,36 @@ describe('Test for candidate assessment verfication', () => {
 
   it('Checks, header of verification page should be visible and correct', () => {
     cy.CustomVisitOnCandidateSide('verification')
-    cy.get('#header')
+    cy.get('[data-cy="header"]')
       .should('be.visible')
       .should('have.text', 'OTP Verification')
   })
 
   it('Checks, Email Id of candidate should be visible and correct', () => {
     cy.CustomVisitOnCandidateSide('verification')
-    cy.get('#email').should('be.visible')
+    cy.get('[data-cy="email"]').should('be.visible')
   })
 
   it('Checks, Timer is working fine', () => {
     cy.CustomVisitOnCandidateSide('verification')
     cy.clock()
-    cy.get('.resendOTP').should('have.text', ' 01:00')
+    cy.get('[data-cy="resendOTP"]').should('have.text', ' 01:00')
     cy.tick(1000)
-    cy.get('.resendOTP').should('have.text', ' 00:59')
+    cy.get('[data-cy="resendOTP"]').should('have.text', ' 00:59')
     cy.tick(1000)
-    cy.get('.resendOTP').should('have.text', ' 00:58')
+    cy.get('[data-cy="resendOTP"]').should('have.text', ' 00:58')
     cy.tick(1000)
-    cy.get('.resendOTP').should('have.text', ' 00:57')
+    cy.get('[data-cy="resendOTP"]').should('have.text', ' 00:57')
   })
 
   it('Checks, Timer ends and text Changes', () => {
     cy.CustomVisitOnCandidateSide('verification')
     cy.wait(60000)
-    cy.get('.resendText').should('have.text', "Didn't get a code Resend")
-    cy.get('.resendButton').should('be.visible').click()
+    cy.get("[data-cy='resendText']").should(
+      'have.text',
+      "Didn't get a code Resend"
+    )
+    cy.get('[data-cy="resendButton"]').should('be.visible').click()
     cy.get('.Toastify__toast').should(
       'have.text',
       'Otp sent. Please check your email'
