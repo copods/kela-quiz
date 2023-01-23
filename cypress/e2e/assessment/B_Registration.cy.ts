@@ -8,7 +8,7 @@ describe('Test for Candidate assessment Registration', () => {
     cy.get('#group-by-tests').click()
     cy.get('a').find('#tests').click()
     cy.get('#invite-popup-open0').click()
-    cy.get('.inviteInput').type(`ki${emailId}@copds.co`)
+    cy.get('.inviteInput').type(`ki${emailId}@copods.co`)
     cy.get('[data-cy="submit"]').click()
     cy.get('#group-by-tests').click()
     cy.get('.groupByItemTest').each((el) => {
@@ -23,7 +23,7 @@ describe('Test for Candidate assessment Registration', () => {
       .its('navigator.clipboard')
       .invoke('readText')
       .then((text) => {
-        examLink = text
+        examLink = text.split('3000')[1]
         cy.visit(examLink)
       })
   })
@@ -77,6 +77,6 @@ describe('Test for Candidate assessment Registration', () => {
       .should('be.visible')
       .should('have.css', 'background-color', 'rgb(53, 57, 136)')
       .click()
-    cy.url().should('eq', `${examLink}/verification`)
+    cy.url().should('include', `${examLink}/verification`)
   })
 })

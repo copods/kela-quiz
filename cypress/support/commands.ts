@@ -133,15 +133,15 @@ function candidateRegistration() {
     .its('navigator.clipboard')
     .invoke('readText')
     .then((text) => {
-      ExamLink = text
-      text && cy.visit(text)
+      ExamLink = text.split('3000')[1]
+      cy.visit(ExamLink)
       cy.get('#firstName').type(candidateName)
       cy.get('#lastName').type('Jain')
       cy.get("[data-cy='submit-button']")
         .should('be.visible')
         .should('have.css', 'background-color', 'rgb(53, 57, 136)')
         .click()
-      cy.url().should('eq', `${ExamLink}/verification`)
+      cy.url().should('include', `${ExamLink}/verification`)
     })
 }
 
