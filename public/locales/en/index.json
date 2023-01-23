@@ -171,7 +171,9 @@
     "allCandidatesInvited": "All candidates invited.",
     "writeDescriptionOfTest": "Write Description of Test",
     "searchCandidate": "Search Candidate",
-    "min": "Min"
+    "min": "Min",
+    "copyLink": "Link Copied Successfully",
+    "copyLinkFailed": "Fail"
   },
   "componentGlobalConstants": {
     "totalCounts": "Total Counts",
@@ -222,6 +224,7 @@
   },
   "resultConstants": {
     "order": "Order",
+    "unordered": "unordered",
     "totalInvited": "Invited",
     "totalAttended": "Attended",
     "noAssessmentAlert": "No assessment found. Add your assessment first",
@@ -240,7 +243,11 @@
     "unanswered": "Unanswered",
     "incorrect": "Incorrect",
     "ViewDetails": "View details",
-    "correctAnswer": "Correct Answer"
+    "correctAnswer": "Correct Answer",
+    "copyLink": "Copy Link",
+    "text": "TEXT",
+    "q": "Q",
+    "givenAnswer": "Given Answer"
   },
   "forgotPasswordConstants": {
     "header": "Forgot password?",

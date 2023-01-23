@@ -95,7 +95,9 @@ export interface TestSection {
 export interface Section {
   id: string
   name: string
+  questions: Array<Question>
   description: string
+  createdBy: User
   createdById: string
   createdAt: Date
   sectionInTest: SectionInTest[]
@@ -150,6 +152,8 @@ export interface Question {
   createdById?: string
   createdAt?: Date
   updatedAt?: Date
+  deleted: boolean
+  deletedAt: string
   options?: Array<Option>
   correctOptions?: Array<Option>
 }
@@ -274,6 +278,7 @@ export interface CandidateResult {
   startedAt: Date
   updatedAt: Date
   workspaceId?: string
+  link?: string
 }
 export interface sectionActionErrorsType {
   title: string

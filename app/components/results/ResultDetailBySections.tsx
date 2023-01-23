@@ -48,7 +48,7 @@ const ResultDetailBySections = () => {
         <Divider height="1px" />
       </header>
       <div className="flex flex-col gap-6">
-        {sectionDetail.questions.map((questions: any) => {
+        {sectionDetail.questions.map((questions: any, index: number) => {
           return (
             <ResultDetailsQuestionsPreview
               key={questions.id}
@@ -60,6 +60,7 @@ const ResultDetailBySections = () => {
               correctOption={questions.question.correctOptions}
               checkOrder={questions.question.checkOrder}
               questionType={questions.question.questionType}
+              index={index + 1}
             />
           )
         })}

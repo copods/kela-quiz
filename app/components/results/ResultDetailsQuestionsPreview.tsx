@@ -11,6 +11,7 @@ const ResultDetailsQuestionsPreview = ({
   correctOption,
   checkOrder,
   questionType,
+  index,
 }: {
   textAnswer: Array<CorrectAnswer>
   status: string
@@ -20,6 +21,7 @@ const ResultDetailsQuestionsPreview = ({
   correctOption: Array<Option>
   checkOrder: boolean
   questionType: QuestionType
+  index: number
 }) => {
   const { t } = useTranslation()
   const correctAnswersArray = correctAnswer.map((a: any) => a.answer)
@@ -33,16 +35,29 @@ const ResultDetailsQuestionsPreview = ({
       <div className="flex w-6/12 flex-col gap-6 p-6">
         <div className="flex items-center gap-8">
           <span className="rounded-52 border border-gray-700 px-3 text-sm text-gray-700">
-            {questionType.displayName === 'Text' ? 'TEXT' : 'MCQ'}
+            {/* {SHOW CHIP ACCORDING TO TYPE OF QUESTION} */}
+            {questionType.displayName === 'Text'
+              ? t('resultConstants.text')
+              : t('sectionsConstants.mcq')}
           </span>
+          {/* {IF QUESTION TYPE IS TEXT THEN
+          CASE1: IF ORDERED THEN SHOW ORDERED FRONT OF QUESTION TYPE
+          CASE2: IF UNORDERED THEN SHOW UNORDERED FRONT OF QUESTION BADGE
+          } */}
           {questionType.displayName === 'Text' && (
             <span className="list-item text-xs text-gray-800">
-              {checkOrder ? 'ordered' : 'unordered'}
+              {checkOrder
+                ? t('resultConstants.order')
+                : t('resultConstants.unordered')}
             </span>
           )}
         </div>
         <div className="flex gap-6">
-          <span>Q1.</span>
+          {/* {SHOWING QUESTION NUMBER} */}
+          <span>
+            {t('resultConstants.q')}.{index}
+          </span>
+          {/* {QUESTION} */}
           <div
             className="question flex-1   flex-row"
             dangerouslySetInnerHTML={{
@@ -57,7 +72,9 @@ const ResultDetailsQuestionsPreview = ({
           <div className="flex flex-col gap-7">
             <div className="flex flex-col gap-6">
               <div className="flex items-center justify-between">
-                <h3 className="text-xl text-gray-800">Given answer</h3>
+                <h3 className="text-xl text-gray-800">
+                  {t('resultConstants.givenAnswer')}
+                </h3>
               </div>
 
               {checkOrder === true &&

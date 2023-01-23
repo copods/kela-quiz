@@ -6,8 +6,9 @@ import { useTranslation } from 'react-i18next'
 import { routes } from '~/constants/route.constants'
 import Table from '../common-components/TableComponent'
 import moment from 'moment'
-import TestListActionMenu from '../../components/TestListActionMenu'
+import ListActionMenu from '../../components/ListActionMenu'
 import DropdownField from '../common-components/Dropdown'
+import resendTestLink from '~/../public/assets/resend-test-invitation.svg'
 import type {
   CandidateTest,
   Candidate,
@@ -52,7 +53,27 @@ const CandidateListOfTest = () => {
       }
     )
   const [pageSize, setPageSize] = useState(5)
-  const [currentPage, setCurrentPage] = useState(1)
+  const [currentPage, setCurrentPage] = useState(
+    candidatesLoaderData.currentPage
+  )
+
+  useEffect(() => {
+    navigate(`?page=${1}&pageSize=${pageSize}&filterByStatus=${statusFilter}`)
+    setStatusFilter(statusFilter)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [statusFilter])
+
+  useEffect(() => {
+    navigate(
+      `?page=${currentPage}&pageSize=${pageSize}&filterByStatus=${statusFilter}`
+    )
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pageSize, currentPage])
+
+  useEffect(() => {
+    setCurrentPage(candidatesLoaderData.currentPage)
+  }, [candidatesLoaderData.currentPage])
+
   const resendInvite = (id: string, candidateId: string, testId: string) => {
     submit(
       {
@@ -65,6 +86,26 @@ const CandidateListOfTest = () => {
     )
   }
 
+  useEffect(() => {
+    if (
+      actionData?.candidateInviteStatus ===
+      t('candidateExamConstants.candidateTestCreated')
+    ) {
+      toast.success(t('testsConstants.reinvited'))
+    }
+    if (
+      actionData?.candidateInviteStatus === t('candidateExamConstants.endTest')
+    ) {
+      toast.error(t('testsConstants.testEnded'))
+    }
+  }, [actionData, t])
+
+  const copyLink = (link: string) => {
+    navigator.clipboard.writeText(link).then(
+      () => toast.success(t('testsConstants.copyLink')),
+      (error) => toast.error(`${t('testConstants.copyLinkFailed')}${error}`)
+    )
+  }
   const SeriaLNoCell = (data: { [key: string]: string }, index: number) => {
     return <span>{index + 1}</span>
   }
@@ -136,6 +177,22 @@ const CandidateListOfTest = () => {
   const StatusCell = (
     data: { candidateResult: CandidateResult[] } & CandidateResult
   ) => {
+    const menuItemsDetailsList = [
+      {
+        id: 'resend-invite',
+        menuListText: t('resultConstants.resendInvite'),
+        menuListLink: resendTestLink,
+        menuLinkAltTagLine: t('resultConstants.resendAssessmentInvite'),
+        handleItemAction: () =>
+          resendInvite(data.id, data.candidateId, data.testId),
+      },
+      {
+        id: 'copy-link',
+        menuListText: t('resultConstants.copyLink'),
+        menuListIcon: 'material-symbols:content-copy-outline',
+        handleItemAction: () => copyLink(data.link as string),
+      },
+    ]
     return (
       <div id="status-cell" className="flex items-center">
         <div
@@ -159,16 +216,13 @@ const CandidateListOfTest = () => {
             )
           )}
           {data?.candidateResult.length <= 0 && (
-            <TestListActionMenu
+            <ListActionMenu
               menuIcon={'mdi:dots-vertical'}
               onItemClick={setmenuListOpen}
               open={menuListOpen}
-              menuListText={t('resultConstants.resendInvite')}
               aria-label={t('testTableItem.menu')}
               id={data.id}
-              resendInvite={() =>
-                resendInvite(data.id, data.candidateId, data.testId)
-              }
+              menuDetails={menuItemsDetailsList}
             />
           )}
         </div>
@@ -201,26 +255,6 @@ const CandidateListOfTest = () => {
     { title: 'Status', field: 'status', render: StatusCell, width: '10%' },
   ]
 
-  useEffect(() => {
-    navigate(
-      `?page=${currentPage}&pageSize=${pageSize}&filterByStatus=${statusFilter}`
-    )
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pageSize, currentPage, statusFilter])
-
-  useEffect(() => {
-    if (
-      actionData?.candidateInviteStatus ===
-      t('candidateExamConstants.candidateTestCreated')
-    ) {
-      toast.success(t('testsConstants.reinvited'))
-    }
-    if (
-      actionData?.candidateInviteStatus === t('candidateExamConstants.endTest')
-    ) {
-      toast.error(t('testsConstants.testEnded'))
-    }
-  }, [actionData, t])
   return (
     <div id="test-details" className="flex h-full flex-col gap-4 ">
       <header className="border-b border-solid border-slate-300">

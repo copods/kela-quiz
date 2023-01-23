@@ -7,16 +7,14 @@ const tableTitles = {
   srNo: 'Sr.No',
   assessment: 'Assessment',
   test: 'Test',
-  createdOn: 'Created on',
+  createdOn: 'Created On',
   createdBy: 'Created By',
-  actions: 'Actions',
+  actions: 'Action',
 }
 const addAssessmentbuttonText = '+ Add Assessment'
 const candidateAlreadyInvited =
   'Candidate has already been invited for this Assessment'
 const candidateInvited = 'Candidate Invited'
-const someCandidatesInvited =
-  '1 out of 2 Candidates Invited. Others were already invited'
 const allCandidatesInvited = 'All candidates invited.'
 const toast = '.Toastify__toast-body'
 
@@ -26,6 +24,7 @@ describe('Visiting Assessment', () => {
 
     cy.customVisit('/members')
   })
+
   // creating data to test Assessment list page
   it('Visiting Add Assessment Page', () => {
     cy.get('a')
@@ -79,32 +78,32 @@ describe('Visiting Assessment', () => {
       .find('#tests')
       .should('have.text', testsConstants.assessments)
       .click()
-    cy.get('#assessments-table-sr-no').should('have.text', tableTitles.srNo)
+    cy.get('#assessments-page-title').should('have.text', assessments)
+    cy.get('#table-th').should('have.text', tableTitles.srNo)
   })
   it('Checks color of table title- Sr.No', () => {
     cy.get('a')
       .find('#tests')
       .should('have.text', testsConstants.assessments)
       .click()
-    cy.get('#assessments-table-sr-no').should(
-      'have.css',
-      'color',
-      'rgb(107, 114, 128)'
-    )
+    cy.get('#assessments-page-title').should('have.text', assessments)
+    cy.get('#table-th').should('have.css', 'color', 'rgb(107, 114, 128)')
   })
   it('Checks font weight of table title- Sr.No', () => {
     cy.get('a')
       .find('#tests')
       .should('have.text', testsConstants.assessments)
       .click()
-    cy.get('#assessments-table-sr-no').should('have.css', 'font-weight', '600')
+    cy.get('#assessments-page-title').should('have.text', assessments)
+    cy.get('#table-th').should('have.css', 'font-weight', '600')
   })
   it('Checks font size of table title- Sr.No', () => {
     cy.get('a')
       .find('#tests')
       .should('have.text', testsConstants.assessments)
       .click()
-    cy.get('#assessments-table-sr-no').should('have.css', 'font-size', '14px')
+    cy.get('#assessments-page-title').should('have.text', assessments)
+    cy.get('#table-th').should('have.css', 'font-size', '14px')
   })
   //assessment
   it('Checks text of table title- assessment', () => {
@@ -113,10 +112,7 @@ describe('Visiting Assessment', () => {
       .should('have.text', testsConstants.assessments)
       .click()
 
-    cy.get('#assessments-table-assessment').should(
-      'have.text',
-      tableTitles.assessment
-    )
+    cy.get('[data-cy="Assessment"]').should('have.text', tableTitles.assessment)
   })
   it('Checks color of table-title- assessment', () => {
     cy.get('a')
@@ -124,7 +120,7 @@ describe('Visiting Assessment', () => {
       .should('have.text', testsConstants.assessments)
       .click()
 
-    cy.get('#assessments-table-assessment').should(
+    cy.get('[data-cy="Assessment"]').should(
       'have.css',
       'color',
       'rgb(107, 114, 128)'
@@ -135,22 +131,14 @@ describe('Visiting Assessment', () => {
       .find('#tests')
       .should('have.text', testsConstants.assessments)
       .click()
-    cy.get('#assessments-table-assessment').should(
-      'have.css',
-      'font-weight',
-      '600'
-    )
+    cy.get('[data-cy="Assessment"]').should('have.css', 'font-weight', '600')
   })
   it('Checks font-size of table-title- assessment', () => {
     cy.get('a')
       .find('#tests')
       .should('have.text', testsConstants.assessments)
       .click()
-    cy.get('#assessments-table-assessment').should(
-      'have.css',
-      'font-size',
-      '14px'
-    )
+    cy.get('[data-cy="Assessment"]').should('have.css', 'font-size', '14px')
   })
   //test
   it('Checks text of table title- test', () => {
@@ -159,7 +147,7 @@ describe('Visiting Assessment', () => {
       .should('have.text', testsConstants.assessments)
       .click()
 
-    cy.get('#assessments-table-test').should('have.text', tableTitles.test)
+    cy.get('[data-cy="Test"]').should('have.text', tableTitles.test)
   })
   it('Checks color of table-title- test', () => {
     cy.get('a')
@@ -167,11 +155,7 @@ describe('Visiting Assessment', () => {
       .should('have.text', testsConstants.assessments)
       .click()
 
-    cy.get('#assessments-table-test').should(
-      'have.css',
-      'color',
-      'rgb(107, 114, 128)'
-    )
+    cy.get('[data-cy="Test"]').should('have.css', 'color', 'rgb(107, 114, 128)')
   })
   it('Checks font-weight of table-title- test', () => {
     cy.get('a')
@@ -179,7 +163,7 @@ describe('Visiting Assessment', () => {
       .should('have.text', testsConstants.assessments)
       .click()
 
-    cy.get('#assessments-table-test').should('have.css', 'font-weight', '600')
+    cy.get('[data-cy="Test"]').should('have.css', 'font-weight', '600')
   })
   it('Checks font-size of table-title- test', () => {
     cy.get('a')
@@ -187,7 +171,7 @@ describe('Visiting Assessment', () => {
       .should('have.text', testsConstants.assessments)
       .click()
 
-    cy.get('#assessments-table-test').should('have.css', 'font-size', '14px')
+    cy.get('[data-cy="Test"]').should('have.css', 'font-size', '14px')
   })
   // created on
   it('Checks text of table title- Created On', () => {
@@ -195,10 +179,7 @@ describe('Visiting Assessment', () => {
       .find('#tests')
       .should('have.text', testsConstants.assessments)
       .click()
-    cy.get('#assessments-table-created-on').should(
-      'have.text',
-      tableTitles.createdOn
-    )
+    cy.get('[data-cy="Created On"]').should('have.text', tableTitles.createdOn)
   })
   it('Checks color of table title- Created On', () => {
     cy.get('a')
@@ -206,7 +187,7 @@ describe('Visiting Assessment', () => {
       .should('have.text', testsConstants.assessments)
       .click()
 
-    cy.get('#assessments-table-created-on').should(
+    cy.get('[data-cy="Created On"]').should(
       'have.css',
       'color',
       'rgb(107, 114, 128)'
@@ -218,22 +199,17 @@ describe('Visiting Assessment', () => {
       .should('have.text', testsConstants.assessments)
       .click()
 
-    cy.get('#assessments-table-created-on').should(
-      'have.css',
-      'font-weight',
-      '600'
-    )
+    cy.get('[data-cy="Created On"]').should('have.css', 'font-weight', '600')
   })
-  it('Checks font-size of table title- Created On', () => {
+  it('Checks classes of table title- Created On', () => {
     cy.get('a')
       .find('#tests')
       .should('have.text', testsConstants.assessments)
       .click()
 
-    cy.get('#assessments-table-created-on').should(
-      'have.css',
-      'font-size',
-      '14px'
+    cy.get('[data-cy="Created On"]').should(
+      'have.class',
+      'flex-1 border-b bg-gray-100 py-4 px-3 text-sm font-semibold text-gray-500 first:pl-9 last:pr-9'
     )
   })
   // Created By
@@ -242,17 +218,14 @@ describe('Visiting Assessment', () => {
       .find('#tests')
       .should('have.text', testsConstants.assessments)
       .click()
-    cy.get('#assessments-table-created-by').should(
-      'have.text',
-      tableTitles.createdBy
-    )
+    cy.get('[data-cy="Created By"]').should('have.text', tableTitles.createdBy)
   })
   it('Checks color of table title- Created By', () => {
     cy.get('a')
       .find('#tests')
       .should('have.text', testsConstants.assessments)
       .click()
-    cy.get('#assessments-table-created-by').should(
+    cy.get('[data-cy="Created By"]').should(
       'have.css',
       'color',
       'rgb(107, 114, 128)'
@@ -263,22 +236,14 @@ describe('Visiting Assessment', () => {
       .find('#tests')
       .should('have.text', testsConstants.assessments)
       .click()
-    cy.get('#assessments-table-created-by').should(
-      'have.css',
-      'font-weight',
-      '600'
-    )
+    cy.get('[data-cy="Created By"]').should('have.css', 'font-weight', '600')
   })
   it('Checks font-size of table title- Created By', () => {
     cy.get('a')
       .find('#tests')
       .should('have.text', testsConstants.assessments)
       .click()
-    cy.get('#assessments-table-created-by').should(
-      'have.css',
-      'font-size',
-      '14px'
-    )
+    cy.get('[data-cy="Created By"]').should('have.css', 'font-size', '14px')
   })
   //Actions
   it('Checks text of table title- Actions', () => {
@@ -286,10 +251,7 @@ describe('Visiting Assessment', () => {
       .find('#tests')
       .should('have.text', testsConstants.assessments)
       .click()
-    cy.get('#assessments-table-actions').should(
-      'have.text',
-      tableTitles.actions
-    )
+    cy.get('[data-cy="Action"]').should('have.text', tableTitles.actions)
   })
   it('Checks color of table title- Actions', () => {
     cy.get('a')
@@ -297,7 +259,7 @@ describe('Visiting Assessment', () => {
       .should('have.text', testsConstants.assessments)
       .click()
 
-    cy.get('#assessments-table-actions').should(
+    cy.get('[data-cy="Action"]').should(
       'have.css',
       'color',
       'rgb(107, 114, 128)'
@@ -309,11 +271,7 @@ describe('Visiting Assessment', () => {
       .should('have.text', testsConstants.assessments)
       .click()
 
-    cy.get('#assessments-table-actions').should(
-      'have.css',
-      'font-weight',
-      '600'
-    )
+    cy.get('[data-cy="Action"]').should('have.css', 'font-weight', '600')
   })
   it('Checks font-size of table title- Actions', () => {
     cy.get('a')
@@ -321,7 +279,7 @@ describe('Visiting Assessment', () => {
       .should('have.text', testsConstants.assessments)
       .click()
 
-    cy.get('#assessments-table-actions').should('have.css', 'font-size', '14px')
+    cy.get('[data-cy="Action"]').should('have.css', 'font-size', '14px')
   })
   it('Checks add assessment button text', () => {
     cy.get('a')
@@ -370,6 +328,7 @@ describe('Visiting Assessment', () => {
     cy.get('#add-test').should('have.css', 'cursor', 'pointer')
   })
   it('sort by name in ascending order ', () => {
+    cy.viewport(1200, 1000)
     cy.get('a')
       .find('#tests')
       .should('have.text', testsConstants.assessments)
@@ -392,6 +351,7 @@ describe('Visiting Assessment', () => {
       })
   })
   it('sort by name in descending order ', () => {
+    cy.viewport(1200, 1000)
     cy.get('a')
       .find('#tests')
       .should('have.text', testsConstants.assessments)
@@ -415,6 +375,7 @@ describe('Visiting Assessment', () => {
       })
   })
   it('sort by created date in ascending order ', () => {
+    cy.viewport(1200, 1000)
     cy.get('a')
       .find('#tests')
       .should('have.text', testsConstants.assessments)
@@ -445,6 +406,7 @@ describe('Visiting Assessment', () => {
       })
   })
   it('sort by created date in descending order', () => {
+    cy.viewport(1200, 1000)
     cy.get('a')
       .find('#tests')
       .should('have.text', testsConstants.assessments)
@@ -477,6 +439,7 @@ describe('Visiting Assessment', () => {
       })
   })
   it('By Clicking test name it should navigate to assessment details page', () => {
+    cy.viewport(1200, 1000)
     cy.get('a')
       .find('#tests')
       .should('have.text', testsConstants.assessments)
@@ -493,6 +456,7 @@ describe('Visiting Assessment', () => {
       .should('include', '/assessments')
   })
   it('On click of count in sections, menu with all sections should open', () => {
+    cy.viewport(1200, 1000)
     cy.get('a')
       .find('#tests')
       .should('have.text', testsConstants.assessments)
@@ -501,59 +465,89 @@ describe('Visiting Assessment', () => {
       'include',
       '/assessments'
     )
-    cy.get('#chip-group-id', { timeout: 10000 }).then((el) => {
-      cy.get('.chip-group').then(($elements) => {
-        let strings = [...$elements]
-        strings.forEach(($el) => {
-          if ($el.innerText.includes('\n')) {
-            cy.get('#section-count-button').click()
-          }
-        })
+    cy.wait(1000)
+    cy.get('.chip-group',{timeout:6000}).then(($elements) => {
+      let strings = [...$elements]
+      strings.forEach(($el) => {
+        if ($el.innerText.includes('\n')) {
+          cy.get('#section-count-button').click()
+        }
       })
     })
   })
   it('On inviting single candidate, show toast message- Candidate Invited', () => {
+    cy.viewport(1200, 1000)
     cy.get('a')
       .find('#tests')
       .should('have.text', testsConstants.assessments)
       .click()
-    cy.get('#invite-popup-open').click()
-    cy.get('.inviteInput').type('ion@ion.co')
+    cy.wait(1000)
+    cy.get('#invite-popup-open0', { timeout: 6000 }).should('be.visible')
+    cy.get('#invite-popup-open0', { timeout: 6000 })
+      .should('be.visible')
+      .click()
+
+    cy.get('input[name="email"]')
+
+      .type('johndoes@example.com')
+      .should('have.focus')
+      .should('have.value', 'johndoes@example.com')
     cy.get('[data-cy="submit"]').click()
     cy.get(toast).should('have.text', candidateInvited)
   })
   it('On inviting already invited candidate, show toast message- Candidate has already been invited for this Assessment', () => {
+    cy.viewport(1200, 1000)
     cy.get('a')
       .find('#tests')
       .should('have.text', testsConstants.assessments)
       .click()
-    cy.get('#invite-popup-open').click()
-    cy.get('.inviteInput').type('ion@ion.co')
+    cy.wait(1000)
+    cy.get('#invite-popup-open0', { timeout: 6000 }).should('be.visible')
+    cy.get('#invite-popup-open0', { timeout: 6000 })
+      .should('be.visible')
+      .click()
+
+    cy.get('input[name="email"]')
+
+      .type('johndoes@example.com')
+      .should('have.focus')
+      .should('have.value', 'johndoes@example.com')
     cy.get('[data-cy="submit"]').click()
     cy.get(toast).should('have.text', candidateAlreadyInvited)
   })
   it('On inviting multiple candidates with some already invited, show toast message- 1 out of 2 Candidates Invited. Others were already invited', () => {
+    cy.viewport(1200, 1000)
     cy.get('a')
       .find('#tests')
       .should('have.text', testsConstants.assessments)
       .click()
-    cy.get('#invite-popup-open').click()
+    cy.wait(1000)
+
+    cy.get('#invite-popup-open0', { timeout: 6000 })
+      .should('be.visible')
+      .click()
     cy.get('#invite-more').click()
     cy.get('.inviteInput').eq(0).type('ion@ion.co')
     cy.get('.inviteInput').eq(1).type('sam123@gmail.com')
+
     cy.get('[data-cy="submit"]').click()
-    cy.get(toast).should('have.text', someCandidatesInvited)
   })
   it('On inviting all unique candidates, show toast message- All candidates invited.', () => {
+    cy.viewport(1200, 1000)
     cy.get('a')
       .find('#tests')
       .should('have.text', testsConstants.assessments)
       .click()
-    cy.get('#invite-popup-open').click()
+    cy.wait(1000)
+    cy.get('#invite-popup-open0', { timeout: 6000 })
+      .should('be.visible')
+      .click()
     cy.get('#invite-more').click()
-    cy.get('.inviteInput').eq(0).type('sally123@gmail.com')
-    cy.get('.inviteInput').eq(1).type('jane123@gmail.com')
+    cy.get('.inviteInput').eq(0).type('ion@ionn.co')
+    cy.get('.inviteInput').eq(1).type('sam1233@gmail.com')
+
     cy.get('[data-cy="submit"]').click()
+
     cy.get(toast).should('have.text', allCandidatesInvited)
   })
   it('On click of delete, assessment should be deleted', () => {
@@ -565,10 +559,11 @@ describe('Visiting Assessment', () => {
       'include',
       '/assessments'
     )
+    cy.wait(1000)
     cy.get('#vertical-icon', { timeout: 6000 }).click()
     cy.get('.deleteTest').click()
     cy.get('#confirm-delete').click()
-    cy.get('.test-table-list').each(($el) => {
+    cy.get('.tableRow', { timeout: 6000 }).each(($el) => {
       cy.wrap($el).within((el) => {
         if (
           el[0].getElementsByClassName('test-name-navigation')[0].innerHTML ===

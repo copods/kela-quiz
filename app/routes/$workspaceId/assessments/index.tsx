@@ -2,23 +2,22 @@ import { getUserId, requireUserId } from '~/session.server'
 import { redirect } from '@remix-run/node'
 import type { LoaderFunction, ActionFunction } from '@remix-run/node'
 import TestList from '~/components/tests/TestList'
-import { getAllTests } from '~/models/tests.server'
+import { getAllTests, getAllTestsCount } from '~/models/tests.server'
 import { json } from '@remix-run/node'
-import { useActionData, useLoaderData } from '@remix-run/react'
 import { deleteTestById } from '~/models/tests.server'
-import { toast } from 'react-toastify'
 import type { Test } from '~/interface/Interface'
 import { createCandidate } from '~/models/candidate.server'
 import { routes } from '~/constants/route.constants'
-import { useTranslation } from 'react-i18next'
 import { getUserWorkspaces } from '~/models/workspace.server'
-import { useEffect } from 'react'
 
 type LoaderData = {
   tests: Awaited<Array<Test>>
   status?: string | undefined
   workspaces: Awaited<ReturnType<typeof getUserWorkspaces>>
   currentWorkspaceId: string
+  allTestsCount: number
+  testsCurrentPage: number
+  testsItemsPerPage: number
 }
 export type ActionData = {
   errors?: {
@@ -32,23 +31,24 @@ export type ActionData = {
 }
 
 export const loader: LoaderFunction = async ({ request, params }) => {
+  const query = new URL(request.url).searchParams
+  const testsItemsPerPage = Math.max(Number(query.get('limit') || 5), 5) //To set the lower bound, so that minimum count will always be 1 for current page and 5 for items per page.
+  const testsCurrentPage = Math.max(Number(query.get('page') || 1), 1)
   const userId = await getUserId(request)
   const currentWorkspaceId = params.workspaceId as string
   const workspaces = await getUserWorkspaces(userId as string)
-
   if (!userId) return redirect(routes.signIn)
-
   let tests: Array<Test> = []
   let status: string = ''
-
-  const filter = Object.fromEntries(new URL(request.url).searchParams.entries())
-    .data
-    ? JSON.parse(
-        Object.fromEntries(new URL(request.url).searchParams.entries()).data
-      )
-    : {}
-
-  await getAllTests(filter, currentWorkspaceId as string)
+  const sortBy = query.get('sortBy')
+  const sortOrder = query.get('sort')
+  await getAllTests(
+    sortBy as string,
+    sortOrder as string,
+    currentWorkspaceId as string,
+    testsItemsPerPage,
+    testsCurrentPage
+  )
     .then((res) => {
       tests = res as Test[]
       status = 'statusCheck.success'
@@ -56,7 +56,16 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     .catch((err) => {
       status = err
     })
-  return json<LoaderData>({ tests, status, workspaces, currentWorkspaceId })
+  const allTestsCount = await getAllTestsCount(currentWorkspaceId)
+  return json<LoaderData>({
+    tests,
+    status,
+    workspaces,
+    currentWorkspaceId,
+    allTestsCount,
+    testsCurrentPage,
+    testsItemsPerPage,
+  })
 }
 
 export const action: ActionFunction = async ({ request }) => {
@@ -108,30 +117,5 @@ export const action: ActionFunction = async ({ request }) => {
 }
 
 export default function Tests() {
-  const { t } = useTranslation()
-
-  const data = useLoaderData() as unknown as LoaderData
-
-  const testActionData = useActionData() as ActionData
-  if (t(data.status as string) != t('statusCheck.success')) {
-    toast.warn(t('statusCheck.commonError'))
-  }
-  useEffect(() => {
-    if (testActionData) {
-      if (testActionData.resp?.statusCode === 200) {
-        toast.success(t(testActionData.resp?.message))
-      } else if (testActionData.errors?.statusCode === 400) {
-        toast.error(t(testActionData.errors?.message), {
-          toastId: testActionData.errors?.statusCode,
-        })
-      }
-    }
-  }, [testActionData, t])
-  return (
-    <TestList
-      tests={data.tests as Test[]}
-      status={data.status}
-      currentWorkspaceId={data.currentWorkspaceId as string}
-    />
-  )
+  return <TestList />
 }

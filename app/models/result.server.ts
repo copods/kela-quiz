@@ -342,7 +342,6 @@ export async function getAllCandidateTests(
       }
     )
   }
-
   return res
 }
 

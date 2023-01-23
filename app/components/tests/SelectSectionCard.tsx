@@ -8,9 +8,11 @@ import { useTranslation } from 'react-i18next'
 const SelectSectionCard = ({
   section,
   updateSection,
+  questionCount = 0,
 }: {
   section: TestSection
-  updateSection: (e: any) => void
+  updateSection: <T>(e: T) => void
+  questionCount?: number
 }) => {
   const { t } = useTranslation()
 
@@ -19,7 +21,7 @@ const SelectSectionCard = ({
     value?: string,
     selected?: boolean
   ) => {
-    if (section?._count?.questions == 0) {
+    if (questionCount === 0) {
       toast.error(t('toastConstants.cannotAddTestZeroQuestion'))
       return
     }
@@ -27,13 +29,13 @@ const SelectSectionCard = ({
       isSelected: section.isSelected,
       totalQuestions: section.totalQuestions
         ? section.totalQuestions
-        : section._count && section._count?.questions < 11
-        ? section._count?.questions
+        : questionCount && questionCount < 11
+        ? questionCount
         : 10,
       time: section.time
         ? section.time
-        : section._count && section._count?.questions < 11
-        ? section._count?.questions
+        : questionCount && questionCount < 11
+        ? questionCount
         : 10,
     }
     switch (target) {
@@ -41,8 +43,10 @@ const SelectSectionCard = ({
         tempSection.isSelected = selected
         break
       case 'totalQuestions':
-        if (parseInt(value || '') > (section?._count?.questions || 0)) {
-          toast.error(t('toastConstants.notAdMoreThanAvailableQuestion'))
+        if (parseInt(value || '') > (questionCount || 0)) {
+          toast.error(t('toastConstants.notAdMoreThanAvailableQuestion'), {
+            toastId: t('toastConstants.notAdMoreThanAvailableQuestion'),
+          })
           return
         }
         if (parseInt(value || '') == 0) {
@@ -105,7 +109,7 @@ const SelectSectionCard = ({
       </div>
       <div className="flex text-xs text-gray-400">
         {t('testsConstants.totalQuestionsText')}:{' '}
-        <span className="count">{section?._count?.questions}</span>
+        <span className="count">{questionCount}</span>
       </div>
       <hr className="h-px w-full border-0 bg-gray-300" />
       <div className="flex gap-4 pt-1">

@@ -11,14 +11,34 @@ export async function getUserById(id: User['id']) {
   return prisma.user.findUnique({ where: { id }, include: { password: true } })
 }
 
-export async function deleteUserById(userId: string, workspaceId: string) {
-  try {
-    return await prisma.userWorkspace.deleteMany({
-      where: { userId, workspaceId },
-    })
-  } catch (error) {
-    return 'Something went wrong'
-  }
+export async function deleteUserById(
+  userId: string,
+  workspaceId: string,
+  email: string
+) {
+  const deleteUserWorkspace = await prisma.userWorkspace.deleteMany({
+    where: { userId, workspaceId },
+  })
+  const invitedIdByEmail = await prisma.invites.findMany({
+    where: {
+      email: email,
+      workspaceId,
+      deleted: false,
+    },
+    select: {
+      id: true,
+    },
+  })
+  await prisma.invites.update({
+    where: {
+      id: invitedIdByEmail[0].id,
+    },
+    data: {
+      deleted: true,
+      deletedAt: new Date().toString(),
+    },
+  })
+  return deleteUserWorkspace
 }
 
 export async function getUserByEmail(email: User['email']) {
