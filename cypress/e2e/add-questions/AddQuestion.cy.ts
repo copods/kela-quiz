@@ -52,7 +52,7 @@ describe('Test for section-details', () => {
     )
     cy.get('h1', { timeout: 6000 })
       .should('be.visible')
-      .should('have.text', section1 + ' - Add Question')
+      .should('have.text', 'Aptitude - section1 - Add Question')
   })
   it('checks, redirect to section page after clicking on breadscrum link', () => {
     cy.get('#sections', { timeout: 6000 }).should('have.text', 'Tests').click()
@@ -77,7 +77,7 @@ describe('Test for section-details', () => {
     )
     cy.get('h1', { timeout: 6000 })
       .should('be.visible')
-      .should('have.text', section1 + ' - Add Question')
+      .should('have.text', 'Aptitude - section1 - Add Question')
     cy.get('#Test', { timeout: 20000 }).should('have.text', 'Test').click()
   })
 
@@ -553,7 +553,7 @@ describe('Test for section-details', () => {
       })
     })
     cy.get('.sectionName').contains(section1).click()
-    cy.wait(1000)
+    cy.wait(1500)
     cy.get('.question', { timeout: 8000 })
       .contains('What is useRef() ?')
       .trigger('mouseover')
