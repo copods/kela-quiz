@@ -540,6 +540,7 @@ describe('Visiting Assessment', () => {
       .click()
     cy.wait(1000)
     cy.get('#invite-popup-open0', { timeout: 6000 })
+
       .should('be.visible')
       .click()
     cy.get('#invite-more').click()

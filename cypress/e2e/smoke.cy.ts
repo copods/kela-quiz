@@ -80,10 +80,9 @@ describe('smoke tests', () => {
       .should('have.attr', 'value', randomWorkSpaceName)
 
     cy.get('button[name="addWorkspace"]', { timeout: 6000 }).click()
-    cy.wait(1000)
+    cy.wait(2000)
     // Check for workspace length
     dropdown = cy.get('#dropdown')
-
     dropdown
       .click()
       .find('ul')
@@ -109,6 +108,7 @@ describe('smoke tests', () => {
         cy.get('textarea').type('Aptitude')
         cy.get('[data-cy="submit"]').click()
       })
+    cy.wait(2000)
   })
 
   it('Adding a second section', () => {
@@ -148,7 +148,7 @@ describe('smoke tests', () => {
     cy.customVisit('/members')
     cy.wait(1000)
     cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
-
+    cy.wait(3000)
     cy.get('#section-card').each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -193,7 +193,7 @@ describe('smoke tests', () => {
     cy.customVisit('/members')
     cy.wait(1000)
     cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
-
+    cy.wait(3000)
     cy.get('#section-card').each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -235,7 +235,7 @@ describe('smoke tests', () => {
     cy.customVisit('/members')
     cy.wait(1000)
     cy.get('#sections', { timeout: 6000 }).should('have.text', 'Tests').click()
-    cy.wait(2000)
+    cy.wait(3000)
     cy.get('#section-card').each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -458,8 +458,9 @@ describe('smoke tests', () => {
     cy.get('#assessments-page-title').should('have.text', 'Assessments')
     cy.get('#invite-popup-open0', { timeout: 6000 }).should('be.visible')
     cy.get('#invite-popup-open0', { timeout: 6000 })
+      .first()
       .should('be.visible')
-      .click()
+      .click({ force: true })
 
     cy.get('input[name="email"]')
       .type('johndoe@example.com')

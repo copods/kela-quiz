@@ -1,7 +1,6 @@
-import type { User, Section } from '@prisma/client'
+import type { User, Section, Question } from '@prisma/client'
 import cuid from 'cuid'
 import { prisma } from '~/db.server'
-import type { Question } from '~/interface/Interface'
 
 export async function getSectionById({ id }: Pick<Section, 'id'>) {
   return prisma.section.findUnique({
@@ -29,24 +28,49 @@ export async function getSectionById({ id }: Pick<Section, 'id'>) {
   })
 }
 
-export async function getFirstSection(workspaceId: string) {
+export async function getFirstSection(
+  sortBy: string | null,
+  sortOrder: string | null,
+  workspaceId: string,
+  testCurrentPage = 1,
+  testItemsPerPage = 5
+) {
   const firstSection = await prisma.section.findFirst({
+    orderBy: { [sortBy ? sortBy : 'createdAt']: sortOrder ? sortOrder : 'asc' },
+    take: testItemsPerPage,
+    skip: (testCurrentPage - 1) * testItemsPerPage,
+
     where: {
       workspaceId,
       deleted: false,
-    },
-    orderBy: {
-      createdAt: 'desc',
     },
   })
 
   return firstSection?.id
 }
 
-export async function getAllSections(filterData: string, workspaceId: string) {
-  let filter = filterData ? filterData : '{"orderBy":{"createdAt":"desc"}}'
+export async function getAllTestsCounts(currentWorkspaceId: string) {
+  const userCount = await prisma.section.count({
+    where: {
+      deleted: false,
+      workspaceId: currentWorkspaceId,
+    },
+  })
+  return userCount
+}
+export async function getAllSections(
+  sortBy: string | null,
+  sortOrder: string | null,
+  workspaceId: string,
+  testCurrentPage = 1,
+  testItemsPerPage = 5
+) {
+  const PER_PAGE_ITEMS = testItemsPerPage
   const res = await prisma.section.findMany({
-    ...JSON.parse(filter),
+    orderBy: { [sortBy ? sortBy : 'createdAt']: sortOrder ? sortOrder : 'asc' },
+    take: PER_PAGE_ITEMS,
+    skip: (testCurrentPage - 1) * PER_PAGE_ITEMS,
+
     where: {
       deleted: false,
       workspaceId,
@@ -65,8 +89,8 @@ export async function getAllSections(filterData: string, workspaceId: string) {
         }
       ) => {
         let count = 0
-        section?.questions?.forEach((questions: Question) => {
-          if (questions?.deleted == false) {
+        section?.questions?.forEach((question: Question) => {
+          if (question?.deleted == false) {
             count = count + 1
           }
         })
