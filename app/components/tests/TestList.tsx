@@ -1,6 +1,6 @@
 import { useActionData, useLoaderData, useSubmit } from '@remix-run/react'
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate,useLocation } from 'react-router-dom'
 import type { Test, User, tableColumnType } from '~/interface/Interface'
 import { sortByOrder } from '~/interface/Interface'
 import SortFilter from '../common-components/SortFilter'
@@ -21,6 +21,7 @@ const TestList = () => {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const submit = useSubmit()
+  const location = useLocation()
   //loader and action data
   const testLoaderData = useLoaderData()
   const testActionData = useActionData()
@@ -62,6 +63,9 @@ const TestList = () => {
   const [candidatePopupOpen, setCandidatePopupOpen] = useState<boolean>(false)
   const [showDeletePopup, setShowDeletePopup] = useState(false)
   const [deleted, setDeleted] = useState(false)
+  useEffect(() => {
+    setTestsCurrentPage(testLoaderData.testsCurrentPage)
+  }, [testLoaderData.testsCurrentPage])
   const [id, setId] = useState('')
   const [selectedTest, setSelectedTest] = useState({ id: '', name: '' })
   useEffect(() => {
@@ -224,8 +228,15 @@ const TestList = () => {
     sortDirection,
     navigate,
     testLoaderData.allTestsCount,
+    location.search,
   ])
-
+  useEffect(() => {
+    if (!location.search && testLoaderData.allTestsCount > 0) {
+      navigate(
+        `?sortBy=${sortBy}&sort=${sortDirection}&page=${testsCurrentPage}&limit=${testsPageSize}`
+      )
+    }
+  }, [location])
   useEffect(() => {
     const heading = document.getElementById('assessments-page-title')
     heading?.focus()

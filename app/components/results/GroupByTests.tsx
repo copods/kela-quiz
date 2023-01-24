@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import SortFilter from '../common-components/SortFilter'
 
-import { Link, useLoaderData, useNavigate } from '@remix-run/react'
+import { Link, useLoaderData, useNavigate,useLocation } from '@remix-run/react'
 import type {
   CandidateTest,
   tableColumnType,
@@ -135,12 +135,27 @@ const GroupByTests = () => {
     },
     { title: 'Status', field: 'action', render: StatusDataCell },
   ]
+   const location = useLocation()
   useEffect(() => {
-    navigate(
-      `?sortBy=${sortBy}&sort=${sortDirection}&page=${resultsCurrentPage}&limit=${resultsPageSize}&status=${statusFilter}`
-    )
+    if (!location.search && candidateTestData.testCount > 0) {
+      navigate(
+        `?sortBy=${sortBy}&sort=${sortDirection}&page=${resultsCurrentPage}&limit=${resultsPageSize}&status=${statusFilter}`
+      )
+    } else {
+      navigate(
+        `?sortBy=${sortBy}&sort=${sortDirection}&page=${resultsCurrentPage}&limit=${resultsPageSize}&status=${statusFilter}`
+      )
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [resultsPageSize, resultsCurrentPage, statusFilter, sortBy, sortDirection])
+  }, [
+    resultsPageSize,
+    resultsCurrentPage,
+    statusFilter,
+    sortBy,
+    sortDirection,
+    location.search,
+  ])
   return (
     <div
       className="flex h-full flex-col gap-6 p-1"
