@@ -246,9 +246,9 @@
     "correctAnswer": "Correct Answer",
     "copyLink": "Copy Link",
     "text": "TEXT",
-    "q": "Q",
-    "givenAnswer": "Given Answer",
-    "wrong":"Wrong"
+    "q": "Question",
+    "givenAnswers": "Given Answers",
+    "wrong": "Wrong"
   },
   "forgotPasswordConstants": {
     "header": "Forgot password?",

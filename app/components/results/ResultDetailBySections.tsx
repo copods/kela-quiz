@@ -3,7 +3,7 @@ import { useLoaderData, useNavigate } from '@remix-run/react'
 import { routes } from '~/constants/route.constants'
 import ResultDetailsQuestionsPreview from './ResultDetailsQuestionsPreview'
 import Divider from '../common-components/divider'
-import type{ SectionInCandidateTest } from '~/interface/Interface'
+import type { SectionInCandidateTest } from '~/interface/Interface'
 
 const ResultDetailBySections = () => {
   const resultDetailsLoaderData = useLoaderData()

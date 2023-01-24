@@ -25,13 +25,8 @@ const ResultDetailsQuestionsPreview = ({
 }) => {
   const { t } = useTranslation()
   const correctAnswersArray = correctAnswer.map(
-    (correctAnswer: any) => correctAnswer.answer
+    (correctAnswer: CorrectAnswer) => correctAnswer.answer
   )
-
-  // extracting correct options
-  const sortedCorrectOptionArray = correctOption.map((option: Option) => {
-    return option.option
-  })
 
   let flag = selectedOptions.map((selectedOptions: Option, index: number) => {
     return selectedOptions.option === correctOption[index]?.option
@@ -50,60 +45,65 @@ const ResultDetailsQuestionsPreview = ({
     <div className="flex w-full  rounded-lg  border border-gray-300 bg-gray-50">
       <div className="flex w-6/12 flex-col gap-6 p-6">
         <div className="flex items-center gap-8">
-          <span className="rounded-52 border border-gray-700 px-3 text-sm text-gray-700">
-            {/* {show chip according to type of question} */}
-            {questionType.displayName === 'Text'
-              ? t('resultConstants.text')
-              : t('sectionsConstants.mcq')}
-          </span>
-          {/* {if question type is TEXT then
+          <div className="flex w-full font-medium text-xl items-center justify-between gap-2">
+            <span>
+              {t('resultConstants.q')} {index}
+            </span>
+            <div className="flex items-center gap-8">
+              
+              <span className="rounded-52 border border-black px-3 py-1 text-sm text-gray-800">
+                {/* {show chip according to type of question} */}
+                {questionType.displayName === 'Text'
+                  ? t('resultConstants.text')
+                  : t('sectionsConstants.mcq')}
+              </span>
+               {/* {if question type is TEXT then
           CASE1: if ordered then show ordered front of question type
           CASE2: if unordered then show unordered front of question badge
           } */}
-          {questionType.displayName === 'Text' && (
-            <span className="list-item text-xs text-gray-800">
-              {checkOrder
-                ? t('resultConstants.order')
-                : t('resultConstants.unordered')}
-            </span>
-          )}
+              {questionType.displayName === 'Text' && (
+                <span className="list-item font-semibold text-xs text-gray-800">
+                  {checkOrder
+                    ? t('resultConstants.order')
+                    : t('resultConstants.unordered')}
+                </span>
+              )}
+            </div>
+          </div>
+
+         
         </div>
-        <div className="flex gap-6">
-          {/* {showing question serial number} */}
-          <span>
-            {t('resultConstants.q')}.{index}
-          </span>
-          {/* {question} */}
-          <div
-            className="question flex-1   flex-row"
-            dangerouslySetInnerHTML={{
-              __html: question,
-            }}
-          ></div>
-        </div>
+
+        {/* {question} */}
+        <div
+          className="question flex-1   flex-row"
+          dangerouslySetInnerHTML={{
+            __html: question,
+          }}
+        ></div>
       </div>
       <hr className="h-[auto] w-px bg-gray-300" />
       <div className="w-6/12 p-6">
         {/* {checking if question is answered by candidate} */}
         {status === 'ANSWERED' && (
-          <div className="flex flex-col gap-7">
+          <div className="flex flex-col gap-6">
             <div className="flex flex-col gap-6">
               <div className="flex items-center justify-between">
-                <h3 className="text-xl text-gray-800">
-                  {t('resultConstants.givenAnswer')}
+                <h3 className="text-xl font-medium text-gray-800">
+                  {t('resultConstants.givenAnswers')}
                 </h3>
                 <div>
                   {checkOrder === true &&
                   questionType.displayName === 'Text' &&
                   correctOrder.includes(false) ? (
-                    <span className="rounded-full bg-[#FAD1E5] px-2.5 py-2.5 text-xs">
+                    <span className="rounded-full bg-red-100 px-2.5 py-2.5 text-sm">
                       {t('resultConstants.wrong')}
                     </span>
                   ) : (
                     checkOrder === true &&
                     questionType.displayName === 'Text' &&
                     !correctOrder.includes(false) && (
-                      <span className="rounded-full bg-green-100 px-2.5 py-2.5 text-xs">
+                      <span className="rounded-full bg-green-100 px-2.5 py-2.5 text-sm">
                         {t('resultConstants.correct')}
                       </span>
                     )
@@ -111,27 +111,27 @@ const ResultDetailsQuestionsPreview = ({
                   {checkOrder === false &&
                   questionType.displayName === 'Text' &&
                   areEqual(textAnswer, correctAnswersArray) === false ? (
-                    <span className="rounded-full bg-[#FAD1E5] px-2.5 py-2.5 text-xs">
+                    <span className="rounded-full bg-red-100 px-2.5 py-2.5 text-sm">
                       {t('resultConstants.wrong')}
                     </span>
                   ) : (
                     checkOrder === false &&
                     questionType.displayName === 'Text' &&
                     areEqual(textAnswer, correctAnswersArray) === true && (
-                      <span className="rounded-full bg-green-100 px-2.5 py-2.5 text-xs">
+                      <span className="rounded-full bg-green-100 px-2.5 py-2.5 text-sm">
                         {t('resultConstants.correct')}
                       </span>
                     )
                   )}
                   {flag.includes('incorrect') === true &&
                   questionType.displayName !== 'Text' ? (
-                    <span className="rounded-full bg-[#FAD1E5] px-2.5 py-2.5 text-xs">
+                    <span className="rounded-full bg-red-100 px-2.5 py-2.5 text-sm">
                       {t('resultConstants.wrong')}
                     </span>
                   ) : (
                     flag.includes('incorrect') === false &&
                     questionType.displayName !== 'Text' && (
-                      <span className="rounded-full bg-green-100 px-2.5 py-2.5 text-xs">
+                      <span className="rounded-full bg-green-100 px-2.5 py-2.5 text-sm">
                         {t('resultConstants.correct')}
                       </span>
                     )
@@ -139,79 +139,25 @@ const ResultDetailsQuestionsPreview = ({
                 </div>
               </div>
 
-              {checkOrder === true &&
-                correctOrder.includes(false) &&
-                textAnswer.map((textAnswer: CorrectAnswer, index: number) => {
-                  return (
-                    <div
-                      key={index}
-                      className="rounded border border-solid bg-[#FAD1E5] p-6"
-                    >
-                      {textAnswer}
-                    </div>
-                  )
-                })}
-              {checkOrder === true &&
-                !correctOrder.includes(false) &&
-                textAnswer.map((textAnswer: CorrectAnswer, index: number) => {
-                  return (
-                    <div
-                      key={index}
-                      className="rounded border border-solid bg-green-100 p-6"
-                    >
-                      {textAnswer}
-                    </div>
-                  )
-                })}
+              {textAnswer.map((textAnswer: CorrectAnswer, index: number) => {
+                return (
+                  <div
+                    key={index}
+                    className="flex h-full gap-2 break-normal rounded-lg border border-solid border-gray-300 bg-gray-100 py-6 px-6 text-gray-800"
+                  >
+                    {textAnswer}
+                  </div>
+                )
+              })}
+
               {
                 <div className="flex flex-col gap-6">
-                  {checkOrder === false &&
-                    areEqual(textAnswer, correctAnswersArray) === true &&
-                    textAnswer.map(
-                      (textAnswer: CorrectAnswer, index: number) => {
-                        return (
-                          <div
-                            key={index}
-                            className={
-                              'rounded border border-solid bg-green-100 p-6'
-                            }
-                          >
-                            {textAnswer}
-                          </div>
-                        )
-                      }
-                    )}
-
-                  {checkOrder === false &&
-                    areEqual(textAnswer, correctAnswersArray) === false &&
-                    textAnswer.map(
-                      (textAnswer: CorrectAnswer, index: number) => {
-                        return (
-                          <div
-                            key={index}
-                            className={
-                              correctAnswersArray.includes(textAnswer as any)
-                                ? 'rounded border border-solid bg-green-100 p-6'
-                                : 'rounded border border-solid bg-[#FAD1E5] p-6'
-                            }
-                          >
-                            {textAnswer}
-                          </div>
-                        )
-                      }
-                    )}
                   {selectedOptions.map((selectedOption: Option) => {
                     return (
                       <div key={selectedOption.questionId}>
-                        <div className="flex flex-col gap-7">
+                        <div className="flex flex-col gap-6">
                           <div
-                            className={`${
-                              sortedCorrectOptionArray.includes(
-                                selectedOption.option
-                              )
-                                ? 'ql-editor rounded border border-solid bg-green-100 p-6'
-                                : 'ql-editor rounded border border-solid bg-[#FAD1E5] p-6'
-                            }`}
+                            className="ql-editor flex h-full gap-2 break-normal rounded-lg border border-solid border-gray-300 bg-gray-100 py-6 px-6 text-gray-800"
                             dangerouslySetInnerHTML={{
                               __html: `${selectedOption.option}`,
                             }}
@@ -224,29 +170,29 @@ const ResultDetailsQuestionsPreview = ({
               }
             </div>
             <div className="flex flex-col gap-6">
-              <div className="flex flex-col gap-7">
-                {/* conditional rendering if gieven answer is wrong */}
+              <div className="flex flex-col gap-6">
+                {/* conditional rendering if given answer is wrong */}
                 {correctOrder.includes(false) && checkOrder === true && (
-                  <div className="flex flex-col gap-7">
+                  <div className="flex flex-col gap-6">
                     <Divider height="1px" />
-                    <h3 className="text-xl text-gray-800">
+                    <h3 className="text-xl text-gray-800 font-medium">
                       {t('resultConstants.correctAnswer')}
                     </h3>
                   </div>
                 )}
                 {areEqual(textAnswer, correctAnswersArray) === false &&
                   checkOrder === false && (
-                    <div className="flex flex-col gap-7">
+                    <div className="flex flex-col gap-6">
                       <Divider height="1px" />
-                      <h3 className="text-xl text-gray-800">
+                      <h3 className="text-xl text-gray-800 font-medium">
                         {t('resultConstants.correctAnswer')}
                       </h3>
                     </div>
                   )}
                 {flag.includes('incorrect') && (
-                  <div className="flex flex-col gap-7">
+                  <div className="flex flex-col gap-6">
                     <Divider height="1px" />
-                    <h3 className="text-xl text-gray-800">
+                    <h3 className="text-xl font-medium text-gray-800">
                       {t('resultConstants.correctAnswer')}
                     </h3>
                   </div>
@@ -262,7 +208,7 @@ const ResultDetailsQuestionsPreview = ({
                             <div
                               key={index}
                               className={
-                                'ql-editor rounded border border-solid bg-green-100 p-6'
+                                'ql-editor flex h-full gap-2 break-normal rounded-lg border border-solid border-gray-300 bg-gray-100 py-6 px-6 text-gray-800'
                               }
                               dangerouslySetInnerHTML={{
                                 __html: `${correctOption?.option}`,
@@ -282,7 +228,7 @@ const ResultDetailsQuestionsPreview = ({
                           <div
                             key={index}
                             className={
-                              'ql-editor rounded border border-solid bg-green-100 p-6'
+                              'ql-editor flex h-full gap-2 break-normal rounded-lg border border-solid border-gray-300 bg-gray-100 py-6 px-6 text-gray-800'
                             }
                           >
                             {correctAnswer.answer}
@@ -298,7 +244,7 @@ const ResultDetailsQuestionsPreview = ({
                         return (
                           <div
                             key={index}
-                            className="rounded border border-solid bg-green-100 p-6"
+                            className="flex h-full gap-2 break-normal rounded-lg border border-solid border-gray-300 bg-gray-100 py-6 px-6 text-gray-800"
                           >
                             {correctAnswer.answer}
                           </div>
@@ -311,7 +257,22 @@ const ResultDetailsQuestionsPreview = ({
           </div>
         )}
         {/* {if question is skipped by candidate } */}
-        {status === 'SKIPPED' && <span>{t('resultConstants.skipped')}</span>}
+        {status === 'SKIPPED' && (
+          <div className='flex flex-col gap-6'>
+            <div className='flex justify-between items-center'>
+            <h3 className="text-xl text-gray-800">
+                  {t('resultConstants.givenAnswers')}
+                </h3>
+                <span className="rounded-full text-red-800 bg-yellow-100 px-2.5 py-2.5 text-sm">
+                        {t('resultConstants.skipped')}
+                      </span>
+            </div>
+            
+                <div className='flex h-full gap-2 break-normal rounded-lg border border-solid border-gray-300 bg-gray-100 py-6 px-6 text-gray-800'>
+                  -
+                </div>
+          </div>
+        )}
       </div>
     </div>
   )

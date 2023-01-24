@@ -1,8 +1,6 @@
-import type { CorrectAnswer } from '~/interface/Interface'
-
 export function areEqual(
-  textAnswer: Array<CorrectAnswer>,
-  correctAnswersArray: Array<CorrectAnswer>
+  textAnswer: any,
+  correctAnswersArray: any
 ) {
   let N = textAnswer.length
   let M = correctAnswersArray.length
