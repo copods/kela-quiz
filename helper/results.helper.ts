@@ -1,7 +1,4 @@
-export function areEqual(
-  textAnswer: any,
-  correctAnswersArray: any
-) {
+export function areEqual(textAnswer: any, correctAnswersArray: any) {
   let N = textAnswer.length
   let M = correctAnswersArray.length
 

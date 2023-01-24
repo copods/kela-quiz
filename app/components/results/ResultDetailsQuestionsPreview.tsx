@@ -45,24 +45,23 @@ const ResultDetailsQuestionsPreview = ({
     <div className="flex w-full  rounded-lg  border border-gray-300 bg-gray-50">
       <div className="flex w-6/12 flex-col gap-6 p-6">
         <div className="flex items-center gap-8">
-          <div className="flex w-full font-medium text-xl items-center justify-between gap-2">
+          <div className="flex w-full items-center justify-between gap-2 text-xl font-medium">
             <span>
               {t('resultConstants.q')} {index}
             </span>
             <div className="flex items-center gap-8">
-              
               <span className="rounded-52 border border-black px-3 py-1 text-sm text-gray-800">
                 {/* {show chip according to type of question} */}
                 {questionType.displayName === 'Text'
                   ? t('resultConstants.text')
                   : t('sectionsConstants.mcq')}
               </span>
-               {/* {if question type is TEXT then
+              {/* {if question type is TEXT then
           CASE1: if ordered then show ordered front of question type
           CASE2: if unordered then show unordered front of question badge
           } */}
               {questionType.displayName === 'Text' && (
-                <span className="list-item font-semibold text-xs text-gray-800">
+                <span className="list-item text-xs font-semibold text-gray-800">
                   {checkOrder
                     ? t('resultConstants.order')
                     : t('resultConstants.unordered')}
@@ -70,8 +69,6 @@ const ResultDetailsQuestionsPreview = ({
               )}
             </div>
           </div>
-
-         
         </div>
 
         {/* {question} */}
@@ -175,7 +172,7 @@ const ResultDetailsQuestionsPreview = ({
                 {correctOrder.includes(false) && checkOrder === true && (
                   <div className="flex flex-col gap-6">
                     <Divider height="1px" />
-                    <h3 className="text-xl text-gray-800 font-medium">
+                    <h3 className="text-xl font-medium text-gray-800">
                       {t('resultConstants.correctAnswer')}
                     </h3>
                   </div>
@@ -184,7 +181,7 @@ const ResultDetailsQuestionsPreview = ({
                   checkOrder === false && (
                     <div className="flex flex-col gap-6">
                       <Divider height="1px" />
-                      <h3 className="text-xl text-gray-800 font-medium">
+                      <h3 className="text-xl font-medium text-gray-800">
                         {t('resultConstants.correctAnswer')}
                       </h3>
                     </div>
@@ -258,19 +255,19 @@ const ResultDetailsQuestionsPreview = ({
         )}
         {/* {if question is skipped by candidate } */}
         {status === 'SKIPPED' && (
-          <div className='flex flex-col gap-6'>
-            <div className='flex justify-between items-center'>
-            <h3 className="text-xl text-gray-800">
-                  {t('resultConstants.givenAnswers')}
-                </h3>
-                <span className="rounded-full text-red-800 bg-yellow-100 px-2.5 py-2.5 text-sm">
-                        {t('resultConstants.skipped')}
-                      </span>
+          <div className="flex flex-col gap-6">
+            <div className="flex items-center justify-between">
+              <h3 className="text-xl text-gray-800">
+                {t('resultConstants.givenAnswers')}
+              </h3>
+              <span className="rounded-full bg-yellow-100 px-2.5 py-2.5 text-sm text-red-800">
+                {t('resultConstants.skipped')}
+              </span>
             </div>
-            
-                <div className='flex h-full gap-2 break-normal rounded-lg border border-solid border-gray-300 bg-gray-100 py-6 px-6 text-gray-800'>
-                  -
-                </div>
+
+            <div className="flex h-full gap-2 break-normal rounded-lg border border-solid border-gray-300 bg-gray-100 py-6 px-6 text-gray-800">
+              -
+            </div>
           </div>
         )}
       </div>
