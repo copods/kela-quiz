@@ -12,6 +12,7 @@ const SectionDetails = () => {
   const { t } = useTranslation()
 
   const sectionDetails = useLoaderData()
+
   const [currentAccordian, setCurrentAccordian] = useState(-1)
   const [searchText, setSearchText] = useState('')
   const navigate = useNavigate()
@@ -92,6 +93,10 @@ const SectionDetails = () => {
               expandedIndex={currentAccordian}
               onAccordianToggle={setCurrentAccordian}
               index={i}
+              sectionInTest={sectionDetails.sectionDetails?.sectionInTest}
+              totalQuestionInSection={
+                sectionDetails.sectionDetails?.questions.length
+              }
             />
           )
         })

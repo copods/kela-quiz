@@ -143,7 +143,9 @@
     "msq": "MSQ",
     "mcq": "MCQ",
     "multipleSelectQuestion": "Multiple Select Question",
-    "multipleChoiceQuestion": "Multiple Choice Question"
+    "multipleChoiceQuestion": "Multiple Choice Question",
+    "testMayAffectWarning": "This question is being used in a test, further invites will not get this question.",
+    "questionNotDeleted": "due to number of question used is assessment of this section is same as current questions, please add question to delete this question"
   },
   "testsConstants": {
     "addTestbutton": "Add Assessment",

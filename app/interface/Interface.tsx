@@ -157,6 +157,7 @@ export interface Question {
   deletedAt: string
   options?: Array<Option>
   correctOptions?: Array<Option>
+  candidateQuestion: CandidateQuestion[]
 }
 
 export interface Test {

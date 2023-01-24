@@ -13,6 +13,8 @@ export default function DeletePopUp({
   status,
   deleteItemType,
   deleteItem,
+  warning,
+  isHide,
 }: {
   open: boolean
   setOpen: (e: boolean) => void
@@ -22,6 +24,8 @@ export default function DeletePopUp({
   status?: string | undefined
   deleteItemType: string
   deleteItem?: string
+  warning?: string
+  isHide?: boolean
 }) {
   const { t } = useTranslation()
 
@@ -57,41 +61,44 @@ export default function DeletePopUp({
                 <p className="bold text-sm text-gray-500">
                   {deleteItem} {subAlert}
                 </p>
+                <p className="text-sm font-medium text-red-600">{warning}</p>
               </div>
             </div>
           </div>
-          <div className="gap-2 sm:flex sm:flex-row-reverse">
-            <Form method="post">
+          {!isHide && (
+            <div className="gap-2 sm:flex sm:flex-row-reverse">
+              <Form method="post">
+                <Button
+                  tabIndex={0}
+                  id="confirm-delete"
+                  variant="secondary-solid"
+                  type="button"
+                  name="delete"
+                  className="px-5"
+                  title={t('commonConstants.delete')}
+                  buttonText={t('commonConstants.delete')}
+                  onClick={() => {
+                    handleDelete()
+                    if (setDeleted !== undefined) {
+                      setDeleted(true)
+                    }
+                  }}
+                />
+              </Form>
               <Button
                 tabIndex={0}
-                id="confirm-delete"
-                variant="secondary-solid"
                 type="button"
-                name="delete"
+                id="cancel-delete-pop-up"
+                variant="primary-outlined"
                 className="px-5"
-                title={t('commonConstants.delete')}
-                buttonText={t('commonConstants.delete')}
+                title={t('commonConstants.cancel')}
+                buttonText={t('commonConstants.cancel')}
                 onClick={() => {
-                  handleDelete()
-                  if (setDeleted !== undefined) {
-                    setDeleted(true)
-                  }
+                  if (setOpen !== undefined) setOpen(false)
                 }}
               />
-            </Form>
-            <Button
-              tabIndex={0}
-              type="button"
-              id="cancel-delete-pop-up"
-              variant="primary-outlined"
-              className="px-5"
-              title={t('commonConstants.cancel')}
-              buttonText={t('commonConstants.cancel')}
-              onClick={() => {
-                if (setOpen !== undefined) setOpen(false)
-              }}
-            />
-          </div>
+            </div>
+          )}
         </div>
       </DialogWrapper>
     </div>

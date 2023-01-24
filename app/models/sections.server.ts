@@ -22,6 +22,17 @@ export async function getSectionById({ id }: Pick<Section, 'id'>) {
               value: true,
             },
           },
+          candidateQuestion: true,
+        },
+      },
+      sectionInTest: {
+        select: {
+          totalQuestions: true,
+          test: {
+            select: {
+              deleted: true,
+            },
+          },
         },
       },
     },
