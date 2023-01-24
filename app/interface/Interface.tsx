@@ -228,6 +228,10 @@ export interface CandidateTest {
 }
 
 export interface SectionInCandidateTest {
+  question: any
+  selectedOptions: Option[]
+  answers: CorrectAnswer[]
+  status: string
   SectionWiseResult: SectionWiseResults[]
   id: string
   sectionId: string

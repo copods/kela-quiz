@@ -614,6 +614,7 @@ async function calculateResultBySectionId(sectionid?: string) {
               correctAnswer: true,
               correctOptions: true,
               questionType: true,
+              checkOrder: true,
             },
           },
         },
@@ -645,24 +646,41 @@ async function calculateResultBySectionId(sectionid?: string) {
       }
 
       if (question?.question?.questionType?.value === 'TEXT') {
-        const correctAnswers = question?.question?.correctAnswer
-          ?.flatMap((opt) => opt?.answer.toLowerCase())
-          .sort()
-        const userAnswers = question?.answers
-          ?.flatMap((opt) => opt.toLowerCase())
-          .sort()
-        if (correctAnswers?.length === userAnswers?.length) {
-          let correctFlag = true
-          for (let i = 0; i < correctAnswers?.length; i++) {
-            if (correctAnswers[i].localeCompare(userAnswers[i]) != 0) {
-              correctFlag = false
-              break
+        const checkOrder = question?.question?.checkOrder
+        const correctOrder = question?.answers.map(
+          (textAnswer: any, index: number) => {
+            return (
+              textAnswer === question?.question?.correctAnswer[index].answer
+            )
+          }
+        )
+
+        if (checkOrder === false) {
+          const correctAnswers = question?.question?.correctAnswer
+            ?.flatMap((opt) => opt?.answer.toLowerCase())
+            .sort()
+          const userAnswers = question?.answers
+            ?.flatMap((opt) => opt.toLowerCase())
+            .sort()
+          if (correctAnswers?.length === userAnswers?.length) {
+            let correctFlag = true
+            for (let i = 0; i < correctAnswers?.length; i++) {
+              if (correctAnswers[i].localeCompare(userAnswers[i]) != 0) {
+                correctFlag = false
+                break
+              }
+            }
+            if (correctFlag) {
+              correct += 1
+            } else {
+              incorrect += 1
             }
           }
-          if (correctFlag) {
-            correct += 1
-          } else {
+        } else if (checkOrder === true) {
+          if (correctOrder.includes(false)) {
             incorrect += 1
+          } else {
+            correct += 1
           }
         }
       } else if (question?.question?.questionType?.value === 'SINGLE_CHOICE') {

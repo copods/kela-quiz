@@ -3,6 +3,7 @@ import { useLoaderData, useNavigate } from '@remix-run/react'
 import { routes } from '~/constants/route.constants'
 import ResultDetailsQuestionsPreview from './ResultDetailsQuestionsPreview'
 import Divider from '../common-components/divider'
+import type{ SectionInCandidateTest } from '~/interface/Interface'
 
 const ResultDetailBySections = () => {
   const resultDetailsLoaderData = useLoaderData()
@@ -48,22 +49,24 @@ const ResultDetailBySections = () => {
         <Divider height="1px" />
       </header>
       <div className="flex flex-col gap-6">
-        {sectionDetail.questions.map((questions: any, index: number) => {
-          return (
-            <ResultDetailsQuestionsPreview
-              key={questions.id}
-              textAnswer={questions.answers}
-              status={questions.status}
-              selectedOptions={questions.selectedOptions}
-              question={questions.question.question}
-              correctAnswer={questions.question.correctAnswer}
-              correctOption={questions.question.correctOptions}
-              checkOrder={questions.question.checkOrder}
-              questionType={questions.question.questionType}
-              index={index + 1}
-            />
-          )
-        })}
+        {sectionDetail.questions.map(
+          (questions: SectionInCandidateTest, index: number) => {
+            return (
+              <ResultDetailsQuestionsPreview
+                key={questions.id}
+                textAnswer={questions.answers}
+                status={questions.status}
+                selectedOptions={questions.selectedOptions}
+                question={questions.question.question}
+                correctAnswer={questions.question.correctAnswer}
+                correctOption={questions.question.correctOptions}
+                checkOrder={questions.question.checkOrder}
+                questionType={questions.question.questionType}
+                index={index + 1}
+              />
+            )
+          }
+        )}
       </div>
     </div>
   )
