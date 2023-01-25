@@ -150,6 +150,7 @@ export interface Question {
   questionTypeId?: string
   sectionId?: string
   createdById?: string
+  createdBy: User
   createdAt?: Date
   updatedAt?: Date
   deleted: boolean
@@ -278,6 +279,7 @@ export interface CandidateResult {
   startedAt: Date
   updatedAt: Date
   workspaceId?: string
+  link?: string
 }
 export interface sectionActionErrorsType {
   title: string

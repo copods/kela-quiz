@@ -14,7 +14,7 @@ const SideNav = () => {
   const { t } = useTranslation()
   const param = useParams()
   const [showAddWorkspaceModal, setShowAddWorkspaceModal] = useState(false)
-  const { workspaces = [], currentWorkspaceId, firstSection } = useLoaderData()
+  const { workspaces = [], currentWorkspaceId } = useLoaderData()
   const [workspace, setWorkspace] = useState<string>(param.workspaceId!)
   const fetcher = useFetcher()
   const tempWorkspaces = workspaces.map((userWorkspace: UserWorkspace) => {
@@ -56,17 +56,13 @@ const SideNav = () => {
           id: 'tests',
           iconClass: 'carbon:result',
           itemName: 'testsConstants.assessments',
-          itemRoute: `${routes.assessments}?index=&data=%7B"orderBy"%3A%7B"createdAt"%3A"desc"%7D%7D`,
+          itemRoute: `${routes.assessments}`,
         },
         {
           id: 'sections',
           iconClass: 'ci:list-checklist-alt',
           itemName: 'routeFiles.tests',
-          itemRoute: `${routes.tests}${
-            firstSection
-              ? `/${firstSection}?filter=%7B"orderBy"%3A%7B"createdAt"%3A"desc"%7D%7D`
-              : ''
-          }`,
+          itemRoute: `${routes.tests}`,
         },
       ],
     },

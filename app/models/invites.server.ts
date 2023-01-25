@@ -14,46 +14,42 @@ export async function inviteNewUser({
   userId?: string
   invitedByWorkspaceId: string
 }) {
-  try {
-    const inviteCreated = await prisma.invites.create({
-      data: {
-        email,
-        roleId,
-        workspaceId: invitedByWorkspaceId,
-        userId: userId,
-      },
-      select: {
-        invitedForWorkspace: {
-          select: {
-            name: true,
-          },
-        },
-        id: true,
-        invitedById: {
-          select: {
-            firstName: true,
-            lastName: true,
-          },
+  const res = await prisma.invites.create({
+    data: {
+      email,
+      roleId,
+      workspaceId: invitedByWorkspaceId,
+      userId: userId,
+    },
+    select: {
+      invitedForWorkspace: {
+        select: {
+          name: true,
         },
       },
-    })
-
+      id: true,
+      invitedById: {
+        select: {
+          firstName: true,
+          lastName: true,
+        },
+      },
+    },
+  })
+  if (res) {
+    const invite = res
     const workspaceJoinLink =
-      env.PUBLIC_URL + '/workspace/' + inviteCreated.id + '/join'
-    const name = ((inviteCreated.invitedById?.firstName as string) +
+      env.PUBLIC_URL + '/workspace/' + invite.id + '/join'
+    const name = ((invite.invitedById?.firstName as string) +
       ' ' +
-      inviteCreated.invitedById?.lastName) as string
-
-    const emailSentRes = await sendMemberInvite(
+      invite.invitedById?.lastName) as string
+    return await sendMemberInvite(
       email,
       name as string,
       workspaceJoinLink as string
     )
-
-    return emailSentRes
-  } catch (err) {
-    throw new Error('Something went wrong!')
   }
+  return res
 }
 export async function getInvitedMemberById(id: Invites['id']) {
   return prisma.invites.findUnique({

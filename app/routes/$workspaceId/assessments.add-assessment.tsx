@@ -3,7 +3,6 @@ import type { ActionFunction, LoaderFunction } from '@remix-run/server-runtime'
 import { json, redirect } from '@remix-run/server-runtime'
 import { useEffect } from 'react'
 import { toast } from 'react-toastify'
-import type { Section } from '~/interface/Interface'
 import AddTestComponent from '~/components/tests/AddTest'
 import { getAllSections } from '~/models/sections.server'
 import { createTest } from '~/models/tests.server'
@@ -11,9 +10,10 @@ import { getUserId, requireUserId } from '~/session.server'
 import { routes } from '~/constants/route.constants'
 import { useTranslation } from 'react-i18next'
 import { getUserWorkspaces } from '~/models/workspace.server'
+import type { Section } from '@prisma/client'
 
 type LoaderData = {
-  sections: Awaited<ReturnType<typeof getAllSections>>
+  sections: Section[]
   status: string
   workspaces: Awaited<ReturnType<typeof getUserWorkspaces>>
   currentWorkspaceId: string
@@ -34,16 +34,9 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const workspaces = await getUserWorkspaces(userId as string)
   if (!userId) return redirect(routes.signIn)
 
-  const filter = Object.fromEntries(new URL(request.url).searchParams.entries())
-    .data
-    ? JSON.parse(
-        Object.fromEntries(new URL(request.url).searchParams.entries()).data
-      )
-    : '{}'
-
   let sections: Array<Section> = []
   let status: string = ''
-  await getAllSections(filter, currentWorkspaceId as string)
+  await getAllSections('', '', currentWorkspaceId as string)
     .then((res) => {
       sections = res as Section[]
       status = 'statusCheck.success'

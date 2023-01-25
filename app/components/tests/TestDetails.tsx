@@ -1,22 +1,9 @@
 import { Icon } from '@iconify/react'
-import { Link, useActionData, useLoaderData } from '@remix-run/react'
-import { useEffect } from 'react'
-import { useTranslation } from 'react-i18next'
-import { toast } from 'react-toastify'
+import { Link, useLoaderData } from '@remix-run/react'
 
 import TestPreview from './CreateTestPreview'
 const TestDetails = () => {
   const { testPreview, currentWorkspaceId } = useLoaderData()
-  const action = useActionData()
-  const { t } = useTranslation()
-
-  useEffect(() => {
-    if (action?.errors?.statusCode === 400) {
-      toast.error(t(action?.errors?.message), {
-        toastId: action?.errors?.message,
-      })
-    }
-  }, [action, t])
 
   return (
     <div id="test-details" className="h-full">
