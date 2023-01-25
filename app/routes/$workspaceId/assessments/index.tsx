@@ -106,28 +106,13 @@ export const action: ActionFunction = async ({ request }) => {
         testId,
       })
     }
-    try {
-      const candidateInviteStatus = await createCandidate({
-        emails,
-        createdById,
-        testId,
-      })
+    const candidateInviteStatus = await createCandidate({
+      emails,
+      createdById,
+      testId,
+    })
 
-      return json({ candidateInviteStatus, testId })
-    } catch (err) {
-      let message = 'statusCheck.sendGridError'
-      let testFailed = json<ActionData>(
-        {
-          errors: {
-            message,
-            statusCode: 400,
-          },
-        },
-        { status: 400 }
-      )
-
-      return testFailed
-    }
+    return json({ candidateInviteStatus, testId })
   }
 }
 

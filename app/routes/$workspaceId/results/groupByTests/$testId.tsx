@@ -61,27 +61,12 @@ export const action: ActionFunction = async ({ request }) => {
     const testId = formData.get('testId') as string
     const candidateId = formData.get('candidateId') as string
     const id = formData.get('id') as string
-    try {
-      const candidateInviteStatus = await resendTestLink({
-        id,
-        candidateId,
-        testId,
-      })
-      return json({ candidateInviteStatus, candidateId })
-    } catch (err) {
-      let message = 'statusCheck.sendGridError'
-      let testFailed = json<ActionData>(
-        {
-          errors: {
-            message,
-            statusCode: 400,
-          },
-        },
-        { status: 400 }
-      )
-
-      return testFailed
-    }
+    const candidateInviteStatus = await resendTestLink({
+      id,
+      candidateId,
+      testId,
+    })
+    return json({ candidateInviteStatus, candidateId })
   }
 }
 function CandidateListRoute() {
