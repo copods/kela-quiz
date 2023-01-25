@@ -22,17 +22,6 @@ export async function getSectionById({ id }: Pick<Section, 'id'>) {
               value: true,
             },
           },
-          candidateQuestion: true,
-        },
-      },
-      sectionInTest: {
-        select: {
-          totalQuestions: true,
-          test: {
-            select: {
-              deleted: true,
-            },
-          },
         },
       },
     },
@@ -222,7 +211,51 @@ export async function addQuestion(
     })
 }
 export async function deleteQuestionById(id: string) {
-  return prisma.question.update({
+  const getQuestion = await prisma.question.findUnique({
+    where: {
+      id,
+    },
+    select: {
+      section: {
+        select: {
+          questions: {
+            where: {
+              deleted: {
+                equals: false,
+              },
+            },
+          },
+          sectionInTest: {
+            where: {
+              test: {
+                deleted: {
+                  equals: false,
+                },
+              },
+            },
+            select: {
+              totalQuestions: true,
+            },
+          },
+        },
+      },
+    },
+  })
+  const totalQuestionArray = getQuestion?.section?.sectionInTest.map(
+    (data: any) => {
+      return data.totalQuestions
+    }
+  )
+  const sortTotalTime = totalQuestionArray?.sort((a: any, b: any) => {
+    return b - a
+  })
+  if (getQuestion && sortTotalTime) {
+    if (getQuestion.section.questions?.length <= sortTotalTime[0]) {
+      return 'not deleted'
+    }
+  }
+
+  const deleteQuestion = await prisma.question.update({
     where: {
       id,
     },
@@ -231,4 +264,5 @@ export async function deleteQuestionById(id: string) {
       deletedAt: new Date().toString(),
     },
   })
+  return deleteQuestion && 'success'
 }

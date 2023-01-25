@@ -34,23 +34,6 @@ export const action: ActionFunction = async ({ request, params }) => {
   const id = formData.get('id') as string
   if (action === 'deleteQuestion') {
     const deleteQuestion = await deleteQuestionById(id)
-      .then(() => {
-        return json<ActionData>(
-          { resp: { title: 'statusCheck.deletedSuccess', status: 200 } },
-          { status: 200 }
-        )
-      })
-      .catch(() => {
-        return json<ActionData>(
-          {
-            errors: {
-              title: 'statusCheck.commonError',
-              status: 400,
-            },
-          },
-          { status: 400 }
-        )
-      })
     return deleteQuestion
   }
 
@@ -59,13 +42,16 @@ export const action: ActionFunction = async ({ request, params }) => {
 export default function Section() {
   const { t } = useTranslation()
   const section = useActionData() as ActionData
+  console.log(section, 'section')
   useEffect(() => {
-    if (section?.resp?.status === 200) {
-      toast.success(t(section.resp?.title))
-    } else if (section?.errors?.status === 400) {
-      toast.error(t(section.errors?.title), {
-        toastId: section.errors?.title,
-      })
+    if (section) {
+      if ((section as string) === 'success') {
+        toast.success(t('statusCheck.deletedSuccess'))
+      } else if ((section as string) === 'not deleted') {
+        toast.error(t('sectionsConstants.questionNotDeleted'), {
+          toastId: 'sectionsConstants.questionNotDeleted',
+        })
+      }
     }
   }, [section, t])
   return <SectionDetails />

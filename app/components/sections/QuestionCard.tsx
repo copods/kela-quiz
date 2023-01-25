@@ -4,7 +4,6 @@ import type {
   Question,
   Option,
   QuestionType,
-  SectionInTest,
 } from '~/interface/Interface'
 import OptionCard from './OptionCard'
 import { QuestionTypes } from '../../interface/Interface'
@@ -16,8 +15,6 @@ const QuestionCard = ({
   expandedIndex,
   onAccordianToggle,
   index,
-  sectionInTest,
-  totalQuestionInSection,
 }: {
   question: Question & {
     questionType?: QuestionType
@@ -26,8 +23,6 @@ const QuestionCard = ({
   expandedIndex: number
   onAccordianToggle: (e: number) => void
   index: number
-  sectionInTest: SectionInTest[]
-  totalQuestionInSection: number
 }) => {
   const [openDeleteQuestionPopUp, setOpenDeleteQuestionPopUp] = useState(false)
   const [hoverState, setHoverState] = useState(false)
@@ -35,20 +30,6 @@ const QuestionCard = ({
   const deleteQuestion = () => {
     submit({ action: 'deleteQuestion', id: question.id }, { method: 'post' })
   }
-  // filter the array (only assessment which not deleted)
-  const filterTest = sectionInTest.filter((test: SectionInTest) => {
-    return test.test.deleted === false
-  })
-  // create the array of totalQuestions
-  const totalQuestionArray = filterTest.map((data: SectionInTest) => {
-    return data.totalQuestions
-  })
-  //  sort it by higher to low time
-  // because if section is used in multiple assessment so have to check the where
-  // higher number of question is selected from the specific test
-  const sortTotalTime = totalQuestionArray.sort((a: any, b: any) => {
-    return b - a
-  })
 
   const { t } = useTranslation()
   const displayName =
@@ -162,32 +143,14 @@ const QuestionCard = ({
             })}
           </div>
         )}
-        {question?.candidateQuestion.length > 0 &&
-        totalQuestionInSection > sortTotalTime[0] ? (
-          <DeletePopUp
-            setOpen={setOpenDeleteQuestionPopUp}
-            open={openDeleteQuestionPopUp}
-            onDelete={deleteQuestion}
-            deleteItemType={t('candidateExamConstants.question')}
-            warning={t('sectionsConstants.testMayAffectWarning')}
-          />
-        ) : totalQuestionInSection <= sortTotalTime[0] ? (
-          <DeletePopUp
-            setOpen={setOpenDeleteQuestionPopUp}
-            open={openDeleteQuestionPopUp}
-            onDelete={deleteQuestion}
-            deleteItemType={t('candidateExamConstants.question')}
-            warning={t('sectionsConstants.questionNotDeleted')}
-            isHide={true}
-          />
-        ) : (
+        {
           <DeletePopUp
             setOpen={setOpenDeleteQuestionPopUp}
             open={openDeleteQuestionPopUp}
             onDelete={deleteQuestion}
             deleteItemType={t('candidateExamConstants.question')}
           />
-        )}
+        }
       </div>
     </div>
   )

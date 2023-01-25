@@ -13,8 +13,7 @@ export default function DeletePopUp({
   status,
   deleteItemType,
   deleteItem,
-  warning,
-  isHide,
+
 }: {
   open: boolean
   setOpen: (e: boolean) => void
@@ -24,8 +23,7 @@ export default function DeletePopUp({
   status?: string | undefined
   deleteItemType: string
   deleteItem?: string
-  warning?: string
-  isHide?: boolean
+
 }) {
   const { t } = useTranslation()
 
@@ -61,11 +59,9 @@ export default function DeletePopUp({
                 <p className="bold text-sm text-gray-500">
                   {deleteItem} {subAlert}
                 </p>
-                <p className="text-sm font-medium text-red-600">{warning}</p>
               </div>
             </div>
           </div>
-          {!isHide && (
             <div className="gap-2 sm:flex sm:flex-row-reverse">
               <Form method="post">
                 <Button
@@ -98,7 +94,6 @@ export default function DeletePopUp({
                 }}
               />
             </div>
-          )}
         </div>
       </DialogWrapper>
     </div>

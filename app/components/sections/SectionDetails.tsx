@@ -93,10 +93,7 @@ const SectionDetails = () => {
               expandedIndex={currentAccordian}
               onAccordianToggle={setCurrentAccordian}
               index={i}
-              sectionInTest={sectionDetails.sectionDetails?.sectionInTest}
-              totalQuestionInSection={
-                sectionDetails.sectionDetails?.questions.length
-              }
+             
             />
           )
         })

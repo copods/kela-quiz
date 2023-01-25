@@ -145,7 +145,7 @@
     "multipleSelectQuestion": "Multiple Select Question",
     "multipleChoiceQuestion": "Multiple Choice Question",
     "testMayAffectWarning": "This question is being used in a test, further invites will not get this question.",
-    "questionNotDeleted": "due to number of question used is assessment of this section is same as current questions, please add question to delete this question"
+    "questionNotDeleted": "Cannot delete question. This test is used in assessment and will cause conflict after deleting."
   },
   "testsConstants": {
     "addTestbutton": "Add Assessment",
