@@ -137,25 +137,19 @@ const GroupByTests = () => {
   ]
   const location = useLocation()
   useEffect(() => {
+    navigate(
+      `?sortBy=${sortBy}&sort=${sortDirection}&page=${resultsCurrentPage}&limit=${resultsPageSize}&status=${statusFilter}`
+    )
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [resultsPageSize, resultsCurrentPage, statusFilter, sortBy, sortDirection])
+  useEffect(() => {
     if (!location.search && candidateTestData.testCount > 0) {
       navigate(
         `?sortBy=${sortBy}&sort=${sortDirection}&page=${resultsCurrentPage}&limit=${resultsPageSize}&status=${statusFilter}`
       )
-    } else {
-      navigate(
-        `?sortBy=${sortBy}&sort=${sortDirection}&page=${resultsCurrentPage}&limit=${resultsPageSize}&status=${statusFilter}`
-      )
     }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    resultsPageSize,
-    resultsCurrentPage,
-    statusFilter,
-    sortBy,
-    sortDirection,
-    location.search,
-  ])
+  }, [location])
   return (
     <div
       className="flex h-full flex-col gap-6 p-1"

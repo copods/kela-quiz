@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 import moment from 'moment'
 import { Menu } from '@headlessui/react'
-import { useSubmit } from '@remix-run/react'
+import { useSubmit, useLoaderData } from '@remix-run/react'
 import DeletePopUp from '../common-components/DeletePopUp'
 import { useEffect, useState } from 'react'
 import type { sectionActionErrorsType } from '~/interface/Interface'
@@ -15,13 +15,13 @@ const SectionCard = ({
   createdBy,
   createdAt,
   id,
-  err,
-  actionStatusData,
   setDeleted,
   setIsDelete,
   isDelete,
   setSectionActionErrors,
   sectionActionErrors,
+  currentPageCount,
+  filter,
 }: {
   name: string
   description: string
@@ -30,8 +30,6 @@ const SectionCard = ({
   createdBy: string
   createdAt: Date
   id: string
-  err?: string
-  actionStatusData?: string
   setDeleted?: (e: boolean) => void
   setIsDelete: (e: boolean) => void
   isDelete: boolean
@@ -40,16 +38,33 @@ const SectionCard = ({
     title,
     description,
   }: sectionActionErrorsType) => void
+  currentPageCount: number
+  filter: string
 }) => {
   const { t } = useTranslation()
   const submit = useSubmit()
+  const data = useLoaderData()
   const [editMode, setEditMode] = useState(false)
   const [editItem, setEditItem] = useState({
     name: '',
     description: '',
   })
   const deleteSection = () => {
-    submit({ deleteSection: 'sectionDelete', id: id }, { method: 'post' })
+    submit(
+      {
+        deleteSection: 'sectionDelete',
+        id: id,
+        currentPage: data.testCurrentPage,
+        pageSize: data.testItemsPerPage,
+        totalSectionsOnCurrentPage: String(currentPageCount),
+        filter: filter
+          .split('?')[1]
+          .split('&')
+          .filter((res) => res.includes('sortBy') || res.includes('sort'))
+          .join('&'),
+      },
+      { method: 'post' }
+    )
   }
   // shift + alt + Tab combination key for get back focus to selected section card
   useEffect(() => {

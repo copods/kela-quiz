@@ -68,7 +68,6 @@ const TestList = () => {
   }, [testLoaderData.testsCurrentPage])
   const [id, setId] = useState('')
   const [selectedTest, setSelectedTest] = useState({ id: '', name: '' })
-
   useEffect(() => {
     if (deleted) {
       setTimeout(() => {
@@ -154,13 +153,13 @@ const TestList = () => {
             className="candidateInviteIcon cursor-pointer text-2xl text-primary focus:outline-dotted focus:outline-2"
             icon={'ant-design:user-add-outlined'}
             onClick={(e) => {
-              setSelectedTest({ id: data.id, name: data.name })
               setCandidatePopupOpen(true)
+              setSelectedTest({ id: data.id, name: data.name })
             }}
             onKeyUp={(e) => {
               if (e.key === 'Enter') {
-                setSelectedTest({ id: data.id, name: data.name })
                 setCandidatePopupOpen(true)
+                setSelectedTest({ id: data.id, name: data.name })
               }
             }}
             aria-label={t('members.inviteMember')}
@@ -307,6 +306,10 @@ const TestList = () => {
         setOpenInvitePopup={setCandidatePopupOpen}
         testName={selectedTest.name}
         testId={selectedTest.id}
+        testsPageSize={testsPageSize}
+        testsCurrentPage={testsCurrentPage}
+        sortBy={sortBy}
+        sortDirection={sortDirection}
       />
     </div>
   )

@@ -150,6 +150,7 @@ export interface Question {
   questionTypeId?: string
   sectionId?: string
   createdById?: string
+  createdBy: User
   createdAt?: Date
   updatedAt?: Date
   deleted: boolean
