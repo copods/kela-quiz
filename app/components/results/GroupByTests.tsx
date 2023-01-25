@@ -141,6 +141,19 @@ const GroupByTests = () => {
     )
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resultsPageSize, resultsCurrentPage, statusFilter, sortBy, sortDirection])
+
+  useEffect(() => {
+    navigate(
+      `?sortBy=${sortBy}&sort=${sortDirection}&page=${1}&limit=${resultsPageSize}&status=${statusFilter}`
+    )
+    setStatusFilter(statusFilter)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [statusFilter])
+
+  useEffect(() => {
+    setResultsCurrentPage(candidateTestData.resultsCurrentPage)
+  }, [candidateTestData.resultsCurrentPage])
+
   return (
     <div
       className="flex h-full flex-col gap-6 p-1"
