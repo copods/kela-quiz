@@ -99,11 +99,7 @@ export async function verifyOTP({
       candidate: { select: { OTP: true, id: true } },
     },
   })
-<<<<<<< HEAD
   if (process.env.PORT === '8811' && otp === Number('0000')) {
-=======
-  if (process.env.npm_lifecycle_event === 'start:mocks' && otp === Number('0000')) {
->>>>>>> f38a42c63522863edf3b80e8eb48daba23b8a02f
     return true
   }
 
@@ -468,8 +464,8 @@ export async function skipAnswerAndNextQuestion({
           selectedOptions?.length || answers?.length
             ? 'ANSWERED'
             : question?.status === 'ANSWERED'
-              ? 'ANSWERED'
-              : 'SKIPPED',
+            ? 'ANSWERED'
+            : 'SKIPPED',
         answeredAt: new Date(),
       },
       select: {
