@@ -255,34 +255,6 @@ const CandidateListOfTest = () => {
     { title: 'Status', field: 'status', render: StatusCell, width: '10%' },
   ]
 
-  useEffect(() => {
-    navigate(
-      `?page=${currentPage}&pageSize=${pageSize}&filterByStatus=${statusFilter}`
-    )
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pageSize, currentPage, statusFilter])
-
-  useEffect(() => {
-    if (
-      actionData?.candidateInviteStatus ===
-      t('candidateExamConstants.candidateTestCreated')
-    ) {
-      toast.success(t('testsConstants.reinvited'))
-    }
-    if (
-      actionData?.candidateInviteStatus === t('candidateExamConstants.endTest')
-    ) {
-      toast.error(t('testsConstants.testEnded'))
-    }
-  }, [actionData, t])
-
-  useEffect(() => {
-    if (actionData?.errors?.statusCode === 400) {
-      toast.error(t(actionData?.errors?.message), {
-        toastId: actionData?.errors?.message,
-      })
-    }
-  }, [actionData, t])
   return (
     <div id="test-details" className="flex h-full flex-col gap-4 ">
       <header className="border-b border-solid border-slate-300">
