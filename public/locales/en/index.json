@@ -185,6 +185,7 @@
   },
   "statusCheck": {
     "success": "Success",
+    "sendGridError": "An error occurred. Please contact admin",
     "commonError": "Something went wrong. Please try again.",
     "deletedSuccess": "Deleted Successfully...!",
     "noEmailsInvite": "No emails to invite",
