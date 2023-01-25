@@ -12,13 +12,6 @@ import { getUserId } from '~/session.server'
 import { resendTestLink } from '~/models/candidate.server'
 import { actions } from '~/constants/action.constants'
 
-export type ActionData = {
-  errors?: {
-    statusCode: number
-    message: string
-  }
-}
-
 export const loader: LoaderFunction = async ({ request, params }) => {
   const url = new URL(request.url)
   const query = url.searchParams

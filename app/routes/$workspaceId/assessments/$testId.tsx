@@ -14,13 +14,6 @@ type LoaderData = {
   currentWorkspaceId: string
 }
 
-export type ActionData = {
-  errors?: {
-    statusCode: number
-    message: string
-  }
-}
-
 export const loader: LoaderFunction = async ({ request, params }) => {
   const userId = await getUserId(request)
   const currentWorkspaceId = params.workspaceId as string
@@ -39,42 +32,27 @@ export const action: ActionFunction = async ({ request }) => {
   const testId = formData.get('inviteCandidates') as string
   formData.delete('inviteCandidates')
 
-  try {
-    if (testId !== null) {
-      let emails: Array<string> = []
-      await formData.forEach((fd) => {
-        if (fd != '') {
-          emails.push(fd as string)
-        }
-      })
-      if (emails.length === 0) {
-        return json({
-          status: 401,
-          message: 'statusCheck.noEmailsInvite',
-          testId,
-        })
+  if (testId !== null) {
+    let emails: Array<string> = []
+    await formData.forEach((fd) => {
+      if (fd != '') {
+        emails.push(fd as string)
       }
-      const candidateInviteStatus = await createCandidate({
-        emails,
-        createdById,
+    })
+    if (emails.length === 0) {
+      return json({
+        status: 401,
+        message: 'statusCheck.noEmailsInvite',
         testId,
       })
-
-      return json({ candidateInviteStatus, testId })
     }
-  } catch (err) {
-    let message = 'statusCheck.sendGridError'
-    let testFailed = json<ActionData>(
-      {
-        errors: {
-          message,
-          statusCode: 400,
-        },
-      },
-      { status: 400 }
-    )
+    const candidateInviteStatus = await createCandidate({
+      emails,
+      createdById,
+      testId,
+    })
 
-    return testFailed
+    return json({ candidateInviteStatus, testId })
   }
 }
 export default function TestsDetailsRoute() {

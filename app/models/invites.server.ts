@@ -1,7 +1,9 @@
 import type { Invites } from '@prisma/client'
 import { prisma } from '~/db.server'
-import { sendMemberInvite } from './sendgrid.servers'
+import { sendMail, sendMemberInvite } from './sendgrid.servers'
 import { env } from 'process'
+import faker from '@faker-js/faker'
+import bcrypt from 'bcryptjs'
 
 export async function inviteNewUser({
   email,
@@ -146,33 +148,46 @@ export async function getAllInvitedMember(
   })
 }
 export async function reinviteMemberForWorkspace({ id }: { id: string }) {
-  try {
-    const user = await prisma.invites.findUnique({
-      where: { id },
-      include: {
-        invitedForWorkspace: true,
-        invitedById: {
-          select: {
-            firstName: true,
-            lastName: true,
-          },
+  const user = await prisma.invites.findUnique({
+    where: { id },
+    include: {
+      invitedForWorkspace: true,
+      invitedById: {
+        select: {
+          firstName: true,
+          lastName: true,
         },
       },
-    })
-    const workspaceJoinLink =
-      env.PUBLIC_URL + '/workspace/' + user?.id + '/join'
-    const name = ((user?.invitedById?.firstName as string) +
-      ' ' +
-      user?.invitedById?.lastName) as string
-
-    const emailSentRes = await sendMemberInvite(
-      user?.email as string,
-      name as string,
-      workspaceJoinLink as string
-    )
-
-    return emailSentRes
-  } catch (err) {
-    throw new Error('Something went wrong!')
-  }
+    },
+  })
+  const workspaceJoinLink = env.PUBLIC_URL + '/workspace/' + user?.id + '/join'
+  const name = ((user?.invitedById?.firstName as string) +
+    ' ' +
+    user?.invitedById?.lastName) as string
+  return await sendMemberInvite(
+    user?.email as string,
+    name as string,
+    workspaceJoinLink as string
+  )
+}
+export async function reinviteMember({ id }: { id: string }) {
+  const user = await prisma.user.findUnique({ where: { id } })
+  const roleId = user?.roleId as string
+  const role = await prisma.role.findUnique({ where: { id: roleId } })
+  const password = faker.internet.password()
+  const hashedPassword = await bcrypt.hash(password, 10)
+  await prisma.password.update({
+    where: {
+      userId: id,
+    },
+    data: {
+      hash: hashedPassword,
+    },
+  })
+  return await sendMail(
+    user?.email as string,
+    user?.firstName as string,
+    password,
+    role?.name as string
+  )
 }
