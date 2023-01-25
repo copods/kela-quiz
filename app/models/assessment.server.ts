@@ -99,7 +99,7 @@ export async function verifyOTP({
       candidate: { select: { OTP: true, id: true } },
     },
   })
-  if (process.env.NODE_ENV !== 'production' && otp === Number('0000')) {
+  if (process.env.PORT === '8811' && otp === Number('0000')) {
     return true
   }
 

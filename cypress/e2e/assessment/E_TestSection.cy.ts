@@ -1,13 +1,13 @@
 const commonContants = {
-  sectionHeadingOne: 'Section 1 - 3: Quantitative - assessment1',
-  sectionHeadingTwo: 'Section 2 - 3: Quantitative - assessment1',
-  sectionHeadingThree: 'Section 3 - 3: Quantitative - assessment1',
+  sectionHeadingOne: 'Section 1 - 2: Quantitative - assessment1',
+  sectionHeadingTwo: 'Section 2 - 2: Quantitative - assessment1',
   coolDown: 'cooldown',
   congratulationText: 'Congratulations! You have completed the exam',
   Next: 'Next',
   Previous: 'Previous',
   EndTest: 'End Test',
   Finish: 'Finish',
+  section1: 'Quantitive - section1',
 }
 describe('Tests for Test Section', () => {
   it('Checks,registration, OTP Verification and Instruction', () => {
@@ -105,7 +105,7 @@ describe('Tests for Test Section', () => {
       .find('p')
       .should(
         'have.text',
-        'Cheers! Aptitude - delete-Section Questions Completed - two more to go'
+        `Cheers! ${commonContants.section1} Questions Completed - one more to go`
       )
   })
 
@@ -122,40 +122,14 @@ describe('Tests for Test Section', () => {
   })
 
   /**
-   *  Test Cases For Section 2
-   */
-
-  it('Checks, Heading should be visible and correct', () => {
-    cy.get("[data-cy='testSectionHeading']").should('be.visible')
-    cy.get('[data-cy="testSectionHeading"]').should(
-      'have.text',
-      commonContants?.sectionHeadingTwo
-    )
-  })
-
-  it('Checks, Question should be visible', () => {
-    cy.get('[data-cy="questionSection"] p').should('be.visible')
-  })
-
-  it('Checks, Finish test working correctly', () => {
-    cy.get('[data-cy="answerSection"] textarea').type('hello world')
-    cy.contains('button', commonContants.Finish).should('be.visible').click()
-    cy.url().should('include', commonContants.coolDown)
-  })
-
-  it('Checks, Visiting third section after cooldown', () => {
-    cy.contains('button', 'Start New Section').click()
-  })
-
-  /**
-   *   Test Cases For Question 1 of Section 3
+   *   Test Cases For Question 1 of Section 2
    */
 
   it('Checks, Heading should be visible and correct', () => {
     cy.get('[data-cy="testSectionHeading"]').should('be.visible')
     cy.get('[data-cy="testSectionHeading"]').should(
       'have.text',
-      commonContants?.sectionHeadingThree
+      commonContants?.sectionHeadingTwo
     )
   })
 
@@ -218,7 +192,7 @@ describe('Tests for Test Section', () => {
   })
 
   /**
-   * Test Cases For Question 2 of Section 3
+   * Test Cases For Question 2 of Section 2
    */
   it('Checks, Previous button should be visible and should have correct styling', () => {
     cy.contains('button', commonContants.Previous).should('be.visible')

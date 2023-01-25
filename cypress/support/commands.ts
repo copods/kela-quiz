@@ -36,7 +36,7 @@ declare global {
       /**
        *  candidate Registration for Cypress testing
        */
-      CustomVisitOnCandidateSide: typeof Function
+      customVisitOnCandidateSide: typeof Function
       /**
        *  candidate Verification for Cypress Testing
        */
@@ -53,7 +53,7 @@ declare global {
   }
 }
 let ExamLink = ''
-let candidateName = 'Ayushi'
+let candidateName = 'joy'
 
 function login() {
   let formData = new FormData()
@@ -110,7 +110,7 @@ function deleteUserByEmail(email: string) {
   cy.clearCookie('__session')
 }
 
-function candidateRegistration() {
+const candidateRegistration = () => {
   const emailId = Math.random()
   cy.viewport(1280, 720)
   cy.login()
@@ -145,11 +145,11 @@ function candidateRegistration() {
     })
 }
 
-function CustomVisitOnCandidateSide(path = '') {
+const customVisitOnCandidateSide = (path = '') => {
   ExamLink && cy.visit(`${ExamLink}/${path}`)
 }
-function candidateVerification() {
-  cy.CustomVisitOnCandidateSide('verification')
+const candidateVerification = () => {
+  cy.customVisitOnCandidateSide('verification')
   cy.get('input[name="field-1"]').type('0')
   cy.get('input[name="field-2"]').type('0')
   cy.get('input[name="field-3"]').type('0')
@@ -157,13 +157,13 @@ function candidateVerification() {
   cy.url().should('include', 'instructions')
 }
 
-function checkCandidateName() {
+const checkCandidateName = () => {
   cy.get('.heading')
     .should('be.visible')
     .should('have.text', `Welcome ${candidateName}`)
 }
 
-function assessmentInstruction() {
+const assessmentInstruction = () => {
   cy.get('#start').should('be.visible')
   cy.get('#start').should('have.text', 'Begin Assessment')
   cy.get('#start').click()
@@ -173,7 +173,7 @@ Cypress.Commands.add('login', login)
 Cypress.Commands.add('cleanupUser', cleanupUser)
 Cypress.Commands.add('customVisit', customVisit)
 Cypress.Commands.add('candidateRegistration', candidateRegistration)
-Cypress.Commands.add('CustomVisitOnCandidateSide', CustomVisitOnCandidateSide)
+Cypress.Commands.add('customVisitOnCandidateSide', customVisitOnCandidateSide)
 Cypress.Commands.add('candidateVerification', candidateVerification)
 Cypress.Commands.add('checkCandidateName', checkCandidateName)
 Cypress.Commands.add('assessmentInstruction', assessmentInstruction)
