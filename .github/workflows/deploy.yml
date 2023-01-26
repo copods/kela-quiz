@@ -190,7 +190,7 @@ jobs:
   deploy:
     name: 🚀 Deploy
     runs-on: ubuntu-latest
-    needs: [lint, typecheck, vitest, build]
+    needs: [lint, typecheck, cypress, vitest, build]
     # only build/deploy main branch on pushes
     if: ${{ (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev') && github.event_name == 'push' }}
 
@@ -221,7 +221,6 @@ jobs:
         uses: superfly/flyctl-actions@1.3
         with:
           args: 'deploy --image registry.fly.io/${{ steps.app_name.outputs.value }}:${{ github.ref_name }}-${{ github.sha }}'
-          version: v0.9.1
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
 
