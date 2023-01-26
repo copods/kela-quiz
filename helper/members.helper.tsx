@@ -138,6 +138,7 @@ export const deleteMemberById = async (
   workspaceId: string,
   email: string
 ) => {
+
   const deleteHandle = deleteUserById(id, workspaceId, email)
     .then((res) => {
       return json<ActionData>(
