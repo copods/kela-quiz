@@ -12,7 +12,7 @@ const ChipGroup = ({
 }) => {
   return (
     <div className="chip-group mr-3 flex items-center gap-2">
-      <div className="truncate rounded-52 bg-blue-50 px-1 py-1">
+      <div className="truncate rounded-52 bg-blue-50 px-3 py-1 text-xs">
         {sections[0]?.section.name}
       </div>
       {sections.length > 1 && (

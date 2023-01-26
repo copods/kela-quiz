@@ -34,7 +34,7 @@ const SectionCardForResultDetail = ({
       <div className="text-base font-semibold text-gray-700">{sectionName}</div>
       {startedAt && endAt ? (
         <>
-          <div className="flex gap-9">
+          <div className="flex items-center gap-4">
             <div className="flex gap-2 text-sm">
               <span className="text-gray-500">
                 {t('resultConstants.correct')}:
