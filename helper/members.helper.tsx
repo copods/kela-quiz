@@ -156,6 +156,6 @@ export const deleteMemberById = async (
         { status: 400 }
       )
     })
-
+    
   return deleteHandle
 }
