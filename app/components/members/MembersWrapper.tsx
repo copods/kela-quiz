@@ -57,6 +57,7 @@ const MembersWrapper = () => {
         `?MemberPage=${membersCurrentPage}&MemberItems=${membersPageSize}&InvitedMemberPage=${invitedMemberCurrentPage}&InvitedMemberItems=${invitedMemberPageSize}`
       )
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location])
   useEffect(() => {
     navigate(
