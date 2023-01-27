@@ -147,7 +147,7 @@ const GroupByTests = () => {
     statusFilter,
     sortBy,
     sortDirection,
-    location,
+    location.search,
   ])
 
   useEffect(() => {

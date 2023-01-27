@@ -211,7 +211,6 @@ const TestList = () => {
     },
     { title: 'Action', field: 'action', render: TestInvite, width: '10%' },
   ]
-
   useEffect(() => {
     if (testLoaderData.allTestsCount === 0) {
       navigate(`/${testLoaderData.currentWorkspaceId}${routes.assessments}`)
@@ -220,6 +219,8 @@ const TestList = () => {
         `?sortBy=${sortBy}&sort=${sortDirection}&page=${testsCurrentPage}&limit=${testsPageSize}`
       )
     }
+    console.log('hi')
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     testsPageSize,
@@ -230,13 +231,7 @@ const TestList = () => {
     testLoaderData.allTestsCount,
     location.search,
   ])
-  useEffect(() => {
-    if (!location.search && testLoaderData.allTestsCount > 0) {
-      navigate(
-        `?sortBy=${sortBy}&sort=${sortDirection}&page=${testsCurrentPage}&limit=${testsPageSize}`
-      )
-    }
-  }, [location])
+
   useEffect(() => {
     const heading = document.getElementById('assessments-page-title')
     heading?.focus()
