@@ -277,6 +277,8 @@ export default function SectionPage() {
     t,
     data.getAllTestsCount,
     data.sections[0]?.id,
+    sortBy,
+    order,
   ])
   useEffect(() => {
     setTestsCurrentPage(data.testCurrentPage)
