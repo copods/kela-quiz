@@ -45,8 +45,7 @@ describe('Creating new assessment', () => {
     cy.customVisit('/members')
     cy.get('#sections', { timeout: 6000 }).should('have.text', 'Tests').click()
     cy.get('.sectionName').contains(commonConstants?.section1).click()
-    cy.wait(2000)
-    cy.get('#add-question').click()
+    cy.get('#add-question', { timeout: 6000 }).click()
     cy.get('#Question').get('#dropdown-container').click()
     cy.get('ul').within(() => {
       cy.get('li').within(() => {
@@ -74,7 +73,7 @@ describe('Creating new assessment', () => {
     cy.customVisit('/members')
     cy.get('#sections', { timeout: 6000 }).click()
     cy.get('.sectionName').contains(commonConstants?.section2).click()
-    cy.get('#add-question')
+    cy.get('#add-question', { timeout: 6000 })
       .should('have.text', `+ ${commonConstants?.addQuestion}`)
       .click()
     cy.get('h1', { timeout: 6000 }).should('be.visible')
