@@ -67,6 +67,9 @@ module.exports = {
         54: '54px',
         86: '86px',
       },
+      gap: {
+        6.5: '26px',
+      },
     },
   },
   plugins: [],

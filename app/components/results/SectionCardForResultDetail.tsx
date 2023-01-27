@@ -1,6 +1,5 @@
 import { useTranslation } from 'react-i18next'
 import { Link } from '@remix-run/react'
-import React from 'react'
 
 const SectionCardForResultDetail = ({
   sectionId,

@@ -10,9 +10,9 @@ const ResultDetailBySections = () => {
   const sectionDetail = resultDetailsLoaderData.sectionDetail
   let navigate = useNavigate()
   return (
-    <div className="flex h-full flex-col gap-6">
+    <div className="flex h-full flex-col gap-5">
       <header className="flex flex-col gap-6">
-        <div className="flex gap-2">
+        <div className="flex gap-5">
           <div
             onClick={() =>
               navigate(
