@@ -14,7 +14,6 @@ const QuestionCard = ({
 }: {
   question: Question & {
     questionType?: QuestionType
-    // candidateQuestion?: CandidateQuestion[]
   }
   expandedIndex: number
   onAccordianToggle: (e: number) => void
@@ -26,7 +25,6 @@ const QuestionCard = ({
   const deleteQuestion = () => {
     submit({ action: 'deleteQuestion', id: question.id }, { method: 'post' })
   }
-
   const { t } = useTranslation()
   const displayName =
     question.questionType?.value === QuestionTypes.multipleChoice

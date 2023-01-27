@@ -42,16 +42,13 @@ export const action: ActionFunction = async ({ request, params }) => {
 export default function Section() {
   const { t } = useTranslation()
   const section = useActionData() as ActionData
-  console.log(section, 'section')
   useEffect(() => {
-    if (section) {
-      if ((section as string) === 'success') {
-        toast.success(t('statusCheck.deletedSuccess'))
-      } else if ((section as string) === 'not deleted') {
-        toast.error(t('sectionsConstants.questionNotDeleted'), {
-          toastId: 'sectionsConstants.questionNotDeleted',
-        })
-      }
+    if ((section && (section as string)) === 'success') {
+      toast.success(t('statusCheck.deletedSuccess'))
+    } else if ((section && (section as string)) === 'not deleted') {
+      toast.error(t('sectionsConstants.questionNotDeleted'), {
+        toastId: 'sectionsConstants.questionNotDeleted',
+      })
     }
   }, [section, t])
   return <SectionDetails />
