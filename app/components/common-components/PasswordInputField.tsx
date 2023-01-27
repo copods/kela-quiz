@@ -33,7 +33,7 @@ const PasswordInputFields = ({
           value={value}
           onChange={onChange}
           onBlur={onBlur}
-          className="h-11 w-full px-3.5 py-2.5 text-lg"
+          className="h-11 w-full pl-3.5 pr-12 py-2.5 text-lg"
         />
         <button
           type="button"
