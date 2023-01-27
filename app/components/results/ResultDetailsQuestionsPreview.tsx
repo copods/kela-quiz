@@ -85,7 +85,7 @@ const ResultDetailsQuestionsPreview = ({
         {/* {checking if question is answered by candidate} */}
         {status === 'ANSWERED' && (
           <div className="flex flex-col gap-6">
-            <div className="flex flex-col gap-6.5">
+            <div className="flex flex-col gap-6">
               <div className="flex items-center justify-between">
                 <h3 className="text-xl font-medium text-gray-800">
                   {t('resultConstants.givenAnswers')}
