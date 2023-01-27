@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import { Link } from '@remix-run/react'
+import React from 'react'
 
 const SectionCardForResultDetail = ({
   sectionId,
@@ -82,7 +83,7 @@ const SectionCardForResultDetail = ({
                 data-cy="result-details"
                 className="groupByItemTest text-base font-semibold text-primary"
               >
-                {t('resultConstants.ViewDetails')}
+                {t('resultConstants.viewDetails')}
               </Link>
             </div>
           </div>

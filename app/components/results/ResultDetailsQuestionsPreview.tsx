@@ -1,6 +1,8 @@
-import { areEqual } from 'helper/results.helper'
+import { areEqualArrays } from 'helper/results.helper'
 import { useTranslation } from 'react-i18next'
 import type { Option, CorrectAnswer, QuestionType } from '~/interface/Interface'
+import React from 'react'
+
 import Divider from '../common-components/divider'
 const ResultDetailsQuestionsPreview = ({
   textAnswer,
@@ -47,7 +49,7 @@ const ResultDetailsQuestionsPreview = ({
         <div className="flex items-center gap-8">
           <div className="flex w-full items-center justify-between gap-2 text-xl font-medium">
             <span>
-              {t('resultConstants.q')} {index}
+              {t('resultConstants.question')} {index}
             </span>
             <div className="flex items-center gap-8">
               <span className="rounded-52 border border-black px-3 py-1 text-sm text-gray-800">
@@ -107,14 +109,15 @@ const ResultDetailsQuestionsPreview = ({
                   )}
                   {checkOrder === false &&
                   questionType.displayName === 'Text' &&
-                  areEqual(textAnswer, correctAnswersArray) === false ? (
+                  areEqualArrays(textAnswer, correctAnswersArray) === false ? (
                     <span className="rounded-full bg-red-100 px-2.5 py-2.5 text-sm">
                       {t('resultConstants.wrong')}
                     </span>
                   ) : (
                     checkOrder === false &&
                     questionType.displayName === 'Text' &&
-                    areEqual(textAnswer, correctAnswersArray) === true && (
+                    areEqualArrays(textAnswer, correctAnswersArray) ===
+                      true && (
                       <span className="rounded-full bg-green-100 px-2.5 py-2.5 text-sm">
                         {t('resultConstants.correct')}
                       </span>
@@ -177,7 +180,7 @@ const ResultDetailsQuestionsPreview = ({
                     </h3>
                   </div>
                 )}
-                {areEqual(textAnswer, correctAnswersArray) === false &&
+                {areEqualArrays(textAnswer, correctAnswersArray) === false &&
                   checkOrder === false && (
                     <div className="flex flex-col gap-6">
                       <Divider height="1px" />
@@ -218,7 +221,7 @@ const ResultDetailsQuestionsPreview = ({
 
                   {/* {if TEXT type question is wrong } */}
                   {checkOrder === false &&
-                    areEqual(textAnswer, correctAnswersArray) === false &&
+                    areEqualArrays(textAnswer, correctAnswersArray) === false &&
                     correctAnswer.map(
                       (correctAnswer: CorrectAnswer, index: number) => {
                         return (
