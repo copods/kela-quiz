@@ -167,10 +167,9 @@ describe('Test for members', () => {
       .parent()
       .should('have.attr', 'tabindex', '0')
   })
-  it('checks,resend member invite button have tabindex', () => {
-    cy.get('#resend-member-invite')
-      .parent()
-      .should('have.attr', 'tabindex', '0')
+  it('checks,after clicking on resend invite member button toster should have correct message', () => {
+    cy.get('#resend-member-invite').should('have.attr', 'tabindex', '0').click()
+    cy.get('.Toastify__toast--success').should('be.visible')
   })
   it('Test for conforming ,new member is added in a list or not', () => {
     cy.get('#table-row #table-td', { timeout: 8000 })
