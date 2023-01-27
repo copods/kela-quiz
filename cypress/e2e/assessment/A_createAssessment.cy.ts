@@ -144,6 +144,7 @@ describe('Creating new assessment', () => {
             commonConstants.section2
         ) {
           cy.get('button').should('have.text', commonConstants.add).click()
+          cy.wait(2000)
           cy.get('button').should('have.text', commonConstants?.remove)
         }
       })
