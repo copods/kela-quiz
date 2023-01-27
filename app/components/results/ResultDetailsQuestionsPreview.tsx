@@ -91,65 +91,48 @@ const ResultDetailsQuestionsPreview = ({
                   {t('resultConstants.givenAnswers')}
                 </h3>
                 <div>
-                  {checkOrder === true &&
-                  questionType.displayName === 'Text' &&
-                  correctOrder.includes(false) ? (
+                  {((checkOrder === true &&
+                    questionType.displayName === 'Text' &&
+                    correctOrder.includes(false)) ||
+                    (checkOrder === false &&
+                      questionType.displayName === 'Text' &&
+                      areEqualArrays(textAnswer, correctAnswersArray) ===
+                        false) ||
+                    (flag.includes('incorrect') === true &&
+                      questionType.displayName !== 'Text')) && (
                     <span className="rounded-full bg-red-100 px-4 py-2 text-xs font-medium text-red-800">
                       {t('resultConstants.wrong')}
                     </span>
-                  ) : (
-                    checkOrder === true &&
-                    questionType.displayName === 'Text' &&
-                    !correctOrder.includes(false) && (
-                      <span className="rounded-full bg-green-100 px-4 py-2 text-xs font-medium text-green-800">
-                        {t('resultConstants.correct')}
-                      </span>
-                    )
                   )}
-                  {checkOrder === false &&
-                  questionType.displayName === 'Text' &&
-                  areEqualArrays(textAnswer, correctAnswersArray) === false ? (
-                    <span className="rounded-full bg-red-100 px-4 py-2 text-xs font-medium text-red-800">
-                      {t('resultConstants.wrong')}
-                    </span>
-                  ) : (
-                    checkOrder === false &&
+                  {((checkOrder === true &&
                     questionType.displayName === 'Text' &&
-                    areEqualArrays(textAnswer, correctAnswersArray) ===
-                      true && (
-                      <span className="rounded-full bg-green-100 px-4 py-2 text-xs font-medium text-green-800">
-                        {t('resultConstants.correct')}
-                      </span>
-                    )
-                  )}
-                  {flag.includes('incorrect') === true &&
-                  questionType.displayName !== 'Text' ? (
-                    <span className="rounded-full bg-red-100  px-4 py-2 text-xs font-medium text-red-800">
-                      {t('resultConstants.wrong')}
+                    !correctOrder.includes(false)) ||
+                    (checkOrder === false &&
+                      questionType.displayName === 'Text' &&
+                      areEqualArrays(textAnswer, correctAnswersArray) ===
+                        true) ||
+                    (flag.includes('incorrect') === false &&
+                      questionType.displayName !== 'Text')) && (
+                    <span className="rounded-full bg-green-100 px-4 py-2 text-xs font-medium text-green-800">
+                      {t('resultConstants.correct')}
                     </span>
-                  ) : (
-                    flag.includes('incorrect') === false &&
-                    questionType.displayName !== 'Text' && (
-                      <span className="rounded-full bg-green-100  px-4 py-2 text-xs font-medium text-green-800">
-                        {t('resultConstants.correct')}
-                      </span>
-                    )
                   )}
                 </div>
               </div>
 
-              {textAnswer.map((textAnswer: CorrectAnswer, index: number) => {
-                return (
-                  <div
-                    key={index}
-                    className="flex h-full gap-2 break-normal rounded-lg border border-solid border-gray-300 bg-gray-50 p-4 text-base font-normal text-gray-600"
-                  >
-                    {textAnswer}
-                  </div>
-                )
-              })}
+              {questionType.displayName == 'Text' &&
+                textAnswer.map((textAnswer: CorrectAnswer, index: number) => {
+                  return (
+                    <div
+                      key={index}
+                      className="flex h-full gap-2 break-normal rounded-lg border border-solid border-gray-300 bg-gray-50 p-4 text-base font-normal text-gray-600"
+                    >
+                      {textAnswer}
+                    </div>
+                  )
+                })}
 
-              {
+              {questionType.displayName !== 'Text' && (
                 <div className="flex flex-col gap-6">
                   {selectedOptions.map((selectedOption: Option) => {
                     return (
@@ -166,96 +149,86 @@ const ResultDetailsQuestionsPreview = ({
                     )
                   })}
                 </div>
-              }
+              )}
             </div>
-            <div className="flex flex-col gap-6">
+            {(flag.includes('incorrect') ||
+              areEqualArrays(textAnswer, correctAnswersArray) === false ||
+              correctOrder.includes(false)) && (
               <div className="flex flex-col gap-6">
-                {/* conditional rendering if given answer is wrong */}
-                {correctOrder.includes(false) && checkOrder === true && (
+                <div className="flex flex-col gap-6">
                   <div className="flex flex-col gap-6">
                     <Divider height="1px" />
                     <h3 className="text-xl font-medium text-gray-800">
                       {t('resultConstants.correctAnswer')}
                     </h3>
                   </div>
-                )}
-                {areEqualArrays(textAnswer, correctAnswersArray) === false &&
-                  checkOrder === false && (
+                  {/* if MCQ is incorrect */}
+                  {flag.includes('incorrect') && (
                     <div className="flex flex-col gap-6">
-                      <Divider height="1px" />
-                      <h3 className="text-xl font-medium text-gray-800">
-                        {t('resultConstants.correctAnswer')}
-                      </h3>
+                      {correctOption.map(
+                        (correctOption: Option, index: number) => {
+                          return (
+                            <div key={index}>
+                              <div
+                                key={index}
+                                className={
+                                  'ql-editor flex h-full gap-2 break-normal rounded-lg border border-solid border-gray-300 bg-gray-50 p-4 text-base font-normal text-gray-600'
+                                }
+                                dangerouslySetInnerHTML={{
+                                  __html: `${correctOption?.option}`,
+                                }}
+                              ></div>
+                            </div>
+                          )
+                        }
+                      )}
                     </div>
                   )}
-                {flag.includes('incorrect') && (
-                  <div className="flex flex-col gap-6">
-                    <Divider height="1px" />
-                    <h3 className="text-xl font-medium text-gray-800">
-                      {t('resultConstants.correctAnswer')}
-                    </h3>
-                  </div>
-                )}
 
-                {/* {if MCQ is incorrect} */}
-                <div className="flex flex-col gap-6">
-                  {flag.includes('incorrect') &&
-                    correctOption.map(
-                      (correctOption: Option, index: number) => {
-                        return (
-                          <div key={index}>
+                  {/* if TEXT type question is wrong */}
+                  {checkOrder === false &&
+                    areEqualArrays(textAnswer, correctAnswersArray) ===
+                      false && (
+                      <div className="flex flex-col gap-6">
+                        {correctAnswer.map(
+                          (correctAnswer: CorrectAnswer, index: number) => {
+                            return (
+                              <div
+                                key={index}
+                                className={
+                                  'ql-editor flex h-full gap-2 break-normal rounded-lg border border-solid border-gray-300 bg-gray-50 p-4 text-gray-800'
+                                }
+                              >
+                                {correctAnswer.answer}
+                              </div>
+                            )
+                          }
+                        )}
+                      </div>
+                    )}
+                  {/* if order is true and given answer is wrong then showing correct answer */}
+                  {checkOrder === true && correctOrder.includes(false) && (
+                    <div className="flex flex-col gap-6">
+                      {correctAnswer.map(
+                        (correctAnswer: CorrectAnswer, index: number) => {
+                          return (
                             <div
                               key={index}
-                              className={
-                                'ql-editor flex h-full gap-2 break-normal rounded-lg border border-solid border-gray-300 bg-gray-50 p-4 text-base font-normal text-gray-600'
-                              }
-                              dangerouslySetInnerHTML={{
-                                __html: `${correctOption?.option}`,
-                              }}
-                            ></div>
-                          </div>
-                        )
-                      }
-                    )}
-
-                  {/* {if TEXT type question is wrong } */}
-                  {checkOrder === false &&
-                    areEqualArrays(textAnswer, correctAnswersArray) === false &&
-                    correctAnswer.map(
-                      (correctAnswer: CorrectAnswer, index: number) => {
-                        return (
-                          <div
-                            key={index}
-                            className={
-                              'ql-editor flex h-full gap-2 break-normal rounded-lg border border-solid border-gray-300 bg-gray-50 p-4 text-gray-800'
-                            }
-                          >
-                            {correctAnswer.answer}
-                          </div>
-                        )
-                      }
-                    )}
-                  {/* {if order is true and given answer is wrong then showing correct answer} */}
-                  {checkOrder === true &&
-                    correctOrder.includes(false) &&
-                    correctAnswer.map(
-                      (correctAnswer: CorrectAnswer, index: number) => {
-                        return (
-                          <div
-                            key={index}
-                            className="flex h-full gap-2 break-normal rounded-lg border border-solid border-gray-300 bg-gray-50 p-4 text-base font-normal text-gray-600"
-                          >
-                            {correctAnswer.answer}
-                          </div>
-                        )
-                      }
-                    )}
+                              className="flex h-full gap-2 break-normal rounded-lg border border-solid border-gray-300 bg-gray-50 p-4 text-base font-normal text-gray-600"
+                            >
+                              {correctAnswer.answer}
+                            </div>
+                          )
+                        }
+                      )}
+                    </div>
+                  )}
                 </div>
               </div>
-            </div>
+            )}
           </div>
         )}
-        {/* {if question is skipped by candidate } */}
+        {/* if question is skipped by candidate  */}
         {status === 'SKIPPED' && (
           <div className="flex flex-col gap-6">
             <div className="flex items-center justify-between">

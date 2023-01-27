@@ -373,7 +373,6 @@ export async function getResultDetailBySection(id?: string) {
               question: true,
               correctOptions: {
                 select: {
-                  id: true,
                   option: true,
                 },
               },
@@ -393,7 +392,6 @@ export async function getResultDetailBySection(id?: string) {
             select: {
               option: true,
               questionId: true,
-              coInQuestionId: true,
             },
           },
         },
