@@ -1,6 +1,6 @@
 import { useActionData, useLoaderData, useSubmit } from '@remix-run/react'
 import { useEffect, useState } from 'react'
-import { useNavigate,useLocation } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import type { Test, User, tableColumnType } from '~/interface/Interface'
 import { sortByOrder } from '~/interface/Interface'
 import SortFilter from '../common-components/SortFilter'

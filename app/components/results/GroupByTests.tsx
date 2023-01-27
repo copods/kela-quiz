@@ -137,25 +137,12 @@ const GroupByTests = () => {
   ]
   const location = useLocation()
   useEffect(() => {
-    if (!location.search && candidateTestData.testCount > 0) {
-      navigate(
-        `?sortBy=${sortBy}&sort=${sortDirection}&page=${resultsCurrentPage}&limit=${resultsPageSize}&status=${statusFilter}`
-      )
-    } else {
-      navigate(
-        `?sortBy=${sortBy}&sort=${sortDirection}&page=${resultsCurrentPage}&limit=${resultsPageSize}&status=${statusFilter}`
-      )
-    }
+    navigate(
+      `?sortBy=${sortBy}&sort=${sortDirection}&page=${resultsCurrentPage}&limit=${resultsPageSize}&status=${statusFilter}`
+    )
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    resultsPageSize,
-    resultsCurrentPage,
-    statusFilter,
-    sortBy,
-    sortDirection,
-    location.search,
-  ])
+  }, [resultsPageSize, resultsCurrentPage, statusFilter, sortBy, sortDirection])
   useEffect(() => {
     if (!location.search && candidateTestData.testCount > 0) {
       navigate(
