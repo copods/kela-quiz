@@ -93,7 +93,6 @@ const SectionDetails = () => {
               expandedIndex={currentAccordian}
               onAccordianToggle={setCurrentAccordian}
               index={i}
-             
             />
           )
         })

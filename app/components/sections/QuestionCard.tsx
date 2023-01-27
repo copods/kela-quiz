@@ -1,10 +1,6 @@
 import { Icon } from '@iconify/react'
 import { useTranslation } from 'react-i18next'
-import type {
-  Question,
-  Option,
-  QuestionType,
-} from '~/interface/Interface'
+import type { Question, Option, QuestionType } from '~/interface/Interface'
 import OptionCard from './OptionCard'
 import { QuestionTypes } from '../../interface/Interface'
 import { useState } from 'react'

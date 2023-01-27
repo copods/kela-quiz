@@ -13,7 +13,6 @@ export default function DeletePopUp({
   status,
   deleteItemType,
   deleteItem,
-
 }: {
   open: boolean
   setOpen: (e: boolean) => void
@@ -23,7 +22,6 @@ export default function DeletePopUp({
   status?: string | undefined
   deleteItemType: string
   deleteItem?: string
-
 }) {
   const { t } = useTranslation()
 
@@ -62,38 +60,38 @@ export default function DeletePopUp({
               </div>
             </div>
           </div>
-            <div className="gap-2 sm:flex sm:flex-row-reverse">
-              <Form method="post">
-                <Button
-                  tabIndex={0}
-                  id="confirm-delete"
-                  variant="secondary-solid"
-                  type="button"
-                  name="delete"
-                  className="px-5"
-                  title={t('commonConstants.delete')}
-                  buttonText={t('commonConstants.delete')}
-                  onClick={() => {
-                    handleDelete()
-                    if (setDeleted !== undefined) {
-                      setDeleted(true)
-                    }
-                  }}
-                />
-              </Form>
+          <div className="gap-2 sm:flex sm:flex-row-reverse">
+            <Form method="post">
               <Button
                 tabIndex={0}
+                id="confirm-delete"
+                variant="secondary-solid"
                 type="button"
-                id="cancel-delete-pop-up"
-                variant="primary-outlined"
+                name="delete"
                 className="px-5"
-                title={t('commonConstants.cancel')}
-                buttonText={t('commonConstants.cancel')}
+                title={t('commonConstants.delete')}
+                buttonText={t('commonConstants.delete')}
                 onClick={() => {
-                  if (setOpen !== undefined) setOpen(false)
+                  handleDelete()
+                  if (setDeleted !== undefined) {
+                    setDeleted(true)
+                  }
                 }}
               />
-            </div>
+            </Form>
+            <Button
+              tabIndex={0}
+              type="button"
+              id="cancel-delete-pop-up"
+              variant="primary-outlined"
+              className="px-5"
+              title={t('commonConstants.cancel')}
+              buttonText={t('commonConstants.cancel')}
+              onClick={() => {
+                if (setOpen !== undefined) setOpen(false)
+              }}
+            />
+          </div>
         </div>
       </DialogWrapper>
     </div>
