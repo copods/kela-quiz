@@ -18,39 +18,39 @@ describe('smoke tests', () => {
     window.localStorage.clear()
   })
 
-  // it('Invalid Email Error Message', () => {
-  //   cy.visit('/sign-in')
-  //   cy.get('#email').clear().type('test@copods.co')
-  //   cy.get('#password').clear().type('kQuiz@copods')
-  //   cy.findByRole('button').click()
+  it('Invalid Email Error Message', () => {
+    cy.visit('/sign-in')
+    cy.get('#email').clear().type('test@copods.co')
+    cy.get('#password').clear().type('kQuiz@copods')
+    cy.findByRole('button').click()
 
-  //   cy.get('#password-error', { timeout: 8000 }).should(
-  //     'have.text',
-  //     'Incorrect email or password'
-  //   )
-  // })
+    cy.get('#password-error', { timeout: 8000 }).should(
+      'have.text',
+      'Incorrect email or password'
+    )
+  })
 
-  // it('Invalid Password Error Message', () => {
-  //   cy.visit('/sign-in')
-  //   cy.get('#email').clear().type('copods.demo.sendgrid@gmail.com')
-  //   cy.get('#password').clear().type('anuragpate')
-  //   cy.findByRole('button').click()
-  //   cy.get('#password-error').should('have.text', 'Incorrect email or password')
-  // })
+  it('Invalid Password Error Message', () => {
+    cy.visit('/sign-in')
+    cy.get('#email').clear().type('copods.demo.sendgrid@gmail.com')
+    cy.get('#password').clear().type('anuragpate')
+    cy.findByRole('button').click()
+    cy.get('#password-error').should('have.text', 'Incorrect email or password')
+  })
 
-  // it('Successfully Login', () => {
-  //   cy.visit('/sign-in')
-  //   cy.get('#email').clear().type('copods.demo.sendgrid@gmail.com')
-  //   cy.get('#password').clear().type('kQuiz@copods')
-  //   cy.findByRole('button').click()
-  //   cy.wait(1000)
+  it('Successfully Login', () => {
+    cy.visit('/sign-in')
+    cy.get('#email').clear().type('copods.demo.sendgrid@gmail.com')
+    cy.get('#password').clear().type('kQuiz@copods')
+    cy.findByRole('button').click()
+    cy.wait(1000)
 
-  //   cy.getCookies()
-  //     .should('have.length', 1)
-  //     .then((cookies) => {
-  //       expect(cookies[0]).to.have.property('name', '__session')
-  //     })
-  // })
+    cy.getCookies()
+      .should('have.length', 1)
+      .then((cookies) => {
+        expect(cookies[0]).to.have.property('name', '__session')
+      })
+  })
 
   it('should add workspace', () => {
     cy.login()
@@ -94,7 +94,7 @@ describe('smoke tests', () => {
   })
 
   // creating test data
-  it('Adding a first section', () => {
+  it('Adding a three section', () => {
     cy.login()
     cy.customVisit('/members')
     cy.wait(1000)
@@ -110,170 +110,140 @@ describe('smoke tests', () => {
         cy.get('[data-cy="submit"]').click()
       })
     cy.wait(2000)
+    cy.get('#add-section').click()
+    cy.get('form > div')
+      .should('be.visible')
+      .within((el) => {
+        cy.get(`input[placeholder='Enter Test Name*']`).type(section2)
+        cy.get('textarea').type('Aptitude')
+        cy.get('[data-cy="submit"]').click()
+      })
+    cy.wait(2000)
+
+    cy.get('#add-section').click()
+    cy.get('form > div')
+      .should('be.visible')
+      .within((el) => {
+        cy.get('input[placeholder="Enter Test Name*"]').type(deleteSection)
+        cy.get('textarea').type('Aptitude')
+        cy.get('[data-cy="submit"]').click()
+      })
+
+    // adding question
+    cy.wait(3000)
+    cy.get('#section-card').each(($el) => {
+      cy.wrap($el).within((el) => {
+        if (
+          el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
+        ) {
+          cy.get('.sectionName').contains(section1)
+        }
+      })
+    })
+    cy.get('.sectionName').contains(section1).click()
+    cy.wait(3000)
+    cy.get('#add-question')
+      .should('have.text', `+ ${addQuestion.addQuestion}`)
+      .click()
+    cy.location('pathname').should('include', '/add-question')
+    cy.get('h1', { timeout: 6000 }).should('be.visible')
+    cy.get('#Question').get('#dropdown-container').click()
+    cy.get('ul').within(() => {
+      cy.get('li').within(() => {
+        cy.get('div').then((el) => {
+          ;[...el].map((el) => {
+            if (el.innerText === 'Text') {
+              el.click()
+            }
+            return null
+          })
+        })
+      })
+    })
+    cy.get('#question-editor #quill-editor').within(() => {
+      cy.get('.ql-editor').type(cypress.useRef)
+    })
+    cy.get('input[placeholder="Write your option here"]')
+      .clear()
+      .type(cypress.useRefAns)
+    cy.get('#save-and-exit').click()
+
+    cy.wait(3000)
+    cy.get('#section-card').each(($el) => {
+      cy.wrap($el).within((el) => {
+        if (
+          el[0].getElementsByClassName('sectionName')[0].innerHTML === section2
+        ) {
+          cy.get('.sectionName').should('have.text', section2)
+        }
+      })
+    })
+    cy.get('.sectionName').contains(section2).click()
+    cy.get('#add-question')
+      .should('have.text', `+ ${addQuestion.addQuestion}`)
+      .click()
+    cy.location('pathname').should('include', '/add-question')
+    cy.get('h1', { timeout: 6000 }).should('be.visible')
+    cy.get('#Question').get('#dropdown-container').click()
+    cy.get('ul').within(() => {
+      cy.get('li').within(() => {
+        cy.get('div').then((el) => {
+          ;[...el].map((el) => {
+            if (el.innerText === 'Text') {
+              el.click()
+            }
+            return null
+          })
+        })
+      })
+    })
+    cy.get('#question-editor #quill-editor').within(() => {
+      cy.get('.ql-editor').type(cypress.useMemo)
+    })
+    cy.get('input[placeholder="Write your option here"]')
+      .clear()
+      .type(cypress.useMemoAns)
+    cy.get('#save-and-exit').click()
+
+    cy.get('#section-card').each(($el) => {
+      cy.wrap($el).within((el) => {
+        if (
+          el[0].getElementsByClassName('sectionName')[0].innerHTML === section2
+        ) {
+          cy.get('.sectionName').contains(section2).click()
+        }
+      })
+    })
+    cy.get('.sectionName').contains(section2).click()
+    cy.get('#add-question')
+      .should('have.text', `+ ${addQuestion.addQuestion}`)
+      .click()
+    cy.location('pathname').should('include', '/add-question')
+    cy.get('h1', { timeout: 6000 }).should('be.visible')
+
+    cy.get('#Question').get('#dropdown-container').click()
+    cy.get('ul').within(() => {
+      cy.get('li').within(() => {
+        cy.get('div').then((el) => {
+          ;[...el].map((el) => {
+            if (el.innerText === 'Text') {
+              el.click()
+            }
+            return null
+          })
+        })
+      })
+    })
+    cy.get('#question-editor #quill-editor').within(() => {
+      cy.get('.ql-editor').type(question)
+    })
+    cy.get('input[placeholder="Write your option here"]')
+      .clear()
+      .type(cypress.useRefAns)
+    cy.get('#save-and-exit').click()
   })
 
-  // it('Adding a second section', () => {
-  //   cy.login()
-  //   cy.customVisit('/members')
-  //   cy.wait(1000)
-  //   cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
 
-  //   cy.get('#add-section').click()
-  //   cy.get('form > div')
-  //     .should('be.visible')
-  //     .within((el) => {
-  //       cy.get(`input[placeholder='Enter Test Name*']`).type(section2)
-  //       cy.get('textarea').type('Aptitude')
-  //       cy.get('[data-cy="submit"]').click()
-  //     })
-  // })
-
-  // it('Adding a deleteSection ', () => {
-  //   cy.login()
-  //   cy.customVisit('/members')
-  //   cy.wait(1000)
-  //   cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
-
-  //   cy.get('#add-section').click()
-  //   cy.get('form > div')
-  //     .should('be.visible')
-  //     .within((el) => {
-  //       cy.get('input[placeholder="Enter Test Name*"]').type(deleteSection)
-  //       cy.get('textarea').type('Aptitude')
-  //       cy.get('[data-cy="submit"]').click()
-  //     })
-  // })
-
-  // it('Add question to the first section', () => {
-  //   cy.login()
-  //   cy.customVisit('/members')
-  //   cy.wait(1000)
-  //   cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
-  //   cy.wait(3000)
-  //   cy.get('#section-card').each(($el) => {
-  //     cy.wrap($el).within((el) => {
-  //       if (
-  //         el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
-  //       ) {
-  //         cy.get('.sectionName').contains(section1)
-  //       }
-  //     })
-  //   })
-  //   cy.get('.sectionName').contains(section1).click()
-  //   cy.wait(3000)
-  //   cy.get('#add-question')
-  //     .should('have.text', `+ ${addQuestion.addQuestion}`)
-  //     .click()
-  //   cy.location('pathname').should('include', '/add-question')
-  //   cy.get('h1', { timeout: 6000 }).should('be.visible')
-
-  //   cy.get('#Question').get('#dropdown-container').click()
-  //   cy.get('ul').within(() => {
-  //     cy.get('li').within(() => {
-  //       cy.get('div').then((el) => {
-  //         ;[...el].map((el) => {
-  //           if (el.innerText === 'Text') {
-  //             el.click()
-  //           }
-  //           return null
-  //         })
-  //       })
-  //     })
-  //   })
-  //   cy.get('#question-editor #quill-editor').within(() => {
-  //     cy.get('.ql-editor').type(cypress.useRef)
-  //   })
-  //   cy.get('input[placeholder="Write your option here"]')
-  //     .clear()
-  //     .type(cypress.useRefAns)
-  //   cy.get('#save-and-exit').click()
-  // })
-
-  // it('Add question to the second section', () => {
-  //   cy.login()
-  //   cy.customVisit('/members')
-  //   cy.wait(1000)
-  //   cy.get('#sections', { timeout: 8000 }).should('have.text', 'Tests').click()
-  //   cy.wait(3000)
-  //   cy.get('#section-card').each(($el) => {
-  //     cy.wrap($el).within((el) => {
-  //       if (
-  //         el[0].getElementsByClassName('sectionName')[0].innerHTML === section2
-  //       ) {
-  //         cy.get('.sectionName').should('have.text', section2)
-  //       }
-  //     })
-  //   })
-  //   cy.get('.sectionName').contains(section2).click()
-  //   cy.get('#add-question')
-  //     .should('have.text', `+ ${addQuestion.addQuestion}`)
-  //     .click()
-  //   cy.location('pathname').should('include', '/add-question')
-  //   cy.get('h1', { timeout: 6000 }).should('be.visible')
-  //   cy.get('#Question').get('#dropdown-container').click()
-  //   cy.get('ul').within(() => {
-  //     cy.get('li').within(() => {
-  //       cy.get('div').then((el) => {
-  //         ;[...el].map((el) => {
-  //           if (el.innerText === 'Text') {
-  //             el.click()
-  //           }
-  //           return null
-  //         })
-  //       })
-  //     })
-  //   })
-  //   cy.get('#question-editor #quill-editor').within(() => {
-  //     cy.get('.ql-editor').type(cypress.useMemo)
-  //   })
-  //   cy.get('input[placeholder="Write your option here"]')
-  //     .clear()
-  //     .type(cypress.useMemoAns)
-  //   cy.get('#save-and-exit').click()
-  // })
-  // it('Add second question to the first section', () => {
-  //   cy.login()
-  //   cy.customVisit('/members')
-  //   cy.wait(1000)
-  //   cy.get('#sections', { timeout: 6000 }).should('have.text', 'Tests').click()
-  //   cy.wait(3000)
-  //   cy.get('#section-card').each(($el) => {
-  //     cy.wrap($el).within((el) => {
-  //       if (
-  //         el[0].getElementsByClassName('sectionName')[0].innerHTML === section2
-  //       ) {
-  //         cy.get('.sectionName').contains(section2).click()
-  //       }
-  //     })
-  //   })
-  //   cy.get('.sectionName').contains(section2).click()
-  //   cy.get('#add-question')
-  //     .should('have.text', `+ ${addQuestion.addQuestion}`)
-  //     .click()
-  //   cy.location('pathname').should('include', '/add-question')
-  //   cy.get('h1', { timeout: 6000 }).should('be.visible')
-
-  //   cy.get('#Question').get('#dropdown-container').click()
-  //   cy.get('ul').within(() => {
-  //     cy.get('li').within(() => {
-  //       cy.get('div').then((el) => {
-  //         ;[...el].map((el) => {
-  //           if (el.innerText === 'Text') {
-  //             el.click()
-  //           }
-  //           return null
-  //         })
-  //       })
-  //     })
-  //   })
-  //   cy.get('#question-editor #quill-editor').within(() => {
-  //     cy.get('.ql-editor').type(question)
-  //   })
-  //   cy.get('input[placeholder="Write your option here"]')
-  //     .clear()
-  //     .type(cypress.useRefAns)
-  //   cy.get('#save-and-exit').click()
-  // })
   // it('Verify if user able create the assesssment 1', () => {
   //   cy.login()
   //   cy.customVisit('/members')
