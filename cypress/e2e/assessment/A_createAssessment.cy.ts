@@ -63,7 +63,8 @@ describe('Creating new assessment', () => {
         })
       })
     })
-    cy.get('#question-editor #quill-editor', { timeout: 6000 }).within(() => {
+    cy.wait(1000)
+    cy.get('#question-editor #quill-editor').within(() => {
       cy.get('.ql-editor').type(commonConstants?.useRef)
     })
     cy.get('input[placeholder="Write your option here"]')
@@ -95,7 +96,8 @@ describe('Creating new assessment', () => {
         })
       })
     })
-    cy.get('#question-editor #quill-editor', { timeout: 6000 }).within(() => {
+    cy.wait(1000)
+    cy.get('#question-editor #quill-editor').within(() => {
       cy.get('.ql-editor').type(commonConstants?.useMemo)
     })
     cy.get('.ql-editor ').eq(1).clear().type(commonConstants?.useMemoAns)
