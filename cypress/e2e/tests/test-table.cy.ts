@@ -450,6 +450,7 @@ describe('Visiting Assessment', () => {
     )
     cy.get('.test-table-list', { timeout: 6000 }).should('be.visible')
     cy.get('#test-name-navigation')
+      .eq(1)
       .should('have.text', test1)
       .click()
       .location('pathname', { timeout: 60000 })
