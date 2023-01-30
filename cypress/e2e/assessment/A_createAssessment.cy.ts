@@ -125,7 +125,7 @@ describe('Creating new assessment', () => {
       .should('have.text', 'Assessments')
       .click()
     cy.get('#add-test', { timeout: 6000 }).click()
-    cy.get('input[placeholder="Enter assessment name"]')
+    cy.get('input[placeholder="Enter assessment name"]', { timeout: 6000 })
       .clear()
       .type(commonConstants.test1)
     cy.get('#quill-editor').within(() => {
