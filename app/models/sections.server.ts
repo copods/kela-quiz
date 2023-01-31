@@ -211,7 +211,7 @@ export async function addQuestion(
     })
 }
 export async function deleteQuestionById(id: string) {
-  const getQuestion = await prisma.question.findUnique({
+  const questionData = await prisma.question.findUnique({
     where: {
       id,
     },
@@ -241,16 +241,17 @@ export async function deleteQuestionById(id: string) {
       },
     },
   })
-  const totalQuestionArray = getQuestion?.section?.sectionInTest.map(
+  const totalQuestionArray = questionData?.section?.sectionInTest.map(
     (data: any) => {
       return data.totalQuestions
     }
   )
-  const sortTotalTime = totalQuestionArray?.sort((a: any, b: any) => {
+  console.log(totalQuestionArray, 'totalQuestionArray')
+  const totalQuestions = totalQuestionArray?.sort((a, b) => {
     return b - a
   })
-  if (getQuestion && sortTotalTime) {
-    if (getQuestion.section.questions?.length <= sortTotalTime[0]) {
+  if (questionData && totalQuestions) {
+    if (questionData.section.questions?.length <= totalQuestions[0]) {
       return 'not deleted'
     }
   }
