@@ -229,13 +229,13 @@ describe('Test for GroupByTestTable, Result', () => {
   it('checks,table contains assessment name', () => {
     cy.get('#group-by-tests').should('have.text', 'Results').click()
 
-    cy.get('[data-cy="group-by-item-test"]').eq(1).should('have.text', test1)
+    cy.get('[data-cy="group-by-item-test"]').should('have.text', test1)
     cy.get('.groupByItemTest').contains(test1).should('be.visible')
   })
   it('checks,table contains assessment name should be in blue color', () => {
     cy.get('#group-by-tests').should('have.text', 'Results').click()
 
-    cy.get('[data-cy="group-by-item-test"]').eq(1).should('have.text', test1)
+    cy.get('[data-cy="group-by-item-test"]').should('have.text', test1)
 
     cy.get('.groupByItemTest')
       .contains(test1)

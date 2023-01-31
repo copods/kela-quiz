@@ -204,19 +204,17 @@ describe('smoke tests', () => {
       })
     })
     cy.get('.sectionName').contains(section2).click()
-    cy.wait(1000)
     cy.get('#add-question')
       .should('have.text', `+ ${addQuestion.addQuestion}`)
       .click()
     cy.location('pathname').should('include', '/add-question')
     cy.get('h1', { timeout: 6000 }).should('be.visible')
-    cy.wait(1500)
     cy.get('#Question').get('#dropdown-container').click()
     cy.get('ul').within(() => {
       cy.get('li').within(() => {
         cy.get('div').then((el) => {
           ;[...el].map((el) => {
-            if (el.innerText === 'Multiple Choice') {
+            if (el.innerText === 'Text') {
               el.click()
             }
             return null
@@ -227,24 +225,10 @@ describe('smoke tests', () => {
     cy.get('#question-editor #quill-editor').within(() => {
       cy.get('.ql-editor').type(cypress.useMemo)
     })
-    cy.wait(2000)
-    cy.get('.ql-editor ').eq(1).clear().type(cypress.useMemoAns)
-    cy.get('.checkBox').eq(0).click()
-    cy.get('.ql-editor ').eq(2).clear().type('secound option')
-    cy.get('.ql-editor ').eq(3).clear().type('third option')
-    cy.get('.ql-editor ').eq(4).clear().type('fourth option')
-    cy.get('#save-and-add-more').click()
-    cy.wait(2000)
-    cy.get('#question-editor #quill-editor').within(() => {
-      cy.get('.ql-editor').type(cypress.useMemo)
-    })
-    cy.get('.ql-editor ').eq(1).clear().type(cypress.useMemoAns)
-    cy.get('.checkBox').eq(0).click()
-    cy.get('.ql-editor ').eq(2).clear().type('secound option')
-    cy.get('.checkBox').eq(1).click()
-    cy.get('.ql-editor ').eq(3).clear().type('third option')
-    cy.get('.ql-editor ').eq(4).clear().type('fourth option')
-    cy.get('#save-and-add-more').click()
+    cy.get('input[placeholder="Write your option here"]')
+      .clear()
+      .type(cypress.useMemoAns)
+    cy.get('#save-and-exit').click()
   })
 
   it('Add second question to the first section', () => {
