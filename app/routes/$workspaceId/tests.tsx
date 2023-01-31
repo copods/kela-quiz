@@ -60,6 +60,8 @@ export type LoaderData = {
   testCurrentPage: number
   testItemsPerPage: number
   getAllTestsCount: number
+  sortBy: string | null
+  sortOrder: string | null
 }
 
 export const loader: LoaderFunction = async ({ request, params }) => {
@@ -110,6 +112,8 @@ export const loader: LoaderFunction = async ({ request, params }) => {
       testCurrentPage,
       testItemsPerPage,
       getAllTestsCount,
+      sortBy,
+      sortOrder,
     })
   } catch (err) {
     console.log(err)
@@ -190,6 +194,7 @@ export const action: ActionFunction = async ({ request, params }) => {
 
 export default function SectionPage() {
   const data = useLoaderData() as unknown as LoaderData
+  console.log(data, 'data')
   const { t } = useTranslation()
   const sectionActionData = useActionData() as ActionData
   const sortByDetails = [
@@ -277,9 +282,17 @@ export default function SectionPage() {
     t,
     data.getAllTestsCount,
     data.sections[0]?.id,
-    sortBy,
-    order,
+    location.search,
   ])
+  useEffect(() => {
+    if (data.sortOrder !== order || data.sortBy !== sortBy) {
+      navigate(
+        `/${data.currentWorkspaceId}${routes.tests}/${
+          data.sections.slice(-1)[0]?.id
+        }?sortBy=${sortBy}&sort=${order}&testPage=${testsCurrentPage}&testItems=${testsPageSize}`
+      )
+    }
+  }, [order, sortBy])
   useEffect(() => {
     setTestsCurrentPage(data.testCurrentPage)
   }, [data])
