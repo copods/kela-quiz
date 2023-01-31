@@ -1,6 +1,11 @@
 import { areEqualArrays } from 'helper/results.helper'
 import { useTranslation } from 'react-i18next'
-import type { Option, CorrectAnswer, QuestionType } from '~/interface/Interface'
+import {
+  Option,
+  CorrectAnswer,
+  QuestionType,
+  QuestionTypes,
+} from '~/interface/Interface'
 
 import Divider from '../common-components/divider'
 const ResultDetailsQuestionsPreview = ({
@@ -53,7 +58,7 @@ const ResultDetailsQuestionsPreview = ({
             <div className="flex items-center gap-8">
               <span className="rounded-52 border border-black px-3 py-1 text-xs font-medium text-gray-800">
                 {/* {show chip according to type of question} */}
-                {questionType.displayName === 'Text'
+                {questionType.value === QuestionTypes.text
                   ? t('resultConstants.text')
                   : t('sectionsConstants.mcq')}
               </span>
@@ -61,7 +66,7 @@ const ResultDetailsQuestionsPreview = ({
           CASE1: if ordered then show ordered front of question type
           CASE2: if unordered then show unordered front of question badge
           } */}
-              {questionType.displayName === 'Text' && (
+              {questionType.value === QuestionTypes.text && (
                 <span className="list-item text-xs font-semibold text-gray-800">
                   {checkOrder
                     ? t('resultConstants.order')
@@ -92,27 +97,27 @@ const ResultDetailsQuestionsPreview = ({
                 </h3>
                 <div>
                   {((checkOrder === true &&
-                    questionType.displayName === 'Text' &&
+                    questionType.value === QuestionTypes.text &&
                     correctOrder.includes(false)) ||
                     (checkOrder === false &&
-                      questionType.displayName === 'Text' &&
+                      questionType.value === QuestionTypes.text &&
                       areEqualArrays(textAnswer, correctAnswersArray) ===
                         false) ||
                     (flag.includes('incorrect') === true &&
-                      questionType.displayName !== 'Text')) && (
+                      questionType.value !== QuestionTypes.text)) && (
                     <span className="rounded-full bg-red-100 px-4 py-2 text-xs font-medium text-red-800">
                       {t('resultConstants.wrong')}
                     </span>
                   )}
                   {((checkOrder === true &&
-                    questionType.displayName === 'Text' &&
+                    questionType.value === QuestionTypes.text &&
                     !correctOrder.includes(false)) ||
                     (checkOrder === false &&
-                      questionType.displayName === 'Text' &&
+                      questionType.value === QuestionTypes.text &&
                       areEqualArrays(textAnswer, correctAnswersArray) ===
                         true) ||
                     (flag.includes('incorrect') === false &&
-                      questionType.displayName !== 'Text')) && (
+                      questionType.value !== QuestionTypes.text)) && (
                     <span className="rounded-full bg-green-100 px-4 py-2 text-xs font-medium text-green-800">
                       {t('resultConstants.correct')}
                     </span>
@@ -120,7 +125,7 @@ const ResultDetailsQuestionsPreview = ({
                 </div>
               </div>
 
-              {questionType.displayName == 'Text' &&
+              {questionType.value == QuestionTypes.text &&
                 textAnswer.map((textAnswer: CorrectAnswer, index: number) => {
                   return (
                     <div
@@ -132,7 +137,7 @@ const ResultDetailsQuestionsPreview = ({
                   )
                 })}
 
-              {questionType.displayName !== 'Text' && (
+              {questionType.value !== QuestionTypes.text && (
                 <div className="flex flex-col gap-6">
                   {selectedOptions.map((selectedOption: Option) => {
                     return (
@@ -151,9 +156,14 @@ const ResultDetailsQuestionsPreview = ({
                 </div>
               )}
             </div>
-            {(flag.includes('incorrect') ||
-              areEqualArrays(textAnswer, correctAnswersArray) === false ||
-              correctOrder.includes(false)) && (
+            {((checkOrder === true &&
+              questionType.value === QuestionTypes.text &&
+              correctOrder.includes(false)) ||
+              (checkOrder === false &&
+                questionType.value === QuestionTypes.text &&
+                areEqualArrays(textAnswer, correctAnswersArray) === false) ||
+              (flag.includes('incorrect') === true &&
+                questionType.value !== QuestionTypes.text)) && (
               <div className="flex flex-col gap-6">
                 <div className="flex flex-col gap-6">
                   <div className="flex flex-col gap-6">

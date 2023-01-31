@@ -647,13 +647,17 @@ async function calculateResultBySectionId(sectionid?: string) {
 
       if (question?.question?.questionType?.value === 'TEXT') {
         const checkOrder = question?.question?.checkOrder
-        const correctOrder = question?.answers.map(
-          (textAnswer: any, index: number) => {
-            return (
-              textAnswer === question?.question?.correctAnswer[index]?.answer
-            )
-          }
-        )
+        let correctOrder
+        if(checkOrder === true){
+           correctOrder = question?.answers.map(
+            (textAnswer: any, index: number) => {
+              return (
+                textAnswer === question?.question?.correctAnswer[index]?.answer
+              )
+            }
+          )
+        }
+       
 
         if (checkOrder === false) {
           const correctAnswers = question?.question?.correctAnswer
@@ -677,7 +681,7 @@ async function calculateResultBySectionId(sectionid?: string) {
             }
           }
         } else if (checkOrder === true) {
-          if (correctOrder.includes(false)) {
+          if (correctOrder?.includes(false)) {
             incorrect += 1
           } else {
             correct += 1

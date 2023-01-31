@@ -378,7 +378,7 @@ export async function getResultDetailBySection(id?: string) {
               },
               questionType: {
                 select: {
-                  displayName: true,
+                  value: true,
                 },
               },
               options: true,
