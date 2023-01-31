@@ -216,22 +216,26 @@ export default function OptionForQuestion({
                     </ClientOnly>
                   }
                 </div>
-                <Icon
-                  onClick={() => deleteOption(index, option?.id)}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter') deleteOption(index, option?.id)
-                  }}
-                  tabIndex={0}
-                  id="delete-option"
-                  aria-label={t('commonConstants.delete')}
-                  icon="ic:outline-delete-outline"
-                  className={`h-6 w-6 ${index} ${
-                    options.length < 2
-                      ? 'cursor-not-allowed text-red-400'
-                      : 'cursor-pointer text-red-600'
-                  }`}
-                  role="button"
-                />
+                {getQuestionType(selectedTypeOfQuestion) ===
+                  QuestionTypes.multipleChoice &&
+                  options.length > 2 && (
+                    <Icon
+                      onClick={() => deleteOption(index, option?.id)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') deleteOption(index, option?.id)
+                      }}
+                      tabIndex={0}
+                      id="delete-option"
+                      aria-label={t('commonConstants.delete')}
+                      icon="ic:outline-delete-outline"
+                      className={`h-6 w-6 ${index} ${
+                        options.length < 2
+                          ? 'cursor-not-allowed text-red-400'
+                          : 'cursor-pointer text-red-600'
+                      }`}
+                      role="button"
+                    />
+                  )}
               </div>
             )
           })}
@@ -253,19 +257,23 @@ export default function OptionForQuestion({
                       }}
                     ></input>
                   </div>
-                  <Icon
-                    onClick={() => deleteOption(index)}
-                    tabIndex={0}
-                    icon="ic:outline-delete-outline"
-                    className={`h-6 w-6 ${index} ${
-                      textCorrectAnswer.length < 2
-                        ? 'cursor-not-allowed text-red-400'
-                        : 'cursor-pointer text-red-600'
-                    }`}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter') deleteOption(index, option?.id)
-                    }}
-                  />
+                  {getQuestionType(selectedTypeOfQuestion) ===
+                    QuestionTypes.text &&
+                    textCorrectAnswer.length > 1 && (
+                      <Icon
+                        onClick={() => deleteOption(index)}
+                        tabIndex={0}
+                        icon="ic:outline-delete-outline"
+                        className={`h-6 w-6 ${index} ${
+                          textCorrectAnswer.length < 2
+                            ? 'cursor-not-allowed text-red-400'
+                            : 'cursor-pointer text-red-600'
+                        }`}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') deleteOption(index, option?.id)
+                        }}
+                      />
+                    )}
                 </div>
               )
             }
