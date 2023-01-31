@@ -648,8 +648,8 @@ async function calculateResultBySectionId(sectionid?: string) {
       if (question?.question?.questionType?.value === 'TEXT') {
         const checkOrder = question?.question?.checkOrder
         let correctOrder
-        if(checkOrder === true){
-           correctOrder = question?.answers.map(
+        if (checkOrder === true) {
+          correctOrder = question?.answers.map(
             (textAnswer: any, index: number) => {
               return (
                 textAnswer === question?.question?.correctAnswer[index]?.answer
@@ -657,7 +657,6 @@ async function calculateResultBySectionId(sectionid?: string) {
             }
           )
         }
-       
 
         if (checkOrder === false) {
           const correctAnswers = question?.question?.correctAnswer

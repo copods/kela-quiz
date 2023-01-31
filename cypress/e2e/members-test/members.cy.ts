@@ -10,6 +10,7 @@ describe('Test for members', () => {
   it('checks, member heading should be visible', () => {
     cy.get('.membersHeading').should('be.visible')
   })
+
   it('checks, member heading should have correct text', () => {
     cy.get('.membersHeading').should('have.text', 'Members')
   })
@@ -167,10 +168,12 @@ describe('Test for members', () => {
       .parent()
       .should('have.attr', 'tabindex', '0')
   })
-  it('checks,resend member invite button have tabindex', () => {
-    cy.get('#resend-member-invite')
-      .parent()
-      .should('have.attr', 'tabindex', '0')
+  it('checks,after clicking on resend invite member button toster should have correct message', () => {
+    cy.get('#resend-member-invite').should('be.visible').click()
+    cy.get('.Toastify__toast--success').should(
+      'have.text',
+      'Invitation Sent Successfully..!'
+    )
   })
   it('Test for conforming ,new member is added in a list or not', () => {
     cy.get('#table-row #table-td', { timeout: 8000 })
