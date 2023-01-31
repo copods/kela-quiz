@@ -5,20 +5,23 @@ describe('Test for candidate assessment verfication', () => {
 
   it('Checks, header of verification page should be visible and correct', () => {
     cy.customVisitOnCandidateSide('verification')
-    cy.get('[data-cy="header"]')
+    cy.get('[data-cy="header"]', { timeout: 6000 })
       .should('be.visible')
       .should('have.text', 'OTP Verification')
   })
 
   it('Checks, Email Id of candidate should be visible and correct', () => {
     cy.customVisitOnCandidateSide('verification')
-    cy.get('[data-cy="email"]').should('be.visible')
+    cy.get('[data-cy="email"]', { timeout: 6000 }).should('be.visible')
   })
 
   it('Checks, Timer is working fine', () => {
     cy.customVisitOnCandidateSide('verification')
     cy.clock()
-    cy.get('[data-cy="resendOTP"]').should('have.text', ' 01:00')
+    cy.get('[data-cy="resendOTP"]', { timeout: 6000 }).should(
+      'have.text',
+      ' 01:00'
+    )
     cy.tick(1000)
     cy.get('[data-cy="resendOTP"]').should('have.text', ' 00:59')
     cy.tick(1000)
@@ -30,7 +33,7 @@ describe('Test for candidate assessment verfication', () => {
   it('Checks, Timer ends and text Changes', () => {
     cy.customVisitOnCandidateSide('verification')
     cy.wait(60000)
-    cy.get("[data-cy='resendText']").should(
+    cy.get("[data-cy='resendText']", { timeout: 6000 }).should(
       'have.text',
       "Didn't get a code Resend"
     )
@@ -43,7 +46,7 @@ describe('Test for candidate assessment verfication', () => {
 
   it('Checks, Otp Verification', () => {
     cy.customVisitOnCandidateSide('verification')
-    cy.get('input[name="field-1"]').type('0')
+    cy.get('input[name="field-1"]', { timeout: 6000 }).type('0')
     cy.get('input[name="field-2"]').type('0')
     cy.get('input[name="field-3"]').type('0')
     cy.get('input[name="field-4"]').type('0')
