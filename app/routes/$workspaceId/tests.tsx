@@ -71,7 +71,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     const testCurrentPage = Math.max(Number(query.get('testPage') || 1), 1)
     // taking sortBy and order
     const sortBy = query.get('sortBy')
-    const sortOrder = query.get('sort')
+    const sortOrder = query.get('sort') || sortByOrder.desc
     const userId = await getUserId(request)
     const currentWorkspaceId = params.workspaceId as string
     const workspaces = await getUserWorkspaces(userId as string)
