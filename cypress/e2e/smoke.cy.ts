@@ -15,7 +15,6 @@ import {
   getSubmitBtn,
   getTestNameInput,
   getTextArea,
-  visitMembers,
   visitSignIn,
   getQuestionWithDropdown,
   getQlEditorWrapper,
@@ -86,7 +85,6 @@ describe('smoke tests', () => {
     cy.wait(1000)
 
     // To add workspace
-    visitMembers()
     cy.location('pathname').should('include', '/members')
     cy.wait(500)
 
@@ -118,6 +116,7 @@ describe('smoke tests', () => {
       .should((item) => {
         expect(item.length).to.be.greaterThan(1)
       })
+    cy.wait(500)
 
     // To add sections
     getSections().should('have.text', 'Tests').click()
@@ -131,6 +130,7 @@ describe('smoke tests', () => {
         getTextArea().type('Aptitude')
         getSubmitBtn().click()
       })
+    cy.wait(500)
     getSections().should('have.text', 'Tests').click()
 
     // Section 2
@@ -142,6 +142,7 @@ describe('smoke tests', () => {
         getTextArea().type('Aptitude')
         getSubmitBtn().click()
       })
+    cy.wait(500)
     getSections().should('have.text', 'Tests').click()
 
     // Delete Section
@@ -153,8 +154,8 @@ describe('smoke tests', () => {
         getTextArea().type('Aptitude')
         getSubmitBtn().click()
       })
-    getSections().should('have.text', 'Tests').click()
     cy.wait(500)
+    getSections().should('have.text', 'Tests').click()
 
     // Add Question 1 to Section 1
     getSectionCards().each(($el) => {
@@ -168,6 +169,7 @@ describe('smoke tests', () => {
     })
     cy.wait(1000)
     getSectionName().contains(section1).click()
+    cy.wait(2000)
     getAddQuestionBtn()
       .should('have.text', `+ ${addQuestion.addQuestion}`)
       .click()
@@ -231,6 +233,7 @@ describe('smoke tests', () => {
     })
     cy.wait(1000)
     getSectionName().contains(section2).click()
+    cy.wait(2000)
     getAddQuestionBtn()
       .should('have.text', `+ ${addQuestion.addQuestion}`)
       .click()

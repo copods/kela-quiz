@@ -1,5 +1,4 @@
 export const visitSignIn = () => cy.visit('/sign-in')
-export const visitMembers = () => cy.visit('/memebers')
 export const getEmail = () => cy.get('#email')
 export const getPassword = () => cy.get('#password')
 export const getPasswordError = () => cy.get('#password-error')
@@ -14,7 +13,8 @@ export const getTextArea = () => cy.get('textarea')
 export const getSubmitBtn = () => cy.get('[data-cy="submit"]')
 export const getSectionCards = () => cy.get('#section-card')
 export const getSectionName = () => cy.get('.sectionName')
-export const getAddQuestionBtn = () => cy.get('#add-question')
+export const getAddQuestionBtn = () =>
+  cy.get('#add-question', { timeout: 8000 })
 export const geth1 = () => cy.get('h1')
 export const getQuestionWithDropdown = () =>
   cy.get('#Question').get('#dropdown-container')
