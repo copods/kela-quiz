@@ -9,6 +9,7 @@ import {
   getTotalTestCount,
 } from '~/models/result.server'
 import { getUserWorkspaces } from '~/models/workspace.server'
+import { sortByOrder } from '~/interface/Interface'
 type LoaderData = {
   candidateTest: Awaited<ReturnType<typeof getAllCandidateTests>>
   userId: Awaited<ReturnType<typeof getUserId>>
@@ -26,7 +27,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const resultsCurrentPage = Math.max(Number(query.get('page') || 1), 1)
   const statusFilter = query.get('status') as string
   const sortBy = query.get('sortBy')
-  const sortOrder = query.get('sort')
+  const sortOrder = query.get('sort') || sortByOrder.desc
   const currentWorkspaceId = params.workspaceId as string
   const testCount = await getAllCandidateTestsCount(
     currentWorkspaceId,
