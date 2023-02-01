@@ -5,7 +5,7 @@ import TestList from '~/components/tests/TestList'
 import { getAllTests, getAllTestsCount } from '~/models/tests.server'
 import { json } from '@remix-run/node'
 import { deleteTestById } from '~/models/tests.server'
-import type { Test } from '~/interface/Interface'
+import { sortByOrder, Test } from '~/interface/Interface'
 import { createCandidate } from '~/models/candidate.server'
 import { routes } from '~/constants/route.constants'
 import { getUserWorkspaces } from '~/models/workspace.server'
@@ -41,7 +41,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   let tests: Array<Test> = []
   let status: string = ''
   const sortBy = query.get('sortBy')
-  const sortOrder = query.get('sort')
+  const sortOrder = query.get('sort') || sortByOrder.desc
   await getAllTests(
     sortBy as string,
     sortOrder as string,
