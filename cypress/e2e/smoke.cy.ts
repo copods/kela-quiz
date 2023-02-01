@@ -310,7 +310,6 @@ describe('smoke tests', () => {
     })
     // user reached to step 2
     cy.get('div#section').each((el) => {
-      cy.log('element', el)
       cy.wrap(el).within(() => {
         if (el.find('.count')[0].innerText != '0') {
           cy.get('input#no-of-qu').should('have.disabled', true)

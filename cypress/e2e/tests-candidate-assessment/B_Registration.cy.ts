@@ -43,12 +43,12 @@ describe('Test for Candidate assessment Registration', () => {
       .should('be.visible')
       .should('have.attr', 'placeholder', 'Enter last name')
 
-    cy.get("[data-cy='submit-button']").should('be.disabled')
+    cy.get("[data-cy='submitButton']").should('be.disabled')
   })
 
   it('Checks, button color when it is disabled', () => {
     cy.visit(examLink)
-    cy.get("[data-cy='submit-button']").should(
+    cy.get("[data-cy='submitButton']").should(
       'have.css',
       'background-color',
       'rgb(162, 164, 214)'
@@ -59,21 +59,21 @@ describe('Test for Candidate assessment Registration', () => {
     cy.visit(examLink)
     cy.get('#firstName').should('be.visible').should('be.empty')
     cy.get('#lastName').should('be.visible').type('jain')
-    cy.get("[data-cy='submit-button']").should('be.disabled')
+    cy.get("[data-cy='submitButton']").should('be.disabled')
   })
 
   it('Checks, last name is empty submit buttom should be disabled', () => {
     cy.visit(examLink)
     cy.get('#firstName').should('be.visible').type('ayushi')
     cy.get('#lastName').should('be.visible').should('be.empty')
-    cy.get("[data-cy='submit-button']").should('be.disabled')
+    cy.get("[data-cy='submitButton']").should('be.disabled')
   })
 
   it('Checks, submitting the registeration form', () => {
     cy.visit(examLink)
     cy.get('#firstName').type('aa')
     cy.get('#lastName').type('Jain')
-    cy.get("[data-cy='submit-button']")
+    cy.get("[data-cy='submitButton']")
       .should('be.visible')
       .should('have.css', 'background-color', 'rgb(53, 57, 136)')
       .click()

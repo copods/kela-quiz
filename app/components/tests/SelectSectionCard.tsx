@@ -74,7 +74,7 @@ const SelectSectionCard = ({
         <h3
           title={section.name}
           className="flex-1 text-xl font-semibold text-gray-700"
-          data-cy="section-heading"
+          data-cy="sectionHeading"
         >
           {section.name}
         </h3>

@@ -55,8 +55,11 @@ describe('Test for Assessment Verification', () => {
       })
   })
   it('Checks,Gesture should be visisble and have correct text', () => {
-    cy.get('[data-cy="gesture"]').should('be.visible')
-    cy.get('[data-cy="gesture"]').should('have.text', commonContants.BestWishes)
+    cy.get('[data-cy="goodLuckMessageText"]').should('be.visible')
+    cy.get('[data-cy="goodLuckMessageText"]').should(
+      'have.text',
+      commonContants.BestWishes
+    )
   })
   it('Checks, click on begin assessment', () => {
     cy.get('#start').should('be.visible')

@@ -140,9 +140,9 @@ describe('Creating new assessment', () => {
     cy.get('div#section').each((el) => {
       cy.wrap(el).within(() => {
         if (
-          el.find("[data-cy='section-heading']")[0].innerText ===
+          el.find("[data-cy='sectionHeading']")[0].innerText ===
             commonConstants.section1 ||
-          el.find("[data-cy='section-heading']")[0].innerText ===
+          el.find("[data-cy='sectionHeading']")[0].innerText ===
             commonConstants.section2
         ) {
           cy.get('button').should('have.text', commonConstants.add).click()

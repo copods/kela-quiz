@@ -60,7 +60,7 @@ function CandidateRegister() {
             className="h-12 w-full text-base"
             isDisabled={!canSubmitBtnBeEnabled() || busy}
             variant="primary-solid"
-            data-cy="submit-button"
+            data-cy="submitButton"
           />
         </Form>
       </div>
