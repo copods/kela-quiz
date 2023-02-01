@@ -188,7 +188,7 @@ const Table = <T extends object>({
         )}
       </div>
       {paginationEnabled ? (
-        <div className="rounded-b-2xl border bg-white px-9 py-5 shadow">
+        <div className="z-0 rounded-b-2xl border bg-white px-9 py-5 shadow">
           <Pagination
             currentPage={currentPage!}
             onPageChange={(page) => onPageChange?.(page)}
