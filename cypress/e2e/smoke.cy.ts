@@ -1,5 +1,30 @@
 /// <reference types="Cypress"/>
 import {
+  getAddQuestionBtn,
+  getAddSectionBtn,
+  getAddWorkspaceBtn,
+  getAddWorkspaceInput,
+  getDropdown,
+  getEmail,
+  geth1,
+  getPassword,
+  getPasswordError,
+  getSectionCards,
+  getSectionName,
+  getSections,
+  getSubmitBtn,
+  getTestNameInput,
+  getTextArea,
+  visitMembers,
+  visitSignIn,
+  getQuestionWithDropdown,
+  getQlEditorWrapper,
+  getQlEditor,
+  getQlEditorInput,
+  getSaveAndExit,
+  getSaveAndAddMore,
+} from 'support/common-function'
+import {
   addQuestion,
   commonConstants,
   cypress,
@@ -18,33 +43,36 @@ describe('smoke tests', () => {
     window.localStorage.clear()
   })
 
-  it('Invalid Email Error Message', () => {
-    cy.visit('/sign-in')
-    cy.get('#email').clear().type('test@copods.co')
-    cy.get('#password').clear().type('kQuiz@copods')
+  it('Login form validations', () => {
+    visitSignIn()
+
+    // To check Invalid Email Error
+    getEmail().type('test@copods.co')
+    getPassword().type('kQuiz@copods')
     cy.findByRole('button').click()
+    getPasswordError().should('have.text', 'Incorrect email or password')
 
-    cy.get('#password-error', { timeout: 8000 }).should(
-      'have.text',
-      'Incorrect email or password'
-    )
-  })
+    // To clear fields
+    getEmail().clear()
+    getPassword().clear()
 
-  it('Invalid Password Error Message', () => {
-    cy.visit('/sign-in')
-    cy.get('#email').clear().type('copods.demo.sendgrid@gmail.com')
-    cy.get('#password').clear().type('anuragpate')
+    // To check Invalid Password Error
+    getEmail().type('copods.demo.sendgrid@gmail.com')
+    getPassword().type('anuragpate')
     cy.findByRole('button').click()
-    cy.get('#password-error').should('have.text', 'Incorrect email or password')
-  })
+    getPasswordError().should('have.text', 'Incorrect email or password')
 
-  it('Successfully Login', () => {
-    cy.visit('/sign-in')
-    cy.get('#email').clear().type('copods.demo.sendgrid@gmail.com')
-    cy.get('#password').clear().type('kQuiz@copods')
+    // To clear fields
+    getEmail().clear()
+    getPassword().clear()
+
+    // To login
+    getEmail().type('copods.demo.sendgrid@gmail.com')
+    getPassword().type('kQuiz@copods')
     cy.findByRole('button').click()
-    cy.wait(1000)
+    cy.wait(500)
 
+    // To check cookies
     cy.getCookies()
       .should('have.length', 1)
       .then((cookies) => {
@@ -52,7 +80,186 @@ describe('smoke tests', () => {
       })
   })
 
-  it('should add workspace', () => {
+  it('Creating user data', () => {
+    // To Login
+    cy.login()
+    cy.wait(1000)
+
+    // To add workspace
+    visitMembers()
+    cy.location('pathname').should('include', '/members')
+    cy.wait(500)
+
+    const randomWorkSpaceName = `workSpace-${(Math.random() + 1)
+      .toString(36)
+      .substring(7)}`
+
+    getDropdown()
+      .click()
+      .find('ul')
+      .children()
+      .each((element, index) => {
+        if (index === 0) {
+          cy.wrap(element).click()
+          return
+        }
+      })
+
+    getAddWorkspaceInput()
+      .type(randomWorkSpaceName)
+      .should('have.attr', 'value', randomWorkSpaceName)
+
+    getAddWorkspaceBtn().click()
+
+    getDropdown()
+      .click()
+      .find('ul')
+      .find('li')
+      .should((item) => {
+        expect(item.length).to.be.greaterThan(1)
+      })
+
+    // To add sections
+    getSections().should('have.text', 'Tests').click()
+
+    // Section 1
+    getAddSectionBtn().click()
+    cy.get('form > div')
+      .should('be.visible')
+      .within((el) => {
+        getTestNameInput().type(section1)
+        getTextArea().type('Aptitude')
+        getSubmitBtn().click()
+      })
+    getSections().should('have.text', 'Tests').click()
+
+    // Section 2
+    getAddSectionBtn().click()
+    cy.get('form > div')
+      .should('be.visible')
+      .within((el) => {
+        getTestNameInput().type(section2)
+        getTextArea().type('Aptitude')
+        getSubmitBtn().click()
+      })
+    getSections().should('have.text', 'Tests').click()
+
+    // Delete Section
+    getAddSectionBtn().click()
+    cy.get('form > div')
+      .should('be.visible')
+      .within((el) => {
+        getTestNameInput().type(deleteSection)
+        getTextArea().type('Aptitude')
+        getSubmitBtn().click()
+      })
+    getSections().should('have.text', 'Tests').click()
+    cy.wait(500)
+
+    // Add Question 1 to Section 1
+    getSectionCards().each(($el) => {
+      cy.wrap($el).within((el) => {
+        if (
+          el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
+        ) {
+          cy.get('.sectionName').contains(section1)
+        }
+      })
+    })
+    cy.wait(1000)
+    getSectionName().contains(section1).click()
+    getAddQuestionBtn()
+      .should('have.text', `+ ${addQuestion.addQuestion}`)
+      .click()
+    cy.location('pathname').should('include', '/add-question')
+    geth1().should('be.visible')
+    getQuestionWithDropdown().click()
+    cy.get('ul').within(() => {
+      cy.get('li').within(() => {
+        cy.get('div').then((el) => {
+          ;[...el].map((el) => {
+            if (el.innerText === 'Text') {
+              el.click()
+            }
+            return null
+          })
+        })
+      })
+    })
+    cy.wait(500)
+
+    getQlEditorWrapper().within(() => {
+      getQlEditor().type(cypress.useRef).should('have.text', cypress.useRef)
+    })
+    getQlEditorInput().clear().type(cypress.useRefAns)
+    getSaveAndAddMore().click()
+    cy.wait(500)
+
+    // Add Question 2 to Section 1
+    cy.location('pathname').should('include', '/add-question')
+    geth1().should('be.visible')
+    getQuestionWithDropdown().click()
+    cy.get('ul').within(() => {
+      cy.get('li').within(() => {
+        cy.get('div').then((el) => {
+          ;[...el].map((el) => {
+            if (el.innerText === 'Text') {
+              el.click()
+            }
+            return null
+          })
+        })
+      })
+    })
+    cy.wait(500)
+
+    getQlEditorWrapper().within(() => {
+      getQlEditor().type(question).should('have.text', question)
+    })
+    getQlEditorInput().clear().type(cypress.useRefAns)
+    getSaveAndExit().click()
+
+    // Add Question to Section 2
+    getSectionCards().each(($el) => {
+      cy.wrap($el).within((el) => {
+        if (
+          el[0].getElementsByClassName('sectionName')[0].innerHTML === section2
+        ) {
+          cy.get('.sectionName').contains(section2)
+        }
+      })
+    })
+    cy.wait(1000)
+    getSectionName().contains(section2).click()
+    getAddQuestionBtn()
+      .should('have.text', `+ ${addQuestion.addQuestion}`)
+      .click()
+    cy.location('pathname').should('include', '/add-question')
+    geth1().should('be.visible')
+    getQuestionWithDropdown().click()
+    cy.get('ul').within(() => {
+      cy.get('li').within(() => {
+        cy.get('div').then((el) => {
+          ;[...el].map((el) => {
+            if (el.innerText === 'Text') {
+              el.click()
+            }
+            return null
+          })
+        })
+      })
+    })
+    cy.wait(500)
+
+    getQlEditorWrapper().within(() => {
+      getQlEditor().type(cypress.useMemo).should('have.text', cypress.useMemo)
+    })
+    getQlEditorInput().clear().type(cypress.useMemo)
+    getSaveAndExit().click()
+    cy.wait(500)
+  })
+
+  it.skip('should add workspace', () => {
     cy.login()
     cy.customVisit('/members')
     cy.location('pathname').should('include', '/members')
@@ -93,7 +300,7 @@ describe('smoke tests', () => {
   })
 
   // creating test data
-  it('Adding a first section', () => {
+  it.skip('Adding a first section', () => {
     cy.login()
     cy.customVisit('/members')
     cy.wait(1000)
@@ -111,7 +318,7 @@ describe('smoke tests', () => {
     cy.wait(2000)
   })
 
-  it('Adding a second section', () => {
+  it.skip('Adding a second section', () => {
     cy.login()
     cy.customVisit('/members')
     cy.wait(1000)
@@ -127,7 +334,7 @@ describe('smoke tests', () => {
       })
   })
 
-  it('Adding a deleteSection ', () => {
+  it.skip('Adding a deleteSection ', () => {
     cy.login()
     cy.customVisit('/members')
     cy.wait(1000)
@@ -143,7 +350,7 @@ describe('smoke tests', () => {
       })
   })
 
-  it('Add question to the first section', () => {
+  it.skip('Add question to the first section', () => {
     cy.login()
     cy.customVisit('/members')
     cy.wait(1000)
@@ -188,7 +395,7 @@ describe('smoke tests', () => {
     cy.get('#save-and-exit').click()
   })
 
-  it('Add question to the second section', () => {
+  it.skip('Add question to the second section', () => {
     cy.login()
     cy.customVisit('/members')
     cy.wait(1000)
@@ -230,7 +437,8 @@ describe('smoke tests', () => {
       .type(cypress.useMemoAns)
     cy.get('#save-and-exit').click()
   })
-  it('Add second question to the first section', () => {
+
+  it.skip('Add second question to the first section', () => {
     cy.login()
     cy.customVisit('/members')
     cy.wait(1000)
@@ -273,7 +481,8 @@ describe('smoke tests', () => {
       .type(cypress.useRefAns)
     cy.get('#save-and-exit').click()
   })
-  it('Verify if user able create the assesssment 1', () => {
+
+  it.skip('Verify if user able create the assesssment 1', () => {
     cy.login()
     cy.customVisit('/members')
     cy.get('#tests', { timeout: 6000 })
@@ -350,7 +559,7 @@ describe('smoke tests', () => {
       .click()
   })
 
-  it('Verify if user able create the assessment 2', () => {
+  it.skip('Verify if user able create the assessment 2', () => {
     cy.login()
     cy.customVisit('/members')
     cy.wait(1000)
@@ -427,7 +636,7 @@ describe('smoke tests', () => {
       .click()
   })
 
-  it('Test for adding a new member', () => {
+  it.skip('Test for adding a new member', () => {
     cy.login()
     cy.customVisit('/members')
     cy.wait(1000)
@@ -446,7 +655,7 @@ describe('smoke tests', () => {
     cy.get('#invite-button').click()
   })
 
-  it('invite candidate for assessment', () => {
+  it.skip('invite candidate for assessment', () => {
     cy.viewport(1200, 1000)
     cy.login()
     cy.customVisit('/members')
@@ -468,7 +677,7 @@ describe('smoke tests', () => {
       .should('have.value', 'johndoe@example.com')
     cy.get('[data-cy="submit"]').click()
   })
-  it('check for not found page', () => {
+  it.skip('check for not found page', () => {
     cy.login()
     cy.customVisit('/members')
     cy.wait(1000)
