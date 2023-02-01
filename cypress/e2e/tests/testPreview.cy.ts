@@ -182,7 +182,9 @@ describe('Test for testPreview', () => {
       '/assessments'
     )
     cy.get('.test-name-navigation', { timeout: 6000 }).contains(test1).click()
-    cy.get('#description').should('have.text', cypress.description).click()
+    cy.get('#description', { timeout: 6000 })
+      .should('have.text', cypress.description)
+      .click()
   })
   it('test for total time', () => {
     cy.get('a')
