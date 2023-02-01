@@ -24,18 +24,18 @@ describe('Test for testPreview', () => {
     cy.get('#title', { timeout: 6000 }).should('have.text', test1)
     cy.get('#back-button').click()
   })
-  // it('test for assessments name', () => {
-  //   cy.get('a')
-  //     .find('#tests', { timeout: 6000 })
-  //     .should('have.text', testsConstants.assessments)
-  //     .click()
-  //   cy.location('pathname', { timeout: 60000 }).should(
-  //     'include',
-  //     '/assessments'
-  //   )
-  //   cy.get('.test-name-navigation', { timeout: 6000 }).contains(test1).click()
-  //   cy.get('#name').should('have.text', cypress.name)
-  // })
+  it('test for assessments name', () => {
+    cy.get('a')
+      .find('#tests', { timeout: 6000 })
+      .should('have.text', testsConstants.assessments)
+      .click()
+    cy.location('pathname', { timeout: 60000 }).should(
+      'include',
+      '/assessments'
+    )
+    cy.get('.test-name-navigation', { timeout: 6000 }).contains(test1).click()
+    cy.get('#name').should('have.text', cypress.name)
+  })
   it('Checks for invite candidate button text', () => {
     cy.get('a')
       .find('#tests', { timeout: 6000 })
@@ -196,17 +196,17 @@ describe('Test for testPreview', () => {
     cy.get('.test-name-navigation', { timeout: 6000 }).contains(test1).click()
     cy.get('#totalTime').should('have.text', cypress.totalTime).click()
   })
-  // it('test for Total Sections', () => {
-  //   cy.get('a')
-  //     .find('#tests', { timeout: 6000 })
-  //     .should('have.text', testsConstants.assessments)
-  //     .click()
-  //   cy.location('pathname', { timeout: 60000 }).should(
-  //     'include',
-  //     '/assessments'
-  //   )
+  it('test for Total Sections', () => {
+    cy.get('a')
+      .find('#tests', { timeout: 6000 })
+      .should('have.text', testsConstants.assessments)
+      .click()
+    cy.location('pathname', { timeout: 60000 }).should(
+      'include',
+      '/assessments'
+    )
 
-  //   cy.get('.test-name-navigation', { timeout: 6000 }).contains(test1).click()
-  //   cy.get('#totalSection').should('have.text', testsConstants.totalTests)
-  // })
+    cy.get('.test-name-navigation', { timeout: 6000 }).contains(test1).click()
+    cy.get('#totalSection').should('have.text', testsConstants.totalTests)
+  })
 })
