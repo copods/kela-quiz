@@ -308,6 +308,10 @@ export enum QuestionTypes {
   singleChoice = 'SINGLE_CHOICE',
   text = 'TEXT',
 }
+export enum QuestionStatus {
+  answered = 'ANSWERED',
+  skipped = 'SKIPPED',
+}
 export interface SectionWiseResults {
   id: string
   sectionInCandidateTestId: string

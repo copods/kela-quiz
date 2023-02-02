@@ -388,6 +388,7 @@ export async function getResultDetailBySection(id?: string) {
           },
           answers: true,
           status: true,
+          id: true,
           selectedOptions: {
             select: {
               option: true,

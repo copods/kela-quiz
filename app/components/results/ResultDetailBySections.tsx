@@ -53,7 +53,7 @@ const ResultDetailBySections = () => {
           (questions: SectionInCandidateTest, index: number) => {
             return (
               <ResultDetailsQuestionsPreview
-                key={index}
+                key={questions.id}
                 textAnswer={questions.answers}
                 status={questions.status}
                 selectedOptions={questions.selectedOptions}

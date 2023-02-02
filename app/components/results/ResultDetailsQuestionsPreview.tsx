@@ -5,6 +5,7 @@ import {
   CorrectAnswer,
   QuestionType,
   QuestionTypes,
+  QuestionStatus,
 } from '~/interface/Interface'
 
 import Divider from '../common-components/divider'
@@ -33,7 +34,6 @@ const ResultDetailsQuestionsPreview = ({
   const correctAnswersArray = correctAnswer.map(
     (correctAnswer: CorrectAnswer) => correctAnswer.answer
   )
-
   let flag = selectedOptions.map((selectedOptions: Option, index: number) => {
     return selectedOptions.option === correctOption[index]?.option
       ? 'correct'
@@ -88,7 +88,7 @@ const ResultDetailsQuestionsPreview = ({
       <hr className="h-[auto] w-px bg-gray-300" />
       <div className="w-6/12 p-6">
         {/* {checking if question is answered by candidate} */}
-        {status === 'ANSWERED' && (
+        {status === QuestionStatus.answered && (
           <div className="flex flex-col gap-6">
             <div className="flex flex-col gap-6">
               <div className="flex items-center justify-between">
@@ -239,7 +239,7 @@ const ResultDetailsQuestionsPreview = ({
           </div>
         )}
         {/* if question is skipped by candidate  */}
-        {status === 'SKIPPED' && (
+        {status === QuestionStatus.skipped && (
           <div className="flex flex-col gap-6">
             <div className="flex items-center justify-between">
               <h3 className="text-xl font-medium text-gray-800">

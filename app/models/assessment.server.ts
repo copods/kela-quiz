@@ -650,7 +650,7 @@ async function calculateResultBySectionId(sectionid?: string) {
         let correctOrder
         if (checkOrder === true) {
           correctOrder = question?.answers.map(
-            (textAnswer: any, index: number) => {
+            (textAnswer: string, index: number) => {
               return (
                 textAnswer === question?.question?.correctAnswer[index]?.answer
               )
