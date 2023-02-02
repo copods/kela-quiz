@@ -1,3 +1,12 @@
+import {
+  getBeginAssessmentButton,
+  getGoodLuckMessageText,
+  getInstructionSectionContent,
+  getInstructionSectionHeading,
+  getSectionHeading,
+  getTestSectionContent,
+} from 'support/common-function'
+
 describe('Test for Assessment Verification', () => {
   let commonContants = {
     Begin: 'Begin Assessment',
@@ -14,8 +23,8 @@ describe('Test for Assessment Verification', () => {
   })
 
   it('Checks, test section should have heading', () => {
-    cy.get('[data-cy="testSectionHeading"]').should('be.visible')
-    cy.get('[data-cy="testSectionHeading"]').should('have.text', 'Tests')
+    getSectionHeading().should('be.visible')
+    getSectionHeading().should('have.text', 'Tests')
   })
 
   it('Checks, total number of section in test with name', () => {
@@ -23,8 +32,8 @@ describe('Test for Assessment Verification', () => {
       'Test 1 -Quantitive - section1',
       'Test 2 -Quantitive - section2',
     ]
-    cy.get('[data-cy="testSectionContent"]').children().should('have.length', 2)
-    cy.get('[data-cy="testSectionContent"]')
+    getTestSectionContent().children().should('have.length', 2)
+    getTestSectionContent()
       .children()
       .each(($el, index) => {
         cy.wrap($el).should('have.text', sectionsInAssessment[index])
@@ -32,11 +41,8 @@ describe('Test for Assessment Verification', () => {
   })
 
   it('Checks, Instructions section should have proper heading', () => {
-    cy.get('[data-cy="instructionSectionHeading"]').should('be.visible')
-    cy.get('[data-cy="instructionSectionHeading"]').should(
-      'have.text',
-      'Instructions'
-    )
+    getInstructionSectionHeading().should('be.visible')
+    getInstructionSectionHeading().should('have.text', 'Instructions')
   })
 
   it('Checks, total number of instruction in text with name', () => {
@@ -45,25 +51,20 @@ describe('Test for Assessment Verification', () => {
       'Each question is worth the same marks',
       "After submitting the section, you won't be able to make any changes",
     ]
-    cy.get('[data-cy="instructionSectionContent"]')
-      .children()
-      .should('have.length', 3)
-    cy.get('[data-cy="instructionSectionContent"]')
+    getInstructionSectionContent().children().should('have.length', 3)
+    getInstructionSectionContent()
       .children()
       .each(($el, index) => {
         cy.wrap($el).should('have.text', instructions[index])
       })
   })
-  it('Checks,Gesture should be visisble and have correct text', () => {
-    cy.get('[data-cy="goodLuckMessageText"]').should('be.visible')
-    cy.get('[data-cy="goodLuckMessageText"]').should(
-      'have.text',
-      commonContants.BestWishes
-    )
+  it('Checks, GoodLuckText should be visible and have correct text', () => {
+    getGoodLuckMessageText().should('be.visible')
+    getGoodLuckMessageText().should('have.text', commonContants.BestWishes)
   })
   it('Checks, click on begin assessment', () => {
-    cy.get('#start').should('be.visible')
-    cy.get('#start').should('have.text', commonContants.Begin)
-    cy.get('#start').click()
+    getBeginAssessmentButton().should('be.visible')
+    getBeginAssessmentButton().should('have.text', commonContants.Begin)
+    getBeginAssessmentButton().click()
   })
 })

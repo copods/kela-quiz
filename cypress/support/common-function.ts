@@ -67,3 +67,41 @@ export const getResendMemberInviteBtn = () => cy.get('#resend-member-invite')
 export const getToaster = () => cy.get('.Toastify__toast--success')
 export const getTableRow = () => cy.get('#table-row #table-td')
 export const getBadgeTag = () => cy.get('[data-cy="badge-tag"]')
+export const getFirstName = () => cy.get('#firstName')
+export const getLastName = () => cy.get('#lastName')
+export const getRegistrationButtonId = () => cy.get("[data-cy='submitButton']")
+export const getOTPVerificationHeader = () => cy.get('[data-cy="header"]')
+export const getEmailIDOfCandidate = () => cy.get('[data-cy="email"]')
+export const getResendOTP = () => cy.get('[data-cy="resendOTP"]')
+export const getResendText = () => cy.get("[data-cy='resendText']")
+export const getResendButton = () => cy.get('[data-cy="resendButton"]')
+export const getToastMessage = () => cy.get('.Toastify__toast')
+export const getOTPFirstInputField = () => cy.get('input[name="field-1"]')
+export const getOTPSecondInputField = () => cy.get('input[name="field-2"]')
+export const getOTPThirdInputField = () => cy.get('input[name="field-3"]')
+export const getOTPFourthInputField = () => cy.get('input[name="field-4"]')
+export const getSectionHeading = () => cy.get('[data-cy="testSectionHeading"]')
+export const getTestSectionContent = () =>
+  cy.get('[data-cy="testSectionContent"]')
+export const getInstructionSectionHeading = () =>
+  cy.get('[data-cy="instructionSectionHeading"]')
+export const getInstructionSectionContent = () =>
+  cy.get('[data-cy="instructionSectionContent"]')
+
+export const getGoodLuckMessageText = () =>
+  cy.get('[data-cy="goodLuckMessageText"]')
+export const getBeginAssessmentButton = () => cy.get('#start')
+export const getRemainingTime = () => cy.get('[data-cy="timeRemaining"] span')
+export const getQuestionSectionHeading = () =>
+  cy.get('[data-cy="questionSection"] span')
+export const getQuestion = () => cy.get('[data-cy="questionSection"] p')
+export const getAnswerSectionHeading = () =>
+  cy.get('[data-cy="answerSection"] div')
+export const getAnswer = () => cy.get('[data-cy="answerSection"] textarea')
+export const getcoolDownCard = () => cy.get('.w-coolDownCard')
+export const getAnswerSectionLabel = () =>
+  cy.get('[data-cy="answerSection"] label')
+export const getStepperContents = () => cy.get('.contents')
+export const getGroupByTestId = () => cy.get('#group-by-tests')
+export const getVeriticalIconId = () => cy.get('#vertical-icon')
+export const getCopyLinkId = () => cy.get('[data-cy="copy-link"]')

@@ -1,3 +1,15 @@
+import {
+  getAnswer,
+  getAnswerSectionHeading,
+  getAnswerSectionLabel,
+  getcoolDownCard,
+  getQuestion,
+  getQuestionSectionHeading,
+  getRemainingTime,
+  getSectionHeading,
+  getStepperContents,
+} from 'support/common-function'
+
 const commonContants = {
   sectionHeadingOne: 'Section 1 - 2: Quantitative - assessment1',
   sectionHeadingTwo: 'Section 2 - 2: Quantitative - assessment1',
@@ -19,51 +31,48 @@ describe('Tests for Test Section', () => {
    *  Test Cases For Section 1
    */
   it('Checks, Heading should be visible and correct', () => {
-    cy.get('[data-cy="testSectionHeading"]').should('be.visible')
-    cy.get('[data-cy="testSectionHeading"]').should(
-      'have.text',
-      commonContants?.sectionHeadingOne
-    )
+    getSectionHeading().should('be.visible')
+    getSectionHeading().should('have.text', commonContants?.sectionHeadingOne)
   })
 
   it('Checks, timer should be visible and should work properly', () => {
     cy.clock()
-    cy.get('[data-cy="timeRemaining"] span')
+    getRemainingTime()
       .first()
       .should('be.visible')
       .should('have.text', 'Time Remaining')
-    cy.get('[data-cy="timeRemaining"] span').last().should('be.visible')
+    getRemainingTime().last().should('be.visible')
     cy.wait(1000)
-    cy.get('[data-cy="timeRemaining"] span').last().invoke('val', '01:00')
+    getRemainingTime().last().invoke('val', '01:00')
     cy.tick(1000)
-    cy.get('[data-cy="timeRemaining"] span').last().invoke('val', '00:59')
+    getRemainingTime().last().invoke('val', '00:59')
     cy.tick(1000)
-    cy.get('[data-cy="timeRemaining"] span').last().invoke('val', '00:58')
+    getRemainingTime().last().invoke('val', '00:58')
     cy.tick(1000)
-    cy.get('[data-cy="timeRemaining"] span').last().invoke('val', '00:57')
+    getRemainingTime().last().invoke('val', '00:57')
     cy.tick(1000)
   })
 
   it('Checks, Question section heading should be visible and correct', () => {
-    cy.get('[data-cy="questionSection"] span')
+    getQuestionSectionHeading()
       .should('be.visible')
       .should('have.text', 'Question ')
   })
 
   it('Checks, Question should be visible', () => {
-    cy.get('[data-cy="questionSection"] p').should('be.visible')
+    getQuestion().should('be.visible')
   })
 
   it('Checks, Answer section heading should be visible and correct', () => {
-    cy.get('[data-cy="answerSection"] div')
+    getAnswerSectionHeading()
       .first()
       .should('be.visible')
       .should('have.text', 'Write Correct Answer')
   })
 
   it('Checks, Answer section has textArea', () => {
-    cy.get('[data-cy="answerSection"] textarea').should('be.visible')
-    cy.get('[data-cy="answerSection"]  textarea').click().should('have.focus') //checking Accessibility
+    getAnswer().should('be.visible')
+    getAnswer().click().should('have.focus') //checking Accessibility
   })
 
   it('Checks, Previous button should be visible', () => {
@@ -92,16 +101,16 @@ describe('Tests for Test Section', () => {
   })
 
   it('Checks, Take A Break is visible and should be correct', () => {
-    cy.get('.w-coolDownCard')
+    getcoolDownCard()
       .find('span')
       .should('be.visible')
       .should('have.class', 'text-gray-500')
-    cy.get('.w-coolDownCard').find('span').should('have.text', 'Take A Break!')
+    getcoolDownCard().find('span').should('have.text', 'Take A Break!')
   })
 
   it('Checks, Heading should be visible and correct styling', () => {
-    cy.get('.w-coolDownCard').find('p').should('be.visible')
-    cy.get('.w-coolDownCard')
+    getcoolDownCard().find('p').should('be.visible')
+    getcoolDownCard()
       .find('p')
       .should(
         'have.text',
@@ -126,21 +135,18 @@ describe('Tests for Test Section', () => {
    */
 
   it('Checks, Heading should be visible and correct', () => {
-    cy.get('[data-cy="testSectionHeading"]').should('be.visible')
-    cy.get('[data-cy="testSectionHeading"]').should(
-      'have.text',
-      commonContants?.sectionHeadingTwo
-    )
+    getSectionHeading().should('be.visible')
+    getSectionHeading().should('have.text', commonContants?.sectionHeadingTwo)
   })
 
   it('Checks, Stepper section should be visible and work properly', () => {
-    cy.get('.contents')
+    getStepperContents()
       .first()
       .find('div')
       .should('have.class', 'bg-primary')
       .and('have.class', 'rounded-full')
       .should('have.text', '1')
-    cy.get('.contents')
+    getStepperContents()
       .last()
       .find('div')
       .and('have.class', 'rounded-full')
@@ -163,27 +169,27 @@ describe('Tests for Test Section', () => {
   })
 
   it('Checks, Answer Section contains opitons', () => {
-    cy.get('[data-cy="answerSection"] label').each(($el) => {
+    getAnswerSectionLabel().each(($el) => {
       cy.wrap($el).first().get('input').should('be.visible')
     })
   })
 
   it('Checks,attempt Question and click on skip', () => {
     cy.contains('button', 'Skip Question').click()
-    cy.get('.contents')
+    getStepperContents()
       .first()
       .find('div')
       .should('have.class', 'bg-gray-700')
       .find('img')
       .should('be.visible')
     cy.contains('button', commonContants.Previous).click()
-    cy.get('.contents').last().find('div').find('img').should('be.visible')
+    getStepperContents().last().find('div').find('img').should('be.visible')
   })
 
   it('Checks, attempt Question and click on next', () => {
-    cy.get('[data-cy="answerSection"] label').first().click()
+    getAnswerSectionLabel().first().click()
     cy.contains('button', commonContants.Next).click()
-    cy.get('.contents')
+    getStepperContents()
       .first()
       .find('div')
       .should('have.class', 'bg-green-600')
@@ -204,7 +210,7 @@ describe('Tests for Test Section', () => {
 
   it('Checks, Previous button should work correctly', () => {
     cy.contains('button', commonContants.Previous).click()
-    cy.get('.contents').last().find('div').find('img').should('be.visible')
+    getStepperContents().last().find('div').find('img').should('be.visible')
     cy.contains('button', commonContants.Next).click()
   })
 
@@ -218,7 +224,7 @@ describe('Tests for Test Section', () => {
   })
 
   it('Checks, End Test working correctly', () => {
-    cy.get('[data-cy="answerSection"] label').last().click()
+    getAnswerSectionLabel().last().click()
     cy.contains('button', commonContants.EndTest).should('be.visible').click()
   })
 
@@ -231,11 +237,11 @@ describe('Tests for Test Section', () => {
   })
 
   it('Checks, image is visible or not', () => {
-    cy.get('.w-coolDownCard').find('img').should('be.visible')
+    getcoolDownCard().find('img').should('be.visible')
   })
 
   it('Checks, Congratulation text is visible and correct', () => {
-    cy.get('.w-coolDownCard')
+    getcoolDownCard()
       .find('span')
       .should('have.text', commonContants.congratulationText)
       .should('have.class', 'text-2xl')

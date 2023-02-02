@@ -1,24 +1,34 @@
+import {
+  getCopyLinkId,
+  getFirstName,
+  getGroupByTestId,
+  geth1,
+  getInvitePopup,
+  getLastName,
+  getRegistrationButtonId,
+  getVeriticalIconId,
+} from 'support/common-function'
+
 describe('Test for Candidate assessment Registration', () => {
   const emailId = Math.random()
   let examLink = ''
   it('Check candidate is in correct exam link', () => {
-    cy.viewport(1280, 720)
     cy.login()
     cy.customVisit('/members')
-    cy.get('#group-by-tests').click()
+    getGroupByTestId().click()
     cy.get('a').find('#tests').click()
-    cy.get('#invite-popup-open0').click()
+    getInvitePopup().click()
     cy.get('.inviteInput').type(`ki${emailId}@copods.co`)
     cy.get('[data-cy="submit"]').click()
-    cy.get('#group-by-tests').click()
+    getGroupByTestId().click()
     cy.get('.groupByItemTest').each((el) => {
       const itemText = el.text()
       if (itemText === 'Quantitative - assessment1') {
         cy.wrap(el).click()
       }
     })
-    cy.get('#vertical-icon', { timeout: 8000 }).click()
-    cy.get('[data-cy="copy-link"]').should('be.visible').click()
+    getVeriticalIconId().click()
+    getCopyLinkId().should('be.visible').click()
     cy.wrap(
       Cypress.automation('remote:debugger:protocol', {
         command: 'Browser.grantPermissions',
@@ -40,25 +50,25 @@ describe('Test for Candidate assessment Registration', () => {
 
   it('Checks, register heading should be visible', () => {
     cy.visit(examLink)
-    cy.get('h1').should('be.visible')
+    geth1().should('be.visible')
   })
 
   it('Checks, First and Last Name field of the page and button should be disable', () => {
     cy.visit(examLink)
-    cy.get('#firstName')
+    getFirstName()
       .should('be.visible')
       .should('have.attr', 'placeholder', 'Enter first name')
 
-    cy.get('#lastName')
+    getLastName()
       .should('be.visible')
       .should('have.attr', 'placeholder', 'Enter last name')
 
-    cy.get("[data-cy='submitButton']").should('be.disabled')
+    getRegistrationButtonId().should('be.disabled')
   })
 
   it('Checks, button color when it is disabled', () => {
     cy.visit(examLink)
-    cy.get("[data-cy='submitButton']").should(
+    getRegistrationButtonId().should(
       'have.css',
       'background-color',
       'rgb(162, 164, 214)'
@@ -67,23 +77,23 @@ describe('Test for Candidate assessment Registration', () => {
 
   it('Checks, first name is empty button should be disabled', () => {
     cy.visit(examLink)
-    cy.get('#firstName').should('be.visible').should('be.empty')
-    cy.get('#lastName').should('be.visible').type('jain')
-    cy.get("[data-cy='submitButton']").should('be.disabled')
+    getFirstName().should('be.visible').should('be.empty')
+    getLastName().should('be.visible').type('jain')
+    getRegistrationButtonId().should('be.disabled')
   })
 
   it('Checks, last name is empty submit buttom should be disabled', () => {
     cy.visit(examLink)
-    cy.get('#firstName').should('be.visible').type('ayushi')
-    cy.get('#lastName').should('be.visible').should('be.empty')
-    cy.get("[data-cy='submitButton']").should('be.disabled')
+    getFirstName().should('be.visible').type('ayushi')
+    getLastName().should('be.visible').should('be.empty')
+    getRegistrationButtonId().should('be.disabled')
   })
 
   it('Checks, submitting the registeration form', () => {
     cy.visit(examLink)
-    cy.get('#firstName').type('aa')
-    cy.get('#lastName').type('Jain')
-    cy.get("[data-cy='submitButton']")
+    getFirstName().type('aa')
+    getLastName().type('Jain')
+    getRegistrationButtonId()
       .should('be.visible')
       .should('have.css', 'background-color', 'rgb(53, 57, 136)')
       .click()
