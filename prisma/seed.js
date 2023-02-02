@@ -69,8 +69,17 @@ async function seed() {
         workspace: true,
       },
     })
-    await prisma.userWorkspace.create({
-      data: {
+    await prisma.userWorkspace.upsert({
+      where: {
+        workspaceId_userId: {
+          userId: user.id,
+          workspaceId: user.workspace[0].id,
+        },
+      },
+      update: {
+        userId: user.id,
+      },
+      create: {
         userId: user.id,
         workspaceId: user.workspace[0].id,
         roleId: user?.roleId,
