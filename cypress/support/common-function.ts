@@ -24,3 +24,13 @@ export const getQlEditorInput = () =>
   cy.get('input[placeholder="Write your option here"]')
 export const getSaveAndExit = () => cy.get('#save-and-exit')
 export const getSaveAndAddMore = () => cy.get('#save-and-add-more')
+export const getTests = () => cy.get('#tests')
+export const getAddTestBtn = () => cy.get('#add-test')
+export const getAssesmentNameInput = () =>
+  cy.get('input[placeholder="Enter assessment name"]')
+export const getNextBtn = () => cy.get('#next-button')
+export const getStepsTabs = () => cy.get('.stepsTab')
+export const getNumberOfQuestionsInput = () => cy.get('input#no-of-qu')
+export const getTimeInput = () => cy.get('input#time')
+export const getAssesmentSubmitBtn = () => cy.get('button#submit-button')
+export const getAssesmentQlEditorWrapper = () => cy.get('#quill-editor')
