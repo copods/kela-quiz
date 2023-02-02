@@ -151,7 +151,7 @@ const SignUp = ({ error }: { error?: string }) => {
     {
       label: t('settings.password'),
       placeholder: t('settings.password'),
-      name: 'Password',
+      name: 'password',
       required: true,
       isRequired: true,
       type: 'password',
