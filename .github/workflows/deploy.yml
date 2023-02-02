@@ -125,8 +125,6 @@ jobs:
         uses: cypress-io/github-action@v4
         with:
           start: npm run start:mocks
-          browser: chrome
-          headed: true
           wait-on: 'http://localhost:8811'
         env:
           PORT: '8811'
