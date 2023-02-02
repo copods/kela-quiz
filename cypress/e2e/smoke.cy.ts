@@ -31,6 +31,13 @@ import {
   getTimeInput,
   getAssesmentSubmitBtn,
   getAssesmentQlEditorWrapper,
+  getInviteMemberBtn,
+  getDialogWrapper,
+  getEmailInput,
+  getAddMemberModal,
+  getInviteBtn,
+  getAssessmentsPageTitle,
+  getInvitePopup,
 } from 'support/common-function'
 import {
   addQuestion,
@@ -414,51 +421,43 @@ describe('smoke tests', () => {
     getAssesmentSubmitBtn().should('have.text', commonConstants.submit).click()
   })
 
-  it.skip('Test for adding a new member', () => {
+  it('Inviting new member', () => {
+    // To Login
     cy.login()
     cy.customVisit('/members')
-    cy.wait(1000)
-    cy.get('#invite-member', { timeout: 6000 })
-      .should('have.text', 'Invite Member')
-      .click()
-    cy.get('#dialog-wrapper').should('be.visible')
 
-    cy.get('input[name="email"]')
-      .clear()
-      .type(memberEmail)
-      .should('have.value', memberEmail)
-
-    cy.get('div').get('#add-member-modal').find('.dropdownButton').click()
+    // To invite member
+    getInviteMemberBtn().should('have.text', 'Invite Member').click()
+    getDialogWrapper().should('be.visible')
+    getEmailInput().type(memberEmail).should('have.value', memberEmail)
+    getAddMemberModal().find('.dropdownButton').click()
     cy.get('ul').contains('Recruiter').click()
-    cy.get('#invite-button').click()
+    getInviteBtn().click()
   })
 
-  it.skip('invite candidate for assessment', () => {
+  it('Invite candidate for Assessment', () => {
     cy.viewport(1200, 1000)
+
+    // To Login
     cy.login()
     cy.customVisit('/members')
-    cy.wait(1000)
-    cy.get('#tests', { timeout: 8000 })
-      .should('have.text', 'Assessments')
-      .click()
-    cy.wait(1000)
-    cy.get('#assessments-page-title').should('have.text', 'Assessments')
-    cy.get('#invite-popup-open0', { timeout: 6000 }).should('be.visible')
-    cy.get('#invite-popup-open0', { timeout: 6000 })
-      .first()
-      .should('be.visible')
-      .click({ force: true })
 
-    cy.get('input[name="email"]')
+    getTests().should('have.text', 'Assessments').click()
+    getAssessmentsPageTitle().should('have.text', 'Assessments')
+    getInvitePopup().should('be.visible').click()
+    getEmailInput()
       .type('johndoe@example.com')
       .should('have.focus')
       .should('have.value', 'johndoe@example.com')
-    cy.get('[data-cy="submit"]').click()
+    getSubmitBtn().click()
   })
-  it.skip('check for not found page', () => {
+
+  it('Test to check Page Not Found', () => {
+    // To Login
     cy.login()
     cy.customVisit('/members')
-    cy.wait(1000)
+
+    // To check Page Not Found fallback
     cy.location().then((res) => {
       cy.customVisit(`${res.pathname}-error`)
     })
