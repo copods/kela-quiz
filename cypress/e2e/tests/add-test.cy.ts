@@ -208,10 +208,11 @@ describe('Creating assessments', () => {
       .find('#tests')
       .should('have.text', testsConstants.assessments)
       .click()
+    cy.wait(2000)
     cy.get('#add-test', { timeout: 6000 })
       .should('have.text', `+ ${testsConstants.addAssessmentbutton}`)
       .click()
-    cy.wait(2000)
+    cy.wait(1000)
     cy.get('#next-button', { timeout: 6000 }).should(
       'have.css',
       'font-weight',
@@ -407,10 +408,11 @@ describe('Creating assessments', () => {
       .find('#tests')
       .should('have.text', testsConstants.assessments)
       .click()
+    cy.wait(2000)
     cy.get('#add-test', { timeout: 6000 })
       .should('have.text', `+ ${testsConstants.addAssessmentbutton}`)
       .click()
-    cy.wait(2000)
+    cy.wait(1000)
     cy.get('input[placeholder="Enter assessment name"]', { timeout: 6000 })
       .clear()
       .type(test)
