@@ -1,6 +1,7 @@
 import type { User, Section, Question } from '@prisma/client'
 import cuid from 'cuid'
 import { prisma } from '~/db.server'
+import { TotalQuestion } from '~/interface/Interface'
 
 export async function getSectionById({ id }: Pick<Section, 'id'>) {
   return prisma.section.findUnique({
@@ -242,11 +243,10 @@ export async function deleteQuestionById(id: string) {
     },
   })
   const totalQuestionArray = questionData?.section?.sectionInTest.map(
-    (data: any) => {
+    (data: TotalQuestion) => {
       return data.totalQuestions
     }
   )
-  console.log(totalQuestionArray, 'totalQuestionArray')
   const totalQuestions = totalQuestionArray?.sort((a, b) => {
     return b - a
   })

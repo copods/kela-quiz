@@ -8,17 +8,8 @@ import { useActionData } from '@remix-run/react'
 import { toast } from 'react-toastify'
 import { useTranslation } from 'react-i18next'
 import { useEffect } from 'react'
+import { actions } from '~/constants/action.constants'
 
-export type ActionData = {
-  errors?: {
-    title: string
-    status: number
-  }
-  resp?: {
-    title: string
-    status: number
-  }
-}
 export const loader: LoaderFunction = async ({ request, params }) => {
   invariant(params.sectionId, 'sectionId not found')
   const sectionDetails = await getSectionById({ id: params.sectionId })
@@ -32,7 +23,7 @@ export const action: ActionFunction = async ({ request, params }) => {
   const formData = await request.formData()
   const action = await formData.get('action')
   const id = formData.get('id') as string
-  if (action === 'deleteQuestion') {
+  if (action === actions.deleteQuestion) {
     const deleteQuestion = await deleteQuestionById(id)
     return deleteQuestion
   }
@@ -41,11 +32,11 @@ export const action: ActionFunction = async ({ request, params }) => {
 }
 export default function Section() {
   const { t } = useTranslation()
-  const section = useActionData() as ActionData
+  const section = useActionData()
   useEffect(() => {
-    if ((section && (section as string)) === 'success') {
+    if (section === 'success') {
       toast.success(t('statusCheck.deletedSuccess'))
-    } else if ((section && (section as string)) === 'not deleted') {
+    } else if (section === 'not deleted') {
       toast.error(t('sectionsConstants.questionNotDeleted'), {
         toastId: 'sectionsConstants.questionNotDeleted',
       })

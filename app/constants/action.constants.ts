@@ -8,4 +8,5 @@ export enum actions {
   switchWorkspace = 'switch',
   addWorkspace = 'Add Workspace',
   login = 'login',
+  deleteQuestion = 'deleteQuestion',
 }
