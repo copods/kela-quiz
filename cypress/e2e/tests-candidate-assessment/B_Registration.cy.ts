@@ -19,12 +19,23 @@ describe('Test for Candidate assessment Registration', () => {
     })
     cy.get('#vertical-icon', { timeout: 8000 }).click()
     cy.get('[data-cy="copy-link"]').should('be.visible').click()
-    cy.window().then((win) => {
-      win.navigator.clipboard.readText().then((text) => {
+    cy.wrap(
+      Cypress.automation('remote:debugger:protocol', {
+        command: 'Browser.grantPermissions',
+        params: {
+          permissions: ['clipboardReadWrite', 'clipboardSanitizedWrite'],
+          origin: window.location.origin,
+        },
+      })
+    )
+
+    cy.window()
+      .its('navigator.clipboard')
+      .invoke('readText')
+      .then((text) => {
         examLink = text.split('3000')[1]
         cy.visit(examLink)
       })
-    })
   })
 
   it('Checks, register heading should be visible', () => {

@@ -130,8 +130,20 @@ const candidateRegistration = () => {
   })
   cy.get('#vertical-icon', { timeout: 8000 }).click()
   cy.get('[data-cy="copy-link"]').should('be.visible').click()
-  cy.window().then((win) => {
-    win.navigator.clipboard.readText().then((text) => {
+  cy.wrap(
+    Cypress.automation('remote:debugger:protocol', {
+      command: 'Browser.grantPermissions',
+      params: {
+        permissions: ['clipboardReadWrite', 'clipboardSanitizedWrite'],
+        origin: window.location.origin,
+      },
+    })
+  )
+
+  cy.window()
+    .its('navigator.clipboard')
+    .invoke('readText')
+    .then((text) => {
       ExamLink = text.split('3000')[1]
       cy.visit(ExamLink)
       cy.get('#firstName').type(candidateName)
@@ -142,7 +154,6 @@ const candidateRegistration = () => {
         .click()
       cy.url().should('include', `${ExamLink}/verification`)
     })
-  })
 }
 
 const customVisitOnCandidateSide = (path = '') => {
