@@ -1,11 +1,34 @@
 import {
+  getConfirmNewPassword,
+  getConfirmPasswordError,
+  getDialogCloseIcon,
+  getDialogWrapper,
   getGeneral,
+  getInputContainerWrapper,
+  getLabel,
+  getNewPassword,
+  getNewPasswordError,
+  getOldPassword,
+  getPasswordError,
+  getResetPasswordPopup,
   getSettings,
+  getSubmitBtn,
   getTabsWrapper,
+  getToaster,
   getWorkspaces,
 } from 'support/common-function'
-import { settings, statusCheck, tabs } from '~/constants/common.constants'
 const settings1 = 'Settings'
+const clickToChange = 'Click to change'
+const general = 'General'
+const workspace = 'Workspaces'
+const resetPas = 'Reset Password'
+const enterOldPassword = 'Enter Old Password'
+const enterNewPass = 'Enter New Password'
+const reEnterPass = 'Re-Enter Password'
+const passNotMatch = 'Password do not match'
+const passIsInvalid = 'Password is invalid'
+const passShouldNotBeSame =
+  'Current Password and New Password should not be same'
 
 describe('Test for settings', () => {
   beforeEach('sign-in', () => {
@@ -34,10 +57,10 @@ describe('Test for settings', () => {
     })
 
     // To check general tab has correct text
-    getGeneral().should('have.text', tabs.general)
+    getGeneral().should('have.text', general)
 
     // To check active tab is workspace
-    getWorkspaces().should('have.text', tabs.workspace).click()
+    getWorkspaces().should('have.text', workspace).click()
     getWorkspaces().within(() => {
       cy.get('hr').should(
         'have.class',
@@ -46,519 +69,138 @@ describe('Test for settings', () => {
     })
 
     // To check workspace tab has correct text
-    getWorkspaces().should('have.text', tabs.workspace)
+    getWorkspaces().should('have.text', workspace)
 
     // To check heading in general has correct classes
     getGeneral().click()
     cy.get('h3').should('have.class', 'text-lg font-semibold')
+
+    // To check if reset password pop up is opening
+    getResetPasswordPopup().should('have.text', clickToChange).click()
+    getDialogWrapper().should('be.visible')
+
+    // To check if reset password pop up is closing
+    getDialogCloseIcon().click()
+
+    // To check heading of reset password pop up
+    getResetPasswordPopup().click()
+    cy.get('h2').should('have.text', resetPas)
+
+    // To check if heading of reset password pop up has focus
+    cy.get('h2').should('be.focused')
+
+    // To check if reset password pop up has input fields
+    getOldPassword().should('be.visible')
+    getNewPassword().should('be.visible')
+    getConfirmNewPassword().should('be.visible')
+
+    // To check if there is gap between input fields
+    getInputContainerWrapper().should('have.css', `gap`, `24px`)
+
+    // To check if old password input has focus when clicked
+    getOldPassword().click().should('be.focused')
+
+    // To check if new password input has focus when clicked
+    getNewPassword().click().should('be.focused')
+
+    // To check if confirm new password input has focus when clicked
+    getConfirmNewPassword().click().should('be.focused')
+
+    // To check if old password input has correct label
+    getOldPassword()
+      .parent()
+      .parent()
+      .within(() => {
+        getLabel().should('have.text', enterOldPassword + '*')
+      })
+
+    // To check if new password input has correct label
+    getNewPassword()
+      .parent()
+      .parent()
+      .within(() => {
+        getLabel().should('have.text', enterNewPass + '*')
+      })
+
+    // To check if confirm new password input has correct label
+    getConfirmNewPassword()
+      .parent()
+      .parent()
+      .within(() => {
+        getLabel().should('have.text', reEnterPass + '*')
+      })
+
+    // To check if old password input has correct classes
+    getOldPassword()
+      .parent()
+      .parent()
+      .within(() => {
+        getLabel().should('have.class', 'text-gray-800')
+      })
+
+    // To check if new password input has correct classes
+    getNewPassword()
+      .parent()
+      .parent()
+      .within(() => {
+        getLabel().should('have.class', 'text-gray-800')
+      })
+
+    // To check if confirm new password input has correct classes
+    getConfirmNewPassword()
+      .parent()
+      .parent()
+      .within(() => {
+        getLabel().should('have.class', 'text-gray-800')
+      })
+
+    // To check if submit button is disabled if all fields are not filled
+    getSubmitBtn().should('have.class', 'disabled:bg-primaryDisabled')
+
+    // To check if submit button is enabled when all fields are filled
+    getOldPassword().type('password')
+    getNewPassword().type('newPassword')
+    getConfirmNewPassword().type('confirmPassword')
+    getSubmitBtn().should('have.class', 'hover:bg-primaryHover')
+
+    // To check submit button text
+    getSubmitBtn().should('have.text', resetPas)
+
+    // To check if values are not matched we see a error
+    getConfirmNewPassword().blur()
+    getConfirmPasswordError().should('have.text', passNotMatch)
+
+    // To check if new password and confirm password values dont match
+    getOldPassword().clear().type('password')
+    getNewPassword().clear().type('newPassword')
+    getConfirmNewPassword().clear().type('confirmPassword')
+    getSubmitBtn().click()
+    getConfirmPasswordError().should('have.class', 'text-red-700')
+
+    // To check if old password is not matched user sees error
+    getOldPassword().clear().type('password')
+    getNewPassword().clear().type('kQuiz@copods')
+    getConfirmNewPassword().clear().type('kQuiz@copods')
+    getSubmitBtn().click()
+    getPasswordError()
+      .should('have.text', passIsInvalid)
+      .should('have.class', 'text-red-700')
+
+    // To check if old password and new password is same throws error
+    getOldPassword().clear().type('kQuiz@copods')
+    getNewPassword().clear().type('kQuiz@copods')
+    getConfirmNewPassword().clear().type('kQuiz@copods')
+    getSubmitBtn().click()
+    getNewPasswordError().should('have.text', passShouldNotBeSame)
   })
 
-  it.skip('Checks reset password pop up will be open after clicking on Click to change', () => {
-    cy.get('a')
-      .find('#Settings', { timeout: 8000 })
-      .should('have.text', settings.settings)
-      .click()
-    cy.location('pathname', { timeout: 6000 }).should(
-      'include',
-      '/settings/general'
-    )
-    cy.get('.resetPassOpenPopUpLink')
-      .should('have.text', settings.clickToChange)
-      .click()
-    cy.get('#dialog-wrapper').should('be.visible')
-  })
-  it.skip('Checks reset password pop up will be close after clicking on cross icon', () => {
-    cy.get('a')
-      .find('#Settings', { timeout: 8000 })
-      .should('have.text', settings.settings)
-      .click()
-    cy.location('pathname', { timeout: 6000 }).should(
-      'include',
-      '/settings/general'
-    )
-    cy.get('.resetPassOpenPopUpLink')
-      .should('have.text', settings.clickToChange)
-      .click()
-    cy.get('#dialog-wrapper').should('be.visible')
-    cy.get('#dialog-close-icon').click()
-  })
-  it.skip('Checks heading of reset password pop up ', () => {
-    cy.get('a')
-      .find('#Settings', { timeout: 8000 })
-      .should('have.text', settings.settings)
-      .click()
-    cy.location('pathname', { timeout: 6000 }).should(
-      'include',
-      '/settings/general'
-    )
-    cy.get('.resetPassOpenPopUpLink')
-      .should('have.text', settings.clickToChange)
-      .click()
-    cy.get('h2').should('have.text', settings.resetPas)
-  })
-  it.skip('Checks heading of reset password pop up have focused after opening the reset password pop up ', () => {
-    cy.get('a')
-      .find('#Settings', { timeout: 8000 })
-      .should('have.text', settings.settings)
-      .click()
-    cy.location('pathname', { timeout: 6000 }).should(
-      'include',
-      '/settings/general'
-    )
-    cy.get('.resetPassOpenPopUpLink')
-      .should('have.text', settings.clickToChange)
-      .click()
-    cy.get('h2').should('be.focused')
-  })
-  it.skip('Checks reset password pop up input fields exists', () => {
-    cy.get('a')
-      .find('#Settings', { timeout: 8000 })
-      .should('have.text', settings.settings)
-      .click()
-    cy.location('pathname', { timeout: 6000 }).should(
-      'include',
-      '/settings/general'
-    )
-    cy.get('.resetPassOpenPopUpLink')
-      .should('have.text', settings.clickToChange)
-      .click()
-    cy.get('#dialog-wrapper').should('be.visible')
-    cy.get('#oldPassword', { timeout: 6000 }).should('be.visible')
-    cy.get('#newPassword').should('be.visible')
-    cy.get('#confirmNewPassword').should('be.visible')
-  })
-  it.skip('Checks gap between input-container-wrapper', () => {
-    cy.get('a')
-      .find('#Settings', { timeout: 8000 })
-      .should('have.text', settings.settings)
-      .click()
-    cy.location('pathname', { timeout: 6000 }).should(
-      'include',
-      '/settings/general'
-    )
-    cy.get('.resetPassOpenPopUpLink')
-      .should('have.text', settings.clickToChange)
-      .click()
-    cy.get('.input-container-wrapper').should('have.css', `gap`, `24px`)
-  })
-  it.skip('Checks reset password pop up old password input field Should have focus on clicking on it or selecting it', () => {
-    cy.get('a')
-      .find('#Settings', { timeout: 8000 })
-      .should('have.text', settings.settings)
-      .click()
-    cy.location('pathname', { timeout: 6000 }).should(
-      'include',
-      '/settings/general'
-    )
-    cy.get('.resetPassOpenPopUpLink')
-      .should('have.text', settings.clickToChange)
-      .click()
-    cy.get('#dialog-wrapper').should('be.visible')
-    cy.get('#oldPassword', { timeout: 6000 }).click().should('be.focused')
-  })
-  it.skip('Checks reset password pop up new password input field Should have focus on clicking on it or selecting it', () => {
-    cy.get('a')
-      .find('#Settings', { timeout: 8000 })
-      .should('have.text', settings.settings)
-      .click()
-    cy.location('pathname', { timeout: 6000 }).should(
-      'include',
-      '/settings/general'
-    )
-    cy.get('.resetPassOpenPopUpLink')
-      .should('have.text', settings.clickToChange)
-      .click()
-    cy.get('#dialog-wrapper').should('be.visible')
-    cy.get('#newPassword').should('be.visible').click().should('be.focused')
-  })
-  it.skip('Checks reset password pop up confirm password input field Should have focus on clicking on it or selecting it', () => {
-    cy.get('a')
-      .find('#Settings', { timeout: 8000 })
-      .should('have.text', settings.settings)
-      .click()
-    cy.location('pathname', { timeout: 6000 }).should(
-      'include',
-      '/settings/general'
-    )
-    cy.get('.resetPassOpenPopUpLink')
-      .should('have.text', settings.clickToChange)
-      .click()
-    cy.get('#dialog-wrapper').should('be.visible')
-    cy.get('#confirmNewPassword').click().should('be.focused')
-  })
-  it.skip('Checks reset password pop up old password label have correct text', () => {
-    cy.get('a')
-      .find('#Settings', { timeout: 8000 })
-      .should('have.text', settings.settings)
-      .click()
-    cy.location('pathname', { timeout: 6000 }).should(
-      'include',
-      '/settings/general'
-    )
-    cy.get('.resetPassOpenPopUpLink')
-      .should('have.text', settings.clickToChange)
-      .click()
-    cy.get('#oldPassword', { timeout: 6000 })
-      .parent()
-      .parent()
-      .within(() => {
-        cy.get('label').should('have.text', settings.enterOldPassword + '*')
-      })
-  })
-  it.skip('Checks reset password pop up new password label have correct text', () => {
-    cy.get('a')
-      .find('#Settings', { timeout: 8000 })
-      .should('have.text', settings.settings)
-      .click()
-    cy.location('pathname', { timeout: 6000 }).should(
-      'include',
-      '/settings/general'
-    )
-    cy.get('.resetPassOpenPopUpLink')
-      .should('have.text', settings.clickToChange)
-      .click()
-    cy.get('#newPassword', { timeout: 6000 })
-      .parent()
-      .parent()
-      .within(() => {
-        cy.get('label').should('have.text', settings.enterNewPass + '*')
-      })
-  })
-  it.skip('Checks reset password pop up confirm new password label have correct text', () => {
-    cy.get('a')
-      .find('#Settings', { timeout: 8000 })
-      .should('have.text', settings.settings)
-      .click()
-    cy.location('pathname', { timeout: 6000 }).should(
-      'include',
-      '/settings/general'
-    )
-    cy.get('.resetPassOpenPopUpLink')
-      .should('have.text', settings.clickToChange)
-      .click()
-    cy.get('#confirmNewPassword', { timeout: 6000 })
-      .parent()
-      .parent()
-      .within(() => {
-        cy.get('label').should('have.text', settings.reEnterPass + '*')
-      })
-  })
-  it.skip('Checks reset password pop up old password label have correct classes', () => {
-    cy.get('a')
-      .find('#Settings', { timeout: 8000 })
-      .should('have.text', settings.settings)
-      .click()
-    cy.location('pathname', { timeout: 6000 }).should(
-      'include',
-      '/settings/general'
-    )
-    cy.get('.resetPassOpenPopUpLink')
-      .should('have.text', settings.clickToChange)
-      .click()
-    cy.get('#oldPassword', { timeout: 6000 })
-      .parent()
-      .parent()
-      .within(() => {
-        cy.get('label').should('have.class', 'text-gray-800')
-      })
-  })
-  it.skip('Checks reset password pop up new password label have correct classes', () => {
-    cy.get('a')
-      .find('#Settings', { timeout: 8000 })
-      .should('have.text', settings.settings)
-      .click()
-    cy.location('pathname', { timeout: 6000 }).should(
-      'include',
-      '/settings/general'
-    )
-    cy.get('.resetPassOpenPopUpLink')
-      .should('have.text', settings.clickToChange)
-      .click()
-    cy.get('#newPassword', { timeout: 6000 })
-      .parent()
-      .parent()
-      .within(() => {
-        cy.get('label').should('have.class', 'text-gray-800')
-      })
-  })
-  it.skip('Checks reset password pop up confirm new password label have correct classes', () => {
-    cy.get('a')
-      .find('#Settings', { timeout: 8000 })
-      .should('have.text', settings.settings)
-      .click()
-    cy.location('pathname', { timeout: 6000 }).should(
-      'include',
-      '/settings/general'
-    )
-    cy.get('.resetPassOpenPopUpLink')
-      .should('have.text', settings.clickToChange)
-      .click()
-    cy.get('#confirmNewPassword', { timeout: 6000 })
-      .parent()
-      .parent()
-      .within(() => {
-        cy.get('label').should('have.class', 'text-gray-800')
-      })
-  })
-  it.skip('Checks reset password pop up submit button will be disabled if all input fields are not filled', () => {
-    cy.get('a')
-      .find('#Settings', { timeout: 8000 })
-      .should('have.text', settings.settings)
-      .click()
-    cy.location('pathname', { timeout: 6000 }).should(
-      'include',
-      '/settings/general'
-    )
-    cy.get('.resetPassOpenPopUpLink')
-      .should('have.text', settings.clickToChange)
-      .click()
-    cy.get('[data-cy="submit"]').should(
-      'have.class',
-      'disabled:bg-primaryDisabled'
-    )
-  })
-  it.skip('Checks reset password pop up submit button will be enabled if all input fields are filled', () => {
-    cy.get('a')
-      .find('#Settings', { timeout: 8000 })
-      .should('have.text', settings.settings)
-      .click()
-    cy.location('pathname', { timeout: 6000 }).should(
-      'include',
-      '/settings/general'
-    )
-    cy.get('.resetPassOpenPopUpLink')
-      .should('have.text', settings.clickToChange)
-      .click()
-    cy.get('#oldPassword', { timeout: 6000 })
-      .should('be.visible')
-      .clear()
-      .type('password')
-    cy.get('#newPassword').should('be.visible').clear().type('newPassword')
-    cy.get('#confirmNewPassword')
-      .should('be.visible')
-      .clear()
-      .type('confirmPassword')
-    cy.get('[data-cy="submit"]').should('have.class', 'hover:bg-primaryHover')
-  })
-  it.skip('Checks reset password pop up submit button text', () => {
-    cy.get('a')
-      .find('#Settings', { timeout: 8000 })
-      .should('have.text', settings.settings)
-      .click()
-    cy.location('pathname', { timeout: 6000 }).should(
-      'include',
-      '/settings/general'
-    )
-    cy.get('.resetPassOpenPopUpLink')
-      .should('have.text', settings.clickToChange)
-      .click()
-    cy.get('#oldPassword', { timeout: 6000 })
-      .should('be.visible')
-      .clear()
-      .type('password')
-    cy.get('#newPassword').should('be.visible').clear().type('newPassword')
-    cy.get('#confirmNewPassword')
-      .should('be.visible')
-      .clear()
-      .type('confirmPassword')
-    cy.get('[data-cy="submit"]').should('have.text', settings.resetPas)
-  })
-  it.skip('Checks if new password and confirm password input fields input values not matched then throwing a proper error', () => {
-    cy.get('a')
-      .find('#Settings', { timeout: 8000 })
-      .should('have.text', settings.settings)
-      .click()
-    cy.location('pathname', { timeout: 6000 }).should(
-      'include',
-      '/settings/general'
-    )
-    cy.get('.resetPassOpenPopUpLink')
-      .should('have.text', settings.clickToChange)
-      .click()
-    cy.get('#oldPassword', { timeout: 6000 })
-      .should('be.visible')
-      .clear()
-      .type('password')
-    cy.get('#newPassword').should('be.visible').clear().type('newPassword')
-    cy.get('#confirmNewPassword')
-      .should('be.visible')
-      .clear()
-      .type('confirmPassword')
-      .blur()
-    cy.get('#confirm-password-error').should('have.text', settings.passNotMatch)
-  })
-  it.skip('Checks classes of error text if new password and confirm password input fields input values not matched', () => {
-    cy.get('a')
-      .find('#Settings', { timeout: 8000 })
-      .should('have.text', settings.settings)
-      .click()
-    cy.location('pathname', { timeout: 6000 }).should(
-      'include',
-      '/settings/general'
-    )
-    cy.get('.resetPassOpenPopUpLink')
-      .should('have.text', settings.clickToChange)
-      .click()
-    cy.get('#oldPassword', { timeout: 6000 })
-      .should('be.visible')
-      .clear()
-      .type('password')
-    cy.get('#newPassword').should('be.visible').clear().type('newPassword')
-    cy.get('#confirmNewPassword')
-      .should('be.visible')
-      .clear()
-      .type('confirmPassword')
-    cy.get('[data-cy="submit"]')
-      .should('have.class', 'hover:bg-primaryHover')
-      .click()
-    cy.get('#confirm-password-error').should('have.class', 'text-red-700')
-  })
-  it.skip('Checks if new password and confirm password input fields input values matched but total charactes are less than 8', () => {
-    cy.get('a')
-      .find('#Settings', { timeout: 8000 })
-      .should('have.text', settings.settings)
-      .click()
-    cy.location('pathname', { timeout: 6000 }).should(
-      'include',
-      '/settings/general'
-    )
-    cy.get('.resetPassOpenPopUpLink')
-      .should('have.text', settings.clickToChange)
-      .click()
-    cy.get('#oldPassword', { timeout: 6000 })
-      .should('be.visible')
-      .clear()
-      .type('password')
-    cy.get('#newPassword').should('be.visible').clear().type('kQuiz')
-    cy.get('#confirmNewPassword').should('be.visible').clear().type('kQuiz')
-    cy.get('[data-cy="submit"]')
-      .should('have.class', 'hover:bg-primaryHover')
-      .click()
-    cy.get('#new-password-error').should('have.text', settings.minPasswordLimit)
-  })
-  it.skip('Checks if old password is not matched filled input field then throwing a error', () => {
-    cy.get('a')
-      .find('#Settings', { timeout: 8000 })
-      .should('have.text', settings.settings)
-      .click()
-    cy.location('pathname', { timeout: 6000 }).should(
-      'include',
-      '/settings/general'
-    )
-    cy.get('.resetPassOpenPopUpLink')
-      .should('have.text', settings.clickToChange)
-      .click()
-    cy.get('#oldPassword', { timeout: 6000 })
-      .should('be.visible')
-      .clear()
-      .type('password')
-    cy.get('#newPassword').should('be.visible').clear().type('kQuiz@copods')
-    cy.get('#confirmNewPassword')
-      .should('be.visible')
-      .clear()
-      .type('kQuiz@copods')
-    cy.get('[data-cy="submit"]')
-      .should('have.class', 'hover:bg-primaryHover')
-      .click()
-    cy.get('#password-error').should('have.text', statusCheck.passIsInvalid)
-  })
-  it.skip('Checks class of error if old password is not matched filled input field', () => {
-    cy.get('a')
-      .find('#Settings', { timeout: 8000 })
-      .should('have.text', settings.settings)
-      .click()
-    cy.location('pathname', { timeout: 6000 }).should(
-      'include',
-      '/settings/general'
-    )
-    cy.get('.resetPassOpenPopUpLink')
-      .should('have.text', settings.clickToChange)
-      .click()
-    cy.get('#oldPassword', { timeout: 6000 })
-      .should('be.visible')
-      .clear()
-      .type('password')
-    cy.get('#newPassword').should('be.visible').clear().type('kQuiz@copods')
-    cy.get('#confirmNewPassword')
-      .should('be.visible')
-      .clear()
-      .type('kQuiz@copods')
-    cy.get('[data-cy="submit"]')
-      .should('have.class', 'hover:bg-primaryHover')
-      .click()
-    cy.get('#password-error').should('have.class', 'text-red-700')
-  })
-  it.skip('Checks if new password and old password is same then throwing a error', () => {
-    cy.get('a')
-      .find('#Settings', { timeout: 8000 })
-      .should('have.text', settings.settings)
-      .click()
-    cy.location('pathname', { timeout: 6000 }).should(
-      'include',
-      '/settings/general'
-    )
-    cy.get('.resetPassOpenPopUpLink')
-      .should('have.text', settings.clickToChange)
-      .click()
-    cy.get('#oldPassword', { timeout: 6000 })
-      .should('be.visible')
-      .clear()
-      .type('kQuiz@copods')
-    cy.get('#newPassword').should('be.visible').clear().type('kQuiz@copods')
-    cy.get('#confirmNewPassword')
-      .should('be.visible')
-      .clear()
-      .type('kQuiz@copods')
-    cy.get('[data-cy="submit"]')
-      .should('have.class', 'hover:bg-primaryHover')
-      .click()
-    cy.get('#new-password-error').should(
-      'have.text',
-      settings.passShouldNotBeSame
-    )
-  })
-  it.skip('Checks if toster showing correct message after successfully reset password and Checks if by login in from reseted password', () => {
-    cy.get('a')
-      .find('#Settings', { timeout: 8000 })
-      .should('have.text', 'Settings')
-      .click()
-    cy.location('pathname', { timeout: 6000 }).should(
-      'include',
-      '/settings/general'
-    )
-    cy.get('.resetPassOpenPopUpLink')
-      .should('have.text', 'Click to change')
-      .click()
-    cy.get('#oldPassword', { timeout: 6000 })
-      .should('be.visible')
-      .clear()
-      .type('kQuiz@copods')
-    cy.get('#newPassword').should('be.visible').clear().type('kQuiz@careers')
-    cy.get('#confirmNewPassword')
-      .should('be.visible')
-      .clear()
-      .type('kQuiz@careers')
-    cy.get('[data-cy="submit"]')
-      .should('have.class', 'hover:bg-primaryHover')
-      .click()
-    cy.get('.Toastify__toast-body', { timeout: 6000 }).should(
-      'have.text',
-      'Password changed successfully !'
-    )
-    cy.get('.resetPassOpenPopUpLink')
-      .should('have.text', 'Click to change')
-      .click()
-    cy.get('#oldPassword', { timeout: 6000 })
-      .should('be.visible')
-      .clear()
-      .type('kQuiz@careers')
-    cy.get('#newPassword').should('be.visible').clear().type('kQuiz@copods')
-    cy.get('#confirmNewPassword')
-      .should('be.visible')
-      .clear()
-      .type('kQuiz@copods')
-    cy.get('[data-cy="submit"]')
-      .should('have.class', 'hover:bg-primaryHover')
-      .click()
+  it('Test to reset password', () => {
+    getSettings().click()
+    getResetPasswordPopup().click()
+    getOldPassword().type('kQuiz@copods')
+    getNewPassword().type('kQuiz@careers')
+    getConfirmNewPassword().type('kQuiz@careers')
+    getSubmitBtn().click()
+    getToaster().should('have.text', 'Password changed successfully !')
   })
 })
