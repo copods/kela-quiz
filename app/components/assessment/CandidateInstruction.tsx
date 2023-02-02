@@ -45,7 +45,7 @@ const CandidateInstruction = () => {
       <div className="flex-1 overflow-auto">
         <div className="flex flex-col items-center justify-center gap-16 py-10">
           <div className="flex flex-col items-center justify-center gap-4">
-            <h3 className="text-2xl font-bold text-gray-900">
+            <h3 className="text-2xl font-bold text-gray-900" data-cy="heading">
               {t('candidateExamConstants.candidateInsWelcome')}{' '}
               {candidate.firstName}
             </h3>

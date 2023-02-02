@@ -119,6 +119,7 @@ const candidateRegistration = () => {
   cy.get('a').find('#tests').click()
   cy.get('#invite-popup-open0').click()
   cy.get('.inviteInput').type(`ki${emailId}@copds.co`)
+  cy.wait(500)
   cy.get('[data-cy="submit"]').click()
   cy.get('#group-by-tests').click()
   cy.get('.groupByItemTest').each((el) => {
@@ -137,7 +138,7 @@ const candidateRegistration = () => {
       cy.visit(ExamLink)
       cy.get('#firstName').type(candidateName)
       cy.get('#lastName').type('Jain')
-      cy.get("[data-cy='submit-button']")
+      cy.get("[data-cy='submitButton']")
         .should('be.visible')
         .should('have.css', 'background-color', 'rgb(53, 57, 136)')
         .click()
@@ -158,7 +159,7 @@ const candidateVerification = () => {
 }
 
 const checkCandidateName = () => {
-  cy.get('.heading')
+  cy.get('[data-cy="heading"]')
     .should('be.visible')
     .should('have.text', `Welcome ${candidateName}`)
 }

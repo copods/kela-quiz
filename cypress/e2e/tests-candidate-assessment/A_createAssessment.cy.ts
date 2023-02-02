@@ -1,3 +1,26 @@
+import {
+  getAddQuestionBtn,
+  getAddSectionBtn,
+  getAddTestBtn,
+  getAssesmentNameInput,
+  getAssesmentQlEditorWrapper,
+  getAssesmentSubmitBtn,
+  geth1,
+  getNextBtn,
+  getQlEditor,
+  getQlEditorInput,
+  getQlEditorWrapper,
+  getQuestionWithDropdown,
+  getSaveAndAddMore,
+  getSaveAndExit,
+  getSectionName,
+  getSections,
+  getSubmitBtn,
+  getTestNameInput,
+  getTests,
+  getTextArea,
+} from 'support/common-function'
+
 const commonConstants = {
   test1: `Quantitative - assessment1`,
   add: 'Add',
@@ -20,36 +43,41 @@ describe('Creating new assessment', () => {
     cy.viewport(1280, 1000)
     cy.login()
     cy.customVisit('/members')
-    cy.get('#sections', { timeout: 6000 }).click()
-    cy.get('#add-section').click()
-    cy.get('form > div').within((el) => {
-      cy.get('input[placeholder="Enter Test Name*"]').type(
-        commonConstants?.section1
-      )
-      cy.get('textarea').type('Aptitude')
-      cy.get('[data-cy="submit"]').click()
-    })
+
+    //To add sections
+    getSections().should('have.text', 'Tests').click()
+
+    //Section 1
+    getAddSectionBtn().click()
+    cy.get('form > div')
+      .should('be.visible')
+      .within((el) => {
+        getTestNameInput().type(commonConstants?.section1)
+        getTextArea().type('Aptitude')
+        getSubmitBtn().click()
+      })
     cy.wait(1000)
-    cy.get('#add-section').click()
-    cy.get('form > div').within((el) => {
-      cy.get(`input[placeholder='Enter Test Name*']`).type(
-        commonConstants?.section2
-      )
-      cy.get('textarea').type('Aptitude')
-      cy.get('[data-cy="submit"]').click()
-    })
+
+    //Section 2
+    getAddSectionBtn().click()
+    cy.get('form > div')
+      .should('be.visible')
+      .within((el) => {
+        getTestNameInput().type(commonConstants?.section2)
+        getTextArea().type('Aptitude')
+        getSubmitBtn().click()
+      })
+    cy.wait(1000)
   })
 
-  it('Add question to the first section', () => {
+  it('Adding Questions in Sections', () => {
     cy.login()
     cy.customVisit('/members')
-    cy.get('#sections', { timeout: 6000 }).should('have.text', 'Tests').click()
+    getSections().should('have.text', 'Tests').click()
     cy.wait(1000)
-    cy.get('.sectionName', { timeout: 6000 })
-      .contains(commonConstants?.section1)
-      .click()
+    getSectionName().contains(commonConstants?.section1).click()
     cy.wait(1000)
-    cy.get('#add-question').click()
+    getAddQuestionBtn().click()
     cy.get('#Question').get('#dropdown-container').click()
     cy.get('ul').within(() => {
       cy.get('li').within(() => {
@@ -64,26 +92,21 @@ describe('Creating new assessment', () => {
       })
     })
     cy.wait(1000)
-    cy.get('#question-editor #quill-editor').within(() => {
-      cy.get('.ql-editor').type(commonConstants?.useRef)
+    getQlEditorWrapper().within(() => {
+      getQlEditor().type(commonConstants?.useRef)
     })
-    cy.get('input[placeholder="Write your option here"]')
-      .clear()
-      .type(commonConstants?.useRefAns)
-    cy.get('#save-and-exit').click()
-  })
+    getQlEditorInput().clear().type(commonConstants?.useRefAns)
+    getSaveAndExit().click()
+    cy.wait(2000)
 
-  it('Add questions to the second section', () => {
-    cy.login()
-    cy.customVisit('/members')
-    cy.get('#sections', { timeout: 6000 }).click()
+    //Add Question to Section2
+    getSectionName().contains(commonConstants?.section2).click()
     cy.wait(1000)
-    cy.get('.sectionName').contains(commonConstants?.section2).click()
-    cy.get('#add-question')
+    getAddQuestionBtn()
       .should('have.text', `+ ${commonConstants?.addQuestion}`)
       .click()
-    cy.get('h1', { timeout: 6000 }).should('be.visible')
-    cy.get('#Question').get('#dropdown-container').click()
+    geth1().should('be.visible')
+    getQuestionWithDropdown().click()
     cy.get('ul').within(() => {
       cy.get('li').within(() => {
         cy.get('div').then((el) => {
@@ -97,44 +120,43 @@ describe('Creating new assessment', () => {
       })
     })
     cy.wait(1000)
-    cy.get('#question-editor #quill-editor').within(() => {
-      cy.get('.ql-editor').type(commonConstants?.useMemo)
+
+    getQlEditorWrapper().within(() => {
+      getQlEditor().type(commonConstants?.useMemo)
     })
-    cy.get('.ql-editor ').eq(1).clear().type(commonConstants?.useMemoAns)
+    getQlEditor().eq(1).clear().type(commonConstants?.useMemoAns)
     cy.get('.checkBox').eq(0).click()
-    cy.get('.ql-editor ').eq(2).clear().type('secound option')
-    cy.get('.ql-editor ').eq(3).clear().type('third option')
-    cy.get('.ql-editor ').eq(4).clear().type('fourth option')
-    cy.get('#save-and-add-more').click()
-    cy.wait(2000)
-    cy.get('#question-editor #quill-editor', { timeout: 6000 }).within(() => {
-      cy.get('.ql-editor').type(commonConstants?.useMemo)
+    getQlEditor().eq(2).clear().type('secound option')
+    getQlEditor().eq(3).clear().type('third option')
+    getQlEditor().eq(4).clear().type('fourth option')
+    getSaveAndAddMore().click()
+    cy.wait(500)
+
+    getQlEditorWrapper().within(() => {
+      getQlEditor().type(commonConstants?.useMemo)
     })
-    cy.get('.ql-editor ').eq(1).clear().type(commonConstants?.useMemoAns)
+    getQlEditor().eq(1).clear().type(commonConstants?.useMemoAns)
     cy.get('.checkBox').eq(0).click()
-    cy.get('.ql-editor ').eq(2).clear().type('secound option')
+    getQlEditor().eq(2).clear().type('secound option')
     cy.get('.checkBox').eq(1).click()
-    cy.get('.ql-editor ').eq(3).clear().type('third option')
-    cy.get('.ql-editor ').eq(4).clear().type('fourth option')
-    cy.get('#save-and-add-more').click()
+    getQlEditor().eq(3).clear().type('third option')
+    getQlEditor().eq(4).clear().type('fourth option')
+    getSaveAndExit().click()
   })
 
   it('creating assessment ', () => {
-    cy.viewport(1280, 720)
+    //To Login
     cy.login()
     cy.customVisit('/members')
-    cy.get('#tests', { timeout: 6000 })
-      .should('have.text', 'Assessments')
-      .click()
-    cy.get('#add-test', { timeout: 6000 }).click()
-    cy.get('input[placeholder="Enter assessment name"]', { timeout: 6000 })
-      .clear()
-      .type(commonConstants.test1)
-    cy.get('#quill-editor').within(() => {
-      cy.get('.ql-editor').type(`Test Description`)
+    getTests().should('have.text', 'Assessments').click()
+
+    //To add Quantitative assessment
+    getAddTestBtn().click()
+    getAssesmentNameInput().type(commonConstants.test1)
+    getAssesmentQlEditorWrapper().within(() => {
+      getQlEditor().type('Test Description')
     })
-    cy.get('#next-button', { timeout: 6000 }).should('be.visible')
-    cy.get('#next-button').should('have.text', commonConstants?.next).click()
+    getNextBtn().should('have.text', commonConstants?.next).click()
 
     // user reached to step 2
     cy.get('div#section').each((el) => {
@@ -151,9 +173,7 @@ describe('Creating new assessment', () => {
         }
       })
     })
-    cy.get('button#next-button').click()
-    cy.get('button#submit-button')
-      .should('have.text', commonConstants.submit)
-      .click()
+    getNextBtn().click()
+    getAssesmentSubmitBtn().should('have.text', commonConstants.submit).click()
   })
 })
