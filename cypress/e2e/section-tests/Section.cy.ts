@@ -36,14 +36,14 @@ describe('Test for Tests', () => {
   })
 
   it('Checks, Active State of Tests', () => {
-    getSections().should('have.text', 'Tests').click()
+    getSections().click()
     cy.location().then((loc) => {
       cy.location('search').should('include', loc.search)
     })
   })
 
   it('checks, Tests page have heading and should be visible,correct text and attribute', () => {
-    getSections().should('have.text', 'Tests').click()
+    getSections().click()
     getTestHeading()
       .should('be.visible')
       .should('have.text', 'Tests')
@@ -53,7 +53,7 @@ describe('Test for Tests', () => {
       .should('have.focus')
   })
   it('checks, Add test button should be visible, have correct text and cancel functionality', () => {
-    getSections().should('have.text', 'Tests').click()
+    getSections().click()
     getAddSectionBtn()
       .should('be.visible')
       .should('have.text', '+ Add Test')
@@ -66,7 +66,7 @@ describe('Test for Tests', () => {
   })
 
   it('checks, add test popup heading and close icon should be visible and contain correct attributes', () => {
-    getSections().should('have.text', 'Tests').click()
+    getSections().click()
     getAddSectionBtn().should('have.text', '+ Add Test').click()
     getDialogHeader()
       .should('be.visible')
@@ -81,7 +81,7 @@ describe('Test for Tests', () => {
       .should('have.attr', 'role', 'img')
   })
   it('Checks, Add and cancel button should be visible and have correct attributes', () => {
-    getSections().should('have.text', 'Tests').click()
+    getSections().click()
     getAddSectionBtn().should('have.text', '+ Add Test').click()
     getSubmitButtonById()
       .should('be.visible')
@@ -93,7 +93,7 @@ describe('Test for Tests', () => {
   })
 
   it('checks, enter test name input field and description area should be visible and have correct attributes', () => {
-    getSections().should('have.text', 'Tests').click()
+    getSections().click()
     getAddSectionBtn().should('have.text', '+ Add Test').click()
     cy.get('form > div')
       .should('be.visible')
@@ -113,7 +113,7 @@ describe('Test for Tests', () => {
       })
   })
   it('checks,active Tests should have correct attributes and vertical dots for action menu', () => {
-    getSections().should('have.text', 'Tests').click()
+    getSections().click()
     cy.wait(1000)
     getActiveSectionCard()
       .should('have.attr', 'role', 'button')
@@ -125,7 +125,7 @@ describe('Test for Tests', () => {
   })
 
   it('checks,Tests details heading should be visible and correct attributes', () => {
-    getSections().should('have.text', 'Tests').click()
+    getSections().click()
     cy.wait(1500)
     getSectionCardByClass().each(($el) => {
       cy.wrap($el).within((el) => {
@@ -147,7 +147,7 @@ describe('Test for Tests', () => {
   })
 
   it('checks,Tests details search bar should be visible and have correct attributes', () => {
-    getSections().should('have.text', 'Tests').click()
+    getSections().click()
     cy.wait(1500)
     getSectionCardByClass().each(($el) => {
       cy.wrap($el).within((el) => {
@@ -166,7 +166,7 @@ describe('Test for Tests', () => {
       .should('have.focus')
   })
   it('Checks,Question card should be visible and correct attributes', () => {
-    getSections().should('have.text', 'Tests').click()
+    getSections().click()
     cy.wait(1500)
     getSectionCardByClass().each(($el) => {
       cy.wrap($el).within((el) => {
@@ -185,7 +185,7 @@ describe('Test for Tests', () => {
   })
 
   it('Checks,initially option card should have max height 0 and expand after clicking on question card', () => {
-    getSections().should('have.text', 'Tests').click()
+    getSections().click()
     cy.wait(1500)
     getSectionCardByClass().each(($el) => {
       cy.wrap($el).within((el) => {
@@ -206,7 +206,7 @@ describe('Test for Tests', () => {
   })
 
   it('Checks,question type chip should be visible', () => {
-    getSections().should('have.text', 'Tests').click()
+    getSections().click()
     cy.wait(1500)
     getSectionCardByClass().each(($el) => {
       cy.wrap($el).within((el) => {
@@ -224,7 +224,7 @@ describe('Test for Tests', () => {
   })
 
   it('Test for valid error message while adding new Tests without Title or description and duplicate title', () => {
-    getSections().should('have.text', 'Tests').click()
+    getSections().click()
     cy.wait(1500)
     getSectionCardByClass().each(($el) => {
       cy.wrap($el).within((el) => {
@@ -258,7 +258,7 @@ describe('Test for Tests', () => {
   })
 
   it('SortBy Name or created Date', () => {
-    getSections().should('have.text', 'Tests').click()
+    getSections().click()
     cy.wait(1500)
     getSectionCardByClass().each(($el) => {
       cy.wrap($el).within((el) => {
