@@ -172,20 +172,24 @@ export const action: ActionFunction = async ({ request, params }) => {
       Number(pagePerItems)
     )
     if (sectionId && totalItems === '1' && currentPage !== '1') {
-      return redirect(
-        `/${params.workspaceId}${
-          routes.tests
-        }/${sectionId}?${sortFilter}&testPage=${
-          Number(currentPage) - 1
-        }&testItems=${pagePerItems}`
+      return (
+        redirect(
+          `/${params.workspaceId}${
+            routes.tests
+          }/${sectionId}?${sortFilter}&testPage=${
+            Number(currentPage) - 1
+          }&testItems=${pagePerItems}`
+        ) && 'deleted'
       )
     } else {
       if (sectionId) {
-        return redirect(
-          `/${params.workspaceId}${routes.tests}/${sectionId}?${sortFilter}&testPage=${currentPage}&testItems=${pagePerItems}`
+        return (
+          redirect(
+            `/${params.workspaceId}${routes.tests}/${sectionId}?${sortFilter}&testPage=${currentPage}&testItems=${pagePerItems}`
+          ) && 'deleted'
         )
       } else {
-        return redirect(`/${params.workspaceId}${routes.tests}`)
+        return redirect(`/${params.workspaceId}${routes.tests}`) && 'deleted'
       }
     }
   }
@@ -228,6 +232,9 @@ export default function SectionPage() {
         t(sectionActionData.resp?.status as string) ===
         t('statusCheck.testAddedSuccess')
       ) {
+        toast.success(t(sectionActionData.resp?.status as string), {
+          toastId: t(sectionActionData.resp?.status as string),
+        })
         setSectionActionErrors({ title: '', description: '' })
         setShowAddSectionModal(false)
       } else if (
@@ -238,12 +245,9 @@ export default function SectionPage() {
           toastId: t(sectionActionData.resp?.status as string),
         })
         navigate(`${location.pathname}${location.search}`)
-      } else if (
-        t(sectionActionData.resp?.status as string) ===
-        t('statusCheck.deletedSuccess')
-      ) {
-        toast.success(t(sectionActionData.resp?.status as string), {
-          toastId: t(sectionActionData.resp?.status as string),
+      } else if (t(sectionActionData as string) === 'deleted') {
+        toast.success(t('statusCheck.deletedSuccess'), {
+          toastId: t('statusCheck.deletedSuccess'),
         })
       } else if (sectionActionData.createSectionFieldError) {
         setSectionActionErrors({
