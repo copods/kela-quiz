@@ -265,12 +265,9 @@ export default function SectionPage() {
       (data.getAllTestsCount > 0 &&
         t(sectionActionData?.resp?.status as string) ===
           t('statusCheck.testAddedSuccess')) ||
-      data.sections.length >= 0
+      data.sections.length >= 0 ||
+      (!location.search && data.getAllTestsCount > 0)
     ) {
-      navigate(
-        `/${data.currentWorkspaceId}${routes.tests}/${data.sections[0]?.id}?sortBy=${sortBy}&sort=${order}&testPage=${testsCurrentPage}&testItems=${testsPageSize}`
-      )
-    } else if (!location.search && data.getAllTestsCount > 0) {
       navigate(
         `/${data.currentWorkspaceId}${routes.tests}/${data.sections[0]?.id}?sortBy=${sortBy}&sort=${order}&testPage=${testsCurrentPage}&testItems=${testsPageSize}`
       )
