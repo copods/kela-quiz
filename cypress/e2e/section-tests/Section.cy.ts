@@ -41,6 +41,7 @@ describe('Test for Tests', () => {
       cy.location('search').should('include', loc.search)
     })
   })
+
   it('checks, Tests page have heading and should be visible,correct text and attribute', () => {
     getSections().should('have.text', 'Tests').click()
     getTestHeading()
@@ -93,9 +94,7 @@ describe('Test for Tests', () => {
 
   it('checks, enter test name input field and description area should be visible and have correct attributes', () => {
     getSections().should('have.text', 'Tests').click()
-    cy.wait(1500)
     getAddSectionBtn().should('have.text', '+ Add Test').click()
-
     cy.get('form > div')
       .should('be.visible')
       .within((el) => {
@@ -115,12 +114,11 @@ describe('Test for Tests', () => {
   })
   it('checks,active Tests should have correct attributes and vertical dots for action menu', () => {
     getSections().should('have.text', 'Tests').click()
-    cy.wait(1500)
+    cy.wait(1000)
     getActiveSectionCard()
       .should('have.attr', 'role', 'button')
       .should('have.attr', 'tabindex', '0')
       .children()
-
       .should('have.css', 'background-color', 'rgb(255, 255, 255)')
       .get('.verticalDots')
       .should('be.visible')
@@ -245,17 +243,16 @@ describe('Test for Tests', () => {
         getSubmitBtn().click()
       })
     getAddEditSectionTitleError().should('have.text', nameIsReq)
-
     getTestNameInput().type(`${section1} ${new Date().getTime()}`)
-
-    getSubmitBtn().click()
+    getSubmitButtonById().click()
     addEditSectionDescError().should('have.text', descIsReq)
+    cy.wait(500)
     cy.get('form > div')
       .should('be.visible')
       .within((el) => {
-        getTestNameInput().type(section1)
-        getTextArea().type('Aptitude')
-        getSubmitBtn().click()
+        getTestNameInput().clear().type(section1)
+        getTextArea().clear().type('Aptitude')
+        getSubmitButtonById().click()
       })
     duplicateTitleError().should('have.text', duplicate)
   })
