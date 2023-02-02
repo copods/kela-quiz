@@ -21,11 +21,11 @@ import {
   addEditSectionDescError,
   duplicateTitleError,
 } from 'support/common-function'
-import {
-  // commonConstants,
-  statusCheck,
-} from '~/constants/common.constants'
+
 const section1 = `Aptitude - section1`
+const nameIsReq = 'Name is required'
+const descIsReq = 'Description is required'
+const duplicate = 'Duplicate Title'
 // const deleteSection = `Aptitude - delete-Section`
 
 /// <reference types="Cypress">
@@ -244,12 +244,12 @@ describe('Test for Tests', () => {
       .within((el) => {
         getSubmitBtn().click()
       })
-    getAddEditSectionTitleError().should('have.text', statusCheck.nameIsReq)
+    getAddEditSectionTitleError().should('have.text', nameIsReq)
 
     getTestNameInput().type(`${section1} ${new Date().getTime()}`)
 
     getSubmitBtn().click()
-    addEditSectionDescError().should('have.text', statusCheck.descIsReq)
+    addEditSectionDescError().should('have.text', descIsReq)
     cy.get('form > div')
       .should('be.visible')
       .within((el) => {
@@ -257,7 +257,7 @@ describe('Test for Tests', () => {
         getTextArea().type('Aptitude')
         getSubmitBtn().click()
       })
-    duplicateTitleError().should('have.text', statusCheck.duplicate)
+    duplicateTitleError().should('have.text', duplicate)
   })
 
   it('SortBy Name or created Date', () => {
