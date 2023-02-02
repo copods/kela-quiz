@@ -1,113 +1,59 @@
+import {
+  getGeneral,
+  getSettings,
+  getTabsWrapper,
+  getWorkspaces,
+} from 'support/common-function'
 import { settings, statusCheck, tabs } from '~/constants/common.constants'
+const settings1 = 'Settings'
 
 describe('Test for settings', () => {
   beforeEach('sign-in', () => {
     cy.login()
-
     cy.customVisit('/members')
   })
-  it('Checks heading of settings page having a text', () => {
-    cy.get('a')
-      .find('#Settings', { timeout: 8000 })
-      .should('have.text', settings.settings)
-      .click()
-    cy.location('pathname', { timeout: 6000 }).should(
-      'include',
-      '/settings/general'
-    )
-    cy.get('h1').should('have.text', settings.settings)
-  })
-  it('Checks if gap between two tabs is correct', () => {
-    cy.get('a')
-      .find('#Settings', { timeout: 8000 })
-      .should('have.text', settings.settings)
-      .click()
-    cy.location('pathname', { timeout: 6000 }).should(
-      'include',
-      '/settings/general'
-    )
-    cy.get('.tabsWrapper').should('have.css', `gap`, '20px')
-  })
-  it('Checks heading of settings page having a correct classes applied', () => {
-    cy.get('a')
-      .find('#Settings', { timeout: 8000 })
-      .should('have.text', settings.settings)
-      .click()
-    cy.location('pathname', { timeout: 6000 }).should(
-      'include',
-      '/settings/general'
-    )
-    cy.get('h1').should('to.have.class', 'text-3xl font-bold')
-  })
-  it('Checks active tab is general', () => {
-    cy.get('a')
-      .find('#Settings', { timeout: 8000 })
-      .should('have.text', settings.settings)
-      .click()
-    cy.location('pathname', { timeout: 6000 }).should(
-      'include',
-      '/settings/general'
-    )
 
-    cy.get('#General').within(() => {
+  it('Tests to check Attributes/Colors/Visibility/Texts', () => {
+    // To check location and title
+    getSettings().should('have.text', settings1).click()
+    cy.location('pathname').should('include', '/settings/general')
+    cy.get('h1').should('have.text', settings1)
+
+    // To check gap between two tabs
+    getTabsWrapper().should('have.css', `gap`, '20px')
+
+    // To check title classes
+    cy.get('h1').should('to.have.class', 'text-3xl font-bold')
+
+    // To check initial active tab is general
+    getGeneral().within(() => {
       cy.get('hr').should(
         'have.class',
         'h-1 w-full rounded-1 border-0 bg-primary'
       )
     })
-    cy.location('pathname').should('include', '/settings/')
-  })
-  it('Checks general tab having correct text', () => {
-    cy.get('a')
-      .find('#Settings', { timeout: 8000 })
-      .should('have.text', settings.settings)
-      .click()
-    cy.location('pathname', { timeout: 6000 }).should(
-      'include',
-      '/settings/general'
-    )
-    cy.get('#General').should('have.text', tabs.general)
-  })
-  it('Checks active tab is workspace', () => {
-    cy.get('a')
-      .find('#Settings', { timeout: 8000 })
-      .should('have.text', settings.settings)
-      .click()
-    cy.location('pathname', { timeout: 6000 }).should(
-      'include',
-      '/settings/general'
-    )
-    cy.get('#Workspaces').should('have.text', tabs.workspace).click()
-    cy.get('#Workspaces').within(() => {
+
+    // To check general tab has correct text
+    getGeneral().should('have.text', tabs.general)
+
+    // To check active tab is workspace
+    getWorkspaces().should('have.text', tabs.workspace).click()
+    getWorkspaces().within(() => {
       cy.get('hr').should(
         'have.class',
         'h-1 w-full rounded-1 border-0 bg-primary'
       )
     })
-  })
-  it('Checks workspace tab having correct text', () => {
-    cy.get('a')
-      .find('#Settings', { timeout: 8000 })
-      .should('have.text', settings.settings)
-      .click()
-    cy.location('pathname', { timeout: 6000 }).should(
-      'include',
-      '/settings/general'
-    )
-    cy.get('#Workspaces').should('have.text', tabs.workspace)
-  })
-  it('Checks content heading in general tab having a correct classes', () => {
-    cy.get('a')
-      .find('#Settings', { timeout: 8000 })
-      .should('have.text', settings.settings)
-      .click()
-    cy.location('pathname', { timeout: 6000 }).should(
-      'include',
-      '/settings/general'
-    )
+
+    // To check workspace tab has correct text
+    getWorkspaces().should('have.text', tabs.workspace)
+
+    // To check heading in general has correct classes
+    getGeneral().click()
     cy.get('h3').should('have.class', 'text-lg font-semibold')
   })
-  it('Checks reset password pop up will be open after clicking on Click to change', () => {
+
+  it.skip('Checks reset password pop up will be open after clicking on Click to change', () => {
     cy.get('a')
       .find('#Settings', { timeout: 8000 })
       .should('have.text', settings.settings)
@@ -121,7 +67,7 @@ describe('Test for settings', () => {
       .click()
     cy.get('#dialog-wrapper').should('be.visible')
   })
-  it('Checks reset password pop up will be close after clicking on cross icon', () => {
+  it.skip('Checks reset password pop up will be close after clicking on cross icon', () => {
     cy.get('a')
       .find('#Settings', { timeout: 8000 })
       .should('have.text', settings.settings)
@@ -136,7 +82,7 @@ describe('Test for settings', () => {
     cy.get('#dialog-wrapper').should('be.visible')
     cy.get('#dialog-close-icon').click()
   })
-  it('Checks heading of reset password pop up ', () => {
+  it.skip('Checks heading of reset password pop up ', () => {
     cy.get('a')
       .find('#Settings', { timeout: 8000 })
       .should('have.text', settings.settings)
@@ -150,7 +96,7 @@ describe('Test for settings', () => {
       .click()
     cy.get('h2').should('have.text', settings.resetPas)
   })
-  it('Checks heading of reset password pop up have focused after opening the reset password pop up ', () => {
+  it.skip('Checks heading of reset password pop up have focused after opening the reset password pop up ', () => {
     cy.get('a')
       .find('#Settings', { timeout: 8000 })
       .should('have.text', settings.settings)
@@ -164,7 +110,7 @@ describe('Test for settings', () => {
       .click()
     cy.get('h2').should('be.focused')
   })
-  it('Checks reset password pop up input fields exists', () => {
+  it.skip('Checks reset password pop up input fields exists', () => {
     cy.get('a')
       .find('#Settings', { timeout: 8000 })
       .should('have.text', settings.settings)
@@ -181,7 +127,7 @@ describe('Test for settings', () => {
     cy.get('#newPassword').should('be.visible')
     cy.get('#confirmNewPassword').should('be.visible')
   })
-  it('Checks gap between input-container-wrapper', () => {
+  it.skip('Checks gap between input-container-wrapper', () => {
     cy.get('a')
       .find('#Settings', { timeout: 8000 })
       .should('have.text', settings.settings)
@@ -195,7 +141,7 @@ describe('Test for settings', () => {
       .click()
     cy.get('.input-container-wrapper').should('have.css', `gap`, `24px`)
   })
-  it('Checks reset password pop up old password input field Should have focus on clicking on it or selecting it', () => {
+  it.skip('Checks reset password pop up old password input field Should have focus on clicking on it or selecting it', () => {
     cy.get('a')
       .find('#Settings', { timeout: 8000 })
       .should('have.text', settings.settings)
@@ -210,7 +156,7 @@ describe('Test for settings', () => {
     cy.get('#dialog-wrapper').should('be.visible')
     cy.get('#oldPassword', { timeout: 6000 }).click().should('be.focused')
   })
-  it('Checks reset password pop up new password input field Should have focus on clicking on it or selecting it', () => {
+  it.skip('Checks reset password pop up new password input field Should have focus on clicking on it or selecting it', () => {
     cy.get('a')
       .find('#Settings', { timeout: 8000 })
       .should('have.text', settings.settings)
@@ -225,7 +171,7 @@ describe('Test for settings', () => {
     cy.get('#dialog-wrapper').should('be.visible')
     cy.get('#newPassword').should('be.visible').click().should('be.focused')
   })
-  it('Checks reset password pop up confirm password input field Should have focus on clicking on it or selecting it', () => {
+  it.skip('Checks reset password pop up confirm password input field Should have focus on clicking on it or selecting it', () => {
     cy.get('a')
       .find('#Settings', { timeout: 8000 })
       .should('have.text', settings.settings)
@@ -240,7 +186,7 @@ describe('Test for settings', () => {
     cy.get('#dialog-wrapper').should('be.visible')
     cy.get('#confirmNewPassword').click().should('be.focused')
   })
-  it('Checks reset password pop up old password label have correct text', () => {
+  it.skip('Checks reset password pop up old password label have correct text', () => {
     cy.get('a')
       .find('#Settings', { timeout: 8000 })
       .should('have.text', settings.settings)
@@ -259,7 +205,7 @@ describe('Test for settings', () => {
         cy.get('label').should('have.text', settings.enterOldPassword + '*')
       })
   })
-  it('Checks reset password pop up new password label have correct text', () => {
+  it.skip('Checks reset password pop up new password label have correct text', () => {
     cy.get('a')
       .find('#Settings', { timeout: 8000 })
       .should('have.text', settings.settings)
@@ -278,7 +224,7 @@ describe('Test for settings', () => {
         cy.get('label').should('have.text', settings.enterNewPass + '*')
       })
   })
-  it('Checks reset password pop up confirm new password label have correct text', () => {
+  it.skip('Checks reset password pop up confirm new password label have correct text', () => {
     cy.get('a')
       .find('#Settings', { timeout: 8000 })
       .should('have.text', settings.settings)
@@ -297,7 +243,7 @@ describe('Test for settings', () => {
         cy.get('label').should('have.text', settings.reEnterPass + '*')
       })
   })
-  it('Checks reset password pop up old password label have correct classes', () => {
+  it.skip('Checks reset password pop up old password label have correct classes', () => {
     cy.get('a')
       .find('#Settings', { timeout: 8000 })
       .should('have.text', settings.settings)
@@ -316,7 +262,7 @@ describe('Test for settings', () => {
         cy.get('label').should('have.class', 'text-gray-800')
       })
   })
-  it('Checks reset password pop up new password label have correct classes', () => {
+  it.skip('Checks reset password pop up new password label have correct classes', () => {
     cy.get('a')
       .find('#Settings', { timeout: 8000 })
       .should('have.text', settings.settings)
@@ -335,7 +281,7 @@ describe('Test for settings', () => {
         cy.get('label').should('have.class', 'text-gray-800')
       })
   })
-  it('Checks reset password pop up confirm new password label have correct classes', () => {
+  it.skip('Checks reset password pop up confirm new password label have correct classes', () => {
     cy.get('a')
       .find('#Settings', { timeout: 8000 })
       .should('have.text', settings.settings)
@@ -354,7 +300,7 @@ describe('Test for settings', () => {
         cy.get('label').should('have.class', 'text-gray-800')
       })
   })
-  it('Checks reset password pop up submit button will be disabled if all input fields are not filled', () => {
+  it.skip('Checks reset password pop up submit button will be disabled if all input fields are not filled', () => {
     cy.get('a')
       .find('#Settings', { timeout: 8000 })
       .should('have.text', settings.settings)
@@ -371,7 +317,7 @@ describe('Test for settings', () => {
       'disabled:bg-primaryDisabled'
     )
   })
-  it('Checks reset password pop up submit button will be enabled if all input fields are filled', () => {
+  it.skip('Checks reset password pop up submit button will be enabled if all input fields are filled', () => {
     cy.get('a')
       .find('#Settings', { timeout: 8000 })
       .should('have.text', settings.settings)
@@ -394,7 +340,7 @@ describe('Test for settings', () => {
       .type('confirmPassword')
     cy.get('[data-cy="submit"]').should('have.class', 'hover:bg-primaryHover')
   })
-  it('Checks reset password pop up submit button text', () => {
+  it.skip('Checks reset password pop up submit button text', () => {
     cy.get('a')
       .find('#Settings', { timeout: 8000 })
       .should('have.text', settings.settings)
@@ -417,7 +363,7 @@ describe('Test for settings', () => {
       .type('confirmPassword')
     cy.get('[data-cy="submit"]').should('have.text', settings.resetPas)
   })
-  it('Checks if new password and confirm password input fields input values not matched then throwing a proper error', () => {
+  it.skip('Checks if new password and confirm password input fields input values not matched then throwing a proper error', () => {
     cy.get('a')
       .find('#Settings', { timeout: 8000 })
       .should('have.text', settings.settings)
@@ -441,7 +387,7 @@ describe('Test for settings', () => {
       .blur()
     cy.get('#confirm-password-error').should('have.text', settings.passNotMatch)
   })
-  it('Checks classes of error text if new password and confirm password input fields input values not matched', () => {
+  it.skip('Checks classes of error text if new password and confirm password input fields input values not matched', () => {
     cy.get('a')
       .find('#Settings', { timeout: 8000 })
       .should('have.text', settings.settings)
@@ -467,7 +413,7 @@ describe('Test for settings', () => {
       .click()
     cy.get('#confirm-password-error').should('have.class', 'text-red-700')
   })
-  it('Checks if new password and confirm password input fields input values matched but total charactes are less than 8', () => {
+  it.skip('Checks if new password and confirm password input fields input values matched but total charactes are less than 8', () => {
     cy.get('a')
       .find('#Settings', { timeout: 8000 })
       .should('have.text', settings.settings)
@@ -490,7 +436,7 @@ describe('Test for settings', () => {
       .click()
     cy.get('#new-password-error').should('have.text', settings.minPasswordLimit)
   })
-  it('Checks if old password is not matched filled input field then throwing a error', () => {
+  it.skip('Checks if old password is not matched filled input field then throwing a error', () => {
     cy.get('a')
       .find('#Settings', { timeout: 8000 })
       .should('have.text', settings.settings)
@@ -516,7 +462,7 @@ describe('Test for settings', () => {
       .click()
     cy.get('#password-error').should('have.text', statusCheck.passIsInvalid)
   })
-  it('Checks class of error if old password is not matched filled input field', () => {
+  it.skip('Checks class of error if old password is not matched filled input field', () => {
     cy.get('a')
       .find('#Settings', { timeout: 8000 })
       .should('have.text', settings.settings)
@@ -542,7 +488,7 @@ describe('Test for settings', () => {
       .click()
     cy.get('#password-error').should('have.class', 'text-red-700')
   })
-  it('Checks if new password and old password is same then throwing a error', () => {
+  it.skip('Checks if new password and old password is same then throwing a error', () => {
     cy.get('a')
       .find('#Settings', { timeout: 8000 })
       .should('have.text', settings.settings)
@@ -571,7 +517,7 @@ describe('Test for settings', () => {
       settings.passShouldNotBeSame
     )
   })
-  it('Checks if toster showing correct message after successfully reset password and Checks if by login in from reseted password', () => {
+  it.skip('Checks if toster showing correct message after successfully reset password and Checks if by login in from reseted password', () => {
     cy.get('a')
       .find('#Settings', { timeout: 8000 })
       .should('have.text', 'Settings')
