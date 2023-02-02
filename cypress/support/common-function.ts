@@ -58,3 +58,13 @@ export const getAddEditSectionTitleError = () =>
 export const addEditSectionDescError = () =>
   cy.get('#addEditSection-description-error')
 export const duplicateTitleError = () => cy.get('#duplicete-title-error')
+export const getMembersHeading = () => cy.get('.membersHeading')
+export const getMemberDialogHeader = () => cy.get('[data-cy="dialog-header"]')
+export const getDialogCloseIcon = () => cy.get('#dialog-close-icon')
+export const getCancelBtn = () => cy.get('#cancel-add-button')
+export const getJoinedMemberHeading = () => cy.get('#joined-member-heading')
+export const getInvitedMemberHeading = () => cy.get('#invited-member-heading')
+export const getResendMemberInviteBtn = () => cy.get('#resend-member-invite')
+export const getToaster = () => cy.get('.Toastify__toast--success')
+export const getTableRow = () => cy.get('#table-row #table-td')
+export const getBadgeTag = () => cy.get('[data-cy="badge-tag"]')
