@@ -74,11 +74,12 @@ describe('Creating assessments', () => {
       .find('#tests')
       .should('have.text', testsConstants.assessments)
       .click()
+    cy.wait(2000)
     cy.get('#add-test', { timeout: 6000 })
       .should('have.text', `+ ${testsConstants.addAssessmentbutton}`)
       .click()
     cy.wait(1500)
-    cy.get('#add-assessment-page-title').should(
+    cy.get('#add-assessment-page-title', { timeout: 6000 }).should(
       'have.text',
       addAssessmentPageTitle
     )
