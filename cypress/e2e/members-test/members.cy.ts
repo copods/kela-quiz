@@ -2,14 +2,14 @@
 import {
   getBadgeTag,
   getCancelBtn,
-  getDialogueCloseIcon,
+  getDialogCloseIcon,
   getDropdown,
   getEmail,
   getInviteBtn,
   getInvitedMemberHeading,
   getInviteMemberBtn,
   getJoinedMemberHeading,
-  getMemberDialogueHeader,
+  getMemberDialogHeader,
   getMembersHeading,
   getResendMemberInviteBtn,
   getTableRow,
@@ -51,26 +51,26 @@ describe('Test for members', () => {
       'rgb(53, 57, 136)'
     )
 
-    // Invite Dialogue tests
-    // To check if invite Dialogue is visible
+    // Invite Dialog tests
+    // To check if invite Dialog is visible
     getInviteMemberBtn().click()
-    getMemberDialogueHeader().should('be.visible')
+    getMemberDialogHeader().should('be.visible')
 
-    // To check if dialogue has correct text
-    getMemberDialogueHeader().should('have.text', 'Invite Member')
+    // To check if Dialog has correct text
+    getMemberDialogHeader().should('have.text', 'Invite Member')
 
-    // To check if dialogue has tabindex
-    getMemberDialogueHeader().should('have.attr', 'tabindex', '0')
+    // To check if Dialog has tabindex
+    getMemberDialogHeader().should('have.attr', 'tabindex', '0')
 
     // Invite popup tests
     // To check if invite popup close icon is visible
-    getDialogueCloseIcon().should('be.visible')
+    getDialogCloseIcon().should('be.visible')
 
     // To check if invite popup close icon has tabindex
-    getDialogueCloseIcon().should('have.attr', 'tabindex', '0')
+    getDialogCloseIcon().should('have.attr', 'tabindex', '0')
 
     // To check if invite popup close icon has role
-    getDialogueCloseIcon().should('have.attr', 'tabindex', '0')
+    getDialogCloseIcon().should('have.attr', 'tabindex', '0')
 
     // Invite popup email input tests
     // To check if invite popup email input is visible
