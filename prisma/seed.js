@@ -73,11 +73,11 @@ async function seed() {
       where: {
         workspaceId_userId: {
           userId: user.id,
-          workspaceId: user.workspace[0].id
-        }
+          workspaceId: user.workspace[0].id,
+        },
       },
       update: {
-        userId: user.id
+        userId: user.id,
       },
       create: {
         userId: user.id,
