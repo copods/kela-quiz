@@ -19,13 +19,12 @@ describe('Test for Candidate assessment Registration', () => {
     })
     cy.get('#vertical-icon', { timeout: 8000 }).click()
     cy.get('[data-cy="copy-link"]').should('be.visible').click()
-    cy.window()
-      .its('navigator.clipboard')
-      .invoke('readText')
-      .then((text) => {
+    cy.window().then((win) => {
+      win.navigator.clipboard.readText().then((text) => {
         examLink = text.split('3000')[1]
         cy.visit(examLink)
       })
+    })
   })
 
   it('Checks, register heading should be visible', () => {
