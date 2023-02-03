@@ -26,7 +26,7 @@ const ChipGroup = ({
 
   return (
     <div className="chip-group mr-3 flex items-center gap-2" ref={inputRef}>
-      <div className="truncate rounded-52 bg-blue-50 px-1.5 py-1.5 text-xs text-gray-900">
+      <div className="truncate rounded-52 bg-blue-50 px-2 py-1.5 text-xs text-gray-900">
         {sections[0]?.section.name}
       </div>
       {sections.length > 1 && (
@@ -35,7 +35,7 @@ const ChipGroup = ({
             <Menu.Button onClick={() => setIsViewPortVisible(isInViewport())}>
               <div
                 aria-label={`+ ${sections.length - 1} Sections in Test`}
-                className="cursor-pointer rounded-52 bg-blue-50 px-1 py-1 text-xs text-gray-900"
+                className="cursor-pointer rounded-52 bg-blue-50 px-2 py-1.5 text-xs text-gray-900"
               >
                 + {sections.length - 1}
               </div>
@@ -52,7 +52,7 @@ const ChipGroup = ({
           >
             <Menu.Items
               id="menu-items"
-              className={`sectionMenu absolute top-8 z-40 max-h-52 overflow-auto rounded-2xl bg-white py-4 px-4 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none ${
+              className={`sectionMenu absolute top-9 z-40 max-h-52 overflow-auto rounded-2xl bg-white py-4 px-4 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none ${
                 isViewPortVisible ? '' : '-top-1 -translate-y-full transform'
               } flex flex-col gap-4 border-gray-300 shadow-2xl`}
             >
