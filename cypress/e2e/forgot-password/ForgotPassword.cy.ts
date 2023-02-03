@@ -1,6 +1,6 @@
 import {
-  forgetPasswordCard,
-  forgetPasswordHeader,
+  getForgetPasswordCard,
+  getForgetPasswordHeader,
   getBackToLogIn,
   getButton,
   getEmailErrorById,
@@ -27,12 +27,14 @@ describe('Forgot password', () => {
     cy.visit('/forgot-password')
   })
   it('checks forget-password card contain shadow', () => {
-    forgetPasswordCard()
+    getForgetPasswordCard()
       .should('be.visible')
       .should('have.class', `drop-shadow-xl`)
   })
   it('checks forget-password card have correct gap between children components', () => {
-    forgetPasswordCard().should('be.visible').should('have.css', `gap`, `24px`)
+    getForgetPasswordCard()
+      .should('be.visible')
+      .should('have.css', `gap`, `24px`)
   })
   it('checks, divider should be visible ', () => {
     getHr().should('be.visible')
@@ -46,7 +48,7 @@ describe('Forgot password', () => {
     getImg().should('be.visible')
   })
   it('should display a Heading and also contain correct text and css class', () => {
-    forgetPasswordHeader()
+    getForgetPasswordHeader()
       .should('be.visible')
       .should('have.text', header)
       .should('have.class', `text-center text-3xl font-bold text-gray-900`)
@@ -85,8 +87,8 @@ describe('Forgot password', () => {
     getButton().should('be.visible').should('have.text', resetPassword)
   })
   it('Checking account not found for reset password ,error should have correct message and classes', () => {
-    forgetPasswordHeader().should('be.visible', { timeout: 6000 })
-    forgetPasswordHeader().should('have.text', header)
+    getForgetPasswordHeader().should('be.visible', { timeout: 6000 })
+    getForgetPasswordHeader().should('have.text', header)
     getEmailInput()
       .clear()
       .type(invalidMemberEmail)
@@ -99,8 +101,8 @@ describe('Forgot password', () => {
   })
 
   it('Checking account not found for reset password ', () => {
-    forgetPasswordHeader().should('be.visible', { timeout: 6000 })
-    forgetPasswordHeader().should('have.text', header)
+    getForgetPasswordHeader().should('be.visible', { timeout: 6000 })
+    getForgetPasswordHeader().should('have.text', header)
     getEmailInput()
       .clear()
       .type(invalidMemberEmail)
@@ -122,8 +124,8 @@ describe('Forgot password', () => {
   })
   it('Checking for account when it is found for reset password ', () => {
     cy.log('On forget Password page')
-    forgetPasswordHeader().should('be.visible', { timeout: 6000 })
-    forgetPasswordHeader().should('have.text', header)
+    getForgetPasswordHeader().should('be.visible', { timeout: 6000 })
+    getForgetPasswordHeader().should('have.text', header)
     getEmailInput()
       .should('be.visible', { timeout: 6000 })
       .clear()
