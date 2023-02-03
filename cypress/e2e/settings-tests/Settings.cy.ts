@@ -186,7 +186,7 @@ describe('Test for settings', () => {
       .should('have.text', passIsInvalid)
       .should('have.class', 'text-red-700')
 
-    // To check if old password and new password is same throws error
+    // To check if old password and new password is same throws an error
     getOldPassword().clear().type('kQuiz@copods')
     getNewPassword().clear().type('kQuiz@copods')
     getConfirmNewPassword().clear().type('kQuiz@copods')
