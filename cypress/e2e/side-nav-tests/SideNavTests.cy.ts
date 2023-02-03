@@ -25,11 +25,8 @@ describe('Test for Logout, SideNav', () => {
 
   it('click all links with loop', () => {
     const pages = ['members', 'tests', 'sections', 'group-by-tests', 'Settings']
-    cy.login()
-    cy.customVisit('/members')
     pages.forEach((page) => {
       cy.get(`#${page}`).click()
-      cy.customVisit('/members')
     })
   })
   it('Checks text of SideNav group title- Results and css properties', () => {
