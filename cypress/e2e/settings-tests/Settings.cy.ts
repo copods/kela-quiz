@@ -14,10 +14,10 @@ import {
   getSettings,
   getSubmitBtn,
   getTabsWrapper,
-  // getToaster,
+  getToaster,
   getWorkspaces,
 } from 'support/common-function'
-const settings1 = 'Settings'
+const settings = 'Settings'
 const clickToChange = 'Click to change'
 const general = 'General'
 const workspace = 'Workspaces'
@@ -31,15 +31,15 @@ const passShouldNotBeSame =
   'Current Password and New Password should not be same'
 
 describe('Test for settings', () => {
-  it('Tests to check Attributes/Colors/Visibility/Texts', () => {
+  it('Tests to check Attributes/Colors/Visibility/Texts and to check if we can reset the password', () => {
     // To login
     cy.login()
     cy.customVisit('/members')
 
     // To check location and title
-    getSettings().should('have.text', settings1).click()
+    getSettings().should('have.text', settings).click()
     cy.location('pathname').should('include', '/settings/general')
-    cy.get('h1').should('have.text', settings1)
+    cy.get('h1').should('have.text', settings)
 
     // To check gap between two tabs
     getTabsWrapper().should('have.css', `gap`, '20px')
@@ -191,20 +191,12 @@ describe('Test for settings', () => {
     getConfirmNewPassword().clear().type('kQuiz@copods')
     getSubmitBtn().click()
     getNewPasswordError().should('have.text', passShouldNotBeSame)
+
+    // To check if we can reset the password
+    getOldPassword().clear().type('kQuiz@copods')
+    getNewPassword().clear().type('kQuiz@careers')
+    getConfirmNewPassword().clear().type('kQuiz@careers')
+    getSubmitBtn().click()
+    getToaster().should('have.text', 'Password changed successfully !')
   })
-
-  // it('Test to reset password', () => {
-  //   // To login
-  //   cy.login()
-  //   cy.customVisit('/members')
-
-  //   // To reset password
-  //   getSettings().click()
-  //   getResetPasswordPopup().click()
-  //   getOldPassword().type('kQuiz@copods')
-  //   getNewPassword().type('kQuiz@careers')
-  //   getConfirmNewPassword().type('kQuiz@careers')
-  //   getSubmitBtn().click()
-  //   getToaster().should('have.text', 'Password changed successfully !')
-  // })
 })
