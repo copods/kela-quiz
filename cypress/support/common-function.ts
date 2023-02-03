@@ -129,3 +129,22 @@ export const getHr = () => cy.get('hr')
 export const getImg = () => cy.get('img')
 export const getEmailInfo = () => cy.get('#enter-mail-info')
 export const getDialogCloseIcon = () => cy.get('#dialog-close-icon')
+export const getGroupByItems = () => cy.get('[data-cy="group-by-item-test"]')
+export const getDescendSort = () => cy.get('#descend', { timeout: 60000 })
+export const getSortFilterBody = () =>
+  cy.get('#sort-filter-body', { timeout: 60000 })
+export const getTotalItemValue = () =>
+  cy.get('#total-items-value', { timeout: 60000 })
+export const getElementInsideOfDropdown = () =>
+  cy.get('.dropdownButton span span')
+export const getGroupByTestItems = () => cy.get('#group-by-test-items')
+export const getCandidateName = () =>
+  cy.get('.candidate-name', { timeout: 6000 })
+export const sortFilterContainer = () => cy.get('#sort-filter-container')
+export const getDropdownButton = () => cy.get('.dropdownButton')
+export const getDivInsideTheList = () => cy.get('li div')
+export const getDropdownOption = () => cy.get('.dropdown-option')
+export const getNotSelected = () => cy.get('.not-selected')
+export const getResendInviteCandidate = () =>
+  cy.get('[data-cy="resend-invite"]')
+export const getAscSort = () => cy.get('#ascend')
