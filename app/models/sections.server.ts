@@ -247,12 +247,11 @@ export async function deleteQuestionById(id: string) {
       return data.totalQuestions
     }
   )
-  const totalQuestions = totalQuestionArray?.sort((a, b) => {
-    return b - a
-  })
-  if (questionData && totalQuestions) {
-    if (questionData.section.questions?.length <= totalQuestions[0]) {
-      return 'not deleted'
+  if (questionData && totalQuestionArray) {
+    if (
+      questionData.section.questions?.length <= Math.max(...totalQuestionArray)
+    ) {
+      return false
     }
   }
 
@@ -265,5 +264,5 @@ export async function deleteQuestionById(id: string) {
       deletedAt: new Date().toString(),
     },
   })
-  return deleteQuestion && 'success'
+  return deleteQuestion
 }
