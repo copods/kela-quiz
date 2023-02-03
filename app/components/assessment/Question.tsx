@@ -77,7 +77,10 @@ const Question = () => {
             <CandidateQuestionStepper />
           </div>
           <div className="mx-5 mb-5 flex h-full overflow-auto rounded-lg border bg-white">
-            <div className="flex h-full w-1/2 flex-col gap-8 border-r p-5">
+            <div
+              className="flex h-full w-1/2 flex-col gap-8 border-r p-5"
+              data-cy="questionSection"
+            >
               <div className="flex items-center justify-between">
                 <div className="flex text-xl font-medium">
                   <span>Question </span>
@@ -95,7 +98,10 @@ const Question = () => {
                 />
               </div>
             </div>
-            <div className="flex h-full w-1/2 flex-col gap-2 py-5">
+            <div
+              className="flex h-full w-1/2 flex-col gap-2 py-5"
+              data-cy="answerSection"
+            >
               <div className="flex items-center justify-between px-5">
                 {questionType === QuestionTypes.singleChoice && (
                   <div className="flex text-xl font-medium">

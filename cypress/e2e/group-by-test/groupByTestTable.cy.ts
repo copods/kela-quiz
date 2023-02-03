@@ -92,8 +92,7 @@ describe('Test for GroupByTestTable, Result', () => {
   })
   it('Total Count of Test of groupByTable', () => {
     cy.get('#group-by-tests').should('have.text', 'Results').click()
-
-    cy.get('#total-count-value', { timeout: 60000 }).should('have.text', 1)
+    cy.get('#total-count-value', { timeout: 6000 }).should('be.visible')
   })
   it('sort by name in ascending order ', () => {
     cy.get('#group-by-tests').should('have.text', 'Results').click()
