@@ -1,14 +1,11 @@
 import {
-  getEmail,
   getNavGuideAssessment,
   getNavGuideGeneral,
   getNavGuideResult,
-  getPassword,
   getSideNavLogoutBtn,
   getSideNavUserAvatar,
   getSideNavUserEmail,
   getSideNavUserName,
-  visitSignIn,
 } from 'support/common-function'
 
 const sideNavGroupTitles = {
@@ -22,17 +19,8 @@ const userAvatarText = 'CC'
 describe('Test for Logout, SideNav', () => {
   it('Tests to check Attributes/Colors/Visibility/Texts', () => {
     // To login
-    visitSignIn()
-    getEmail().type('copods.demo.sendgrid@gmail.com')
-    getPassword().type('kQuiz@copods')
-    cy.findByRole('button').click()
-    cy.wait(1000)
-
-    // To check sidenav links
-    const pages = ['members', 'tests', 'sections', 'group-by-tests', 'Settings']
-    pages.forEach((page) => {
-      cy.get(`#${page}`).click()
-    })
+    cy.login()
+    cy.customVisit('/members')
 
     // To check text, styles of Results title
     getNavGuideResult()
