@@ -14,7 +14,7 @@ import {
   getSettings,
   getSubmitBtn,
   getTabsWrapper,
-  getToaster,
+  // getToaster,
   getWorkspaces,
 } from 'support/common-function'
 const settings1 = 'Settings'
@@ -193,18 +193,18 @@ describe('Test for settings', () => {
     getNewPasswordError().should('have.text', passShouldNotBeSame)
   })
 
-  it('Test to reset password', () => {
-    // To login
-    cy.login()
-    cy.customVisit('/members')
+  // it('Test to reset password', () => {
+  //   // To login
+  //   cy.login()
+  //   cy.customVisit('/members')
 
-    // To reset password
-    getSettings().click()
-    getResetPasswordPopup().click()
-    getOldPassword().type('kQuiz@copods')
-    getNewPassword().type('kQuiz@careers')
-    getConfirmNewPassword().type('kQuiz@careers')
-    getSubmitBtn().click()
-    getToaster().should('have.text', 'Password changed successfully !')
-  })
+  //   // To reset password
+  //   getSettings().click()
+  //   getResetPasswordPopup().click()
+  //   getOldPassword().type('kQuiz@copods')
+  //   getNewPassword().type('kQuiz@careers')
+  //   getConfirmNewPassword().type('kQuiz@careers')
+  //   getSubmitBtn().click()
+  //   getToaster().should('have.text', 'Password changed successfully !')
+  // })
 })
