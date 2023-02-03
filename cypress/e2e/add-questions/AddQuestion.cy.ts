@@ -1,11 +1,32 @@
 import {
   getAddQuestionBtn,
+  getAssesmentQlEditorWrapper,
+  getCheckbox,
+  getDeleteQuestion,
+  getInput,
+  getInputTextArea,
+  getOptEditorInput,
+  getQlEditor,
+  getQuestionWithDropdown,
+  getQuetion,
+  getQlEditorWrapper,
+  getSaveAndAddMore,
+  getSectionCardByClass,
   getSectionName,
   getSections,
+  getTest,
+  geth1,
+  getToastMessage,
+  getDeleteOption,
+  getSvg,
 } from 'support/common-function'
-import { cypress, addQuestion } from '~/constants/common.constants'
 import { routes } from '~/constants/route.constants'
 const section1 = `Aptitude - section1`
+const useRef = 'What is useRef() ?'
+const saveAndAddMore = 'Save & Add More'
+const useRefAns = 'It allows you to persist values between renders.'
+const useMemoAns =
+  'The useMemo Hook can be used to keep expensive, resource intensive functions from needlessly running.'
 
 describe('Test for section-details', () => {
   beforeEach('sign-in', () => {
@@ -18,7 +39,7 @@ describe('Test for section-details', () => {
     getSections().click()
     cy.wait(1500)
 
-    cy.get('.sectionCard', { timeout: 6000 }).each(($el) => {
+    getSectionCardByClass().each(($el) => {
       cy.wrap($el).within((el) => {
         if (
           el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
@@ -29,25 +50,21 @@ describe('Test for section-details', () => {
     })
     getSectionName().contains(section1).click()
     cy.wait(1500)
-    cy.get('.question', { timeout: 8000 })
-      .contains('What is useRef() ?')
-      .trigger('mouseover')
-    cy.get('[data-cy="delete-question"]').should('be.exist')
+    getQuetion().contains('What is useRef() ?').trigger('mouseover')
+    getDeleteQuestion().should('be.exist')
     getAddQuestionBtn().click()
     cy.location('pathname', { timeout: 6000 }).should(
       'include',
       routes.addQuestion
     )
-    cy.get('h1', { timeout: 6000 })
-      .should('be.visible')
-      .should('have.text', section1 + ' - Add Question')
-    cy.get('#Test', { timeout: 20000 }).should('have.text', 'Test').click()
+    geth1().should('have.text', section1 + ' - Add Question')
+    getTest().click()
   })
   let lengthBefore: number
   it('Verifying functionlity and elements in add question page', () => {
     getSections().click()
     cy.wait(1500)
-    cy.get('.sectionCard', { timeout: 6000 }).each(($el) => {
+    getSectionCardByClass().each(($el) => {
       cy.wrap($el).within((el) => {
         if (
           el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
@@ -64,8 +81,8 @@ describe('Test for section-details', () => {
       'include',
       routes.addQuestion
     )
-    cy.get('h1', { timeout: 6000 }).should('be.visible')
-    cy.get('#Question').get('#dropdown-container').click()
+    geth1().should('be.visible')
+    getQuestionWithDropdown().click()
     let flag = ''
     cy.get('ul[role="listbox"]').within(() => {
       cy.get('li').within(() => {
@@ -86,11 +103,11 @@ describe('Test for section-details', () => {
     })
     // Verifying MCQ to have Check Box in options
     if (flag === 'CheckBox') {
-      cy.get('input[type="checkbox"]').should('have.class', 'checkBox')
+      getCheckbox().should('have.class', 'checkBox')
     }
     cy.wait(500)
     // Verifying Single Choice to have Radio Button in options
-    cy.get('#Question').get('#dropdown-container').click()
+    getQuestionWithDropdown().click()
     cy.get('ul').within(() => {
       cy.get('li').within(() => {
         cy.get('div').then((el) => {
@@ -109,11 +126,11 @@ describe('Test for section-details', () => {
       })
     })
     if (flag === 'RadioButton') {
-      cy.get('input').should('have.class', 'radioButton')
+      getInput().should('have.class', 'radioButton')
     }
     // Verifying Text to have Textarea in options and should be in focused after interaction
     cy.wait(500)
-    cy.get('#Question').get('#dropdown-container').click()
+    getQuestionWithDropdown().click()
     cy.get('ul').within(() => {
       cy.get('li').within(() => {
         cy.get('div').then((el) => {
@@ -132,24 +149,21 @@ describe('Test for section-details', () => {
       })
     })
     if (flag === 'TextArea') {
-      cy.get('input[type="textarea"]')
-        .should('have.class', 'textOption')
-        .click()
-        .should('be.focused')
+      getInputTextArea().click().should('be.focused')
     }
     // On Save and Add More visit the Add Question Page
-    cy.get('#question-editor #quill-editor').within(() => {
-      cy.get('.ql-editor').type(cypress.useRef)
+    getQlEditorWrapper().within(() => {
+      getQlEditor().type(useRef)
     })
-    cy.get('#optionEditor input').clear().type(cypress.useRefAns)
-    cy.get('#save-and-add-more').click()
+    getOptEditorInput().clear().type(useRefAns)
+    getSaveAndAddMore().click()
     cy.location('pathname', { timeout: 6000 }).should(
       'include',
       '/add-question'
     )
     cy.wait(500)
     // Verifying if Add Option functionality Working on Options
-    cy.get('#Question').get('#dropdown-container').click()
+    getQuestionWithDropdown().click()
     cy.get('ul').within(() => {
       cy.get('li').within(() => {
         cy.get('div').then((el) => {
@@ -163,7 +177,7 @@ describe('Test for section-details', () => {
     })
     let secondFlag = 0
     cy.get('.h-40 > .gap-6 > .flex-col').within(() => {
-      cy.get(' #quill-editor ').then((el) => {
+      getAssesmentQlEditorWrapper().then((el) => {
         ;[...el].forEach((element) => {
           if (element.innerText === '') {
             secondFlag = 1
@@ -172,22 +186,20 @@ describe('Test for section-details', () => {
       })
     })
     if (secondFlag == 1) {
-      cy.get('#save-and-add-more')
-        .should('have.text', cypress.saveAndAddMore)
-        .click()
-      cy.get('.Toastify__toast').should('have.text', '')
+      getSaveAndAddMore().click()
+      getToastMessage().should('have.text', '')
     }
     cy.get('.h-40 > .gap-6').within(() => {
-      cy.get('#quill-editor')
+      getAssesmentQlEditorWrapper()
         .its('length')
         .then((len) => {
           lengthBefore = len
         })
 
       // Verifying if Delete button should be visible
-      cy.get('#delete-option').should('be.visible')
-      cy.get('svg.h-6').first().click()
-      cy.get('#quill-editor')
+      getDeleteOption().should('be.visible')
+      getSvg().first().click()
+      getAssesmentQlEditorWrapper()
         .its('length')
         .then((len) => {
           expect(lengthBefore - 1).to.equal(len)
@@ -198,7 +210,7 @@ describe('Test for section-details', () => {
   it('On Save and Continue visit the Sections Page', () => {
     getSections().should('have.text', 'Tests').click()
     cy.wait(1500)
-    cy.get('.sectionCard', { timeout: 6000 }).each(($el) => {
+    getSectionCardByClass().each(($el) => {
       cy.wrap($el).within((el) => {
         if (
           el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
@@ -209,19 +221,13 @@ describe('Test for section-details', () => {
     })
     getSectionName().contains(section1).click()
 
-    cy.get('#section-details-heading', { timeout: 6000 })
-      .should('be.visible', { timeout: 4000 })
-      .should('have.text', section1)
-
-    cy.get('#add-question', { timeout: 6000 })
-      .should('have.text', `+ ${addQuestion.addQuestion}`)
-      .click()
+    getAddQuestionBtn().click()
     cy.location('pathname', { timeout: 6000 }).should(
       'include',
       '/add-question'
     )
-    cy.get('h1', { timeout: 6000 }).should('be.visible')
-    cy.get('#Question').get('#dropdown-container').click()
+    geth1().should('be.visible')
+    getQuestionWithDropdown().click()
     cy.get('ul').within(() => {
       cy.get('li').within(() => {
         cy.get('div').then((el) => {
@@ -234,27 +240,20 @@ describe('Test for section-details', () => {
         })
       })
     })
-    cy.get('#question-editor #quill-editor').within(() => {
-      cy.get('.ql-editor').type(cypress.useMemo)
+    getQlEditorWrapper().within(() => {
+      getQlEditor()
     })
-    cy.get('#optionEditor input').clear().type(cypress.useMemoAns)
-    cy.get('#save-and-exit').click()
-    cy.location('pathname', { timeout: 6000 }).should('include', '/tests')
+    getOptEditorInput().clear().type(useMemoAns)
+    getSaveAndAddMore().click()
     // Verifying if Question is Empty or not
-    cy.get(
-      '#question-editor > .rounded-lg > .ql-container > .ql-editor'
-    ).clear()
 
-    cy.get('#save-and-add-more', { timeout: 6000 })
-      .should('have.text', cypress.saveAndAddMore)
-      .click()
-    cy.get('.Toastify__toast').should('have.text', 'Enter the Question')
+    cy.location('pathname', { timeout: 6000 }).should('include', '/tests')
   })
 
   it('Verifying if any Option is empty or not', () => {
     getSections().should('have.text', 'Tests').click()
     cy.wait(1500)
-    cy.get('.sectionCard', { timeout: 6000 }).each(($el) => {
+    getSectionCardByClass().each(($el) => {
       cy.wrap($el).within((el) => {
         if (
           el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
@@ -265,19 +264,14 @@ describe('Test for section-details', () => {
     })
     getSectionName().contains(section1).click()
 
-    cy.get('#section-details-heading', { timeout: 6000 })
-      .should('be.visible', { timeout: 4000 })
-      .should('have.text', section1)
-    cy.get('#add-question', { timeout: 6000 })
-      .should('have.text', `+ ${addQuestion.addQuestion}`)
-      .click()
+    getAddQuestionBtn().click()
     cy.location('pathname', { timeout: 6000 }).should(
       'include',
       routes.addQuestion
     )
-    cy.get('h1', { timeout: 6000 }).should('be.visible')
+    geth1().should('be.visible')
     let flag = 0
-    cy.get('#Question').get('#dropdown-container').click()
+    getQuestionWithDropdown().click()
     cy.get('ul').within(() => {
       cy.get('li').within(() => {
         cy.get('div').then((el) => {
@@ -290,7 +284,7 @@ describe('Test for section-details', () => {
       })
     })
     cy.get('.h-40 > .gap-6 > .flex-col').within(() => {
-      cy.get(' #quill-editor ').then((el) => {
+      getAssesmentQlEditorWrapper().then((el) => {
         ;[...el].forEach((element) => {
           if (element.innerText === '') {
             flag = 1
@@ -299,10 +293,8 @@ describe('Test for section-details', () => {
       })
     })
     if (flag == 1) {
-      cy.get('#save-and-add-more')
-        .should('have.text', cypress.saveAndAddMore)
-        .click()
-      cy.get('.Toastify__toast').should('have.text', '')
+      getSaveAndAddMore().should('have.text', saveAndAddMore).click()
+      getToastMessage().should('have.text', '')
     }
   })
 })

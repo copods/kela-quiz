@@ -99,6 +99,12 @@ export async function verifyOTP({
       candidate: { select: { OTP: true, id: true } },
     },
   })
+
+  //for testing purpose we are accepting manual OTP
+  if (process.env.PORT === '8811' && otp === Number('0000')) {
+    return true
+  }
+
   return candidateAssessmentOtp?.candidate?.OTP === otp
 }
 
