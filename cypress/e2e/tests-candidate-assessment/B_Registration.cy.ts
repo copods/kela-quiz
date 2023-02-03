@@ -1,11 +1,14 @@
 import {
   getCopyLinkId,
+  getEmailInput,
   getFirstName,
+  getGroupByItemTest,
   getGroupByTestId,
   geth1,
   getInvitePopup,
   getLastName,
   getRegistrationButtonId,
+  getSubmitBtn,
   getVeriticalIconId,
 } from 'support/common-function'
 
@@ -18,10 +21,10 @@ describe('Test for Candidate assessment Registration', () => {
     getGroupByTestId().click()
     cy.get('a').find('#tests').click()
     getInvitePopup().click()
-    cy.get('.inviteInput').type(`ki${emailId}@copods.co`)
-    cy.get('[data-cy="submit"]').click()
+    getEmailInput().type(`ki${emailId}@copods.co`)
+    getSubmitBtn().click()
     getGroupByTestId().click()
-    cy.get('.groupByItemTest').each((el) => {
+    getGroupByItemTest().each((el) => {
       const itemText = el.text()
       if (itemText === 'Quantitative - assessment1') {
         cy.wrap(el).click()

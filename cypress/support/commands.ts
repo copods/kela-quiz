@@ -1,6 +1,24 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { faker } from '@faker-js/faker'
 import { logIn } from '~/constants/common.constants'
+import {
+  getBeginAssessmentButton,
+  getCopyLinkId,
+  getEmailInput,
+  getFirstName,
+  getGroupByItemTest,
+  getGroupByTestId,
+  getInstructionHeading,
+  getInvitePopup,
+  getLastName,
+  getOTPFirstInputField,
+  getOTPFourthInputField,
+  getOTPSecondInputField,
+  getOTPThirdInputField,
+  getRegistrationButtonId,
+  getSubmitBtn,
+  getVeriticalIconId,
+} from './common-function'
 
 declare global {
   namespace Cypress {
@@ -115,21 +133,20 @@ const candidateRegistration = () => {
   cy.viewport(1280, 720)
   cy.login()
   cy.customVisit('/members')
-  cy.get('#group-by-tests').click()
+  getGroupByTestId().click()
   cy.get('a').find('#tests').click()
-  cy.get('#invite-popup-open0').click()
-  cy.get('.inviteInput').type(`ki${emailId}@copds.co`)
-  cy.wait(500)
-  cy.get('[data-cy="submit"]').click()
-  cy.get('#group-by-tests').click()
-  cy.get('.groupByItemTest').each((el) => {
+  getInvitePopup().click()
+  getEmailInput().type(`ki${emailId}@copods.co`)
+  getSubmitBtn().click()
+  getGroupByTestId().click()
+  getGroupByItemTest().each((el) => {
     const itemText = el.text()
     if (itemText === 'Quantitative - assessment1') {
       cy.wrap(el).click()
     }
   })
-  cy.get('#vertical-icon', { timeout: 8000 }).click()
-  cy.get('[data-cy="copy-link"]').should('be.visible').click()
+  getVeriticalIconId().click()
+  getCopyLinkId().should('be.visible').click()
   cy.wrap(
     Cypress.automation('remote:debugger:protocol', {
       command: 'Browser.grantPermissions',
@@ -146,9 +163,9 @@ const candidateRegistration = () => {
     .then((text) => {
       ExamLink = text.split('3000')[1]
       cy.visit(ExamLink)
-      cy.get('#firstName').type(candidateName)
-      cy.get('#lastName').type('Jain')
-      cy.get("[data-cy='submitButton']")
+      getFirstName().type(candidateName)
+      getLastName().type('Jain')
+      getRegistrationButtonId()
         .should('be.visible')
         .should('have.css', 'background-color', 'rgb(53, 57, 136)')
         .click()
@@ -161,23 +178,23 @@ const customVisitOnCandidateSide = (path = '') => {
 }
 const candidateVerification = () => {
   cy.customVisitOnCandidateSide('verification')
-  cy.get('input[name="field-1"]').type('0')
-  cy.get('input[name="field-2"]').type('0')
-  cy.get('input[name="field-3"]').type('0')
-  cy.get('input[name="field-4"]').type('0')
+  getOTPFirstInputField().type('0')
+  getOTPSecondInputField().type('0')
+  getOTPThirdInputField().type('0')
+  getOTPFourthInputField().type('0')
   cy.url().should('include', 'instructions')
 }
 
 const checkCandidateName = () => {
-  cy.get('[data-cy="heading"]')
+  getInstructionHeading()
     .should('be.visible')
     .should('have.text', `Welcome ${candidateName}`)
 }
 
 const assessmentInstruction = () => {
-  cy.get('#start').should('be.visible')
-  cy.get('#start').should('have.text', 'Begin Assessment')
-  cy.get('#start').click()
+  getBeginAssessmentButton().should('be.visible')
+  getBeginAssessmentButton().should('have.text', 'Begin Assessment')
+  getBeginAssessmentButton().click()
 }
 
 Cypress.Commands.add('login', login)
