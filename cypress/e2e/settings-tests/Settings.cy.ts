@@ -31,12 +31,11 @@ const passShouldNotBeSame =
   'Current Password and New Password should not be same'
 
 describe('Test for settings', () => {
-  beforeEach('sign-in', () => {
+  it('Tests to check Attributes/Colors/Visibility/Texts and to check if we can reset the password', () => {
+    // To login
     cy.login()
     cy.customVisit('/members')
-  })
 
-  it('Tests to check Attributes/Colors/Visibility/Texts and to check if we can reset the password', () => {
     // To check location and title
     getSettings().should('have.text', settings).click()
     cy.location('pathname').should('include', '/settings/general')
@@ -192,23 +191,19 @@ describe('Test for settings', () => {
     getConfirmNewPassword().clear().type('kQuiz@copods')
     getSubmitBtn().click()
     getNewPasswordError().should('have.text', passShouldNotBeSame)
-  })
-
-  it('Test to reset password', () => {
-    getSettings().click()
-    getResetPasswordPopup().click()
 
     // Change password
-    getOldPassword().type('kQuiz@copods')
-    getNewPassword().type('kQuiz@careers')
-    getConfirmNewPassword().type('kQuiz@careers')
+    getOldPassword().clear().type('kQuiz@copods')
+    getNewPassword().clear().type('kQuiz@careers')
+    getConfirmNewPassword().clear().type('kQuiz@careers')
     getSubmitBtn().click()
     getToaster().should('have.text', 'Password changed successfully !')
 
     // Change password to old once
-    getOldPassword().type('kQuiz@careers')
-    getNewPassword().type('kQuiz@copods')
-    getConfirmNewPassword().type('kQuiz@copods')
+    getResetPasswordPopup().click()
+    getOldPassword().clear().type('kQuiz@careers')
+    getNewPassword().clear().type('kQuiz@copods')
+    getConfirmNewPassword().clear().type('kQuiz@copods')
     getSubmitBtn().click()
     getToaster().should('have.text', 'Password changed successfully !')
   })
