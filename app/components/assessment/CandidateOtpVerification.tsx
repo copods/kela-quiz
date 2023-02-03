@@ -103,10 +103,14 @@ const CandidateOtp = ({ email }: { email: string }) => {
         <div className="flex justify-center">
           <img src={otpImage} alt={t('otpConstants.otp')} />
         </div>
-        <div className="text-2xl font-bold">{t('otpConstants.header')}</div>
+        <div className="text-2xl font-bold" data-cy="header">
+          {t('otpConstants.header')}
+        </div>
         <div className="gap-4 text-base text-gray-500">
           {t('otpConstants.enterOTP')}{' '}
-          <span className="font-medium text-primary">{email} </span>
+          <span className="font-medium text-primary" data-cy="email">
+            {email}{' '}
+          </span>
         </div>
         <Form method="post">
           <div className="flex justify-center gap-4 pb-4">
@@ -126,16 +130,20 @@ const CandidateOtp = ({ email }: { email: string }) => {
             ))}
           </div>
 
-          <div className="pb-10 text-base text-gray-500">
+          <div className="pb-10 text-base text-gray-500" data-cy="resendText">
             {finalTime === '00:00'
               ? t('otpConstants.didntGetCode')
               : t('otpConstants.resendCodeIn')}
             {finalTime !== '00:00' ? (
-              <span className="font-medium text-primary"> {finalTime}</span>
+              <span className="font-medium text-primary" data-cy="resendOTP">
+                {' '}
+                {finalTime}
+              </span>
             ) : (
               <span
                 tabIndex={0}
                 className="font-medium text-primary"
+                data-cy="resendButton"
                 onClick={() => {
                   resend()
                 }}
