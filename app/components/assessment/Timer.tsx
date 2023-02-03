@@ -53,7 +53,10 @@ const TimerComponent = ({
     return `${min > 9 ? '' : '0'}${min}:${seconds > 9 ? '' : '0'}${seconds} `
   }
   return (
-    <div className="flex items-center gap-4 text-lg font-medium text-gray-800">
+    <div
+      className="flex items-center gap-4 text-lg font-medium text-gray-800"
+      data-cy="timeRemaining"
+    >
       <span className="text-sm font-medium text-gray-500">
         {t('candidateExamConstants.timeRemaining')}
       </span>
