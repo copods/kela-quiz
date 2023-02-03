@@ -15,11 +15,9 @@ const memberEmail = 'john@example.com'
 const memberAlreadyExist = 'Member with this email id already exists!'
 
 describe('Test for Sign Up page', () => {
-  beforeEach('/sign-up', () => {
-    cy.visit('/sign-up')
-  })
-
   it('Tests to check Attributes/Colors/Visibility/Texts', () => {
+    cy.visit('/sign-up')
+
     // To check signup title has correct text and correct attributes
     getSignUpPageTitle()
       .should('have.text', signupPageTitle)
