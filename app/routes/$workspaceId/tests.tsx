@@ -60,6 +60,8 @@ export type LoaderData = {
   testCurrentPage: number
   testItemsPerPage: number
   getAllTestsCount: number
+  sortBy: string | null
+  sortOrder: string | null
 }
 
 export const loader: LoaderFunction = async ({ request, params }) => {
@@ -71,7 +73,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     const testCurrentPage = Math.max(Number(query.get('testPage') || 1), 1)
     // taking sortBy and order
     const sortBy = query.get('sortBy')
-    const sortOrder = query.get('sort')
+    const sortOrder = query.get('sort') || sortByOrder.desc
     const userId = await getUserId(request)
     const currentWorkspaceId = params.workspaceId as string
     const workspaces = await getUserWorkspaces(userId as string)
@@ -110,6 +112,8 @@ export const loader: LoaderFunction = async ({ request, params }) => {
       testCurrentPage,
       testItemsPerPage,
       getAllTestsCount,
+      sortBy,
+      sortOrder,
     })
   } catch (err) {
     console.log(err)
@@ -261,12 +265,9 @@ export default function SectionPage() {
       (data.getAllTestsCount > 0 &&
         t(sectionActionData?.resp?.status as string) ===
           t('statusCheck.testAddedSuccess')) ||
-      data.sections.length >= 0
+      data.sections.length >= 0 ||
+      (!location.search && data.getAllTestsCount > 0)
     ) {
-      navigate(
-        `/${data.currentWorkspaceId}${routes.tests}/${data.sections[0]?.id}?sortBy=${sortBy}&sort=${order}&testPage=${testsCurrentPage}&testItems=${testsPageSize}`
-      )
-    } else if (!location.search && data.getAllTestsCount > 0) {
       navigate(
         `/${data.currentWorkspaceId}${routes.tests}/${data.sections[0]?.id}?sortBy=${sortBy}&sort=${order}&testPage=${testsCurrentPage}&testItems=${testsPageSize}`
       )
@@ -277,7 +278,18 @@ export default function SectionPage() {
     t,
     data.getAllTestsCount,
     data.sections[0]?.id,
+    location.search,
+    sortBy,
   ])
+  useEffect(() => {
+    if (data.sortOrder !== order) {
+      navigate(
+        `/${data.currentWorkspaceId}${routes.tests}/${
+          data.sections.slice(-1)[0]?.id
+        }?sortBy=${sortBy}&sort=${order}&testPage=${testsCurrentPage}&testItems=${testsPageSize}`
+      )
+    }
+  }, [order])
   useEffect(() => {
     setTestsCurrentPage(data.testCurrentPage)
   }, [data])

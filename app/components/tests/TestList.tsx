@@ -273,7 +273,7 @@ const TestList = () => {
               onSortDirectionChange={onSortDirectionChange}
               sortBy={sortBy}
               onSortChange={onSortChange}
-              totalItems={tests?.length}
+              totalItems={testLoaderData?.allTestsCount}
               showSelected={false}
             />
           </div>

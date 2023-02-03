@@ -24,6 +24,7 @@ export default function MembersList({
   const memberLoaderData = useLoaderData()
   const loggedInUser = memberLoaderData.userId
   const [openDeleteModal, setOpenDeleteModal] = useState(false)
+  const [memberId, setMemberId] = useState('')
   const workspaceOwner = memberLoaderData.currentWorkspaceOwner.createdById
   const NameDataCell = (data: User) => {
     return (
@@ -49,6 +50,7 @@ export default function MembersList({
   const MemberDelete = (data: User) => {
     const openPopUp = () => {
       if (loggedInUser !== data.id) {
+        setMemberId(data.id)
         setOpenDeleteModal(!openDeleteModal)
       }
     }
@@ -67,13 +69,15 @@ export default function MembersList({
             loggedInUser === data.id && 'cursor-not-allowed text-red-200'
           }`}
         />
-        <DeletePopUp
-          setOpen={setOpenDeleteModal}
-          open={openDeleteModal}
-          onDelete={() => deleteUser(data.id)}
-          deleteItem={`${data.firstName} ${data.lastName}`}
-          deleteItemType={t('members.member')}
-        />
+        {memberId === data.id && (
+          <DeletePopUp
+            setOpen={setOpenDeleteModal}
+            open={openDeleteModal}
+            onDelete={() => deleteUser(data.id)}
+            deleteItem={`${data.firstName} ${data.lastName}`}
+            deleteItemType={t('members.member')}
+          />
+        )}
       </>
     )
   }
