@@ -20,6 +20,7 @@ import {
   getAddEditSectionTitleError,
   addEditSectionDescError,
   duplicateTitleError,
+  getSectionLSWrapper,
 } from 'support/common-function'
 
 const section1 = `Aptitude - section1`
@@ -35,15 +36,14 @@ describe('Test for Tests', () => {
     cy.customVisit('/members')
   })
 
-  it('Checks, Active State of Tests', () => {
+  it('Tests to check Attributes/Colors/Visibility/Texts', () => {
+    // To check initial active state
     getSections().click()
     cy.location().then((loc) => {
       cy.location('search').should('include', loc.search)
     })
-  })
 
-  it('checks, Tests page have heading and should be visible,correct text and attribute', () => {
-    getSections().click()
+    // To check heading is visible, has correct text and has correct attributes
     getTestHeading()
       .should('be.visible')
       .should('have.text', 'Tests')
@@ -51,9 +51,8 @@ describe('Test for Tests', () => {
       .should('have.attr', 'tabindex', '0')
       .click()
       .should('have.focus')
-  })
-  it('checks, Add test button should be visible, have correct text and cancel functionality', () => {
-    getSections().click()
+
+    // To check button is visible, has correct text and has working functionality
     getAddSectionBtn()
       .should('be.visible')
       .should('have.text', '+ Add Test')
@@ -63,11 +62,9 @@ describe('Test for Tests', () => {
       .within(() => {
         getCancelButton().click()
       })
-  })
 
-  it('checks, add test popup heading and close icon should be visible and contain correct attributes', () => {
-    getSections().click()
-    getAddSectionBtn().should('have.text', '+ Add Test').click()
+    // To check pop up heading and close icon is visible and has correct attributes
+    getAddSectionBtn().click()
     getDialogHeader()
       .should('be.visible')
       .should('have.text', 'Add Test')
@@ -79,10 +76,8 @@ describe('Test for Tests', () => {
       .should('be.visible')
       .should('have.attr', 'tabindex', '0')
       .should('have.attr', 'role', 'img')
-  })
-  it('Checks, Add and cancel button should be visible and have correct attributes', () => {
-    getSections().click()
-    getAddSectionBtn().should('have.text', '+ Add Test').click()
+
+    // To check add and cancel button is visible and have correct attributes
     getSubmitButtonById()
       .should('be.visible')
       .should('have.text', 'Add')
@@ -90,11 +85,8 @@ describe('Test for Tests', () => {
     getCancelButton()
       .should('have.text', 'Cancel')
       .should('have.attr', 'tabindex', '0')
-  })
 
-  it('checks, enter test name input field and description area should be visible and have correct attributes', () => {
-    getSections().click()
-    getAddSectionBtn().should('have.text', '+ Add Test').click()
+    // To check if input field and description area is visible and have correct attributes
     cy.get('form > div')
       .should('be.visible')
       .within((el) => {
@@ -111,10 +103,9 @@ describe('Test for Tests', () => {
           .click()
           .should('be.focus')
       })
-  })
-  it('checks,active Tests should have correct attributes and vertical dots for action menu', () => {
-    getSections().click()
-    cy.wait(1000)
+    getDialogCloseIcon().click()
+
+    // To check if active test has coorect attribute and has vertical dots
     getActiveSectionCard()
       .should('have.attr', 'role', 'button')
       .should('have.attr', 'tabindex', '0')
@@ -122,11 +113,8 @@ describe('Test for Tests', () => {
       .should('have.css', 'background-color', 'rgb(255, 255, 255)')
       .get('.verticalDots')
       .should('be.visible')
-  })
 
-  it('checks,Tests details heading should be visible and correct attributes', () => {
-    getSections().click()
-    cy.wait(1500)
+    // To check if tests heading is visible and has correct attributes
     getSectionCardByClass().each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -144,134 +132,52 @@ describe('Test for Tests', () => {
       .should('have.attr', 'tabindex', '0')
       .click()
       .should('have.focus')
-  })
 
-  it('checks,Tests details search bar should be visible and have correct attributes', () => {
-    getSections().click()
-    cy.wait(1500)
-    getSectionCardByClass().each(($el) => {
-      cy.wrap($el).within((el) => {
-        if (
-          el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
-        ) {
-          getSectionName().should('have.text', section1)
-        }
-      })
-    })
-    getSectionName().contains(section1).click()
+    // To check if search bar is visible and has correct attributes
     getSectionSearch()
       .should('be.visible')
       .should('have.attr', 'tabindex', '0')
       .click()
       .should('have.focus')
-  })
-  it('Checks,Question card should be visible and correct attributes', () => {
-    getSections().click()
-    cy.wait(1500)
-    getSectionCardByClass().each(($el) => {
-      cy.wrap($el).within((el) => {
-        if (
-          el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
-        ) {
-          getSectionName().should('have.text', section1)
-        }
-      })
-    })
-    getSectionName().contains(section1).click()
+
+    // To check if question card is visible and has correct attributes
     getQuestionCardWrapper()
       .should('be.visible')
       .should('have.attr', 'tabindex', '0')
       .should('have.attr', 'aria-label', 'Expand')
-  })
 
-  it('Checks,initially option card should have max height 0 and expand after clicking on question card', () => {
-    getSections().click()
-    cy.wait(1500)
-    getSectionCardByClass().each(($el) => {
-      cy.wrap($el).within((el) => {
-        if (
-          el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
-        ) {
-          getSectionName().should('have.text', section1)
-        }
-      })
-    })
-    getSectionName().contains(section1).click()
+    // To check if initially option card has max height 0 and can be expanded by clicking
     getOptionWrapper().should('have.css', 'max-height', '0px')
-    getQuestionCardWrapper().should('be.visible').click()
+    getQuestionCardWrapper().click()
     getOptionWrapper().should(
       'have.class',
       'overflow-scroll text-base text-gray-600 transition-all h-full'
     )
-  })
 
-  it('Checks,question type chip should be visible', () => {
-    getSections().click()
-    cy.wait(1500)
-    getSectionCardByClass().each(($el) => {
-      cy.wrap($el).within((el) => {
-        if (
-          el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
-        ) {
-          getSectionName().should('have.text', section1)
-        }
-      })
-    })
-    getSectionName().contains(section1).click()
-    getQuestionCardWrapper().should('be.visible').click()
-    cy.wait(500)
+    // To check if question type chip is visible
+    getQuestionCardWrapper().click()
     getQuestionType().should('be.visible')
-  })
 
-  it('Test for valid error message while adding new Tests without Title or description and duplicate title', () => {
-    getSections().click()
-    cy.wait(1500)
-    getSectionCardByClass().each(($el) => {
-      cy.wrap($el).within((el) => {
-        if (
-          el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
-        ) {
-          getSectionName().should('have.text', section1)
-        }
-      })
+    // To check if user sees valid error message while adding new tests without title or description and duplicate title
+    getAddSectionBtn().click()
+    cy.get('form > div').within((el) => {
+      getSubmitBtn().click()
     })
-    getSectionName().contains(section1).click()
-    getAddSectionBtn().should('have.text', '+ Add Test').click()
-    cy.get('form > div')
-      .should('be.visible')
-      .within((el) => {
-        getSubmitBtn().click()
-      })
     getAddEditSectionTitleError().should('have.text', nameIsReq)
     getTestNameInput().type(`${section1} ${new Date().getTime()}`)
     getSubmitButtonById().click()
     addEditSectionDescError().should('have.text', descIsReq)
     cy.wait(500)
-    cy.get('form > div')
-      .should('be.visible')
-      .within((el) => {
-        getTestNameInput().clear().type(section1)
-        getTextArea().clear().type('Aptitude')
-        getSubmitButtonById().click()
-      })
-    duplicateTitleError().should('have.text', duplicate)
-  })
-
-  it('SortBy Name or created Date', () => {
-    getSections().click()
-    cy.wait(1500)
-    getSectionCardByClass().each(($el) => {
-      cy.wrap($el).within((el) => {
-        if (
-          el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
-        ) {
-          getSectionName().should('have.text', section1)
-        }
-      })
+    cy.get('form > div').within((el) => {
+      getTestNameInput().clear().type(section1)
+      getTextArea().clear().type('Aptitude')
+      getSubmitButtonById().click()
     })
-    getSectionName().contains(section1).click()
-    cy.wait(1500)
-    cy.get('.sectionLSWrapper').within(() => {
+    duplicateTitleError().should('have.text', duplicate)
+    getDialogCloseIcon().click()
+
+    // To check sort by name and sort by created date
+    getSectionLSWrapper().within(() => {
       cy.get('#section-cards')
         .get('#section-link')
         .then((listing) => {
