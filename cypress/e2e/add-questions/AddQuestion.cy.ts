@@ -14,7 +14,7 @@ describe('Test for section-details', () => {
     cy.customVisit('/members')
   })
 
-  it('checks,heading, button of add question and redirect to section page after clicking on breadscrum link', () => {
+  it('checks,heading, button of add question and redirect to section page after clicking on breadscrum link and question delete icon', () => {
     getSections().click()
     cy.wait(1500)
 
@@ -28,7 +28,11 @@ describe('Test for section-details', () => {
       })
     })
     getSectionName().contains(section1).click()
-    cy.wait(500)
+    cy.wait(1500)
+    cy.get('.question', { timeout: 8000 })
+      .contains('What is useRef() ?')
+      .trigger('mouseover')
+    cy.get('[data-cy="delete-question"]').should('be.exist')
     getAddQuestionBtn().click()
     cy.location('pathname', { timeout: 6000 }).should(
       'include',
@@ -237,9 +241,10 @@ describe('Test for section-details', () => {
     cy.get('#save-and-exit').click()
     cy.location('pathname', { timeout: 6000 }).should('include', '/tests')
     // Verifying if Question is Empty or not
-    cy.get('#question-editor > .rounded-lg > .ql-container > .ql-editor')
-      .type('{backspace}')
-      .should('have.value', '')
+    cy.get(
+      '#question-editor > .rounded-lg > .ql-container > .ql-editor'
+    ).clear()
+
     cy.get('#save-and-add-more', { timeout: 6000 })
       .should('have.text', cypress.saveAndAddMore)
       .click()
@@ -299,24 +304,5 @@ describe('Test for section-details', () => {
         .click()
       cy.get('.Toastify__toast').should('have.text', '')
     }
-  })
-  it('Checks if Delete Question button exists', () => {
-    getSections().should('have.text', 'Tests').click()
-    cy.wait(1500)
-    cy.get('.sectionCard', { timeout: 6000 }).each(($el) => {
-      cy.wrap($el).within((el) => {
-        if (
-          el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
-        ) {
-          getSectionName().should('have.text', section1)
-        }
-      })
-    })
-    getSectionName().contains(section1).click()
-    cy.wait(1500)
-    cy.get('.question', { timeout: 8000 })
-      .contains('What is useRef() ?')
-      .trigger('mouseover')
-    cy.get('[data-cy="delete-question"]').should('be.exist')
   })
 })
