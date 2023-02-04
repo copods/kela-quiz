@@ -30,7 +30,7 @@ describe('Test for GroupByTestTable, Result', () => {
     cy.customVisit('/members')
   })
 
-  it('checks, result page elements css properties and attributes', () => {
+  it('To check result page element css properties and attributes', () => {
     getGroupByTestId().click()
 
     // checks,table contains assessment name and having correct css and attributes
@@ -161,11 +161,11 @@ describe('Test for GroupByTestTable, Result', () => {
       })
   })
 
-  it('checks,elements inside perticular test', () => {
+  it('To check elemnts inside perticular test', () => {
+    cy.viewport(1500, 1000)
     getGroupByTestId().click()
     getGroupByItemTest().contains(test1).click()
-    getVeriticalIconId().should('be.visible')
-    getVeriticalIconId().click()
+    getVeriticalIconId().should('be.visible').click()
     getCopyLinkId().should('be.visible')
     getResendInviteCandidate().click()
     getToastMessage().should('have.text', 'Candidate Invited Successfully')
