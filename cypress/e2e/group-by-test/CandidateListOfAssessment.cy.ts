@@ -22,7 +22,7 @@ describe('Visiting group by test of results page', () => {
     getTitle()
       .should('be.visible')
       .should('have.class', 'text-3xl font-semibold text-gray-900')
-
+    cy.wait(1000)
     //checks button should be visible and after clicking it back to the result page
     getBackButton().should('be.visible').click()
     cy.location('pathname', { timeout: 60000 }).should('include', '/results')
