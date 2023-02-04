@@ -25,9 +25,12 @@ import {
 const test1 = `Aptitude - assessment1`
 
 describe('Test for GroupByTestTable, Result', () => {
-  it('checks, result page elements css properties and attributes', () => {
+  beforeEach('sign-in', () => {
     cy.login()
     cy.customVisit('/members')
+  })
+
+  it('checks, result page elements css properties and attributes', () => {
     getGroupByTestId().click()
 
     // checks,table contains assessment name and having correct css and attributes
@@ -84,8 +87,8 @@ describe('Test for GroupByTestTable, Result', () => {
           })
         }
       })
-
     // sort by name in descending order
+
     getDescendSort().click()
     getElementInsideOfDropdown()
       .invoke('text')
@@ -156,10 +159,12 @@ describe('Test for GroupByTestTable, Result', () => {
           })
         }
       })
+  })
 
-    // To check elements inside a perticular test
+  it('checks,elements inside perticular test', () => {
     getGroupByTestId().click()
     getGroupByItemTest().contains(test1).click()
+    getVeriticalIconId().should('be.visible')
     getVeriticalIconId().click()
     getCopyLinkId().should('be.visible')
     getResendInviteCandidate().click()
