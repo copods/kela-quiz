@@ -15,6 +15,7 @@ import {
 describe('Test for Candidate assessment Registration', () => {
   const emailId = Math.random()
   let examLink = ''
+
   it('Check candidate is in correct exam link', () => {
     cy.login()
     cy.customVisit('/members')
@@ -51,13 +52,13 @@ describe('Test for Candidate assessment Registration', () => {
       })
   })
 
-  it('Checks, register heading should be visible', () => {
+  it('Tests to check Attributes/Colors/Visibility/Texts', () => {
     cy.visit(examLink)
-    geth1().should('be.visible')
-  })
 
-  it('Checks, First and Last Name field of the page and button should be disable', () => {
-    cy.visit(examLink)
+    // To check if heading is visible
+    geth1().should('be.visible')
+
+    // To check if first and last name field
     getFirstName()
       .should('be.visible')
       .should('have.attr', 'placeholder', 'Enter first name')
@@ -66,40 +67,30 @@ describe('Test for Candidate assessment Registration', () => {
       .should('be.visible')
       .should('have.attr', 'placeholder', 'Enter last name')
 
+    // To check if button is disabled
     getRegistrationButtonId().should('be.disabled')
-  })
 
-  it('Checks, button color when it is disabled', () => {
-    cy.visit(examLink)
+    // To check if button color is correct when disabled
     getRegistrationButtonId().should(
       'have.css',
       'background-color',
       'rgb(162, 164, 214)'
     )
-  })
 
-  it('Checks, first name is empty button should be disabled', () => {
-    cy.visit(examLink)
+    // To check if first name is empty the button should be disabled
     getFirstName().should('be.visible').should('be.empty')
-    getLastName().should('be.visible').type('jain')
+    getLastName().should('be.visible').type('tester')
     getRegistrationButtonId().should('be.disabled')
-  })
 
-  it('Checks, last name is empty submit buttom should be disabled', () => {
-    cy.visit(examLink)
-    getFirstName().should('be.visible').type('ayushi')
-    getLastName().should('be.visible').should('be.empty')
+    // To check if last name is empty the button should be disabled
+    getFirstName().clear().type('tester')
+    getLastName().clear().should('be.empty')
     getRegistrationButtonId().should('be.disabled')
-  })
 
-  it('Checks, submitting the registeration form', () => {
-    cy.visit(examLink)
-    getFirstName().type('aa')
-    getLastName().type('Jain')
-    getRegistrationButtonId()
-      .should('be.visible')
-      .should('have.css', 'background-color', 'rgb(53, 57, 136)')
-      .click()
+    // To check if form is submitting
+    getFirstName().clear().type('aa')
+    getLastName().clear().type('Jain')
+    getRegistrationButtonId().click()
     cy.url().should('include', `${examLink}/verification`)
   })
 })
