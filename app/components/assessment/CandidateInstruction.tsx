@@ -45,7 +45,7 @@ const CandidateInstruction = () => {
       <div className="flex-1 overflow-auto">
         <div className="flex flex-col items-center justify-center gap-16 py-10">
           <div className="flex flex-col items-center justify-center gap-4">
-            <h3 className="text-2xl font-bold text-gray-900">
+            <h3 className="text-2xl font-bold text-gray-900" data-cy="heading">
               {t('candidateExamConstants.candidateInsWelcome')}{' '}
               {candidate.firstName}
             </h3>
@@ -56,10 +56,13 @@ const CandidateInstruction = () => {
           </div>
           <div className="flex gap-12">
             <div className="flex w-438 flex-col gap-10 rounded-lg border border-gray-50 bg-white p-10 shadow-sm">
-              <h3 className="text-center text-2xl font-bold text-gray-900">
+              <h3
+                className="text-center text-2xl font-bold text-gray-900"
+                data-cy="testSectionHeading"
+              >
                 {t('routeFiles.tests')}
               </h3>
-              <div className="flex flex-col gap-6">
+              <div className="flex flex-col gap-6" data-cy="testSectionContent">
                 {candidateSections.map(
                   (section: SectionInTest, index: number) => {
                     return (
@@ -81,10 +84,16 @@ const CandidateInstruction = () => {
               </div>
             </div>
             <div className="flex w-438 flex-col gap-10 rounded-lg border border-gray-50 bg-white p-10 shadow-sm">
-              <h3 className="text-center text-2xl font-bold text-gray-900">
+              <h3
+                className="text-center text-2xl font-bold text-gray-900"
+                data-cy="instructionSectionHeading"
+              >
                 {t('candidateExamConstants.instructions')}
               </h3>
-              <div className="flex flex-col gap-6">
+              <div
+                className="flex flex-col gap-6"
+                data-cy="instructionSectionContent"
+              >
                 {setOfInstructions.map((instruction: string, index: number) => {
                   return (
                     <div
@@ -104,7 +113,10 @@ const CandidateInstruction = () => {
           <div className="flex flex-col items-center justify-center gap-4">
             <div className="flex gap-2">
               <span>🎉 </span>
-              <p className="text-base font-semibold text-gray-900">
+              <p
+                className="text-base font-semibold text-gray-900"
+                data-cy="goodLuckMessageText"
+              >
                 Best of Luck
               </p>
             </div>

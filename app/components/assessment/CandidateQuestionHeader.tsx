@@ -24,7 +24,10 @@ const CandidateQuestionHeader = () => {
           {t('sideNav.sideNavHeading')}
         </span>
       </div>
-      <div className="w-min-64 flex self-center text-center text-xl font-bold">
+      <div
+        className="w-min-64  flex self-center text-center text-xl font-bold"
+        data-cy="testSectionHeading"
+      >
         Section {section.order} - {candidateTests.sections.length}:{' '}
         {candidateTests.test.name}
       </div>
