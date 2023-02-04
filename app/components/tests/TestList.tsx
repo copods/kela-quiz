@@ -145,7 +145,7 @@ const TestList = () => {
     ]
     return (
       <>
-        <div className="flex">
+        <div className="flex" id="action-cell">
           <Icon
             id={`invite-popup-open${index}`}
             role={'button'}
