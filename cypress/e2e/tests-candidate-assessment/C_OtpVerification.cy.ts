@@ -46,7 +46,7 @@ describe('Test for candidate assessment verfication', () => {
     getResendOTP().should('have.text', ' 00:55')
 
     // To check if text changes after 1 min
-    cy.wait(55000)
+    cy.tick(55000)
     getResendText().should('have.text', "Didn't get a code Resend")
     getResendButton().should('be.visible').click()
     getToastMessage().should('have.text', 'Otp sent. Please check your email')

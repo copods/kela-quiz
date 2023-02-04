@@ -30,10 +30,6 @@ describe('Tests for Test Section', () => {
   /**
    *  Test Cases For Section 1
    */
-  it('Checks, Heading should be visible and correct', () => {
-    getSectionHeading().should('be.visible')
-    getSectionHeading().should('have.text', commonContants?.sectionHeadingOne)
-  })
 
   it('Checks, timer should be visible and should work properly', () => {
     cy.clock()
@@ -53,41 +49,40 @@ describe('Tests for Test Section', () => {
     cy.tick(1000)
   })
 
-  it('Checks, Question section heading should be visible and correct', () => {
+  it('Tests to check Attributes/Colors/Visibility/Texts of section 1', () => {
+    // To check heading is visible and correct
+    getSectionHeading().should('be.visible')
+    getSectionHeading().should('have.text', commonContants?.sectionHeadingOne)
+
+    // To check question section heading
     getQuestionSectionHeading()
       .should('be.visible')
       .should('have.text', 'Question ')
-  })
 
-  it('Checks, Question should be visible', () => {
+    // To check question
     getQuestion().should('be.visible')
-  })
 
-  it('Checks, Answer section heading should be visible and correct', () => {
+    // To check answer section heading
     getAnswerSectionHeading()
       .first()
       .should('be.visible')
       .should('have.text', 'Write Correct Answer')
-  })
 
-  it('Checks, Answer section has textArea', () => {
+    // To check answer section has text area
     getAnswer().should('be.visible')
-    getAnswer().click().should('have.focus') //checking Accessibility
-  })
+    getAnswer().click().should('have.focus')
 
-  it('Checks, Previous button should be visible', () => {
+    // To check previous button is visible
     cy.contains('button', commonContants.Previous).should('be.disabled')
     cy.contains('button', commonContants.Previous)
       .should('have.class', 'text-xs')
       .and('have.class', 'font-medium')
       .and('have.class', 'text-primaryDisabled')
-  })
 
-  it('Checks, Finish button should be visible', () => {
+    // To check finish button is visible
     cy.contains('button', commonContants.Finish).should('be.visible')
-  })
 
-  it('Checks, Attempted question and click on finish', () => {
+    // To attempt question and click finish
     cy.contains('button', commonContants.Finish).click()
     cy.url().should('include', commonContants.coolDown)
   })
@@ -95,20 +90,18 @@ describe('Tests for Test Section', () => {
   /**
    * Cool Down Page
    */
-
-  it('Checks, Cool down page url', () => {
+  it('Tests to check Attributes/Colors/Visibility/Texts of cooldown page', () => {
+    // To check cooldown page url
     cy.url().should('contains', commonContants.coolDown)
-  })
 
-  it('Checks, Take A Break is visible and should be correct', () => {
+    // To check take a break is visible
     getcoolDownCard()
       .find('span')
       .should('be.visible')
       .should('have.class', 'text-gray-500')
     getcoolDownCard().find('span').should('have.text', 'Take A Break!')
-  })
 
-  it('Checks, Heading should be visible and correct styling', () => {
+    // To check heading is visible
     getcoolDownCard().find('p').should('be.visible')
     getcoolDownCard()
       .find('p')
@@ -116,13 +109,11 @@ describe('Tests for Test Section', () => {
         'have.text',
         `Cheers! ${commonContants.section1} Questions Completed - one more to go`
       )
-  })
 
-  it('Checks, cooldownImage is visible', () => {
+    // To check cooldown image is visible
     cy.get('.w-coolDownCard img').should('be.visible')
-  })
 
-  it('Checks, Start new section button should be visible and works fine ', () => {
+    // To check start new section button is visible
     cy.contains('button', 'Start New Section')
       .should('be.visible')
       .should('have.class', 'text-gray-50')
@@ -134,12 +125,12 @@ describe('Tests for Test Section', () => {
    *   Test Cases For Question 1 of Section 2
    */
 
-  it('Checks, Heading should be visible and correct', () => {
+  it('Tests to check Attributes/Colors/Visibility/Texts of section 2 page', () => {
+    // To check heading
     getSectionHeading().should('be.visible')
     getSectionHeading().should('have.text', commonContants?.sectionHeadingTwo)
-  })
 
-  it('Checks, Stepper section should be visible and work properly', () => {
+    // To check stepper section
     getStepperContents()
       .first()
       .find('div')
@@ -151,30 +142,13 @@ describe('Tests for Test Section', () => {
       .find('div')
       .and('have.class', 'rounded-full')
       .should('have.text', '2')
-  })
 
-  it('Check, skip question button should be visible', () => {
-    cy.contains('button', 'Skip Question')
-      .should('be.visible')
-      .should('have.class', 'text-xs')
-  })
-
-  it('Checks, Next button should be visible', () => {
-    cy.contains('button', commonContants.Next).should('be.visible')
-    cy.contains('button', commonContants.Next)
-      .should('have.class', 'text-xs')
-      .and('have.class', 'font-medium')
-      .and('have.class', 'text-gray-50')
-      .and('have.class', 'bg-primary')
-  })
-
-  it('Checks, Answer Section contains opitons', () => {
+    // To check answer section contains options
     getAnswerSectionLabel().each(($el) => {
       cy.wrap($el).first().get('input').should('be.visible')
     })
-  })
 
-  it('Checks,attempt Question and click on skip', () => {
+    // To attempt question and click skip
     cy.contains('button', 'Skip Question').click()
     getStepperContents()
       .first()
@@ -184,9 +158,8 @@ describe('Tests for Test Section', () => {
       .should('be.visible')
     cy.contains('button', commonContants.Previous).click()
     getStepperContents().last().find('div').find('img').should('be.visible')
-  })
 
-  it('Checks, attempt Question and click on next', () => {
+    // To attempt question and click on next
     getAnswerSectionLabel().first().click()
     cy.contains('button', commonContants.Next).click()
     getStepperContents()
@@ -200,30 +173,29 @@ describe('Tests for Test Section', () => {
   /**
    * Test Cases For Question 2 of Section 2
    */
-  it('Checks, Previous button should be visible and should have correct styling', () => {
+
+  it('Tests to check Attributes/Colors/Visibility/Texts of question 2 of section 2 page', () => {
+    // To check previous button
     cy.contains('button', commonContants.Previous).should('be.visible')
     cy.contains('button', commonContants.Previous)
       .should('have.class', 'text-xs')
       .and('have.class', 'font-medium')
       .and('have.class', 'bg-white')
-  })
 
-  it('Checks, Previous button should work correctly', () => {
+    // To check previous button works
     cy.contains('button', commonContants.Previous).click()
     getStepperContents().last().find('div').find('img').should('be.visible')
     cy.contains('button', commonContants.Next).click()
-  })
 
-  it('Checks, End test button should be visible', () => {
+    // To check end test button is visible
     cy.contains('button', commonContants.EndTest).should('be.visible')
     cy.contains('button', commonContants.EndTest)
       .should('have.class', 'text-xs')
       .and('have.class', 'font-medium')
       .and('have.class', 'text-gray-50')
       .and('have.class', 'bg-primary')
-  })
 
-  it('Checks, End Test working correctly', () => {
+    // To check end test button works
     getAnswerSectionLabel().last().click()
     cy.contains('button', commonContants.EndTest).should('be.visible').click()
   })
@@ -232,15 +204,14 @@ describe('Tests for Test Section', () => {
    * End assessment
    */
 
-  it('Checks, correct page', () => {
+  it('Tests to check Attributes/Colors/Visibility/Texts of end assessment', () => {
+    // To check if page url is correct
     cy.url().should('include', 'end-assessment')
-  })
 
-  it('Checks, image is visible or not', () => {
+    // To check if image is visible
     getcoolDownCard().find('img').should('be.visible')
-  })
 
-  it('Checks, Congratulation text is visible and correct', () => {
+    // To check if text is visible
     getcoolDownCard()
       .find('span')
       .should('have.text', commonContants.congratulationText)
