@@ -22,12 +22,12 @@ describe('Test for Assessment Verification', () => {
     cy.checkCandidateName()
   })
 
-  it('Checks, test section should have heading', () => {
+  it('Tests to check Attributes/Colors/Visibility/Texts', () => {
+    // To check section heading
     getSectionHeading().should('be.visible')
     getSectionHeading().should('have.text', 'Tests')
-  })
 
-  it('Checks, total number of section in test with name', () => {
+    // To check total number of sections
     const sectionsInAssessment = [
       'Test 1 -Quantitive - section1',
       'Test 2 -Quantitive - section2',
@@ -38,14 +38,12 @@ describe('Test for Assessment Verification', () => {
       .each(($el, index) => {
         cy.wrap($el).should('have.text', sectionsInAssessment[index])
       })
-  })
 
-  it('Checks, Instructions section should have proper heading', () => {
+    // To check instruction section heading
     getInstructionSectionHeading().should('be.visible')
     getInstructionSectionHeading().should('have.text', 'Instructions')
-  })
 
-  it('Checks, total number of instruction in text with name', () => {
+    // To check instruction text
     const instructions = [
       'The duration of this exam is 3 minutes',
       'Each question is worth the same marks',
@@ -57,12 +55,12 @@ describe('Test for Assessment Verification', () => {
       .each(($el, index) => {
         cy.wrap($el).should('have.text', instructions[index])
       })
-  })
-  it('Checks, GoodLuckText should be visible and have correct text', () => {
+
+    // To check goodluck text
     getGoodLuckMessageText().should('be.visible')
     getGoodLuckMessageText().should('have.text', commonContants.BestWishes)
-  })
-  it('Checks, click on begin assessment', () => {
+
+    // To click on begin assessment
     getBeginAssessmentButton().should('be.visible')
     getBeginAssessmentButton().should('have.text', commonContants.Begin)
     getBeginAssessmentButton().click()
