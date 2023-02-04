@@ -28,6 +28,14 @@ describe('Test for candidate assessment verfication', () => {
     getEmailIDOfCandidate().should('be.visible')
   })
 
+  it('Test to check text change on timer', () => {
+    cy.customVisitOnCandidateSide('verification')
+    cy.wait(60000)
+    getResendText().should('have.text', "Didn't get a code Resend")
+    getResendButton().should('be.visible').click()
+    getToastMessage().should('have.text', 'Otp sent. Please check your email')
+  })
+
   it('Test to check OTP flow', () => {
     cy.customVisitOnCandidateSide('verification')
 
@@ -44,12 +52,6 @@ describe('Test for candidate assessment verfication', () => {
     getResendOTP().should('have.text', ' 00:56')
     cy.tick(1000)
     getResendOTP().should('have.text', ' 00:55')
-
-    // To check if text changes after 1 min
-    cy.tick(55000)
-    getResendText().should('have.text', "Didn't get a code Resend")
-    getResendButton().should('be.visible').click()
-    getToastMessage().should('have.text', 'Otp sent. Please check your email')
 
     // To check otp input fields
     getOTPFirstInputField().type('0')
