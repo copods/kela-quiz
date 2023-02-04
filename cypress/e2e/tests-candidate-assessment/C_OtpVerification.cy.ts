@@ -16,20 +16,22 @@ describe('Test for candidate assessment verfication', () => {
     cy.candidateRegistration()
   })
 
-  it('Checks, header of verification page should be visible and correct', () => {
+  it('Tests to check Attributes/Colors/Visibility/Texts', () => {
     cy.customVisitOnCandidateSide('verification')
+
+    // To check if header is visible
     getOTPVerificationHeader()
       .should('be.visible')
       .should('have.text', 'OTP Verification')
-  })
 
-  it('Checks, Email Id of candidate should be visible and correct', () => {
-    cy.customVisitOnCandidateSide('verification')
+    // To check if email id of candidate is visible
     getEmailIDOfCandidate().should('be.visible')
   })
 
-  it('Checks, Timer is working fine', () => {
+  it('Test to check OTP flow', () => {
     cy.customVisitOnCandidateSide('verification')
+
+    // To check otp timer
     cy.clock()
     getResendOTP().should('have.text', ' 01:00')
     cy.tick(1000)
@@ -38,18 +40,18 @@ describe('Test for candidate assessment verfication', () => {
     getResendOTP().should('have.text', ' 00:58')
     cy.tick(1000)
     getResendOTP().should('have.text', ' 00:57')
-  })
+    cy.tick(1000)
+    getResendOTP().should('have.text', ' 00:56')
+    cy.tick(1000)
+    getResendOTP().should('have.text', ' 00:55')
 
-  it('Checks, Timer ends and text Changes', () => {
-    cy.customVisitOnCandidateSide('verification')
-    cy.wait(60000)
+    // To check if text changes after 1 min
+    cy.wait(55000)
     getResendText().should('have.text', "Didn't get a code Resend")
     getResendButton().should('be.visible').click()
     getToastMessage().should('have.text', 'Otp sent. Please check your email')
-  })
 
-  it('Checks, Otp Verification', () => {
-    cy.customVisitOnCandidateSide('verification')
+    // To check otp input fields
     getOTPFirstInputField().type('0')
     getOTPSecondInputField().type('0')
     getOTPThirdInputField().type('0')
