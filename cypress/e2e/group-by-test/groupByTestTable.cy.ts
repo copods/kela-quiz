@@ -160,7 +160,6 @@ describe('Test for GroupByTestTable, Result', () => {
     // To check elements inside a perticular test
     getGroupByTestId().click()
     getGroupByItemTest().contains(test1).click()
-    getVeriticalIconId().should('be.visible')
     getVeriticalIconId().click()
     getCopyLinkId().should('be.visible')
     getResendInviteCandidate().click()
