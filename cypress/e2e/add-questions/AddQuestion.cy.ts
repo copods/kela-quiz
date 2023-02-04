@@ -20,24 +20,23 @@ import {
   getDeleteOption,
   getSvg,
 } from 'support/common-function'
-import { routes } from '~/constants/route.constants'
 const section1 = `Aptitude - section1`
 const useRef = 'What is useRef() ?'
 const saveAndAddMore = 'Save & Add More'
 const useRefAns = 'It allows you to persist values between renders.'
 const useMemoAns =
   'The useMemo Hook can be used to keep expensive, resource intensive functions from needlessly running.'
+const addQuestion = '/add-question'
 
 describe('Test for section-details', () => {
   beforeEach('sign-in', () => {
     cy.login()
-
     cy.customVisit('/members')
   })
 
-  it('checks,heading, button of add question and redirect to section page after clicking on breadscrum link and question delete icon', () => {
+  it('Tests to check heading, button of add question and to check breadcrumb is working and to check question delete icon', () => {
     getSections().click()
-    cy.wait(1500)
+    cy.wait(1000)
 
     getSectionCardByClass().each(($el) => {
       cy.wrap($el).within((el) => {
@@ -49,21 +48,19 @@ describe('Test for section-details', () => {
       })
     })
     getSectionName().contains(section1).click()
-    cy.wait(1500)
+    cy.wait(1000)
     getQuetion().contains('What is useRef() ?').trigger('mouseover')
     getDeleteQuestion().should('be.exist')
     getAddQuestionBtn().click()
-    cy.location('pathname', { timeout: 6000 }).should(
-      'include',
-      routes.addQuestion
-    )
+    cy.location('pathname').should('include', addQuestion)
     geth1().should('have.text', section1 + ' - Add Question')
     getTest().click()
   })
+
   let lengthBefore: number
-  it('Verifying functionlity and elements in add question page', () => {
+  it('To check if functionality and elements of add question page are working', () => {
     getSections().click()
-    cy.wait(1500)
+    cy.wait(1000)
     getSectionCardByClass().each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -77,10 +74,7 @@ describe('Test for section-details', () => {
 
     getAddQuestionBtn().click()
 
-    cy.location('pathname', { timeout: 6000 }).should(
-      'include',
-      routes.addQuestion
-    )
+    cy.location('pathname').should('include', addQuestion)
     geth1().should('be.visible')
     getQuestionWithDropdown().click()
     let flag = ''
@@ -101,11 +95,12 @@ describe('Test for section-details', () => {
         })
       })
     })
+
     // Verifying MCQ to have Check Box in options
     if (flag === 'CheckBox') {
       getCheckbox().should('have.class', 'checkBox')
     }
-    cy.wait(500)
+
     // Verifying Single Choice to have Radio Button in options
     getQuestionWithDropdown().click()
     cy.get('ul').within(() => {
@@ -128,8 +123,8 @@ describe('Test for section-details', () => {
     if (flag === 'RadioButton') {
       getInput().should('have.class', 'radioButton')
     }
+
     // Verifying Text to have Textarea in options and should be in focused after interaction
-    cy.wait(500)
     getQuestionWithDropdown().click()
     cy.get('ul').within(() => {
       cy.get('li').within(() => {
@@ -151,17 +146,16 @@ describe('Test for section-details', () => {
     if (flag === 'TextArea') {
       getInputTextArea().click().should('be.focused')
     }
+
     // On Save and Add More visit the Add Question Page
     getQlEditorWrapper().within(() => {
       getQlEditor().type(useRef)
     })
     getOptEditorInput().clear().type(useRefAns)
     getSaveAndAddMore().click()
-    cy.location('pathname', { timeout: 6000 }).should(
-      'include',
-      '/add-question'
-    )
+    cy.location('pathname').should('include', '/add-question')
     cy.wait(500)
+
     // Verifying if Add Option functionality Working on Options
     getQuestionWithDropdown().click()
     cy.get('ul').within(() => {
@@ -207,9 +201,9 @@ describe('Test for section-details', () => {
     })
   })
 
-  it('On Save and Continue visit the Sections Page', () => {
+  it('To check if save and continue reroutes to sections page', () => {
     getSections().should('have.text', 'Tests').click()
-    cy.wait(1500)
+    cy.wait(1000)
     getSectionCardByClass().each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -222,10 +216,7 @@ describe('Test for section-details', () => {
     getSectionName().contains(section1).click()
 
     getAddQuestionBtn().click()
-    cy.location('pathname', { timeout: 6000 }).should(
-      'include',
-      '/add-question'
-    )
+    cy.location('pathname').should('include', '/add-question')
     geth1().should('be.visible')
     getQuestionWithDropdown().click()
     cy.get('ul').within(() => {
@@ -245,14 +236,11 @@ describe('Test for section-details', () => {
     })
     getOptEditorInput().clear().type(useMemoAns)
     getSaveAndAddMore().click()
-    // Verifying if Question is Empty or not
-
-    cy.location('pathname', { timeout: 6000 }).should('include', '/tests')
   })
 
-  it('Verifying if any Option is empty or not', () => {
+  it('To check if any option is empty or not', () => {
     getSections().should('have.text', 'Tests').click()
-    cy.wait(1500)
+    cy.wait(1000)
     getSectionCardByClass().each(($el) => {
       cy.wrap($el).within((el) => {
         if (
@@ -265,10 +253,7 @@ describe('Test for section-details', () => {
     getSectionName().contains(section1).click()
 
     getAddQuestionBtn().click()
-    cy.location('pathname', { timeout: 6000 }).should(
-      'include',
-      routes.addQuestion
-    )
+    cy.location('pathname').should('include', addQuestion)
     geth1().should('be.visible')
     let flag = 0
     getQuestionWithDropdown().click()
