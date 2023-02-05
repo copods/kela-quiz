@@ -13,7 +13,7 @@ import {
 } from 'support/common-function'
 import { cypress, testsConstants } from '~/constants/common.constants'
 
-const test1 = `Aptitude - assessment2`
+const test1 = `Aptitude - assessment1`
 const selectedSectionText = 'Selected Tests'
 const assessmentDetailsText = 'Assessment Details'
 const inviteCandidate = 'Invite Candidate'
