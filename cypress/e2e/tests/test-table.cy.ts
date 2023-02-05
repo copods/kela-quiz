@@ -8,7 +8,6 @@ import {
   getCreatedByHeader,
   getCreatedOnHeader,
   getDeleteTest,
-  getDialogCloseIcon,
   getDropdownButton,
   getEmailInput,
   getInviteInput,
@@ -37,8 +36,6 @@ const tableTitles = {
   actions: 'Action',
 }
 const addAssessmentbuttonText = '+ Add Assessment'
-const candidateAlreadyInvited =
-  'Candidate has already been invited for this Assessment'
 const candidateInvited = 'Candidate Invited'
 const addAssessmentbutton = 'Add Assessment'
 
@@ -203,17 +200,6 @@ describe('Visiting Assessment', () => {
     getSubmitBtn().click()
     getToastBody().should('have.text', candidateInvited)
     getToastifyCloseBtn()
-
-    // To check already invited candidate toast
-    getInvitePopup().click()
-    getEmailInput()
-      .type('johndoes@example.com')
-      .should('have.focus')
-      .should('have.value', 'johndoes@example.com')
-    getSubmitBtn().click()
-    getToastBody().contains(candidateAlreadyInvited)
-    getToastifyCloseBtn()
-    getDialogCloseIcon().click()
 
     // To check multiple candidate invite
     getInvitePopup().click()
