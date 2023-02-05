@@ -203,6 +203,7 @@ describe('Visiting Assessment', () => {
     getToastBody().should('have.text', candidateInvited)
 
     // To check already invited candidate toast
+    cy.wait(1000)
     getInvitePopup().click()
     getEmailInput()
       .type('johndoes@example.com')
