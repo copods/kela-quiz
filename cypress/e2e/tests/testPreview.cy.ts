@@ -1,13 +1,12 @@
 import {
-  getAnchorTag,
   getBackButton,
   getDescription,
-  getFindTests,
   getInvitePopupOpenText,
   getName,
   getTestNameNavigation,
   getTestPreviewAssessDetail,
   getTestPrewSelectedTest,
+  getTests,
   getTitle,
   getTotalSections,
   getTotalTime,
@@ -25,8 +24,7 @@ describe('Test for testPreview', () => {
     cy.customVisit('/members')
   })
   it('checks preview data', () => {
-    getAnchorTag().click()
-    getFindTests().should('have.text', testsConstants.assessments).click()
+    getTests().click()
     cy.location('pathname', { timeout: 60000 }).should(
       'include',
       '/assessments'
@@ -36,7 +34,7 @@ describe('Test for testPreview', () => {
     getTitle().should('have.text', test1)
 
     // data match selected test and back button
-    getBackButton().click()
+    getBackButton()
 
     // test for assessments name
     getName().should('have.text', cypress.name)
