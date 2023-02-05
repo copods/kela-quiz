@@ -21,6 +21,7 @@ import {
   getTestHeader,
   getTestNameNavigation,
   getToastBody,
+  getToastifyCloseBtn,
   getVeriticalIconId,
   sortFilterContainer,
 } from 'support/common-function'
@@ -201,9 +202,9 @@ describe('Visiting Assessment', () => {
       .should('have.value', 'johndoes@example.com')
     getSubmitBtn().click()
     getToastBody().should('have.text', candidateInvited)
+    getToastifyCloseBtn()
 
     // To check already invited candidate toast
-    cy.wait(1000)
     getInvitePopup().click()
     getEmailInput()
       .type('johndoes@example.com')
@@ -211,6 +212,7 @@ describe('Visiting Assessment', () => {
       .should('have.value', 'johndoes@example.com')
     getSubmitBtn().click()
     getToastBody().should('have.text', candidateAlreadyInvited)
+    getToastifyCloseBtn()
     getDialogCloseIcon().click()
 
     // To check multiple candidate invite
