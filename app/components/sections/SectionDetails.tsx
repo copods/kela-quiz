@@ -10,6 +10,7 @@ import EmptyStateComponent from '../common-components/EmptyStateComponent'
 
 const SectionDetails = () => {
   const { t } = useTranslation()
+
   const sectionDetails = useLoaderData()
   const [currentAccordian, setCurrentAccordian] = useState(-1)
   const [searchText, setSearchText] = useState('')
