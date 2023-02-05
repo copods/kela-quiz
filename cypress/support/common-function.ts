@@ -181,3 +181,7 @@ export const getTestPrewSelectedTest = () =>
 export const getDescription = () => cy.get('#description')
 export const getTotalTime = () => cy.get('#totalTime')
 export const getTotalSections = () => cy.get('#totalSection')
+export const getAssesPageTitle = () => cy.get('#add-assessment-page-title')
+export const getSectionInDiv = () => cy.get('div#section')
+export const getBackBtnInBtn = () => cy.get('button#back-button')
+export const getNextBtnInBtn = () => cy.get('button#next-button')
