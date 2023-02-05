@@ -205,6 +205,7 @@ describe('Visiting Assessment', () => {
     getToastifyCloseBtn()
 
     // To check already invited candidate toast
+    cy.wait(1500)
     getInvitePopup().click()
     getEmailInput()
       .type('johndoes@example.com')
