@@ -6,7 +6,7 @@
 
 import { RefObject } from 'react'
 
-export function isInViewport(
+export function isElementInViewport(
   element: RefObject<HTMLDivElement>
 ): boolean | undefined {
   const positionOfElement = element && element?.current?.getBoundingClientRect()

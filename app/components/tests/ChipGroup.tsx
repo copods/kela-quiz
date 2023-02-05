@@ -1,7 +1,7 @@
 import type { SectionInTest } from '~/interface/Interface'
 import { Menu, Transition } from '@headlessui/react'
 import { Fragment, useRef, useState } from 'react'
-import { isInViewport } from '~/utils/common.utils'
+import { isElementInViewport } from '~/utils/common.utils'
 const ChipGroup = ({
   sections,
   totalCount,
@@ -26,7 +26,7 @@ const ChipGroup = ({
           <div id="section-count-button">
             <Menu.Button
               onClick={() =>
-                setElementViewPortVisiblility(isInViewport(elementRef))
+                setElementViewPortVisiblility(isElementInViewport(elementRef))
               }
             >
               <div

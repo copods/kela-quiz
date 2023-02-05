@@ -4,7 +4,7 @@ import { Fragment, useRef, useState } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { useTranslation } from 'react-i18next'
 import { usePagination } from '~/utils'
-import { isInViewport } from '~/utils/common.utils'
+import { isElementInViewport } from '~/utils/common.utils'
 
 const PaginationButtons = ({
   paginationRange,
@@ -70,7 +70,7 @@ const PaginationDropDown = ({
         <Listbox.Button
           className="flex cursor-pointer items-center text-xs text-gray-600"
           onClick={() =>
-            setElementViewPortVisiblility(isInViewport(elementRef))
+            setElementViewPortVisiblility(isElementInViewport(elementRef))
           }
         >
           <span className="block truncate">
