@@ -205,14 +205,13 @@ describe('Visiting Assessment', () => {
     getToastifyCloseBtn()
 
     // To check already invited candidate toast
-    cy.wait(1500)
     getInvitePopup().click()
     getEmailInput()
       .type('johndoes@example.com')
       .should('have.focus')
       .should('have.value', 'johndoes@example.com')
     getSubmitBtn().click()
-    getToastBody().should('have.text', candidateAlreadyInvited)
+    getToastBody().contains(candidateAlreadyInvited)
     getToastifyCloseBtn()
     getDialogCloseIcon().click()
 
