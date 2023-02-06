@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react'
-import { Fragment, useRef, useState } from 'react'
+import { Fragment, useEffect, useRef, useState } from 'react'
 
 import { Listbox, Transition } from '@headlessui/react'
 import { useTranslation } from 'react-i18next'
@@ -63,15 +63,24 @@ const PaginationDropDown = ({
   let [elementViewPortVisiblility, setElementViewPortVisiblility] = useState<
     boolean | undefined
   >(false)
+  let [isDropdownVisible, setIsDropdownVisible] = useState(false)
   const elementRef = useRef<HTMLDivElement>(null)
+  const dropdownRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    setTimeout(() => {
+      setElementViewPortVisiblility(
+        isElementInViewport(elementRef, dropdownRef)
+      )
+    }, 0)
+  }, [isDropdownVisible])
+
   return (
     <Listbox value={selected} onChange={setSelected}>
       <div className="relative" ref={elementRef}>
         <Listbox.Button
           className="flex cursor-pointer items-center text-xs text-gray-600"
-          onClick={() =>
-            setElementViewPortVisiblility(isElementInViewport(elementRef))
-          }
+          onClick={() => setIsDropdownVisible(!isDropdownVisible)}
         >
           <span className="block truncate">
             {selected} {t('commonConstants.items')}
@@ -91,29 +100,31 @@ const PaginationDropDown = ({
                 : '-top-2 -translate-y-full transform'
             }}`}
           >
-            {pageSizeOptions?.map((item: number, index: number) => (
-              <Listbox.Option
-                key={index}
-                onClick={() => {
-                  setPageSize(item)
-                  onPageChange(1)
-                }}
-                className={({ active }) =>
-                  `relative cursor-pointer select-none py-2 px-8 text-xs text-gray-600 ${
-                    selected === item
-                      ? ' bg-gray-100'
-                      : active
-                      ? 'bg-gray-100'
-                      : ''
-                  }`
-                }
-                value={item}
-              >
-                <span className="block truncate">
-                  {item} {t('commonConstants.items')}
-                </span>
-              </Listbox.Option>
-            ))}
+            <div ref={dropdownRef}>
+              {pageSizeOptions?.map((item: number, index: number) => (
+                <Listbox.Option
+                  key={index}
+                  onClick={() => {
+                    setPageSize(item)
+                    onPageChange(1)
+                  }}
+                  className={({ active }) =>
+                    `relative cursor-pointer select-none py-2 px-8 text-xs text-gray-600 ${
+                      selected === item
+                        ? ' bg-gray-100'
+                        : active
+                        ? 'bg-gray-100'
+                        : ''
+                    }`
+                  }
+                  value={item}
+                >
+                  <span className="block truncate">
+                    {item} {t('commonConstants.items')}
+                  </span>
+                </Listbox.Option>
+              ))}
+            </div>
           </Listbox.Options>
         </Transition>
       </div>

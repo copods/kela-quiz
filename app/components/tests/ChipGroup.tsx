@@ -1,6 +1,6 @@
 import type { SectionInTest } from '~/interface/Interface'
 import { Menu, Transition } from '@headlessui/react'
-import { Fragment, useRef, useState } from 'react'
+import { Fragment, useEffect, useRef, useState } from 'react'
 import { isElementInViewport } from '~/utils/common.utils'
 const ChipGroup = ({
   sections,
@@ -14,7 +14,17 @@ const ChipGroup = ({
   let [elementViewPortVisiblility, setElementViewPortVisiblility] = useState<
     boolean | undefined
   >(false)
+  let [isDropdownVisible, setIsDropdownVisible] = useState(false)
   const elementRef = useRef<HTMLDivElement>(null)
+  const dropdownRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    setTimeout(() => {
+      setElementViewPortVisiblility(
+        isElementInViewport(elementRef, dropdownRef)
+      )
+    }, 0)
+  }, [isDropdownVisible])
 
   return (
     <div className="chip-group mr-3 flex items-center gap-2" ref={elementRef}>
@@ -25,9 +35,9 @@ const ChipGroup = ({
         <Menu as="div" className="relative inline-block text-left">
           <div id="section-count-button">
             <Menu.Button
-              onClick={() =>
-                setElementViewPortVisiblility(isElementInViewport(elementRef))
-              }
+              onClick={() => {
+                setIsDropdownVisible((prev) => !prev)
+              }}
             >
               <div
                 aria-label={`+ ${sections.length - 1} Sections in Test`}
@@ -52,17 +62,19 @@ const ChipGroup = ({
                 elementViewPortVisiblility
                   ? ''
                   : '-top-1 -translate-y-full transform'
-              } flex flex-col gap-4 border-gray-300 shadow-2xl`}
+              }  border-gray-300 shadow-2xl`}
             >
-              {sections.map((sect) => {
-                return (
-                  <Menu.Item key={sect?.section?.id}>
-                    <span className="truncate rounded-52 bg-blue-50 px-2 py-1.5 text-xs text-gray-900">
-                      {sect?.section?.name}
-                    </span>
-                  </Menu.Item>
-                )
-              })}
+              <div ref={dropdownRef} className="flex flex-col gap-4">
+                {sections.map((sect) => {
+                  return (
+                    <Menu.Item key={sect?.section?.id}>
+                      <span className="truncate rounded-52 bg-blue-50 px-2 py-1.5 text-xs text-gray-900">
+                        {sect?.section?.name}
+                      </span>
+                    </Menu.Item>
+                  )
+                })}
+              </div>
             </Menu.Items>
           </Transition>
         </Menu>

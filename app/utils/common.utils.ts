@@ -7,15 +7,18 @@
 import { RefObject } from 'react'
 
 export function isElementInViewport(
-  element: RefObject<HTMLDivElement>
+  element: RefObject<HTMLDivElement>,
+  dropdownRef: RefObject<HTMLDivElement>
 ): boolean | undefined {
   const positionOfElement = element && element?.current?.getBoundingClientRect()
-  if (positionOfElement) {
+  const heightOfDropdown = dropdownRef.current?.offsetHeight
+  if (positionOfElement && heightOfDropdown) {
     return (
       positionOfElement?.top >= 0 &&
       positionOfElement?.left >= 0 &&
       positionOfElement?.bottom <=
-        (window.innerHeight - 100 || document?.documentElement.clientHeight) &&
+        (window.innerHeight - heightOfDropdown ||
+          document?.documentElement.clientHeight) &&
       positionOfElement?.right <=
         (window.innerWidth || document?.documentElement.clientWidth)
     )
