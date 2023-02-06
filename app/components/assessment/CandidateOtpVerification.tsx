@@ -7,11 +7,13 @@ import { useTranslation } from 'react-i18next'
 
 const CandidateOtp = ({ email }: { email: string }) => {
   const { t } = useTranslation()
+
   const [counter, setCounter] = useState(60)
   const [finalTime, setFinalTime] = useState('')
   const [OTPSegments, setOTPSegments] = useState(Array(4).fill(''))
   const [autoSubmit, setAutoSubmit] = useState(true)
-  const btnRef = useRef<HTMLElement>(null)
+
+  const btnRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
     counter > 0 && setTimeout(() => setCounter(counter - 1), 1000)
