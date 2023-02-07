@@ -43,7 +43,7 @@ function Footer() {
             type="submit"
             id="logout-button"
             variant="secondary-solid"
-            className="px-2"
+            padding="px-2"
             title={t('commonConstants.logout')}
             buttonText={
               <Icon

@@ -1,6 +1,24 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { faker } from '@faker-js/faker'
 import { logIn } from '~/constants/common.constants'
+import {
+  getBeginAssessmentButton,
+  getCopyLinkId,
+  getEmailInput,
+  getFirstName,
+  getGroupByItemTest,
+  getGroupByTestId,
+  getInstructionHeading,
+  getInvitePopup,
+  getLastName,
+  getOTPFirstInputField,
+  getOTPFourthInputField,
+  getOTPSecondInputField,
+  getOTPThirdInputField,
+  getRegistrationButtonId,
+  getSubmitBtn,
+  getVeriticalIconId,
+} from './common-function'
 
 declare global {
   namespace Cypress {
@@ -26,9 +44,34 @@ declare global {
        * Logs in function for cypress testing.
        */
       customVisit: typeof Function
+
+      /**
+       * candidate Registration for Cypress testing
+       */
+
+      candidateRegistration: typeof Function
+
+      /**
+       *  candidate Registration for Cypress testing
+       */
+      customVisitOnCandidateSide: typeof Function
+      /**
+       *  candidate Verification for Cypress Testing
+       */
+      candidateVerification: typeof Function
+      /**
+       * candidate Name for Cypress testing
+       */
+      checkCandidateName: typeof Function
+      /**
+       * assessment instruction for Cypress Testing
+       */
+      assessmentInstruction: typeof Function
     }
   }
 }
+let ExamLink = ''
+let candidateName = 'joy'
 
 function login() {
   let formData = new FormData()
@@ -85,9 +128,83 @@ function deleteUserByEmail(email: string) {
   cy.clearCookie('__session')
 }
 
+const candidateRegistration = () => {
+  const emailId = Math.random()
+  cy.viewport(1280, 720)
+  cy.login()
+  cy.customVisit('/members')
+  getGroupByTestId().click()
+  cy.get('a').find('#tests').click()
+  getInvitePopup().click()
+  getEmailInput().type(`ki${emailId}@copods.co`)
+  getSubmitBtn().click()
+  getGroupByTestId().click()
+  getGroupByItemTest().each((el) => {
+    const itemText = el.text()
+    if (itemText === 'Quantitative - assessment1') {
+      cy.wrap(el).click()
+    }
+  })
+  getVeriticalIconId().click()
+  getCopyLinkId().should('be.visible').click()
+  cy.wrap(
+    Cypress.automation('remote:debugger:protocol', {
+      command: 'Browser.grantPermissions',
+      params: {
+        permissions: ['clipboardReadWrite', 'clipboardSanitizedWrite'],
+        origin: window.location.origin,
+      },
+    })
+  )
+
+  cy.window()
+    .its('navigator.clipboard')
+    .invoke('readText')
+    .then((text) => {
+      ExamLink = text.split('3000')[1]
+      cy.visit(ExamLink)
+      getFirstName().type(candidateName)
+      getLastName().type('Jain')
+      getRegistrationButtonId()
+        .should('be.visible')
+        .should('have.css', 'background-color', 'rgb(53, 57, 136)')
+        .click()
+      cy.url().should('include', `${ExamLink}/verification`)
+    })
+}
+
+const customVisitOnCandidateSide = (path = '') => {
+  ExamLink && cy.visit(`${ExamLink}/${path}`)
+}
+const candidateVerification = () => {
+  cy.customVisitOnCandidateSide('verification')
+  getOTPFirstInputField().type('0')
+  getOTPSecondInputField().type('0')
+  getOTPThirdInputField().type('0')
+  getOTPFourthInputField().type('0')
+  cy.url().should('include', 'instructions')
+}
+
+const checkCandidateName = () => {
+  getInstructionHeading()
+    .should('be.visible')
+    .should('have.text', `Welcome ${candidateName}`)
+}
+
+const assessmentInstruction = () => {
+  getBeginAssessmentButton().should('be.visible')
+  getBeginAssessmentButton().should('have.text', 'Begin Assessment')
+  getBeginAssessmentButton().click()
+}
+
 Cypress.Commands.add('login', login)
 Cypress.Commands.add('cleanupUser', cleanupUser)
 Cypress.Commands.add('customVisit', customVisit)
+Cypress.Commands.add('candidateRegistration', candidateRegistration)
+Cypress.Commands.add('customVisitOnCandidateSide', customVisitOnCandidateSide)
+Cypress.Commands.add('candidateVerification', candidateVerification)
+Cypress.Commands.add('checkCandidateName', checkCandidateName)
+Cypress.Commands.add('assessmentInstruction', assessmentInstruction)
 
 /*
 eslint

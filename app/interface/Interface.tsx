@@ -52,7 +52,8 @@ export interface ButtonProps {
   buttonText: string | JSX.Element
   onClick?: React.MouseEventHandler<HTMLButtonElement>
   isDisabled?: boolean
-  btnRef?: any
+  btnRef?: React.RefObject<HTMLButtonElement> | null
+  padding?: string
 }
 
 export interface LoginProps {

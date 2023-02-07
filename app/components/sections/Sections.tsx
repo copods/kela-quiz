@@ -48,14 +48,10 @@ const SectionLink = ({
       }, 500)
     }
   }, [deleted])
+
   return (
     <div
-      onClick={() => {
-        if (isActive) {
-          return
-        }
-        navigate(path)
-      }}
+      onClick={() => !isActive && navigate(path)}
       id="section-link"
       className={isActive ? 'activeSectionCard' : ''}
       role={'button'}
