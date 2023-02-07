@@ -144,7 +144,7 @@
     "mcq": "MCQ",
     "multipleSelectQuestion": "Multiple Select Question",
     "multipleChoiceQuestion": "Multiple Choice Question",
-    "questionNotDeleted": "Test can not be deleted as being used in existing Assessment."
+    "questionNotDeleted": "Question cannot be deleted as being used in existing Assessment."
   },
   "testsConstants": {
     "addTestbutton": "Add Assessment",

@@ -33,8 +33,9 @@ export const action: ActionFunction = async ({ request, params }) => {
 export default function Section() {
   const { t } = useTranslation()
   const section = useActionData()
+
   useEffect(() => {
-    if (section === true) {
+    if (section) {
       toast.success(t('statusCheck.deletedSuccess'))
     } else if (section === false) {
       toast.error(t('sectionsConstants.questionNotDeleted'), {

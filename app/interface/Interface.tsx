@@ -186,9 +186,7 @@ export interface SectionInTest {
   updatedAt: Date
   test: Test
 }
-export interface TotalQuestion {
-  totalQuestions: number
-}
+
 export interface Option {
   id: string
   option: string
