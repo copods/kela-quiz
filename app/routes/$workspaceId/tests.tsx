@@ -181,10 +181,14 @@ export const action: ActionFunction = async ({ request, params }) => {
           Number(currentPage) - 1
         }&testItems=${pagePerItems}`
       )
-      return 'deleted'
+      console.log(sectionId, 'sectionId')
+      return {
+        deleted: 'deleted',
+        sectionId: sectionId,
+      }
     } else {
       if (sectionId) {
-        redirect: redirect(
+        redirect(
           `/${params.workspaceId}${routes.tests}/${sectionId}?${sortFilter}&testPage=${currentPage}&testItems=${pagePerItems}`
         )
         return {
@@ -193,7 +197,9 @@ export const action: ActionFunction = async ({ request, params }) => {
         }
       } else {
         redirect(`/${params.workspaceId}${routes.tests}`)
-        return 'deleted'
+        return {
+          deleted: 'deleted',
+        }
       }
     }
   }
