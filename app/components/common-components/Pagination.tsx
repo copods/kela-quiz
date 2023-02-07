@@ -1,10 +1,10 @@
 import { Icon } from '@iconify/react'
-import { Fragment, useEffect, useRef, useState } from 'react'
+import { Fragment, useState } from 'react'
 
 import { Listbox, Transition } from '@headlessui/react'
 import { useTranslation } from 'react-i18next'
 import { usePagination } from '~/utils'
-import { isElementInViewport } from '~/utils/common.utils'
+import { useElementPositionHandler } from '~/hooks/useElementPositionHandler'
 
 const PaginationButtons = ({
   paginationRange,
@@ -60,27 +60,19 @@ const PaginationDropDown = ({
   onPageChange: (e: number) => void
 }) => {
   const { t } = useTranslation()
-  let [elementViewPortVisiblility, setElementViewPortVisiblility] = useState<
-    boolean | undefined
-  >(false)
-  let [isDropdownVisible, setIsDropdownVisible] = useState(false)
-  const elementRef = useRef<HTMLDivElement>(null)
-  const dropdownRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    setTimeout(() => {
-      setElementViewPortVisiblility(
-        isElementInViewport(elementRef, dropdownRef)
-      )
-    }, 0)
-  }, [isDropdownVisible])
+  const {
+    elementRef,
+    componentRef,
+    elementViewPortVisiblility,
+    setIsComponentVisible,
+  } = useElementPositionHandler()
 
   return (
     <Listbox value={selected} onChange={setSelected}>
       <div className="relative" ref={elementRef}>
         <Listbox.Button
           className="flex cursor-pointer items-center text-xs text-gray-600"
-          onClick={() => setIsDropdownVisible(!isDropdownVisible)}
+          onClick={() => setIsComponentVisible((prev) => !prev)}
         >
           <span className="block truncate">
             {selected} {t('commonConstants.items')}
@@ -100,7 +92,7 @@ const PaginationDropDown = ({
                 : '-top-2 -translate-y-full transform'
             }}`}
           >
-            <div ref={dropdownRef}>
+            <div ref={componentRef}>
               {pageSizeOptions?.map((item: number, index: number) => (
                 <Listbox.Option
                   key={index}

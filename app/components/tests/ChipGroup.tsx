@@ -1,7 +1,8 @@
 import type { SectionInTest } from '~/interface/Interface'
 import { Menu, Transition } from '@headlessui/react'
-import { Fragment, useEffect, useRef, useState } from 'react'
-import { isElementInViewport } from '~/utils/common.utils'
+import { Fragment } from 'react'
+import { useElementPositionHandler } from '~/hooks/useElementPositionHandler'
+
 const ChipGroup = ({
   sections,
   totalCount,
@@ -11,20 +12,12 @@ const ChipGroup = ({
   totalCount: number
   index?: number
 }) => {
-  let [elementViewPortVisiblility, setElementViewPortVisiblility] = useState<
-    boolean | undefined
-  >(false)
-  let [isDropdownVisible, setIsDropdownVisible] = useState(false)
-  const elementRef = useRef<HTMLDivElement>(null)
-  const dropdownRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    setTimeout(() => {
-      setElementViewPortVisiblility(
-        isElementInViewport(elementRef, dropdownRef)
-      )
-    }, 0)
-  }, [isDropdownVisible])
+  const {
+    elementRef,
+    componentRef,
+    elementViewPortVisiblility,
+    setIsComponentVisible,
+  } = useElementPositionHandler()
 
   return (
     <div className="chip-group mr-3 flex items-center gap-2" ref={elementRef}>
@@ -36,7 +29,7 @@ const ChipGroup = ({
           <div id="section-count-button">
             <Menu.Button
               onClick={() => {
-                setIsDropdownVisible((prev) => !prev)
+                setIsComponentVisible((prev) => !prev)
               }}
             >
               <div
@@ -64,7 +57,7 @@ const ChipGroup = ({
                   : '-top-1 -translate-y-full transform'
               }  border-gray-300 shadow-2xl`}
             >
-              <div ref={dropdownRef} className="flex flex-col gap-4">
+              <div ref={componentRef} className="flex flex-col gap-4">
                 {sections.map((sect) => {
                   return (
                     <Menu.Item key={sect?.section?.id}>
