@@ -16,7 +16,7 @@ const ChipGroup = ({
     elementRef,
     componentRef,
     elementViewPortVisiblility,
-    setIsComponentVisible,
+    setIsElementOpen,
   } = useElementPositionHandler()
 
   return (
@@ -29,7 +29,7 @@ const ChipGroup = ({
           <div id="section-count-button">
             <Menu.Button
               onClick={() => {
-                setIsComponentVisible((prev) => !prev)
+                setIsElementOpen((prev) => !prev)
               }}
             >
               <div

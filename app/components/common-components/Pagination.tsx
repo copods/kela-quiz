@@ -64,7 +64,7 @@ const PaginationDropDown = ({
     elementRef,
     componentRef,
     elementViewPortVisiblility,
-    setIsComponentVisible,
+    setIsElementOpen,
   } = useElementPositionHandler()
 
   return (
@@ -72,7 +72,7 @@ const PaginationDropDown = ({
       <div className="relative" ref={elementRef}>
         <Listbox.Button
           className="flex cursor-pointer items-center text-xs text-gray-600"
-          onClick={() => setIsComponentVisible((prev) => !prev)}
+          onClick={() => setIsElementOpen((prev) => !prev)}
         >
           <span className="block truncate">
             {selected} {t('commonConstants.items')}
