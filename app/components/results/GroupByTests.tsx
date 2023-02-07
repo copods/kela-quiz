@@ -12,6 +12,8 @@ import { sortByOrder } from '~/interface/Interface'
 import { useTranslation } from 'react-i18next'
 import EmptyStateComponent from '../common-components/EmptyStateComponent'
 import Table from '../common-components/TableComponent'
+import { useCustomStorage } from '~/hooks/useCustomStorage'
+
 const sortByDetails = [
   {
     name: 'Name',
@@ -38,6 +40,7 @@ const filterByStatus = [
 ]
 const GroupByTests = () => {
   const { t } = useTranslation()
+  const { toSetCustomStorage } = useCustomStorage()
   const navigate = useNavigate()
   const candidateTestData = useLoaderData()
   const [sortDirection, onSortDirectionChange] = useState(
@@ -50,7 +53,11 @@ const GroupByTests = () => {
     candidateTestData.resultsCurrentPage
   )
   const [sortBy, onSortChange] = useState(sortByDetails[1].value)
-  const [statusFilter, setStatusFilter] = useState(filterByStatus[1].value)
+  const [statusFilter, setStatusFilter] = useState(
+    toSetCustomStorage('filterByStatus')
+      ? toSetCustomStorage('filterByStatus')?.value
+      : filterByStatus[1].value
+  )
 
   const candidateTests = candidateTestData.candidateTest
   const candidateTestsArray = candidateTests.filter(
@@ -155,6 +162,7 @@ const GroupByTests = () => {
       `?sortBy=${sortBy}&sort=${sortDirection}&page=${1}&limit=${resultsPageSize}&status=${statusFilter}`
     )
     setStatusFilter(statusFilter)
+    toSetCustomStorage('filterByStatus', statusFilter)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [statusFilter])
 
