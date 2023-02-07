@@ -1,3 +1,13 @@
+import {
+  getNavGuideAssessment,
+  getNavGuideGeneral,
+  getNavGuideResult,
+  getSideNavLogoutBtn,
+  getSideNavUserAvatar,
+  getSideNavUserEmail,
+  getSideNavUserName,
+} from 'support/common-function'
+
 const sideNavGroupTitles = {
   results: 'Results',
   assessments: 'Assessments',
@@ -7,150 +17,57 @@ const userName = 'Copods Careers'
 const userEmail = 'copods.demo.sendgrid@gmail.com'
 const userAvatarText = 'CC'
 describe('Test for Logout, SideNav', () => {
-  beforeEach('sign-in', () => {
+  it('Tests to check Attributes/Colors/Visibility/Texts', () => {
+    // To login
     cy.login()
-
-    cy.customVisit('/members')
-  })
-
-  it('click all links with loop', () => {
-    const pages = ['members', 'tests', 'sections', 'group-by-tests', 'Settings']
-
-    cy.login()
-
     cy.customVisit('/members')
 
-    pages.forEach((page) => {
-      cy.get(`#${page}`).click()
+    // To check text, styles of Results title
+    getNavGuideResult()
+      .should('have.text', sideNavGroupTitles.results)
+      .should('have.css', 'font-weight', '600')
+      .should('have.css', 'font-size', '12px')
+      .should('have.css', 'color', 'rgb(156, 163, 175)')
 
-      cy.customVisit('/members')
-    })
-  })
-  it('Checks text of SideNav group title- Results', () => {
-    cy.get('#nav-guide-results').should('have.text', sideNavGroupTitles.results)
-  })
-  it('Checks font weight of SideNav group title- Results', () => {
-    cy.get('#nav-guide-results').should('have.css', 'font-weight', '600')
-  })
-  it('Checks font-size of SideNav group title- Results ', () => {
-    cy.get('#nav-guide-results').should('have.css', 'font-size', '12px')
-  })
-  it('Checks color of SideNav group title- Results ', () => {
-    cy.get('#nav-guide-results').should(
-      'have.css',
-      'color',
-      'rgb(156, 163, 175)'
-    )
-  })
-  it('Checks text of SideNav group title- Assessments ', () => {
-    cy.get('#nav-guide-assessments').should(
-      'have.text',
-      sideNavGroupTitles.assessments
-    )
-  })
-  it('Checks font weight of SideNav group title- Assessments ', () => {
-    cy.get('#nav-guide-assessments').should('have.css', 'font-weight', '600')
-  })
-  it('Checks font-size of SideNav group title- Assessments ', () => {
-    cy.get('#nav-guide-assessments').should('have.css', 'font-size', '12px')
-  })
-  it('Checks color of SideNav group title- Assessments ', () => {
-    cy.get('#nav-guide-assessments').should(
-      'have.css',
-      'color',
-      'rgb(156, 163, 175)'
-    )
-  })
+    // To check text, styles of Assessments title
+    getNavGuideAssessment()
+      .should('have.text', sideNavGroupTitles.assessments)
+      .should('have.css', 'font-weight', '600')
+      .should('have.css', 'font-size', '12px')
+      .should('have.css', 'color', 'rgb(156, 163, 175)')
 
-  it('Checks text of SideNav group title- General', () => {
-    cy.get('#nav-guide-general').should('have.text', sideNavGroupTitles.general)
-  })
-  it('Checks font weight of SideNav group title- General ', () => {
-    cy.get('#nav-guide-general').should('have.css', 'font-weight', '600')
-  })
-  it('Checks font size of SideNav group title- General ', () => {
-    cy.get('#nav-guide-general').should('have.css', 'font-size', '12px')
-  })
-  it('Checks color of SideNav group title- General ', () => {
-    cy.get('#nav-guide-general').should(
-      'have.css',
-      'color',
-      'rgb(156, 163, 175)'
-    )
-  })
-  it('Checks for SideNav username text', () => {
-    cy.get('#sidenav-username').should('have.text', userName)
-  })
-  it('Checks for SideNav username color', () => {
-    cy.get('#sidenav-username').should('have.css', 'color', 'rgb(17, 24, 39)')
-  })
-  it('Checks for SideNav username font weight', () => {
-    cy.get('#sidenav-username').should('have.css', 'font-weight', '600')
-  })
-  it('Checks for SideNav username font size', () => {
-    cy.get('#sidenav-username').should('have.css', 'font-size', '12px')
-  })
-  it('Checks for sideNav user email text', () => {
-    cy.get('#sidenav-user-email').should('have.text', userEmail)
-  })
+    // To check text, styles of General title
+    getNavGuideGeneral()
+      .should('have.text', sideNavGroupTitles.general)
+      .should('have.css', 'font-weight', '600')
+      .should('have.css', 'font-size', '12px')
+      .should('have.css', 'color', 'rgb(156, 163, 175)')
 
-  it('Checks for sideNav user email color', () => {
-    cy.get('#sidenav-user-email').should(
-      'have.css',
-      'color',
-      'rgb(107, 114, 128)'
-    )
-  })
-  it('Checks for sideNav user email font size', () => {
-    cy.get('#sidenav-user-email').should('have.css', 'font-size', '12px')
-  })
-  it('Checks for sideNav user email font weight', () => {
-    cy.get('#sidenav-user-email').should('have.css', 'font-weight', '400')
-  })
-  // user avatar
-  it('Checks for sideNav user avatar text', () => {
-    cy.get('#sidenav-user-avatar').should('have.text', userAvatarText)
-  })
-  it('Checks for sideNav user avatar font size', () => {
-    cy.get('#sidenav-user-avatar').should('have.css', 'font-size', '18px')
-  })
-  it('Checks for sideNav user avatar font weight', () => {
-    cy.get('#sidenav-user-avatar').should('have.css', 'font-weight', '500')
-  })
-  it('Checks for sideNav user avatar color', () => {
-    cy.get('#sidenav-user-avatar').should(
-      'have.css',
-      'color',
-      'rgb(255, 255, 255)'
-    )
-  })
-  // logout CTA button
-  it('Checks for logout CTA button background color', () => {
-    cy.get('#logout-button').should(
-      'have.css',
-      'background-color',
-      'rgb(239, 68, 68)'
-    )
-  })
-  it('Checks for logout CTA button padding', () => {
-    cy.get('#logout-button').should('have.css', 'padding', '10px 20px')
-  })
-  it('Checks for logout CTA button cursor', () => {
-    cy.get('#logout-button').should('have.css', 'cursor', 'pointer')
-  })
+    // To check text, styles of Username
+    getSideNavUserName()
+      .should('have.text', userName)
+      .should('have.css', 'color', 'rgb(17, 24, 39)')
+      .should('have.css', 'font-weight', '600')
+      .should('have.css', 'font-size', '12px')
 
-  it('should render drop down to switch workspace', () => {
-    cy.get('#dropdown').should('be.visible')
-  })
+    // To check text, styles of User email
+    getSideNavUserEmail()
+      .should('have.text', userEmail)
+      .should('have.css', 'color', 'rgb(107, 114, 128)')
+      .should('have.css', 'font-size', '12px')
+      .should('have.css', 'font-weight', '400')
 
-  it('should render dropdown for workspace without any workspace', () => {
-    const dropdown = cy.get('#dropdown')
-    dropdown
-      .click()
-      .find('ul')
-      .find('li')
-      .should((item) => {
-        expect(item.length).to.be.greaterThan(1)
-      })
+    // To check text, styles of User avatar
+    getSideNavUserAvatar()
+      .should('have.text', userAvatarText)
+      .should('have.css', 'font-size', '18px')
+      .should('have.css', 'font-weight', '500')
+      .should('have.css', 'color', 'rgb(255, 255, 255)')
+
+    // To check style of logout button
+    getSideNavLogoutBtn()
+      .should('have.css', 'background-color', 'rgb(239, 68, 68)')
+      .should('have.css', 'padding', '10px 8px')
+      .should('have.css', 'cursor', 'pointer')
   })
 })

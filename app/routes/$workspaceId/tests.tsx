@@ -32,6 +32,8 @@ import {
 } from 'helper/tests.helper'
 
 export type ActionData = {
+  deleted: any
+  sectionId: any
   errors?: {
     title?: string
     body?: string
@@ -172,24 +174,26 @@ export const action: ActionFunction = async ({ request, params }) => {
       Number(pagePerItems)
     )
     if (sectionId && totalItems === '1' && currentPage !== '1') {
-      return (
-        redirect(
-          `/${params.workspaceId}${
-            routes.tests
-          }/${sectionId}?${sortFilter}&testPage=${
-            Number(currentPage) - 1
-          }&testItems=${pagePerItems}`
-        ) && 'deleted'
+      redirect(
+        `/${params.workspaceId}${
+          routes.tests
+        }/${sectionId}?${sortFilter}&testPage=${
+          Number(currentPage) - 1
+        }&testItems=${pagePerItems}`
       )
+      return 'deleted'
     } else {
       if (sectionId) {
-        return (
-          redirect(
-            `/${params.workspaceId}${routes.tests}/${sectionId}?${sortFilter}&testPage=${currentPage}&testItems=${pagePerItems}`
-          ) && 'deleted'
+        redirect: redirect(
+          `/${params.workspaceId}${routes.tests}/${sectionId}?${sortFilter}&testPage=${currentPage}&testItems=${pagePerItems}`
         )
+        return {
+          sectionId: sectionId,
+          deleted: 'deleted',
+        }
       } else {
-        return redirect(`/${params.workspaceId}${routes.tests}`) && 'deleted'
+        redirect(`/${params.workspaceId}${routes.tests}`)
+        return 'deleted'
       }
     }
   }
@@ -245,10 +249,16 @@ export default function SectionPage() {
           toastId: t(sectionActionData.resp?.status as string),
         })
         navigate(`${location.pathname}${location.search}`)
-      } else if (t(sectionActionData as string) === 'deleted') {
+      } else if (sectionActionData?.deleted) {
         toast.success(t('statusCheck.deletedSuccess'), {
           toastId: t('statusCheck.deletedSuccess'),
         })
+        {
+          sectionActionData.sectionId &&
+            navigate(
+              `/${data.currentWorkspaceId}${routes.tests}/${sectionActionData?.sectionId}?sortBy=${sortBy}&sort=${order}&testPage=${testsCurrentPage}&testItems=${testsPageSize}`
+            )
+        }
       } else if (sectionActionData.createSectionFieldError) {
         setSectionActionErrors({
           title: sectionActionData?.createSectionFieldError.title || '',
@@ -257,7 +267,19 @@ export default function SectionPage() {
         })
       }
     }
-  }, [sectionActionData, t, navigate, sectionActionData?.resp])
+  }, [
+    sectionActionData,
+    t,
+    navigate,
+    sectionActionData?.resp,
+    sectionActionData?.sectionId,
+  ])
+  console.log(sectionActionData?.sectionId, 'sectionActionData')
+  if (sectionActionData?.sectionId) {
+    toast.success(t('statusCheck.deletedSuccess'), {
+      toastId: t('statusCheck.deletedSuccess'),
+    })
+  }
 
   useEffect(() => {
     //checking if tests are zero then redirect to /tests
@@ -284,7 +306,9 @@ export default function SectionPage() {
     data.sections[0]?.id,
     location.search,
     sortBy,
+    sectionActionData?.sectionId,
   ])
+
   useEffect(() => {
     if (data.sortOrder !== order) {
       navigate(
@@ -302,7 +326,6 @@ export default function SectionPage() {
     const heading = document.getElementById('tests-heading')
     heading?.focus()
   }, [])
-
   return (
     <div className="flex h-full flex-col gap-6 overflow-hidden p-1">
       {/* header */}
@@ -327,7 +350,7 @@ export default function SectionPage() {
           buttonText={`+ ${t('sectionsConstants.addTests')}`}
         />
       </header>
-      {data.sections.length > 0 ? (
+      {data.sections.length > 0 && location.pathname.includes('/tests/') ? (
         <div
           className={`flex flex-1 overflow-hidden ${
             sectionDetailFull ? '' : 'gap-5'

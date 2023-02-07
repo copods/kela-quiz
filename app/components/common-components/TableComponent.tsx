@@ -143,11 +143,11 @@ const Table = <T extends object>({
       <div
         id="table"
         style={{ maxHeight: 'inherit' }}
-        className={`overflow-x-auto border-t border-r border-l shadow ${
+        className={`border-t border-r border-l shadow ${
           paginationEnabled ? 'rounded-t-2xl' : 'rounded-2xl'
         }`}
       >
-        <div id="table-head-row" className="sticky top-0 flex bg-gray-100">
+        <div id="table-head-row" className="flex bg-gray-100">
           {columns.map((header, index) => (
             <HeaderDataCell
               key={header.field + index}
@@ -188,7 +188,7 @@ const Table = <T extends object>({
         )}
       </div>
       {paginationEnabled ? (
-        <div className="rounded-b-2xl border bg-white px-9 py-5 shadow">
+        <div className="z-0 rounded-b-2xl border bg-white px-9 py-5 shadow">
           <Pagination
             currentPage={currentPage!}
             onPageChange={(page) => onPageChange?.(page)}
