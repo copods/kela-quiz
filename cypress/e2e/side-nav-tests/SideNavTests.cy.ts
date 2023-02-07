@@ -67,7 +67,7 @@ describe('Test for Logout, SideNav', () => {
     // To check style of logout button
     getSideNavLogoutBtn()
       .should('have.css', 'background-color', 'rgb(239, 68, 68)')
-      .should('have.css', 'padding', '10px 20px')
+      .should('have.css', 'padding', '10px 8px')
       .should('have.css', 'cursor', 'pointer')
   })
 })
