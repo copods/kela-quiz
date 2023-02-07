@@ -181,9 +181,8 @@ export const action: ActionFunction = async ({ request, params }) => {
           Number(currentPage) - 1
         }&testItems=${pagePerItems}`
       )
-      console.log(sectionId, 'sectionId')
       return {
-        deleted: 'deleted',
+        deleted: 'deleteOnlyItem',
         sectionId: sectionId,
       }
     } else {
@@ -235,6 +234,25 @@ export default function SectionPage() {
   if (t(data.status) != t('statusCheck.success')) {
     toast.error(t('statusCheck.commonError'))
   }
+  useEffect(() => {
+    if (sectionActionData?.deleted === 'deleteOnlyItem') {
+      toast.success(t('statusCheck.deletedSuccess'), {
+        toastId: t('statusCheck.deletedSuccess'),
+      })
+      setTimeout(() => {
+        navigate(
+          `/${data.currentWorkspaceId}${routes.tests}/${
+            sectionActionData?.sectionId
+          }?sortBy=${sortBy}&sort=${order}&testPage=${
+            testsCurrentPage - 1
+          }&testItems=${testsPageSize}`
+        )
+      }, 500)
+      navigate(
+        `/${data.currentWorkspaceId}${routes.tests}/${data.sections[0]?.id}?sortBy=${sortBy}&sort=${order}&testPage=${testsCurrentPage}&testItems=${testsPageSize}`
+      )
+    }
+  }, [sectionActionData?.sectionId])
 
   useEffect(() => {
     if (sectionActionData) {
@@ -261,6 +279,7 @@ export default function SectionPage() {
         })
         {
           sectionActionData.sectionId &&
+            sectionActionData?.deleted === 'deleted' &&
             navigate(
               `/${data.currentWorkspaceId}${routes.tests}/${sectionActionData?.sectionId}?sortBy=${sortBy}&sort=${order}&testPage=${testsCurrentPage}&testItems=${testsPageSize}`
             )
@@ -280,12 +299,6 @@ export default function SectionPage() {
     sectionActionData?.resp,
     sectionActionData?.sectionId,
   ])
-  console.log(sectionActionData?.sectionId, 'sectionActionData')
-  if (sectionActionData?.sectionId) {
-    toast.success(t('statusCheck.deletedSuccess'), {
-      toastId: t('statusCheck.deletedSuccess'),
-    })
-  }
 
   useEffect(() => {
     //checking if tests are zero then redirect to /tests
