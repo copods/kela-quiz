@@ -83,18 +83,18 @@ const AddEditSection = ({
     addSection?.(name, description)
   }
 
-  const [err, setErr] = useState<string | undefined>('')
+  const [err, setErr] = useState<string | undefined>("")
   useEffect(() => {
-    localStorage.removeItem('err')
-    setErr('')
+    localStorage.removeItem("err")
+    setErr("")
   }, [open, sectionName])
   useEffect(() => {
-    setErr(localStorage.getItem('err') || undefined)
+    setErr(localStorage.getItem("err") || undefined)
   }, [])
   useEffect(() => {
     if (sectionActionData?.errors?.title) {
       setErr(sectionActionData?.errors?.title)
-      localStorage.setItem('err', sectionActionData?.errors?.title)
+      localStorage.setItem("err", sectionActionData?.errors?.title)
       localStorage.removeItem
     }
   }, [sectionActionData?.errors?.title])
