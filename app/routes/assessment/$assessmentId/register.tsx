@@ -6,7 +6,7 @@ import {
   getCandidateIDFromAssessmentId,
   updateCandidateDetail,
   updateNextStep,
-} from '~/utils/assessment.utils'
+} from '~/services/assessment.service'
 
 export const loader: LoaderFunction = async ({ params, request }) => {
   const candidateNextRoute = await checkIfTestLinkIsValidAndRedirect(

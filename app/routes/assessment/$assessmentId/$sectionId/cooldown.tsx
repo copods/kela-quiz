@@ -6,7 +6,7 @@ import {
   getSectionInCandidateTest,
   getSectionInTest,
   startCandidateSection,
-} from '~/utils/assessment.utils'
+} from '~/services/assessment.service'
 
 export const loader: LoaderFunction = async ({ params, request }) => {
   const section = await getSectionInTest(params.sectionId as string)

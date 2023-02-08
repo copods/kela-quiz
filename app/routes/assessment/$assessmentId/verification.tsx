@@ -7,7 +7,7 @@ import {
   resendOtpCode,
   updateNextStep,
   verifyCandidateOtp,
-} from '~/utils/assessment.utils'
+} from '~/services/assessment.service'
 import { useEffect } from 'react'
 import { toast } from 'react-toastify'
 import CandidateOtp from '~/components/assessment/CandidateOtpVerification'

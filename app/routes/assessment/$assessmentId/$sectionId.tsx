@@ -8,7 +8,7 @@ import {
   getSectionInCandidateTest,
   getSectionInTest,
   moveToNextSection,
-} from '~/utils/assessment.utils'
+} from '~/services/assessment.service'
 
 export const loader: LoaderFunction = async ({ params, request }) => {
   const candidateNextRoute = await checkIfTestLinkIsValidAndRedirect(

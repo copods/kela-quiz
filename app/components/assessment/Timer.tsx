@@ -5,7 +5,7 @@ import type {
   SectionInCandidateTest,
   SectionInTest,
 } from '~/interface/Interface'
-import { getTimeLeftInSeconds } from '~/utils/assessment.utils'
+import { getTimeLeftInSeconds } from '~/services/assessment.service'
 
 const TimerComponent = ({
   candidateSection,
