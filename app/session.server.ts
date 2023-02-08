@@ -1,9 +1,10 @@
 import { createCookieSessionStorage, redirect } from "@remix-run/node"
 import invariant from "tiny-invariant"
 
-import type { User } from "./interface/Interface"
 import { getDefaultWorkspaceIdForUserQuery } from "./models/workspace.server"
-import { getUserByID } from "./services/user.service"
+
+import type { User } from "~/models/user.server"
+import { getUserById } from "~/models/user.server"
 
 invariant(process.env.SESSION_SECRET, "SESSION_SECRET must be set")
 
@@ -51,7 +52,7 @@ export async function getUser(request: Request) {
   const userId = await getUserId(request)
   if (userId === undefined) return null
 
-  const user = await getUserByID(userId)
+  const user = await getUserById(userId)
   if (user) return user
 
   throw await logout(request)
@@ -84,7 +85,7 @@ export async function requireWorkspaceId(
 export async function requireUser(request: Request) {
   const userId = await requireUserId(request)
 
-  const user = await getUserByID(userId)
+  const user = await getUserById(userId)
   if (user) return user
 
   throw await logout(request)

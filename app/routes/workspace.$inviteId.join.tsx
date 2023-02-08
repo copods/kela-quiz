@@ -6,8 +6,8 @@ import Header from "~/components/assessment/Header"
 import JoinWorkspace from "~/components/workspace/JoinWorkspace"
 import { routes } from "~/constants/route.constants"
 import { getInvitedMemberById } from "~/models/invites.server"
+import { getUserByEmail } from "~/models/user.server"
 import { joinWorkspace } from "~/models/workspace.server"
-import { getUserBYEmail } from "~/services/user.service"
 import { getUserId } from "~/session.server"
 
 export type LoaderData = {
@@ -22,7 +22,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     throw new Response("Not Found", { status: 404 })
   }
 
-  const user = await getUserBYEmail(invitedMember.email) //checking if user exist or not
+  const user = await getUserByEmail(invitedMember.email) //checking if user exist or not
   let loginWithWrongId
   let joined
 

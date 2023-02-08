@@ -9,7 +9,7 @@ import { useActionData, useSearchParams } from "@remix-run/react"
 import Login from "~/components/login/Login"
 import { routes } from "~/constants/route.constants"
 import type { ActionData } from "~/interface/Interface"
-import { userLoginVerificationResponse } from "~/services/user.service"
+import { loginVerificationResponse } from "~/models/user.server"
 import { createUserSession, getUserId } from "~/session.server"
 import { safeRedirect, validateEmail } from "~/utils"
 
@@ -52,7 +52,7 @@ export const action: ActionFunction = async ({ request }) => {
     )
   }
 
-  const user = await userLoginVerificationResponse(email, password)
+  const user = await loginVerificationResponse(email, password)
   if (!user) {
     return json<ActionData>(
       { errors: { password: "statusCheck.incorrectEmailOrPassword" } },

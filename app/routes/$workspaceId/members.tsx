@@ -11,21 +11,21 @@ import {
 import MembersWrapper from "~/components/members/MembersWrapper"
 import { actions } from "~/constants/action.constants"
 import { routes } from "~/constants/route.constants"
-import type { User } from "~/interface/Interface"
 import {
   getAllInvitedMember,
   getAllInvitedMemberCount,
 } from "~/models/invites.server"
 import {
+  getAllRoles,
+  getAllUsers,
+  getAllUsersCount,
+  getUserById,
+} from "~/models/user.server"
+import type { User } from "~/models/user.server"
+import {
   getCurrentWorkspaceOwner,
   getUserWorkspaces,
 } from "~/models/workspace.server"
-import {
-  getALLRoles,
-  getALLUsers,
-  getALLUsersCount,
-  getUserByID,
-} from "~/services/user.service"
 import { getUserId, requireWorkspaceId } from "~/session.server"
 
 export const loader: LoaderFunction = async ({ request, params }) => {
@@ -41,7 +41,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     5
   )
   const userId = await getUserId(request)
-  const getUser = await getUserByID(userId as string)
+  const getUser = await getUserById(userId as string)
   const currentWorkspaceId = params.workspaceId as string
   const currentWorkspaceOwner = await getCurrentWorkspaceOwner(
     currentWorkspaceId
@@ -52,15 +52,15 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     invitedMembersItemsPerPage
   )
   const workspaces = await getUserWorkspaces(userId as string)
-  const roles = await getALLRoles()
+  const roles = await getAllRoles()
   if (!userId) return redirect(routes.signIn)
-  const users = await getALLUsers({
+  const users = await getAllUsers({
     currentWorkspaceId,
     membersCurrentPage,
     membersItemsPerPage,
   })
 
-  const allUsersCount = await getALLUsersCount(currentWorkspaceId)
+  const allUsersCount = await getAllUsersCount(currentWorkspaceId)
   const invitedUsersCount = await getAllInvitedMemberCount(currentWorkspaceId)
   return json<LoaderData>({
     users,
@@ -103,7 +103,7 @@ export const action: ActionFunction = async ({ request, params }) => {
     return response
   }
   if (action === actions.deleteMember) {
-    const { email } = (await getUserByID(formData.get("id") as string)) as User
+    const { email } = (await getUserById(formData.get("id") as string)) as User
 
     const response = await deleteMemberById(
       formData.get("id") as string,
