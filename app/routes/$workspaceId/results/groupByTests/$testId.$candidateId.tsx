@@ -1,23 +1,22 @@
 import type { ActionFunction, LoaderFunction } from "@remix-run/server-runtime"
 import { json } from "@remix-run/server-runtime"
 import invariant from "tiny-invariant"
-
 import ResultDetailsComponent from "~/components/results/ResultDetails"
-import type { CandidateTest, Candidate } from "~/interface/Interface"
 import {
-  getSectionWiseResultsOfIndividualCandidate,
-  updateCandidateStatus,
-} from "~/models/result.server"
-import { getUserWorkspaces } from "~/models/workspace.server"
-import { getUserId } from "~/session.server"
+  getSectionWiseResultsOFIndividualCandidate,
+  getUsersId,
+  getWorkspaces,
+  updateCandidateSTATUS,
+} from "~/components/services/results.service"
+import type { CandidateTest, Candidate } from "~/interface/Interface"
 
 export const loader: LoaderFunction = async ({ request, params }) => {
-  const userId = await getUserId(request)
+  const userId = await getUsersId(request)
   const currentWorkspaceId = params.workspaceId as string
-  const workspaces = await getUserWorkspaces(userId as string)
+  const workspaces = await getWorkspaces(userId as string)
   invariant(params.testId, "resultId not found")
   const { sections, candidate } =
-    (await getSectionWiseResultsOfIndividualCandidate({
+    (await getSectionWiseResultsOFIndividualCandidate({
       testId: params?.testId as string,
       candidateId: params?.candidateId as string,
     })) || ({} as CandidateTest & { candidate: Candidate })
@@ -37,7 +36,7 @@ export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
   const candidateStatus = formData.get("candidateStatus")
   const resultId = formData.get("resultId")
-  const updateStatus = await updateCandidateStatus({
+  const updateStatus = await updateCandidateSTATUS({
     id: resultId as string,
     candidateStatus: candidateStatus as string,
   })

@@ -2,16 +2,15 @@ import type { ActionFunction } from "@remix-run/node"
 import { json } from "@remix-run/node"
 import type { LoaderFunction } from "@remix-run/server-runtime"
 import invariant from "tiny-invariant"
-
 import CandidateListOfTest from "~/components/results/CandidateListOfTest"
-import { actions } from "~/constants/action.constants"
-import { resendTestLink } from "~/models/candidate.server"
 import {
-  getAllCandidatesOfTest,
-  getAllCandidatesOfTestCount,
-} from "~/models/result.server"
-import { getUserWorkspaces } from "~/models/workspace.server"
-import { getUserId } from "~/session.server"
+  getALLCandidatesOfTest,
+  getALLCandidatesOfTestCount,
+  getTestResendLink,
+  getUsersId,
+  getWorkspaces,
+} from "~/components/services/results.service"
+import { actions } from "~/constants/action.constants"
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   const url = new URL(request.url)
@@ -19,15 +18,15 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const pageSize = Math.max(Number(query.get("pageSize") || 5), 5)
   const currentPage = Math.max(Number(query.get("page") || 1), 1)
   const statusFilter = query.get("filterByStatus") as string
-  const candidatesCount = await getAllCandidatesOfTestCount(
+  const candidatesCount = await getALLCandidatesOfTestCount(
     params.testId!,
     statusFilter
   )
-  const userId = await getUserId(request)
+  const userId = await getUsersId(request)
   const currentWorkspaceId = params.workspaceId
-  const workspaces = await getUserWorkspaces(userId as string)
+  const workspaces = await getWorkspaces(userId as string)
   invariant(params.testId, "resultId not found")
-  const candidatesOfTest = await getAllCandidatesOfTest({
+  const candidatesOfTest = await getALLCandidatesOfTest({
     id: params.testId,
     workspaceId: currentWorkspaceId as string,
     currentPage,
@@ -55,11 +54,11 @@ export const action: ActionFunction = async ({ request }) => {
     const testId = formData.get("testId") as string
     const candidateId = formData.get("candidateId") as string
     const id = formData.get("id") as string
-    const candidateInviteStatus = await resendTestLink({
+    const candidateInviteStatus = await getTestResendLink(
       id,
       candidateId,
-      testId,
-    })
+      testId
+    )
     return json({ candidateInviteStatus, candidateId })
   }
 }
