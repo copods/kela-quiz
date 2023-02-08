@@ -1,3 +1,4 @@
+import { User } from "@prisma/client"
 import { json } from "@remix-run/node"
 import { createCandidate } from "~/models/candidate.server"
 import {
@@ -64,32 +65,15 @@ export const deleteAssessmentById = async (id: string) => {
 
 //* function for creating the candidate
 export const createCandidateByAssessId = async (
-  testId: string,
-  createdById: string,
-  formData: any
+  emails: Array<string>,
+  createdById: User["id"],
+  testId: string
 ) => {
-  if (testId !== null) {
-    let emails: Array<string> = []
-    await formData.forEach((fd: string) => {
-      if (fd != "") {
-        emails.push(fd as string)
-      }
-    })
-    if (emails.length === 0) {
-      return json({
-        status: 401,
-        message: "statusCheck.noEmailsInvite",
-        testId,
-      })
-    }
-    const candidateInviteStatus = await createCandidate({
-      emails,
-      createdById,
-      testId,
-    })
-
-    return json({ candidateInviteStatus, testId })
-  }
+  return await createCandidate({
+    emails,
+    createdById,
+    testId,
+  })
 }
 
 //* function for fetching number of count of total assessments

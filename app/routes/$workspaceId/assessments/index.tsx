@@ -5,20 +5,22 @@ import TestList from "~/components/tests/TestList"
 import { routes } from "~/constants/route.constants"
 import type { Test } from "~/interface/Interface"
 import { sortByOrder } from "~/interface/Interface"
+import { getUserWorkspaces } from "~/models/workspace.server"
 import {
   createCandidateByAssessId,
   deleteAssessmentById,
   getAllAssessments,
   getAllAssessmentsCount,
+  getRequiredUserId,
+  getUsersId,
   getWorkspaces,
 } from "~/services/assessments.service"
-import { getUserId, requireUserId } from "~/session.server"
-export type LoaderData = {
+type LoaderData = {
   tests: Awaited<Array<Test>>
   status?: string | undefined
-  workspaces: any
+  workspaces: Awaited<ReturnType<typeof getUserWorkspaces>>
   currentWorkspaceId: string
-  allTestsCount: any
+  allTestsCount: number
   testsCurrentPage: number
   testsItemsPerPage: number
 }
@@ -26,7 +28,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const query = new URL(request.url).searchParams
   const testsItemsPerPage = Math.max(Number(query.get("limit") || 5), 5) //To set the lower bound, so that minimum count will always be 1 for current page and 5 for items per page.
   const testsCurrentPage = Math.max(Number(query.get("page") || 1), 1)
-  const userId = await getUserId(request)
+  const userId = await getUsersId(request)
   const currentWorkspaceId = params.workspaceId as string
   const workspaces = await getWorkspaces(userId as string)
   if (!userId) return redirect(routes.signIn)
@@ -65,7 +67,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
   const action = formData.get("action")
-  const createdById = await requireUserId(request)
+  const createdById = await getRequiredUserId(request)
   const testId = formData.get("inviteCandidates") as string
 
   formData.delete("inviteCandidates")
@@ -77,12 +79,28 @@ export const action: ActionFunction = async ({ request }) => {
   }
 
   // creating candidate for assessment
-  const response = await createCandidateByAssessId(
-    testId,
-    createdById,
-    formData
-  )
-  return response
+  if (testId !== null) {
+    let emails: Array<string> = []
+    await formData.forEach((fd) => {
+      if (fd != "") {
+        emails.push(fd as string)
+      }
+    })
+    if (emails.length === 0) {
+      return json({
+        status: 401,
+        message: "statusCheck.noEmailsInvite",
+        testId,
+      })
+    }
+    const candidateInviteStatus = await createCandidateByAssessId(
+      emails,
+      createdById,
+      testId
+    )
+
+    return json({ candidateInviteStatus, testId })
+  }
 }
 
 export default function Tests() {

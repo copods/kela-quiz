@@ -35,12 +35,28 @@ export const action: ActionFunction = async ({ request }) => {
   formData.delete("inviteCandidates")
 
   // creating candidate for assessment
-  const response = await createCandidateByAssessId(
-    testId,
-    createdById,
-    formData
-  )
-  return response
+  if (testId !== null) {
+    let emails: Array<string> = []
+    await formData.forEach((fd) => {
+      if (fd != "") {
+        emails.push(fd as string)
+      }
+    })
+    if (emails.length === 0) {
+      return json({
+        status: 401,
+        message: "statusCheck.noEmailsInvite",
+        testId,
+      })
+    }
+    const candidateInviteStatus = await createCandidateByAssessId(
+      emails,
+      createdById,
+      testId
+    )
+
+    return json({ candidateInviteStatus, testId })
+  }
 }
 export default function TestsDetailsRoute() {
   return <TestDetails />
