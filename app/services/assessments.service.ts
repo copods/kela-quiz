@@ -1,6 +1,5 @@
 import { json } from "@remix-run/node"
-import { Test } from "~/interface/Interface"
-import { createCandidate, getTestById } from "~/models/candidate.server"
+import { createCandidate } from "~/models/candidate.server"
 import {
   deleteTestById,
   getAllTests,
