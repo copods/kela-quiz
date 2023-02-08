@@ -298,7 +298,6 @@ export default function SectionPage() {
     const heading = document.getElementById('tests-heading')
     heading?.focus()
   }, [])
-
   return (
     <div className="flex h-full flex-col gap-6 overflow-hidden p-1">
       {/* header */}
@@ -323,7 +322,7 @@ export default function SectionPage() {
           buttonText={`+ ${t('sectionsConstants.addTests')}`}
         />
       </header>
-      {data.sections.length > 0 ? (
+      {data.sections.length > 0 && location.pathname.includes('/tests/') ? (
         <div
           className={`flex flex-1 overflow-hidden ${
             sectionDetailFull ? '' : 'gap-5'

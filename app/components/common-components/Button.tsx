@@ -5,16 +5,19 @@ const Button = ({
   className,
   onClick,
   isDisabled,
-  btnRef,
-  ...props
+  btnRef = null,
+  padding,
+  ...restProps
 }: ButtonProps) => {
   const getCommonClasses = () => {
-    return `py-2.5 px-5 rounded-md items-center inline-flex shadow-sm text-xs font-medium ${
-      props.alignment ? props.alignment : 'justify-center'
+    return `py-2.5 ${
+      padding ? padding : 'px-5'
+    } rounded-md items-center inline-flex shadow-sm text-xs font-medium ${
+      restProps.alignment ? restProps.alignment : 'justify-center'
     }`
   }
   const getButtonVariant = () => {
-    switch (props.variant) {
+    switch (restProps.variant) {
       case 'primary-solid':
         return `bg-primary text-gray-50 ${
           !isDisabled && 'hover:bg-primaryHover transition ease-in-out delay-75'
@@ -37,12 +40,12 @@ const Button = ({
     <button
       ref={btnRef}
       className={`${getCommonClasses()} ${getButtonVariant()} ${className}`}
-      title={props?.title}
-      data-cy={props?.datacy}
-      tabIndex={props?.tabIndex}
+      title={restProps?.title}
+      data-cy={restProps?.datacy}
+      tabIndex={restProps?.tabIndex}
       disabled={isDisabled}
       onClick={onClick}
-      {...props}
+      {...restProps}
     >
       {buttonText}
     </button>

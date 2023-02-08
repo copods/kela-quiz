@@ -1,6 +1,6 @@
 import {
-  forgetPasswordCard,
-  forgetPasswordHeader,
+  getForgetPasswordCard,
+  getForgetPasswordHeader,
   getBackToLogIn,
   getButton,
   getEmailErrorById,
@@ -11,6 +11,7 @@ import {
   getInput,
   getLabel,
   getResetPassword,
+  getToastMessage,
 } from 'support/common-function'
 import { routes } from '~/constants/route.constants'
 const memberEmail = 'johndoe@example.com'
@@ -23,48 +24,45 @@ const resendPasswordSuccess = 'New password has been sent to email successfully'
 const resendPasswordError = 'Account not found. Please enter valid email'
 
 describe('Forgot password', () => {
-  beforeEach('forgot-password', () => {
+  it('Tests to check Attributes/Colors/Visibility/Texts', () => {
     cy.visit('/forgot-password')
-  })
-  it('checks forget-password card contain shadow', () => {
-    forgetPasswordCard()
+
+    // To check if forgot password card contains shadow
+    getForgetPasswordCard()
       .should('be.visible')
       .should('have.class', `drop-shadow-xl`)
-  })
-  it('checks forget-password card have correct gap between children components', () => {
-    forgetPasswordCard().should('be.visible').should('have.css', `gap`, `24px`)
-  })
-  it('checks, divider should be visible ', () => {
+
+    // To check forgot password card gap
+    getForgetPasswordCard().should('have.css', `gap`, `24px`)
+
+    // To check if divider is visible
     getHr().should('be.visible')
-  })
-  it('checks, divider should contains correct have', () => {
-    getHr()
-      .should('be.visible')
-      .should('have.class', 'h-px w-6/12 border-none bg-gray-500 text-center')
-  })
-  it('should display a image and have correct size', () => {
+
+    // To check if divider has correct class
+    getHr().should(
+      'have.class',
+      'h-px w-6/12 border-none bg-gray-500 text-center'
+    )
+
+    // To check if image is visible
     getImg().should('be.visible')
-  })
-  it('should display a Heading and also contain correct text and css class', () => {
-    forgetPasswordHeader()
+
+    // To check if heading is visible, has correct text and has correct css class
+    getForgetPasswordHeader()
       .should('be.visible')
       .should('have.text', header)
       .should('have.class', `text-center text-3xl font-bold text-gray-900`)
-  })
-  it('sub-Heading should have correct text and classes', () => {
-    getEmailInfo().should('be.visible')
-  })
-  it('sub-Heading should be have correct text', () => {
+
+    // To check sub heading has correct text and has correct classes and is visible
     getEmailInfo()
       .should('be.visible')
       .should('have.text', enterEmail)
       .should('have.class', 'text-center text-xs text-gray-500')
-  })
-  it('checks, label of email input box should be visible and have correct text', () => {
-    getLabel().should('be.visible').should('have.text', 'Email*')
-  })
 
-  it('checks, email input field should be focused and correct class', () => {
+    // To check if email input is visible, have correct text and has label
+    getLabel().should('be.visible').should('have.text', 'Email*')
+
+    // To check if email input is focused and has correct class
     getInput()
       .should('be.visible')
       .should(
@@ -73,20 +71,17 @@ describe('Forgot password', () => {
       )
       .click()
       .should('be.focused')
-  })
 
-  it('checks, back to login link should have correct text and classes', () => {
+    // To check if login link has correct text and has correct class
     getBackToLogIn()
       .should('have.text', backToLogin)
       .should('have.class', 'cursor-pointer text-sm text-primary')
-  })
 
-  it('checks, submit button should have correct text and visible', () => {
+    // To check if submit button has correct text and is visible
     getButton().should('be.visible').should('have.text', resetPassword)
-  })
-  it('Checking account not found for reset password ,error should have correct message and classes', () => {
-    forgetPasswordHeader().should('be.visible', { timeout: 6000 })
-    forgetPasswordHeader().should('have.text', header)
+
+    // To check if account not found error has correct message and classes
+    getForgetPasswordHeader().should('be.visible').should('have.text', header)
     getEmailInput()
       .clear()
       .type(invalidMemberEmail)
@@ -96,11 +91,8 @@ describe('Forgot password', () => {
       .should('be.visible')
       .should('have.text', resendPasswordError)
       .should('have.class', 'text-red-700')
-  })
 
-  it('Checking account not found for reset password ', () => {
-    forgetPasswordHeader().should('be.visible', { timeout: 6000 })
-    forgetPasswordHeader().should('have.text', header)
+    // To check account not found for reset password
     getEmailInput()
       .clear()
       .type(invalidMemberEmail)
@@ -112,22 +104,13 @@ describe('Forgot password', () => {
         if (toastText === resendPasswordError) {
           cy.location('pathname').should('include', routes.forgotPassword)
         } else {
-          cy.get('.Toastify__toast', { timeout: 8000 }).should(
-            'have.text',
-            resendPasswordSuccess
-          )
+          getToastMessage().should('have.text', resendPasswordSuccess)
           cy.location('pathname').should('include', routes.signIn)
         }
       })
-  })
-  it('Checking for account when it is found for reset password ', () => {
-    cy.log('On forget Password page')
-    forgetPasswordHeader().should('be.visible', { timeout: 6000 })
-    forgetPasswordHeader().should('have.text', header)
-    getEmailInput()
-      .should('be.visible', { timeout: 6000 })
-      .clear()
-      .type(memberEmail)
+
+    // To check if account is found for reset password
+    getEmailInput().clear().type(memberEmail)
     getResetPassword().click()
   })
 })
