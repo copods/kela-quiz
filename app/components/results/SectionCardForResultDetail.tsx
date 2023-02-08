@@ -1,5 +1,5 @@
-import { useTranslation } from 'react-i18next'
-import { Link } from '@remix-run/react'
+import { Link } from "@remix-run/react"
+import { useTranslation } from "react-i18next"
 
 const SectionCardForResultDetail = ({
   sectionId,
@@ -37,7 +37,7 @@ const SectionCardForResultDetail = ({
           <div className="flex items-center gap-4">
             <div className="flex gap-2 text-sm">
               <span className="text-gray-500">
-                {t('resultConstants.correct')}:
+                {t("resultConstants.correct")}:
               </span>
               <span className="font-medium text-green-600">
                 {correctQuestions}
@@ -45,7 +45,7 @@ const SectionCardForResultDetail = ({
             </div>
             <div className="flex gap-2 text-sm">
               <span className="text-gray-500">
-                {t('resultConstants.incorrect')}:
+                {t("resultConstants.incorrect")}:
               </span>
               <span className="font-medium text-red-600">
                 {incorrectQuestions}
@@ -53,7 +53,7 @@ const SectionCardForResultDetail = ({
             </div>
             <div className="flex gap-2 text-sm">
               <span className="text-gray-500">
-                {t('resultConstants.skipped')}:
+                {t("resultConstants.skipped")}:
               </span>
               <span className="font-medium text-zinc-600">
                 {skippedQuestions}
@@ -61,7 +61,7 @@ const SectionCardForResultDetail = ({
             </div>
             <div className="flex gap-2 text-sm">
               <span className="text-gray-500">
-                {t('resultConstants.unanswered')}:
+                {t("resultConstants.unanswered")}:
               </span>
               <span className="font-medium text-yellow-600">
                 {unansweredQuestions}
@@ -69,7 +69,7 @@ const SectionCardForResultDetail = ({
             </div>
             <div className="flex gap-2 text-sm">
               <span className="text-gray-500">
-                {t('resultConstants.total')}:
+                {t("resultConstants.total")}:
               </span>
               <span className="font-bold text-primary">{totalQuestions}</span>
             </div>
@@ -82,18 +82,18 @@ const SectionCardForResultDetail = ({
                 data-cy="result-details"
                 className="groupByItemTest text-base font-semibold text-primary"
               >
-                {t('resultConstants.viewDetails')}
+                {t("resultConstants.viewDetails")}
               </Link>
             </div>
           </div>
         </>
       ) : startedAt ? (
         <span className="rounded-full bg-blue-100 px-2 py-1 text-xs">
-          {t('commonConstants.onGoing')}
+          {t("commonConstants.onGoing")}
         </span>
       ) : (
         <span className="rounded-full bg-orange-100 px-2 py-1 text-xs">
-          {t('commonConstants.notAttempted')}
+          {t("commonConstants.notAttempted")}
         </span>
       )}
     </div>

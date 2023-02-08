@@ -1,10 +1,11 @@
-import type { CandidateResult, CandidateTest } from '@prisma/client'
-import { prisma } from '~/db.server'
-import type { Test } from '@prisma/client'
+import type { CandidateResult, CandidateTest } from "@prisma/client"
+import type { Test } from "@prisma/client"
+
+import { prisma } from "~/db.server"
 
 export async function getPendingExamCandidateByTestId({
   id,
-}: Pick<CandidateTest, 'id'>) {
+}: Pick<CandidateTest, "id">) {
   return prisma.test.findFirst({
     where: {
       id,
@@ -28,7 +29,7 @@ export async function getPendingExamCandidateByTestId({
 }
 export async function getTestAttendedCandiated({
   id,
-}: Pick<CandidateResult, 'id'>) {
+}: Pick<CandidateResult, "id">) {
   return prisma.test.findFirst({
     where: {
       id,
@@ -55,7 +56,7 @@ export async function getTestAttendedCandiated({
 }
 export async function getResultsOfCandidatesByTestId({
   testId,
-}: Pick<CandidateResult, 'testId'>) {
+}: Pick<CandidateResult, "testId">) {
   return prisma.candidateResult.findMany({
     where: { testId },
     select: {
@@ -87,9 +88,9 @@ export async function getAllCandidatesOfTestCount(
 ) {
   const count = prisma.candidateTest.count({
     where: {
-      ...(statusFilter === 'complete'
+      ...(statusFilter === "complete"
         ? { NOT: { endAt: { equals: null } } }
-        : statusFilter === 'pending'
+        : statusFilter === "pending"
         ? { endAt: { equals: null } }
         : {}),
       testId: id,
@@ -120,14 +121,14 @@ export async function getAllCandidatesOfTest({
       candidateTest: {
         take: pageSize,
         where: {
-          ...(statusFilter === 'complete'
+          ...(statusFilter === "complete"
             ? { NOT: { endAt: { equals: null } } }
-            : statusFilter === 'pending'
+            : statusFilter === "pending"
             ? { endAt: { equals: null } }
             : {}),
         },
         skip: (currentPage! - 1) * pageSize!,
-        orderBy: { createdAt: 'desc' },
+        orderBy: { createdAt: "desc" },
         include: {
           candidateResult: true,
           candidate: {
@@ -238,7 +239,7 @@ export async function updateCandidateStatus({
       id,
     },
     data: {
-      isQualified: candidateStatus == 'true' ? true : false,
+      isQualified: candidateStatus == "true" ? true : false,
     },
   })
 }
@@ -264,9 +265,9 @@ export async function getAllCandidateTestsCount(
 ) {
   const testCount = await prisma.test.count({
     where: {
-      ...(statusFilter === 'active'
+      ...(statusFilter === "active"
         ? { NOT: { deleted: { equals: true } } }
-        : statusFilter === 'inactive'
+        : statusFilter === "inactive"
         ? { deleted: { equals: true } }
         : {}),
       workspaceId,
@@ -293,11 +294,11 @@ export async function getAllCandidateTests(
   const res: Array<Test> = await prisma.test.findMany({
     take: PER_PAGE_ITEMS,
     skip: (resultsCurrentPage - 1) * PER_PAGE_ITEMS,
-    orderBy: { [sortBy ?? 'createdAt']: sortOrder ?? 'asc' },
+    orderBy: { [sortBy ?? "createdAt"]: sortOrder ?? "asc" },
     where: {
-      ...(statusFilter === 'active'
+      ...(statusFilter === "active"
         ? { NOT: { deleted: { equals: true } } }
-        : statusFilter === 'inactive'
+        : statusFilter === "inactive"
         ? { deleted: { equals: true } }
         : {}),
       workspaceId,
@@ -338,7 +339,7 @@ export async function getAllCandidateTests(
             count = count + 1
           }
         })
-        test['count'] = count
+        test["count"] = count
       }
     )
   }

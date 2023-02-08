@@ -1,13 +1,15 @@
-import type { LoaderFunction, ActionFunction } from '@remix-run/server-runtime'
-import { json } from '@remix-run/node'
-import { getSectionById } from '~/models/sections.server'
-import invariant from 'tiny-invariant'
-import SectionDetails from '~/components/sections/SectionDetails'
-import { deleteQuestionById } from '~/models/sections.server'
-import { useActionData } from '@remix-run/react'
-import { toast } from 'react-toastify'
-import { useTranslation } from 'react-i18next'
-import { useEffect } from 'react'
+import { useEffect } from "react"
+
+import { json } from "@remix-run/node"
+import { useActionData } from "@remix-run/react"
+import type { LoaderFunction, ActionFunction } from "@remix-run/server-runtime"
+import { useTranslation } from "react-i18next"
+import { toast } from "react-toastify"
+import invariant from "tiny-invariant"
+
+import SectionDetails from "~/components/sections/SectionDetails"
+import { getSectionById } from "~/models/sections.server"
+import { deleteQuestionById } from "~/models/sections.server"
 
 export type ActionData = {
   errors?: {
@@ -20,23 +22,23 @@ export type ActionData = {
   }
 }
 export const loader: LoaderFunction = async ({ request, params }) => {
-  invariant(params.sectionId, 'sectionId not found')
+  invariant(params.sectionId, "sectionId not found")
   const sectionDetails = await getSectionById({ id: params.sectionId })
   if (!sectionDetails) {
-    throw new Response('Not Found', { status: 404 })
+    throw new Response("Not Found", { status: 404 })
   }
   const currentWorkspaceId = params.workspaceId
   return json({ sectionDetails, currentWorkspaceId })
 }
 export const action: ActionFunction = async ({ request, params }) => {
   const formData = await request.formData()
-  const action = await formData.get('action')
-  const id = formData.get('id') as string
-  if (action === 'deleteQuestion') {
+  const action = await formData.get("action")
+  const id = formData.get("id") as string
+  if (action === "deleteQuestion") {
     const deleteQuestion = await deleteQuestionById(id)
       .then(() => {
         return json<ActionData>(
-          { resp: { title: 'statusCheck.deletedSuccess', status: 200 } },
+          { resp: { title: "statusCheck.deletedSuccess", status: 200 } },
           { status: 200 }
         )
       })
@@ -44,7 +46,7 @@ export const action: ActionFunction = async ({ request, params }) => {
         return json<ActionData>(
           {
             errors: {
-              title: 'statusCheck.commonError',
+              title: "statusCheck.commonError",
               status: 400,
             },
           },

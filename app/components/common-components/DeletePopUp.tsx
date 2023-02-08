@@ -1,9 +1,11 @@
-import { useEffect } from 'react'
-import { Icon } from '@iconify/react'
-import { Form } from '@remix-run/react'
-import Button from './Button'
-import { useTranslation } from 'react-i18next'
-import DialogWrapper from './Dialog'
+import { useEffect } from "react"
+
+import { Icon } from "@iconify/react"
+import { Form } from "@remix-run/react"
+import { useTranslation } from "react-i18next"
+
+import Button from "./Button"
+import DialogWrapper from "./Dialog"
 export default function DeletePopUp({
   setOpen,
   open,
@@ -32,7 +34,7 @@ export default function DeletePopUp({
   useEffect(() => {
     if (open === true) {
       setTimeout(() => {
-        document.getElementById('confirm-delete')?.focus()
+        document.getElementById("confirm-delete")?.focus()
       }, 100)
     }
   }, [open])
@@ -52,7 +54,7 @@ export default function DeletePopUp({
               </div>
               <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                 <span className="text-sm text-gray-500">
-                  {t('deletePopUp.alert')} {deleteItemType}
+                  {t("deletePopUp.alert")} {deleteItemType}
                 </span>
                 <p className="bold text-sm text-gray-500">
                   {deleteItem} {subAlert}
@@ -69,8 +71,8 @@ export default function DeletePopUp({
                 type="button"
                 name="delete"
                 className="px-5"
-                title={t('commonConstants.delete')}
-                buttonText={t('commonConstants.delete')}
+                title={t("commonConstants.delete")}
+                buttonText={t("commonConstants.delete")}
                 onClick={() => {
                   handleDelete()
                   if (setDeleted !== undefined) {
@@ -85,8 +87,8 @@ export default function DeletePopUp({
               id="cancel-delete-pop-up"
               variant="primary-outlined"
               className="px-5"
-              title={t('commonConstants.cancel')}
-              buttonText={t('commonConstants.cancel')}
+              title={t("commonConstants.cancel")}
+              buttonText={t("commonConstants.cancel")}
               onClick={() => {
                 if (setOpen !== undefined) setOpen(false)
               }}
