@@ -88,7 +88,6 @@ const AddEditSection = ({
   useEffect(() => {
     setErr(localStorage.getItem('err') || undefined)
   }, [])
-
   useEffect(() => {
     if (sectionActionData?.errors?.title) {
       setErr(sectionActionData?.errors?.title)
