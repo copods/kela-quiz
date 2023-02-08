@@ -1,10 +1,11 @@
 import type { ActionFunction, LoaderFunction } from '@remix-run/node'
-import { updatePassword } from '~/models/user.server'
 import { routes } from '~/constants/route.constants'
 import { getUserId } from '~/session.server'
 import { json } from '@remix-run/node'
 import { redirect } from '@remix-run/node'
 import GeneralSettings from '~/components/settings/GeneralSettings'
+import { updateUserPassword } from '~/services/user.service'
+
 export type ActionData = {
   errors?: {
     status?: number
@@ -77,7 +78,7 @@ export const action: ActionFunction = async ({ request }) => {
     }
     if (newPassword === confirmPasword) {
       // new password will be update if this condition is true
-      const general = await updatePassword(
+      const general = await updateUserPassword(
         userId as string,
         newPassword as string,
         oldPassword as string

@@ -2,7 +2,6 @@ import { getUserId, requireWorkspaceId } from '~/session.server'
 import { redirect } from '@remix-run/node'
 import type { LoaderFunction, ActionFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
-import type { User } from '~/models/user.server'
 import {
   getAllRoles,
   getAllUsers,
@@ -26,6 +25,7 @@ import {
   inviteNewMember,
   reinviteMember,
 } from 'helper/members.helper'
+import type { User } from '~/interface/Interface'
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   const query = new URL(request.url).searchParams

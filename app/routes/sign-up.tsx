@@ -1,13 +1,11 @@
 import type { ActionFunction, LoaderFunction } from '@remix-run/node'
 import { json } from '@remix-run/node'
 
-import { createUserBySignUp } from '~/models/user.server'
-
 import SignUp from '~/components/login/SignUp'
-import { createUserSession } from '~/session.server'
 import { safeRedirect } from '~/utils'
 import { routes } from '~/constants/route.constants'
 import { getInvitedMemberById } from '~/models/invites.server'
+import { createUserBySignUP } from '~/services/user.service'
 
 export type ActionData = {
   errors?: {
@@ -123,36 +121,16 @@ export const action: ActionFunction = async ({ request }) => {
       )
     }
 
-    let addHandle = null
-    await createUserBySignUp({
+    let addHandle = await createUserBySignUP(
       firstName,
       lastName,
       email,
       password,
-    })
-      .then((res) => {
-        addHandle = createUserSession({
-          request,
-          userId: res?.id,
-          remember: false,
-          redirectTo,
-        })
-      })
-      .catch((err) => {
-        let title = 'statusCheck.commonError'
-        if (err.code === 'P2002') {
-          title = 'toastConstants.memberAlreadyExist'
-        }
-        addHandle = json<ActionData>(
-          {
-            errors: {
-              title,
-              status: 400,
-            },
-          },
-          { status: 400 }
-        )
-      })
+      redirectTo,
+      request
+    )
+
+    console.log(addHandle)
 
     return addHandle
   }

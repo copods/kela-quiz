@@ -7,11 +7,11 @@ import { json, redirect } from '@remix-run/node'
 import { useActionData, useSearchParams } from '@remix-run/react'
 
 import { createUserSession, getUserId } from '~/session.server'
-import { loginVerificationResponse } from '~/models/user.server'
 import { safeRedirect, validateEmail } from '~/utils'
 import type { ActionData } from '~/interface/Interface'
 import Login from '~/components/login/Login'
 import { routes } from '~/constants/route.constants'
+import { userLoginVerificationResponse } from '~/services/user.service'
 
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await getUserId(request)
@@ -52,7 +52,7 @@ export const action: ActionFunction = async ({ request }) => {
     )
   }
 
-  const user = await loginVerificationResponse(email, password)
+  const user = await userLoginVerificationResponse(email, password)
   if (!user) {
     return json<ActionData>(
       { errors: { password: 'statusCheck.incorrectEmailOrPassword' } },

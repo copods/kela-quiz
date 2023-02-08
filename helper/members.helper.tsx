@@ -4,8 +4,8 @@ import {
   reinviteMemberForWorkspace,
 } from '~/models/invites.server'
 import type { getAllInvitedMember } from '~/models/invites.server'
-import type { getAllRoles, getAllUsers } from '~/models/user.server'
-import { getUserById, deleteUserById } from '~/models/user.server'
+import type { getALLRoles, getALLUsers } from '~/services/user.service'
+import { deleteUserByID, getUserByID } from '~/services/user.service'
 import type { getUserWorkspaces } from '~/models/workspace.server'
 import type { getUserId } from '~/session.server'
 
@@ -20,13 +20,13 @@ export type ActionData = {
   }
 }
 export type LoaderData = {
-  users: Awaited<ReturnType<typeof getAllUsers>>
+  users: Awaited<ReturnType<typeof getALLUsers>>
   userId: Awaited<ReturnType<typeof getUserId>>
-  roles: Awaited<ReturnType<typeof getAllRoles>>
+  roles: Awaited<ReturnType<typeof getALLRoles>>
   workspaces: Awaited<ReturnType<typeof getUserWorkspaces>>
   currentWorkspaceId: string
   invitedMembers: Awaited<ReturnType<typeof getAllInvitedMember>>
-  getUser: Awaited<ReturnType<typeof getUserById>>
+  getUser: Awaited<ReturnType<typeof getUserByID>>
   membersCurrentPage: number
   membersItemsPerPage: number
   invitedMembersItemsPerPage: number
@@ -41,7 +41,7 @@ export const inviteNewMember = async (
   invitedByWorkspaceId: string,
   userId: string
 ) => {
-  const getUser = await getUserById(userId as string)
+  const getUser = await getUserByID(userId)
   const emailFilter = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
 
   if (typeof email !== 'string' || email.length === 0) {
@@ -138,24 +138,7 @@ export const deleteMemberById = async (
   workspaceId: string,
   email: string
 ) => {
-  const deleteHandle = deleteUserById(id, workspaceId, email)
-    .then((res) => {
-      return json<ActionData>(
-        { resp: { title: 'statusCheck.deletedSuccess', status: 200 } },
-        { status: 200 }
-      )
-    })
-    .catch((err) => {
-      return json<ActionData>(
-        {
-          errors: {
-            title: 'statusCheck.commonError',
-            status: 400,
-          },
-        },
-        { status: 400 }
-      )
-    })
+  const deleteHandle = deleteUserByID(id, workspaceId, email)
 
   return deleteHandle
 }

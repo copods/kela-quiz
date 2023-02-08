@@ -7,7 +7,7 @@ import { getUserId } from '~/session.server'
 import { routes } from '~/constants/route.constants'
 import { joinWorkspace } from '~/models/workspace.server'
 import { getInvitedMemberById } from '~/models/invites.server'
-import { getUserByEmail } from '~/models/user.server'
+import { getUserBYEmail } from '~/services/user.service'
 
 export type LoaderData = {
   invitedMember: Awaited<ReturnType<typeof getInvitedMemberById>>
@@ -21,7 +21,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     throw new Response('Not Found', { status: 404 })
   }
 
-  const user = await getUserByEmail(invitedMember.email) //checking if user exist or not
+  const user = await getUserBYEmail(invitedMember.email) //checking if user exist or not
   let loginWithWrongId
   let joined
 
