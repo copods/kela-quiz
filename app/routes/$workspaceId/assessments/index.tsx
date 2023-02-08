@@ -6,7 +6,6 @@ import { routes } from "~/constants/route.constants"
 import type { Test } from "~/interface/Interface"
 import { sortByOrder } from "~/interface/Interface"
 import {
-  LoaderData,
   createCandidateByAssessId,
   deleteAssessmentById,
   getAllAssessments,
@@ -14,7 +13,15 @@ import {
   getWorkspaces,
 } from "~/services/assessments.service"
 import { getUserId, requireUserId } from "~/session.server"
-
+export type LoaderData = {
+  tests: Awaited<Array<Test>>
+  status?: string | undefined
+  workspaces: any
+  currentWorkspaceId: string
+  allTestsCount: any
+  testsCurrentPage: number
+  testsItemsPerPage: number
+}
 export const loader: LoaderFunction = async ({ request, params }) => {
   const query = new URL(request.url).searchParams
   const testsItemsPerPage = Math.max(Number(query.get("limit") || 5), 5) //To set the lower bound, so that minimum count will always be 1 for current page and 5 for items per page.

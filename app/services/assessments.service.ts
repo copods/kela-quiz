@@ -7,22 +7,8 @@ import {
   getAllTestsCount,
 } from "~/models/tests.server"
 import { getUserWorkspaces } from "~/models/workspace.server"
+import { getUserId, requireUserId } from "~/session.server"
 
-//* types for loaderData
-export type LoaderData = {
-  tests: Awaited<Array<Test>>
-  status?: string | undefined
-  workspaces: any
-  currentWorkspaceId: string
-  allTestsCount: any
-  testsCurrentPage: number
-  testsItemsPerPage: number
-}
-export type TestIdLoaderData = {
-  testPreview: Awaited<ReturnType<typeof getTestById>>
-  workspaces: any
-  currentWorkspaceId: string
-}
 //* types for ActionData
 export type ActionData = {
   errors?: {
@@ -109,10 +95,17 @@ export const createCandidateByAssessId = async (
 
 //* function for fetching number of count of total assessments
 export const getAllAssessmentsCount = async (currentWorkspaceId: string) => {
-  await getAllTestsCount(currentWorkspaceId)
+  return await getAllTestsCount(currentWorkspaceId)
 }
 
 //* fetching workspace by userId
 export const getWorkspaces = async (userId: string) => {
-  await getUserWorkspaces(userId)
+  return await getUserWorkspaces(userId)
+}
+
+export const getRequiredUserId = async (request: Request) => {
+  return await requireUserId(request)
+}
+export const getUsersId = async (request: Request) => {
+  return await getUserId(request)
 }
