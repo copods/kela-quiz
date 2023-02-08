@@ -5,7 +5,7 @@ import type { TestSection } from '~/interface/Interface'
 import SortFilter from '../common-components/SortFilter'
 import SelectSectionCard from './SelectSectionCard'
 import { useTranslation } from 'react-i18next'
-import { useNavigate } from '@remix-run/react'
+import { useFetcher, useNavigate } from '@remix-run/react'
 import { routes } from '~/constants/route.constants'
 
 const SelectSections = ({
@@ -34,6 +34,12 @@ const SelectSections = ({
       value: 'createdAt',
     },
   ]
+  const [sectionData, setSectionData] = useState(sections)
+
+  const fetcher: any = useFetcher()
+  const { t } = useTranslation()
+  const navigate = useNavigate()
+
   useEffect(() => {
     if (window.innerWidth > 1842 && sections.length % 4 != 0) {
       sections.length % 4 == 1
@@ -49,46 +55,25 @@ const SelectSections = ({
       setPseudoDivs([])
     }
   }, [sections.length])
-  const sortData = () => {
-    updateSectionsList((e: Array<TestSection>) => {
-      if (
-        sortBy === sortByOrder.name &&
-        sortDirection === sortByOrder.ascending
-      )
-        e.sort((a, b) => (a.name > b.name ? 1 : b.name > a.name ? -1 : 0))
-      if (sortBy === sortByOrder.name && sortDirection === sortByOrder.desc)
-        e.sort((a, b) => (b.name > a.name ? 1 : a.name > b.name ? -1 : 0))
-      if (
-        sortBy === sortByOrder.createdAt &&
-        sortDirection === sortByOrder.ascending
-      )
-        e.sort((a, b) =>
-          new Date(a.createdAt).getTime() > new Date(b.createdAt).getTime()
-            ? 1
-            : new Date(b.createdAt).getTime() > new Date(a.createdAt).getTime()
-            ? -1
-            : 0
-        )
-      if (
-        sortBy === sortByOrder.createdAt &&
-        sortDirection === sortByOrder.desc
-      )
-        e.sort((a, b) =>
-          new Date(b.createdAt).getTime() > new Date(a.createdAt).getTime()
-            ? 1
-            : new Date(a.createdAt).getTime() > new Date(b.createdAt).getTime()
-            ? -1
-            : 0
-        )
-      return [...e]
-    })
-  }
+
   useEffect(() => {
-    sortData()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    fetcher.submit(
+      {
+        sortBy: sortBy,
+        sortOrder: sortDirection,
+      },
+      {
+        method: 'get',
+      }
+    )
   }, [sortDirection, sortBy])
-  const { t } = useTranslation()
-  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (fetcher.data) {
+      setSectionData(fetcher.data.sections)
+    }
+  }, [fetcher.data])
+
   return (
     <div className="flex w-full flex-1 flex-col gap-6 overflow-x-auto rounded-lg bg-white p-6 shadow">
       {sections.length > 0 ? (
@@ -105,7 +90,7 @@ const SelectSections = ({
           />
           {/* Sections list */}
           <div className="flex flex-wrap gap-6">
-            {sections.map((section: TestSection & { count?: number }, i) => {
+            {sectionData.map((section: TestSection & { count?: number }, i) => {
               return (
                 <SelectSectionCard
                   section={section}

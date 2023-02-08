@@ -32,11 +32,15 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const userId = await getUserId(request)
   const currentWorkspaceId = params.workspaceId as string
   const workspaces = await getUserWorkspaces(userId as string)
+
+  const query = new URL(request.url).searchParams
+  const sortBy = query.get('sortBy') as string
+  const sortOrder = query.get('sortOrder') as string
   if (!userId) return redirect(routes.signIn)
 
   let sections: Array<Section> = []
   let status: string = ''
-  await getAllSections('', '', currentWorkspaceId as string)
+  await getAllSections(sortBy, sortOrder, currentWorkspaceId as string)
     .then((res) => {
       sections = res as Section[]
       status = 'statusCheck.success'
