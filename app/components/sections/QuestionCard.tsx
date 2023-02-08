@@ -1,11 +1,11 @@
-import { Icon } from '@iconify/react'
-import { useTranslation } from 'react-i18next'
-import type { Question, Option, QuestionType } from '~/interface/Interface'
-import OptionCard from './OptionCard'
-import { QuestionTypes } from '../../interface/Interface'
-import { useState } from 'react'
-import { useSubmit } from '@remix-run/react'
-import DeletePopUp from '../common-components/DeletePopUp'
+import { Icon } from "@iconify/react"
+import { useTranslation } from "react-i18next"
+import type { Question, Option, QuestionType } from "~/interface/Interface"
+import OptionCard from "./OptionCard"
+import { QuestionTypes } from "../../interface/Interface"
+import { useState } from "react"
+import { useSubmit } from "@remix-run/react"
+import DeletePopUp from "../common-components/DeletePopUp"
 const QuestionCard = ({
   question,
   expandedIndex,
@@ -23,35 +23,35 @@ const QuestionCard = ({
   const [hoverState, setHoverState] = useState(false)
   const submit = useSubmit()
   const deleteQuestion = () => {
-    submit({ action: 'deleteQuestion', id: question.id }, { method: 'post' })
+    submit({ action: "deleteQuestion", id: question.id }, { method: "post" })
   }
   const { t } = useTranslation()
   const displayName =
     question.questionType?.value === QuestionTypes.multipleChoice
       ? {
-          name: t('sectionsConstants.msq'),
-          full: t('sectionsConstants.multipleSelectQuestion'),
+          name: t("sectionsConstants.msq"),
+          full: t("sectionsConstants.multipleSelectQuestion"),
         }
       : question.questionType?.value === QuestionTypes.singleChoice
       ? {
-          name: t('sectionsConstants.mcq'),
-          full: t('sectionsConstants.multipleChoiceQuestion'),
+          name: t("sectionsConstants.mcq"),
+          full: t("sectionsConstants.multipleChoiceQuestion"),
         }
-      : { name: question.questionType?.displayName, full: 'Text' }
+      : { name: question.questionType?.displayName, full: "Text" }
   return (
     <div
       key={question.id}
       onMouseEnter={() => setHoverState(true)}
       onMouseLeave={() => setHoverState(false)}
       className="flex cursor-pointer flex-col rounded-lg border border-gray-300 bg-gray-50 px-6 py-7"
-      title={t('sectionsConstants.expand')}
+      title={t("sectionsConstants.expand")}
       tabIndex={0}
       id="question-card-wrapper"
       data-cy="question-card-wrapper"
-      aria-label={t('sectionsConstants.expand')}
-      role={t('sectionsConstants.expand')}
+      aria-label={t("sectionsConstants.expand")}
+      role={t("sectionsConstants.expand")}
       onKeyUp={(e) => {
-        if (e.key === 'Enter')
+        if (e.key === "Enter")
           onAccordianToggle(
             expandedIndex === -1 ? index : expandedIndex === index ? -1 : index
           )
@@ -84,7 +84,7 @@ const QuestionCard = ({
                   e.stopPropagation()
                 }}
                 onKeyUp={(e) => {
-                  if (e.key === 'Enter')
+                  if (e.key === "Enter")
                     setOpenDeleteQuestionPopUp(!openDeleteQuestionPopUp)
                   e.stopPropagation()
                 }}
@@ -104,12 +104,12 @@ const QuestionCard = ({
           <div>
             {expandedIndex === index ? (
               <Icon
-                icon={'akar-icons:circle-chevron-up'}
+                icon={"akar-icons:circle-chevron-up"}
                 className="cursor-pointer text-xl text-gray-400"
               />
             ) : (
               <Icon
-                icon={'akar-icons:circle-chevron-down'}
+                icon={"akar-icons:circle-chevron-down"}
                 className="cursor-pointer text-xl text-gray-400"
               />
             )}
@@ -118,8 +118,8 @@ const QuestionCard = ({
       </div>
       <div
         className={
-          'overflow-scroll text-base text-gray-600 transition-all ' +
-          (expandedIndex === index ? 'h-full' : 'max-h-0')
+          "overflow-scroll text-base text-gray-600 transition-all " +
+          (expandedIndex === index ? "h-full" : "max-h-0")
         }
         id="options-wrapper"
       >
@@ -142,7 +142,7 @@ const QuestionCard = ({
             setOpen={setOpenDeleteQuestionPopUp}
             open={openDeleteQuestionPopUp}
             onDelete={deleteQuestion}
-            deleteItemType={t('candidateExamConstants.question')}
+            deleteItemType={t("candidateExamConstants.question")}
           />
         }
       </div>

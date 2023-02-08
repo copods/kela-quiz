@@ -1,12 +1,16 @@
-import type { User, Role, Invites } from '~/interface/Interface'
-import { useLoaderData, useSubmit } from '@remix-run/react'
-import { useTranslation } from 'react-i18next'
-import Table from '../common-components/TableComponent'
-import DeletePopUp from '../common-components/DeletePopUp'
-import { Icon } from '@iconify/react'
-import moment from 'moment'
-import { useState } from 'react'
-import Badge from '../common-components/Badge'
+import { useState } from "react"
+
+import moment from "moment"
+
+import { Icon } from "@iconify/react"
+import { useLoaderData, useSubmit } from "@remix-run/react"
+import { useTranslation } from "react-i18next"
+
+import Badge from "../common-components/Badge"
+import DeletePopUp from "../common-components/DeletePopUp"
+import Table from "../common-components/TableComponent"
+
+import type { User, Role, Invites } from "~/interface/Interface"
 
 export default function MembersList({
   membersCurrentPage,
@@ -24,7 +28,7 @@ export default function MembersList({
   const memberLoaderData = useLoaderData()
   const loggedInUser = memberLoaderData.userId
   const [openDeleteModal, setOpenDeleteModal] = useState(false)
-  const [memberId, setMemberId] = useState('')
+  const [memberId, setMemberId] = useState("")
   const workspaceOwner = memberLoaderData.currentWorkspaceOwner.createdById
   const NameDataCell = (data: User) => {
     return (
@@ -33,7 +37,7 @@ export default function MembersList({
           {data.firstName} {data.lastName}
         </span>
         {workspaceOwner === data.id ? (
-          <Badge>{t('members.owner')}</Badge>
+          <Badge>{t("members.owner")}</Badge>
         ) : null}
       </div>
     )
@@ -42,10 +46,10 @@ export default function MembersList({
     return <span>{data.role.name}</span>
   }
   const JoinedOnCell = (data: Invites) => {
-    return <span>{moment(data?.createdAt).format('DD MMMM YY')}</span>
+    return <span>{moment(data?.createdAt).format("DD MMMM YY")}</span>
   }
   const deleteUser = (id: string) => {
-    submit({ action: 'delete', id: id }, { method: 'post' })
+    submit({ action: "delete", id: id }, { method: "post" })
   }
   const MemberDelete = (data: User) => {
     const openPopUp = () => {
@@ -62,11 +66,11 @@ export default function MembersList({
           tabIndex={0}
           onClick={openPopUp}
           onKeyUp={(e) => {
-            if (e.key === 'Enter') openPopUp()
+            if (e.key === "Enter") openPopUp()
           }}
           icon="ic:outline-delete-outline"
           className={`h-6 w-6 cursor-pointer text-red-500  ${
-            loggedInUser === data.id && 'cursor-not-allowed text-red-200'
+            loggedInUser === data.id && "cursor-not-allowed text-red-200"
           }`}
         />
         {memberId === data.id && (
@@ -75,7 +79,7 @@ export default function MembersList({
             open={openDeleteModal}
             onDelete={() => deleteUser(data.id)}
             deleteItem={`${data.firstName} ${data.lastName}`}
-            deleteItemType={t('members.member')}
+            deleteItemType={t("members.member")}
           />
         )}
       </>
@@ -83,16 +87,16 @@ export default function MembersList({
   }
 
   const membersColumn = [
-    { title: 'Name', field: 'name', render: NameDataCell, width: '25%' },
-    { title: 'Email', field: 'email', width: '30%' },
-    { title: 'Role', field: 'role', render: RoleDataCell },
+    { title: "Name", field: "name", render: NameDataCell, width: "25%" },
+    { title: "Email", field: "email", width: "30%" },
+    { title: "Role", field: "role", render: RoleDataCell },
     {
-      title: 'Joined On',
-      field: 'createdAt',
-      width: '20%',
+      title: "Joined On",
+      field: "createdAt",
+      width: "20%",
       render: JoinedOnCell,
     },
-    { title: 'Action', field: 'action', render: MemberDelete },
+    { title: "Action", field: "action", render: MemberDelete },
   ]
 
   return (
