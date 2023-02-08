@@ -32,6 +32,9 @@ import {
 } from 'helper/tests.helper'
 
 export type ActionData = {
+  path: string
+  deleted: string
+  sectionId: string
   errors?: {
     title?: string
     body?: string
@@ -172,20 +175,35 @@ export const action: ActionFunction = async ({ request, params }) => {
       Number(pagePerItems)
     )
     if (sectionId && totalItems === '1' && currentPage !== '1') {
-      return redirect(
+      redirect(
         `/${params.workspaceId}${
           routes.tests
         }/${sectionId}?${sortFilter}&testPage=${
           Number(currentPage) - 1
         }&testItems=${pagePerItems}`
       )
+      return {
+        deleted: 'deleteLastTestOnPage',
+        path: `/${params.workspaceId}${
+          routes.tests
+        }/${sectionId}?${sortFilter}&testPage=${
+          Number(currentPage) - 1
+        }&testItems=${pagePerItems}`,
+      }
     } else {
       if (sectionId) {
-        return redirect(
+        redirect(
           `/${params.workspaceId}${routes.tests}/${sectionId}?${sortFilter}&testPage=${currentPage}&testItems=${pagePerItems}`
         )
+        return {
+          sectionId: sectionId,
+          deleted: 'deleted',
+        }
       } else {
-        return redirect(`/${params.workspaceId}${routes.tests}`)
+        redirect(`/${params.workspaceId}${routes.tests}`)
+        return {
+          deleted: 'deleted',
+        }
       }
     }
   }
@@ -221,6 +239,14 @@ export default function SectionPage() {
   if (t(data.status) != t('statusCheck.success')) {
     toast.error(t('statusCheck.commonError'))
   }
+  useEffect(() => {
+    if (sectionActionData?.deleted === 'deleteLastTestOnPage') {
+      toast.success(t('statusCheck.deletedSuccess'), {
+        toastId: t('statusCheck.deletedSuccess'),
+      })
+      navigate(sectionActionData?.path)
+    }
+  }, [sectionActionData?.path])
 
   useEffect(() => {
     if (sectionActionData) {
@@ -228,6 +254,9 @@ export default function SectionPage() {
         t(sectionActionData.resp?.status as string) ===
         t('statusCheck.testAddedSuccess')
       ) {
+        toast.success(t(sectionActionData.resp?.status as string), {
+          toastId: t(sectionActionData.resp?.status as string),
+        })
         setSectionActionErrors({ title: '', description: '' })
         setShowAddSectionModal(false)
       } else if (
@@ -238,13 +267,16 @@ export default function SectionPage() {
           toastId: t(sectionActionData.resp?.status as string),
         })
         navigate(`${location.pathname}${location.search}`)
-      } else if (
-        t(sectionActionData.resp?.status as string) ===
-        t('statusCheck.deletedSuccess')
-      ) {
-        toast.success(t(sectionActionData.resp?.status as string), {
-          toastId: t(sectionActionData.resp?.status as string),
+      } else if (sectionActionData?.deleted) {
+        toast.success(t('statusCheck.deletedSuccess'), {
+          toastId: t('statusCheck.deletedSuccess'),
         })
+        {
+          sectionActionData.sectionId &&
+            navigate(
+              `/${data.currentWorkspaceId}${routes.tests}/${sectionActionData?.sectionId}?sortBy=${sortBy}&sort=${order}&testPage=${testsCurrentPage}&testItems=${testsPageSize}`
+            )
+        }
       } else if (sectionActionData.createSectionFieldError) {
         setSectionActionErrors({
           title: sectionActionData?.createSectionFieldError.title || '',
@@ -253,7 +285,13 @@ export default function SectionPage() {
         })
       }
     }
-  }, [sectionActionData, t, navigate, sectionActionData?.resp])
+  }, [
+    sectionActionData,
+    t,
+    navigate,
+    sectionActionData?.resp,
+    sectionActionData?.sectionId,
+  ])
 
   useEffect(() => {
     //checking if tests are zero then redirect to /tests
@@ -280,7 +318,9 @@ export default function SectionPage() {
     data.sections[0]?.id,
     location.search,
     sortBy,
+    sectionActionData?.sectionId,
   ])
+
   useEffect(() => {
     if (data.sortOrder !== order) {
       navigate(
