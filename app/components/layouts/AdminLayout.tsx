@@ -1,4 +1,4 @@
-import SideNav from '../side-nav/SideNav'
+import SideNav from "../side-nav/SideNav"
 
 export default function AdminLayout({ children }: { children: JSX.Element }) {
   return (

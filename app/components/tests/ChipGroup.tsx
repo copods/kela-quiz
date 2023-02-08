@@ -1,7 +1,9 @@
-import type { SectionInTest } from '~/interface/Interface'
-import { Menu, Transition } from '@headlessui/react'
-import { Fragment } from 'react'
-import { useElementPositionHandler } from '~/hooks/useElementPositionHandler'
+import { Fragment } from "react"
+
+import { Menu, Transition } from "@headlessui/react"
+
+import { useElementPositionHandler } from "~/hooks/useElementPositionHandler"
+import type { SectionInTest } from "~/interface/Interface"
 
 const ChipGroup = ({
   sections,
@@ -53,8 +55,8 @@ const ChipGroup = ({
               id="menu-items"
               className={`sectionMenu absolute top-8 z-40 max-h-52 overflow-auto rounded-2xl bg-white py-4 px-4 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none ${
                 elementViewPortVisiblility
-                  ? ''
-                  : '-top-1 -translate-y-full transform'
+                  ? ""
+                  : "-top-1 -translate-y-full transform"
               }  border-gray-300 shadow-2xl`}
             >
               <div ref={componentRef} className="flex flex-col gap-4">

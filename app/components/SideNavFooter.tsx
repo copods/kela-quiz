@@ -1,8 +1,10 @@
-import { Icon } from '@iconify/react'
-import { useUser } from '~/utils'
-import { Form } from '@remix-run/react'
-import Button from './common-components/Button'
-import { useTranslation } from 'react-i18next'
+import { Icon } from "@iconify/react"
+import { Form } from "@remix-run/react"
+import { useTranslation } from "react-i18next"
+
+import Button from "./common-components/Button"
+
+import { useUser } from "~/utils"
 
 function Footer() {
   const { t } = useTranslation()
@@ -44,7 +46,7 @@ function Footer() {
             id="logout-button"
             variant="secondary-solid"
             padding="px-2"
-            title={t('commonConstants.logout')}
+            title={t("commonConstants.logout")}
             buttonText={
               <Icon
                 icon="mdi:logout-variant"

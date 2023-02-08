@@ -1,5 +1,6 @@
-import sendgrid from '@sendgrid/mail'
-import { env } from 'process'
+import { env } from "process"
+
+import sendgrid from "@sendgrid/mail"
 
 export async function sendMail(
   passwordGenerationLink: string,
@@ -8,10 +9,10 @@ export async function sendMail(
   role: string
 ) {
   const to = email
-  const from = 'careers@copods.co'
-  const subject = 'Welcome to K - Quiz @ Copods'
-  const text = 'K - Quiz @ Copods'
-  const logo = 'K - Quiz logo'
+  const from = "careers@copods.co"
+  const subject = "Welcome to K - Quiz @ Copods"
+  const text = "K - Quiz @ Copods"
+  const logo = "K - Quiz logo"
   const html = `<html>
   <head>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -76,24 +77,24 @@ export async function sendMail(
   }
   await sendgrid.send(msg).then(
     () => {
-      return 'ok'
+      return "ok"
     },
     (error) => {
       if (error.response) {
-        console.error('Sendgrid Error: ', error.response.body)
+        console.error("Sendgrid Error: ", error.response.body)
       }
     }
   )
 
-  return 'Done'
+  return "Done"
 }
 
 export async function sendTestInviteMail(email: string, link: string) {
   const to = email
-  const from = 'careers@copods.co'
-  const subject = 'Welcome to K - Quiz @ Copods'
-  const text = 'K - Quiz @ Copods'
-  const logo = 'K - Quiz logo'
+  const from = "careers@copods.co"
+  const subject = "Welcome to K - Quiz @ Copods"
+  const text = "K - Quiz @ Copods"
+  const logo = "K - Quiz logo"
   const html = `<html>
   <head>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -159,24 +160,24 @@ export async function sendTestInviteMail(email: string, link: string) {
   }
   await sendgrid.send(msg).then(
     () => {
-      return 'ok'
+      return "ok"
     },
     (error) => {
       if (error.response) {
-        console.error('Sendgrid Error: ', error.response.body)
+        console.error("Sendgrid Error: ", error.response.body)
       }
     }
   )
 
-  return 'Done'
+  return "Done"
 }
 
 export async function sendOTPMail(email: string, otp: number) {
   const to = email
-  const from = 'careers@copods.co'
-  const subject = 'OTP - Quiz @ Copods'
-  const text = 'K - Quiz @ Copods'
-  const logo = 'K - Quiz logo'
+  const from = "careers@copods.co"
+  const subject = "OTP - Quiz @ Copods"
+  const text = "K - Quiz @ Copods"
+  const logo = "K - Quiz logo"
   const html = `<html>
   <head>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -232,15 +233,15 @@ export async function sendOTPMail(email: string, otp: number) {
   }
   await sendgrid.send(msg).then(
     () => {
-      return 'ok'
+      return "ok"
     },
     (error) => {
       if (error.response) {
-        console.error('Sendgrid Error: ', error.response.body)
+        console.error("Sendgrid Error: ", error.response.body)
       }
     }
   )
-  return 'Done'
+  return "Done"
 }
 export async function sendMailToRecruiter(
   recruiterEmail?: string,
@@ -248,10 +249,10 @@ export async function sendMailToRecruiter(
   candidateName?: string
 ) {
   const to = recruiterEmail
-  const from = 'careers@copods.co'
+  const from = "careers@copods.co"
   const subject = `${candidateName} has finished the assessment of K - Quiz @ Copods`
-  const text = 'K - Quiz @ Copods'
-  const logo = 'K - Quiz logo'
+  const text = "K - Quiz @ Copods"
+  const logo = "K - Quiz logo"
   const html = `<html>
   <head>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -311,23 +312,23 @@ export async function sendMailToRecruiter(
   }
   await sendgrid.send(msg).then(
     () => {
-      return 'ok'
+      return "ok"
     },
     (error) => {
       if (error.response) {
-        console.error('Sendgrid Error: ', error.response.body)
+        console.error("Sendgrid Error: ", error.response.body)
       }
     }
   )
 
-  return 'Done'
+  return "Done"
 }
 export async function sendNewPassword(email: string, password: string) {
   const to = email
-  const from = 'careers@copods.co'
-  const subject = 'RESET PASSWORD - Quiz @ Copods'
-  const text = 'K - Quiz @ Copods'
-  const logo = 'K - Quiz logo'
+  const from = "careers@copods.co"
+  const subject = "RESET PASSWORD - Quiz @ Copods"
+  const text = "K - Quiz @ Copods"
+  const logo = "K - Quiz logo"
   const html = `<html>
   <head>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -382,15 +383,15 @@ export async function sendNewPassword(email: string, password: string) {
   }
   await sendgrid.send(msg).then(
     () => {
-      return 'ok'
+      return "ok"
     },
     (error) => {
       if (error.response) {
-        console.error('Sendgrid Error: ', error.response.body)
+        console.error("Sendgrid Error: ", error.response.body)
       }
     }
   )
-  return 'Done'
+  return "Done"
 }
 export async function sendMemberInvite(
   email: string,
@@ -398,10 +399,10 @@ export async function sendMemberInvite(
   workspaceJoinLink: string
 ) {
   const to = email
-  const from = 'careers@copods.co'
-  const subject = 'Welcome to K - Quiz @ Copods'
-  const text = 'K - Quiz @ Copods'
-  const logo = 'K - Quiz logo'
+  const from = "careers@copods.co"
+  const subject = "Welcome to K - Quiz @ Copods"
+  const text = "K - Quiz @ Copods"
+  const logo = "K - Quiz logo"
   const html = `<html>
   <head>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -465,14 +466,14 @@ export async function sendMemberInvite(
   }
   await sendgrid.send(msg).then(
     () => {
-      return 'ok'
+      return "ok"
     },
     (error) => {
       if (error.response) {
-        console.error('Sendgrid Error: ', error.response.body)
+        console.error("Sendgrid Error: ", error.response.body)
       }
     }
   )
 
-  return 'Done'
+  return "Done"
 }

@@ -1,8 +1,9 @@
-import path from 'path'
-import i18n from 'i18next'
-import { initReactI18next } from 'react-i18next'
-import Backend from 'i18next-http-backend'
-import I18nextBrowserLanguageDetector from 'i18next-browser-languagedetector'
+import path from "path"
+
+import i18n from "i18next"
+import I18nextBrowserLanguageDetector from "i18next-browser-languagedetector"
+import Backend from "i18next-http-backend"
+import { initReactI18next } from "react-i18next"
 
 i18n
   .use(Backend)
@@ -10,18 +11,18 @@ i18n
   .use(initReactI18next) // passes i18n down to react-i18next
   .use(
     new Backend(null, {
-      loadPath: '/translations/{{lng}}.json',
+      loadPath: "/translations/{{lng}}.json",
     })
   )
   .init({
-    fallbackLng: 'en',
+    fallbackLng: "en",
     debug: true,
     backend: {
       loadPath: () => {
         // check the domain
         // const host = window.location.host;
         // return (host === 'production.ltd' ? '/static/app':'') + '/static/app/static/locales/{{lng}}/{{ns}}.json';
-        return path.join(__dirname, '/app/translation/{{lng}}.json')
+        return path.join(__dirname, "/app/translation/{{lng}}.json")
       },
     },
     interpolation: {

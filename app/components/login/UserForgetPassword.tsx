@@ -1,10 +1,13 @@
-import { useEffect, useState } from 'react'
-import Button from '../common-components/Button'
-import InputField from '../common-components/InputField'
-import Logo from '../Logo'
-import { Form, useNavigate } from '@remix-run/react'
-import { routes } from '~/constants/route.constants'
-import { useTranslation } from 'react-i18next'
+import { useEffect, useState } from "react"
+
+import { Form, useNavigate } from "@remix-run/react"
+import { useTranslation } from "react-i18next"
+
+import Button from "../common-components/Button"
+import InputField from "../common-components/InputField"
+import Logo from "../Logo"
+
+import { routes } from "~/constants/route.constants"
 
 const UserForgetPassword = ({
   checkErrorStatus,
@@ -13,30 +16,30 @@ const UserForgetPassword = ({
   setCheckErrorStatus: (e: boolean) => void
   checkErrorStatus: boolean
 }) => {
-  const [emailFieldError, setEmailFieldError] = useState('')
-  const [email, setEmail] = useState('')
+  const [emailFieldError, setEmailFieldError] = useState("")
+  const [email, setEmail] = useState("")
   const { t } = useTranslation()
   useEffect(() => {
     if (checkErrorStatus) {
-      setEmailFieldError(t('statusCheck.resendPasswordError'))
+      setEmailFieldError(t("statusCheck.resendPasswordError"))
     }
   }, [t, checkErrorStatus])
   let navigate = useNavigate()
   const inputFieldsProps = [
     {
-      label: t('commonConstants.email'),
-      placeholder: t('forgotPasswordConstants.enterEmailPlaceholder'),
-      type: 'text',
-      name: 'email',
+      label: t("commonConstants.email"),
+      placeholder: t("forgotPasswordConstants.enterEmailPlaceholder"),
+      type: "text",
+      name: "email",
       required: true,
       isRequired: true,
       value: email,
       error: emailFieldError,
-      errorId: 'email-error',
+      errorId: "email-error",
       onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
         setEmail(event?.target.value)
-        if (event.target.value === '') {
-          setEmailFieldError('')
+        if (event.target.value === "") {
+          setEmailFieldError("")
           setCheckErrorStatus(false)
         }
       },
@@ -55,14 +58,14 @@ const UserForgetPassword = ({
           id="forget-pass-header"
           className="text-center text-3xl font-bold text-gray-900"
         >
-          {t('forgotPasswordConstants.header')}
+          {t("forgotPasswordConstants.header")}
         </div>
         <div className="flex items-center justify-center">
           <hr className="h-px w-6/12 border-none bg-gray-500 text-center" />
         </div>
 
         <div id="enter-mail-info" className="text-center text-xs text-gray-500">
-          {t('forgotPasswordConstants.enterEmail')}
+          {t("forgotPasswordConstants.enterEmail")}
         </div>
         <Form method="post" className="flex flex-col gap-6">
           {inputFieldsProps.map((props) => {
@@ -77,12 +80,12 @@ const UserForgetPassword = ({
                 navigate(routes.signIn)
               }}
               onKeyUp={(e) => {
-                if (e.key === 'Enter') navigate(routes.signIn)
+                if (e.key === "Enter") navigate(routes.signIn)
               }}
               role="link"
               className="cursor-pointer text-sm text-primary"
             >
-              {t('forgotPasswordConstants.backToLogin')}
+              {t("forgotPasswordConstants.backToLogin")}
             </span>
           </div>
           <Button
@@ -91,8 +94,8 @@ const UserForgetPassword = ({
             variant="primary-solid"
             type="submit"
             className="h-11 w-358"
-            title={t('forgotPasswordConstants.resetPassword')}
-            buttonText={t('forgotPasswordConstants.resetPassword')}
+            title={t("forgotPasswordConstants.resetPassword")}
+            buttonText={t("forgotPasswordConstants.resetPassword")}
           />
         </Form>
       </div>
