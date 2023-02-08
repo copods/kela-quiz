@@ -4,6 +4,7 @@ import { Fragment, useState } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { useTranslation } from 'react-i18next'
 import { usePagination } from '~/utils'
+import { useElementPositionHandler } from '~/hooks/useElementPositionHandler'
 
 const PaginationButtons = ({
   paginationRange,
@@ -59,10 +60,20 @@ const PaginationDropDown = ({
   onPageChange: (e: number) => void
 }) => {
   const { t } = useTranslation()
+  const {
+    elementRef,
+    componentRef,
+    elementViewPortVisiblility,
+    setIsElementOpen,
+  } = useElementPositionHandler()
+
   return (
     <Listbox value={selected} onChange={setSelected}>
-      <div className="relative">
-        <Listbox.Button className="flex cursor-pointer items-center text-xs text-gray-600">
+      <div className="relative" ref={elementRef}>
+        <Listbox.Button
+          className="flex cursor-pointer items-center text-xs text-gray-600"
+          onClick={() => setIsElementOpen((prev) => !prev)}
+        >
           <span className="block truncate">
             {selected} {t('commonConstants.items')}
           </span>
@@ -74,30 +85,38 @@ const PaginationDropDown = ({
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <Listbox.Options className="absolute mt-1 max-h-60 rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-            {pageSizeOptions?.map((item: number, index: number) => (
-              <Listbox.Option
-                key={index}
-                onClick={() => {
-                  setPageSize(item)
-                  onPageChange(1)
-                }}
-                className={({ active }) =>
-                  `relative cursor-pointer select-none py-2 px-8 text-xs text-gray-600 ${
-                    selected === item
-                      ? ' bg-gray-100'
-                      : active
-                      ? 'bg-gray-100'
-                      : ''
-                  }`
-                }
-                value={item}
-              >
-                <span className="block truncate">
-                  {item} {t('commonConstants.items')}
-                </span>
-              </Listbox.Option>
-            ))}
+          <Listbox.Options
+            className={`absolute mt-1 max-h-60 rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm ${
+              elementViewPortVisiblility
+                ? ''
+                : '-top-2 -translate-y-full transform'
+            }}`}
+          >
+            <div ref={componentRef}>
+              {pageSizeOptions?.map((item: number, index: number) => (
+                <Listbox.Option
+                  key={index}
+                  onClick={() => {
+                    setPageSize(item)
+                    onPageChange(1)
+                  }}
+                  className={({ active }) =>
+                    `relative cursor-pointer select-none py-2 px-8 text-xs text-gray-600 ${
+                      selected === item
+                        ? ' bg-gray-100'
+                        : active
+                        ? 'bg-gray-100'
+                        : ''
+                    }`
+                  }
+                  value={item}
+                >
+                  <span className="block truncate">
+                    {item} {t('commonConstants.items')}
+                  </span>
+                </Listbox.Option>
+              ))}
+            </div>
           </Listbox.Options>
         </Transition>
       </div>

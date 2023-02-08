@@ -1,6 +1,8 @@
 import type { SectionInTest } from '~/interface/Interface'
 import { Menu, Transition } from '@headlessui/react'
-import { Fragment, useRef, useState } from 'react'
+import { Fragment } from 'react'
+import { useElementPositionHandler } from '~/hooks/useElementPositionHandler'
+
 const ChipGroup = ({
   sections,
   totalCount,
@@ -10,32 +12,29 @@ const ChipGroup = ({
   totalCount: number
   index?: number
 }) => {
-  let [isViewPortVisible, setIsViewPortVisible] = useState(false)
-  const inputRef = useRef<HTMLDivElement>(null)
-  const isInViewport = () => {
-    const rect: any = inputRef && inputRef.current?.getBoundingClientRect()
-    return (
-      rect?.top >= 0 &&
-      rect?.left >= 0 &&
-      rect?.bottom <=
-        (window.innerHeight - 100 || document?.documentElement.clientHeight) &&
-      rect?.right <=
-        (window.innerWidth || document?.documentElement.clientWidth)
-    )
-  }
+  const {
+    elementRef,
+    componentRef,
+    elementViewPortVisiblility,
+    setIsElementOpen,
+  } = useElementPositionHandler()
 
   return (
-    <div className="chip-group mr-3 flex items-center gap-2" ref={inputRef}>
-      <div className="truncate rounded-52 bg-blue-50 px-2 py-1.5 text-xs text-gray-900">
+    <div className="chip-group mr-3 flex items-center gap-2" ref={elementRef}>
+      <div className="truncate rounded-52 bg-blue-50 px-1.5 py-1.5 text-xs text-gray-900">
         {sections[0]?.section.name}
       </div>
       {sections.length > 1 && (
         <Menu as="div" className="relative inline-block text-left">
           <div id="section-count-button">
-            <Menu.Button onClick={() => setIsViewPortVisible(isInViewport())}>
+            <Menu.Button
+              onClick={() => {
+                setIsElementOpen((prev) => !prev)
+              }}
+            >
               <div
                 aria-label={`+ ${sections.length - 1} Sections in Test`}
-                className="cursor-pointer rounded-52 bg-blue-50 px-2 py-1.5 text-xs text-gray-900"
+                className="cursor-pointer rounded-52 bg-blue-50 px-1 py-1 text-xs text-gray-900"
               >
                 + {sections.length - 1}
               </div>
@@ -52,19 +51,23 @@ const ChipGroup = ({
           >
             <Menu.Items
               id="menu-items"
-              className={`sectionMenu absolute top-9 z-40 max-h-52 overflow-auto rounded-2xl bg-white py-4 px-4 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none ${
-                isViewPortVisible ? '' : '-top-1 -translate-y-full transform'
-              } flex flex-col gap-4 border-gray-300 shadow-2xl`}
+              className={`sectionMenu absolute top-8 z-40 max-h-52 overflow-auto rounded-2xl bg-white py-4 px-4 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none ${
+                elementViewPortVisiblility
+                  ? ''
+                  : '-top-1 -translate-y-full transform'
+              }  border-gray-300 shadow-2xl`}
             >
-              {sections.map((sect) => {
-                return (
-                  <Menu.Item key={sect?.section?.id}>
-                    <span className="truncate rounded-52 bg-blue-50 px-2 py-1.5 text-xs text-gray-900">
-                      {sect?.section?.name}
-                    </span>
-                  </Menu.Item>
-                )
-              })}
+              <div ref={componentRef} className="flex flex-col gap-4">
+                {sections.map((sect) => {
+                  return (
+                    <Menu.Item key={sect?.section?.id}>
+                      <span className="truncate rounded-52 bg-blue-50 px-2 py-1.5 text-xs text-gray-900">
+                        {sect?.section?.name}
+                      </span>
+                    </Menu.Item>
+                  )
+                })}
+              </div>
             </Menu.Items>
           </Transition>
         </Menu>

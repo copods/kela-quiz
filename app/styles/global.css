@@ -39,6 +39,7 @@ input::-webkit-inner-spin-button {
   overflow: visible !important;
   display: flex;
 }
+
 #table-td:has(#section-count-button) {
   overflow: visible !important;
 }
