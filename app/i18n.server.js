@@ -1,7 +1,9 @@
-import { RemixI18Next } from 'remix-i18next'
-import i18nextOptions from './i18nextOptions'
-import Backend from 'i18next-fs-backend'
-import { resolve } from 'node:path'
+import { resolve } from "node:path"
+
+import Backend from "i18next-fs-backend"
+import { RemixI18Next } from "remix-i18next"
+
+import i18nextOptions from "./i18nextOptions"
 
 export default new RemixI18Next({
   detection: {
@@ -14,7 +16,7 @@ export default new RemixI18Next({
   // This is the configuration for i18next used when translating messages server
   // side only
   i18next: {
-    backend: { loadPath: resolve('./public/locales/{{lng}}/{{ns}}.json') },
+    backend: { loadPath: resolve("./public/locales/{{lng}}/{{ns}}.json") },
   },
   // The backend you want to use to load the translations
   // Tip: You could pass `resources` to the `i18next` configuration and avoid

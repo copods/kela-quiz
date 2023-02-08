@@ -1,4 +1,4 @@
-import type { ButtonProps } from '~/interface/Interface'
+import type { ButtonProps } from "~/interface/Interface"
 
 const Button = ({
   buttonText,
@@ -11,29 +11,29 @@ const Button = ({
 }: ButtonProps) => {
   const getCommonClasses = () => {
     return `py-2.5 ${
-      padding ? padding : 'px-5'
+      padding ? padding : "px-5"
     } rounded-md items-center inline-flex shadow-sm text-xs font-medium ${
-      restProps.alignment ? restProps.alignment : 'justify-center'
+      restProps.alignment ? restProps.alignment : "justify-center"
     }`
   }
   const getButtonVariant = () => {
     switch (restProps.variant) {
-      case 'primary-solid':
+      case "primary-solid":
         return `bg-primary text-gray-50 ${
-          !isDisabled && 'hover:bg-primaryHover transition ease-in-out delay-75'
-        } ${isDisabled && 'disabled:bg-primaryDisabled'}`
+          !isDisabled && "hover:bg-primaryHover transition ease-in-out delay-75"
+        } ${isDisabled && "disabled:bg-primaryDisabled"}`
 
-      case 'primary-outlined':
+      case "primary-outlined":
         return `text-gray-primary rounded-md border border-primary bg-white text-primary ${
-          !isDisabled && 'hover:bg-gray-100 transition ease-in-out delay-75'
+          !isDisabled && "hover:bg-gray-100 transition ease-in-out delay-75"
         } ${
-          isDisabled && 'disabled:border-primaryDisabled text-primaryDisabled'
+          isDisabled && "disabled:border-primaryDisabled text-primaryDisabled"
         }`
 
-      case 'secondary-solid':
+      case "secondary-solid":
         return `border border-transparent bg-red-500 text-white ${
-          !isDisabled && 'hover:bg-red-700 transition ease-in-out delay-75'
-        } ${isDisabled && 'disabled:bg-red-200'}`
+          !isDisabled && "hover:bg-red-700 transition ease-in-out delay-75"
+        } ${isDisabled && "disabled:bg-red-200"}`
     }
   }
   return (

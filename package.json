@@ -63,8 +63,9 @@
     "trailingComma": "es5",
     "tabWidth": 2,
     "semi": false,
-    "singleQuote": true,
-    "bracketSpacing": true
+    "singleQuote": false,
+    "bracketSpacing": true,
+    "jsxBracketSameLine": false
   },
   "eslintIgnore": [
     "/node_modules",

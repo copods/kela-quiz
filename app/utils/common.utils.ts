@@ -4,7 +4,7 @@
  * @returns boolean
  */
 
-import { RefObject } from 'react'
+import type { RefObject } from "react"
 
 export function isElementInViewport(
   element: RefObject<HTMLDivElement>,
@@ -17,10 +17,10 @@ export function isElementInViewport(
       positionOfElement?.top >= 0 &&
       positionOfElement?.left >= 0 &&
       positionOfElement?.bottom <=
-        (window.innerHeight - heightOfComponent ||
-          document?.documentElement.clientHeight) &&
+      (window.innerHeight - heightOfComponent ||
+        document?.documentElement.clientHeight) &&
       positionOfElement?.right <=
-        (window.innerWidth || document?.documentElement.clientWidth)
+      (window.innerWidth || document?.documentElement.clientWidth)
     )
   }
 }

@@ -1,6 +1,7 @@
-import { Icon } from '@iconify/react'
-import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom"
+
+import { Icon } from "@iconify/react"
+import { useTranslation } from "react-i18next"
 
 const BreadCrumb = ({
   data,
@@ -15,7 +16,7 @@ const BreadCrumb = ({
           <div
             key={breadCrumb.route}
             className={`flex px-1 text-sm font-medium ${
-              breadCrumb.route ? 'text-primary' : 'text-gray-400'
+              breadCrumb.route ? "text-primary" : "text-gray-400"
             }`}
             title={t(breadCrumb.tabName)}
           >

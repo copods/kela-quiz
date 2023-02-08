@@ -1,5 +1,5 @@
-import { Icon } from '@iconify/react'
-import { NavLink, useLocation } from '@remix-run/react'
+import { Icon } from "@iconify/react"
+import { NavLink, useLocation } from "@remix-run/react"
 export interface tabProps {
   iconClass: string
   itemName: string
@@ -25,8 +25,8 @@ function MenuItems({
         className={({ isActive }) =>
           `flex flex-row items-start gap-2 rounded-lg p-3.5 ${
             isActive || location.pathname.includes(itemName.toLowerCase())
-              ? 'active_nav_link bg-blue-50'
-              : ''
+              ? "active_nav_link bg-blue-50"
+              : ""
           }`
         }
       >
@@ -36,8 +36,8 @@ function MenuItems({
             icon={iconClass}
             className={`order-none flex-none grow-0 text-2xl  ${
               location.pathname.includes(itemName.toLowerCase())
-                ? 'text-primary'
-                : 'text-gray-400'
+                ? "text-primary"
+                : "text-gray-400"
             }`}
           />
           <span>
@@ -45,8 +45,8 @@ function MenuItems({
               id={id}
               className={`non-italic text-base font-semibold ${
                 location.pathname.includes(itemName.toLowerCase())
-                  ? 'text-primary'
-                  : 'text-gray-500'
+                  ? "text-primary"
+                  : "text-gray-500"
               }`}
             >
               {itemName}

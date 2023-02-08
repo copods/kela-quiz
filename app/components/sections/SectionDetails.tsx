@@ -1,22 +1,26 @@
-import { useLoaderData, useNavigate } from '@remix-run/react'
-import { useEffect, useState } from 'react'
-import type { Question } from '~/interface/Interface'
-import QuestionCard from './QuestionCard'
-import Button from '../common-components/Button'
-import { routes } from '~/constants/route.constants'
-import { useTranslation } from 'react-i18next'
-import { Icon } from '@iconify/react'
-import EmptyStateComponent from '../common-components/EmptyStateComponent'
+import { useEffect, useState } from "react"
+
+import { Icon } from "@iconify/react"
+import { useLoaderData, useNavigate } from "@remix-run/react"
+import { useTranslation } from "react-i18next"
+
+import Button from "../common-components/Button"
+import EmptyStateComponent from "../common-components/EmptyStateComponent"
+
+import QuestionCard from "./QuestionCard"
+
+import { routes } from "~/constants/route.constants"
+import type { Question } from "~/interface/Interface"
 
 const SectionDetails = () => {
   const { t } = useTranslation()
 
   const sectionDetails = useLoaderData()
   const [currentAccordian, setCurrentAccordian] = useState(-1)
-  const [searchText, setSearchText] = useState('')
+  const [searchText, setSearchText] = useState("")
   const navigate = useNavigate()
   useEffect(() => {
-    setSearchText('')
+    setSearchText("")
   }, [navigate])
   const searchedQuestion = sectionDetails.sectionDetails?.questions.filter(
     (question: Question) => {
@@ -41,8 +45,8 @@ const SectionDetails = () => {
       <div
         className={`flex items-start gap-2 ${
           sectionDetails?.sectionDetails?.questions.length === 0
-            ? 'justify-end'
-            : 'justify-between'
+            ? "justify-end"
+            : "justify-between"
         }`}
       >
         {sectionDetails?.sectionDetails?.questions.length === 0 ? null : (
@@ -58,8 +62,8 @@ const SectionDetails = () => {
               type="text"
               value={searchText}
               name="search"
-              placeholder={t('sectionsConstants.search')}
-              title={t('sectionsConstants.search')}
+              placeholder={t("sectionsConstants.search")}
+              title={t("sectionsConstants.search")}
               className="h-9 w-48 rounded-lg border px-5 pl-8 text-sm focus:outline-dotted"
               onChange={(e) => setSearchText(e.target.value)}
             />
@@ -74,10 +78,10 @@ const SectionDetails = () => {
           }
           id="add-question"
           className="h-9 w-36 px-5"
-          buttonText={`+ ${t('addQuestion.addQuestion')}`}
+          buttonText={`+ ${t("addQuestion.addQuestion")}`}
           variant="primary-solid"
-          title={t('addQuestion.addQuestion')}
-          aria-label={t('addQuestion.addQuestion')}
+          title={t("addQuestion.addQuestion")}
+          aria-label={t("addQuestion.addQuestion")}
         />
       </div>
       {/* QUESTION LIST  */}
