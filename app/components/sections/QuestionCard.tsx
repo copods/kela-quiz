@@ -1,16 +1,20 @@
+import { useState } from "react"
+
 import { Icon } from "@iconify/react"
+import { useSubmit } from "@remix-run/react"
 import { useTranslation } from "react-i18next"
+
+import { QuestionTypes } from "../../interface/Interface"
+import DeletePopUp from "../common-components/DeletePopUp"
+
+import OptionCard from "./OptionCard"
+
 import type {
   Question,
   Option,
   CorrectAnswer,
   QuestionType,
 } from "~/interface/Interface"
-import OptionCard from "./OptionCard"
-import { QuestionTypes } from "../../interface/Interface"
-import { useState } from "react"
-import { useSubmit } from "@remix-run/react"
-import DeletePopUp from "../common-components/DeletePopUp"
 const QuestionCard = ({
   question,
   expandedIndex,

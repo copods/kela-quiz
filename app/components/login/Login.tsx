@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react"
+
 import { Form, useLoaderData, useNavigate } from "@remix-run/react"
-import Logo from "~/components/Logo"
-import type { LoginProps } from "~/interface/Interface"
 import { useTranslation } from "react-i18next"
-import { routes } from "~/constants/route.constants"
-import InputField from "../common-components/InputField"
+
 import Button from "../common-components/Button"
+import InputField from "../common-components/InputField"
 import Checkbox from "../form/CheckBox"
+
+import Logo from "~/components/Logo"
+import { routes } from "~/constants/route.constants"
+import type { LoginProps } from "~/interface/Interface"
 function Login({ actionData, redirectTo }: LoginProps) {
   const { t } = useTranslation()
 

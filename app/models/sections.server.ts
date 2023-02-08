@@ -1,5 +1,6 @@
 import type { User, Section, Question } from "@prisma/client"
 import cuid from "cuid"
+
 import { prisma } from "~/db.server"
 
 export async function getSectionById({ id }: Pick<Section, "id">) {

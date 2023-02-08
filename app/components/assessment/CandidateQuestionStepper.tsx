@@ -1,7 +1,9 @@
-import { useLoaderData, useSubmit } from "@remix-run/react"
-import tickMark from "~/../public/assets/tickMark.svg"
-import dash from "~/../public/assets/dash.svg"
 import React from "react"
+
+import { useLoaderData, useSubmit } from "@remix-run/react"
+
+import dash from "~/../public/assets/dash.svg"
+import tickMark from "~/../public/assets/tickMark.svg"
 
 const CandidateQuestionStepper = () => {
   const { section, candidateTests, params } = useLoaderData()

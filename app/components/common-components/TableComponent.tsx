@@ -1,6 +1,8 @@
 import { t } from "i18next"
-import type { TableType } from "~/interface/Interface"
+
 import Pagination from "./Pagination"
+
+import type { TableType } from "~/interface/Interface"
 /**
 * Table parameters : 
 * columns-

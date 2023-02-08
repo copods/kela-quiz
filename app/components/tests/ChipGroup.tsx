@@ -1,6 +1,8 @@
-import type { SectionInTest } from "~/interface/Interface"
-import { Menu, Transition } from "@headlessui/react"
 import { Fragment, useRef, useState } from "react"
+
+import { Menu, Transition } from "@headlessui/react"
+
+import type { SectionInTest } from "~/interface/Interface"
 const ChipGroup = ({
   sections,
   totalCount,

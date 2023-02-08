@@ -1,8 +1,10 @@
 import { useLoaderData } from "@remix-run/react"
 import { useTranslation } from "react-i18next"
+
+import TimerComponent from "./Timer"
+
 import logo from "~/../public/assets/logo.svg"
 import type { SectionInCandidateTest } from "~/interface/Interface"
-import TimerComponent from "./Timer"
 
 const CandidateQuestionHeader = () => {
   const { candidateTests, section } = useLoaderData()

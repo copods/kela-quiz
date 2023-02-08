@@ -17,8 +17,6 @@ module.exports = {
       version: 27,
     },
   },
-  parser: "@typescript-eslint/parser",
-
   rules: {
     "@typescript-eslint/no-unused-vars": "error",
     "import/order": [

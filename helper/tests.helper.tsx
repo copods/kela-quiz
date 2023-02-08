@@ -1,12 +1,13 @@
+import type { Section } from "@prisma/client"
+import { json } from "@remix-run/node"
+
+import type { sectionActionErrorsType } from "~/interface/Interface"
 import {
   createSection,
   editSectionById,
   getAllSections,
   deleteSectionById,
 } from "~/models/sections.server"
-import type { sectionActionErrorsType } from "~/interface/Interface"
-import { json } from "@remix-run/node"
-import type { Section } from "@prisma/client"
 
 //*Action data types are defined here
 export type ActionData = {

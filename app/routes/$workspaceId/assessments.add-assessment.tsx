@@ -1,16 +1,18 @@
+import { useEffect } from "react"
+
+import type { Section } from "@prisma/client"
 import { useLoaderData, useActionData, useNavigate } from "@remix-run/react"
 import type { ActionFunction, LoaderFunction } from "@remix-run/server-runtime"
 import { json, redirect } from "@remix-run/server-runtime"
-import { useEffect } from "react"
+import { useTranslation } from "react-i18next"
 import { toast } from "react-toastify"
+
 import AddTestComponent from "~/components/tests/AddTest"
+import { routes } from "~/constants/route.constants"
 import { getAllSections } from "~/models/sections.server"
 import { createTest } from "~/models/tests.server"
-import { getUserId, requireUserId } from "~/session.server"
-import { routes } from "~/constants/route.constants"
-import { useTranslation } from "react-i18next"
 import { getUserWorkspaces } from "~/models/workspace.server"
-import type { Section } from "@prisma/client"
+import { getUserId, requireUserId } from "~/session.server"
 
 type LoaderData = {
   sections: Section[]

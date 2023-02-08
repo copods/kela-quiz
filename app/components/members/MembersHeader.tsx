@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react"
-import AddMemberModal from "./AddMemberModal"
+
 import { useLoaderData } from "@remix-run/react"
-import Button from "../common-components/Button"
 import { useTranslation } from "react-i18next"
+
+import Button from "../common-components/Button"
+
+import AddMemberModal from "./AddMemberModal"
 
 export default function MembersHeader({
   actionStatus,

@@ -1,7 +1,8 @@
 import { useEffect, useRef } from "react"
-import { useQuill } from "react-quilljs"
-import BlotFormatter from "quill-blot-formatter"
+
 import hljs from "highlight.js"
+import BlotFormatter from "quill-blot-formatter"
+import { useQuill } from "react-quilljs"
 
 export default function QuillEditor({
   text,

@@ -1,17 +1,19 @@
 import { useEffect, useState } from "react"
-import SortFilter from "../common-components/SortFilter"
 
 import { Link, useLoaderData, useNavigate, useLocation } from "@remix-run/react"
+import { useTranslation } from "react-i18next"
+
+import EmptyStateComponent from "../common-components/EmptyStateComponent"
+import SortFilter from "../common-components/SortFilter"
+import Table from "../common-components/TableComponent"
+
+import { sortByOrder } from "~/interface/Interface"
 import type {
   CandidateTest,
   tableColumnType,
   OtherFilters,
   Test,
 } from "~/interface/Interface"
-import { sortByOrder } from "~/interface/Interface"
-import { useTranslation } from "react-i18next"
-import EmptyStateComponent from "../common-components/EmptyStateComponent"
-import Table from "../common-components/TableComponent"
 const sortByDetails = [
   {
     name: "Name",

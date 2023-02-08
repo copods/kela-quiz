@@ -1,6 +1,8 @@
-import InvalidLink from "../../../public/assets/invalid-link.svg"
-import Logo from "~/components/Logo"
 import { useTranslation } from "react-i18next"
+
+import InvalidLink from "../../../public/assets/invalid-link.svg"
+
+import Logo from "~/components/Logo"
 
 const InvalidLinkComponent = () => {
   const { t } = useTranslation()

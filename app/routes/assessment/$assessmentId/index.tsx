@@ -1,5 +1,6 @@
 import type { LoaderFunction } from "@remix-run/node"
 import { redirect } from "@remix-run/node"
+
 import { checkIfTestLinkIsValidAndRedirect } from "~/utils/assessment.utils"
 
 export const loader: LoaderFunction = async ({ params, request }) => {

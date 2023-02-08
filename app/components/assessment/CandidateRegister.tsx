@@ -1,8 +1,10 @@
 import React, { useState } from "react"
+
 import { Form, useTransition } from "@remix-run/react"
+import { useTranslation } from "react-i18next"
+
 import Button from "~/components/common-components/Button"
 import InputField from "~/components/common-components/InputField"
-import { useTranslation } from "react-i18next"
 
 function CandidateRegister() {
   const { t } = useTranslation()

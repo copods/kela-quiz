@@ -1,8 +1,9 @@
-import { Icon } from "@iconify/react"
 import { Fragment, useState } from "react"
 
 import { Listbox, Transition } from "@headlessui/react"
+import { Icon } from "@iconify/react"
 import { useTranslation } from "react-i18next"
+
 import { usePagination } from "~/utils"
 
 const PaginationButtons = ({

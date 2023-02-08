@@ -1,14 +1,18 @@
-import MenuItems from "./MenuItems"
-import Header from "~/components/SideNavHeader"
-import Footer from "~/components/SideNavFooter"
-import { routes } from "~/constants/route.constants"
-import { useTranslation } from "react-i18next"
-import DropdownField from "../common-components/Dropdown"
-import { useFetcher, useLoaderData, useParams } from "@remix-run/react"
-import type { UserWorkspace } from "~/interface/Interface"
-import AddWorkspace from "../workspace/AddWorkspace"
 import { useEffect, useState } from "react"
+
+import { useFetcher, useLoaderData, useParams } from "@remix-run/react"
+import { useTranslation } from "react-i18next"
+
+import DropdownField from "../common-components/Dropdown"
+import AddWorkspace from "../workspace/AddWorkspace"
+
+import MenuItems from "./MenuItems"
+
+import Footer from "~/components/SideNavFooter"
+import Header from "~/components/SideNavHeader"
 import { actions } from "~/constants/action.constants"
+import { routes } from "~/constants/route.constants"
+import type { UserWorkspace } from "~/interface/Interface"
 
 const SideNav = () => {
   const { t } = useTranslation()

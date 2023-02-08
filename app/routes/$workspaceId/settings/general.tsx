@@ -1,10 +1,11 @@
 import type { ActionFunction, LoaderFunction } from "@remix-run/node"
-import { updatePassword } from "~/models/user.server"
-import { routes } from "~/constants/route.constants"
-import { getUserId } from "~/session.server"
 import { json } from "@remix-run/node"
 import { redirect } from "@remix-run/node"
+
 import GeneralSettings from "~/components/settings/GeneralSettings"
+import { routes } from "~/constants/route.constants"
+import { updatePassword } from "~/models/user.server"
+import { getUserId } from "~/session.server"
 export type ActionData = {
   errors?: {
     status?: number

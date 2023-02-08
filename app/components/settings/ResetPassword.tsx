@@ -1,15 +1,18 @@
-import { Form, useActionData, useTransition } from "@remix-run/react"
 import { useEffect, useState } from "react"
+
+import { Form, useActionData, useTransition } from "@remix-run/react"
 import { useTranslation } from "react-i18next"
 import { toast } from "react-toastify"
+
+import Button from "../common-components/Button"
+import DialogWrapper from "../common-components/Dialog"
+import PasswordInputFields from "../common-components/PasswordInputField"
+
 import {
   checkPasswordStrength,
   getPasswordStrengthColor,
   trimValue,
 } from "~/utils"
-import DialogWrapper from "../common-components/Dialog"
-import Button from "../common-components/Button"
-import PasswordInputFields from "../common-components/PasswordInputField"
 
 const ResetPassword = ({
   openResetPassModel,

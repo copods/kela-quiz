@@ -1,8 +1,11 @@
-import { Icon } from "@iconify/react"
-import type { TestSection } from "~/interface/Interface"
-import { useTranslation } from "react-i18next"
 import { useState } from "react"
+
+import { Icon } from "@iconify/react"
+import { useTranslation } from "react-i18next"
+
 import InviteCandidatePopup from "./InviteCandidatePopup"
+
+import type { TestSection } from "~/interface/Interface"
 
 const TestPreview = ({
   name,

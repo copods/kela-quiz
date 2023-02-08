@@ -1,7 +1,8 @@
+import { Fragment } from "react"
+
 import { Dialog, Transition } from "@headlessui/react"
 import { Icon } from "@iconify/react"
 
-import { Fragment } from "react"
 import type { DialogWrapperProps } from "~/interface/Interface"
 
 const DialogWrapper = ({

@@ -1,9 +1,12 @@
-import { useLoaderData, useSubmit } from "@remix-run/react"
 import moment from "moment"
+
+import { useLoaderData, useSubmit } from "@remix-run/react"
 import { useTranslation } from "react-i18next"
-import type { User, Role, Invites } from "~/interface/Interface"
+
 import Table from "../common-components/TableComponent"
+
 import memberResendIcon from "~/../public/assets/resend-member-invitation.svg"
+import type { User, Role, Invites } from "~/interface/Interface"
 
 const InvitedMembersList = ({
   actionStatus,

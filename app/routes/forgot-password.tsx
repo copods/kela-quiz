@@ -1,11 +1,13 @@
-import UserForgetPassword from "~/components/login/UserForgetPassword"
-import type { ActionFunction } from "@remix-run/node"
-import { sendResetPassword } from "~/models/user.server"
 import { useEffect, useState } from "react"
+
+import type { ActionFunction } from "@remix-run/node"
 import { useActionData, useNavigate } from "@remix-run/react"
-import { toast } from "react-toastify"
-import { routes } from "~/constants/route.constants"
 import { useTranslation } from "react-i18next"
+import { toast } from "react-toastify"
+
+import UserForgetPassword from "~/components/login/UserForgetPassword"
+import { routes } from "~/constants/route.constants"
+import { sendResetPassword } from "~/models/user.server"
 
 export const action: ActionFunction = async ({ request, params }) => {
   const formData = await request.formData()

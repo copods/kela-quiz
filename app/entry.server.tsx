@@ -1,12 +1,14 @@
+import { resolve } from "node:path"
+
 import type { EntryContext } from "@remix-run/node"
-import { renderToString } from "react-dom/server"
 import { RemixServer } from "@remix-run/react"
 import { createInstance } from "i18next"
-import { initReactI18next } from "react-i18next"
 import Backend from "i18next-fs-backend"
-import { resolve } from "node:path"
-import i18nextOptions from "./i18nextOptions"
+import { renderToString } from "react-dom/server"
+import { initReactI18next } from "react-i18next"
+
 import i18n from "./i18n.server"
+import i18nextOptions from "./i18nextOptions"
 
 export default async function handleRequest(
   request: Request,

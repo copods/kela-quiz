@@ -1,12 +1,16 @@
-import type { User, Role, Invites } from "~/interface/Interface"
+import { useState } from "react"
+
+import moment from "moment"
+
+import { Icon } from "@iconify/react"
 import { useLoaderData, useSubmit } from "@remix-run/react"
 import { useTranslation } from "react-i18next"
-import Table from "../common-components/TableComponent"
-import DeletePopUp from "../common-components/DeletePopUp"
-import { Icon } from "@iconify/react"
-import moment from "moment"
-import { useState } from "react"
+
 import Badge from "../common-components/Badge"
+import DeletePopUp from "../common-components/DeletePopUp"
+import Table from "../common-components/TableComponent"
+
+import type { User, Role, Invites } from "~/interface/Interface"
 
 export default function MembersList({
   membersCurrentPage,

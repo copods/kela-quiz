@@ -1,12 +1,16 @@
-import { useLoaderData, useNavigate } from "@remix-run/react"
 import { useEffect, useState } from "react"
-import type { Question } from "~/interface/Interface"
-import QuestionCard from "./QuestionCard"
-import Button from "../common-components/Button"
-import { routes } from "~/constants/route.constants"
-import { useTranslation } from "react-i18next"
+
 import { Icon } from "@iconify/react"
+import { useLoaderData, useNavigate } from "@remix-run/react"
+import { useTranslation } from "react-i18next"
+
+import Button from "../common-components/Button"
 import EmptyStateComponent from "../common-components/EmptyStateComponent"
+
+import QuestionCard from "./QuestionCard"
+
+import { routes } from "~/constants/route.constants"
+import type { Question } from "~/interface/Interface"
 
 const SectionDetails = () => {
   const { t } = useTranslation()

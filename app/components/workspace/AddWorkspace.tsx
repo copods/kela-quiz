@@ -1,14 +1,17 @@
+import { Fragment, useState, useEffect } from "react"
+
 import { Dialog, Transition } from "@headlessui/react"
 import { Icon } from "@iconify/react"
 import { useFetcher, useTransition } from "@remix-run/react"
-import { Fragment, useState, useEffect } from "react"
-import Button from "../common-components/Button"
-import { trimValue } from "~/utils"
 import { useTranslation } from "react-i18next"
 import { toast } from "react-toastify"
+
+import Button from "../common-components/Button"
 import InputField from "../common-components/InputField"
+
 import { actions } from "~/constants/action.constants"
 import { routes } from "~/constants/route.constants"
+import { trimValue } from "~/utils"
 
 export default function AddWorkspace({
   showAddWorkspaceModal,

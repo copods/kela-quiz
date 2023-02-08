@@ -1,6 +1,7 @@
 import type { ActionFunction, LoaderFunction } from "@remix-run/node"
 import { json, redirect } from "@remix-run/node"
 import { Outlet } from "@remix-run/react"
+
 import AdminLayout from "~/components/layouts/AdminLayout"
 import { routes } from "~/constants/route.constants"
 import {

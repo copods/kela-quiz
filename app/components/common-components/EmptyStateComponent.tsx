@@ -1,4 +1,5 @@
 import { t } from "i18next"
+
 import noData from "../../../public/assets/noData.svg"
 
 const EmptyStateComponent = () => {

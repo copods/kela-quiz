@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next"
+
 import logo from "~/../public/assets/logo.svg"
 
 export default function Header() {

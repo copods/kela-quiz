@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react"
+
+import { Form, useNavigate } from "@remix-run/react"
+import { useTranslation } from "react-i18next"
+
 import Button from "../common-components/Button"
 import InputField from "../common-components/InputField"
 import Logo from "../Logo"
-import { Form, useNavigate } from "@remix-run/react"
+
 import { routes } from "~/constants/route.constants"
-import { useTranslation } from "react-i18next"
 
 const UserForgetPassword = ({
   checkErrorStatus,

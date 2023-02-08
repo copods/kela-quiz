@@ -11,6 +11,7 @@ import {
   getTotalSections,
   getTotalTime,
 } from "support/common-function"
+
 import { cypress, testsConstants } from "~/constants/common.constants"
 
 const test1 = `Aptitude - assessment1`

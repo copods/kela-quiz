@@ -1,17 +1,20 @@
-import Workspace from "~/components/settings/Workspace"
-import type { LoaderFunction, ActionFunction } from "@remix-run/node"
+import { useEffect } from "react"
+
 import { json } from "@remix-run/node"
-import { getUserId } from "~/session.server"
+import type { LoaderFunction, ActionFunction } from "@remix-run/node"
+import { useActionData, useLoaderData, useNavigate } from "@remix-run/react"
+import { t } from "i18next"
+import { toast } from "react-toastify"
+
+import { routes } from "../../../constants/route.constants"
+
+import Workspace from "~/components/settings/Workspace"
 import {
   getCurrentWorkspaceOwner,
   getOwnersWorkspaces,
   leaveWorkspace,
 } from "~/models/workspace.server"
-import { useActionData, useLoaderData, useNavigate } from "@remix-run/react"
-import { useEffect } from "react"
-import { toast } from "react-toastify"
-import { t } from "i18next"
-import { routes } from "../../../constants/route.constants"
+import { getUserId } from "~/session.server"
 interface LoaderData {
   workspaceOwner: Awaited<ReturnType<typeof getCurrentWorkspaceOwner>>
   ownersWorkspaces: Awaited<ReturnType<typeof getOwnersWorkspaces>>

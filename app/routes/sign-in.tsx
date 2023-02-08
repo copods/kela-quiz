@@ -6,12 +6,12 @@ import type {
 import { json, redirect } from "@remix-run/node"
 import { useActionData, useSearchParams } from "@remix-run/react"
 
-import { createUserSession, getUserId } from "~/session.server"
-import { loginVerificationResponse } from "~/models/user.server"
-import { safeRedirect, validateEmail } from "~/utils"
-import type { ActionData } from "~/interface/Interface"
 import Login from "~/components/login/Login"
 import { routes } from "~/constants/route.constants"
+import type { ActionData } from "~/interface/Interface"
+import { loginVerificationResponse } from "~/models/user.server"
+import { createUserSession, getUserId } from "~/session.server"
+import { safeRedirect, validateEmail } from "~/utils"
 
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await getUserId(request)

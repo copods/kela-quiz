@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import type { ActionFunction, LoaderFunction } from "@remix-run/server-runtime"
-import { redirect } from "@remix-run/server-runtime"
+import { useState, useEffect } from "react"
+
+import { Icon } from "@iconify/react"
 import { json } from "@remix-run/node"
 import {
   Outlet,
@@ -9,27 +10,28 @@ import {
   useLocation,
   useNavigate,
 } from "@remix-run/react"
-import { getAllTestsCounts, getFirstSection } from "~/models/sections.server"
-import { useState, useEffect } from "react"
-import { Icon } from "@iconify/react"
-import { getUserId, requireUserId } from "~/session.server"
-import Sections from "~/components/sections/Sections"
-import type { sectionActionErrorsType } from "~/interface/Interface"
-import AddEditSection from "~/components/sections/AddEditSection"
-import { toast } from "react-toastify"
-import Button from "~/components/common-components/Button"
-import { sortByOrder } from "~/interface/Interface"
-import type { Section } from "~/interface/Interface"
-import { routes } from "~/constants/route.constants"
+import type { ActionFunction, LoaderFunction } from "@remix-run/server-runtime"
+import { redirect } from "@remix-run/server-runtime"
 import { useTranslation } from "react-i18next"
-import { getUserWorkspaces } from "~/models/workspace.server"
-import EmptyStateComponent from "~/components/common-components/EmptyStateComponent"
+import { toast } from "react-toastify"
+
 import {
   getAllSectionsData,
   handleAddSection,
   handleDeleteSection,
   handleEditSection,
 } from "helper/tests.helper"
+import Button from "~/components/common-components/Button"
+import EmptyStateComponent from "~/components/common-components/EmptyStateComponent"
+import AddEditSection from "~/components/sections/AddEditSection"
+import Sections from "~/components/sections/Sections"
+import { routes } from "~/constants/route.constants"
+import { sortByOrder } from "~/interface/Interface"
+import type { sectionActionErrorsType } from "~/interface/Interface"
+import type { Section } from "~/interface/Interface"
+import { getAllTestsCounts, getFirstSection } from "~/models/sections.server"
+import { getUserWorkspaces } from "~/models/workspace.server"
+import { getUserId, requireUserId } from "~/session.server"
 
 export type ActionData = {
   errors?: {

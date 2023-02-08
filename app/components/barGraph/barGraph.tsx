@@ -1,7 +1,9 @@
+import moment from "moment"
+
 import Highcharts from "highcharts"
 import type { TooltipFormatterContextObject } from "highcharts"
 import HighchartsReact from "highcharts-react-official"
-import moment from "moment"
+
 import type {
   SectionInCandidateTest,
   SectionInTest,

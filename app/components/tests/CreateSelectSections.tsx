@@ -1,12 +1,16 @@
 import type { SetStateAction } from "react"
 import { useEffect, useState } from "react"
+
+import { useNavigate } from "@remix-run/react"
+import { useTranslation } from "react-i18next"
+
+import SortFilter from "../common-components/SortFilter"
+
+import SelectSectionCard from "./SelectSectionCard"
+
+import { routes } from "~/constants/route.constants"
 import { sortByOrder } from "~/interface/Interface"
 import type { TestSection } from "~/interface/Interface"
-import SortFilter from "../common-components/SortFilter"
-import SelectSectionCard from "./SelectSectionCard"
-import { useTranslation } from "react-i18next"
-import { useNavigate } from "@remix-run/react"
-import { routes } from "~/constants/route.constants"
 
 const SelectSections = ({
   sections,

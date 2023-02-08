@@ -1,6 +1,13 @@
+import { useEffect } from "react"
+
 import type { ActionFunction, LoaderFunction } from "@remix-run/node"
 import { redirect } from "@remix-run/node"
 import { useActionData, useLoaderData } from "@remix-run/react"
+import { useTranslation } from "react-i18next"
+import { toast } from "react-toastify"
+
+import CandidateOtp from "~/components/assessment/CandidateOtpVerification"
+import Header from "~/components/assessment/Header"
 import {
   checkIfTestLinkIsValidAndRedirect,
   getCandidateEmailByCandidateId,
@@ -8,11 +15,6 @@ import {
   updateNextStep,
   verifyCandidateOtp,
 } from "~/utils/assessment.utils"
-import { useEffect } from "react"
-import { toast } from "react-toastify"
-import CandidateOtp from "~/components/assessment/CandidateOtpVerification"
-import Header from "~/components/assessment/Header"
-import { useTranslation } from "react-i18next"
 
 export type ActionData = {
   errors?: {

@@ -1,6 +1,8 @@
-import { ClientOnly } from "remix-utils"
-import QuillEditor from "../QuillEditor.client"
 import { useTranslation } from "react-i18next"
+import { ClientOnly } from "remix-utils"
+
+import QuillEditor from "../QuillEditor.client"
+
 import { trimValue } from "~/utils"
 
 const TestDetails = ({

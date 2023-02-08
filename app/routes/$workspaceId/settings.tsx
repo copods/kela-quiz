@@ -1,20 +1,22 @@
-import { createUserSession, getUserId } from "~/session.server"
+import { useEffect } from "react"
+
 import type { ActionFunction } from "@remix-run/node"
-import { redirect } from "@remix-run/node"
 import type { LoaderFunction } from "@remix-run/node"
-import { routes } from "~/constants/route.constants"
-import { addWorkspace, getUserWorkspaces } from "~/models/workspace.server"
+import { redirect } from "@remix-run/node"
 import { json } from "@remix-run/node"
-import { actions } from "~/constants/action.constants"
 import {
   Outlet,
   useLoaderData,
   useLocation,
   useNavigate,
 } from "@remix-run/react"
-import SettingsTabs from "~/components/settings/SettingTab"
 import { useTranslation } from "react-i18next"
-import { useEffect } from "react"
+
+import SettingsTabs from "~/components/settings/SettingTab"
+import { actions } from "~/constants/action.constants"
+import { routes } from "~/constants/route.constants"
+import { addWorkspace, getUserWorkspaces } from "~/models/workspace.server"
+import { createUserSession, getUserId } from "~/session.server"
 
 export type LoaderData = {
   workspaces: Awaited<ReturnType<typeof getUserWorkspaces>>

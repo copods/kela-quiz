@@ -1,12 +1,15 @@
-import SectionCard from "./SectionCard"
-import type { Question, Section, SectionInTest } from "~/interface/Interface"
-import { useResolvedPath, useLocation, useNavigate } from "@remix-run/react"
-import {} from "@remix-run/react"
-import SortFilter from "../common-components/SortFilter"
 import { useEffect, useState } from "react"
-import { routes } from "~/constants/route.constants"
-import type { sectionActionErrorsType } from "~/interface/Interface"
+
+import { useResolvedPath, useLocation, useNavigate } from "@remix-run/react"
+
 import Pagination from "../common-components/Pagination"
+import SortFilter from "../common-components/SortFilter"
+
+import SectionCard from "./SectionCard"
+
+import { routes } from "~/constants/route.constants"
+import type { Question, Section, SectionInTest } from "~/interface/Interface"
+import type { sectionActionErrorsType } from "~/interface/Interface"
 
 const SectionLink = ({
   section,

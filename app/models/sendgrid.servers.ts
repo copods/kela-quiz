@@ -1,5 +1,6 @@
-import sendgrid from "@sendgrid/mail"
 import { env } from "process"
+
+import sendgrid from "@sendgrid/mail"
 
 export async function sendMail(
   passwordGenerationLink: string,

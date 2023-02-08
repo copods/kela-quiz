@@ -1,13 +1,14 @@
-import type { LoaderFunction } from "@remix-run/server-runtime"
 import { redirect } from "@remix-run/node"
 import { json } from "@remix-run/node"
+import type { LoaderFunction } from "@remix-run/server-runtime"
+
 import Header from "~/components/assessment/Header"
 import JoinWorkspace from "~/components/workspace/JoinWorkspace"
-import { getUserId } from "~/session.server"
 import { routes } from "~/constants/route.constants"
-import { joinWorkspace } from "~/models/workspace.server"
 import { getInvitedMemberById } from "~/models/invites.server"
 import { getUserByEmail } from "~/models/user.server"
+import { joinWorkspace } from "~/models/workspace.server"
+import { getUserId } from "~/session.server"
 
 export type LoaderData = {
   invitedMember: Awaited<ReturnType<typeof getInvitedMemberById>>

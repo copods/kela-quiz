@@ -1,5 +1,6 @@
 import type { LoaderFunction, ActionFunction } from "@remix-run/node"
 import { redirect } from "@remix-run/node"
+
 import CandidateRegister from "~/components/assessment/CandidateRegister"
 import {
   checkIfTestLinkIsValidAndRedirect,

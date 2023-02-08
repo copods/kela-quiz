@@ -1,12 +1,18 @@
-import { Icon } from "@iconify/react"
-import moment from "moment"
-import { Menu } from "@headlessui/react"
-import { useSubmit, useLoaderData } from "@remix-run/react"
-import DeletePopUp from "../common-components/DeletePopUp"
 import { useEffect, useState } from "react"
-import type { sectionActionErrorsType } from "~/interface/Interface"
+
+import moment from "moment"
+
+import { Menu } from "@headlessui/react"
+import { Icon } from "@iconify/react"
+import { useSubmit, useLoaderData } from "@remix-run/react"
 import { useTranslation } from "react-i18next"
+
+import DeletePopUp from "../common-components/DeletePopUp"
+
 import AddEditSection from "./AddEditSection"
+
+import type { sectionActionErrorsType } from "~/interface/Interface"
+
 const SectionCard = ({
   name,
   description,

@@ -1,9 +1,12 @@
 // import { Icon } from '@iconify/react'
 import { useLoaderData, useSubmit } from "@remix-run/react"
-import Button from "../common-components/Button"
-import Header from "./Header"
-import cooldownImage from "~/../public/assets/cooldown.svg"
 import { useTranslation } from "react-i18next"
+
+import Button from "../common-components/Button"
+
+import Header from "./Header"
+
+import cooldownImage from "~/../public/assets/cooldown.svg"
 
 const Cooldown = () => {
   const { t } = useTranslation()

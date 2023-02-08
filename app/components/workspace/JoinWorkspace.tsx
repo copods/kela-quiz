@@ -1,9 +1,11 @@
 import { useNavigate } from "@remix-run/react"
-import { useTranslation } from "react-i18next"
-import Button from "../common-components/Button"
-import logo from "../../../public/assets/member-invitation.svg"
 import { useLoaderData } from "@remix-run/react"
 import { Form } from "@remix-run/react"
+import { useTranslation } from "react-i18next"
+
+import logo from "../../../public/assets/member-invitation.svg"
+import Button from "../common-components/Button"
+
 import { routes } from "~/constants/route.constants"
 
 const JoinWorkspace = () => {

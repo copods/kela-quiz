@@ -1,9 +1,14 @@
-import bcrypt from "bcryptjs"
-import type { Password, User } from "@prisma/client"
-import { sendMail, sendNewPassword } from "./sendgrid.servers"
-import { prisma } from "~/db.server"
-import { faker } from "@faker-js/faker"
 import { env } from "process"
+
+import { faker } from "@faker-js/faker"
+import type { Password, User } from "@prisma/client"
+import bcrypt from "bcryptjs"
+
+import { sendMail, sendNewPassword } from "./sendgrid.servers"
+
+import { prisma } from "~/db.server"
+
+
 
 export type { User } from "@prisma/client"
 

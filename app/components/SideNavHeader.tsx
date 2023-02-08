@@ -1,5 +1,6 @@
 import { Link } from "@remix-run/react"
 import { useTranslation } from "react-i18next"
+
 import logo from "~/../public/assets/logo.svg"
 import { routes } from "~/constants/route.constants"
 

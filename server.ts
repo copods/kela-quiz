@@ -1,8 +1,9 @@
 import path from "path"
-import express from "express"
-import compression from "compression"
-import morgan from "morgan"
+
 import { createRequestHandler } from "@remix-run/express"
+import compression from "compression"
+import express from "express"
+import morgan from "morgan"
 
 const app = express()
 
@@ -73,13 +74,13 @@ app.all(
   MODE === "production"
     ? createRequestHandler({ build: require(BUILD_DIR) })
     : (...args) => {
-        purgeRequireCache()
-        const requestHandler = createRequestHandler({
-          build: require(BUILD_DIR),
-          mode: MODE,
-        })
-        return requestHandler(...args)
-      }
+      purgeRequireCache()
+      const requestHandler = createRequestHandler({
+        build: require(BUILD_DIR),
+        mode: MODE,
+      })
+      return requestHandler(...args)
+    }
 )
 
 const port = process.env.PORT || 3000

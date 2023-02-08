@@ -1,10 +1,14 @@
-import { useLoaderData } from "@remix-run/react"
 import { useEffect, useState } from "react"
-import { QuestionTypes } from "~/interface/Interface"
+
+import { useLoaderData } from "@remix-run/react"
+
 import Checkbox from "../form/CheckBox"
-import CandidateQuestionHeader from "./CandidateQuestionHeader"
+
 import CandidateQuestionFooter from "./CandidateQuestionFooter"
+import CandidateQuestionHeader from "./CandidateQuestionHeader"
 import CandidateQuestionStepper from "./CandidateQuestionStepper"
+
+import { QuestionTypes } from "~/interface/Interface"
 
 const Question = () => {
   const { question } = useLoaderData()

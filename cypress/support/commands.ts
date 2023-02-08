@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { faker } from "@faker-js/faker"
-import { logIn } from "~/constants/common.constants"
+
 import {
   getBeginAssessmentButton,
   getCopyLinkId,
@@ -19,6 +19,8 @@ import {
   getSubmitBtn,
   getVeriticalIconId,
 } from "./common-function"
+
+import { logIn } from "~/constants/common.constants"
 
 declare global {
   namespace Cypress {

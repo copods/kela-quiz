@@ -1,6 +1,8 @@
-import Header from "./Header"
-import InvalidLink from "../../../public/assets/invalid-link.svg"
 import { useTranslation } from "react-i18next"
+
+import InvalidLink from "../../../public/assets/invalid-link.svg"
+
+import Header from "./Header"
 
 const ExpiredLinkComponent = () => {
   const { t } = useTranslation()

@@ -1,15 +1,16 @@
-import { getUserId } from "~/session.server"
-import { redirect } from "@remix-run/node"
 import type { LoaderFunction } from "@remix-run/node"
+import { redirect } from "@remix-run/node"
 import { json } from "@remix-run/node"
+
 import GroupByTests from "~/components/results/GroupByTests"
+import { sortByOrder } from "~/interface/Interface"
 import {
   getAllCandidateTests,
   getAllCandidateTestsCount,
   getTotalTestCount,
 } from "~/models/result.server"
 import { getUserWorkspaces } from "~/models/workspace.server"
-import { sortByOrder } from "~/interface/Interface"
+import { getUserId } from "~/session.server"
 type LoaderData = {
   candidateTest: Awaited<ReturnType<typeof getAllCandidateTests>>
   userId: Awaited<ReturnType<typeof getUserId>>

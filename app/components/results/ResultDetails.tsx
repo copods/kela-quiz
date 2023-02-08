@@ -1,10 +1,13 @@
-import { useLoaderData, useNavigate } from "@remix-run/react"
 import { Icon } from "@iconify/react"
-import SectionCardForResultDetail from "./SectionCardForResultDetail"
-import Divider from "../common-components/divider"
+import { useLoaderData, useNavigate } from "@remix-run/react"
+
 import BarGraph from "../barGraph/barGraph"
-import { routes } from "~/constants/route.constants"
+import Divider from "../common-components/divider"
 import EmptyStateComponent from "../common-components/EmptyStateComponent"
+
+import SectionCardForResultDetail from "./SectionCardForResultDetail"
+
+import { routes } from "~/constants/route.constants"
 import type { SectionInCandidateTest } from "~/interface/Interface"
 // import { useTranslation } from 'react-i18next'
 

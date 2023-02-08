@@ -1,16 +1,20 @@
-import { useNavigate, useSubmit, useTransition } from "@remix-run/react"
 import { useEffect, useState } from "react"
+
+import { useNavigate, useSubmit, useTransition } from "@remix-run/react"
+import { useTranslation } from "react-i18next"
 import { toast } from "react-toastify"
-import { sortByOrder } from "~/interface/Interface"
-import type { TestSection } from "~/interface/Interface"
+
 import BreadCrumb from "../common-components/BreadCrumb"
+import Button from "../common-components/Button"
+
 import SelectSections from "./CreateSelectSections"
 import TestDetails from "./CreateTestDetails"
 import TestPreview from "./CreateTestPreview"
 import StepsTabComponent from "./StepsTab"
-import Button from "../common-components/Button"
+
 import { routes } from "~/constants/route.constants"
-import { useTranslation } from "react-i18next"
+import type { TestSection } from "~/interface/Interface"
+import { sortByOrder } from "~/interface/Interface"
 
 const AddTestComponent = ({
   sections,

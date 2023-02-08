@@ -1,9 +1,12 @@
-import type { Invites } from "@prisma/client"
-import { prisma } from "~/db.server"
-import { sendMail, sendMemberInvite } from "./sendgrid.servers"
 import { env } from "process"
+
 import faker from "@faker-js/faker"
+import type { Invites } from "@prisma/client"
 import bcrypt from "bcryptjs"
+
+import { sendMail, sendMemberInvite } from "./sendgrid.servers"
+
+import { prisma } from "~/db.server"
 
 export async function inviteNewUser({
   email,

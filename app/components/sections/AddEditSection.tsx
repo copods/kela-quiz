@@ -1,10 +1,13 @@
-import { Form, useActionData, useSubmit, useTransition } from "@remix-run/react"
 import { useEffect, useState } from "react"
-import Button from "../common-components/Button"
-import { trimValue } from "~/utils"
+
+import { Form, useActionData, useSubmit, useTransition } from "@remix-run/react"
 import { useTranslation } from "react-i18next"
+
+import Button from "../common-components/Button"
 import DialogWrapper from "../common-components/Dialog"
+
 import type { sectionActionErrorsType } from "~/interface/Interface"
+import { trimValue } from "~/utils"
 
 export interface editItem {
   name: string

@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react"
+
 import {
   useActionData,
   useLoaderData,
@@ -5,19 +7,20 @@ import {
   useSubmit,
   useTransition,
 } from "@remix-run/react"
-import { useEffect, useState } from "react"
+import { useTranslation } from "react-i18next"
+import { toast } from "react-toastify"
+
+import InputField from "../common-components/InputField"
+import PasswordInputFields from "../common-components/PasswordInputField"
+
 import Button from "~/components/common-components/Button"
 import Logo from "~/components/Logo"
+import { routes } from "~/constants/route.constants"
 import {
   checkPasswordStrength,
   getPasswordStrengthColor,
   trimValue,
 } from "~/utils"
-import { routes } from "~/constants/route.constants"
-import { useTranslation } from "react-i18next"
-import InputField from "../common-components/InputField"
-import PasswordInputFields from "../common-components/PasswordInputField"
-import { toast } from "react-toastify"
 
 const SignUp = ({ error }: { error?: string }) => {
   const navigate = useNavigate()

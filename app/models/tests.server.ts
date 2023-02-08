@@ -1,4 +1,5 @@
 import type { Section } from "@prisma/client"
+
 import { prisma } from "~/db.server"
 
 export async function getTestById({ id }: Pick<Section, "id">) {

@@ -8,8 +8,9 @@ import type {
   SectionInTest,
 } from "@prisma/client"
 
-import { prisma } from "~/db.server"
 import { sendMailToRecruiter, sendOTPMail } from "./sendgrid.servers"
+
+import { prisma } from "~/db.server"
 
 export async function checkIfTestLinkIsValid(id: CandidateTest["id"]) {
   try {
@@ -466,8 +467,8 @@ export async function skipAnswerAndNextQuestion({
           selectedOptions?.length || answers?.length
             ? "ANSWERED"
             : question?.status === "ANSWERED"
-            ? "ANSWERED"
-            : "SKIPPED",
+              ? "ANSWERED"
+              : "SKIPPED",
         answeredAt: new Date(),
       },
       select: {

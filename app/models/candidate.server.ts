@@ -1,7 +1,10 @@
-import type { Question, User } from "@prisma/client"
 import { env } from "process"
-import { prisma } from "~/db.server"
+
+import type { Question, User } from "@prisma/client"
+
 import { sendTestInviteMail } from "./sendgrid.servers"
+
+import { prisma } from "~/db.server"
 
 // inviting candidate
 const candidateTestLink = `${env.PUBLIC_URL}/assessment/`

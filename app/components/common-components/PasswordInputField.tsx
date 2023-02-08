@@ -1,7 +1,9 @@
-import { Icon } from "@iconify/react"
 import { useState } from "react"
-import type { PasswordFieldProps } from "~/interface/Interface"
+
+import { Icon } from "@iconify/react"
 import { useTranslation } from "react-i18next"
+
+import type { PasswordFieldProps } from "~/interface/Interface"
 
 const PasswordInputFields = ({
   name,

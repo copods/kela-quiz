@@ -1,13 +1,12 @@
 import type { ActionFunction, LoaderFunction } from "@remix-run/node"
 import { json } from "@remix-run/node"
 
-import { createUserBySignUp } from "~/models/user.server"
-
 import SignUp from "~/components/login/SignUp"
-import { createUserSession } from "~/session.server"
-import { safeRedirect } from "~/utils"
 import { routes } from "~/constants/route.constants"
 import { getInvitedMemberById } from "~/models/invites.server"
+import { createUserBySignUp } from "~/models/user.server"
+import { createUserSession } from "~/session.server"
+import { safeRedirect } from "~/utils"
 
 export type ActionData = {
   errors?: {

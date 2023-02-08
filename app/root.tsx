@@ -12,16 +12,16 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react"
+import quillEditorStyles from "quill/dist/quill.snow.css"
+import { useTranslation } from "react-i18next"
+import { ToastContainer } from "react-toastify"
+import toasterStyles from "react-toastify/dist/ReactToastify.css"
 
-import tailwindStylesheetUrl from "./styles/tailwind.css"
+import { getUser } from "./session.server"
 import globalStyles from "./styles/global.css"
 import quillStyles from "./styles/quill.css"
+import tailwindStylesheetUrl from "./styles/tailwind.css"
 import toastifyStyles from "./styles/toastify.css"
-import quillEditorStyles from "quill/dist/quill.snow.css"
-import { getUser } from "./session.server"
-import toasterStyles from "react-toastify/dist/ReactToastify.css"
-import { ToastContainer } from "react-toastify"
-import { useTranslation } from "react-i18next"
 
 export const links: LinksFunction = () => {
   return [
