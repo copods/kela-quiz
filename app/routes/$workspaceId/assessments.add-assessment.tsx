@@ -1,16 +1,18 @@
-import { useLoaderData, useActionData, useNavigate } from '@remix-run/react'
-import type { ActionFunction, LoaderFunction } from '@remix-run/server-runtime'
-import { json, redirect } from '@remix-run/server-runtime'
-import { useEffect } from 'react'
-import { toast } from 'react-toastify'
-import AddTestComponent from '~/components/tests/AddTest'
-import { getAllSections } from '~/models/sections.server'
-import { createTest } from '~/models/tests.server'
-import { getUserId, requireUserId } from '~/session.server'
-import { routes } from '~/constants/route.constants'
-import { useTranslation } from 'react-i18next'
-import { getUserWorkspaces } from '~/models/workspace.server'
-import type { Section } from '@prisma/client'
+import { useEffect } from "react"
+
+import type { Section } from "@prisma/client"
+import { useLoaderData, useActionData, useNavigate } from "@remix-run/react"
+import type { ActionFunction, LoaderFunction } from "@remix-run/server-runtime"
+import { json, redirect } from "@remix-run/server-runtime"
+import { useTranslation } from "react-i18next"
+import { toast } from "react-toastify"
+
+import AddTestComponent from "~/components/tests/AddTest"
+import { routes } from "~/constants/route.constants"
+import { getAllSections } from "~/models/sections.server"
+import { createTest } from "~/models/tests.server"
+import { getUserWorkspaces } from "~/models/workspace.server"
+import { getUserId, requireUserId } from "~/session.server"
 
 type LoaderData = {
   sections: Section[]
@@ -35,11 +37,11 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   if (!userId) return redirect(routes.signIn)
 
   let sections: Array<Section> = []
-  let status: string = ''
-  await getAllSections('', '', currentWorkspaceId as string)
+  let status: string = ""
+  await getAllSections("", "", currentWorkspaceId as string)
     .then((res) => {
       sections = res as Section[]
-      status = 'statusCheck.success'
+      status = "statusCheck.success"
     })
     .catch((err) => {
       status = err
@@ -62,7 +64,7 @@ export const action: ActionFunction = async ({ request, params }) => {
           timeInSeconds: number
         }>
       }
-    | any = formData.get('data')
+    | any = formData.get("data")
 
   let test = null
   await createTest(createdById, workspaceId as string, JSON.parse(data))
@@ -70,7 +72,7 @@ export const action: ActionFunction = async ({ request, params }) => {
       test = json<ActionData>(
         {
           resp: {
-            title: 'statusCheck.assessmentAddedSuccessFully',
+            title: "statusCheck.assessmentAddedSuccessFully",
             status: 200,
           },
         },
@@ -78,9 +80,9 @@ export const action: ActionFunction = async ({ request, params }) => {
       )
     })
     .catch((err) => {
-      let title = 'statusCheck.commonError'
-      if (err.code === 'P2002') {
-        title = 'statusCheck.assessmentAlreadyExist'
+      let title = "statusCheck.commonError"
+      if (err.code === "P2002") {
+        title = "statusCheck.assessmentAlreadyExist"
       }
       test = json<ActionData>(
         {
@@ -114,8 +116,8 @@ const AddTest = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [actionData, navigate, t])
 
-  if (t(testData.status) != t('statusCheck.success')) {
-    toast.success(t('statusCheck.commonError'))
+  if (t(testData.status) != t("statusCheck.success")) {
+    toast.success(t("statusCheck.commonError"))
   }
 
   return (

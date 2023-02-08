@@ -1,11 +1,11 @@
-import type { ActionFunction, LoaderFunction } from '@remix-run/node'
-import { json } from '@remix-run/node'
+import type { ActionFunction, LoaderFunction } from "@remix-run/node"
+import { json } from "@remix-run/node"
 
-import SignUp from '~/components/login/SignUp'
-import { safeRedirect } from '~/utils'
-import { routes } from '~/constants/route.constants'
-import { getInvitedMemberById } from '~/models/invites.server'
-import { createUserBySignUP } from '~/services/user.service'
+import SignUp from "~/components/login/SignUp"
+import { routes } from "~/constants/route.constants"
+import { getInvitedMemberById } from "~/models/invites.server"
+import { createUserBySignUP } from "~/services/user.service"
+import { safeRedirect } from "~/utils"
 
 export type ActionData = {
   errors?: {
@@ -26,7 +26,7 @@ export type ActionData = {
 }
 export const loader: LoaderFunction = async ({ request }) => {
   let userData
-  const inviteId = new URL(request.url).searchParams.get('id')
+  const inviteId = new URL(request.url).searchParams.get("id")
   if (inviteId) {
     userData = await getInvitedMemberById(inviteId)
   }
@@ -34,26 +34,26 @@ export const loader: LoaderFunction = async ({ request }) => {
 }
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
-  const action = JSON.parse(formData.get('signUp') as string)
-  const invitedId = formData.get('inviteId')
+  const action = JSON.parse(formData.get("signUp") as string)
+  const invitedId = formData.get("inviteId")
   const redirectTo = safeRedirect(
-    formData.get('redirectTo'),
-    invitedId != 'null' ? `/workspace/${invitedId}/join` : routes.members
+    formData.get("redirectTo"),
+    invitedId != "null" ? `/workspace/${invitedId}/join` : routes.members
   )
 
-  if (action.action === 'add') {
-    const firstName = formData.get('firstName')
-    const lastName = formData.get('lastName')
-    const email = formData.get('email')
-    const password = formData.get('Password')
-    const confirmPassword = formData.get('confirmPassword')
+  if (action.action === "add") {
+    const firstName = formData.get("firstName")
+    const lastName = formData.get("lastName")
+    const email = formData.get("email")
+    const password = formData.get("Password")
+    const confirmPassword = formData.get("confirmPassword")
     // eslint-disable-next-line no-useless-escape
     const emailFilter = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
-    if (typeof firstName !== 'string' || firstName.length === 0) {
+    if (typeof firstName !== "string" || firstName.length === 0) {
       return json<ActionData>(
         {
           errors: {
-            firstNameRequired: 'toastConstants.firstNameRequired',
+            firstNameRequired: "toastConstants.firstNameRequired",
             status: 400,
           },
         },
@@ -61,22 +61,22 @@ export const action: ActionFunction = async ({ request }) => {
       )
     }
 
-    if (typeof lastName !== 'string' || lastName.length === 0) {
+    if (typeof lastName !== "string" || lastName.length === 0) {
       return json<ActionData>(
         {
           errors: {
-            lastNameRequired: 'toastConstants.lastNameRequired',
+            lastNameRequired: "toastConstants.lastNameRequired",
             status: 400,
           },
         },
         { status: 400 }
       )
     }
-    if (typeof email !== 'string' || email.length === 0) {
+    if (typeof email !== "string" || email.length === 0) {
       return json<ActionData>(
         {
           errors: {
-            emailRequired: 'toastConstants.emailRequired',
+            emailRequired: "toastConstants.emailRequired",
             status: 400,
           },
         },
@@ -88,7 +88,7 @@ export const action: ActionFunction = async ({ request }) => {
       return json<ActionData>(
         {
           errors: {
-            enterVaildMailAddress: 'toastConstants.correctEmail',
+            enterVaildMailAddress: "toastConstants.correctEmail",
             status: 400,
           },
         },
@@ -96,12 +96,12 @@ export const action: ActionFunction = async ({ request }) => {
       )
     }
 
-    if (typeof password !== 'string' || password.length < 8) {
+    if (typeof password !== "string" || password.length < 8) {
       // checking if newly entered password is less than 8 characters then throws error
       return json<ActionData>(
         {
           errors: {
-            minPasswordLimit: 'settings.minPasswordLimit',
+            minPasswordLimit: "settings.minPasswordLimit",
             status: 400,
           },
         },
@@ -113,7 +113,7 @@ export const action: ActionFunction = async ({ request }) => {
       return json<ActionData>(
         {
           errors: {
-            passNotMatched: 'settings.passNotMatch',
+            passNotMatched: "settings.passNotMatch",
             status: 400,
           },
         },
@@ -129,8 +129,6 @@ export const action: ActionFunction = async ({ request }) => {
       redirectTo,
       request
     )
-
-    console.log(addHandle)
 
     return addHandle
   }

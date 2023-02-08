@@ -1,13 +1,14 @@
-import { json } from '@remix-run/node'
+import { json } from "@remix-run/node"
+
 import {
   inviteNewUser,
   reinviteMemberForWorkspace,
-} from '~/models/invites.server'
-import type { getAllInvitedMember } from '~/models/invites.server'
-import type { getALLRoles, getALLUsers } from '~/services/user.service'
-import { deleteUserByID, getUserByID } from '~/services/user.service'
-import type { getUserWorkspaces } from '~/models/workspace.server'
-import type { getUserId } from '~/session.server'
+} from "~/models/invites.server"
+import type { getAllInvitedMember } from "~/models/invites.server"
+import type { getUserWorkspaces } from "~/models/workspace.server"
+import type { getALLRoles, getALLUsers } from "~/services/user.service"
+import { deleteUserByID, getUserByID } from "~/services/user.service"
+import type { getUserId } from "~/session.server"
 
 export type ActionData = {
   errors?: {
@@ -44,27 +45,27 @@ export const inviteNewMember = async (
   const getUser = await getUserByID(userId)
   const emailFilter = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
 
-  if (typeof email !== 'string' || email.length === 0) {
+  if (typeof email !== "string" || email.length === 0) {
     return json<ActionData>(
-      { errors: { title: 'toastConstants.emailRequired', status: 400 } },
+      { errors: { title: "toastConstants.emailRequired", status: 400 } },
       { status: 400 }
     )
   }
   if (!emailFilter.test(email)) {
     return json<ActionData>(
-      { errors: { title: 'toastConstants.correctEmail', status: 400 } },
+      { errors: { title: "toastConstants.correctEmail", status: 400 } },
       { status: 400 }
     )
   }
-  if (typeof roleId !== 'string' || roleId.length === 0) {
+  if (typeof roleId !== "string" || roleId.length === 0) {
     return json<ActionData>(
-      { errors: { title: 'toastConstants.roleRequired', status: 400 } },
+      { errors: { title: "toastConstants.roleRequired", status: 400 } },
       { status: 400 }
     )
   }
   if (email === getUser?.email) {
     return json<ActionData>(
-      { errors: { title: 'statusCheck.notInviteYourself', status: 400 } },
+      { errors: { title: "statusCheck.notInviteYourself", status: 400 } },
       { status: 400 }
     )
   }
@@ -78,7 +79,7 @@ export const inviteNewMember = async (
       return json<ActionData>(
         {
           resp: {
-            title: 'toastConstants.invitationSent',
+            title: "toastConstants.invitationSent",
             status: 200,
           },
         },
@@ -86,9 +87,9 @@ export const inviteNewMember = async (
       )
     })
     .catch((err) => {
-      let title = 'statusCheck.commonError'
-      if (err.code === 'P2002') {
-        title = 'toastConstants.memberAlreadyInvited'
+      let title = "statusCheck.commonError"
+      if (err.code === "P2002") {
+        title = "toastConstants.memberAlreadyInvited"
       }
       return json<ActionData>(
         {
@@ -111,7 +112,7 @@ export const reinviteMember = async (id: string) => {
       return json<ActionData>(
         {
           resp: {
-            title: 'toastConstants.invitationSent',
+            title: "toastConstants.invitationSent",
             status: 200,
           },
         },
@@ -119,7 +120,7 @@ export const reinviteMember = async (id: string) => {
       )
     })
     .catch((err) => {
-      let title = 'statusCheck.commonError'
+      let title = "statusCheck.commonError"
       return json<ActionData>(
         {
           errors: {

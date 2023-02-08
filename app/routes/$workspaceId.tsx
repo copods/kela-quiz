@@ -1,14 +1,15 @@
-import type { ActionFunction, LoaderFunction } from '@remix-run/node'
-import { json, redirect } from '@remix-run/node'
-import { Outlet } from '@remix-run/react'
-import AdminLayout from '~/components/layouts/AdminLayout'
-import { routes } from '~/constants/route.constants'
+import type { ActionFunction, LoaderFunction } from "@remix-run/node"
+import { json, redirect } from "@remix-run/node"
+import { Outlet } from "@remix-run/react"
+
+import AdminLayout from "~/components/layouts/AdminLayout"
+import { routes } from "~/constants/route.constants"
 import {
   getDefaultWorkspaceIdForUserQuery,
   getUserWorkspaces,
   verifyWorkspaceId,
-} from '~/models/workspace.server'
-import { getUserId, getWorkspaceId } from '~/session.server'
+} from "~/models/workspace.server"
+import { getUserId, getWorkspaceId } from "~/session.server"
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   const userId = await getUserId(request)

@@ -1,12 +1,15 @@
-import SectionCard from './SectionCard'
-import type { Question, Section, SectionInTest } from '~/interface/Interface'
-import { useResolvedPath, useLocation, useNavigate } from '@remix-run/react'
-import {} from '@remix-run/react'
-import SortFilter from '../common-components/SortFilter'
-import { useEffect, useState } from 'react'
-import { routes } from '~/constants/route.constants'
-import type { sectionActionErrorsType } from '~/interface/Interface'
-import Pagination from '../common-components/Pagination'
+import { useEffect, useState } from "react"
+
+import { useResolvedPath, useLocation, useNavigate } from "@remix-run/react"
+
+import Pagination from "../common-components/Pagination"
+import SortFilter from "../common-components/SortFilter"
+
+import SectionCard from "./SectionCard"
+
+import { routes } from "~/constants/route.constants"
+import type { Question, Section, SectionInTest } from "~/interface/Interface"
+import type { sectionActionErrorsType } from "~/interface/Interface"
 
 const SectionLink = ({
   section,
@@ -41,7 +44,7 @@ const SectionLink = ({
     if (deleted === true) {
       setTimeout(() => {
         const activeCard = document.querySelector(
-          '.activeSectionCard'
+          ".activeSectionCard"
         ) as HTMLElement
         activeCard?.focus()
         setDeleted(false)
@@ -53,15 +56,15 @@ const SectionLink = ({
     <div
       onClick={() => !isActive && navigate(path)}
       id="section-link"
-      className={isActive ? 'activeSectionCard' : ''}
-      role={'button'}
+      className={isActive ? "activeSectionCard" : ""}
+      role={"button"}
       tabIndex={0}
       key={section.id}
       onKeyUp={(e) => {
-        if (e.key === 'Tab' && e.altKey) {
-          window.location.href = '#section-search'
+        if (e.key === "Tab" && e.altKey) {
+          window.location.href = "#section-search"
           // alt + Tab combination key for moving focus to section detail
-        } else if (e.key === 'Enter') navigate(path)
+        } else if (e.key === "Enter") navigate(path)
       }}
     >
       <SectionCard

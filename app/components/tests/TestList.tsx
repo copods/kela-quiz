@@ -1,21 +1,27 @@
-import { useActionData, useLoaderData, useSubmit } from '@remix-run/react'
-import { useEffect, useState } from 'react'
-import { useNavigate, useLocation } from 'react-router-dom'
-import type { Test, User, tableColumnType } from '~/interface/Interface'
-import { sortByOrder } from '~/interface/Interface'
-import SortFilter from '../common-components/SortFilter'
-import Button from '../common-components/Button'
-import { routes } from '~/constants/route.constants'
-import { useTranslation } from 'react-i18next'
-import EmptyStateComponent from '../common-components/EmptyStateComponent'
-import Table from '../common-components/TableComponent'
-import ChipGroup from './ChipGroup'
-import moment from 'moment'
-import ListActionMenu from '../ListActionMenu'
-import { Icon } from '@iconify/react'
-import DeletePopUp from '../common-components/DeletePopUp'
-import InviteCandidatePopup from './InviteCandidatePopup'
-import { toast } from 'react-toastify'
+import { useEffect, useState } from "react"
+
+import { useNavigate, useLocation } from "react-router-dom"
+
+import moment from "moment"
+
+import { Icon } from "@iconify/react"
+import { useActionData, useLoaderData, useSubmit } from "@remix-run/react"
+import { useTranslation } from "react-i18next"
+import { toast } from "react-toastify"
+
+import Button from "../common-components/Button"
+import DeletePopUp from "../common-components/DeletePopUp"
+import EmptyStateComponent from "../common-components/EmptyStateComponent"
+import SortFilter from "../common-components/SortFilter"
+import Table from "../common-components/TableComponent"
+import ListActionMenu from "../ListActionMenu"
+
+import ChipGroup from "./ChipGroup"
+import InviteCandidatePopup from "./InviteCandidatePopup"
+
+import { routes } from "~/constants/route.constants"
+import { sortByOrder } from "~/interface/Interface"
+import type { Test, User, tableColumnType } from "~/interface/Interface"
 
 const TestList = () => {
   const { t } = useTranslation()
@@ -25,8 +31,8 @@ const TestList = () => {
   //loader and action data
   const testLoaderData = useLoaderData()
   const testActionData = useActionData()
-  if (t(testLoaderData.status as string) != t('statusCheck.success')) {
-    toast.warn(t('statusCheck.commonError'))
+  if (t(testLoaderData.status as string) != t("statusCheck.success")) {
+    toast.warn(t("statusCheck.commonError"))
   }
   useEffect(() => {
     if (testActionData) {
@@ -47,12 +53,12 @@ const TestList = () => {
 
   const sortByDetails = [
     {
-      name: 'Name',
-      value: 'name',
+      name: "Name",
+      value: "name",
     },
     {
-      name: 'Created Date',
-      value: 'createdAt',
+      name: "Created Date",
+      value: "createdAt",
     },
   ]
   const [sortBy, onSortChange] = useState(sortByDetails[1].value)
@@ -66,12 +72,12 @@ const TestList = () => {
   useEffect(() => {
     setTestsCurrentPage(testLoaderData.testsCurrentPage)
   }, [testLoaderData.testsCurrentPage])
-  const [id, setId] = useState('')
-  const [selectedTest, setSelectedTest] = useState({ id: '', name: '' })
+  const [id, setId] = useState("")
+  const [selectedTest, setSelectedTest] = useState({ id: "", name: "" })
   useEffect(() => {
     if (deleted) {
       setTimeout(() => {
-        document.getElementById('1')?.focus()
+        document.getElementById("1")?.focus()
         setDeleted(false)
       }, 500)
     }
@@ -80,10 +86,10 @@ const TestList = () => {
   const deleteTest = (id: string) => {
     submit(
       {
-        action: 'testDelete',
+        action: "testDelete",
         id: id,
       },
-      { method: 'post' }
+      { method: "post" }
     )
   }
 
@@ -102,9 +108,9 @@ const TestList = () => {
             `/${testLoaderData.currentWorkspaceId}${routes.assessments}/${data.id}`
           )
         }
-        role={'button'}
+        role={"button"}
         onKeyDown={(e) => {
-          if (e.key === 'Enter')
+          if (e.key === "Enter")
             navigate(
               `/${testLoaderData.currentWorkspaceId}${routes.assessments}/${data.id}`
             )
@@ -132,15 +138,15 @@ const TestList = () => {
     )
   }
   const JoinedOnCell = (data: Test) => {
-    return <span>{moment(data?.createdAt).format('DD MMMM YY')}</span>
+    return <span>{moment(data?.createdAt).format("DD MMMM YY")}</span>
   }
 
   const TestInvite = (data: Test, index: number) => {
     const menuItemsDetailsList = [
       {
-        id: 'Delete',
-        menuListText: `${t('commonConstants.delete')}`,
-        menuListIcon: 'ic:outline-delete-outline',
+        id: "Delete",
+        menuListText: `${t("commonConstants.delete")}`,
+        menuListIcon: "ic:outline-delete-outline",
       },
     ]
     return (
@@ -148,28 +154,28 @@ const TestList = () => {
         <div className="flex" id="action-cell">
           <Icon
             id={`invite-popup-open${index}`}
-            role={'button'}
+            role={"button"}
             tabIndex={0}
             className="candidateInviteIcon cursor-pointer text-2xl text-primary focus:outline-dotted focus:outline-2"
-            icon={'ant-design:user-add-outlined'}
+            icon={"ant-design:user-add-outlined"}
             onClick={(e) => {
               setCandidatePopupOpen(true)
               setSelectedTest({ id: data.id, name: data.name })
             }}
             onKeyUp={(e) => {
-              if (e.key === 'Enter') {
+              if (e.key === "Enter") {
                 setCandidatePopupOpen(true)
                 setSelectedTest({ id: data.id, name: data.name })
               }
             }}
-            aria-label={t('members.inviteMember')}
+            aria-label={t("members.inviteMember")}
           />
           <ListActionMenu
-            menuIcon={'mdi:dots-vertical'}
+            menuIcon={"mdi:dots-vertical"}
             onItemClick={setShowDeletePopup}
             open={showDeletePopup}
             menuDetails={menuItemsDetailsList}
-            aria-label={t('testTableItem.menu')}
+            aria-label={t("testTableItem.menu")}
             id={data.id}
             setId={setId}
           />
@@ -182,34 +188,34 @@ const TestList = () => {
             setDeleted={setDeleted}
             status={testLoaderData.status}
             deleteItem={data.name}
-            deleteItemType={t('testsConstants.assessment')}
+            deleteItemType={t("testsConstants.assessment")}
           />
         )}
       </>
     )
   }
   const testColumns: tableColumnType[] = [
-    { title: 'Sr.No', field: 'Sr_No', render: SeriaLNoCell, width: '10%' },
+    { title: "Sr.No", field: "Sr_No", render: SeriaLNoCell, width: "10%" },
     {
-      title: 'Assessment',
-      field: 'name',
+      title: "Assessment",
+      field: "name",
       render: TestNameDataCell,
-      width: '20%',
+      width: "20%",
     },
-    { title: 'Test', field: 'test', render: TestDataCell, width: '25%' },
+    { title: "Test", field: "test", render: TestDataCell, width: "25%" },
     {
-      title: 'Created On',
-      field: 'createdAt',
+      title: "Created On",
+      field: "createdAt",
       render: JoinedOnCell,
-      width: '20%',
+      width: "20%",
     },
     {
-      title: 'Created By',
-      field: 'createdBy',
+      title: "Created By",
+      field: "createdBy",
       render: CreatedByDataCell,
-      width: '15%',
+      width: "15%",
     },
-    { title: 'Action', field: 'action', render: TestInvite, width: '10%' },
+    { title: "Action", field: "action", render: TestInvite, width: "10%" },
   ]
   useEffect(() => {
     if (testLoaderData.allTestsCount === 0) {
@@ -231,7 +237,7 @@ const TestList = () => {
   ])
 
   useEffect(() => {
-    const heading = document.getElementById('assessments-page-title')
+    const heading = document.getElementById("assessments-page-title")
     heading?.focus()
   }, [])
 
@@ -243,11 +249,11 @@ const TestList = () => {
         <h2
           id="assessments-page-title"
           tabIndex={0}
-          role={t('testsConstants.assessments')}
-          title={t('testsConstants.assessments')}
+          role={t("testsConstants.assessments")}
+          title={t("testsConstants.assessments")}
           className="text-3xl font-bold text-black"
         >
-          {t('testsConstants.assessments')}
+          {t("testsConstants.assessments")}
         </h2>
         <Button
           className="px-5"
@@ -259,9 +265,9 @@ const TestList = () => {
           id="add-test"
           tabIndex={0}
           variant="primary-solid"
-          title={t('testsConstants.addTestbutton')}
-          aria-label={t('testsConstants.addTestbutton')}
-          buttonText={`+ ${t('testsConstants.addTestbutton')}`}
+          title={t("testsConstants.addTestbutton")}
+          aria-label={t("testsConstants.addTestbutton")}
+          buttonText={`+ ${t("testsConstants.addTestbutton")}`}
         />
       </header>
       {tests.length > 0 ? (
