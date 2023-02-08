@@ -15,15 +15,15 @@ const StepsTabComponent = ({
         return (
           <div
             tabIndex={disabledTabs[i] ? -1 : 0}
-            role={'button'}
+            role={"button"}
             key={tab.id}
             id={tab.id.toString()}
             className={`stepsTab flex-1 p-1 ${
               tab.name !== tabs[0].name
                 ? disabledTabs[i]
-                  ? 'cursor-not-allowed'
-                  : 'cursor-pointer'
-                : 'cursor-pointer'
+                  ? "cursor-not-allowed"
+                  : "cursor-pointer"
+                : "cursor-pointer"
             }`}
             onClick={() => {
               if (disabledTabs[i]) return
@@ -31,7 +31,7 @@ const StepsTabComponent = ({
             }}
             aria-label={`${tab.name} ${tab.description}`}
             onKeyUp={(e) => {
-              if (e.key === 'Enter') setCurrentTab(tab.id)
+              if (e.key === "Enter") setCurrentTab(tab.id)
             }}
           >
             <hr
@@ -40,8 +40,8 @@ const StepsTabComponent = ({
                 (currentTab == tabs[1].id && tab.id == tabs[0].id) ||
                 (currentTab == tabs[2].id &&
                   (tab.id == tabs[0].id || tab.id == tabs[1].id))
-                  ? 'bg-primary'
-                  : 'bg-gray-200'
+                  ? "bg-primary"
+                  : "bg-gray-200"
               }`}
             />
             <div

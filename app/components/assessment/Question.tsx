@@ -1,10 +1,14 @@
-import { useLoaderData } from '@remix-run/react'
-import { useEffect, useState } from 'react'
-import { QuestionTypes } from '~/interface/Interface'
-import Checkbox from '../form/CheckBox'
-import CandidateQuestionHeader from './CandidateQuestionHeader'
-import CandidateQuestionFooter from './CandidateQuestionFooter'
-import CandidateQuestionStepper from './CandidateQuestionStepper'
+import { useEffect, useState } from "react"
+
+import { useLoaderData } from "@remix-run/react"
+
+import Checkbox from "../form/CheckBox"
+
+import CandidateQuestionFooter from "./CandidateQuestionFooter"
+import CandidateQuestionHeader from "./CandidateQuestionHeader"
+import CandidateQuestionStepper from "./CandidateQuestionStepper"
+
+import { QuestionTypes } from "~/interface/Interface"
 
 const Question = () => {
   const { question } = useLoaderData()
@@ -31,17 +35,17 @@ const Question = () => {
     document.onkeydown = (e) => {
       // Disable F12, Ctrl + Shift + I, Ctrl + Shift + J, Ctrl + U
       if (
-        e.code === 'F12' ||
-        ctrlShiftKey(e, 'KeyI') ||
-        ctrlShiftKey(e, 'KeyJ') ||
-        ctrlShiftKey(e, 'KeyC') ||
-        ctrlShiftKey(e, 'KeyK')
+        e.code === "F12" ||
+        ctrlShiftKey(e, "KeyI") ||
+        ctrlShiftKey(e, "KeyJ") ||
+        ctrlShiftKey(e, "KeyC") ||
+        ctrlShiftKey(e, "KeyK")
       )
         return false
     }
-    document.addEventListener('contextmenu', handleContextmenu)
+    document.addEventListener("contextmenu", handleContextmenu)
     return function cleanup() {
-      document.removeEventListener('contextmenu', handleContextmenu)
+      document.removeEventListener("contextmenu", handleContextmenu)
     }
   }, [])
 
@@ -135,8 +139,8 @@ const Question = () => {
                         key={option.id}
                         className={`flex cursor-pointer items-start gap-4 border-b px-5 ${
                           option.id === userAnswer
-                            ? 'bg-blue-50'
-                            : 'hover:bg-gray-100'
+                            ? "bg-blue-50"
+                            : "hover:bg-gray-100"
                         }`}
                       >
                         {questionType === QuestionTypes.singleChoice ? (

@@ -1,8 +1,11 @@
-import { useEffect, useState } from 'react'
-import AddMemberModal from './AddMemberModal'
-import { useLoaderData } from '@remix-run/react'
-import Button from '../common-components/Button'
-import { useTranslation } from 'react-i18next'
+import { useEffect, useState } from "react"
+
+import { useLoaderData } from "@remix-run/react"
+import { useTranslation } from "react-i18next"
+
+import Button from "../common-components/Button"
+
+import AddMemberModal from "./AddMemberModal"
 
 export default function MembersHeader({
   actionStatus,
@@ -23,7 +26,7 @@ export default function MembersHeader({
     }
   }, [actionStatus, setActionStatus])
   useEffect(() => {
-    const heading = document.getElementById('members-heading')
+    const heading = document.getElementById("members-heading")
     heading?.focus()
   }, [])
   return (
@@ -32,11 +35,11 @@ export default function MembersHeader({
         <h1
           tabIndex={0}
           id="members-heading"
-          role={t('members.members')}
-          aria-label={t('members.members')}
+          role={t("members.members")}
+          aria-label={t("members.members")}
           className="membersHeading text-3xl font-bold"
         >
-          {t('members.members')}
+          {t("members.members")}
         </h1>
         <Button
           tabIndex={0}
@@ -44,8 +47,8 @@ export default function MembersHeader({
           className="h-9 px-4"
           onClick={() => setOpen(!open)}
           variant="primary-solid"
-          title={t('members.inviteMember')}
-          buttonText={t('members.inviteMember')}
+          title={t("members.inviteMember")}
+          buttonText={t("members.inviteMember")}
         />
       </div>
       <AddMemberModal

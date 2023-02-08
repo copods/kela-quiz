@@ -1,7 +1,10 @@
-import type { Question, User } from '@prisma/client'
-import { env } from 'process'
-import { prisma } from '~/db.server'
-import { sendTestInviteMail } from './sendgrid.servers'
+import { env } from "process"
+
+import type { Question, User } from "@prisma/client"
+
+import { sendTestInviteMail } from "./sendgrid.servers"
+
+import { prisma } from "~/db.server"
 
 // inviting candidate
 const candidateTestLink = `${env.PUBLIC_URL}/assessment/`
@@ -27,7 +30,7 @@ export async function createIndividualCandidate({
     }
     return user
   } catch (error) {
-    throw new Error('candidateExamConstants.candidateCreateError')
+    throw new Error("candidateExamConstants.candidateCreateError")
   }
 }
 
@@ -48,7 +51,7 @@ export async function createCandidateTest({
     })
     return candidateTest
   } catch (error) {
-    throw new Error('candidateExamConstants.candidateTestCreateError')
+    throw new Error("candidateExamConstants.candidateTestCreateError")
   }
 }
 
@@ -70,7 +73,7 @@ export async function updateTestLink({
     })
     return candidateTest
   } catch (error) {
-    throw new Error('Error updating test link..!')
+    throw new Error("Error updating test link..!")
   }
 }
 
@@ -104,9 +107,9 @@ export async function createSectionInTest({
         },
       })
     }
-    return 'done'
+    return "done"
   } catch (error) {
-    throw new Error('Error creating section in test ..')
+    throw new Error("Error creating section in test ..")
   }
 }
 
@@ -127,7 +130,7 @@ async function createCandidateData({
   testId,
 }: {
   email: string
-  createdById: User['id']
+  createdById: User["id"]
   testId: string
 }) {
   const user = await createIndividualCandidate({ email, createdById })
@@ -185,12 +188,12 @@ export async function resendTestLink({
         },
       })
       await sendMailToCandidate(candidate?.email as string, candidateLink)
-      return 'created'
+      return "created"
     } else {
-      return 'End Test'
+      return "End Test"
     }
   } catch (error) {
-    return 'error'
+    return "error"
   }
 }
 
@@ -200,7 +203,7 @@ export async function createCandidate({
   testId,
 }: {
   emails: Array<string>
-  createdById: User['id']
+  createdById: User["id"]
   testId: string
 }) {
   try {
@@ -232,8 +235,8 @@ export async function createCandidate({
         })
       }
     }
-    return { created: 'created', emailCount, neverInvitedCount }
+    return { created: "created", emailCount, neverInvitedCount }
   } catch (error) {
-    return 'error'
+    return "error"
   }
 }
