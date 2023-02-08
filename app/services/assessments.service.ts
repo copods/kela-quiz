@@ -21,13 +21,14 @@ export type ActionData = {
   }
 }
 
-/* fetching all Assessments
+/**
  * @param sortBy
  * @param sortOrder
  * @param currentWorkspaceId
  * @param testsItemsPerPage
  * @param testsCurrentPage
  * @param cb
+ * @returns all Assessments data
  */
 export const getAllAssessments = (
   sortBy: string,
@@ -52,8 +53,9 @@ export const getAllAssessments = (
     })
 }
 
-/* function for deleting the assessment by id
+/** function for deleting the assessment by id
  * @param id
+ * @returns this function will delete the assessment by id
  */
 
 export const deleteAssessmentById = async (id: string) => {
@@ -73,10 +75,11 @@ export const deleteAssessmentById = async (id: string) => {
   return deletedHandle
 }
 
-//* function for creating the candidate
+/**  function for creating the candidate
 /* @param emails
  * @param  createdById
  * @param testId
+ * @returns create candidate
  */
 export const createCandidateByAssessId = async (
   emails: Array<string>,
@@ -90,25 +93,30 @@ export const createCandidateByAssessId = async (
   })
 }
 
-//* function for fetching number of count of total assessments
-//* @param currentWorkspaceId
+/** 
+ *@param currentWorkspaceId
+ @returns number of count of total assessments
+ */
 export const getAllAssessmentsCount = async (currentWorkspaceId: string) => {
   return await getAllTestsCount(currentWorkspaceId)
 }
 
-//* fetching workspace by userId
-//* @param userId
+/**
+ * @param userId
+ * @returns workspace by userId
+ */
 export const getWorkspaces = async (userId: string) => {
   return await getUserWorkspaces(userId)
 }
 
-// this function will return userId
-//* @param request
+/**
+ * @param request
+ * @returns this function will return userId
+ */
 export const getRequiredUserId = async (request: Request) => {
   return await requireUserId(request)
 }
 
-//* @param request
 export const getUsersId = async (request: Request) => {
   return await getUserId(request)
 }
