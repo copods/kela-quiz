@@ -1,39 +1,39 @@
-import { useEffect, useState } from 'react'
-import SortFilter from '../common-components/SortFilter'
+import { useEffect, useState } from "react"
+import SortFilter from "../common-components/SortFilter"
 
-import { Link, useLoaderData, useNavigate, useLocation } from '@remix-run/react'
+import { Link, useLoaderData, useNavigate, useLocation } from "@remix-run/react"
 import type {
   CandidateTest,
   tableColumnType,
   OtherFilters,
   Test,
-} from '~/interface/Interface'
-import { sortByOrder } from '~/interface/Interface'
-import { useTranslation } from 'react-i18next'
-import EmptyStateComponent from '../common-components/EmptyStateComponent'
-import Table from '../common-components/TableComponent'
+} from "~/interface/Interface"
+import { sortByOrder } from "~/interface/Interface"
+import { useTranslation } from "react-i18next"
+import EmptyStateComponent from "../common-components/EmptyStateComponent"
+import Table from "../common-components/TableComponent"
 const sortByDetails = [
   {
-    name: 'Name',
-    value: 'name',
+    name: "Name",
+    value: "name",
   },
   {
-    name: 'Created Date',
-    value: 'createdAt',
+    name: "Created Date",
+    value: "createdAt",
   },
 ]
 const filterByStatus = [
   {
-    name: 'All',
-    value: 'all',
+    name: "All",
+    value: "all",
   },
   {
-    name: 'Active',
-    value: 'active',
+    name: "Active",
+    value: "active",
   },
   {
-    name: 'Inactive',
-    value: 'inactive',
+    name: "Inactive",
+    value: "inactive",
   },
 ]
 const GroupByTests = () => {
@@ -65,7 +65,7 @@ const GroupByTests = () => {
   )
 
   useEffect(() => {
-    const heading = document.getElementById('heading')
+    const heading = document.getElementById("heading")
     heading?.focus()
   }, [])
 
@@ -99,41 +99,41 @@ const GroupByTests = () => {
     return (
       <div
         className={`${
-          data.deleted ? 'text-yellow-500' : 'text-green-500'
+          data.deleted ? "text-yellow-500" : "text-green-500"
         } col-span-1 text-base`}
       >
         {data.deleted
-          ? t('resultConstants.inactive')
-          : t('resultConstants.active')}
+          ? t("resultConstants.inactive")
+          : t("resultConstants.active")}
       </div>
     )
   }
   const otherFilters: OtherFilters[] = [
     {
-      id: 'filterByStatus',
+      id: "filterByStatus",
       data: filterByStatus,
-      displayKey: 'name',
-      valueKey: 'value',
+      displayKey: "name",
+      valueKey: "value",
       value: statusFilter,
       setValue: setStatusFilter,
     },
   ]
 
   const resultsColumn: tableColumnType[] = [
-    { title: 'Sr.No', field: 'sr_no', render: SrNoDataCell, width: '12%' },
+    { title: "Sr.No", field: "sr_no", render: SrNoDataCell, width: "12%" },
     {
-      title: 'Assessment',
-      field: 'name',
+      title: "Assessment",
+      field: "name",
       render: AssessmentDataCell,
-      width: '28%',
+      width: "28%",
     },
-    { title: 'Total Invited', field: 'role', render: TotalInvitedDataCell },
+    { title: "Total Invited", field: "role", render: TotalInvitedDataCell },
     {
-      title: 'Total Attended',
-      field: 'createdAt',
+      title: "Total Attended",
+      field: "createdAt",
       render: TotalAttendedDataCell,
     },
-    { title: 'Status', field: 'action', render: StatusDataCell },
+    { title: "Status", field: "action", render: StatusDataCell },
   ]
   const location = useLocation()
   useEffect(() => {
@@ -170,12 +170,12 @@ const GroupByTests = () => {
       <h1
         tabIndex={0}
         id="heading"
-        title={t('commonConstants.results')}
-        role={t('commonConstants.results')}
-        aria-label={t('commonConstants.results')}
+        title={t("commonConstants.results")}
+        role={t("commonConstants.results")}
+        aria-label={t("commonConstants.results")}
         className="text-3xl font-bold text-gray-900"
       >
-        {t('commonConstants.results')}
+        {t("commonConstants.results")}
       </h1>
       {candidateTestData.totalTestCount ? (
         <div className="flex flex-col gap-6">

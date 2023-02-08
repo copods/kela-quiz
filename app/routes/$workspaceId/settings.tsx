@@ -1,20 +1,20 @@
-import { createUserSession, getUserId } from '~/session.server'
-import type { ActionFunction } from '@remix-run/node'
-import { redirect } from '@remix-run/node'
-import type { LoaderFunction } from '@remix-run/node'
-import { routes } from '~/constants/route.constants'
-import { addWorkspace, getUserWorkspaces } from '~/models/workspace.server'
-import { json } from '@remix-run/node'
-import { actions } from '~/constants/action.constants'
+import { createUserSession, getUserId } from "~/session.server"
+import type { ActionFunction } from "@remix-run/node"
+import { redirect } from "@remix-run/node"
+import type { LoaderFunction } from "@remix-run/node"
+import { routes } from "~/constants/route.constants"
+import { addWorkspace, getUserWorkspaces } from "~/models/workspace.server"
+import { json } from "@remix-run/node"
+import { actions } from "~/constants/action.constants"
 import {
   Outlet,
   useLoaderData,
   useLocation,
   useNavigate,
-} from '@remix-run/react'
-import SettingsTabs from '~/components/settings/SettingTab'
-import { useTranslation } from 'react-i18next'
-import { useEffect } from 'react'
+} from "@remix-run/react"
+import SettingsTabs from "~/components/settings/SettingTab"
+import { useTranslation } from "react-i18next"
+import { useEffect } from "react"
 
 export type LoaderData = {
   workspaces: Awaited<ReturnType<typeof getUserWorkspaces>>
@@ -47,9 +47,9 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
-  const action = formData.get('action')
+  const action = formData.get("action")
   if (action === actions.switchWorkspace) {
-    const workspace = formData.get('workspaceId') as string
+    const workspace = formData.get("workspaceId") as string
     const userId = (await getUserId(request)) as string
     return await createUserSession({
       request,
@@ -61,13 +61,13 @@ export const action: ActionFunction = async ({ request }) => {
   }
   if (action === actions.addWorkspace) {
     let addHandle = {}
-    const workspaceName = formData.get('workspaceName') as string
+    const workspaceName = formData.get("workspaceName") as string
     const userId = (await getUserId(request)) as string
-    if (typeof workspaceName !== 'string' || workspaceName.length === 0) {
+    if (typeof workspaceName !== "string" || workspaceName.length === 0) {
       return json<ActionData>(
         {
           errors: {
-            title: 'toastConstants.workspaceNameIsRequired',
+            title: "toastConstants.workspaceNameIsRequired",
             status: 400,
           },
         },
@@ -79,7 +79,7 @@ export const action: ActionFunction = async ({ request }) => {
         addHandle = json<ActionData>(
           {
             resp: {
-              title: 'toastConstants.workspaceAdded',
+              title: "toastConstants.workspaceAdded",
               status: 200,
               workspaceId: res.workspaceId,
             },
@@ -88,7 +88,7 @@ export const action: ActionFunction = async ({ request }) => {
         )
       })
       .catch((err) => {
-        let title = 'toastConstants.duplicateWorkspace'
+        let title = "toastConstants.duplicateWorkspace"
         addHandle = json<ActionData>(
           {
             errors: {
@@ -111,10 +111,10 @@ export default function Settings() {
   const { currentWorkspaceId } = useLoaderData()
 
   useEffect(() => {
-    if (location.pathname === '/settings') return navigate('/settings/general')
+    if (location.pathname === "/settings") return navigate("/settings/general")
   }, [navigate, location.pathname])
   useEffect(() => {
-    const heading = document.getElementById('settings-heading')
+    const heading = document.getElementById("settings-heading")
     heading?.focus()
   }, [])
   return (
@@ -123,11 +123,11 @@ export default function Settings() {
         <h1
           id="settings-heading"
           tabIndex={0}
-          role={t('commonConstants.settings')}
-          aria-label={t('commonConstants.settings')}
+          role={t("commonConstants.settings")}
+          aria-label={t("commonConstants.settings")}
           className="text-3xl font-bold"
         >
-          {t('commonConstants.settings')}
+          {t("commonConstants.settings")}
         </h1>
       </div>
       <SettingsTabs currentWorkspaceId={currentWorkspaceId} />

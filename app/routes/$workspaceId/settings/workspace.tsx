@@ -1,17 +1,17 @@
-import Workspace from '~/components/settings/Workspace'
-import type { LoaderFunction, ActionFunction } from '@remix-run/node'
-import { json } from '@remix-run/node'
-import { getUserId } from '~/session.server'
+import Workspace from "~/components/settings/Workspace"
+import type { LoaderFunction, ActionFunction } from "@remix-run/node"
+import { json } from "@remix-run/node"
+import { getUserId } from "~/session.server"
 import {
   getCurrentWorkspaceOwner,
   getOwnersWorkspaces,
   leaveWorkspace,
-} from '~/models/workspace.server'
-import { useActionData, useLoaderData, useNavigate } from '@remix-run/react'
-import { useEffect } from 'react'
-import { toast } from 'react-toastify'
-import { t } from 'i18next'
-import { routes } from '../../../constants/route.constants'
+} from "~/models/workspace.server"
+import { useActionData, useLoaderData, useNavigate } from "@remix-run/react"
+import { useEffect } from "react"
+import { toast } from "react-toastify"
+import { t } from "i18next"
+import { routes } from "../../../constants/route.constants"
 interface LoaderData {
   workspaceOwner: Awaited<ReturnType<typeof getCurrentWorkspaceOwner>>
   ownersWorkspaces: Awaited<ReturnType<typeof getOwnersWorkspaces>>
@@ -47,7 +47,7 @@ export const action: ActionFunction = async ({ request, params }) => {
       return json<ActionData>(
         {
           resp: {
-            title: 'members.workspaceLeft',
+            title: "members.workspaceLeft",
             status: 200,
           },
         },
@@ -55,7 +55,7 @@ export const action: ActionFunction = async ({ request, params }) => {
       )
     })
     .catch((err) => {
-      let title = 'statusCheck.commonError'
+      let title = "statusCheck.commonError"
       return json<ActionData>(
         {
           errors: {

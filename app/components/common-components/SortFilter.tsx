@@ -1,8 +1,8 @@
-import { Icon } from '@iconify/react'
-import DropdownField from './Dropdown'
-import type { OtherFilters } from '~/interface/Interface'
-import { sortByOrder } from '~/interface/Interface'
-import { useTranslation } from 'react-i18next'
+import { Icon } from "@iconify/react"
+import DropdownField from "./Dropdown"
+import type { OtherFilters } from "~/interface/Interface"
+import { sortByOrder } from "~/interface/Interface"
+import { useTranslation } from "react-i18next"
 
 const SortFilter = ({
   filterData,
@@ -28,17 +28,17 @@ const SortFilter = ({
   return (
     <div className="flex items-center gap-4" id="sort-filter">
       <div className="flex items-center gap-2.5" id="sort-filter-body">
-        <span title={t('sectionsConstants.sort')}>
+        <span title={t("sectionsConstants.sort")}>
           {sortDirection === sortByOrder.ascending ? (
             <Icon
               tabIndex={0}
               id="ascend"
               icon="ph:sort-ascending-bold"
               onKeyUp={(e) => {
-                if (e.key === 'Enter') onSortDirectionChange(sortByOrder.desc)
+                if (e.key === "Enter") onSortDirectionChange(sortByOrder.desc)
               }}
               onClick={() => onSortDirectionChange(sortByOrder.desc)}
-              aria-label={t('commonConstants.sortAscending')}
+              aria-label={t("commonConstants.sortAscending")}
               className="bg-light-200 cursor-pointer text-2xl focus:outline-dotted focus:outline-2"
             />
           ) : (
@@ -47,11 +47,11 @@ const SortFilter = ({
               id="descend"
               icon="ph:sort-descending-bold"
               onKeyUp={(e) => {
-                if (e.key === 'Enter')
+                if (e.key === "Enter")
                   onSortDirectionChange(sortByOrder.ascending)
               }}
               onClick={() => onSortDirectionChange(sortByOrder.ascending)}
-              aria-label={t('commonConstants.sortDescending')}
+              aria-label={t("commonConstants.sortDescending")}
               className="cursor-pointer text-2xl focus:outline-dotted focus:outline-2"
             />
           )}
@@ -60,8 +60,8 @@ const SortFilter = ({
           <div className="w-48">
             <DropdownField
               data={filterData}
-              displayKey={'name'}
-              valueKey={'value'}
+              displayKey={"name"}
+              valueKey={"value"}
               value={sortBy}
               setValue={onSortChange}
             />
@@ -84,12 +84,12 @@ const SortFilter = ({
       </div>
       <span
         tabIndex={0}
-        role={'banner'}
+        role={"banner"}
         className="flex items-center text-sm text-gray-600"
         id="total-items-value"
       >
         <span className="w-max">
-          {t('componentGlobalConstants.totalCounts')}:
+          {t("componentGlobalConstants.totalCounts")}:
           <span id="total-count-value" className="pl-1">
             {totalItems}
           </span>
@@ -98,7 +98,7 @@ const SortFilter = ({
           <>
             <Icon icon="ci:line-m" />
             <span className="pl-3 ">
-              {t('componentGlobalConstants.selected')}: 0/
+              {t("componentGlobalConstants.selected")}: 0/
               {totalItems}
             </span>
           </>

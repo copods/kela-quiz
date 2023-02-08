@@ -1,12 +1,12 @@
-import type { ActionFunction, LoaderFunction } from '@remix-run/server-runtime'
-import { redirect } from '@remix-run/server-runtime'
-import Cooldown from '~/components/assessment/Cooldown'
+import type { ActionFunction, LoaderFunction } from "@remix-run/server-runtime"
+import { redirect } from "@remix-run/server-runtime"
+import Cooldown from "~/components/assessment/Cooldown"
 import {
   candidateTest,
   getSectionInCandidateTest,
   getSectionInTest,
   startCandidateSection,
-} from '~/utils/assessment.utils'
+} from "~/utils/assessment.utils"
 
 export const loader: LoaderFunction = async ({ params, request }) => {
   const section = await getSectionInTest(params.sectionId as string)
@@ -27,7 +27,7 @@ export const loader: LoaderFunction = async ({ params, request }) => {
 
 export const action: ActionFunction = async ({ request, params }) => {
   const formData = await request.formData()
-  const candidateSectionId = formData.get('candidateSectionId')
+  const candidateSectionId = formData.get("candidateSectionId")
   const started = await startCandidateSection(candidateSectionId as string)
 
   return redirect(

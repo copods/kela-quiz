@@ -1,20 +1,20 @@
-import { Icon } from '@iconify/react'
-import { useState } from 'react'
-import BreadCrumb from '../../common-components/BreadCrumb'
-import QuestionEditor from './QuestionEditor'
-import OptionForQuestion from './OptionForQuestion'
-import cuid from 'cuid'
+import { Icon } from "@iconify/react"
+import { useState } from "react"
+import BreadCrumb from "../../common-components/BreadCrumb"
+import QuestionEditor from "./QuestionEditor"
+import OptionForQuestion from "./OptionForQuestion"
+import cuid from "cuid"
 import {
   useLoaderData,
   useNavigate,
   useSubmit,
   useTransition,
-} from '@remix-run/react'
-import { toast } from 'react-toastify'
-import Button from '~/components/common-components/Button'
-import { routes } from '~/constants/route.constants'
-import { QuestionTypes, sortByOrder } from '~/interface/Interface'
-import { useTranslation } from 'react-i18next'
+} from "@remix-run/react"
+import { toast } from "react-toastify"
+import Button from "~/components/common-components/Button"
+import { routes } from "~/constants/route.constants"
+import { QuestionTypes, sortByOrder } from "~/interface/Interface"
+import { useTranslation } from "react-i18next"
 
 const AddQuestionInSection = () => {
   const { t } = useTranslation()
@@ -27,26 +27,26 @@ const AddQuestionInSection = () => {
       }
     }
   })
-  const [question, setQuestion] = useState('')
-  const [singleChoiceAnswer, setSingleChoiceAnswer] = useState('')
+  const [question, setQuestion] = useState("")
+  const [singleChoiceAnswer, setSingleChoiceAnswer] = useState("")
   const [options, setOptions] = useState([
     {
-      option: '',
+      option: "",
       isCorrect: false,
       id: cuid(),
     },
     {
-      option: '',
+      option: "",
       isCorrect: false,
       id: cuid(),
     },
     {
-      option: '',
+      option: "",
       isCorrect: false,
       id: cuid(),
     },
     {
-      option: '',
+      option: "",
       isCorrect: false,
       id: cuid(),
     },
@@ -54,7 +54,7 @@ const AddQuestionInSection = () => {
   const [textCorrectAnswer, setTextCorrectAnswer] = useState([
     {
       id: cuid(),
-      answer: '',
+      answer: "",
     },
   ])
   const [checkOrder, setCheckOrder] = useState(false)
@@ -64,16 +64,16 @@ const AddQuestionInSection = () => {
   const [answerCount, setAnswerCount] = useState(0)
   const breadCrumbArray = [
     {
-      tabName: 'testsConstants.testText',
+      tabName: "testsConstants.testText",
       route: `/${currentWorkspaceId}${routes.tests}`,
     },
     {
-      tabName: 'addQuestion.addQuestion',
+      tabName: "addQuestion.addQuestion",
       route: `/${currentWorkspaceId}${routes.tests}/${sectionDetails?.id}${routes.addQuestion}`,
     },
   ]
   const getQuestionType = (id: string) => {
-    let quesValue = ''
+    let quesValue = ""
     for (let quesType of questionTypes) {
       if (quesType.id == id) {
         quesValue = quesType?.value as string
@@ -84,8 +84,8 @@ const AddQuestionInSection = () => {
 
   const saveQuestion = (addMoreQuestion: boolean) => {
     if (!question.length) {
-      toast.error(t('addQuestion.enterTheQuestion'), {
-        toastId: 'questionRequired',
+      toast.error(t("addQuestion.enterTheQuestion"), {
+        toastId: "questionRequired",
       })
       return
     }
@@ -102,16 +102,16 @@ const AddQuestionInSection = () => {
         }
       }
       if (optionCount < 2) {
-        toast.error(t('addQuestion.mimimumTwoOptionsRequired'), {
-          toastId: 'optionsRequired',
+        toast.error(t("addQuestion.mimimumTwoOptionsRequired"), {
+          toastId: "optionsRequired",
         })
         return
       }
       let flag = 0
       for (let option of options) {
         if (option.isCorrect && !option.option) {
-          toast.error(t('statusCheck.selectCorrOption'), {
-            toastId: 'correctOptionRequired',
+          toast.error(t("statusCheck.selectCorrOption"), {
+            toastId: "correctOptionRequired",
           })
           return
         }
@@ -123,8 +123,8 @@ const AddQuestionInSection = () => {
         flag === 0 &&
         getQuestionType(selectedTypeOfQuestion) === QuestionTypes.multipleChoice
       ) {
-        toast.error(t('statusCheck.selectCorrOption'), {
-          toastId: 'correctOptionRequired',
+        toast.error(t("statusCheck.selectCorrOption"), {
+          toastId: "correctOptionRequired",
         })
         return
       }
@@ -134,8 +134,8 @@ const AddQuestionInSection = () => {
           QuestionTypes.singleChoice &&
         !singleChoiceAnswer
       ) {
-        toast.error(t('statusCheck.selectCorrOption'), {
-          toastId: 'correctOptionsRequired',
+        toast.error(t("statusCheck.selectCorrOption"), {
+          toastId: "correctOptionsRequired",
         })
         return
       }
@@ -144,7 +144,7 @@ const AddQuestionInSection = () => {
     if (getQuestionType(selectedTypeOfQuestion) === QuestionTypes.text) {
       for (let answer of textCorrectAnswer) {
         if (answer.answer.length === 0) {
-          toast.error('Enter all the Options', { toastId: 'optionsRequired' })
+          toast.error("Enter all the Options", { toastId: "optionsRequired" })
           return
         }
       }
@@ -219,7 +219,7 @@ const AddQuestionInSection = () => {
         testQuestion.correctAnswer.push(optionForQuestion)
       })
     }
-    submit({ quesData: JSON.stringify(testQuestion) }, { method: 'post' })
+    submit({ quesData: JSON.stringify(testQuestion) }, { method: "post" })
   }
   return (
     <div className="flex h-full flex-col gap-6">
@@ -232,7 +232,7 @@ const AddQuestionInSection = () => {
           tabIndex={0}
           className="inline-block text-3xl font-bold text-gray-900"
         >
-          {sectionDetails?.name} - {t('addQuestion.addQuestion')}
+          {sectionDetails?.name} - {t("addQuestion.addQuestion")}
         </h1>
       </div>
       <div className="flex h-40 flex-1 flex-row gap-6">
@@ -268,13 +268,13 @@ const AddQuestionInSection = () => {
                 `/${currentWorkspaceId}${routes.tests}/${sectionDetails?.id}`
               )
             }
-            isDisabled={transition.state === 'submitting'}
+            isDisabled={transition.state === "submitting"}
             className="h-9 px-5"
             title={
-              transition.state === 'submitting' ? 'Canceling...' : 'Cancel'
+              transition.state === "submitting" ? "Canceling..." : "Cancel"
             }
             buttonText={
-              transition.state === 'submitting' ? 'Canceling...' : 'Cancel'
+              transition.state === "submitting" ? "Canceling..." : "Cancel"
             }
             variant="secondary-solid"
           />
@@ -283,7 +283,7 @@ const AddQuestionInSection = () => {
           <Button
             tabIndex={0}
             id="save-and-exit"
-            isDisabled={transition.state === 'submitting'}
+            isDisabled={transition.state === "submitting"}
             className="h-9 px-5"
             onClick={() => saveQuestion(false)}
             variant="primary-solid"
@@ -291,8 +291,8 @@ const AddQuestionInSection = () => {
             buttonText={
               <>
                 <Icon icon="ic:round-save" className="mr-1" />
-                {transition.state === 'submitting'
-                  ? 'Saving...'
+                {transition.state === "submitting"
+                  ? "Saving..."
                   : sortByOrder.saveAndExit}
               </>
             }
@@ -300,7 +300,7 @@ const AddQuestionInSection = () => {
           <Button
             tabIndex={0}
             id="save-and-add-more"
-            isDisabled={transition.state === 'submitting'}
+            isDisabled={transition.state === "submitting"}
             className="h-9 px-5"
             onClick={() => saveQuestion(true)}
             variant="primary-solid"
@@ -308,7 +308,7 @@ const AddQuestionInSection = () => {
             buttonText={
               <>
                 <Icon icon="ic:round-save" className="mr-1" />
-                {transition.state === 'submitting'
+                {transition.state === "submitting"
                   ? sortByOrder.saving
                   : sortByOrder.saveAndAddMore}
               </>

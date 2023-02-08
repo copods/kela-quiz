@@ -1,9 +1,9 @@
-import { Icon } from '@iconify/react'
-import Moment from 'moment'
-import { toast } from 'react-toastify'
-import type { TestSection } from '~/interface/Interface'
-import Button from '../common-components/Button'
-import { useTranslation } from 'react-i18next'
+import { Icon } from "@iconify/react"
+import Moment from "moment"
+import { toast } from "react-toastify"
+import type { TestSection } from "~/interface/Interface"
+import Button from "../common-components/Button"
+import { useTranslation } from "react-i18next"
 
 const SelectSectionCard = ({
   section,
@@ -22,7 +22,7 @@ const SelectSectionCard = ({
     selected?: boolean
   ) => {
     if (questionCount === 0) {
-      toast.error(t('toastConstants.cannotAddTestZeroQuestion'))
+      toast.error(t("toastConstants.cannotAddTestZeroQuestion"))
       return
     }
     let tempSection = {
@@ -39,24 +39,24 @@ const SelectSectionCard = ({
         : 10,
     }
     switch (target) {
-      case 'isSelected':
+      case "isSelected":
         tempSection.isSelected = selected
         break
-      case 'totalQuestions':
-        if (parseInt(value || '') > (questionCount || 0)) {
-          toast.error(t('toastConstants.notAdMoreThanAvailableQuestion'), {
-            toastId: t('toastConstants.notAdMoreThanAvailableQuestion'),
+      case "totalQuestions":
+        if (parseInt(value || "") > (questionCount || 0)) {
+          toast.error(t("toastConstants.notAdMoreThanAvailableQuestion"), {
+            toastId: t("toastConstants.notAdMoreThanAvailableQuestion"),
           })
           return
         }
-        if (parseInt(value || '') == 0) {
-          toast.error(t('toastConstants.cannotAddTestZeroQuestion'))
+        if (parseInt(value || "") == 0) {
+          toast.error(t("toastConstants.cannotAddTestZeroQuestion"))
           return
         }
-        tempSection.totalQuestions = parseInt(value || '')
+        tempSection.totalQuestions = parseInt(value || "")
         break
-      case 'time':
-        tempSection.time = parseInt(value || '')
+      case "time":
+        tempSection.time = parseInt(value || "")
         break
     }
     updateSection(tempSection)
@@ -66,8 +66,8 @@ const SelectSectionCard = ({
       id="section"
       className={`flex min-w-sectionCard flex-1 flex-col gap-2 rounded-lg border ${
         section.isSelected
-          ? 'border-3 border-primary bg-white px-18 py-22'
-          : 'border-gray-300 bg-gray-100 px-5 py-6'
+          ? "border-3 border-primary bg-white px-18 py-22"
+          : "border-gray-300 bg-gray-100 px-5 py-6"
       }`}
     >
       <div className="flex items-start justify-between">
@@ -83,33 +83,33 @@ const SelectSectionCard = ({
             tabIndex={0}
             className="h-7 px-4"
             variant="secondary-solid"
-            onClick={() => updateThisSection('isSelected', '', false)}
-            title={t('commonConstants.removeButton')}
-            buttonText={t('commonConstants.removeButton')}
+            onClick={() => updateThisSection("isSelected", "", false)}
+            title={t("commonConstants.removeButton")}
+            buttonText={t("commonConstants.removeButton")}
           />
         ) : (
           <Button
             tabIndex={0}
             className="h-7 px-4"
-            onClick={() => updateThisSection('isSelected', '', true)}
+            onClick={() => updateThisSection("isSelected", "", true)}
             variant="primary-solid"
-            title={t('commonConstants.add')}
-            buttonText={t('commonConstants.add')}
+            title={t("commonConstants.add")}
+            buttonText={t("commonConstants.add")}
           />
         )}
       </div>
       <div className="flex text-xs text-gray-400">
         <span>
-          {t('commonConstants.byText')} {section?.createdBy?.firstName}{' '}
+          {t("commonConstants.byText")} {section?.createdBy?.firstName}{" "}
           {section?.createdBy?.lastName}
         </span>
         <span className="flex">
-          <Icon className="text-base" icon={'mdi:circle-small'} />
-          {Moment(section?.createdAt).format('DD MMM YY')}
+          <Icon className="text-base" icon={"mdi:circle-small"} />
+          {Moment(section?.createdAt).format("DD MMM YY")}
         </span>
       </div>
       <div className="flex text-xs text-gray-400">
-        {t('testsConstants.totalQuestionsText')}:{' '}
+        {t("testsConstants.totalQuestionsText")}:{" "}
         <span className="count">{questionCount}</span>
       </div>
       <hr className="h-px w-full border-0 bg-gray-300" />
@@ -119,7 +119,7 @@ const SelectSectionCard = ({
             htmlFor="noOfQuestion"
             className="text-xs font-medium text-gray-600"
           >
-            {t('testsConstants.totalQuestionsText')}
+            {t("testsConstants.totalQuestionsText")}
           </label>
           <input
             tabIndex={0}
@@ -128,12 +128,12 @@ const SelectSectionCard = ({
             name="noOfQuestion"
             value={section.totalQuestions}
             onChange={(e) =>
-              updateThisSection('totalQuestions', e.target.value)
+              updateThisSection("totalQuestions", e.target.value)
             }
             className={`mt-1 h-11 w-full rounded-lg border border-gray-300 px-3 text-xs ${
-              section.isSelected ? 'bg-white' : 'bg-gray-200'
+              section.isSelected ? "bg-white" : "bg-gray-200"
             }`}
-            placeholder={t('commonConstants.totalQuestion')}
+            placeholder={t("commonConstants.totalQuestion")}
             disabled={!section.isSelected}
           />
         </div>
@@ -142,7 +142,7 @@ const SelectSectionCard = ({
             htmlFor="totalTime"
             className="text-xs font-medium text-gray-600"
           >
-            {t('testsConstants.totalTimeText')}
+            {t("testsConstants.totalTimeText")}
           </label>
           <input
             tabIndex={0}
@@ -152,10 +152,10 @@ const SelectSectionCard = ({
             name="totalTime"
             value={section.time}
             onChange={(e) => {
-              updateThisSection('time', e.target.value)
+              updateThisSection("time", e.target.value)
             }}
             className={`mt-1 h-11 w-full rounded-lg border border-gray-300 px-3 text-xs ${
-              section.isSelected ? 'bg-white' : 'bg-gray-200'
+              section.isSelected ? "bg-white" : "bg-gray-200"
             }`}
             placeholder="Time(min)"
             disabled={!section.isSelected}

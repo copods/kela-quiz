@@ -1,17 +1,17 @@
-import React, { useState } from 'react'
-import { Form, useTransition } from '@remix-run/react'
-import Button from '~/components/common-components/Button'
-import InputField from '~/components/common-components/InputField'
-import { useTranslation } from 'react-i18next'
+import React, { useState } from "react"
+import { Form, useTransition } from "@remix-run/react"
+import Button from "~/components/common-components/Button"
+import InputField from "~/components/common-components/InputField"
+import { useTranslation } from "react-i18next"
 
 function CandidateRegister() {
   const { t } = useTranslation()
 
-  const [firstName, setFirstName] = useState('')
-  const [lastName, setLastName] = useState('')
+  const [firstName, setFirstName] = useState("")
+  const [lastName, setLastName] = useState("")
 
   const { state } = useTransition()
-  const busy = state === 'submitting'
+  const busy = state === "submitting"
 
   const canSubmitBtnBeEnabled = () => {
     return firstName.length > 0 && lastName.length > 0
@@ -19,25 +19,25 @@ function CandidateRegister() {
 
   const inputFieldsProps = [
     {
-      label: 'First Name',
-      placeholder: 'Enter first name',
-      type: 'text',
-      name: 'firstName',
+      label: "First Name",
+      placeholder: "Enter first name",
+      type: "text",
+      name: "firstName",
       required: true,
       value: firstName,
-      errorId: 'name-error',
+      errorId: "name-error",
       onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
         setFirstName(event?.target.value)
       },
     },
     {
-      label: 'Last Name',
-      placeholder: 'Enter last name',
-      type: 'text',
-      name: 'lastName',
+      label: "Last Name",
+      placeholder: "Enter last name",
+      type: "text",
+      name: "lastName",
       required: true,
       value: lastName,
-      errorId: 'name-error',
+      errorId: "name-error",
       onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
         setLastName(event?.target.value)
       },
@@ -54,8 +54,8 @@ function CandidateRegister() {
             })}
           </div>
           <Button
-            title={t('commonConstants.submit')}
-            buttonText={busy ? 'Processing...' : t('commonConstants.submit')}
+            title={t("commonConstants.submit")}
+            buttonText={busy ? "Processing..." : t("commonConstants.submit")}
             type="submit"
             className="h-12 w-full text-base"
             isDisabled={!canSubmitBtnBeEnabled() || busy}

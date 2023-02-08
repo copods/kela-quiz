@@ -1,6 +1,6 @@
-import type { SectionInTest } from '~/interface/Interface'
-import { Menu, Transition } from '@headlessui/react'
-import { Fragment, useRef, useState } from 'react'
+import type { SectionInTest } from "~/interface/Interface"
+import { Menu, Transition } from "@headlessui/react"
+import { Fragment, useRef, useState } from "react"
 const ChipGroup = ({
   sections,
   totalCount,
@@ -53,7 +53,7 @@ const ChipGroup = ({
             <Menu.Items
               id="menu-items"
               className={`sectionMenu absolute top-9 z-40 max-h-52 overflow-auto rounded-2xl bg-white py-4 px-4 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none ${
-                isViewPortVisible ? '' : '-top-1 -translate-y-full transform'
+                isViewPortVisible ? "" : "-top-1 -translate-y-full transform"
               } flex flex-col gap-4 border-gray-300 shadow-2xl`}
             >
               {sections.map((sect) => {

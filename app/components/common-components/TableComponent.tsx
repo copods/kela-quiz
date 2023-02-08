@@ -1,6 +1,6 @@
-import { t } from 'i18next'
-import type { TableType } from '~/interface/Interface'
-import Pagination from './Pagination'
+import { t } from "i18next"
+import type { TableType } from "~/interface/Interface"
+import Pagination from "./Pagination"
 /**
 * Table parameters : 
 * columns-
@@ -121,7 +121,7 @@ const TableDataCell = <T,>({
 const TableEmptyState = () => {
   return (
     <div className="flex justify-center bg-white py-7 text-gray-700">
-      <span>{t('commonConstants.noRowsToShow')}</span>
+      <span>{t("commonConstants.noRowsToShow")}</span>
     </div>
   )
 }
@@ -139,12 +139,12 @@ const Table = <T extends object>({
     return null
   }
   return (
-    <div style={{ maxHeight: 'inherit' }}>
+    <div style={{ maxHeight: "inherit" }}>
       <div
         id="table"
-        style={{ maxHeight: 'inherit' }}
+        style={{ maxHeight: "inherit" }}
         className={`border-t border-r border-l shadow ${
-          paginationEnabled ? 'rounded-t-2xl' : 'rounded-2xl'
+          paginationEnabled ? "rounded-t-2xl" : "rounded-2xl"
         }`}
       >
         <div id="table-head-row" className="flex bg-gray-100">

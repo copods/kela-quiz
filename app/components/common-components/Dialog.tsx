@@ -1,8 +1,8 @@
-import { Dialog, Transition } from '@headlessui/react'
-import { Icon } from '@iconify/react'
+import { Dialog, Transition } from "@headlessui/react"
+import { Icon } from "@iconify/react"
 
-import { Fragment } from 'react'
-import type { DialogWrapperProps } from '~/interface/Interface'
+import { Fragment } from "react"
+import type { DialogWrapperProps } from "~/interface/Interface"
 
 const DialogWrapper = ({
   open,
@@ -57,9 +57,9 @@ const DialogWrapper = ({
                       tabIndex={0}
                       id="dialog-close-icon"
                       className="cursor-pointer text-2xl text-gray-600"
-                      icon={'carbon:close'}
+                      icon={"carbon:close"}
                       onKeyUp={(e) => {
-                        if (e.key === 'Enter') setOpen(false)
+                        if (e.key === "Enter") setOpen(false)
                       }}
                       onClick={() => setOpen(false)}
                     />

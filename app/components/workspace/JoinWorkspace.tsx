@@ -1,10 +1,10 @@
-import { useNavigate } from '@remix-run/react'
-import { useTranslation } from 'react-i18next'
-import Button from '../common-components/Button'
-import logo from '../../../public/assets/member-invitation.svg'
-import { useLoaderData } from '@remix-run/react'
-import { Form } from '@remix-run/react'
-import { routes } from '~/constants/route.constants'
+import { useNavigate } from "@remix-run/react"
+import { useTranslation } from "react-i18next"
+import Button from "../common-components/Button"
+import logo from "../../../public/assets/member-invitation.svg"
+import { useLoaderData } from "@remix-run/react"
+import { Form } from "@remix-run/react"
+import { routes } from "~/constants/route.constants"
 
 const JoinWorkspace = () => {
   const { t } = useTranslation()
@@ -19,32 +19,32 @@ const JoinWorkspace = () => {
             <div className="flex flex-col items-center justify-center gap-4 text-2xl">
               <span
                 tabIndex={0}
-                role={'rowheader'}
+                role={"rowheader"}
                 aria-label="join workspace heading"
                 className="break-word text-2xl font-bold"
               >
-                {t('members.workspaceInvitation')}
+                {t("members.workspaceInvitation")}
               </span>
-              {workspcaceInvitationData === 'joined' ? (
+              {workspcaceInvitationData === "joined" ? (
                 <span className="text-center text-primary">
-                  {t('members.alreadyJoinedWorkspace')}
+                  {t("members.alreadyJoinedWorkspace")}
                 </span>
               ) : workspcaceInvitationData?.loginWithWrongId ? (
                 <span className="text-center text-base text-gray-500">
-                  {t('members.loggedinFromAnotherAccount')}
+                  {t("members.loggedinFromAnotherAccount")}
                 </span>
               ) : null}
             </div>
             <div className="flex justify-center gap-8">
-              {workspcaceInvitationData === 'joined' ? (
+              {workspcaceInvitationData === "joined" ? (
                 <Button
                   tabIndex={0}
-                  title={t('404.gotoDashboard')}
+                  title={t("404.gotoDashboard")}
                   id="go-to-dashboard"
-                  buttonText={t('404.gotoDashboard')}
+                  buttonText={t("404.gotoDashboard")}
                   name="go-to-workspace"
                   variant="primary-outlined"
-                  value={'reject'}
+                  value={"reject"}
                   className="h-9 px-24"
                   onClick={() =>
                     navigate(
@@ -56,12 +56,12 @@ const JoinWorkspace = () => {
                 <div className="flex gap-8">
                   <Button
                     tabIndex={0}
-                    title={t('404.gotoDashboard')}
+                    title={t("404.gotoDashboard")}
                     id="go-to-dashboard"
-                    buttonText={t('404.gotoDashboard')}
+                    buttonText={t("404.gotoDashboard")}
                     name="go-to-workspace"
                     variant="primary-outlined"
-                    value={'reject'}
+                    value={"reject"}
                     className="py-3 px-9"
                     onClick={() => navigate(`${routes.signIn}`)}
                   />
@@ -71,12 +71,12 @@ const JoinWorkspace = () => {
                   >
                     <Button
                       tabIndex={0}
-                      title={t('commonConstants.switchAccount')}
-                      id={t('commonConstants.switchAccount')}
-                      buttonText={t('commonConstants.switchAccount')}
+                      title={t("commonConstants.switchAccount")}
+                      id={t("commonConstants.switchAccount")}
+                      buttonText={t("commonConstants.switchAccount")}
                       name="logout"
                       variant="primary-solid"
-                      value={t('commonConstants.switchAccount')}
+                      value={t("commonConstants.switchAccount")}
                       className="py-3 px-9"
                     />
                   </Form>

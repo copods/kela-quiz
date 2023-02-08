@@ -1,11 +1,11 @@
-import { useLoaderData, useNavigate } from '@remix-run/react'
-import { Icon } from '@iconify/react'
-import SectionCardForResultDetail from './SectionCardForResultDetail'
-import Divider from '../common-components/divider'
-import BarGraph from '../barGraph/barGraph'
-import { routes } from '~/constants/route.constants'
-import EmptyStateComponent from '../common-components/EmptyStateComponent'
-import type { SectionInCandidateTest } from '~/interface/Interface'
+import { useLoaderData, useNavigate } from "@remix-run/react"
+import { Icon } from "@iconify/react"
+import SectionCardForResultDetail from "./SectionCardForResultDetail"
+import Divider from "../common-components/divider"
+import BarGraph from "../barGraph/barGraph"
+import { routes } from "~/constants/route.constants"
+import EmptyStateComponent from "../common-components/EmptyStateComponent"
+import type { SectionInCandidateTest } from "~/interface/Interface"
 // import { useTranslation } from 'react-i18next'
 
 const ResultDetailsComponent = () => {
@@ -29,10 +29,10 @@ const ResultDetailsComponent = () => {
               )
             }
             className="flex items-center gap-4 "
-            role={'button'}
+            role={"button"}
             tabIndex={0}
             onKeyDown={(e) => {
-              if (e.key === 'Enter')
+              if (e.key === "Enter")
                 navigate(
                   `/${currentWorkspaceId}${routes.resultGroupTest}/${params?.testId}`
                 )

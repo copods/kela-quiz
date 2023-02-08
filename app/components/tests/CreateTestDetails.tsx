@@ -1,7 +1,7 @@
-import { ClientOnly } from 'remix-utils'
-import QuillEditor from '../QuillEditor.client'
-import { useTranslation } from 'react-i18next'
-import { trimValue } from '~/utils'
+import { ClientOnly } from "remix-utils"
+import QuillEditor from "../QuillEditor.client"
+import { useTranslation } from "react-i18next"
+import { trimValue } from "~/utils"
 
 const TestDetails = ({
   name,
@@ -20,7 +20,7 @@ const TestDetails = ({
     <div className="flex h-full w-full flex-col gap-6 rounded-lg bg-white p-6 shadow">
       <div>
         <label htmlFor="name" className="text-base font-medium text-gray-800">
-          {t('commonConstants.name')}
+          {t("commonConstants.name")}
           <span className="text-red-600">*</span>
         </label>
         <input
@@ -31,7 +31,7 @@ const TestDetails = ({
           value={name}
           onChange={(e) => onNameChange(trimValue(e.target.value))}
           className="test-base mt-1 h-11 w-full rounded-lg border border-gray-200 px-3"
-          placeholder={t('commonConstants.enterAssessmentName')}
+          placeholder={t("commonConstants.enterAssessmentName")}
         />
       </div>
       <div className="flex-1">
@@ -39,7 +39,7 @@ const TestDetails = ({
           htmlFor="description"
           className="text-base font-medium text-gray-800"
         >
-          {t('testsConstants.descriptionText')}
+          {t("testsConstants.descriptionText")}
           <span className="text-red-600">*</span>
         </label>
         <div className="h-full pt-2 pb-4">
@@ -49,16 +49,16 @@ const TestDetails = ({
                 text={description}
                 id="testDescription"
                 fullAccess={true}
-                quillPlaceholder={t('testsConstants.descriptionText')}
+                quillPlaceholder={t("testsConstants.descriptionText")}
                 onTextChange={(e) => {
                   onDescriptionChange(
                     e.replace(
                       /<p><br[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|]?><[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|]?p>/g,
-                      ''
+                      ""
                     )
                   )
                 }}
-                aria-label={t('testsConstants.writeDescriptionOfTest')}
+                aria-label={t("testsConstants.writeDescriptionOfTest")}
               />
             )}
           </ClientOnly>

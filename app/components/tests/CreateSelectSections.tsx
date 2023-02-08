@@ -1,12 +1,12 @@
-import type { SetStateAction } from 'react'
-import { useEffect, useState } from 'react'
-import { sortByOrder } from '~/interface/Interface'
-import type { TestSection } from '~/interface/Interface'
-import SortFilter from '../common-components/SortFilter'
-import SelectSectionCard from './SelectSectionCard'
-import { useTranslation } from 'react-i18next'
-import { useNavigate } from '@remix-run/react'
-import { routes } from '~/constants/route.constants'
+import type { SetStateAction } from "react"
+import { useEffect, useState } from "react"
+import { sortByOrder } from "~/interface/Interface"
+import type { TestSection } from "~/interface/Interface"
+import SortFilter from "../common-components/SortFilter"
+import SelectSectionCard from "./SelectSectionCard"
+import { useTranslation } from "react-i18next"
+import { useNavigate } from "@remix-run/react"
+import { routes } from "~/constants/route.constants"
 
 const SelectSections = ({
   sections,
@@ -22,16 +22,16 @@ const SelectSections = ({
   const [sortDirection, onSortDirectionChange] = useState(
     sortByOrder.ascending as string
   )
-  const [sortBy, onSortChange] = useState('name')
+  const [sortBy, onSortChange] = useState("name")
   const [pseudoDivs, setPseudoDivs] = useState([1])
   const filterByType = [
     {
-      name: 'Name',
-      value: 'name',
+      name: "Name",
+      value: "name",
     },
     {
-      name: 'Created Date',
-      value: 'createdAt',
+      name: "Created Date",
+      value: "createdAt",
     },
   ]
   useEffect(() => {
@@ -129,15 +129,15 @@ const SelectSections = ({
         <div className="flex h-full items-center justify-center">
           <span
             onClick={() => navigate(`/${currentWorkspaceId}${routes.tests}`)}
-            role={'button'}
+            role={"button"}
             onKeyDown={(e) => {
-              if (e.key === 'Enter')
+              if (e.key === "Enter")
                 navigate(`/${currentWorkspaceId}${routes.tests}`)
             }}
             tabIndex={0}
             className="text-primary underline"
           >
-            {t('sectionsConstants.addTestFirst')}
+            {t("sectionsConstants.addTestFirst")}
           </span>
         </div>
       )}

@@ -1,12 +1,12 @@
-import type { EntryContext } from '@remix-run/node'
-import { renderToString } from 'react-dom/server'
-import { RemixServer } from '@remix-run/react'
-import { createInstance } from 'i18next'
-import { initReactI18next } from 'react-i18next'
-import Backend from 'i18next-fs-backend'
-import { resolve } from 'node:path'
-import i18nextOptions from './i18nextOptions'
-import i18n from './i18n.server'
+import type { EntryContext } from "@remix-run/node"
+import { renderToString } from "react-dom/server"
+import { RemixServer } from "@remix-run/react"
+import { createInstance } from "i18next"
+import { initReactI18next } from "react-i18next"
+import Backend from "i18next-fs-backend"
+import { resolve } from "node:path"
+import i18nextOptions from "./i18nextOptions"
+import i18n from "./i18n.server"
 
 export default async function handleRequest(
   request: Request,
@@ -33,7 +33,7 @@ export default async function handleRequest(
       lng, // The locale we detected above
       ns, // The namespaces the routes about to render want to use
       backend: {
-        loadPath: resolve('./public/locales/{{lng}}/{{ns}}.json'),
+        loadPath: resolve("./public/locales/{{lng}}/{{ns}}.json"),
       },
     })
 
@@ -44,9 +44,9 @@ export default async function handleRequest(
     <RemixServer context={remixContext} url={request.url} />
   )
 
-  responseHeaders.set('Content-Type', 'text/html')
+  responseHeaders.set("Content-Type", "text/html")
 
-  return new Response('<!DOCTYPE html>' + markup, {
+  return new Response("<!DOCTYPE html>" + markup, {
     status: responseStatusCode,
     headers: responseHeaders,
   })

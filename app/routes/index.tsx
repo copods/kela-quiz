@@ -1,9 +1,9 @@
-import type { LoaderFunction } from '@remix-run/node'
-import { getUserId } from '~/session.server'
-import { redirect } from '@remix-run/node'
-import Logo from '~/components/Logo'
-import { Link } from 'react-router-dom'
-import { routes } from '~/constants/route.constants'
+import type { LoaderFunction } from "@remix-run/node"
+import { getUserId } from "~/session.server"
+import { redirect } from "@remix-run/node"
+import Logo from "~/components/Logo"
+import { Link } from "react-router-dom"
+import { routes } from "~/constants/route.constants"
 
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await getUserId(request)

@@ -1,12 +1,12 @@
-import { useActionData, useLoaderData, useNavigate } from '@remix-run/react'
-import MembersHeader from '~/components/members/MembersHeader'
-import { toast } from 'react-toastify'
-import { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import EmptyStateComponent from '~/components/common-components/EmptyStateComponent'
-import MembersList from '~/components/members/MembersList'
-import InvitedMembersList from '~/components/members/InvitedMembersList'
-import { useLocation } from 'react-router-dom'
+import { useActionData, useLoaderData, useNavigate } from "@remix-run/react"
+import MembersHeader from "~/components/members/MembersHeader"
+import { toast } from "react-toastify"
+import { useEffect, useState } from "react"
+import { useTranslation } from "react-i18next"
+import EmptyStateComponent from "~/components/common-components/EmptyStateComponent"
+import MembersList from "~/components/members/MembersList"
+import InvitedMembersList from "~/components/members/InvitedMembersList"
+import { useLocation } from "react-router-dom"
 type ActionData = {
   errors?: {
     title: string
@@ -79,11 +79,11 @@ const MembersWrapper = () => {
       <div className="flex flex-col gap-4 text-2xl">
         <h1
           tabIndex={0}
-          role={t('members.joinedMembers')}
-          aria-label={t('members.joinedMembers')}
+          role={t("members.joinedMembers")}
+          aria-label={t("members.joinedMembers")}
           id="joined-member-heading"
         >
-          {t('members.joinedMembers')}
+          {t("members.joinedMembers")}
         </h1>
         {memberLoaderData.users.length === 0 ? (
           <EmptyStateComponent />

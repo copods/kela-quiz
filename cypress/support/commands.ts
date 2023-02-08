@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { faker } from '@faker-js/faker'
-import { logIn } from '~/constants/common.constants'
+import { faker } from "@faker-js/faker"
+import { logIn } from "~/constants/common.constants"
 import {
   getBeginAssessmentButton,
   getCopyLinkId,
@@ -18,7 +18,7 @@ import {
   getRegistrationButtonId,
   getSubmitBtn,
   getVeriticalIconId,
-} from './common-function'
+} from "./common-function"
 
 declare global {
   namespace Cypress {
@@ -70,38 +70,38 @@ declare global {
     }
   }
 }
-let ExamLink = ''
-let candidateName = 'joy'
+let ExamLink = ""
+let candidateName = "joy"
 
 function login() {
   let formData = new FormData()
 
   // @TODO: Need to change this credentials with `careers.copods.demo@gmail.com`
-  formData.append('email', Cypress.env('email'))
-  formData.append('password', Cypress.env('password'))
-  formData.append('redirectTo', '/dashboard')
+  formData.append("email", Cypress.env("email"))
+  formData.append("password", Cypress.env("password"))
+  formData.append("redirectTo", "/dashboard")
 
-  const __sessionExist = window.localStorage.getItem('__session')
+  const __sessionExist = window.localStorage.getItem("__session")
 
   if (!__sessionExist)
     cy.request({
-      method: 'POST',
-      url: '/sign-in?_data=routes%2Fsign-in',
+      method: "POST",
+      url: "/sign-in?_data=routes%2Fsign-in",
       body: formData,
     }).then((resp) => {
       const { headers } = resp
       const __session =
-        headers?.['set-cookie'] && headers?.['set-cookie'][0].split('=')[1]
-      window.localStorage.setItem('__session', __session)
+        headers?.["set-cookie"] && headers?.["set-cookie"][0].split("=")[1]
+      window.localStorage.setItem("__session", __session)
     })
 }
 
-function customVisit(path = '') {
+function customVisit(path = "") {
   const headers = {
-    Cookie: `__session=${window.localStorage.getItem('__session')}`,
+    Cookie: `__session=${window.localStorage.getItem("__session")}`,
   }
   cy.visit(`/${path}`, {
-    method: 'GET',
+    method: "GET",
     headers,
   })
   cy.wait(1000)
@@ -111,100 +111,100 @@ function cleanupUser({ email }: { email?: string } = {}) {
   if (email) {
     deleteUserByEmail(email)
   } else {
-    cy.get('@user').then((user) => {
+    cy.get("@user").then((user) => {
       const email = (user as { email?: string }).email
       if (email) {
         deleteUserByEmail(email)
       }
     })
   }
-  cy.clearCookie('__session')
+  cy.clearCookie("__session")
 }
 
 function deleteUserByEmail(email: string) {
   cy.exec(
     `npx ts-node --require tsconfig-paths/register ./cypress/support/delete-user.ts "${email}"`
   )
-  cy.clearCookie('__session')
+  cy.clearCookie("__session")
 }
 
 const candidateRegistration = () => {
   const emailId = Math.random()
   cy.viewport(1280, 720)
   cy.login()
-  cy.customVisit('/members')
+  cy.customVisit("/members")
   getGroupByTestId().click()
-  cy.get('a').find('#tests').click()
+  cy.get("a").find("#tests").click()
   getInvitePopup().click()
   getEmailInput().type(`ki${emailId}@copods.co`)
   getSubmitBtn().click()
   getGroupByTestId().click()
   getGroupByItemTest().each((el) => {
     const itemText = el.text()
-    if (itemText === 'Quantitative - assessment1') {
+    if (itemText === "Quantitative - assessment1") {
       cy.wrap(el).click()
     }
   })
   getVeriticalIconId().click()
-  getCopyLinkId().should('be.visible').click()
+  getCopyLinkId().should("be.visible").click()
   cy.wrap(
-    Cypress.automation('remote:debugger:protocol', {
-      command: 'Browser.grantPermissions',
+    Cypress.automation("remote:debugger:protocol", {
+      command: "Browser.grantPermissions",
       params: {
-        permissions: ['clipboardReadWrite', 'clipboardSanitizedWrite'],
+        permissions: ["clipboardReadWrite", "clipboardSanitizedWrite"],
         origin: window.location.origin,
       },
     })
   )
 
   cy.window()
-    .its('navigator.clipboard')
-    .invoke('readText')
+    .its("navigator.clipboard")
+    .invoke("readText")
     .then((text) => {
-      ExamLink = text.split('3000')[1]
+      ExamLink = text.split("3000")[1]
       cy.visit(ExamLink)
       getFirstName().type(candidateName)
-      getLastName().type('Jain')
+      getLastName().type("Jain")
       getRegistrationButtonId()
-        .should('be.visible')
-        .should('have.css', 'background-color', 'rgb(53, 57, 136)')
+        .should("be.visible")
+        .should("have.css", "background-color", "rgb(53, 57, 136)")
         .click()
-      cy.url().should('include', `${ExamLink}/verification`)
+      cy.url().should("include", `${ExamLink}/verification`)
     })
 }
 
-const customVisitOnCandidateSide = (path = '') => {
+const customVisitOnCandidateSide = (path = "") => {
   ExamLink && cy.visit(`${ExamLink}/${path}`)
 }
 const candidateVerification = () => {
-  cy.customVisitOnCandidateSide('verification')
-  getOTPFirstInputField().type('0')
-  getOTPSecondInputField().type('0')
-  getOTPThirdInputField().type('0')
-  getOTPFourthInputField().type('0')
-  cy.url().should('include', 'instructions')
+  cy.customVisitOnCandidateSide("verification")
+  getOTPFirstInputField().type("0")
+  getOTPSecondInputField().type("0")
+  getOTPThirdInputField().type("0")
+  getOTPFourthInputField().type("0")
+  cy.url().should("include", "instructions")
 }
 
 const checkCandidateName = () => {
   getInstructionHeading()
-    .should('be.visible')
-    .should('have.text', `Welcome ${candidateName}`)
+    .should("be.visible")
+    .should("have.text", `Welcome ${candidateName}`)
 }
 
 const assessmentInstruction = () => {
-  getBeginAssessmentButton().should('be.visible')
-  getBeginAssessmentButton().should('have.text', 'Begin Assessment')
+  getBeginAssessmentButton().should("be.visible")
+  getBeginAssessmentButton().should("have.text", "Begin Assessment")
   getBeginAssessmentButton().click()
 }
 
-Cypress.Commands.add('login', login)
-Cypress.Commands.add('cleanupUser', cleanupUser)
-Cypress.Commands.add('customVisit', customVisit)
-Cypress.Commands.add('candidateRegistration', candidateRegistration)
-Cypress.Commands.add('customVisitOnCandidateSide', customVisitOnCandidateSide)
-Cypress.Commands.add('candidateVerification', candidateVerification)
-Cypress.Commands.add('checkCandidateName', checkCandidateName)
-Cypress.Commands.add('assessmentInstruction', assessmentInstruction)
+Cypress.Commands.add("login", login)
+Cypress.Commands.add("cleanupUser", cleanupUser)
+Cypress.Commands.add("customVisit", customVisit)
+Cypress.Commands.add("candidateRegistration", candidateRegistration)
+Cypress.Commands.add("customVisitOnCandidateSide", customVisitOnCandidateSide)
+Cypress.Commands.add("candidateVerification", candidateVerification)
+Cypress.Commands.add("checkCandidateName", checkCandidateName)
+Cypress.Commands.add("assessmentInstruction", assessmentInstruction)
 
 /*
 eslint

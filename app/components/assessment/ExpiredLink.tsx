@@ -1,6 +1,6 @@
-import Header from './Header'
-import InvalidLink from '../../../public/assets/invalid-link.svg'
-import { useTranslation } from 'react-i18next'
+import Header from "./Header"
+import InvalidLink from "../../../public/assets/invalid-link.svg"
+import { useTranslation } from "react-i18next"
 
 const ExpiredLinkComponent = () => {
   const { t } = useTranslation()
@@ -12,11 +12,11 @@ const ExpiredLinkComponent = () => {
           <div className="mx-auto flex w-coolDownCard flex-col items-center justify-center gap-10 bg-white py-16">
             <img
               src={InvalidLink}
-              alt={t('candidateExamConstants.ExpiredLink')}
+              alt={t("candidateExamConstants.ExpiredLink")}
               className="h-cooldownSVG w-cooldownSVG"
             />
             <span className="text-2xl font-bold text-gray-900">
-              {t('candidateExamConstants.ExpiredLink')}
+              {t("candidateExamConstants.ExpiredLink")}
             </span>
           </div>
         </div>

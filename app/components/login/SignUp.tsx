@@ -4,20 +4,20 @@ import {
   useNavigate,
   useSubmit,
   useTransition,
-} from '@remix-run/react'
-import { useEffect, useState } from 'react'
-import Button from '~/components/common-components/Button'
-import Logo from '~/components/Logo'
+} from "@remix-run/react"
+import { useEffect, useState } from "react"
+import Button from "~/components/common-components/Button"
+import Logo from "~/components/Logo"
 import {
   checkPasswordStrength,
   getPasswordStrengthColor,
   trimValue,
-} from '~/utils'
-import { routes } from '~/constants/route.constants'
-import { useTranslation } from 'react-i18next'
-import InputField from '../common-components/InputField'
-import PasswordInputFields from '../common-components/PasswordInputField'
-import { toast } from 'react-toastify'
+} from "~/utils"
+import { routes } from "~/constants/route.constants"
+import { useTranslation } from "react-i18next"
+import InputField from "../common-components/InputField"
+import PasswordInputFields from "../common-components/PasswordInputField"
+import { toast } from "react-toastify"
 
 const SignUp = ({ error }: { error?: string }) => {
   const navigate = useNavigate()
@@ -36,14 +36,14 @@ const SignUp = ({ error }: { error?: string }) => {
   const transition = useTransition()
   const submit = useSubmit()
 
-  const [firstName, setFirstName] = useState('')
-  const [lastName, setLastName] = useState('')
+  const [firstName, setFirstName] = useState("")
+  const [lastName, setLastName] = useState("")
   const [email, setEmail] = useState(
-    signUpLoaderData?.userData?.email ? signUpLoaderData?.userData?.email : ''
+    signUpLoaderData?.userData?.email ? signUpLoaderData?.userData?.email : ""
   )
-  const [password, setPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
-  const [passwordStrength, setPasswordStrength] = useState('')
+  const [password, setPassword] = useState("")
+  const [confirmPassword, setConfirmPassword] = useState("")
+  const [passwordStrength, setPasswordStrength] = useState("")
   const submitMemberForm = () => {
     let data = {
       firstName: firstName,
@@ -53,14 +53,14 @@ const SignUp = ({ error }: { error?: string }) => {
       confirmPassword: confirmPassword,
       inviteId: signUpLoaderData.inviteId,
       signUp: JSON.stringify({
-        action: 'add',
+        action: "add",
       }),
     }
     submit(data, {
-      method: 'post',
+      method: "post",
       action:
         signUpLoaderData.inviteId === null
-          ? '/sign-up'
+          ? "/sign-up"
           : `/sign-up?cameFrom=join&id=${signUpLoaderData.inviteId}`,
     })
   }
@@ -71,24 +71,24 @@ const SignUp = ({ error }: { error?: string }) => {
     signUpActionData?.errors?.enterVaildMailAddress ||
       signUpActionData?.errors?.emailRequired
   )
-  const [onBlurPasswordErr, setOnBlurPasswordErr] = useState('')
-  const [onBlurConfPasswordErr, setOnConfBlurPasswordErr] = useState('')
+  const [onBlurPasswordErr, setOnBlurPasswordErr] = useState("")
+  const [onBlurConfPasswordErr, setOnConfBlurPasswordErr] = useState("")
   const onBlurPassError = () => {
     if (password.length < 8 && password.length !== 0) {
-      setOnBlurPasswordErr('settings.minPasswordLimit')
+      setOnBlurPasswordErr("settings.minPasswordLimit")
     } else if (password.length >= 8 || password.length === 0) {
-      setOnBlurPasswordErr('')
+      setOnBlurPasswordErr("")
     }
   }
   const onBlurConfPassError = () => {
     if (password !== confirmPassword && confirmPassword.length !== 0) {
-      setOnConfBlurPasswordErr('settings.passNotMatch')
+      setOnConfBlurPasswordErr("settings.passNotMatch")
     } else if (
       confirmPassword.length === 0 ||
       password.length === 0 ||
       password === confirmPassword
     ) {
-      setOnConfBlurPasswordErr('')
+      setOnConfBlurPasswordErr("")
     }
   }
   useEffect(() => {
@@ -103,84 +103,84 @@ const SignUp = ({ error }: { error?: string }) => {
   }, [password])
   const inputFieldsProps = [
     {
-      label: t('members.firstName'),
-      placeholder: t('members.firstName'),
+      label: t("members.firstName"),
+      placeholder: t("members.firstName"),
       isRequired: true,
-      type: 'text',
-      name: 'firstName',
+      type: "text",
+      name: "firstName",
       required: true,
       value: firstName,
       error: signUpActionData?.errors?.firstNameRequired,
-      errorId: 'firstName-error',
+      errorId: "firstName-error",
       onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
-        setFirstName(trimValue(event.target.value.replace(/[^\w\s]/gi, '')))
+        setFirstName(trimValue(event.target.value.replace(/[^\w\s]/gi, "")))
       },
     },
     {
-      label: t('members.lastName'),
-      placeholder: t('members.lastName'),
+      label: t("members.lastName"),
+      placeholder: t("members.lastName"),
       isRequired: true,
-      type: 'text',
-      name: 'lastName',
+      type: "text",
+      name: "lastName",
       required: true,
       value: lastName,
       error: signUpActionData?.errors?.lastNameRequired,
-      errorId: 'lastName-error',
+      errorId: "lastName-error",
       onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
-        setLastName(trimValue(event.target.value.replace(/[^\w\s]/gi, '')))
+        setLastName(trimValue(event.target.value.replace(/[^\w\s]/gi, "")))
       },
     },
     {
-      label: t('commonConstants.email'),
-      placeholder: t('commonConstants.email'),
+      label: t("commonConstants.email"),
+      placeholder: t("commonConstants.email"),
       isRequired: true,
-      type: 'text',
-      name: 'email',
+      type: "text",
+      name: "email",
       required: true,
       disabled: signUpLoaderData?.userData?.email ?? false,
       value: signUpLoaderData?.userData?.email ?? email,
       error: emailFieldError,
-      errorId: 'email-error',
+      errorId: "email-error",
       onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
         setEmail(trimValue(event.target.value))
-        if (event.target.value === '') {
-          setEmailFieldError('')
+        if (event.target.value === "") {
+          setEmailFieldError("")
         }
       },
     },
     {
-      label: t('settings.password'),
-      placeholder: t('settings.password'),
-      name: 'password',
+      label: t("settings.password"),
+      placeholder: t("settings.password"),
+      name: "password",
       required: true,
       isRequired: true,
-      type: 'password',
+      type: "password",
       value: password,
       onBlur: onBlurPassError,
       error: signUpActionData?.errors?.minPasswordLimit || onBlurPasswordErr,
-      errorId: 'New-password-error',
+      errorId: "New-password-error",
       onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
         setPassword(trimValue(event?.target.value))
-        if (event.target.value === '') {
-          setOnBlurPasswordErr('')
+        if (event.target.value === "") {
+          setOnBlurPasswordErr("")
         }
       },
     },
     {
-      label: t('settings.reEnterPass'),
-      placeholder: t('settings.reEnterPass'),
-      name: 'confirmPassword',
+      label: t("settings.reEnterPass"),
+      placeholder: t("settings.reEnterPass"),
+      name: "confirmPassword",
       required: true,
       isRequired: true,
-      type: 'password',
+      type: "password",
       value: confirmPassword,
       onBlur: onBlurConfPassError,
       error: signUpActionData?.errors?.passNotMatched || onBlurConfPasswordErr,
-      errorId: 'Confirm-password-error',
+      errorId: "Confirm-password-error",
       onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
         setConfirmPassword(trimValue(event?.target.value))
-        if (event.target.value === '') {
-          setOnConfBlurPasswordErr('')
+        if (event.target.value === "") {
+          setOnConfBlurPasswordErr("")
         }
       },
     },
@@ -197,11 +197,11 @@ const SignUp = ({ error }: { error?: string }) => {
             id="signup-page-title"
             className="text-center text-3xl font-bold text-gray-900"
             tabIndex={0}
-            title={t('logIn.signUp')}
-            role={t('logIn.signUp')}
-            aria-label={t('logIn.signUp')}
+            title={t("logIn.signUp")}
+            role={t("logIn.signUp")}
+            aria-label={t("logIn.signUp")}
           >
-            {t('logIn.signUp')}
+            {t("logIn.signUp")}
           </h2>
           <hr className="h-px w-6/12 border-none bg-gray-500 text-center" />
         </div>
@@ -225,7 +225,7 @@ const SignUp = ({ error }: { error?: string }) => {
         </div>
         {password ? (
           <span className=" flex gap-1 text-sm">
-            {t('commonConstants.passwordStrength')}:
+            {t("commonConstants.passwordStrength")}:
             <span className={getPasswordStrengthColor(passwordStrength)}>
               {passwordStrength}
             </span>
@@ -236,7 +236,7 @@ const SignUp = ({ error }: { error?: string }) => {
             tabIndex={0}
             id="add-button"
             name="addMember"
-            value={'add'}
+            value={"add"}
             className="h-11 w-full px-4"
             isDisabled={
               !(
@@ -249,20 +249,20 @@ const SignUp = ({ error }: { error?: string }) => {
               )
             }
             title={
-              transition.state === 'submitting'
-                ? t('logIn.signingUp')
-                : t('logIn.signUp')
+              transition.state === "submitting"
+                ? t("logIn.signingUp")
+                : t("logIn.signUp")
             }
             buttonText={
-              transition.state === 'submitting'
-                ? t('logIn.signingUp')
-                : t('logIn.signUp')
+              transition.state === "submitting"
+                ? t("logIn.signingUp")
+                : t("logIn.signUp")
             }
             variant="primary-solid"
             onClick={() => submitMemberForm()}
           />
           <div className="text-base font-medium text-gray-500">
-            {t('logIn.alreadyHaveAnAccount')}{' '}
+            {t("logIn.alreadyHaveAnAccount")}{" "}
             <span
               className="cursor-pointer text-primary"
               tabIndex={0}
@@ -270,11 +270,11 @@ const SignUp = ({ error }: { error?: string }) => {
                 signIn()
               }}
               onKeyUp={(e) => {
-                if (e.key === 'Enter') signIn()
+                if (e.key === "Enter") signIn()
               }}
               role="link"
             >
-              {t('logIn.signIn')}
+              {t("logIn.signIn")}
             </span>
           </div>
         </div>

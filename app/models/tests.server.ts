@@ -1,7 +1,7 @@
-import type { Section } from '@prisma/client'
-import { prisma } from '~/db.server'
+import type { Section } from "@prisma/client"
+import { prisma } from "~/db.server"
 
-export async function getTestById({ id }: Pick<Section, 'id'>) {
+export async function getTestById({ id }: Pick<Section, "id">) {
   return prisma.test.findUnique({
     where: {
       id,
@@ -35,7 +35,7 @@ export async function getAllTests(
   return await prisma.test.findMany({
     take: PER_PAGE_ITEMS,
     skip: (testsCurrentPage - 1) * PER_PAGE_ITEMS,
-    orderBy: { [sortBy ? sortBy : 'createdAt']: sortOrder ? sortOrder : 'asc' },
+    orderBy: { [sortBy ? sortBy : "createdAt"]: sortOrder ? sortOrder : "asc" },
     where: {
       deleted: false,
       workspaceId,

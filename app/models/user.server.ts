@@ -1,13 +1,13 @@
-import bcrypt from 'bcryptjs'
-import type { Password, User } from '@prisma/client'
-import { sendMail, sendNewPassword } from './sendgrid.servers'
-import { prisma } from '~/db.server'
-import { faker } from '@faker-js/faker'
-import { env } from 'process'
+import bcrypt from "bcryptjs"
+import type { Password, User } from "@prisma/client"
+import { sendMail, sendNewPassword } from "./sendgrid.servers"
+import { prisma } from "~/db.server"
+import { faker } from "@faker-js/faker"
+import { env } from "process"
 
-export type { User } from '@prisma/client'
+export type { User } from "@prisma/client"
 
-export async function getUserById(id: User['id']) {
+export async function getUserById(id: User["id"]) {
   return prisma.user.findUnique({ where: { id }, include: { password: true } })
 }
 
@@ -41,7 +41,7 @@ export async function deleteUserById(
   return deleteUserWorkspace
 }
 
-export async function getUserByEmail(email: User['email']) {
+export async function getUserByEmail(email: User["email"]) {
   return await prisma.user.findUnique({ where: { email } })
 }
 export async function getAllUsersCount(currentWorkspaceId: string | undefined) {
@@ -95,7 +95,7 @@ export async function getAllRoles() {
 
 //To get roleId of Admin role
 export async function getAdminId() {
-  const roleName = 'Admin'
+  const roleName = "Admin"
   const role = await prisma.role.findUnique({ where: { name: roleName } })
   return role?.id
 }
@@ -174,7 +174,7 @@ export async function createNewUser({
   email: string
   defaultWorkspaceName: string
   roleId: string
-  createdById: User['id']
+  createdById: User["id"]
   invitedByWorkspaceId: string
 }) {
   const password = faker.internet.password()
@@ -233,12 +233,12 @@ export async function createNewUser({
     },
   })
   const passwordGenerationLink =
-    env.PUBLIC_URL + '/members/' + user?.id + '/create-password'
+    env.PUBLIC_URL + "/members/" + user?.id + "/create-password"
   return await sendMail(
     passwordGenerationLink,
     email,
     firstName,
-    role?.name || 'NA'
+    role?.name || "NA"
   )
 }
 
@@ -270,8 +270,8 @@ export async function sendResetPassword(email: string) {
 }
 
 export async function loginVerificationResponse(
-  email: User['email'],
-  password: Password['hash']
+  email: User["email"],
+  password: Password["hash"]
 ) {
   const userWithPassword = await prisma.user.findUnique({
     where: { email },
@@ -294,7 +294,7 @@ export async function loginVerificationResponse(
 
   const isValid = await bcrypt.compare(password, userWithPassword.password.hash)
   if (!isValid) {
-    let error = new Error('invalidPassword')
+    let error = new Error("invalidPassword")
     return error
   }
 
@@ -323,7 +323,7 @@ export async function updatePassword(
     oldPass?.password?.hash as string
   )
   if (!isValid) {
-    let error = new Error('invalidPassword')
+    let error = new Error("invalidPassword")
     return error
   }
   let checkValidPass
@@ -339,6 +339,6 @@ export async function updatePassword(
     })
   }
   if (checkValidPass) {
-    return 'DONE'
+    return "DONE"
   }
 }

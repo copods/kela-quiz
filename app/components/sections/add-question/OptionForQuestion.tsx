@@ -1,16 +1,16 @@
-import { Icon } from '@iconify/react'
-import { QuestionTypes } from '~/interface/Interface'
-import type { QuestionType } from '~/interface/Interface'
-import cuid from 'cuid'
-import QuillEditor from '~/components/QuillEditor.client'
-import { ClientOnly } from 'remix-utils'
-import Toggle from '~/components/form/Toggle'
-import type { SetStateAction } from 'react'
-import { useEffect } from 'react'
-import { toast } from 'react-toastify'
-import Button from '~/components/common-components/Button'
-import { useTranslation } from 'react-i18next'
-import { trimValue } from '~/utils'
+import { Icon } from "@iconify/react"
+import { QuestionTypes } from "~/interface/Interface"
+import type { QuestionType } from "~/interface/Interface"
+import cuid from "cuid"
+import QuillEditor from "~/components/QuillEditor.client"
+import { ClientOnly } from "remix-utils"
+import Toggle from "~/components/form/Toggle"
+import type { SetStateAction } from "react"
+import { useEffect } from "react"
+import { toast } from "react-toastify"
+import Button from "~/components/common-components/Button"
+import { useTranslation } from "react-i18next"
+import { trimValue } from "~/utils"
 interface textAnswerType {
   id: string
   answer: string
@@ -49,7 +49,7 @@ export default function OptionForQuestion({
 }) {
   const { t } = useTranslation()
 
-  const toastId = 'doNotDeleteLastOptions'
+  const toastId = "doNotDeleteLastOptions"
   const addOptionArea = () => {
     if (
       getQuestionType(selectedTypeOfQuestion) ===
@@ -57,14 +57,14 @@ export default function OptionForQuestion({
       getQuestionType(selectedTypeOfQuestion) === QuestionTypes.singleChoice
     ) {
       if (options.length > 5) {
-        return toast.error(t('statusCheck.maxOptions'), { toastId })
+        return toast.error(t("statusCheck.maxOptions"), { toastId })
       }
-      setOptions([...options, { option: '', isCorrect: false, id: cuid() }])
+      setOptions([...options, { option: "", isCorrect: false, id: cuid() }])
     } else if (getQuestionType(selectedTypeOfQuestion) === QuestionTypes.text) {
       if (textCorrectAnswer.length > 5) {
-        return toast.error(t('statusCheck.maxOptions'), { toastId })
+        return toast.error(t("statusCheck.maxOptions"), { toastId })
       }
-      setTextCorrectAnswer([...textCorrectAnswer, { id: cuid(), answer: '' }])
+      setTextCorrectAnswer([...textCorrectAnswer, { id: cuid(), answer: "" }])
     }
   }
   const deleteOption = (index: number, id?: string) => {
@@ -74,10 +74,10 @@ export default function OptionForQuestion({
       getQuestionType(selectedTypeOfQuestion) === QuestionTypes.singleChoice
     ) {
       if (options.length === 2) {
-        return toast.error('There should be at least two options.', { toastId })
+        return toast.error("There should be at least two options.", { toastId })
       }
       if (id === singleChoiceAnswer) {
-        setSingleChoiceAnswer('')
+        setSingleChoiceAnswer("")
       }
       setOptions(
         (e: Array<{ option: string; isCorrect: boolean; id: string }>) => {
@@ -102,8 +102,8 @@ export default function OptionForQuestion({
   }
   const updateOption = (opt: string, id: string) => {
     const optionIndex = options.findIndex((o) => o.id === id)
-    if (opt === '<p><br></p>') {
-      options[optionIndex].option = ''
+    if (opt === "<p><br></p>") {
+      options[optionIndex].option = ""
     } else {
       options[optionIndex].option = opt
     }
@@ -136,16 +136,16 @@ export default function OptionForQuestion({
           QuestionTypes.singleChoice ? (
           <div
             className="ml-7 text-base font-medium text-gray-600"
-            role={t('addQuestion.createOptions')}
+            role={t("addQuestion.createOptions")}
             tabIndex={0}
-            title={t('addQuestion.createOptions')}
-            aria-label={t('addQuestion.createOptions')}
+            title={t("addQuestion.createOptions")}
+            aria-label={t("addQuestion.createOptions")}
           >
-            {t('addQuestion.createOptions')}
+            {t("addQuestion.createOptions")}
           </div>
         ) : (
           <div className="flex items-center justify-center gap-2 text-base font-medium text-gray-600">
-            {t('addQuestion.checkOrder')}
+            {t("addQuestion.checkOrder")}
             <Toggle toggle={checkOrder} onToggleChange={setCheckOrder} />
           </div>
         )}
@@ -155,8 +155,8 @@ export default function OptionForQuestion({
           className="h-9 px-5"
           variant="primary-solid"
           onClick={addOptionArea}
-          title={t('addQuestion.addOptions')}
-          buttonText={`+ ${t('addQuestion.addOptions')}`}
+          title={t("addQuestion.addOptions")}
+          buttonText={`+ ${t("addQuestion.addOptions")}`}
         />
       </div>
       <div className="flex h-full flex-1 flex-col gap-5 overflow-auto p-1">
@@ -199,14 +199,14 @@ export default function OptionForQuestion({
                       {() => (
                         <QuillEditor
                           text={option.option}
-                          id={index + ''}
-                          quillPlaceholder={'option'}
+                          id={index + ""}
+                          quillPlaceholder={"option"}
                           fullAccess={false}
                           onTextChange={(e) => {
                             updateOption(
                               e.replace(
                                 /<p><br[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|]?><[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|]?p>/g,
-                                ''
+                                ""
                               ),
                               option?.id
                             )
@@ -222,16 +222,16 @@ export default function OptionForQuestion({
                     <Icon
                       onClick={() => deleteOption(index, option?.id)}
                       onKeyDown={(e) => {
-                        if (e.key === 'Enter') deleteOption(index, option?.id)
+                        if (e.key === "Enter") deleteOption(index, option?.id)
                       }}
                       tabIndex={0}
                       id="delete-option"
-                      aria-label={t('commonConstants.delete')}
+                      aria-label={t("commonConstants.delete")}
                       icon="ic:outline-delete-outline"
                       className={`h-6 w-6 ${index} ${
                         options.length < 2
-                          ? 'cursor-not-allowed text-red-400'
-                          : 'cursor-pointer text-red-600'
+                          ? "cursor-not-allowed text-red-400"
+                          : "cursor-pointer text-red-600"
                       }`}
                       role="button"
                     />
@@ -249,7 +249,7 @@ export default function OptionForQuestion({
                       tabIndex={0}
                       className="h-20 w-full rounded-lg border border-gray-300 bg-white p-4"
                       placeholder={t(
-                        'commonConstants.placeholderForOptionInput'
+                        "commonConstants.placeholderForOptionInput"
                       )}
                       value={option.answer}
                       onChange={(e) => {
@@ -266,11 +266,11 @@ export default function OptionForQuestion({
                         icon="ic:outline-delete-outline"
                         className={`h-6 w-6 ${index} ${
                           textCorrectAnswer.length < 2
-                            ? 'cursor-not-allowed text-red-400'
-                            : 'cursor-pointer text-red-600'
+                            ? "cursor-not-allowed text-red-400"
+                            : "cursor-pointer text-red-600"
                         }`}
                         onKeyDown={(e) => {
-                          if (e.key === 'Enter') deleteOption(index, option?.id)
+                          if (e.key === "Enter") deleteOption(index, option?.id)
                         }}
                       />
                     )}
@@ -279,12 +279,12 @@ export default function OptionForQuestion({
             }
           )}
         {answerCount > 1 ? (
-          <p>{`${t('addQuestion.note')}: ${t(
-            'addQuestion.multipleAnswersSelected'
+          <p>{`${t("addQuestion.note")}: ${t(
+            "addQuestion.multipleAnswersSelected"
           )}`}</p>
         ) : answerCount === 1 ? (
-          <p>{`${t('addQuestion.note')}: ${t(
-            'addQuestion.oneAnswerSelected'
+          <p>{`${t("addQuestion.note")}: ${t(
+            "addQuestion.oneAnswerSelected"
           )}`}</p>
         ) : null}
       </div>

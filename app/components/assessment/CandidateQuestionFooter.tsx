@@ -1,6 +1,6 @@
-import { useLoaderData } from '@remix-run/react'
-import { useTranslation } from 'react-i18next'
-import Button from '../common-components/Button'
+import { useLoaderData } from "@remix-run/react"
+import { useTranslation } from "react-i18next"
+import Button from "../common-components/Button"
 // import CandidateQuestionStepper from './CandidateQuestionStepper'
 
 const CandidateQuestionFooter = () => {
@@ -14,8 +14,8 @@ const CandidateQuestionFooter = () => {
           <Button
             className="max-w-max border-none bg-inherit py-0 px-0 text-base font-bold text-black underline shadow-none hover:bg-white"
             variant="primary-outlined"
-            title={'Skip Question'}
-            buttonText={'Skip Question'}
+            title={"Skip Question"}
+            buttonText={"Skip Question"}
             type="submit"
             value="skip"
             name="skip"
@@ -27,8 +27,8 @@ const CandidateQuestionFooter = () => {
         <Button
           className="h-8 w-28"
           variant="primary-outlined"
-          title={t('commonConstants.prevoiusButton')}
-          buttonText={t('commonConstants.prevoiusButton')}
+          title={t("commonConstants.prevoiusButton")}
+          buttonText={t("commonConstants.prevoiusButton")}
           isDisabled={question.order === 1}
           type="submit"
           value="prev"
@@ -38,8 +38,8 @@ const CandidateQuestionFooter = () => {
           <Button
             className="h-8 w-28"
             variant="primary-solid"
-            title={t('commonConstants.nextButton')}
-            buttonText={t('commonConstants.nextButton')}
+            title={t("commonConstants.nextButton")}
+            buttonText={t("commonConstants.nextButton")}
             isDisabled={question.order === section.totalQuestions}
             type="submit"
             value="next"
@@ -49,8 +49,8 @@ const CandidateQuestionFooter = () => {
           <Button
             className="h-8 w-28"
             variant="primary-solid"
-            title={t('candidateExamConstants.endTest')}
-            buttonText={t('candidateExamConstants.endTest')}
+            title={t("candidateExamConstants.endTest")}
+            buttonText={t("candidateExamConstants.endTest")}
             isDisabled={question.order !== section.totalQuestions}
             type="submit"
             value={section.order}
@@ -60,8 +60,8 @@ const CandidateQuestionFooter = () => {
           <Button
             className="h-8 w-28"
             variant="primary-solid"
-            title={t('candidateExamConstants.nextSection')}
-            buttonText={'Finish'}
+            title={t("candidateExamConstants.nextSection")}
+            buttonText={"Finish"}
             isDisabled={question.order !== section.totalQuestions}
             type="submit"
             value={section.order}

@@ -1,8 +1,8 @@
-import { useLoaderData, useSubmit } from '@remix-run/react'
-import { useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import Button from '../common-components/Button'
-import DialogWrapper from '../common-components/Dialog'
+import { useLoaderData, useSubmit } from "@remix-run/react"
+import { useState } from "react"
+import { useTranslation } from "react-i18next"
+import Button from "../common-components/Button"
+import DialogWrapper from "../common-components/Dialog"
 
 const Workspace = () => {
   const [showLeaveWorkspacePopup, setShowLeaveWorkspacePopup] = useState(false)
@@ -10,7 +10,7 @@ const Workspace = () => {
   const submit = useSubmit()
   const workspaceLoaderData = useLoaderData()
   const leaveWorkspace = () => {
-    submit({ leaveWorkspace: 'leaveWorkspace' }, { method: 'post' })
+    submit({ leaveWorkspace: "leaveWorkspace" }, { method: "post" })
   }
 
   return (
@@ -23,8 +23,8 @@ const Workspace = () => {
           type="button"
           name="leave"
           className="px-5"
-          title={t('settings.leaveWorkspace')}
-          buttonText={t('settings.leaveWorkspace')}
+          title={t("settings.leaveWorkspace")}
+          buttonText={t("settings.leaveWorkspace")}
           onClick={() => setShowLeaveWorkspacePopup(!showLeaveWorkspacePopup)}
           isDisabled={workspaceLoaderData?.ownersWorkspaces
             ?.map((workspace: { id: string }) => workspace.id)
@@ -38,7 +38,7 @@ const Workspace = () => {
       >
         <div className="flex flex-col gap-4">
           <div>
-            <p>{t('settings.leaveWorkspaceConfirmation')}</p>
+            <p>{t("settings.leaveWorkspaceConfirmation")}</p>
           </div>
           <div className="flex justify-end gap-4">
             <Button
@@ -48,8 +48,8 @@ const Workspace = () => {
               type="button"
               name="cancel"
               className="px-5"
-              title={t('commonConstants.cancel')}
-              buttonText={t('commonConstants.cancel')}
+              title={t("commonConstants.cancel")}
+              buttonText={t("commonConstants.cancel")}
               onClick={() =>
                 setShowLeaveWorkspacePopup(!showLeaveWorkspacePopup)
               }
@@ -61,8 +61,8 @@ const Workspace = () => {
               type="button"
               name="leave"
               className="px-5"
-              title={t('settings.leaveWorkspace')}
-              buttonText={t('settings.leave')}
+              title={t("settings.leaveWorkspace")}
+              buttonText={t("settings.leave")}
               onClick={() => leaveWorkspace()}
             />
           </div>

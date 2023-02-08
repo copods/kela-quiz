@@ -1,8 +1,8 @@
-import type { User, Section, Question } from '@prisma/client'
-import cuid from 'cuid'
-import { prisma } from '~/db.server'
+import type { User, Section, Question } from "@prisma/client"
+import cuid from "cuid"
+import { prisma } from "~/db.server"
 
-export async function getSectionById({ id }: Pick<Section, 'id'>) {
+export async function getSectionById({ id }: Pick<Section, "id">) {
   return prisma.section.findUnique({
     where: {
       id,
@@ -36,7 +36,7 @@ export async function getFirstSection(
   testItemsPerPage = 5
 ) {
   const firstSection = await prisma.section.findFirst({
-    orderBy: { [sortBy ? sortBy : 'createdAt']: sortOrder ? sortOrder : 'asc' },
+    orderBy: { [sortBy ? sortBy : "createdAt"]: sortOrder ? sortOrder : "asc" },
     take: testItemsPerPage,
     skip: (testCurrentPage - 1) * testItemsPerPage,
 
@@ -67,7 +67,7 @@ export async function getAllSections(
 ) {
   const PER_PAGE_ITEMS = testItemsPerPage
   const res = await prisma.section.findMany({
-    orderBy: { [sortBy ? sortBy : 'createdAt']: sortOrder ? sortOrder : 'asc' },
+    orderBy: { [sortBy ? sortBy : "createdAt"]: sortOrder ? sortOrder : "asc" },
     take: PER_PAGE_ITEMS,
     skip: (testCurrentPage - 1) * PER_PAGE_ITEMS,
 
@@ -94,7 +94,7 @@ export async function getAllSections(
             count = count + 1
           }
         })
-        section['count'] = count
+        section["count"] = count
       }
     )
   }
@@ -106,8 +106,8 @@ export async function createSection({
   description,
   createdById,
   workspaceId,
-}: Pick<Section, 'name' | 'description' | 'workspaceId'> & {
-  createdById: User['id']
+}: Pick<Section, "name" | "description" | "workspaceId"> & {
+  createdById: User["id"]
 }) {
   return await prisma.section.create({
     data: {

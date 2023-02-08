@@ -1,9 +1,9 @@
-import type { Invites } from '@prisma/client'
-import { prisma } from '~/db.server'
-import { sendMail, sendMemberInvite } from './sendgrid.servers'
-import { env } from 'process'
-import faker from '@faker-js/faker'
-import bcrypt from 'bcryptjs'
+import type { Invites } from "@prisma/client"
+import { prisma } from "~/db.server"
+import { sendMail, sendMemberInvite } from "./sendgrid.servers"
+import { env } from "process"
+import faker from "@faker-js/faker"
+import bcrypt from "bcryptjs"
 
 export async function inviteNewUser({
   email,
@@ -41,9 +41,9 @@ export async function inviteNewUser({
   if (res) {
     const invite = res
     const workspaceJoinLink =
-      env.PUBLIC_URL + '/workspace/' + invite.id + '/join'
+      env.PUBLIC_URL + "/workspace/" + invite.id + "/join"
     const name = ((invite.invitedById?.firstName as string) +
-      ' ' +
+      " " +
       invite.invitedById?.lastName) as string
     return await sendMemberInvite(
       email,
@@ -53,7 +53,7 @@ export async function inviteNewUser({
   }
   return res
 }
-export async function getInvitedMemberById(id: Invites['id']) {
+export async function getInvitedMemberById(id: Invites["id"]) {
   return prisma.invites.findUnique({
     where: { id },
     select: {
@@ -85,7 +85,7 @@ export async function deleteMemberInvite(id: string) {
       },
     })
   } catch (error) {
-    return 'Something went wrong'
+    return "Something went wrong"
   }
 }
 
@@ -160,9 +160,9 @@ export async function reinviteMemberForWorkspace({ id }: { id: string }) {
       },
     },
   })
-  const workspaceJoinLink = env.PUBLIC_URL + '/workspace/' + user?.id + '/join'
+  const workspaceJoinLink = env.PUBLIC_URL + "/workspace/" + user?.id + "/join"
   const name = ((user?.invitedById?.firstName as string) +
-    ' ' +
+    " " +
     user?.invitedById?.lastName) as string
   return await sendMemberInvite(
     user?.email as string,
