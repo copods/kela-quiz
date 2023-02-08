@@ -310,8 +310,8 @@ export enum QuestionTypes {
   text = "TEXT",
 }
 export enum QuestionStatus {
-  answered = 'ANSWERED',
-  skipped = 'SKIPPED',
+  answered = "ANSWERED",
+  skipped = "SKIPPED",
 }
 export interface SectionWiseResults {
   id: string

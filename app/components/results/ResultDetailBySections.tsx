@@ -1,9 +1,9 @@
-import { Icon } from '@iconify/react'
-import { useLoaderData, useNavigate } from '@remix-run/react'
-import { routes } from '~/constants/route.constants'
-import ResultDetailsQuestionsPreview from './ResultDetailsQuestionsPreview'
-import Divider from '../common-components/divider'
-import type { SectionInCandidateTest } from '~/interface/Interface'
+import { Icon } from "@iconify/react"
+import { useLoaderData, useNavigate } from "@remix-run/react"
+import { routes } from "~/constants/route.constants"
+import ResultDetailsQuestionsPreview from "./ResultDetailsQuestionsPreview"
+import Divider from "../common-components/divider"
+import type { SectionInCandidateTest } from "~/interface/Interface"
 
 const ResultDetailBySections = () => {
   const resultDetailsLoaderData = useLoaderData()
@@ -20,10 +20,10 @@ const ResultDetailBySections = () => {
               )
             }
             className="flex items-center gap-4 "
-            role={'button'}
+            role={"button"}
             tabIndex={0}
             onKeyDown={(e) => {
-              if (e.key === 'Enter')
+              if (e.key === "Enter")
                 navigate(
                   `/${resultDetailsLoaderData.params.workspaceId}${routes.resultGroupTest}/${resultDetailsLoaderData.params?.testId}/${resultDetailsLoaderData.params.candidateId}`
                 )
@@ -37,7 +37,7 @@ const ResultDetailBySections = () => {
           </div>
           <div className="flex items-center gap-4">
             <h1 className="text-3xl font-semibold text-gray-900" id="title">
-              {sectionDetail.candidateTest?.candidate?.firstName}{' '}
+              {sectionDetail.candidateTest?.candidate?.firstName}{" "}
               {sectionDetail.candidateTest?.candidate?.lastName}
             </h1>
             <hr className="h-5 w-px bg-gray-300" />

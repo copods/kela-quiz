@@ -1,14 +1,14 @@
-import { areEqualArrays } from 'helper/results.helper'
-import { useTranslation } from 'react-i18next'
+import { areEqualArrays } from "helper/results.helper"
+import { useTranslation } from "react-i18next"
 import {
   Option,
   CorrectAnswer,
   QuestionType,
   QuestionTypes,
   QuestionStatus,
-} from '~/interface/Interface'
+} from "~/interface/Interface"
 
-import Divider from '../common-components/divider'
+import Divider from "../common-components/divider"
 const ResultDetailsQuestionsPreview = ({
   textAnswer,
   status,
@@ -36,8 +36,8 @@ const ResultDetailsQuestionsPreview = ({
   )
   let flag = selectedOptions.map((selectedOptions: Option, index: number) => {
     return selectedOptions.option === correctOption[index]?.option
-      ? 'correct'
-      : 'incorrect'
+      ? "correct"
+      : "incorrect"
   })
   //checking if given and correct answers are correct in order
   const correctOrder = textAnswer.map(
@@ -53,14 +53,14 @@ const ResultDetailsQuestionsPreview = ({
         <div className="flex items-center gap-8">
           <div className="flex w-full items-center justify-between gap-2">
             <span className="text-xl font-medium text-gray-800">
-              {t('resultConstants.question')} {index}
+              {t("resultConstants.question")} {index}
             </span>
             <div className="flex items-center gap-8">
               <span className="rounded-52 border border-black px-3 py-1 text-xs font-medium text-gray-800">
                 {/* {show chip according to type of question} */}
                 {questionType.value === QuestionTypes.text
-                  ? t('resultConstants.text')
-                  : t('sectionsConstants.mcq')}
+                  ? t("resultConstants.text")
+                  : t("sectionsConstants.mcq")}
               </span>
               {/* {if question type is TEXT then
           CASE1: if ordered then show ordered front of question type
@@ -69,8 +69,8 @@ const ResultDetailsQuestionsPreview = ({
               {questionType.value === QuestionTypes.text && (
                 <span className="list-item text-xs font-semibold text-gray-800">
                   {checkOrder
-                    ? t('resultConstants.order')
-                    : t('resultConstants.unordered')}
+                    ? t("resultConstants.order")
+                    : t("resultConstants.unordered")}
                 </span>
               )}
             </div>
@@ -93,7 +93,7 @@ const ResultDetailsQuestionsPreview = ({
             <div className="flex flex-col gap-6">
               <div className="flex items-center justify-between">
                 <h3 className="text-xl font-medium text-gray-800">
-                  {t('resultConstants.givenAnswers')}
+                  {t("resultConstants.givenAnswers")}
                 </h3>
                 <div>
                   {((checkOrder === true &&
@@ -103,10 +103,10 @@ const ResultDetailsQuestionsPreview = ({
                       questionType.value === QuestionTypes.text &&
                       areEqualArrays(textAnswer, correctAnswersArray) ===
                         false) ||
-                    (flag.includes('incorrect') === true &&
+                    (flag.includes("incorrect") === true &&
                       questionType.value !== QuestionTypes.text)) && (
                     <span className="rounded-full bg-red-100 px-4 py-2 text-xs font-medium text-red-800">
-                      {t('resultConstants.wrong')}
+                      {t("resultConstants.wrong")}
                     </span>
                   )}
                   {((checkOrder === true &&
@@ -116,10 +116,10 @@ const ResultDetailsQuestionsPreview = ({
                       questionType.value === QuestionTypes.text &&
                       areEqualArrays(textAnswer, correctAnswersArray) ===
                         true) ||
-                    (flag.includes('incorrect') === false &&
+                    (flag.includes("incorrect") === false &&
                       questionType.value !== QuestionTypes.text)) && (
                     <span className="rounded-full bg-green-100 px-4 py-2 text-xs font-medium text-green-800">
-                      {t('resultConstants.correct')}
+                      {t("resultConstants.correct")}
                     </span>
                   )}
                 </div>
@@ -162,18 +162,18 @@ const ResultDetailsQuestionsPreview = ({
               (checkOrder === false &&
                 questionType.value === QuestionTypes.text &&
                 areEqualArrays(textAnswer, correctAnswersArray) === false) ||
-              (flag.includes('incorrect') === true &&
+              (flag.includes("incorrect") === true &&
                 questionType.value !== QuestionTypes.text)) && (
               <div className="flex flex-col gap-6">
                 <div className="flex flex-col gap-6">
                   <div className="flex flex-col gap-6">
                     <Divider height="1px" />
                     <h3 className="text-xl font-medium text-gray-800">
-                      {t('resultConstants.correctAnswer')}
+                      {t("resultConstants.correctAnswer")}
                     </h3>
                   </div>
                   {/* if MCQ is incorrect */}
-                  {flag.includes('incorrect') && (
+                  {flag.includes("incorrect") && (
                     <div className="flex flex-col gap-6">
                       {correctOption.map(
                         (correctOption: Option, index: number) => {
@@ -182,7 +182,7 @@ const ResultDetailsQuestionsPreview = ({
                               <div
                                 key={index}
                                 className={
-                                  'ql-editor flex h-full gap-2 break-normal rounded-lg border border-solid border-gray-300 bg-gray-50 p-4 text-base font-normal text-gray-600'
+                                  "ql-editor flex h-full gap-2 break-normal rounded-lg border border-solid border-gray-300 bg-gray-50 p-4 text-base font-normal text-gray-600"
                                 }
                                 dangerouslySetInnerHTML={{
                                   __html: `${correctOption?.option}`,
@@ -206,7 +206,7 @@ const ResultDetailsQuestionsPreview = ({
                               <div
                                 key={index}
                                 className={
-                                  'ql-editor flex h-full gap-2 break-normal rounded-lg border border-solid border-gray-300 bg-gray-50 p-4 text-gray-800'
+                                  "ql-editor flex h-full gap-2 break-normal rounded-lg border border-solid border-gray-300 bg-gray-50 p-4 text-gray-800"
                                 }
                               >
                                 {correctAnswer.answer}
@@ -243,10 +243,10 @@ const ResultDetailsQuestionsPreview = ({
           <div className="flex flex-col gap-6">
             <div className="flex items-center justify-between">
               <h3 className="text-xl font-medium text-gray-800">
-                {t('resultConstants.givenAnswers')}
+                {t("resultConstants.givenAnswers")}
               </h3>
               <span className="rounded-full bg-yellow-100 px-4 py-2 text-sm text-red-800">
-                {t('resultConstants.skipped')}
+                {t("resultConstants.skipped")}
               </span>
             </div>
 

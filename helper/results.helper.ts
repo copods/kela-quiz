@@ -1,4 +1,4 @@
-import { CorrectAnswer } from '~/interface/Interface'
+import { CorrectAnswer } from "~/interface/Interface"
 
 export function areEqualArrays(
   textAnswer: CorrectAnswer[],
