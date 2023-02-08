@@ -32,8 +32,9 @@ import {
 } from 'helper/tests.helper'
 
 export type ActionData = {
-  deleted: any
-  sectionId: any
+  path: string
+  deleted: string
+  sectionId: string
   errors?: {
     title?: string
     body?: string
@@ -182,8 +183,12 @@ export const action: ActionFunction = async ({ request, params }) => {
         }&testItems=${pagePerItems}`
       )
       return {
-        deleted: 'deleteOnlyItem',
-        sectionId: sectionId,
+        deleted: 'deleteLastTestOnPage',
+        path: `/${params.workspaceId}${
+          routes.tests
+        }/${sectionId}?${sortFilter}&testPage=${
+          Number(currentPage) - 1
+        }&testItems=${pagePerItems}`,
       }
     } else {
       if (sectionId) {
@@ -235,24 +240,13 @@ export default function SectionPage() {
     toast.error(t('statusCheck.commonError'))
   }
   useEffect(() => {
-    if (sectionActionData?.deleted === 'deleteOnlyItem') {
+    if (sectionActionData?.deleted === 'deleteLastTestOnPage') {
       toast.success(t('statusCheck.deletedSuccess'), {
         toastId: t('statusCheck.deletedSuccess'),
       })
-      setTimeout(() => {
-        navigate(
-          `/${data.currentWorkspaceId}${routes.tests}/${
-            sectionActionData?.sectionId
-          }?sortBy=${sortBy}&sort=${order}&testPage=${
-            testsCurrentPage - 1
-          }&testItems=${testsPageSize}`
-        )
-      }, 500)
-      navigate(
-        `/${data.currentWorkspaceId}${routes.tests}/${data.sections[0]?.id}?sortBy=${sortBy}&sort=${order}&testPage=${testsCurrentPage}&testItems=${testsPageSize}`
-      )
+      navigate(sectionActionData?.path)
     }
-  }, [sectionActionData?.sectionId])
+  }, [sectionActionData?.path])
 
   useEffect(() => {
     if (sectionActionData) {
@@ -279,7 +273,6 @@ export default function SectionPage() {
         })
         {
           sectionActionData.sectionId &&
-            sectionActionData?.deleted === 'deleted' &&
             navigate(
               `/${data.currentWorkspaceId}${routes.tests}/${sectionActionData?.sectionId}?sortBy=${sortBy}&sort=${order}&testPage=${testsCurrentPage}&testItems=${testsPageSize}`
             )
