@@ -80,6 +80,22 @@ const AddEditSection = ({
     addSection?.(name, description)
   }
 
+  const [err, setErr] = useState<string | undefined>('')
+  useEffect(() => {
+    localStorage.removeItem('err')
+    setErr('')
+  }, [open, sectionName])
+  useEffect(() => {
+    setErr(localStorage.getItem('err') || undefined)
+  }, [])
+
+  useEffect(() => {
+    if (sectionActionData?.errors?.title) {
+      setErr(sectionActionData?.errors?.title)
+      localStorage.setItem('err', sectionActionData?.errors?.title)
+      localStorage.removeItem
+    }
+  }, [sectionActionData?.errors?.title])
   return (
     <DialogWrapper
       open={open}
@@ -111,9 +127,9 @@ const AddEditSection = ({
             <p id="addEditSection-title-error" className="px-3 text-red-500">
               {t(sectionActionErrors.title)}
             </p>
-          ) : sectionActionData?.errors ? (
+          ) : err ? (
             <p id="duplicete-title-error" className="px-3 text-red-500">
-              {t(sectionActionData?.errors?.title)}
+              {t(err)}
             </p>
           ) : null}
         </div>
