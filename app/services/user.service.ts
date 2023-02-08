@@ -1,4 +1,5 @@
-import { json } from '@remix-run/node'
+import { json } from "@remix-run/node"
+
 import {
   createUserBySignUp,
   getUserById,
@@ -9,8 +10,9 @@ import {
   getUserByEmail,
   loginVerificationResponse,
   sendResetPassword,
-} from '~/models/user.server'
-import { createUserSession } from '~/session.server'
+  getAllUsersCount,
+} from "~/models/user.server"
+import { createUserSession } from "~/session.server"
 
 type ActionData = {
   errors?: {
@@ -48,9 +50,9 @@ export async function createUserBySignUP(
       })
     })
     .catch((err) => {
-      let title = 'statusCheck.commonError'
-      if (err.code === 'P2002') {
-        title = 'toastConstants.memberAlreadyExist'
+      let title = "statusCheck.commonError"
+      if (err.code === "P2002") {
+        title = "toastConstants.memberAlreadyExist"
       }
       return json<ActionData>(
         {
@@ -76,7 +78,7 @@ export async function deleteUserByID(
   return await deleteUserById(id, workspaceId, email)
     .then((res) => {
       return json<ActionData>(
-        { resp: { title: 'statusCheck.deletedSuccess', status: 200 } },
+        { resp: { title: "statusCheck.deletedSuccess", status: 200 } },
         { status: 200 }
       )
     })
@@ -84,7 +86,7 @@ export async function deleteUserByID(
       return json<ActionData>(
         {
           errors: {
-            title: 'statusCheck.commonError',
+            title: "statusCheck.commonError",
             status: 400,
           },
         },
@@ -95,6 +97,10 @@ export async function deleteUserByID(
 
 export async function getALLRoles() {
   return await getAllRoles()
+}
+
+export async function getALLUsersCount(currentWorkspaceId: string) {
+  return await getAllUsersCount(currentWorkspaceId)
 }
 
 export async function getALLUsers({
