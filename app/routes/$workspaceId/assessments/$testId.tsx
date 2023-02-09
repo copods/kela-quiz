@@ -3,23 +3,24 @@ import type { ActionFunction, LoaderFunction } from "@remix-run/server-runtime"
 import invariant from "tiny-invariant"
 
 import TestDetails from "~/components/tests/TestDetails"
-import { createCandidate } from "~/models/candidate.server"
-import { getTestById } from "~/models/tests.server"
-import { getUserWorkspaces } from "~/models/workspace.server"
+import {
+  getAssessmentById,
+  getCandidateByAssessmentId,
+  getWorkspaces,
+} from "~/services/assessments.service"
 import { getUserId, requireUserId } from "~/session.server"
 
 type LoaderData = {
-  testPreview: Awaited<ReturnType<typeof getTestById>>
-  workspaces: Awaited<ReturnType<typeof getUserWorkspaces>>
+  testPreview: Awaited<ReturnType<typeof getAssessmentById>>
+  workspaces: Awaited<ReturnType<typeof getWorkspaces>>
   currentWorkspaceId: string
 }
-
 export const loader: LoaderFunction = async ({ request, params }) => {
   const userId = await getUserId(request)
   const currentWorkspaceId = params.workspaceId as string
-  const workspaces = await getUserWorkspaces(userId as string)
+  const workspaces = await getWorkspaces(userId as string)
   invariant(params.testId, "testId not found")
-  const testPreview = await getTestById({ id: params.testId })
+  const testPreview = await getAssessmentById({ id: params.testId })
   if (!testPreview) {
     throw new Response("Not Found", { status: 404 })
   }
@@ -32,6 +33,7 @@ export const action: ActionFunction = async ({ request }) => {
   const testId = formData.get("inviteCandidates") as string
   formData.delete("inviteCandidates")
 
+  // creating candidate for assessment
   if (testId !== null) {
     let emails: Array<string> = []
     await formData.forEach((fd) => {
@@ -46,7 +48,7 @@ export const action: ActionFunction = async ({ request }) => {
         testId,
       })
     }
-    const candidateInviteStatus = await createCandidate({
+    const candidateInviteStatus = await getCandidateByAssessmentId({
       emails,
       createdById,
       testId,
