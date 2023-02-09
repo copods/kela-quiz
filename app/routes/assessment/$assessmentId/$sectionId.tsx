@@ -1,6 +1,6 @@
 import { useLoaderData } from "@remix-run/react"
-import type { ActionFunction, LoaderFunction } from "@remix-run/server-runtime"
 import { redirect } from "@remix-run/server-runtime"
+import type { ActionFunction, LoaderFunction } from "@remix-run/server-runtime"
 
 import SectionQuestionPage from "~/components/assessment/SectionQuestionPage"
 import {
@@ -9,7 +9,7 @@ import {
   getSectionInCandidateTest,
   getSectionInTest,
   moveToNextSection,
-} from "~/utils/assessment.utils"
+} from "~/services/assessment.service"
 
 export const loader: LoaderFunction = async ({ params, request }) => {
   const candidateNextRoute = await checkIfTestLinkIsValidAndRedirect(
