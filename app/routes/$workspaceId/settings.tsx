@@ -16,15 +16,12 @@ import SettingsTabs from "~/components/settings/SettingTab"
 import { actions } from "~/constants/action.constants"
 import { routes } from "~/constants/route.constants"
 import { addWorkspace, getUserWorkspaces } from "~/models/workspace.server"
-import {
-  getUserID,
-  createCurrentUserSession,
-} from "~/services/settings.service"
+import { createUserSession, getUserId } from "~/session.server"
 
 export type LoaderData = {
   workspaces: Awaited<ReturnType<typeof getUserWorkspaces>>
   currentWorkspaceId: string
-  userId: Awaited<ReturnType<typeof getUserID>>
+  userId: Awaited<ReturnType<typeof getUserId>>
 }
 export type ActionData = {
   errors?: {
@@ -39,7 +36,7 @@ export type ActionData = {
 }
 
 export const loader: LoaderFunction = async ({ request, params }) => {
-  const userId = await getUserID(request)
+  const userId = await getUserId(request)
   if (!userId) return redirect(routes.signIn)
   const currentWorkspaceId = params.workspaceId as string
   const workspaces = await getUserWorkspaces(userId as string)
@@ -55,8 +52,8 @@ export const action: ActionFunction = async ({ request }) => {
   const action = formData.get("action")
   if (action === actions.switchWorkspace) {
     const workspace = formData.get("workspaceId") as string
-    const userId = (await getUserID(request)) as string
-    return await createCurrentUserSession({
+    const userId = (await getUserId(request)) as string
+    return await createUserSession({
       request,
       workspace,
       userId,
@@ -67,7 +64,7 @@ export const action: ActionFunction = async ({ request }) => {
   if (action === actions.addWorkspace) {
     let addHandle = {}
     const workspaceName = formData.get("workspaceName") as string
-    const userId = (await getUserID(request)) as string
+    const userId = (await getUserId(request)) as string
     if (typeof workspaceName !== "string" || workspaceName.length === 0) {
       return json<ActionData>(
         {
