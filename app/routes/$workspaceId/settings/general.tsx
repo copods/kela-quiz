@@ -4,8 +4,9 @@ import { redirect } from "@remix-run/node"
 
 import GeneralSettings from "~/components/settings/GeneralSettings"
 import { routes } from "~/constants/route.constants"
-import { updatePassword } from "~/models/user.server"
+import { updateUserPassword } from "~/services/settings.service"
 import { getUserId } from "~/session.server"
+
 export type ActionData = {
   errors?: {
     status?: number
@@ -24,12 +25,14 @@ export type ActionData = {
 type LoaderData = {
   userId: Awaited<ReturnType<typeof getUserId>>
 }
+
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await getUserId(request)
   if (!userId) return redirect(routes.signIn)
 
   return json<LoaderData>({ userId })
 }
+
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData() // getting formData
   const action = formData.get("resetPassword") as string
@@ -78,7 +81,7 @@ export const action: ActionFunction = async ({ request }) => {
     }
     if (newPassword === confirmPasword) {
       // new password will be update if this condition is true
-      const general = await updatePassword(
+      const general = await updateUserPassword(
         userId as string,
         newPassword as string,
         oldPassword as string
