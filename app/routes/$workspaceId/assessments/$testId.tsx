@@ -4,7 +4,7 @@ import invariant from "tiny-invariant"
 import TestDetails from "~/components/tests/TestDetails"
 import {
   getAssessmentById,
-  getCandidateByAssessId,
+  getCandidateByAssessmentId,
   getRequiredUserId,
   getUsersId,
   getWorkspaces,
@@ -48,7 +48,7 @@ export const action: ActionFunction = async ({ request }) => {
         testId,
       })
     }
-    const candidateInviteStatus = await getCandidateByAssessId(
+    const candidateInviteStatus = await getCandidateByAssessmentId(
       emails,
       createdById,
       testId

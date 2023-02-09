@@ -82,7 +82,7 @@ export const deleteAssessmentById = async (id: string) => {
  * @param testId
  * @returns create candidate
  */
-export const getCandidateByAssessId = async (
+export const getCandidateByAssessmentId = async (
   emails: Array<string>,
   createdById: User["id"],
   testId: string

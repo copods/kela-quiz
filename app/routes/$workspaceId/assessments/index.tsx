@@ -6,7 +6,7 @@ import { routes } from "~/constants/route.constants"
 import type { Test } from "~/interface/Interface"
 import { sortByOrder } from "~/interface/Interface"
 import {
-  getCandidateByAssessId,
+  getCandidateByAssessmentId,
   deleteAssessmentById,
   getAllAssessments,
   getAllAssessmentsCount,
@@ -92,7 +92,7 @@ export const action: ActionFunction = async ({ request }) => {
         testId,
       })
     }
-    const candidateInviteStatus = await getCandidateByAssessId(
+    const candidateInviteStatus = await getCandidateByAssessmentId(
       emails,
       createdById,
       testId
