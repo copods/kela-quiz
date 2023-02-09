@@ -16,13 +16,13 @@ import SettingsTabs from "~/components/settings/SettingTab"
 import { actions } from "~/constants/action.constants"
 import { routes } from "~/constants/route.constants"
 import {
-  accquireUserWorkspaces,
+  getUserWorkspaceService,
   createWorkspace,
 } from "~/services/workspace.service"
 import { createUserSession, getUserId } from "~/session.server"
 
 export type LoaderData = {
-  workspaces: Awaited<ReturnType<typeof accquireUserWorkspaces>>
+  workspaces: Awaited<ReturnType<typeof getUserWorkspaceService>>
   currentWorkspaceId: string
   userId: Awaited<ReturnType<typeof getUserId>>
 }
@@ -43,7 +43,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const userId = await getUserId(request)
   if (!userId) return redirect(routes.signIn)
   const currentWorkspaceId = params.workspaceId as string
-  const workspaces = await accquireUserWorkspaces(userId as string)
+  const workspaces = await getUserWorkspaceService(userId as string)
   return json<LoaderData>({
     workspaces,
     currentWorkspaceId,

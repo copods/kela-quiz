@@ -113,6 +113,6 @@ export async function createWorkspace(workspace: string, userId: string) {
  * @param userId
  * @returns Object consisting workspaces of user
  */
-export async function accquireUserWorkspaces(userId: string) {
+export async function getUserWorkspaceService(userId: string) {
   return await getUserWorkspaces(userId)
 }
