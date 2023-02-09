@@ -1,7 +1,7 @@
-import { useNavigate } from '@remix-run/react'
-import { useTranslation } from 'react-i18next'
+import { useNavigate } from "@remix-run/react"
+import { useTranslation } from "react-i18next"
 
-import notFound from '~/../public/assets/404.svg'
+import notFound from "~/../public/assets/404.svg"
 
 const NotFound = () => {
   const { t } = useTranslation()
@@ -9,7 +9,7 @@ const NotFound = () => {
   const navigate = useNavigate()
 
   const navigateToHomepage = () => {
-    navigate('/')
+    navigate("/")
   }
 
   return (
@@ -18,23 +18,23 @@ const NotFound = () => {
         <div className="mb-4">
           <img
             src={notFound}
-            alt={t('404.notFound')}
+            alt={t("404.notFound")}
             className="h-cooldownSVG w-cooldownSVG"
           />
         </div>
         <div className="text-center leading-8">
-          <p className="text-2xl font-bold">{t('404.error')}</p>
-          <p className="text-2xl font-bold">{t('404.urlNotFound')}</p>
+          <p className="text-2xl font-bold">{t("404.error")}</p>
+          <p className="text-2xl font-bold">{t("404.urlNotFound")}</p>
           <div
             className="font-semibold text-primary underline"
             tabIndex={0}
             role="button"
             onClick={() => navigateToHomepage()}
             onKeyUp={(e) => {
-              if (e.key === 'Enter') navigateToHomepage()
+              if (e.key === "Enter") navigateToHomepage()
             }}
           >
-            {t('404.gotoDashboard')}
+            {t("404.gotoDashboard")}
           </div>
         </div>
       </div>

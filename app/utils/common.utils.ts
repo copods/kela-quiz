@@ -4,7 +4,7 @@
  * @returns boolean
  */
 
-import { RefObject } from 'react'
+import type { RefObject } from "react"
 
 export function isElementInViewport(
   element: RefObject<HTMLDivElement>,

@@ -1,7 +1,7 @@
-import { Icon } from '@iconify/react'
-import { Link, useLoaderData } from '@remix-run/react'
+import { Icon } from "@iconify/react"
+import { Link, useLoaderData } from "@remix-run/react"
 
-import TestPreview from './CreateTestPreview'
+import TestPreview from "./CreateTestPreview"
 const TestDetails = () => {
   const { testPreview, currentWorkspaceId } = useLoaderData()
   return (
@@ -33,7 +33,7 @@ const TestDetails = () => {
           description={testPreview.description}
           selectedSections={testPreview.sections}
           onSelectedSectionChange={function (e: any): void {
-            throw new Error('Function not implemented.')
+            throw new Error("Function not implemented.")
           }}
           isPreviewEditable={false}
           showInviteAction={true}
