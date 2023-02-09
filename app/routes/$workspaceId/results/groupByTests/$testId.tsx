@@ -55,11 +55,11 @@ export const action: ActionFunction = async ({ request }) => {
     const testId = formData.get("testId") as string
     const candidateId = formData.get("candidateId") as string
     const id = formData.get("id") as string
-    const candidateInviteStatus = await getTestResendLink(
+    const candidateInviteStatus = await getTestResendLink({
       id,
       candidateId,
-      testId
-    )
+      testId,
+    })
     return json({ candidateInviteStatus, candidateId })
   }
 }

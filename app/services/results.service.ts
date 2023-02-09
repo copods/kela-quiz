@@ -82,11 +82,15 @@ export const getALLCandidateTestsCount = async (
  * @param testId
  * @returns resend test link to candidate on mail
  */
-export const getTestResendLink = async (
-  id: string,
-  candidateId: string,
+export const getTestResendLink = async ({
+  id,
+  candidateId,
+  testId,
+}: {
+  id: string
+  candidateId: string
   testId: string
-) => {
+}) => {
   return await resendTestLink({
     id,
     candidateId,
