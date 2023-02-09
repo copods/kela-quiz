@@ -9,7 +9,6 @@ import {
   updateCandidateStatus,
 } from "~/models/result.server"
 import { getUserWorkspaces } from "~/models/workspace.server"
-import { getUserId } from "~/session.server"
 
 /**
  * this function will return all candidate tests
@@ -53,9 +52,6 @@ export const getWorkspaces = async (userId: string) => {
  * @param request
  * @returns userId
  */
-export const getUsersId = async (request: Request) => {
-  return await getUserId(request)
-}
 
 /**
  * this function will return total count of tests

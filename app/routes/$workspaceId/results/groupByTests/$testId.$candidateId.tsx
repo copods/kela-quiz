@@ -4,14 +4,14 @@ import invariant from "tiny-invariant"
 import ResultDetailsComponent from "~/components/results/ResultDetails"
 import {
   getSectionWiseResultsOFIndividualCandidate,
-  getUsersId,
   getWorkspaces,
   updateCandidateSTATUS,
 } from "~/services/results.service"
 import type { CandidateTest, Candidate } from "~/interface/Interface"
+import { getUserId } from "~/session.server"
 
 export const loader: LoaderFunction = async ({ request, params }) => {
-  const userId = await getUsersId(request)
+  const userId = await getUserId(request)
   const currentWorkspaceId = params.workspaceId as string
   const workspaces = await getWorkspaces(userId as string)
   invariant(params.testId, "resultId not found")

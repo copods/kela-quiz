@@ -2,21 +2,18 @@ import type { LoaderFunction } from "@remix-run/node"
 import { redirect } from "@remix-run/node"
 import { json } from "@remix-run/node"
 import GroupByTests from "~/components/results/GroupByTests"
-import {
-  getALLCandidateTests,
-  getUsersId,
-  getWorkspaces,
-} from "~/services/results.service"
+import { getALLCandidateTests, getWorkspaces } from "~/services/results.service"
 import { routes } from "~/constants/route.constants"
+import { getUserId } from "~/session.server"
 
 type LoaderData = {
   candidateTest: Awaited<ReturnType<typeof getALLCandidateTests>>
-  userId: Awaited<ReturnType<typeof getUsersId>>
+  userId: Awaited<ReturnType<typeof getUserId>>
   workspaces: Awaited<ReturnType<typeof getWorkspaces>>
   currentWorkspaceId: string
 }
 export const loader: LoaderFunction = async ({ request, params }) => {
-  const userId = await getUsersId(request)
+  const userId = await getUserId(request)
   const query = new URL(request.url).searchParams
   const currentWorkspaceId = params.workspaceId as string
   const resultsItemsPerPage = Math.max(Number(query.get("limit") || 5), 5) //To set the lower bound, so that minimum count will always be 1 for current page and 5 for items per page.

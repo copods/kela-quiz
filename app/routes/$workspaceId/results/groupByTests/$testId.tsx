@@ -7,10 +7,10 @@ import {
   getALLCandidatesOfTest,
   getALLCandidatesOfTestCount,
   getTestResendLink,
-  getUsersId,
   getWorkspaces,
 } from "~/services/results.service"
 import { actions } from "~/constants/action.constants"
+import { getUserId } from "~/session.server"
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   const url = new URL(request.url)
@@ -22,7 +22,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     params.testId!,
     statusFilter
   )
-  const userId = await getUsersId(request)
+  const userId = await getUserId(request)
   const currentWorkspaceId = params.workspaceId
   const workspaces = await getWorkspaces(userId as string)
   invariant(params.testId, "resultId not found")
