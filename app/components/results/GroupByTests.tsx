@@ -40,7 +40,7 @@ const filterByStatus = [
 ]
 const GroupByTests = () => {
   const { t } = useTranslation()
-  const { toSetCustomStorage } = useCommonContext()
+  const { toSetCustomStorage, toGetStoredValue } = useCommonContext()
   const navigate = useNavigate()
   const candidateTestData = useLoaderData()
   const [sortDirection, onSortDirectionChange] = useState(
@@ -53,13 +53,13 @@ const GroupByTests = () => {
     candidateTestData.resultsCurrentPage
   )
   const [sortBy, onSortChange] = useState(
-    toSetCustomStorage('sortByDetails')
-      ? toSetCustomStorage('sortByDetails')?.value
+    toGetStoredValue('sortByDetails')
+      ? toGetStoredValue('sortByDetails')?.value
       : sortByDetails[1].value
   )
   const [statusFilter, setStatusFilter] = useState(
-    toSetCustomStorage('filterByStatus')
-      ? toSetCustomStorage('filterByStatus')?.value
+    toGetStoredValue('filterByStatus')
+      ? toGetStoredValue('filterByStatus')?.value
       : filterByStatus[1].value
   )
 
