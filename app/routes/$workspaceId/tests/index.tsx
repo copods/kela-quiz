@@ -1,14 +1,15 @@
 import { json } from "@remix-run/node"
 import type { LoaderFunction } from "@remix-run/server-runtime"
+
 import {
-  getALLSections,
+  getALLTest,
   getALLUsers,
   getWorkspaces,
 } from "~/services/tests.service"
 import { getUserId } from "~/session.server"
 
 type LoaderData = {
-  sections: Awaited<ReturnType<typeof getALLSections>>
+  sections: Awaited<ReturnType<typeof getALLTest>>
   users: Awaited<ReturnType<typeof getALLUsers>>
   workspaces: Awaited<ReturnType<typeof getWorkspaces>>
   currentWorkspaceId: string
@@ -18,7 +19,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const userId = await getUserId(request)
   const currentWorkspaceId = params.workspaceId as string
   const workspaces = await getWorkspaces(userId as string)
-  const sections = await getALLSections(currentWorkspaceId as string)
+  const sections = await getALLTest(currentWorkspaceId as string)
   const users = await getALLUsers(currentWorkspaceId)
   return json<LoaderData>({ sections, users, workspaces, currentWorkspaceId })
 }

@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react"
+
 import { Icon } from "@iconify/react"
 import { json } from "@remix-run/node"
 import {
@@ -13,6 +14,7 @@ import type { ActionFunction, LoaderFunction } from "@remix-run/server-runtime"
 import { redirect } from "@remix-run/server-runtime"
 import { useTranslation } from "react-i18next"
 import { toast } from "react-toastify"
+
 import Button from "~/components/common-components/Button"
 import EmptyStateComponent from "~/components/common-components/EmptyStateComponent"
 import AddEditSection from "~/components/sections/AddEditSection"
@@ -21,16 +23,16 @@ import { routes } from "~/constants/route.constants"
 import { sortByOrder } from "~/interface/Interface"
 import type { sectionActionErrorsType } from "~/interface/Interface"
 import type { Section } from "~/interface/Interface"
-import { getUserId, requireUserId } from "~/session.server"
 import {
   getALLtestsCount,
-  getAllSectionsData,
+  getAllTestsData,
   getFirstTest,
   getWorkspaces,
-  handleAddSection,
-  handleDeleteSection,
-  handleEditSection,
+  handleAddTest,
+  handleDeleteTest,
+  handleEditTest,
 } from "~/services/tests.service"
+import { getUserId, requireUserId } from "~/session.server"
 
 export type ActionData = {
   path: string
@@ -91,7 +93,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     // import function from helper which return number of sections based on
     // sort : sortBy ('name' / 'Created Date')
     // PaginationData : current page number (testCurrentPage) and number of items per page(testItemsPerPage)
-    await getAllSectionsData(
+    await getAllTestsData(
       sortBy,
       sortOrder,
       currentWorkspaceId as string,
@@ -136,7 +138,7 @@ export const action: ActionFunction = async ({ request, params }) => {
   if (action === "sectionAdd") {
     const name = formData.get("name") as string
     const description = formData.get("description") as string
-    const response = await handleAddSection(
+    const response = await handleAddTest(
       name,
       description,
       createdById,
@@ -148,7 +150,7 @@ export const action: ActionFunction = async ({ request, params }) => {
     const name = formData.get("name") as string
     const description = formData.get("description") as string
     const id = formData.get("id") as string
-    const response = await handleEditSection(name, description, id)
+    const response = await handleEditTest(name, description, id)
     return response
   }
 
@@ -158,7 +160,7 @@ export const action: ActionFunction = async ({ request, params }) => {
     const totalItems = formData.get("totalSectionsOnCurrentPage") as string
     const sortFilter = formData.get("filter") as string
     const deleteSectionId = formData.get("id") as string
-    await handleDeleteSection(deleteSectionId)
+    await handleDeleteTest(deleteSectionId)
 
     const sectionId = await getFirstTest(
       sortFilter
