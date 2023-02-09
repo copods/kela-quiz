@@ -5,6 +5,7 @@ import {
   deleteTestById,
   getAllTests,
   getAllTestsCount,
+  getTestById,
 } from "~/models/tests.server"
 import { getUserWorkspaces } from "~/models/workspace.server"
 import { getUserId, requireUserId } from "~/session.server"
@@ -30,7 +31,7 @@ export type ActionData = {
  * @param cb
  * @returns all Assessments data
  */
-export const getAllAssessments = (
+export const getAllAssessments = async (
   sortBy: string,
   sortOrder: string,
   currentWorkspaceId: string,
@@ -38,7 +39,7 @@ export const getAllAssessments = (
   testsCurrentPage: number,
   cb: any
 ) => {
-  return getAllTests(
+  return await getAllTests(
     sortBy as string,
     sortOrder as string,
     currentWorkspaceId as string,
@@ -59,7 +60,7 @@ export const getAllAssessments = (
  */
 
 export const deleteAssessmentById = async (id: string) => {
-  const deletedHandle = deleteTestById(id)
+  const deletedHandle = await deleteTestById(id)
     .then((res) => {
       return json<ActionData>(
         { resp: { statusCode: 200, message: "statusCheck.deletedSuccess" } },
@@ -81,7 +82,7 @@ export const deleteAssessmentById = async (id: string) => {
  * @param testId
  * @returns create candidate
  */
-export const createCandidateByAssessId = async (
+export const getCandidateByAssessId = async (
   emails: Array<string>,
   createdById: User["id"],
   testId: string
@@ -119,4 +120,8 @@ export const getRequiredUserId = async (request: Request) => {
 
 export const getUsersId = async (request: Request) => {
   return await getUserId(request)
+}
+
+export const getAssessmentById = async (id: string) => {
+  return await getTestById(id)
 }

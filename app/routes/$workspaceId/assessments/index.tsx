@@ -5,9 +5,8 @@ import TestList from "~/components/tests/TestList"
 import { routes } from "~/constants/route.constants"
 import type { Test } from "~/interface/Interface"
 import { sortByOrder } from "~/interface/Interface"
-import { getUserWorkspaces } from "~/models/workspace.server"
 import {
-  createCandidateByAssessId,
+  getCandidateByAssessId,
   deleteAssessmentById,
   getAllAssessments,
   getAllAssessmentsCount,
@@ -18,7 +17,7 @@ import {
 type LoaderData = {
   tests: Awaited<Array<Test>>
   status?: string | undefined
-  workspaces: Awaited<ReturnType<typeof getUserWorkspaces>>
+  workspaces: Awaited<ReturnType<typeof getWorkspaces>>
   currentWorkspaceId: string
   allTestsCount: number
   testsCurrentPage: number
@@ -93,7 +92,7 @@ export const action: ActionFunction = async ({ request }) => {
         testId,
       })
     }
-    const candidateInviteStatus = await createCandidateByAssessId(
+    const candidateInviteStatus = await getCandidateByAssessId(
       emails,
       createdById,
       testId

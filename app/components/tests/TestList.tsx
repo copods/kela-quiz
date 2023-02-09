@@ -31,7 +31,6 @@ const TestList = () => {
   //loader and action data
   const testLoaderData = useLoaderData()
   const testActionData = useActionData()
-  console.log(testActionData, "testActionData")
   if (t(testLoaderData.status as string) != t("statusCheck.success")) {
     toast.warn(t("statusCheck.commonError"))
   }
