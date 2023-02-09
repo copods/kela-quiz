@@ -218,7 +218,7 @@ export const handleEditTest = async (
 
 /**
  * Function will delete the test by id
- * @param deleteSectionId
+ * @param deleteTestId
  * @returns update the section status from deleted false to deleted true
  */
 export const handleDeleteTest = async (deleteTestId: string) => {
