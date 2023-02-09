@@ -116,7 +116,7 @@ export interface User {
   roleId: string
   createdAt: Date
   updatedAt: Date
-  workspace: Array<Workspace>
+  workspace?: Array<Workspace>
 }
 export interface Invites {
   id: string
