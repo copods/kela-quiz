@@ -144,11 +144,13 @@ export interface Role {
 }
 
 export interface Question {
+  checkOrder: boolean
   id: string
   question: string
-  correctAnswer?: Array<CorrectAnswer>
+  correctAnswer: Array<CorrectAnswer>
   marks?: number
-  questionTypeId?: string
+  questionTypeId: string
+  questionType: QuestionType
   sectionId?: string
   createdById?: string
   createdBy: User
@@ -157,7 +159,7 @@ export interface Question {
   deleted: boolean
   deletedAt: string
   options?: Array<Option>
-  correctOptions?: Array<Option>
+  correctOptions: Array<Option>
 }
 
 export interface Test {
@@ -230,7 +232,6 @@ export interface CandidateTest {
 }
 
 export interface SectionInCandidateTest {
-  question: any
   selectedOptions: Option[]
   answers: CorrectAnswer[]
   status: string
@@ -268,6 +269,7 @@ export interface CandidateQuestion {
   answeredAt: Date | null
   createdAt: Date
   updatedAt: Date
+  question: Question
 }
 
 export interface CandidateResult {

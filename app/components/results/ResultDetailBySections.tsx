@@ -1,9 +1,12 @@
 import { Icon } from "@iconify/react"
 import { useLoaderData, useNavigate } from "@remix-run/react"
-import { routes } from "~/constants/route.constants"
-import ResultDetailsQuestionsPreview from "./ResultDetailsQuestionsPreview"
+
 import Divider from "../common-components/divider"
-import type { SectionInCandidateTest } from "~/interface/Interface"
+
+import ResultDetailsQuestionsPreview from "./ResultDetailsQuestionsPreview"
+
+import { routes } from "~/constants/route.constants"
+import type { Question, SectionInCandidateTest } from "~/interface/Interface"
 
 const ResultDetailBySections = () => {
   const resultDetailsLoaderData = useLoaderData()
@@ -50,7 +53,10 @@ const ResultDetailBySections = () => {
       </header>
       <div className="flex flex-col gap-6">
         {sectionDetail.questions.map(
-          (questions: SectionInCandidateTest, index: number) => {
+          (
+            questions: SectionInCandidateTest & { question: Question },
+            index: number
+          ) => {
             return (
               <ResultDetailsQuestionsPreview
                 key={questions.id}

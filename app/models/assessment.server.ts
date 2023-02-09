@@ -11,6 +11,7 @@ import type {
 import { sendMailToRecruiter, sendOTPMail } from "./sendgrid.servers"
 
 import { prisma } from "~/db.server"
+import { QuestionTypes } from "~/interface/Interface"
 
 export async function checkIfTestLinkIsValid(id: CandidateTest["id"]) {
   try {
@@ -652,10 +653,10 @@ async function calculateResultBySectionId(sectionid?: string) {
         continue
       }
 
-      if (question?.question?.questionType?.value === "TEXT") {
+      if (question?.question?.questionType?.value === QuestionTypes.text) {
         const checkOrder = question?.question?.checkOrder
         let correctOrder
-        if (checkOrder === true) {
+        if (checkOrder) {
           correctOrder = question?.answers.map(
             (textAnswer: string, index: number) => {
               return (
@@ -693,7 +694,9 @@ async function calculateResultBySectionId(sectionid?: string) {
             correct += 1
           }
         }
-      } else if (question?.question?.questionType?.value === "SINGLE_CHOICE") {
+      } else if (
+        question?.question?.questionType?.value === QuestionTypes.singleChoice
+      ) {
         if (
           question?.selectedOptions[0].id ===
           question?.question?.correctOptions[0].id
@@ -703,7 +706,7 @@ async function calculateResultBySectionId(sectionid?: string) {
           incorrect += 1
         }
       } else if (
-        question?.question?.questionType?.value === "MULTIPLE_CHOICE"
+        question?.question?.questionType?.value === QuestionTypes.multipleChoice
       ) {
         const correctOptionsId = question?.question?.correctOptions
           ?.flatMap((opt) => opt?.id)

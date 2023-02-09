@@ -1,4 +1,4 @@
-import { CorrectAnswer } from "~/interface/Interface"
+import type { CorrectAnswer } from "~/interface/Interface"
 
 export function areEqualArrays(
   textAnswer: CorrectAnswer[],
@@ -8,7 +8,7 @@ export function areEqualArrays(
   let correctAnswersArrayLength = correctAnswersArray.length
 
   // If lengths of array are not equal means
-  // array are not equal
+  // Answers are not equal
   if (textAnswerArrayLength != correctAnswersArrayLength) return false
 
   // Sort both arrays

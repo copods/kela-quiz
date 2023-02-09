@@ -1,14 +1,11 @@
-import { areEqualArrays } from "helper/results.helper"
 import { useTranslation } from "react-i18next"
-import {
-  Option,
-  CorrectAnswer,
-  QuestionType,
-  QuestionTypes,
-  QuestionStatus,
-} from "~/interface/Interface"
 
 import Divider from "../common-components/divider"
+
+import { areEqualArrays } from "helper/results.helper"
+import type { Option, CorrectAnswer, QuestionType } from "~/interface/Interface"
+import { QuestionTypes, QuestionStatus } from "~/interface/Interface"
+
 const ResultDetailsQuestionsPreview = ({
   textAnswer,
   status,

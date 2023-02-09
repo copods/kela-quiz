@@ -224,7 +224,7 @@
   },
   "resultConstants": {
     "order": "Order",
-    "unordered": "unordered",
+    "unordered": "Unordered",
     "totalInvited": "Invited",
     "totalAttended": "Attended",
     "noAssessmentAlert": "No assessment found. Add your assessment first",
@@ -242,12 +242,12 @@
     "resendAssessmentInvite": "Resend assessment Invite Icon",
     "unanswered": "Unanswered",
     "incorrect": "Incorrect",
-    "viewDetails": "View details",
+    "viewDetails": "View Details",
     "correctAnswer": "Correct Answer",
     "copyLink": "Copy Link",
     "text": "TEXT",
     "question": "Question",
-    "givenAnswers": "Given answers",
+    "givenAnswers": "Given Answers",
     "wrong": "Wrong"
   },
   "forgotPasswordConstants": {
