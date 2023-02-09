@@ -4,7 +4,8 @@ import { redirect } from "@remix-run/node"
 
 import GeneralSettings from "~/components/settings/GeneralSettings"
 import { routes } from "~/constants/route.constants"
-import { getUserID, updateUserPassword } from "~/services/settings.service"
+import { updateUserPassword } from "~/services/settings.service"
+import { getUserId } from "~/session.server"
 
 export type ActionData = {
   errors?: {
@@ -22,11 +23,11 @@ export type ActionData = {
 }
 
 type LoaderData = {
-  userId: Awaited<ReturnType<typeof getUserID>>
+  userId: Awaited<ReturnType<typeof getUserId>>
 }
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const userId = await getUserID(request)
+  const userId = await getUserId(request)
   if (!userId) return redirect(routes.signIn)
 
   return json<LoaderData>({ userId })
@@ -37,7 +38,7 @@ export const action: ActionFunction = async ({ request }) => {
   const action = formData.get("resetPassword") as string
   if (action === "resetPassword") {
     // action will perform if match with specific formData
-    const userId = await getUserID(request)
+    const userId = await getUserId(request)
     const oldPassword = formData.get("oldPassword")
     const newPassword = formData.get("newPassword")
     const confirmPasword = formData.get("confirmNewPassword")
