@@ -82,11 +82,15 @@ export const deleteAssessmentById = async (id: string) => {
  * @param testId
  * @returns create candidate
  */
-export const getCandidateByAssessmentId = async (
-  emails: Array<string>,
-  createdById: User["id"],
+export const getCandidateByAssessmentId = async ({
+  emails,
+  createdById,
+  testId,
+}: {
+  emails: Array<string>
+  createdById: User["id"]
   testId: string
-) => {
+}) => {
   return await createCandidate({
     emails,
     createdById,
@@ -110,6 +114,6 @@ export const getWorkspaces = async (userId: string) => {
   return await getUserWorkspaces(userId)
 }
 
-export const getAssessmentById = async (id: string) => {
-  return await getTestById(id)
+export const getAssessmentById = async ({ id }: { id: string }) => {
+  return await getTestById({ id })
 }

@@ -18,9 +18,9 @@ type LoaderData = {
 export const loader: LoaderFunction = async ({ request, params }) => {
   const userId = await getUserId(request)
   const currentWorkspaceId = params.workspaceId as string
-  const workspaces = await getWorkspaces(userId as unknown as string)
+  const workspaces = await getWorkspaces(userId as string)
   invariant(params.testId, "testId not found")
-  const testPreview = await getAssessmentById(params.testId)
+  const testPreview = await getAssessmentById({ id: params.testId })
   if (!testPreview) {
     throw new Response("Not Found", { status: 404 })
   }
@@ -48,11 +48,11 @@ export const action: ActionFunction = async ({ request }) => {
         testId,
       })
     }
-    const candidateInviteStatus = await getCandidateByAssessmentId(
+    const candidateInviteStatus = await getCandidateByAssessmentId({
       emails,
       createdById,
-      testId
-    )
+      testId,
+    })
 
     return json({ candidateInviteStatus, testId })
   }

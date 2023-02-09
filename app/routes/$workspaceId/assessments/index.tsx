@@ -92,11 +92,11 @@ export const action: ActionFunction = async ({ request }) => {
         testId,
       })
     }
-    const candidateInviteStatus = await getCandidateByAssessmentId(
+    const candidateInviteStatus = await getCandidateByAssessmentId({
       emails,
       createdById,
-      testId
-    )
+      testId,
+    })
 
     return json({ candidateInviteStatus, testId })
   }
