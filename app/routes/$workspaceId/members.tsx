@@ -15,13 +15,13 @@ import {
   getAllInvitedMember,
   getAllInvitedMemberCount,
 } from "~/models/invites.server"
-import type { User } from "~/models/user.server"
 import {
   getAllRoles,
   getAllUsers,
   getAllUsersCount,
   getUserById,
 } from "~/models/user.server"
+import type { User } from "~/models/user.server"
 import {
   getCurrentWorkspaceOwner,
   getUserWorkspaces,

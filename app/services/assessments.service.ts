@@ -1,5 +1,6 @@
-import { User } from "@prisma/client"
+import type { User } from "@prisma/client"
 import { json } from "@remix-run/node"
+
 import { createCandidate } from "~/models/candidate.server"
 import {
   deleteTestById,
