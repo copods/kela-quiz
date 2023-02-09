@@ -1,14 +1,16 @@
-import type { LoaderFunction, ActionFunction } from "@remix-run/server-runtime"
-import { json } from "@remix-run/node"
-import { getSectionById } from "~/models/sections.server"
-import invariant from "tiny-invariant"
-import SectionDetails from "~/components/sections/SectionDetails"
-import { deleteQuestionById } from "~/models/sections.server"
-import { useActionData } from "@remix-run/react"
-import { toast } from "react-toastify"
-import { useTranslation } from "react-i18next"
 import { useEffect } from "react"
+
+import { json } from "@remix-run/node"
+import { useActionData } from "@remix-run/react"
+import type { LoaderFunction, ActionFunction } from "@remix-run/server-runtime"
+import { useTranslation } from "react-i18next"
+import { toast } from "react-toastify"
+import invariant from "tiny-invariant"
+
+import SectionDetails from "~/components/sections/SectionDetails"
 import { actions } from "~/constants/action.constants"
+import { getSectionById } from "~/models/sections.server"
+import { deleteQuestionById } from "~/models/sections.server"
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   invariant(params.sectionId, "sectionId not found")
@@ -35,9 +37,9 @@ export default function Section() {
   const section = useActionData()
 
   useEffect(() => {
-    if (section) {
+    if (section === "deleted") {
       toast.success(t("statusCheck.deletedSuccess"))
-    } else if (section === false) {
+    } else if (section === "not deleted") {
       toast.error(t("sectionsConstants.questionNotDeleted"), {
         toastId: "sectionsConstants.questionNotDeleted",
       })

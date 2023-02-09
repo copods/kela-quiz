@@ -251,7 +251,7 @@ export async function deleteQuestionById(id: string) {
     if (
       questionData.section.questions?.length <= Math.max(...totalQuestionArray)
     ) {
-      return false
+      return "not deleted"
     }
   }
 
@@ -264,5 +264,7 @@ export async function deleteQuestionById(id: string) {
       deletedAt: new Date().toString(),
     },
   })
-  return deleteQuestion
+  if (deleteQuestion) {
+    return "deleted"
+  }
 }
