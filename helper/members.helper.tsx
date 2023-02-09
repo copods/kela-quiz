@@ -43,6 +43,7 @@ export const inviteNewMember = async (
   userId: string
 ) => {
   const getUser = await getUserById(userId as string)
+  // eslint-disable-next-line no-useless-escape
   const emailFilter = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
 
   if (typeof email !== "string" || email.length === 0) {
