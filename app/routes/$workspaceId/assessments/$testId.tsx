@@ -20,7 +20,6 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const currentWorkspaceId = params.workspaceId as string
   const workspaces = await getWorkspaces(userId as unknown as string)
   invariant(params.testId, "testId not found")
-  console.log(params.testId)
   const testPreview = await getAssessmentById(params.testId)
   if (!testPreview) {
     throw new Response("Not Found", { status: 404 })
