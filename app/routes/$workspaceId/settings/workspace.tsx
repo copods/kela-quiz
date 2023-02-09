@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 
-import { json } from "@remix-run/node"
 import type { LoaderFunction, ActionFunction } from "@remix-run/node"
+import { json } from "@remix-run/node"
 import { useActionData, useLoaderData, useNavigate } from "@remix-run/react"
 import { t } from "i18next"
 import { toast } from "react-toastify"
@@ -10,32 +10,23 @@ import { routes } from "../../../constants/route.constants"
 
 import Workspace from "~/components/settings/Workspace"
 import {
-  getCurrentWorkspaceOwner,
-  getOwnersWorkspaces,
-  leaveWorkspace,
-} from "~/models/workspace.server"
+  getActiveOwnerWorkspaces,
+  getActiveWorkspaceOwner,
+  leaveActiveWorkspace,
+} from "~/services/workspace.service"
 import { getUserId } from "~/session.server"
+
 interface LoaderData {
-  workspaceOwner: Awaited<ReturnType<typeof getCurrentWorkspaceOwner>>
-  ownersWorkspaces: Awaited<ReturnType<typeof getOwnersWorkspaces>>
+  workspaceOwner: Awaited<ReturnType<typeof getActiveWorkspaceOwner>>
+  ownersWorkspaces: Awaited<ReturnType<typeof getActiveOwnerWorkspaces>>
   currentWorkspaceId: string
-}
-export type ActionData = {
-  errors?: {
-    title: string
-    status: number
-  }
-  resp?: {
-    title: string
-    status: number
-  }
 }
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   const currentWorkspaceId = params.workspaceId as string
   const userId = (await getUserId(request)) as string
-  const workspaceOwner = await getCurrentWorkspaceOwner(currentWorkspaceId)
-  const ownersWorkspaces = await getOwnersWorkspaces(userId)
+  const workspaceOwner = await getActiveWorkspaceOwner(currentWorkspaceId)
+  const ownersWorkspaces = await getActiveOwnerWorkspaces(userId)
   return json<LoaderData>({
     workspaceOwner,
     ownersWorkspaces,
@@ -45,30 +36,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 export const action: ActionFunction = async ({ request, params }) => {
   const workspaceId = params.workspaceId as string
   const userId = (await getUserId(request)) as string
-  const response = await leaveWorkspace(workspaceId, userId)
-    .then((res) => {
-      return json<ActionData>(
-        {
-          resp: {
-            title: "members.workspaceLeft",
-            status: 200,
-          },
-        },
-        { status: 200 }
-      )
-    })
-    .catch((err) => {
-      let title = "statusCheck.commonError"
-      return json<ActionData>(
-        {
-          errors: {
-            title,
-            status: 400,
-          },
-        },
-        { status: 400 }
-      )
-    })
+  const response = await leaveActiveWorkspace(workspaceId, userId)
   return response
 }
 const WorkspaceSetting = () => {
