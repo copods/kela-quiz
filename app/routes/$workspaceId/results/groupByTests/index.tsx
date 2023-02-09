@@ -5,22 +5,24 @@ import { json } from "@remix-run/node"
 import GroupByTests from "~/components/results/GroupByTests"
 import { sortByOrder } from "~/interface/Interface"
 import {
-  getAllCandidateTests,
-  getAllCandidateTestsCount,
-  getTotalTestCount,
-} from "~/models/result.server"
-import { getUserWorkspaces } from "~/models/workspace.server"
+  getALLCandidateTests,
+  getALLCandidateTestsCount,
+  getTotalTestCounts,
+  getWorkspaces,
+} from "~/services/results.service"
 import { getUserId } from "~/session.server"
+
 type LoaderData = {
-  candidateTest: Awaited<ReturnType<typeof getAllCandidateTests>>
+  candidateTest: Awaited<ReturnType<typeof getALLCandidateTests>>
   userId: Awaited<ReturnType<typeof getUserId>>
-  workspaces: Awaited<ReturnType<typeof getUserWorkspaces>>
+  workspaces: Awaited<ReturnType<typeof getWorkspaces>>
   currentWorkspaceId: string
   resultsItemsPerPage: number
   resultsCurrentPage: number
   testCount: number
   totalTestCount: number
 }
+
 export const loader: LoaderFunction = async ({ request, params }) => {
   const userId = await getUserId(request)
   const query = new URL(request.url).searchParams
@@ -30,14 +32,14 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const sortBy = query.get("sortBy")
   const sortOrder = query.get("sort") || sortByOrder.desc
   const currentWorkspaceId = params.workspaceId as string
-  const testCount = await getAllCandidateTestsCount(
+  const testCount = await getALLCandidateTestsCount(
     currentWorkspaceId,
     statusFilter
   )
-  const totalTestCount = await getTotalTestCount(params.testId!)
-  const workspaces = await getUserWorkspaces(userId as string)
+  const totalTestCount = await getTotalTestCounts(params.testId!)
+  const workspaces = await getWorkspaces(userId as string)
   if (!userId) return redirect("/sign-in")
-  const candidateTest = await getAllCandidateTests(
+  const candidateTest = await getALLCandidateTests(
     currentWorkspaceId as string,
     resultsItemsPerPage,
     resultsCurrentPage,
