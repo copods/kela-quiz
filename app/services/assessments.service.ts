@@ -8,7 +8,6 @@ import {
   getTestById,
 } from "~/models/tests.server"
 import { getUserWorkspaces } from "~/models/workspace.server"
-import { getUserId, requireUserId } from "~/session.server"
 
 //* types for ActionData
 export type ActionData = {
@@ -108,18 +107,6 @@ export const getAllAssessmentsCount = async (currentWorkspaceId: string) => {
  */
 export const getWorkspaces = async (userId: string) => {
   return await getUserWorkspaces(userId)
-}
-
-/**
- * @param request
- * @returns this function will return userId
- */
-export const getRequiredUserId = async (request: Request) => {
-  return await requireUserId(request)
-}
-
-export const getUsersId = async (request: Request) => {
-  return await getUserId(request)
 }
 
 export const getAssessmentById = async (id: string) => {

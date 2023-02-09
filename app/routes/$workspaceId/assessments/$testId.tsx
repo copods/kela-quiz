@@ -5,10 +5,9 @@ import TestDetails from "~/components/tests/TestDetails"
 import {
   getAssessmentById,
   getCandidateByAssessmentId,
-  getRequiredUserId,
-  getUsersId,
   getWorkspaces,
 } from "~/services/assessments.service"
+import { getUserId, requireUserId } from "~/session.server"
 
 type LoaderData = {
   testPreview: Awaited<ReturnType<typeof getAssessmentById>>
@@ -16,7 +15,7 @@ type LoaderData = {
   currentWorkspaceId: string
 }
 export const loader: LoaderFunction = async ({ request, params }) => {
-  const userId = await getUsersId(request)
+  const userId = await getUserId(request)
   const currentWorkspaceId = params.workspaceId as string
   const workspaces = await getWorkspaces(userId as unknown as string)
   invariant(params.testId, "testId not found")
@@ -29,7 +28,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 }
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
-  const createdById = await getRequiredUserId(request)
+  const createdById = await requireUserId(request)
   const testId = formData.get("inviteCandidates") as string
   formData.delete("inviteCandidates")
 

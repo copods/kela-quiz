@@ -10,10 +10,9 @@ import {
   deleteAssessmentById,
   getAllAssessments,
   getAllAssessmentsCount,
-  getRequiredUserId,
-  getUsersId,
   getWorkspaces,
 } from "~/services/assessments.service"
+import { getUserId, requireUserId } from "~/session.server"
 type LoaderData = {
   tests: Awaited<Array<Test>>
   status?: string | undefined
@@ -27,7 +26,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const query = new URL(request.url).searchParams
   const testsItemsPerPage = Math.max(Number(query.get("limit") || 5), 5) //To set the lower bound, so that minimum count will always be 1 for current page and 5 for items per page.
   const testsCurrentPage = Math.max(Number(query.get("page") || 1), 1)
-  const userId = await getUsersId(request)
+  const userId = await getUserId(request)
   const currentWorkspaceId = params.workspaceId as string
   const workspaces = await getWorkspaces(userId as string)
   if (!userId) return redirect(routes.signIn)
@@ -66,7 +65,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
   const action = formData.get("action")
-  const createdById = await getRequiredUserId(request)
+  const createdById = await requireUserId(request)
   const testId = formData.get("inviteCandidates") as string
 
   formData.delete("inviteCandidates")
