@@ -1,7 +1,6 @@
 import type { LoaderFunction } from "@remix-run/node"
 import { redirect } from "@remix-run/node"
 import { json } from "@remix-run/node"
-
 import GroupByTests from "~/components/results/GroupByTests"
 import {
   getALLCandidateTests,
@@ -9,18 +8,20 @@ import {
   getTotalTestCounts,
   getUsersId,
   getWorkspaces,
-} from "~/components/services/results.service"
+} from "~/services/results.service"
 import { sortByOrder } from "~/interface/Interface"
+
 type LoaderData = {
-  candidateTest: any
-  userId: any
-  workspaces: any
+  candidateTest: Awaited<ReturnType<typeof getALLCandidateTests>>
+  userId: Awaited<ReturnType<typeof getUsersId>>
+  workspaces: Awaited<ReturnType<typeof getWorkspaces>>
   currentWorkspaceId: string
   resultsItemsPerPage: number
   resultsCurrentPage: number
   testCount: number
   totalTestCount: number
 }
+
 export const loader: LoaderFunction = async ({ request, params }) => {
   const userId = await getUsersId(request)
   const query = new URL(request.url).searchParams

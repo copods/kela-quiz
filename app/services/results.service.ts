@@ -12,16 +12,16 @@ import { getUserWorkspaces } from "~/models/workspace.server"
 import { getUserId } from "~/session.server"
 
 /**
- *
+ * this function will return all candidate tests
  * @param currentWorkspaceId
  * @param resultsItemsPerPage
  * @param resultsCurrentPage
  * @param statusFilter
  * @param sortBy
  * @param sortOrder
- * @returns this function will return all candidate tests
+ * @returns Test array
  */
-export const getALLCandidateTests = (
+export const getALLCandidateTests = async (
   currentWorkspaceId: string,
   resultsItemsPerPage: number,
   resultsCurrentPage: number,
@@ -29,7 +29,7 @@ export const getALLCandidateTests = (
   sortBy: string,
   sortOrder: string
 ) => {
-  return getAllCandidateTests(
+  return await getAllCandidateTests(
     currentWorkspaceId as string,
     resultsItemsPerPage,
     resultsCurrentPage,
@@ -40,37 +40,37 @@ export const getALLCandidateTests = (
 }
 
 /**
- *
+ * this function will return workspace
  * @param userId
- * @returns this function will return workspace
+ * @returns userWorkspaces
  */
 export const getWorkspaces = async (userId: string) => {
   return await getUserWorkspaces(userId)
 }
 
 /**
- *
+ * this function will return userId
  * @param request
- * @returns this function will return userId
+ * @returns userId
  */
 export const getUsersId = async (request: Request) => {
   return await getUserId(request)
 }
 
 /**
- *
+ * this function will return total count of tests
  * @param id
- * @returns this function will return total count of tests
+ * @returns total count
  */
 export const getTotalTestCounts = async (id: string) => {
   return await getTotalTestCount(id)
 }
 
 /**
- *
+ * this function will return all candidate tests count
  * @param currentWorkspaceId
  * @param statusFilter
- * @returns this function will return all candidate tests
+ * @returns total count
  */
 export const getALLCandidateTestsCount = async (
   currentWorkspaceId: string,
@@ -80,11 +80,11 @@ export const getALLCandidateTestsCount = async (
 }
 
 /**
- *
+ * this function will resend test link to candidate
  * @param id
  * @param candidateId
  * @param testId
- * @returns resend test link to candidate
+ * @returns resend test link to candidate on mail
  */
 export const getTestResendLink = async (
   id: string,
@@ -99,10 +99,10 @@ export const getTestResendLink = async (
 }
 
 /**
- *
+ * get count of candidate for specific test
  * @param id
  * @param statusFilter
- * @returns get count of candidate for specific test
+ * @returns total count
  */
 export const getALLCandidatesOfTestCount = async (
   id: string,
@@ -112,13 +112,13 @@ export const getALLCandidatesOfTestCount = async (
 }
 
 /**
- *
+ * this function will return all candidate of test
  * @param id
  * @param workspaceId
  * @param currentPage
  * @param pageSize
  * @param statusFilter
- * @returns this function will return all candidate of test
+ * @returns tests
  */
 export const getALLCandidatesOfTest = async ({
   id,
@@ -143,10 +143,10 @@ export const getALLCandidatesOfTest = async ({
 }
 
 /**
- *
+ * this function will update the candidate result
  * @param id
  * @param candidateStatus
- * @returns candidate result is updated
+ * @returns isQualified: candidateStatus == "true" ? true : false
  */
 export const updateCandidateSTATUS = async ({
   id,
@@ -162,10 +162,10 @@ export const updateCandidateSTATUS = async ({
 }
 
 /**
- *
+ * this function will return test cand candidate data
  * @param testId
  * @param candidateId
- * @returns sectionWise result
+ * @returns array of candidate and tests
  */
 export const getSectionWiseResultsOFIndividualCandidate = async ({
   testId,

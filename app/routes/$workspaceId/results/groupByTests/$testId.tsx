@@ -9,7 +9,7 @@ import {
   getTestResendLink,
   getUsersId,
   getWorkspaces,
-} from "~/components/services/results.service"
+} from "~/services/results.service"
 import { actions } from "~/constants/action.constants"
 
 export const loader: LoaderFunction = async ({ request, params }) => {

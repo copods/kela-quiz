@@ -6,13 +6,13 @@ import {
   getALLCandidateTests,
   getUsersId,
   getWorkspaces,
-} from "~/components/services/results.service"
+} from "~/services/results.service"
 import { routes } from "~/constants/route.constants"
 
 type LoaderData = {
-  candidateTest: any
-  userId: string
-  workspaces: any
+  candidateTest: Awaited<ReturnType<typeof getALLCandidateTests>>
+  userId: Awaited<ReturnType<typeof getUsersId>>
+  workspaces: Awaited<ReturnType<typeof getWorkspaces>>
   currentWorkspaceId: string
 }
 export const loader: LoaderFunction = async ({ request, params }) => {

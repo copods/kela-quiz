@@ -7,7 +7,7 @@ import {
   getUsersId,
   getWorkspaces,
   updateCandidateSTATUS,
-} from "~/components/services/results.service"
+} from "~/services/results.service"
 import type { CandidateTest, Candidate } from "~/interface/Interface"
 
 export const loader: LoaderFunction = async ({ request, params }) => {
