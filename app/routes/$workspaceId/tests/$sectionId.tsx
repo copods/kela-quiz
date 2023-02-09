@@ -1,15 +1,12 @@
 import { useEffect } from "react"
-
 import { json } from "@remix-run/node"
 import { useActionData } from "@remix-run/react"
 import type { LoaderFunction, ActionFunction } from "@remix-run/server-runtime"
 import { useTranslation } from "react-i18next"
 import { toast } from "react-toastify"
 import invariant from "tiny-invariant"
-
 import SectionDetails from "~/components/sections/SectionDetails"
-import { getSectionById } from "~/models/sections.server"
-import { deleteQuestionById } from "~/models/sections.server"
+import { getDeleteQuestionById, getTestById } from "~/services/tests.service"
 
 export type ActionData = {
   errors?: {
@@ -23,7 +20,7 @@ export type ActionData = {
 }
 export const loader: LoaderFunction = async ({ request, params }) => {
   invariant(params.sectionId, "sectionId not found")
-  const sectionDetails = await getSectionById({ id: params.sectionId })
+  const sectionDetails = await getTestById(params.sectionId)
   if (!sectionDetails) {
     throw new Response("Not Found", { status: 404 })
   }
@@ -32,31 +29,9 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 }
 export const action: ActionFunction = async ({ request, params }) => {
   const formData = await request.formData()
-  const action = await formData.get("action")
   const id = formData.get("id") as string
-  if (action === "deleteQuestion") {
-    const deleteQuestion = await deleteQuestionById(id)
-      .then(() => {
-        return json<ActionData>(
-          { resp: { title: "statusCheck.deletedSuccess", status: 200 } },
-          { status: 200 }
-        )
-      })
-      .catch(() => {
-        return json<ActionData>(
-          {
-            errors: {
-              title: "statusCheck.commonError",
-              status: 400,
-            },
-          },
-          { status: 400 }
-        )
-      })
-    return deleteQuestion
-  }
-
-  return null
+  const deleteQuestion = await getDeleteQuestionById(id)
+  return deleteQuestion
 }
 export default function Section() {
   const { t } = useTranslation()

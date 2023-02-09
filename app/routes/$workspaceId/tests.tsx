@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react"
-
 import { Icon } from "@iconify/react"
 import { json } from "@remix-run/node"
 import {
@@ -14,13 +13,6 @@ import type { ActionFunction, LoaderFunction } from "@remix-run/server-runtime"
 import { redirect } from "@remix-run/server-runtime"
 import { useTranslation } from "react-i18next"
 import { toast } from "react-toastify"
-
-import {
-  getAllSectionsData,
-  handleAddSection,
-  handleDeleteSection,
-  handleEditSection,
-} from "helper/tests.helper"
 import Button from "~/components/common-components/Button"
 import EmptyStateComponent from "~/components/common-components/EmptyStateComponent"
 import AddEditSection from "~/components/sections/AddEditSection"
@@ -29,9 +21,16 @@ import { routes } from "~/constants/route.constants"
 import { sortByOrder } from "~/interface/Interface"
 import type { sectionActionErrorsType } from "~/interface/Interface"
 import type { Section } from "~/interface/Interface"
-import { getAllTestsCounts, getFirstSection } from "~/models/sections.server"
-import { getUserWorkspaces } from "~/models/workspace.server"
 import { getUserId, requireUserId } from "~/session.server"
+import {
+  getALLtestsCount,
+  getAllSectionsData,
+  getFirstTest,
+  getWorkspaces,
+  handleAddSection,
+  handleDeleteSection,
+  handleEditSection,
+} from "~/services/tests.service"
 
 export type ActionData = {
   path: string
@@ -60,7 +59,7 @@ export type LoaderData = {
   selectedSectionId?: string
   filters: string
   status: string
-  workspaces: Awaited<ReturnType<typeof getUserWorkspaces>>
+  workspaces: Awaited<ReturnType<typeof getWorkspaces>>
   currentWorkspaceId: string
   testCurrentPage: number
   testItemsPerPage: number
@@ -81,7 +80,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     const sortOrder = query.get("sort") || sortByOrder.desc
     const userId = await getUserId(request)
     const currentWorkspaceId = params.workspaceId as string
-    const workspaces = await getUserWorkspaces(userId as string)
+    const workspaces = await getWorkspaces(userId as string)
 
     let sections: Array<Section> = []
     let status: string = ""
@@ -103,7 +102,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     const selectedSectionId = params.sectionId
       ? params.sectionId?.toString()
       : undefined
-    const getAllTestsCount = await getAllTestsCounts(currentWorkspaceId)
+    const getAllTestsCount = await getALLtestsCount(currentWorkspaceId)
 
     if (!userId) return redirect(routes.signIn)
     const filters = `?sortBy=${sortBy}&sort=${sortOrder}&testPage=${testCurrentPage}&testItems=${testItemsPerPage}`
@@ -161,7 +160,7 @@ export const action: ActionFunction = async ({ request, params }) => {
     const deleteSectionId = formData.get("id") as string
     await handleDeleteSection(deleteSectionId)
 
-    const sectionId = await getFirstSection(
+    const sectionId = await getFirstTest(
       sortFilter
         .split("&")
         .filter((res) => res.includes("sortBy"))[0]
@@ -174,40 +173,14 @@ export const action: ActionFunction = async ({ request, params }) => {
       totalItems === "1" && currentPage !== "1"
         ? Number(currentPage) - 1
         : Number(currentPage),
-      Number(pagePerItems)
+      Number(pagePerItems),
+      totalItems,
+      currentPage,
+      pagePerItems,
+      sortFilter,
+      params
     )
-    if (sectionId && totalItems === "1" && currentPage !== "1") {
-      redirect(
-        `/${params.workspaceId}${
-          routes.tests
-        }/${sectionId}?${sortFilter}&testPage=${
-          Number(currentPage) - 1
-        }&testItems=${pagePerItems}`
-      )
-      return {
-        deleted: "deleteLastTestOnPage",
-        path: `/${params.workspaceId}${
-          routes.tests
-        }/${sectionId}?${sortFilter}&testPage=${
-          Number(currentPage) - 1
-        }&testItems=${pagePerItems}`,
-      }
-    } else {
-      if (sectionId) {
-        redirect(
-          `/${params.workspaceId}${routes.tests}/${sectionId}?${sortFilter}&testPage=${currentPage}&testItems=${pagePerItems}`
-        )
-        return {
-          sectionId: sectionId,
-          deleted: "deleted",
-        }
-      } else {
-        redirect(`/${params.workspaceId}${routes.tests}`)
-        return {
-          deleted: "deleted",
-        }
-      }
-    }
+    return sectionId
   }
   return "ok"
 }
