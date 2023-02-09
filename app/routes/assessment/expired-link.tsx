@@ -1,4 +1,4 @@
-import ExpiredLinkComponent from '~/components/assessment/ExpiredLink'
+import ExpiredLinkComponent from "~/components/assessment/ExpiredLink"
 
 const ExpiredLink = () => {
   return (

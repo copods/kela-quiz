@@ -1,11 +1,13 @@
-import { useSubmit } from '@remix-run/react'
-import { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { useEffect, useState } from "react"
+
+import { useSubmit } from "@remix-run/react"
+import { useTranslation } from "react-i18next"
+
 import type {
   SectionInCandidateTest,
   SectionInTest,
-} from '~/interface/Interface'
-import { getTimeLeftInSeconds } from '~/services/assessment.service'
+} from "~/interface/Interface"
+import { getTimeLeftInSeconds } from "~/services/assessment.service"
 
 const TimerComponent = ({
   candidateSection,
@@ -37,8 +39,8 @@ const TimerComponent = ({
           setTimer(timeLeft)
           if (timeLeft == 0) {
             submit(
-              { order: section.order.toString(), nextSection: 'nextSection' },
-              { method: 'post' }
+              { order: section.order.toString(), nextSection: "nextSection" },
+              { method: "post" }
             )
             setTimer(0)
             clearInterval(timer)
@@ -50,7 +52,7 @@ const TimerComponent = ({
   const getFormattedTime = (time: number) => {
     let min = Math.floor(time / 60)
     let seconds = time - min * 60
-    return `${min > 9 ? '' : '0'}${min}:${seconds > 9 ? '' : '0'}${seconds} `
+    return `${min > 9 ? "" : "0"}${min}:${seconds > 9 ? "" : "0"}${seconds} `
   }
   return (
     <div
@@ -58,11 +60,11 @@ const TimerComponent = ({
       data-cy="timeRemaining"
     >
       <span className="text-sm font-medium text-gray-500">
-        {t('candidateExamConstants.timeRemaining')}
+        {t("candidateExamConstants.timeRemaining")}
       </span>
       <span
         className={`flex w-24 justify-center rounded-md px-4 py-1 font-mono text-lg font-bold text-gray-800 ${
-          time > 120 ? 'bg-blue-100' : 'bg-red-100'
+          time > 120 ? "bg-blue-100" : "bg-red-100"
         }`}
         suppressHydrationWarning
       >

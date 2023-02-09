@@ -1,10 +1,13 @@
-import { useLoaderData, useSubmit } from '@remix-run/react'
-import type { SectionInTest, TestSection } from '~/interface/Interface'
-import Button from '../common-components/Button'
-import contactSupport from '~/../public/assets/contactSupport.svg'
-import checkIcon from '~/../public/assets/checkIcon.svg'
-import Header from './Header'
-import { useTranslation } from 'react-i18next'
+import { useLoaderData, useSubmit } from "@remix-run/react"
+import { useTranslation } from "react-i18next"
+
+import Button from "../common-components/Button"
+
+import Header from "./Header"
+
+import checkIcon from "~/../public/assets/checkIcon.svg"
+import contactSupport from "~/../public/assets/contactSupport.svg"
+import type { SectionInTest, TestSection } from "~/interface/Interface"
 
 const CandidateInstruction = () => {
   const { t } = useTranslation()
@@ -18,10 +21,10 @@ const CandidateInstruction = () => {
   const startTestForCandidate = () => {
     submit(
       {
-        proceedToTest: 'true',
+        proceedToTest: "true",
         firstSectionId: firstSection.id,
       },
-      { method: 'post' }
+      { method: "post" }
     )
   }
 
@@ -46,7 +49,7 @@ const CandidateInstruction = () => {
         <div className="flex flex-col items-center justify-center gap-16 py-10">
           <div className="flex flex-col items-center justify-center gap-4">
             <h3 className="text-2xl font-bold text-gray-900" data-cy="heading">
-              {t('candidateExamConstants.candidateInsWelcome')}{' '}
+              {t("candidateExamConstants.candidateInsWelcome")}{" "}
               {candidate.firstName}
             </h3>
             {/* <p className="text-base font-medium text-gray-500">
@@ -60,7 +63,7 @@ const CandidateInstruction = () => {
                 className="text-center text-2xl font-bold text-gray-900"
                 data-cy="testSectionHeading"
               >
-                {t('routeFiles.tests')}
+                {t("routeFiles.tests")}
               </h3>
               <div className="flex flex-col gap-6" data-cy="testSectionContent">
                 {candidateSections.map(
@@ -73,7 +76,7 @@ const CandidateInstruction = () => {
                         <div className="flex items-start gap-4">
                           <img src={contactSupport} alt="" className="h-6" />
                           <span className="text-base font-normal text-gray-900">
-                            {t('testsConstants.testText')} {section.order} -
+                            {t("testsConstants.testText")} {section.order} -
                             {section.section.name}
                           </span>
                         </div>
@@ -88,7 +91,7 @@ const CandidateInstruction = () => {
                 className="text-center text-2xl font-bold text-gray-900"
                 data-cy="instructionSectionHeading"
               >
-                {t('candidateExamConstants.instructions')}
+                {t("candidateExamConstants.instructions")}
               </h3>
               <div
                 className="flex flex-col gap-6"
@@ -125,8 +128,8 @@ const CandidateInstruction = () => {
               id="start"
               className="w-356 py-3"
               variant="primary-solid"
-              title={t('candidateExamConstants.beginAssessment')}
-              buttonText={t('candidateExamConstants.beginAssessment')}
+              title={t("candidateExamConstants.beginAssessment")}
+              buttonText={t("candidateExamConstants.beginAssessment")}
               onClick={startTestForCandidate}
               aria-label="start"
             />

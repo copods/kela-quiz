@@ -1,5 +1,6 @@
-import { redirect } from '@remix-run/node'
-import moment from 'moment'
+import moment from "moment"
+
+import { redirect } from "@remix-run/node"
 
 import {
   candidateSectionStart,
@@ -21,7 +22,7 @@ import {
   updateCandidateFirstLastName,
   updateNextCandidateStep,
   verifyOTP,
-} from '~/models/assessment.server'
+} from "~/models/assessment.server"
 
 // Type of candidateStep field in CandidateTest schema
 export type CandidateStep = {
@@ -48,7 +49,7 @@ export async function checkIfTestLinkIsValidAndRedirect(
   if (currentCandidateStep?.linkSentOn) {
     const now = moment(new Date())
     const LinkSendedTime = moment(currentCandidateStep?.linkSentOn)
-    const duration = now.diff(LinkSendedTime, 'hours')
+    const duration = now.diff(LinkSendedTime, "hours")
     if (duration >= 48) {
       return `/assessment/expired-link`
     }
@@ -63,16 +64,16 @@ export async function checkIfTestLinkIsValidAndRedirect(
   ) {
     if (currentRoute !== candidateStepObj.nextRoute) {
       switch (candidateStepObj.nextRoute) {
-        case 'register':
-        case 'verification':
+        case "register":
+        case "verification":
           return `/assessment/${assessmentID}/${candidateStepObj.nextRoute}`
-        case 'instructions':
+        case "instructions":
           return `/assessment/${assessmentID}/${candidateStepObj.nextRoute}`
-        case 'section':
+        case "section":
           return `/assessment/${assessmentID}/${candidateStepObj.currentSectionId}/cooldown`
-        case 'end':
+        case "end":
           return `/assessment/${assessmentID}/end-assessment`
-        case 'already-submitted':
+        case "already-submitted":
           return `/assessment/${assessmentID}/already-submitted`
       }
     }
@@ -81,11 +82,11 @@ export async function checkIfTestLinkIsValidAndRedirect(
   if (currentCandidateStep?.endAt) {
     const CurrentTime = moment(new Date())
     const examEndedBefore = moment(currentCandidateStep?.endAt)
-    const duration = CurrentTime.diff(examEndedBefore, 'minute')
+    const duration = CurrentTime.diff(examEndedBefore, "minute")
     if (duration >= 1) {
       await updateNextStep({
         assessmentId: assessmentID as string,
-        nextRoute: 'already-submitted',
+        nextRoute: "already-submitted",
         isSection: false,
       })
       if (currentRoute !== candidateStepObj.nextRoute) {
@@ -326,7 +327,7 @@ export async function moveToNextSection({
 
   await updateNextStep({
     assessmentId: assessmentId as string,
-    nextRoute: 'section',
+    nextRoute: "section",
     isSection: true,
     currentSectionId: nextSectionObject?.id,
   })
@@ -387,7 +388,7 @@ export async function endCandidateAssessment(
   await endSection(assessmentId as string, sectionId as string)
   await updateNextStep({
     assessmentId: assessmentId as string,
-    nextRoute: 'end',
+    nextRoute: "end",
     isSection: false,
   })
   await endAssessment(assessmentId as string)

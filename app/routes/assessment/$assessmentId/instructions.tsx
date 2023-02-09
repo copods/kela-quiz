@@ -1,7 +1,8 @@
-import type { ActionFunction, LoaderFunction } from '@remix-run/node'
-import { json } from '@remix-run/node'
-import { redirect } from '@remix-run/node'
-import CandidateInstruction from '~/components/assessment/CandidateInstruction'
+import type { ActionFunction, LoaderFunction } from "@remix-run/node"
+import { json } from "@remix-run/node"
+import { redirect } from "@remix-run/node"
+
+import CandidateInstruction from "~/components/assessment/CandidateInstruction"
 import {
   checkIfTestLinkIsValidAndRedirect,
   getCandidateByAssessmentId,
@@ -12,18 +13,18 @@ import {
   startCandidateSection,
   startTest,
   updateNextStep,
-} from '~/services/assessment.service'
+} from "~/services/assessment.service"
 
 export const loader: LoaderFunction = async ({ params, request }) => {
   const candidateNextRoute = await checkIfTestLinkIsValidAndRedirect(
     params.assessmentId as string,
-    'instructions'
+    "instructions"
   )
 
-  if (typeof candidateNextRoute === 'string') {
+  if (typeof candidateNextRoute === "string") {
     return redirect(candidateNextRoute)
   } else if (candidateNextRoute === null) {
-    throw new Response('Not Found', { status: 404 })
+    throw new Response("Not Found", { status: 404 })
   }
 
   const instructions = await getTestInstructions(params.assessmentId as string)
@@ -41,13 +42,13 @@ export const loader: LoaderFunction = async ({ params, request }) => {
 
 export const action: ActionFunction = async ({ request, params }) => {
   const formData = await request.formData()
-  const proceed = formData.get('proceedToTest')
-  const firstSectionId = formData.get('firstSectionId') as string
+  const proceed = formData.get("proceedToTest")
+  const firstSectionId = formData.get("firstSectionId") as string
 
   if (proceed) {
     await updateNextStep({
       assessmentId: params.assessmentId as string,
-      nextRoute: 'section',
+      nextRoute: "section",
       isSection: true,
       currentSectionId: firstSectionId,
     })

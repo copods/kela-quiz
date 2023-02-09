@@ -1,8 +1,10 @@
-import { Fragment } from 'react'
-import { Listbox, Transition } from '@headlessui/react'
-import { Icon } from '@iconify/react'
-import { useTranslation } from 'react-i18next'
-import { QuestionTypes } from '../../interface/Interface'
+import { Fragment } from "react"
+
+import { Listbox, Transition } from "@headlessui/react"
+import { Icon } from "@iconify/react"
+import { useTranslation } from "react-i18next"
+
+import { QuestionTypes } from "../../interface/Interface"
 function DropdownField({
   data,
   displayKey,
@@ -30,7 +32,7 @@ function DropdownField({
   )
 
   function classNames(...classes: Array<string>) {
-    return classes.filter(Boolean).join(' ')
+    return classes.filter(Boolean).join(" ")
   }
   const getName = (val: string) => {
     for (let d of data) {
@@ -52,8 +54,8 @@ function DropdownField({
           <div
             className="dropdown relative w-full"
             id="dropdown"
-            title={t('sectionsConstants.dropdown')}
-            aria-label={t('sectionsConstants.dropdown')}
+            title={t("sectionsConstants.dropdown")}
+            aria-label={t("sectionsConstants.dropdown")}
           >
             <Listbox.Button
               id="dropdownButton"
@@ -79,8 +81,8 @@ function DropdownField({
                     key={actionName}
                     className={({ active }) =>
                       classNames(
-                        active ? 'bg-primary text-white' : 'text-gray-900',
-                        'relative z-20 cursor-pointer select-none py-2 px-3'
+                        active ? "bg-primary text-white" : "text-gray-900",
+                        "relative z-20 cursor-pointer select-none py-2 px-3"
                       )
                     }
                     value={actionName}
@@ -104,8 +106,8 @@ function DropdownField({
                     key={option[valueKey]}
                     className={({ active }) =>
                       classNames(
-                        active ? 'bg-primary text-white' : 'text-gray-900',
-                        'relative z-20 cursor-pointer select-none py-2 px-3'
+                        active ? "bg-primary text-white" : "text-gray-900",
+                        "relative z-20 cursor-pointer select-none py-2 px-3"
                       )
                     }
                     value={option[valueKey]}
@@ -116,9 +118,9 @@ function DropdownField({
                           <span
                             className={classNames(
                               selected
-                                ? 'font-semibold'
-                                : 'not-selected font-normal',
-                              'dropdown-option block truncate'
+                                ? "font-semibold"
+                                : "not-selected font-normal",
+                              "dropdown-option block truncate"
                             )}
                             id="option"
                           >
@@ -128,8 +130,8 @@ function DropdownField({
                         {selected ? (
                           <span
                             className={classNames(
-                              active ? 'text-white' : 'text-primary',
-                              'absolute inset-y-0 right-0 flex items-center pr-4'
+                              active ? "text-white" : "text-primary",
+                              "absolute inset-y-0 right-0 flex items-center pr-4"
                             )}
                           >
                             <Icon

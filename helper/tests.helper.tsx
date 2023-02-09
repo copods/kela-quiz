@@ -1,12 +1,13 @@
+import type { Section } from "@prisma/client"
+import { json } from "@remix-run/node"
+
+import type { sectionActionErrorsType } from "~/interface/Interface"
 import {
   createSection,
   editSectionById,
   getAllSections,
   deleteSectionById,
-} from '~/models/sections.server'
-import type { sectionActionErrorsType } from '~/interface/Interface'
-import { json } from '@remix-run/node'
-import type { Section } from '@prisma/client'
+} from "~/models/sections.server"
 
 //*Action data types are defined here
 export type ActionData = {
@@ -45,23 +46,23 @@ export const getAllSectionsData = (
     testItemsPerPage
   )
     .then((res) => {
-      return cb(res, 'statusCheck.success')
+      return cb(res, "statusCheck.success")
     })
     .catch((err) => {
-      return cb(err, '')
+      return cb(err, "")
     })
 }
 
 //* functions checking name and description error
 const validateTitle = (title: string) => {
-  if (typeof title !== 'string' || title.length <= 0) {
-    return 'statusCheck.nameIsReq'
+  if (typeof title !== "string" || title.length <= 0) {
+    return "statusCheck.nameIsReq"
   }
 }
 
 const validateDescription = (description: string) => {
-  if (typeof description !== 'string' || description.length <= 0) {
-    return 'statusCheck.descIsReq'
+  if (typeof description !== "string" || description.length <= 0) {
+    return "statusCheck.descIsReq"
   }
 }
 
@@ -93,7 +94,7 @@ export const handleAddSection = async (
       return json<ActionData>(
         {
           resp: {
-            status: 'statusCheck.testAddedSuccess',
+            status: "statusCheck.testAddedSuccess",
             data: res as Section,
             check: new Date(),
           },
@@ -103,9 +104,9 @@ export const handleAddSection = async (
     })
 
     .catch((err) => {
-      let title = 'statusCheck.commonError'
-      if (err.code === 'P2002') {
-        title = 'statusCheck.duplicate'
+      let title = "statusCheck.commonError"
+      if (err.code === "P2002") {
+        title = "statusCheck.duplicate"
       }
       return json<ActionData>(
         { errors: { title, status: 400, check: new Date() } },
@@ -121,15 +122,15 @@ export const handleEditSection = async (
   description: string,
   id: string
 ) => {
-  if (typeof name !== 'string' || name.length === 0) {
+  if (typeof name !== "string" || name.length === 0) {
     return json<ActionData>(
-      { errors: { title: 'statusCheck.nameIsReq', status: 400 } },
+      { errors: { title: "statusCheck.nameIsReq", status: 400 } },
       { status: 400 }
     )
   }
-  if (typeof description !== 'string' || description.length === 0) {
+  if (typeof description !== "string" || description.length === 0) {
     return json<ActionData>(
-      { errors: { title: 'statusCheck.descIsReq', status: 400 } },
+      { errors: { title: "statusCheck.descIsReq", status: 400 } },
       { status: 400 }
     )
   }
@@ -145,7 +146,7 @@ export const handleEditSection = async (
       return json<ActionData>(
         {
           resp: {
-            status: 'statusCheck.testUpdatedSuccess',
+            status: "statusCheck.testUpdatedSuccess",
             data: res as Section,
           },
         },
@@ -154,9 +155,9 @@ export const handleEditSection = async (
     })
 
     .catch((err) => {
-      let title = 'statusCheck.commonError'
-      if (err.code === 'P2002') {
-        title = 'statusCheck.duplicate'
+      let title = "statusCheck.commonError"
+      if (err.code === "P2002") {
+        title = "statusCheck.duplicate"
       }
       return json<ActionData>(
         { errors: { title, status: 400, check: new Date() } },
@@ -172,7 +173,7 @@ export const handleDeleteSection = async (deleteSectionId: string) => {
       return json<ActionData>(
         {
           resp: {
-            status: 'statusCheck.deletedSuccess',
+            status: "statusCheck.deletedSuccess",
             id: deleteSectionId,
           },
         },
@@ -184,7 +185,7 @@ export const handleDeleteSection = async (deleteSectionId: string) => {
       return json<ActionData>(
         {
           errors: {
-            title: 'statusCheck.commonError',
+            title: "statusCheck.commonError",
             status: 400,
             check: new Date(),
           },

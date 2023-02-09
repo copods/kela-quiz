@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState } from 'react'
-import { isElementInViewport } from '~/utils/common.utils'
+import { useEffect, useRef, useState } from "react"
+
+import { isElementInViewport } from "~/utils/common.utils"
 
 /**
  *
