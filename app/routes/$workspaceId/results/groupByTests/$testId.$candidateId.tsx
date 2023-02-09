@@ -1,13 +1,14 @@
 import type { ActionFunction, LoaderFunction } from "@remix-run/server-runtime"
 import { json } from "@remix-run/server-runtime"
 import invariant from "tiny-invariant"
+
 import ResultDetailsComponent from "~/components/results/ResultDetails"
+import type { CandidateTest, Candidate } from "~/interface/Interface"
 import {
   getSectionWiseResultsOFIndividualCandidate,
   getWorkspaces,
   updateCandidateSTATUS,
 } from "~/services/results.service"
-import type { CandidateTest, Candidate } from "~/interface/Interface"
 import { getUserId } from "~/session.server"
 
 export const loader: LoaderFunction = async ({ request, params }) => {

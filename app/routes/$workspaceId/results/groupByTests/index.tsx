@@ -1,14 +1,15 @@
 import type { LoaderFunction } from "@remix-run/node"
 import { redirect } from "@remix-run/node"
 import { json } from "@remix-run/node"
+
 import GroupByTests from "~/components/results/GroupByTests"
+import { sortByOrder } from "~/interface/Interface"
 import {
   getALLCandidateTests,
   getALLCandidateTestsCount,
   getTotalTestCounts,
   getWorkspaces,
 } from "~/services/results.service"
-import { sortByOrder } from "~/interface/Interface"
 import { getUserId } from "~/session.server"
 
 type LoaderData = {
