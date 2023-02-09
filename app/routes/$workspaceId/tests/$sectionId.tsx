@@ -1,10 +1,12 @@
 import { useEffect } from "react"
+
 import { json } from "@remix-run/node"
 import { useActionData } from "@remix-run/react"
 import type { LoaderFunction, ActionFunction } from "@remix-run/server-runtime"
 import { useTranslation } from "react-i18next"
 import { toast } from "react-toastify"
 import invariant from "tiny-invariant"
+
 import SectionDetails from "~/components/sections/SectionDetails"
 import { getDeleteQuestionById, getTestById } from "~/services/tests.service"
 
@@ -20,7 +22,7 @@ export type ActionData = {
 }
 export const loader: LoaderFunction = async ({ request, params }) => {
   invariant(params.sectionId, "sectionId not found")
-  const sectionDetails = await getTestById(params.sectionId)
+  const sectionDetails = await getTestById({ id: params.sectionId })
   if (!sectionDetails) {
     throw new Response("Not Found", { status: 404 })
   }

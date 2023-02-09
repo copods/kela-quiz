@@ -1,7 +1,7 @@
 import type { Section } from "@prisma/client"
 import { json, redirect } from "@remix-run/node"
-import { routes } from "~/constants/route.constants"
 
+import { routes } from "~/constants/route.constants"
 import type { sectionActionErrorsType } from "~/interface/Interface"
 import {
   createSection,
@@ -228,8 +228,8 @@ export const getALLtestsCount = async (userId: string) => {
   return await getAllTestsCounts(userId)
 }
 
-export const getTestById = async (id: string) => {
-  return await getSectionById(id)
+export const getTestById = async ({ id }: { id: string }) => {
+  return await getSectionById({ id })
 }
 
 export const getQuestionTypeFromTests = async () => {

@@ -1,19 +1,21 @@
 import { useEffect, useState } from "react"
+
 import { json } from "@remix-run/node"
 import { useActionData, useLoaderData, useNavigate } from "@remix-run/react"
 import type { ActionFunction, LoaderFunction } from "@remix-run/server-runtime"
 import { useTranslation } from "react-i18next"
 import { toast } from "react-toastify"
 import invariant from "tiny-invariant"
+
 import AddQuestionInSection from "~/components/sections/add-question/AddQuestionInSection"
 import { routes } from "~/constants/route.constants"
-import { getUserId, requireUserId } from "~/session.server"
 import {
   getAddQuestion,
   getQuestionTypeFromTests,
   getTestById,
   getWorkspaces,
 } from "~/services/tests.service"
+import { getUserId, requireUserId } from "~/session.server"
 
 type LoaderData = {
   sectionDetails: Awaited<ReturnType<typeof getTestById>>
@@ -30,7 +32,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
   invariant(params.sectionId, "sectionId not found")
 
-  const sectionDetails = await getTestById(params.sectionId)
+  const sectionDetails = await getTestById({ id: params.sectionId })
 
   if (!sectionDetails) {
     throw new Response("Not Found", { status: 404 })
