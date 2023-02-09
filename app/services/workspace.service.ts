@@ -1,9 +1,12 @@
+import { json } from "@remix-run/node"
+
 import {
+  addWorkspace,
   getCurrentWorkspaceOwner,
   getOwnersWorkspaces,
+  getUserWorkspaces,
   leaveWorkspace,
-} from '~/models/workspace.server'
-import { json } from '@remix-run/node'
+} from "~/models/workspace.server"
 
 type ActionData = {
   errors?: {
@@ -13,6 +16,7 @@ type ActionData = {
   resp?: {
     title: string
     status: number
+    workspaceId?: string
   }
 }
 
@@ -49,7 +53,7 @@ export async function leaveActiveWorkspace(
       return json<ActionData>(
         {
           resp: {
-            title: 'members.workspaceLeft',
+            title: "members.workspaceLeft",
             status: 200,
           },
         },
@@ -57,7 +61,7 @@ export async function leaveActiveWorkspace(
       )
     })
     .catch((err) => {
-      let title = 'statusCheck.commonError'
+      let title = "statusCheck.commonError"
       return json<ActionData>(
         {
           errors: {
@@ -68,4 +72,47 @@ export async function leaveActiveWorkspace(
         { status: 400 }
       )
     })
+}
+
+/**
+ * Function will return json response
+ * @param workspace
+ * @param userId
+ * @returns json response
+ */
+export async function createWorkspace(workspace: string, userId: string) {
+  return await addWorkspace(workspace, userId)
+    .then((res) => {
+      return json<ActionData>(
+        {
+          resp: {
+            title: "toastConstants.workspaceAdded",
+            status: 200,
+            workspaceId: res.workspaceId,
+          },
+        },
+        { status: 200 }
+      )
+    })
+    .catch((err) => {
+      let title = "toastConstants.duplicateWorkspace"
+      return json<ActionData>(
+        {
+          errors: {
+            title,
+            status: 400,
+          },
+        },
+        { status: 400 }
+      )
+    })
+}
+
+/**
+ * Function to get user workspaces
+ * @param userId
+ * @returns Object consisting workspaces of user
+ */
+export async function accquireUserWorkspaces(userId: string) {
+  return await getUserWorkspaces(userId)
 }

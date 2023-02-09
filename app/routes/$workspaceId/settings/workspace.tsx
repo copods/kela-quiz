@@ -9,12 +9,12 @@ import { toast } from "react-toastify"
 import { routes } from "../../../constants/route.constants"
 
 import Workspace from "~/components/settings/Workspace"
+import { getUserID } from "~/services/settings.service"
 import {
   getActiveOwnerWorkspaces,
   getActiveWorkspaceOwner,
   leaveActiveWorkspace,
 } from "~/services/workspace.service"
-import { getUserId } from "~/session.server"
 
 interface LoaderData {
   workspaceOwner: Awaited<ReturnType<typeof getActiveWorkspaceOwner>>
@@ -24,7 +24,7 @@ interface LoaderData {
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   const currentWorkspaceId = params.workspaceId as string
-  const userId = (await getUserId(request)) as string
+  const userId = (await getUserID(request)) as string
   const workspaceOwner = await getActiveWorkspaceOwner(currentWorkspaceId)
   const ownersWorkspaces = await getActiveOwnerWorkspaces(userId)
   return json<LoaderData>({
@@ -35,7 +35,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 }
 export const action: ActionFunction = async ({ request, params }) => {
   const workspaceId = params.workspaceId as string
-  const userId = (await getUserId(request)) as string
+  const userId = (await getUserID(request)) as string
   const response = await leaveActiveWorkspace(workspaceId, userId)
   return response
 }
