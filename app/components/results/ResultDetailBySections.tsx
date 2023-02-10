@@ -11,7 +11,7 @@ import type { Question, SectionInCandidateTest } from "~/interface/Interface"
 const ResultDetailBySections = () => {
   const resultDetailsLoaderData = useLoaderData()
   const sectionDetail = resultDetailsLoaderData.sectionDetail
-  let navigate = useNavigate()
+  const navigate = useNavigate()
   return (
     <div className="flex h-full flex-col gap-5">
       <header className="flex flex-col gap-6">
@@ -23,7 +23,7 @@ const ResultDetailBySections = () => {
               )
             }
             className="flex items-center gap-4 "
-            role={"button"}
+            role="button"
             tabIndex={0}
             onKeyDown={(e) => {
               if (e.key === "Enter")
@@ -36,7 +36,7 @@ const ResultDetailBySections = () => {
               className="text-3xl font-semibold text-gray-900"
               id="backButton"
               icon="mdi:arrow-left"
-            ></Icon>
+            />
           </div>
           <div className="flex items-center gap-4">
             <h1 className="text-3xl font-semibold text-gray-900" id="title">
