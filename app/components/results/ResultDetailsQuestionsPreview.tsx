@@ -3,7 +3,6 @@ import { useTranslation } from "react-i18next"
 import Chip from "../common-components/Chip"
 import Divider from "../common-components/divider"
 
-import { areEqualAsnwersArray } from "helper/results.helper"
 import type { Option, CorrectAnswer, QuestionType } from "~/interface/Interface"
 import { QuestionTypes, QuestionStatus } from "~/interface/Interface"
 
@@ -29,6 +28,29 @@ const ResultDetailsQuestionsPreview = ({
   index: number
 }) => {
   const { t } = useTranslation()
+  function areEqualAsnwersArray(
+    textAnswer: CorrectAnswer[],
+    correctAnswersArray: string[]
+  ) {
+    let textAnswerArrayLength = textAnswer.length
+    let correctAnswersArrayLength = correctAnswersArray.length
+
+    // If lengths of array are not equal means
+    // Answers are not equal
+    if (textAnswerArrayLength != correctAnswersArrayLength) return false
+
+    // Sort both arrays
+    textAnswer.sort()
+    correctAnswersArray.sort()
+
+    // Linearly compare elements
+    for (let i = 0; i < textAnswerArrayLength; i++)
+      if (textAnswer[i] != (correctAnswersArray[i] as unknown as CorrectAnswer))
+        return false
+
+    // If all elements were same.
+    return true
+  }
   const correctAnswersArray = correctAnswer.map(
     (correctAnswer: CorrectAnswer) => correctAnswer.answer
   )
@@ -45,7 +67,7 @@ const ResultDetailsQuestionsPreview = ({
       )
     }
   )
-  console.log(flag, "l")
+  const orderFlag = correctOrder.includes(false)
   return (
     <div className="flex w-full  rounded-lg  border border-gray-300 bg-white">
       <div className="flex w-6/12 flex-col gap-6 p-6">
@@ -83,70 +105,71 @@ const ResultDetailsQuestionsPreview = ({
         />
       </div>
       <hr className="h-[auto] w-px bg-gray-300" />
-      <div className="w-6/12 p-6">
+      <div className="flex w-6/12 flex-col gap-6 p-6">
         {/* {checking if question is answered by candidate} */}
-        {status === QuestionStatus.answered && (
+        <div className="flex items-center justify-between">
+          <h3 className="text-xl font-medium text-gray-800">
+            {t("resultConstants.givenAnswers")}
+          </h3>
+          {status === QuestionStatus.answered ? (
+            <>
+              {((checkOrder === true &&
+                questionType.value === QuestionTypes.text &&
+                orderFlag) ||
+                (checkOrder === false &&
+                  questionType.value === QuestionTypes.text &&
+                  areEqualAsnwersArray(textAnswer, correctAnswersArray) ===
+                    false) ||
+                (flag.includes("incorrect") === true &&
+                  questionType.value !== QuestionTypes.text)) && (
+                <Chip text={t("resultConstants.wrong")} variant={"wrong"} />
+              )}
+              {((checkOrder === true &&
+                questionType.value === QuestionTypes.text &&
+                orderFlag === false) ||
+                (checkOrder === false &&
+                  questionType.value === QuestionTypes.text &&
+                  areEqualAsnwersArray(textAnswer, correctAnswersArray) ===
+                    true) ||
+                (flag.includes("incorrect") === false &&
+                  questionType.value !== QuestionTypes.text)) && (
+                <Chip text={t("resultConstants.correct")} variant={"sucess"} />
+              )}
+            </>
+          ) : (
+            <Chip text={t("resultConstants.skipped")} variant={"skipped"} />
+          )}
+        </div>
+        {status === QuestionStatus.answered ? (
           <div className="flex flex-col gap-6">
             <div className="flex flex-col gap-6">
-              <div className="flex items-center justify-between">
-                <h3 className="text-xl font-medium text-gray-800">
-                  {t("resultConstants.givenAnswers")}
-                </h3>
-                {((checkOrder === true &&
-                  questionType.value === QuestionTypes.text &&
-                  correctOrder.includes(false)) ||
-                  (checkOrder === false &&
-                    questionType.value === QuestionTypes.text &&
-                    areEqualAsnwersArray(textAnswer, correctAnswersArray) ===
-                      false) ||
-                  (flag.includes("incorrect") === true &&
-                    questionType.value !== QuestionTypes.text)) && (
-                  <Chip text={t("resultConstants.wrong")} variant={"wrong"} />
-                )}
-                {((checkOrder === true &&
-                  questionType.value === QuestionTypes.text &&
-                  !correctOrder.includes(false)) ||
-                  (checkOrder === false &&
-                    questionType.value === QuestionTypes.text &&
-                    areEqualAsnwersArray(textAnswer, correctAnswersArray) ===
-                      true) ||
-                  (flag.includes("incorrect") === false &&
-                    questionType.value !== QuestionTypes.text)) && (
-                  <Chip
-                    text={t("resultConstants.correct")}
-                    variant={"sucess"}
-                  />
-                )}
-              </div>
-
-              {questionType.value == QuestionTypes.text &&
-                textAnswer.map((textAnswer: CorrectAnswer, index: number) => {
-                  return (
-                    <div
-                      key={index}
-                      className="flex h-full break-normal rounded-lg border border-solid border-gray-300 bg-gray-50 p-4 text-base font-normal text-gray-600"
-                    >
-                      {textAnswer}
-                    </div>
-                  )
-                })}
-
-              {questionType.value !== QuestionTypes.text &&
-                selectedOptions.map((selectedOption: Option) => {
-                  return (
-                    <div
-                      key={selectedOption.questionId}
-                      className="ql-editor h-full break-normal rounded-lg border border-solid border-gray-300 bg-gray-50 p-4 text-base font-normal text-gray-600"
-                      dangerouslySetInnerHTML={{
-                        __html: `${selectedOption.option}`,
-                      }}
-                    />
-                  )
-                })}
+              {questionType.value == QuestionTypes.text
+                ? textAnswer.map((textAnswer: CorrectAnswer, index: number) => {
+                    return (
+                      <div
+                        key={index}
+                        className="flex h-full break-normal rounded-lg border border-solid border-gray-300 bg-gray-50 p-4 text-base font-normal text-gray-600"
+                      >
+                        {textAnswer}
+                      </div>
+                    )
+                  })
+                : questionType.value !== QuestionTypes.text &&
+                  selectedOptions.map((selectedOption: Option) => {
+                    return (
+                      <div
+                        key={selectedOption.questionId}
+                        className="ql-editor h-full break-normal rounded-lg border border-solid border-gray-300 bg-gray-50 p-4 text-base font-normal text-gray-600"
+                        dangerouslySetInnerHTML={{
+                          __html: `${selectedOption.option}`,
+                        }}
+                      />
+                    )
+                  })}
             </div>
             {((checkOrder === true &&
               questionType.value === QuestionTypes.text &&
-              correctOrder.includes(false)) ||
+              orderFlag) ||
               (checkOrder === false &&
                 questionType.value === QuestionTypes.text &&
                 areEqualAsnwersArray(textAnswer, correctAnswersArray) ===
@@ -155,84 +178,71 @@ const ResultDetailsQuestionsPreview = ({
                 questionType.value !== QuestionTypes.text)) && (
               <div className="flex flex-col gap-6">
                 <div className="flex flex-col gap-6">
+                  <Divider height="1px" />
+                  <h3 className="text-xl font-medium text-gray-800">
+                    {t("resultConstants.correctAnswer")}
+                  </h3>
+                </div>
+                {/* if MCQ is incorrect */}
+                {flag.includes("incorrect") && (
                   <div className="flex flex-col gap-6">
-                    <Divider height="1px" />
-                    <h3 className="text-xl font-medium text-gray-800">
-                      {t("resultConstants.correctAnswer")}
-                    </h3>
-                  </div>
-                  {/* if MCQ is incorrect */}
-                  {flag.includes("incorrect") && (
-                    <div className="flex flex-col gap-6">
-                      {correctOption.map(
-                        (correctOption: Option, index: number) => {
-                          return (
-                            <div
-                              key={index}
-                              className={
-                                "ql-editor flex h-full gap-2 break-normal rounded-lg border border-solid border-gray-300 bg-gray-50 p-4 text-base font-normal text-gray-600"
-                              }
-                              dangerouslySetInnerHTML={{
-                                __html: `${correctOption?.option}`,
-                              }}
-                            />
-                          )
-                        }
-                      )}
-                    </div>
-                  )}
-
-                  {/* if TEXT type question is wrong */}
-                  {checkOrder === false &&
-                    areEqualAsnwersArray(textAnswer, correctAnswersArray) ===
-                      false &&
-                    correctAnswer.map(
-                      (correctAnswer: CorrectAnswer, index: number) => {
+                    {correctOption.map(
+                      (correctOption: Option, index: number) => {
                         return (
                           <div
                             key={index}
                             className={
-                              "ql-editor flex h-full gap-2 break-normal rounded-lg border border-solid border-gray-300 bg-gray-50 p-4 text-gray-800"
+                              "ql-editor flex h-full gap-2 break-normal rounded-lg border border-solid border-gray-300 bg-gray-50 p-4 text-base font-normal text-gray-600"
                             }
-                          >
-                            {correctAnswer.answer}
-                          </div>
+                            dangerouslySetInnerHTML={{
+                              __html: `${correctOption?.option}`,
+                            }}
+                          />
                         )
                       }
                     )}
-                  {/* if order is true and given answer is wrong then showing correct answer */}
-                  {checkOrder === true &&
-                    correctOrder.includes(false) &&
-                    correctAnswer.map(
-                      (correctAnswer: CorrectAnswer, index: number) => {
-                        return (
-                          <div
-                            key={index}
-                            className="flex h-full gap-2 break-normal rounded-lg border border-solid border-gray-300 bg-gray-50 p-4 text-base font-normal text-gray-600"
-                          >
-                            {correctAnswer.answer}
-                          </div>
-                        )
-                      }
-                    )}
-                </div>
+                  </div>
+                )}
+
+                {/* if TEXT type question is wrong */}
+                {checkOrder === false &&
+                  areEqualAsnwersArray(textAnswer, correctAnswersArray) ===
+                    false &&
+                  correctAnswer.map(
+                    (correctAnswer: CorrectAnswer, index: number) => {
+                      return (
+                        <div
+                          key={index}
+                          className={
+                            "ql-editor flex h-full gap-2 break-normal rounded-lg border border-solid border-gray-300 bg-gray-50 p-4 text-gray-800"
+                          }
+                        >
+                          {correctAnswer.answer}
+                        </div>
+                      )
+                    }
+                  )}
+                {/* if order is true and given answer is wrong then showing correct answer */}
+                {checkOrder === true &&
+                  orderFlag === false &&
+                  correctAnswer.map(
+                    (correctAnswer: CorrectAnswer, index: number) => {
+                      return (
+                        <div
+                          key={index}
+                          className="flex h-full gap-2 break-normal rounded-lg border border-solid border-gray-300 bg-gray-50 p-4 text-base font-normal text-gray-600"
+                        >
+                          {correctAnswer.answer}
+                        </div>
+                      )
+                    }
+                  )}
               </div>
             )}
           </div>
-        )}
-        {/* if question is skipped by candidate  */}
-        {status === QuestionStatus.skipped && (
-          <div className="flex flex-col gap-6">
-            <div className="flex items-center justify-between">
-              <h3 className="text-xl font-medium text-gray-800">
-                {t("resultConstants.givenAnswers")}
-              </h3>
-              <Chip text={t("resultConstants.skipped")} variant={"skipped"} />
-            </div>
-
-            <div className="flex h-full gap-2 break-normal rounded-lg border border-solid border-gray-300 bg-gray-50 p-4 text-base font-normal text-gray-600">
-              -
-            </div>
+        ) : (
+          <div className="flex break-normal rounded-lg border border-solid border-gray-300 bg-gray-50 p-4 text-base font-normal text-gray-600">
+            -
           </div>
         )}
       </div>
