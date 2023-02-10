@@ -1,32 +1,33 @@
-import CandidateListOfTest from '~/components/results/CandidateListOfTest'
-import type { LoaderFunction } from '@remix-run/server-runtime'
-import type { ActionFunction } from '@remix-run/node'
-import { json } from '@remix-run/node'
-import invariant from 'tiny-invariant'
+import type { ActionFunction } from "@remix-run/node"
+import { json } from "@remix-run/node"
+import type { LoaderFunction } from "@remix-run/server-runtime"
+import invariant from "tiny-invariant"
+
+import CandidateListOfTest from "~/components/results/CandidateListOfTest"
+import { actions } from "~/constants/action.constants"
 import {
-  getAllCandidatesOfTest,
-  getAllCandidatesOfTestCount,
-} from '~/models/result.server'
-import { getUserWorkspaces } from '~/models/workspace.server'
-import { getUserId } from '~/session.server'
-import { resendTestLink } from '~/models/candidate.server'
-import { actions } from '~/constants/action.constants'
+  getALLCandidatesOfTest,
+  getALLCandidatesOfTestCount,
+  getTestResendLink,
+  getWorkspaces,
+} from "~/services/results.service"
+import { getUserId } from "~/session.server"
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   const url = new URL(request.url)
   const query = url.searchParams
-  const pageSize = Math.max(Number(query.get('pageSize') || 5), 5)
-  const currentPage = Math.max(Number(query.get('page') || 1), 1)
-  const statusFilter = query.get('filterByStatus') as string
-  const candidatesCount = await getAllCandidatesOfTestCount(
+  const pageSize = Math.max(Number(query.get("pageSize") || 5), 5)
+  const currentPage = Math.max(Number(query.get("page") || 1), 1)
+  const statusFilter = query.get("filterByStatus") as string
+  const candidatesCount = await getALLCandidatesOfTestCount(
     params.testId!,
     statusFilter
   )
   const userId = await getUserId(request)
   const currentWorkspaceId = params.workspaceId
-  const workspaces = await getUserWorkspaces(userId as string)
-  invariant(params.testId, 'resultId not found')
-  const candidatesOfTest = await getAllCandidatesOfTest({
+  const workspaces = await getWorkspaces(userId as string)
+  invariant(params.testId, "resultId not found")
+  const candidatesOfTest = await getALLCandidatesOfTest({
     id: params.testId,
     workspaceId: currentWorkspaceId as string,
     currentPage,
@@ -34,7 +35,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     statusFilter,
   })
   if (!candidatesOfTest) {
-    throw new Response('Not Found', { status: 404 })
+    throw new Response("Not Found", { status: 404 })
   }
 
   return json({
@@ -49,12 +50,12 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 }
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
-  const action = formData.get('action')
+  const action = formData.get("action")
   if (action === actions.resendTestLink) {
-    const testId = formData.get('testId') as string
-    const candidateId = formData.get('candidateId') as string
-    const id = formData.get('id') as string
-    const candidateInviteStatus = await resendTestLink({
+    const testId = formData.get("testId") as string
+    const candidateId = formData.get("candidateId") as string
+    const id = formData.get("id") as string
+    const candidateInviteStatus = await getTestResendLink({
       id,
       candidateId,
       testId,

@@ -1,24 +1,25 @@
-import { useLoaderData } from '@remix-run/react'
-import type { ActionFunction, LoaderFunction } from '@remix-run/server-runtime'
-import { redirect } from '@remix-run/server-runtime'
-import SectionQuestionPage from '~/components/assessment/SectionQuestionPage'
+import { useLoaderData } from "@remix-run/react"
+import { redirect } from "@remix-run/server-runtime"
+import type { ActionFunction, LoaderFunction } from "@remix-run/server-runtime"
+
+import SectionQuestionPage from "~/components/assessment/SectionQuestionPage"
 import {
   candidateTest,
   checkIfTestLinkIsValidAndRedirect,
   getSectionInCandidateTest,
   getSectionInTest,
   moveToNextSection,
-} from '~/utils/assessment.utils'
+} from "~/services/assessment.service"
 
 export const loader: LoaderFunction = async ({ params, request }) => {
   const candidateNextRoute = await checkIfTestLinkIsValidAndRedirect(
     params.assessmentId as string,
-    'section'
+    "section"
   )
-  if (typeof candidateNextRoute === 'string') {
+  if (typeof candidateNextRoute === "string") {
     return redirect(candidateNextRoute)
   } else if (candidateNextRoute === null) {
-    throw new Response('Not Found', { status: 404 })
+    throw new Response("Not Found", { status: 404 })
   }
 
   const section = await getSectionInTest(params.sectionId as string)
@@ -33,9 +34,9 @@ export const loader: LoaderFunction = async ({ params, request }) => {
     const nextSecRoute = await moveToNextSection({
       assessmentId: params.assessmentId as string,
       order: section?.order || 0,
-      sectionId: '',
+      sectionId: "",
     })
-    if (typeof nextSecRoute === 'string') return redirect(nextSecRoute)
+    if (typeof nextSecRoute === "string") return redirect(nextSecRoute)
   }
 
   const candidateTests = await candidateTest(params.assessmentId as string)
@@ -54,13 +55,13 @@ export const loader: LoaderFunction = async ({ params, request }) => {
 
 export const action: ActionFunction = async ({ params, request }) => {
   const formData = await request.formData()
-  const order = formData.get('order')
+  const order = formData.get("order")
   const nextSecRoute = await moveToNextSection({
     assessmentId: params.assessmentId as string,
     order: parseInt(order as string),
     sectionId: params.sectionId as string,
   })
-  if (typeof nextSecRoute === 'string') return redirect(nextSecRoute)
+  if (typeof nextSecRoute === "string") return redirect(nextSecRoute)
 }
 const AssessmentSection = () => {
   const { section, candidateTests, params } = useLoaderData()

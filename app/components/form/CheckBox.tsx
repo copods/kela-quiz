@@ -1,4 +1,4 @@
-import type { CheckboxProps } from '~/interface/Interface'
+import type { CheckboxProps } from "~/interface/Interface"
 
 function Checkbox({ isChecked, handleChange, ...props }: CheckboxProps) {
   return (

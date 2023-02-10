@@ -1,34 +1,38 @@
-import { Link, useActionData, useNavigate, useSubmit } from '@remix-run/react'
-import { Icon } from '@iconify/react'
-import { useLoaderData } from '@remix-run/react'
-import { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
-import { routes } from '~/constants/route.constants'
-import Table from '../common-components/TableComponent'
-import moment from 'moment'
-import ListActionMenu from '../../components/ListActionMenu'
-import DropdownField from '../common-components/Dropdown'
-import resendTestLink from '~/../public/assets/resend-test-invitation.svg'
+import { useEffect, useState } from "react"
+
+import moment from "moment"
+
+import { Icon } from "@iconify/react"
+import { Link, useActionData, useNavigate, useSubmit } from "@remix-run/react"
+import { useLoaderData } from "@remix-run/react"
+import { useTranslation } from "react-i18next"
+import { toast } from "react-toastify"
+
+import ListActionMenu from "../../components/ListActionMenu"
+import DropdownField from "../common-components/Dropdown"
+import Table from "../common-components/TableComponent"
+
+import resendTestLink from "~/../public/assets/resend-test-invitation.svg"
+import { routes } from "~/constants/route.constants"
+import { useCommonContext } from "~/context/Common.context"
 import type {
   CandidateTest,
   Candidate,
   CandidateResult,
   tableColumnType,
-} from '~/interface/Interface'
-import { toast } from 'react-toastify'
-import { useCommonContext } from '~/context/Common.context'
+} from "~/interface/Interface"
 const filterByStatus = [
   {
-    name: 'All',
-    value: 'all',
+    name: "All",
+    value: "all",
   },
   {
-    name: 'Pending',
-    value: 'pending',
+    name: "Pending",
+    value: "pending",
   },
   {
-    name: 'Completed',
-    value: 'complete',
+    name: "Completed",
+    value: "complete",
   },
 ]
 
@@ -41,10 +45,10 @@ const CandidateListOfTest = () => {
   const submit = useSubmit()
   const actionData = useActionData()
   const [menuListOpen, setmenuListOpen] = useState<boolean>(false)
-  const [searchText, setSearchText] = useState('')
+  const [searchText, setSearchText] = useState("")
   const [statusFilter, setStatusFilter] = useState(
-    toGetStoredValue('candidateListFilter')
-      ? toGetStoredValue('candidateListFilter')?.value
+    toGetStoredValue("candidateListFilter")
+      ? toGetStoredValue("candidateListFilter")?.value
       : filterByStatus[0].value
   )
 
@@ -66,7 +70,7 @@ const CandidateListOfTest = () => {
   useEffect(() => {
     navigate(`?page=${1}&pageSize=${pageSize}&filterByStatus=${statusFilter}`)
     setStatusFilter(statusFilter)
-    toSetCustomStorage('candidateListFilter', statusFilter)
+    toSetCustomStorage("candidateListFilter", statusFilter)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [statusFilter])
 
@@ -84,33 +88,33 @@ const CandidateListOfTest = () => {
   const resendInvite = (id: string, candidateId: string, testId: string) => {
     submit(
       {
-        action: 'resendInvite',
+        action: "resendInvite",
         id: id,
         candidateId: candidateId,
         testId: testId,
       },
-      { method: 'post' }
+      { method: "post" }
     )
   }
 
   useEffect(() => {
     if (
       actionData?.candidateInviteStatus ===
-      t('candidateExamConstants.candidateTestCreated')
+      t("candidateExamConstants.candidateTestCreated")
     ) {
-      toast.success(t('testsConstants.reinvited'))
+      toast.success(t("testsConstants.reinvited"))
     }
     if (
-      actionData?.candidateInviteStatus === t('candidateExamConstants.endTest')
+      actionData?.candidateInviteStatus === t("candidateExamConstants.endTest")
     ) {
-      toast.error(t('testsConstants.testEnded'))
+      toast.error(t("testsConstants.testEnded"))
     }
   }, [actionData, t])
 
   const copyLink = (link: string) => {
     navigator.clipboard.writeText(link).then(
-      () => toast.success(t('testsConstants.copyLink')),
-      (error) => toast.error(`${t('testConstants.copyLinkFailed')}${error}`)
+      () => toast.success(t("testsConstants.copyLink")),
+      (error) => toast.error(`${t("testConstants.copyLinkFailed")}${error}`)
     )
   }
   const SeriaLNoCell = (data: { [key: string]: string }, index: number) => {
@@ -122,7 +126,7 @@ const CandidateListOfTest = () => {
     }
   ) => {
     const candidateName =
-      data.candidate.firstName + ' ' + data.candidate.lastName
+      data.candidate.firstName + " " + data.candidate.lastName
     return (
       <span>
         {data.candidate.firstName &&
@@ -152,17 +156,17 @@ const CandidateListOfTest = () => {
     return (
       <span
         title={
-          data.createdAt ? moment(data.createdAt).format('DD MMMM YY') : '-'
+          data.createdAt ? moment(data.createdAt).format("DD MMMM YY") : "-"
         }
       >
-        {data.createdAt ? moment(data.createdAt).format('DD MMMM YY') : '-'}
+        {data.createdAt ? moment(data.createdAt).format("DD MMMM YY") : "-"}
       </span>
     )
   }
   const StartedAtCell = (data: CandidateResult) => {
     return (
       <span>
-        {data.startedAt ? moment(data.startedAt).format('DD MMMM YY') : '-'}
+        {data.startedAt ? moment(data.startedAt).format("DD MMMM YY") : "-"}
       </span>
     )
   }
@@ -179,24 +183,24 @@ const CandidateListOfTest = () => {
         return `${parseInt(result.toFixed(2))}%`
       }
     }
-    return <span>{getPercent() ?? 'NA'}</span>
+    return <span>{getPercent() ?? "NA"}</span>
   }
   const StatusCell = (
     data: { candidateResult: CandidateResult[] } & CandidateResult
   ) => {
     const menuItemsDetailsList = [
       {
-        id: 'resend-invite',
-        menuListText: t('resultConstants.resendInvite'),
+        id: "resend-invite",
+        menuListText: t("resultConstants.resendInvite"),
         menuListLink: resendTestLink,
-        menuLinkAltTagLine: t('resultConstants.resendAssessmentInvite'),
+        menuLinkAltTagLine: t("resultConstants.resendAssessmentInvite"),
         handleItemAction: () =>
           resendInvite(data.id, data.candidateId, data.testId),
       },
       {
-        id: 'copy-link',
-        menuListText: t('resultConstants.copyLink'),
-        menuListIcon: 'material-symbols:content-copy-outline',
+        id: "copy-link",
+        menuListText: t("resultConstants.copyLink"),
+        menuListIcon: "material-symbols:content-copy-outline",
         handleItemAction: () => copyLink(data.link as string),
       },
     ]
@@ -204,30 +208,30 @@ const CandidateListOfTest = () => {
       <div id="status-cell" className="flex items-center">
         <div
           tabIndex={0}
-          role={'banner'}
+          role={"banner"}
           className="flex items-center justify-between"
         >
           {data.startedAt === null ? (
             <span className="rounded-full bg-yellow-200 px-2 py-1 text-xs">
-              {t('commonConstants.pending')}
+              {t("commonConstants.pending")}
             </span>
           ) : data.startedAt != null && data.endAt === null ? (
             <span className="rounded-full bg-blue-50 px-2 py-1 text-xs">
-              {t('commonConstants.onGoing')}
+              {t("commonConstants.onGoing")}
             </span>
           ) : (
             data.endAt != null && (
               <span className="rounded-full bg-green-200 px-2 py-1 text-xs">
-                {t('commonConstants.completed')}
+                {t("commonConstants.completed")}
               </span>
             )
           )}
           {data?.candidateResult.length <= 0 && (
             <ListActionMenu
-              menuIcon={'mdi:dots-vertical'}
+              menuIcon={"mdi:dots-vertical"}
               onItemClick={setmenuListOpen}
               open={menuListOpen}
-              aria-label={t('testTableItem.menu')}
+              aria-label={t("testTableItem.menu")}
               id={data.id}
               menuDetails={menuItemsDetailsList}
             />
@@ -237,29 +241,29 @@ const CandidateListOfTest = () => {
     )
   }
   const column: tableColumnType[] = [
-    { title: 'Sr.No', field: 'sr_no', render: SeriaLNoCell },
-    { title: 'Name', field: 'name', render: NameDataCell, width: '15%' },
-    { title: 'Email', field: 'email', render: EmailDataCell, width: '20%' },
+    { title: "Sr.No", field: "sr_no", render: SeriaLNoCell },
+    { title: "Name", field: "name", render: NameDataCell, width: "15%" },
+    { title: "Email", field: "email", render: EmailDataCell, width: "20%" },
     {
-      title: 'Invited At',
-      field: 'invitedAt',
+      title: "Invited At",
+      field: "invitedAt",
       render: InvitedAtCell,
-      width: '15%',
+      width: "15%",
     },
     {
-      title: 'Started At',
-      field: 'invitedAt',
+      title: "Started At",
+      field: "invitedAt",
       render: StartedAtCell,
-      width: '15%',
+      width: "15%",
     },
     {
-      title: 'Invited By',
-      field: 'invitedBy',
+      title: "Invited By",
+      field: "invitedBy",
       render: InvitedByCell,
-      width: '10%',
+      width: "10%",
     },
-    { title: 'Result', field: 'Result', render: ResultCell },
-    { title: 'Status', field: 'status', render: StatusCell, width: '10%' },
+    { title: "Result", field: "Result", render: ResultCell },
+    { title: "Status", field: "status", render: StatusCell, width: "10%" },
   ]
 
   return (
@@ -270,11 +274,11 @@ const CandidateListOfTest = () => {
             onClick={() =>
               navigate(`/${currentWorkspaceId}${routes.resultGroupTest}`)
             }
-            role={'button'}
+            role={"button"}
             tabIndex={0}
             className="flex items-center gap-4 "
             onKeyDown={(e) => {
-              if (e.key === 'Enter')
+              if (e.key === "Enter")
                 navigate(`/${currentWorkspaceId}${routes.resultGroupTest}`)
             }}
           >
@@ -300,8 +304,8 @@ const CandidateListOfTest = () => {
           id="section-search"
           type="text"
           name="search"
-          placeholder={t('testsConstants.searchCandidate')}
-          title={t('testsConstants.searchCandidate')}
+          placeholder={t("testsConstants.searchCandidate")}
+          title={t("testsConstants.searchCandidate")}
           className="h-11 w-48 rounded-lg border px-5 pl-8 text-sm shadow-sm focus:outline-dotted"
           onChange={(e) => setSearchText(e.target.value)}
         />

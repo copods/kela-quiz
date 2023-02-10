@@ -20,60 +20,60 @@ import {
   getVeriticalIconId,
   geth1,
   sortFilterContainer,
-} from 'support/common-function'
+} from "support/common-function"
 
 const test1 = `Aptitude - assessment1`
 
-describe('Test for GroupByTestTable, Result', () => {
-  beforeEach('sign-in', () => {
+describe("Test for GroupByTestTable, Result", () => {
+  beforeEach("sign-in", () => {
     cy.login()
-    cy.customVisit('/members')
+    cy.customVisit("/members")
   })
 
-  it('To check result page element css properties and attributes', () => {
+  it("To check result page element css properties and attributes", () => {
     getGroupByTestId().click()
 
     // checks,table contains assessment name and having correct css and attributes
-    getGroupByItems().should('have.text', test1)
+    getGroupByItems().should("have.text", test1)
     getGroupByItemTest()
       .contains(test1)
-      .should('be.visible')
-      .should('have.css', 'color', 'rgb(53, 57, 136)')
-      .should('have.attr', 'tabindex', '0')
+      .should("be.visible")
+      .should("have.css", "color", "rgb(53, 57, 136)")
+      .should("have.attr", "tabindex", "0")
 
     // checking heading of results page
     geth1()
-      .should('be.visible')
-      .should('have.text', 'Results')
-      .should('have.class', 'text-3xl font-bold text-gray-900')
-      .should('have.attr', 'tabindex', '0') //checking accessibility
-      .should('have.attr', 'aria-label', 'Results')
+      .should("be.visible")
+      .should("have.text", "Results")
+      .should("have.class", "text-3xl font-bold text-gray-900")
+      .should("have.attr", "tabindex", "0") //checking accessibility
+      .should("have.attr", "aria-label", "Results")
       .click() //checking accessibility
-      .should('have.focus') //checking accessibility
+      .should("have.focus") //checking accessibility
 
     // sort button
     getDescendSort()
-      .should('have.attr', 'tabindex', '0')
-      .should('have.attr', 'aria-label', 'Sort Descending')
+      .should("have.attr", "tabindex", "0")
+      .should("have.attr", "aria-label", "Sort Descending")
 
     //sort filter
-    getSortFilterBody().should('be.visible')
+    getSortFilterBody().should("be.visible")
 
     // dropdown
-    getDropdown().should('be.visible')
+    getDropdown().should("be.visible")
 
     //checking total items value
     getTotalItemValue()
-      .should('be.visible')
-      .should('have.attr', 'tabindex', '0')
+      .should("be.visible")
+      .should("have.attr", "tabindex", "0")
       .click()
-      .should('have.focus')
+      .should("have.focus")
 
     // sort by name in ascending order
     getElementInsideOfDropdown()
-      .invoke('text')
+      .invoke("text")
       .then((el) => {
-        if (el === 'Name') {
+        if (el === "Name") {
           getGroupByTestItems().each(($el) => {
             cy.wrap($el)
               .children()
@@ -91,9 +91,9 @@ describe('Test for GroupByTestTable, Result', () => {
 
     getDescendSort().click()
     getElementInsideOfDropdown()
-      .invoke('text')
+      .invoke("text")
       .then((el) => {
-        if (el === 'Name') {
+        if (el === "Name") {
           getGroupByTestItems().each(($el) => {
             cy.wrap($el)
               .children()
@@ -117,9 +117,9 @@ describe('Test for GroupByTestTable, Result', () => {
       getNotSelected().click()
     })
     getElementInsideOfDropdown()
-      .invoke('text')
+      .invoke("text")
       .then((el) => {
-        if (el === 'Created Date') {
+        if (el === "Created Date") {
           getGroupByTestItems().each(($el) => {
             cy.wrap($el)
               .children()
@@ -143,9 +143,9 @@ describe('Test for GroupByTestTable, Result', () => {
       getNotSelected().click()
     })
     getElementInsideOfDropdown()
-      .invoke('text')
+      .invoke("text")
       .then((el) => {
-        if (el === 'Created Date') {
+        if (el === "Created Date") {
           getGroupByTestItems().each(($el) => {
             cy.wrap($el)
               .children()
@@ -161,13 +161,13 @@ describe('Test for GroupByTestTable, Result', () => {
       })
   })
 
-  it('To check elemnts inside perticular test', () => {
+  it("To check elemnts inside perticular test", () => {
     cy.viewport(1500, 1000)
     getGroupByTestId().click()
     getGroupByItemTest().contains(test1).click()
-    getVeriticalIconId().should('be.visible').click()
-    getCopyLinkId().should('be.visible')
+    getVeriticalIconId().should("be.visible").click()
+    getCopyLinkId().should("be.visible")
     getResendInviteCandidate().click()
-    getToastMessage().should('have.text', 'Candidate Invited Successfully')
+    getToastMessage().should("have.text", "Candidate Invited Successfully")
   })
 })

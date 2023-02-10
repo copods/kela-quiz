@@ -1,7 +1,7 @@
-import type { BadgeComponent } from '~/interface/Interface'
+import type { BadgeComponent } from "~/interface/Interface"
 
 const Badge = (props: BadgeComponent) => {
-  const { children, bgColor = 'bg-blue-100', textColor = 'text-black' } = props
+  const { children, bgColor = "bg-blue-100", textColor = "text-black" } = props
 
   return (
     <span

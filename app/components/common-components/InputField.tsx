@@ -1,5 +1,6 @@
-import { useTranslation } from 'react-i18next'
-import type { InputFieldProps } from '~/interface/Interface'
+import { useTranslation } from "react-i18next"
+
+import type { InputFieldProps } from "~/interface/Interface"
 
 function InputField({
   name,

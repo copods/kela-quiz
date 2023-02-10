@@ -1,5 +1,6 @@
-import { Outlet } from '@remix-run/react'
-import type { CandidateTest, SectionInTest } from '~/interface/Interface'
+import { Outlet } from "@remix-run/react"
+
+import type { CandidateTest, SectionInTest } from "~/interface/Interface"
 
 const SectionQuestionPage = ({
   section,
