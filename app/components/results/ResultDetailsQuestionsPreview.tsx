@@ -1,8 +1,9 @@
 import { useTranslation } from "react-i18next"
 
+import Chip from "../common-components/Chip"
 import Divider from "../common-components/divider"
 
-import { areEqualArrays } from "helper/results.helper"
+import { areEqualAsnwersArray } from "helper/results.helper"
 import type { Option, CorrectAnswer, QuestionType } from "~/interface/Interface"
 import { QuestionTypes, QuestionStatus } from "~/interface/Interface"
 
@@ -44,33 +45,32 @@ const ResultDetailsQuestionsPreview = ({
       )
     }
   )
+  console.log(flag, "l")
   return (
     <div className="flex w-full  rounded-lg  border border-gray-300 bg-white">
       <div className="flex w-6/12 flex-col gap-6 p-6">
-        <div className="flex items-center gap-8">
-          <div className="flex w-full items-center justify-between gap-2">
-            <span className="text-xl font-medium text-gray-800">
-              {t("resultConstants.question")} {index}
+        <div className="flex w-full items-center justify-between gap-2">
+          <span className="text-xl font-medium text-gray-800">
+            {t("candidateExamConstants.question")} {index}
+          </span>
+          <div className="flex items-center gap-8">
+            <span className="rounded-52 border border-black px-3 py-1 text-xs font-medium text-gray-800">
+              {/* {show chip according to type of question} */}
+              {questionType.value === QuestionTypes.text
+                ? t("resultConstants.text")
+                : t("sectionsConstants.mcq")}
             </span>
-            <div className="flex items-center gap-8">
-              <span className="rounded-52 border border-black px-3 py-1 text-xs font-medium text-gray-800">
-                {/* {show chip according to type of question} */}
-                {questionType.value === QuestionTypes.text
-                  ? t("resultConstants.text")
-                  : t("sectionsConstants.mcq")}
-              </span>
-              {/* {if question type is TEXT then
+            {/* {if question type is TEXT then
           CASE1: if ordered then show ordered front of question type
           CASE2: if unordered then show unordered front of question badge
           } */}
-              {questionType.value === QuestionTypes.text && (
-                <span className="list-item text-xs font-semibold text-gray-800">
-                  {checkOrder
-                    ? t("resultConstants.order")
-                    : t("resultConstants.unordered")}
-                </span>
-              )}
-            </div>
+            {questionType.value === QuestionTypes.text && (
+              <span className="list-item text-xs font-semibold text-gray-800">
+                {checkOrder
+                  ? t("resultConstants.order")
+                  : t("resultConstants.unordered")}
+              </span>
+            )}
           </div>
         </div>
 
@@ -80,7 +80,7 @@ const ResultDetailsQuestionsPreview = ({
           dangerouslySetInnerHTML={{
             __html: question,
           }}
-        ></div>
+        />
       </div>
       <hr className="h-[auto] w-px bg-gray-300" />
       <div className="w-6/12 p-6">
@@ -92,34 +92,31 @@ const ResultDetailsQuestionsPreview = ({
                 <h3 className="text-xl font-medium text-gray-800">
                   {t("resultConstants.givenAnswers")}
                 </h3>
-                <div>
-                  {((checkOrder === true &&
+                {((checkOrder === true &&
+                  questionType.value === QuestionTypes.text &&
+                  correctOrder.includes(false)) ||
+                  (checkOrder === false &&
                     questionType.value === QuestionTypes.text &&
-                    correctOrder.includes(false)) ||
-                    (checkOrder === false &&
-                      questionType.value === QuestionTypes.text &&
-                      areEqualArrays(textAnswer, correctAnswersArray) ===
-                        false) ||
-                    (flag.includes("incorrect") === true &&
-                      questionType.value !== QuestionTypes.text)) && (
-                    <span className="rounded-full bg-red-100 px-4 py-2 text-xs font-medium text-red-800">
-                      {t("resultConstants.wrong")}
-                    </span>
-                  )}
-                  {((checkOrder === true &&
+                    areEqualAsnwersArray(textAnswer, correctAnswersArray) ===
+                      false) ||
+                  (flag.includes("incorrect") === true &&
+                    questionType.value !== QuestionTypes.text)) && (
+                  <Chip text={t("resultConstants.wrong")} variant={"wrong"} />
+                )}
+                {((checkOrder === true &&
+                  questionType.value === QuestionTypes.text &&
+                  !correctOrder.includes(false)) ||
+                  (checkOrder === false &&
                     questionType.value === QuestionTypes.text &&
-                    !correctOrder.includes(false)) ||
-                    (checkOrder === false &&
-                      questionType.value === QuestionTypes.text &&
-                      areEqualArrays(textAnswer, correctAnswersArray) ===
-                        true) ||
-                    (flag.includes("incorrect") === false &&
-                      questionType.value !== QuestionTypes.text)) && (
-                    <span className="rounded-full bg-green-100 px-4 py-2 text-xs font-medium text-green-800">
-                      {t("resultConstants.correct")}
-                    </span>
-                  )}
-                </div>
+                    areEqualAsnwersArray(textAnswer, correctAnswersArray) ===
+                      true) ||
+                  (flag.includes("incorrect") === false &&
+                    questionType.value !== QuestionTypes.text)) && (
+                  <Chip
+                    text={t("resultConstants.correct")}
+                    variant={"sucess"}
+                  />
+                )}
               </div>
 
               {questionType.value == QuestionTypes.text &&
@@ -127,38 +124,33 @@ const ResultDetailsQuestionsPreview = ({
                   return (
                     <div
                       key={index}
-                      className="flex h-full gap-2 break-normal rounded-lg border border-solid border-gray-300 bg-gray-50 p-4 text-base font-normal text-gray-600"
+                      className="flex h-full break-normal rounded-lg border border-solid border-gray-300 bg-gray-50 p-4 text-base font-normal text-gray-600"
                     >
                       {textAnswer}
                     </div>
                   )
                 })}
 
-              {questionType.value !== QuestionTypes.text && (
-                <div className="flex flex-col gap-6">
-                  {selectedOptions.map((selectedOption: Option) => {
-                    return (
-                      <div key={selectedOption.questionId}>
-                        <div className="flex flex-col gap-6">
-                          <div
-                            className="ql-editor flex h-full gap-2 break-normal rounded-lg border border-solid border-gray-300 bg-gray-50 p-4 text-base font-normal text-gray-600"
-                            dangerouslySetInnerHTML={{
-                              __html: `${selectedOption.option}`,
-                            }}
-                          ></div>
-                        </div>
-                      </div>
-                    )
-                  })}
-                </div>
-              )}
+              {questionType.value !== QuestionTypes.text &&
+                selectedOptions.map((selectedOption: Option) => {
+                  return (
+                    <div
+                      key={selectedOption.questionId}
+                      className="ql-editor h-full break-normal rounded-lg border border-solid border-gray-300 bg-gray-50 p-4 text-base font-normal text-gray-600"
+                      dangerouslySetInnerHTML={{
+                        __html: `${selectedOption.option}`,
+                      }}
+                    />
+                  )
+                })}
             </div>
             {((checkOrder === true &&
               questionType.value === QuestionTypes.text &&
               correctOrder.includes(false)) ||
               (checkOrder === false &&
                 questionType.value === QuestionTypes.text &&
-                areEqualArrays(textAnswer, correctAnswersArray) === false) ||
+                areEqualAsnwersArray(textAnswer, correctAnswersArray) ===
+                  false) ||
               (flag.includes("incorrect") === true &&
                 questionType.value !== QuestionTypes.text)) && (
               <div className="flex flex-col gap-6">
@@ -175,17 +167,15 @@ const ResultDetailsQuestionsPreview = ({
                       {correctOption.map(
                         (correctOption: Option, index: number) => {
                           return (
-                            <div key={index}>
-                              <div
-                                key={index}
-                                className={
-                                  "ql-editor flex h-full gap-2 break-normal rounded-lg border border-solid border-gray-300 bg-gray-50 p-4 text-base font-normal text-gray-600"
-                                }
-                                dangerouslySetInnerHTML={{
-                                  __html: `${correctOption?.option}`,
-                                }}
-                              ></div>
-                            </div>
+                            <div
+                              key={index}
+                              className={
+                                "ql-editor flex h-full gap-2 break-normal rounded-lg border border-solid border-gray-300 bg-gray-50 p-4 text-base font-normal text-gray-600"
+                              }
+                              dangerouslySetInnerHTML={{
+                                __html: `${correctOption?.option}`,
+                              }}
+                            />
                           )
                         }
                       )}
@@ -194,42 +184,37 @@ const ResultDetailsQuestionsPreview = ({
 
                   {/* if TEXT type question is wrong */}
                   {checkOrder === false &&
-                    areEqualArrays(textAnswer, correctAnswersArray) ===
-                      false && (
-                      <div className="flex flex-col gap-6">
-                        {correctAnswer.map(
-                          (correctAnswer: CorrectAnswer, index: number) => {
-                            return (
-                              <div
-                                key={index}
-                                className={
-                                  "ql-editor flex h-full gap-2 break-normal rounded-lg border border-solid border-gray-300 bg-gray-50 p-4 text-gray-800"
-                                }
-                              >
-                                {correctAnswer.answer}
-                              </div>
-                            )
-                          }
-                        )}
-                      </div>
+                    areEqualAsnwersArray(textAnswer, correctAnswersArray) ===
+                      false &&
+                    correctAnswer.map(
+                      (correctAnswer: CorrectAnswer, index: number) => {
+                        return (
+                          <div
+                            key={index}
+                            className={
+                              "ql-editor flex h-full gap-2 break-normal rounded-lg border border-solid border-gray-300 bg-gray-50 p-4 text-gray-800"
+                            }
+                          >
+                            {correctAnswer.answer}
+                          </div>
+                        )
+                      }
                     )}
                   {/* if order is true and given answer is wrong then showing correct answer */}
-                  {checkOrder === true && correctOrder.includes(false) && (
-                    <div className="flex flex-col gap-6">
-                      {correctAnswer.map(
-                        (correctAnswer: CorrectAnswer, index: number) => {
-                          return (
-                            <div
-                              key={index}
-                              className="flex h-full gap-2 break-normal rounded-lg border border-solid border-gray-300 bg-gray-50 p-4 text-base font-normal text-gray-600"
-                            >
-                              {correctAnswer.answer}
-                            </div>
-                          )
-                        }
-                      )}
-                    </div>
-                  )}
+                  {checkOrder === true &&
+                    correctOrder.includes(false) &&
+                    correctAnswer.map(
+                      (correctAnswer: CorrectAnswer, index: number) => {
+                        return (
+                          <div
+                            key={index}
+                            className="flex h-full gap-2 break-normal rounded-lg border border-solid border-gray-300 bg-gray-50 p-4 text-base font-normal text-gray-600"
+                          >
+                            {correctAnswer.answer}
+                          </div>
+                        )
+                      }
+                    )}
                 </div>
               </div>
             )}
@@ -242,9 +227,7 @@ const ResultDetailsQuestionsPreview = ({
               <h3 className="text-xl font-medium text-gray-800">
                 {t("resultConstants.givenAnswers")}
               </h3>
-              <span className="rounded-full bg-yellow-100 px-4 py-2 text-sm text-red-800">
-                {t("resultConstants.skipped")}
-              </span>
+              <Chip text={t("resultConstants.skipped")} variant={"skipped"} />
             </div>
 
             <div className="flex h-full gap-2 break-normal rounded-lg border border-solid border-gray-300 bg-gray-50 p-4 text-base font-normal text-gray-600">

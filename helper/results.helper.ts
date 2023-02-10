@@ -1,6 +1,6 @@
 import type { CorrectAnswer } from "~/interface/Interface"
 
-export function areEqualArrays(
+export function areEqualAsnwersArray(
   textAnswer: CorrectAnswer[],
   correctAnswersArray: string[]
 ) {
