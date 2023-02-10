@@ -9,19 +9,16 @@ import DeletePopUp from "../common-components/DeletePopUp"
 
 import OptionCard from "./OptionCard"
 
-import type {
-  Question,
-  Option,
-  CorrectAnswer,
-  QuestionType,
-} from "~/interface/Interface"
+import type { Question, Option, QuestionType } from "~/interface/Interface"
 const QuestionCard = ({
   question,
   expandedIndex,
   onAccordianToggle,
   index,
 }: {
-  question: Question & { questionType?: QuestionType }
+  question: Question & {
+    questionType?: QuestionType
+  }
   expandedIndex: number
   onAccordianToggle: (e: number) => void
   index: number
@@ -142,18 +139,6 @@ const QuestionCard = ({
                 </div>
               )
             })}
-          </div>
-        )}
-        {question?.correctAnswer && (
-          <div className="grid grid-cols-1 gap-4 pt-6 ">
-            {question.correctAnswer?.map((answer: CorrectAnswer) => (
-              <div key={answer.id}>
-                <OptionCard
-                  option={answer}
-                  Questiontype={question.questionType}
-                />
-              </div>
-            ))}
           </div>
         )}
         {
