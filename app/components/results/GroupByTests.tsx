@@ -42,7 +42,8 @@ const filterByStatus = [
 ]
 const GroupByTests = () => {
   const { t } = useTranslation()
-  const { toSetCustomStorage, toGetStoredValue } = useCommonContext()
+  const { toSetCustomStorage, toGetStoredValue, toClearStoredValue } =
+    useCommonContext()
   const navigate = useNavigate()
   const candidateTestData = useLoaderData()
   const [sortDirection, onSortDirectionChange] = useState(
@@ -93,6 +94,7 @@ const GroupByTests = () => {
         id="group-by-item-test"
         data-cy="group-by-item-test"
         className="groupByItemTest text-base font-semibold text-primary"
+        onClick={() => toClearStoredValue("candidateListFilter")}
       >
         {data.name}
       </Link>
