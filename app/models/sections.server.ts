@@ -243,14 +243,14 @@ export async function deleteQuestionById(id: string) {
       },
     },
   })
-  const totalQuestionArray = questionData?.section?.sectionInTest.map(
+  const totalQuestionsList = questionData?.section?.sectionInTest.map(
     (data: { totalQuestions: number }) => {
       return data.totalQuestions
     }
   )
-  if (questionData && totalQuestionArray) {
+  if (questionData && totalQuestionsList) {
     if (
-      questionData.section.questions?.length <= Math.max(...totalQuestionArray)
+      questionData.section.questions?.length <= Math.max(...totalQuestionsList)
     ) {
       return deleteQuestionStatus.notDeleted
     }
