@@ -16,6 +16,7 @@ import type {
   tableColumnType,
 } from '~/interface/Interface'
 import { toast } from 'react-toastify'
+import { useCommonContext } from '~/context/Common.context'
 const filterByStatus = [
   {
     name: 'All',
@@ -34,13 +35,18 @@ const filterByStatus = [
 const CandidateListOfTest = () => {
   const { candidatesOfTest, currentWorkspaceId } = useLoaderData()
   const candidatesLoaderData = useLoaderData()
+  const { toSetCustomStorage, toGetStoredValue } = useCommonContext()
   const { t } = useTranslation()
   let navigate = useNavigate()
   const submit = useSubmit()
   const actionData = useActionData()
   const [menuListOpen, setmenuListOpen] = useState<boolean>(false)
   const [searchText, setSearchText] = useState('')
-  const [statusFilter, setStatusFilter] = useState(filterByStatus[0].value)
+  const [statusFilter, setStatusFilter] = useState(
+    toGetStoredValue('candidateListFilter')
+      ? toGetStoredValue('candidateListFilter')?.value
+      : filterByStatus[0].value
+  )
 
   const filteredData =
     candidatesLoaderData.candidatesOfTest.candidateTest?.filter(
@@ -60,6 +66,7 @@ const CandidateListOfTest = () => {
   useEffect(() => {
     navigate(`?page=${1}&pageSize=${pageSize}&filterByStatus=${statusFilter}`)
     setStatusFilter(statusFilter)
+    toSetCustomStorage('candidateListFilter', statusFilter)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [statusFilter])
 

@@ -53,13 +53,13 @@ const GroupByTests = () => {
     candidateTestData.resultsCurrentPage
   )
   const [sortBy, onSortChange] = useState(
-    toGetStoredValue('sortByDetails')
-      ? toGetStoredValue('sortByDetails')?.value
+    toGetStoredValue('resultsSortByDetails')
+      ? toGetStoredValue('resultsSortByDetails')?.value
       : sortByDetails[1].value
   )
   const [statusFilter, setStatusFilter] = useState(
-    toGetStoredValue('filterByStatus')
-      ? toGetStoredValue('filterByStatus')?.value
+    toGetStoredValue('resultsFilterByStatus')
+      ? toGetStoredValue('resultsFilterByStatus')?.value
       : filterByStatus[1].value
   )
 
@@ -151,7 +151,7 @@ const GroupByTests = () => {
     navigate(
       `?sortBy=${sortBy}&sort=${sortDirection}&page=${resultsCurrentPage}&limit=${resultsPageSize}&status=${statusFilter}`
     )
-    toSetCustomStorage('sortByDetails', sortBy)
+    toSetCustomStorage('resultsSortByDetails', sortBy)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     resultsPageSize,
@@ -167,7 +167,7 @@ const GroupByTests = () => {
       `?sortBy=${sortBy}&sort=${sortDirection}&page=${1}&limit=${resultsPageSize}&status=${statusFilter}`
     )
     setStatusFilter(statusFilter)
-    toSetCustomStorage('filterByStatus', statusFilter)
+    toSetCustomStorage('resultsFilterByStatus', statusFilter)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [statusFilter])
 
