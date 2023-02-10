@@ -2,6 +2,7 @@ import type { User, Section, Question } from "@prisma/client"
 import cuid from "cuid"
 
 import { prisma } from "~/db.server"
+import { deleteQuestionStatus } from "~/interface/Interface"
 
 export async function getSectionById({ id }: Pick<Section, "id">) {
   return prisma.section.findUnique({
@@ -212,7 +213,50 @@ export async function addQuestion(
     })
 }
 export async function deleteQuestionById(id: string) {
-  return prisma.question.update({
+  const questionData = await prisma.question.findUnique({
+    where: {
+      id,
+    },
+    select: {
+      section: {
+        select: {
+          questions: {
+            where: {
+              deleted: {
+                equals: false,
+              },
+            },
+          },
+          sectionInTest: {
+            where: {
+              test: {
+                deleted: {
+                  equals: false,
+                },
+              },
+            },
+            select: {
+              totalQuestions: true,
+            },
+          },
+        },
+      },
+    },
+  })
+  const totalQuestionsList = questionData?.section?.sectionInTest.map(
+    (data: { totalQuestions: number }) => {
+      return data.totalQuestions
+    }
+  )
+  if (questionData && totalQuestionsList) {
+    if (
+      questionData.section.questions?.length <= Math.max(...totalQuestionsList)
+    ) {
+      return deleteQuestionStatus.notDeleted
+    }
+  }
+
+  const deleteQuestion = await prisma.question.update({
     where: {
       id,
     },
@@ -221,4 +265,7 @@ export async function deleteQuestionById(id: string) {
       deletedAt: new Date().toString(),
     },
   })
+  if (deleteQuestion) {
+    return deleteQuestionStatus.deleted
+  }
 }

@@ -283,7 +283,11 @@ export const getDeleteQuestionById = async (id: string) => {
  * @param currentWorkspaceId
  * @returns all users data
  */
-export const getAllUsersData = async (currentWorkspaceId: string) => {
+export const getAllUsersData = async ({
+  currentWorkspaceId,
+}: {
+  currentWorkspaceId: string
+}) => {
   return await getAllUsers({ currentWorkspaceId })
 }
 
@@ -292,7 +296,7 @@ export const getAllUsersData = async (currentWorkspaceId: string) => {
  * @param currentWorkspaceId
  * @returns test data
  */
-export const getALLSectionsData = async (currentWorkspaceId: string) => {
+export const getAllSectionsData = async (currentWorkspaceId: string) => {
   return await getAllSections("", "", currentWorkspaceId)
 }
 

@@ -8,21 +8,12 @@ import { toast } from "react-toastify"
 import invariant from "tiny-invariant"
 
 import SectionDetails from "~/components/sections/SectionDetails"
+import { deleteQuestionStatus } from "~/interface/Interface"
 import {
   getDeleteQuestionById,
   getSectionDataById,
 } from "~/services/tests.service"
 
-export type ActionData = {
-  errors?: {
-    title: string
-    status: number
-  }
-  resp?: {
-    title: string
-    status: number
-  }
-}
 export const loader: LoaderFunction = async ({ request, params }) => {
   invariant(params.sectionId, "sectionId not found")
   const sectionDetails = await getSectionDataById({ id: params.sectionId })
@@ -40,13 +31,14 @@ export const action: ActionFunction = async ({ request, params }) => {
 }
 export default function Section() {
   const { t } = useTranslation()
-  const section = useActionData() as ActionData
+  const section = useActionData()
+
   useEffect(() => {
-    if (section?.resp?.status === 200) {
-      toast.success(t(section.resp?.title))
-    } else if (section?.errors?.status === 400) {
-      toast.error(t(section.errors?.title), {
-        toastId: section.errors?.title,
+    if (section === deleteQuestionStatus.deleted) {
+      toast.success(t("statusCheck.deletedSuccess"))
+    } else if (section === deleteQuestionStatus.notDeleted) {
+      toast.error(t("sectionsConstants.questionNotDeleted"), {
+        toastId: "question-not-deleted",
       })
     }
   }, [section, t])
