@@ -1,7 +1,6 @@
 import type { Section } from "@prisma/client"
-import { json, redirect } from "@remix-run/node"
+import { json } from "@remix-run/node"
 
-import { routes } from "~/constants/route.constants"
 import type { sectionActionErrorsType } from "~/interface/Interface"
 import {
   createSection,
@@ -12,7 +11,6 @@ import {
   getSectionById,
   getQuestionType,
   deleteQuestionById,
-  getFirstSection,
   addQuestion,
 } from "~/models/sections.server"
 import { getAllUsers } from "~/models/user.server"
@@ -296,73 +294,6 @@ export const getAllUsersData = async (currentWorkspaceId: string) => {
  */
 export const getALLSectionsData = async (currentWorkspaceId: string) => {
   return await getAllSections("", "", currentWorkspaceId)
-}
-
-/**
- * Function will call the first section
- * @param sortBy
- * @param sortOrder
- * @param workspaceId
- * @param testCurrentPage
- * @param testItemsPerPage
- * @param totalItems
- * @param currentPage
- * @param pagePerItems
- * @param sortFilter
- * @param params
- * @returns  testId
- */
-export const getFirstSectionData = async (
-  sortBy: string | null,
-  sortOrder: string | null,
-  workspaceId: string,
-  testCurrentPage: number,
-  testItemsPerPage: number,
-  totalItems: string,
-  currentPage: string,
-  pagePerItems: string,
-  sortFilter: string,
-  params: any
-) => {
-  const sectionId = await getFirstSection(
-    sortBy,
-    sortOrder,
-    workspaceId,
-    testCurrentPage,
-    testItemsPerPage
-  )
-  if (sectionId && totalItems === "1" && currentPage !== "1") {
-    redirect(
-      `/${params.workspaceId}${
-        routes.tests
-      }/${sectionId}?${sortFilter}&testPage=${
-        Number(currentPage) - 1
-      }&testItems=${pagePerItems}`
-    )
-    return {
-      deleted: "deleteLastTestOnPage",
-      path: `/${params.workspaceId}${
-        routes.tests
-      }/${sectionId}?${sortFilter}&testPage=${
-        Number(currentPage) - 1
-      }&testItems=${pagePerItems}`,
-    }
-  } else {
-    if (sectionId) {
-      redirect(
-        `/${params.workspaceId}${routes.tests}/${sectionId}?${sortFilter}&testPage=${currentPage}&testItems=${pagePerItems}`
-      )
-      return {
-        sectionId: sectionId,
-        deleted: "deleted",
-      }
-    } else {
-      redirect(`/${params.workspaceId}${routes.tests}`)
-      return {
-        deleted: "deleted",
-      }
-    }
-  }
 }
 
 /**

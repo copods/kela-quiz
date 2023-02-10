@@ -23,10 +23,10 @@ import { routes } from "~/constants/route.constants"
 import { sortByOrder } from "~/interface/Interface"
 import type { sectionActionErrorsType } from "~/interface/Interface"
 import type { Section } from "~/interface/Interface"
+import { getFirstSection } from "~/models/sections.server"
 import {
   getAllSectionCount,
   getAllTestsData,
-  getFirstSectionData,
   getWorkspaces,
   handleAddTest,
   handleDeleteTest,
@@ -187,7 +187,7 @@ export const action: ActionFunction = async ({ request, params }) => {
     const deleteSectionId = formData.get("id") as string
     await handleDeleteTest(deleteSectionId)
 
-    const sectionId = await getFirstSectionData(
+    const sectionId = await getFirstSection(
       sortFilter
         .split("&")
         .filter((res) => res.includes("sortBy"))[0]
@@ -200,14 +200,40 @@ export const action: ActionFunction = async ({ request, params }) => {
       totalItems === "1" && currentPage !== "1"
         ? Number(currentPage) - 1
         : Number(currentPage),
-      Number(pagePerItems),
-      totalItems,
-      currentPage,
-      pagePerItems,
-      sortFilter,
-      params
+      Number(pagePerItems)
     )
-    return sectionId
+    if (sectionId && totalItems === "1" && currentPage !== "1") {
+      redirect(
+        `/${params.workspaceId}${
+          routes.tests
+        }/${sectionId}?${sortFilter}&testPage=${
+          Number(currentPage) - 1
+        }&testItems=${pagePerItems}`
+      )
+      return {
+        deleted: "deleteLastTestOnPage",
+        path: `/${params.workspaceId}${
+          routes.tests
+        }/${sectionId}?${sortFilter}&testPage=${
+          Number(currentPage) - 1
+        }&testItems=${pagePerItems}`,
+      }
+    } else {
+      if (sectionId) {
+        redirect(
+          `/${params.workspaceId}${routes.tests}/${sectionId}?${sortFilter}&testPage=${currentPage}&testItems=${pagePerItems}`
+        )
+        return {
+          sectionId: sectionId,
+          deleted: "deleted",
+        }
+      } else {
+        redirect(`/${params.workspaceId}${routes.tests}`)
+        return {
+          deleted: "deleted",
+        }
+      }
+    }
   }
   return "ok"
 }
