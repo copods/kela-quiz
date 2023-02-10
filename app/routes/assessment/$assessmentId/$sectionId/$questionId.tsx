@@ -10,7 +10,7 @@ import {
   moveToNextSection,
   saveAnswerSkipAndNext,
   endCandidateAssessment,
-} from "~/utils/assessment.utils"
+} from "~/services/assessment.service"
 
 export const loader: LoaderFunction = async ({ params, request }) => {
   const question = await getQuestion(params.questionId as string)

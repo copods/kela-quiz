@@ -15,14 +15,18 @@ import { useTranslation } from "react-i18next"
 import SettingsTabs from "~/components/settings/SettingTab"
 import { actions } from "~/constants/action.constants"
 import { routes } from "~/constants/route.constants"
-import { addWorkspace, getUserWorkspaces } from "~/models/workspace.server"
+import {
+  getUserWorkspaceService,
+  createWorkspace,
+} from "~/services/workspace.service"
 import { createUserSession, getUserId } from "~/session.server"
 
 export type LoaderData = {
-  workspaces: Awaited<ReturnType<typeof getUserWorkspaces>>
+  workspaces: Awaited<ReturnType<typeof getUserWorkspaceService>>
   currentWorkspaceId: string
   userId: Awaited<ReturnType<typeof getUserId>>
 }
+
 export type ActionData = {
   errors?: {
     title: string
@@ -39,7 +43,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const userId = await getUserId(request)
   if (!userId) return redirect(routes.signIn)
   const currentWorkspaceId = params.workspaceId as string
-  const workspaces = await getUserWorkspaces(userId as string)
+  const workspaces = await getUserWorkspaceService(userId as string)
   return json<LoaderData>({
     workspaces,
     currentWorkspaceId,
@@ -62,7 +66,7 @@ export const action: ActionFunction = async ({ request }) => {
     })
   }
   if (action === actions.addWorkspace) {
-    let addHandle = {}
+    let addHandle
     const workspaceName = formData.get("workspaceName") as string
     const userId = (await getUserId(request)) as string
     if (typeof workspaceName !== "string" || workspaceName.length === 0) {
@@ -76,31 +80,7 @@ export const action: ActionFunction = async ({ request }) => {
         { status: 400 }
       )
     }
-    await addWorkspace(workspaceName, userId)
-      .then((res) => {
-        addHandle = json<ActionData>(
-          {
-            resp: {
-              title: "toastConstants.workspaceAdded",
-              status: 200,
-              workspaceId: res.workspaceId,
-            },
-          },
-          { status: 200 }
-        )
-      })
-      .catch((err) => {
-        let title = "toastConstants.duplicateWorkspace"
-        addHandle = json<ActionData>(
-          {
-            errors: {
-              title,
-              status: 400,
-            },
-          },
-          { status: 400 }
-        )
-      })
+    addHandle = await createWorkspace(workspaceName, userId)
     return addHandle
   }
   return null
