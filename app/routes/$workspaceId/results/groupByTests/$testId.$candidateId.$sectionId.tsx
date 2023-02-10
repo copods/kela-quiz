@@ -19,9 +19,9 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 }
 const ResultDetail = () => {
   return (
-    <div>
+    <>
       <ResultDetailBySections />
-    </div>
+    </>
   )
 }
 export default ResultDetail
