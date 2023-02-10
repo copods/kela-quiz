@@ -51,7 +51,7 @@ export type ActionData = {
 }
 
 /**
- * function will fetching the Tests data
+ * function will fetching the section data
  * @param sortBy
  * @param sortOrder
  * @param currentWorkspaceId
@@ -101,7 +101,7 @@ const validateDescription = (description: string) => {
 }
 
 /**
- * Function will the add the new test
+ * Function will the add the new section
  * @param name
  * @param description
  * @param createdById
@@ -159,11 +159,11 @@ export const handleAddTest = async (
 }
 
 /**
- * Function will edit the existing test
+ * Function will edit the existing section
  * @param name
  * @param description
  * @param id
- * @returns updated test data
+ * @returns updated section data
  */
 export const handleEditTest = async (
   name: string,
@@ -217,18 +217,18 @@ export const handleEditTest = async (
 }
 
 /**
- * Function will delete the test by id
- * @param deleteTestId
+ * Function will delete the section by id
+ * @param deleteSectionId
  * @returns update the section status from deleted false to deleted true
  */
-export const handleDeleteTest = async (deleteTestId: string) => {
-  const deleteHandle = await deleteSectionById(deleteTestId)
+export const handleDeleteTest = async (deleteSectionId: string) => {
+  const deleteHandle = await deleteSectionById(deleteSectionId)
     .then((res) => {
       return json<ActionData>(
         {
           resp: {
             status: "statusCheck.deletedSuccess",
-            id: deleteTestId,
+            id: deleteSectionId,
           },
         },
 
@@ -261,11 +261,11 @@ export const getWorkspaces = async (userId: string) => {
 }
 
 /**
- * Function will get total count id test
+ * Function will get total count of section
  * @param userId
  * @returns count
  */
-export const getALLtestsCount = async (userId: string) => {
+export const getAllSectionCount = async (userId: string) => {
   return await getAllTestsCounts(userId)
 }
 
@@ -274,7 +274,7 @@ export const getALLtestsCount = async (userId: string) => {
  * @param param0
  * @returns test
  */
-export const getTestById = async ({ id }: { id: string }) => {
+export const getSectionDataById = async ({ id }: { id: string }) => {
   return await getSectionById({ id })
 }
 
@@ -318,21 +318,21 @@ export const getDeleteQuestionById = async (id: string) => {
  * @param currentWorkspaceId
  * @returns all users data
  */
-export const getALLUsers = async (currentWorkspaceId: string) => {
+export const getAllUsersData = async (currentWorkspaceId: string) => {
   return await getAllUsers({ currentWorkspaceId })
 }
 
 /**
- * Function will call all tests
+ * Function will call all section
  * @param currentWorkspaceId
  * @returns test data
  */
-export const getALLTest = async (currentWorkspaceId: string) => {
+export const getALLSectionsData = async (currentWorkspaceId: string) => {
   return await getAllSections("", "", currentWorkspaceId)
 }
 
 /**
- * Function will call the first test
+ * Function will call the first section
  * @param sortBy
  * @param sortOrder
  * @param workspaceId
@@ -345,7 +345,7 @@ export const getALLTest = async (currentWorkspaceId: string) => {
  * @param params
  * @returns  testId
  */
-export const getFirstTest = async (
+export const getFirstSectionData = async (
   sortBy: string | null,
   sortOrder: string | null,
   workspaceId: string,

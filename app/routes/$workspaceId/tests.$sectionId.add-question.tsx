@@ -12,13 +12,13 @@ import { routes } from "~/constants/route.constants"
 import {
   getAddQuestion,
   getQuestionTypeFromTests,
-  getTestById,
+  getSectionDataById,
   getWorkspaces,
 } from "~/services/tests.service"
 import { getUserId, requireUserId } from "~/session.server"
 
 type LoaderData = {
-  sectionDetails: Awaited<ReturnType<typeof getTestById>>
+  sectionDetails: Awaited<ReturnType<typeof getSectionDataById>>
   questionTypes: Awaited<ReturnType<typeof getQuestionTypeFromTests>>
   workspaces: Awaited<ReturnType<typeof getWorkspaces>>
   currentWorkspaceId: string
@@ -32,7 +32,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
   invariant(params.sectionId, "sectionId not found")
 
-  const sectionDetails = await getTestById({ id: params.sectionId })
+  const sectionDetails = await getSectionDataById({ id: params.sectionId })
 
   if (!sectionDetails) {
     throw new Response("Not Found", { status: 404 })

@@ -24,9 +24,9 @@ import { sortByOrder } from "~/interface/Interface"
 import type { sectionActionErrorsType } from "~/interface/Interface"
 import type { Section } from "~/interface/Interface"
 import {
-  getALLtestsCount,
+  getAllSectionCount,
   getAllTestsData,
-  getFirstTest,
+  getFirstSectionData,
   getWorkspaces,
   handleAddTest,
   handleDeleteTest,
@@ -104,7 +104,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     const selectedSectionId = params.sectionId
       ? params.sectionId?.toString()
       : undefined
-    const getAllTestsCount = await getALLtestsCount(currentWorkspaceId)
+    const getAllTestsCount = await getAllSectionCount(currentWorkspaceId)
 
     if (!userId) return redirect(routes.signIn)
     const filters = `?sortBy=${sortBy}&sort=${sortOrder}&testPage=${testCurrentPage}&testItems=${testItemsPerPage}`
@@ -162,7 +162,7 @@ export const action: ActionFunction = async ({ request, params }) => {
     const deleteSectionId = formData.get("id") as string
     await handleDeleteTest(deleteSectionId)
 
-    const sectionId = await getFirstTest(
+    const sectionId = await getFirstSectionData(
       sortFilter
         .split("&")
         .filter((res) => res.includes("sortBy"))[0]
