@@ -252,7 +252,7 @@ export async function deleteQuestionById(id: string) {
     if (
       questionData.section.questions?.length <= Math.max(...totalQuestionArray)
     ) {
-      return deleteQuestionStatus.questionNotDeleted
+      return deleteQuestionStatus.notDeleted
     }
   }
 
@@ -266,6 +266,6 @@ export async function deleteQuestionById(id: string) {
     },
   })
   if (deleteQuestion) {
-    return deleteQuestionStatus.questionDeleted
+    return deleteQuestionStatus.deleted
   }
 }

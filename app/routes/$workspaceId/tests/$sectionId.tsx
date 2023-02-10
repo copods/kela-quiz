@@ -38,11 +38,11 @@ export default function Section() {
   const section = useActionData()
 
   useEffect(() => {
-    if (section === deleteQuestionStatus.questionDeleted) {
+    if (section === deleteQuestionStatus.deleted) {
       toast.success(t("statusCheck.deletedSuccess"))
-    } else if (section === deleteQuestionStatus.questionNotDeleted) {
+    } else if (section === deleteQuestionStatus.notDeleted) {
       toast.error(t("sectionsConstants.questionNotDeleted"), {
-        toastId: "sectionsConstants.questionNotDeleted",
+        toastId: "question-not-deleted",
       })
     }
   }, [section, t])

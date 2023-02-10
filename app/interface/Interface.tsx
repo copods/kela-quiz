@@ -307,8 +307,8 @@ export enum QuestionTypes {
   text = "TEXT",
 }
 export enum deleteQuestionStatus {
-  questionNotDeleted = "QUESTION_NOT_DELETED",
-  questionDeleted = "QUESTION_DELETED",
+  notDeleted = "NOT_DELETED",
+  deleted = "DELETED",
 }
 export interface SectionWiseResults {
   id: string
