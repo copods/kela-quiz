@@ -1,8 +1,9 @@
 import { json } from "@remix-run/server-runtime"
 import type { LoaderFunction } from "@remix-run/server-runtime"
-import { getResultDetailBySection } from "~/models/result.server"
 
 import ResultDetailBySections from "~/components/results/ResultDetailBySections"
+import { getResultDetailBySection } from "~/models/result.server"
+
 export type LoaderData = {
   sectionDetail: Awaited<ReturnType<typeof getResultDetailBySection>>
   params: {
