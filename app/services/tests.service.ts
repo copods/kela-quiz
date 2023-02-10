@@ -84,23 +84,6 @@ export const getAllTestsData = (
 }
 
 /**
- * Function checking name and description error
- * @param title
- * @returns error
- */
-const validateTitle = (title: string) => {
-  if (typeof title !== "string" || title.length <= 0) {
-    return "statusCheck.nameIsReq"
-  }
-}
-
-const validateDescription = (description: string) => {
-  if (typeof description !== "string" || description.length <= 0) {
-    return "statusCheck.descIsReq"
-  }
-}
-
-/**
  * Function will the add the new section
  * @param name
  * @param description
@@ -114,16 +97,6 @@ export const handleAddTest = async (
   createdById: string,
   workspaceId: string
 ) => {
-  // passing the props to above functions(*validateTitle,*validateDescription) for error checking
-  const createSectionFieldError = {
-    title: validateTitle(name),
-    description: validateDescription(description),
-  }
-
-  if (Object.values(createSectionFieldError).some(Boolean)) {
-    return json({ createSectionFieldError }, { status: 400 })
-  }
-
   // fetching the data from server function
   const addHandle = createSection({
     name,
@@ -182,13 +155,7 @@ export const handleEditTest = async (
       { status: 400 }
     )
   }
-  const createSectionFieldError = {
-    title: validateTitle(name),
-    description: validateDescription(description),
-  }
-  if (Object.values(createSectionFieldError).some(Boolean)) {
-    return json({ createSectionFieldError }, { status: 400 })
-  }
+
   const editHandle = editSectionById(id, name, description)
     .then((res) => {
       return json<ActionData>(

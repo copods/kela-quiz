@@ -134,10 +134,28 @@ export const action: ActionFunction = async ({ request, params }) => {
     formData.get("addSection") ||
     formData.get("editSection") ||
     formData.get("deleteSection")
+  const validateTitle = (title: string) => {
+    if (typeof title !== "string" || title.length <= 0) {
+      return "statusCheck.nameIsReq"
+    }
+  }
 
+  const validateDescription = (description: string) => {
+    if (typeof description !== "string" || description.length <= 0) {
+      return "statusCheck.descIsReq"
+    }
+  }
   if (action === "sectionAdd") {
     const name = formData.get("name") as string
     const description = formData.get("description") as string
+    const createSectionFieldError = {
+      title: validateTitle(name),
+      description: validateDescription(description),
+    }
+
+    if (Object.values(createSectionFieldError).some(Boolean)) {
+      return json({ createSectionFieldError }, { status: 400 })
+    }
     const response = await handleAddTest(
       name,
       description,
@@ -150,6 +168,13 @@ export const action: ActionFunction = async ({ request, params }) => {
     const name = formData.get("name") as string
     const description = formData.get("description") as string
     const id = formData.get("id") as string
+    const createSectionFieldError = {
+      title: validateTitle(name),
+      description: validateDescription(description),
+    }
+    if (Object.values(createSectionFieldError).some(Boolean)) {
+      return json({ createSectionFieldError }, { status: 400 })
+    }
     const response = await handleEditTest(name, description, id)
     return response
   }
