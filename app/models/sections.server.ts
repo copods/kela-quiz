@@ -2,6 +2,7 @@ import type { User, Section, Question } from "@prisma/client"
 import cuid from "cuid"
 
 import { prisma } from "~/db.server"
+import { deleteQuestionStatus } from "~/interface/Interface"
 
 export async function getSectionById({ id }: Pick<Section, "id">) {
   return prisma.section.findUnique({
@@ -251,7 +252,7 @@ export async function deleteQuestionById(id: string) {
     if (
       questionData.section.questions?.length <= Math.max(...totalQuestionArray)
     ) {
-      return "not deleted"
+      return deleteQuestionStatus.questionNotDeleted
     }
   }
 
@@ -265,6 +266,6 @@ export async function deleteQuestionById(id: string) {
     },
   })
   if (deleteQuestion) {
-    return "deleted"
+    return deleteQuestionStatus.questionDeleted
   }
 }

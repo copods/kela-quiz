@@ -9,6 +9,7 @@ import invariant from "tiny-invariant"
 
 import SectionDetails from "~/components/sections/SectionDetails"
 import { actions } from "~/constants/action.constants"
+import { deleteQuestionStatus } from "~/interface/Interface"
 import { getSectionById } from "~/models/sections.server"
 import { deleteQuestionById } from "~/models/sections.server"
 
@@ -37,9 +38,9 @@ export default function Section() {
   const section = useActionData()
 
   useEffect(() => {
-    if (section === "deleted") {
+    if (section === deleteQuestionStatus.questionDeleted) {
       toast.success(t("statusCheck.deletedSuccess"))
-    } else if (section === "not deleted") {
+    } else if (section === deleteQuestionStatus.questionNotDeleted) {
       toast.error(t("sectionsConstants.questionNotDeleted"), {
         toastId: "sectionsConstants.questionNotDeleted",
       })
