@@ -1,5 +1,5 @@
-import type { FC, ReactNode } from 'react'
-import { createContext, useContext, useState } from 'react'
+import type { FC, ReactNode } from "react"
+import { createContext, useContext, useState } from "react"
 
 interface IStorage {
   key: string
@@ -8,7 +8,7 @@ interface IStorage {
 
 type CommonContextType = {
   storage: IStorage[]
-  toSetCustomStorage: (key: string, value?: Pick<IStorage, 'value'>) => any
+  toSetCustomStorage: (key: string, value?: Pick<IStorage, "value">) => any
   toGetStoredValue: (key: string) => any
 }
 
@@ -17,7 +17,7 @@ const CommonContext = createContext<CommonContextType | null>(null)
 const CommonContextProvider: FC<ReactNode> = ({ children }) => {
   const [storage, setStorage] = useState<IStorage[]>([])
 
-  const toSetCustomStorage = (key: string, value?: Pick<IStorage, 'value'>) => {
+  const toSetCustomStorage = (key: string, value?: Pick<IStorage, "value">) => {
     if (storage.find((store) => store.key === key)) {
       setStorage(
         storage.map((store) =>
