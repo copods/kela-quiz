@@ -1,6 +1,12 @@
 import { useEffect, useState } from "react"
 
-import { Form, useActionData, useSubmit, useTransition } from "@remix-run/react"
+import {
+  Form,
+  useActionData,
+  useFetcher,
+  useSubmit,
+  useTransition,
+} from "@remix-run/react"
 import { useTranslation } from "react-i18next"
 
 import Button from "../common-components/Button"
@@ -40,6 +46,7 @@ const AddEditSection = ({
   const [description, setDescription] = useState("")
   const submit = useSubmit()
   const sectionActionData = useActionData()
+  const fetcher = useFetcher()
   const editSection = (name: string, description: string) => {
     submit(
       {
@@ -54,7 +61,10 @@ const AddEditSection = ({
     )
   }
   const addSection = (name: string, description: string) => {
-    submit({ addSection: "sectionAdd", name, description }, { method: "post" })
+    fetcher.submit(
+      { addSection: "sectionAdd", name, description },
+      { method: "get" }
+    )
   }
   useEffect(() => {
     if (editItem) {

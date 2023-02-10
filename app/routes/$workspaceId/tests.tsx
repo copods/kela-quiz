@@ -73,6 +73,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   try {
     // taking search params from URL
     const query = new URL(request.url).searchParams
+    console.log(query, "k")
     // taking number of items per page and current page number from query
     const testItemsPerPage = Math.max(Number(query.get("testItems") || 5), 5) //To set the lower bound, so that minimum count will always be 1 for current page and 5 for items per page.
     const testCurrentPage = Math.max(Number(query.get("testPage") || 1), 1)
@@ -82,6 +83,29 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     const userId = await getUserId(request)
     const currentWorkspaceId = params.workspaceId as string
     const workspaces = await getUserWorkspaces(userId as string)
+
+    const name = query.get("name")
+    const description = query.get("description")
+
+    const validateTitle = (title: any) => {
+      if (typeof title !== "string" || title.length <= 0) {
+        return "statusCheck.nameIsReq"
+      }
+    }
+
+    const validateDescription = (description: any) => {
+      if (typeof description !== "string" || description.length <= 0) {
+        return "statusCheck.descIsReq"
+      }
+    }
+    const createSectionFieldError = {
+      title: validateTitle(name),
+      description: validateDescription(description),
+    }
+
+    if (Object.values(createSectionFieldError).some(Boolean)) {
+      return json({ createSectionFieldError }, { status: 400 })
+    }
 
     let sections: Array<Section> = []
     let status: string = ""
