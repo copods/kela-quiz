@@ -7,6 +7,7 @@ import EmptyStateComponent from "../common-components/EmptyStateComponent"
 import SortFilter from "../common-components/SortFilter"
 import Table from "../common-components/TableComponent"
 
+import { useCommonContext } from "~/context/Common.context"
 import { sortByOrder } from "~/interface/Interface"
 import type {
   CandidateTest,
@@ -14,6 +15,7 @@ import type {
   OtherFilters,
   Test,
 } from "~/interface/Interface"
+
 const sortByDetails = [
   {
     name: "Name",
@@ -40,6 +42,8 @@ const filterByStatus = [
 ]
 const GroupByTests = () => {
   const { t } = useTranslation()
+  const { toSetCustomStorage, toGetStoredValue, toClearStoredValue } =
+    useCommonContext()
   const navigate = useNavigate()
   const candidateTestData = useLoaderData()
   const [sortDirection, onSortDirectionChange] = useState(
@@ -51,8 +55,16 @@ const GroupByTests = () => {
   const [resultsCurrentPage, setResultsCurrentPage] = useState(
     candidateTestData.resultsCurrentPage
   )
-  const [sortBy, onSortChange] = useState(sortByDetails[1].value)
-  const [statusFilter, setStatusFilter] = useState(filterByStatus[1].value)
+  const [sortBy, onSortChange] = useState(
+    toGetStoredValue("resultsSortByDetails")
+      ? toGetStoredValue("resultsSortByDetails")?.value
+      : sortByDetails[1].value
+  )
+  const [statusFilter, setStatusFilter] = useState(
+    toGetStoredValue("resultsFilterByStatus")
+      ? toGetStoredValue("resultsFilterByStatus")?.value
+      : filterByStatus[1].value
+  )
 
   const candidateTests = candidateTestData.candidateTest
   const candidateTestsArray = candidateTests.filter(
@@ -82,6 +94,7 @@ const GroupByTests = () => {
         id="group-by-item-test"
         data-cy="group-by-item-test"
         className="groupByItemTest text-base font-semibold text-primary"
+        onClick={() => toClearStoredValue("candidateListFilter")}
       >
         {data.name}
       </Link>
@@ -142,6 +155,7 @@ const GroupByTests = () => {
     navigate(
       `?sortBy=${sortBy}&sort=${sortDirection}&page=${resultsCurrentPage}&limit=${resultsPageSize}&status=${statusFilter}`
     )
+    toSetCustomStorage("resultsSortByDetails", sortBy)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     resultsPageSize,
@@ -157,6 +171,7 @@ const GroupByTests = () => {
       `?sortBy=${sortBy}&sort=${sortDirection}&page=${1}&limit=${resultsPageSize}&status=${statusFilter}`
     )
     setStatusFilter(statusFilter)
+    toSetCustomStorage("resultsFilterByStatus", statusFilter)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [statusFilter])
 
