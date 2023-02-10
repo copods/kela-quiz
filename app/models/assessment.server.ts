@@ -687,7 +687,7 @@ async function calculateResultBySectionId(sectionid?: string) {
               incorrect += 1
             }
           }
-        } else if (checkOrder === true) {
+        } else {
           if (correctOrder?.includes(false)) {
             incorrect += 1
           } else {
