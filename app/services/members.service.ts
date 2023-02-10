@@ -25,10 +25,21 @@ type ActionData = {
   }
 }
 
+/**
+ * Function to get all roles
+ * @returns Role[]
+ */
 export async function getALLRoles() {
   return await getAllRoles()
 }
 
+/**
+ * Function to get all users
+ * @param currentWorkspaceId
+ * @param membersCurrentPage
+ * @param membersItemsPerPage
+ * @returns user[]
+ */
 export async function getALLUsers({
   currentWorkspaceId,
   membersCurrentPage,
@@ -45,14 +56,31 @@ export async function getALLUsers({
   })
 }
 
+/**
+ * Function to get all users count
+ * @param currentWorkspaceId
+ * @returns user count in number
+ */
 export async function getALLUsersCount(currentWorkspaceId: string) {
   return await getAllUsersCount(currentWorkspaceId)
 }
 
+/**
+ * Function to get specific user
+ * @param userId
+ * @returns User[]
+ */
 export async function getUserByID(userId: string) {
   return await getUserById(userId)
 }
 
+/**
+ * Function to get all invited members
+ * @param currentWorkspaceId
+ * @param invitedMembersCurrentPage
+ * @param invitedMembersItemsPerPage
+ * @returns Invites[]
+ */
 export async function getALLInvitedMember(
   currentWorkspaceId: string,
   invitedMembersCurrentPage: number,
@@ -65,10 +93,20 @@ export async function getALLInvitedMember(
   )
 }
 
+/**
+ * Function to get invited members count
+ * @param currentWorkspaceId
+ * @returns invited member count in number
+ */
 export async function getALLInvitedMemberCount(currentWorkspaceId: string) {
   return await getAllInvitedMemberCount(currentWorkspaceId)
 }
 
+/**
+ * Function to reinvite member
+ * @param id
+ * @returns json response
+ */
 export async function reinviteMember({ id }: { id: string }) {
   return await reinviteMemberForWorkspace({ id })
     .then(() => {
@@ -96,6 +134,13 @@ export async function reinviteMember({ id }: { id: string }) {
     })
 }
 
+/**
+ * Function to delete specific user
+ * @param id
+ * @param workspaceId
+ * @param email
+ * @returns json response
+ */
 export async function deleteUserByID(
   id: string,
   workspaceId: string,
@@ -121,6 +166,14 @@ export async function deleteUserByID(
     })
 }
 
+/**
+ * Function to invite new user
+ * @param email
+ * @param roleId
+ * @param invitedByWorkspaceId
+ * @param userId
+ * @returns json response
+ */
 export async function inviteNEWUser({
   email,
   roleId,
