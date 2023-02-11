@@ -4,6 +4,7 @@ import { Listbox, Transition } from "@headlessui/react"
 import { Icon } from "@iconify/react"
 import { useTranslation } from "react-i18next"
 
+import { useCommonContext } from "~/context/Common.context"
 import { useElementPositionHandler } from "~/hooks/useElementPositionHandler"
 import { usePagination } from "~/utils"
 
@@ -16,6 +17,7 @@ const PaginationButtons = ({
   currentPage: number
   onPageChange: (e: number) => void
 }) => {
+  const { toClearStoredValue } = useCommonContext()
   return paginationRange?.map((paginationRangeItems: number, index) => {
     if (paginationRangeItems === -1) {
       return (
@@ -33,7 +35,10 @@ const PaginationButtons = ({
               ? " rounded-md bg-gray-200"
               : ""
           }`}
-          onClick={() => onPageChange(paginationRangeItems)}
+          onClick={() => {
+            onPageChange(paginationRangeItems)
+            toClearStoredValue("activeTestsSection")
+          }}
           role="button"
           tabIndex={0}
           onKeyDown={(e) => {
@@ -152,6 +157,7 @@ const Pagination = ({
     hideRange,
   })
   const [selected, setSelected] = useState(pageSize)
+  const { toClearStoredValue } = useCommonContext()
   return (
     <div className="test-table-list b flex items-center justify-between gap-3">
       <div className="paginationInfo flex items-center gap-6">
@@ -178,7 +184,10 @@ const Pagination = ({
             currentPage === 1 ? "pointer-events-none text-slate-300" : ""
           }`}
           icon="ooui:previous-ltr"
-          onClick={() => onPageChange(currentPage - 1)}
+          onClick={() => {
+            onPageChange(currentPage - 1)
+            toClearStoredValue("activeTestsSection")
+          }}
         />
         {PaginationButtons({ paginationRange, currentPage, onPageChange })}
 
@@ -189,7 +198,10 @@ const Pagination = ({
               : ""
           }`}
           icon="ooui:previous-rtl"
-          onClick={() => onPageChange(currentPage + 1)}
+          onClick={() => {
+            onPageChange(currentPage + 1)
+            toClearStoredValue("activeTestsSection")
+          }}
         />
       </div>
     </div>

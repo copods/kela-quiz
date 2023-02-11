@@ -8,6 +8,7 @@ import SortFilter from "../common-components/SortFilter"
 import SectionCard from "./SectionCard"
 
 import { routes } from "~/constants/route.constants"
+import { useCommonContext } from "~/context/Common.context"
 import type { Question, Section, SectionInTest } from "~/interface/Interface"
 import type { sectionActionErrorsType } from "~/interface/Interface"
 
@@ -35,6 +36,7 @@ const SectionLink = ({
 }) => {
   const path = `/${currentWorkspaceId}${routes.tests}/${section.id}${filter}`
   const [isDelete, setIsDelete] = useState(false)
+  const { toClearStoredValue } = useCommonContext()
   const location = useLocation() // to get current location
   const resolvedPath = useResolvedPath(path) // to get resolved path which would match with current location
   const isActive = location.pathname === resolvedPath.pathname
@@ -54,7 +56,10 @@ const SectionLink = ({
 
   return (
     <div
-      onClick={() => !isActive && navigate(path)}
+      onClick={() => {
+        !isActive && navigate(path)
+        toClearStoredValue("activeTestsSection")
+      }}
       id="section-link"
       className={isActive ? "activeSectionCard" : ""}
       role={"button"}

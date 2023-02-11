@@ -26,6 +26,7 @@ import EmptyStateComponent from "~/components/common-components/EmptyStateCompon
 import AddEditSection from "~/components/sections/AddEditSection"
 import Sections from "~/components/sections/Sections"
 import { routes } from "~/constants/route.constants"
+import { useCommonContext } from "~/context/Common.context"
 import { sortByOrder } from "~/interface/Interface"
 import type { sectionActionErrorsType } from "~/interface/Interface"
 import type { Section } from "~/interface/Interface"
@@ -215,6 +216,7 @@ export const action: ActionFunction = async ({ request, params }) => {
 export default function SectionPage() {
   const data = useLoaderData() as unknown as LoaderData
   const { t } = useTranslation()
+  const { toGetStoredValue, toSetCustomStorage } = useCommonContext()
   const sectionActionData = useActionData() as ActionData
   const sortByDetails = [
     {
@@ -235,7 +237,11 @@ export default function SectionPage() {
     description: "",
   })
   const [testsPageSize, setTestPageSize] = useState(5)
-  const [testsCurrentPage, setTestsCurrentPage] = useState(data.testCurrentPage)
+  const [testsCurrentPage, setTestsCurrentPage] = useState(
+    toGetStoredValue("testsRouteActivePage")
+      ? toGetStoredValue("testsRouteActivePage")?.value
+      : data.testCurrentPage
+  )
   const location = useLocation()
   const navigate = useNavigate()
   if (t(data.status) != t("statusCheck.success")) {
@@ -310,7 +316,11 @@ export default function SectionPage() {
       (!location.search && data.getAllTestsCount > 0)
     ) {
       navigate(
-        `/${data.currentWorkspaceId}${routes.tests}/${data.sections[0]?.id}?sortBy=${sortBy}&sort=${order}&testPage=${testsCurrentPage}&testItems=${testsPageSize}`
+        `/${data.currentWorkspaceId}${routes.tests}/${
+          toGetStoredValue("activeTestsSection")
+            ? toGetStoredValue("activeTestsSection")?.value
+            : data.sections[0]?.id
+        }?sortBy=${sortBy}&sort=${order}&testPage=${testsCurrentPage}&testItems=${testsPageSize}`
       )
     }
   }, [
@@ -334,9 +344,8 @@ export default function SectionPage() {
     }
   }, [order])
   useEffect(() => {
-    setTestsCurrentPage(data.testCurrentPage)
+    toSetCustomStorage("testsRouteActivePage", data?.testCurrentPage)
   }, [data])
-
   useEffect(() => {
     const heading = document.getElementById("tests-heading")
     heading?.focus()

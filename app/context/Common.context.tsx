@@ -7,8 +7,7 @@ interface IStorage {
 }
 
 type CommonContextType = {
-  storage: IStorage[]
-  toSetCustomStorage: (key: string, value?: Pick<IStorage, "value">) => void
+  toSetCustomStorage: (key: string, value?: any) => void
   toGetStoredValue: (key: string) => any
   toClearStoredValue: (key: string) => void
 }
@@ -41,7 +40,6 @@ const CommonContextProvider: FC<ReactNode> = ({ children }) => {
   return (
     <CommonContext.Provider
       value={{
-        storage,
         toSetCustomStorage,
         toGetStoredValue,
         toClearStoredValue,
