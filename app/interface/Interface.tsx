@@ -158,6 +158,7 @@ export interface Question {
   deletedAt: string
   options?: Array<Option>
   correctOptions?: Array<Option>
+  candidateQuestion: CandidateQuestion[]
 }
 
 export interface Test {
@@ -304,6 +305,10 @@ export enum QuestionTypes {
   multipleChoice = "MULTIPLE_CHOICE",
   singleChoice = "SINGLE_CHOICE",
   text = "TEXT",
+}
+export enum deleteQuestionStatus {
+  notDeleted = "NOT_DELETED",
+  deleted = "DELETED",
 }
 export interface SectionWiseResults {
   id: string
