@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react'
 import Moment from 'moment'
 import { toast } from 'react-toastify'
-import type { TestSection } from '~/interface/Interface'
+import type { TestSection, AddedSectionDetails } from '~/interface/Interface'
 import Button from '../common-components/Button'
 import { useTranslation } from 'react-i18next'
 
@@ -11,7 +11,7 @@ const SelectSectionCard = ({
   questionCount = 0,
 }: {
   section: TestSection
-  updateSection: <T>(e: T) => void
+  updateSection: (e: AddedSectionDetails) => void
   questionCount?: number
 }) => {
   const { t } = useTranslation()

@@ -1,28 +1,35 @@
-import type { SetStateAction } from 'react'
+import { SetStateAction } from 'react'
 import { useEffect, useState } from 'react'
-import { sortByOrder } from '~/interface/Interface'
+import { sortByOrder, AddedSectionDetails } from '~/interface/Interface'
 import type { TestSection } from '~/interface/Interface'
 import SortFilter from '../common-components/SortFilter'
 import SelectSectionCard from './SelectSectionCard'
 import { useTranslation } from 'react-i18next'
 import { useFetcher, useNavigate } from '@remix-run/react'
 import { routes } from '~/constants/route.constants'
+import Pagination from '../common-components/Pagination'
 
 const SelectSections = ({
   sections,
   setSections,
   updateSectionsList,
   currentWorkspaceId,
+  totalSections,
+  AllSelectedSections,
 }: {
   sections: Array<TestSection>
-  setSections: <T>(e: T, i: number) => void
+  setSections: (e: AddedSectionDetails, i: number) => void
   updateSectionsList: (e: SetStateAction<Array<TestSection>>) => void
   currentWorkspaceId: string
+  totalSections: number
+  AllSelectedSections: Array<TestSection>
 }) => {
   const [sortDirection, onSortDirectionChange] = useState(
     sortByOrder.ascending as string
   )
   const [sortBy, onSortChange] = useState('name')
+  const [sectionsCurrentPage, setSectionsCurrentPage] = useState(1)
+  const [sectionsPageSize, setSectionsPageSize] = useState(5)
   const [pseudoDivs, setPseudoDivs] = useState([1])
   const filterByType = [
     {
@@ -34,7 +41,6 @@ const SelectSections = ({
       value: 'createdAt',
     },
   ]
-  const [sectionData, setSectionData] = useState(sections)
 
   const fetcher: any = useFetcher()
   const { t } = useTranslation()
@@ -61,18 +67,31 @@ const SelectSections = ({
       {
         sortBy: sortBy,
         sortOrder: sortDirection,
+        currentPage: sectionsCurrentPage,
+        pageSize: sectionsPageSize,
       },
       {
         method: 'get',
       }
     )
-  }, [sortDirection, sortBy])
+  }, [sortDirection, sortBy, sectionsCurrentPage, sectionsPageSize])
 
   useEffect(() => {
-    if (fetcher.data) {
-      setSectionData(fetcher.data.sections)
+    const { data } = fetcher
+    if (data) {
+      totalSections = data.getAllSectionsCount
+      let sortedData = data.sections
+      if (AllSelectedSections.length > 0) {
+        sortedData = sortedData.map((section: TestSection) => {
+          const selected = AllSelectedSections.find(
+            (selected) => selected.id === section.id
+          )
+          return selected || section
+        })
+      }
+      updateSectionsList(sortedData)
     }
-  }, [fetcher.data])
+  }, [fetcher])
 
   return (
     <div className="flex w-full flex-1 flex-col gap-6 overflow-x-auto rounded-lg bg-white p-6 shadow">
@@ -85,12 +104,12 @@ const SelectSections = ({
             onSortDirectionChange={onSortDirectionChange}
             sortBy={sortBy}
             onSortChange={onSortChange}
-            totalItems={sections?.length}
+            totalItems={totalSections}
             showSelected={false}
           />
           {/* Sections list */}
           <div className="flex flex-wrap gap-6">
-            {sectionData.map((section: TestSection & { count?: number }, i) => {
+            {sections.map((section: TestSection & { count?: number }, i) => {
               return (
                 <SelectSectionCard
                   section={section}
@@ -109,6 +128,14 @@ const SelectSections = ({
               )
             })}
           </div>
+          <Pagination
+            currentPage={sectionsCurrentPage}
+            onPageChange={(page) => setSectionsCurrentPage?.(page)}
+            pageSize={sectionsPageSize}
+            setPageSize={setSectionsPageSize}
+            totalItems={totalSections!}
+            hideRange={true}
+          />
         </div>
       ) : (
         <div className="flex h-full items-center justify-center">

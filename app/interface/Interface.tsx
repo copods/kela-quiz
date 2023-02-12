@@ -375,3 +375,9 @@ export interface BadgeComponent {
   bgColor?: string
   textColor?: string
 }
+
+export interface AddedSectionDetails {
+  isSelected: boolean | undefined
+  totalQuestions: number
+  time: number
+}

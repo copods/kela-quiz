@@ -4,7 +4,7 @@ import { json, redirect } from '@remix-run/server-runtime'
 import { useEffect } from 'react'
 import { toast } from 'react-toastify'
 import AddTestComponent from '~/components/tests/AddTest'
-import { getAllSections } from '~/models/sections.server'
+import { getAllSections, getAllTestsCounts } from '~/models/sections.server'
 import { createTest } from '~/models/tests.server'
 import { getUserId, requireUserId } from '~/session.server'
 import { routes } from '~/constants/route.constants'
@@ -17,6 +17,7 @@ type LoaderData = {
   status: string
   workspaces: Awaited<ReturnType<typeof getUserWorkspaces>>
   currentWorkspaceId: string
+  getAllSectionsCount: number
 }
 export type ActionData = {
   errors?: {
@@ -36,11 +37,22 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const query = new URL(request.url).searchParams
   const sortBy = query.get('sortBy') as string
   const sortOrder = query.get('sortOrder') as string
+  const testItemsPerPage = Math.max(Number(query.get('pageSize') || 5), 5)
+  const testCurrentPage = Math.max(Number(query.get('currentPage') || 1), 1)
+
+  const getAllSectionsCount = await getAllTestsCounts(currentWorkspaceId)
+
   if (!userId) return redirect(routes.signIn)
 
   let sections: Array<Section> = []
   let status: string = ''
-  await getAllSections(sortBy, sortOrder, currentWorkspaceId as string)
+  await getAllSections(
+    sortBy,
+    sortOrder,
+    currentWorkspaceId as string,
+    testCurrentPage,
+    testItemsPerPage
+  )
     .then((res) => {
       sections = res as Section[]
       status = 'statusCheck.success'
@@ -48,7 +60,13 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     .catch((err) => {
       status = err
     })
-  return json<LoaderData>({ sections, status, workspaces, currentWorkspaceId })
+  return json<LoaderData>({
+    sections,
+    status,
+    workspaces,
+    currentWorkspaceId,
+    getAllSectionsCount,
+  })
 }
 
 export const action: ActionFunction = async ({ request, params }) => {
@@ -126,6 +144,7 @@ const AddTest = () => {
     <AddTestComponent
       currentWorkspaceId={testData.currentWorkspaceId}
       sections={testData.sections}
+      totalSections={testData.getAllSectionsCount}
     />
   )
 }

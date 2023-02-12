@@ -1,7 +1,7 @@
 import { useNavigate, useSubmit, useTransition } from '@remix-run/react'
 import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
-import { sortByOrder } from '~/interface/Interface'
+import { sortByOrder, AddedSectionDetails } from '~/interface/Interface'
 import type { TestSection } from '~/interface/Interface'
 import BreadCrumb from '../common-components/BreadCrumb'
 import SelectSections from './CreateSelectSections'
@@ -15,15 +15,20 @@ import { useTranslation } from 'react-i18next'
 const AddTestComponent = ({
   sections,
   currentWorkspaceId,
+  totalSections,
 }: {
   sections: Array<TestSection>
   currentWorkspaceId: string
+  totalSections: number
 }) => {
   const { t } = useTranslation()
 
   const transition = useTransition()
   const submit = useSubmit()
   const [sectionsCopy, setSectionsCopy] = useState(sections)
+  const [AllSelectedSections, setAllSelectedSections] = useState<
+    Array<TestSection>
+  >([])
   useEffect(() => {
     setSectionsCopy(sections)
   }, [sections])
@@ -61,9 +66,27 @@ const AddTestComponent = ({
     []
   )
   const navigate = useNavigate()
-  const updateSection = <T,>(data: T, i: number) => {
+  const updateSection = (data: AddedSectionDetails, i: number) => {
     setSectionsCopy((sec) => {
       sec[i] = { ...sec[i], ...data }
+
+      // pushing  section which is selected to an Array for Maintaining state
+      if (data.isSelected) {
+        AllSelectedSections
+          ? setAllSelectedSections((oldArray) => [...oldArray, sec[i]])
+          : setAllSelectedSections([sec[i]])
+      } else {
+        // Poping section which we unselect from an array for Maintaining state
+        if (AllSelectedSections) {
+          const removedSection = AllSelectedSections.find(
+            (obj) => obj.id === sec[i].id
+          )
+          if (removedSection) {
+            const index = AllSelectedSections?.indexOf(removedSection)
+            AllSelectedSections.splice(index, 1)
+          }
+        }
+      }
       onSelectedSectionChange(
         sec.filter((s) => {
           return s.isSelected
@@ -178,6 +201,8 @@ const AddTestComponent = ({
           }}
           updateSectionsList={setSectionsCopy}
           currentWorkspaceId={currentWorkspaceId}
+          totalSections={totalSections}
+          AllSelectedSections={AllSelectedSections}
         />
       ) : (
         currentTab === tabs[2].id && (
