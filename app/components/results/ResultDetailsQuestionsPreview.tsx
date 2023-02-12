@@ -184,25 +184,20 @@ const ResultDetailsQuestionsPreview = ({
                   </h3>
                 </div>
                 {/* if MCQ is incorrect */}
-                {flag.includes("incorrect") && (
-                  <div className="flex flex-col gap-6">
-                    {correctOption.map(
-                      (correctOption: Option, index: number) => {
-                        return (
-                          <div
-                            key={index}
-                            className={
-                              "ql-editor flex h-full gap-2 break-normal rounded-lg border border-solid border-gray-300 bg-gray-50 p-4 text-base font-normal text-gray-600"
-                            }
-                            dangerouslySetInnerHTML={{
-                              __html: `${correctOption?.option}`,
-                            }}
-                          />
-                        )
-                      }
-                    )}
-                  </div>
-                )}
+                {flag.includes("incorrect") &&
+                  correctOption.map((correctOption: Option, index: number) => {
+                    return (
+                      <div
+                        key={index}
+                        className={
+                          "ql-editor flex h-full gap-2 break-normal rounded-lg border border-solid border-gray-300 bg-gray-50 p-4 text-base font-normal text-gray-600"
+                        }
+                        dangerouslySetInnerHTML={{
+                          __html: `${correctOption?.option}`,
+                        }}
+                      />
+                    )
+                  })}
 
                 {/* if TEXT type question is wrong */}
                 {checkOrder === false &&
