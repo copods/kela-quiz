@@ -1,16 +1,20 @@
-import { useNavigate, useSubmit, useTransition } from '@remix-run/react'
-import { useEffect, useState } from 'react'
-import { toast } from 'react-toastify'
-import { sortByOrder, AddedSectionDetails } from '~/interface/Interface'
-import type { TestSection } from '~/interface/Interface'
-import BreadCrumb from '../common-components/BreadCrumb'
-import SelectSections from './CreateSelectSections'
-import TestDetails from './CreateTestDetails'
-import TestPreview from './CreateTestPreview'
-import StepsTabComponent from './StepsTab'
-import Button from '../common-components/Button'
-import { routes } from '~/constants/route.constants'
-import { useTranslation } from 'react-i18next'
+import { useEffect, useState } from "react"
+
+import { useNavigate, useSubmit, useTransition } from "@remix-run/react"
+import { useTranslation } from "react-i18next"
+import { toast } from "react-toastify"
+
+import BreadCrumb from "../common-components/BreadCrumb"
+import Button from "../common-components/Button"
+
+import SelectSections from "./CreateSelectSections"
+import TestDetails from "./CreateTestDetails"
+import TestPreview from "./CreateTestPreview"
+import StepsTabComponent from "./StepsTab"
+
+import { routes } from "~/constants/route.constants"
+import type { AddedSectionDetails, TestSection } from "~/interface/Interface"
+import { sortByOrder } from "~/interface/Interface"
 
 const AddTestComponent = ({
   sections,
@@ -34,34 +38,34 @@ const AddTestComponent = ({
   }, [sections])
   const breadCrumbData = [
     {
-      tabName: 'testsConstants.assessment',
+      tabName: "testsConstants.assessment",
       route: `/${currentWorkspaceId}${routes.assessments}`,
     },
     {
-      tabName: 'testsConstants.addTestbutton',
+      tabName: "testsConstants.addTestbutton",
       route: `/${currentWorkspaceId}${routes.addAssessment}`,
     },
   ]
   const tabs = [
     {
       id: 0,
-      name: 'Step 1',
-      description: 'Assessment Details',
+      name: "Step 1",
+      description: "Assessment Details",
     },
     {
       id: 1,
-      name: 'Step 2',
-      description: 'Select Sections',
+      name: "Step 2",
+      description: "Select Sections",
     },
     {
       id: 2,
-      name: 'Step 3',
-      description: 'Preview',
+      name: "Step 3",
+      description: "Preview",
     },
   ]
   const [currentTab, setCurrentTab] = useState(0) // testDetails  ||  selectSections  ||  preview
-  const [name, onNameChange] = useState('')
-  const [description, setDescription] = useState('')
+  const [name, onNameChange] = useState("")
+  const [description, setDescription] = useState("")
   const [selectedSections, onSelectedSectionChange] = useState<TestSection[]>(
     []
   )
@@ -96,16 +100,16 @@ const AddTestComponent = ({
     })
   }
   const submitAddTest = () => {
-    if (typeof name !== 'string' || name.length === 0) {
-      toast.error(t('toastConstants.addAssessment'))
+    if (typeof name !== "string" || name.length === 0) {
+      toast.error(t("toastConstants.addAssessment"))
       return
     }
-    if (typeof description !== 'string' || description.length === 0) {
-      toast.error(t('toastConstants.enterDescription'))
+    if (typeof description !== "string" || description.length === 0) {
+      toast.error(t("toastConstants.enterDescription"))
       return
     }
     if (selectedSections.length === 0) {
-      toast.error(t('toastConstants.addTest'))
+      toast.error(t("toastConstants.addTest"))
       return
     }
     let sendData: {
@@ -130,7 +134,7 @@ const AddTestComponent = ({
         order: index + 1,
       })
     })
-    submit({ data: JSON.stringify(sendData) }, { method: 'post' })
+    submit({ data: JSON.stringify(sendData) }, { method: "post" })
     // fetcher.submit({ data: JSON.stringify(sendData) }, { method: "post" });
   }
   useEffect(() => {
@@ -140,8 +144,8 @@ const AddTestComponent = ({
   }, [currentTab, setCurrentTab, name, description])
   function isQuillEmpty(value: string) {
     if (
-      value.replace(/<(.|\n)*?>/g, '').trim().length === 0 &&
-      !value.includes('<img')
+      value.replace(/<(.|\n)*?>/g, "").trim().length === 0 &&
+      !value.includes("<img")
     ) {
       return true
     }
@@ -166,12 +170,12 @@ const AddTestComponent = ({
       <header className="flex items-center justify-between">
         <h2
           id="add-assessment-page-title"
-          role={t('testsConstants.addTestbutton')}
+          role={t("testsConstants.addTestbutton")}
           tabIndex={0}
-          title={t('testsConstants.addTestbutton')}
+          title={t("testsConstants.addTestbutton")}
           className="text-3xl font-bold text-black"
         >
-          {t('testsConstants.addTestbutton')}
+          {t("testsConstants.addTestbutton")}
         </h2>
       </header>
       <BreadCrumb data={breadCrumbData} />
@@ -224,28 +228,28 @@ const AddTestComponent = ({
           }
           className="h-9 px-7"
           variant="secondary-solid"
-          title={t('commonConstants.cancelAddTest')}
-          buttonText={t('commonConstants.cancel')}
+          title={t("commonConstants.cancelAddTest")}
+          buttonText={t("commonConstants.cancel")}
         />
         <div className="flex gap-4">
           <Button
             tabIndex={0}
-            title={t('commonConstants.previousTab')}
+            title={t("commonConstants.previousTab")}
             className="h-9 px-7"
             variant="primary-solid"
             id="back-button"
-            buttonText={t('commonConstants.backButton')}
+            buttonText={t("commonConstants.backButton")}
             isDisabled={currentTab === tabs[0].id}
             onClick={() => setCurrentTab(currentTab - 1)}
           />
           {currentTab !== 2 ? (
             <Button
               tabIndex={0}
-              title={t('commonConstants.nextTab')}
+              title={t("commonConstants.nextTab")}
               className="h-9 px-7"
               variant="primary-solid"
               id="next-button"
-              buttonText={t('commonConstants.nextButton')}
+              buttonText={t("commonConstants.nextButton")}
               isDisabled={
                 !name ||
                 isQuillEmpty(description) ||
@@ -257,12 +261,12 @@ const AddTestComponent = ({
           ) : (
             <Button
               tabIndex={0}
-              title={t('commonConstants.nextTab')}
+              title={t("commonConstants.nextTab")}
               id="submit-button"
               className="h-9 px-7"
               variant="primary-solid"
               buttonText={
-                transition.state === 'submitting'
+                transition.state === "submitting"
                   ? sortByOrder.creatingAssessment
                   : sortByOrder.submit
               }

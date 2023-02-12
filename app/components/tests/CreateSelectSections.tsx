@@ -1,13 +1,17 @@
-import { SetStateAction } from 'react'
-import { useEffect, useState } from 'react'
-import { sortByOrder, AddedSectionDetails } from '~/interface/Interface'
-import type { TestSection } from '~/interface/Interface'
-import SortFilter from '../common-components/SortFilter'
-import SelectSectionCard from './SelectSectionCard'
-import { useTranslation } from 'react-i18next'
-import { useFetcher, useNavigate } from '@remix-run/react'
-import { routes } from '~/constants/route.constants'
-import Pagination from '../common-components/Pagination'
+import type { SetStateAction } from "react"
+import { useEffect, useState } from "react"
+
+import { useFetcher, useNavigate } from "@remix-run/react"
+import { useTranslation } from "react-i18next"
+
+import SortFilter from "../common-components/SortFilter"
+
+import SelectSectionCard from "./SelectSectionCard"
+
+import { routes } from "~/constants/route.constants"
+import { AddedSectionDetails, sortByOrder } from "~/interface/Interface"
+import type { TestSection } from "~/interface/Interface"
+import Pagination from "../common-components/Pagination"
 
 const SelectSections = ({
   sections,
@@ -27,18 +31,18 @@ const SelectSections = ({
   const [sortDirection, onSortDirectionChange] = useState(
     sortByOrder.ascending as string
   )
-  const [sortBy, onSortChange] = useState('name')
+  const [sortBy, onSortChange] = useState("name")
   const [sectionsCurrentPage, setSectionsCurrentPage] = useState(1)
   const [sectionsPageSize, setSectionsPageSize] = useState(5)
   const [pseudoDivs, setPseudoDivs] = useState([1])
   const filterByType = [
     {
-      name: 'Name',
-      value: 'name',
+      name: "Name",
+      value: "name",
     },
     {
-      name: 'Created Date',
-      value: 'createdAt',
+      name: "Created Date",
+      value: "createdAt",
     },
   ]
 
@@ -71,7 +75,7 @@ const SelectSections = ({
         pageSize: sectionsPageSize,
       },
       {
-        method: 'get',
+        method: "get",
       }
     )
   }, [sortDirection, sortBy, sectionsCurrentPage, sectionsPageSize])
@@ -141,15 +145,15 @@ const SelectSections = ({
         <div className="flex h-full items-center justify-center">
           <span
             onClick={() => navigate(`/${currentWorkspaceId}${routes.tests}`)}
-            role={'button'}
+            role={"button"}
             onKeyDown={(e) => {
-              if (e.key === 'Enter')
+              if (e.key === "Enter")
                 navigate(`/${currentWorkspaceId}${routes.tests}`)
             }}
             tabIndex={0}
             className="text-primary underline"
           >
-            {t('sectionsConstants.addTestFirst')}
+            {t("sectionsConstants.addTestFirst")}
           </span>
         </div>
       )}

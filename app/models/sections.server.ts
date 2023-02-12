@@ -1,8 +1,10 @@
-import type { User, Section, Question } from '@prisma/client'
-import cuid from 'cuid'
-import { prisma } from '~/db.server'
+import type { User, Section, Question } from "@prisma/client"
+import cuid from "cuid"
 
-export async function getSectionById({ id }: Pick<Section, 'id'>) {
+import { prisma } from "~/db.server"
+import { deleteQuestionStatus } from "~/interface/Interface"
+
+export async function getSectionById({ id }: Pick<Section, "id">) {
   return prisma.section.findUnique({
     where: {
       id,
@@ -36,7 +38,7 @@ export async function getFirstSection(
   testItemsPerPage = 5
 ) {
   const firstSection = await prisma.section.findFirst({
-    orderBy: { [sortBy ? sortBy : 'createdAt']: sortOrder ? sortOrder : 'asc' },
+    orderBy: { [sortBy ? sortBy : "createdAt"]: sortOrder ? sortOrder : "asc" },
     take: testItemsPerPage,
     skip: (testCurrentPage - 1) * testItemsPerPage,
 
@@ -67,7 +69,7 @@ export async function getAllSections(
 ) {
   const PER_PAGE_ITEMS = testItemsPerPage
   const res = await prisma.section.findMany({
-    orderBy: { [sortBy ? sortBy : 'createdAt']: sortOrder ? sortOrder : 'asc' },
+    orderBy: { [sortBy ? sortBy : "createdAt"]: sortOrder ? sortOrder : "asc" },
     take: PER_PAGE_ITEMS,
     skip: (testCurrentPage - 1) * PER_PAGE_ITEMS,
 
@@ -94,7 +96,7 @@ export async function getAllSections(
             count = count + 1
           }
         })
-        section['count'] = count
+        section["count"] = count
       }
     )
   }
@@ -106,8 +108,8 @@ export async function createSection({
   description,
   createdById,
   workspaceId,
-}: Pick<Section, 'name' | 'description' | 'workspaceId'> & {
-  createdById: User['id']
+}: Pick<Section, "name" | "description" | "workspaceId"> & {
+  createdById: User["id"]
 }) {
   return await prisma.section.create({
     data: {
@@ -211,7 +213,50 @@ export async function addQuestion(
     })
 }
 export async function deleteQuestionById(id: string) {
-  return prisma.question.update({
+  const questionData = await prisma.question.findUnique({
+    where: {
+      id,
+    },
+    select: {
+      section: {
+        select: {
+          questions: {
+            where: {
+              deleted: {
+                equals: false,
+              },
+            },
+          },
+          sectionInTest: {
+            where: {
+              test: {
+                deleted: {
+                  equals: false,
+                },
+              },
+            },
+            select: {
+              totalQuestions: true,
+            },
+          },
+        },
+      },
+    },
+  })
+  const totalQuestionsList = questionData?.section?.sectionInTest.map(
+    (data: { totalQuestions: number }) => {
+      return data.totalQuestions
+    }
+  )
+  if (questionData && totalQuestionsList) {
+    if (
+      questionData.section.questions?.length <= Math.max(...totalQuestionsList)
+    ) {
+      return deleteQuestionStatus.notDeleted
+    }
+  }
+
+  const deleteQuestion = await prisma.question.update({
     where: {
       id,
     },
@@ -220,4 +265,7 @@ export async function deleteQuestionById(id: string) {
       deletedAt: new Date().toString(),
     },
   })
+  if (deleteQuestion) {
+    return deleteQuestionStatus.deleted
+  }
 }

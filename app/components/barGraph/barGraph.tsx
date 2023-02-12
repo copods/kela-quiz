@@ -1,12 +1,14 @@
-import Highcharts from 'highcharts'
-import type { TooltipFormatterContextObject } from 'highcharts'
-import HighchartsReact from 'highcharts-react-official'
-import moment from 'moment'
+import moment from "moment"
+
+import Highcharts from "highcharts"
+import type { TooltipFormatterContextObject } from "highcharts"
+import HighchartsReact from "highcharts-react-official"
+
 import type {
   SectionInCandidateTest,
   SectionInTest,
   SectionWiseResults,
-} from '~/interface/Interface'
+} from "~/interface/Interface"
 
 const BarGraph = ({
   candidateTestResult,
@@ -48,11 +50,11 @@ const BarGraph = ({
         return result?.section?.name === sectionName
       }
     )
-    if (resultKind === 'total') {
+    if (resultKind === "total") {
       return getRequiredSection[0]?.SectionWiseResult[0]?.totalQuestion
-    } else if (resultKind === 'correct') {
+    } else if (resultKind === "correct") {
       return getRequiredSection[0]?.SectionWiseResult[0]?.correctQuestion
-    } else if (resultKind === 'skipped') {
+    } else if (resultKind === "skipped") {
       return (
         (getRequiredSection[0]?.SectionWiseResult[0]?.totalQuestion as number) -
         (getRequiredSection[0]?.SectionWiseResult[0]?.correctQuestion as number)
@@ -61,10 +63,10 @@ const BarGraph = ({
   }
   const options: Highcharts.Options = {
     chart: {
-      type: 'column',
+      type: "column",
     },
     title: {
-      text: '',
+      text: "",
     },
     xAxis: {
       categories: calculateResult.map((result: SectionInCandidateTest) => {
@@ -75,7 +77,7 @@ const BarGraph = ({
       {
         min: 0,
         title: {
-          text: 'Time (in min)',
+          text: "Time (in min)",
         },
       },
     ],
@@ -88,7 +90,7 @@ const BarGraph = ({
     },
     tooltip: {
       shared: true,
-      backgroundColor: '#fff',
+      backgroundColor: "#fff",
       borderRadius: 10,
       shadow: true,
       padding: 15,
@@ -98,27 +100,27 @@ const BarGraph = ({
           (
             acc: TooltipFormatterContextObject
           ): TooltipFormatterContextObject => {
-            return ('<div>' +
-              'Total' +
-              ': ' +
+            return ("<div>" +
+              "Total" +
+              ": " +
               '<span style="color: #353988; fontWeight: 500; margin: 20px">' +
-              getLabelData(acc.key as string, 'total') +
-              '</span>' +
-              '<div/> </br>' +
-              '<div>' +
-              'Correct' +
-              ': ' +
+              getLabelData(acc.key as string, "total") +
+              "</span>" +
+              "<div/> </br>" +
+              "<div>" +
+              "Correct" +
+              ": " +
               '<span style="color: #059669; fontWeight: 500; margin: 20px">' +
-              getLabelData(acc.key as string, 'correct') +
-              '</span>' +
-              '<div/> </br>' +
-              '<div>' +
-              'Skipped' +
-              ': ' +
+              getLabelData(acc.key as string, "correct") +
+              "</span>" +
+              "<div/> </br>" +
+              "<div>" +
+              "Skipped" +
+              ": " +
               '<span style="color: #D97706; fontWeight: 500; margin: 20px">' +
-              getLabelData(acc.key as string, 'skipped') +
-              '</span>' +
-              '<div/>') as unknown as TooltipFormatterContextObject
+              getLabelData(acc.key as string, "skipped") +
+              "</span>" +
+              "<div/>") as unknown as TooltipFormatterContextObject
           }
         )
       },
@@ -133,25 +135,25 @@ const BarGraph = ({
     series: [
       {
         showInLegend: false,
-        color: '#F3F4F6',
+        color: "#F3F4F6",
         data: result,
         states: {
           hover: {
-            color: '#F3F4F6',
+            color: "#F3F4F6",
           },
         },
-        type: 'column',
+        type: "column",
       },
       {
         showInLegend: false,
-        color: '#353988',
+        color: "#353988",
         data: getDifferenceMin(),
         states: {
           hover: {
-            color: '#353988',
+            color: "#353988",
           },
         },
-        type: 'column',
+        type: "column",
       },
     ],
   }
