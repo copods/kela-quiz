@@ -42,7 +42,7 @@ const filterByStatus = [
 ]
 const GroupByTests = () => {
   const { t } = useTranslation()
-  const { toSetCustomStorage, toGetStoredValue, toClearStoredValue } =
+  const { setCustomStorage, getStoredValue, clearStoredValue } =
     useCommonContext()
   const navigate = useNavigate()
   const candidateTestData = useLoaderData()
@@ -56,13 +56,13 @@ const GroupByTests = () => {
     candidateTestData.resultsCurrentPage
   )
   const [sortBy, onSortChange] = useState(
-    toGetStoredValue("resultsSortByDetails")
-      ? toGetStoredValue("resultsSortByDetails")?.value
+    getStoredValue("resultsSortByDetails")
+      ? getStoredValue("resultsSortByDetails")?.value
       : sortByDetails[1].value
   )
   const [statusFilter, setStatusFilter] = useState(
-    toGetStoredValue("resultsFilterByStatus")
-      ? toGetStoredValue("resultsFilterByStatus")?.value
+    getStoredValue("resultsFilterByStatus")
+      ? getStoredValue("resultsFilterByStatus")?.value
       : filterByStatus[1].value
   )
 
@@ -94,7 +94,7 @@ const GroupByTests = () => {
         id="group-by-item-test"
         data-cy="group-by-item-test"
         className="groupByItemTest text-base font-semibold text-primary"
-        onClick={() => toClearStoredValue("candidateListFilter")}
+        onClick={() => clearStoredValue("candidateListFilter")}
       >
         {data.name}
       </Link>
@@ -155,7 +155,7 @@ const GroupByTests = () => {
     navigate(
       `?sortBy=${sortBy}&sort=${sortDirection}&page=${resultsCurrentPage}&limit=${resultsPageSize}&status=${statusFilter}`
     )
-    toSetCustomStorage("resultsSortByDetails", sortBy)
+    setCustomStorage("resultsSortByDetails", sortBy)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     resultsPageSize,
@@ -171,7 +171,7 @@ const GroupByTests = () => {
       `?sortBy=${sortBy}&sort=${sortDirection}&page=${1}&limit=${resultsPageSize}&status=${statusFilter}`
     )
     setStatusFilter(statusFilter)
-    toSetCustomStorage("resultsFilterByStatus", statusFilter)
+    setCustomStorage("resultsFilterByStatus", statusFilter)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [statusFilter])
 
