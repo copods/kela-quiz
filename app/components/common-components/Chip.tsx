@@ -1,4 +1,4 @@
-const Chip = ({ text, variant }: { text: string; variant: any }) => {
+const Chip = ({ text, variant }: { text: string; variant: string }) => {
   const getChipVariant = () => {
     switch (variant) {
       case "sucess":
@@ -12,7 +12,7 @@ const Chip = ({ text, variant }: { text: string; variant: any }) => {
     }
   }
   return (
-    <span className={`${getChipVariant()}`} data-cy="chip-tag">
+    <span className={getChipVariant()} data-cy="chip-tag">
       {text}
     </span>
   )
