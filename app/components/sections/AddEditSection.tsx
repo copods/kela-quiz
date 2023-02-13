@@ -4,15 +4,18 @@ import {
   Form,
   useActionData,
   useFetcher,
+  useNavigate,
   useSubmit,
   useTransition,
 } from "@remix-run/react"
 import { useTranslation } from "react-i18next"
+import { toast } from "react-toastify"
 
 import Button from "../common-components/Button"
 import DialogWrapper from "../common-components/Dialog"
 
 import type { sectionActionErrorsType } from "~/interface/Interface"
+import type { LoaderData } from "~/routes/$workspaceId/tests"
 import { trimValue } from "~/utils"
 
 export interface editItem {
@@ -26,6 +29,7 @@ const AddEditSection = ({
   editId,
   setSectionActionErrors,
   sectionActionErrors,
+  data,
 }: {
   open: boolean
   sectionActionErrors?: sectionActionErrorsType
@@ -39,6 +43,7 @@ const AddEditSection = ({
   editItem?: editItem
   editId?: string
   addSection?: (name: string, description: string) => void
+  data?: LoaderData
 }) => {
   const { t } = useTranslation()
   const transition = useTransition()
@@ -66,6 +71,24 @@ const AddEditSection = ({
       { method: "get" }
     )
   }
+  const fetcherData = fetcher.data
+  const navigate = useNavigate()
+  useEffect(() => {
+    if (fetcherData?.response?.status === "statusCheck.testAddedSuccess") {
+      toast.success(t(fetcherData?.response?.status as string), {
+        toastId: "test-added-sucessfully",
+      })
+      navigate(`${fetcherData?.response?.data?.id}${data?.filters}`)
+      setOpen(false)
+    }
+  }, [
+    fetcherData?.response?.data?.id,
+    fetcherData?.response?.status,
+    data?.filters,
+    navigate,
+    setOpen,
+    t,
+  ])
   useEffect(() => {
     if (editItem) {
       setSectionActionErrors?.({ title: "", description: "" })
@@ -120,13 +143,17 @@ const AddEditSection = ({
             value={sectionName}
             maxLength={52}
           />
-          {sectionActionErrors?.title ? (
+          {fetcherData?.createSectionFieldError ||
+          fetcherData?.response?.errors?.title ? (
             <p id="addEditSection-title-error" className="px-3 text-red-500">
-              {t(sectionActionErrors.title)}
+              {t(
+                fetcherData?.createSectionFieldError?.title ||
+                  fetcherData?.response?.errors?.title
+              )}
             </p>
-          ) : sectionActionData?.errors ? (
+          ) : fetcherData?.response?.errors ? (
             <p id="duplicete-title-error" className="px-3 text-red-500">
-              {t(sectionActionData?.errors?.title)}
+              {t(fetcherData?.response?.errors?.title)}
             </p>
           ) : null}
         </div>
@@ -141,12 +168,12 @@ const AddEditSection = ({
             value={description}
             placeholder={`${t("commonConstants.enterTestsDesc")}*`}
           />
-          {sectionActionErrors?.description ? (
+          {fetcherData?.createSectionFieldError?.description ? (
             <p
               id="addEditSection-description-error"
               className="px-3 text-red-500"
             >
-              {t(sectionActionErrors.description)}
+              {t(fetcherData?.createSectionFieldError?.description)}
             </p>
           ) : null}
         </div>

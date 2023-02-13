@@ -68,6 +68,7 @@ export type LoaderData = {
   sortBy: string | null
   sortOrder: string | null
   response: any
+  createSectionFieldError: any
 }
 
 export const loader: LoaderFunction = async ({ request, params }) => {
@@ -79,7 +80,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     const testItemsPerPage = Math.max(Number(query.get("testItems") || 5), 5) //To set the lower bound, so that minimum count will always be 1 for current page and 5 for items per page.
     const testCurrentPage = Math.max(Number(query.get("testPage") || 1), 1)
     // taking sortBy and order
-    const sortBy = query.get("sortBy")
+    const sortBy = query.get("sortBy") || "name"
     const sortOrder = query.get("sort") || sortByOrder.desc
     const userId = await getUserId(request)
     const currentWorkspaceId = params.workspaceId as string
@@ -103,7 +104,6 @@ export const loader: LoaderFunction = async ({ request, params }) => {
       title: validateTitle(name),
       description: validateDescription(description),
     }
-    console.log(createSectionFieldError, "createSectionFieldError")
     const response = await handleAddSection(
       name as string,
       description as string,
@@ -147,6 +147,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
       sortBy,
       sortOrder,
       response,
+      createSectionFieldError,
     })
   } catch (err) {
     console.log(err)
@@ -242,7 +243,6 @@ export const action: ActionFunction = async ({ request, params }) => {
 
 export default function SectionPage() {
   const data = useLoaderData() as unknown as LoaderData
-  console.log(data, "data")
   const { t } = useTranslation()
   const sectionActionData = useActionData() as ActionData
   const sortByDetails = [
@@ -270,6 +270,10 @@ export default function SectionPage() {
   if (t(data.status) != t("statusCheck.success")) {
     toast.error(t("statusCheck.commonError"))
   }
+
+  useEffect(() => {
+    console.log(data, "data")
+  })
   useEffect(() => {
     if (sectionActionData?.deleted === "deleteLastTestOnPage") {
       toast.success(t("statusCheck.deletedSuccess"), {
@@ -455,6 +459,7 @@ export default function SectionPage() {
         setSectionActionErrors={setSectionActionErrors}
         setOpen={setShowAddSectionModal}
         showErrorMessage={sectionActionData?.errors?.status === 400}
+        data={data}
       />
     </div>
   )

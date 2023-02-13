@@ -74,6 +74,16 @@ export const handleAddSection = async (
   workspaceId: string
 ) => {
   // fetching the data from server function
+
+  const createSectionFieldError = {
+    title: validateTitle(name),
+    description: validateDescription(description),
+  }
+
+  if (Object.values(createSectionFieldError).some(Boolean)) {
+    return json({ createSectionFieldError }, { status: 400 })
+  }
+
   return await createSection({
     name,
     description,
@@ -82,9 +92,9 @@ export const handleAddSection = async (
   })
     .then((res) => {
       return {
-        title: "statusCheck.testAddedSuccess",
+        status: "statusCheck.testAddedSuccess",
+        data: res as Section,
         check: new Date(),
-        status: 200,
       }
     })
 
