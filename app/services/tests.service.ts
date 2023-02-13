@@ -292,15 +292,6 @@ export const getAllUsersData = async ({
 }
 
 /**
- * Function will call all section
- * @param currentWorkspaceId
- * @returns test data
- */
-export const getAllSectionsData = async (currentWorkspaceId: string) => {
-  return await getAllSections("", "", currentWorkspaceId)
-}
-
-/**
  * Function will adding a new question
  * @param question
  * @param options
