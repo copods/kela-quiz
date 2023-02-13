@@ -73,8 +73,6 @@ export const handleAddSection = async (
   createdById: string,
   workspaceId: string
 ) => {
-  // fetching the data from server function
-
   const createSectionFieldError = {
     title: validateTitle(name),
     description: validateDescription(description),
@@ -83,7 +81,6 @@ export const handleAddSection = async (
   if (Object.values(createSectionFieldError).some(Boolean)) {
     return json({ createSectionFieldError }, { status: 400 })
   }
-
   return await createSection({
     name,
     description,

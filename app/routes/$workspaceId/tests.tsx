@@ -155,25 +155,12 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 }
 
 export const action: ActionFunction = async ({ request, params }) => {
-  const createdById = await requireUserId(request)
-  const workspaceId = params.workspaceId as string
   const formData = await request.formData()
   const action =
     formData.get("addSection") ||
     formData.get("editSection") ||
     formData.get("deleteSection")
 
-  if (action === "sectionAdd") {
-    const name = formData.get("name") as string
-    const description = formData.get("description") as string
-    const response = await handleAddSection(
-      name,
-      description,
-      createdById,
-      workspaceId
-    )
-    return response
-  }
   if (action === "sectionEdit") {
     const name = formData.get("name") as string
     const description = formData.get("description") as string

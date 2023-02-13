@@ -33,10 +33,7 @@ const AddEditSection = ({
 }: {
   open: boolean
   sectionActionErrors?: sectionActionErrorsType
-  setSectionActionErrors?: ({
-    title,
-    description,
-  }: sectionActionErrorsType) => void
+  setSectionActionErrors?: any
 
   setOpen: (e: boolean) => void
   showErrorMessage?: boolean
@@ -74,6 +71,7 @@ const AddEditSection = ({
   const fetcherData = fetcher.data
   console.log(fetcherData, "data")
   const navigate = useNavigate()
+
   useEffect(() => {
     if (fetcherData?.response?.status === "statusCheck.testAddedSuccess") {
       toast.success(t(fetcherData?.response?.status as string), {
@@ -90,6 +88,15 @@ const AddEditSection = ({
     setOpen,
     t,
   ])
+  useEffect(() => {
+    if (fetcherData?.createSectionFieldError) {
+      setSectionActionErrors({
+        title: fetcherData?.createSectionFieldError?.title || "",
+        description: fetcherData?.createSectionFieldError?.description || "",
+      })
+    }
+  }, [fetcherData?.createSectionFieldError, setSectionActionErrors])
+
   useEffect(() => {
     if (editItem) {
       setSectionActionErrors?.({ title: "", description: "" })
@@ -144,13 +151,9 @@ const AddEditSection = ({
             value={sectionName}
             maxLength={52}
           />
-          {fetcherData?.createSectionFieldError ||
-          fetcherData?.response?.errors?.title ? (
+          {sectionActionErrors ? (
             <p id="addEditSection-title-error" className="px-3 text-red-500">
-              {t(
-                fetcherData?.createSectionFieldError?.title ||
-                  fetcherData?.response?.errors?.title
-              )}
+              {t(sectionActionErrors?.title)}
             </p>
           ) : fetcherData?.response?.errors ? (
             <p id="duplicete-title-error" className="px-3 text-red-500">
@@ -169,12 +172,12 @@ const AddEditSection = ({
             value={description}
             placeholder={`${t("commonConstants.enterTestsDesc")}*`}
           />
-          {fetcherData?.createSectionFieldError?.description ? (
+          {sectionActionErrors ? (
             <p
               id="addEditSection-description-error"
               className="px-3 text-red-500"
             >
-              {t(fetcherData?.createSectionFieldError?.description)}
+              {t(sectionActionErrors?.description)}
             </p>
           ) : null}
         </div>
