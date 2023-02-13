@@ -116,7 +116,7 @@ export interface User {
   roleId: string
   createdAt: Date
   updatedAt: Date
-  workspace: Array<Workspace>
+  workspace?: Array<Workspace>
 }
 export interface Invites {
   id: string
@@ -160,6 +160,7 @@ export interface Question {
   deletedAt: string
   options?: Array<Option>
   correctOptions: Array<Option>
+  candidateQuestion: CandidateQuestion[]
 }
 
 export interface Test {
@@ -314,6 +315,10 @@ export enum QuestionTypes {
 export enum QuestionStatus {
   answered = "ANSWERED",
   skipped = "SKIPPED",
+}
+export enum deleteQuestionStatus {
+  notDeleted = "NOT_DELETED",
+  deleted = "DELETED",
 }
 export interface SectionWiseResults {
   id: string
