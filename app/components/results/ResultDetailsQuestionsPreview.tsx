@@ -37,7 +37,7 @@ const ResultDetailsQuestionsPreview = ({
 
     // If lengths of array are not equal means
     // Answers are not equal
-    if (textAnswerArrayLength != correctAnswersArrayLength) return false
+    if (textAnswerArrayLength !== correctAnswersArrayLength) return false
 
     // Sort both arrays
     textAnswer.sort()
@@ -45,7 +45,9 @@ const ResultDetailsQuestionsPreview = ({
 
     // Linearly compare elements
     for (let i = 0; i < textAnswerArrayLength; i++)
-      if (textAnswer[i] != (correctAnswersArray[i] as unknown as CorrectAnswer))
+      if (
+        textAnswer[i] !== (correctAnswersArray[i] as unknown as CorrectAnswer)
+      )
         return false
 
     // If all elements were same.
@@ -69,7 +71,7 @@ const ResultDetailsQuestionsPreview = ({
   )
   const orderFlag = correctOrder.includes(false)
   return (
-    <div className="flex w-full  rounded-lg  border border-gray-300 bg-white">
+    <div className="flex w-full rounded-lg border border-gray-300 bg-white">
       <div className="flex w-6/12 flex-col gap-6 p-6">
         <div className="flex w-full items-center justify-between gap-2">
           <span className="text-xl font-medium text-gray-800">
@@ -98,7 +100,7 @@ const ResultDetailsQuestionsPreview = ({
 
         {/* {question} */}
         <div
-          className="question flex-1   flex-row"
+          className="question flex-1 flex-row"
           dangerouslySetInnerHTML={{
             __html: question,
           }}
@@ -133,7 +135,7 @@ const ResultDetailsQuestionsPreview = ({
                     true) ||
                 (flag.includes("incorrect") === false &&
                   questionType.value !== QuestionTypes.text)) && (
-                <Chip text={t("resultConstants.correct")} variant={"sucess"} />
+                <Chip text={t("resultConstants.correct")} variant={"success"} />
               )}
             </>
           ) : (
@@ -143,7 +145,7 @@ const ResultDetailsQuestionsPreview = ({
         {status === QuestionStatus.answered ? (
           <div className="flex flex-col gap-6">
             <div className="flex flex-col gap-6">
-              {questionType.value == QuestionTypes.text
+              {questionType.value === QuestionTypes.text
                 ? textAnswer.map((textAnswer: CorrectAnswer, index: number) => {
                     return (
                       <div
@@ -218,8 +220,8 @@ const ResultDetailsQuestionsPreview = ({
                     }
                   )}
                 {/* if order is true and given answer is wrong then showing correct answer */}
-                {checkOrder === true &&
-                  orderFlag === true &&
+                {checkOrder &&
+                  orderFlag &&
                   correctAnswer.map(
                     (correctAnswer: CorrectAnswer, index: number) => {
                       return (

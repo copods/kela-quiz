@@ -655,7 +655,7 @@ async function calculateResultBySectionId(sectionid?: string) {
 
       if (question?.question?.questionType?.value === QuestionTypes.text) {
         const checkOrder = question?.question?.checkOrder
-        let correctOrder
+        let correctOrder: boolean[] = []
         if (checkOrder) {
           correctOrder = question?.answers.map(
             (textAnswer: string, index: number) => {

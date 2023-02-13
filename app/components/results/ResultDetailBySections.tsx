@@ -22,7 +22,7 @@ const ResultDetailBySections = () => {
                 `/${resultDetailsLoaderData.params.workspaceId}${routes.resultGroupTest}/${resultDetailsLoaderData.params?.testId}/${resultDetailsLoaderData.params.candidateId}`
               )
             }
-            className="flex items-center gap-4 "
+            className="flex items-center gap-4"
             role="button"
             tabIndex={0}
             onKeyDown={(e) => {
@@ -39,12 +39,12 @@ const ResultDetailBySections = () => {
             />
           </div>
           <div className="flex items-center gap-4">
-            <h1 className="text-3xl font-semibold text-gray-900" id="title">
+            <h1 className="text-3xl font-semibold text-gray-900">
               {sectionDetail.candidateTest?.candidate?.firstName}{" "}
               {sectionDetail.candidateTest?.candidate?.lastName}
             </h1>
             <hr className="h-5 w-px bg-gray-300" />
-            <h1 className="text-3xl font-semibold text-gray-900" id="title">
+            <h1 className="text-3xl font-semibold text-gray-900">
               {sectionDetail.section?.name}
             </h1>
           </div>
