@@ -1,5 +1,7 @@
 import { Icon } from "@iconify/react"
 import { NavLink, useLocation } from "@remix-run/react"
+
+import { useCommonContext } from "~/context/Common.context"
 export interface tabProps {
   iconClass: string
   itemName: string
@@ -17,6 +19,7 @@ function MenuItems({
 }: tabProps) {
   // const resolvedPath = useResolvedPath(itemRoute) // to get resolved path which would match with current location
   const location = useLocation() // to get current location
+  const { resetStorage } = useCommonContext()
   return (
     <div className="menuItem">
       <NavLink
@@ -29,6 +32,7 @@ function MenuItems({
               : ""
           }`
         }
+        onClick={resetStorage}
       >
         <div className="flex flex-row items-center gap-2">
           <Icon

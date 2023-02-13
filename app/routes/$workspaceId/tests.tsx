@@ -343,9 +343,11 @@ export default function SectionPage() {
       )
     }
   }, [order])
+
   useEffect(() => {
     setCustomStorage("testsRouteActivePage", data?.testCurrentPage)
   }, [data])
+
   useEffect(() => {
     const heading = document.getElementById("tests-heading")
     heading?.focus()

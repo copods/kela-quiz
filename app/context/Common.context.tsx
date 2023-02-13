@@ -10,6 +10,7 @@ type CommonContextType = {
   setCustomStorage: (key: string, value?: any) => void
   getStoredValue: (key: string) => any
   clearStoredValue: (key: string) => void
+  resetStorage: () => void
 }
 
 const CommonContext = createContext<CommonContextType | null>(null)
@@ -37,12 +38,17 @@ const CommonContextProvider: FC<ReactNode> = ({ children }) => {
     setStorage(storage.filter((store) => store.key !== key))
   }
 
+  const resetStorage = () => {
+    setStorage([])
+  }
+
   return (
     <CommonContext.Provider
       value={{
         setCustomStorage,
         getStoredValue,
         clearStoredValue,
+        resetStorage,
       }}
     >
       {children}
