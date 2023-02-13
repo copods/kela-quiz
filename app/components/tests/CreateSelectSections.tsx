@@ -46,7 +46,7 @@ const SelectSections = ({
     },
   ]
 
-  const fetcher: any = useFetcher()
+  const fetcher = useFetcher()
   const { t } = useTranslation()
   const navigate = useNavigate()
 
@@ -71,8 +71,8 @@ const SelectSections = ({
       {
         sortBy: sortBy,
         sortOrder: sortDirection,
-        currentPage: sectionsCurrentPage,
-        pageSize: sectionsPageSize,
+        currentPage: sectionsCurrentPage.toString(),
+        pageSize: sectionsPageSize.toString(),
       },
       {
         method: "get",

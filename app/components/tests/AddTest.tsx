@@ -76,12 +76,12 @@ const AddTestComponent = ({
 
       // pushing  section which is selected to an Array for Maintaining state
       if (data.isSelected) {
-        AllSelectedSections
+        AllSelectedSections.length > 0
           ? setAllSelectedSections((oldArray) => [...oldArray, sec[i]])
           : setAllSelectedSections([sec[i]])
       } else {
         // Poping section which we unselect from an array for Maintaining state
-        if (AllSelectedSections) {
+        if (AllSelectedSections.length > 0) {
           const removedSection = AllSelectedSections.find(
             (obj) => obj.id === sec[i].id
           )
