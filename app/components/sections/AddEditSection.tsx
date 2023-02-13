@@ -1,12 +1,6 @@
 import { useEffect, useState } from "react"
 
-import {
-  Form,
-  useActionData,
-  useFetcher,
-  useNavigate,
-  useTransition,
-} from "@remix-run/react"
+import { Form, useFetcher, useNavigate, useTransition } from "@remix-run/react"
 import { useTranslation } from "react-i18next"
 import { toast } from "react-toastify"
 
@@ -45,7 +39,6 @@ const AddEditSection = ({
   const transition = useTransition()
   const [sectionName, setSectionName] = useState("")
   const [description, setDescription] = useState("")
-  const sectionActionData = useActionData()
   const fetcher = useFetcher()
   const editSection = (name: string, description: string) => {
     fetcher.submit(
@@ -93,14 +86,8 @@ const AddEditSection = ({
     fetcherData?.resp?.status,
   ])
   useEffect(() => {
-    if (fetcherData?.createSectionFieldError) {
-      setSectionActionErrors({
-        title: fetcherData?.createSectionFieldError?.title || "",
-        description: fetcherData?.createSectionFieldError?.description || "",
-      })
-    }
-  }, [fetcherData?.createSectionFieldError, setSectionActionErrors])
-
+    setSectionActionErrors?.({ title: "", description: "" })
+  }, [setOpen])
   useEffect(() => {
     if (editItem) {
       setSectionActionErrors?.({ title: "", description: "" })
@@ -113,14 +100,6 @@ const AddEditSection = ({
     setSectionActionErrors?.({ title: "", description: "" })
   }, [open, editItem, setSectionActionErrors])
 
-  useEffect(() => {
-    if (
-      t(sectionActionData?.resp?.status as string) ===
-      t("statusCheck.testUpdatedSuccess")
-    ) {
-      setOpen(false)
-    }
-  }, [sectionActionData?.resp, setOpen, t])
   const handleEdit = (name: string, description: string) => {
     editSection(name, description)
   }
