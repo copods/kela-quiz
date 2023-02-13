@@ -219,7 +219,7 @@ const ResultDetailsQuestionsPreview = ({
                   )}
                 {/* if order is true and given answer is wrong then showing correct answer */}
                 {checkOrder === true &&
-                  orderFlag === false &&
+                  orderFlag === true &&
                   correctAnswer.map(
                     (correctAnswer: CorrectAnswer, index: number) => {
                       return (
