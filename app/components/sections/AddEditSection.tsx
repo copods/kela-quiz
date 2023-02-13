@@ -69,7 +69,6 @@ const AddEditSection = ({
     )
   }
   const fetcherData = fetcher.data
-  console.log(fetcherData, "data")
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -151,9 +150,12 @@ const AddEditSection = ({
             value={sectionName}
             maxLength={52}
           />
-          {sectionActionErrors ? (
+          {sectionActionErrors || fetcherData?.response?.errors?.title ? (
             <p id="addEditSection-title-error" className="px-3 text-red-500">
-              {t(sectionActionErrors?.title)}
+              {t(
+                sectionActionErrors?.title ||
+                  fetcherData?.response?.errors?.title
+              )}
             </p>
           ) : fetcherData?.response?.errors ? (
             <p id="duplicete-title-error" className="px-3 text-red-500">
