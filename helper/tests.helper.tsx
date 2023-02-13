@@ -73,34 +73,19 @@ export const handleAddSection = async (
   createdById: string,
   workspaceId: string
 ) => {
-  // passing the props to above functions(*validateTitle,*validateDescription) for error checking
-  const createSectionFieldError = {
-    title: validateTitle(name),
-    description: validateDescription(description),
-  }
-
-  if (Object.values(createSectionFieldError).some(Boolean)) {
-    return json({ createSectionFieldError }, { status: 400 })
-  }
-
   // fetching the data from server function
-  const addHandle = createSection({
+  return await createSection({
     name,
     description,
     createdById,
     workspaceId,
   })
     .then((res) => {
-      return json<ActionData>(
-        {
-          resp: {
-            status: "statusCheck.testAddedSuccess",
-            data: res as Section,
-            check: new Date(),
-          },
-        },
-        { status: 200 }
-      )
+      return {
+        title: "statusCheck.testAddedSuccess",
+        check: new Date(),
+        status: 200,
+      }
     })
 
     .catch((err) => {
@@ -108,13 +93,8 @@ export const handleAddSection = async (
       if (err.code === "P2002") {
         title = "statusCheck.duplicate"
       }
-      return json<ActionData>(
-        { errors: { title, status: 400, check: new Date() } },
-        { status: 400 }
-      )
+      return { errors: { title, status: 400, check: new Date() } }
     })
-
-  return addHandle
 }
 
 export const handleEditSection = async (

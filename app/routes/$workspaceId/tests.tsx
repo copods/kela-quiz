@@ -67,13 +67,14 @@ export type LoaderData = {
   getAllTestsCount: number
   sortBy: string | null
   sortOrder: string | null
+  response: any
 }
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   try {
     // taking search params from URL
     const query = new URL(request.url).searchParams
-    console.log(query, "k")
+    const createdById = await requireUserId(request)
     // taking number of items per page and current page number from query
     const testItemsPerPage = Math.max(Number(query.get("testItems") || 5), 5) //To set the lower bound, so that minimum count will always be 1 for current page and 5 for items per page.
     const testCurrentPage = Math.max(Number(query.get("testPage") || 1), 1)
@@ -102,11 +103,13 @@ export const loader: LoaderFunction = async ({ request, params }) => {
       title: validateTitle(name),
       description: validateDescription(description),
     }
-
-    if (Object.values(createSectionFieldError).some(Boolean)) {
-      return json({ createSectionFieldError }, { status: 400 })
-    }
-
+    console.log(createSectionFieldError, "createSectionFieldError")
+    const response = await handleAddSection(
+      name as string,
+      description as string,
+      createdById,
+      currentWorkspaceId
+    )
     let sections: Array<Section> = []
     let status: string = ""
     let callBack = (sectionUpdate: Section[], statusUpdate: string) => {
@@ -143,6 +146,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
       getAllTestsCount,
       sortBy,
       sortOrder,
+      response,
     })
   } catch (err) {
     console.log(err)
@@ -238,6 +242,7 @@ export const action: ActionFunction = async ({ request, params }) => {
 
 export default function SectionPage() {
   const data = useLoaderData() as unknown as LoaderData
+  console.log(data, "data")
   const { t } = useTranslation()
   const sectionActionData = useActionData() as ActionData
   const sortByDetails = [
