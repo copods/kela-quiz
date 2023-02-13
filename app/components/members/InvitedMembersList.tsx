@@ -1,9 +1,12 @@
-import { useLoaderData, useSubmit } from '@remix-run/react'
-import moment from 'moment'
-import { useTranslation } from 'react-i18next'
-import type { User, Role, Invites } from '~/interface/Interface'
-import Table from '../common-components/TableComponent'
-import memberResendIcon from '~/../public/assets/resend-member-invitation.svg'
+import moment from "moment"
+
+import { useLoaderData, useSubmit } from "@remix-run/react"
+import { useTranslation } from "react-i18next"
+
+import Table from "../common-components/TableComponent"
+
+import memberResendIcon from "~/../public/assets/resend-member-invitation.svg"
+import type { User, Role, Invites } from "~/interface/Interface"
 
 const InvitedMembersList = ({
   actionStatus,
@@ -32,7 +35,7 @@ const InvitedMembersList = ({
     )
   }
   const InvitedOnCell = (data: Invites) => {
-    return <span>{moment(data?.invitedOn).format('DD MMMM YY')}</span>
+    return <span>{moment(data?.invitedOn).format("DD MMMM YY")}</span>
   }
   const RoleDataCell = (data: { role: Role }) => {
     return <span>{data.role.name}</span>
@@ -40,10 +43,10 @@ const InvitedMembersList = ({
   const resendMail = (id: string) => {
     let data = {
       id: id,
-      action: 'resendMember',
+      action: "resendMember",
     }
     submit(data, {
-      method: 'post',
+      method: "post",
     })
   }
   const MemberReinvite = (data: User) => {
@@ -52,7 +55,7 @@ const InvitedMembersList = ({
         tabIndex={0}
         role="button"
         onKeyUp={(e) => {
-          if (e.key === 'Enter') resendMail(data.id)
+          if (e.key === "Enter") resendMail(data.id)
         }}
         onClick={() => resendMail(data.id)}
         className="cursor-pointer opacity-100"
@@ -67,21 +70,21 @@ const InvitedMembersList = ({
     )
   }
   const invitedMembersColumn = [
-    { title: 'Email', field: 'email', width: '30%' },
-    { title: 'Role', field: 'role', render: RoleDataCell },
+    { title: "Email", field: "email", width: "30%" },
+    { title: "Role", field: "role", render: RoleDataCell },
     {
-      title: 'Invited By',
-      field: 'invitedById',
+      title: "Invited By",
+      field: "invitedById",
       render: InvitedByCell,
-      width: '25%',
+      width: "25%",
     },
     {
-      title: 'Invited On',
-      field: 'invitedOn',
-      width: '20%',
+      title: "Invited On",
+      field: "invitedOn",
+      width: "20%",
       render: InvitedOnCell,
     },
-    { title: 'Action', field: 'action', render: MemberReinvite },
+    { title: "Action", field: "action", render: MemberReinvite },
   ]
   return (
     <>
@@ -89,11 +92,11 @@ const InvitedMembersList = ({
         <div className="flex flex-col gap-4 text-2xl">
           <h1
             tabIndex={0}
-            role={t('members.invitedMember')}
-            aria-label={t('members.invitedMember')}
+            role={t("members.invitedMember")}
+            aria-label={t("members.invitedMember")}
             id="invited-member-heading"
           >
-            {t('members.invitedMember')}
+            {t("members.invitedMember")}
           </h1>
           <div className="text-base">
             <Table

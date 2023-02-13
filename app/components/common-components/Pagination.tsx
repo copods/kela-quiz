@@ -1,10 +1,11 @@
-import { Icon } from '@iconify/react'
-import { Fragment, useState } from 'react'
+import { Fragment, useState } from "react"
 
-import { Listbox, Transition } from '@headlessui/react'
-import { useTranslation } from 'react-i18next'
-import { usePagination } from '~/utils'
-import { useElementPositionHandler } from '~/hooks/useElementPositionHandler'
+import { Listbox, Transition } from "@headlessui/react"
+import { Icon } from "@iconify/react"
+import { useTranslation } from "react-i18next"
+
+import { useElementPositionHandler } from "~/hooks/useElementPositionHandler"
+import { usePagination } from "~/utils"
 
 const PaginationButtons = ({
   paginationRange,
@@ -29,14 +30,14 @@ const PaginationButtons = ({
           key={index}
           className={`flex w-8 cursor-pointer justify-center py-1 text-sm ${
             currentPage === paginationRangeItems
-              ? ' rounded-md bg-gray-200'
-              : ''
+              ? " rounded-md bg-gray-200"
+              : ""
           }`}
           onClick={() => onPageChange(paginationRangeItems)}
           role="button"
           tabIndex={0}
           onKeyDown={(e) => {
-            if (e.key === 'Enter') onPageChange(paginationRangeItems)
+            if (e.key === "Enter") onPageChange(paginationRangeItems)
           }}
         >
           {paginationRangeItems}
@@ -64,7 +65,7 @@ const PaginationDropDown = ({
     elementRef,
     componentRef,
     elementViewPortVisiblility,
-    setIsComponentVisible,
+    setIsElementOpen,
   } = useElementPositionHandler()
 
   return (
@@ -72,10 +73,10 @@ const PaginationDropDown = ({
       <div className="relative" ref={elementRef}>
         <Listbox.Button
           className="flex cursor-pointer items-center text-xs text-gray-600"
-          onClick={() => setIsComponentVisible((prev) => !prev)}
+          onClick={() => setIsElementOpen((prev) => !prev)}
         >
           <span className="block truncate">
-            {selected} {t('commonConstants.items')}
+            {selected} {t("commonConstants.items")}
           </span>
           <Icon className="text-2xl" icon="gridicons:dropdown" />
         </Listbox.Button>
@@ -88,8 +89,8 @@ const PaginationDropDown = ({
           <Listbox.Options
             className={`absolute mt-1 max-h-60 rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm ${
               elementViewPortVisiblility
-                ? ''
-                : '-top-2 -translate-y-full transform'
+                ? ""
+                : "-top-2 -translate-y-full transform"
             }}`}
           >
             <div ref={componentRef}>
@@ -103,16 +104,16 @@ const PaginationDropDown = ({
                   className={({ active }) =>
                     `relative cursor-pointer select-none py-2 px-8 text-xs text-gray-600 ${
                       selected === item
-                        ? ' bg-gray-100'
+                        ? " bg-gray-100"
                         : active
-                        ? 'bg-gray-100'
-                        : ''
+                        ? "bg-gray-100"
+                        : ""
                     }`
                   }
                   value={item}
                 >
                   <span className="block truncate">
-                    {item} {t('commonConstants.items')}
+                    {item} {t("commonConstants.items")}
                   </span>
                 </Listbox.Option>
               ))}
@@ -163,10 +164,10 @@ const Pagination = ({
         })}
         {!hideRange && (
           <span className="flex text-xs text-gray-600">
-            Showing {firstPageIndex + 1} to{' '}
+            Showing {firstPageIndex + 1} to{" "}
             {pageSize * currentPage > totalItems
               ? totalItems
-              : pageSize * currentPage}{' '}
+              : pageSize * currentPage}{" "}
             of {totalItems}
           </span>
         )}
@@ -174,7 +175,7 @@ const Pagination = ({
       <div className="pagination flex items-center gap-2">
         <Icon
           className={`w-3 cursor-pointer text-sm ${
-            currentPage === 1 ? 'pointer-events-none text-slate-300' : ''
+            currentPage === 1 ? "pointer-events-none text-slate-300" : ""
           }`}
           icon="ooui:previous-ltr"
           onClick={() => onPageChange(currentPage - 1)}
@@ -184,8 +185,8 @@ const Pagination = ({
         <Icon
           className={`w-3 cursor-pointer text-sm ${
             pageSize * currentPage >= totalItems
-              ? 'pointer-events-none text-slate-300'
-              : ''
+              ? "pointer-events-none text-slate-300"
+              : ""
           }`}
           icon="ooui:previous-rtl"
           onClick={() => onPageChange(currentPage + 1)}

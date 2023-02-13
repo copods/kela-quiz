@@ -1,4 +1,4 @@
-import type React from 'react'
+import type React from "react"
 
 export interface InputFieldProps {
   name: string
@@ -47,8 +47,8 @@ export interface ButtonProps {
   tabIndex?: number
   datacy?: string
   alignment?: string
-  type?: 'button' | 'submit' | 'reset'
-  variant: 'primary-solid' | 'primary-outlined' | 'secondary-solid'
+  type?: "button" | "submit" | "reset"
+  variant: "primary-solid" | "primary-outlined" | "secondary-solid"
   buttonText: string | JSX.Element
   onClick?: React.MouseEventHandler<HTMLButtonElement>
   isDisabled?: boolean
@@ -116,7 +116,7 @@ export interface User {
   roleId: string
   createdAt: Date
   updatedAt: Date
-  workspace: Array<Workspace>
+  workspace?: Array<Workspace>
 }
 export interface Invites {
   id: string
@@ -158,6 +158,7 @@ export interface Question {
   deletedAt: string
   options?: Array<Option>
   correctOptions?: Array<Option>
+  candidateQuestion: CandidateQuestion[]
 }
 
 export interface Test {
@@ -287,23 +288,27 @@ export interface sectionActionErrorsType {
   description: string
 }
 export enum sortByOrder {
-  ascending = 'asc',
-  name = 'name',
-  desc = 'desc',
-  saveAndExit = 'Save & Exit',
-  saveAndAddMore = 'Save & Add More',
-  saving = 'Saving...',
-  cancelling = 'Cancelling...',
-  cancel = 'Cancel',
-  createdAt = 'createdAt',
-  creatingAssessment = 'Creating Assessment',
-  submit = 'Submit',
+  ascending = "asc",
+  name = "name",
+  desc = "desc",
+  saveAndExit = "Save & Exit",
+  saveAndAddMore = "Save & Add More",
+  saving = "Saving...",
+  cancelling = "Cancelling...",
+  cancel = "Cancel",
+  createdAt = "createdAt",
+  creatingAssessment = "Creating Assessment",
+  submit = "Submit",
 }
 
 export enum QuestionTypes {
-  multipleChoice = 'MULTIPLE_CHOICE',
-  singleChoice = 'SINGLE_CHOICE',
-  text = 'TEXT',
+  multipleChoice = "MULTIPLE_CHOICE",
+  singleChoice = "SINGLE_CHOICE",
+  text = "TEXT",
+}
+export enum deleteQuestionStatus {
+  notDeleted = "NOT_DELETED",
+  deleted = "DELETED",
 }
 export interface SectionWiseResults {
   id: string

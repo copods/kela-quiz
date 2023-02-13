@@ -1,7 +1,9 @@
-import { Icon } from '@iconify/react'
-import { useState } from 'react'
-import type { PasswordFieldProps } from '~/interface/Interface'
-import { useTranslation } from 'react-i18next'
+import { useState } from "react"
+
+import { Icon } from "@iconify/react"
+import { useTranslation } from "react-i18next"
+
+import type { PasswordFieldProps } from "~/interface/Interface"
 
 const PasswordInputFields = ({
   name,
@@ -26,7 +28,7 @@ const PasswordInputFields = ({
       <div className="relative flex rounded-lg border border-gray-200">
         <input
           id={name}
-          type={showPassword ? 'text' : 'password'}
+          type={showPassword ? "text" : "password"}
           name={name}
           placeholder={placeholder}
           required={required}

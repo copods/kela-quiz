@@ -1,37 +1,42 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import type { ActionFunction, LoaderFunction } from '@remix-run/server-runtime'
-import { redirect } from '@remix-run/server-runtime'
-import { json } from '@remix-run/node'
+import { useState, useEffect } from "react"
+
+import { Icon } from "@iconify/react"
+import { json } from "@remix-run/node"
 import {
   Outlet,
   useActionData,
   useLoaderData,
   useLocation,
   useNavigate,
-} from '@remix-run/react'
-import { getAllTestsCounts, getFirstSection } from '~/models/sections.server'
-import { useState, useEffect } from 'react'
-import { Icon } from '@iconify/react'
-import { getUserId, requireUserId } from '~/session.server'
-import Sections from '~/components/sections/Sections'
-import type { sectionActionErrorsType } from '~/interface/Interface'
-import AddEditSection from '~/components/sections/AddEditSection'
-import { toast } from 'react-toastify'
-import Button from '~/components/common-components/Button'
-import { sortByOrder } from '~/interface/Interface'
-import type { Section } from '~/interface/Interface'
-import { routes } from '~/constants/route.constants'
-import { useTranslation } from 'react-i18next'
-import { getUserWorkspaces } from '~/models/workspace.server'
-import EmptyStateComponent from '~/components/common-components/EmptyStateComponent'
+} from "@remix-run/react"
+import type { ActionFunction, LoaderFunction } from "@remix-run/server-runtime"
+import { redirect } from "@remix-run/server-runtime"
+import { useTranslation } from "react-i18next"
+import { toast } from "react-toastify"
+
 import {
   getAllSectionsData,
   handleAddSection,
   handleDeleteSection,
   handleEditSection,
-} from 'helper/tests.helper'
+} from "helper/tests.helper"
+import Button from "~/components/common-components/Button"
+import EmptyStateComponent from "~/components/common-components/EmptyStateComponent"
+import AddEditSection from "~/components/sections/AddEditSection"
+import Sections from "~/components/sections/Sections"
+import { routes } from "~/constants/route.constants"
+import { sortByOrder } from "~/interface/Interface"
+import type { sectionActionErrorsType } from "~/interface/Interface"
+import type { Section } from "~/interface/Interface"
+import { getAllTestsCounts, getFirstSection } from "~/models/sections.server"
+import { getUserWorkspaces } from "~/models/workspace.server"
+import { getUserId, requireUserId } from "~/session.server"
 
 export type ActionData = {
+  path: string
+  deleted: string
+  sectionId: string
   errors?: {
     title?: string
     body?: string
@@ -69,17 +74,17 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     // taking search params from URL
     const query = new URL(request.url).searchParams
     // taking number of items per page and current page number from query
-    const testItemsPerPage = Math.max(Number(query.get('testItems') || 5), 5) //To set the lower bound, so that minimum count will always be 1 for current page and 5 for items per page.
-    const testCurrentPage = Math.max(Number(query.get('testPage') || 1), 1)
+    const testItemsPerPage = Math.max(Number(query.get("testItems") || 5), 5) //To set the lower bound, so that minimum count will always be 1 for current page and 5 for items per page.
+    const testCurrentPage = Math.max(Number(query.get("testPage") || 1), 1)
     // taking sortBy and order
-    const sortBy = query.get('sortBy')
-    const sortOrder = query.get('sort') || sortByOrder.desc
+    const sortBy = query.get("sortBy")
+    const sortOrder = query.get("sort") || sortByOrder.desc
     const userId = await getUserId(request)
     const currentWorkspaceId = params.workspaceId as string
     const workspaces = await getUserWorkspaces(userId as string)
 
     let sections: Array<Section> = []
-    let status: string = ''
+    let status: string = ""
     let callBack = (sectionUpdate: Section[], statusUpdate: string) => {
       sections = sectionUpdate
       status = statusUpdate
@@ -125,13 +130,13 @@ export const action: ActionFunction = async ({ request, params }) => {
   const workspaceId = params.workspaceId as string
   const formData = await request.formData()
   const action =
-    formData.get('addSection') ||
-    formData.get('editSection') ||
-    formData.get('deleteSection')
+    formData.get("addSection") ||
+    formData.get("editSection") ||
+    formData.get("deleteSection")
 
-  if (action === 'sectionAdd') {
-    const name = formData.get('name') as string
-    const description = formData.get('description') as string
+  if (action === "sectionAdd") {
+    const name = formData.get("name") as string
+    const description = formData.get("description") as string
     const response = await handleAddSection(
       name,
       description,
@@ -140,56 +145,71 @@ export const action: ActionFunction = async ({ request, params }) => {
     )
     return response
   }
-  if (action === 'sectionEdit') {
-    const name = formData.get('name') as string
-    const description = formData.get('description') as string
-    const id = formData.get('id') as string
+  if (action === "sectionEdit") {
+    const name = formData.get("name") as string
+    const description = formData.get("description") as string
+    const id = formData.get("id") as string
     const response = await handleEditSection(name, description, id)
     return response
   }
 
-  if (action === 'sectionDelete') {
-    const currentPage = formData.get('currentPage') as string
-    const pagePerItems = formData.get('pageSize') as string
-    const totalItems = formData.get('totalSectionsOnCurrentPage') as string
-    const sortFilter = formData.get('filter') as string
-    const deleteSectionId = formData.get('id') as string
+  if (action === "sectionDelete") {
+    const currentPage = formData.get("currentPage") as string
+    const pagePerItems = formData.get("pageSize") as string
+    const totalItems = formData.get("totalSectionsOnCurrentPage") as string
+    const sortFilter = formData.get("filter") as string
+    const deleteSectionId = formData.get("id") as string
     await handleDeleteSection(deleteSectionId)
 
     const sectionId = await getFirstSection(
       sortFilter
-        .split('&')
-        .filter((res) => res.includes('sortBy'))[0]
-        .split('=')[1],
+        .split("&")
+        .filter((res) => res.includes("sortBy"))[0]
+        .split("=")[1],
       sortFilter
-        .split('&')
-        .filter((res) => res.includes('sort='))[0]
-        .split('=')[1],
+        .split("&")
+        .filter((res) => res.includes("sort="))[0]
+        .split("=")[1],
       params.workspaceId as string,
-      totalItems === '1' && currentPage !== '1'
+      totalItems === "1" && currentPage !== "1"
         ? Number(currentPage) - 1
         : Number(currentPage),
       Number(pagePerItems)
     )
-    if (sectionId && totalItems === '1' && currentPage !== '1') {
-      return redirect(
+    if (sectionId && totalItems === "1" && currentPage !== "1") {
+      redirect(
         `/${params.workspaceId}${
           routes.tests
         }/${sectionId}?${sortFilter}&testPage=${
           Number(currentPage) - 1
         }&testItems=${pagePerItems}`
       )
+      return {
+        deleted: "deleteLastTestOnPage",
+        path: `/${params.workspaceId}${
+          routes.tests
+        }/${sectionId}?${sortFilter}&testPage=${
+          Number(currentPage) - 1
+        }&testItems=${pagePerItems}`,
+      }
     } else {
       if (sectionId) {
-        return redirect(
+        redirect(
           `/${params.workspaceId}${routes.tests}/${sectionId}?${sortFilter}&testPage=${currentPage}&testItems=${pagePerItems}`
         )
+        return {
+          sectionId: sectionId,
+          deleted: "deleted",
+        }
       } else {
-        return redirect(`/${params.workspaceId}${routes.tests}`)
+        redirect(`/${params.workspaceId}${routes.tests}`)
+        return {
+          deleted: "deleted",
+        }
       }
     }
   }
-  return 'ok'
+  return "ok"
 }
 
 export default function SectionPage() {
@@ -198,12 +218,12 @@ export default function SectionPage() {
   const sectionActionData = useActionData() as ActionData
   const sortByDetails = [
     {
-      name: 'Name',
-      value: 'name',
+      name: "Name",
+      value: "name",
     },
     {
-      name: 'Created Date',
-      value: 'createdAt',
+      name: "Created Date",
+      value: "createdAt",
     },
   ]
   const [sectionDetailFull, setSectionDetailFull] = useState(false)
@@ -211,49 +231,70 @@ export default function SectionPage() {
   const [order, setOrder] = useState(sortByOrder.desc as string)
   const [sortBy, setSortBy] = useState(sortByDetails[1].value)
   const [sectionActionErrors, setSectionActionErrors] = useState({
-    title: '',
-    description: '',
+    title: "",
+    description: "",
   })
   const [testsPageSize, setTestPageSize] = useState(5)
   const [testsCurrentPage, setTestsCurrentPage] = useState(data.testCurrentPage)
   const location = useLocation()
   const navigate = useNavigate()
-  if (t(data.status) != t('statusCheck.success')) {
-    toast.error(t('statusCheck.commonError'))
+  if (t(data.status) != t("statusCheck.success")) {
+    toast.error(t("statusCheck.commonError"))
   }
+  useEffect(() => {
+    if (sectionActionData?.deleted === "deleteLastTestOnPage") {
+      toast.success(t("statusCheck.deletedSuccess"), {
+        toastId: t("statusCheck.deletedSuccess"),
+      })
+      navigate(sectionActionData?.path)
+    }
+  }, [sectionActionData?.path])
 
   useEffect(() => {
     if (sectionActionData) {
       if (
         t(sectionActionData.resp?.status as string) ===
-        t('statusCheck.testAddedSuccess')
+        t("statusCheck.testAddedSuccess")
       ) {
-        setSectionActionErrors({ title: '', description: '' })
+        toast.success(t(sectionActionData.resp?.status as string), {
+          toastId: t(sectionActionData.resp?.status as string),
+        })
+        setSectionActionErrors({ title: "", description: "" })
         setShowAddSectionModal(false)
       } else if (
         t(sectionActionData.resp?.status as string) ===
-        t('statusCheck.testUpdatedSuccess')
+        t("statusCheck.testUpdatedSuccess")
       ) {
         toast.success(t(sectionActionData.resp?.status as string), {
           toastId: t(sectionActionData.resp?.status as string),
         })
         navigate(`${location.pathname}${location.search}`)
-      } else if (
-        t(sectionActionData.resp?.status as string) ===
-        t('statusCheck.deletedSuccess')
-      ) {
-        toast.success(t(sectionActionData.resp?.status as string), {
-          toastId: t(sectionActionData.resp?.status as string),
+      } else if (sectionActionData?.deleted) {
+        toast.success(t("statusCheck.deletedSuccess"), {
+          toastId: t("statusCheck.deletedSuccess"),
         })
+        // eslint-disable-next-line no-lone-blocks
+        {
+          sectionActionData.sectionId &&
+            navigate(
+              `/${data.currentWorkspaceId}${routes.tests}/${sectionActionData?.sectionId}?sortBy=${sortBy}&sort=${order}&testPage=${testsCurrentPage}&testItems=${testsPageSize}`
+            )
+        }
       } else if (sectionActionData.createSectionFieldError) {
         setSectionActionErrors({
-          title: sectionActionData?.createSectionFieldError.title || '',
+          title: sectionActionData?.createSectionFieldError.title || "",
           description:
-            sectionActionData.createSectionFieldError.description || '',
+            sectionActionData.createSectionFieldError.description || "",
         })
       }
     }
-  }, [sectionActionData, t, navigate, sectionActionData?.resp])
+  }, [
+    sectionActionData,
+    t,
+    navigate,
+    sectionActionData?.resp,
+    sectionActionData?.sectionId,
+  ])
 
   useEffect(() => {
     //checking if tests are zero then redirect to /tests
@@ -264,7 +305,7 @@ export default function SectionPage() {
       // navigate to given path
       (data.getAllTestsCount > 0 &&
         t(sectionActionData?.resp?.status as string) ===
-          t('statusCheck.testAddedSuccess')) ||
+          t("statusCheck.testAddedSuccess")) ||
       data.sections.length >= 0 ||
       (!location.search && data.getAllTestsCount > 0)
     ) {
@@ -280,7 +321,9 @@ export default function SectionPage() {
     data.sections[0]?.id,
     location.search,
     sortBy,
+    sectionActionData?.sectionId,
   ])
+
   useEffect(() => {
     if (data.sortOrder !== order) {
       navigate(
@@ -295,7 +338,7 @@ export default function SectionPage() {
   }, [data])
 
   useEffect(() => {
-    const heading = document.getElementById('tests-heading')
+    const heading = document.getElementById("tests-heading")
     heading?.focus()
   }, [])
   return (
@@ -306,11 +349,11 @@ export default function SectionPage() {
           className="text-3xl font-bold text-black"
           id="tests-heading"
           tabIndex={0}
-          role={t('routeFiles.tests')}
-          title={t('routeFiles.tests')}
-          aria-label={t('routeFiles.tests')}
+          role={t("routeFiles.tests")}
+          title={t("routeFiles.tests")}
+          aria-label={t("routeFiles.tests")}
         >
-          {t('routeFiles.tests')}
+          {t("routeFiles.tests")}
         </h2>
         <Button
           id="add-section"
@@ -318,18 +361,18 @@ export default function SectionPage() {
           className="h-9 px-5"
           variant="primary-solid"
           onClick={() => setShowAddSectionModal(!showAddSectionModal)}
-          title={t('sectionsConstants.addTests')}
-          buttonText={`+ ${t('sectionsConstants.addTests')}`}
+          title={t("sectionsConstants.addTests")}
+          buttonText={`+ ${t("sectionsConstants.addTests")}`}
         />
       </header>
-      {data.sections.length > 0 && location.pathname.includes('/tests/') ? (
+      {data.sections.length > 0 && location.pathname.includes("/tests/") ? (
         <div
           className={`flex flex-1 overflow-hidden ${
-            sectionDetailFull ? '' : 'gap-5'
+            sectionDetailFull ? "" : "gap-5"
           }`}
         >
           {/* section list */}
-          <div className={`${sectionDetailFull ? 'hidden' : ''}`}>
+          <div className={`${sectionDetailFull ? "hidden" : ""}`}>
             <Sections
               sections={data.sections as Section[]}
               filters={data.filters}
@@ -353,20 +396,20 @@ export default function SectionPage() {
             <span
               className="z-20 -mr-5"
               tabIndex={0}
-              role={'button'}
+              role={"button"}
               onClick={() => setSectionDetailFull(!sectionDetailFull)}
               onKeyUp={(e) => {
-                if (e.key === 'Enter') setSectionDetailFull(!sectionDetailFull)
+                if (e.key === "Enter") setSectionDetailFull(!sectionDetailFull)
               }}
             >
               {sectionDetailFull ? (
                 <Icon
-                  icon={'akar-icons:circle-chevron-right-fill'}
+                  icon={"akar-icons:circle-chevron-right-fill"}
                   className="cursor-pointer text-4xl text-primary"
                 />
               ) : (
                 <Icon
-                  icon={'akar-icons:circle-chevron-left-fill'}
+                  icon={"akar-icons:circle-chevron-left-fill"}
                   className="cursor-pointer text-4xl text-primary"
                 />
               )}
