@@ -26,8 +26,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 export const action: ActionFunction = async ({ request, params }) => {
   const formData = await request.formData()
   const id = formData.get("id") as string
-  const deleteQuestion = await getDeleteQuestionById(id)
-  return deleteQuestion
+  await getDeleteQuestionById(id)
 }
 export default function Section() {
   const { t } = useTranslation()

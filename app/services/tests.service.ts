@@ -64,7 +64,7 @@ export const getAllTestsData = (
   currentWorkspaceId: string,
   testCurrentPage: number,
   testItemsPerPage: number,
-  cb: any
+  cb: (e: any, s: string) => void
 ) => {
   return getAllSections(
     sortBy,
@@ -236,7 +236,7 @@ export const getAllSectionCount = async (userId: string) => {
 
 /**
  * Function will get testById
- * @param param0
+ * @param params.sectionId
  * @returns test
  */
 export const getSectionDataById = async ({ id }: { id: string }) => {
@@ -257,7 +257,7 @@ export const getQuestionTypeFromTests = async () => {
  * @returns update the deleted field from false to true
  */
 export const getDeleteQuestionById = async (id: string) => {
-  const deleteQuestion = await deleteQuestionById(id)
+  await deleteQuestionById(id)
     .then(() => {
       return json<ActionData>(
         { resp: { title: "statusCheck.deletedSuccess", status: 200 } },
@@ -275,7 +275,6 @@ export const getDeleteQuestionById = async (id: string) => {
         { status: 400 }
       )
     })
-  return deleteQuestion
 }
 
 /**
