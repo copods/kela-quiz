@@ -9,8 +9,8 @@ import SortFilter from "../common-components/SortFilter"
 import SelectSectionCard from "./SelectSectionCard"
 
 import { routes } from "~/constants/route.constants"
-import { AddedSectionDetails, sortByOrder } from "~/interface/Interface"
-import type { TestSection } from "~/interface/Interface"
+import { sortByOrder } from "~/interface/Interface"
+import type { TestSection, AddedSectionDetails } from "~/interface/Interface"
 import Pagination from "../common-components/Pagination"
 
 const SelectSections = ({
