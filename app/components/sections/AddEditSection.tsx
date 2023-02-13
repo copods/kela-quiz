@@ -5,7 +5,6 @@ import {
   useActionData,
   useFetcher,
   useNavigate,
-  useSubmit,
   useTransition,
 } from "@remix-run/react"
 import { useTranslation } from "react-i18next"
@@ -46,11 +45,10 @@ const AddEditSection = ({
   const transition = useTransition()
   const [sectionName, setSectionName] = useState("")
   const [description, setDescription] = useState("")
-  const submit = useSubmit()
   const sectionActionData = useActionData()
   const fetcher = useFetcher()
   const editSection = (name: string, description: string) => {
-    submit(
+    fetcher.submit(
       {
         editSection: "sectionEdit",
         id: editId!,
@@ -69,14 +67,20 @@ const AddEditSection = ({
     )
   }
   const fetcherData = fetcher.data
+  console.log(fetcherData, "fetcherData")
   const navigate = useNavigate()
-
   useEffect(() => {
     if (fetcherData?.response?.status === "statusCheck.testAddedSuccess") {
       toast.success(t(fetcherData?.response?.status as string), {
         toastId: "test-added-sucessfully",
       })
       navigate(`${fetcherData?.response?.data?.id}${data?.filters}`)
+      setOpen(false)
+    } else if (fetcherData?.resp?.status === "statusCheck.testUpdatedSuccess") {
+      toast.success(t(fetcherData?.resp?.status as string), {
+        toastId: t(fetcherData?.resp?.status as string),
+      })
+      navigate(`${location.pathname}${location.search}`)
       setOpen(false)
     }
   }, [
@@ -86,6 +90,7 @@ const AddEditSection = ({
     navigate,
     setOpen,
     t,
+    fetcherData?.resp?.status,
   ])
   useEffect(() => {
     if (fetcherData?.createSectionFieldError) {

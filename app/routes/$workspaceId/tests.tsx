@@ -67,8 +67,6 @@ export type LoaderData = {
   getAllTestsCount: number
   sortBy: string | null
   sortOrder: string | null
-  response: any
-  createSectionFieldError: any
 }
 
 export const loader: LoaderFunction = async ({ request, params }) => {
@@ -88,28 +86,16 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
     const name = query.get("name")
     const description = query.get("description")
+    const id = query.get("id") as string
 
-    const validateTitle = (title: any) => {
-      if (typeof title !== "string" || title.length <= 0) {
-        return "statusCheck.nameIsReq"
-      }
-    }
-
-    const validateDescription = (description: any) => {
-      if (typeof description !== "string" || description.length <= 0) {
-        return "statusCheck.descIsReq"
-      }
-    }
-    const createSectionFieldError = {
-      title: validateTitle(name),
-      description: validateDescription(description),
-    }
-    const response = await handleAddSection(
+    await handleAddSection(
       name as string,
       description as string,
       createdById,
       currentWorkspaceId
     )
+    await handleEditSection(name as string, description as string, id)
+
     let sections: Array<Section> = []
     let status: string = ""
     let callBack = (sectionUpdate: Section[], statusUpdate: string) => {
@@ -146,8 +132,6 @@ export const loader: LoaderFunction = async ({ request, params }) => {
       getAllTestsCount,
       sortBy,
       sortOrder,
-      response,
-      createSectionFieldError,
     })
   } catch (err) {
     console.log(err)
