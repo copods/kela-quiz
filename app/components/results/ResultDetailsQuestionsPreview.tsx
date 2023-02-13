@@ -55,7 +55,7 @@ const ResultDetailsQuestionsPreview = ({
     (correctAnswer: CorrectAnswer) => correctAnswer.answer
   )
   let flag = selectedOptions.map((selectedOptions: Option, index: number) => {
-    return selectedOptions.option === correctOption[index]?.option
+    return selectedOptions.id === correctOption[index]?.id
       ? "correct"
       : "incorrect"
   })

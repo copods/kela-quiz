@@ -375,6 +375,7 @@ export async function getResultDetailBySection(id?: string) {
               correctOptions: {
                 select: {
                   option: true,
+                  id: true,
                 },
               },
               questionType: {
@@ -392,6 +393,7 @@ export async function getResultDetailBySection(id?: string) {
           id: true,
           selectedOptions: {
             select: {
+              id: true,
               option: true,
               questionId: true,
             },
