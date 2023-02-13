@@ -17,6 +17,7 @@ import { useTranslation } from "react-i18next"
 import { ToastContainer } from "react-toastify"
 import toasterStyles from "react-toastify/dist/ReactToastify.css"
 
+import { CommonContextProvider } from "./context/Common.context"
 import { getUser } from "./session.server"
 import globalStyles from "./styles/global.css"
 import quillStyles from "./styles/quill.css"
@@ -67,21 +68,23 @@ export default function App() {
         <Links />
       </head>
       <body className="h-full">
-        <Outlet />
-        <ScrollRestoration />
-        <Scripts />
-        <LiveReload />
-        <ToastContainer
-          position="top-center"
-          autoClose={5000}
-          hideProgressBar={true}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-        />
+        <CommonContextProvider>
+          <Outlet />
+          <ScrollRestoration />
+          <Scripts />
+          <LiveReload />
+          <ToastContainer
+            position="top-center"
+            autoClose={5000}
+            hideProgressBar={true}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+          />
+        </CommonContextProvider>
       </body>
     </html>
   )
