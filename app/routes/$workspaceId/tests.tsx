@@ -270,10 +270,6 @@ export default function SectionPage() {
   if (t(data.status) != t("statusCheck.success")) {
     toast.error(t("statusCheck.commonError"))
   }
-
-  useEffect(() => {
-    console.log(data, "data")
-  })
   useEffect(() => {
     if (sectionActionData?.deleted === "deleteLastTestOnPage") {
       toast.success(t("statusCheck.deletedSuccess"), {
@@ -286,15 +282,6 @@ export default function SectionPage() {
   useEffect(() => {
     if (sectionActionData) {
       if (
-        t(sectionActionData.resp?.status as string) ===
-        t("statusCheck.testAddedSuccess")
-      ) {
-        toast.success(t(sectionActionData.resp?.status as string), {
-          toastId: t(sectionActionData.resp?.status as string),
-        })
-        setSectionActionErrors({ title: "", description: "" })
-        setShowAddSectionModal(false)
-      } else if (
         t(sectionActionData.resp?.status as string) ===
         t("statusCheck.testUpdatedSuccess")
       ) {
@@ -336,9 +323,7 @@ export default function SectionPage() {
     } else if (
       // checking if new test added && total count of tests are not zero or data is present for present page
       // navigate to given path
-      (data.getAllTestsCount > 0 &&
-        t(sectionActionData?.resp?.status as string) ===
-          t("statusCheck.testAddedSuccess")) ||
+      data.getAllTestsCount > 0 ||
       data.sections.length >= 0 ||
       (!location.search && data.getAllTestsCount > 0)
     ) {

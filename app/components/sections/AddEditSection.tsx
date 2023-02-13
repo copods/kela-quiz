@@ -72,6 +72,7 @@ const AddEditSection = ({
     )
   }
   const fetcherData = fetcher.data
+  console.log(fetcherData, "data")
   const navigate = useNavigate()
   useEffect(() => {
     if (fetcherData?.response?.status === "statusCheck.testAddedSuccess") {
