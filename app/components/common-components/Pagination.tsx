@@ -17,7 +17,7 @@ const PaginationButtons = ({
   currentPage: number
   onPageChange: (e: number) => void
 }) => {
-  const { toClearStoredValue } = useCommonContext()
+  const { clearStoredValue } = useCommonContext()
   return paginationRange?.map((paginationRangeItems: number, index) => {
     if (paginationRangeItems === -1) {
       return (
@@ -37,7 +37,7 @@ const PaginationButtons = ({
           }`}
           onClick={() => {
             onPageChange(paginationRangeItems)
-            toClearStoredValue("activeTestsSection")
+            clearStoredValue("activeTestsSection")
           }}
           role="button"
           tabIndex={0}
@@ -157,7 +157,7 @@ const Pagination = ({
     hideRange,
   })
   const [selected, setSelected] = useState(pageSize)
-  const { toClearStoredValue } = useCommonContext()
+  const { clearStoredValue } = useCommonContext()
   return (
     <div className="test-table-list b flex items-center justify-between gap-3">
       <div className="paginationInfo flex items-center gap-6">
@@ -186,7 +186,7 @@ const Pagination = ({
           icon="ooui:previous-ltr"
           onClick={() => {
             onPageChange(currentPage - 1)
-            toClearStoredValue("activeTestsSection")
+            clearStoredValue("activeTestsSection")
           }}
         />
         {PaginationButtons({ paginationRange, currentPage, onPageChange })}
@@ -200,7 +200,7 @@ const Pagination = ({
           icon="ooui:previous-rtl"
           onClick={() => {
             onPageChange(currentPage + 1)
-            toClearStoredValue("activeTestsSection")
+            clearStoredValue("activeTestsSection")
           }}
         />
       </div>

@@ -15,7 +15,7 @@ import type { Question } from "~/interface/Interface"
 
 const SectionDetails = () => {
   const { t } = useTranslation()
-  const { toSetCustomStorage } = useCommonContext()
+  const { setCustomStorage } = useCommonContext()
   const sectionDetails = useLoaderData()
   const [currentAccordian, setCurrentAccordian] = useState(-1)
   const [searchText, setSearchText] = useState("")
@@ -76,7 +76,7 @@ const SectionDetails = () => {
             navigate(
               `/${sectionDetails.currentWorkspaceId}${routes.tests}/${sectionDetails.sectionDetails?.id}${routes.addQuestion}`
             )
-            toSetCustomStorage(
+            setCustomStorage(
               "activeTestsSection",
               sectionDetails.sectionDetails?.id
             )

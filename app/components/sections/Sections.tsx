@@ -36,7 +36,7 @@ const SectionLink = ({
 }) => {
   const path = `/${currentWorkspaceId}${routes.tests}/${section.id}${filter}`
   const [isDelete, setIsDelete] = useState(false)
-  const { toClearStoredValue } = useCommonContext()
+  const { clearStoredValue } = useCommonContext()
   const location = useLocation() // to get current location
   const resolvedPath = useResolvedPath(path) // to get resolved path which would match with current location
   const isActive = location.pathname === resolvedPath.pathname
@@ -58,7 +58,7 @@ const SectionLink = ({
     <div
       onClick={() => {
         !isActive && navigate(path)
-        toClearStoredValue("activeTestsSection")
+        clearStoredValue("activeTestsSection")
       }}
       id="section-link"
       className={isActive ? "activeSectionCard" : ""}

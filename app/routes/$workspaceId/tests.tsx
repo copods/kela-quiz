@@ -216,7 +216,7 @@ export const action: ActionFunction = async ({ request, params }) => {
 export default function SectionPage() {
   const data = useLoaderData() as unknown as LoaderData
   const { t } = useTranslation()
-  const { toGetStoredValue, toSetCustomStorage } = useCommonContext()
+  const { getStoredValue, setCustomStorage } = useCommonContext()
   const sectionActionData = useActionData() as ActionData
   const sortByDetails = [
     {
@@ -238,8 +238,8 @@ export default function SectionPage() {
   })
   const [testsPageSize, setTestPageSize] = useState(5)
   const [testsCurrentPage, setTestsCurrentPage] = useState(
-    toGetStoredValue("testsRouteActivePage")
-      ? toGetStoredValue("testsRouteActivePage")?.value
+    getStoredValue("testsRouteActivePage")
+      ? getStoredValue("testsRouteActivePage")?.value
       : data.testCurrentPage
   )
   const location = useLocation()
@@ -317,8 +317,8 @@ export default function SectionPage() {
     ) {
       navigate(
         `/${data.currentWorkspaceId}${routes.tests}/${
-          toGetStoredValue("activeTestsSection")
-            ? toGetStoredValue("activeTestsSection")?.value
+          getStoredValue("activeTestsSection")
+            ? getStoredValue("activeTestsSection")?.value
             : data.sections[0]?.id
         }?sortBy=${sortBy}&sort=${order}&testPage=${testsCurrentPage}&testItems=${testsPageSize}`
       )
@@ -344,7 +344,7 @@ export default function SectionPage() {
     }
   }, [order])
   useEffect(() => {
-    toSetCustomStorage("testsRouteActivePage", data?.testCurrentPage)
+    setCustomStorage("testsRouteActivePage", data?.testCurrentPage)
   }, [data])
   useEffect(() => {
     const heading = document.getElementById("tests-heading")
