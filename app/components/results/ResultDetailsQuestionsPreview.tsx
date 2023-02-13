@@ -122,7 +122,7 @@ const ResultDetailsQuestionsPreview = ({
                     false) ||
                 (flag.includes("incorrect") === true &&
                   questionType.value !== QuestionTypes.text)) && (
-                <Chip text={t("resultConstants.wrong")} variant={"wrong"} />
+                <Chip text={t("resultConstants.wrong")} variant={"error"} />
               )}
               {((checkOrder === true &&
                 questionType.value === QuestionTypes.text &&
@@ -137,7 +137,7 @@ const ResultDetailsQuestionsPreview = ({
               )}
             </>
           ) : (
-            <Chip text={t("resultConstants.skipped")} variant={"skipped"} />
+            <Chip text={t("resultConstants.skipped")} variant={"warning"} />
           )}
         </div>
         {status === QuestionStatus.answered ? (
