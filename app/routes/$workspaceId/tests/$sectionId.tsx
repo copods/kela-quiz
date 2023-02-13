@@ -8,22 +8,15 @@ import { toast } from "react-toastify"
 import invariant from "tiny-invariant"
 
 import SectionDetails from "~/components/sections/SectionDetails"
-import { getSectionById } from "~/models/sections.server"
-import { deleteQuestionById } from "~/models/sections.server"
+import { deleteQuestionStatus } from "~/interface/Interface"
+import {
+  getDeleteQuestionById,
+  getSectionDataById,
+} from "~/services/tests.service"
 
-export type ActionData = {
-  errors?: {
-    title: string
-    status: number
-  }
-  resp?: {
-    title: string
-    status: number
-  }
-}
 export const loader: LoaderFunction = async ({ request, params }) => {
   invariant(params.sectionId, "sectionId not found")
-  const sectionDetails = await getSectionById({ id: params.sectionId })
+  const sectionDetails = await getSectionDataById({ id: params.sectionId })
   if (!sectionDetails) {
     throw new Response("Not Found", { status: 404 })
   }
@@ -32,41 +25,19 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 }
 export const action: ActionFunction = async ({ request, params }) => {
   const formData = await request.formData()
-  const action = await formData.get("action")
   const id = formData.get("id") as string
-  if (action === "deleteQuestion") {
-    const deleteQuestion = await deleteQuestionById(id)
-      .then(() => {
-        return json<ActionData>(
-          { resp: { title: "statusCheck.deletedSuccess", status: 200 } },
-          { status: 200 }
-        )
-      })
-      .catch(() => {
-        return json<ActionData>(
-          {
-            errors: {
-              title: "statusCheck.commonError",
-              status: 400,
-            },
-          },
-          { status: 400 }
-        )
-      })
-    return deleteQuestion
-  }
-
-  return null
+  await getDeleteQuestionById(id)
 }
 export default function Section() {
   const { t } = useTranslation()
-  const section = useActionData() as ActionData
+  const section = useActionData()
+
   useEffect(() => {
-    if (section?.resp?.status === 200) {
-      toast.success(t(section.resp?.title))
-    } else if (section?.errors?.status === 400) {
-      toast.error(t(section.errors?.title), {
-        toastId: section.errors?.title,
+    if (section === deleteQuestionStatus.deleted) {
+      toast.success(t("statusCheck.deletedSuccess"))
+    } else if (section === deleteQuestionStatus.notDeleted) {
+      toast.error(t("sectionsConstants.questionNotDeleted"), {
+        toastId: "question-not-deleted",
       })
     }
   }, [section, t])

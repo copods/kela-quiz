@@ -143,7 +143,8 @@
     "msq": "MSQ",
     "mcq": "MCQ",
     "multipleSelectQuestion": "Multiple Select Question",
-    "multipleChoiceQuestion": "Multiple Choice Question"
+    "multipleChoiceQuestion": "Multiple Choice Question",
+    "questionNotDeleted": "Question cannot be deleted as being used in existing Assessment."
   },
   "testsConstants": {
     "addTestbutton": "Add Assessment",

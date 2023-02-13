@@ -67,14 +67,14 @@ const AddEditSection = ({
     )
   }
   const fetcherData = fetcher.data
-  console.log(fetcherData, "fetcherData")
+  console.log(fetcherData?.errors, "fetcherData")
   const navigate = useNavigate()
   useEffect(() => {
-    if (fetcherData?.response?.status === "statusCheck.testAddedSuccess") {
-      toast.success(t(fetcherData?.response?.status as string), {
+    if (fetcherData?.resp?.status === "statusCheck.testAddedSuccess") {
+      toast.success(t(fetcherData?.resp?.status as string), {
         toastId: "test-added-sucessfully",
       })
-      navigate(`${fetcherData?.response?.data?.id}${data?.filters}`)
+      navigate(`${fetcherData?.resp?.data?.id}${data?.filters}`)
       setOpen(false)
     } else if (fetcherData?.resp?.status === "statusCheck.testUpdatedSuccess") {
       toast.success(t(fetcherData?.resp?.status as string), {
@@ -84,8 +84,8 @@ const AddEditSection = ({
       setOpen(false)
     }
   }, [
-    fetcherData?.response?.data?.id,
-    fetcherData?.response?.status,
+    fetcherData?.resp?.data?.id,
+    fetcherData?.resp?.status,
     data?.filters,
     navigate,
     setOpen,
@@ -155,16 +155,21 @@ const AddEditSection = ({
             value={sectionName}
             maxLength={52}
           />
-          {sectionActionErrors || fetcherData?.response?.errors?.title ? (
+          {fetcherData?.createSectionFieldError?.title ||
+          fetcherData?.errors?.title ? (
             <p id="addEditSection-title-error" className="px-3 text-red-500">
               {t(
                 sectionActionErrors?.title ||
-                  fetcherData?.response?.errors?.title
+                  fetcherData?.createSectionFieldError?.title ||
+                  fetcherData?.errors?.title
               )}
             </p>
           ) : fetcherData?.response?.errors ? (
             <p id="duplicete-title-error" className="px-3 text-red-500">
-              {t(fetcherData?.response?.errors?.title)}
+              {t(
+                fetcherData?.response?.errors?.title ||
+                  fetcherData?.errors.title
+              )}
             </p>
           ) : null}
         </div>
@@ -179,12 +184,12 @@ const AddEditSection = ({
             value={description}
             placeholder={`${t("commonConstants.enterTestsDesc")}*`}
           />
-          {sectionActionErrors ? (
+          {fetcherData?.createSectionFieldError ? (
             <p
               id="addEditSection-description-error"
               className="px-3 text-red-500"
             >
-              {t(sectionActionErrors?.description)}
+              {t(fetcherData?.createSectionFieldError?.description)}
             </p>
           ) : null}
         </div>

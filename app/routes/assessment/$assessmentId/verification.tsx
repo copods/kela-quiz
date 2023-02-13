@@ -14,7 +14,7 @@ import {
   resendOtpCode,
   updateNextStep,
   verifyCandidateOtp,
-} from "~/utils/assessment.utils"
+} from "~/services/assessment.service"
 
 export type ActionData = {
   errors?: {
