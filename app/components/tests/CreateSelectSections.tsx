@@ -8,7 +8,6 @@ import Pagination from "../common-components/Pagination"
 import SortFilter from "../common-components/SortFilter"
 
 import SelectSectionCard from "./SelectSectionCard"
-
 import { routes } from "~/constants/route.constants"
 
 import { sortByOrder } from "~/interface/Interface"
