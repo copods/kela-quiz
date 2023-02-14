@@ -10,7 +10,7 @@ import Badge from "../common-components/Badge"
 import DeletePopUp from "../common-components/DeletePopUp"
 import Table from "../common-components/TableComponent"
 
-import type { User, Invites } from "~/interface/Interface"
+import type { User, Invites, UserWorkspace } from "~/interface/Interface"
 
 export default function MembersList({
   membersCurrentPage,
@@ -46,8 +46,8 @@ export default function MembersList({
       </div>
     )
   }
-  const RoleDataCell = (data: { userWorkspace: any }) => {
-    return <span>{data.userWorkspace[0].role.name}</span>
+  const RoleDataCell = (data: { userWorkspace: UserWorkspace[] }) => {
+    return <span>{data?.userWorkspace[0]?.role?.name}</span>
   }
   const JoinedOnCell = (data: Invites) => {
     return <span>{moment(data?.createdAt).format("DD MMMM YY")}</span>
@@ -77,10 +77,10 @@ export default function MembersList({
             if (e.key === "Enter") openPopUp()
           }}
           icon="ic:outline-delete-outline"
-          className={`${
+          className={`h-6 w-6 ${
             userRoleId !== roleId
-              ? "h-6 w-6 cursor-not-allowed text-red-200"
-              : `h-6 w-6 cursor-pointer text-red-500 ${
+              ? "cursor-not-allowed text-red-200"
+              : `cursor-pointer text-red-500 ${
                   (loggedInUser === data.id || workspaceOwner === data.id) &&
                   "cursor-not-allowed text-red-200"
                 } `
