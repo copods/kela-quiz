@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react"
+
 import { useTranslation } from "react-i18next"
 
 import Chip from "../common-components/Chip"
@@ -59,24 +61,34 @@ const ResultDetailsQuestionsPreview = ({
   const optionContainer =
     "break-normal rounded-lg border border-solid border-gray-300 bg-gray-50 p-4 text-base font-normal text-gray-600"
 
-  const array1 =
-    questionType.value === QuestionTypes.text
-      ? (textAnswer as CorrectAnswer[])
-      : selectedOptions
-  const array2: any =
-    questionType.value === QuestionTypes.text ? correctAnswer : correctOption
-  let flag: string = ""
-  array1.forEach((array1, index) => {
-    if (
-      questionType.value === QuestionTypes.text
-        ? array1 !== array2[index].answer
-        : array1?.id !== array2[index].id
-    ) {
-      return (flag = "incorrect")
-    } else {
-      return (flag = "correct")
+  const [flag, setFlag] = useState(false)
+  function testAnswerFlag() {
+    for (const [index, value] of textAnswer.entries()) {
+      if (value !== (correctAnswer[index].answer as unknown as CorrectAnswer)) {
+        setFlag(false)
+        break
+      } else {
+        setFlag(true)
+        return
+      }
     }
+  }
+
+  function mcqFlag() {
+    for (const [index, value] of selectedOptions.entries()) {
+      if (value.id !== correctOption[index]?.id) {
+        setFlag(false)
+        break
+      } else {
+        setFlag(true)
+      }
+    }
+  }
+  useEffect(() => {
+    testAnswerFlag()
+    mcqFlag()
   })
+
   return (
     <div className="flex w-full rounded-lg border border-gray-300 bg-white">
       <div className="flex w-6/12 flex-col gap-6 p-6">
@@ -121,15 +133,20 @@ const ResultDetailsQuestionsPreview = ({
             {t("resultConstants.givenAnswers")}
           </h3>
           {status === QuestionStatus.answered ? (
-            (checkOrder === true && flag === "incorrect") ||
-            (checkOrder === false &&
-              areEqualAsnwersArray(textAnswer, correctAnswersArray) ===
-                false) ||
-            flag === "incorrect" ? (
-              <Chip text={t("resultConstants.wrong")} variant={"error"} />
-            ) : (
-              <Chip text={t("resultConstants.correct")} variant={"success"} />
-            )
+            <>
+              {(checkOrder &&
+                questionType.value === QuestionTypes.text &&
+                !flag) ||
+              (checkOrder === false &&
+                questionType.value === QuestionTypes.text &&
+                areEqualAsnwersArray(textAnswer, correctAnswersArray) ===
+                  false) ||
+              (!flag && questionType.value !== QuestionTypes.text) ? (
+                <Chip text={t("resultConstants.wrong")} variant={"error"} />
+              ) : (
+                <Chip text={t("resultConstants.correct")} variant={"success"} />
+              )}
+            </>
           ) : (
             <Chip text={t("resultConstants.skipped")} variant={"warning"} />
           )}
@@ -158,15 +175,14 @@ const ResultDetailsQuestionsPreview = ({
                     )
                   })}
             </div>
-            {((checkOrder === true &&
+            {((checkOrder &&
               questionType.value === QuestionTypes.text &&
-              flag === "incorrect") ||
+              !flag) ||
               (checkOrder === false &&
                 questionType.value === QuestionTypes.text &&
                 areEqualAsnwersArray(textAnswer, correctAnswersArray) ===
                   false) ||
-              (flag === "incorrect" &&
-                questionType.value !== QuestionTypes.text)) && (
+              (!flag && questionType.value !== QuestionTypes.text)) && (
               <div className="flex flex-col gap-6">
                 <div className="flex flex-col gap-6">
                   <Divider height="1px" />

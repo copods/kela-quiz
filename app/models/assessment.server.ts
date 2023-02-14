@@ -654,22 +654,22 @@ async function calculateResultBySectionId(sectionid?: string) {
       }
 
       if (question?.question?.questionType?.value === QuestionTypes.text) {
-        if (question?.question?.checkOrder) {
-          // eslint-disable-next-line no-loop-func
-          let flag = ""
-          question?.answers.forEach((textAnswer: string, index: number) => {
-            if (
-              textAnswer !== question?.question?.correctAnswer[index]?.answer
-            ) {
-              return (flag = "incorrect")
+        const checkOrder = question?.question?.checkOrder
+
+        if (checkOrder) {
+          let flag
+          for (const [index, value] of question?.answers.entries()) {
+            if (value !== question?.question?.correctAnswer[index]?.answer) {
+              flag = false
+              break
             } else {
-              return (flag = "correct")
+              flag = true
             }
-          })
-          if (flag === "incorrect") {
-            incorrect += 1
-          } else {
+          }
+          if (flag) {
             correct += 1
+          } else {
+            incorrect += 1
           }
         } else {
           const correctAnswers = question?.question?.correctAnswer
