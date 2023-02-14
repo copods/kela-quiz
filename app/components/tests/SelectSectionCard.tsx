@@ -40,6 +40,7 @@ const SelectSectionCard = ({
         : questionCount && questionCount < 11
         ? questionCount
         : 10,
+      target: target,
     }
     switch (target) {
       case "isSelected":

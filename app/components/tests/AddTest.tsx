@@ -30,9 +30,10 @@ const AddTestComponent = ({
   const transition = useTransition()
   const submit = useSubmit()
   const [sectionsCopy, setSectionsCopy] = useState(sections)
-  const [AllSelectedSections, setAllSelectedSections] = useState<
+  const [allSelectedSections, setAllSelectedSections] = useState<
     Array<TestSection>
   >([])
+  // let allSelectedSections: Array<TestSection> = []
   useEffect(() => {
     setSectionsCopy(sections)
   }, [sections])
@@ -73,22 +74,29 @@ const AddTestComponent = ({
   const updateSection = (data: AddedSectionDetails, i: number) => {
     setSectionsCopy((sec) => {
       sec[i] = { ...sec[i], ...data }
-
-      // pushing  section which is selected to an Array for Maintaining state
-      if (data.isSelected) {
-        AllSelectedSections.length > 0
+      const isSelectedSectionExist = allSelectedSections.find(
+        (obj) => obj.id === sec[i].id
+      )
+      if (!isSelectedSectionExist) {
+        //Simply adding the selected Sections
+        allSelectedSections.length > 0
           ? setAllSelectedSections((oldArray) => [...oldArray, sec[i]])
           : setAllSelectedSections([sec[i]])
-      } else {
-        // Poping section which we unselect from an array for Maintaining state
-        if (AllSelectedSections.length > 0) {
-          const removedSection = AllSelectedSections.find(
-            (obj) => obj.id === sec[i].id
-          )
-          if (removedSection) {
-            const index = AllSelectedSections?.indexOf(removedSection)
-            AllSelectedSections.splice(index, 1)
-          }
+      } else if (isSelectedSectionExist) {
+        if (data.isSelected) {
+          // updating the sections whenever we are updating question or Time
+          allSelectedSections.map((selected: any) => {
+            const targetData = data.target as keyof TestSection
+            if (selected.id === sec[i].id && targetData in selected) {
+              selected[targetData] = sec[i][targetData]
+            } else {
+              selected[targetData]
+            }
+          })
+        } else {
+          // Removing the section when we click remove
+          const index = allSelectedSections?.indexOf(isSelectedSectionExist)
+          allSelectedSections.splice(index, 1)
         }
       }
       onSelectedSectionChange(
@@ -206,7 +214,7 @@ const AddTestComponent = ({
           updateSectionsList={setSectionsCopy}
           currentWorkspaceId={currentWorkspaceId}
           totalSections={totalSections}
-          AllSelectedSections={AllSelectedSections}
+          allSelectedSections={allSelectedSections}
         />
       ) : (
         currentTab === tabs[2].id && (

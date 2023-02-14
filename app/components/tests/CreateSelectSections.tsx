@@ -19,14 +19,14 @@ const SelectSections = ({
   updateSectionsList,
   currentWorkspaceId,
   totalSections,
-  AllSelectedSections,
+  allSelectedSections,
 }: {
   sections: Array<TestSection>
   setSections: (e: AddedSectionDetails, i: number) => void
   updateSectionsList: (e: SetStateAction<Array<TestSection>>) => void
   currentWorkspaceId: string
   totalSections: number
-  AllSelectedSections: Array<TestSection>
+  allSelectedSections: Array<TestSection>
 }) => {
   const [sortDirection, onSortDirectionChange] = useState(
     sortByOrder.ascending as string
@@ -86,14 +86,13 @@ const SelectSections = ({
     const { data } = fetcher
     if (data) {
       let sortedData = data.sections
-      if (AllSelectedSections.length > 0) {
+      if (allSelectedSections.length > 0) {
         sortedData = sortedData.map((section: TestSection) => {
-          const selected = AllSelectedSections.find(
+          const selected = allSelectedSections.find(
             (selected) => selected.id === section.id
           )
           return selected || section
         })
-        console.log("sorted Data with Time", sortedData)
       }
       updateSectionsList(sortedData)
     }
