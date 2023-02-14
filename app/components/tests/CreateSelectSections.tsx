@@ -31,11 +31,11 @@ const SelectSections = ({
   const [sortDirection, onSortDirectionChange] = useState(
     sortByOrder.ascending as string
   )
-  const [sortBy, onSortChange] = useState("name")
+  const [sortBy, onSortChange] = useState("createdAt")
   const [sectionsCurrentPage, setSectionsCurrentPage] = useState(1)
   const [sectionsPageSize, setSectionsPageSize] = useState(3)
   const [pseudoDivs, setPseudoDivs] = useState([1])
-  let paginationSizeOptions = [3, 6, 12, 18, 24]
+  const paginationSizeOptions = [3, 6, 12, 18, 24]
 
   const filterByType = [
     {
@@ -84,16 +84,14 @@ const SelectSections = ({
 
   useEffect(() => {
     const { data } = fetcher
-    if (data) {
+    if (data && allSelectedSections.length > 0) {
       let sortedData = data.sections
-      if (allSelectedSections.length > 0) {
-        sortedData = sortedData.map((section: TestSection) => {
-          const selected = allSelectedSections.find(
-            (selected) => selected.id === section.id
-          )
-          return selected || section
-        })
-      }
+      sortedData = sortedData.map((section: TestSection) => {
+        const selected = allSelectedSections.find(
+          (selected) => selected.id === section.id
+        )
+        return selected || section
+      })
       updateSectionsList(sortedData)
     }
   }, [fetcher])

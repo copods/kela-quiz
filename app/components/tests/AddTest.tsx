@@ -33,7 +33,6 @@ const AddTestComponent = ({
   const [allSelectedSections, setAllSelectedSections] = useState<
     Array<TestSection>
   >([])
-  // let allSelectedSections: Array<TestSection> = []
   useEffect(() => {
     setSectionsCopy(sections)
   }, [sections])
@@ -85,12 +84,10 @@ const AddTestComponent = ({
       } else if (isSelectedSectionExist) {
         if (data.isSelected) {
           // updating the sections whenever we are updating question or Time
-          allSelectedSections.map((selected: any) => {
+          allSelectedSections.forEach((selected: any) => {
             const targetData = data.target as keyof TestSection
             if (selected.id === sec[i].id && targetData in selected) {
               selected[targetData] = sec[i][targetData]
-            } else {
-              selected[targetData]
             }
           })
         } else {

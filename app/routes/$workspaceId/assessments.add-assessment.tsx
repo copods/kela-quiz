@@ -52,7 +52,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
   let sections: Array<Section> = []
   let status: string = ""
-  let callBack = (sectionUpdate: Section[], statusUpdate: string) => {
+  const callBack = (sectionUpdate: Section[], statusUpdate: string) => {
     sections = sectionUpdate
     status = statusUpdate
   }
