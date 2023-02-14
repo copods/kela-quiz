@@ -9,18 +9,23 @@ import { toast } from "react-toastify"
 
 import AddTestComponent from "~/components/tests/AddTest"
 import { routes } from "~/constants/route.constants"
-import { getAllSections, getAllTestsCounts } from "~/models/sections.server"
-import { createTest } from "~/models/tests.server"
-import { getUserWorkspaces } from "~/models/workspace.server"
+
 import { getUserId, requireUserId } from "~/session.server"
+import { getUserWorkspaceService } from "~/services/workspace.service"
+import {
+  getAllSectionCount,
+  getAllTestsData,
+  getCreateTest,
+} from "~/services/tests.service"
 
 type LoaderData = {
   sections: Section[]
   status: string
-  workspaces: Awaited<ReturnType<typeof getUserWorkspaces>>
+  workspaces: Awaited<ReturnType<typeof getUserWorkspaceService>>
   currentWorkspaceId: string
   getAllSectionsCount: number
 }
+
 export type ActionData = {
   errors?: {
     title: string
@@ -34,7 +39,7 @@ export type ActionData = {
 export const loader: LoaderFunction = async ({ request, params }) => {
   const userId = await getUserId(request)
   const currentWorkspaceId = params.workspaceId as string
-  const workspaces = await getUserWorkspaces(userId as string)
+  const workspaces = await getUserWorkspaceService(userId as string)
 
   const query = new URL(request.url).searchParams
   const sortBy = query.get("sortBy") as string
@@ -42,26 +47,24 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const testItemsPerPage = Math.max(Number(query.get("pageSize") || 3), 3)
   const testCurrentPage = Math.max(Number(query.get("currentPage") || 1), 1)
 
-  const getAllSectionsCount = await getAllTestsCounts(currentWorkspaceId)
+  const getAllSectionsCount = await getAllSectionCount(currentWorkspaceId)
 
   if (!userId) return redirect(routes.signIn)
 
   let sections: Array<Section> = []
   let status: string = ""
-  await getAllSections(
+  let callBack = (sectionUpdate: Section[], statusUpdate: string) => {
+    sections = sectionUpdate
+    status = statusUpdate
+  }
+  await getAllTestsData(
     sortBy,
     sortOrder,
     currentWorkspaceId as string,
     testCurrentPage,
-    testItemsPerPage
+    testItemsPerPage,
+    callBack
   )
-    .then((res) => {
-      sections = res as Section[]
-      status = "statusCheck.success"
-    })
-    .catch((err) => {
-      status = err
-    })
   return json<LoaderData>({
     sections,
     status,
@@ -76,47 +79,13 @@ export const action: ActionFunction = async ({ request, params }) => {
   const workspaceId = params.workspaceId
   const formData = await request.formData()
 
-  const data:
-    | {
-        name: string
-        description: string
-        sections: Array<{
-          sectionId: string
-          totalQuestions: number
-          timeInSeconds: number
-        }>
-      }
-    | any = formData.get("data")
+  const data = formData.get("data")
 
-  let test = null
-  await createTest(createdById, workspaceId as string, JSON.parse(data))
-    .then((res) => {
-      test = json<ActionData>(
-        {
-          resp: {
-            title: "statusCheck.assessmentAddedSuccessFully",
-            status: 200,
-          },
-        },
-        { status: 200 }
-      )
-    })
-    .catch((err) => {
-      let title = "statusCheck.commonError"
-      if (err.code === "P2002") {
-        title = "statusCheck.assessmentAlreadyExist"
-      }
-      test = json<ActionData>(
-        {
-          errors: {
-            title,
-            status: 400,
-          },
-        },
-        { status: 400 }
-      )
-    })
-  return test
+  return await getCreateTest(
+    createdById,
+    workspaceId as string,
+    JSON.parse(data as string)
+  )
 }
 
 const AddTest = () => {

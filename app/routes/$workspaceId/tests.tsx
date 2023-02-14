@@ -23,7 +23,6 @@ import { routes } from "~/constants/route.constants"
 import { sortByOrder } from "~/interface/Interface"
 import type { sectionActionErrorsType } from "~/interface/Interface"
 import type { Section } from "~/interface/Interface"
-import { getFirstSection } from "~/models/sections.server"
 import {
   getAllSectionCount,
   getAllTestsData,
@@ -31,6 +30,7 @@ import {
   handleAddTest,
   handleDeleteTest,
   handleEditTest,
+  getFIRSTSection,
 } from "~/services/tests.service"
 import { getUserId, requireUserId } from "~/session.server"
 
@@ -187,7 +187,7 @@ export const action: ActionFunction = async ({ request, params }) => {
     const deleteSectionId = formData.get("id") as string
     await handleDeleteTest(deleteSectionId)
 
-    const sectionId = await getFirstSection(
+    const sectionId = await getFIRSTSection(
       sortFilter
         .split("&")
         .filter((res) => res.includes("sortBy"))[0]
