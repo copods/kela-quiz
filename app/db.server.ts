@@ -1,6 +1,8 @@
 import { PrismaClient } from "@prisma/client"
 import invariant from "tiny-invariant"
 
+import { emailCronCaller } from "./models/cron.server"
+
 let prisma: PrismaClient
 
 declare global {
@@ -16,6 +18,8 @@ if (process.env.NODE_ENV === "production") {
 } else {
   if (!global.__db__) {
     global.__db__ = getClient()
+    console.log("called")
+    emailCronCaller()
   }
   prisma = global.__db__
 }
