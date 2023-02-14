@@ -286,6 +286,7 @@ export interface CandidateResult {
 export interface sectionActionErrorsType {
   title: string
   description: string
+  duplicateTitle: string
 }
 export enum sortByOrder {
   ascending = "asc",

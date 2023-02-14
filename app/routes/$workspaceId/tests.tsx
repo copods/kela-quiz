@@ -273,6 +273,7 @@ export default function SectionPage() {
   const [sectionActionErrors, setSectionActionErrors] = useState({
     title: "",
     description: "",
+    duplicateTitle: "",
   })
   const [testsPageSize, setTestPageSize] = useState(5)
   const [testsCurrentPage, setTestsCurrentPage] = useState(data.testCurrentPage)
@@ -311,12 +312,6 @@ export default function SectionPage() {
               `/${data.currentWorkspaceId}${routes.tests}/${sectionActionData?.sectionId}?sortBy=${sortBy}&sort=${order}&testPage=${testsCurrentPage}&testItems=${testsPageSize}`
             )
         }
-      } else if (sectionActionData.createSectionFieldError) {
-        setSectionActionErrors({
-          title: sectionActionData?.createSectionFieldError.title || "",
-          description:
-            sectionActionData.createSectionFieldError.description || "",
-        })
       }
     }
   }, [

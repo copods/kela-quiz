@@ -30,6 +30,7 @@ const SectionLink = ({
   setSectionActionErrors?: ({
     title,
     description,
+    duplicateTitle,
   }: sectionActionErrorsType) => void
   currentPageCount: number
 }) => {
@@ -99,6 +100,7 @@ type SectionType = {
   setSectionActionErrors?: ({
     title,
     description,
+    duplicateTitle,
   }: sectionActionErrorsType) => void
   totalCount: number
   testsPageSize: number

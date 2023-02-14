@@ -60,7 +60,17 @@ const AddEditSection = ({
     )
   }
   const fetcherData = fetcher.data
-  console.log(fetcherData?.errors, "fetcherData")
+
+  useEffect(() => {
+    if (fetcherData?.createSectionFieldError || fetcherData?.errors?.title) {
+      setSectionActionErrors({
+        title: fetcherData?.createSectionFieldError?.title || "",
+        description: fetcherData?.createSectionFieldError?.description || "",
+        duplicateTitle: fetcherData?.errors?.title || "",
+      })
+    }
+  }, [fetcherData?.createSectionFieldError, setSectionActionErrors])
+
   const navigate = useNavigate()
   useEffect(() => {
     if (fetcherData?.resp?.status === "statusCheck.testAddedSuccess") {
@@ -82,12 +92,22 @@ const AddEditSection = ({
     data?.filters,
     navigate,
     setOpen,
+
     t,
     fetcherData?.resp?.status,
   ])
   useEffect(() => {
-    setSectionActionErrors?.({ title: "", description: "" })
-  }, [setOpen])
+    if (sectionName.length! > 1)
+      setSectionActionErrors({
+        title: "",
+        duplicate: "",
+      })
+    else if (description.length! > 1) {
+      setSectionActionErrors({
+        description: "",
+      })
+    }
+  }, [sectionName, description, setSectionActionErrors, setOpen])
   useEffect(() => {
     if (editItem) {
       setSectionActionErrors?.({ title: "", description: "" })
@@ -106,7 +126,6 @@ const AddEditSection = ({
   const handleAdd = (name: string, description: string) => {
     addSection?.(name, description)
   }
-
   return (
     <DialogWrapper
       open={open}
@@ -134,21 +153,13 @@ const AddEditSection = ({
             value={sectionName}
             maxLength={52}
           />
-          {fetcherData?.createSectionFieldError?.title ||
-          fetcherData?.errors?.title ? (
+          {sectionActionErrors?.title ? (
             <p id="addEditSection-title-error" className="px-3 text-red-500">
-              {t(
-                sectionActionErrors?.title ||
-                  fetcherData?.createSectionFieldError?.title ||
-                  fetcherData?.errors?.title
-              )}
+              {t(sectionActionErrors?.title)}
             </p>
-          ) : fetcherData?.response?.errors ? (
+          ) : sectionActionErrors?.duplicateTitle ? (
             <p id="duplicete-title-error" className="px-3 text-red-500">
-              {t(
-                fetcherData?.response?.errors?.title ||
-                  fetcherData?.errors.title
-              )}
+              {t(sectionActionErrors?.duplicateTitle)}
             </p>
           ) : null}
         </div>
@@ -163,12 +174,12 @@ const AddEditSection = ({
             value={description}
             placeholder={`${t("commonConstants.enterTestsDesc")}*`}
           />
-          {fetcherData?.createSectionFieldError ? (
+          {sectionActionErrors?.description ? (
             <p
               id="addEditSection-description-error"
               className="px-3 text-red-500"
             >
-              {t(fetcherData?.createSectionFieldError?.description)}
+              {t(sectionActionErrors?.description)}
             </p>
           ) : null}
         </div>
