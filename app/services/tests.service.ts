@@ -1,6 +1,8 @@
 import type { Section } from "@prisma/client"
 import { json } from "@remix-run/node"
 
+import { getUserWorkspaceService } from "./workspace.service"
+
 import type { sectionActionErrorsType } from "~/interface/Interface"
 import {
   createSection,
@@ -13,8 +15,8 @@ import {
   deleteQuestionById,
   addQuestion,
 } from "~/models/sections.server"
+import { getFirstSection } from "~/models/sections.server"
 import { getAllUsers } from "~/models/user.server"
-import { getUserWorkspaces } from "~/models/workspace.server"
 
 //*
 /** Action data types are defined here
@@ -222,7 +224,7 @@ export const handleDeleteTest = async (deleteSectionId: string) => {
  * @returns userWorkspaces
  */
 export const getWorkspaces = async (userId: string) => {
-  return await getUserWorkspaces(userId)
+  return await getUserWorkspaceService(userId)
 }
 
 /**
@@ -339,4 +341,30 @@ export const getAddQuestion = async (
       )
     })
   return ques
+}
+
+/**
+ * Function will adding a new question
+ * @param sortBy
+ * @param sortOrder
+ * @param workspaceId
+ * @param testCurrentPage
+ * @param testItemsPerPage
+ * @param number
+ * @returns first seciton id
+ */
+export const getFIRSTSection = async (
+  sortBy: string,
+  sortOrder: string,
+  workspaceId: string,
+  testCurrentPage: number,
+  testItemsPerPage: number
+) => {
+  return await getFirstSection(
+    sortBy,
+    sortOrder,
+    workspaceId,
+    testCurrentPage,
+    testItemsPerPage
+  )
 }
