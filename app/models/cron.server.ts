@@ -6,12 +6,12 @@ import { getAllCandidates } from "./candidate.server"
 import { sendTestInviteMail } from "./sendgrid.servers"
 
 export function emailCronCaller() {
-  cron.schedule("0 */23 * * *", async function () {
+  cron.schedule("0 */1 * * *", async function () {
     const candidates = await getAllCandidates()
 
     candidates.forEach((candidate) => {
       const invitedAtTime = moment(candidate.createdAt).fromNow()
-
+      console.log(invitedAtTime)
       if (invitedAtTime.includes("23")) {
         sendTestInviteMail(candidate.candidate.email, candidate.link as string)
       }
