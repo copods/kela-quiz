@@ -27,10 +27,9 @@ const SectionLink = ({
   filter: string
   currentWorkspaceId: string
   sectionActionErrors?: sectionActionErrorsType
-  setSectionActionErrors?: ({
+  setSectionActionErrors: ({
     title,
     description,
-    duplicateTitle,
   }: sectionActionErrorsType) => void
   currentPageCount: number
 }) => {
@@ -97,10 +96,9 @@ type SectionType = {
   sortByDetails: Array<{ name: string; value: string }>
   currentWorkspaceId: string
   sectionActionErrors?: sectionActionErrorsType
-  setSectionActionErrors?: ({
+  setSectionActionErrors: ({
     title,
     description,
-    duplicateTitle,
   }: sectionActionErrorsType) => void
   totalCount: number
   testsPageSize: number

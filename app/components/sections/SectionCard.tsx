@@ -40,7 +40,7 @@ const SectionCard = ({
   setIsDelete: (e: boolean) => void
   isDelete: boolean
   sectionActionErrors?: sectionActionErrorsType
-  setSectionActionErrors?: ({
+  setSectionActionErrors: ({
     title,
     description,
   }: sectionActionErrorsType) => void

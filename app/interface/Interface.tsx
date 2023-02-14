@@ -284,9 +284,9 @@ export interface CandidateResult {
   link?: string
 }
 export interface sectionActionErrorsType {
-  title: string
-  description: string
-  duplicateTitle: string
+  title?: string
+  description?: string
+  duplicateTitle?: string
 }
 export enum sortByOrder {
   ascending = "asc",

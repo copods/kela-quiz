@@ -270,11 +270,7 @@ export default function SectionPage() {
   const [showAddSectionModal, setShowAddSectionModal] = useState(false)
   const [order, setOrder] = useState(sortByOrder.desc as string)
   const [sortBy, setSortBy] = useState(sortByDetails[1].value)
-  const [sectionActionErrors, setSectionActionErrors] = useState({
-    title: "",
-    description: "",
-    duplicateTitle: "",
-  })
+  const [sectionActionErrors, setSectionActionErrors] = useState({})
   const [testsPageSize, setTestPageSize] = useState(5)
   const [testsCurrentPage, setTestsCurrentPage] = useState(data.testCurrentPage)
   const location = useLocation()

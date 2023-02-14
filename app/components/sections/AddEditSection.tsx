@@ -26,7 +26,11 @@ const AddEditSection = ({
 }: {
   open: boolean
   sectionActionErrors?: sectionActionErrorsType
-  setSectionActionErrors?: any
+  setSectionActionErrors: ({
+    title,
+    description,
+    duplicateTitle,
+  }: sectionActionErrorsType) => void
 
   setOpen: (e: boolean) => void
   showErrorMessage?: boolean
@@ -100,7 +104,7 @@ const AddEditSection = ({
     if (sectionName.length! > 1)
       setSectionActionErrors({
         title: "",
-        duplicate: "",
+        duplicateTitle: "",
       })
     else if (description.length! > 1) {
       setSectionActionErrors({
