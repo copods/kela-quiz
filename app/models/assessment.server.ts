@@ -654,19 +654,24 @@ async function calculateResultBySectionId(sectionid?: string) {
       }
 
       if (question?.question?.questionType?.value === QuestionTypes.text) {
-        const checkOrder = question?.question?.checkOrder
-        let correctOrder: boolean[] = []
-        if (checkOrder) {
-          correctOrder = question?.answers.map(
-            (textAnswer: string, index: number) => {
-              return (
-                textAnswer === question?.question?.correctAnswer[index]?.answer
-              )
+        if (question?.question?.checkOrder) {
+          // eslint-disable-next-line no-loop-func
+          let flag = ""
+          question?.answers.forEach((textAnswer: string, index: number) => {
+            if (
+              textAnswer !== question?.question?.correctAnswer[index]?.answer
+            ) {
+              return (flag = "incorrect")
+            } else {
+              return (flag = "correct")
             }
-          )
-        }
-
-        if (checkOrder === false) {
+          })
+          if (flag === "incorrect") {
+            incorrect += 1
+          } else {
+            correct += 1
+          }
+        } else {
           const correctAnswers = question?.question?.correctAnswer
             ?.flatMap((opt) => opt?.answer.toLowerCase())
             .sort()
@@ -686,12 +691,6 @@ async function calculateResultBySectionId(sectionid?: string) {
             } else {
               incorrect += 1
             }
-          }
-        } else {
-          if (correctOrder?.includes(false)) {
-            incorrect += 1
-          } else {
-            correct += 1
           }
         }
       } else if (

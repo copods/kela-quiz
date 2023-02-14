@@ -391,3 +391,9 @@ export interface BadgeComponent {
   bgColor?: string
   textColor?: string
 }
+
+export interface ChipComponent {
+  success: string
+  error: string
+  warning: string
+}
