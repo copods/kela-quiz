@@ -681,7 +681,7 @@ async function calculateResultBySectionId(sectionid?: string) {
           if (correctAnswers?.length === userAnswers?.length) {
             let correctFlag = true
             for (let i = 0; i < correctAnswers?.length; i++) {
-              if (correctAnswers[i].localeCompare(userAnswers[i]) != 0) {
+              if (correctAnswers[i].localeCompare(userAnswers[i]) !== 0) {
                 correctFlag = false
                 break
               }

@@ -12,24 +12,18 @@ const ResultDetailBySections = () => {
   const resultDetailsLoaderData = useLoaderData()
   const sectionDetail = resultDetailsLoaderData.sectionDetail
   const navigate = useNavigate()
+  const navigateToGraphPage = `/${resultDetailsLoaderData.params.workspaceId}${routes.resultGroupTest}/${resultDetailsLoaderData.params?.testId}/${resultDetailsLoaderData.params.candidateId}`
   return (
     <div className="flex h-full flex-col gap-5">
       <header className="flex flex-col gap-6">
         <div className="flex gap-5">
           <div
-            onClick={() =>
-              navigate(
-                `/${resultDetailsLoaderData.params.workspaceId}${routes.resultGroupTest}/${resultDetailsLoaderData.params?.testId}/${resultDetailsLoaderData.params.candidateId}`
-              )
-            }
+            onClick={() => navigate(navigateToGraphPage)}
             className="flex items-center gap-4"
             role="button"
             tabIndex={0}
             onKeyDown={(e) => {
-              if (e.key === "Enter")
-                navigate(
-                  `/${resultDetailsLoaderData.params.workspaceId}${routes.resultGroupTest}/${resultDetailsLoaderData.params?.testId}/${resultDetailsLoaderData.params.candidateId}`
-                )
+              e.key === "Enter" && navigate(navigateToGraphPage)
             }}
           >
             <Icon

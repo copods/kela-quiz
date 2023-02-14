@@ -62,7 +62,8 @@ const ResultDetailsQuestionsPreview = ({
     "break-normal rounded-lg border border-solid border-gray-300 bg-gray-50 p-4 text-base font-normal text-gray-600"
 
   const [flag, setFlag] = useState(false)
-  function testAnswerFlag() {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  function checkTextAnswer() {
     for (const [index, value] of textAnswer.entries()) {
       if (value !== (correctAnswer[index].answer as unknown as CorrectAnswer)) {
         setFlag(false)
@@ -74,7 +75,8 @@ const ResultDetailsQuestionsPreview = ({
     }
   }
 
-  function mcqFlag() {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  function checkMaq() {
     for (const [index, value] of selectedOptions.entries()) {
       if (value.id !== correctOption[index]?.id) {
         setFlag(false)
@@ -85,9 +87,9 @@ const ResultDetailsQuestionsPreview = ({
     }
   }
   useEffect(() => {
-    testAnswerFlag()
-    mcqFlag()
-  })
+    checkTextAnswer()
+    checkMaq()
+  }, [checkMaq, checkTextAnswer])
 
   return (
     <div className="flex w-full rounded-lg border border-gray-300 bg-white">
@@ -137,7 +139,7 @@ const ResultDetailsQuestionsPreview = ({
               {(checkOrder &&
                 questionType.value === QuestionTypes.text &&
                 !flag) ||
-              (checkOrder === false &&
+              (!checkOrder &&
                 questionType.value === QuestionTypes.text &&
                 areEqualAsnwersArray(textAnswer, correctAnswersArray) ===
                   false) ||
@@ -178,7 +180,7 @@ const ResultDetailsQuestionsPreview = ({
             {((checkOrder &&
               questionType.value === QuestionTypes.text &&
               !flag) ||
-              (checkOrder === false &&
+              (!checkOrder &&
                 questionType.value === QuestionTypes.text &&
                 areEqualAsnwersArray(textAnswer, correctAnswersArray) ===
                   false) ||
