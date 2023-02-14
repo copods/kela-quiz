@@ -92,7 +92,7 @@ export interface TestSection {
   order?: number
   timeInSeconds?: number
   section?: Section
-  target: string
+  target?: string
 }
 export interface Section {
   id: string
