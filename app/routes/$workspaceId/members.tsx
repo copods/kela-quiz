@@ -67,7 +67,8 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const getUser = await getUserByID(userId as string)
   const currentWorkspaceId = params.workspaceId as string
   const currentWorkspaceOwner = await getActiveWorkspaceOwner(
-    currentWorkspaceId
+    currentWorkspaceId,
+    userId as string
   )
   const invitedMembers = await getALLInvitedMember(
     currentWorkspaceId as string,
@@ -82,7 +83,6 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     membersCurrentPage,
     membersItemsPerPage,
   })
-
   const allUsersCount = await getALLUsersCount(currentWorkspaceId)
   const invitedUsersCount = await getALLInvitedMemberCount(currentWorkspaceId)
   return json<LoaderData>({

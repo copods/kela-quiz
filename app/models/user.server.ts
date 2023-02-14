@@ -87,6 +87,18 @@ export async function getAllUsers({
           joinedAt: true,
         },
       },
+      userWorkspace: {
+        where: {
+          workspaceId: currentWorkspaceId,
+        },
+        select: {
+          role: {
+            select: {
+              name: true,
+            },
+          },
+        },
+      },
     },
   })
   return user

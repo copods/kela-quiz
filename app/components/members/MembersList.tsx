@@ -10,7 +10,7 @@ import Badge from "../common-components/Badge"
 import DeletePopUp from "../common-components/DeletePopUp"
 import Table from "../common-components/TableComponent"
 
-import type { User, Role, Invites } from "~/interface/Interface"
+import type { User, Invites } from "~/interface/Interface"
 
 export default function MembersList({
   membersCurrentPage,
@@ -30,6 +30,10 @@ export default function MembersList({
   const [openDeleteModal, setOpenDeleteModal] = useState(false)
   const [memberId, setMemberId] = useState("")
   const workspaceOwner = memberLoaderData.currentWorkspaceOwner.createdById
+  const roleId = "cl4xvj89a000209jp4qtlfyii"
+  const userRoleId =
+    memberLoaderData.currentWorkspaceOwner.userWorkspace[0].roleId
+
   const NameDataCell = (data: User) => {
     return (
       <div className="flex gap-2">
@@ -42,8 +46,8 @@ export default function MembersList({
       </div>
     )
   }
-  const RoleDataCell = (data: { role: Role }) => {
-    return <span>{data.role.name}</span>
+  const RoleDataCell = (data: { userWorkspace: any }) => {
+    return <span>{data.userWorkspace[0].role.name}</span>
   }
   const JoinedOnCell = (data: Invites) => {
     return <span>{moment(data?.createdAt).format("DD MMMM YY")}</span>
@@ -53,7 +57,11 @@ export default function MembersList({
   }
   const MemberDelete = (data: User) => {
     const openPopUp = () => {
-      if (loggedInUser !== data.id) {
+      if (
+        loggedInUser !== data.id &&
+        workspaceOwner !== data.id &&
+        userRoleId === roleId
+      ) {
         setMemberId(data.id)
         setOpenDeleteModal(!openDeleteModal)
       }
@@ -69,11 +77,16 @@ export default function MembersList({
             if (e.key === "Enter") openPopUp()
           }}
           icon="ic:outline-delete-outline"
-          className={`h-6 w-6 cursor-pointer text-red-500  ${
-            loggedInUser === data.id && "cursor-not-allowed text-red-200"
+          className={`${
+            userRoleId !== roleId
+              ? "h-6 w-6 cursor-not-allowed text-red-200"
+              : `h-6 w-6 cursor-pointer text-red-500 ${
+                  (loggedInUser === data.id || workspaceOwner === data.id) &&
+                  "cursor-not-allowed text-red-200"
+                } `
           }`}
         />
-        {memberId === data.id && (
+        {memberId === data.id && userRoleId === roleId && (
           <DeletePopUp
             setOpen={setOpenDeleteModal}
             open={openDeleteModal}
