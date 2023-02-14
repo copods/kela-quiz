@@ -39,7 +39,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const query = new URL(request.url).searchParams
   const sortBy = query.get("sortBy") as string
   const sortOrder = query.get("sortOrder") as string
-  const testItemsPerPage = Math.max(Number(query.get("pageSize") || 5), 5)
+  const testItemsPerPage = Math.max(Number(query.get("pageSize") || 3), 3)
   const testCurrentPage = Math.max(Number(query.get("currentPage") || 1), 1)
 
   const getAllSectionsCount = await getAllTestsCounts(currentWorkspaceId)

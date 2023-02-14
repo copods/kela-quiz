@@ -4,14 +4,15 @@ import { useEffect, useState } from "react"
 import { useFetcher, useNavigate } from "@remix-run/react"
 import { useTranslation } from "react-i18next"
 
+import Pagination from "../common-components/Pagination"
 import SortFilter from "../common-components/SortFilter"
 
 import SelectSectionCard from "./SelectSectionCard"
 
 import { routes } from "~/constants/route.constants"
+
 import { sortByOrder } from "~/interface/Interface"
 import type { TestSection, AddedSectionDetails } from "~/interface/Interface"
-import Pagination from "../common-components/Pagination"
 
 const SelectSections = ({
   sections,
@@ -33,8 +34,10 @@ const SelectSections = ({
   )
   const [sortBy, onSortChange] = useState("name")
   const [sectionsCurrentPage, setSectionsCurrentPage] = useState(1)
-  const [sectionsPageSize, setSectionsPageSize] = useState(5)
+  const [sectionsPageSize, setSectionsPageSize] = useState(3)
   const [pseudoDivs, setPseudoDivs] = useState([1])
+  let paginationSizeOptions = [3, 6, 12, 18, 24]
+
   const filterByType = [
     {
       name: "Name",
@@ -83,7 +86,6 @@ const SelectSections = ({
   useEffect(() => {
     const { data } = fetcher
     if (data) {
-      totalSections = data.getAllSectionsCount
       let sortedData = data.sections
       if (AllSelectedSections.length > 0) {
         sortedData = sortedData.map((section: TestSection) => {
@@ -92,6 +94,7 @@ const SelectSections = ({
           )
           return selected || section
         })
+        console.log("sorted Data with Time", sortedData)
       }
       updateSectionsList(sortedData)
     }
@@ -100,7 +103,7 @@ const SelectSections = ({
   return (
     <div className="flex w-full flex-1 flex-col gap-6 overflow-x-auto rounded-lg bg-white p-6 shadow">
       {sections.length > 0 ? (
-        <div className="flex flex-col gap-6 overflow-x-auto">
+        <div className="flex flex-col gap-6">
           {/* filters */}
           <SortFilter
             filterData={filterByType}
@@ -112,7 +115,7 @@ const SelectSections = ({
             showSelected={false}
           />
           {/* Sections list */}
-          <div className="flex flex-wrap gap-6">
+          <div className="flex h-80 flex-wrap gap-6 overflow-x-auto">
             {sections.map((section: TestSection & { count?: number }, i) => {
               return (
                 <SelectSectionCard
@@ -134,11 +137,11 @@ const SelectSections = ({
           </div>
           <Pagination
             currentPage={sectionsCurrentPage}
+            pageSizeOptions={paginationSizeOptions}
             onPageChange={(page) => setSectionsCurrentPage?.(page)}
             pageSize={sectionsPageSize}
             setPageSize={setSectionsPageSize}
             totalItems={totalSections!}
-            hideRange={true}
           />
         </div>
       ) : (
