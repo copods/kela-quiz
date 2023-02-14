@@ -109,13 +109,12 @@ export const loader: LoaderFunction = async ({ request, params }) => {
       if (Object.values(createSectionFieldError).some(Boolean)) {
         return json({ createSectionFieldError }, { status: 400 })
       }
-      const response = await handleAddTest(
+      return await handleAddTest(
         name as string,
         description as string,
         createdById,
         currentWorkspaceId
       )
-      return response
     }
 
     let sections: Array<Section> = []

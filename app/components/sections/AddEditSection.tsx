@@ -68,9 +68,9 @@ const AddEditSection = ({
   useEffect(() => {
     if (fetcherData?.createSectionFieldError || fetcherData?.errors?.title) {
       setSectionActionErrors({
-        title: fetcherData?.createSectionFieldError?.title || "",
-        description: fetcherData?.createSectionFieldError?.description || "",
-        duplicateTitle: fetcherData?.errors?.title || "",
+        title: fetcherData?.createSectionFieldError?.title,
+        description: fetcherData?.createSectionFieldError?.description,
+        duplicateTitle: fetcherData?.errors?.title,
       })
     }
   }, [fetcherData?.createSectionFieldError, setSectionActionErrors])
@@ -96,7 +96,6 @@ const AddEditSection = ({
     data?.filters,
     navigate,
     setOpen,
-
     t,
     fetcherData?.resp?.status,
   ])
