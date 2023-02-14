@@ -240,3 +240,14 @@ export async function createCandidate({
     return "error"
   }
 }
+
+export async function getAllCandidates() {
+  return await prisma.candidateTest.findMany({
+    where: { startedAt: null },
+    select: {
+      createdAt: true,
+      link: true,
+      candidate: { select: { email: true } },
+    },
+  })
+}
