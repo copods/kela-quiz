@@ -26,16 +26,16 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 export const action: ActionFunction = async ({ request, params }) => {
   const formData = await request.formData()
   const id = formData.get("id") as string
-  await getDeleteQuestionById(id)
+  return await getDeleteQuestionById(id)
 }
 export default function Section() {
   const { t } = useTranslation()
   const section = useActionData()
 
   useEffect(() => {
-    if (section === deleteQuestionStatus.deleted) {
+    if (section?.resp?.title === deleteQuestionStatus.deleted) {
       toast.success(t("statusCheck.deletedSuccess"))
-    } else if (section === deleteQuestionStatus.notDeleted) {
+    } else if (section?.resp?.title === deleteQuestionStatus.notDeleted) {
       toast.error(t("sectionsConstants.questionNotDeleted"), {
         toastId: "question-not-deleted",
       })

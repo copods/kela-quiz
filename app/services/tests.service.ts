@@ -259,10 +259,10 @@ export const getQuestionTypeFromTests = async () => {
  * @returns update the deleted field from false to true
  */
 export const getDeleteQuestionById = async (id: string) => {
-  await deleteQuestionById(id)
-    .then(() => {
+  return await deleteQuestionById(id)
+    .then((res) => {
       return json<ActionData>(
-        { resp: { title: "statusCheck.deletedSuccess", status: 200 } },
+        { resp: { title: res, status: 200 } },
         { status: 200 }
       )
     })
