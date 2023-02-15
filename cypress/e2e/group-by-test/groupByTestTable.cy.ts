@@ -34,7 +34,7 @@ describe("Test for GroupByTestTable, Result", () => {
     getGroupByTestId().click()
 
     // checks,table contains assessment name and having correct css and attributes
-    getGroupByItems().first().should("have.text", test1)
+    getGroupByItems().eq(1).should("have.text", test1)
     getGroupByItemTest()
       .contains(test1)
       .should("be.visible")
