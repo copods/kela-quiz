@@ -10,7 +10,7 @@ import invariant from "tiny-invariant"
 import SectionDetails from "~/components/sections/SectionDetails"
 import { deleteQuestionStatus } from "~/interface/Interface"
 import {
-  getDeleteQuestionById,
+  deleteTestQuestionById,
   getSectionDataById,
 } from "~/services/tests.service"
 
@@ -26,7 +26,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 export const action: ActionFunction = async ({ request, params }) => {
   const formData = await request.formData()
   const id = formData.get("id") as string
-  return await getDeleteQuestionById(id)
+  return await deleteTestQuestionById(id)
 }
 export default function Section() {
   const { t } = useTranslation()
