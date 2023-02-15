@@ -10,40 +10,29 @@ import invariant from "tiny-invariant"
 import AddQuestionInSection from "~/components/sections/add-question/AddQuestionInSection"
 import { routes } from "~/constants/route.constants"
 import {
-  getSectionById,
-  getQuestionType,
-  addQuestion,
-} from "~/models/sections.server"
-import { getUserWorkspaces } from "~/models/workspace.server"
+  getAddQuestion,
+  getQuestionTypeFromTests,
+  getSectionDataById,
+  getWorkspaces,
+} from "~/services/tests.service"
 import { getUserId, requireUserId } from "~/session.server"
 
 type LoaderData = {
-  sectionDetails: Awaited<ReturnType<typeof getSectionById>>
-  questionTypes: Awaited<ReturnType<typeof getQuestionType>>
-  workspaces: Awaited<ReturnType<typeof getUserWorkspaces>>
+  sectionDetails: Awaited<ReturnType<typeof getSectionDataById>>
+  questionTypes: Awaited<ReturnType<typeof getQuestionTypeFromTests>>
+  workspaces: Awaited<ReturnType<typeof getWorkspaces>>
   currentWorkspaceId: string
-}
-type ActionData = {
-  error?: {
-    data?: string
-    status?: number
-  }
-  success?: {
-    data?: string
-    addMoreQuestion?: boolean
-    status?: number
-  }
 }
 
 export const loader: LoaderFunction = async ({ request, params }) => {
-  const questionTypes = await getQuestionType()
+  const questionTypes = await getQuestionTypeFromTests()
   const userId = await getUserId(request)
   const currentWorkspaceId = params.workspaceId as string
-  const workspaces = await getUserWorkspaces(userId as string)
+  const workspaces = await getWorkspaces(userId as string)
 
   invariant(params.sectionId, "sectionId not found")
 
-  const sectionDetails = await getSectionById({ id: params.sectionId })
+  const sectionDetails = await getSectionDataById({ id: params.sectionId })
 
   if (!sectionDetails) {
     throw new Response("Not Found", { status: 404 })
@@ -60,8 +49,7 @@ export const action: ActionFunction = async ({ request }) => {
   const createdById = await requireUserId(request)
   const formData = await request.formData()
   const question = JSON.parse(formData.get("quesData") as string)
-  let ques
-  await addQuestion(
+  const response = await getAddQuestion(
     question.question.replace(
       /<p><br[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|]?><[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|]?p>/g,
       ""
@@ -71,26 +59,11 @@ export const action: ActionFunction = async ({ request }) => {
     question.questionTypeId,
     question.sectionId,
     createdById,
-    question.checkOrder
+    question.checkOrder,
+    question?.addMoreQuestion
   )
-    .then((res) => {
-      ques = json<ActionData>(
-        {
-          success: {
-            data: "statusCheck.questionAddedSuccess",
-            addMoreQuestion: question?.addMoreQuestion,
-          },
-        },
-        { status: 200 }
-      )
-    })
-    .catch((err) => {
-      ques = json<ActionData>(
-        { error: { data: "statusCheck.questionNotAdded" } },
-        { status: 400 }
-      )
-    })
-  return ques
+
+  return response
 }
 
 export default function AddQuestion() {
