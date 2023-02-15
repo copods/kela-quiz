@@ -246,7 +246,6 @@ export async function remindCandidate() {
   let time: string | number = Date.now() - 24 * 60 * 60 * 1000
   dayTime = new Date(dayTime).toISOString()
   time = new Date(time).toISOString()
-  console.log(dayTime, time)
 
   const candidates = await prisma.candidateTest.findMany({
     where: {
@@ -267,7 +266,7 @@ export async function remindCandidate() {
       candidate: { select: { email: true } },
     },
   })
-  console.log(candidates)
+
   if (candidates.length) {
     candidates.forEach((candidate) => {
       sendTestInviteMail(candidate.candidate.email, candidate.link as string)
