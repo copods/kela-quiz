@@ -35,6 +35,7 @@ const CandidateOtp = ({ email }: { email: string }) => {
   const submit = useSubmit()
   const resend = () => {
     submit({ resendOTP: "Resend" }, { method: "post" })
+    setCounter(60)
   }
 
   useEffect(() => {
@@ -80,24 +81,42 @@ const CandidateOtp = ({ email }: { email: string }) => {
   }
 
   const updateOTP = (index: number) => {
-    return (event: React.SyntheticEvent) => {
-      setOTPSegments([
-        ...OTPSegments.slice(0, index),
-        (event.target as HTMLInputElement).value,
-        ...OTPSegments.slice(index + 1),
-      ])
+    return (e: React.KeyboardEvent) => {
+      if (
+        e.key.match("^[0-9]*$") ||
+        e.key === "Backspace" ||
+        e.key === "ArrowLeft" ||
+        e.key === "ArrowRight"
+      ) {
+        if (e.key.match("^[0-9]*$") || e.key === "Backspace") {
+          setOTPSegments([
+            ...OTPSegments.slice(0, index),
+            e.key === "Backspace" ? "" : Number(e.key),
+            ...OTPSegments.slice(index + 1),
+          ])
+        }
 
-      // Focus on the submit button
-      if (index === 3) {
-        btnRef.current?.focus()
-      }
-      // Focus on the next input field
-      else if (index !== 3) {
-        const foncusOnNextField = document.querySelector(
-          `input[name=field-${index + 2}]`
-        )
-        // @ts-ignore
-        foncusOnNextField && foncusOnNextField.focus()
+        if (e.key === "ArrowLeft") {
+          const foncusOnNextField = document.querySelector<HTMLInputElement>(
+            `input[name=field-${index}]`
+          )
+          foncusOnNextField && foncusOnNextField.focus()
+        } else if (index === 3 && e.key !== "Backspace") {
+          const foncusOnNextField = document.querySelector<HTMLInputElement>(
+            `input[name=field-${index + 1}]`
+          )
+          foncusOnNextField && foncusOnNextField.focus()
+        } else if (index !== 3 && e.key !== "Backspace") {
+          const foncusOnNextField = document.querySelector<HTMLInputElement>(
+            `input[name=field-${index + 2}]`
+          )
+          foncusOnNextField && foncusOnNextField.focus()
+        } else {
+          const foncusOnNextField = document.querySelector<HTMLInputElement>(
+            `input[name=field-${index}]`
+          )
+          foncusOnNextField && foncusOnNextField.focus()
+        }
       }
     }
   }
@@ -114,7 +133,7 @@ const CandidateOtp = ({ email }: { email: string }) => {
         <div className="gap-4 text-base text-gray-500">
           {t("otpConstants.enterOTP")}{" "}
           <span className="font-medium text-primary" data-cy="email">
-            {email}{" "}
+            {email}
           </span>
         </div>
         <Form method="post">
@@ -129,7 +148,7 @@ const CandidateOtp = ({ email }: { email: string }) => {
                 className="flex h-12 w-16 justify-center rounded-md border border-gray-200 text-center drop-shadow-sm"
                 key={idx}
                 value={ele}
-                onInput={updateOTP(idx)}
+                onKeyUp={updateOTP(idx)}
                 tabIndex={idx + 1}
               />
             ))}
@@ -141,8 +160,7 @@ const CandidateOtp = ({ email }: { email: string }) => {
               : t("otpConstants.resendCodeIn")}
             {finalTime !== "00:00" ? (
               <span className="font-medium text-primary" data-cy="resendOTP">
-                {" "}
-                {finalTime}
+                {` ${finalTime}`}
               </span>
             ) : (
               <span
@@ -157,8 +175,7 @@ const CandidateOtp = ({ email }: { email: string }) => {
                 }}
                 role="button"
               >
-                {" "}
-                {t("otpConstants.resend")}
+                {` ${t("otpConstants.resend")}`}
               </span>
             )}
           </div>
@@ -174,6 +191,9 @@ const CandidateOtp = ({ email }: { email: string }) => {
               className="w-full"
               title={t("commonConstants.verify")}
               buttonText={t("commonConstants.verify")}
+              isDisabled={OTPSegments.some(
+                (ele) => ele === "" || ele === undefined || ele === null
+              )}
             />
           </div>
         </Form>

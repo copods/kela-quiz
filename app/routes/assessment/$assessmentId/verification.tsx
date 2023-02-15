@@ -49,10 +49,13 @@ export const action: ActionFunction = async ({ request, params }) => {
       assessmentId: params.assessmentId as string,
     })
       .then((res) => {
-        checkStatus = "success"
+        checkStatus = { value: "success", timestamp: new Date().getSeconds() }
       })
       .catch((err) => {
-        checkStatus = "commonError"
+        checkStatus = {
+          value: "commonError",
+          timestamp: new Date().getSeconds(),
+        }
       })
   }
   if (proceed) {
@@ -73,7 +76,7 @@ export const action: ActionFunction = async ({ request, params }) => {
       })
       return redirect(`/assessment/${params.assessmentId}/instructions`)
     } else {
-      return null
+      return { value: false, timestamp: new Date().getSeconds() }
     }
   }
   return checkStatus
@@ -82,15 +85,16 @@ const Verification = () => {
   const { t } = useTranslation()
   const loaderData = useLoaderData() as any
   const action = useActionData()
+  console.log(action)
   useEffect(() => {
-    if (action === "success") {
+    if (action?.value === "success") {
       toast.success(t("statusCheck.otpSent"))
-    } else if (action === "commonError") {
+    } else if (action?.value === "commonError") {
       toast.error(t("statusCheck.erroSendingOtp"))
-    } else if (action === null) {
+    } else if (action?.value === false) {
       toast.error(t("statusCheck.correctOtp"))
     }
-  }, [action, t])
+  }, [action?.timestamp, action?.value, t])
   return (
     <div className="flex h-full flex-col">
       <Header />
