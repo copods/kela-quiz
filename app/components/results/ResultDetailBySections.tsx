@@ -44,7 +44,7 @@ const ResultDetailBySections = () => {
         </div>
         <Divider height="1px" />
       </header>
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-6 pb-5">
         {sectionDetail.questions.map(
           (
             questions: SectionInCandidateTest & { question: Question },

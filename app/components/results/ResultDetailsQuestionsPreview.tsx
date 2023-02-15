@@ -99,11 +99,18 @@ const ResultDetailsQuestionsPreview = ({
             {`${t("candidateExamConstants.question")} ${index}`}
           </span>
           <div className="flex items-center gap-8">
+            <Chip text={""} variant={""} />
             <span className="rounded-52 border border-black px-3 py-1 text-xs font-medium text-gray-800">
               {/* {show chip according to type of question} */}
-              {questionType.value === QuestionTypes.text
-                ? t("resultConstants.text")
-                : t("sectionsConstants.mcq")}
+              {questionType.value === QuestionTypes.text ? (
+                <Chip text={t("resultConstants.text")} variant={""} />
+              ) : questionType.value === QuestionTypes.multipleChoice ? (
+                <Chip text={t("sectionsConstants.mcq")} variant={""} />
+              ) : (
+                questionType.value === QuestionTypes.singleChoice && (
+                  <Chip text={t("sectionsConstants.msq")} variant={""} />
+                )
+              )}
             </span>
             {/* {if question type is TEXT then
           CASE1: if ordered then show ordered front of question type
