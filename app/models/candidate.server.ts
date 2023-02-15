@@ -241,13 +241,36 @@ export async function createCandidate({
   }
 }
 
-export async function getAllCandidates() {
-  return await prisma.candidateTest.findMany({
-    where: { startedAt: null },
+export async function remindCandidate() {
+  let dayTime: string | number = Date.now() - 23 * 60 * 60 * 1000
+  let time: string | number = Date.now() - 24 * 60 * 60 * 1000
+  dayTime = new Date(dayTime).toISOString()
+  time = new Date(time).toISOString()
+  console.log(dayTime, time)
+
+  const candidates = await prisma.candidateTest.findMany({
+    where: {
+      AND: [
+        {
+          startedAt: null,
+        },
+        {
+          createdAt: {
+            lte: time,
+            gte: dayTime,
+          },
+        },
+      ],
+    },
     select: {
-      createdAt: true,
       link: true,
       candidate: { select: { email: true } },
     },
   })
+  console.log(candidates)
+  if (candidates.length) {
+    candidates.forEach((candidate) => {
+      sendTestInviteMail(candidate.candidate.email, candidate.link as string)
+    })
+  }
 }
