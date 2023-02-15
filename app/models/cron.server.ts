@@ -11,7 +11,7 @@ export function emailCronCaller() {
 
     candidates.forEach((candidate) => {
       const invitedAtTime = moment(candidate.createdAt).fromNow()
-      console.log(invitedAtTime)
+
       if (invitedAtTime.includes("23")) {
         sendTestInviteMail(candidate.candidate.email, candidate.link as string)
       }
