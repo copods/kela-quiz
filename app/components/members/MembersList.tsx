@@ -31,8 +31,12 @@ export default function MembersList({
   const [memberId, setMemberId] = useState("")
   const workspaceOwner = memberLoaderData.currentWorkspaceOwner.createdById
   const roleId = "cl4xvj89a000209jp4qtlfyii"
-  const userRoleId =
-    memberLoaderData.currentWorkspaceOwner.userWorkspace[0].roleId
+
+  const currentLoggedInUserData = memberLoaderData.users.filter(
+    (data: { id: any }) => {
+      return data.id === loggedInUser
+    }
+  )
 
   const NameDataCell = (data: User) => {
     return (
@@ -55,12 +59,12 @@ export default function MembersList({
   const deleteUser = (id: string) => {
     submit({ action: "delete", id: id }, { method: "post" })
   }
-  const MemberDelete = (data: User) => {
+  const MemberDelete = (data: User & { userWorkspace: UserWorkspace[] }) => {
     const openPopUp = () => {
       if (
         loggedInUser !== data.id &&
         workspaceOwner !== data.id &&
-        userRoleId === roleId
+        currentLoggedInUserData[0].userWorkspace[0]?.role.id === roleId
       ) {
         setMemberId(data.id)
         setOpenDeleteModal(!openDeleteModal)
@@ -78,7 +82,7 @@ export default function MembersList({
           }}
           icon="ic:outline-delete-outline"
           className={`h-6 w-6 ${
-            userRoleId !== roleId
+            currentLoggedInUserData[0].userWorkspace[0]?.role.id !== roleId
               ? "cursor-not-allowed text-red-200"
               : `cursor-pointer text-red-500 ${
                   (loggedInUser === data.id || workspaceOwner === data.id) &&
@@ -86,15 +90,16 @@ export default function MembersList({
                 } `
           }`}
         />
-        {memberId === data.id && userRoleId === roleId && (
-          <DeletePopUp
-            setOpen={setOpenDeleteModal}
-            open={openDeleteModal}
-            onDelete={() => deleteUser(data.id)}
-            deleteItem={`${data.firstName} ${data.lastName}`}
-            deleteItemType={t("members.member")}
-          />
-        )}
+        {memberId === data.id &&
+          currentLoggedInUserData[0].userWorkspace[0]?.role.id === roleId && (
+            <DeletePopUp
+              setOpen={setOpenDeleteModal}
+              open={openDeleteModal}
+              onDelete={() => deleteUser(data.id)}
+              deleteItem={`${data.firstName} ${data.lastName}`}
+              deleteItemType={t("members.member")}
+            />
+          )}
       </>
     )
   }

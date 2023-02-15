@@ -26,11 +26,8 @@ type ActionData = {
  * @param userId
  * @returns createdById
  */
-export async function getActiveWorkspaceOwner(
-  currentWorkspaceId: string,
-  userId?: string
-) {
-  return await getCurrentWorkspaceOwner(currentWorkspaceId, userId)
+export async function getActiveWorkspaceOwner(currentWorkspaceId: string) {
+  return await getCurrentWorkspaceOwner(currentWorkspaceId)
 }
 
 /**

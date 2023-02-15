@@ -95,6 +95,7 @@ export async function getAllUsers({
           role: {
             select: {
               name: true,
+              id: true,
             },
           },
         },
