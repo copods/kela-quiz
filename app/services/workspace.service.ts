@@ -23,7 +23,6 @@ type ActionData = {
 /**
  * Function will return current workspace owner id
  * @param currentWorkspaceId
- * @param userId
  * @returns createdById
  */
 export async function getActiveWorkspaceOwner(currentWorkspaceId: string) {
