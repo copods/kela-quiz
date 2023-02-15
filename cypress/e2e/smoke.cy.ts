@@ -66,7 +66,7 @@ describe("smoke tests", () => {
     getEmail().type("test@copods.co")
     getPassword().type("kQuiz@copods")
     cy.findByRole("button").click()
-    cy.wait(500)
+    cy.wait(1000)
     getPasswordError().should("have.text", "Incorrect email or password")
 
     // To clear fields
@@ -77,7 +77,7 @@ describe("smoke tests", () => {
     getEmail().type("copods.demo.sendgrid@gmail.com")
     getPassword().type("anuragpate")
     cy.findByRole("button").click()
-    cy.wait(500)
+    cy.wait(1000)
     getPasswordError().should("have.text", "Incorrect email or password")
 
     // To clear fields
