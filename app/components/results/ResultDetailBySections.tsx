@@ -34,8 +34,7 @@ const ResultDetailBySections = () => {
           </div>
           <div className="flex items-center gap-4">
             <h1 className="text-3xl font-semibold text-gray-900">
-              {sectionDetail.candidateTest?.candidate?.firstName}{" "}
-              {sectionDetail.candidateTest?.candidate?.lastName}
+              {`${sectionDetail.candidateTest?.candidate?.firstName} ${sectionDetail.candidateTest?.candidate?.lastName}`}
             </h1>
             <hr className="h-5 w-px bg-gray-300" />
             <h1 className="text-3xl font-semibold text-gray-900">

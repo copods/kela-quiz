@@ -30,7 +30,7 @@ const ResultDetailsQuestionsPreview = ({
   index: number
 }) => {
   const { t } = useTranslation()
-  function areEqualAsnwersArray(
+  function areEqualAnswers(
     textAnswer: CorrectAnswer[],
     correctAnswersArray: string[]
   ) {
@@ -96,7 +96,7 @@ const ResultDetailsQuestionsPreview = ({
       <div className="flex w-6/12 flex-col gap-6 p-6">
         <div className="flex w-full items-center justify-between gap-2">
           <span className="text-xl font-medium text-gray-800">
-            {t("candidateExamConstants.question")} {index}
+            {`${t("candidateExamConstants.question")} ${index}`}
           </span>
           <div className="flex items-center gap-8">
             <span className="rounded-52 border border-black px-3 py-1 text-xs font-medium text-gray-800">
@@ -141,8 +141,7 @@ const ResultDetailsQuestionsPreview = ({
                 !flag) ||
               (!checkOrder &&
                 questionType.value === QuestionTypes.text &&
-                areEqualAsnwersArray(textAnswer, correctAnswersArray) ===
-                  false) ||
+                areEqualAnswers(textAnswer, correctAnswersArray) === false) ||
               (!flag && questionType.value !== QuestionTypes.text) ? (
                 <Chip text={t("resultConstants.wrong")} variant={"error"} />
               ) : (
@@ -182,8 +181,7 @@ const ResultDetailsQuestionsPreview = ({
               !flag) ||
               (!checkOrder &&
                 questionType.value === QuestionTypes.text &&
-                areEqualAsnwersArray(textAnswer, correctAnswersArray) ===
-                  false) ||
+                areEqualAnswers(textAnswer, correctAnswersArray) === false) ||
               (!flag && questionType.value !== QuestionTypes.text)) && (
               <div className="flex flex-col gap-6">
                 <div className="flex flex-col gap-6">
