@@ -8,14 +8,15 @@ import { toast } from "react-toastify"
 import invariant from "tiny-invariant"
 
 import SectionDetails from "~/components/sections/SectionDetails"
-import { actions } from "~/constants/action.constants"
 import { deleteQuestionStatus } from "~/interface/Interface"
-import { getSectionById } from "~/models/sections.server"
-import { deleteQuestionById } from "~/models/sections.server"
+import {
+  getDeleteQuestionById,
+  getSectionDataById,
+} from "~/services/tests.service"
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   invariant(params.sectionId, "sectionId not found")
-  const sectionDetails = await getSectionById({ id: params.sectionId })
+  const sectionDetails = await getSectionDataById({ id: params.sectionId })
   if (!sectionDetails) {
     throw new Response("Not Found", { status: 404 })
   }
@@ -24,14 +25,8 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 }
 export const action: ActionFunction = async ({ request, params }) => {
   const formData = await request.formData()
-  const action = await formData.get("action")
   const id = formData.get("id") as string
-  if (action === actions.deleteQuestion) {
-    const deleteQuestion = await deleteQuestionById(id)
-    return deleteQuestion
-  }
-
-  return null
+  await getDeleteQuestionById(id)
 }
 export default function Section() {
   const { t } = useTranslation()
