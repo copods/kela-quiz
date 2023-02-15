@@ -138,7 +138,10 @@ const ResultDetailsQuestionsPreview = ({
       <div className="flex w-6/12 flex-col gap-6 p-6">
         {/* {checking if question is answered by candidate} */}
         <div className="flex items-center justify-between">
-          <h3 className="text-xl font-medium text-gray-800">
+          <h3
+            className="text-xl font-medium text-gray-800"
+            data-cy="givenAnswers"
+          >
             {t("resultConstants.givenAnswers")}
           </h3>
           {status === QuestionStatus.answered ? (
@@ -193,7 +196,10 @@ const ResultDetailsQuestionsPreview = ({
               <div className="flex flex-col gap-6">
                 <div className="flex flex-col gap-6">
                   <Divider height="1px" />
-                  <h3 className="text-xl font-medium text-gray-800">
+                  <h3
+                    className="text-xl font-medium text-gray-800"
+                    data-cy="correct-answer"
+                  >
                     {t("resultConstants.correctAnswer")}
                   </h3>
                 </div>
@@ -224,7 +230,9 @@ const ResultDetailsQuestionsPreview = ({
             )}
           </div>
         ) : (
-          <div className={optionContainer}>-</div>
+          <div className={optionContainer} data-cy="skipped-container">
+            -
+          </div>
         )}
       </div>
     </div>

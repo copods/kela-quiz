@@ -18,6 +18,7 @@ const ResultDetailBySections = () => {
       <header className="flex flex-col gap-6">
         <div className="flex gap-5">
           <div
+            data-cy="back-button"
             onClick={() => navigate(navigateToGraphPage)}
             className="flex items-center gap-4"
             role="button"
