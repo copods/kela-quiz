@@ -85,7 +85,6 @@ const Verification = () => {
   const { t } = useTranslation()
   const loaderData = useLoaderData() as any
   const action = useActionData()
-  console.log(action)
   useEffect(() => {
     if (action?.value === "success") {
       toast.success(t("statusCheck.otpSent"))
