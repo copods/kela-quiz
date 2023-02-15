@@ -22,7 +22,7 @@ const SelectSections = ({
   allSelectedSections,
 }: {
   sections: Array<TestSection>
-  setSections: (e: AddedSectionDetails, i: number) => void
+  setSections: (e: AddedSectionDetails, index: number) => void
   updateSectionsList: (e: SetStateAction<Array<TestSection>>) => void
   currentWorkspaceId: string
   totalSections: number
@@ -80,20 +80,26 @@ const SelectSections = ({
         method: "get",
       }
     )
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sortDirection, sortBy, sectionsCurrentPage, sectionsPageSize])
 
   useEffect(() => {
     const { data } = fetcher
-    if (data && allSelectedSections.length > 0) {
+    if (data) {
+      // if there is nothing in selected Array then we are updating the section Array
       let sortedData = data.sections
-      sortedData = sortedData.map((section: TestSection) => {
-        const selected = allSelectedSections.find(
-          (selected) => selected.id === section.id
-        )
-        return selected || section
-      })
+      if (allSelectedSections.length > 0) {
+        // if there is something in selected array then we are updating that section array here
+        sortedData = data.sections.map((section: TestSection) => {
+          const selected = allSelectedSections.find(
+            (selected) => selected.id === section.id
+          )
+          return selected || section
+        })
+      }
       updateSectionsList(sortedData)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fetcher])
 
   return (
@@ -112,16 +118,18 @@ const SelectSections = ({
           />
           {/* Sections list */}
           <div className="flex h-80 flex-wrap gap-6 overflow-x-auto">
-            {sections.map((section: TestSection & { count?: number }, i) => {
-              return (
-                <SelectSectionCard
-                  section={section}
-                  updateSection={(e) => setSections(e, i)}
-                  questionCount={section?.count}
-                  key={section.id}
-                />
-              )
-            })}
+            {sections.map(
+              (section: TestSection & { count?: number }, index) => {
+                return (
+                  <SelectSectionCard
+                    section={section}
+                    updateSection={(e) => setSections(e, index)}
+                    questionCount={section?.count}
+                    key={section.id}
+                  />
+                )
+              }
+            )}
             {pseudoDivs.map((temp) => {
               return (
                 <div

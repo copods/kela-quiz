@@ -51,7 +51,7 @@ export type ActionData = {
   }
 }
 
-export type formData = {
+export type createTestData = {
   name: string
   description: string
   sections: Array<{
@@ -384,7 +384,7 @@ export const getFIRSTSection = async (
 export const getCreateTest = async (
   createdById: string,
   workspaceId: string,
-  data: formData
+  data: createTestData
 ) => {
   return await createTest(createdById, workspaceId as string, data)
     .then((res) => {

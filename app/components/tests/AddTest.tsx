@@ -70,35 +70,37 @@ const AddTestComponent = ({
     []
   )
   const navigate = useNavigate()
-  const updateSection = (data: AddedSectionDetails, i: number) => {
+  const updateSection = (data: AddedSectionDetails, index: number) => {
     setSectionsCopy((sec) => {
-      sec[i] = { ...sec[i], ...data }
+      sec[index] = { ...sec[index], ...data }
       const isSelectedSectionExist = allSelectedSections.find(
-        (obj) => obj.id === sec[i].id
+        (obj) => obj.id === sec[index].id
       )
       if (!isSelectedSectionExist) {
         //Simply adding the selected Sections
         allSelectedSections.length > 0
-          ? setAllSelectedSections((oldArray) => [...oldArray, sec[i]])
-          : setAllSelectedSections([sec[i]])
+          ? setAllSelectedSections((oldArray) => [...oldArray, sec[index]])
+          : setAllSelectedSections([sec[index]])
       } else if (isSelectedSectionExist) {
         if (data.isSelected) {
           // updating the sections whenever we are updating question or Time
           allSelectedSections.forEach((selected: any) => {
             const targetData = data.target as keyof TestSection
-            if (selected.id === sec[i].id && targetData in selected) {
-              selected[targetData] = sec[i][targetData]
+            if (selected.id === sec[index].id && targetData in selected) {
+              selected[targetData] = sec[index][targetData]
             }
           })
         } else {
           // Removing the section when we click remove
-          const index = allSelectedSections?.indexOf(isSelectedSectionExist)
-          allSelectedSections.splice(index, 1)
+          const indexOfSectionToBeRemoved = allSelectedSections?.indexOf(
+            isSelectedSectionExist
+          )
+          allSelectedSections.splice(indexOfSectionToBeRemoved, 1)
         }
       }
       onSelectedSectionChange(
-        sec.filter((s) => {
-          return s.isSelected
+        sec.filter((section) => {
+          return section.isSelected
         })
       )
       return [...sec]

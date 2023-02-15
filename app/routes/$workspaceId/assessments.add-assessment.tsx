@@ -22,7 +22,7 @@ type LoaderData = {
   status: string
   workspaces: Awaited<ReturnType<typeof getUserWorkspaceService>>
   currentWorkspaceId: string
-  getAllSectionsCount: number
+  getAllSectionsCount: Awaited<ReturnType<typeof getAllSectionCount>>
 }
 
 export type ActionData = {
@@ -77,14 +77,10 @@ export const action: ActionFunction = async ({ request, params }) => {
   const createdById = await requireUserId(request)
   const workspaceId = params.workspaceId
   const formData = await request.formData()
-
   const data = formData.get("data")
+  const parsedData = JSON.parse(data as string)
 
-  return await getCreateTest(
-    createdById,
-    workspaceId as string,
-    JSON.parse(data as string)
-  )
+  return await getCreateTest(createdById, workspaceId as string, parsedData)
 }
 
 const AddTest = () => {
