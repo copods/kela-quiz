@@ -83,7 +83,7 @@ export const action: ActionFunction = async ({ request, params }) => {
 }
 const Verification = () => {
   const { t } = useTranslation()
-  const loaderData = useLoaderData() as any
+  const loaderData = useLoaderData()
   const action = useActionData()
   useEffect(() => {
     if (action?.value === "success") {

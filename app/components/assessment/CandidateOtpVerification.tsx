@@ -50,6 +50,14 @@ const CandidateOtp = ({ email }: { email: string }) => {
     }
   }, [OTPSegments, autoSubmit])
 
+  const getRequiredInputField = (index: number) => {
+    const requiredInputField = document.querySelector<HTMLInputElement>(
+      `input[name=field-${index}]`
+    )
+
+    requiredInputField && requiredInputField.focus()
+  }
+
   const onPaste = (event: React.ClipboardEvent) => {
     event.preventDefault()
     const pasted = event.clipboardData.getData("text/plain")
@@ -71,12 +79,7 @@ const CandidateOtp = ({ email }: { email: string }) => {
     }
     // Focus on the next input field
     else if (pasted.length < 4) {
-      const foncusOnNextField = document.querySelector(
-        `input[name=field-${pasted.length + 1}]`
-      )
-
-      // @ts-ignore
-      foncusOnNextField && foncusOnNextField.focus()
+      getRequiredInputField(pasted.length + 1)
     }
   }
 
@@ -97,25 +100,13 @@ const CandidateOtp = ({ email }: { email: string }) => {
         }
 
         if (e.key === "ArrowLeft") {
-          const foncusOnNextField = document.querySelector<HTMLInputElement>(
-            `input[name=field-${index}]`
-          )
-          foncusOnNextField && foncusOnNextField.focus()
+          getRequiredInputField(index)
         } else if (index === 3 && e.key !== "Backspace") {
-          const foncusOnNextField = document.querySelector<HTMLInputElement>(
-            `input[name=field-${index + 1}]`
-          )
-          foncusOnNextField && foncusOnNextField.focus()
+          getRequiredInputField(index + 1)
         } else if (index !== 3 && e.key !== "Backspace") {
-          const foncusOnNextField = document.querySelector<HTMLInputElement>(
-            `input[name=field-${index + 2}]`
-          )
-          foncusOnNextField && foncusOnNextField.focus()
+          getRequiredInputField(index + 2)
         } else {
-          const foncusOnNextField = document.querySelector<HTMLInputElement>(
-            `input[name=field-${index}]`
-          )
-          foncusOnNextField && foncusOnNextField.focus()
+          getRequiredInputField(index)
         }
       }
     }
