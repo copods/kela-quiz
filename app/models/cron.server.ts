@@ -5,8 +5,8 @@ import * as cron from "node-cron"
 import { getAllCandidates } from "./candidate.server"
 import { sendTestInviteMail } from "./sendgrid.servers"
 
-export function emailCronCaller() {
-  cron.schedule("0 */1 * * *", async function () {
+export function cronInitiator() {
+  cron.schedule("0 */23 * * *", async function () {
     const candidates = await getAllCandidates()
 
     candidates.forEach((candidate) => {
