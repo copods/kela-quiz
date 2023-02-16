@@ -61,7 +61,7 @@ const Question = () => {
       })
     }
     if (questionType === QuestionTypes.multipleChoice) {
-      setUserAnswer((val: any) => {
+      setUserAnswer((val: string[]) => {
         if (userAnswer.indexOf(event.id) === -1) {
           return [...val, event.id]
         } else {
