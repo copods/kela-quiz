@@ -58,7 +58,10 @@ describe("result details", () => {
     //checks chip-tag class
     getChipTag()
       .eq(0)
-      .should("have.class", "rounded-full text-xs font-medium undefined")
+      .should(
+        "have.class",
+        "rounded-full text-xs font-medium border rounded-52 border-black text-grey-800 px-3 py-1"
+      )
 
     //checks question have correct text and classes
     cy.get(".question")
