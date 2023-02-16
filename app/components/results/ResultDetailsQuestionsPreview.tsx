@@ -30,6 +30,10 @@ const ResultDetailsQuestionsPreview = ({
   index: number
 }) => {
   const { t } = useTranslation()
+
+  const correctAnswersArray = correctAnswer.map(
+    (correctAnswer: CorrectAnswer) => correctAnswer.answer
+  )
   function areEqualAnswers(
     textAnswer: CorrectAnswer[],
     correctAnswersArray: string[]
@@ -55,41 +59,33 @@ const ResultDetailsQuestionsPreview = ({
     // If all elements were same.
     return true
   }
-  const correctAnswersArray = correctAnswer.map(
-    (correctAnswer: CorrectAnswer) => correctAnswer.answer
-  )
   const optionContainer =
     "break-normal rounded-lg border border-solid border-gray-300 bg-gray-50 p-4 text-base font-normal text-gray-600"
 
-  const [flag, setFlag] = useState(false)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  function checkTextAnswer() {
-    for (const [index, value] of textAnswer.entries()) {
-      if (value !== (correctAnswer[index].answer as unknown as CorrectAnswer)) {
-        setFlag(false)
-        break
-      } else {
-        setFlag(true)
-        return
-      }
-    }
-  }
+  const [isCorretAnswer, setCorrectAnswer] = useState(true)
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  function checkMaq() {
-    for (const [index, value] of selectedOptions.entries()) {
-      if (value.id !== correctOption[index]?.id) {
-        setFlag(false)
-        break
-      } else {
-        setFlag(true)
+  useEffect(() => {
+    const checkTextAnswer = () => {
+      for (const [index, value] of textAnswer.entries()) {
+        if (
+          value !== (correctAnswer[index].answer as unknown as CorrectAnswer)
+        ) {
+          setCorrectAnswer(false)
+          break
+        }
       }
     }
-  }
-  useEffect(() => {
     checkTextAnswer()
-    checkMaq()
-  }, [checkMaq, checkTextAnswer])
+    const checkMcq = () => {
+      for (const [index, value] of selectedOptions.entries()) {
+        if (value.id !== correctOption[index]?.id) {
+          setCorrectAnswer(false)
+          break
+        }
+      }
+    }
+    checkMcq()
+  }, [correctAnswer, correctOption, selectedOptions, textAnswer])
 
   return (
     <div className="flex w-full rounded-lg border border-gray-300 bg-white">
@@ -99,16 +95,15 @@ const ResultDetailsQuestionsPreview = ({
             {`${t("candidateExamConstants.question")} ${index}`}
           </span>
           <div className="flex items-center gap-8">
-            <Chip text={""} variant={""} />
-            <span className="rounded-52 border border-black px-3 py-1 text-xs font-medium text-gray-800">
+            <span>
               {/* {show chip according to type of question} */}
               {questionType.value === QuestionTypes.text ? (
-                <Chip text={t("resultConstants.text")} variant={""} />
+                <Chip text={t("resultConstants.text")} variant={"default"} />
               ) : questionType.value === QuestionTypes.multipleChoice ? (
-                <Chip text={t("sectionsConstants.mcq")} variant={""} />
+                <Chip text={t("sectionsConstants.mcq")} variant={"default"} />
               ) : (
                 questionType.value === QuestionTypes.singleChoice && (
-                  <Chip text={t("sectionsConstants.msq")} variant={""} />
+                  <Chip text={t("sectionsConstants.msq")} variant={"default"} />
                 )
               )}
             </span>
@@ -148,11 +143,11 @@ const ResultDetailsQuestionsPreview = ({
             <>
               {(checkOrder &&
                 questionType.value === QuestionTypes.text &&
-                !flag) ||
+                !isCorretAnswer) ||
               (!checkOrder &&
                 questionType.value === QuestionTypes.text &&
                 areEqualAnswers(textAnswer, correctAnswersArray) === false) ||
-              (!flag && questionType.value !== QuestionTypes.text) ? (
+              (!isCorretAnswer && questionType.value !== QuestionTypes.text) ? (
                 <Chip text={t("resultConstants.wrong")} variant={"error"} />
               ) : (
                 <Chip text={t("resultConstants.correct")} variant={"success"} />
@@ -188,11 +183,12 @@ const ResultDetailsQuestionsPreview = ({
             </div>
             {((checkOrder &&
               questionType.value === QuestionTypes.text &&
-              !flag) ||
+              !isCorretAnswer) ||
               (!checkOrder &&
                 questionType.value === QuestionTypes.text &&
                 areEqualAnswers(textAnswer, correctAnswersArray) === false) ||
-              (!flag && questionType.value !== QuestionTypes.text)) && (
+              (!isCorretAnswer &&
+                questionType.value !== QuestionTypes.text)) && (
               <div className="flex flex-col gap-6">
                 <div className="flex flex-col gap-6">
                   <Divider height="1px" />
@@ -207,7 +203,7 @@ const ResultDetailsQuestionsPreview = ({
                 {correctOption.map((correctOption: Option, index: number) => {
                   return (
                     <div
-                      key={index}
+                      key={correctOption.id}
                       className={`ql-editor h-full ${optionContainer}`}
                       dangerouslySetInnerHTML={{
                         __html: `${correctOption?.option}`,

@@ -103,7 +103,7 @@ export async function verifyOTP({
   })
 
   //for testing purpose we are accepting manual OTP
-  if (otp === Number("0000")) {
+  if (process.env.PORT === "8811" && otp === Number("0000")) {
     return true
   }
 
