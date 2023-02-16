@@ -23,7 +23,7 @@ const Question = () => {
   )
 
   useEffect(() => {
-    const handleContextmenu = (e: any) => {
+    const handleContextmenu = (e: MouseEvent) => {
       e.preventDefault()
     }
     function ctrlShiftKey(e: KeyboardEvent, code: string) {
