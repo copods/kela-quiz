@@ -249,17 +249,11 @@ export async function remindCandidate() {
 
   const candidates = await prisma.candidateTest.findMany({
     where: {
-      AND: [
-        {
-          startedAt: null,
-        },
-        {
-          createdAt: {
-            lte: time,
-            gte: dayTime,
-          },
-        },
-      ],
+      startedAt: null,
+      createdAt: {
+        lte: time,
+        gte: dayTime,
+      },
     },
     select: {
       link: true,
