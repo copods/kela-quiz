@@ -15,12 +15,6 @@ import { redirect } from "@remix-run/server-runtime"
 import { useTranslation } from "react-i18next"
 import { toast } from "react-toastify"
 
-import {
-  getAllSectionsData,
-  handleAddSection,
-  handleDeleteSection,
-  handleEditSection,
-} from "helper/tests.helper"
 import Button from "~/components/common-components/Button"
 import EmptyStateComponent from "~/components/common-components/EmptyStateComponent"
 import AddEditSection from "~/components/sections/AddEditSection"
@@ -30,8 +24,15 @@ import { useCommonContext } from "~/context/Common.context"
 import { sortByOrder } from "~/interface/Interface"
 import type { sectionActionErrorsType } from "~/interface/Interface"
 import type { Section } from "~/interface/Interface"
-import { getAllTestsCounts, getFirstSection } from "~/models/sections.server"
-import { getUserWorkspaces } from "~/models/workspace.server"
+import {
+  getAllSectionCount,
+  getAllTestsData,
+  getWorkspaces,
+  handleAddTest,
+  handleDeleteTest,
+  handleEditTest,
+  getFIRSTSection,
+} from "~/services/tests.service"
 import { getUserId, requireUserId } from "~/session.server"
 
 export type ActionData = {
@@ -61,7 +62,7 @@ export type LoaderData = {
   selectedSectionId?: string
   filters: string
   status: string
-  workspaces: Awaited<ReturnType<typeof getUserWorkspaces>>
+  workspaces: Awaited<ReturnType<typeof getWorkspaces>>
   currentWorkspaceId: string
   testCurrentPage: number
   testItemsPerPage: number
@@ -82,7 +83,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     const sortOrder = query.get("sort") || sortByOrder.desc
     const userId = await getUserId(request)
     const currentWorkspaceId = params.workspaceId as string
-    const workspaces = await getUserWorkspaces(userId as string)
+    const workspaces = await getWorkspaces(userId as string)
 
     let sections: Array<Section> = []
     let status: string = ""
@@ -93,7 +94,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     // import function from helper which return number of sections based on
     // sort : sortBy ('name' / 'Created Date')
     // PaginationData : current page number (testCurrentPage) and number of items per page(testItemsPerPage)
-    await getAllSectionsData(
+    await getAllTestsData(
       sortBy,
       sortOrder,
       currentWorkspaceId as string,
@@ -104,7 +105,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     const selectedSectionId = params.sectionId
       ? params.sectionId?.toString()
       : undefined
-    const getAllTestsCount = await getAllTestsCounts(currentWorkspaceId)
+    const getAllTestsCount = await getAllSectionCount(currentWorkspaceId)
 
     if (!userId) return redirect(routes.signIn)
     const filters = `?sortBy=${sortBy}&sort=${sortOrder}&testPage=${testCurrentPage}&testItems=${testItemsPerPage}`
@@ -134,11 +135,29 @@ export const action: ActionFunction = async ({ request, params }) => {
     formData.get("addSection") ||
     formData.get("editSection") ||
     formData.get("deleteSection")
+  const validateTitle = (title: string) => {
+    if (typeof title !== "string" || title.length <= 0) {
+      return "statusCheck.nameIsReq"
+    }
+  }
 
+  const validateDescription = (description: string) => {
+    if (typeof description !== "string" || description.length <= 0) {
+      return "statusCheck.descIsReq"
+    }
+  }
   if (action === "sectionAdd") {
     const name = formData.get("name") as string
     const description = formData.get("description") as string
-    const response = await handleAddSection(
+    const createSectionFieldError = {
+      title: validateTitle(name),
+      description: validateDescription(description),
+    }
+
+    if (Object.values(createSectionFieldError).some(Boolean)) {
+      return json({ createSectionFieldError }, { status: 400 })
+    }
+    const response = await handleAddTest(
       name,
       description,
       createdById,
@@ -150,7 +169,14 @@ export const action: ActionFunction = async ({ request, params }) => {
     const name = formData.get("name") as string
     const description = formData.get("description") as string
     const id = formData.get("id") as string
-    const response = await handleEditSection(name, description, id)
+    const createSectionFieldError = {
+      title: validateTitle(name),
+      description: validateDescription(description),
+    }
+    if (Object.values(createSectionFieldError).some(Boolean)) {
+      return json({ createSectionFieldError }, { status: 400 })
+    }
+    const response = await handleEditTest(name, description, id)
     return response
   }
 
@@ -160,9 +186,9 @@ export const action: ActionFunction = async ({ request, params }) => {
     const totalItems = formData.get("totalSectionsOnCurrentPage") as string
     const sortFilter = formData.get("filter") as string
     const deleteSectionId = formData.get("id") as string
-    await handleDeleteSection(deleteSectionId)
+    await handleDeleteTest(deleteSectionId)
 
-    const sectionId = await getFirstSection(
+    const sectionId = await getFIRSTSection(
       sortFilter
         .split("&")
         .filter((res) => res.includes("sortBy"))[0]

@@ -2,10 +2,10 @@ import type { SetStateAction } from "react"
 import { useEffect } from "react"
 
 import { Icon } from "@iconify/react"
-import cuid from "cuid"
 import { useTranslation } from "react-i18next"
 import { toast } from "react-toastify"
 import { ClientOnly } from "remix-utils"
+import { v4 as uuidv4 } from "uuid"
 
 import Button from "~/components/common-components/Button"
 import Toggle from "~/components/form/Toggle"
@@ -61,12 +61,12 @@ export default function OptionForQuestion({
       if (options.length > 5) {
         return toast.error(t("statusCheck.maxOptions"), { toastId })
       }
-      setOptions([...options, { option: "", isCorrect: false, id: cuid() }])
+      setOptions([...options, { option: "", isCorrect: false, id: uuidv4() }])
     } else if (getQuestionType(selectedTypeOfQuestion) === QuestionTypes.text) {
       if (textCorrectAnswer.length > 5) {
         return toast.error(t("statusCheck.maxOptions"), { toastId })
       }
-      setTextCorrectAnswer([...textCorrectAnswer, { id: cuid(), answer: "" }])
+      setTextCorrectAnswer([...textCorrectAnswer, { id: uuidv4(), answer: "" }])
     }
   }
   const deleteOption = (index: number, id?: string) => {

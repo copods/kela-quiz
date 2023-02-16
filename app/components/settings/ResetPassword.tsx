@@ -194,7 +194,11 @@ const ResetPassword = ({
               type="submit"
               variant="primary-solid"
               className="h-11 w-full text-base"
-              isDisabled={!(newPassword && confirmPassword && password)}
+              isDisabled={
+                !(newPassword && confirmPassword && password) ||
+                newPassword != confirmPassword ||
+                newPassword.length < 8
+              }
               datacy="submit"
             />
           </div>

@@ -1,25 +1,21 @@
 import { json } from "@remix-run/node"
 import type { LoaderFunction } from "@remix-run/server-runtime"
 
-import { getAllSections } from "~/models/sections.server"
-import { getAllUsers } from "~/models/user.server"
-import { getUserWorkspaces } from "~/models/workspace.server"
+import { getAllUsersData, getWorkspaces } from "~/services/tests.service"
 import { getUserId } from "~/session.server"
 
 type LoaderData = {
-  sections: Awaited<ReturnType<typeof getAllSections>>
-  users: Awaited<ReturnType<typeof getAllUsers>>
-  workspaces: Awaited<ReturnType<typeof getUserWorkspaces>>
+  users: Awaited<ReturnType<typeof getAllUsersData>>
+  workspaces: Awaited<ReturnType<typeof getWorkspaces>>
   currentWorkspaceId: string
 }
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   const userId = await getUserId(request)
   const currentWorkspaceId = params.workspaceId as string
-  const workspaces = await getUserWorkspaces(userId as string)
-  const sections = await getAllSections("", "", currentWorkspaceId as string)
-  const users = await getAllUsers({ currentWorkspaceId })
-  return json<LoaderData>({ sections, users, workspaces, currentWorkspaceId })
+  const workspaces = await getWorkspaces(userId as string)
+  const users = await getAllUsersData({ currentWorkspaceId })
+  return json<LoaderData>({ users, workspaces, currentWorkspaceId })
 }
 
 export default function Section() {
