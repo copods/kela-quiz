@@ -242,17 +242,17 @@ export async function createCandidate({
 }
 
 export async function remindCandidate() {
-  let dayTime: string | number = Date.now() - 23 * 60 * 60 * 1000
-  let time: string | number = Date.now() - 24 * 60 * 60 * 1000
-  dayTime = new Date(dayTime).toISOString()
-  time = new Date(time).toISOString()
+  let minTime: string | number = Date.now() - 23 * 60 * 60 * 1000
+  let maxTime: string | number = Date.now() - 24 * 60 * 60 * 1000
+  minTime = new Date(minTime).toISOString()
+  maxTime = new Date(maxTime).toISOString()
 
   const candidates = await prisma.candidateTest.findMany({
     where: {
       startedAt: null,
       createdAt: {
-        lte: time,
-        gte: dayTime,
+        lte: maxTime,
+        gte: minTime,
       },
     },
     select: {
