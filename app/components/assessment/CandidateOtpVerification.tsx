@@ -84,26 +84,26 @@ const CandidateOtp = ({ email }: { email: string }) => {
   }
 
   const updateOTP = (index: number) => {
-    return (e: React.KeyboardEvent) => {
+    return (event: React.KeyboardEvent) => {
       if (
-        e.key.match("^[0-9]*$") ||
-        e.key === "Backspace" ||
-        e.key === "ArrowLeft" ||
-        e.key === "ArrowRight"
+        event.key.match("^[0-9]*$") ||
+        event.key === "Backspace" ||
+        event.key === "ArrowLeft" ||
+        event.key === "ArrowRight"
       ) {
-        if (e.key.match("^[0-9]*$") || e.key === "Backspace") {
+        if (event.key.match("^[0-9]*$") || event.key === "Backspace") {
           setOTPSegments([
             ...OTPSegments.slice(0, index),
-            e.key === "Backspace" ? "" : Number(e.key),
+            event.key === "Backspace" ? "" : Number(event.key),
             ...OTPSegments.slice(index + 1),
           ])
         }
 
-        if (e.key === "ArrowLeft") {
+        if (event.key === "ArrowLeft") {
           getRequiredInputField(index)
-        } else if (index === 3 && e.key !== "Backspace") {
+        } else if (index === 3 && event.key !== "Backspace") {
           getRequiredInputField(index + 1)
-        } else if (index !== 3 && e.key !== "Backspace") {
+        } else if (index !== 3 && event.key !== "Backspace") {
           getRequiredInputField(index + 2)
         } else {
           getRequiredInputField(index)
