@@ -69,7 +69,7 @@ export interface ActionData {
 }
 
 export interface CheckboxProps {
-  [x: string]: any
+  id?: string
   handleChange: React.ChangeEventHandler<HTMLInputElement>
   name?: string
   isChecked?: boolean
