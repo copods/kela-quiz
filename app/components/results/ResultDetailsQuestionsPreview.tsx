@@ -62,7 +62,7 @@ const ResultDetailsQuestionsPreview = ({
   const optionContainer =
     "break-normal rounded-lg border border-solid border-gray-300 bg-gray-50 p-4 text-base font-normal text-gray-600"
 
-  const [isCorretAnswer, setCorrectAnswer] = useState(true)
+  const [isCorrectAnswer, setCorrectAnswer] = useState(true)
 
   useEffect(() => {
     const checkTextAnswer = () => {
@@ -143,11 +143,12 @@ const ResultDetailsQuestionsPreview = ({
             <>
               {(checkOrder &&
                 questionType.value === QuestionTypes.text &&
-                !isCorretAnswer) ||
+                !isCorrectAnswer) ||
               (!checkOrder &&
                 questionType.value === QuestionTypes.text &&
                 areEqualAnswers(textAnswer, correctAnswersArray) === false) ||
-              (!isCorretAnswer && questionType.value !== QuestionTypes.text) ? (
+              (!isCorrectAnswer &&
+                questionType.value !== QuestionTypes.text) ? (
                 <Chip text={t("resultConstants.wrong")} variant={"error"} />
               ) : (
                 <Chip text={t("resultConstants.correct")} variant={"success"} />
@@ -183,11 +184,11 @@ const ResultDetailsQuestionsPreview = ({
             </div>
             {((checkOrder &&
               questionType.value === QuestionTypes.text &&
-              !isCorretAnswer) ||
+              !isCorrectAnswer) ||
               (!checkOrder &&
                 questionType.value === QuestionTypes.text &&
                 areEqualAnswers(textAnswer, correctAnswersArray) === false) ||
-              (!isCorretAnswer &&
+              (!isCorrectAnswer &&
                 questionType.value !== QuestionTypes.text)) && (
               <div className="flex flex-col gap-6">
                 <div className="flex flex-col gap-6">
