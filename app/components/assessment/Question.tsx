@@ -8,6 +8,7 @@ import CandidateQuestionFooter from "./CandidateQuestionFooter"
 import CandidateQuestionHeader from "./CandidateQuestionHeader"
 import CandidateQuestionStepper from "./CandidateQuestionStepper"
 
+import type { Option } from "~/interface/Interface"
 import { QuestionTypes } from "~/interface/Interface"
 
 const Question = () => {
@@ -18,14 +19,14 @@ const Question = () => {
       ? question.selectedOptions[0]?.id
       : questionType === QuestionTypes.text
       ? question?.answers
-      : question.selectedOptions.flatMap((option: any) => option.id)
+      : question.selectedOptions.flatMap((option: Option) => option.id)
   )
 
   useEffect(() => {
     const handleContextmenu = (e: any) => {
       e.preventDefault()
     }
-    function ctrlShiftKey(e: any, code: any) {
+    function ctrlShiftKey(e: KeyboardEvent, code: string) {
       return (
         (e.ctrlKey && e.shiftKey && e.code) ||
         (e.metaKey && e.shiftKey && e.code) === code

@@ -31,9 +31,9 @@ export const action: ActionFunction = async ({ params, request }) => {
   const skip = formData.get("skip")
   const nextSection = formData.get("nextSection")
   const endExam = formData.get("endExam")
-  const options: any = formData.getAll("option")
-  let answers: any = formData.getAll("answer")
-  const jumpQuestionId: any = formData.get("jumpQuestionId")
+  const options = formData.getAll("option")
+  let answers = formData.getAll("answer")
+  const jumpQuestionId = formData.get("jumpQuestionId")
 
   if (answers.length) {
     let flag = true
@@ -52,8 +52,8 @@ export const action: ActionFunction = async ({ params, request }) => {
 
   if (next || nextSection || endExam) {
     nextQuestionId = await saveAnswerSkipAndNext(
-      options,
-      answers,
+      options as string[],
+      answers as string[],
       params.sectionId as string,
       params.questionId as string,
       "next"
@@ -61,8 +61,8 @@ export const action: ActionFunction = async ({ params, request }) => {
   }
   if (previous) {
     nextQuestionId = await saveAnswerSkipAndNext(
-      options,
-      answers,
+      options as string[],
+      answers as string[],
       params.sectionId as string,
       params.questionId as string,
       "prev"

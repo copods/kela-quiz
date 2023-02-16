@@ -24,7 +24,7 @@ const CandidateOtp = ({ email }: { email: string }) => {
     var seconds = counter - minutes * 60
     var hours = Math.floor(counter / 3600)
     setCounter(counter - hours * 3600)
-    const timerValue = (timeUnit: any, pad: any, length: any) => {
+    const timerValue = (timeUnit: number, pad: string, length: number) => {
       return (new Array(length + 1).join(pad) + timeUnit).slice(-length)
     }
     const timer: string =
