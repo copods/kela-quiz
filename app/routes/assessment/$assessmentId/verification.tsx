@@ -81,16 +81,23 @@ export const action: ActionFunction = async ({ request, params }) => {
   }
   return checkStatus
 }
+
+const getToaster = () => {
+  const errorToaster = document.querySelector(".Toastify__toast--error")
+  const successToaster = document.querySelector(".Toastify__toast--success")
+  return { errorToaster, successToaster }
+}
+
 const Verification = () => {
   const { t } = useTranslation()
   const loaderData = useLoaderData()
   const action = useActionData()
   useEffect(() => {
-    if (action?.value === "success") {
+    if (action?.value === "success" && !getToaster().successToaster) {
       toast.success(t("statusCheck.otpSent"))
-    } else if (action?.value === "commonError") {
+    } else if (action?.value === "commonError" && !getToaster().errorToaster) {
       toast.error(t("statusCheck.erroSendingOtp"))
-    } else if (action?.value === false) {
+    } else if (action?.value === false && !getToaster().errorToaster) {
       toast.error(t("statusCheck.correctOtp"))
     }
   }, [action?.timestamp, action?.value, t])
