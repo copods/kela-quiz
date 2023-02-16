@@ -74,48 +74,17 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   try {
     // taking search params from URL
     const query = new URL(request.url).searchParams
-    const createdById = await requireUserId(request)
+
     // taking number of items per page and current page number from query
     const testItemsPerPage = Math.max(Number(query.get("testItems") || 5), 5) //To set the lower bound, so that minimum count will always be 1 for current page and 5 for items per page.
     const testCurrentPage = Math.max(Number(query.get("testPage") || 1), 1)
     // taking sortBy and order
     const sortBy = query.get("sortBy") || "name"
-    const action = query.get("addSection")
+
     const sortOrder = query.get("sort") || sortByOrder.desc
     const userId = await getUserId(request)
     const currentWorkspaceId = params.workspaceId as string
     const workspaces = await getWorkspaces(userId as string)
-
-    const validateTitle = (title: string) => {
-      if (typeof title !== "string" || title.length <= 0) {
-        return "statusCheck.nameIsReq"
-      }
-    }
-
-    const validateDescription = (description: string) => {
-      if (typeof description !== "string" || description.length <= 0) {
-        return "statusCheck.descIsReq"
-      }
-    }
-
-    if (action === "sectionAdd") {
-      const name = query.get("name")
-      const description = query.get("description")
-      const createSectionFieldError = {
-        title: validateTitle(name as string),
-        description: validateDescription(description as string),
-      }
-
-      if (Object.values(createSectionFieldError).some(Boolean)) {
-        return json({ createSectionFieldError }, { status: 400 })
-      }
-      return await handleAddTest(
-        name as string,
-        description as string,
-        createdById,
-        currentWorkspaceId
-      )
-    }
 
     let sections: Array<Section> = []
     let status: string = ""
@@ -160,6 +129,8 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 }
 
 export const action: ActionFunction = async ({ request, params }) => {
+  const createdById = await requireUserId(request)
+  const currentWorkspaceId = params.workspaceId as string
   const formData = await request.formData()
   const action =
     formData.get("addSection") ||
@@ -191,7 +162,24 @@ export const action: ActionFunction = async ({ request, params }) => {
     const response = await handleEditTest(name, description, id)
     return response
   }
+  if (action === "sectionAdd") {
+    const name = formData.get("name")
+    const description = formData.get("description")
+    const createSectionFieldError = {
+      title: validateTitle(name as string),
+      description: validateDescription(description as string),
+    }
 
+    if (Object.values(createSectionFieldError).some(Boolean)) {
+      return json({ createSectionFieldError }, { status: 400 })
+    }
+    return await handleAddTest(
+      name as string,
+      description as string,
+      createdById,
+      currentWorkspaceId
+    )
+  }
   if (action === "sectionDelete") {
     const currentPage = formData.get("currentPage") as string
     const pagePerItems = formData.get("pageSize") as string

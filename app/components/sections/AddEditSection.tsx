@@ -60,7 +60,7 @@ const AddEditSection = ({
   const addSection = (name: string, description: string) => {
     fetcher.submit(
       { addSection: "sectionAdd", name, description },
-      { method: "get" }
+      { method: "post" }
     )
   }
   const fetcherData = fetcher.data
