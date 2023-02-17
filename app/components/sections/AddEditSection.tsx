@@ -7,7 +7,6 @@ import { toast } from "react-toastify"
 import Button from "../common-components/Button"
 import DialogWrapper from "../common-components/Dialog"
 
-import type { sectionActionErrorsType } from "~/interface/Interface"
 import type { LoaderData } from "~/routes/$workspaceId/tests"
 import { trimValue } from "~/utils"
 
@@ -25,12 +24,20 @@ const AddEditSection = ({
   data,
 }: {
   open: boolean
-  sectionActionErrors?: sectionActionErrorsType
+  sectionActionErrors?: {
+    title?: string
+    description?: string
+    duplicateTitle?: string
+  }
   setSectionActionErrors: ({
     title,
     description,
     duplicateTitle,
-  }: sectionActionErrorsType) => void
+  }: {
+    title?: string
+    description?: string
+    duplicateTitle?: string
+  }) => void
 
   setOpen: (e: boolean) => void
   showErrorMessage?: boolean

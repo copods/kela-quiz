@@ -21,7 +21,6 @@ import AddEditSection from "~/components/sections/AddEditSection"
 import Sections from "~/components/sections/Sections"
 import { routes } from "~/constants/route.constants"
 import { sortByOrder } from "~/interface/Interface"
-import type { sectionActionErrorsType } from "~/interface/Interface"
 import type { Section } from "~/interface/Interface"
 import {
   getAllSectionCount,
@@ -46,7 +45,11 @@ export type ActionData = {
     name?: string
     description?: string
   }
-  createSectionFieldError?: sectionActionErrorsType
+  createSectionFieldError?: {
+    title?: string
+    description?: string
+    duplicateTitle?: string
+  }
   resp?: {
     status?: string
     check?: Date
