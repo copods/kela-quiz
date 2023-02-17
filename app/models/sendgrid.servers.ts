@@ -89,7 +89,11 @@ export async function sendMail(
   return "Done"
 }
 
-export async function sendTestInviteMail(email: string, link: string) {
+export async function sendTestInviteMail(
+  email: string,
+  link: string,
+  time?: string
+) {
   const to = email
   const from = "careers@copods.co"
   const subject = "Welcome to K - Quiz @ Copods"
@@ -120,7 +124,7 @@ export async function sendTestInviteMail(email: string, link: string) {
         <p style="text-align:left;color:#4B5563;margin:0;"><span>Hi,</span>
         </p>
         <br>
-        <p style="text-align:left;color:#4B5563;margin:0;">You have been invited by Copods for an online pre interview assessment test.
+        <p style="text-align:left;color:#4B5563;margin:0;">You have been invited by Copods for an online pre interview assessment of ${time}.
         </p>
         
 

@@ -5,6 +5,7 @@ import type { Question, User } from "@prisma/client"
 import { sendTestInviteMail } from "./sendgrid.servers"
 
 import { prisma } from "~/db.server"
+import { getHoursAndMinutes } from "~/utils"
 
 // inviting candidate
 const candidateTestLink = `${env.PUBLIC_URL}/assessment/`
@@ -120,8 +121,12 @@ export async function getTestById(id: string) {
   })
 }
 
-export async function sendMailToCandidate(email: string, link: string) {
-  sendTestInviteMail(email, link)
+export async function sendMailToCandidate(
+  email: string,
+  link: string,
+  time?: string
+) {
+  sendTestInviteMail(email, link, time)
 }
 
 async function createCandidateData({
@@ -138,6 +143,7 @@ async function createCandidateData({
     testId,
     candidateId: user.id,
   })
+  console.log(candidateTest)
   // generating random link
   const candidateLink = `${candidateTestLink}${candidateTest.id}`
   const updatedCandidateTest = await updateTestLink({
@@ -156,7 +162,40 @@ async function createCandidateData({
       })
     }
   }
-  await sendMailToCandidate(user?.email, updatedCandidateTest?.link as string)
+  const getUserTestTime = await prisma.test.findUnique({
+    where: { id: updatedCandidateTest.testId },
+    select: {
+      sections: {
+        select: {
+          timeInSeconds: true,
+        },
+      },
+    },
+  })
+
+  const getFormatedTime = () => {
+    const testTimeArr = getUserTestTime?.sections
+    let totalTimeInSeconds = 0
+
+    testTimeArr?.forEach((time) => {
+      totalTimeInSeconds = time.timeInSeconds + totalTimeInSeconds
+    })
+
+    const timeInHoursAndMinutes = getHoursAndMinutes(totalTimeInSeconds)
+
+    return `${
+      timeInHoursAndMinutes.h
+        ? timeInHoursAndMinutes.h +
+          (timeInHoursAndMinutes.h < 2 ? "Hour" : "Hours")
+        : ""
+    } ${timeInHoursAndMinutes.m ? timeInHoursAndMinutes.m + "Minutes" : ""}`
+  }
+
+  await sendMailToCandidate(
+    user?.email,
+    updatedCandidateTest?.link as string,
+    getFormatedTime() as string
+  )
 }
 // Resend a test link to user
 export async function resendTestLink({
