@@ -50,22 +50,35 @@ const Question = () => {
     }
   }, [])
 
-  const onChangeHandle = (event: any, index?: number) => {
+  const onChangeHandle = ({
+    event,
+    index,
+    option,
+  }: {
+    event?: React.ChangeEvent<HTMLInputElement>
+    index?: number
+    option?: {
+      isCorrect: boolean
+      id: string
+      option: string
+      rightAnswer: boolean
+    }
+  }) => {
     if (questionType === QuestionTypes.singleChoice) {
-      setUserAnswer(event.id)
+      setUserAnswer(option?.id)
     }
     if (questionType === QuestionTypes.text) {
-      setUserAnswer((oldVal: Array<string>) => {
-        oldVal[index || 0] = event.target.value
+      setUserAnswer((oldVal: (string | undefined)[]) => {
+        oldVal[index || 0] = event?.target.value
         return [...oldVal]
       })
     }
     if (questionType === QuestionTypes.multipleChoice) {
       setUserAnswer((val: string[]) => {
-        if (userAnswer.indexOf(event.id) === -1) {
-          return [...val, event.id]
+        if (userAnswer.indexOf(option?.id) === -1) {
+          return [...val, option?.id]
         } else {
-          val.splice(userAnswer.indexOf(event.id), 1)
+          val.splice(userAnswer.indexOf(option?.id), 1)
           return [...val]
         }
       })
@@ -133,7 +146,7 @@ const Question = () => {
                       option: string
                       rightAnswer: boolean
                     },
-                    i: number
+                    index: number
                   ) => {
                     return (
                       <label
@@ -151,7 +164,7 @@ const Question = () => {
                             value={option.id}
                             checked={option.id === userAnswer}
                             onChange={() => {
-                              onChangeHandle(option)
+                              onChangeHandle({ option })
                             }}
                             className="mt-7"
                           />
@@ -161,7 +174,9 @@ const Question = () => {
                             name="option"
                             isChecked={userAnswer.indexOf(option.id) !== -1}
                             className="mt-7"
-                            handleChange={() => onChangeHandle(option, i)}
+                            handleChange={() =>
+                              onChangeHandle({ index, option })
+                            }
                           />
                         )}
                         <div className="ql-editor w-full bg-inherit py-5">
@@ -186,7 +201,7 @@ const Question = () => {
                           id={answer.id}
                           value={userAnswer[index]}
                           rows={4}
-                          onChange={() => onChangeHandle(event, index)}
+                          onChange={() => onChangeHandle({ index })}
                           className="w-full rounded-lg border border-gray-200 bg-white p-5"
                         />
                       </div>
