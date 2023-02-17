@@ -33,7 +33,7 @@ export default function MembersList({
   const roleId = "cl4xvj89a000209jp4qtlfyii"
 
   const currentLoggedInUserData = memberLoaderData.users.filter(
-    (data: { id: any }) => {
+    (data: { id: string }) => {
       return data.id === loggedInUser
     }
   )
