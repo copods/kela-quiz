@@ -3,13 +3,13 @@ const Chip = ({
   variant = "default",
 }: {
   text: string
-  variant: string
+  variant?: string
 }) => {
   const variantMap: any = {
-    success: "bg-green-100 text-green-800",
-    error: "bg-red-100 text-red-800",
-    warning: "bg-yellow-100 text-yellow-800",
-    default: "border rounded-52 border-black text-grey-800",
+    success: "border border-green-100 bg-green-100 text-green-800",
+    error: "border border-red-100 bg-red-100 text-red-800",
+    warning: "border border-yellow-100 bg-yellow-100 text-yellow-800",
+    default: "border border-black text-grey-800",
   }
   return (
     <span

@@ -65,27 +65,19 @@ const ResultDetailsQuestionsPreview = ({
   const [isCorrectAnswer, setCorrectAnswer] = useState(true)
 
   useEffect(() => {
-    const checkTextAnswer = () => {
-      for (const [index, value] of textAnswer.entries()) {
-        if (
-          value !== (correctAnswer[index].answer as unknown as CorrectAnswer)
-        ) {
-          setCorrectAnswer(false)
-          break
-        }
+    for (const [index, value] of textAnswer.entries()) {
+      if (value !== (correctAnswer[index].answer as unknown as CorrectAnswer)) {
+        setCorrectAnswer(false)
+        break
       }
     }
-    checkTextAnswer()
-    const checkMcq = () => {
-      for (const [index, value] of selectedOptions.entries()) {
-        if (value.id !== correctOption[index]?.id) {
-          setCorrectAnswer(false)
-          break
-        }
+    for (const [index, value] of selectedOptions.entries()) {
+      if (value.id !== correctOption[index]?.id) {
+        setCorrectAnswer(false)
+        break
       }
     }
-    checkMcq()
-  }, [correctAnswer, correctOption, selectedOptions, textAnswer])
+  }, [])
 
   return (
     <div className="flex w-full rounded-lg border border-gray-300 bg-white">
@@ -98,12 +90,12 @@ const ResultDetailsQuestionsPreview = ({
             <span>
               {/* {show chip according to type of question} */}
               {questionType.value === QuestionTypes.text ? (
-                <Chip text={t("resultConstants.text")} variant={"default"} />
+                <Chip text={t("resultConstants.text")} />
               ) : questionType.value === QuestionTypes.multipleChoice ? (
-                <Chip text={t("sectionsConstants.mcq")} variant={"default"} />
+                <Chip text={t("sectionsConstants.mcq")} />
               ) : (
                 questionType.value === QuestionTypes.singleChoice && (
-                  <Chip text={t("sectionsConstants.msq")} variant={"default"} />
+                  <Chip text={t("sectionsConstants.msq")} />
                 )
               )}
             </span>
