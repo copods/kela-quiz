@@ -160,7 +160,7 @@ describe("Test for settings", () => {
     getOldPassword().type("password")
     getNewPassword().type("newPassword")
     getConfirmNewPassword().type("confirmPassword")
-    getSubmitBtn().should("have.class", "hover:bg-primaryHover")
+    getSubmitBtn().should("be.disabled")
 
     // To check submit button text
     getSubmitBtn().should("have.text", resetPas)
@@ -173,7 +173,6 @@ describe("Test for settings", () => {
     getOldPassword().clear().type("password")
     getNewPassword().clear().type("newPassword")
     getConfirmNewPassword().clear().type("confirmPassword")
-    getSubmitBtn().click()
     getConfirmPasswordError().should("have.class", "text-red-700")
 
     // To check if old password is not matched user sees error
