@@ -84,7 +84,7 @@ describe("result details", () => {
       .within(() => {
         getChipTag().should(
           "have.class",
-          "rounded-full py-1 px-3 text-xs font-medium border border-yellow-100 bg-yellow-100 text-yellow-800"
+          "rounded-full px-3 py-1 text-xs font-medium border border-yellow-100 bg-yellow-100 text-yellow-800"
         )
       })
 
@@ -113,7 +113,7 @@ describe("result details", () => {
       .within(() => {
         getChipTag().should(
           "have.class",
-          "rounded-full py-1 px-3 text-xs font-medium border border-green-100 bg-green-100 text-green-800"
+          "rounded-full px-3 py-1 text-xs font-medium border border-green-100 bg-green-100 text-green-800"
         )
       })
 
@@ -127,7 +127,7 @@ describe("result details", () => {
       .within(() => {
         getChipTag().should(
           "have.class",
-          "rounded-full py-1 px-3 text-xs font-medium border border-red-100 bg-red-100 text-red-800"
+          "rounded-full px-3 py-1 text-xs font-medium border border-red-100 bg-red-100 text-red-800"
         )
       })
 
