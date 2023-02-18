@@ -60,7 +60,7 @@ describe("result details", () => {
       .eq(0)
       .should(
         "have.class",
-        "rounded-full text-xs font-medium border rounded-52 border-black text-grey-800 px-3 py-1"
+        "rounded-full px-3 py-1 text-xs font-medium border border-black text-grey-800"
       )
 
     //checks question have correct text and classes
