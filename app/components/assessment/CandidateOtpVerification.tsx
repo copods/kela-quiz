@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next"
 import Button from "../common-components/Button"
 
 import otpImage from "~/../public/assets/otp.svg"
+import { keyboardKeys } from "~/interface/Interface"
 
 const CandidateOtp = ({ email }: { email: string }) => {
   const { t } = useTranslation()
@@ -87,23 +88,26 @@ const CandidateOtp = ({ email }: { email: string }) => {
     return (event: React.KeyboardEvent) => {
       if (
         event.key.match("^[0-9]*$") ||
-        event.key === "Backspace" ||
-        event.key === "ArrowLeft" ||
-        event.key === "ArrowRight"
+        event.key === keyboardKeys.backspace ||
+        event.key === keyboardKeys.arrowLeft ||
+        event.key === keyboardKeys.arrowRight
       ) {
-        if (event.key.match("^[0-9]*$") || event.key === "Backspace") {
+        if (
+          event.key.match("^[0-9]*$") ||
+          event.key === keyboardKeys.backspace
+        ) {
           setOTPSegments([
             ...OTPSegments.slice(0, index),
-            event.key === "Backspace" ? "" : Number(event.key),
+            event.key === keyboardKeys.backspace ? "" : Number(event.key),
             ...OTPSegments.slice(index + 1),
           ])
         }
 
-        if (event.key === "ArrowLeft") {
+        if (event.key === keyboardKeys.arrowLeft) {
           getRequiredInputField(index)
-        } else if (index === 3 && event.key !== "Backspace") {
+        } else if (index === 3 && event.key !== keyboardKeys.backspace) {
           getRequiredInputField(index + 1)
-        } else if (index !== 3 && event.key !== "Backspace") {
+        } else if (index !== 3 && event.key !== keyboardKeys.backspace) {
           getRequiredInputField(index + 2)
         } else {
           getRequiredInputField(index)

@@ -8,6 +8,7 @@ import { toast } from "react-toastify"
 
 import CandidateOtp from "~/components/assessment/CandidateOtpVerification"
 import Header from "~/components/assessment/Header"
+import { checks } from "~/interface/Interface"
 import {
   checkIfTestLinkIsValidAndRedirect,
   getCandidateEmailByCandidateId,
@@ -93,9 +94,12 @@ const Verification = () => {
   const loaderData = useLoaderData()
   const action = useActionData()
   useEffect(() => {
-    if (action?.value === "success" && !getToaster().successToaster) {
+    if (action?.value === checks.success && !getToaster().successToaster) {
       toast.success(t("statusCheck.otpSent"))
-    } else if (action?.value === "commonError" && !getToaster().errorToaster) {
+    } else if (
+      action?.value === checks.commonError &&
+      !getToaster().errorToaster
+    ) {
       toast.error(t("statusCheck.erroSendingOtp"))
     } else if (action?.value === false && !getToaster().errorToaster) {
       toast.error(t("statusCheck.correctOtp"))
