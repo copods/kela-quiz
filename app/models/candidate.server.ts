@@ -124,7 +124,7 @@ export async function getTestById(id: string) {
 export async function sendMailToCandidate(
   email: string,
   link: string,
-  time?: string
+  time: string
 ) {
   sendTestInviteMail(email, link, time)
 }
@@ -143,7 +143,7 @@ async function createCandidateData({
     testId,
     candidateId: user.id,
   })
-  console.log(candidateTest)
+
   // generating random link
   const candidateLink = `${candidateTestLink}${candidateTest.id}`
   const updatedCandidateTest = await updateTestLink({
@@ -226,7 +226,41 @@ export async function resendTestLink({
           linkSentOn: new Date(),
         },
       })
-      await sendMailToCandidate(candidate?.email as string, candidateLink)
+
+      const getUserTestTime = await prisma.test.findUnique({
+        where: { id: testId },
+        select: {
+          sections: {
+            select: {
+              timeInSeconds: true,
+            },
+          },
+        },
+      })
+
+      const getFormatedTime = () => {
+        const testTimeArr = getUserTestTime?.sections
+        let totalTimeInSeconds = 0
+
+        testTimeArr?.forEach((time) => {
+          totalTimeInSeconds = time.timeInSeconds + totalTimeInSeconds
+        })
+
+        const timeInHoursAndMinutes = getHoursAndMinutes(totalTimeInSeconds)
+
+        return `${
+          timeInHoursAndMinutes.h
+            ? timeInHoursAndMinutes.h +
+              (timeInHoursAndMinutes.h < 2 ? "Hour" : "Hours")
+            : ""
+        } ${timeInHoursAndMinutes.m ? timeInHoursAndMinutes.m + "Minutes" : ""}`
+      }
+
+      await sendMailToCandidate(
+        candidate?.email as string,
+        candidateLink,
+        getFormatedTime() as string
+      )
       return "created"
     } else {
       return "End Test"
@@ -296,13 +330,46 @@ export async function remindCandidate() {
     },
     select: {
       link: true,
-      candidate: { select: { email: true } },
+      test: {
+        select: {
+          sections: {
+            select: { timeInSeconds: true },
+          },
+        },
+      },
+      candidate: {
+        select: {
+          email: true,
+        },
+      },
     },
   })
 
   if (candidates.length) {
     candidates.forEach((candidate) => {
-      sendTestInviteMail(candidate.candidate.email, candidate.link as string)
+      const getFormatedTime = () => {
+        const testTimeArr = candidate.test?.sections
+        let totalTimeInSeconds = 0
+
+        testTimeArr?.forEach((time) => {
+          totalTimeInSeconds = time.timeInSeconds + totalTimeInSeconds
+        })
+
+        const timeInHoursAndMinutes = getHoursAndMinutes(totalTimeInSeconds)
+
+        return `${
+          timeInHoursAndMinutes.h
+            ? timeInHoursAndMinutes.h +
+              (timeInHoursAndMinutes.h < 2 ? "Hour" : "Hours")
+            : ""
+        } ${timeInHoursAndMinutes.m ? timeInHoursAndMinutes.m + "Minutes" : ""}`
+      }
+
+      sendTestInviteMail(
+        candidate.candidate.email,
+        candidate.link as string,
+        getFormatedTime() as string
+      )
     })
   }
 }
