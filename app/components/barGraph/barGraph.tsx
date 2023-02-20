@@ -95,7 +95,6 @@ const BarGraph = ({
       shadow: true,
       padding: 15,
       followTouchMove: true,
-      // {NOTE: @anurag}
       formatter: function (): any {
         return this.points?.reduce(
           (

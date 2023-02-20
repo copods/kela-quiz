@@ -32,7 +32,7 @@ const TestDetails = () => {
           name={testPreview.name}
           description={testPreview.description}
           selectedSections={testPreview.sections}
-          onSelectedSectionChange={function (): void {
+          onSelectedSectionChange={function (e: any): void {
             throw new Error("Function not implemented.")
           }}
           isPreviewEditable={false}
