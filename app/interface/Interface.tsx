@@ -189,7 +189,7 @@ export interface SectionInTest {
   test: Test
 }
 
-export type Option = {
+export interface Option {
   id: string
   option: string
   coInQuestionId?: string

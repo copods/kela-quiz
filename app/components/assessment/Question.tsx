@@ -8,7 +8,8 @@ import CandidateQuestionFooter from "./CandidateQuestionFooter"
 import CandidateQuestionHeader from "./CandidateQuestionHeader"
 import CandidateQuestionStepper from "./CandidateQuestionStepper"
 
-import { QuestionTypes, Option } from "~/interface/Interface"
+import type { Option } from "~/interface/Interface"
+import { QuestionTypes } from "~/interface/Interface"
 
 const Question = () => {
   const { question } = useLoaderData()
@@ -49,28 +50,17 @@ const Question = () => {
     }
   }, [])
 
-  const onChangeHandle = (
-    event: React.ChangeEvent<HTMLTextAreaElement> | Option,
-    index?: number
-  ) => {
-    if (
-      questionType === QuestionTypes.singleChoice &&
-      event instanceof Option
-    ) {
+  const onChangeHandle = (event: any, index?: number) => {
+    if (questionType === QuestionTypes.singleChoice) {
       setUserAnswer(event.id)
     }
     if (questionType === QuestionTypes.text) {
       setUserAnswer((oldVal: Array<string>) => {
-        oldVal[index || 0] = (
-          event as React.ChangeEvent<HTMLTextAreaElement>
-        ).target.value
+        oldVal[index || 0] = event.target.value
         return [...oldVal]
       })
     }
-    if (
-      questionType === QuestionTypes.multipleChoice &&
-      event instanceof Option
-    ) {
+    if (questionType === QuestionTypes.multipleChoice) {
       setUserAnswer((val: string[]) => {
         if (userAnswer.indexOf(event.id) === -1) {
           return [...val, event.id]
