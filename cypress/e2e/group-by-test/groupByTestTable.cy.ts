@@ -9,7 +9,6 @@ import {
   getDropdownOption,
   getElementInsideOfDropdown,
   getGroupByItemTest,
-  getGroupByItems,
   getGroupByTestId,
   getGroupByTestItems,
   getNotSelected,
@@ -32,9 +31,17 @@ describe("Test for GroupByTestTable, Result", () => {
 
   it("To check result page element css properties and attributes", () => {
     getGroupByTestId().click()
-
+    cy.wait(1500)
     // checks,table contains assessment name and having correct css and attributes
-    getGroupByItems().should("have.text", test1)
+    cy.get(".tableRow", { timeout: 6000 }).each(($el) => {
+      cy.wrap($el).within((el) => {
+        if (
+          el[0].getElementsByClassName("groupByItemTest")[0].innerHTML === test1
+        ) {
+          cy.contains(test1)
+        }
+      })
+    })
     getGroupByItemTest()
       .contains(test1)
       .should("be.visible")

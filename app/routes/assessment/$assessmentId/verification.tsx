@@ -8,6 +8,7 @@ import { toast } from "react-toastify"
 
 import CandidateOtp from "~/components/assessment/CandidateOtpVerification"
 import Header from "~/components/assessment/Header"
+import { checks } from "~/interface/Interface"
 import {
   checkIfTestLinkIsValidAndRedirect,
   getCandidateEmailByCandidateId,
@@ -49,10 +50,13 @@ export const action: ActionFunction = async ({ request, params }) => {
       assessmentId: params.assessmentId as string,
     })
       .then((res) => {
-        checkStatus = "success"
+        checkStatus = { value: "success", timestamp: new Date().getSeconds() }
       })
       .catch((err) => {
-        checkStatus = "commonError"
+        checkStatus = {
+          value: "commonError",
+          timestamp: new Date().getSeconds(),
+        }
       })
   }
   if (proceed) {
@@ -73,24 +77,34 @@ export const action: ActionFunction = async ({ request, params }) => {
       })
       return redirect(`/assessment/${params.assessmentId}/instructions`)
     } else {
-      return null
+      return { value: false, timestamp: new Date().getSeconds() }
     }
   }
   return checkStatus
 }
+
+const getToaster = () => {
+  const errorToaster = document.querySelector(".Toastify__toast--error")
+  const successToaster = document.querySelector(".Toastify__toast--success")
+  return { errorToaster, successToaster }
+}
+
 const Verification = () => {
   const { t } = useTranslation()
   const loaderData = useLoaderData()
   const action = useActionData()
   useEffect(() => {
-    if (action === "success") {
+    if (action?.value === checks.success && !getToaster().successToaster) {
       toast.success(t("statusCheck.otpSent"))
-    } else if (action === "commonError") {
+    } else if (
+      action?.value === checks.commonError &&
+      !getToaster().errorToaster
+    ) {
       toast.error(t("statusCheck.erroSendingOtp"))
-    } else if (action === null) {
+    } else if (action?.value === false && !getToaster().errorToaster) {
       toast.error(t("statusCheck.correctOtp"))
     }
-  }, [action, t])
+  }, [action?.timestamp, action?.value, t])
   return (
     <div className="flex h-full flex-col">
       <Header />
