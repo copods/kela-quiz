@@ -8,8 +8,7 @@ import CandidateQuestionFooter from "./CandidateQuestionFooter"
 import CandidateQuestionHeader from "./CandidateQuestionHeader"
 import CandidateQuestionStepper from "./CandidateQuestionStepper"
 
-import { Option } from "~/interface/Interface"
-import { QuestionTypes } from "~/interface/Interface"
+import { QuestionTypes, Option } from "~/interface/Interface"
 
 const Question = () => {
   const { question } = useLoaderData()
