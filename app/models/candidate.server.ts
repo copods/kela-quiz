@@ -5,10 +5,32 @@ import type { Question, User } from "@prisma/client"
 import { sendTestInviteMail } from "./sendgrid.servers"
 
 import { prisma } from "~/db.server"
-import { getFormatedTime } from "~/utils"
+import { getHoursAndMinutes } from "~/utils"
 
 // inviting candidate
 const candidateTestLink = `${env.PUBLIC_URL}/assessment/`
+
+const getFormatedTime = (testTimeArray: Array<{ timeInSeconds: number }>) => {
+  let totalTimeInSeconds = 0
+
+  testTimeArray?.forEach((time: { timeInSeconds: number }) => {
+    totalTimeInSeconds = time.timeInSeconds + totalTimeInSeconds
+  })
+
+  const timeInHoursAndMinutes = getHoursAndMinutes(totalTimeInSeconds)
+
+  return `${
+    timeInHoursAndMinutes.h
+      ? timeInHoursAndMinutes.h +
+        (timeInHoursAndMinutes.h <= 1 ? "Hour" : "Hours")
+      : ""
+  } ${
+    timeInHoursAndMinutes.m
+      ? timeInHoursAndMinutes.m +
+        (timeInHoursAndMinutes.m <= 1 ? "Minute" : "Minutes")
+      : ""
+  }`
+}
 
 export async function createIndividualCandidate({
   email,

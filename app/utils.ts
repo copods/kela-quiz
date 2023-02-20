@@ -276,27 +276,3 @@ export const getHoursAndMinutes = (totalSeconds: number) => {
 
   return { h: hours, m: minutes, s: seconds }
 }
-
-export const getFormatedTime = (
-  testTimeArray: Array<{ timeInSeconds: number }>
-) => {
-  let totalTimeInSeconds = 0
-
-  testTimeArray?.forEach((time: { timeInSeconds: number }) => {
-    totalTimeInSeconds = time.timeInSeconds + totalTimeInSeconds
-  })
-
-  const timeInHoursAndMinutes = getHoursAndMinutes(totalTimeInSeconds)
-
-  return `${
-    timeInHoursAndMinutes.h
-      ? timeInHoursAndMinutes.h +
-        (timeInHoursAndMinutes.h <= 1 ? "Hour" : "Hours")
-      : ""
-  } ${
-    timeInHoursAndMinutes.m
-      ? timeInHoursAndMinutes.m +
-        (timeInHoursAndMinutes.m <= 1 ? "Minute" : "Minutes")
-      : ""
-  }`
-}
