@@ -8,7 +8,7 @@ import CandidateQuestionFooter from "./CandidateQuestionFooter"
 import CandidateQuestionHeader from "./CandidateQuestionHeader"
 import CandidateQuestionStepper from "./CandidateQuestionStepper"
 
-import type { Option } from "~/interface/Interface"
+import { Option } from "~/interface/Interface"
 import { QuestionTypes } from "~/interface/Interface"
 
 const Question = () => {
@@ -50,35 +50,33 @@ const Question = () => {
     }
   }, [])
 
-  const onChangeHandle = ({
-    event,
-    index,
-    option,
-  }: {
-    event?: React.ChangeEvent<HTMLInputElement>
+  const onChangeHandle = (
+    event: React.ChangeEvent<HTMLTextAreaElement> | Option,
     index?: number
-    option?: {
-      isCorrect: boolean
-      id: string
-      option: string
-      rightAnswer: boolean
-    }
-  }) => {
-    if (questionType === QuestionTypes.singleChoice) {
-      setUserAnswer(option?.id)
+  ) => {
+    if (
+      questionType === QuestionTypes.singleChoice &&
+      event instanceof Option
+    ) {
+      setUserAnswer(event.id)
     }
     if (questionType === QuestionTypes.text) {
-      setUserAnswer((oldVal: (string | undefined)[]) => {
-        oldVal[index || 0] = event?.target.value
+      setUserAnswer((oldVal: Array<string>) => {
+        oldVal[index || 0] = (
+          event as React.ChangeEvent<HTMLTextAreaElement>
+        ).target.value
         return [...oldVal]
       })
     }
-    if (questionType === QuestionTypes.multipleChoice) {
+    if (
+      questionType === QuestionTypes.multipleChoice &&
+      event instanceof Option
+    ) {
       setUserAnswer((val: string[]) => {
-        if (userAnswer.indexOf(option?.id) === -1) {
-          return [...val, option?.id]
+        if (userAnswer.indexOf(event.id) === -1) {
+          return [...val, event.id]
         } else {
-          val.splice(userAnswer.indexOf(option?.id), 1)
+          val.splice(userAnswer.indexOf(event.id), 1)
           return [...val]
         }
       })
@@ -139,15 +137,7 @@ const Question = () => {
               </div>
               <div className="flex h-full flex-1 flex-col overflow-auto">
                 {question?.question?.options.map(
-                  (
-                    option: {
-                      isCorrect: boolean
-                      id: string
-                      option: string
-                      rightAnswer: boolean
-                    },
-                    index: number
-                  ) => {
+                  (option: Option, i: number) => {
                     return (
                       <label
                         key={option.id}
@@ -164,7 +154,7 @@ const Question = () => {
                             value={option.id}
                             checked={option.id === userAnswer}
                             onChange={() => {
-                              onChangeHandle({ option })
+                              onChangeHandle(option)
                             }}
                             className="mt-7"
                           />
@@ -174,9 +164,7 @@ const Question = () => {
                             name="option"
                             isChecked={userAnswer.indexOf(option.id) !== -1}
                             className="mt-7"
-                            handleChange={() =>
-                              onChangeHandle({ index, option })
-                            }
+                            handleChange={() => onChangeHandle(option, i)}
                           />
                         )}
                         <div className="ql-editor w-full bg-inherit py-5">
@@ -201,7 +189,7 @@ const Question = () => {
                           id={answer.id}
                           value={userAnswer[index]}
                           rows={4}
-                          onChange={() => onChangeHandle({ index })}
+                          onChange={(event) => onChangeHandle(event, index)}
                           className="w-full rounded-lg border border-gray-200 bg-white p-5"
                         />
                       </div>
