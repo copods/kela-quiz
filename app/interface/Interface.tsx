@@ -320,6 +320,15 @@ export enum deleteQuestionStatus {
   notDeleted = "NOT_DELETED",
   deleted = "DELETED",
 }
+export enum keyboardKeys {
+  backspace = "Backspace",
+  arrowLeft = "ArrowLeft",
+  arrowRight = "ArrowRight",
+}
+export enum checks {
+  success = "success",
+  commonError = "commonError",
+}
 export interface SectionWiseResults {
   id: string
   sectionInCandidateTestId: string
