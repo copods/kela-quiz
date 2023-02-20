@@ -5,10 +5,11 @@ import type { Question, User } from "@prisma/client"
 import { sendTestInviteMail } from "./sendgrid.servers"
 
 import { prisma } from "~/db.server"
-import { getHoursAndMinutes } from "~/utils"
+import { getFormatedTime } from "~/utils"
 
 // inviting candidate
 const candidateTestLink = `${env.PUBLIC_URL}/assessment/`
+
 export async function createIndividualCandidate({
   email,
   createdById,
@@ -173,28 +174,12 @@ async function createCandidateData({
     },
   })
 
-  const getFormatedTime = () => {
-    const testTimeArr = getUserTestTime?.sections
-    let totalTimeInSeconds = 0
-
-    testTimeArr?.forEach((time) => {
-      totalTimeInSeconds = time.timeInSeconds + totalTimeInSeconds
-    })
-
-    const timeInHoursAndMinutes = getHoursAndMinutes(totalTimeInSeconds)
-
-    return `${
-      timeInHoursAndMinutes.h
-        ? timeInHoursAndMinutes.h +
-          (timeInHoursAndMinutes.h < 2 ? "Hour" : "Hours")
-        : ""
-    } ${timeInHoursAndMinutes.m ? timeInHoursAndMinutes.m + "Minutes" : ""}`
-  }
-
   await sendMailToCandidate(
     user?.email,
     updatedCandidateTest?.link as string,
-    getFormatedTime() as string
+    getFormatedTime(
+      getUserTestTime?.sections as Array<{ timeInSeconds: number }>
+    ) as string
   )
 }
 // Resend a test link to user
@@ -238,28 +223,12 @@ export async function resendTestLink({
         },
       })
 
-      const getFormatedTime = () => {
-        const testTimeArr = getUserTestTime?.sections
-        let totalTimeInSeconds = 0
-
-        testTimeArr?.forEach((time) => {
-          totalTimeInSeconds = time.timeInSeconds + totalTimeInSeconds
-        })
-
-        const timeInHoursAndMinutes = getHoursAndMinutes(totalTimeInSeconds)
-
-        return `${
-          timeInHoursAndMinutes.h
-            ? timeInHoursAndMinutes.h +
-              (timeInHoursAndMinutes.h < 2 ? "Hour" : "Hours")
-            : ""
-        } ${timeInHoursAndMinutes.m ? timeInHoursAndMinutes.m + "Minutes" : ""}`
-      }
-
       await sendMailToCandidate(
         candidate?.email as string,
         candidateLink,
-        getFormatedTime() as string
+        getFormatedTime(
+          getUserTestTime?.sections as Array<{ timeInSeconds: number }>
+        ) as string
       )
       return "created"
     } else {
@@ -347,28 +316,10 @@ export async function remindCandidate() {
 
   if (candidates.length) {
     candidates.forEach((candidate) => {
-      const getFormatedTime = () => {
-        const testTimeArr = candidate.test?.sections
-        let totalTimeInSeconds = 0
-
-        testTimeArr?.forEach((time) => {
-          totalTimeInSeconds = time.timeInSeconds + totalTimeInSeconds
-        })
-
-        const timeInHoursAndMinutes = getHoursAndMinutes(totalTimeInSeconds)
-
-        return `${
-          timeInHoursAndMinutes.h
-            ? timeInHoursAndMinutes.h +
-              (timeInHoursAndMinutes.h < 2 ? "Hour" : "Hours")
-            : ""
-        } ${timeInHoursAndMinutes.m ? timeInHoursAndMinutes.m + "Minutes" : ""}`
-      }
-
       sendTestInviteMail(
         candidate.candidate.email,
         candidate.link as string,
-        getFormatedTime() as string
+        getFormatedTime(candidate.test?.sections) as string
       )
     })
   }
