@@ -92,7 +92,7 @@ export async function sendMail(
 export async function sendTestInviteMail(
   email: string,
   link: string,
-  time?: string
+  time: string
 ) {
   const to = email
   const from = "careers@copods.co"
