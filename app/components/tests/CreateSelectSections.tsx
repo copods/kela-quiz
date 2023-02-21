@@ -18,14 +18,14 @@ const SelectSections = ({
   setSections,
   updateSectionsList,
   currentWorkspaceId,
-  totalSections,
+  totalSectionsCount,
   allSelectedSections,
 }: {
   sections: Array<TestSection>
   setSections: (e: AddedSectionDetails, index: number) => void
   updateSectionsList: (e: SetStateAction<Array<TestSection>>) => void
   currentWorkspaceId: string
-  totalSections: number
+  totalSectionsCount: number
   allSelectedSections: Array<TestSection>
 }) => {
   const [sortDirection, onSortDirectionChange] = useState(
@@ -35,7 +35,6 @@ const SelectSections = ({
   const [sectionsCurrentPage, setSectionsCurrentPage] = useState(1)
   const [sectionsPageSize, setSectionsPageSize] = useState(3)
   const [pseudoDivs, setPseudoDivs] = useState([1])
-  const paginationSizeOptions = [3, 6, 12, 18, 24]
 
   const filterByType = [
     {
@@ -113,7 +112,7 @@ const SelectSections = ({
             onSortDirectionChange={onSortDirectionChange}
             sortBy={sortBy}
             onSortChange={onSortChange}
-            totalItems={totalSections}
+            totalItems={totalSectionsCount}
             showSelected={false}
           />
           {/* Sections list */}
@@ -141,11 +140,11 @@ const SelectSections = ({
           </div>
           <Pagination
             currentPage={sectionsCurrentPage}
-            pageSizeOptions={paginationSizeOptions}
+            pageSizeOptions={[3, 6, 12, 18, 24]}
             onPageChange={(page) => setSectionsCurrentPage?.(page)}
             pageSize={sectionsPageSize}
             setPageSize={setSectionsPageSize}
-            totalItems={totalSections!}
+            totalItems={totalSectionsCount}
           />
         </div>
       ) : (

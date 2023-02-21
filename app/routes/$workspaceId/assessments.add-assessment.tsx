@@ -12,7 +12,7 @@ import { routes } from "~/constants/route.constants"
 import {
   getAllSectionCount,
   getAllTestsData,
-  getCreateTest,
+  createTestHandler,
 } from "~/services/tests.service"
 import { getUserWorkspaceService } from "~/services/workspace.service"
 import { getUserId, requireUserId } from "~/session.server"
@@ -80,7 +80,7 @@ export const action: ActionFunction = async ({ request, params }) => {
   const data = formData.get("data")
   const parsedData = JSON.parse(data as string)
 
-  return await getCreateTest(createdById, workspaceId as string, parsedData)
+  return await createTestHandler(createdById, workspaceId as string, parsedData)
 }
 
 const AddTest = () => {
@@ -110,7 +110,7 @@ const AddTest = () => {
     <AddTestComponent
       currentWorkspaceId={testData.currentWorkspaceId}
       sections={testData.sections}
-      totalSections={testData.getAllSectionsCount}
+      totalSectionsCount={testData.getAllSectionsCount}
     />
   )
 }

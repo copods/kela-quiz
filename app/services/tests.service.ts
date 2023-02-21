@@ -381,7 +381,15 @@ export const getFIRSTSection = async (
   )
 }
 
-export const getCreateTest = async (
+/**
+ * Function will be creating new Assessment/test
+ * @param createdById
+ * @param workspaceId
+ * @param data
+ * @returns
+ */
+
+export const createTestHandler = async (
   createdById: string,
   workspaceId: string,
   data: createTestData

@@ -19,11 +19,11 @@ import { sortByOrder } from "~/interface/Interface"
 const AddTestComponent = ({
   sections,
   currentWorkspaceId,
-  totalSections,
+  totalSectionsCount,
 }: {
   sections: Array<TestSection>
   currentWorkspaceId: string
-  totalSections: number
+  totalSectionsCount: number
 }) => {
   const { t } = useTranslation()
 
@@ -212,7 +212,7 @@ const AddTestComponent = ({
           }}
           updateSectionsList={setSectionsCopy}
           currentWorkspaceId={currentWorkspaceId}
-          totalSections={totalSections}
+          totalSectionsCount={totalSectionsCount}
           allSelectedSections={allSelectedSections}
         />
       ) : (
