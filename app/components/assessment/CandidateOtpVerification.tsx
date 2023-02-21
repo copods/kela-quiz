@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next"
 import Button from "../common-components/Button"
 
 import otpImage from "~/../public/assets/otp.svg"
+import { keyboardKeys } from "~/interface/Interface"
 
 const CandidateOtp = ({ email }: { email: string }) => {
   const { t } = useTranslation()
@@ -24,7 +25,7 @@ const CandidateOtp = ({ email }: { email: string }) => {
     var seconds = counter - minutes * 60
     var hours = Math.floor(counter / 3600)
     setCounter(counter - hours * 3600)
-    const timerValue = (timeUnit: any, pad: any, length: any) => {
+    const timerValue = (timeUnit: number, pad: string, length: number) => {
       return (new Array(length + 1).join(pad) + timeUnit).slice(-length)
     }
     const timer: string =
@@ -35,6 +36,7 @@ const CandidateOtp = ({ email }: { email: string }) => {
   const submit = useSubmit()
   const resend = () => {
     submit({ resendOTP: "Resend" }, { method: "post" })
+    setCounter(60)
   }
 
   useEffect(() => {
@@ -48,6 +50,14 @@ const CandidateOtp = ({ email }: { email: string }) => {
       setAutoSubmit(false)
     }
   }, [OTPSegments, autoSubmit])
+
+  const getRequiredInputField = (index: number) => {
+    const requiredInputField = document.querySelector<HTMLInputElement>(
+      `input[name=field-${index}]`
+    )
+
+    requiredInputField && requiredInputField.focus()
+  }
 
   const onPaste = (event: React.ClipboardEvent) => {
     event.preventDefault()
@@ -70,34 +80,38 @@ const CandidateOtp = ({ email }: { email: string }) => {
     }
     // Focus on the next input field
     else if (pasted.length < 4) {
-      const foncusOnNextField = document.querySelector(
-        `input[name=field-${pasted.length + 1}]`
-      )
-
-      // @ts-ignore
-      foncusOnNextField && foncusOnNextField.focus()
+      getRequiredInputField(pasted.length + 1)
     }
   }
 
   const updateOTP = (index: number) => {
-    return (event: React.SyntheticEvent) => {
-      setOTPSegments([
-        ...OTPSegments.slice(0, index),
-        (event.target as HTMLInputElement).value,
-        ...OTPSegments.slice(index + 1),
-      ])
+    return (event: React.KeyboardEvent) => {
+      if (
+        event.key.match("^[0-9]*$") ||
+        event.key === keyboardKeys.backspace ||
+        event.key === keyboardKeys.arrowLeft ||
+        event.key === keyboardKeys.arrowRight
+      ) {
+        if (
+          event.key.match("^[0-9]*$") ||
+          event.key === keyboardKeys.backspace
+        ) {
+          setOTPSegments([
+            ...OTPSegments.slice(0, index),
+            event.key === keyboardKeys.backspace ? "" : Number(event.key),
+            ...OTPSegments.slice(index + 1),
+          ])
+        }
 
-      // Focus on the submit button
-      if (index === 3) {
-        btnRef.current?.focus()
-      }
-      // Focus on the next input field
-      else if (index !== 3) {
-        const foncusOnNextField = document.querySelector(
-          `input[name=field-${index + 2}]`
-        )
-        // @ts-ignore
-        foncusOnNextField && foncusOnNextField.focus()
+        if (event.key === keyboardKeys.arrowLeft) {
+          getRequiredInputField(index)
+        } else if (index === 3 && event.key !== keyboardKeys.backspace) {
+          getRequiredInputField(index + 1)
+        } else if (index !== 3 && event.key !== keyboardKeys.backspace) {
+          getRequiredInputField(index + 2)
+        } else {
+          getRequiredInputField(index)
+        }
       }
     }
   }
@@ -114,7 +128,7 @@ const CandidateOtp = ({ email }: { email: string }) => {
         <div className="gap-4 text-base text-gray-500">
           {t("otpConstants.enterOTP")}{" "}
           <span className="font-medium text-primary" data-cy="email">
-            {email}{" "}
+            {email}
           </span>
         </div>
         <Form method="post">
@@ -129,7 +143,7 @@ const CandidateOtp = ({ email }: { email: string }) => {
                 className="flex h-12 w-16 justify-center rounded-md border border-gray-200 text-center drop-shadow-sm"
                 key={idx}
                 value={ele}
-                onInput={updateOTP(idx)}
+                onKeyUp={updateOTP(idx)}
                 tabIndex={idx + 1}
               />
             ))}
@@ -141,8 +155,7 @@ const CandidateOtp = ({ email }: { email: string }) => {
               : t("otpConstants.resendCodeIn")}
             {finalTime !== "00:00" ? (
               <span className="font-medium text-primary" data-cy="resendOTP">
-                {" "}
-                {finalTime}
+                {` ${finalTime}`}
               </span>
             ) : (
               <span
@@ -157,8 +170,7 @@ const CandidateOtp = ({ email }: { email: string }) => {
                 }}
                 role="button"
               >
-                {" "}
-                {t("otpConstants.resend")}
+                {` ${t("otpConstants.resend")}`}
               </span>
             )}
           </div>
@@ -174,6 +186,9 @@ const CandidateOtp = ({ email }: { email: string }) => {
               className="w-full"
               title={t("commonConstants.verify")}
               buttonText={t("commonConstants.verify")}
+              isDisabled={OTPSegments.some(
+                (ele) => ele === "" || ele === undefined || ele === null
+              )}
             />
           </div>
         </Form>

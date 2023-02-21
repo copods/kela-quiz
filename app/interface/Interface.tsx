@@ -144,11 +144,13 @@ export interface Role {
 }
 
 export interface Question {
+  checkOrder: boolean
   id: string
   question: string
-  correctAnswer?: Array<CorrectAnswer>
+  correctAnswer: Array<CorrectAnswer>
   marks?: number
-  questionTypeId?: string
+  questionTypeId: string
+  questionType: QuestionType
   sectionId?: string
   createdById?: string
   createdBy: User
@@ -157,7 +159,7 @@ export interface Question {
   deleted: boolean
   deletedAt: string
   options?: Array<Option>
-  correctOptions?: Array<Option>
+  correctOptions: Array<Option>
   candidateQuestion: CandidateQuestion[]
 }
 
@@ -231,6 +233,9 @@ export interface CandidateTest {
 }
 
 export interface SectionInCandidateTest {
+  selectedOptions: Option[]
+  answers: CorrectAnswer[]
+  status: string
   SectionWiseResult: SectionWiseResults[]
   id: string
   sectionId: string
@@ -265,6 +270,7 @@ export interface CandidateQuestion {
   answeredAt: Date | null
   createdAt: Date
   updatedAt: Date
+  question: Question
 }
 
 export interface CandidateResult {
@@ -306,9 +312,22 @@ export enum QuestionTypes {
   singleChoice = "SINGLE_CHOICE",
   text = "TEXT",
 }
+export enum QuestionStatus {
+  answered = "ANSWERED",
+  skipped = "SKIPPED",
+}
 export enum deleteQuestionStatus {
   notDeleted = "NOT_DELETED",
   deleted = "DELETED",
+}
+export enum keyboardKeys {
+  backspace = "Backspace",
+  arrowLeft = "ArrowLeft",
+  arrowRight = "ArrowRight",
+}
+export enum checks {
+  success = "success",
+  commonError = "commonError",
 }
 export interface SectionWiseResults {
   id: string
@@ -380,4 +399,10 @@ export interface BadgeComponent {
   children: React.ReactNode
   bgColor?: string
   textColor?: string
+}
+
+export interface ChipComponent {
+  success: string
+  error: string
+  warning: string
 }

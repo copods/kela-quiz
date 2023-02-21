@@ -225,6 +225,7 @@
   },
   "resultConstants": {
     "order": "Order",
+    "unordered": "Unordered",
     "totalInvited": "Invited",
     "totalAttended": "Attended",
     "noAssessmentAlert": "No assessment found. Add your assessment first",
@@ -242,7 +243,12 @@
     "resendAssessmentInvite": "Resend assessment Invite Icon",
     "unanswered": "Unanswered",
     "incorrect": "Incorrect",
-    "copyLink": "Copy Link"
+    "viewDetails": "View Details",
+    "correctAnswer": "Correct Answer",
+    "copyLink": "Copy Link",
+    "text": "TEXT",
+    "givenAnswers": "Given Answers",
+    "wrong": "Wrong"
   },
   "forgotPasswordConstants": {
     "header": "Forgot password?",

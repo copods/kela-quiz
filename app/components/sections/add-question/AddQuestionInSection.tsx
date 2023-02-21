@@ -7,9 +7,9 @@ import {
   useSubmit,
   useTransition,
 } from "@remix-run/react"
-import cuid from "cuid"
 import { useTranslation } from "react-i18next"
 import { toast } from "react-toastify"
+import { v4 as uuidv4 } from "uuid"
 
 import BreadCrumb from "../../common-components/BreadCrumb"
 
@@ -33,31 +33,32 @@ const AddQuestionInSection = () => {
   })
   const [question, setQuestion] = useState("")
   const [singleChoiceAnswer, setSingleChoiceAnswer] = useState("")
+
   const [options, setOptions] = useState([
     {
       option: "",
       isCorrect: false,
-      id: cuid(),
+      id: uuidv4(),
     },
     {
       option: "",
       isCorrect: false,
-      id: cuid(),
+      id: uuidv4(),
     },
     {
       option: "",
       isCorrect: false,
-      id: cuid(),
+      id: uuidv4(),
     },
     {
       option: "",
       isCorrect: false,
-      id: cuid(),
+      id: uuidv4(),
     },
   ])
   const [textCorrectAnswer, setTextCorrectAnswer] = useState([
     {
-      id: cuid(),
+      id: uuidv4(),
       answer: "",
     },
   ])
