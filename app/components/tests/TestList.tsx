@@ -230,7 +230,6 @@ const TestList = () => {
       navigate(
         `?sortBy=${sortBy}&sort=${sortDirection}&page=${testsCurrentPage}&limit=${testsPageSize}`
       )
-      setCustomStorage("assessmentSort", sortBy)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
@@ -242,6 +241,10 @@ const TestList = () => {
     testLoaderData.allTestsCount,
     location.search,
   ])
+
+  useEffect(() => {
+    setCustomStorage("assessmentSort", sortBy)
+  }, [setCustomStorage, sortBy])
 
   useEffect(() => {
     const heading = document.getElementById("assessments-page-title")
