@@ -244,7 +244,7 @@ const TestList = () => {
 
   useEffect(() => {
     setCustomStorage("assessmentSort", sortBy)
-  }, [setCustomStorage, sortBy])
+  }, [sortBy])
 
   useEffect(() => {
     const heading = document.getElementById("assessments-page-title")
