@@ -68,7 +68,9 @@ const CandidateListOfTest = () => {
   )
 
   useEffect(() => {
-    navigate(`?page=${1}&pageSize=${pageSize}&filterByStatus=${statusFilter}`)
+    navigate(`?page=${1}&pageSize=${pageSize}&filterByStatus=${statusFilter}`, {
+      replace: true,
+    })
     setStatusFilter(statusFilter)
     setCustomStorage("candidateListFilter", statusFilter)
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -76,7 +78,8 @@ const CandidateListOfTest = () => {
 
   useEffect(() => {
     navigate(
-      `?page=${currentPage}&pageSize=${pageSize}&filterByStatus=${statusFilter}`
+      `?page=${currentPage}&pageSize=${pageSize}&filterByStatus=${statusFilter}`,
+      { replace: true }
     )
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pageSize, currentPage])
@@ -98,6 +101,7 @@ const CandidateListOfTest = () => {
   }
 
   useEffect(() => {
+    console.log("backtrack the routes to candidates")
     if (
       actionData?.candidateInviteStatus ===
       t("candidateExamConstants.candidateTestCreated")

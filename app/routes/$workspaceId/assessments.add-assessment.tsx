@@ -105,7 +105,7 @@ const AddTest = () => {
   useEffect(() => {
     if (actionData) {
       if (actionData.resp?.status === 200) {
-        navigate(`/${testData.currentWorkspaceId}${routes.assessments}`)
+        navigate(`/${testData.currentWorkspaceId}${routes.assessments}`, {})
         toast.success(t(actionData.resp?.title))
       } else if (actionData.errors?.status === 400) {
         toast.error(t(actionData.errors?.title), {
