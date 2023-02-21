@@ -101,7 +101,6 @@ const CandidateListOfTest = () => {
   }
 
   useEffect(() => {
-    console.log("backtrack the routes to candidates")
     if (
       actionData?.candidateInviteStatus ===
       t("candidateExamConstants.candidateTestCreated")

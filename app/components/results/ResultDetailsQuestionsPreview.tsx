@@ -77,6 +77,7 @@ const ResultDetailsQuestionsPreview = ({
         break
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

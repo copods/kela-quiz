@@ -174,7 +174,6 @@ const GroupByTests = () => {
     )
     setStatusFilter(statusFilter)
     setCustomStorage("resultsFilterByStatus", statusFilter)
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [statusFilter])
 
