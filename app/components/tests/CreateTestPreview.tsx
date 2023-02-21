@@ -20,7 +20,7 @@ const TestPreview = ({
   testId?: string
   description: string
   selectedSections: Array<TestSection>
-  onSelectedSectionChange: (
+  onSelectedSectionChange?: (
     e: (section: Array<TestSection>) => TestSection[]
   ) => void
   isPreviewEditable: boolean
@@ -33,22 +33,24 @@ const TestPreview = ({
       if (index == 0) {
         return
       }
-      onSelectedSectionChange((section: Array<TestSection>) => {
-        let temp = section[index]
-        section[index] = section[index - 1]
-        section[index - 1] = temp
-        return [...section]
-      })
+      onSelectedSectionChange &&
+        onSelectedSectionChange((section: Array<TestSection>) => {
+          let temp = section[index]
+          section[index] = section[index - 1]
+          section[index - 1] = temp
+          return [...section]
+        })
     } else if (action == "down") {
       if (index == selectedSections.length - 1) {
         return
       }
-      onSelectedSectionChange((section: Array<TestSection>) => {
-        let temp = section[index]
-        section[index] = section[index + 1]
-        section[index + 1] = temp
-        return [...section]
-      })
+      onSelectedSectionChange &&
+        onSelectedSectionChange((section: Array<TestSection>) => {
+          let temp = section[index]
+          section[index] = section[index + 1]
+          section[index + 1] = temp
+          return [...section]
+        })
     }
   }
   const getTotalTime = () => {
