@@ -10,10 +10,10 @@ import { getHoursAndMinutes } from "~/utils"
 // inviting candidate
 const candidateTestLink = `${env.PUBLIC_URL}/assessment/`
 
-const getFormatedTime = (testTimeArray: Array<{ timeInSeconds: number }>) => {
+const getFormatedTime = (testTimeList: Array<{ timeInSeconds: number }>) => {
   let totalTimeInSeconds = 0
 
-  testTimeArray?.forEach((time: { timeInSeconds: number }) => {
+  testTimeList?.forEach((time: { timeInSeconds: number }) => {
     totalTimeInSeconds = time.timeInSeconds + totalTimeInSeconds
   })
 
@@ -22,12 +22,12 @@ const getFormatedTime = (testTimeArray: Array<{ timeInSeconds: number }>) => {
   return `${
     timeInHoursAndMinutes.h
       ? timeInHoursAndMinutes.h +
-        (timeInHoursAndMinutes.h <= 1 ? "Hour" : "Hours")
+        (timeInHoursAndMinutes.h === 1 ? "Hour" : "Hours")
       : ""
   } ${
     timeInHoursAndMinutes.m
       ? timeInHoursAndMinutes.m +
-        (timeInHoursAndMinutes.m <= 1 ? "Minute" : "Minutes")
+        (timeInHoursAndMinutes.m === 1 ? "Minute" : "Minutes")
       : ""
   }`
 }
