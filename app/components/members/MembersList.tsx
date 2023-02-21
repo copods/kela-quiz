@@ -32,7 +32,7 @@ export default function MembersList({
   const [openDeleteModal, setOpenDeleteModal] = useState(false)
   const [memberId, setMemberId] = useState("")
   const workspaceOwner = memberLoaderData.currentWorkspaceOwner.createdById
-  const roleId = roles.find((role) => role.name === "Admin")?.id
+  const adminRoleId = roles.find((role) => role.name === "Admin")?.id
 
   const currentLoggedInUserData = memberLoaderData.users.filter(
     (data: { id: string }) => {
@@ -66,7 +66,7 @@ export default function MembersList({
       if (
         loggedInUser !== data.id &&
         workspaceOwner !== data.id &&
-        currentLoggedInUserData[0].userWorkspace[0]?.role.id === roleId
+        currentLoggedInUserData[0].userWorkspace[0]?.role.id === adminRoleId
       ) {
         setMemberId(data.id)
         setOpenDeleteModal(!openDeleteModal)
@@ -85,15 +85,17 @@ export default function MembersList({
           }}
           icon="ic:outline-delete-outline"
           className={`h-6 w-6 ${
-            currentLoggedInUserData[0].userWorkspace[0]?.role.id !== roleId
-              ? "cursor-not-allowed text-red-200"
-              : loggedInUser === data.id || workspaceOwner === data.id
+            currentLoggedInUserData[0].userWorkspace[0]?.role.id !==
+              adminRoleId ||
+            loggedInUser === data.id ||
+            workspaceOwner === data.id
               ? "cursor-not-allowed text-red-200"
               : "cursor-pointer text-red-500"
           }`}
         />
         {memberId === data.id &&
-          currentLoggedInUserData[0].userWorkspace[0]?.role.id === roleId && (
+          currentLoggedInUserData[0].userWorkspace[0]?.role.id ===
+            adminRoleId && (
             <DeletePopUp
               setOpen={setOpenDeleteModal}
               open={openDeleteModal}
@@ -122,7 +124,7 @@ export default function MembersList({
     <div className="z-10 text-base">
       <Table
         columns={
-          currentLoggedInUserData[0].userWorkspace[0]?.role.id !== roleId
+          currentLoggedInUserData[0].userWorkspace[0]?.role.id !== adminRoleId
             ? membersColumn.filter((column) => column.title !== "Action")
             : membersColumn
         }
