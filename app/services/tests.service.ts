@@ -3,7 +3,7 @@ import { json } from "@remix-run/node"
 
 import { getUserWorkspaceService } from "./workspace.service"
 
-import type { Section, sectionActionErrorsType } from "~/interface/Interface"
+import type { Section } from "~/interface/Interface"
 import {
   createSection,
   editSectionById,
@@ -40,7 +40,11 @@ export type ActionData = {
     addMoreQuestion?: boolean
     status?: number
   }
-  createSectionFieldError?: sectionActionErrorsType
+  createSectionFieldError?: {
+    title?: string
+    description?: string
+    duplicateTitle?: string
+  }
   resp?: {
     status?: string | number
     check?: Date

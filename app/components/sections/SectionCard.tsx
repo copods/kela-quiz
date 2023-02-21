@@ -11,8 +11,6 @@ import DeletePopUp from "../common-components/DeletePopUp"
 
 import AddEditSection from "./AddEditSection"
 
-import type { sectionActionErrorsType } from "~/interface/Interface"
-
 const SectionCard = ({
   name,
   description,
@@ -39,11 +37,18 @@ const SectionCard = ({
   setDeleted?: (e: boolean) => void
   setIsDelete: (e: boolean) => void
   isDelete: boolean
-  sectionActionErrors?: sectionActionErrorsType
-  setSectionActionErrors?: ({
+  sectionActionErrors?: {
+    title?: string
+    description?: string
+    duplicateTitle?: string
+  }
+  setSectionActionErrors: ({
     title,
     description,
-  }: sectionActionErrorsType) => void
+  }: {
+    title?: string
+    description?: string
+  }) => void
   currentPageCount: number
   filter: string
 }) => {

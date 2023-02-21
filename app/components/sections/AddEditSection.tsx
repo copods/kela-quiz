@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react"
 
-import { Form, useActionData, useSubmit, useTransition } from "@remix-run/react"
+import { Form, useFetcher, useNavigate, useTransition } from "@remix-run/react"
 import { useTranslation } from "react-i18next"
+import { toast } from "react-toastify"
 
 import Button from "../common-components/Button"
 import DialogWrapper from "../common-components/Dialog"
 
-import type { sectionActionErrorsType } from "~/interface/Interface"
+import type { LoaderData } from "~/routes/$workspaceId/tests"
 import { trimValue } from "~/utils"
 
 export interface editItem {
@@ -20,28 +21,38 @@ const AddEditSection = ({
   editId,
   setSectionActionErrors,
   sectionActionErrors,
+  data,
 }: {
   open: boolean
-  sectionActionErrors?: sectionActionErrorsType
-  setSectionActionErrors?: ({
+  sectionActionErrors?: {
+    title?: string
+    description?: string
+    duplicateTitle?: string
+  }
+  setSectionActionErrors: ({
     title,
     description,
-  }: sectionActionErrorsType) => void
+    duplicateTitle,
+  }: {
+    title?: string
+    description?: string
+    duplicateTitle?: string
+  }) => void
 
   setOpen: (e: boolean) => void
   showErrorMessage?: boolean
   editItem?: editItem
   editId?: string
   addSection?: (name: string, description: string) => void
+  data?: LoaderData
 }) => {
   const { t } = useTranslation()
   const transition = useTransition()
   const [sectionName, setSectionName] = useState("")
   const [description, setDescription] = useState("")
-  const submit = useSubmit()
-  const sectionActionData = useActionData()
+  const fetcher = useFetcher()
   const editSection = (name: string, description: string) => {
-    submit(
+    fetcher.submit(
       {
         editSection: "sectionEdit",
         id: editId!,
@@ -54,8 +65,59 @@ const AddEditSection = ({
     )
   }
   const addSection = (name: string, description: string) => {
-    submit({ addSection: "sectionAdd", name, description }, { method: "post" })
+    fetcher.submit(
+      { addSection: "sectionAdd", name, description },
+      { method: "post" }
+    )
   }
+  const fetcherData = fetcher.data
+
+  useEffect(() => {
+    if (fetcherData?.createSectionFieldError || fetcherData?.errors?.title) {
+      setSectionActionErrors({
+        title: fetcherData?.createSectionFieldError?.title,
+        description: fetcherData?.createSectionFieldError?.description,
+        duplicateTitle: fetcherData?.errors?.title,
+      })
+    }
+  }, [fetcherData?.createSectionFieldError, setSectionActionErrors])
+
+  const navigate = useNavigate()
+  useEffect(() => {
+    if (fetcherData?.resp?.status === "statusCheck.testAddedSuccess") {
+      toast.success(t(fetcherData?.resp?.status as string), {
+        toastId: "test-added-sucessfully",
+      })
+      navigate(`${fetcherData?.resp?.data?.id}${data?.filters}`)
+      setOpen(false)
+    } else if (fetcherData?.resp?.status === "statusCheck.testUpdatedSuccess") {
+      toast.success(t(fetcherData?.resp?.status as string), {
+        toastId: t(fetcherData?.resp?.status as string),
+      })
+      navigate(`${location.pathname}${location.search}`)
+      setOpen(false)
+    }
+  }, [
+    fetcherData?.resp?.data?.id,
+    fetcherData?.resp?.status,
+    data?.filters,
+    navigate,
+    setOpen,
+    t,
+    fetcherData?.resp?.status,
+  ])
+  useEffect(() => {
+    if (sectionName.length! > 1)
+      setSectionActionErrors({
+        title: "",
+        duplicateTitle: "",
+      })
+    else if (description.length! > 1) {
+      setSectionActionErrors({
+        description: "",
+      })
+    }
+  }, [sectionName, description, setSectionActionErrors, setOpen])
   useEffect(() => {
     if (editItem) {
       setSectionActionErrors?.({ title: "", description: "" })
@@ -68,21 +130,12 @@ const AddEditSection = ({
     setSectionActionErrors?.({ title: "", description: "" })
   }, [open, editItem, setSectionActionErrors])
 
-  useEffect(() => {
-    if (
-      t(sectionActionData?.resp?.status as string) ===
-      t("statusCheck.testUpdatedSuccess")
-    ) {
-      setOpen(false)
-    }
-  }, [sectionActionData?.resp, setOpen, t])
   const handleEdit = (name: string, description: string) => {
     editSection(name, description)
   }
   const handleAdd = (name: string, description: string) => {
     addSection?.(name, description)
   }
-
   return (
     <DialogWrapper
       open={open}
@@ -112,11 +165,11 @@ const AddEditSection = ({
           />
           {sectionActionErrors?.title ? (
             <p id="addEditSection-title-error" className="px-3 text-red-500">
-              {t(sectionActionErrors.title)}
+              {t(sectionActionErrors?.title)}
             </p>
-          ) : sectionActionData?.errors ? (
+          ) : sectionActionErrors?.duplicateTitle ? (
             <p id="duplicete-title-error" className="px-3 text-red-500">
-              {t(sectionActionData?.errors?.title)}
+              {t(sectionActionErrors?.duplicateTitle)}
             </p>
           ) : null}
         </div>
@@ -136,7 +189,7 @@ const AddEditSection = ({
               id="addEditSection-description-error"
               className="px-3 text-red-500"
             >
-              {t(sectionActionErrors.description)}
+              {t(sectionActionErrors?.description)}
             </p>
           ) : null}
         </div>
