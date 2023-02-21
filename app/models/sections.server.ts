@@ -1,5 +1,5 @@
 import type { User, Section, Question } from "@prisma/client"
-import cuid from "cuid"
+import { v4 as uuidv4 } from "uuid"
 
 import { prisma } from "~/db.server"
 import { deleteQuestionStatus } from "~/interface/Interface"
@@ -178,7 +178,7 @@ export async function addQuestion(
   createdById: string,
   checkOrder: boolean
 ) {
-  let questionId = cuid()
+  let questionId = uuidv4()
   await prisma.question
     .create({
       data: {

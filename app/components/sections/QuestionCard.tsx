@@ -4,6 +4,7 @@ import { Icon } from "@iconify/react"
 import { useSubmit } from "@remix-run/react"
 import { useTranslation } from "react-i18next"
 
+import type { CorrectAnswer } from "../../interface/Interface"
 import { QuestionTypes } from "../../interface/Interface"
 import DeletePopUp from "../common-components/DeletePopUp"
 
@@ -139,6 +140,18 @@ const QuestionCard = ({
                 </div>
               )
             })}
+          </div>
+        )}
+        {question?.correctAnswer && (
+          <div className="grid grid-cols-1 gap-4 pt-6 ">
+            {question.correctAnswer?.map((answer: CorrectAnswer) => (
+              <div key={answer.id}>
+                <OptionCard
+                  option={answer}
+                  Questiontype={question.questionType}
+                />
+              </div>
+            ))}
           </div>
         )}
         {

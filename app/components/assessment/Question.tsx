@@ -8,6 +8,7 @@ import CandidateQuestionFooter from "./CandidateQuestionFooter"
 import CandidateQuestionHeader from "./CandidateQuestionHeader"
 import CandidateQuestionStepper from "./CandidateQuestionStepper"
 
+import type { Option } from "~/interface/Interface"
 import { QuestionTypes } from "~/interface/Interface"
 
 const Question = () => {
@@ -18,14 +19,14 @@ const Question = () => {
       ? question.selectedOptions[0]?.id
       : questionType === QuestionTypes.text
       ? question?.answers
-      : question.selectedOptions.flatMap((option: any) => option.id)
+      : question.selectedOptions.flatMap((option: Option) => option.id)
   )
 
   useEffect(() => {
-    const handleContextmenu = (e: any) => {
+    const handleContextmenu = (e: MouseEvent) => {
       e.preventDefault()
     }
-    function ctrlShiftKey(e: any, code: any) {
+    function ctrlShiftKey(e: KeyboardEvent, code: string) {
       return (
         (e.ctrlKey && e.shiftKey && e.code) ||
         (e.metaKey && e.shiftKey && e.code) === code
@@ -60,7 +61,7 @@ const Question = () => {
       })
     }
     if (questionType === QuestionTypes.multipleChoice) {
-      setUserAnswer((val: any) => {
+      setUserAnswer((val: string[]) => {
         if (userAnswer.indexOf(event.id) === -1) {
           return [...val, event.id]
         } else {
@@ -125,15 +126,7 @@ const Question = () => {
               </div>
               <div className="flex h-full flex-1 flex-col overflow-auto">
                 {question?.question?.options.map(
-                  (
-                    option: {
-                      isCorrect: boolean
-                      id: string
-                      option: string
-                      rightAnswer: boolean
-                    },
-                    i: number
-                  ) => {
+                  (option: Option, i: number) => {
                     return (
                       <label
                         key={option.id}
@@ -185,7 +178,7 @@ const Question = () => {
                           id={answer.id}
                           value={userAnswer[index]}
                           rows={4}
-                          onChange={() => onChangeHandle(event, index)}
+                          onChange={(event) => onChangeHandle(event, index)}
                           className="w-full rounded-lg border border-gray-200 bg-white p-5"
                         />
                       </div>

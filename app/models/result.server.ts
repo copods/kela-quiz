@@ -183,6 +183,7 @@ export async function getSectionWiseResultsOfIndividualCandidate({
       },
       sections: {
         select: {
+          id: true,
           startedAt: true,
           endAt: true,
           order: true,
@@ -343,4 +344,62 @@ export async function getAllCandidateTests(
     )
   }
   return res
+}
+
+export async function getResultDetailBySection(id?: string) {
+  return await prisma.sectionInCandidateTest.findUnique({
+    where: {
+      id,
+    },
+    select: {
+      candidateTest: {
+        select: {
+          candidate: {
+            select: {
+              firstName: true,
+              lastName: true,
+            },
+          },
+        },
+      },
+      section: {
+        select: {
+          name: true,
+        },
+      },
+      questions: {
+        select: {
+          question: {
+            select: {
+              question: true,
+              correctOptions: {
+                select: {
+                  option: true,
+                  id: true,
+                },
+              },
+              questionType: {
+                select: {
+                  value: true,
+                },
+              },
+              options: true,
+              correctAnswer: true,
+              checkOrder: true,
+            },
+          },
+          answers: true,
+          status: true,
+          id: true,
+          selectedOptions: {
+            select: {
+              id: true,
+              option: true,
+              questionId: true,
+            },
+          },
+        },
+      },
+    },
+  })
 }

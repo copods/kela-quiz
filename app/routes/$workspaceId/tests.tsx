@@ -15,22 +15,22 @@ import { redirect } from "@remix-run/server-runtime"
 import { useTranslation } from "react-i18next"
 import { toast } from "react-toastify"
 
-import {
-  getAllSectionsData,
-  handleAddSection,
-  handleDeleteSection,
-  handleEditSection,
-} from "helper/tests.helper"
 import Button from "~/components/common-components/Button"
 import EmptyStateComponent from "~/components/common-components/EmptyStateComponent"
 import AddEditSection from "~/components/sections/AddEditSection"
 import Sections from "~/components/sections/Sections"
 import { routes } from "~/constants/route.constants"
 import { sortByOrder } from "~/interface/Interface"
-import type { sectionActionErrorsType } from "~/interface/Interface"
 import type { Section } from "~/interface/Interface"
-import { getAllTestsCounts, getFirstSection } from "~/models/sections.server"
-import { getUserWorkspaces } from "~/models/workspace.server"
+import {
+  getAllSectionCount,
+  getAllTestsData,
+  getWorkspaces,
+  handleAddTest,
+  handleDeleteTest,
+  handleEditTest,
+  getFIRSTSection,
+} from "~/services/tests.service"
 import { getUserId, requireUserId } from "~/session.server"
 
 export type ActionData = {
@@ -45,7 +45,11 @@ export type ActionData = {
     name?: string
     description?: string
   }
-  createSectionFieldError?: sectionActionErrorsType
+  createSectionFieldError?: {
+    title?: string
+    description?: string
+    duplicateTitle?: string
+  }
   resp?: {
     status?: string
     check?: Date
@@ -60,7 +64,7 @@ export type LoaderData = {
   selectedSectionId?: string
   filters: string
   status: string
-  workspaces: Awaited<ReturnType<typeof getUserWorkspaces>>
+  workspaces: Awaited<ReturnType<typeof getWorkspaces>>
   currentWorkspaceId: string
   testCurrentPage: number
   testItemsPerPage: number
@@ -73,15 +77,17 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   try {
     // taking search params from URL
     const query = new URL(request.url).searchParams
+
     // taking number of items per page and current page number from query
     const testItemsPerPage = Math.max(Number(query.get("testItems") || 5), 5) //To set the lower bound, so that minimum count will always be 1 for current page and 5 for items per page.
     const testCurrentPage = Math.max(Number(query.get("testPage") || 1), 1)
     // taking sortBy and order
-    const sortBy = query.get("sortBy")
+    const sortBy = query.get("sortBy") || "name"
+
     const sortOrder = query.get("sort") || sortByOrder.desc
     const userId = await getUserId(request)
     const currentWorkspaceId = params.workspaceId as string
-    const workspaces = await getUserWorkspaces(userId as string)
+    const workspaces = await getWorkspaces(userId as string)
 
     let sections: Array<Section> = []
     let status: string = ""
@@ -92,7 +98,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     // import function from helper which return number of sections based on
     // sort : sortBy ('name' / 'Created Date')
     // PaginationData : current page number (testCurrentPage) and number of items per page(testItemsPerPage)
-    await getAllSectionsData(
+    await getAllTestsData(
       sortBy,
       sortOrder,
       currentWorkspaceId as string,
@@ -103,7 +109,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     const selectedSectionId = params.sectionId
       ? params.sectionId?.toString()
       : undefined
-    const getAllTestsCount = await getAllTestsCounts(currentWorkspaceId)
+    const getAllTestsCount = await getAllSectionCount(currentWorkspaceId)
 
     if (!userId) return redirect(routes.signIn)
     const filters = `?sortBy=${sortBy}&sort=${sortOrder}&testPage=${testCurrentPage}&testItems=${testItemsPerPage}`
@@ -127,41 +133,65 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
 export const action: ActionFunction = async ({ request, params }) => {
   const createdById = await requireUserId(request)
-  const workspaceId = params.workspaceId as string
+  const currentWorkspaceId = params.workspaceId as string
   const formData = await request.formData()
   const action =
     formData.get("addSection") ||
     formData.get("editSection") ||
     formData.get("deleteSection")
-
-  if (action === "sectionAdd") {
-    const name = formData.get("name") as string
-    const description = formData.get("description") as string
-    const response = await handleAddSection(
-      name,
-      description,
-      createdById,
-      workspaceId
-    )
-    return response
+  const validateTitle = (title: string) => {
+    if (typeof title !== "string" || title.length <= 0) {
+      return "statusCheck.nameIsReq"
+    }
   }
+
+  const validateDescription = (description: string) => {
+    if (typeof description !== "string" || description.length <= 0) {
+      return "statusCheck.descIsReq"
+    }
+  }
+
   if (action === "sectionEdit") {
     const name = formData.get("name") as string
     const description = formData.get("description") as string
     const id = formData.get("id") as string
-    const response = await handleEditSection(name, description, id)
+    const createSectionFieldError = {
+      title: validateTitle(name),
+      description: validateDescription(description),
+    }
+    if (Object.values(createSectionFieldError).some(Boolean)) {
+      return json({ createSectionFieldError }, { status: 400 })
+    }
+    const response = await handleEditTest(name, description, id)
     return response
   }
+  if (action === "sectionAdd") {
+    const name = formData.get("name")
+    const description = formData.get("description")
+    const createSectionFieldError = {
+      title: validateTitle(name as string),
+      description: validateDescription(description as string),
+    }
 
+    if (Object.values(createSectionFieldError).some(Boolean)) {
+      return json({ createSectionFieldError }, { status: 400 })
+    }
+    return await handleAddTest(
+      name as string,
+      description as string,
+      createdById,
+      currentWorkspaceId
+    )
+  }
   if (action === "sectionDelete") {
     const currentPage = formData.get("currentPage") as string
     const pagePerItems = formData.get("pageSize") as string
     const totalItems = formData.get("totalSectionsOnCurrentPage") as string
     const sortFilter = formData.get("filter") as string
     const deleteSectionId = formData.get("id") as string
-    await handleDeleteSection(deleteSectionId)
+    await handleDeleteTest(deleteSectionId)
 
-    const sectionId = await getFirstSection(
+    const sectionId = await getFIRSTSection(
       sortFilter
         .split("&")
         .filter((res) => res.includes("sortBy"))[0]
@@ -230,10 +260,7 @@ export default function SectionPage() {
   const [showAddSectionModal, setShowAddSectionModal] = useState(false)
   const [order, setOrder] = useState(sortByOrder.desc as string)
   const [sortBy, setSortBy] = useState(sortByDetails[1].value)
-  const [sectionActionErrors, setSectionActionErrors] = useState({
-    title: "",
-    description: "",
-  })
+  const [sectionActionErrors, setSectionActionErrors] = useState({})
   const [testsPageSize, setTestPageSize] = useState(5)
   const [testsCurrentPage, setTestsCurrentPage] = useState(data.testCurrentPage)
   const location = useLocation()
@@ -254,15 +281,6 @@ export default function SectionPage() {
     if (sectionActionData) {
       if (
         t(sectionActionData.resp?.status as string) ===
-        t("statusCheck.testAddedSuccess")
-      ) {
-        toast.success(t(sectionActionData.resp?.status as string), {
-          toastId: t(sectionActionData.resp?.status as string),
-        })
-        setSectionActionErrors({ title: "", description: "" })
-        setShowAddSectionModal(false)
-      } else if (
-        t(sectionActionData.resp?.status as string) ===
         t("statusCheck.testUpdatedSuccess")
       ) {
         toast.success(t(sectionActionData.resp?.status as string), {
@@ -280,12 +298,6 @@ export default function SectionPage() {
               `/${data.currentWorkspaceId}${routes.tests}/${sectionActionData?.sectionId}?sortBy=${sortBy}&sort=${order}&testPage=${testsCurrentPage}&testItems=${testsPageSize}`
             )
         }
-      } else if (sectionActionData.createSectionFieldError) {
-        setSectionActionErrors({
-          title: sectionActionData?.createSectionFieldError.title || "",
-          description:
-            sectionActionData.createSectionFieldError.description || "",
-        })
       }
     }
   }, [
@@ -303,9 +315,7 @@ export default function SectionPage() {
     } else if (
       // checking if new test added && total count of tests are not zero or data is present for present page
       // navigate to given path
-      (data.getAllTestsCount > 0 &&
-        t(sectionActionData?.resp?.status as string) ===
-          t("statusCheck.testAddedSuccess")) ||
+      data.getAllTestsCount > 0 ||
       data.sections.length >= 0 ||
       (!location.search && data.getAllTestsCount > 0)
     ) {
@@ -426,6 +436,7 @@ export default function SectionPage() {
         setSectionActionErrors={setSectionActionErrors}
         setOpen={setShowAddSectionModal}
         showErrorMessage={sectionActionData?.errors?.status === 400}
+        data={data}
       />
     </div>
   )

@@ -111,11 +111,11 @@ export function getTimeLeftInSeconds({
   startTime,
 }: {
   totalTimeInSeconds: number
-  startTime: any
+  startTime: Date | null
 }) {
   const diffrenceInSeconds =
     Math.abs(new Date().getTime() / 1000) -
-    Math.abs(new Date(startTime).getTime() / 1000)
+    Math.abs(new Date(startTime as Date).getTime() / 1000)
   return totalTimeInSeconds - Math.floor(diffrenceInSeconds) > -1
     ? totalTimeInSeconds - Math.floor(diffrenceInSeconds)
     : 0

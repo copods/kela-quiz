@@ -1,6 +1,8 @@
 import { PrismaClient } from "@prisma/client"
 import invariant from "tiny-invariant"
 
+import { cronInitiator } from "./models/cron.server"
+
 let prisma: PrismaClient
 
 declare global {
@@ -13,9 +15,11 @@ declare global {
 // in production we'll have a single connection to the DB.
 if (process.env.NODE_ENV === "production") {
   prisma = getClient()
+  cronInitiator()
 } else {
   if (!global.__db__) {
     global.__db__ = getClient()
+    cronInitiator()
   }
   prisma = global.__db__
 }

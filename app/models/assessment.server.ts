@@ -11,6 +11,7 @@ import type {
 import { sendMailToRecruiter, sendOTPMail } from "./sendgrid.servers"
 
 import { prisma } from "~/db.server"
+import { QuestionTypes } from "~/interface/Interface"
 
 export async function checkIfTestLinkIsValid(id: CandidateTest["id"]) {
   try {
@@ -621,6 +622,7 @@ async function calculateResultBySectionId(sectionid?: string) {
               correctAnswer: true,
               correctOptions: true,
               questionType: true,
+              checkOrder: true,
             },
           },
         },
@@ -651,28 +653,49 @@ async function calculateResultBySectionId(sectionid?: string) {
         continue
       }
 
-      if (question?.question?.questionType?.value === "TEXT") {
-        const correctAnswers = question?.question?.correctAnswer
-          ?.flatMap((opt) => opt?.answer.toLowerCase())
-          .sort()
-        const userAnswers = question?.answers
-          ?.flatMap((opt) => opt.toLowerCase())
-          .sort()
-        if (correctAnswers?.length === userAnswers?.length) {
-          let correctFlag = true
-          for (let i = 0; i < correctAnswers?.length; i++) {
-            if (correctAnswers[i].localeCompare(userAnswers[i]) != 0) {
-              correctFlag = false
+      if (question?.question?.questionType?.value === QuestionTypes.text) {
+        const checkOrder = question?.question?.checkOrder
+
+        if (checkOrder) {
+          let flag
+          for (const [index, value] of question?.answers.entries()) {
+            if (value !== question?.question?.correctAnswer[index]?.answer) {
+              flag = false
               break
+            } else {
+              flag = true
             }
           }
-          if (correctFlag) {
+          if (flag) {
             correct += 1
           } else {
             incorrect += 1
           }
+        } else {
+          const correctAnswers = question?.question?.correctAnswer
+            ?.flatMap((opt) => opt?.answer.toLowerCase())
+            .sort()
+          const userAnswers = question?.answers
+            ?.flatMap((opt) => opt.toLowerCase())
+            .sort()
+          if (correctAnswers?.length === userAnswers?.length) {
+            let correctFlag = true
+            for (let i = 0; i < correctAnswers?.length; i++) {
+              if (correctAnswers[i].localeCompare(userAnswers[i]) !== 0) {
+                correctFlag = false
+                break
+              }
+            }
+            if (correctFlag) {
+              correct += 1
+            } else {
+              incorrect += 1
+            }
+          }
         }
-      } else if (question?.question?.questionType?.value === "SINGLE_CHOICE") {
+      } else if (
+        question?.question?.questionType?.value === QuestionTypes.singleChoice
+      ) {
         if (
           question?.selectedOptions[0].id ===
           question?.question?.correctOptions[0].id
@@ -682,7 +705,7 @@ async function calculateResultBySectionId(sectionid?: string) {
           incorrect += 1
         }
       } else if (
-        question?.question?.questionType?.value === "MULTIPLE_CHOICE"
+        question?.question?.questionType?.value === QuestionTypes.multipleChoice
       ) {
         const correctOptionsId = question?.question?.correctOptions
           ?.flatMap((opt) => opt?.id)
