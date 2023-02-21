@@ -10,7 +10,6 @@ import SectionCard from "./SectionCard"
 import { routes } from "~/constants/route.constants"
 import { useCommonContext } from "~/context/Common.context"
 import type { Question, Section, SectionInTest } from "~/interface/Interface"
-import type { sectionActionErrorsType } from "~/interface/Interface"
 
 const SectionLink = ({
   section,
@@ -27,11 +26,20 @@ const SectionLink = ({
   }
   filter: string
   currentWorkspaceId: string
-  sectionActionErrors?: sectionActionErrorsType
-  setSectionActionErrors?: ({
+  sectionActionErrors?: {
+    title?: string
+    decription?: string
+    duplicateTitle?: string
+  }
+  setSectionActionErrors: ({
     title,
     description,
-  }: sectionActionErrorsType) => void
+    duplicateTitle,
+  }: {
+    title?: string
+    description?: string
+    duplicateTitle?: string
+  }) => void
   currentPageCount: number
 }) => {
   const path = `/${currentWorkspaceId}${routes.tests}/${section.id}${filter}`
@@ -100,11 +108,20 @@ type SectionType = {
   setOrder: (e: string) => void
   sortByDetails: Array<{ name: string; value: string }>
   currentWorkspaceId: string
-  sectionActionErrors?: sectionActionErrorsType
-  setSectionActionErrors?: ({
+  sectionActionErrors?: {
+    title?: string
+    decription?: string
+    duplicateTitle?: string
+  }
+  setSectionActionErrors: ({
     title,
     description,
-  }: sectionActionErrorsType) => void
+    duplicateTitle,
+  }: {
+    title?: string
+    description?: string
+    duplicateTitle?: string
+  }) => void
   totalCount: number
   testsPageSize: number
   testsCurrentPage: number

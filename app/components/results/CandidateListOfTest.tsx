@@ -128,7 +128,7 @@ const CandidateListOfTest = () => {
     const candidateName =
       data.candidate.firstName + " " + data.candidate.lastName
     return (
-      <span>
+      <span data-cy="candidateName">
         {data.candidate.firstName &&
         data.candidate.lastName &&
         data.startedAt ? (

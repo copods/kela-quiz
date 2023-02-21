@@ -10,18 +10,20 @@ import Badge from "../common-components/Badge"
 import DeletePopUp from "../common-components/DeletePopUp"
 import Table from "../common-components/TableComponent"
 
-import type { User, Role, Invites } from "~/interface/Interface"
+import type { User, Invites, UserWorkspace, Role } from "~/interface/Interface"
 
 export default function MembersList({
   membersCurrentPage,
   setMembersCurrentPage,
   membersPageSize,
   setMembersPageSize,
+  roles,
 }: {
   membersCurrentPage: number
   setMembersCurrentPage: (e: number) => void
   membersPageSize: number
   setMembersPageSize: (e: number) => void
+  roles: Role[]
 }) {
   const { t } = useTranslation()
   const submit = useSubmit()
@@ -30,6 +32,14 @@ export default function MembersList({
   const [openDeleteModal, setOpenDeleteModal] = useState(false)
   const [memberId, setMemberId] = useState("")
   const workspaceOwner = memberLoaderData.currentWorkspaceOwner.createdById
+  const adminRoleId = roles.find((role) => role.name === "Admin")?.id
+
+  const currentLoggedInUserData = memberLoaderData.users.filter(
+    (data: { id: string }) => {
+      return data.id === loggedInUser
+    }
+  )
+
   const NameDataCell = (data: User) => {
     return (
       <div className="flex gap-2">
@@ -42,8 +52,8 @@ export default function MembersList({
       </div>
     )
   }
-  const RoleDataCell = (data: { role: Role }) => {
-    return <span>{data.role.name}</span>
+  const RoleDataCell = (data: { userWorkspace: UserWorkspace[] }) => {
+    return <span>{data?.userWorkspace[0]?.role?.name}</span>
   }
   const JoinedOnCell = (data: Invites) => {
     return <span>{moment(data?.createdAt).format("DD MMMM YY")}</span>
@@ -51,13 +61,18 @@ export default function MembersList({
   const deleteUser = (id: string) => {
     submit({ action: "delete", id: id }, { method: "post" })
   }
-  const MemberDelete = (data: User) => {
+  const MemberDelete = (data: User & { userWorkspace: UserWorkspace[] }) => {
     const openPopUp = () => {
-      if (loggedInUser !== data.id) {
+      if (
+        loggedInUser !== data.id &&
+        workspaceOwner !== data.id &&
+        currentLoggedInUserData[0].userWorkspace[0]?.role.id === adminRoleId
+      ) {
         setMemberId(data.id)
         setOpenDeleteModal(!openDeleteModal)
       }
     }
+
     return (
       <>
         <Icon
@@ -69,23 +84,29 @@ export default function MembersList({
             if (e.key === "Enter") openPopUp()
           }}
           icon="ic:outline-delete-outline"
-          className={`h-6 w-6 cursor-pointer text-red-500  ${
-            loggedInUser === data.id && "cursor-not-allowed text-red-200"
+          className={`h-6 w-6 ${
+            currentLoggedInUserData[0].userWorkspace[0]?.role.id !==
+              adminRoleId ||
+            loggedInUser === data.id ||
+            workspaceOwner === data.id
+              ? "cursor-not-allowed text-red-200"
+              : "cursor-pointer text-red-500"
           }`}
         />
-        {memberId === data.id && (
-          <DeletePopUp
-            setOpen={setOpenDeleteModal}
-            open={openDeleteModal}
-            onDelete={() => deleteUser(data.id)}
-            deleteItem={`${data.firstName} ${data.lastName}`}
-            deleteItemType={t("members.member")}
-          />
-        )}
+        {memberId === data.id &&
+          currentLoggedInUserData[0].userWorkspace[0]?.role.id ===
+            adminRoleId && (
+            <DeletePopUp
+              setOpen={setOpenDeleteModal}
+              open={openDeleteModal}
+              onDelete={() => deleteUser(data.id)}
+              deleteItem={`${data.firstName} ${data.lastName}`}
+              deleteItemType={t("members.member")}
+            />
+          )}
       </>
     )
   }
-
   const membersColumn = [
     { title: "Name", field: "name", render: NameDataCell, width: "25%" },
     { title: "Email", field: "email", width: "30%" },
@@ -102,7 +123,11 @@ export default function MembersList({
   return (
     <div className="z-10 text-base">
       <Table
-        columns={membersColumn}
+        columns={
+          currentLoggedInUserData[0].userWorkspace[0]?.role.id !== adminRoleId
+            ? membersColumn.filter((column) => column.title !== "Action")
+            : membersColumn
+        }
         data={memberLoaderData.users}
         paginationEnabled={true}
         pageSize={membersPageSize}

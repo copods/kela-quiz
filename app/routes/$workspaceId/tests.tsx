@@ -22,7 +22,6 @@ import Sections from "~/components/sections/Sections"
 import { routes } from "~/constants/route.constants"
 import { useCommonContext } from "~/context/Common.context"
 import { sortByOrder } from "~/interface/Interface"
-import type { sectionActionErrorsType } from "~/interface/Interface"
 import type { Section } from "~/interface/Interface"
 import {
   getAllSectionCount,
@@ -47,7 +46,11 @@ export type ActionData = {
     name?: string
     description?: string
   }
-  createSectionFieldError?: sectionActionErrorsType
+  createSectionFieldError?: {
+    title?: string
+    description?: string
+    duplicateTitle?: string
+  }
   resp?: {
     status?: string
     check?: Date
@@ -75,11 +78,13 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   try {
     // taking search params from URL
     const query = new URL(request.url).searchParams
+
     // taking number of items per page and current page number from query
     const testItemsPerPage = Math.max(Number(query.get("testItems") || 5), 5) //To set the lower bound, so that minimum count will always be 1 for current page and 5 for items per page.
     const testCurrentPage = Math.max(Number(query.get("testPage") || 1), 1)
     // taking sortBy and order
-    const sortBy = query.get("sortBy")
+    const sortBy = query.get("sortBy") || "name"
+
     const sortOrder = query.get("sort") || sortByOrder.desc
     const userId = await getUserId(request)
     const currentWorkspaceId = params.workspaceId as string
@@ -129,7 +134,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
 export const action: ActionFunction = async ({ request, params }) => {
   const createdById = await requireUserId(request)
-  const workspaceId = params.workspaceId as string
+  const currentWorkspaceId = params.workspaceId as string
   const formData = await request.formData()
   const action =
     formData.get("addSection") ||
@@ -146,25 +151,7 @@ export const action: ActionFunction = async ({ request, params }) => {
       return "statusCheck.descIsReq"
     }
   }
-  if (action === "sectionAdd") {
-    const name = formData.get("name") as string
-    const description = formData.get("description") as string
-    const createSectionFieldError = {
-      title: validateTitle(name),
-      description: validateDescription(description),
-    }
 
-    if (Object.values(createSectionFieldError).some(Boolean)) {
-      return json({ createSectionFieldError }, { status: 400 })
-    }
-    const response = await handleAddTest(
-      name,
-      description,
-      createdById,
-      workspaceId
-    )
-    return response
-  }
   if (action === "sectionEdit") {
     const name = formData.get("name") as string
     const description = formData.get("description") as string
@@ -179,7 +166,24 @@ export const action: ActionFunction = async ({ request, params }) => {
     const response = await handleEditTest(name, description, id)
     return response
   }
+  if (action === "sectionAdd") {
+    const name = formData.get("name")
+    const description = formData.get("description")
+    const createSectionFieldError = {
+      title: validateTitle(name as string),
+      description: validateDescription(description as string),
+    }
 
+    if (Object.values(createSectionFieldError).some(Boolean)) {
+      return json({ createSectionFieldError }, { status: 400 })
+    }
+    return await handleAddTest(
+      name as string,
+      description as string,
+      createdById,
+      currentWorkspaceId
+    )
+  }
   if (action === "sectionDelete") {
     const currentPage = formData.get("currentPage") as string
     const pagePerItems = formData.get("pageSize") as string
@@ -258,10 +262,7 @@ export default function SectionPage() {
   const [showAddSectionModal, setShowAddSectionModal] = useState(false)
   const [order, setOrder] = useState(sortByOrder.desc as string)
   const [sortBy, setSortBy] = useState(sortByDetails[1].value)
-  const [sectionActionErrors, setSectionActionErrors] = useState({
-    title: "",
-    description: "",
-  })
+  const [sectionActionErrors, setSectionActionErrors] = useState({})
   const [testsPageSize, setTestPageSize] = useState(5)
   const [testsCurrentPage, setTestsCurrentPage] = useState(
     getStoredValue("testsRouteActivePage")
@@ -286,15 +287,6 @@ export default function SectionPage() {
     if (sectionActionData) {
       if (
         t(sectionActionData.resp?.status as string) ===
-        t("statusCheck.testAddedSuccess")
-      ) {
-        toast.success(t(sectionActionData.resp?.status as string), {
-          toastId: t(sectionActionData.resp?.status as string),
-        })
-        setSectionActionErrors({ title: "", description: "" })
-        setShowAddSectionModal(false)
-      } else if (
-        t(sectionActionData.resp?.status as string) ===
         t("statusCheck.testUpdatedSuccess")
       ) {
         toast.success(t(sectionActionData.resp?.status as string), {
@@ -312,12 +304,6 @@ export default function SectionPage() {
               `/${data.currentWorkspaceId}${routes.tests}/${sectionActionData?.sectionId}?sortBy=${sortBy}&sort=${order}&testPage=${testsCurrentPage}&testItems=${testsPageSize}`
             )
         }
-      } else if (sectionActionData.createSectionFieldError) {
-        setSectionActionErrors({
-          title: sectionActionData?.createSectionFieldError.title || "",
-          description:
-            sectionActionData.createSectionFieldError.description || "",
-        })
       }
     }
   }, [
@@ -335,9 +321,7 @@ export default function SectionPage() {
     } else if (
       // checking if new test added && total count of tests are not zero or data is present for present page
       // navigate to given path
-      (data.getAllTestsCount > 0 &&
-        t(sectionActionData?.resp?.status as string) ===
-          t("statusCheck.testAddedSuccess")) ||
+      data.getAllTestsCount > 0 ||
       data.sections.length >= 0 ||
       (!location.search && data.getAllTestsCount > 0)
     ) {
@@ -463,6 +447,7 @@ export default function SectionPage() {
         setSectionActionErrors={setSectionActionErrors}
         setOpen={setShowAddSectionModal}
         showErrorMessage={sectionActionData?.errors?.status === 400}
+        data={data}
       />
     </div>
   )
