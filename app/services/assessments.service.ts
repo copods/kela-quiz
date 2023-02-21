@@ -1,6 +1,7 @@
 import type { User } from "@prisma/client"
 import { json } from "@remix-run/node"
 
+import type { Test } from "~/interface/Interface"
 import { createCandidate } from "~/models/candidate.server"
 import {
   deleteTestById,
@@ -37,7 +38,7 @@ export const getAllAssessments = async (
   currentWorkspaceId: string,
   testsItemsPerPage: number,
   testsCurrentPage: number,
-  cb: any
+  cb: (AssessmentUpdate: Test[], statusUpdate: string) => void
 ) => {
   return await getAllTests(
     sortBy as string,
@@ -47,7 +48,7 @@ export const getAllAssessments = async (
     testsCurrentPage
   )
     .then((res) => {
-      return cb(res, "statusCheck.success")
+      return cb(res as Test[], "statusCheck.success")
     })
     .catch((err) => {
       return cb(err, "")
