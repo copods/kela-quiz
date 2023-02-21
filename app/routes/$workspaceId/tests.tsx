@@ -343,6 +343,7 @@ export default function SectionPage() {
       )
     }
   }, [order])
+
   useEffect(() => {
     setTestsCurrentPage(data.testCurrentPage)
   }, [data])
@@ -351,6 +352,7 @@ export default function SectionPage() {
     const heading = document.getElementById("tests-heading")
     heading?.focus()
   }, [])
+
   return (
     <div className="flex h-full flex-col gap-6 overflow-hidden p-1">
       {/* header */}

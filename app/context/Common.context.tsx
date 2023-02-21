@@ -7,9 +7,10 @@ interface IStorage {
 }
 
 type CommonContextType = {
-  setCustomStorage: (key: string, value?: Pick<IStorage, "value">) => void
+  setCustomStorage: (key: string, value?: any) => void
   getStoredValue: (key: string) => any
   clearStoredValue: (key: string) => void
+  clearStorage: () => void
 }
 
 const CommonContext = createContext<CommonContextType | null>(null)
@@ -17,7 +18,7 @@ const CommonContext = createContext<CommonContextType | null>(null)
 const CommonContextProvider: FC<ReactNode> = ({ children }) => {
   const [storage, setStorage] = useState<IStorage[]>([])
 
-  const setCustomStorage = (key: string, value?: Pick<IStorage, "value">) => {
+  const setCustomStorage = (key: string, value?: any) => {
     if (storage.find((store) => store.key === key)) {
       setStorage(
         storage.map((store) =>
@@ -37,12 +38,17 @@ const CommonContextProvider: FC<ReactNode> = ({ children }) => {
     setStorage(storage.filter((store) => store.key !== key))
   }
 
+  const clearStorage = () => {
+    setStorage([])
+  }
+
   return (
     <CommonContext.Provider
       value={{
         setCustomStorage,
         getStoredValue,
         clearStoredValue,
+        clearStorage,
       }}
     >
       {children}
