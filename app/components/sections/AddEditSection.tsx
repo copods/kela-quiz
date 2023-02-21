@@ -101,10 +101,8 @@ const AddEditSection = ({
     fetcherData?.resp?.data?.id,
     fetcherData?.resp?.status,
     data?.filters,
-    navigate,
     setOpen,
     t,
-    fetcherData?.resp?.status,
   ])
   useEffect(() => {
     if (sectionName.length! > 1)
