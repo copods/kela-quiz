@@ -1,5 +1,7 @@
 import { useMemo } from "react"
 
+import crypto from "crypto"
+
 import { useMatches } from "@remix-run/react"
 import { t } from "i18next"
 
@@ -266,4 +268,28 @@ export const getPasswordStrengthColor = (passwordStrength: string) => {
     case "Strong":
       return "text-green-600"
   }
+}
+
+/**
+ * Util function for encrypting and decrypting IDs.
+ */
+const ENC = "bf3c199c2470cb477d907b1e0917c17b"
+const IV = "5183666c72eec9e4"
+const ALGO = "aes-256-cbc"
+
+export const encryptId = (id: string) => {
+  console.log({ id, asdasd: "asdawdw" })
+  let cipher = crypto.createCipheriv(ALGO, ENC, IV)
+  let encrypted = cipher.update(id, "utf8", "base64")
+  encrypted += cipher.final("base64")
+
+  return encrypted
+}
+
+export const decryptId = (encyptedId: string) => {
+  console.log(encryptId)
+  console.log({ encryptId, asdasd: "234234" })
+  let decipher = crypto.createDecipheriv(ALGO, ENC, IV)
+  let decrypted = decipher.update(encyptedId, "base64", "utf8")
+  return (decrypted += decipher.final("utf8"))
 }

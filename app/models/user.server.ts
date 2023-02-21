@@ -7,8 +7,24 @@ import bcrypt from "bcryptjs"
 import { sendMail, sendNewPassword } from "./sendgrid.servers"
 
 import { prisma } from "~/db.server"
+import { encryptId, decryptId } from "~/utils"
 
 export type { User } from "@prisma/client"
+
+prisma.$use(async (params, next) => {
+  if (params.model === "User" && params.args.where.id) {
+    const temp = params.args.where.id
+    const originalId = decryptId(temp)
+    console.log({
+      str: typeof temp,
+      id: temp,
+      decryptId: originalId,
+    })
+    params.args.where.id = originalId
+  }
+
+  return next(params)
+})
 
 export async function getUserById(id: User["id"]) {
   return prisma.user.findUnique({ where: { id }, include: { password: true } })
@@ -302,7 +318,8 @@ export async function loginVerificationResponse(
   }
 
   const { password: _password, ...userWithoutPassword } = userWithPassword
-  return userWithoutPassword
+  return { ...userWithoutPassword, id: encryptId(userWithoutPassword?.id) }
+  // return { ...userWithoutPassword }
 }
 
 export async function updatePassword(
