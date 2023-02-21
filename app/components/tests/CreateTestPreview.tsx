@@ -20,7 +20,9 @@ const TestPreview = ({
   testId?: string
   description: string
   selectedSections: Array<TestSection>
-  onSelectedSectionChange: (e: any) => void
+  onSelectedSectionChange: (
+    e: (section: Array<TestSection>) => TestSection[]
+  ) => void
   isPreviewEditable: boolean
   showInviteAction?: boolean
 }) => {

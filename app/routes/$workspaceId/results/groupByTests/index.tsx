@@ -28,7 +28,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const query = new URL(request.url).searchParams
   const resultsItemsPerPage = Math.max(Number(query.get("limit") || 5), 5) //To set the lower bound, so that minimum count will always be 1 for current page and 5 for items per page.
   const resultsCurrentPage = Math.max(Number(query.get("page") || 1), 1)
-  const statusFilter = query.get("status") as string
+  const statusFilter = (query.get("status") as string) || "active"
   const sortBy = query.get("sortBy")
   const sortOrder = query.get("sort") || sortByOrder.desc
   const currentWorkspaceId = params.workspaceId as string

@@ -4,7 +4,9 @@ import { prisma } from "~/db.server"
 export async function getCurrentWorkspaceOwner(currentWorkspaceId: string) {
   const workspaceOwner = await prisma.workspace.findUnique({
     where: { id: currentWorkspaceId },
-    select: { createdById: true },
+    select: {
+      createdById: true,
+    },
   })
   return workspaceOwner
 }

@@ -4,6 +4,7 @@ import { useLoaderData, useSubmit } from "@remix-run/react"
 
 import dash from "~/../public/assets/dash.svg"
 import tickMark from "~/../public/assets/tickMark.svg"
+import type { CandidateQuestion } from "~/interface/Interface"
 
 const CandidateQuestionStepper = () => {
   const { section, candidateTests, params } = useLoaderData()
@@ -12,7 +13,7 @@ const CandidateQuestionStepper = () => {
   return (
     <div className="flex w-full items-center justify-center gap-2">
       {candidateTests.sections[section.order - 1].questions.map(
-        (question: any, i: number) => {
+        (question: CandidateQuestion, i: number) => {
           return (
             <div key={question.id} className="contents">
               <div

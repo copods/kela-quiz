@@ -97,6 +97,7 @@ const MembersWrapper = () => {
             setMembersCurrentPage={setMembersCurrentPage}
             membersPageSize={membersPageSize}
             setMembersPageSize={setMembersPageSize}
+            roles={memberLoaderData?.roles}
           />
         )}
       </div>

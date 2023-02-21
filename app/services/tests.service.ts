@@ -1,9 +1,9 @@
-import type { Section } from "@prisma/client"
+// import type { Section } from "@prisma/client"
 import { json } from "@remix-run/node"
 
 import { getUserWorkspaceService } from "./workspace.service"
 
-import type { sectionActionErrorsType } from "~/interface/Interface"
+import type { Section, sectionActionErrorsType } from "~/interface/Interface"
 import {
   createSection,
   editSectionById,
@@ -78,7 +78,7 @@ export const getAllTestsData = (
   currentWorkspaceId: string,
   testCurrentPage: number,
   testItemsPerPage: number,
-  cb: (e: any, s: string) => void
+  cb: (sectionUpdate: Section[], statusUpdate: string) => void
 ) => {
   return getAllSections(
     sortBy,
@@ -88,7 +88,7 @@ export const getAllTestsData = (
     testItemsPerPage
   )
     .then((res) => {
-      return cb(res, "statusCheck.success")
+      return cb(res as unknown as Section[], "statusCheck.success")
     })
     .catch((err) => {
       return cb(err, "")
