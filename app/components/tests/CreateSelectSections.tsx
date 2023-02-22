@@ -104,7 +104,7 @@ const SelectSections = ({
   return (
     <div className="flex w-full flex-1 flex-col gap-6 overflow-x-auto rounded-lg bg-white p-6 shadow">
       {sections.length > 0 ? (
-        <div className="flex flex-col gap-6">
+        <div className="flex h-full flex-col gap-6">
           {/* filters */}
           <SortFilter
             filterData={filterByType}
@@ -116,7 +116,7 @@ const SelectSections = ({
             showSelected={false}
           />
           {/* Sections list */}
-          <div className="flex h-80 flex-wrap gap-6 overflow-x-auto">
+          <div className="flex flex-wrap gap-6 overflow-x-auto">
             {sections.map(
               (section: TestSection & { count?: number }, index) => {
                 return (
