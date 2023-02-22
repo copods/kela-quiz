@@ -244,6 +244,7 @@ const TestList = () => {
 
   useEffect(() => {
     setCustomStorage("assessmentSort", sortBy)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sortBy])
 
   useEffect(() => {
