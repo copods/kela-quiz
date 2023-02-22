@@ -320,7 +320,8 @@ export default function SectionPage() {
       (!location.search && data.getAllTestsCount > 0)
     ) {
       navigate(
-        `/${data.currentWorkspaceId}${routes.tests}/${data.sections[0]?.id}?sortBy=${sortBy}&sort=${order}&testPage=${testsCurrentPage}&testItems=${testsPageSize}`
+        `/${data.currentWorkspaceId}${routes.tests}/${data.sections[0]?.id}?sortBy=${sortBy}&sort=${order}&testPage=${testsCurrentPage}&testItems=${testsPageSize}`,
+        { replace: true }
       )
     }
   }, [

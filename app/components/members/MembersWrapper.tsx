@@ -58,14 +58,16 @@ const MembersWrapper = () => {
       (!location.search && memberLoaderData.users.length > 0)
     ) {
       navigate(
-        `?MemberPage=${membersCurrentPage}&MemberItems=${membersPageSize}&InvitedMemberPage=${invitedMemberCurrentPage}&InvitedMemberItems=${invitedMemberPageSize}`
+        `?MemberPage=${membersCurrentPage}&MemberItems=${membersPageSize}&InvitedMemberPage=${invitedMemberCurrentPage}&InvitedMemberItems=${invitedMemberPageSize}`,
+        { replace: true }
       )
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location])
   useEffect(() => {
     navigate(
-      `?MemberPage=${membersCurrentPage}&MemberItems=${membersPageSize}&InvitedMemberPage=${invitedMemberCurrentPage}&InvitedMemberItems=${invitedMemberPageSize}`
+      `?MemberPage=${membersCurrentPage}&MemberItems=${membersPageSize}&InvitedMemberPage=${invitedMemberCurrentPage}&InvitedMemberItems=${invitedMemberPageSize}`,
+      { replace: true }
     )
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
