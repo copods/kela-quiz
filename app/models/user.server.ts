@@ -11,23 +11,26 @@ import { encryptId, decryptId } from "~/utils"
 
 export type { User } from "@prisma/client"
 
-prisma.$use(async (params, next) => {
-  if (params.model === "User" && params.args.where.id) {
-    const temp = params.args.where.id
-    const originalId = decryptId(temp)
-    console.log({
-      str: typeof temp,
-      id: temp,
-      decryptId: originalId,
-    })
-    params.args.where.id = originalId
-  }
+// prisma.$use(async (params, next) => {
+//   if (params.model === "User" && params.args.where.id) {
+//     const temp = params.args.where.id
+//     const originalId = decryptId(temp)
+//     console.log({
+//       id: temp,
+//       decryptId: originalId,
+//     })
+//     params.args.where.id = originalId
+//     console.log({ id: params.args.where })
+//   }
 
-  return next(params)
-})
+//   return next(params)
+// })
 
 export async function getUserById(id: User["id"]) {
-  return prisma.user.findUnique({ where: { id }, include: { password: true } })
+  return prisma.user.findUnique({
+    where: { id: decryptId(id) },
+    include: { password: true },
+  })
 }
 
 export async function deleteUserById(
@@ -61,7 +64,10 @@ export async function deleteUserById(
 }
 
 export async function getUserByEmail(email: User["email"]) {
-  return await prisma.user.findUnique({ where: { email } })
+  const user = await prisma.user.findUnique({ where: { email } })
+
+  return encryptId(user)
+  // return user
 }
 export async function getAllUsersCount(currentWorkspaceId: string | undefined) {
   const userCount = await prisma.user.count({
@@ -105,7 +111,7 @@ export async function getAllUsers({
       },
     },
   })
-  return user
+  return user //@TODO: Encrypt ID for multipleUser
 }
 
 export async function getAllRoles() {
@@ -318,8 +324,7 @@ export async function loginVerificationResponse(
   }
 
   const { password: _password, ...userWithoutPassword } = userWithPassword
-  return { ...userWithoutPassword, id: encryptId(userWithoutPassword?.id) }
-  // return { ...userWithoutPassword }
+  return encryptId(userWithoutPassword)
 }
 
 export async function updatePassword(
@@ -328,7 +333,7 @@ export async function updatePassword(
   oldPassword: string
 ) {
   const oldPass = await prisma.user.findUnique({
-    where: { id },
+    where: { id: decryptId(id) },
     select: {
       password: {
         select: {

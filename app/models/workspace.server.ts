@@ -1,6 +1,7 @@
 import { getAdminId } from "./user.server"
 
 import { prisma } from "~/db.server"
+import { decryptId, encryptId } from "~/utils"
 export async function getCurrentWorkspaceOwner(currentWorkspaceId: string) {
   const workspaceOwner = await prisma.workspace.findUnique({
     where: { id: currentWorkspaceId },
@@ -51,7 +52,7 @@ export async function joinWorkspace({ invitedId }: { invitedId: string }) {
   const linkUserWorkspace = await prisma.userWorkspace.create({
     //create user's another UserWorkspace which is linked with invited workspace
     data: {
-      userId: user?.id as string,
+      userId: encryptId(user)?.id as string,
       workspaceId: getUserInvite?.invitedForWorkspace?.id as string,
       roleId: getUserInvite?.roleId as string,
       isDefault: false,
@@ -88,7 +89,7 @@ export async function addWorkspace(workspaceName: string, userId: string) {
 
 export async function getDefaultWorkspaceIdForUserQuery(userId: string) {
   return prisma.user.findUnique({
-    where: { id: userId },
+    where: { id: decryptId(userId) },
     select: {
       workspace: {
         select: {
@@ -125,7 +126,7 @@ export async function leaveWorkspace(workspaceId: string, userId: string) {
 
 export async function getOwnersWorkspaces(userId: string) {
   const ownerWorkspaceId = await prisma.workspace.findMany({
-    where: { createdById: userId },
+    where: { createdById: decryptId(userId) },
   })
   return ownerWorkspaceId
 }

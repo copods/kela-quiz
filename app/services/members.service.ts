@@ -13,6 +13,7 @@ import {
   getAllUsersCount,
   getUserById,
 } from "~/models/user.server"
+import { encryptId } from "~/utils"
 
 type ActionData = {
   errors?: {
@@ -71,7 +72,10 @@ export async function getALLUsersCount(currentWorkspaceId: string) {
  * @returns User[]
  */
 export async function getUserByID(userId: string) {
-  return await getUserById(userId)
+  const user = await getUserById(userId)
+  if (user) return encryptId(user)
+
+  return null
 }
 
 /**
