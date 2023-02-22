@@ -219,10 +219,13 @@ const TestList = () => {
   ]
   useEffect(() => {
     if (testLoaderData.allTestsCount === 0) {
-      navigate(`/${testLoaderData.currentWorkspaceId}${routes.assessments}`)
+      navigate(`/${testLoaderData.currentWorkspaceId}${routes.assessments}`, {
+        replace: true,
+      })
     } else if (testLoaderData.allTestsCount > 0 && tests.length > 0) {
       navigate(
-        `?sortBy=${sortBy}&sort=${sortDirection}&page=${testsCurrentPage}&limit=${testsPageSize}`
+        `?sortBy=${sortBy}&sort=${sortDirection}&page=${testsCurrentPage}&limit=${testsPageSize}`,
+        { replace: true }
       )
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

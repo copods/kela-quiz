@@ -328,7 +328,8 @@ export default function SectionPage() {
           getStoredValue("activeTest")?.value
             ? getStoredValue("activeTest")?.value
             : data.sections[0]?.id
-        }?sortBy=${sortBy}&sort=${order}&testPage=${testsCurrentPage}&testItems=${testsPageSize}`
+        }?sortBy=${sortBy}&sort=${order}&testPage=${testsCurrentPage}&testItems=${testsPageSize}`,
+        { replace: true }
       )
     }
   }, [
