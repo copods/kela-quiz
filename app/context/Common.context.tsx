@@ -7,7 +7,7 @@ interface IStorage {
 }
 
 type CommonContextType = {
-  setCustomStorage: (key: string, value?: Pick<IStorage, "value">) => void
+  setCustomStorage: (key: string, value?: any) => void
   getStoredValue: (key: string) => any
   clearStoredValue: (key: string) => void
 }
@@ -17,7 +17,7 @@ const CommonContext = createContext<CommonContextType | null>(null)
 const CommonContextProvider: FC<ReactNode> = ({ children }) => {
   const [storage, setStorage] = useState<IStorage[]>([])
 
-  const setCustomStorage = (key: string, value?: Pick<IStorage, "value">) => {
+  const setCustomStorage = (key: string, value?: any) => {
     if (storage.find((store) => store.key === key)) {
       setStorage(
         storage.map((store) =>
