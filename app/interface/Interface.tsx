@@ -290,10 +290,7 @@ export interface CandidateResult {
   workspaceId?: string
   link?: string
 }
-export interface sectionActionErrorsType {
-  title: string
-  description: string
-}
+
 export enum sortByOrder {
   ascending = "asc",
   name = "name",
