@@ -263,7 +263,11 @@ export default function SectionPage() {
   const [order, setOrder] = useState(sortByOrder.desc as string)
   const [sortBy, setSortBy] = useState(sortByDetails[1].value)
   const [sectionActionErrors, setSectionActionErrors] = useState({})
-  const [testsPageSize, setTestPageSize] = useState(5)
+  const [testsPageSize, setTestPageSize] = useState(
+    getStoredValue("testActiveSize")?.value
+      ? getStoredValue("testActiveSize")?.value
+      : 5
+  )
   const [testsCurrentPage, setTestsCurrentPage] = useState(
     getStoredValue("testActivePage")?.value
       ? getStoredValue("testActivePage")?.value
@@ -297,13 +301,7 @@ export default function SectionPage() {
         toast.success(t("statusCheck.deletedSuccess"), {
           toastId: t("statusCheck.deletedSuccess"),
         })
-        // eslint-disable-next-line no-lone-blocks
-        {
-          sectionActionData.sectionId &&
-            navigate(
-              `/${data.currentWorkspaceId}${routes.tests}/${sectionActionData?.sectionId}?sortBy=${sortBy}&sort=${order}&testPage=${testsCurrentPage}&testItems=${testsPageSize}`
-            )
-        }
+        setCustomStorage("activeTest", sectionActionData?.sectionId)
       }
     }
   }, [
@@ -345,23 +343,23 @@ export default function SectionPage() {
   ])
 
   useEffect(() => {
-    if (data.sortOrder !== order) {
-      navigate(
-        `/${data.currentWorkspaceId}${routes.tests}/${
-          data.sections.slice(-1)[0]?.id
-        }?sortBy=${sortBy}&sort=${order}&testPage=${testsCurrentPage}&testItems=${testsPageSize}`
-      )
+    const heading = document.getElementById("tests-heading")
+    heading?.focus()
+  }, [])
+
+  useEffect(() => {
+    if (!getStoredValue("activeTest")?.value) {
+      setTestsCurrentPage(1)
     }
-  }, [order])
+  }, [data.getAllTestsCount, sortBy, order])
 
   useEffect(() => {
     setCustomStorage("testActivePage", testsCurrentPage)
   }, [data])
 
   useEffect(() => {
-    const heading = document.getElementById("tests-heading")
-    heading?.focus()
-  }, [])
+    setCustomStorage("testActiveSize", testsPageSize)
+  }, [testsPageSize])
 
   return (
     <div className="flex h-full flex-col gap-6 overflow-hidden p-1">
@@ -414,7 +412,7 @@ export default function SectionPage() {
             />
           </div>
           {/* section details */}
-          <div className={`z-10 flex flex-1 items-center `}>
+          <div className="z-10 flex flex-1 items-center">
             <span
               className="z-20 -mr-5"
               tabIndex={0}
