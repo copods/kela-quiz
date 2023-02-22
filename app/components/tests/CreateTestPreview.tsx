@@ -188,7 +188,9 @@ const TestPreview = ({
                       <div className="flex gap-2">
                         <Icon
                           icon="fa:long-arrow-up"
-                          className="cursor-pointer"
+                          className={`${
+                            i == 0 ? "cursor-not-allowed" : "cursor-pointer"
+                          }`}
                           onClick={() => moveSection(i, "up")}
                           tabIndex={0}
                           onKeyUp={(e) => {
@@ -197,7 +199,11 @@ const TestPreview = ({
                         />
                         <Icon
                           icon="fa:long-arrow-down"
-                          className="cursor-pointer"
+                          className={`${
+                            i == selectedSections.length - 1
+                              ? "cursor-not-allowed"
+                              : "cursor-pointer"
+                          }`}
                           onClick={() => moveSection(i, "down")}
                           tabIndex={0}
                           onKeyUp={(e) => {
