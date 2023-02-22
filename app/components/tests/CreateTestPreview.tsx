@@ -11,7 +11,7 @@ const TestPreview = ({
   name,
   testId,
   description,
-  onSelectedSectionChange,
+  onChangeSelectedSectionsOrder,
   selectedSections,
   isPreviewEditable = true,
   showInviteAction,
@@ -20,39 +20,28 @@ const TestPreview = ({
   testId?: string
   description: string
   selectedSections: Array<TestSection>
-  onSelectedSectionChange?: (
-    e: (section: Array<TestSection>) => TestSection[]
-  ) => void
+  onChangeSelectedSectionsOrder?: (e: TestSection[]) => void
   isPreviewEditable: boolean
   showInviteAction?: boolean
 }) => {
   const { t } = useTranslation()
 
-  const moveSection = (index: number, action: string) => {
-    if (action == "up") {
-      if (index == 0) {
-        return
-      }
-      onSelectedSectionChange &&
-        onSelectedSectionChange((section: Array<TestSection>) => {
-          let temp = section[index]
-          section[index] = section[index - 1]
-          section[index - 1] = temp
-          return [...section]
-        })
-    } else if (action == "down") {
-      if (index == selectedSections.length - 1) {
-        return
-      }
-      onSelectedSectionChange &&
-        onSelectedSectionChange((section: Array<TestSection>) => {
-          let temp = section[index]
-          section[index] = section[index + 1]
-          section[index + 1] = temp
-          return [...section]
-        })
+  const changeSelectedSectionsOrder = (index: number, action: string) => {
+    if (
+      (index === 0 && action === "up") ||
+      (index === selectedSections.length - 1 && action === "down")
+    )
+      return
+    else {
+      let temp = selectedSections[index]
+      selectedSections[index] =
+        selectedSections[action == "up" ? index - 1 : index + 1]
+      selectedSections[action == "up" ? index - 1 : index + 1] = temp
+      onChangeSelectedSectionsOrder &&
+        onChangeSelectedSectionsOrder([...selectedSections])
     }
   }
+
   const getTotalTime = () => {
     let time = 0
 
@@ -191,10 +180,11 @@ const TestPreview = ({
                           className={`${
                             i == 0 ? "cursor-not-allowed" : "cursor-pointer"
                           }`}
-                          onClick={() => moveSection(i, "up")}
+                          onClick={() => changeSelectedSectionsOrder(i, "up")}
                           tabIndex={0}
                           onKeyUp={(e) => {
-                            if (e.key === "Enter") moveSection(i, "up")
+                            if (e.key === "Enter")
+                              changeSelectedSectionsOrder(i, "up")
                           }}
                         />
                         <Icon
@@ -204,10 +194,11 @@ const TestPreview = ({
                               ? "cursor-not-allowed"
                               : "cursor-pointer"
                           }`}
-                          onClick={() => moveSection(i, "down")}
+                          onClick={() => changeSelectedSectionsOrder(i, "down")}
                           tabIndex={0}
                           onKeyUp={(e) => {
-                            if (e.key === "Enter") moveSection(i, "up")
+                            if (e.key === "Enter")
+                              changeSelectedSectionsOrder(i, "down")
                           }}
                         />
                       </div>
