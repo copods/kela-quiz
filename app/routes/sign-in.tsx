@@ -69,7 +69,7 @@ export const action: ActionFunction = async ({ request }) => {
 
   return createUserSession({
     request,
-    userId: user.id,
+    userId: user.id as string,
     remember: remember === "on" ? true : false,
     redirectTo: redirectTo
       ? redirectTo

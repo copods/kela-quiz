@@ -73,7 +73,8 @@ export async function getALLUsersCount(currentWorkspaceId: string) {
  */
 export async function getUserByID(userId: string) {
   const user = await getUserById(userId)
-  if (user) return encryptId(user)
+  console.log({ user, 3: 3 })
+  if (user) return { ...user, id: encryptId(user.id) }
 
   return null
 }

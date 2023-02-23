@@ -33,7 +33,7 @@ export async function getUserId(
 ): Promise<User["id"] | undefined> {
   const session = await getSession(request)
   const userId = session.get(USER_SESSION_KEY)
-  return userId
+  return encryptId(userId) as string
 }
 
 export async function getWorkspaceId(
@@ -51,10 +51,10 @@ export async function getDefaultWorkspaceIdForUser(userId: string) {
 
 export async function getUser(request: Request) {
   const userId = await getUserId(request)
-  if (userId === undefined) return null
+  if (userId === undefined || userId === null) return null
 
   const user = await getUserById(userId)
-  if (user) return encryptId(user)
+  if (user) return { ...user, id: encryptId(user.id) }
 
   throw await logout(request)
 }
@@ -85,9 +85,10 @@ export async function requireWorkspaceId(
 
 export async function requireUser(request: Request) {
   const userId = await requireUserId(request)
-
+  if (userId === undefined) return null
+  console.log({ userId, 2: 2 })
   const user = await getUserById(userId)
-  if (user) return encryptId(user)
+  if (user) return { ...user, id: encryptId(user.id) }
 
   throw await logout(request)
 }
@@ -111,6 +112,7 @@ export async function createUserSession({
   const session = await getSession(request)
   session.set(USER_SESSION_KEY, userId)
   session.set(USER_WORKSPACE_KEY, workspaceId)
+  console.log(userId)
   return redirect(redirectTo, {
     headers: {
       "Set-Cookie": await sessionStorage.commitSession(session, {

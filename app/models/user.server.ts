@@ -66,7 +66,9 @@ export async function deleteUserById(
 export async function getUserByEmail(email: User["email"]) {
   const user = await prisma.user.findUnique({ where: { email } })
 
-  return encryptId(user)
+  if (user) {
+    return { ...user, id: encryptId(user.id) }
+  }
   // return user
 }
 export async function getAllUsersCount(currentWorkspaceId: string | undefined) {
@@ -324,7 +326,7 @@ export async function loginVerificationResponse(
   }
 
   const { password: _password, ...userWithoutPassword } = userWithPassword
-  return encryptId(userWithoutPassword)
+  return { ...userWithoutPassword, id: encryptId(userWithoutPassword.id) }
 }
 
 export async function updatePassword(
