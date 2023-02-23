@@ -219,7 +219,9 @@ const AddTestComponent = ({
         currentTab === tabs[2].id && (
           <TestPreview
             selectedSections={selectedSections}
-            onSelectedSectionChange={onSelectedSectionChange}
+            onChangeSelectedSectionsOrder={(sections) => {
+              onSelectedSectionChange(sections)
+            }}
             name={name}
             description={description}
             isPreviewEditable
