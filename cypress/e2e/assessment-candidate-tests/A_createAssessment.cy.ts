@@ -56,7 +56,7 @@ describe("Creating new assessment", () => {
         getTextArea().type("Aptitude")
         getSubmitBtn().click()
       })
-    cy.wait(1000)
+    cy.wait(1500)
 
     //Section 2
     getAddSectionBtn().click()
