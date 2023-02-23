@@ -70,7 +70,7 @@ const PaginationDropDown = ({
 
   return (
     <Listbox value={selected} onChange={setSelected}>
-      <div className="relative" ref={elementRef}>
+      <div className="relative" ref={elementRef} data-cy="pagination-dropdown">
         <Listbox.Button
           className="flex cursor-pointer items-center text-xs text-gray-600"
           onClick={() => setIsElementOpen((prev) => !prev)}
@@ -163,7 +163,10 @@ const Pagination = ({
           onPageChange,
         })}
         {!hideRange && (
-          <span className="flex text-xs text-gray-600">
+          <span
+            className="flex text-xs text-gray-600"
+            data-cy="pagination-details"
+          >
             Showing {firstPageIndex + 1} to{" "}
             {pageSize * currentPage > totalItems
               ? totalItems

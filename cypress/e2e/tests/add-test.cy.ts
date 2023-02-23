@@ -15,6 +15,10 @@ import {
   getSubmitButtonById,
   getTests,
   getTimeInput,
+  getPaginationDropdown,
+  getPaginationDropdownButton,
+  getPaginationDetails,
+  getPaginationRange,
 } from "support/common-function"
 
 const step1 = "Step 1"
@@ -31,6 +35,13 @@ const addTestPageButtons = {
   back: "Back",
   submit: "Submit",
 }
+const paginationDropdownItems = [
+  "3 Items",
+  "6 Items",
+  "12 Items",
+  "18 Items",
+  "24 Items",
+]
 describe("Creating assessments", () => {
   beforeEach("sign-in", () => {
     cy.login()
@@ -99,6 +110,72 @@ describe("Creating assessments", () => {
         }
       })
     })
+
+    /*
+     * Checking the visibility of Dropdown
+     * Verify if user able to change the dropdown Range
+     * That Amount of section is visible
+     */
+    getPaginationDropdownButton()
+      .should("be.visible")
+      .should("have.text", "3 Items")
+    getSectionInDiv().should("have.length", "3")
+    getPaginationDropdownButton().click()
+    getPaginationDropdown()
+      .should("be.visible")
+      .get("li")
+      .each((listItems, index) => {
+        cy.wrap(listItems).within(() => {
+          expect(listItems.find("span")[0].innerText).to.deep.equal(
+            paginationDropdownItems[index]
+          )
+        })
+      })
+    getPaginationDropdown()
+      .get("li")
+      .eq(0)
+      .should(
+        "have.class",
+        "relative cursor-pointer select-none py-2 px-8 text-xs text-gray-600 bg-gray-100"
+      )
+
+    /**
+     * Checking the Visiblity Pagination Range, Styling and its working
+     */
+    getPaginationRange()
+      .should("be.visible")
+      .find("span")
+      .each((item, index) => {
+        expect(item[0].innerText).to.deep.equal((index + 1).toString())
+      })
+    getPaginationRange().find("span").eq(0).should("have.class", "bg-gray-200")
+    getPaginationRange().find("svg").should("have.length", "2")
+    getPaginationRange()
+      .find("svg")
+      .eq(0)
+      .should("have.class", "pointer-events-none text-slate-300")
+
+    /**
+     * Checking the Visibility Pagination Details, Styling and its working
+     */
+    getPaginationDetails()
+      .should("be.visible")
+      .should("have.text", "Showing 1 to 3 of 5")
+    getPaginationRange().should("be.visible").find("span").eq(1).click()
+    getPaginationRange().find("span").eq(1).should("have.class", "bg-gray-200")
+    getSectionInDiv().should("have.length", "2")
+    getPaginationRange()
+      .find("svg")
+      .eq(1)
+      .should("have.class", "pointer-events-none text-slate-300")
+    getPaginationDetails()
+      .should("be.visible")
+      .should("have.text", "Showing 4 to 5 of 5")
+    getPaginationDropdownButton().click()
+    getPaginationDropdown().get("li").eq(1).click()
+    getPaginationDropdownButton().should("have.text", "6 Items")
+    getSectionInDiv().should("have.length", "5")
+
     getNextBtn().click()
     getSubmitButtonById().should("have.text", addTestPageButtons.submit)
     getSubmitButtonById().should("have.css", "padding", "10px 28px")
