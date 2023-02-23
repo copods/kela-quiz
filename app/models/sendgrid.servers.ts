@@ -89,7 +89,11 @@ export async function sendMail(
   return "Done"
 }
 
-export async function sendTestInviteMail(email: string, link: string) {
+export async function sendTestInviteMail(
+  email: string,
+  link: string,
+  time: string
+) {
   const to = email
   const from = "careers@copods.co"
   const subject = "Welcome to K - Quiz @ Copods"
@@ -120,7 +124,7 @@ export async function sendTestInviteMail(email: string, link: string) {
         <p style="text-align:left;color:#4B5563;margin:0;"><span>Hi,</span>
         </p>
         <br>
-        <p style="text-align:left;color:#4B5563;margin:0;">You have been invited by Copods for an online pre interview assessment test.
+        <p style="text-align:left;color:#4B5563;margin:0;">You have been invited by Copods for an online pre interview assessment of ${time}.
         </p>
         
 
@@ -135,7 +139,7 @@ export async function sendTestInviteMail(email: string, link: string) {
           If the above link does not work, copy and paste this URL into your browser:
         </p>
         <p style="text-align:center;color:#4B5563;margin:0;font-family:'Poppins', sans-serif;margin-top:10px">
-          <a href="${link}" style="color: #353988;">"${link}"</a>
+          <a href="${link}" style="color: #353988;">${link}</a>
         </p>
         <br>
     </div>
@@ -223,7 +227,6 @@ export async function sendOTPMail(email: string, otp: number) {
       `
 
   sendgrid.setApiKey(env.SENDGRID_API_KEY as string)
-
   const msg = {
     to,
     from, // Use the email address or domain you verified above
