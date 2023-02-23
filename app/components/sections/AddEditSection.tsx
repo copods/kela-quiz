@@ -71,7 +71,6 @@ const AddEditSection = ({
     )
   }
   const fetcherData = fetcher.data
-
   useEffect(() => {
     if (fetcherData?.createSectionFieldError || fetcherData?.errors?.title) {
       setSectionActionErrors({
@@ -80,7 +79,7 @@ const AddEditSection = ({
         duplicateTitle: fetcherData?.errors?.title,
       })
     }
-  }, [fetcherData?.createSectionFieldError, setSectionActionErrors])
+  }, [fetcherData?.createSectionFieldError, fetcherData?.errors?.check])
 
   const navigate = useNavigate()
   useEffect(() => {
@@ -101,10 +100,8 @@ const AddEditSection = ({
     fetcherData?.resp?.data?.id,
     fetcherData?.resp?.status,
     data?.filters,
-    navigate,
     setOpen,
     t,
-    fetcherData?.resp?.status,
   ])
   useEffect(() => {
     if (sectionName.length! > 1)
