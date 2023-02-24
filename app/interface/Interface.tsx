@@ -1,5 +1,4 @@
 import type React from "react"
-import type { FC } from "react"
 
 export interface InputFieldProps {
   name: string
