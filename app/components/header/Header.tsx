@@ -1,12 +1,6 @@
-const Header = ({
-  id,
-  heading,
-  component,
-}: {
-  id: string
-  heading: string
-  component?: React.ReactNode
-}) => {
+import type { headerProps } from "~/interface/Interface"
+
+const Header = ({ id, heading, component }: headerProps) => {
   return (
     <header className="flex items-center justify-between">
       <h2
