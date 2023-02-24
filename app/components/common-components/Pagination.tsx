@@ -29,9 +29,7 @@ const PaginationButtons = ({
         <span
           key={index}
           className={`flex h-7 w-7 cursor-pointer items-center justify-center text-xs ${
-            currentPage === paginationRangeItems
-              ? " rounded-md bg-gray-200"
-              : ""
+            currentPage === paginationRangeItems ? "rounded-md bg-gray-200" : ""
           }`}
           onClick={() => onPageChange(paginationRangeItems)}
           role="button"
