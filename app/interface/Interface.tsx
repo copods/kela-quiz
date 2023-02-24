@@ -410,3 +410,9 @@ export interface ChipComponent {
   error: string
   warning: string
 }
+
+export interface headerProps {
+  id: string
+  heading: string
+  rightChildren?: React.ReactNode
+}
