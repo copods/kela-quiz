@@ -28,10 +28,8 @@ const PaginationButtons = ({
       return (
         <span
           key={index}
-          className={`flex w-8 cursor-pointer justify-center py-1 text-sm ${
-            currentPage === paginationRangeItems
-              ? " rounded-md bg-gray-200"
-              : ""
+          className={`flex h-7 w-7 cursor-pointer items-center justify-center text-xs ${
+            currentPage === paginationRangeItems ? "rounded-md bg-gray-200" : ""
           }`}
           onClick={() => onPageChange(paginationRangeItems)}
           role="button"
@@ -70,7 +68,7 @@ const PaginationDropDown = ({
 
   return (
     <Listbox value={selected} onChange={setSelected}>
-      <div className="relative" ref={elementRef}>
+      <div className="relative" ref={elementRef} data-cy="pagination-dropdown">
         <Listbox.Button
           className="flex cursor-pointer items-center text-xs text-gray-600"
           onClick={() => setIsElementOpen((prev) => !prev)}
@@ -163,7 +161,10 @@ const Pagination = ({
           onPageChange,
         })}
         {!hideRange && (
-          <span className="flex text-xs text-gray-600">
+          <span
+            className="flex text-xs text-gray-600"
+            data-cy="pagination-details"
+          >
             Showing {firstPageIndex + 1} to{" "}
             {pageSize * currentPage > totalItems
               ? totalItems

@@ -13,21 +13,26 @@ import TestPreview from "./CreateTestPreview"
 import StepsTabComponent from "./StepsTab"
 
 import { routes } from "~/constants/route.constants"
-import type { TestSection } from "~/interface/Interface"
+import type { AddedSectionDetails, TestSection } from "~/interface/Interface"
 import { sortByOrder } from "~/interface/Interface"
 
 const AddTestComponent = ({
   sections,
   currentWorkspaceId,
+  totalSectionsCount,
 }: {
   sections: Array<TestSection>
   currentWorkspaceId: string
+  totalSectionsCount: number
 }) => {
   const { t } = useTranslation()
 
   const transition = useTransition()
   const submit = useSubmit()
   const [sectionsCopy, setSectionsCopy] = useState(sections)
+  const [allSelectedSections, setAllSelectedSections] = useState<
+    Array<TestSection>
+  >([])
   useEffect(() => {
     setSectionsCopy(sections)
   }, [sections])
@@ -65,12 +70,37 @@ const AddTestComponent = ({
     []
   )
   const navigate = useNavigate()
-  const updateSection = <T,>(data: T, i: number) => {
+  const updateSection = (data: AddedSectionDetails, index: number) => {
     setSectionsCopy((sec) => {
-      sec[i] = { ...sec[i], ...data }
+      sec[index] = { ...sec[index], ...data }
+      const isSelectedSectionExist = allSelectedSections.find(
+        (obj) => obj.id === sec[index].id
+      )
+      if (!isSelectedSectionExist) {
+        //Simply adding the selected Sections
+        allSelectedSections.length > 0
+          ? setAllSelectedSections((oldArray) => [...oldArray, sec[index]])
+          : setAllSelectedSections([sec[index]])
+      } else if (isSelectedSectionExist) {
+        if (data.isSelected) {
+          // updating the sections whenever we are updating question or Time
+          allSelectedSections.forEach((selected: any) => {
+            const targetData = data.target as keyof TestSection
+            if (selected.id === sec[index].id && targetData in selected) {
+              selected[targetData] = sec[index][targetData]
+            }
+          })
+        } else {
+          // Removing the section when we click remove
+          const indexOfSectionToBeRemoved = allSelectedSections?.indexOf(
+            isSelectedSectionExist
+          )
+          allSelectedSections.splice(indexOfSectionToBeRemoved, 1)
+        }
+      }
       onSelectedSectionChange(
-        sec.filter((s) => {
-          return s.isSelected
+        sec.filter((section) => {
+          return section.isSelected
         })
       )
       return [...sec]
@@ -130,10 +160,10 @@ const AddTestComponent = ({
   }
 
   const getSectionCheck = () => {
-    if (selectedSections.length < 1) {
+    if (allSelectedSections.length < 1) {
       return true
     }
-    for (let section of selectedSections) {
+    for (let section of allSelectedSections) {
       if (!section?.totalQuestions || !section?.time) {
         return true
       }
@@ -182,13 +212,15 @@ const AddTestComponent = ({
           }}
           updateSectionsList={setSectionsCopy}
           currentWorkspaceId={currentWorkspaceId}
+          totalSectionsCount={totalSectionsCount}
+          allSelectedSections={allSelectedSections}
         />
       ) : (
         currentTab === tabs[2].id && (
           <TestPreview
-            selectedSections={selectedSections}
+            selectedSections={allSelectedSections}
             onChangeSelectedSectionsOrder={(sections) => {
-              onSelectedSectionChange(sections)
+              setAllSelectedSections(sections)
             }}
             name={name}
             description={description}
