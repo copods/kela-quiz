@@ -1,6 +1,6 @@
 import type { headerProps } from "~/interface/Interface"
 
-const Header = ({ id, heading, component }: headerProps) => {
+const Header = ({ id, heading, rightChildren }: headerProps) => {
   return (
     <header className="flex items-center justify-between">
       <h2
@@ -12,7 +12,7 @@ const Header = ({ id, heading, component }: headerProps) => {
       >
         {heading}
       </h2>
-      {component}
+      {rightChildren}
     </header>
   )
 }

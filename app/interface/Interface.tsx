@@ -1,5 +1,4 @@
 import type React from "react"
-import type { FC } from "react"
 
 export interface InputFieldProps {
   name: string
@@ -415,5 +414,5 @@ export interface ChipComponent {
 export interface headerProps {
   id: string
   heading: string
-  component?: FC
+  rightChildren?: React.ReactNode
 }
