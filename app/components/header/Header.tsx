@@ -12,7 +12,7 @@ const Header = ({ id, heading, component }: headerProps) => {
       >
         {heading}
       </h2>
-      {component && component}
+      {component}
     </header>
   )
 }
