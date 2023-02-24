@@ -20,6 +20,7 @@ import ChipGroup from "./ChipGroup"
 import InviteCandidatePopup from "./InviteCandidatePopup"
 
 import { routes } from "~/constants/route.constants"
+import { useCommonContext } from "~/context/Common.context"
 import { sortByOrder } from "~/interface/Interface"
 import type { Test, User, tableColumnType } from "~/interface/Interface"
 
@@ -46,6 +47,7 @@ const TestList = () => {
     }
   }, [testActionData, t])
   const tests = testLoaderData.tests
+  const { setCustomStorage, getStoredValue } = useCommonContext()
   //sort filter data
   const [sortDirection, onSortDirectionChange] = useState(
     sortByOrder.desc as string
@@ -61,7 +63,11 @@ const TestList = () => {
       value: "createdAt",
     },
   ]
-  const [sortBy, onSortChange] = useState(sortByDetails[1].value)
+  const [sortBy, onSortChange] = useState(
+    getStoredValue("assessmentSort")?.value
+      ? getStoredValue("assessmentSort")?.value
+      : sortByDetails[1].value
+  )
   const [testsCurrentPage, setTestsCurrentPage] = useState(
     testLoaderData.testsCurrentPage
   )
@@ -238,6 +244,11 @@ const TestList = () => {
     testLoaderData.allTestsCount,
     location.search,
   ])
+
+  useEffect(() => {
+    setCustomStorage("assessmentSort", sortBy)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sortBy])
 
   useEffect(() => {
     const heading = document.getElementById("assessments-page-title")
