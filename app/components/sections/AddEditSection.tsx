@@ -7,6 +7,7 @@ import { toast } from "react-toastify"
 import Button from "../common-components/Button"
 import DialogWrapper from "../common-components/Dialog"
 
+import { useCommonContext } from "~/context/Common.context"
 import type { LoaderData } from "~/routes/$workspaceId/tests"
 import { trimValue } from "~/utils"
 
@@ -47,6 +48,7 @@ const AddEditSection = ({
   data?: LoaderData
 }) => {
   const { t } = useTranslation()
+  const { clearStoredValue } = useCommonContext()
   const transition = useTransition()
   const [sectionName, setSectionName] = useState("")
   const [description, setDescription] = useState("")
@@ -65,6 +67,8 @@ const AddEditSection = ({
     )
   }
   const addSection = (name: string, description: string) => {
+    clearStoredValue("testActivePage")
+    clearStoredValue("activeTest")
     fetcher.submit(
       { addSection: "sectionAdd", name, description },
       { method: "post" }
@@ -87,7 +91,6 @@ const AddEditSection = ({
       toast.success(t(fetcherData?.resp?.status as string), {
         toastId: "test-added-sucessfully",
       })
-      navigate(`${fetcherData?.resp?.data?.id}${data?.filters}`)
       setOpen(false)
     } else if (fetcherData?.resp?.status === "statusCheck.testUpdatedSuccess") {
       toast.success(t(fetcherData?.resp?.status as string), {
@@ -96,13 +99,7 @@ const AddEditSection = ({
       navigate(`${location.pathname}${location.search}`)
       setOpen(false)
     }
-  }, [
-    fetcherData?.resp?.data?.id,
-    fetcherData?.resp?.status,
-    data?.filters,
-    setOpen,
-    t,
-  ])
+  }, [fetcherData?.resp?.data?.id, fetcherData?.resp?.status, setOpen, t])
   useEffect(() => {
     if (sectionName.length! > 1)
       setSectionActionErrors({
