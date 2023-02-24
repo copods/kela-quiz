@@ -10,11 +10,12 @@ import EmptyStateComponent from "../common-components/EmptyStateComponent"
 import QuestionCard from "./QuestionCard"
 
 import { routes } from "~/constants/route.constants"
+import { useCommonContext } from "~/context/Common.context"
 import type { Question } from "~/interface/Interface"
 
 const SectionDetails = () => {
   const { t } = useTranslation()
-
+  const { setCustomStorage } = useCommonContext()
   const sectionDetails = useLoaderData()
   const [currentAccordian, setCurrentAccordian] = useState(-1)
   const [searchText, setSearchText] = useState("")
@@ -71,11 +72,12 @@ const SectionDetails = () => {
         )}
         <Button
           tabIndex={0}
-          onClick={() =>
+          onClick={() => {
             navigate(
               `/${sectionDetails.currentWorkspaceId}${routes.tests}/${sectionDetails.sectionDetails?.id}${routes.addQuestion}`
             )
-          }
+            setCustomStorage("activeTest", sectionDetails.sectionDetails?.id)
+          }}
           id="add-question"
           className="h-9 w-36 px-5"
           buttonText={`+ ${t("addQuestion.addQuestion")}`}
