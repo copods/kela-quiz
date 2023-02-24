@@ -414,5 +414,6 @@ export interface ChipComponent {
 export interface headerProps {
   id: string
   heading: string
+  size?: string
   rightChildren?: React.ReactNode
 }
