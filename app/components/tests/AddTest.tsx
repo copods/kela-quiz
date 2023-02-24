@@ -160,10 +160,10 @@ const AddTestComponent = ({
   }
 
   const getSectionCheck = () => {
-    if (selectedSections.length < 1) {
+    if (allSelectedSections.length < 1) {
       return true
     }
-    for (let section of selectedSections) {
+    for (let section of allSelectedSections) {
       if (!section?.totalQuestions || !section?.time) {
         return true
       }
@@ -218,9 +218,9 @@ const AddTestComponent = ({
       ) : (
         currentTab === tabs[2].id && (
           <TestPreview
-            selectedSections={selectedSections}
+            selectedSections={allSelectedSections}
             onChangeSelectedSectionsOrder={(sections) => {
-              onSelectedSectionChange(sections)
+              setAllSelectedSections(sections)
             }}
             name={name}
             description={description}
