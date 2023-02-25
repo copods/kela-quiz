@@ -341,7 +341,8 @@
     "passShouldNotBeSame": "Current Password and New Password should not be same",
     "leaveWorkspace": "Leave workspace",
     "leave": "Leave",
-    "leaveWorkspaceConfirmation": "Are you sure you want to leave this workspace?"
+    "leaveWorkspaceConfirmation": "Are you sure you want to leave this workspace?",
+    "workspaceUpdated": "Workspace updated sucessfully..!"
   },
   "tabs": {
     "general": "General",

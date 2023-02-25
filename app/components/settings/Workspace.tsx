@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState } from "react"
+import { useState } from "react"
 
 import { useLoaderData, useSubmit } from "@remix-run/react"
 import { useTranslation } from "react-i18next"
@@ -10,22 +10,31 @@ import DialogWrapper from "../common-components/Dialog"
 import { WorkspaceDetailsSection } from "./WorkspaceDetailsSection"
 
 import Header from "~/components/header/Header"
-
-type UserWorkspace = {
-  id: string
-  name: string
-  createdById: string
-  createdAt: string
-  updatedAt: string
-}
+import type { SettingWorkspace } from "~/interface/Interface"
 
 const CancelAndSaveButton = ({
   setIsEdit,
   t,
+  currentWorkspaceId,
+  workspaceName,
 }: {
   setIsEdit: (val: boolean) => void
   t: TFunction<"translation", undefined>
+  currentWorkspaceId: string
+  workspaceName: string
 }) => {
+  const submit = useSubmit()
+  const updateWorkspace = () => {
+    submit(
+      {
+        updateWorkspace: "updateUserWorkspace",
+        workspaceId: currentWorkspaceId,
+        name: workspaceName,
+      },
+      { method: "post" }
+    )
+  }
+
   return (
     <div className="flex gap-6">
       <Button
@@ -46,7 +55,10 @@ const CancelAndSaveButton = ({
         name="edit"
         title={t("commonConstants.save")}
         buttonText={t("commonConstants.save")}
-        onClick={() => setIsEdit(false)}
+        onClick={() => {
+          updateWorkspace()
+          setIsEdit(false)
+        }}
       />
     </div>
   )
@@ -79,7 +91,7 @@ const Workspace = () => {
   const workspaceLoaderData = useLoaderData()
   const [inputValue, setInputValue] = useState(
     workspaceLoaderData?.ownersWorkspaces?.find(
-      (workspaces: UserWorkspace) =>
+      (workspaces: SettingWorkspace) =>
         workspaces?.id === workspaceLoaderData?.currentWorkspaceId
     )?.name
   )
@@ -88,23 +100,18 @@ const Workspace = () => {
   const leaveWorkspace = () => {
     submit({ leaveWorkspace: "leaveWorkspace" }, { method: "post" })
   }
-  console.log(workspaceLoaderData)
-
-  useLayoutEffect(() => {
-    setInputValue(
-      workspaceLoaderData?.ownersWorkspaces?.find(
-        (workspaces: UserWorkspace) =>
-          workspaces?.id === workspaceLoaderData?.currentWorkspaceId
-      )?.name
-    )
-  }, [workspaceLoaderData])
 
   return (
     <div className="flex flex-col justify-start gap-8">
       <div className="flex h-10 items-center justify-between">
         <Header id="workspace-header" heading="Details" size="text-2xl" />
         {isEdit ? (
-          <CancelAndSaveButton setIsEdit={setIsEdit} t={t} />
+          <CancelAndSaveButton
+            setIsEdit={setIsEdit}
+            t={t}
+            currentWorkspaceId={workspaceLoaderData.currentWorkspaceId}
+            workspaceName={inputValue}
+          />
         ) : (
           <EditButton setIsEdit={setIsEdit} t={t} />
         )}

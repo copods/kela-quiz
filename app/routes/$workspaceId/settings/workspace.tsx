@@ -13,6 +13,7 @@ import {
   getActiveOwnerWorkspaces,
   getActiveWorkspaceOwner,
   leaveActiveWorkspace,
+  updateCurrentUserWorkspace,
 } from "~/services/workspace.service"
 import { getUserId } from "~/session.server"
 
@@ -33,18 +34,44 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     currentWorkspaceId,
   })
 }
+
+const actionConstants = {
+  leaveWorksapce: "leaveWorkspace",
+  updateWorkspace: "updateWorkspace",
+  updateUserWorkspace: "updateUserWorkspace",
+}
+
 export const action: ActionFunction = async ({ request, params }) => {
   const workspaceId = params.workspaceId as string
   const userId = (await getUserId(request)) as string
-  const response = await leaveActiveWorkspace(workspaceId, userId)
-  return response
+  const formData = await request.formData()
+
+  const action =
+    formData.get(actionConstants.updateWorkspace) ||
+    formData.get(actionConstants.leaveWorksapce)
+
+  if (action === actionConstants.updateUserWorkspace) {
+    const name = formData.get("name") as string
+    const workspaceId = formData.get("workspaceId") as string
+    const updateWorkspace = await updateCurrentUserWorkspace(workspaceId, name)
+    return updateWorkspace
+  } else if (action === actionConstants.leaveWorksapce) {
+    const response = await leaveActiveWorkspace(workspaceId, userId)
+    return response
+  }
 }
 const WorkspaceSetting = () => {
   const actionData = useActionData()
   const workspaceLoaderData = useLoaderData()
   const navigate = useNavigate()
+
   useEffect(() => {
-    if (actionData?.resp?.status === 200) {
+    if (
+      actionData?.resp?.status === 200 &&
+      actionData?.resp?.title === "settings.workspaceUpdated"
+    ) {
+      toast.success(t(actionData?.resp?.title))
+    } else if (actionData?.resp?.status === 200) {
       toast.success(t(actionData?.resp?.title))
       navigate(`/${workspaceLoaderData?.ownersWorkspace?.id}${routes.members}`)
     } else if (actionData?.resp?.status === 400) {

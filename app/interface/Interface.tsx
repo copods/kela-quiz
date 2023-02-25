@@ -417,3 +417,11 @@ export interface headerProps {
   size?: string
   rightChildren?: React.ReactNode
 }
+
+export interface SettingWorkspace {
+  id: string
+  name: string
+  createdById: string
+  createdAt: string
+  updatedAt: string
+}
