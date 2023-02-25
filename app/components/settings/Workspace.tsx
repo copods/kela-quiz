@@ -78,7 +78,6 @@ const Workspace = () => {
         workspaces?.id === workspaceLoaderData?.currentWorkspaceId
     )?.name
   )
-  console.log(workspaceLoaderData)
   const [isError, setIsError] = useState(false)
   const { t } = useTranslation()
   const submit = useSubmit()
