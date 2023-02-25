@@ -5,9 +5,33 @@ import type { Question, User } from "@prisma/client"
 import { sendTestInviteMail } from "./sendgrid.servers"
 
 import { prisma } from "~/db.server"
+import { getHoursAndMinutes } from "~/utils"
 
 // inviting candidate
 const candidateTestLink = `${env.PUBLIC_URL}/assessment/`
+
+const getFormatedTime = (testTimeList: Array<{ timeInSeconds: number }>) => {
+  let totalTimeInSeconds = 0
+
+  testTimeList?.forEach((time: { timeInSeconds: number }) => {
+    totalTimeInSeconds = time.timeInSeconds + totalTimeInSeconds
+  })
+
+  const timeInHoursAndMinutes = getHoursAndMinutes(totalTimeInSeconds)
+
+  return `${
+    timeInHoursAndMinutes.h
+      ? timeInHoursAndMinutes.h +
+        (timeInHoursAndMinutes.h === 1 ? "Hour" : "Hours")
+      : ""
+  } ${
+    timeInHoursAndMinutes.m
+      ? timeInHoursAndMinutes.m +
+        (timeInHoursAndMinutes.m === 1 ? "Minute" : "Minutes")
+      : ""
+  }`
+}
+
 export async function createIndividualCandidate({
   email,
   createdById,
@@ -120,8 +144,12 @@ export async function getTestById(id: string) {
   })
 }
 
-export async function sendMailToCandidate(email: string, link: string) {
-  sendTestInviteMail(email, link)
+export async function sendMailToCandidate(
+  email: string,
+  link: string,
+  time: string
+) {
+  sendTestInviteMail(email, link, time)
 }
 
 async function createCandidateData({
@@ -138,6 +166,7 @@ async function createCandidateData({
     testId,
     candidateId: user.id,
   })
+
   // generating random link
   const candidateLink = `${candidateTestLink}${candidateTest.id}`
   const updatedCandidateTest = await updateTestLink({
@@ -156,7 +185,24 @@ async function createCandidateData({
       })
     }
   }
-  await sendMailToCandidate(user?.email, updatedCandidateTest?.link as string)
+  const getUserTestTime = await prisma.test.findUnique({
+    where: { id: updatedCandidateTest.testId },
+    select: {
+      sections: {
+        select: {
+          timeInSeconds: true,
+        },
+      },
+    },
+  })
+
+  await sendMailToCandidate(
+    user?.email,
+    updatedCandidateTest?.link as string,
+    getFormatedTime(
+      getUserTestTime?.sections as Array<{ timeInSeconds: number }>
+    ) as string
+  )
 }
 // Resend a test link to user
 export async function resendTestLink({
@@ -187,7 +233,25 @@ export async function resendTestLink({
           linkSentOn: new Date(),
         },
       })
-      await sendMailToCandidate(candidate?.email as string, candidateLink)
+
+      const getUserTestTime = await prisma.test.findUnique({
+        where: { id: testId },
+        select: {
+          sections: {
+            select: {
+              timeInSeconds: true,
+            },
+          },
+        },
+      })
+
+      await sendMailToCandidate(
+        candidate?.email as string,
+        candidateLink,
+        getFormatedTime(
+          getUserTestTime?.sections as Array<{ timeInSeconds: number }>
+        ) as string
+      )
       return "created"
     } else {
       return "End Test"
@@ -257,13 +321,28 @@ export async function remindCandidate() {
     },
     select: {
       link: true,
-      candidate: { select: { email: true } },
+      test: {
+        select: {
+          sections: {
+            select: { timeInSeconds: true },
+          },
+        },
+      },
+      candidate: {
+        select: {
+          email: true,
+        },
+      },
     },
   })
 
   if (candidates.length) {
     candidates.forEach((candidate) => {
-      sendTestInviteMail(candidate.candidate.email, candidate.link as string)
+      sendTestInviteMail(
+        candidate.candidate.email,
+        candidate.link as string,
+        getFormatedTime(candidate.test?.sections) as string
+      )
     })
   }
 }

@@ -132,7 +132,7 @@ const MyProfileComponent = () => {
       <Header
         id="my-profile-page-title"
         heading={t("commonConstants.myProfile")}
-        component={viewMode ? <EditButton /> : <SaveAndCancelButton />}
+        rightChildren={viewMode ? <EditButton /> : <SaveAndCancelButton />}
       />
       <div className="flex gap-6 rounded-lg border border-solid border-gray-300 bg-white p-5">
         {inputFieldsProps.map((props) => {

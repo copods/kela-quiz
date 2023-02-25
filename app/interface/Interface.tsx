@@ -93,6 +93,7 @@ export interface TestSection {
   order?: number
   timeInSeconds?: number
   section?: Section
+  target?: string
 }
 export interface Section {
   id: string
@@ -399,6 +400,12 @@ export interface BadgeComponent {
   textColor?: string
 }
 
+export interface AddedSectionDetails {
+  isSelected: boolean | undefined
+  totalQuestions: number
+  time: number
+  target: string
+}
 export interface ChipComponent {
   success: string
   error: string
@@ -408,5 +415,5 @@ export interface ChipComponent {
 export interface HeaderProps {
   id: string
   heading: string
-  component?: React.ReactNode
+  rightChildren?: React.ReactNode
 }
