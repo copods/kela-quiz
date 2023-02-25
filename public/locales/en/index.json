@@ -83,7 +83,10 @@
     "items": "Items",
     "onGoing": "Ongoing",
     "notAttempted": "Not attempted",
-    "switchAccount": "Switch Account"
+    "switchAccount": "Switch Account",
+    "myProfile": "My Profile",
+    "save": "Save",
+    "saving": "Saving..."
   },
   "sideNav": {
     "sideNavHeading": "Quiz",
@@ -314,7 +317,8 @@
     "workspaceNameIsRequired": "Workspace name is required",
     "memberAlreadyInvited": "Member already invited",
     "cannotAddTestZeroQuestion": "Cannot add test with 0 questions.",
-    "notAdMoreThanAvailableQuestion": "Cannot add more than available questions"
+    "notAdMoreThanAvailableQuestion": "Cannot add more than available questions",
+    "userProfileUpdatedSuccessfully": "User Profile is Updated successfully"
   },
   "otpConstants": {
     "header": "OTP Verification",

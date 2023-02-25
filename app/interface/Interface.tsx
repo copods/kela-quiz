@@ -10,6 +10,7 @@ export interface InputFieldProps {
   value: string
   error?: string
   errorId: string
+  customClasses?: string
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
@@ -289,10 +290,7 @@ export interface CandidateResult {
   workspaceId?: string
   link?: string
 }
-export interface sectionActionErrorsType {
-  title: string
-  description: string
-}
+
 export enum sortByOrder {
   ascending = "asc",
   name = "name",
@@ -405,4 +403,10 @@ export interface ChipComponent {
   success: string
   error: string
   warning: string
+}
+
+export interface HeaderProps {
+  id: string
+  heading: string
+  component?: React.ReactNode
 }
