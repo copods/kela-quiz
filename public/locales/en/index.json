@@ -193,6 +193,7 @@
     "selectCorrOption": "Select the Correct Option",
     "descIsReq": "Description is required",
     "nameIsReq": "Name is required",
+    "workspaceNameIsReq": "Workspace name is required",
     "testAddedSuccess": "Test added successfully..!",
     "testUpdatedSuccess": "Test updated sucessfully..!",
     "maxOptions": "you can add maximum six options.",

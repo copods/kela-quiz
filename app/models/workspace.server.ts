@@ -133,11 +133,12 @@ export async function getOwnersWorkspaces(userId: string) {
 }
 
 export async function updateUserWorkspace(
-  workspaceId: string,
-  workspaceName: string
+  id: string,
+  name: string,
+  updatedById: string
 ) {
   await prisma.workspace.update({
-    where: { id: workspaceId },
-    data: { name: workspaceName },
+    where: { id },
+    data: { name, updatedById },
   })
 }

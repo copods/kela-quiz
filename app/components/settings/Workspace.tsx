@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 import { useLoaderData, useSubmit } from "@remix-run/react"
 import { useTranslation } from "react-i18next"
@@ -15,26 +15,12 @@ import type { SettingWorkspace } from "~/interface/Interface"
 const CancelAndSaveButton = ({
   setIsEdit,
   t,
-  currentWorkspaceId,
-  workspaceName,
+  updateWorkspaceCb,
 }: {
   setIsEdit: (val: boolean) => void
   t: TFunction<"translation", undefined>
-  currentWorkspaceId: string
-  workspaceName: string
+  updateWorkspaceCb: () => void
 }) => {
-  const submit = useSubmit()
-  const updateWorkspace = () => {
-    submit(
-      {
-        updateWorkspace: "updateUserWorkspace",
-        workspaceId: currentWorkspaceId,
-        name: workspaceName,
-      },
-      { method: "post" }
-    )
-  }
-
   return (
     <div className="flex gap-6">
       <Button
@@ -55,10 +41,7 @@ const CancelAndSaveButton = ({
         name="edit"
         title={t("commonConstants.save")}
         buttonText={t("commonConstants.save")}
-        onClick={() => {
-          updateWorkspace()
-          setIsEdit(false)
-        }}
+        onClick={updateWorkspaceCb}
       />
     </div>
   )
@@ -95,11 +78,35 @@ const Workspace = () => {
         workspaces?.id === workspaceLoaderData?.currentWorkspaceId
     )?.name
   )
+  console.log(workspaceLoaderData)
+  const [isError, setIsError] = useState(false)
   const { t } = useTranslation()
   const submit = useSubmit()
   const leaveWorkspace = () => {
     submit({ leaveWorkspace: "leaveWorkspace" }, { method: "post" })
   }
+
+  const updateWorkspace = () => {
+    if (inputValue) {
+      submit(
+        {
+          updateWorkspace: "updateUserWorkspace",
+          workspaceId: workspaceLoaderData.currentWorkspaceId,
+          workspaceCreatorId: workspaceLoaderData.workspaceOwner.createdById,
+          name: inputValue,
+        },
+        { method: "post" }
+      )
+      setIsEdit(false)
+      setIsError(false)
+    } else {
+      setIsError(true)
+    }
+  }
+
+  useEffect(() => {
+    setIsError(false)
+  }, [inputValue])
 
   return (
     <div className="flex flex-col justify-start gap-8">
@@ -109,8 +116,7 @@ const Workspace = () => {
           <CancelAndSaveButton
             setIsEdit={setIsEdit}
             t={t}
-            currentWorkspaceId={workspaceLoaderData.currentWorkspaceId}
-            workspaceName={inputValue}
+            updateWorkspaceCb={updateWorkspace}
           />
         ) : (
           <EditButton setIsEdit={setIsEdit} t={t} />
@@ -118,6 +124,7 @@ const Workspace = () => {
       </div>
       <WorkspaceDetailsSection
         isEdit={isEdit}
+        isError={isError}
         inputValue={inputValue}
         setInputValue={setInputValue}
       />

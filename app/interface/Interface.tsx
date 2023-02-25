@@ -2,9 +2,9 @@ import type React from "react"
 
 export interface InputFieldProps {
   name: string
-  label: string
-  placeholder: string
-  type: string
+  label?: string
+  placeholder?: string
+  type?: string
   isRequired?: boolean
   required: boolean
   value: string

@@ -121,9 +121,14 @@ export async function getUserWorkspaceService(userId: string) {
 
 export async function updateCurrentUserWorkspace(
   workspaceId: string,
-  workspaceName: string
+  workspaceName: string,
+  workspaceCreatorId: string
 ) {
-  return await updateUserWorkspace(workspaceId, workspaceName)
+  return await updateUserWorkspace(
+    workspaceId,
+    workspaceName,
+    workspaceCreatorId
+  )
     .then((res) => {
       return json<ActionData>(
         {

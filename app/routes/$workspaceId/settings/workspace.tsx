@@ -53,7 +53,12 @@ export const action: ActionFunction = async ({ request, params }) => {
   if (action === actionConstants.updateUserWorkspace) {
     const name = formData.get("name") as string
     const workspaceId = formData.get("workspaceId") as string
-    const updateWorkspace = await updateCurrentUserWorkspace(workspaceId, name)
+    const workspaceCreatorId = formData.get("workspaceCreatorId") as string
+    const updateWorkspace = await updateCurrentUserWorkspace(
+      workspaceId,
+      name,
+      workspaceCreatorId
+    )
     return updateWorkspace
   } else if (action === actionConstants.leaveWorksapce) {
     const response = await leaveActiveWorkspace(workspaceId, userId)

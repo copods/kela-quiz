@@ -13,10 +13,12 @@ function InputField({
   const { t } = useTranslation()
   return (
     <div className="flex flex-col gap-1.5">
-      <label htmlFor={name} className="block text-gray-800">
-        {label}
-        {isRequired ? <span className="text-red-600">*</span> : null}
-      </label>
+      {label && (
+        <label htmlFor={name} className="block text-gray-800">
+          {label}
+          {isRequired ? <span className="text-red-600">*</span> : null}
+        </label>
+      )}
       <input
         tabIndex={0}
         id={name}

@@ -1,11 +1,15 @@
 import { useTranslation } from "react-i18next"
 
+import InputField from "../common-components/InputField"
+
 export const WorkspaceDetailsSection = ({
   isEdit,
+  isError,
   inputValue,
   setInputValue,
 }: {
   isEdit: boolean
+  isError: boolean
   inputValue: string
   setInputValue: (val: string) => void
 }) => {
@@ -17,11 +21,16 @@ export const WorkspaceDetailsSection = ({
         {t("sideNav.workspace")}
       </span>
       {isEdit ? (
-        <input
-          value={inputValue}
-          className="w-[498px] rounded-lg border border-gray-300 py-3.5 px-2.5 text-base font-normal leading-6"
-          onChange={(e) => setInputValue(e.target.value)}
-        />
+        <div className="w-[498px]">
+          <InputField
+            name={inputValue}
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            required={false}
+            errorId={"error"}
+            error={isError ? "statusCheck.workspaceNameIsReq" : ""}
+          />
+        </div>
       ) : (
         <span className="text-base font-medium leading-6 text-gray-900 ">
           {inputValue}
