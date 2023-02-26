@@ -48,7 +48,7 @@ describe("Creating assessments", () => {
 
     cy.customVisit("/members")
   })
-  it("chceks, Add Assessment Page", () => {
+  it("checks, Add Assessment Page", () => {
     getTests().click()
     getAddTestBtn().click()
     cy.location("pathname", { timeout: 60000 }).should(
