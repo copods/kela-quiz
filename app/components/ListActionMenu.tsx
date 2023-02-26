@@ -3,6 +3,8 @@ import { Fragment, useEffect } from "react"
 import { Menu, Transition } from "@headlessui/react"
 import { Icon } from "@iconify/react"
 
+import { useElementPositionHandler } from "~/hooks/useElementPositionHandler"
+
 const ListMenuItem = ({
   menuIcon,
   onItemClick,
@@ -10,6 +12,7 @@ const ListMenuItem = ({
   menuDetails,
   id,
   setId,
+  customClasses,
 }: {
   menuIcon: string
   onItemClick: (e: boolean) => void
@@ -24,6 +27,7 @@ const ListMenuItem = ({
   }>
   id: string
   setId?: (e: string) => void
+  customClasses: { item: string; itemsContainer?: string }
 }) => {
   useEffect(() => {
     if (open === false) {
@@ -33,17 +37,32 @@ const ListMenuItem = ({
       }, 50)
     }
   }, [open, id])
+
+  const {
+    elementRef,
+    componentRef,
+    elementViewPortVisiblility,
+    setIsElementOpen,
+  } = useElementPositionHandler()
+
   return (
     <>
       <Menu as="div" className="relative flex">
-        <Menu.Button className={`${id} self-center`}>
-          <Icon
-            onClick={() => setId && setId(id)}
-            className="text-2xl text-gray-600"
-            icon={menuIcon}
-            id="vertical-icon"
-          />
-        </Menu.Button>
+        <div ref={elementRef}>
+          <Menu.Button
+            className={`${id} self-center`}
+            onClick={() => {
+              setIsElementOpen((prev) => !prev)
+            }}
+          >
+            <Icon
+              onClick={() => setId && setId(id)}
+              className="text-2xl text-gray-600"
+              icon={menuIcon}
+              id="vertical-icon"
+            />
+          </Menu.Button>
+        </div>
         <Transition
           as={Fragment}
           enter="transition ease-out duration-100"
@@ -53,8 +72,14 @@ const ListMenuItem = ({
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95"
         >
-          <Menu.Items className="absolute right-6 top-8 z-40 origin-bottom-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5">
-            <div className="flex flex-col px-1 py-1">
+          <Menu.Items
+            className={`absolute right-0 top-8 z-40 origin-bottom-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 ${
+              elementViewPortVisiblility
+                ? ""
+                : "-top-2 -translate-y-full transform"
+            } ${customClasses.itemsContainer}`}
+          >
+            <div className="flex flex-col px-1 py-1" ref={componentRef}>
               {menuDetails?.map((menuItem) => {
                 return (
                   <Menu.Item key={menuItem.id}>
@@ -62,7 +87,7 @@ const ListMenuItem = ({
                       <button
                         tabIndex={0}
                         name="deleteTest"
-                        className="deleteTest text-gray-primary inline-flex w-36 items-center justify-start rounded-md border border-none bg-white px-2 py-2 text-xs font-medium text-primary shadow-sm transition delay-75 ease-in-out hover:bg-gray-100"
+                        className={`deleteTest inline-flex items-center justify-start rounded-md border border-none px-2 py-2 font-medium transition delay-75 ease-in-out hover:bg-gray-100 ${customClasses.item}`}
                         onClick={() => {
                           onItemClick(true)
                           menuItem.handleItemAction &&

@@ -86,7 +86,8 @@
     "switchAccount": "Switch Account",
     "myProfile": "My Profile",
     "save": "Save",
-    "saving": "Saving..."
+    "saving": "Saving...",
+    "changePassword": "Change Password"
   },
   "sideNav": {
     "sideNavHeading": "Quiz",

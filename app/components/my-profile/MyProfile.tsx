@@ -140,10 +140,15 @@ const MyProfileComponent = () => {
             <div className="flex w-6/12 flex-col gap-1" key={props.name}>
               <InputField
                 {...props}
-                customClasses={viewMode ? "hidden" : "visible"}
+                customClasses={{
+                  inputField: viewMode ? "hidden" : "visible",
+                  label: "text-sm",
+                }}
               />
               {viewMode && (
-                <p className="text-base-500 text-gray-900">{props.name}</p>
+                <p className="text-base-500 font-medium text-gray-900">
+                  {props.name}
+                </p>
               )}
             </div>
           )

@@ -10,7 +10,7 @@ export interface InputFieldProps {
   value: string
   error?: string
   errorId: string
-  customClasses?: string
+  customClasses?: { label: string; inputField: string }
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
