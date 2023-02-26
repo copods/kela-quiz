@@ -43,7 +43,7 @@ const updatedName = "Updated Name"
 const workspaceInputError = "Workspace name is required"
 
 describe("Test for settings", () => {
-  it("Tests to check Attributes/Colors/Visibility/Texts and to check if we can reset the password", () => {
+  beforeEach(() => {
     // To login
     cy.login()
     cy.customVisit("/members")
@@ -52,7 +52,9 @@ describe("Test for settings", () => {
     getSettings().should("have.text", settings).click()
     cy.location("pathname").should("include", "/settings/general")
     cy.get("h1").should("have.text", settings)
+  })
 
+  it("Tests to check Attributes/Colors/Visibility/Texts and to check if we can reset the password", () => {
     // To check gap between two tabs
     getTabsWrapper().should("have.css", `gap`, "20px")
 
@@ -220,15 +222,6 @@ describe("Test for settings", () => {
   })
 
   it("Test to check if we can update workspace name", () => {
-    // To login
-    cy.login()
-    cy.customVisit("/members")
-
-    // To check location and title
-    getSettings().should("have.text", settings).click()
-    cy.location("pathname").should("include", "/settings/general")
-    cy.get("h1").should("have.text", settings)
-
     // To check active tab is workspace
     getWorkspaces().should("have.text", workspace).click()
     getWorkspaces().within(() => {
