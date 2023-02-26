@@ -23,16 +23,19 @@ export const WorkspaceDetailsSection = ({
       {isEdit ? (
         <div className="w-[498px]">
           <InputField
-            name={inputValue}
+            name={"workspace-name-input"}
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             required={false}
-            errorId={"error"}
+            errorId={"workspace-input-error"}
             error={isError ? "statusCheck.workspaceNameIsReq" : ""}
           />
         </div>
       ) : (
-        <span className="text-base font-medium leading-6 text-gray-900 ">
+        <span
+          id="current-workspace"
+          className="text-base font-medium leading-6 text-gray-900"
+        >
           {inputValue}
         </span>
       )}

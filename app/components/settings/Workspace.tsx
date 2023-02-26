@@ -25,7 +25,7 @@ const CancelAndSaveButton = ({
     <div className="flex gap-6">
       <Button
         tabIndex={0}
-        id="edit-workspace"
+        id="cancel-edit-workspace"
         variant="primary-outlined"
         type="button"
         name="edit"
@@ -35,7 +35,7 @@ const CancelAndSaveButton = ({
       />
       <Button
         tabIndex={0}
-        id="edit-workspace"
+        id="save-workspace"
         variant="primary-solid"
         type="button"
         name="edit"
