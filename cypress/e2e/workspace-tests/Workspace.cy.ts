@@ -5,7 +5,6 @@ import {
   getSaveWorkspaceBtn,
   getSettings,
   getToaster,
-  getWorkspaceInputError,
   getWorkspaceNameInput,
   getWorkspaces,
 } from "support/common-function"
@@ -17,7 +16,6 @@ const save = "Save"
 const cancel = "Cancel"
 const defaultWorkspace = "Default Workspace"
 const updatedName = "Updated Name"
-const workspaceInputError = "Workspace name is required"
 
 describe("Test for settings", () => {
   it("Tests to check Attributes/Colors/Visibility/Texts and to check if we can reset the password", () => {
@@ -73,7 +71,6 @@ describe("Test for settings", () => {
     // To check if error is shown when user tries to submit empty input
     getEditWorkspaceBtn().click()
     getWorkspaceNameInput().clear()
-    getSaveWorkspaceBtn().click()
-    getWorkspaceInputError().should("have.text", workspaceInputError)
+    getSaveWorkspaceBtn().should("have.attr", "disabled")
   })
 })
