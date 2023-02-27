@@ -13,13 +13,15 @@ import Header from "~/components/header/Header"
 import type { SettingWorkspace } from "~/interface/Interface"
 
 const CancelAndSaveButton = ({
-  setIsEdit,
+  inputValue,
   t,
   updateWorkspaceCb,
+  cancelEditCb,
 }: {
-  setIsEdit: (val: boolean) => void
+  inputValue: string
   t: TFunction<"translation", undefined>
   updateWorkspaceCb: () => void
+  cancelEditCb: () => void
 }) => {
   return (
     <div className="flex gap-6">
@@ -31,7 +33,7 @@ const CancelAndSaveButton = ({
         name="edit"
         title={t("commonConstants.cancel")}
         buttonText={t("commonConstants.cancel")}
-        onClick={() => setIsEdit(false)}
+        onClick={cancelEditCb}
       />
       <Button
         tabIndex={0}
@@ -42,6 +44,7 @@ const CancelAndSaveButton = ({
         title={t("commonConstants.save")}
         buttonText={t("commonConstants.save")}
         onClick={updateWorkspaceCb}
+        isDisabled={!inputValue}
       />
     </div>
   )
@@ -85,6 +88,16 @@ const Workspace = () => {
     submit({ leaveWorkspace: "leaveWorkspace" }, { method: "post" })
   }
 
+  const cancelEdit = () => {
+    setIsEdit(false)
+    setInputValue(
+      workspaceLoaderData?.ownersWorkspaces?.find(
+        (workspaces: SettingWorkspace) =>
+          workspaces?.id === workspaceLoaderData?.currentWorkspaceId
+      )?.name
+    )
+  }
+
   const updateWorkspace = () => {
     if (inputValue) {
       submit(
@@ -113,9 +126,10 @@ const Workspace = () => {
         <Header id="workspace-header" heading="Details" size="text-2xl" />
         {isEdit ? (
           <CancelAndSaveButton
-            setIsEdit={setIsEdit}
             t={t}
             updateWorkspaceCb={updateWorkspace}
+            cancelEditCb={cancelEdit}
+            inputValue={inputValue}
           />
         ) : (
           <EditButton setIsEdit={setIsEdit} t={t} />
