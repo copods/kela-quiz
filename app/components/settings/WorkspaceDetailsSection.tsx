@@ -1,6 +1,23 @@
+import type { TFunction } from "react-i18next"
 import { useTranslation } from "react-i18next"
 
 import InputField from "../common-components/InputField"
+
+const MaxLength = ({
+  inputValue,
+  t,
+}: {
+  inputValue: string
+  t: TFunction<"translation", undefined>
+}) => {
+  return (
+    <span
+      className={`ml-auto text-xs font-normal leading-4 ${
+        inputValue.length === 32 ? "text-red-500" : "text-gray-600"
+      }`}
+    >{`${32 - inputValue.length} character`}</span>
+  )
+}
 
 export const WorkspaceDetailsSection = ({
   isEdit,
@@ -14,6 +31,7 @@ export const WorkspaceDetailsSection = ({
   setInputValue: (val: string) => void
 }) => {
   const { t } = useTranslation()
+  const workspaceNameRegex = /^[a-zA-Z0-9\s]+$/ // Checks that there are no special characters
 
   return (
     <div className="flex flex-col gap-1 rounded-lg border border-gray-300 bg-white p-6">
@@ -25,10 +43,16 @@ export const WorkspaceDetailsSection = ({
           <InputField
             name={"workspace-name-input"}
             value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
+            onChange={(e) =>
+              (workspaceNameRegex.test(e.target.value) ||
+                e.target.value === "") &&
+              setInputValue(e.target.value)
+            }
             required={false}
             errorId={"workspace-input-error"}
             error={isError ? "statusCheck.workspaceNameIsReq" : ""}
+            helperText={<MaxLength t={t} inputValue={inputValue} />}
+            maxLength={32}
           />
         </div>
       ) : (

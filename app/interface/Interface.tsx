@@ -11,6 +11,8 @@ export interface InputFieldProps {
   error?: string
   errorId: string
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  helperText?: React.ReactNode
+  maxLength?: number
 }
 
 export interface PasswordFieldProps {
