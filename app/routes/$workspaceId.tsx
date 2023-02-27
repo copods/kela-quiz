@@ -1,9 +1,14 @@
+import { useEffect } from "react"
+
 import type { ActionFunction, LoaderFunction } from "@remix-run/node"
 import { json, redirect } from "@remix-run/node"
 import { Outlet } from "@remix-run/react"
+import { useLoaderData } from "@remix-run/react"
 
 import AdminLayout from "~/components/layouts/AdminLayout"
 import { routes } from "~/constants/route.constants"
+import { useCommonContext } from "~/context/Common.context"
+import { checkUserFeatureAuthorization } from "~/models/autorization.server"
 import {
   getDefaultWorkspaceIdForUserQuery,
   getUserWorkspaces,
@@ -16,6 +21,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   if (!userId) return redirect(routes.signIn)
 
   let currentWorkspaceId = params.workspaceId as string
+  const featureAuthorization = await checkUserFeatureAuthorization(userId)
 
   const verfiedWorkspaceId = await verifyWorkspaceId({
     userId,
@@ -35,7 +41,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
   const workspaces = await getUserWorkspaces(userId as string)
 
-  return json({ workspaces, currentWorkspaceId })
+  return json({ workspaces, currentWorkspaceId, featureAuthorization })
 }
 
 export const action: ActionFunction = async ({ request }) => {
@@ -43,6 +49,18 @@ export const action: ActionFunction = async ({ request }) => {
 }
 
 const WorkspaceWrapper = () => {
+  const { featureAuthorization } = useLoaderData()
+  const { setCustomStorage, getStoredValue } = useCommonContext()
+
+  useEffect(() => {
+    if (!getStoredValue("authorizationValidations")?.value) {
+      setCustomStorage("authorizationValidations", featureAuthorization)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [featureAuthorization])
+
+  console.log(getStoredValue("authorizationValidations"))
+
   return (
     <AdminLayout>
       <Outlet />
