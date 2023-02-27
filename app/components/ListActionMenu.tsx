@@ -7,6 +7,7 @@ import { useElementPositionHandler } from "~/hooks/useElementPositionHandler"
 
 const ListMenuItem = ({
   menuIcon,
+  menuOpeningClosingState,
   onItemClick,
   open,
   menuDetails,
@@ -15,6 +16,10 @@ const ListMenuItem = ({
   customClasses,
 }: {
   menuIcon: string
+  menuOpeningClosingState?: {
+    menuOpen: boolean
+    setMenuOpen: (e: boolean) => void
+  }
   onItemClick: (e: boolean) => void
   open: boolean
   menuDetails: Array<{
@@ -53,6 +58,10 @@ const ListMenuItem = ({
             className={`${id} self-center`}
             onClick={() => {
               setIsElementOpen((prev) => !prev)
+              menuOpeningClosingState &&
+                menuOpeningClosingState?.setMenuOpen(
+                  !menuOpeningClosingState?.menuOpen
+                )
             }}
           >
             <Icon
@@ -90,6 +99,8 @@ const ListMenuItem = ({
                         className={`deleteTest inline-flex items-center justify-start rounded-md border border-none px-2 py-2 font-medium transition delay-75 ease-in-out hover:bg-gray-100 ${customClasses.item}`}
                         onClick={() => {
                           onItemClick(true)
+                          menuOpeningClosingState &&
+                            menuOpeningClosingState?.setMenuOpen(false)
                           menuItem.handleItemAction &&
                             menuItem.handleItemAction()
                         }}

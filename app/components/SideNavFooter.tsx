@@ -14,6 +14,7 @@ function Footer({ currentWorkspaceId }: { currentWorkspaceId: string }) {
   const fetcher = useFetcher()
 
   const [menuListOpen, setmenuListOpen] = useState<boolean>(false)
+  const [menuOpen, setMenuOpen] = useState<boolean>(false)
 
   const menuItemsDetailsList = [
     {
@@ -67,8 +68,12 @@ function Footer({ currentWorkspaceId }: { currentWorkspaceId: string }) {
         </div>
         <ListActionMenu
           menuIcon={
-            menuListOpen ? "ic:baseline-arrow-drop-up" : "gridicons:dropdown"
+            menuOpen ? "ic:baseline-arrow-drop-up" : "gridicons:dropdown"
           }
+          menuOpeningClosingState={{
+            menuOpen: menuOpen,
+            setMenuOpen: setMenuOpen,
+          }}
           onItemClick={setmenuListOpen}
           open={menuListOpen}
           aria-label={t("testTableItem.menu")}
