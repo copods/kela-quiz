@@ -121,6 +121,27 @@ export async function createUserSession({
   })
 }
 
+export async function switchWorkspace({
+  request,
+  workspaceId,
+  userId,
+}: {
+  request: Request
+  workspaceId: string
+  userId: string
+}) {
+  const session = await getSession(request)
+  await session.set(USER_SESSION_KEY, userId)
+  await session.set(USER_WORKSPACE_KEY, workspaceId)
+  return redirect("/", {
+    headers: {
+      "Set-Cookie": await sessionStorage.commitSession(session, {
+        maxAge: false ? 60 * 60 * 24 * 7 : undefined,
+      }),
+    },
+  })
+}
+
 export async function logout(request: Request) {
   const session = await getSession(request)
   const joinId = new URL(request.url).searchParams.get("?cameFrom") === "join"
