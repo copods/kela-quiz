@@ -148,10 +148,6 @@ export async function checkFeatureAuthorization(
     select: { role: { select: { name: true } } },
   })
 
-  console.log(
-    permissions[userRole[0].role!.name.toLocaleLowerCase()][feature][action]
-  )
-
   return permissions[userRole[0].role!.name.toLocaleLowerCase()][feature][
     action
   ]
@@ -165,8 +161,6 @@ export async function checkUserFeatureAuthorization(
     where: { userId, workspaceId },
     select: { role: { select: { name: true } } },
   })
-
-  console.log(permissions[userRole[0]?.role.name.toLocaleLowerCase() as string])
 
   return permissions[userRole[0]?.role.name.toLocaleLowerCase() as string]
 }

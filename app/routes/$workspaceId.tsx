@@ -53,14 +53,12 @@ export const action: ActionFunction = async ({ request }) => {
 
 const WorkspaceWrapper = () => {
   const { featureAuthorization, currentWorkspaceId } = useLoaderData()
-  const { setCustomStorage, getStoredValue } = useCommonContext()
+  const { setCustomStorage } = useCommonContext()
 
   useEffect(() => {
     setCustomStorage("authorizationValidations", featureAuthorization)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [featureAuthorization, currentWorkspaceId])
-
-  console.log(getStoredValue("authorizationValidations"))
 
   return (
     <AdminLayout>
