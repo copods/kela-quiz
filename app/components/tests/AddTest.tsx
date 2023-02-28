@@ -66,9 +66,7 @@ const AddTestComponent = ({
   const [currentTab, setCurrentTab] = useState(0) // testDetails  ||  selectSections  ||  preview
   const [name, onNameChange] = useState("")
   const [description, setDescription] = useState("")
-  const [selectedSections, onSelectedSectionChange] = useState<TestSection[]>(
-    []
-  )
+
   const navigate = useNavigate()
   const updateSection = (data: AddedSectionDetails, index: number) => {
     setSectionsCopy((sec) => {
@@ -98,11 +96,6 @@ const AddTestComponent = ({
           allSelectedSections.splice(indexOfSectionToBeRemoved, 1)
         }
       }
-      onSelectedSectionChange(
-        sec.filter((section) => {
-          return section.isSelected
-        })
-      )
       return [...sec]
     })
   }
@@ -115,7 +108,7 @@ const AddTestComponent = ({
       toast.error(t("toastConstants.enterDescription"))
       return
     }
-    if (selectedSections.length === 0) {
+    if (allSelectedSections.length === 0) {
       toast.error(t("toastConstants.addTest"))
       return
     }
@@ -133,7 +126,7 @@ const AddTestComponent = ({
       description,
       sections: [],
     }
-    selectedSections.forEach((section, index) => {
+    allSelectedSections.forEach((section, index) => {
       sendData.sections.push({
         sectionId: section.id,
         totalQuestions: section.totalQuestions as number,
@@ -142,7 +135,7 @@ const AddTestComponent = ({
       })
     })
     submit({ data: JSON.stringify(sendData) }, { method: "post" })
-    // fetcher.submit({ data: JSON.stringify(sendData) }, { method: "post" });
+    // P({ data: JSON.stringify(sendData) }, { method: "post" });
   }
   useEffect(() => {
     if (!name || !description) {
