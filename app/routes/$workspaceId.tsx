@@ -21,7 +21,10 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   if (!userId) return redirect(routes.signIn)
 
   let currentWorkspaceId = params.workspaceId as string
-  const featureAuthorization = await checkUserFeatureAuthorization(userId)
+  const featureAuthorization = await checkUserFeatureAuthorization(
+    userId,
+    currentWorkspaceId
+  )
 
   const verfiedWorkspaceId = await verifyWorkspaceId({
     userId,
@@ -49,15 +52,13 @@ export const action: ActionFunction = async ({ request }) => {
 }
 
 const WorkspaceWrapper = () => {
-  const { featureAuthorization } = useLoaderData()
+  const { featureAuthorization, currentWorkspaceId } = useLoaderData()
   const { setCustomStorage, getStoredValue } = useCommonContext()
 
   useEffect(() => {
-    if (!getStoredValue("authorizationValidations")?.value) {
-      setCustomStorage("authorizationValidations", featureAuthorization)
-    }
+    setCustomStorage("authorizationValidations", featureAuthorization)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [featureAuthorization])
+  }, [featureAuthorization, currentWorkspaceId])
 
   console.log(getStoredValue("authorizationValidations"))
 

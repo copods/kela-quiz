@@ -155,48 +155,36 @@ const permissions: {
   },
 }
 
-interface User {
-  id: string
-  workspaceId: string
-  userId: string
-  roleId: string
-  isDefault: boolean
-  createdAt: Date
-  updatedAt: Date
-}
-
 export async function checkFeatureAuthorization(
   userId: string,
   workspaceId: string,
   feature: string,
   action: string
 ) {
-  const user = await prisma.user.findUnique({
-    where: { id: userId },
-    select: { userWorkspace: true },
-  })
-
-  const userRoleId = user?.userWorkspace.find(
-    (user: User) => user?.workspaceId === workspaceId
-  )?.roleId
-
-  const role = await prisma.role.findUnique({
-    where: { id: userRoleId },
-    select: { name: true },
-  })
-
-  console.log(permissions[role!.name.toLocaleLowerCase()][feature][action])
-
-  return permissions[role!.name.toLocaleLowerCase()][feature][action]
-}
-
-export async function checkUserFeatureAuthorization(userId: string) {
-  const userRole = await prisma.user.findUnique({
-    where: { id: userId },
+  const userRole = await prisma.userWorkspace.findMany({
+    where: { userId, workspaceId },
     select: { role: { select: { name: true } } },
   })
 
-  console.log(permissions[userRole?.role.name.toLocaleLowerCase() as string])
+  console.log(
+    permissions[userRole[0].role!.name.toLocaleLowerCase()][feature][action]
+  )
 
-  return permissions[userRole?.role.name.toLocaleLowerCase() as string]
+  return permissions[userRole[0].role!.name.toLocaleLowerCase()][feature][
+    action
+  ]
+}
+
+export async function checkUserFeatureAuthorization(
+  userId: string,
+  workspaceId: string
+) {
+  const userRole = await prisma.userWorkspace.findMany({
+    where: { userId, workspaceId },
+    select: { role: { select: { name: true } } },
+  })
+
+  console.log(permissions[userRole[0]?.role.name.toLocaleLowerCase() as string])
+
+  return permissions[userRole[0]?.role.name.toLocaleLowerCase() as string]
 }
