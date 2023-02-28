@@ -8,13 +8,11 @@ const permissions: {
       create: true,
       read: true,
       update: true,
-      delete: false,
     },
     workspace: {
       create: true,
       read: true,
       update: true,
-      delete: true,
     },
     member: {
       create: true,
@@ -41,16 +39,12 @@ const permissions: {
       delete: true,
     },
     results: {
-      create: false,
       read: true,
-      update: false,
-      delete: false,
     },
     inviteCandidate: {
       create: true,
       read: true,
       update: true,
-      delete: false,
     },
   },
   testCreator: {
@@ -58,13 +52,11 @@ const permissions: {
       create: true,
       read: true,
       update: true,
-      delete: false,
     },
     workspace: {
       create: true,
       read: true,
       update: false,
-      delete: false,
     },
     member: {
       create: false,
@@ -91,16 +83,12 @@ const permissions: {
       delete: true,
     },
     results: {
-      create: false,
       read: false,
-      update: false,
-      delete: false,
     },
     inviteCandidate: {
       create: false,
       read: false,
       update: false,
-      delete: false,
     },
   },
   recruiter: {
@@ -108,13 +96,11 @@ const permissions: {
       create: true,
       read: true,
       update: true,
-      delete: false,
     },
     workspace: {
       create: true,
       read: true,
       update: false,
-      delete: false,
     },
     member: {
       create: false,
@@ -141,16 +127,12 @@ const permissions: {
       delete: false,
     },
     results: {
-      create: false,
       read: true,
-      update: false,
-      delete: false,
     },
     inviteCandidate: {
       create: true,
       read: true,
       update: true,
-      delete: false,
     },
   },
 }
