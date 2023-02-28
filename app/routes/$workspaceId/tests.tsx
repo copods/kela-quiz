@@ -339,6 +339,7 @@ export default function SectionPage() {
     data.getAllTestsCount,
     data.sections[0]?.id,
     location.search,
+    order,
     sortBy,
     sectionActionData?.sectionId,
   ])
