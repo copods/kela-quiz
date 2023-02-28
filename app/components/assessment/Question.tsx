@@ -1,10 +1,15 @@
-import { useLoaderData } from '@remix-run/react'
-import { useEffect, useState } from 'react'
-import { QuestionTypes } from '~/interface/Interface'
-import Checkbox from '../form/CheckBox'
-import CandidateQuestionHeader from './CandidateQuestionHeader'
-import CandidateQuestionFooter from './CandidateQuestionFooter'
-import CandidateQuestionStepper from './CandidateQuestionStepper'
+import { useEffect, useState } from "react"
+
+import { useLoaderData } from "@remix-run/react"
+
+import Checkbox from "../form/CheckBox"
+
+import CandidateQuestionFooter from "./CandidateQuestionFooter"
+import CandidateQuestionHeader from "./CandidateQuestionHeader"
+import CandidateQuestionStepper from "./CandidateQuestionStepper"
+
+import type { Option } from "~/interface/Interface"
+import { QuestionTypes } from "~/interface/Interface"
 
 const Question = () => {
   const { question } = useLoaderData()
@@ -14,14 +19,14 @@ const Question = () => {
       ? question.selectedOptions[0]?.id
       : questionType === QuestionTypes.text
       ? question?.answers
-      : question.selectedOptions.flatMap((option: any) => option.id)
+      : question.selectedOptions.flatMap((option: Option) => option.id)
   )
 
   useEffect(() => {
-    const handleContextmenu = (e: any) => {
+    const handleContextmenu = (e: MouseEvent) => {
       e.preventDefault()
     }
-    function ctrlShiftKey(e: any, code: any) {
+    function ctrlShiftKey(e: KeyboardEvent, code: string) {
       return (
         (e.ctrlKey && e.shiftKey && e.code) ||
         (e.metaKey && e.shiftKey && e.code) === code
@@ -31,17 +36,17 @@ const Question = () => {
     document.onkeydown = (e) => {
       // Disable F12, Ctrl + Shift + I, Ctrl + Shift + J, Ctrl + U
       if (
-        e.code === 'F12' ||
-        ctrlShiftKey(e, 'KeyI') ||
-        ctrlShiftKey(e, 'KeyJ') ||
-        ctrlShiftKey(e, 'KeyC') ||
-        ctrlShiftKey(e, 'KeyK')
+        e.code === "F12" ||
+        ctrlShiftKey(e, "KeyI") ||
+        ctrlShiftKey(e, "KeyJ") ||
+        ctrlShiftKey(e, "KeyC") ||
+        ctrlShiftKey(e, "KeyK")
       )
         return false
     }
-    document.addEventListener('contextmenu', handleContextmenu)
+    document.addEventListener("contextmenu", handleContextmenu)
     return function cleanup() {
-      document.removeEventListener('contextmenu', handleContextmenu)
+      document.removeEventListener("contextmenu", handleContextmenu)
     }
   }, [])
 
@@ -56,7 +61,7 @@ const Question = () => {
       })
     }
     if (questionType === QuestionTypes.multipleChoice) {
-      setUserAnswer((val: any) => {
+      setUserAnswer((val: string[]) => {
         if (userAnswer.indexOf(event.id) === -1) {
           return [...val, event.id]
         } else {
@@ -77,7 +82,10 @@ const Question = () => {
             <CandidateQuestionStepper />
           </div>
           <div className="mx-5 mb-5 flex h-full overflow-auto rounded-lg border bg-white">
-            <div className="flex h-full w-1/2 flex-col gap-8 border-r p-5">
+            <div
+              className="flex h-full w-1/2 flex-col gap-8 border-r p-5"
+              data-cy="questionSection"
+            >
               <div className="flex items-center justify-between">
                 <div className="flex text-xl font-medium">
                   <span>Question </span>
@@ -95,7 +103,10 @@ const Question = () => {
                 />
               </div>
             </div>
-            <div className="flex h-full w-1/2 flex-col gap-2 py-5">
+            <div
+              className="flex h-full w-1/2 flex-col gap-2 py-5"
+              data-cy="answerSection"
+            >
               <div className="flex items-center justify-between px-5">
                 {questionType === QuestionTypes.singleChoice && (
                   <div className="flex text-xl font-medium">
@@ -115,22 +126,14 @@ const Question = () => {
               </div>
               <div className="flex h-full flex-1 flex-col overflow-auto">
                 {question?.question?.options.map(
-                  (
-                    option: {
-                      isCorrect: boolean
-                      id: string
-                      option: string
-                      rightAnswer: boolean
-                    },
-                    i: number
-                  ) => {
+                  (option: Option, i: number) => {
                     return (
                       <label
                         key={option.id}
                         className={`flex cursor-pointer items-start gap-4 border-b px-5 ${
                           option.id === userAnswer
-                            ? 'bg-blue-50'
-                            : 'hover:bg-gray-100'
+                            ? "bg-blue-50"
+                            : "hover:bg-gray-100"
                         }`}
                       >
                         {questionType === QuestionTypes.singleChoice ? (
@@ -175,7 +178,7 @@ const Question = () => {
                           id={answer.id}
                           value={userAnswer[index]}
                           rows={4}
-                          onChange={() => onChangeHandle(event, index)}
+                          onChange={(event) => onChangeHandle(event, index)}
                           className="w-full rounded-lg border border-gray-200 bg-white p-5"
                         />
                       </div>

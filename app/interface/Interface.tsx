@@ -1,10 +1,11 @@
-import type React from 'react'
+import type React from "react"
 
 export interface InputFieldProps {
   name: string
   label: string
   placeholder: string
   type: string
+  isRequired?: boolean
   required: boolean
   value: string
   error?: string
@@ -17,12 +18,13 @@ export interface PasswordFieldProps {
   label: string
   placeholder: string
   required: boolean
+  isRequired: boolean
   value: string
   type: string
   error?: string
   errorId: string
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
-  onblur?: (e: React.FocusEvent<HTMLInputElement>) => void
+  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void
 }
 
 export interface DialogWrapperProps {
@@ -45,12 +47,13 @@ export interface ButtonProps {
   tabIndex?: number
   datacy?: string
   alignment?: string
-  type?: 'button' | 'submit' | 'reset'
-  varient: 'primary-solid' | 'primary-outlined' | 'secondary-solid'
+  type?: "button" | "submit" | "reset"
+  variant: "primary-solid" | "primary-outlined" | "secondary-solid"
   buttonText: string | JSX.Element
   onClick?: React.MouseEventHandler<HTMLButtonElement>
   isDisabled?: boolean
-  btnRef?: any
+  btnRef?: React.RefObject<HTMLButtonElement> | null
+  padding?: string
 }
 
 export interface LoginProps {
@@ -89,13 +92,17 @@ export interface TestSection {
   order?: number
   timeInSeconds?: number
   section?: Section
+  target?: string
 }
 export interface Section {
   id: string
   name: string
+  questions: Array<Question>
   description: string
+  createdBy: User
   createdById: string
   createdAt: Date
+  sectionInTest: SectionInTest[]
   updatedAt: Date
   deleted: boolean
   deletedAt: string
@@ -110,7 +117,7 @@ export interface User {
   roleId: string
   createdAt: Date
   updatedAt: Date
-  workspace: Array<Workspace>
+  workspace?: Array<Workspace>
 }
 export interface Invites {
   id: string
@@ -138,17 +145,23 @@ export interface Role {
 }
 
 export interface Question {
+  checkOrder: boolean
   id: string
   question: string
-  correctAnswer?: Array<CorrectAnswer>
+  correctAnswer: Array<CorrectAnswer>
   marks?: number
-  questionTypeId?: string
+  questionTypeId: string
+  questionType: QuestionType
   sectionId?: string
   createdById?: string
+  createdBy: User
   createdAt?: Date
   updatedAt?: Date
+  deleted: boolean
+  deletedAt: string
   options?: Array<Option>
-  correctOptions?: Array<Option>
+  correctOptions: Array<Option>
+  candidateQuestion: CandidateQuestion[]
 }
 
 export interface Test {
@@ -221,6 +234,10 @@ export interface CandidateTest {
 }
 
 export interface SectionInCandidateTest {
+  selectedOptions: Option[]
+  answers: CorrectAnswer[]
+  status: string
+  SectionWiseResult: SectionWiseResults[]
   id: string
   sectionId: string
   section: Section
@@ -254,6 +271,7 @@ export interface CandidateQuestion {
   answeredAt: Date | null
   createdAt: Date
   updatedAt: Date
+  question: Question
 }
 
 export interface CandidateResult {
@@ -270,29 +288,43 @@ export interface CandidateResult {
   startedAt: Date
   updatedAt: Date
   workspaceId?: string
-}
-export interface createSectionErrorType {
-  title: string
-  description: string
+  link?: string
 }
 export enum sortByOrder {
-  ascending = 'asc',
-  name = 'name',
-  desc = 'desc',
-  saveAndExit = 'Save & Exit',
-  saveAndAddMore = 'Save & Add More',
-  saving = 'Saving...',
-  cancelling = 'Cancelling...',
-  cancel = 'Cancel',
-  createdAt = 'createdAt',
-  creatingAssessment = 'Creating Assessment',
-  submit = 'Submit',
+  ascending = "asc",
+  name = "name",
+  desc = "desc",
+  saveAndExit = "Save & Exit",
+  saveAndAddMore = "Save & Add More",
+  saving = "Saving...",
+  cancelling = "Cancelling...",
+  cancel = "Cancel",
+  createdAt = "createdAt",
+  creatingAssessment = "Creating Assessment",
+  submit = "Submit",
 }
 
 export enum QuestionTypes {
-  multipleChoice = 'MULTIPLE_CHOICE',
-  singleChoice = 'SINGLE_CHOICE',
-  text = 'TEXT',
+  multipleChoice = "MULTIPLE_CHOICE",
+  singleChoice = "SINGLE_CHOICE",
+  text = "TEXT",
+}
+export enum QuestionStatus {
+  answered = "ANSWERED",
+  skipped = "SKIPPED",
+}
+export enum deleteQuestionStatus {
+  notDeleted = "NOT_DELETED",
+  deleted = "DELETED",
+}
+export enum keyboardKeys {
+  backspace = "Backspace",
+  arrowLeft = "ArrowLeft",
+  arrowRight = "ArrowRight",
+}
+export enum checks {
+  success = "success",
+  commonError = "commonError",
 }
 export interface SectionWiseResults {
   id: string
@@ -308,6 +340,24 @@ export interface SectionWiseResults {
   updatedAt: Date
   section: SectionInCandidateTest
   test: Test
+}
+export interface tableColumnType {
+  title: string
+  field: string
+  render?: (data: any, index: number) => JSX.Element
+  width?: string
+}
+export interface TableType<T extends object> {
+  columns: tableColumnType[]
+  data: T[]
+  title?: string
+  paginationEnabled?: boolean
+  onPageChange?: (e: number) => void
+  totalItems?: number
+  currentPage?: number
+  pageSizeOptions?: Array<number>
+  pageSize?: number
+  setPageSize?: (e: number) => void
 }
 export interface Workspace {
   id: string
@@ -331,4 +381,37 @@ export interface UserWorkspace {
 export interface TabsComponent {
   name: string
   route: string
+}
+
+export interface OtherFilters {
+  id: string
+  data: Array<{ name: string; value: string }>
+  displayKey: string
+  valueKey: string
+  value: string
+  setValue: (e: string) => void
+}
+
+export interface BadgeComponent {
+  children: React.ReactNode
+  bgColor?: string
+  textColor?: string
+}
+
+export interface AddedSectionDetails {
+  isSelected: boolean | undefined
+  totalQuestions: number
+  time: number
+  target: string
+}
+export interface ChipComponent {
+  success: string
+  error: string
+  warning: string
+}
+
+export interface headerProps {
+  id: string
+  heading: string
+  rightChildren?: React.ReactNode
 }

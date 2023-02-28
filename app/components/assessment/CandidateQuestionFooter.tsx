@@ -1,6 +1,7 @@
-import { useLoaderData } from '@remix-run/react'
-import { useTranslation } from 'react-i18next'
-import Button from '../form/Button'
+import { useLoaderData } from "@remix-run/react"
+import { useTranslation } from "react-i18next"
+
+import Button from "../common-components/Button"
 // import CandidateQuestionStepper from './CandidateQuestionStepper'
 
 const CandidateQuestionFooter = () => {
@@ -13,9 +14,9 @@ const CandidateQuestionFooter = () => {
         {question?.order !== section?.totalQuestions && (
           <Button
             className="max-w-max border-none bg-inherit py-0 px-0 text-base font-bold text-black underline shadow-none hover:bg-white"
-            varient="primary-outlined"
-            title={'Skip Question'}
-            buttonText={'Skip Question'}
+            variant="primary-outlined"
+            title={"Skip Question"}
+            buttonText={"Skip Question"}
             type="submit"
             value="skip"
             name="skip"
@@ -26,9 +27,9 @@ const CandidateQuestionFooter = () => {
       <div className="flex gap-6">
         <Button
           className="h-8 w-28"
-          varient="primary-outlined"
-          title={t('commonConstants.prevoiusButton')}
-          buttonText={t('commonConstants.prevoiusButton')}
+          variant="primary-outlined"
+          title={t("commonConstants.prevoiusButton")}
+          buttonText={t("commonConstants.prevoiusButton")}
           isDisabled={question.order === 1}
           type="submit"
           value="prev"
@@ -37,9 +38,9 @@ const CandidateQuestionFooter = () => {
         {question.order !== section.totalQuestions ? (
           <Button
             className="h-8 w-28"
-            varient="primary-solid"
-            title={t('commonConstants.nextButton')}
-            buttonText={t('commonConstants.nextButton')}
+            variant="primary-solid"
+            title={t("commonConstants.nextButton")}
+            buttonText={t("commonConstants.nextButton")}
             isDisabled={question.order === section.totalQuestions}
             type="submit"
             value="next"
@@ -48,9 +49,9 @@ const CandidateQuestionFooter = () => {
         ) : lastSection ? (
           <Button
             className="h-8 w-28"
-            varient="primary-solid"
-            title={t('candidateExamConstants.endTest')}
-            buttonText={t('candidateExamConstants.endTest')}
+            variant="primary-solid"
+            title={t("candidateExamConstants.endTest")}
+            buttonText={t("candidateExamConstants.endTest")}
             isDisabled={question.order !== section.totalQuestions}
             type="submit"
             value={section.order}
@@ -59,9 +60,9 @@ const CandidateQuestionFooter = () => {
         ) : (
           <Button
             className="h-8 w-28"
-            varient="primary-solid"
-            title={t('candidateExamConstants.nextSection')}
-            buttonText={'Finish'}
+            variant="primary-solid"
+            title={t("candidateExamConstants.nextSection")}
+            buttonText={"Finish"}
             isDisabled={question.order !== section.totalQuestions}
             type="submit"
             value={section.order}

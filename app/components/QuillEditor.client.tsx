@@ -1,7 +1,8 @@
-import { useEffect, useRef } from 'react'
-import { useQuill } from 'react-quilljs'
-import BlotFormatter from 'quill-blot-formatter'
-import hljs from 'highlight.js'
+import { useEffect, useRef } from "react"
+
+import hljs from "highlight.js"
+import BlotFormatter from "quill-blot-formatter"
+import { useQuill } from "react-quilljs"
 
 export default function QuillEditor({
   text,
@@ -17,20 +18,20 @@ export default function QuillEditor({
   id: string
 }) {
   hljs.configure({
-    languages: ['javascript'],
+    languages: ["javascript"],
   })
-  const theme = 'snow'
+  const theme = "snow"
   const modules = fullAccess
     ? {
         toolbar: [
-          ['bold', 'italic', 'underline'],
+          ["bold", "italic", "underline"],
           [{ align: [] }],
-          [{ list: 'ordered' }, { list: 'bullet' }],
+          [{ list: "ordered" }, { list: "bullet" }],
           [{ header: [1, 2, 3, 4, 5, 6, false] }],
-          ['link', 'image'],
+          ["link", "image"],
           [{ color: [] }, { background: [] }],
-          ['code-block'],
-          ['clean'],
+          ["code-block"],
+          ["clean"],
         ],
         clipboard: {
           matchVisual: false,
@@ -38,7 +39,7 @@ export default function QuillEditor({
         blotFormatter: {},
       }
     : {
-        toolbar: [['bold', 'italic', 'underline'], ['image'], ['code-block']],
+        toolbar: [["bold", "italic", "underline"], ["image"], ["code-block"]],
         clipboard: {
           matchVisual: false,
         },
@@ -46,17 +47,17 @@ export default function QuillEditor({
       }
   const placeholder = `Write your ${quillPlaceholder} here....`
   let formats = [
-    'bold',
-    'italic',
-    'underline',
-    'list',
-    'header',
-    'link',
-    'image',
-    'align',
-    'color',
-    'background',
-    'code-block',
+    "bold",
+    "italic",
+    "underline",
+    "list",
+    "header",
+    "link",
+    "image",
+    "align",
+    "color",
+    "background",
+    "code-block",
   ]
   const editorRef = useRef(null)
   const { quill, quillRef, Quill } = useQuill({
@@ -66,7 +67,7 @@ export default function QuillEditor({
     placeholder,
   })
   if (Quill && !quill) {
-    Quill.register('modules/blotFormatter', BlotFormatter)
+    Quill.register("modules/blotFormatter", BlotFormatter)
   }
   useEffect(() => {
     if (quill && text) {
@@ -76,14 +77,16 @@ export default function QuillEditor({
   }, [quill])
   useEffect(() => {
     if (quill) {
-      quill?.on('text-change', () => {
+      quill?.on("text-change", () => {
         onTextChange(quill.root.innerHTML)
       })
     }
   }, [quill, onTextChange])
   return (
     <div
-      className="flex h-full w-full flex-col rounded-lg bg-white"
+      className={`flex h-full w-full flex-col rounded-lg bg-white ${
+        fullAccess ? "" : "setDynamicHeight"
+      }`}
       id="quill-editor"
       ref={editorRef}
     >

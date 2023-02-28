@@ -1,25 +1,25 @@
-const { PrismaClient } = require('@prisma/client')
-const bcrypt = require('bcryptjs')
+const { PrismaClient } = require("@prisma/client")
+const bcrypt = require("bcryptjs")
 
 const prisma = new PrismaClient()
 
 async function seed() {
-  const email = 'copods.demo.sendgrid@gmail.com'
+  const email = "copods.demo.sendgrid@gmail.com"
 
-  const hashedPassword = await bcrypt.hash('kQuiz@copods', 10)
+  const hashedPassword = await bcrypt.hash("kQuiz@copods", 10)
 
   const roles = [
     {
-      id: 'cl4xvj89a000209jp4qtlfyii',
-      name: 'Admin',
+      id: "cl4xvj89a000209jp4qtlfyii",
+      name: "Admin",
     },
     {
-      id: 'cl4xvj89a000209jp4qtlfyih',
-      name: 'Test Creator',
+      id: "cl4xvj89a000209jp4qtlfyih",
+      name: "Test Creator",
     },
     {
-      id: 'cl4xvjdqs000309jp3rwiefp8',
-      name: 'Recruiter',
+      id: "cl4xvjdqs000309jp3rwiefp8",
+      name: "Recruiter",
     },
   ]
 
@@ -58,19 +58,28 @@ async function seed() {
         },
         workspace: {
           create: {
-            name: 'Default Workspace',
+            name: "Default Workspace",
           },
         },
-        firstName: 'Copods',
-        lastName: 'Careers',
+        firstName: "Copods",
+        lastName: "Careers",
         roleId: roles[0].id,
       },
       include: {
         workspace: true,
       },
     })
-    await prisma.userWorkspace.create({
-      data: {
+    await prisma.userWorkspace.upsert({
+      where: {
+        workspaceId_userId: {
+          userId: user.id,
+          workspaceId: user.workspace[0].id,
+        },
+      },
+      update: {
+        userId: user.id,
+      },
+      create: {
         userId: user.id,
         workspaceId: user.workspace[0].id,
         roleId: user?.roleId,
@@ -81,16 +90,16 @@ async function seed() {
 
   const questionType = [
     {
-      displayName: 'Single Choice',
-      value: 'SINGLE_CHOICE',
+      displayName: "Single Choice",
+      value: "SINGLE_CHOICE",
     },
     {
-      displayName: 'Multiple Choice',
-      value: 'MULTIPLE_CHOICE',
+      displayName: "Multiple Choice",
+      value: "MULTIPLE_CHOICE",
     },
     {
-      displayName: 'Text',
-      value: 'TEXT',
+      displayName: "Text",
+      value: "TEXT",
     },
   ]
 

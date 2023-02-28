@@ -1,191 +1,171 @@
 /// <reference types="Cypress"/>
-import { cypress } from '~/constants/common.constants'
-const memberEmail = 'johndoe@example.com'
-
-describe('Test for members', () => {
-  beforeEach('sign-in', () => {
+import {
+  getBadgeTag,
+  getCancelBtn,
+  getDialogCloseIcon,
+  getDropdown,
+  getEmail,
+  getInviteBtn,
+  getInvitedMemberHeading,
+  getInviteMemberBtn,
+  getJoinedMemberHeading,
+  getMemberDialogHeader,
+  getMembersHeading,
+  getResendMemberInviteBtn,
+  getTableRow,
+  getToaster,
+} from "support/common-function"
+const memberEmail = "johndoe@example.com"
+const owner = "Owner"
+describe("Test for members", () => {
+  beforeEach("sign-in", () => {
     cy.login()
-    cy.customVisit('/members')
-  })
-  it('checks, member heading should be visible', () => {
-    cy.get('.membersHeading').should('be.visible')
-  })
-  it('checks, member heading should have correct text', () => {
-    cy.get('.membersHeading').should('have.text', 'Members')
-  })
-  it('checks, member heading should have tabIndex', () => {
-    cy.get('.membersHeading').should('have.attr', 'tabindex', '0')
-  })
-  it('checks, member heading should be focused', () => {
-    cy.get('.membersHeading')
-      .should('have.attr', 'tabindex', '0')
-      .click()
-      .should('have.focus')
-  })
-  it('checks, invite member button should be visible', () => {
-    cy.get('#invite-member').should('be.visible')
-  })
-  it('checks, invite member button should correct text', () => {
-    cy.get('#invite-member').should('have.text', 'Invite Member')
-  })
-  it('checks, invite member button should correct background color', () => {
-    cy.get('#invite-member').should(
-      'have.css',
-      'background-color',
-      'rgb(53, 57, 136)'
-    )
-  })
-  it('checks,invite member dialog header should be visible', () => {
-    cy.get('#invite-member').should('have.text', 'Invite Member').click()
-    cy.get('[data-cy="dialog-header"]', { timeout: 8000 }).should('be.visible')
-  })
-  it('checks,invite member dialog header should have correct text', () => {
-    cy.get('#invite-member').should('have.text', 'Invite Member').click()
-    cy.get('[data-cy="dialog-header"]', { timeout: 8000 }).should(
-      'have.text',
-      'Invite Member'
-    )
-  })
-  it('checks,invite member dialog header should have tabIndex', () => {
-    cy.get('#invite-member').should('have.text', 'Invite Member').click()
-    cy.get('[data-cy="dialog-header"]', { timeout: 8000 }).should(
-      'have.attr',
-      'tabindex',
-      '0'
-    )
+    cy.customVisit("/members")
   })
 
-  it('checks, invite member popup close icon should be visible', () => {
-    cy.get('#invite-member').should('have.text', 'Invite Member').click()
-    cy.get('#dialog-close-icon').should('be.visible')
-  })
-  it('checks, invite member popup close icon should have tabIndex', () => {
-    cy.get('#invite-member').should('have.text', 'Invite Member').click()
-    cy.get('#dialog-close-icon').should('have.attr', 'tabindex', '0')
-  })
-  it('checks, invite member popup close icon should have role image', () => {
-    cy.get('#invite-member').should('have.text', 'Invite Member').click()
-    cy.get('#dialog-close-icon').should('have.attr', 'role', 'img')
-  })
-  it('checks, invite member popup email input field should be visible', () => {
-    cy.get('#invite-member').should('have.text', 'Invite Member').click()
-    cy.get('#email').should('be.visible')
-  })
-  it('checks, invite member popup email input field should have tabIndex', () => {
-    cy.get('#invite-member').should('have.text', 'Invite Member').click()
-    cy.get('#email').should('have.attr', 'tabindex', '0')
-  })
-  it('checks, invite member popup email input field should have text type', () => {
-    cy.get('#invite-member').should('have.text', 'Invite Member').click()
-    cy.get('#email').should('have.attr', 'type', 'text')
-  })
-  it('checks, invite member popup email input field should have no value after opening the popup', () => {
-    cy.get('#invite-member').should('have.text', 'Invite Member').click()
-    cy.get('#email').should('have.value', '')
-  })
-  it('checks, invite member popup dropdown should be visible', () => {
-    cy.get('#invite-member').should('have.text', 'Invite Member').click()
-    cy.get('#dropdown').should('be.visible')
-  })
-  it('checks, invite member popup dropdown should have aria label', () => {
-    cy.get('#invite-member').should('have.text', 'Invite Member').click()
-    cy.get('#dropdown').should('have.attr', 'aria-label', 'Select')
-  })
-  it('checks, cancel button should have correct text', () => {
-    cy.get('#invite-member').should('have.text', 'Invite Member').click()
-    cy.get('#cancel-add-button').should('have.text', 'Cancel')
-  })
+  it("Tests to check Attributes/Colors/Visibility/Texts", () => {
+    // Header tests
+    // To check if header is visible
+    getMembersHeading().should("be.visible")
 
-  it('checks, cancel button should have tabindex', () => {
-    cy.get('#invite-member').should('have.text', 'Invite Member').click()
-    cy.get('#cancel-add-button').should('have.attr', 'tabindex', '0')
-  })
-  it('checks,cancel Add test button functionality', () => {
-    cy.get('#invite-member').should('have.text', 'Invite Member').click()
-    cy.get('#cancel-add-button').click()
-  })
-  it('checks,Invite button should be visible', () => {
-    cy.get('#invite-member').should('have.text', 'Invite Member').click()
-    cy.get('#invite-button').should('be.visible')
-  })
-  it('checks,Invite button should have correct text', () => {
-    cy.get('#invite-member').should('have.text', 'Invite Member').click()
-    cy.get('#invite-button').should('have.text', 'Invite')
-  })
-  it('checks,Invite button should be disabled', () => {
-    cy.get('#invite-member').should('have.text', 'Invite Member').click()
-    cy.get('#invite-button').should('have.attr', 'disabled')
-  })
-  it('checks,Invite button should be clickable after filling all input values in popup', () => {
-    cy.get('#invite-member').should('have.text', 'Invite Member').click()
-    cy.get('#email')
-      .should('have.attr', 'type', 'text')
-      .type('johndoe@example.com')
-    cy.get('#invite-button').should(
-      'have.css',
-      'background-color',
-      'rgb(53, 57, 136)'
+    // To check if header has correct text
+    getMembersHeading().should("have.text", "Members")
+
+    // To check if header has tabindex
+    getMembersHeading().should("have.attr", "tabindex", "0")
+
+    // To check if header is focused
+    getMembersHeading().click().should("have.focus")
+
+    // Invite button tests
+    // To check if invite member button is visible
+    getInviteMemberBtn().should("be.visible")
+
+    // To check if invite member button has correct text
+    getInviteMemberBtn().should("have.text", "Invite Member")
+
+    // To check if invite member button has correct background color
+    getInviteMemberBtn().should(
+      "have.css",
+      "background-color",
+      "rgb(53, 57, 136)"
     )
-  })
-  it('checks,joined member heading should be visible', () => {
-    cy.get('#joined-member-heading').should('be.visible')
-  })
-  it('checks,joined member heading should have test', () => {
-    cy.get('#joined-member-heading').should('have.text', 'Joined Members')
-  })
-  it('checks,joined member heading should have tabIndex', () => {
-    cy.get('#joined-member-heading').should('have.attr', 'tabindex', '0')
-  })
-  it('checks,joined member heading should have aria label', () => {
-    cy.get('#joined-member-heading').should(
-      'have.attr',
-      'aria-label',
-      'Joined Members'
+
+    // Invite Dialog tests
+    // To check if invite Dialog is visible
+    getInviteMemberBtn().click()
+    getMemberDialogHeader().should("be.visible")
+
+    // To check if Dialog has correct text
+    getMemberDialogHeader().should("have.text", "Invite Member")
+
+    // To check if Dialog has tabindex
+    getMemberDialogHeader().should("have.attr", "tabindex", "0")
+
+    // Invite popup tests
+    // To check if invite popup close icon is visible
+    getDialogCloseIcon().should("be.visible")
+
+    // To check if invite popup close icon has tabindex
+    getDialogCloseIcon().should("have.attr", "tabindex", "0")
+
+    // To check if invite popup close icon has role
+    getDialogCloseIcon().should("have.attr", "tabindex", "0")
+
+    // Invite popup email input tests
+    // To check if invite popup email input is visible
+    getEmail().should("be.visible")
+
+    // To check if invite popup email input has tabindex
+    getEmail().should("have.attr", "tabindex", "0")
+
+    // To check if invite popup email input has type
+    getEmail().should("have.attr", "type", "text")
+
+    // To check if invite popup email input has no value initially
+    getEmail().should("not.have.value")
+
+    // Invite popup dropdown tests
+    // To check if invite popup dropdown is visible
+    getDropdown().should("be.visible")
+
+    // To check if invite popup dropdown has aria label
+    getDropdown().should("have.attr", "aria-label", "Select")
+
+    // Cancel Button tests
+    // To check if cancel button has correct text
+    getCancelBtn().should("have.text", "Cancel")
+
+    // To check if cancel button has tabindex
+    getCancelBtn().should("have.attr", "tabindex", "0")
+
+    // To check if cancel button has working functionality
+    getCancelBtn().click()
+
+    // Invite button tests
+    // To check if invite button is visible
+    getInviteMemberBtn().click()
+    getInviteBtn().should("be.visible")
+
+    // To check if invite button is disabled
+    getInviteBtn().should("have.attr", "disabled")
+
+    // To check if invite button is clickable after all input filled
+    getEmail().type("johndoe@example.com")
+    getInviteBtn().should("have.css", "background-color", "rgb(53, 57, 136)")
+    getCancelBtn().click()
+
+    // Joined memeber heading tests
+    // To check if joined memeber heading is visible
+    getJoinedMemberHeading().should("be.visible")
+
+    // To check if joined member heading has text
+    getJoinedMemberHeading().should("have.text", "Joined Members")
+
+    // To check if joined member heading has tabindex
+    getJoinedMemberHeading().should("have.attr", "tabindex", "0")
+
+    // To check if joined member heading has aria label
+    getJoinedMemberHeading().should("have.attr", "aria-label", "Joined Members")
+
+    // Invite member heading tests
+    // To check if invite member heading is visible
+    getInvitedMemberHeading().should("be.visible")
+
+    // To check if invite member heading has text
+    getInvitedMemberHeading().should("have.text", "Invited Member")
+
+    // To check if invite member heading has tabindex
+    getInvitedMemberHeading().should("have.attr", "tabindex", "0")
+
+    // To check if invite member heading has aria label
+    getInvitedMemberHeading().should(
+      "have.attr",
+      "aria-label",
+      "Invited Member"
     )
-  })
-  it('checks,invite member heading should be visible', () => {
-    cy.get('#invited-member-heading').should('be.visible')
-  })
-  it('checks,invite member heading should have test', () => {
-    cy.get('#invited-member-heading').should('have.text', 'Invited Member')
-  })
-  it('checks,invite member heading should have tabIndex', () => {
-    cy.get('#invited-member-heading').should('have.attr', 'tabindex', '0')
-  })
-  it('checks,invite member heading should have aria label', () => {
-    cy.get('#invited-member-heading').should(
-      'have.attr',
-      'aria-label',
-      'Invited Member'
-    )
-  })
-  it('checks,resend member invite button should be visible', () => {
-    cy.get('#resend-member-invite').should('be.visible')
-  })
-  it('checks,resend member invite button have tabindex', () => {
-    cy.get('#resend-member-invite')
-      .parent()
-      .should('have.attr', 'tabindex', '0')
-  })
-  it('checks,resend member invite button have tabindex', () => {
-    cy.get('#resend-member-invite')
-      .parent()
-      .should('have.attr', 'tabindex', '0')
-  })
-  it('Test for conforming ,new member is added in a list or not', () => {
-    cy.get('.inviteMemberRow', { timeout: 8000 }).each(($el) => {
-      cy.wrap($el).within((el) => {
-        if (
-          el[0].getElementsByClassName('memberMail')[0].innerHTML ===
-          memberEmail
-        ) {
-          cy.get('.memberMail').should('have.text', memberEmail)
-        }
-      })
-    })
-  })
-  it('Test for add-members popUp cancel button', () => {
-    cy.get('#invite-member').should('have.text', cypress.addMember).click()
-    cy.get('#cancel-add-button').should('have.text', 'Cancel').click()
+
+    // Resend member invite button tests
+    // To check if resend member invite button is visible
+    getResendMemberInviteBtn().should("be.visible")
+
+    // To check if resend member invite button has tabindex
+    getResendMemberInviteBtn().parent().should("have.attr", "tabindex", "0")
+
+    // To check if resend number invite button click opens toster
+    getResendMemberInviteBtn().click()
+    getToaster().should("have.text", "Invitation Sent Successfully..!")
+
+    // New member tests
+    // To check if new member is added
+    getTableRow().eq(5).should("have.text", memberEmail)
+
+    // Owner badge tests
+    // To check if owner badge is visible
+    cy.viewport(1280, 720)
+    getBadgeTag().should("be.visible")
+
+    // To check if owner badge has text
+    getBadgeTag().should("have.text", owner)
   })
 })

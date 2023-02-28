@@ -1,82 +1,122 @@
-import { useNavigate, useSubmit, useTransition } from '@remix-run/react'
-import { useEffect, useState } from 'react'
-import { toast } from 'react-toastify'
-import { sortByOrder } from '~/interface/Interface'
-import type { TestSection } from '~/interface/Interface'
-import BreadCrumb from '../BreadCrumb'
-import SelectSections from './CreateSelectSections'
-import TestDetails from './CreateTestDetails'
-import TestPreview from './CreateTestPreview'
-import StepsTabComponent from './StepsTab'
-import Button from '../form/Button'
-import { routes } from '~/constants/route.constants'
-import { useTranslation } from 'react-i18next'
+import { useEffect, useState } from "react"
 
-const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
+import { useNavigate, useSubmit, useTransition } from "@remix-run/react"
+import { useTranslation } from "react-i18next"
+import { toast } from "react-toastify"
+
+import BreadCrumb from "../common-components/BreadCrumb"
+import Button from "../common-components/Button"
+
+import SelectSections from "./CreateSelectSections"
+import TestDetails from "./CreateTestDetails"
+import TestPreview from "./CreateTestPreview"
+import StepsTabComponent from "./StepsTab"
+
+import { routes } from "~/constants/route.constants"
+import type { AddedSectionDetails, TestSection } from "~/interface/Interface"
+import { sortByOrder } from "~/interface/Interface"
+
+const AddTestComponent = ({
+  sections,
+  currentWorkspaceId,
+  totalSectionsCount,
+}: {
+  sections: Array<TestSection>
+  currentWorkspaceId: string
+  totalSectionsCount: number
+}) => {
   const { t } = useTranslation()
 
   const transition = useTransition()
   const submit = useSubmit()
   const [sectionsCopy, setSectionsCopy] = useState(sections)
+  const [allSelectedSections, setAllSelectedSections] = useState<
+    Array<TestSection>
+  >([])
   useEffect(() => {
     setSectionsCopy(sections)
   }, [sections])
   const breadCrumbData = [
     {
-      tabName: 'testsConstants.assessment',
-      route: routes.assessments,
+      tabName: "testsConstants.assessment",
+      route: `/${currentWorkspaceId}${routes.assessments}`,
     },
     {
-      tabName: 'testsConstants.addTestbutton',
-      route: routes.addAssessment,
+      tabName: "testsConstants.addTestbutton",
+      route: `/${currentWorkspaceId}${routes.addAssessment}`,
     },
   ]
   const tabs = [
     {
       id: 0,
-      name: 'Step 1',
-      description: 'Assessment Details',
+      name: "Step 1",
+      description: "Assessment Details",
     },
     {
       id: 1,
-      name: 'Step 2',
-      description: 'Select Sections',
+      name: "Step 2",
+      description: "Select Sections",
     },
     {
       id: 2,
-      name: 'Step 3',
-      description: 'Preview',
+      name: "Step 3",
+      description: "Preview",
     },
   ]
   const [currentTab, setCurrentTab] = useState(0) // testDetails  ||  selectSections  ||  preview
-  const [name, onNameChange] = useState('')
-  const [description, setDescription] = useState('')
+  const [name, onNameChange] = useState("")
+  const [description, setDescription] = useState("")
   const [selectedSections, onSelectedSectionChange] = useState<TestSection[]>(
     []
   )
   const navigate = useNavigate()
-  const updateSection = (data: Array<TestSection>, i: number) => {
+  const updateSection = (data: AddedSectionDetails, index: number) => {
     setSectionsCopy((sec) => {
-      sec[i] = { ...sec[i], ...data }
+      sec[index] = { ...sec[index], ...data }
+      const isSelectedSectionExist = allSelectedSections.find(
+        (obj) => obj.id === sec[index].id
+      )
+      if (!isSelectedSectionExist) {
+        //Simply adding the selected Sections
+        allSelectedSections.length > 0
+          ? setAllSelectedSections((oldArray) => [...oldArray, sec[index]])
+          : setAllSelectedSections([sec[index]])
+      } else if (isSelectedSectionExist) {
+        if (data.isSelected) {
+          // updating the sections whenever we are updating question or Time
+          allSelectedSections.forEach((selected: any) => {
+            const targetData = data.target as keyof TestSection
+            if (selected.id === sec[index].id && targetData in selected) {
+              selected[targetData] = sec[index][targetData]
+            }
+          })
+        } else {
+          // Removing the section when we click remove
+          const indexOfSectionToBeRemoved = allSelectedSections?.indexOf(
+            isSelectedSectionExist
+          )
+          allSelectedSections.splice(indexOfSectionToBeRemoved, 1)
+        }
+      }
       onSelectedSectionChange(
-        sec.filter((s) => {
-          return s.isSelected
+        sec.filter((section) => {
+          return section.isSelected
         })
       )
       return [...sec]
     })
   }
   const submitAddTest = () => {
-    if (typeof name !== 'string' || name.length === 0) {
-      toast.error(t('toastConstants.addAssessment'))
+    if (typeof name !== "string" || name.length === 0) {
+      toast.error(t("toastConstants.addAssessment"))
       return
     }
-    if (typeof description !== 'string' || description.length === 0) {
-      toast.error(t('toastConstants.enterDescription'))
+    if (typeof description !== "string" || description.length === 0) {
+      toast.error(t("toastConstants.enterDescription"))
       return
     }
     if (selectedSections.length === 0) {
-      toast.error(t('toastConstants.addTest'))
+      toast.error(t("toastConstants.addTest"))
       return
     }
     let sendData: {
@@ -101,7 +141,7 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
         order: index + 1,
       })
     })
-    submit({ data: JSON.stringify(sendData) }, { method: 'post' })
+    submit({ data: JSON.stringify(sendData) }, { method: "post" })
     // fetcher.submit({ data: JSON.stringify(sendData) }, { method: "post" });
   }
   useEffect(() => {
@@ -111,8 +151,8 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
   }, [currentTab, setCurrentTab, name, description])
   function isQuillEmpty(value: string) {
     if (
-      value.replace(/<(.|\n)*?>/g, '').trim().length === 0 &&
-      !value.includes('<img')
+      value.replace(/<(.|\n)*?>/g, "").trim().length === 0 &&
+      !value.includes("<img")
     ) {
       return true
     }
@@ -120,11 +160,11 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
   }
 
   const getSectionCheck = () => {
-    if (selectedSections.length < 1) {
+    if (allSelectedSections.length < 1) {
       return true
     }
-    for (let section of selectedSections) {
-      if (!section?.totalQuestions) {
+    for (let section of allSelectedSections) {
+      if (!section?.totalQuestions || !section?.time) {
         return true
       }
     }
@@ -137,12 +177,12 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
       <header className="flex items-center justify-between">
         <h2
           id="add-assessment-page-title"
-          role={t('testsConstants.addTestbutton')}
+          role={t("testsConstants.addTestbutton")}
           tabIndex={0}
-          title={t('testsConstants.addTestbutton')}
+          title={t("testsConstants.addTestbutton")}
           className="text-3xl font-bold text-black"
         >
-          {t('testsConstants.addTestbutton')}
+          {t("testsConstants.addTestbutton")}
         </h2>
       </header>
       <BreadCrumb data={breadCrumbData} />
@@ -171,12 +211,17 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
             updateSection(e, i)
           }}
           updateSectionsList={setSectionsCopy}
+          currentWorkspaceId={currentWorkspaceId}
+          totalSectionsCount={totalSectionsCount}
+          allSelectedSections={allSelectedSections}
         />
       ) : (
         currentTab === tabs[2].id && (
           <TestPreview
-            selectedSections={selectedSections}
-            onSelectedSectionChange={onSelectedSectionChange}
+            selectedSections={allSelectedSections}
+            onChangeSelectedSectionsOrder={(sections) => {
+              setAllSelectedSections(sections)
+            }}
             name={name}
             description={description}
             isPreviewEditable
@@ -187,31 +232,33 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
       <div className="flex w-full items-center justify-between">
         <Button
           tabIndex={0}
-          onClick={() => navigate(routes.assessments)}
+          onClick={() =>
+            navigate(`/${currentWorkspaceId}${routes.assessments}`)
+          }
           className="h-9 px-7"
-          varient="secondary-solid"
-          title={t('commonConstants.cancelAddTest')}
-          buttonText={t('commonConstants.cancel')}
+          variant="secondary-solid"
+          title={t("commonConstants.cancelAddTest")}
+          buttonText={t("commonConstants.cancel")}
         />
         <div className="flex gap-4">
           <Button
             tabIndex={0}
-            title={t('commonConstants.previousTab')}
+            title={t("commonConstants.previousTab")}
             className="h-9 px-7"
-            varient="primary-solid"
+            variant="primary-solid"
             id="back-button"
-            buttonText={t('commonConstants.backButton')}
+            buttonText={t("commonConstants.backButton")}
             isDisabled={currentTab === tabs[0].id}
             onClick={() => setCurrentTab(currentTab - 1)}
           />
           {currentTab !== 2 ? (
             <Button
               tabIndex={0}
-              title={t('commonConstants.nextTab')}
+              title={t("commonConstants.nextTab")}
               className="h-9 px-7"
-              varient="primary-solid"
+              variant="primary-solid"
               id="next-button"
-              buttonText={t('commonConstants.nextButton')}
+              buttonText={t("commonConstants.nextButton")}
               isDisabled={
                 !name ||
                 isQuillEmpty(description) ||
@@ -223,12 +270,12 @@ const AddTestComponent = ({ sections }: { sections: Array<TestSection> }) => {
           ) : (
             <Button
               tabIndex={0}
-              title={t('commonConstants.nextTab')}
+              title={t("commonConstants.nextTab")}
               id="submit-button"
               className="h-9 px-7"
-              varient="primary-solid"
+              variant="primary-solid"
               buttonText={
-                transition.state === 'submitting'
+                transition.state === "submitting"
                   ? sortByOrder.creatingAssessment
                   : sortByOrder.submit
               }

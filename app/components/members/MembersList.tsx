@@ -1,49 +1,141 @@
-import type { User, Role, Invites } from '~/interface/Interface'
-import MemberListItem from './MemberListItem'
-import { useLoaderData } from '@remix-run/react'
-import { useTranslation } from 'react-i18next'
+import { useState } from "react"
+
+import moment from "moment"
+
+import { Icon } from "@iconify/react"
+import { useLoaderData, useSubmit } from "@remix-run/react"
+import { useTranslation } from "react-i18next"
+
+import Badge from "../common-components/Badge"
+import DeletePopUp from "../common-components/DeletePopUp"
+import Table from "../common-components/TableComponent"
+
+import type { User, Invites, UserWorkspace, Role } from "~/interface/Interface"
 
 export default function MembersList({
-  actionStatus,
+  membersCurrentPage,
+  setMembersCurrentPage,
+  membersPageSize,
+  setMembersPageSize,
+  roles,
 }: {
-  actionStatus: string | undefined
+  membersCurrentPage: number
+  setMembersCurrentPage: (e: number) => void
+  membersPageSize: number
+  setMembersPageSize: (e: number) => void
+  roles: Role[]
 }) {
   const { t } = useTranslation()
+  const submit = useSubmit()
+  const memberLoaderData = useLoaderData()
+  const loggedInUser = memberLoaderData.userId
+  const [openDeleteModal, setOpenDeleteModal] = useState(false)
+  const [memberId, setMemberId] = useState("")
+  const workspaceOwner = memberLoaderData.currentWorkspaceOwner.createdById
+  const adminRoleId = roles.find((role) => role.name === "Admin")?.id
 
-  const membersData = useLoaderData()
-  const users = membersData.users
+  const currentLoggedInUserData = memberLoaderData.users.filter(
+    (data: { id: string }) => {
+      return data.id === loggedInUser
+    }
+  )
 
-  const loggedInUser = membersData.userId
-  return (
-    <div className="grid grid-cols-12 rounded-lg shadow-base">
-      <div className="col-span-full grid grid-cols-10 rounded-lg border border-solid border-gray-200 bg-white">
-        <div className="col-gap-3 col-span-full grid grid-cols-10 bg-gray-100 py-4 px-6">
-          <h1 className="col-span-2 pl-4 text-sm text-gray-500">
-            {t('commonConstants.name')}
-          </h1>
-          <h1 className="col-span-3 pl-4 text-sm text-gray-500">
-            {t('commonConstants.email')}
-          </h1>
-          <h1 className="col-span-2 pl-4 text-sm text-gray-500">
-            {t('members.role')}
-          </h1>
-          <h1 className="col-span-2 pl-4 text-sm text-gray-500">
-            {t('commonConstants.joinedOn')}
-          </h1>
-          <h1 className="col-span-1 pl-4 text-sm text-gray-500">
-            {t('members.action')}
-          </h1>
-        </div>
-        {users.map((user: User & { role?: Role; invites: Invites }) => (
-          <div key={user.id} className="memberRow col-span-10 grid">
-            <MemberListItem
-              user={user}
-              loggedInUser={loggedInUser === user.id}
-              actionStatus={actionStatus}
-            />
-          </div>
-        ))}
+  const NameDataCell = (data: User) => {
+    return (
+      <div className="flex gap-2">
+        <span>
+          {data.firstName} {data.lastName}
+        </span>
+        {workspaceOwner === data.id ? (
+          <Badge>{t("members.owner")}</Badge>
+        ) : null}
       </div>
+    )
+  }
+  const RoleDataCell = (data: { userWorkspace: UserWorkspace[] }) => {
+    return <span>{data?.userWorkspace[0]?.role?.name}</span>
+  }
+  const JoinedOnCell = (data: Invites) => {
+    return <span>{moment(data?.createdAt).format("DD MMMM YY")}</span>
+  }
+  const deleteUser = (id: string) => {
+    submit({ action: "delete", id: id }, { method: "post" })
+  }
+  const MemberDelete = (data: User & { userWorkspace: UserWorkspace[] }) => {
+    const openPopUp = () => {
+      if (
+        loggedInUser !== data.id &&
+        workspaceOwner !== data.id &&
+        currentLoggedInUserData[0].userWorkspace[0]?.role.id === adminRoleId
+      ) {
+        setMemberId(data.id)
+        setOpenDeleteModal(!openDeleteModal)
+      }
+    }
+
+    return (
+      <>
+        <Icon
+          id="delete-button"
+          aria-label="delete member"
+          tabIndex={0}
+          onClick={openPopUp}
+          onKeyUp={(e) => {
+            if (e.key === "Enter") openPopUp()
+          }}
+          icon="ic:outline-delete-outline"
+          className={`h-6 w-6 ${
+            currentLoggedInUserData[0].userWorkspace[0]?.role.id !==
+              adminRoleId ||
+            loggedInUser === data.id ||
+            workspaceOwner === data.id
+              ? "cursor-not-allowed text-red-200"
+              : "cursor-pointer text-red-500"
+          }`}
+        />
+        {memberId === data.id &&
+          currentLoggedInUserData[0].userWorkspace[0]?.role.id ===
+            adminRoleId && (
+            <DeletePopUp
+              setOpen={setOpenDeleteModal}
+              open={openDeleteModal}
+              onDelete={() => deleteUser(data.id)}
+              deleteItem={`${data.firstName} ${data.lastName}`}
+              deleteItemType={t("members.member")}
+            />
+          )}
+      </>
+    )
+  }
+  const membersColumn = [
+    { title: "Name", field: "name", render: NameDataCell, width: "25%" },
+    { title: "Email", field: "email", width: "30%" },
+    { title: "Role", field: "role", render: RoleDataCell },
+    {
+      title: "Joined On",
+      field: "createdAt",
+      width: "20%",
+      render: JoinedOnCell,
+    },
+    { title: "Action", field: "action", render: MemberDelete },
+  ]
+
+  return (
+    <div className="z-10 text-base">
+      <Table
+        columns={
+          currentLoggedInUserData[0].userWorkspace[0]?.role.id !== adminRoleId
+            ? membersColumn.filter((column) => column.title !== "Action")
+            : membersColumn
+        }
+        data={memberLoaderData.users}
+        paginationEnabled={true}
+        pageSize={membersPageSize}
+        setPageSize={setMembersPageSize}
+        currentPage={membersCurrentPage}
+        onPageChange={setMembersCurrentPage}
+        totalItems={memberLoaderData.allUsersCount}
+      />
     </div>
   )
 }

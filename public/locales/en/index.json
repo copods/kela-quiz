@@ -15,9 +15,11 @@
     "invitedOn": "Invited On",
     "alreadyJoinedWorkspace": "You already joined the workspace",
     "alreadyRejectedWorkspaceInvitation": "You already reject the workspace joining invitation",
-    "loggedinFromAnotherAccount": "Invalid link, please login from correct account.",
+    "loggedinFromAnotherAccount": "This link is not valid for this account.",
     "youInvitedBy": "You have been invited by",
-    "toJoin": "to join"
+    "toJoin": "to join",
+    "owner": "Owner",
+    "workspaceLeft": "You left the workspace"
   },
   "commonConstants": {
     "name": "Name",
@@ -47,7 +49,7 @@
     "results": "Results",
     "goToDashboard": "Go to Dashboard",
     "checkOrder": "Check Order",
-    "complete": "Complete",
+    "completed": "Completed",
     "pending": "Pending",
     "createTest": "Creating Assessment",
     "cancelAddTest": "Cancel Add Assessment",
@@ -72,7 +74,16 @@
     "join": "Join",
     "joining": "Joining",
     "joinedOn": "Joined On",
-    "invitedAt": "Invited At"
+    "invitedAt": "Invited At",
+    "passwordStrength": "Password Strength",
+    "strong": "Strong",
+    "good": "Good",
+    "weak": "Weak",
+    "noRowsToShow": "No Rows To Show",
+    "items": "Items",
+    "onGoing": "Ongoing",
+    "notAttempted": "Not attempted",
+    "switchAccount": "Switch Account"
   },
   "sideNav": {
     "sideNavHeading": "Quiz",
@@ -101,8 +112,9 @@
     "signIn": "Sign In",
     "signUp": "Sign Up",
     "signingUp": "Signing up...",
-    "AlreadyHaveAnAccount": "Already have an account?",
-    "DontHaveAnAccountYet": "Don’t have an account yet?"
+    "alreadyHaveAnAccount": "Already have an account?",
+    "dontHaveAnAccountYet": "Don’t have an account yet?",
+    "rememberMe": "Remember Me"
   },
   "addQuestion": {
     "createOptions": "Create Options",
@@ -110,6 +122,7 @@
     "addOptions": "Add Options",
     "addQuestion": "Add Question",
     "note": "Note",
+    "mimimumTwoOptionsRequired": "Minimum 2 Options Required",
     "multipleAnswersSelected": "Multiple answers selected",
     "oneAnswerSelected": "One answer selected",
     "enterTheQuestion": "Enter the Question"
@@ -120,15 +133,18 @@
     "editTest": "Edit Test",
     "totalQuestions": "Total Questions:",
     "noQuestionAlert": "No questions found. Add your first question",
-    "noRecordFound": "No Record Found",
+    "noDataToShow": "No data to show",
     "sort": "Sort",
     "dropdown": "Select",
     "expand": "Expand",
+    "search": "Search Question",
+    "addTestFirst": "No test found. Please add test first",
+    "noQuestionFound": "No Question Found",
     "msq": "MSQ",
     "mcq": "MCQ",
     "multipleSelectQuestion": "Multiple Select Question",
     "multipleChoiceQuestion": "Multiple Choice Question",
-    "search": "Search Question"
+    "questionNotDeleted": "Question cannot be deleted as being used in existing Assessment."
   },
   "testsConstants": {
     "addTestbutton": "Add Assessment",
@@ -155,7 +171,10 @@
     "candidatesInvited": "Candidates Invited",
     "allCandidatesInvited": "All candidates invited.",
     "writeDescriptionOfTest": "Write Description of Test",
-    "searchCandidate": "Search Candidate"
+    "searchCandidate": "Search Candidate",
+    "min": "Min",
+    "copyLink": "Link Copied Successfully",
+    "copyLinkFailed": "Fail"
   },
   "componentGlobalConstants": {
     "totalCounts": "Total Counts",
@@ -185,9 +204,9 @@
     "passIsInvalid": "Password is invalid",
     "questionAddedSuccess": "Question Added Successfully",
     "questionNotAdded": "Question Not Added Successfully",
-    "firstNameReq": "firstName is required",
-    "lastNameReq": "lastName is required",
-    "emailIsReq": "email is required",
+    "firstNameReq": "FirstName is required",
+    "lastNameReq": "LastName is required",
+    "emailIsReq": "Email is required",
     "roleIdIsReq": "roleId is required",
     "memberAddedSuccess": "Member Added Successfully..!",
     "erroSendingOtp": "Error in sending OTP..",
@@ -201,11 +220,12 @@
     "userNotFound": "User Not Found",
     "workspaceJoinSuccess": "Workspace joined successfully",
     "workspaceInvitationRejected": "Workspace invitation rejected",
-    "notInviteYourself": "Your can not invite Yourself",
-    "wrongInvitedId": "Your email is not matched with invited id"
+    "notInviteYourself": "You can not invite Yourself",
+    "incorrectEmailOrPassword": "Incorrect email or password"
   },
   "resultConstants": {
     "order": "Order",
+    "unordered": "Unordered",
     "totalInvited": "Invited",
     "totalAttended": "Attended",
     "noAssessmentAlert": "No assessment found. Add your assessment first",
@@ -222,7 +242,13 @@
     "resendInvite": "Resend Invite",
     "resendAssessmentInvite": "Resend assessment Invite Icon",
     "unanswered": "Unanswered",
-    "incorrect": "Incorrect"
+    "incorrect": "Incorrect",
+    "viewDetails": "View Details",
+    "correctAnswer": "Correct Answer",
+    "copyLink": "Copy Link",
+    "text": "TEXT",
+    "givenAnswers": "Given Answers",
+    "wrong": "Wrong"
   },
   "forgotPasswordConstants": {
     "header": "Forgot password?",
@@ -311,10 +337,19 @@
     "passResetSuccessfully": "Password changed successfully !",
     "basicInfo": "Basic Info",
     "minPasswordLimit": "Password should have minimum 8 characters",
-    "passShouldNotBeSame": "Current Password and New Password should not be same"
+    "passShouldNotBeSame": "Current Password and New Password should not be same",
+    "leaveWorkspace": "Leave workspace",
+    "leave": "Leave",
+    "leaveWorkspaceConfirmation": "Are you sure you want to leave this workspace?"
   },
   "tabs": {
     "general": "General",
     "workspaces": "Workspaces"
+  },
+  "404": {
+    "error": "That's an error.",
+    "notFound": "Not Found",
+    "urlNotFound": "The requested URL was not found on this server.",
+    "gotoDashboard": "GoTo Dashboard"
   }
 }

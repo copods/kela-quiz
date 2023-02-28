@@ -1,82 +1,87 @@
-import Highcharts from 'highcharts'
-import type { TooltipFormatterContextObject } from 'highcharts'
-import HighchartsReact from 'highcharts-react-official'
-import moment from 'moment'
-import type { SectionWiseResults } from '~/interface/Interface'
+import moment from "moment"
+
+import Highcharts from "highcharts"
+import type { TooltipFormatterContextObject } from "highcharts"
+import HighchartsReact from "highcharts-react-official"
+
+import type {
+  SectionInCandidateTest,
+  SectionInTest,
+  SectionWiseResults,
+} from "~/interface/Interface"
 
 const BarGraph = ({
-  sectionWiseResult,
+  candidateTestResult,
 }: {
-  sectionWiseResult: Array<SectionWiseResults>
+  candidateTestResult: SectionInCandidateTest[]
 }) => {
+  const calculateResult = candidateTestResult.filter(
+    (data: SectionInCandidateTest) => {
+      return data.SectionWiseResult.length > 0
+    }
+  )
   const getDifferenceMin = () => {
     let finalResult: Array<number> = []
-    sectionWiseResult.forEach((result: SectionWiseResults) => {
-      let startingTime = moment(result.section.startedAt)
-      let endingTime = moment(result.section.endAt)
-
-      let difference = endingTime.diff(startingTime)
-
-      finalResult.push(parseFloat((difference / 60000).toFixed(1)))
+    calculateResult.forEach((result: SectionInCandidateTest) => {
+      result.SectionWiseResult.forEach((data: SectionWiseResults) => {
+        const startingTime = moment(data?.section?.startedAt)
+        const endingTime = moment(data?.section?.endAt)
+        const difference = endingTime.diff(startingTime)
+        finalResult.push(parseFloat((difference / 60000).toFixed(1)))
+      })
     })
 
     return finalResult
   }
-
-  const getSectionsFromResult = sectionWiseResult.map(
-    (result: SectionWiseResults) => result.test.sections
-  )
   let result: Array<number> = []
-
-  // finding specific section in data
-  for (let j = 0; j < getSectionsFromResult.length; j++) {
-    for (let k = 0; k < getSectionsFromResult[j].length; k++) {
-      if (
-        sectionWiseResult[j].section.section.id ===
-        getSectionsFromResult[j][k].section.id
-      ) {
-        result.push(Math.floor(getSectionsFromResult[j][k].timeInSeconds / 60))
-      }
-    }
-  }
-
+  calculateResult.map((data: SectionInCandidateTest) => {
+    return data.SectionWiseResult?.forEach((results: SectionWiseResults) => {
+      const sectionInTestData = results.section.section.sectionInTest.map(
+        (data: SectionInTest) => {
+          return data
+        }
+      )
+      result.push(Math.floor(sectionInTestData[0].timeInSeconds / 60))
+    })
+  })
   const getLabelData = (sectionName: string, resultKind: string) => {
-    const getRequiredSection = sectionWiseResult.find(
-      (result: SectionWiseResults) =>
-        result.section.section.name === sectionName
+    const getRequiredSection = calculateResult.filter(
+      (result: SectionInCandidateTest) => {
+        return result?.section?.name === sectionName
+      }
     )
-    if (resultKind === 'total') {
-      return getRequiredSection?.totalQuestion
-    } else if (resultKind === 'correct') {
-      return getRequiredSection?.correctQuestion
-    } else if (resultKind === 'skipped') {
+    if (resultKind === "total") {
+      return getRequiredSection[0]?.SectionWiseResult[0]?.totalQuestion
+    } else if (resultKind === "correct") {
+      return getRequiredSection[0]?.SectionWiseResult[0]?.correctQuestion
+    } else if (resultKind === "skipped") {
       return (
-        (getRequiredSection?.totalQuestion as number) -
-        (getRequiredSection?.correctQuestion as number)
+        (getRequiredSection[0]?.SectionWiseResult[0]?.totalQuestion as number) -
+        (getRequiredSection[0]?.SectionWiseResult[0]?.correctQuestion as number)
       )
     }
   }
-
   const options: Highcharts.Options = {
     chart: {
-      type: 'column',
+      type: "column",
     },
     title: {
-      text: '',
+      text: "",
     },
     xAxis: {
-      categories: sectionWiseResult.map(
-        (result: SectionWiseResults) => result.section.section.name
-      ),
+      categories: calculateResult.map((result: SectionInCandidateTest) => {
+        return result?.section.name
+      }),
     },
     yAxis: [
       {
         min: 0,
         title: {
-          text: 'Time (in min)',
+          text: "Time (in min)",
         },
       },
     ],
+
     legend: {
       shadow: false,
     },
@@ -85,7 +90,7 @@ const BarGraph = ({
     },
     tooltip: {
       shared: true,
-      backgroundColor: '#fff',
+      backgroundColor: "#fff",
       borderRadius: 10,
       shadow: true,
       padding: 15,
@@ -95,27 +100,27 @@ const BarGraph = ({
           (
             acc: TooltipFormatterContextObject
           ): TooltipFormatterContextObject => {
-            return ('<div>' +
-              'Total' +
-              ': ' +
+            return ("<div>" +
+              "Total" +
+              ": " +
               '<span style="color: #353988; fontWeight: 500; margin: 20px">' +
-              getLabelData(acc.key as string, 'total') +
-              '</span>' +
-              '<div/> </br>' +
-              '<div>' +
-              'Correct' +
-              ': ' +
+              getLabelData(acc.key as string, "total") +
+              "</span>" +
+              "<div/> </br>" +
+              "<div>" +
+              "Correct" +
+              ": " +
               '<span style="color: #059669; fontWeight: 500; margin: 20px">' +
-              getLabelData(acc.key as string, 'correct') +
-              '</span>' +
-              '<div/> </br>' +
-              '<div>' +
-              'Skipped' +
-              ': ' +
+              getLabelData(acc.key as string, "correct") +
+              "</span>" +
+              "<div/> </br>" +
+              "<div>" +
+              "Skipped" +
+              ": " +
               '<span style="color: #D97706; fontWeight: 500; margin: 20px">' +
-              getLabelData(acc.key as string, 'skipped') +
-              '</span>' +
-              '<div/>') as unknown as TooltipFormatterContextObject
+              getLabelData(acc.key as string, "skipped") +
+              "</span>" +
+              "<div/>") as unknown as TooltipFormatterContextObject
           }
         )
       },
@@ -130,25 +135,25 @@ const BarGraph = ({
     series: [
       {
         showInLegend: false,
-        color: '#F3F4F6',
+        color: "#F3F4F6",
         data: result,
         states: {
           hover: {
-            color: '#F3F4F6',
+            color: "#F3F4F6",
           },
         },
-        type: 'column',
+        type: "column",
       },
       {
         showInLegend: false,
-        color: '#353988',
+        color: "#353988",
         data: getDifferenceMin(),
         states: {
           hover: {
-            color: '#353988',
+            color: "#353988",
           },
         },
-        type: 'column',
+        type: "column",
       },
     ],
   }

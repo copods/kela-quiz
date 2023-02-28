@@ -1,7 +1,9 @@
-import { ClientOnly } from 'remix-utils'
-import QuillEditor from '../../QuillEditor.client'
-import type { QuestionType } from '~/interface/Interface'
-import DropdownField from '~/components/form/Dropdown'
+import { ClientOnly } from "remix-utils"
+
+import QuillEditor from "../../QuillEditor.client"
+
+import DropdownField from "~/components/common-components/Dropdown"
+import type { QuestionType } from "~/interface/Interface"
 
 export default function QuestionEditor({
   questionTypeList,
@@ -17,8 +19,8 @@ export default function QuestionEditor({
   setQuestion: (e: string) => void
 }) {
   function setEditorQuestion(question: string) {
-    if (question === '<p><br></p>') {
-      setQuestion('')
+    if (question === "<p><br></p>") {
+      setQuestion("")
     } else {
       setQuestion(question)
     }
@@ -30,8 +32,8 @@ export default function QuestionEditor({
           value={selectedTypeOfQuestion}
           setValue={onQuestionTypeChange}
           data={questionTypeList}
-          displayKey={'displayName'}
-          valueKey={'id'}
+          displayKey={"displayName"}
+          valueKey={"id"}
         />
       </div>
       <div className="flex-1 py-1" id="question-editor">
@@ -40,7 +42,7 @@ export default function QuestionEditor({
             <QuillEditor
               id="editorQuill"
               text={question}
-              quillPlaceholder={'question'}
+              quillPlaceholder={"question"}
               fullAccess={true}
               onTextChange={(e) => {
                 setEditorQuestion(e)

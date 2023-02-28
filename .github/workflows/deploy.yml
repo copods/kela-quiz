@@ -7,8 +7,11 @@ on:
   pull_request: {}
   workflow_dispatch: {}
 permissions:
+  pull-requests: write
+  issues: write
+  repository-projects: write
   actions: write
-  contents: read
+  contents: write
 
 jobs:
   lint:
@@ -110,7 +113,10 @@ jobs:
         # the sleep is just there to give time for postgres to get started
         run: docker-compose up -d && sleep 3
         env:
-          DATABASE_URL: 'postgresql://postgres:postgres@localhost:5432/postgres'
+          DATABASE_URL: "postgresql://postgres:postgres@localhost:5432/postgres"
+
+      - name: Prisma Generate
+        run: npx prisma generate
 
       - name: 🛠 Setup Database
         run: npx prisma migrate reset --force
@@ -122,10 +128,11 @@ jobs:
         uses: cypress-io/github-action@v4
         with:
           start: npm run start:mocks
-          wait-on: 'http://localhost:8811'
+          browser: chrome
+          headed: true
+          wait-on: "http://localhost:8811"
         env:
-          PORT: '8811'
-
+          PORT: "8811"
   build:
     name: 🐳 Build
     # only build/deploy main branch on pushes
@@ -142,12 +149,12 @@ jobs:
         uses: SebRollen/toml-action@v1.0.0
         id: app_name
         with:
-          file: 'fly.toml'
-          field: 'app'
+          file: "fly.toml"
+          field: "app"
 
       - name: 🐳 Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
-        with: 
+        with:
           version: v0.9.1
 
       # Setup cache
@@ -205,14 +212,14 @@ jobs:
         uses: SebRollen/toml-action@v1.0.0
         id: app_name
         with:
-          file: 'fly.toml'
-          field: 'app'
+          file: "fly.toml"
+          field: "app"
 
       - name: 🚀 Deploy Staging
         if: ${{ github.ref == 'refs/heads/dev' }}
         uses: superfly/flyctl-actions@1.3
         with:
-          args: 'deploy --app ${{ steps.app_name.outputs.value }}-staging --image registry.fly.io/${{ steps.app_name.outputs.value }}:${{ github.ref_name }}-${{ github.sha }}'
+          args: "deploy --app ${{ steps.app_name.outputs.value }}-staging --image registry.fly.io/${{ steps.app_name.outputs.value }}:${{ github.ref_name }}-${{ github.sha }}"
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
 
@@ -220,6 +227,22 @@ jobs:
         if: ${{ github.ref == 'refs/heads/main' }}
         uses: superfly/flyctl-actions@1.3
         with:
-          args: 'deploy --image registry.fly.io/${{ steps.app_name.outputs.value }}:${{ github.ref_name }}-${{ github.sha }}'
+          args: "deploy --image registry.fly.io/${{ steps.app_name.outputs.value }}:${{ github.ref_name }}-${{ github.sha }}"
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+
+  publish:
+    runs-on: ubuntu-latest
+    needs: [lint, typecheck, vitest, cypress, build, deploy]
+    if: ${{ github.ref == 'refs/heads/main' && github.event_name == 'push' }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: "npm"
+      - run: npm i
+      - run: npx semantic-release --branches dev main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

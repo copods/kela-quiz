@@ -1,12 +1,16 @@
-import { Icon } from '@iconify/react'
-import moment from 'moment'
-import { Menu } from '@headlessui/react'
-import { useSubmit } from '@remix-run/react'
-import DeletePopUp from '../DeletePopUp'
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from "react"
 
-import { useTranslation } from 'react-i18next'
-import AddEditSection from './AddEditSection'
+import moment from "moment"
+
+import { Menu } from "@headlessui/react"
+import { Icon } from "@iconify/react"
+import { useSubmit, useLoaderData } from "@remix-run/react"
+import { useTranslation } from "react-i18next"
+
+import DeletePopUp from "../common-components/DeletePopUp"
+
+import AddEditSection from "./AddEditSection"
+
 const SectionCard = ({
   name,
   description,
@@ -15,11 +19,13 @@ const SectionCard = ({
   createdBy,
   createdAt,
   id,
-  err,
-  actionStatusData,
   setDeleted,
   setIsDelete,
   isDelete,
+  setSectionActionErrors,
+  sectionActionErrors,
+  currentPageCount,
+  filter,
 }: {
   name: string
   description: string
@@ -28,28 +34,54 @@ const SectionCard = ({
   createdBy: string
   createdAt: Date
   id: string
-  err?: string
-  actionStatusData?: string
   setDeleted?: (e: boolean) => void
   setIsDelete: (e: boolean) => void
   isDelete: boolean
+  sectionActionErrors?: {
+    title?: string
+    description?: string
+    duplicateTitle?: string
+  }
+  setSectionActionErrors: ({
+    title,
+    description,
+  }: {
+    title?: string
+    description?: string
+  }) => void
+  currentPageCount: number
+  filter: string
 }) => {
   const { t } = useTranslation()
   const submit = useSubmit()
+  const data = useLoaderData()
   const [editMode, setEditMode] = useState(false)
   const [editItem, setEditItem] = useState({
-    name: '',
-    description: '',
+    name: "",
+    description: "",
   })
-
   const deleteSection = () => {
-    submit({ deleteSection: 'sectionDelete', id: id }, { method: 'post' })
+    submit(
+      {
+        deleteSection: "sectionDelete",
+        id: id,
+        currentPage: data.testCurrentPage,
+        pageSize: data.testItemsPerPage,
+        totalSectionsOnCurrentPage: String(currentPageCount),
+        filter: filter
+          .split("?")[1]
+          .split("&")
+          .filter((res) => res.includes("sortBy") || res.includes("sort"))
+          .join("&"),
+      },
+      { method: "post" }
+    )
   }
   // shift + alt + Tab combination key for get back focus to selected section card
   useEffect(() => {
-    window.addEventListener('keydown', function (event) {
-      if (event.shiftKey && event.altKey && event.key === 'Tab') {
-        window.location.href = '#section-card'
+    window.addEventListener("keydown", function (event) {
+      if (event.shiftKey && event.altKey && event.key === "Tab") {
+        window.location.href = "#section-card"
       }
     })
   }, [])
@@ -57,8 +89,8 @@ const SectionCard = ({
     <div
       className={`sectionCard section-card flex flex-col gap-2 rounded-lg p-5 pt-4 ${
         isActive
-          ? 'border border-l-8 border-transparent border-l-primary bg-white pl-13 shadow-md'
-          : 'border border-gray-300 bg-gray-100'
+          ? "border border-l-8 border-transparent border-l-primary bg-white pl-13 shadow-md"
+          : "border border-gray-300 bg-gray-100"
       }`}
       id="section-card"
     >
@@ -74,7 +106,7 @@ const SectionCard = ({
             <Menu.Button id="menu-button" className={id}>
               <Icon
                 className="text-2xl text-gray-600"
-                icon={'mdi:dots-vertical'}
+                icon={"mdi:dots-vertical"}
               />
             </Menu.Button>
             <Menu.Items className="absolute right-0 mt-2 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5">
@@ -95,16 +127,16 @@ const SectionCard = ({
                           })
                         }}
                         name="editSection"
-                        title={t('commonConstants.edit')}
+                        title={t("commonConstants.edit")}
                       >
                         <>
                           <Icon
-                            icon={'material-symbols:edit-outline-sharp'}
+                            icon={"material-symbols:edit-outline-sharp"}
                             className="mr-2 h-5 w-5
                         text-black"
                             aria-hidden="true"
                           />
-                          {t('commonConstants.edit')}
+                          {t("commonConstants.edit")}
                         </>
                       </button>
                       <button
@@ -116,16 +148,16 @@ const SectionCard = ({
                           setIsDelete(true)
                         }}
                         name="deleteSection"
-                        title={t('commonConstants.delete')}
+                        title={t("commonConstants.delete")}
                       >
                         <>
                           <Icon
-                            icon={'ic:outline-delete-outline'}
+                            icon={"ic:outline-delete-outline"}
                             className="mr-2 h-5 w-5
                         text-red-500"
                             aria-hidden="true"
                           />
-                          {t('commonConstants.delete')}
+                          {t("commonConstants.delete")}
                         </>
                       </button>
                     </div>
@@ -139,25 +171,27 @@ const SectionCard = ({
       <div className="flex text-xs text-gray-400">
         <span>By {createdBy}</span>
         <span id="sectionDate" className="created-by-date flex">
-          <Icon className="text-base" icon={'mdi:circle-small'} />
-          {moment(createdAt).format('DD MMM YY')}
+          <Icon className="text-base" icon={"mdi:circle-small"} />
+          {moment(createdAt).format("DD MMM YY")}
         </span>
       </div>
       <div className="flex text-xs text-gray-400">
-        {t('sectionsConstants.totalQuestions')} {questionsCount}
+        {t("sectionsConstants.totalQuestions")} {questionsCount}
       </div>
       <DeletePopUp
         setOpen={setIsDelete}
         open={isDelete}
         onDelete={deleteSection}
-        subAlert={t('deletePopUp.subAlert')}
+        subAlert={t("deletePopUp.subAlert")}
         deleteItem={name}
-        deleteItemType={t('testsConstants.testText')}
+        deleteItemType={t("testsConstants.testText")}
         setDeleted={setDeleted}
       />
       <AddEditSection
         open={editMode}
         setOpen={setEditMode}
+        sectionActionErrors={sectionActionErrors}
+        setSectionActionErrors={setSectionActionErrors}
         showErrorMessage={false}
         editItem={editItem}
         editId={id}

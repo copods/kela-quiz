@@ -1,36 +1,60 @@
-import SectionCard from './SectionCard'
-import type { Section, User } from '~/interface/Interface'
-import { useResolvedPath, useLocation, useNavigate } from '@remix-run/react'
-import {} from '@remix-run/react'
-import SortFilter from '../SortFilter'
-import { useEffect, useState } from 'react'
-import { routes } from '~/constants/route.constants'
+import { useEffect, useState } from "react"
+
+import { useResolvedPath, useLocation, useNavigate } from "@remix-run/react"
+
+import Pagination from "../common-components/Pagination"
+import SortFilter from "../common-components/SortFilter"
+
+import SectionCard from "./SectionCard"
+
+import { routes } from "~/constants/route.constants"
+import { useCommonContext } from "~/context/Common.context"
+import type { Question, Section, SectionInTest } from "~/interface/Interface"
 
 const SectionLink = ({
   section,
-  actionStatusData,
-  err,
   filter,
-  setSelectedSection,
+  currentWorkspaceId,
+  sectionActionErrors,
+  setSectionActionErrors,
+  currentPageCount,
 }: {
-  section: Section & { _count?: { questions: number }; createdBy?: User }
-  actionStatusData?: string
-  err?: string
+  section: Section & {
+    count?: number
+    questions?: Array<Question>
+    sectionInTest: Array<SectionInTest>
+  }
   filter: string
-  setSelectedSection: (e: string) => void
+  currentWorkspaceId: string
+  sectionActionErrors?: {
+    title?: string
+    decription?: string
+    duplicateTitle?: string
+  }
+  setSectionActionErrors: ({
+    title,
+    description,
+    duplicateTitle,
+  }: {
+    title?: string
+    description?: string
+    duplicateTitle?: string
+  }) => void
+  currentPageCount: number
 }) => {
-  const path = `${routes.tests}/${section.id}${filter}`
+  const path = `/${currentWorkspaceId}${routes.tests}/${section.id}${filter}`
+  const { clearStoredValue } = useCommonContext()
   const [isDelete, setIsDelete] = useState(false)
   const location = useLocation() // to get current location
   const resolvedPath = useResolvedPath(path) // to get resolved path which would match with current location
   const isActive = location.pathname === resolvedPath.pathname
-  let navigate = useNavigate()
+  const navigate = useNavigate()
   const [deleted, setDeleted] = useState(false)
   useEffect(() => {
     if (deleted === true) {
       setTimeout(() => {
         const activeCard = document.querySelector(
-          '.activeSectionCard'
+          ".activeSectionCard"
         ) as HTMLElement
         activeCard?.focus()
         setDeleted(false)
@@ -41,23 +65,19 @@ const SectionLink = ({
   return (
     <div
       onClick={() => {
-        setSelectedSection(section.id)
-        if (isActive) {
-          return
-        }
-        navigate(path)
+        !isActive && navigate(path)
+        clearStoredValue("activeTest")
       }}
       id="section-link"
-      className={isActive ? 'activeSectionCard' : ''}
-      role={'button'}
+      className={isActive ? "activeSectionCard" : ""}
+      role={"button"}
       tabIndex={0}
       key={section.id}
       onKeyUp={(e) => {
-        if (e.key === 'Tab' && e.altKey) {
-          window.location.href = '#section-search'
+        if (e.key === "Tab" && e.altKey) {
+          window.location.href = "#section-search"
           // alt + Tab combination key for moving focus to section detail
-        } else if (e.key === 'Enter') navigate(path)
-        setSelectedSection(section.id)
+        } else if (e.key === "Enter") navigate(path)
       }}
     >
       <SectionCard
@@ -65,14 +85,16 @@ const SectionLink = ({
         name={section?.name}
         description={section?.description}
         createdBy={`${section?.createdBy?.firstName} ${section?.createdBy?.lastName}`}
-        questionsCount={section?._count?.questions as number}
+        questionsCount={section?.count as number}
         createdAt={section.createdAt}
         id={section?.id}
-        actionStatusData={actionStatusData}
-        err={err}
         setDeleted={setDeleted}
         setIsDelete={setIsDelete}
         isDelete={isDelete}
+        sectionActionErrors={sectionActionErrors}
+        setSectionActionErrors={setSectionActionErrors}
+        currentPageCount={currentPageCount}
+        filter={filter}
       />
     </div>
   )
@@ -80,15 +102,31 @@ const SectionLink = ({
 type SectionType = {
   sections: Section[]
   sortBy: string
-  selectedSection: string
   filters: string
   setSortBy: (e: string) => void
   order: string
-  err?: string
-  actionStatusData?: string
   setOrder: (e: string) => void
-  setSelectedSection: (e: string) => void
   sortByDetails: Array<{ name: string; value: string }>
+  currentWorkspaceId: string
+  sectionActionErrors?: {
+    title?: string
+    decription?: string
+    duplicateTitle?: string
+  }
+  setSectionActionErrors: ({
+    title,
+    description,
+    duplicateTitle,
+  }: {
+    title?: string
+    description?: string
+    duplicateTitle?: string
+  }) => void
+  totalCount: number
+  testsPageSize: number
+  testsCurrentPage: number
+  setTestPageSize: (e: number) => void
+  setTestsCurrentPage: (e: number) => void
 }
 const Sections = ({
   sections,
@@ -97,10 +135,15 @@ const Sections = ({
   setSortBy,
   order,
   setOrder,
-  setSelectedSection,
   sortByDetails,
-  err,
-  actionStatusData,
+  currentWorkspaceId,
+  sectionActionErrors,
+  setSectionActionErrors,
+  totalCount,
+  testsPageSize,
+  testsCurrentPage,
+  setTestPageSize,
+  setTestsCurrentPage,
 }: SectionType) => {
   return (
     <div className="sectionLSWrapper flex h-full max-w-96 flex-col gap-6">
@@ -113,7 +156,7 @@ const Sections = ({
             onSortDirectionChange={setOrder}
             sortBy={sortBy}
             onSortChange={setSortBy}
-            totalItems={sections?.length}
+            totalItems={totalCount}
             showSelected={false}
           />
         </div>
@@ -128,11 +171,20 @@ const Sections = ({
             key={section.id}
             section={section}
             filter={filters}
-            setSelectedSection={setSelectedSection}
-            actionStatusData={actionStatusData}
-            err={err}
+            sectionActionErrors={sectionActionErrors}
+            setSectionActionErrors={setSectionActionErrors}
+            currentWorkspaceId={currentWorkspaceId}
+            currentPageCount={sections?.length}
           />
         ))}
+        <Pagination
+          currentPage={testsCurrentPage!}
+          onPageChange={(page) => setTestsCurrentPage?.(page)}
+          pageSize={testsPageSize!}
+          setPageSize={setTestPageSize!}
+          totalItems={totalCount}
+          hideRange={true}
+        />
       </div>
     </div>
   )

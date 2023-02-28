@@ -1,34 +1,77 @@
-import bcrypt from 'bcryptjs'
-import type { Password, User } from '@prisma/client'
-import { sendMail, sendNewPassword } from './sendgrid.servers'
-import { prisma } from '~/db.server'
-import { faker } from '@faker-js/faker'
-import { env } from 'process'
+import { env } from "process"
 
-export type { User } from '@prisma/client'
+import { faker } from "@faker-js/faker"
+import type { Password, User } from "@prisma/client"
+import bcrypt from "bcryptjs"
 
-export async function getUserById(id: User['id']) {
+import { sendMail, sendNewPassword } from "./sendgrid.servers"
+
+import { prisma } from "~/db.server"
+
+export type { User } from "@prisma/client"
+
+export async function getUserById(id: User["id"]) {
   return prisma.user.findUnique({ where: { id }, include: { password: true } })
 }
 
-export async function deleteUserById(id: string) {
-  try {
-    return await prisma.user.delete({ where: { id } })
-  } catch (error) {
-    return 'Something went wrong'
-  }
+export async function deleteUserById(
+  userId: string,
+  workspaceId: string,
+  email: string
+) {
+  const deleteUserWorkspace = await prisma.userWorkspace.deleteMany({
+    where: { userId, workspaceId },
+  })
+  const invitedIdByEmail = await prisma.invites.findMany({
+    where: {
+      email: email,
+      workspaceId,
+      deleted: false,
+    },
+    select: {
+      id: true,
+    },
+  })
+  await prisma.invites.update({
+    where: {
+      id: invitedIdByEmail[0].id,
+    },
+    data: {
+      deleted: true,
+      deletedAt: new Date().toString(),
+    },
+  })
+  return deleteUserWorkspace
 }
 
-export async function getUserByEmail(email: User['email']) {
+export async function getUserByEmail(email: User["email"]) {
   return await prisma.user.findUnique({ where: { email } })
 }
-
+export async function getAllUsersCount(currentWorkspaceId: string | undefined) {
+  const userCount = await prisma.user.count({
+    where: {
+      userWorkspace: {
+        some: {
+          workspaceId: currentWorkspaceId,
+        },
+      },
+    },
+  })
+  return userCount
+}
 export async function getAllUsers({
   currentWorkspaceId,
+  membersCurrentPage = 1,
+  membersItemsPerPage = 5,
 }: {
   currentWorkspaceId: string | undefined
+  membersCurrentPage?: number
+  membersItemsPerPage?: number
 }) {
+  const PER_PAGE_ITEMS = membersItemsPerPage
   const user = await prisma.user.findMany({
+    take: PER_PAGE_ITEMS,
+    skip: (membersCurrentPage - 1) * PER_PAGE_ITEMS,
     where: {
       userWorkspace: {
         some: {
@@ -44,6 +87,19 @@ export async function getAllUsers({
           joinedAt: true,
         },
       },
+      userWorkspace: {
+        where: {
+          workspaceId: currentWorkspaceId,
+        },
+        select: {
+          role: {
+            select: {
+              name: true,
+              id: true,
+            },
+          },
+        },
+      },
     },
   })
   return user
@@ -55,7 +111,7 @@ export async function getAllRoles() {
 
 //To get roleId of Admin role
 export async function getAdminId() {
-  const roleName = 'Admin'
+  const roleName = "Admin"
   const role = await prisma.role.findUnique({ where: { name: roleName } })
   return role?.id
 }
@@ -65,13 +121,11 @@ export async function createUserBySignUp({
   lastName,
   email,
   password,
-  workspaceName,
 }: {
   firstName: string
   lastName: string
   email: string
   password: string
-  workspaceName: string
 }) {
   const hashedPassword = await bcrypt.hash(password, 10)
   const roleId = await getAdminId()
@@ -88,7 +142,7 @@ export async function createUserBySignUp({
       },
       workspace: {
         create: {
-          name: workspaceName,
+          name: `${firstName}'s workspace`,
         },
       },
     },
@@ -136,7 +190,7 @@ export async function createNewUser({
   email: string
   defaultWorkspaceName: string
   roleId: string
-  createdById: User['id']
+  createdById: User["id"]
   invitedByWorkspaceId: string
 }) {
   const password = faker.internet.password()
@@ -195,12 +249,12 @@ export async function createNewUser({
     },
   })
   const passwordGenerationLink =
-    env.PUBLIC_URL + '/members/' + user?.id + '/create-password'
+    env.PUBLIC_URL + "/members/" + user?.id + "/create-password"
   return await sendMail(
     passwordGenerationLink,
     email,
     firstName,
-    role?.name || 'NA'
+    role?.name || "NA"
   )
 }
 
@@ -227,18 +281,26 @@ export async function sendResetPassword(email: string) {
     })
     return await sendNewPassword(userEmail?.email as string, password)
   } else {
-    return null
+    return { value: null, time: Date.now() }
   }
 }
 
 export async function loginVerificationResponse(
-  email: User['email'],
-  password: Password['hash']
+  email: User["email"],
+  password: Password["hash"]
 ) {
   const userWithPassword = await prisma.user.findUnique({
     where: { email },
     include: {
       password: true,
+      userWorkspace: {
+        where: {
+          isDefault: true,
+        },
+        select: {
+          workspaceId: true,
+        },
+      },
     },
   })
 
@@ -248,25 +310,12 @@ export async function loginVerificationResponse(
 
   const isValid = await bcrypt.compare(password, userWithPassword.password.hash)
   if (!isValid) {
-    let error = new Error('invalidPassword')
+    let error = new Error("invalidPassword")
     return error
   }
 
   const { password: _password, ...userWithoutPassword } = userWithPassword
   return userWithoutPassword
-}
-
-export async function getDefaultWorkspaceIdForUserQuery(userId: string) {
-  return prisma.user.findUnique({
-    where: { id: userId },
-    select: {
-      workspace: {
-        select: {
-          id: true,
-        },
-      },
-    },
-  })
 }
 
 export async function updatePassword(
@@ -290,7 +339,7 @@ export async function updatePassword(
     oldPass?.password?.hash as string
   )
   if (!isValid) {
-    let error = new Error('invalidPassword')
+    let error = new Error("invalidPassword")
     return error
   }
   let checkValidPass
@@ -306,6 +355,6 @@ export async function updatePassword(
     })
   }
   if (checkValidPass) {
-    return 'DONE'
+    return "DONE"
   }
 }

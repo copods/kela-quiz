@@ -1,96 +1,101 @@
-import MenuItems from './MenuItems'
-import Header from '~/components/SideNavHeader'
-import Footer from '~/components/SideNavFooter'
-import { routes } from '~/constants/route.constants'
-import { useTranslation } from 'react-i18next'
-import DropdownField from '../form/Dropdown'
-import { useFetcher, useLoaderData } from '@remix-run/react'
-import type { UserWorkspace } from '~/interface/Interface'
-import AddWorkspace from '../workspace/AddWorkspace'
-import { useEffect, useState } from 'react'
-import { actions } from '~/constants/action.constants'
+import { useEffect, useState } from "react"
 
-const sideNavGuide = [
-  // {
-  //   navGuide: 'Main Menu',
-  //   subItem: [
-  //     {
-  //       id: 'Dashboard',
-  //       iconClass: 'mdi:view-dashboard',
-  //       itemName: 'Dashboard',
-  //       itemRoute: routes.dashboard,
-  //     },
-  //   ],
-  // },
-  {
-    navGuide: 'Results',
-    subItem: [
-      {
-        id: 'group-by-tests',
-        iconClass: 'mdi:chart-box-outline',
-        itemName: 'commonConstants.results',
-        itemRoute: routes.resultGroupTest,
-      },
-      // {
-      //   id: 'Group_By_Candidate',
-      //   iconClass: 'mdi:chart-box-outline',
-      //   itemName: commonConstants.groupByCandidate,
-      //   itemRoute: 'groupByCandidate',
-      // },
-    ],
-  },
-  {
-    navGuide: 'Assessments',
-    subItem: [
-      {
-        id: 'tests',
-        iconClass: 'carbon:result',
-        itemName: 'testsConstants.assessments',
-        itemRoute: routes.assessments,
-      },
-      {
-        id: 'sections',
-        iconClass: 'ci:list-checklist-alt',
-        itemName: 'routeFiles.tests',
-        itemRoute: routes.tests,
-      },
-    ],
-  },
-  {
-    navGuide: 'General',
-    subItem: [
-      {
-        id: 'members',
-        iconClass: 'mdi:account-group',
-        itemName: 'members.members',
-        itemRoute: routes.members,
-      },
-      {
-        id: 'Settings',
-        iconClass: 'mdi:cog',
-        itemName: 'commonConstants.settings',
-        itemRoute: routes.settings,
-      },
-    ],
-  },
-]
+import { useFetcher, useLoaderData, useParams } from "@remix-run/react"
+import { useTranslation } from "react-i18next"
+
+import DropdownField from "../common-components/Dropdown"
+import AddWorkspace from "../workspace/AddWorkspace"
+
+import MenuItems from "./MenuItems"
+
+import Footer from "~/components/SideNavFooter"
+import Header from "~/components/SideNavHeader"
+import { actions } from "~/constants/action.constants"
+import { routes } from "~/constants/route.constants"
+import type { UserWorkspace } from "~/interface/Interface"
+
 const SideNav = () => {
   const { t } = useTranslation()
+  const param = useParams()
   const [showAddWorkspaceModal, setShowAddWorkspaceModal] = useState(false)
   const { workspaces = [], currentWorkspaceId } = useLoaderData()
-  const [workspace, setWorkspace] = useState<string>(currentWorkspaceId)
+  const [workspace, setWorkspace] = useState<string>(param.workspaceId!)
   const fetcher = useFetcher()
   const tempWorkspaces = workspaces.map((userWorkspace: UserWorkspace) => {
     return { ...userWorkspace, ...userWorkspace.workspace }
   })
+  const sideNavGuide = [
+    // {
+    //   navGuide: 'Main Menu',
+    //   subItem: [
+    //     {
+    //       id: 'Dashboard',
+    //       iconClass: 'mdi:view-dashboard',
+    //       itemName: 'Dashboard',
+    //       itemRoute: routes.dashboard,
+    //     },
+    //   ],
+    // },
+    {
+      navGuide: "Results",
+      subItem: [
+        {
+          id: "group-by-tests",
+          iconClass: "mdi:chart-box-outline",
+          itemName: "commonConstants.results",
+          itemRoute: `${routes.resultGroupTest}`,
+        },
+        // {
+        //   id: 'Group_By_Candidate',
+        //   iconClass: 'mdi:chart-box-outline',
+        //   itemName: commonConstants.groupByCandidate,
+        //   itemRoute: 'groupByCandidate',
+        // },
+      ],
+    },
+    {
+      navGuide: "Assessments",
+      subItem: [
+        {
+          id: "tests",
+          iconClass: "carbon:result",
+          itemName: "testsConstants.assessments",
+          itemRoute: `${routes.assessments}`,
+        },
+        {
+          id: "sections",
+          iconClass: "ci:list-checklist-alt",
+          itemName: "routeFiles.tests",
+          itemRoute: `${routes.tests}`,
+        },
+      ],
+    },
+    {
+      navGuide: "General",
+      subItem: [
+        {
+          id: "members",
+          iconClass: "mdi:account-group",
+          itemName: "members.members",
+          itemRoute: routes.members,
+        },
+        {
+          id: "Settings",
+          iconClass: "mdi:cog",
+          itemName: "commonConstants.settings",
+          itemRoute: routes.generalSettings,
+        },
+      ],
+    },
+  ]
   function switchWorkpace(val: string) {
-    if (val !== t('sideNav.addWorkspace') && workspace !== currentWorkspaceId) {
+    if (val !== t("sideNav.addWorkspace") && workspace !== currentWorkspaceId) {
       fetcher.submit(
         {
           workspaceId: val,
           action: actions.switchWorkspace,
         },
-        { method: 'post', action: '/settings' }
+        { method: "post", action: `/${currentWorkspaceId}/settings` }
       )
     }
   }
@@ -101,6 +106,12 @@ const SideNav = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [workspace])
 
+  useEffect(() => {
+    if (workspace) {
+      setWorkspace(param.workspaceId!)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [param.workspaceId])
   return (
     <>
       <div
@@ -109,7 +120,7 @@ const SideNav = () => {
       >
         <div>
           <div className="mb-9 px-1">
-            <Header title={t('sideNav.sideNavHeading')} />
+            <Header title={t("sideNav.sideNavHeading")} />
             <div className="mt-5">
               <DropdownField
                 data={tempWorkspaces}
@@ -119,7 +130,7 @@ const SideNav = () => {
                 value={workspace}
                 setValue={setWorkspace}
                 setOpen={setShowAddWorkspaceModal}
-                actionName={t('sideNav.addWorkspace')}
+                actionName={t("sideNav.addWorkspace")}
                 callToAction={true}
               />
             </div>
@@ -142,6 +153,7 @@ const SideNav = () => {
                         iconClass={item.iconClass}
                         itemName={t(item.itemName)}
                         itemRoute={item.itemRoute}
+                        currentWorkspaceId={currentWorkspaceId}
                       />
                     )
                   })}
@@ -158,6 +170,7 @@ const SideNav = () => {
         showAddWorkspaceModal={showAddWorkspaceModal}
         setShowAddWorkspaceModal={setShowAddWorkspaceModal}
         setWorkspaceId={setWorkspace}
+        currentWorkspaceId={currentWorkspaceId}
       />
     </>
   )

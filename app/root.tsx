@@ -2,8 +2,8 @@ import type {
   LinksFunction,
   LoaderFunction,
   MetaFunction,
-} from '@remix-run/node'
-import { json } from '@remix-run/node'
+} from "@remix-run/node"
+import { json } from "@remix-run/node"
 import {
   Links,
   LiveReload,
@@ -11,29 +11,34 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-} from '@remix-run/react'
+} from "@remix-run/react"
+import quillEditorStyles from "quill/dist/quill.snow.css"
+import { useTranslation } from "react-i18next"
+import { ToastContainer } from "react-toastify"
+import toasterStyles from "react-toastify/dist/ReactToastify.css"
 
-import tailwindStylesheetUrl from './styles/tailwind.css'
-import globalStyles from './styles/global.css'
-import quillEditorStyles from 'quill/dist/quill.snow.css'
-import { getUser } from './session.server'
-import toastrStyles from 'react-toastify/dist/ReactToastify.css'
-import { ToastContainer } from 'react-toastify'
-import { useTranslation } from 'react-i18next'
+import { CommonContextProvider } from "./context/Common.context"
+import { getUser } from "./session.server"
+import globalStyles from "./styles/global.css"
+import quillStyles from "./styles/quill.css"
+import tailwindStylesheetUrl from "./styles/tailwind.css"
+import toastifyStyles from "./styles/toastify.css"
 
 export const links: LinksFunction = () => {
   return [
-    { rel: 'stylesheet', href: tailwindStylesheetUrl },
-    { rel: 'stylesheet', href: globalStyles },
-    { rel: 'stylesheet', href: quillEditorStyles },
-    { rel: 'stylesheet', href: toastrStyles },
+    { rel: "stylesheet", href: tailwindStylesheetUrl },
+    { rel: "stylesheet", href: globalStyles },
+    { rel: "stylesheet", href: quillStyles },
+    { rel: "stylesheet", href: toastifyStyles },
+    { rel: "stylesheet", href: quillEditorStyles },
+    { rel: "stylesheet", href: toasterStyles },
   ]
 }
 
 export const meta: MetaFunction = () => ({
-  charset: 'utf-8',
-  title: 'K-Quiz',
-  viewport: 'width=device-width,initial-scale=1',
+  charset: "utf-8",
+  title: "K-Quiz",
+  viewport: "width=device-width,initial-scale=1",
 })
 
 type LoaderData = {
@@ -49,12 +54,12 @@ export const loader: LoaderFunction = async ({ request }) => {
 export const handle = {
   // In the handle export, we could add a i18n key with namespaces our route
   // will need to load. This key can be a single string or an array of strings.
-  i18n: ['index'],
+  i18n: ["index"],
 }
 
 export default function App() {
   const { i18n, ready } = useTranslation()
-  if (!ready) return 'Translation loading...'
+  if (!ready) return "Translation loading..."
 
   return (
     <html lang={i18n.language} className="h-full">
@@ -63,21 +68,23 @@ export default function App() {
         <Links />
       </head>
       <body className="h-full">
-        <Outlet />
-        <ScrollRestoration />
-        <Scripts />
-        <LiveReload />
-        <ToastContainer
-          position="top-center"
-          autoClose={5000}
-          hideProgressBar={true}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-        />
+        <CommonContextProvider>
+          <Outlet />
+          <ScrollRestoration />
+          <Scripts />
+          <LiveReload />
+          <ToastContainer
+            position="top-center"
+            autoClose={5000}
+            hideProgressBar={true}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+          />
+        </CommonContextProvider>
       </body>
     </html>
   )

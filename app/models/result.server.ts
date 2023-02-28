@@ -1,10 +1,11 @@
-import type { CandidateResult, CandidateTest } from '@prisma/client'
-import { prisma } from '~/db.server'
-import type { Test } from '@prisma/client'
+import type { CandidateResult, CandidateTest } from "@prisma/client"
+import type { Test } from "@prisma/client"
+
+import { prisma } from "~/db.server"
 
 export async function getPendingExamCandidateByTestId({
   id,
-}: Pick<CandidateTest, 'id'>) {
+}: Pick<CandidateTest, "id">) {
   return prisma.test.findFirst({
     where: {
       id,
@@ -28,7 +29,7 @@ export async function getPendingExamCandidateByTestId({
 }
 export async function getTestAttendedCandiated({
   id,
-}: Pick<CandidateResult, 'id'>) {
+}: Pick<CandidateResult, "id">) {
   return prisma.test.findFirst({
     where: {
       id,
@@ -55,7 +56,7 @@ export async function getTestAttendedCandiated({
 }
 export async function getResultsOfCandidatesByTestId({
   testId,
-}: Pick<CandidateResult, 'testId'>) {
+}: Pick<CandidateResult, "testId">) {
   return prisma.candidateResult.findMany({
     where: { testId },
     select: {
@@ -81,12 +82,35 @@ export async function getResultsOfCandidatesByTestId({
   })
 }
 
+export async function getAllCandidatesOfTestCount(
+  id: string,
+  statusFilter: string
+) {
+  const count = prisma.candidateTest.count({
+    where: {
+      ...(statusFilter === "complete"
+        ? { NOT: { endAt: { equals: null } } }
+        : statusFilter === "pending"
+          ? { endAt: { equals: null } }
+          : {}),
+      testId: id,
+    },
+  })
+  return count
+}
+
 export async function getAllCandidatesOfTest({
   id,
   workspaceId,
+  currentPage,
+  pageSize,
+  statusFilter,
 }: {
   id: string
   workspaceId: string
+  currentPage?: number
+  pageSize?: number
+  statusFilter?: string
 }) {
   return prisma.test.findFirst({
     where: {
@@ -95,7 +119,16 @@ export async function getAllCandidatesOfTest({
     },
     include: {
       candidateTest: {
-        orderBy: { createdAt: 'desc' },
+        take: pageSize,
+        where: {
+          ...(statusFilter === "complete"
+            ? { NOT: { endAt: { equals: null } } }
+            : statusFilter === "pending"
+              ? { endAt: { equals: null } }
+              : {}),
+        },
+        skip: (currentPage! - 1) * pageSize!,
+        orderBy: { createdAt: "desc" },
         include: {
           candidateResult: true,
           candidate: {
@@ -132,53 +165,64 @@ export async function getResultsOfIndividualCandidates({ id }: { id: string }) {
 
 export async function getSectionWiseResultsOfIndividualCandidate({
   testId,
-  candidateTestId,
+  candidateId,
 }: {
   testId: string
-  candidateTestId: string
+  candidateId: string
 }) {
-  return await prisma.sectionWiseResult.findMany({
+  return await prisma.candidateTest.findUnique({
     where: {
-      testId,
-      candidateTestId,
+      candidateId_testId: { candidateId, testId },
     },
     select: {
-      id: true,
-      section: {
+      candidate: {
         select: {
+          firstName: true,
+          lastName: true,
+        },
+      },
+      sections: {
+        select: {
+          id: true,
           startedAt: true,
           endAt: true,
+          order: true,
           section: {
             select: {
               id: true,
               name: true,
             },
           },
-        },
-      },
 
-      test: {
-        select: {
-          id: true,
-          sections: {
+          SectionWiseResult: {
             select: {
               id: true,
-              timeInSeconds: true,
               section: {
                 select: {
-                  id: true,
+                  startedAt: true,
+                  endAt: true,
+                  section: {
+                    select: {
+                      id: true,
+                      name: true,
+                      sectionInTest: {
+                        select: {
+                          timeInSeconds: true,
+                        },
+                      },
+                    },
+                  },
                 },
               },
+              totalQuestion: true,
+              correctQuestion: true,
+              unanswered: true,
+              incorrect: true,
+              skipped: true,
             },
           },
         },
       },
-
-      totalQuestion: true,
-      correctQuestion: true,
-      unanswered: true,
-      incorrect: true,
-      skipped: true,
     },
   })
 }
@@ -195,19 +239,68 @@ export async function updateCandidateStatus({
       id,
     },
     data: {
-      isQualified: candidateStatus == 'true' ? true : false,
+      isQualified: candidateStatus == "true" ? true : false,
     },
   })
 }
-
-export async function getAllCandidateTests(
-  filterData: string,
-  workspaceId: string
-) {
-  const filter = filterData ? filterData : {}
-  const res: Array<Test> = await prisma.test.findMany({
-    ...filter,
+export async function getTotalTestCount(workspaceId: string) {
+  const totalCount = await prisma.test.count({
     where: {
+      workspaceId,
+
+      candidateTest: {
+        some: {
+          id: {
+            not: undefined,
+          },
+        },
+      },
+    },
+  })
+  return totalCount
+}
+export async function getAllCandidateTestsCount(
+  workspaceId: string,
+  statusFilter: string
+) {
+  const testCount = await prisma.test.count({
+    where: {
+      ...(statusFilter === "active"
+        ? { NOT: { deleted: { equals: true } } }
+        : statusFilter === "inactive"
+          ? { deleted: { equals: true } }
+          : {}),
+      workspaceId,
+      candidateTest: {
+        some: {
+          id: {
+            not: undefined,
+          },
+        },
+      },
+    },
+  })
+  return testCount
+}
+export async function getAllCandidateTests(
+  workspaceId: string,
+  resultsItemsPerPage: number = 5,
+  resultsCurrentPage: number = 1,
+  statusFilter: string,
+  sortBy: string,
+  sortOrder: string
+) {
+  const PER_PAGE_ITEMS = resultsItemsPerPage
+  const res: Array<Test> = await prisma.test.findMany({
+    take: PER_PAGE_ITEMS,
+    skip: (resultsCurrentPage - 1) * PER_PAGE_ITEMS,
+    orderBy: { [sortBy ?? "createdAt"]: sortOrder ?? "asc" },
+    where: {
+      ...(statusFilter === "active"
+        ? { NOT: { deleted: { equals: true } } }
+        : statusFilter === "inactive"
+          ? { deleted: { equals: true } }
+          : {}),
       workspaceId,
       candidateTest: {
         some: {
@@ -246,10 +339,68 @@ export async function getAllCandidateTests(
             count = count + 1
           }
         })
-        test['count'] = count
+        test["count"] = count
       }
     )
   }
 
   return res
+}
+
+export async function getResultDetailBySection(id?: string) {
+  return await prisma.sectionInCandidateTest.findUnique({
+    where: {
+      id,
+    },
+    select: {
+      candidateTest: {
+        select: {
+          candidate: {
+            select: {
+              firstName: true,
+              lastName: true,
+            },
+          },
+        },
+      },
+      section: {
+        select: {
+          name: true,
+        },
+      },
+      questions: {
+        select: {
+          question: {
+            select: {
+              question: true,
+              correctOptions: {
+                select: {
+                  option: true,
+                  id: true,
+                },
+              },
+              questionType: {
+                select: {
+                  value: true,
+                },
+              },
+              options: true,
+              correctAnswer: true,
+              checkOrder: true,
+            },
+          },
+          answers: true,
+          status: true,
+          id: true,
+          selectedOptions: {
+            select: {
+              id: true,
+              option: true,
+              questionId: true,
+            },
+          },
+        },
+      },
+    },
+  })
 }

@@ -1,6 +1,15 @@
-import { prisma } from '~/db.server'
-import { getAdminId } from './user.server'
+import { getAdminId } from "./user.server"
 
+import { prisma } from "~/db.server"
+export async function getCurrentWorkspaceOwner(currentWorkspaceId: string) {
+  const workspaceOwner = await prisma.workspace.findUnique({
+    where: { id: currentWorkspaceId },
+    select: {
+      createdById: true,
+    },
+  })
+  return workspaceOwner
+}
 export async function getUserWorkspaces(userId: string) {
   return await prisma.userWorkspace.findMany({
     where: {
@@ -78,20 +87,47 @@ export async function addWorkspace(workspaceName: string, userId: string) {
     },
   })
 }
-export async function rejectWorkspaceInvitation({
-  //if user rejected the workspace invited this function is called
-  invitedId,
-}: {
-  invitedId: string
-}) {
-  await prisma.invites.update({
-    // update the status if rejecting the workspace invitation
-    where: {
-      id: invitedId,
-    },
-    data: {
-      joined: false,
+
+export async function getDefaultWorkspaceIdForUserQuery(userId: string) {
+  return prisma.user.findUnique({
+    where: { id: userId },
+    select: {
+      workspace: {
+        select: {
+          id: true,
+        },
+      },
     },
   })
-  return
+}
+
+export async function verifyWorkspaceId({
+  userId,
+  currentWorkspaceId,
+}: {
+  userId: string
+  currentWorkspaceId: string
+}) {
+  return prisma.userWorkspace.findFirst({
+    where: { userId, workspaceId: currentWorkspaceId },
+    select: {
+      workspace: {
+        select: {
+          id: true,
+        },
+      },
+    },
+  })
+}
+export async function leaveWorkspace(workspaceId: string, userId: string) {
+  await prisma.userWorkspace.deleteMany({
+    where: { workspaceId: workspaceId, userId: userId },
+  })
+}
+
+export async function getOwnersWorkspaces(userId: string) {
+  const ownerWorkspaceId = await prisma.workspace.findMany({
+    where: { createdById: userId },
+  })
+  return ownerWorkspaceId
 }

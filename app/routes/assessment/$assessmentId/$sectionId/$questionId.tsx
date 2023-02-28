@@ -1,7 +1,8 @@
-import { useLoaderData } from '@remix-run/react'
-import type { ActionFunction, LoaderFunction } from '@remix-run/server-runtime'
-import { redirect } from '@remix-run/server-runtime'
-import Question from '~/components/assessment/Question'
+import { useLoaderData } from "@remix-run/react"
+import type { ActionFunction, LoaderFunction } from "@remix-run/server-runtime"
+import { redirect } from "@remix-run/server-runtime"
+
+import Question from "~/components/assessment/Question"
 import {
   candidateTest,
   getQuestion,
@@ -9,7 +10,7 @@ import {
   moveToNextSection,
   saveAnswerSkipAndNext,
   endCandidateAssessment,
-} from '~/utils/assessment.utils'
+} from "~/services/assessment.service"
 
 export const loader: LoaderFunction = async ({ params, request }) => {
   const question = await getQuestion(params.questionId as string)
@@ -25,19 +26,19 @@ export const loader: LoaderFunction = async ({ params, request }) => {
 
 export const action: ActionFunction = async ({ params, request }) => {
   const formData = await request.formData()
-  const next = formData.get('next')
-  const previous = formData.get('previous')
-  const skip = formData.get('skip')
-  const nextSection = formData.get('nextSection')
-  const endExam = formData.get('endExam')
-  const options: any = formData.getAll('option')
-  let answers: any = formData.getAll('answer')
-  const jumpQuestionId: any = formData.get('jumpQuestionId')
+  const next = formData.get("next")
+  const previous = formData.get("previous")
+  const skip = formData.get("skip")
+  const nextSection = formData.get("nextSection")
+  const endExam = formData.get("endExam")
+  const options = formData.getAll("option")
+  let answers = formData.getAll("answer")
+  const jumpQuestionId = formData.get("jumpQuestionId")
 
   if (answers.length) {
     let flag = true
     for (let i = 0; i < answers.length; i++) {
-      if (answers[i] !== '') {
+      if (answers[i] !== "") {
         flag = false
         break
       }
@@ -51,20 +52,20 @@ export const action: ActionFunction = async ({ params, request }) => {
 
   if (next || nextSection || endExam) {
     nextQuestionId = await saveAnswerSkipAndNext(
-      options,
-      answers,
+      options as string[],
+      answers as string[],
       params.sectionId as string,
       params.questionId as string,
-      'next'
+      "next"
     )
   }
   if (previous) {
     nextQuestionId = await saveAnswerSkipAndNext(
-      options,
-      answers,
+      options as string[],
+      answers as string[],
       params.sectionId as string,
       params.questionId as string,
-      'prev'
+      "prev"
     )
   }
   if (skip) {
@@ -73,7 +74,7 @@ export const action: ActionFunction = async ({ params, request }) => {
       [],
       params.sectionId as string,
       params.questionId as string,
-      'skip'
+      "skip"
     )
   }
 
@@ -83,7 +84,7 @@ export const action: ActionFunction = async ({ params, request }) => {
       order: parseInt(nextSection as string),
       sectionId: params.sectionId as string,
     })
-    if (typeof nextSecRoute === 'string') return redirect(nextSecRoute)
+    if (typeof nextSecRoute === "string") return redirect(nextSecRoute)
   }
 
   if (endExam) {

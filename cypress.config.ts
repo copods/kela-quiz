@@ -1,10 +1,12 @@
-import { defineConfig } from 'cypress'
+import { defineConfig } from "cypress"
 
 export default defineConfig({
+  viewportHeight: 1000,
+  viewportWidth: 1200,
   e2e: {
     setupNodeEvents: (on, config) => {
       const isDev = config.watchForFileChanges
-      const port = process.env.PORT ?? (isDev ? '3000' : '8811')
+      const port = process.env.PORT ?? (isDev ? "3000" : "8811")
       const configOverrides: Partial<Cypress.PluginConfigOptions> = {
         baseUrl: `http://localhost:${port}`,
         video: !process.env.CI,
@@ -13,7 +15,7 @@ export default defineConfig({
 
       // To use this:
       // cy.task('log', whateverYouWantInTheTerminal)
-      on('task', {
+      on("task", {
         log: (message) => {
           return null
         },
@@ -22,8 +24,8 @@ export default defineConfig({
       return { ...config, ...configOverrides }
     },
     env: {
-      email: 'copods.demo.sendgrid@gmail.com',
-      password: 'kQuiz@copods',
+      email: "copods.demo.sendgrid@gmail.com",
+      password: "kQuiz@copods",
     },
   },
 })

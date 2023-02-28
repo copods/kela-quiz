@@ -1,62 +1,119 @@
 /// <reference types="Cypress"/>
 import {
+  getAddQuestionBtn,
+  getAddSectionBtn,
+  getAddWorkspaceBtn,
+  getAddWorkspaceInput,
+  getDropdown,
+  getEmail,
+  geth1,
+  getPassword,
+  getPasswordError,
+  getSectionCards,
+  getSectionName,
+  getSections,
+  getSubmitBtn,
+  getTestNameInput,
+  getTextArea,
+  visitSignIn,
+  getQuestionWithDropdown,
+  getQlEditorWrapper,
+  getQlEditor,
+  getQlEditorInput,
+  getSaveAndExit,
+  getSaveAndAddMore,
+  getTests,
+  getAddTestBtn,
+  getAssesmentNameInput,
+  getNextBtn,
+  getStepsTabs,
+  getNumberOfQuestionsInput,
+  getTimeInput,
+  getAssesmentSubmitBtn,
+  getAssesmentQlEditorWrapper,
+  getInviteMemberBtn,
+  getDialogWrapper,
+  getEmailInput,
+  getAddMemberModal,
+  getInviteBtn,
+  getAssessmentsPageTitle,
+  getInvitePopup,
+} from "support/common-function"
+
+import {
   addQuestion,
   commonConstants,
   cypress,
-} from '~/constants/common.constants'
+} from "~/constants/common.constants"
 const section1 = `Aptitude - section1`
 const test1 = `Aptitude - assessment1`
 const deleteTest1 = `Aptitude - assessment2`
 const section2 = `Aptitude - section2`
 const deleteSection = `Aptitude - delete-Section`
+const question = "first-question"
+const memberEmail = "johndoe@example.com"
 
-const memberEmail = 'johndoe@example.com'
-
-describe('smoke tests', () => {
+describe("smoke tests", () => {
   beforeEach(() => {
     // This will clear the local storage for every test
     window.localStorage.clear()
   })
 
-  it('Invalid Email Error Message', () => {
-    cy.visit('/sign-in')
-    cy.get('#email').clear().type('test@copods.co')
-    cy.get('#password').clear().type('kQuiz@copods')
-    cy.findByRole('button').click()
-    cy.get('#email-error').should('have.text', 'Email is invalid')
-  })
+  it("Login form validations", () => {
+    visitSignIn()
 
-  it('Invalid Password Error Message', () => {
-    cy.visit('/sign-in')
-    cy.get('#email').clear().type('copods.demo.sendgrid@gmail.com')
-    cy.get('#password').clear().type('anuragpate')
-    cy.findByRole('button').click()
-    cy.get('#password-error').should('have.text', 'Password is invalid')
-  })
+    // To check Invalid Email Error
+    getEmail().type("test@copods.co")
+    getPassword().type("kQuiz@copods")
+    cy.findByRole("button").click()
+    cy.wait(1000)
+    getPasswordError().should("have.text", "Incorrect email or password")
 
-  it('Successfully Login', () => {
-    cy.visit('/sign-in')
-    cy.get('#email').clear().type('copods.demo.sendgrid@gmail.com')
-    cy.get('#password').clear().type('kQuiz@copods')
-    cy.findByRole('button').click()
-    cy.url().should('includes', '/members')
+    // To clear fields
+    getEmail().clear()
+    getPassword().clear()
+
+    // To check Invalid Password Error
+    getEmail().type("copods.demo.sendgrid@gmail.com")
+    getPassword().type("anuragpate")
+    cy.findByRole("button").click()
+    cy.wait(1000)
+    getPasswordError().should("have.text", "Incorrect email or password")
+
+    // To clear fields
+    getEmail().clear()
+    getPassword().clear()
+
+    // To login
+    getEmail().type("copods.demo.sendgrid@gmail.com")
+    getPassword().type("kQuiz@copods")
+    cy.findByRole("button").click()
+    cy.wait(1000)
+
+    // To check cookies
     cy.getCookies()
-      .should('have.length', 1)
+      .should("have.length", 1)
       .then((cookies) => {
-        expect(cookies[0]).to.have.property('name', '__session')
+        expect(cookies[0]).to.have.property("name", "__session")
       })
   })
 
-  it('should add workspace', () => {
+  it("Creating Workspace", () => {
+    // To Login
     cy.login()
-    cy.customVisit('/members')
-    cy.location('pathname').should('include', '/members')
 
-    let dropdown = cy.get('#dropdown')
+    // To add workspace
+    cy.customVisit("/members")
+    cy.location("pathname").should("include", "/members")
+    cy.wait(500)
 
-    dropdown
+    const randomWorkSpaceName = `workSpace-${(Math.random() + 1)
+      .toString(36)
+      .substring(7)}`
+
+    getDropdown()
       .click()
-      .find('ul')
+      .find("ul")
       .children()
       .each((element, index) => {
         if (index === 0) {
@@ -65,98 +122,92 @@ describe('smoke tests', () => {
         }
       })
 
-    // Adding workspace name
-    const randomWorkSpaceName = `workSpace-${(Math.random() + 1)
-      .toString(36)
-      .substring(7)}`
-
-    cy.get('input[name="addWorkspace"]')
+    getAddWorkspaceInput()
       .type(randomWorkSpaceName)
-      .should('have.attr', 'value', randomWorkSpaceName)
+      .should("have.attr", "value", randomWorkSpaceName)
 
-    cy.get('button[name="addWorkspace"]').click()
+    getAddWorkspaceBtn().click()
 
-    // Check for workspace length
-    dropdown = cy.get('#dropdown')
-
-    dropdown
+    getDropdown()
       .click()
-      .find('ul')
-      .find('li')
+      .find("ul")
+      .find("li")
       .should((item) => {
         expect(item.length).to.be.greaterThan(1)
       })
   })
 
-  // creating test data
-  it('Adding a first section', () => {
+  it("Creating sections", () => {
+    // To Login
     cy.login()
-    cy.customVisit('/tests')
+    cy.customVisit("/members")
 
-    cy.get('#add-section').click()
-    cy.get('form > div')
-      .should('be.visible')
+    // To add sections
+    getSections().should("have.text", "Tests").click()
+
+    // Section 1
+    getAddSectionBtn().click()
+    cy.get("form > div")
+      .should("be.visible")
       .within((el) => {
-        cy.get('input[placeholder="Enter Test Name"]').type(section1)
-        cy.get('textarea').type('Aptitude')
-        cy.get('[data-cy="submit"]').click()
+        getTestNameInput().type(section1)
+        getTextArea().type("Aptitude")
+        getSubmitBtn().click()
+      })
+    cy.wait(1000)
+
+    // Section 2
+    getAddSectionBtn().click()
+    cy.get("form > div")
+      .should("be.visible")
+      .within((el) => {
+        getTestNameInput().type(section2)
+        getTextArea().type("Aptitude")
+        getSubmitBtn().click()
+      })
+    cy.wait(1000)
+
+    // Delete Section
+    getAddSectionBtn().click()
+    cy.get("form > div")
+      .should("be.visible")
+      .within((el) => {
+        getTestNameInput().type(deleteSection)
+        getTextArea().type("Aptitude")
+        getSubmitBtn().click()
       })
   })
 
-  it('Adding a second section', () => {
+  it("Adding Questions in Sections", () => {
+    // To Login
     cy.login()
-    cy.customVisit('/tests')
+    cy.customVisit("/members")
+    getSections().should("have.text", "Tests").click()
 
-    cy.get('#add-section').click()
-    cy.get('form > div')
-      .should('be.visible')
-      .within((el) => {
-        cy.get(`input[placeholder='Enter Test Name']`).type(section2)
-        cy.get('textarea').type('Aptitude')
-        cy.get('[data-cy="submit"]').click()
-      })
-  })
-
-  it('Adding a deleteSection ', () => {
-    cy.login()
-    cy.customVisit('/tests')
-
-    cy.get('#add-section').click()
-    cy.get('form > div')
-      .should('be.visible')
-      .within((el) => {
-        cy.get('input[placeholder="Enter Test Name"]').type(deleteSection)
-        cy.get('textarea').type('Aptitude')
-        cy.get('[data-cy="submit"]').click()
-      })
-  })
-
-  it('Add question to the first section', () => {
-    cy.login()
-    cy.customVisit('/tests')
-
-    cy.get('#section-card').each(($el) => {
+    // Add Question 1 to Section 1
+    getSectionCards().each(($el) => {
       cy.wrap($el).within((el) => {
         if (
-          el[0].getElementsByClassName('sectionName')[0].innerHTML === section1
+          el[0].getElementsByClassName("sectionName")[0].innerHTML === section1
         ) {
-          cy.get('.sectionName').contains(section1).click()
+          cy.get(".sectionName").contains(section1)
         }
       })
     })
-    cy.get('.sectionName').contains(section1).click()
-    cy.get('#add-question')
-      .should('have.text', `+ ${addQuestion.addQuestion}`)
+    cy.wait(1000)
+    getSectionName().contains(section1).click()
+    cy.wait(1000)
+    getAddQuestionBtn()
+      .should("have.text", `+ ${addQuestion.addQuestion}`)
       .click()
-    cy.location('pathname').should('include', '/add-question')
-    cy.get('h1', { timeout: 6000 }).should('be.visible')
-
-    cy.get('#Question').get('#dropdown-container').click()
-    cy.get('ul').within(() => {
-      cy.get('li').within(() => {
-        cy.get('div').then((el) => {
+    cy.location("pathname").should("include", "/add-question")
+    geth1().should("be.visible")
+    getQuestionWithDropdown().click()
+    cy.get("ul").within(() => {
+      cy.get("li").within(() => {
+        cy.get("div").then((el) => {
           ;[...el].map((el) => {
-            if (el.innerText === 'Text') {
+            if (el.innerText === "Text") {
               el.click()
             }
             return null
@@ -164,40 +215,24 @@ describe('smoke tests', () => {
         })
       })
     })
-    cy.get('#question-editor #quill-editor').within(() => {
-      cy.get('.ql-editor').type(cypress.useRef)
-    })
-    cy.get('input[placeholder="Write your option here"]')
-      .clear()
-      .type(cypress.useRefAns)
-    cy.get('#save-and-exit').click()
-  })
+    cy.wait(500)
 
-  it('Add question to the second section', () => {
-    cy.login()
-    cy.customVisit('/tests')
-
-    cy.get('#section-card').each(($el) => {
-      cy.wrap($el).within((el) => {
-        if (
-          el[0].getElementsByClassName('sectionName')[0].innerHTML === section2
-        ) {
-          cy.get('.sectionName').should('have.text', section2)
-        }
-      })
+    getQlEditorWrapper().within(() => {
+      getQlEditor().type(cypress.useRef).should("have.text", cypress.useRef)
     })
-    cy.get('.sectionName').contains(section2).click()
-    cy.get('#add-question')
-      .should('have.text', `+ ${addQuestion.addQuestion}`)
-      .click()
-    cy.location('pathname').should('include', '/add-question')
-    cy.get('h1', { timeout: 6000 }).should('be.visible')
-    cy.get('#Question').get('#dropdown-container').click()
-    cy.get('ul').within(() => {
-      cy.get('li').within(() => {
-        cy.get('div').then((el) => {
+    getQlEditorInput().clear().type(cypress.useRefAns)
+    getSaveAndAddMore().click()
+    cy.wait(500)
+
+    // Add Question 2 to Section 1
+    cy.location("pathname").should("include", "/add-question")
+    geth1().should("be.visible")
+    getQuestionWithDropdown().click()
+    cy.get("ul").within(() => {
+      cy.get("li").within(() => {
+        cy.get("div").then((el) => {
           ;[...el].map((el) => {
-            if (el.innerText === 'Text') {
+            if (el.innerText === "Text") {
               el.click()
             }
             return null
@@ -205,195 +240,230 @@ describe('smoke tests', () => {
         })
       })
     })
-    cy.get('#question-editor #quill-editor').within(() => {
-      cy.get('.ql-editor').type(cypress.useMemo)
+    cy.wait(500)
+
+    getQlEditorWrapper().within(() => {
+      getQlEditor().type(question).should("have.text", question)
     })
-    cy.get('input[placeholder="Write your option here"]')
-      .clear()
-      .type(cypress.useMemoAns)
-    cy.get('#save-and-exit').click()
+    getQlEditorInput().clear().type(cypress.useRefAns)
+    getSaveAndExit().click()
+
+    // Add Question to Section 2
+    getSectionCards().each(($el) => {
+      cy.wrap($el).within((el) => {
+        if (
+          el[0].getElementsByClassName("sectionName")[0].innerHTML === section2
+        ) {
+          cy.get(".sectionName").contains(section2)
+        }
+      })
+    })
+    cy.wait(1000)
+    getSectionName().contains(section2).click()
+    cy.wait(1000)
+    getAddQuestionBtn()
+      .should("have.text", `+ ${addQuestion.addQuestion}`)
+      .click()
+    cy.location("pathname").should("include", "/add-question")
+    geth1().should("be.visible")
+    getQuestionWithDropdown().click()
+    cy.get("ul").within(() => {
+      cy.get("li").within(() => {
+        cy.get("div").then((el) => {
+          ;[...el].map((el) => {
+            if (el.innerText === "Text") {
+              el.click()
+            }
+            return null
+          })
+        })
+      })
+    })
+    cy.wait(500)
+
+    getQlEditorWrapper().within(() => {
+      getQlEditor().type(cypress.useMemo).should("have.text", cypress.useMemo)
+    })
+    getQlEditorInput().clear().type(cypress.useMemo)
+    getSaveAndExit().click()
+    cy.wait(500)
   })
 
-  it('Verify if user able create the assesssment 1', () => {
+  it("Creating Assesments", () => {
+    // To Login
     cy.login()
-    cy.customVisit('/assessments')
+    cy.customVisit("/members")
+    getTests().should("have.text", "Assessments").click()
 
-    cy.get('#add-test').click()
-    cy.location('pathname').should('include', '/assessments/add-assessment')
-    cy.get('input[placeholder="Enter assessment name"]')
-      .clear()
-      .type(deleteTest1)
-    cy.get('#quill-editor').within(() => {
-      cy.get('.ql-editor').type(`Test Description`)
+    // To add Assesment 1
+    getAddTestBtn().click()
+    cy.location("pathname").should("include", "/assessments/add-assessment")
+    getAssesmentNameInput().type(deleteTest1)
+    getAssesmentQlEditorWrapper().within(() => {
+      getQlEditor().type("Test Description")
     })
-    cy.get('button#next-button').should('have.text', cypress.next).click()
-    cy.get('.stepsTab').each(($el) => {
+    getNextBtn().should("have.text", cypress.next).click()
+
+    getStepsTabs().each(($el) => {
       cy.wrap($el).within((el) => {
         if (
-          el[0].getElementsByClassName('stepsName')[0].innerHTML ===
+          el[0].getElementsByClassName("stepsName")[0].innerHTML ===
           cypress.step1
         ) {
-          cy.get('.stepsName').should('have.text', cypress.step1)
+          cy.get(".stepsName").should("have.text", cypress.step1)
         } else if (
-          el[0].getElementsByClassName('stepsName')[0].innerHTML ===
+          el[0].getElementsByClassName("stepsName")[0].innerHTML ===
           cypress.step2
         ) {
-          cy.get('.stepsName').should('have.text', cypress.step2)
+          cy.get(".stepsName").should("have.text", cypress.step2)
         }
       })
     })
-    // user reached to step 2
-    cy.get('div#section').each((el) => {
+
+    cy.get("div#section").each((el) => {
       cy.wrap(el).within(() => {
-        if (el.find('.count')[0].innerText != '0') {
-          cy.get('input#no-of-qu').should('have.disabled', true)
-          cy.get('input#time').should('have.disabled', true)
-          cy.get('button').should('have.text', commonConstants.add).click()
-          cy.get('button').should('have.text', cypress.remove)
+        if (el.find(".count")[0].innerText != "0") {
+          getNumberOfQuestionsInput().should("have.disabled", true)
+          getTimeInput().should("have.disabled", true)
+          cy.get("button").should("have.text", commonConstants.add).click()
+          cy.get("button").should("have.text", cypress.remove)
 
-          cy.get('input#no-of-qu').clear().type('1')
-          cy.get('input#time').clear().type('1')
-          cy.get('input#no-of-qu').should('have.value', '1')
-          cy.get('input#time').should('have.value', '1')
+          getNumberOfQuestionsInput().clear().type("1")
+          getTimeInput().clear().type("1")
         }
       })
     })
-    cy.get('button#next-button', { timeout: 8000 }).should('be.visible')
-    cy.get('button#next-button').should('have.text', cypress.next).click()
-    cy.get('.stepsTab').each(($el) => {
+
+    getNextBtn().click()
+
+    getStepsTabs().each(($el) => {
       cy.wrap($el).within((el) => {
         if (
-          el[0].getElementsByClassName('stepsName')[0].innerHTML ===
+          el[0].getElementsByClassName("stepsName")[0].innerHTML ===
           cypress.step1
         ) {
-          cy.get('.stepsName').should('have.text', cypress.step1)
+          cy.get(".stepsName").should("have.text", cypress.step1)
         } else if (
-          el[0].getElementsByClassName('stepsName')[0].innerHTML ===
+          el[0].getElementsByClassName("stepsName")[0].innerHTML ===
           cypress.step2
         ) {
-          cy.get('.stepsName').should('have.text', cypress.step2)
+          cy.get(".stepsName").should("have.text", cypress.step2)
         } else if (
-          el[0].getElementsByClassName('stepsName')[0].innerHTML ===
+          el[0].getElementsByClassName("stepsName")[0].innerHTML ===
           cypress.step3
         ) {
-          cy.get('.stepsName').should('have.text', cypress.step3)
+          cy.get(".stepsName").should("have.text", cypress.step3)
         }
       })
     })
-    cy.get('button#submit-button')
-      .should('have.text', commonConstants.submit)
-      .click()
-  })
 
-  it('Verify if user able create the assessment 2', () => {
-    cy.login()
-    cy.customVisit('/assessments')
+    getAssesmentSubmitBtn().should("have.text", commonConstants.submit).click()
 
-    cy.get('#add-test').click()
-    cy.location('pathname').should('include', '/assessments/add-assessment')
-    cy.get('input[placeholder="Enter assessment name"]').clear().type(test1)
-    cy.get('#quill-editor').within(() => {
-      cy.get('.ql-editor').type(`Test Description`)
+    // To add Assesment 2
+    getAddTestBtn().click()
+    cy.location("pathname").should("include", "/assessments/add-assessment")
+    getAssesmentNameInput().type(test1)
+    getAssesmentQlEditorWrapper().within(() => {
+      getQlEditor().type("Test Description")
     })
-    cy.get('button#next-button').should('have.text', cypress.next).click()
-    cy.get('.stepsTab').each(($el) => {
+    getNextBtn().should("have.text", cypress.next).click()
+
+    getStepsTabs().each(($el) => {
       cy.wrap($el).within((el) => {
         if (
-          el[0].getElementsByClassName('stepsName')[0].innerHTML ===
+          el[0].getElementsByClassName("stepsName")[0].innerHTML ===
           cypress.step1
         ) {
-          cy.get('.stepsName').should('have.text', cypress.step1)
+          cy.get(".stepsName").should("have.text", cypress.step1)
         } else if (
-          el[0].getElementsByClassName('stepsName')[0].innerHTML ===
+          el[0].getElementsByClassName("stepsName")[0].innerHTML ===
           cypress.step2
         ) {
-          cy.get('.stepsName').should('have.text', cypress.step2)
+          cy.get(".stepsName").should("have.text", cypress.step2)
         }
       })
     })
-    // user reached to step 2
-    cy.get('div#section').each((el) => {
+
+    cy.get("div#section").each((el) => {
       cy.wrap(el).within(() => {
-        if (el.find('.count')[0].innerText != '0') {
-          cy.get('input#no-of-qu').should('have.disabled', true)
-          cy.get('input#time').should('have.disabled', true)
-          cy.get('button').should('have.text', commonConstants.add).click()
-          cy.get('button').should('have.text', cypress.remove)
+        if (el.find(".count")[0].innerText != "0") {
+          getNumberOfQuestionsInput().should("have.disabled", true)
+          getTimeInput().should("have.disabled", true)
+          cy.get("button").should("have.text", commonConstants.add).click()
+          cy.get("button").should("have.text", cypress.remove)
 
-          cy.get('input#no-of-qu').clear().type('1')
-          cy.get('input#time').clear().type('1')
-          cy.get('input#no-of-qu').should('have.value', '1')
-          cy.get('input#time').should('have.value', '1')
+          getNumberOfQuestionsInput().clear().type("1")
+          getTimeInput().clear().type("1")
         }
       })
     })
-    cy.get('button#next-button', { timeout: 8000 }).should('be.visible')
-    cy.get('button#next-button').should('have.text', cypress.next).click()
-    cy.get('.stepsTab').each(($el) => {
+
+    getNextBtn().click()
+
+    getStepsTabs().each(($el) => {
       cy.wrap($el).within((el) => {
         if (
-          el[0].getElementsByClassName('stepsName')[0].innerHTML ===
+          el[0].getElementsByClassName("stepsName")[0].innerHTML ===
           cypress.step1
         ) {
-          cy.get('.stepsName').should('have.text', cypress.step1)
+          cy.get(".stepsName").should("have.text", cypress.step1)
         } else if (
-          el[0].getElementsByClassName('stepsName')[0].innerHTML ===
+          el[0].getElementsByClassName("stepsName")[0].innerHTML ===
           cypress.step2
         ) {
-          cy.get('.stepsName').should('have.text', cypress.step2)
+          cy.get(".stepsName").should("have.text", cypress.step2)
         } else if (
-          el[0].getElementsByClassName('stepsName')[0].innerHTML ===
+          el[0].getElementsByClassName("stepsName")[0].innerHTML ===
           cypress.step3
         ) {
-          cy.get('.stepsName').should('have.text', cypress.step3)
+          cy.get(".stepsName").should("have.text", cypress.step3)
         }
       })
     })
-    cy.get('button#submit-button')
-      .should('have.text', commonConstants.submit)
-      .click()
+
+    getAssesmentSubmitBtn().should("have.text", commonConstants.submit).click()
   })
 
-  it('Test for adding a new member', () => {
+  it("Inviting new member", () => {
+    // To Login
     cy.login()
-    cy.customVisit('/members')
+    cy.customVisit("/members")
 
-    cy.get('#invite-member').should('have.text', cypress.addMember).click()
-    cy.get('#dialog-wrapper').should('be.visible')
-
-    cy.get('input[name="email"]')
-      .clear()
-      .type(memberEmail)
-      .should('have.value', memberEmail)
-
-    cy.get('div').get('#add-member-modal').find('.dropdownButton').click()
-    cy.get('ul').contains('Recruiter').click()
-    cy.get('#invite-button').click()
+    // To invite member
+    getInviteMemberBtn().should("have.text", "Invite Member").click()
+    getDialogWrapper().should("be.visible")
+    getEmailInput().type(memberEmail).should("have.value", memberEmail)
+    getAddMemberModal().find(".dropdownButton").click()
+    cy.get("ul").contains("Recruiter").click()
+    getInviteBtn().click()
   })
 
-  it('invite candidate for assessment', () => {
-    cy.login()
-    cy.customVisit('/assessments')
+  it("Invite candidate for Assessment", () => {
+    cy.viewport(1200, 1000)
 
-    cy.get('.test-table-list', { timeout: 8000 }).should('be.visible')
-    cy.get('.test-table-list').each(($el) => {
-      cy.wrap($el).within((el) => {
-        if (
-          el[0].getElementsByClassName('test-name-navigation')[0].innerHTML ===
-          test1
-        ) {
-          cy.get('.test-name-navigation').should('have.text', test1)
-        }
-      })
+    // To Login
+    cy.login()
+    cy.customVisit("/members")
+
+    getTests().should("have.text", "Assessments").click()
+    getAssessmentsPageTitle().should("have.text", "Assessments")
+    getInvitePopup().should("be.visible").click()
+    getEmailInput()
+      .type("johndoe@example.com")
+      .should("have.focus")
+      .should("have.value", "johndoe@example.com")
+    getSubmitBtn().click()
+  })
+
+  it("Test to check Page Not Found", () => {
+    // To Login
+    cy.login()
+    cy.customVisit("/members")
+
+    // To check Page Not Found fallback
+    cy.location().then((res) => {
+      cy.customVisit(`${res.pathname}-error`)
     })
-    cy.get('.test-name-navigation').contains(test1).click()
-    cy.get('#title', { timeout: 8000 }).should('have.text', test1)
-    cy.get('#invite-popup-open', { timeout: 8000 }).should('be.visible').click()
-    cy.get('input[name="email"]')
-      .clear()
-      .type('johndoe@example.com')
-      .should('have.focus')
-      .should('have.value', 'johndoe@example.com')
-    cy.get('[data-cy="submit"]').click()
+    cy.contains("That's an error.")
   })
 })

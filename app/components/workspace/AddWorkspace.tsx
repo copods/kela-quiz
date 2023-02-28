@@ -1,43 +1,49 @@
-import { Dialog, Transition } from '@headlessui/react'
-import { Icon } from '@iconify/react'
-import { useFetcher, useTransition } from '@remix-run/react'
-import { Fragment, useState, useEffect } from 'react'
-import Button from '../form/Button'
-import { trimValue } from '~/utils'
-import { useTranslation } from 'react-i18next'
-import { toast } from 'react-toastify'
-import InputField from '../form/InputField'
-import { actions } from '~/constants/action.constants'
+import { Fragment, useState, useEffect } from "react"
+
+import { Dialog, Transition } from "@headlessui/react"
+import { Icon } from "@iconify/react"
+import { useFetcher, useTransition } from "@remix-run/react"
+import { useTranslation } from "react-i18next"
+import { toast } from "react-toastify"
+
+import Button from "../common-components/Button"
+import InputField from "../common-components/InputField"
+
+import { actions } from "~/constants/action.constants"
+import { routes } from "~/constants/route.constants"
+import { trimValue } from "~/utils"
 
 export default function AddWorkspace({
   showAddWorkspaceModal,
   setShowAddWorkspaceModal,
   setWorkspaceId,
+  currentWorkspaceId,
 }: {
   showAddWorkspaceModal: boolean
   setShowAddWorkspaceModal?: (e: boolean) => void
   setWorkspaceId?: (e: string) => void
+  currentWorkspaceId: string
 }) {
   const { t } = useTranslation()
   const fetcher = useFetcher()
   const transition = useTransition()
-  const [workspace, setWorkspace] = useState('')
+  const [workspace, setWorkspace] = useState("")
   const submitWorkspaceForm = () => {
     fetcher.submit(
       {
         workspaceName: workspace,
         action: actions.addWorkspace,
       },
-      { method: 'post', action: '/settings' }
+      { method: "post", action: `/${currentWorkspaceId}${routes.settings}` }
     )
   }
   useEffect(() => {
-    setWorkspace('')
+    setWorkspace("")
   }, [showAddWorkspaceModal])
 
   useEffect(() => {
     let data = fetcher.data
-    if (fetcher.state === 'loading' && data) {
+    if (fetcher.state === "loading" && data) {
       if (
         data.resp?.status === 200 &&
         setShowAddWorkspaceModal &&
@@ -57,13 +63,14 @@ export default function AddWorkspace({
 
   const inputFieldsProps = [
     {
-      label: t('sideNav.workspace'),
-      placeholder: t('sideNav.enterWorkspace'),
-      type: 'text',
-      name: 'addWorkspace',
+      label: t("sideNav.workspace"),
+      placeholder: t("sideNav.enterWorkspace"),
+      type: "text",
+      name: "addWorkspace",
       required: true,
+      isRequired: true,
       value: workspace,
-      errorId: 'name-error',
+      errorId: "name-error",
       onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
         setWorkspace(trimValue(event.target.value))
       },
@@ -108,18 +115,18 @@ export default function AddWorkspace({
                   <h2
                     className="text-2xl font-bold text-gray-700"
                     tabIndex={0}
-                    title={t('sideNav.addWorkspace')}
-                    role={t('sideNav.addWorkspace')}
-                    aria-label={t('sideNav.addWorkspace')}
+                    title={t("sideNav.addWorkspace")}
+                    role={t("sideNav.addWorkspace")}
+                    aria-label={t("sideNav.addWorkspace")}
                   >
-                    {t('sideNav.addWorkspace')}
+                    {t("sideNav.addWorkspace")}
                   </h2>
                   <Icon
                     tabIndex={0}
                     className="cursor-pointer text-2xl text-gray-600"
                     icon="carbon:close"
                     onKeyUp={(e) => {
-                      if (e.key === 'Enter' && setShowAddWorkspaceModal)
+                      if (e.key === "Enter" && setShowAddWorkspaceModal)
                         setShowAddWorkspaceModal(false)
                     }}
                     onClick={() =>
@@ -143,9 +150,9 @@ export default function AddWorkspace({
                       setShowAddWorkspaceModal &&
                       setShowAddWorkspaceModal(false)
                     }
-                    varient="primary-outlined"
-                    title={t('commonConstants.cancel')}
-                    buttonText={t('commonConstants.cancel')}
+                    variant="primary-outlined"
+                    title={t("commonConstants.cancel")}
+                    buttonText={t("commonConstants.cancel")}
                   />
                   <Button
                     tabIndex={0}
@@ -153,18 +160,18 @@ export default function AddWorkspace({
                     name="addWorkspace"
                     value="add"
                     className="h-9 px-4"
-                    isDisabled={transition.state === 'submitting'}
+                    isDisabled={transition.state === "submitting"}
                     title={
-                      transition.state === 'submitting'
-                        ? t('commonConstants.adding')
-                        : t('commonConstants.add')
+                      transition.state === "submitting"
+                        ? t("commonConstants.adding")
+                        : t("commonConstants.add")
                     }
                     buttonText={
-                      transition.state === 'submitting'
-                        ? t('commonConstants.adding')
-                        : t('commonConstants.add')
+                      transition.state === "submitting"
+                        ? t("commonConstants.adding")
+                        : t("commonConstants.add")
                     }
-                    varient="primary-solid"
+                    variant="primary-solid"
                     onClick={() => submitWorkspaceForm()}
                   />
                 </div>
