@@ -20,6 +20,7 @@ import EmptyStateComponent from "~/components/common-components/EmptyStateCompon
 import AddEditSection from "~/components/sections/AddEditSection"
 import Sections from "~/components/sections/Sections"
 import { routes } from "~/constants/route.constants"
+import { useCommonContext } from "~/context/Common.context"
 import { sortByOrder } from "~/interface/Interface"
 import type { Section } from "~/interface/Interface"
 import {
@@ -245,6 +246,7 @@ export const action: ActionFunction = async ({ request, params }) => {
 export default function SectionPage() {
   const data = useLoaderData() as unknown as LoaderData
   const { t } = useTranslation()
+  const { getStoredValue, setCustomStorage } = useCommonContext()
   const sectionActionData = useActionData() as ActionData
   const sortByDetails = [
     {
@@ -258,11 +260,27 @@ export default function SectionPage() {
   ]
   const [sectionDetailFull, setSectionDetailFull] = useState(false)
   const [showAddSectionModal, setShowAddSectionModal] = useState(false)
-  const [order, setOrder] = useState(sortByOrder.desc as string)
-  const [sortBy, setSortBy] = useState(sortByDetails[1].value)
+  const [order, setOrder] = useState(
+    getStoredValue("testsOrder")?.value
+      ? getStoredValue("testsOrder")?.value
+      : (sortByOrder.desc as string)
+  )
+  const [sortBy, setSortBy] = useState(
+    getStoredValue("testsSortBy")?.value
+      ? getStoredValue("testsSortBy")?.value
+      : sortByDetails[1].value
+  )
   const [sectionActionErrors, setSectionActionErrors] = useState({})
-  const [testsPageSize, setTestPageSize] = useState(5)
-  const [testsCurrentPage, setTestsCurrentPage] = useState(data.testCurrentPage)
+  const [testsPageSize, setTestPageSize] = useState(
+    getStoredValue("testActiveSize")?.value
+      ? getStoredValue("testActiveSize")?.value
+      : 5
+  )
+  const [testsCurrentPage, setTestsCurrentPage] = useState(
+    getStoredValue("testActivePage")?.value
+      ? getStoredValue("testActivePage")?.value
+      : data.testCurrentPage
+  )
   const location = useLocation()
   const navigate = useNavigate()
   if (t(data.status) != t("statusCheck.success")) {
@@ -291,13 +309,7 @@ export default function SectionPage() {
         toast.success(t("statusCheck.deletedSuccess"), {
           toastId: t("statusCheck.deletedSuccess"),
         })
-        // eslint-disable-next-line no-lone-blocks
-        {
-          sectionActionData.sectionId &&
-            navigate(
-              `/${data.currentWorkspaceId}${routes.tests}/${sectionActionData?.sectionId}?sortBy=${sortBy}&sort=${order}&testPage=${testsCurrentPage}&testItems=${testsPageSize}`
-            )
-        }
+        setCustomStorage("activeTest", sectionActionData?.sectionId)
       }
     }
   }, [
@@ -320,7 +332,12 @@ export default function SectionPage() {
       (!location.search && data.getAllTestsCount > 0)
     ) {
       navigate(
-        `/${data.currentWorkspaceId}${routes.tests}/${data.sections[0]?.id}?sortBy=${sortBy}&sort=${order}&testPage=${testsCurrentPage}&testItems=${testsPageSize}`
+        `/${data.currentWorkspaceId}${routes.tests}/${
+          getStoredValue("activeTest")?.value
+            ? getStoredValue("activeTest")?.value
+            : data.sections[0]?.id
+        }?sortBy=${sortBy}&sort=${order}&testPage=${testsCurrentPage}&testItems=${testsPageSize}`,
+        { replace: true }
       )
     }
   }, [
@@ -330,27 +347,38 @@ export default function SectionPage() {
     data.getAllTestsCount,
     data.sections[0]?.id,
     location.search,
+    order,
     sortBy,
     sectionActionData?.sectionId,
   ])
 
   useEffect(() => {
-    if (data.sortOrder !== order) {
-      navigate(
-        `/${data.currentWorkspaceId}${routes.tests}/${
-          data.sections.slice(-1)[0]?.id
-        }?sortBy=${sortBy}&sort=${order}&testPage=${testsCurrentPage}&testItems=${testsPageSize}`
-      )
-    }
+    setCustomStorage("testsOrder", order)
   }, [order])
+
   useEffect(() => {
-    setTestsCurrentPage(data.testCurrentPage)
-  }, [data])
+    setCustomStorage("testsSortBy", sortBy)
+  }, [sortBy])
 
   useEffect(() => {
     const heading = document.getElementById("tests-heading")
     heading?.focus()
   }, [])
+
+  useEffect(() => {
+    if (!getStoredValue("activeTest")?.value) {
+      setTestsCurrentPage(1)
+    }
+  }, [data.getAllTestsCount, sortBy, order])
+
+  useEffect(() => {
+    setCustomStorage("testActivePage", testsCurrentPage)
+  }, [data])
+
+  useEffect(() => {
+    setCustomStorage("testActiveSize", testsPageSize)
+  }, [testsPageSize])
+
   return (
     <div className="flex h-full flex-col gap-6 overflow-hidden p-1">
       {/* header */}
@@ -402,7 +430,7 @@ export default function SectionPage() {
             />
           </div>
           {/* section details */}
-          <div className={`z-10 flex flex-1 items-center `}>
+          <div className="z-10 flex flex-1 items-center">
             <span
               className="z-20 -mr-5"
               tabIndex={0}

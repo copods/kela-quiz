@@ -6,7 +6,7 @@ import { toast } from "react-toastify"
 
 import Button from "../common-components/Button"
 
-import type { TestSection } from "~/interface/Interface"
+import type { AddedSectionDetails, TestSection } from "~/interface/Interface"
 
 const SelectSectionCard = ({
   section,
@@ -14,7 +14,7 @@ const SelectSectionCard = ({
   questionCount = 0,
 }: {
   section: TestSection
-  updateSection: <T>(e: T) => void
+  updateSection: (e: AddedSectionDetails) => void
   questionCount?: number
 }) => {
   const { t } = useTranslation()
@@ -40,6 +40,7 @@ const SelectSectionCard = ({
         : questionCount && questionCount < 11
         ? questionCount
         : 10,
+      target: target,
     }
     switch (target) {
       case "isSelected":
@@ -71,7 +72,7 @@ const SelectSectionCard = ({
         section.isSelected
           ? "border-3 border-primary bg-white px-18 py-22"
           : "border-gray-300 bg-gray-100 px-5 py-6"
-      }`}
+      } h-max`}
     >
       <div className="flex items-start justify-between">
         <h3

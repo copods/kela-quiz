@@ -1,5 +1,7 @@
 import { Icon } from "@iconify/react"
 import { NavLink, useLocation } from "@remix-run/react"
+
+import { useCommonContext } from "~/context/Common.context"
 export interface tabProps {
   iconClass: string
   itemName: string
@@ -15,13 +17,14 @@ function MenuItems({
   id,
   currentWorkspaceId,
 }: tabProps) {
-  // const resolvedPath = useResolvedPath(itemRoute) // to get resolved path which would match with current location
   const location = useLocation() // to get current location
+  const { clearStorage } = useCommonContext()
   return (
     <div className="menuItem">
       <NavLink
         tabIndex={0}
         to={`/${currentWorkspaceId}${itemRoute}`}
+        onClick={clearStorage}
         className={({ isActive }) =>
           `flex flex-row items-start gap-2 rounded-lg p-3.5 ${
             isActive || location.pathname.includes(itemName.toLowerCase())

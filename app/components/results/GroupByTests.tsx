@@ -9,12 +9,7 @@ import Table from "../common-components/TableComponent"
 
 import { useCommonContext } from "~/context/Common.context"
 import { sortByOrder } from "~/interface/Interface"
-import type {
-  CandidateTest,
-  tableColumnType,
-  OtherFilters,
-  Test,
-} from "~/interface/Interface"
+import type { tableColumnType, OtherFilters, Test } from "~/interface/Interface"
 
 const sortByDetails = [
   {
@@ -67,16 +62,6 @@ const GroupByTests = () => {
   )
 
   const candidateTests = candidateTestData.candidateTest
-  const candidateTestsArray = candidateTests.filter(
-    (
-      items: Test & {
-        count?: number | undefined
-        candidateTest?: CandidateTest
-      }
-    ) => {
-      return items.candidateTest?.length !== 0 || items.deleted === false
-    }
-  )
 
   useEffect(() => {
     const heading = document.getElementById("heading")
@@ -153,7 +138,8 @@ const GroupByTests = () => {
   const location = useLocation()
   useEffect(() => {
     navigate(
-      `?sortBy=${sortBy}&sort=${sortDirection}&page=${resultsCurrentPage}&limit=${resultsPageSize}&status=${statusFilter}`
+      `?sortBy=${sortBy}&sort=${sortDirection}&page=${resultsCurrentPage}&limit=${resultsPageSize}&status=${statusFilter}`,
+      { replace: true }
     )
     setCustomStorage("resultsSortByDetails", sortBy)
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -168,7 +154,8 @@ const GroupByTests = () => {
 
   useEffect(() => {
     navigate(
-      `?sortBy=${sortBy}&sort=${sortDirection}&page=${1}&limit=${resultsPageSize}&status=${statusFilter}`
+      `?sortBy=${sortBy}&sort=${sortDirection}&page=${1}&limit=${resultsPageSize}&status=${statusFilter}`,
+      { replace: true }
     )
     setStatusFilter(statusFilter)
     setCustomStorage("resultsFilterByStatus", statusFilter)
@@ -203,7 +190,7 @@ const GroupByTests = () => {
               onSortDirectionChange={onSortDirectionChange}
               sortBy={sortBy}
               onSortChange={onSortChange}
-              totalItems={candidateTestsArray.length}
+              totalItems={candidateTestData.totalTestCount}
               showSelected={false}
               otherFilters={otherFilters}
             />
