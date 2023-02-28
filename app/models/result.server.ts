@@ -91,8 +91,8 @@ export async function getAllCandidatesOfTestCount(
       ...(statusFilter === "complete"
         ? { NOT: { endAt: { equals: null } } }
         : statusFilter === "pending"
-        ? { endAt: { equals: null } }
-        : {}),
+          ? { endAt: { equals: null } }
+          : {}),
       testId: id,
     },
   })
@@ -124,8 +124,8 @@ export async function getAllCandidatesOfTest({
           ...(statusFilter === "complete"
             ? { NOT: { endAt: { equals: null } } }
             : statusFilter === "pending"
-            ? { endAt: { equals: null } }
-            : {}),
+              ? { endAt: { equals: null } }
+              : {}),
         },
         skip: (currentPage! - 1) * pageSize!,
         orderBy: { createdAt: "desc" },
@@ -268,8 +268,8 @@ export async function getAllCandidateTestsCount(
       ...(statusFilter === "active"
         ? { NOT: { deleted: { equals: true } } }
         : statusFilter === "inactive"
-        ? { deleted: { equals: true } }
-        : {}),
+          ? { deleted: { equals: true } }
+          : {}),
       workspaceId,
       candidateTest: {
         some: {
@@ -299,8 +299,8 @@ export async function getAllCandidateTests(
       ...(statusFilter === "active"
         ? { NOT: { deleted: { equals: true } } }
         : statusFilter === "inactive"
-        ? { deleted: { equals: true } }
-        : {}),
+          ? { deleted: { equals: true } }
+          : {}),
       workspaceId,
       candidateTest: {
         some: {
@@ -343,6 +343,7 @@ export async function getAllCandidateTests(
       }
     )
   }
+
   return res
 }
 
