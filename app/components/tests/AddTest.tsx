@@ -135,7 +135,6 @@ const AddTestComponent = ({
       })
     })
     submit({ data: JSON.stringify(sendData) }, { method: "post" })
-    // P({ data: JSON.stringify(sendData) }, { method: "post" });
   }
   useEffect(() => {
     if (!name || !description) {
