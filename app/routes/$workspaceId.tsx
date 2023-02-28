@@ -8,7 +8,7 @@ import { useLoaderData } from "@remix-run/react"
 import AdminLayout from "~/components/layouts/AdminLayout"
 import { routes } from "~/constants/route.constants"
 import { useCommonContext } from "~/context/Common.context"
-import { checkUserFeatureAuthorization } from "~/models/autorization.server"
+import { checkUserFeatureAuthorization } from "~/models/authorization.server"
 import {
   getDefaultWorkspaceIdForUserQuery,
   getUserWorkspaces,
