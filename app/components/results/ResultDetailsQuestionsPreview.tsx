@@ -31,13 +31,19 @@ const ResultDetailsQuestionsPreview = ({
 }) => {
   const { t } = useTranslation()
 
-  const correctAnswersArray = correctAnswer.map(
-    (correctAnswer: CorrectAnswer) => correctAnswer.answer
-  )
-  function areEqualAnswers(
+  let correctAnswersArray
+  const [isCorrectAnswer, setCorrectAnswer] = useState(true)
+
+  if (correctAnswer.length > 0) {
+    correctAnswersArray = correctAnswer.map(
+      (correctAnswer: CorrectAnswer) => correctAnswer.answer
+    )
+  }
+
+  const comparingTextAnswers = (
     textAnswer: CorrectAnswer[],
     correctAnswersArray: string[]
-  ) {
+  ) => {
     let textAnswerArrayLength = textAnswer.length
     let correctAnswersArrayLength = correctAnswersArray.length
 
@@ -59,22 +65,40 @@ const ResultDetailsQuestionsPreview = ({
     // If all elements were same.
     return true
   }
-  const optionContainer =
-    "break-normal rounded-lg border border-solid border-gray-300 bg-gray-50 p-4 text-base font-normal text-gray-600"
 
-  const [isCorrectAnswer, setCorrectAnswer] = useState(true)
-
-  useEffect(() => {
-    for (const [index, value] of textAnswer.entries()) {
-      if (value !== (correctAnswer[index].answer as unknown as CorrectAnswer)) {
+  const settingCorrectAnswer = (
+    answers: any,
+    correctAnswers: any,
+    questionType: string
+  ) => {
+    for (const [index, value] of answers.entries()) {
+      if (
+        questionType === QuestionTypes.text &&
+        value !== (correctAnswers[index].answer as unknown as CorrectAnswer)
+      ) {
+        setCorrectAnswer(false)
+        break
+      } else if (value.id !== correctAnswers[index]?.id) {
         setCorrectAnswer(false)
         break
       }
     }
-    for (const [index, value] of selectedOptions.entries()) {
-      if (value.id !== correctOption[index]?.id) {
-        setCorrectAnswer(false)
-        break
+  }
+
+  const optionContainer =
+    "break-normal rounded-lg border border-solid border-gray-300 bg-gray-50 p-4 text-base font-normal text-gray-600"
+
+  useEffect(() => {
+    if (questionType.value === QuestionTypes.text) {
+      settingCorrectAnswer(textAnswer, correctAnswer, questionType.value)
+    } else {
+      if (
+        selectedOptions.length >= correctOption.length ||
+        questionType.value === QuestionTypes.singleChoice
+      ) {
+        settingCorrectAnswer(selectedOptions, correctOption, questionType.value)
+      } else {
+        settingCorrectAnswer(correctOption, selectedOptions, questionType.value)
       }
     }
   }, [])
@@ -138,7 +162,9 @@ const ResultDetailsQuestionsPreview = ({
                 !isCorrectAnswer) ||
               (!checkOrder &&
                 questionType.value === QuestionTypes.text &&
-                areEqualAnswers(textAnswer, correctAnswersArray) === false) ||
+                correctAnswersArray &&
+                comparingTextAnswers(textAnswer, correctAnswersArray) ===
+                  false) ||
               (!isCorrectAnswer &&
                 questionType.value !== QuestionTypes.text) ? (
                 <Chip text={t("resultConstants.wrong")} variant={"error"} />
@@ -179,7 +205,9 @@ const ResultDetailsQuestionsPreview = ({
               !isCorrectAnswer) ||
               (!checkOrder &&
                 questionType.value === QuestionTypes.text &&
-                areEqualAnswers(textAnswer, correctAnswersArray) === false) ||
+                correctAnswersArray &&
+                comparingTextAnswers(textAnswer, correctAnswersArray) ===
+                  false) ||
               (!isCorrectAnswer &&
                 questionType.value !== QuestionTypes.text)) && (
               <div className="flex flex-col gap-6">
