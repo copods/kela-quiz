@@ -214,3 +214,16 @@ export const getPaginationDropdown = () =>
 export const getPaginationDetails = () =>
   cy.get('[data-cy="pagination-details"]')
 export const getPaginationRange = () => cy.get(".pagination")
+export const getSideNavFooterDropdownButton = () =>
+  cy.get(".sidenav-footer-menu")
+export const getMyProfileButton = () => cy.get("[data-cy='my-profile']")
+export const getMyProfileTitle = () => cy.get("#my-profile-page-title")
+export const getEditProfileButton = () => cy.get("#edit-user")
+export const getUserProfileDetails = () =>
+  cy.get("[data-cy='userProfileDetails']")
+export const getSaveButton = () => cy.get("#save")
+export const getFirstNameInput = () => cy.get('input[name="first-name"]')
+export const getLastNameInput = () => cy.get('input[name="last-name"]')
+export const getChangePasswordButton = () =>
+  cy.get("[data-cy='change-password']")
+export const getLogoutButton = () => cy.get("[data-cy='logout']")

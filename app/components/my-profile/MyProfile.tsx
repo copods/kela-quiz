@@ -41,7 +41,7 @@ const MyProfileComponent = () => {
       label: "First Name",
       placeholder: "Enter First Name",
       type: "text",
-      name: userData.firstName,
+      name: "first-name",
       required: true,
       value: firstName,
       errorId: "first-name-error",
@@ -53,7 +53,7 @@ const MyProfileComponent = () => {
       label: "Last Name",
       placeholder: "Enter Last Name",
       type: "text",
-      name: userData.lastName,
+      name: "last-name",
       required: true,
       value: lastName,
       errorId: "last-name-error",
@@ -75,7 +75,7 @@ const MyProfileComponent = () => {
         <Button
           className="px-5"
           onClick={() => onCancel()}
-          id="cancel"
+          id="cancel-button"
           tabIndex={0}
           variant="primary-outlined"
           title={t("commonConstants.cancel")}
@@ -137,17 +137,22 @@ const MyProfileComponent = () => {
       <div className="flex gap-6 rounded-lg border border-solid border-gray-300 bg-white p-5">
         {inputFieldsProps.map((props) => {
           return (
-            <div className="flex w-6/12 flex-col gap-1" key={props.name}>
+            <div
+              className="flex w-6/12 flex-col gap-1"
+              data-cy="userProfileDetails"
+              key={props.name}
+            >
               <InputField
                 {...props}
                 customClasses={{
                   inputField: viewMode ? "hidden" : "visible",
                   label: "text-sm",
                 }}
+                isRequired={viewMode ? false : true}
               />
               {viewMode && (
                 <p className="text-base-500 font-medium text-gray-900">
-                  {props.name}
+                  {props.value}
                 </p>
               )}
             </div>

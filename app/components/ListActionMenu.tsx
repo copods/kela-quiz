@@ -7,7 +7,8 @@ import { useElementPositionHandler } from "~/hooks/useElementPositionHandler"
 
 const ListMenuItem = ({
   menuIcon,
-  menuOpeningClosingState,
+  menuOpeningClosing,
+  setMenuOpeningClosing,
   onItemClick,
   open,
   menuDetails,
@@ -16,10 +17,8 @@ const ListMenuItem = ({
   customClasses,
 }: {
   menuIcon: string
-  menuOpeningClosingState?: {
-    menuOpen: boolean
-    setMenuOpen: (e: boolean) => void
-  }
+  menuOpeningClosing?: boolean
+  setMenuOpeningClosing?: (e: boolean) => void
   onItemClick: (e: boolean) => void
   open: boolean
   menuDetails: Array<{
@@ -34,6 +33,13 @@ const ListMenuItem = ({
   setId?: (e: string) => void
   customClasses: { item: string; itemsContainer?: string }
 }) => {
+  const {
+    elementRef,
+    componentRef,
+    elementViewPortVisiblility,
+    setIsElementOpen,
+  } = useElementPositionHandler()
+
   useEffect(() => {
     if (open === false) {
       setTimeout(() => {
@@ -43,13 +49,6 @@ const ListMenuItem = ({
     }
   }, [open, id])
 
-  const {
-    elementRef,
-    componentRef,
-    elementViewPortVisiblility,
-    setIsElementOpen,
-  } = useElementPositionHandler()
-
   return (
     <>
       <Menu as="div" className="relative flex">
@@ -58,10 +57,8 @@ const ListMenuItem = ({
             className={`${id} self-center`}
             onClick={() => {
               setIsElementOpen((prev) => !prev)
-              menuOpeningClosingState &&
-                menuOpeningClosingState?.setMenuOpen(
-                  !menuOpeningClosingState?.menuOpen
-                )
+              setMenuOpeningClosing &&
+                setMenuOpeningClosing(!menuOpeningClosing)
             }}
           >
             <Icon
@@ -88,7 +85,10 @@ const ListMenuItem = ({
                 : "-top-2 -translate-y-full transform"
             } ${customClasses.itemsContainer}`}
           >
-            <div className="flex flex-col px-1 py-1" ref={componentRef}>
+            <div
+              className="dropdown flex flex-col px-1 py-1"
+              ref={componentRef}
+            >
               {menuDetails?.map((menuItem) => {
                 return (
                   <Menu.Item key={menuItem.id}>
@@ -99,8 +99,7 @@ const ListMenuItem = ({
                         className={`deleteTest inline-flex items-center justify-start rounded-md border border-none px-2 py-2 font-medium transition delay-75 ease-in-out hover:bg-gray-100 ${customClasses.item}`}
                         onClick={() => {
                           onItemClick(true)
-                          menuOpeningClosingState &&
-                            menuOpeningClosingState?.setMenuOpen(false)
+                          setMenuOpeningClosing && setMenuOpeningClosing(false)
                           menuItem.handleItemAction &&
                             menuItem.handleItemAction()
                         }}
