@@ -87,6 +87,7 @@ export default function LoginPage() {
   const [searchParams] = useSearchParams()
   const redirectTo = searchParams.get("redirectTo") || routes.members
   const actionData = useActionData() as ActionData
+
   return (
     <div className="flex min-h-full items-center justify-center bg-gray-50">
       <Login actionData={actionData} redirectTo={redirectTo} />

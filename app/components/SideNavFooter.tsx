@@ -4,11 +4,12 @@ import { useTranslation } from "react-i18next"
 
 import Button from "./common-components/Button"
 
+import { useCommonContext } from "~/context/Common.context"
 import { useUser } from "~/utils"
 
 function Footer() {
   const { t } = useTranslation()
-
+  const { clearStoredValue } = useCommonContext()
   const user = useUser()
   return (
     <div>
@@ -53,6 +54,7 @@ function Footer() {
                 className="relative h-5 w-5 text-gray-50"
               />
             }
+            onClick={() => clearStoredValue("authorizationValidations")}
           />
         </Form>
       </div>
