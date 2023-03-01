@@ -112,8 +112,12 @@ export default function Settings() {
           {t("commonConstants.settings")}
         </h1>
       </div>
-      <SettingsTabs currentWorkspaceId={currentWorkspaceId} />
-      <Outlet />
+      <div>
+        <SettingsTabs currentWorkspaceId={currentWorkspaceId} />
+        <div className="pt-5">
+          <Outlet />
+        </div>
+      </div>
     </div>
   )
 }
