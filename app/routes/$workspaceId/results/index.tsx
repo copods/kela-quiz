@@ -30,7 +30,8 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     resultsCurrentPage,
     statusFilter,
     sortBy as string,
-    sortOrder as string
+    sortOrder as string,
+    userId
   )
   return json<LoaderData>({
     candidateTest,

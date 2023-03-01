@@ -415,3 +415,13 @@ export interface headerProps {
   heading: string
   rightChildren?: React.ReactNode
 }
+
+export enum HTTP_CODE {
+  NOT_AUTHORIZED = 401,
+  ACCESS_DENIED = 403,
+  NO_FOUND = 404,
+  SUCCESS = 200,
+  CREATED = 201,
+  UPDATE = 202,
+  REDIRECT = 302,
+}

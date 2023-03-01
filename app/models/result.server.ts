@@ -1,6 +1,8 @@
 import type { CandidateResult, CandidateTest } from "@prisma/client"
 import type { Test } from "@prisma/client"
 
+import { checkFeatureAuthorization } from "./authorization.server"
+
 import { prisma } from "~/db.server"
 
 export async function getPendingExamCandidateByTestId({
@@ -288,63 +290,77 @@ export async function getAllCandidateTests(
   resultsCurrentPage: number = 1,
   statusFilter: string,
   sortBy: string,
-  sortOrder: string
+  sortOrder: string,
+  userId: string
 ) {
   const PER_PAGE_ITEMS = resultsItemsPerPage
-  const res: Array<Test> = await prisma.test.findMany({
-    take: PER_PAGE_ITEMS,
-    skip: (resultsCurrentPage - 1) * PER_PAGE_ITEMS,
-    orderBy: { [sortBy ?? "createdAt"]: sortOrder ?? "asc" },
-    where: {
-      ...(statusFilter === "active"
-        ? { NOT: { deleted: { equals: true } } }
-        : statusFilter === "inactive"
-        ? { deleted: { equals: true } }
-        : {}),
-      workspaceId,
-      candidateTest: {
-        some: {
-          id: {
-            not: undefined,
+  try {
+    if (
+      !(await checkFeatureAuthorization(userId, workspaceId, "results", "read"))
+    ) {
+      throw {
+        status: 403,
+        message: "You have no access permission for this action",
+        data: null,
+      }
+    }
+    const res: Array<Test> = await prisma.test.findMany({
+      take: PER_PAGE_ITEMS,
+      skip: (resultsCurrentPage - 1) * PER_PAGE_ITEMS,
+      orderBy: { [sortBy ?? "createdAt"]: sortOrder ?? "asc" },
+      where: {
+        ...(statusFilter === "active"
+          ? { NOT: { deleted: { equals: true } } }
+          : statusFilter === "inactive"
+          ? { deleted: { equals: true } }
+          : {}),
+        workspaceId,
+        candidateTest: {
+          some: {
+            id: {
+              not: undefined,
+            },
           },
         },
       },
-    },
-    include: {
-      _count: {
-        select: {
-          candidateResult: true,
-          candidateTest: true,
+      include: {
+        _count: {
+          select: {
+            candidateResult: true,
+            candidateTest: true,
+          },
+        },
+        candidateTest: {
+          select: {
+            id: true,
+            endAt: true,
+          },
         },
       },
-      candidateTest: {
-        select: {
-          id: true,
-          endAt: true,
-        },
-      },
-    },
-  })
-  if (res) {
-    res.forEach(
-      (
-        test: Test & {
-          count?: number
-          candidateTest?: Array<CandidateTest>
-        }
-      ) => {
-        let count = 0
-        test?.candidateTest?.forEach((candidateTest: CandidateTest) => {
-          if (candidateTest?.endAt !== null) {
-            count = count + 1
+    })
+    if (res) {
+      res.forEach(
+        (
+          test: Test & {
+            count?: number
+            candidateTest?: Array<CandidateTest>
           }
-        })
-        test["count"] = count
-      }
-    )
-  }
+        ) => {
+          let count = 0
+          test?.candidateTest?.forEach((candidateTest: CandidateTest) => {
+            if (candidateTest?.endAt !== null) {
+              count = count + 1
+            }
+          })
+          test["count"] = count
+        }
+      )
+    }
 
-  return res
+    return res
+  } catch (error) {
+    throw error
+  }
 }
 
 export async function getResultDetailBySection(id?: string) {

@@ -18,6 +18,7 @@ import { getUserWorkspaces } from "~/models/workspace.server"
  * @param statusFilter
  * @param sortBy
  * @param sortOrder
+ * @param userId
  * @returns Test array
  */
 export const getALLCandidateTests = async (
@@ -26,16 +27,22 @@ export const getALLCandidateTests = async (
   resultsCurrentPage: number,
   statusFilter: string,
   sortBy: string,
-  sortOrder: string
+  sortOrder: string,
+  userId: string
 ) => {
-  return await getAllCandidateTests(
-    currentWorkspaceId as string,
-    resultsItemsPerPage,
-    resultsCurrentPage,
-    statusFilter,
-    sortBy as string,
-    sortOrder as string
-  )
+  try {
+    return await getAllCandidateTests(
+      currentWorkspaceId as string,
+      resultsItemsPerPage,
+      resultsCurrentPage,
+      statusFilter,
+      sortBy as string,
+      sortOrder as string,
+      userId
+    )
+  } catch (error) {
+    throw error
+  }
 }
 
 /**
