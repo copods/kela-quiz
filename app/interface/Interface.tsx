@@ -92,6 +92,7 @@ export interface TestSection {
   order?: number
   timeInSeconds?: number
   section?: Section
+  target?: string
 }
 export interface Section {
   id: string
@@ -289,7 +290,6 @@ export interface CandidateResult {
   workspaceId?: string
   link?: string
 }
-
 export enum sortByOrder {
   ascending = "asc",
   name = "name",
@@ -398,8 +398,20 @@ export interface BadgeComponent {
   textColor?: string
 }
 
+export interface AddedSectionDetails {
+  isSelected: boolean | undefined
+  totalQuestions: number
+  time: number
+  target: string
+}
 export interface ChipComponent {
   success: string
   error: string
   warning: string
+}
+
+export interface headerProps {
+  id: string
+  heading: string
+  rightChildren?: React.ReactNode
 }

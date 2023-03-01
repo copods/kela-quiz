@@ -16,6 +16,7 @@ import {
   addQuestion,
 } from "~/models/sections.server"
 import { getFirstSection } from "~/models/sections.server"
+import { createTest } from "~/models/tests.server"
 import { getAllUsers } from "~/models/user.server"
 
 //*
@@ -52,6 +53,17 @@ export type ActionData = {
     data?: Section
     id?: string
   }
+}
+
+export type createTestData = {
+  name: string
+  description: string
+  sections: Array<{
+    sectionId: string
+    totalQuestions: number
+    timeInSeconds: number
+    order: number
+  }>
 }
 
 /**
@@ -371,4 +383,46 @@ export const getFIRSTSection = async (
     testCurrentPage,
     testItemsPerPage
   )
+}
+
+/**
+ * Function will be creating new Assessment/test
+ * @param createdById
+ * @param workspaceId
+ * @param data
+ * @returns
+ */
+
+export const createTestHandler = async (
+  createdById: string,
+  workspaceId: string,
+  data: createTestData
+) => {
+  return await createTest(createdById, workspaceId as string, data)
+    .then((res) => {
+      return json<ActionData>(
+        {
+          resp: {
+            title: "statusCheck.assessmentAddedSuccessFully",
+            status: 200,
+          },
+        },
+        { status: 200 }
+      )
+    })
+    .catch((err) => {
+      let title = "statusCheck.commonError"
+      if (err.code === "P2002") {
+        title = "statusCheck.assessmentAlreadyExist"
+      }
+      return json<ActionData>(
+        {
+          errors: {
+            title,
+            status: 400,
+          },
+        },
+        { status: 400 }
+      )
+    })
 }
