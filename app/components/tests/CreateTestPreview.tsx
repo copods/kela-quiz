@@ -11,7 +11,7 @@ const TestPreview = ({
   name,
   testId,
   description,
-  onSelectedSectionChange,
+  onChangeSelectedSectionsOrder,
   selectedSections,
   isPreviewEditable = true,
   showInviteAction,
@@ -20,37 +20,28 @@ const TestPreview = ({
   testId?: string
   description: string
   selectedSections: Array<TestSection>
-  onSelectedSectionChange: (
-    e: (section: Array<TestSection>) => TestSection[]
-  ) => void
+  onChangeSelectedSectionsOrder?: (e: TestSection[]) => void
   isPreviewEditable: boolean
   showInviteAction?: boolean
 }) => {
   const { t } = useTranslation()
 
-  const moveSection = (index: number, action: string) => {
-    if (action == "up") {
-      if (index == 0) {
-        return
-      }
-      onSelectedSectionChange((section: Array<TestSection>) => {
-        let temp = section[index]
-        section[index] = section[index - 1]
-        section[index - 1] = temp
-        return [...section]
-      })
-    } else if (action == "down") {
-      if (index == selectedSections.length - 1) {
-        return
-      }
-      onSelectedSectionChange((section: Array<TestSection>) => {
-        let temp = section[index]
-        section[index] = section[index + 1]
-        section[index + 1] = temp
-        return [...section]
-      })
+  const changeSelectedSectionsOrder = (index: number, action: string) => {
+    if (
+      (index === 0 && action === "up") ||
+      (index === selectedSections.length - 1 && action === "down")
+    )
+      return
+    else {
+      let temp = selectedSections[index]
+      selectedSections[index] =
+        selectedSections[action === "up" ? index - 1 : index + 1]
+      selectedSections[action === "up" ? index - 1 : index + 1] = temp
+      onChangeSelectedSectionsOrder &&
+        onChangeSelectedSectionsOrder([...selectedSections])
     }
   }
+
   const getTotalTime = () => {
     let time = 0
 
@@ -157,11 +148,11 @@ const TestPreview = ({
           {t("testsConstants.selectedTests")}
         </h1>
         <div className="flex flex-col gap-4 text-base">
-          {selectedSections.map((section, i) => {
+          {selectedSections.map((section, index) => {
             return (
               <div className="flex items-center gap-4" key={section.id}>
                 <div className="min-w-184 text-base text-gray-500">
-                  {t("testsConstants.testText")} {i + 1}
+                  {t("testsConstants.testText")} {index + 1}
                 </div>
                 <div className="flex max-w-2xl flex-1 items-center justify-between gap-6 rounded-lg border border-gray-300 py-3 px-4 text-gray-700">
                   <div className="text-base font-semibold text-gray-700">
@@ -186,20 +177,34 @@ const TestPreview = ({
                       <div className="flex gap-2">
                         <Icon
                           icon="fa:long-arrow-up"
-                          className="cursor-pointer"
-                          onClick={() => moveSection(i, "up")}
+                          className={`${
+                            index === 0
+                              ? "cursor-not-allowed"
+                              : "cursor-pointer"
+                          }`}
+                          onClick={() =>
+                            changeSelectedSectionsOrder(index, "up")
+                          }
                           tabIndex={0}
                           onKeyUp={(e) => {
-                            if (e.key === "Enter") moveSection(i, "up")
+                            if (e.key === "Enter")
+                              changeSelectedSectionsOrder(index, "up")
                           }}
                         />
                         <Icon
                           icon="fa:long-arrow-down"
-                          className="cursor-pointer"
-                          onClick={() => moveSection(i, "down")}
+                          className={`${
+                            index === selectedSections.length - 1
+                              ? "cursor-not-allowed"
+                              : "cursor-pointer"
+                          }`}
+                          onClick={() =>
+                            changeSelectedSectionsOrder(index, "down")
+                          }
                           tabIndex={0}
                           onKeyUp={(e) => {
-                            if (e.key === "Enter") moveSection(i, "up")
+                            if (e.key === "Enter")
+                              changeSelectedSectionsOrder(index, "down")
                           }}
                         />
                       </div>

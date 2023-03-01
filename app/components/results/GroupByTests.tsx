@@ -138,7 +138,8 @@ const GroupByTests = () => {
   const location = useLocation()
   useEffect(() => {
     navigate(
-      `?sortBy=${sortBy}&sort=${sortDirection}&page=${resultsCurrentPage}&limit=${resultsPageSize}&status=${statusFilter}`
+      `?sortBy=${sortBy}&sort=${sortDirection}&page=${resultsCurrentPage}&limit=${resultsPageSize}&status=${statusFilter}`,
+      { replace: true }
     )
     setCustomStorage("resultsSortByDetails", sortBy)
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -153,7 +154,8 @@ const GroupByTests = () => {
 
   useEffect(() => {
     navigate(
-      `?sortBy=${sortBy}&sort=${sortDirection}&page=${1}&limit=${resultsPageSize}&status=${statusFilter}`
+      `?sortBy=${sortBy}&sort=${sortDirection}&page=${1}&limit=${resultsPageSize}&status=${statusFilter}`,
+      { replace: true }
     )
     setStatusFilter(statusFilter)
     setCustomStorage("resultsFilterByStatus", statusFilter)

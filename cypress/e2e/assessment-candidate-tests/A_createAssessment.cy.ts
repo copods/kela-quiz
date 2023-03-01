@@ -7,6 +7,7 @@ import {
   getAssesmentSubmitBtn,
   geth1,
   getNextBtn,
+  getPaginationRange,
   getQlEditor,
   getQlEditorInput,
   getQlEditorWrapper,
@@ -159,6 +160,8 @@ describe("Creating new assessment", () => {
     getNextBtn().should("have.text", commonConstants?.next).click()
 
     // user reached to step 2
+    getPaginationRange().find("span").eq(1).click()
+    cy.wait(1000)
     cy.get("div#section").each((el) => {
       cy.wrap(el).within(() => {
         if (

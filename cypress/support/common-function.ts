@@ -207,3 +207,10 @@ export const getGivenAnswer = () => cy.get('[data-cy="givenAnswers"]')
 export const getSkippedContainer = () => cy.get('[data-cy="skipped-container"]')
 export const getBackButtonByDataCy = () => cy.get('[data-cy="back-button"]')
 export const getCorrectAnswer = () => cy.get('[data-cy="correct-answer"]')
+export const getPaginationDropdownButton = () =>
+  cy.get(".paginationInfo button")
+export const getPaginationDropdown = () =>
+  cy.get('[data-cy="pagination-dropdown"]')
+export const getPaginationDetails = () =>
+  cy.get('[data-cy="pagination-details"]')
+export const getPaginationRange = () => cy.get(".pagination")
