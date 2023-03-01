@@ -47,7 +47,7 @@ const permissions: {
       update: true,
     },
   },
-  testcreator: {
+  test_creator: {
     userProfile: {
       create: true,
       read: true,
@@ -149,7 +149,7 @@ export async function checkFeatureAuthorization(
   })
 
   return permissions[
-    userRole[0].role!.name.replace(" ", "").toLocaleLowerCase()
+    userRole[0].role!.name.replace(" ", "_").toLocaleLowerCase()
   ][feature][action]
 }
 
@@ -163,6 +163,6 @@ export async function checkUserFeatureAuthorization(
   })
 
   return permissions[
-    userRole[0]?.role.name.replace(" ", "").toLocaleLowerCase() as string
+    userRole[0]?.role.name.replace(" ", "_").toLocaleLowerCase() as string
   ]
 }
