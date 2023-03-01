@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next"
 import Chip from "../common-components/Chip"
 import Divider from "../common-components/divider"
 
-import type { Option, CorrectAnswer, QuestionType } from "~/interface/Interface"
+import type { Option, QuestionType, CorrectAnswer } from "~/interface/Interface"
 import { QuestionTypes, QuestionStatus } from "~/interface/Interface"
 
 const ResultDetailsQuestionsPreview = ({
@@ -67,18 +67,17 @@ const ResultDetailsQuestionsPreview = ({
   }
 
   const settingCorrectAnswer = (
-    answers: any,
-    correctAnswers: any,
-    questionType: string
+    answers: Array<CorrectAnswer> | Array<Option>,
+    questionType: string,
+    correctAnswers: any
   ) => {
     for (const [index, value] of answers.entries()) {
       if (
-        questionType === QuestionTypes.text &&
-        value !== (correctAnswers[index].answer as unknown as CorrectAnswer)
+        (questionType === QuestionTypes.text &&
+          value !== correctAnswers[index].answer) ||
+        questionType === QuestionTypes.singleChoice ||
+        (QuestionTypes.multipleChoice && value.id !== correctOption[index]?.id)
       ) {
-        setCorrectAnswer(false)
-        break
-      } else if (value.id !== correctAnswers[index]?.id) {
         setCorrectAnswer(false)
         break
       }
@@ -90,17 +89,18 @@ const ResultDetailsQuestionsPreview = ({
 
   useEffect(() => {
     if (questionType.value === QuestionTypes.text) {
-      settingCorrectAnswer(textAnswer, correctAnswer, questionType.value)
+      settingCorrectAnswer(textAnswer, questionType.value, correctAnswer)
     } else {
       if (
         selectedOptions.length >= correctOption.length ||
         questionType.value === QuestionTypes.singleChoice
       ) {
-        settingCorrectAnswer(selectedOptions, correctOption, questionType.value)
+        settingCorrectAnswer(selectedOptions, questionType.value, correctOption)
       } else {
-        settingCorrectAnswer(correctOption, selectedOptions, questionType.value)
+        settingCorrectAnswer(correctOption, questionType.value, selectedOptions)
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
