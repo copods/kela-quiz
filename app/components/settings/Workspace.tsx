@@ -76,11 +76,12 @@ const Workspace = () => {
   const [isEdit, setIsEdit] = useState(false)
   const workspaceLoaderData = useLoaderData()
   const [inputValue, setInputValue] = useState(
-    workspaceLoaderData?.ownersWorkspaces?.find(
+    workspaceLoaderData?.userWorkspaces?.find(
       (workspaces: SettingWorkspace) =>
-        workspaces?.id === workspaceLoaderData?.currentWorkspaceId
-    )?.name
+        workspaces?.workspaceId === workspaceLoaderData?.currentWorkspaceId
+    )?.workspace?.name
   )
+  console.log(workspaceLoaderData)
   const [isError, setIsError] = useState(false)
   const { t } = useTranslation()
   const submit = useSubmit()
@@ -91,10 +92,10 @@ const Workspace = () => {
   const cancelEdit = () => {
     setIsEdit(false)
     setInputValue(
-      workspaceLoaderData?.ownersWorkspaces?.find(
+      workspaceLoaderData?.userWorkspaces?.find(
         (workspaces: SettingWorkspace) =>
-          workspaces?.id === workspaceLoaderData?.currentWorkspaceId
-      )?.name
+          workspaces?.workspaceId === workspaceLoaderData?.currentWorkspaceId
+      )?.workspace?.name
     )
   }
 
@@ -104,7 +105,6 @@ const Workspace = () => {
         {
           updateWorkspace: "updateUserWorkspace",
           workspaceId: workspaceLoaderData.currentWorkspaceId,
-          workspaceCreatorId: workspaceLoaderData.workspaceOwner.createdById,
           name: inputValue,
         },
         { method: "post" }

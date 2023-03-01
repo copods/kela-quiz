@@ -422,8 +422,6 @@ export interface headerProps {
 
 export interface SettingWorkspace {
   id: string
-  name: string
-  createdById: string
-  createdAt: string
-  updatedAt: string
+  workspace: { name: string }
+  workspaceId: string
 }

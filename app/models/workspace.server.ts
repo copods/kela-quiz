@@ -137,6 +137,7 @@ export async function updateUserWorkspace(
   name: string,
   updatedById: string
 ) {
+  console.log(id, name, updatedById)
   await prisma.workspace.update({
     where: { id },
     data: { name, updatedById },

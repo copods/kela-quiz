@@ -12,6 +12,7 @@ import Workspace from "~/components/settings/Workspace"
 import {
   getActiveOwnerWorkspaces,
   getActiveWorkspaceOwner,
+  getUserWorkspaceService,
   leaveActiveWorkspace,
   updateCurrentUserWorkspace,
 } from "~/services/workspace.service"
@@ -21,6 +22,7 @@ interface LoaderData {
   workspaceOwner: Awaited<ReturnType<typeof getActiveWorkspaceOwner>>
   ownersWorkspaces: Awaited<ReturnType<typeof getActiveOwnerWorkspaces>>
   currentWorkspaceId: string
+  userWorkspaces: Awaited<ReturnType<typeof getUserWorkspaceService>>
 }
 
 export const loader: LoaderFunction = async ({ request, params }) => {
@@ -28,10 +30,12 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const userId = (await getUserId(request)) as string
   const workspaceOwner = await getActiveWorkspaceOwner(currentWorkspaceId)
   const ownersWorkspaces = await getActiveOwnerWorkspaces(userId)
+  const userWorkspaces = await getUserWorkspaceService(userId)
   return json<LoaderData>({
     workspaceOwner,
     ownersWorkspaces,
     currentWorkspaceId,
+    userWorkspaces,
   })
 }
 
@@ -53,11 +57,10 @@ export const action: ActionFunction = async ({ request, params }) => {
   if (action === actionConstants.updateUserWorkspace) {
     const name = formData.get("name") as string
     const workspaceId = formData.get("workspaceId") as string
-    const workspaceCreatorId = formData.get("workspaceCreatorId") as string
     const updateWorkspace = await updateCurrentUserWorkspace(
       workspaceId,
       name,
-      workspaceCreatorId
+      userId
     )
     return updateWorkspace
   } else if (action === actionConstants.leaveWorksapce) {

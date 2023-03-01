@@ -122,12 +122,12 @@ export async function getUserWorkspaceService(userId: string) {
 export async function updateCurrentUserWorkspace(
   workspaceId: string,
   workspaceName: string,
-  workspaceCreatorId: string
+  workspaceUpdatorId: string
 ) {
   return await updateUserWorkspace(
     workspaceId,
     workspaceName,
-    workspaceCreatorId
+    workspaceUpdatorId
   )
     .then((res) => {
       return json<ActionData>(
