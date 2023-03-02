@@ -68,10 +68,10 @@ const SelectSectionCard = ({
   return (
     <div
       id="section"
-      className={`flex min-w-sectionCard flex-1 flex-col gap-2 rounded-lg border ${
+      className={`flex min-w-sectionCard flex-1 flex-col gap-2 rounded-lg  ${
         section.isSelected
           ? "border-3 border-primary bg-white px-18 py-22"
-          : "border-gray-300 bg-gray-100 px-5 py-6"
+          : "border border-gray-300 bg-gray-100 px-5 py-6"
       } h-max`}
     >
       <div className="flex items-start justify-between">
