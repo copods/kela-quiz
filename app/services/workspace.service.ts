@@ -6,6 +6,7 @@ import {
   getOwnersWorkspaces,
   getUserWorkspaces,
   leaveWorkspace,
+  updateUserWorkspace,
 } from "~/models/workspace.server"
 
 type ActionData = {
@@ -17,6 +18,7 @@ type ActionData = {
     title: string
     status: number
     workspaceId?: string
+    action?: string
   }
 }
 
@@ -115,4 +117,39 @@ export async function createWorkspace(workspace: string, userId: string) {
  */
 export async function getUserWorkspaceService(userId: string) {
   return await getUserWorkspaces(userId)
+}
+
+export async function updateCurrentUserWorkspace(
+  workspaceId: string,
+  workspaceName: string,
+  workspaceUpdatorId: string
+) {
+  return await updateUserWorkspace(
+    workspaceId,
+    workspaceName,
+    workspaceUpdatorId
+  )
+    .then((res) => {
+      return json<ActionData>(
+        {
+          resp: {
+            title: "settings.workspaceUpdated",
+            status: 200,
+          },
+        },
+        { status: 200 }
+      )
+    })
+    .catch((err) => {
+      let title = "statusCheck.commonError"
+      return json<ActionData>(
+        {
+          errors: {
+            title,
+            status: 400,
+          },
+        },
+        { status: 400 }
+      )
+    })
 }

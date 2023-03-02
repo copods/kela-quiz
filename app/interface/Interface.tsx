@@ -2,15 +2,17 @@ import type React from "react"
 
 export interface InputFieldProps {
   name: string
-  label: string
-  placeholder: string
-  type: string
+  label?: string
+  placeholder?: string
+  type?: string
   isRequired?: boolean
   required: boolean
   value: string
   error?: string
   errorId: string
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  helperText?: React.ReactNode
+  maxLength?: number
 }
 
 export interface PasswordFieldProps {
@@ -413,6 +415,7 @@ export interface ChipComponent {
 export interface headerProps {
   id: string
   heading: string
+  size?: string
   rightChildren?: React.ReactNode
 }
 
@@ -424,4 +427,9 @@ export enum HTTP_CODE {
   CREATED = 201,
   UPDATE = 202,
   REDIRECT = 302,
+}
+export interface SettingWorkspace {
+  id: string
+  workspace: { name: string }
+  workspaceId: string
 }

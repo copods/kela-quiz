@@ -190,7 +190,7 @@ const GroupByTests = () => {
               onSortDirectionChange={onSortDirectionChange}
               sortBy={sortBy}
               onSortChange={onSortChange}
-              totalItems={candidateTestData.totalTestCount}
+              totalItems={candidateTestData.testCount}
               showSelected={false}
               otherFilters={otherFilters}
             />
