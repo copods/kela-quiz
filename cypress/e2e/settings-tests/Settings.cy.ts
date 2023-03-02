@@ -70,6 +70,15 @@ describe("Test for settings", () => {
     // To check workspace tab has correct text
     getWorkspaces().should("have.text", workspace)
 
+    // To check active tab is workspace
+    getWorkspaces().should("have.text", workspace).click()
+    getWorkspaces().within(() => {
+      cy.get("hr").should(
+        "have.class",
+        "h-1 w-full rounded-1 border-0 bg-primary"
+      )
+    })
+
     // To check heading in general has correct classes
     getGeneral().click()
     cy.get("h3").should("have.class", "text-lg font-semibold")

@@ -214,3 +214,10 @@ export const getPaginationDropdown = () =>
 export const getPaginationDetails = () =>
   cy.get('[data-cy="pagination-details"]')
 export const getPaginationRange = () => cy.get(".pagination")
+export const getCancelEditWorkspaceBtn = () => cy.get("#cancel-edit-workspace")
+export const getSaveWorkspaceBtn = () => cy.get("#save-workspace")
+export const getEditWorkspaceBtn = () => cy.get("#edit-workspace")
+export const getCurrentWorkspace = () => cy.get("#current-workspace")
+export const getLeaveWorkspaceBtn = () => cy.get("#leave-workspace")
+export const getWorkspaceNameInput = () => cy.get("#workspace-name-input")
+export const getWorkspaceInputError = () => cy.get("#workspace-input-error")
