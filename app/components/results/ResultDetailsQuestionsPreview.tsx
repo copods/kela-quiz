@@ -71,19 +71,25 @@ const ResultDetailsQuestionsPreview = ({
     questionType: string,
     correctAnswers: any
   ) => {
-    for (const [index, value] of answers.entries()) {
-      if (
-        (questionType === QuestionTypes.text &&
-          value !== correctAnswers[index].answer) ||
-        questionType === QuestionTypes.singleChoice ||
-        (QuestionTypes.multipleChoice && value.id !== correctOption[index]?.id)
-      ) {
-        setCorrectAnswer(false)
-        break
+    if (questionType === QuestionTypes.text) {
+      answers.forEach((value, index) => {
+        if (value !== correctAnswers[index].answer) {
+          setCorrectAnswer(false)
+        }
+      })
+    } else {
+      for (const [index, value] of answers.entries()) {
+        if (
+          (questionType === QuestionTypes.singleChoice ||
+            QuestionTypes.multipleChoice) &&
+          value.id !== correctAnswers[index]?.id
+        ) {
+          setCorrectAnswer(false)
+          break
+        }
       }
     }
   }
-
   const optionContainer =
     "break-normal rounded-lg border border-solid border-gray-300 bg-gray-50 p-4 text-base font-normal text-gray-600"
 
