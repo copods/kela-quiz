@@ -8,7 +8,6 @@ function InputField({
   error,
   errorId,
   isRequired = false,
-  customClasses,
   helperText,
   maxLength,
   ...props
@@ -17,10 +16,7 @@ function InputField({
   return (
     <div className="flex flex-col gap-1.5">
       {label && (
-        <label
-          htmlFor={name}
-          className={`block text-gray-800 ${customClasses?.label}`}
-        >
+        <label htmlFor={name} className={`block text-gray-800`}>
           {label}
           {isRequired ? <span className="text-red-600">*</span> : null}
         </label>
@@ -30,7 +26,7 @@ function InputField({
         id={name}
         name={name}
         {...props}
-        className={`h-11 w-full rounded-lg border border-gray-200 px-3.5 py-2.5 text-lg ${customClasses?.inputField}`}
+        className={`h-11 w-full rounded-lg border border-gray-200 px-3.5 py-2.5 text-lg`}
         title={props.placeholder}
         maxLength={maxLength}
       />
