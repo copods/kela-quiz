@@ -14,4 +14,6 @@ export const routes = {
   forgotPassword: "/forgot-password",
   endExam: "/end-assessment",
   unauthorized: "/forbidden",
+  myProfile: "/my-profile",
+  logout: "/logout",
 }

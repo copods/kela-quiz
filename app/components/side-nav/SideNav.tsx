@@ -163,7 +163,7 @@ const SideNav = () => {
           </div>
         </div>
         <div className="justify-end">
-          <Footer />
+          <Footer currentWorkspaceId={currentWorkspaceId} />
         </div>
       </div>
       <AddWorkspace
