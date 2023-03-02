@@ -67,7 +67,7 @@ const ListMenuItem = ({
               onClick={() => setId && setId(id)}
               className="text-2xl text-gray-600"
               icon={menuIcon}
-              id={`${dataCyID}?${dataCyID}:vertical-icon`}
+              id={`${dataCyID ? dataCyID : "vertical-icon"}`}
             />
           </Menu.Button>
         </div>
