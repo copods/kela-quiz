@@ -358,3 +358,19 @@ export async function updatePassword(
     return "DONE"
   }
 }
+
+export async function updateUserData(
+  id: string,
+  firstName: string,
+  lastName: string
+) {
+  return await prisma.user.update({
+    where: {
+      id,
+    },
+    data: {
+      firstName,
+      lastName,
+    },
+  })
+}

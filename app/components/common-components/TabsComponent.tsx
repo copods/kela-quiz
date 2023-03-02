@@ -16,11 +16,13 @@ const TabComponent = ({ tab }: { tab: TabsComponent }) => {
         to={tab.route}
         id={tab.name}
         className={({ isActive }) =>
-          `flex flex-col-reverse gap-2 ${isActive ? "cursor-pointer" : " "}`
+          `relative flex flex-col-reverse gap-2 ${
+            isActive ? "cursor-pointer" : " "
+          }`
         }
       >
         <hr
-          className={`h-1 w-full rounded-1 border-0   ${
+          className={`h-1 w-full rounded-1 border-0  ${
             isActive ? "bg-primary" : "bg-transparent"
           }`}
         />

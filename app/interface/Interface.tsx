@@ -412,7 +412,7 @@ export interface ChipComponent {
   warning: string
 }
 
-export interface headerProps {
+export interface HeaderProps {
   id: string
   heading: string
   size?: string
