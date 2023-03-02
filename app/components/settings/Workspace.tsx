@@ -2,7 +2,6 @@ import { useEffect, useState } from "react"
 
 import { useLoaderData, useSubmit } from "@remix-run/react"
 import { useTranslation } from "react-i18next"
-import type { TFunction } from "react-i18next"
 
 import Button from "../common-components/Button"
 import DialogWrapper from "../common-components/Dialog"
@@ -14,15 +13,14 @@ import type { SettingWorkspace } from "~/interface/Interface"
 
 const CancelAndSaveButton = ({
   inputValue,
-  t,
   updateWorkspaceCb,
   cancelEditCb,
 }: {
   inputValue: string
-  t: TFunction<"translation", undefined>
   updateWorkspaceCb: () => void
   cancelEditCb: () => void
 }) => {
+  const { t } = useTranslation()
   return (
     <div className="flex gap-6">
       <Button
@@ -50,13 +48,8 @@ const CancelAndSaveButton = ({
   )
 }
 
-const EditButton = ({
-  setIsEdit,
-  t,
-}: {
-  setIsEdit: (val: boolean) => void
-  t: TFunction<"translation", undefined>
-}) => {
+const EditButton = ({ setIsEdit }: { setIsEdit: (val: boolean) => void }) => {
+  const { t } = useTranslation()
   return (
     <Button
       tabIndex={0}
@@ -81,7 +74,6 @@ const Workspace = () => {
         workspaces?.workspaceId === workspaceLoaderData?.currentWorkspaceId
     )?.workspace?.name
   )
-  console.log(workspaceLoaderData)
   const [isError, setIsError] = useState(false)
   const { t } = useTranslation()
   const submit = useSubmit()
@@ -126,13 +118,12 @@ const Workspace = () => {
         <Header id="workspace-header" heading="Details" size="text-2xl" />
         {isEdit ? (
           <CancelAndSaveButton
-            t={t}
             updateWorkspaceCb={updateWorkspace}
             cancelEditCb={cancelEdit}
             inputValue={inputValue}
           />
         ) : (
-          <EditButton setIsEdit={setIsEdit} t={t} />
+          <EditButton setIsEdit={setIsEdit} />
         )}
       </div>
       <WorkspaceDetailsSection
