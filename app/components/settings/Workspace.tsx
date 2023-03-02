@@ -113,7 +113,7 @@ const Workspace = () => {
   }, [inputValue])
 
   return (
-    <div className="flex flex-col justify-start gap-8">
+    <div className="flex flex-col justify-start gap-6">
       <div className="flex h-10 items-center justify-between">
         <Header id="workspace-header" heading="Details" size="text-2xl" />
         {isEdit ? (
@@ -126,67 +126,71 @@ const Workspace = () => {
           <EditButton setIsEdit={setIsEdit} />
         )}
       </div>
-      <WorkspaceDetailsSection
-        isEdit={isEdit}
-        isError={isError}
-        inputValue={inputValue}
-        setInputValue={setInputValue}
-      />
-      {!isEdit && (
-        <>
-          <Button
-            tabIndex={0}
-            id="leave-workspace"
-            variant="secondary-solid"
-            type="button"
-            name="leave"
-            className="w-max px-5"
-            title={t("settings.leaveWorkspace")}
-            buttonText={t("settings.leaveWorkspace")}
-            onClick={() => setShowLeaveWorkspacePopup(!showLeaveWorkspacePopup)}
-            isDisabled={workspaceLoaderData?.ownersWorkspaces
-              ?.map((workspace: { id: string }) => workspace.id)
-              .includes(workspaceLoaderData?.currentWorkspaceId)}
-          />
-          <DialogWrapper
-            open={showLeaveWorkspacePopup}
-            setOpen={setShowLeaveWorkspacePopup}
-            header={false}
-          >
-            <div className="flex flex-col gap-4">
-              <div>
-                <p>{t("settings.leaveWorkspaceConfirmation")}</p>
+      <div className="flex flex-col gap-8">
+        <WorkspaceDetailsSection
+          isEdit={isEdit}
+          isError={isError}
+          inputValue={inputValue}
+          setInputValue={setInputValue}
+        />
+        {!isEdit && (
+          <>
+            <Button
+              tabIndex={0}
+              id="leave-workspace"
+              variant="secondary-solid"
+              type="button"
+              name="leave"
+              className="w-max px-5"
+              title={t("settings.leaveWorkspace")}
+              buttonText={t("settings.leaveWorkspace")}
+              onClick={() =>
+                setShowLeaveWorkspacePopup(!showLeaveWorkspacePopup)
+              }
+              isDisabled={workspaceLoaderData?.ownersWorkspaces
+                ?.map((workspace: { id: string }) => workspace.id)
+                .includes(workspaceLoaderData?.currentWorkspaceId)}
+            />
+            <DialogWrapper
+              open={showLeaveWorkspacePopup}
+              setOpen={setShowLeaveWorkspacePopup}
+              header={false}
+            >
+              <div className="flex flex-col gap-4">
+                <div>
+                  <p>{t("settings.leaveWorkspaceConfirmation")}</p>
+                </div>
+                <div className="flex justify-end gap-4">
+                  <Button
+                    tabIndex={0}
+                    id="cancel-leave-workspace"
+                    variant="primary-outlined"
+                    type="button"
+                    name="cancel"
+                    className="px-5"
+                    title={t("commonConstants.cancel")}
+                    buttonText={t("commonConstants.cancel")}
+                    onClick={() =>
+                      setShowLeaveWorkspacePopup(!showLeaveWorkspacePopup)
+                    }
+                  />
+                  <Button
+                    tabIndex={0}
+                    id="confirm-leave-workspace"
+                    variant="secondary-solid"
+                    type="button"
+                    name="leave"
+                    className="px-5"
+                    title={t("settings.leaveWorkspace")}
+                    buttonText={t("settings.leave")}
+                    onClick={() => leaveWorkspace()}
+                  />
+                </div>
               </div>
-              <div className="flex justify-end gap-4">
-                <Button
-                  tabIndex={0}
-                  id="cancel-leave-workspace"
-                  variant="primary-outlined"
-                  type="button"
-                  name="cancel"
-                  className="px-5"
-                  title={t("commonConstants.cancel")}
-                  buttonText={t("commonConstants.cancel")}
-                  onClick={() =>
-                    setShowLeaveWorkspacePopup(!showLeaveWorkspacePopup)
-                  }
-                />
-                <Button
-                  tabIndex={0}
-                  id="confirm-leave-workspace"
-                  variant="secondary-solid"
-                  type="button"
-                  name="leave"
-                  className="px-5"
-                  title={t("settings.leaveWorkspace")}
-                  buttonText={t("settings.leave")}
-                  onClick={() => leaveWorkspace()}
-                />
-              </div>
-            </div>
-          </DialogWrapper>
-        </>
-      )}
+            </DialogWrapper>
+          </>
+        )}
+      </div>
     </div>
   )
 }
