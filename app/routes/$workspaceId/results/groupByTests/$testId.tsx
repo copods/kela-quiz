@@ -1,10 +1,13 @@
 import type { ActionFunction } from "@remix-run/node"
 import { json } from "@remix-run/node"
 import type { LoaderFunction } from "@remix-run/server-runtime"
+import { redirect } from "@remix-run/server-runtime"
 import invariant from "tiny-invariant"
 
 import CandidateListOfTest from "~/components/results/CandidateListOfTest"
 import { actions } from "~/constants/action.constants"
+import { routes } from "~/constants/route.constants"
+import { HTTP_CODE } from "~/interface/Interface"
 import {
   getALLCandidatesOfTest,
   getALLCandidatesOfTestCount,
@@ -19,34 +22,41 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const pageSize = Math.max(Number(query.get("pageSize") || 5), 5)
   const currentPage = Math.max(Number(query.get("page") || 1), 1)
   const statusFilter = query.get("filterByStatus") as string
-  const candidatesCount = await getALLCandidatesOfTestCount(
-    params.testId!,
-    statusFilter
-  )
   const userId = await getUserId(request)
   const currentWorkspaceId = params.workspaceId
   const workspaces = await getWorkspaces(userId as string)
   invariant(params.testId, "resultId not found")
-  const candidatesOfTest = await getALLCandidatesOfTest({
-    id: params.testId,
-    workspaceId: currentWorkspaceId as string,
-    currentPage,
-    pageSize,
-    statusFilter,
-  })
-  if (!candidatesOfTest) {
-    throw new Response("Not Found", { status: 404 })
-  }
 
-  return json({
-    candidatesOfTest,
-    params,
-    workspaces,
-    currentWorkspaceId,
-    candidatesCount,
-    currentPage,
-    pageSize,
-  })
+  try {
+    const candidatesCount = await getALLCandidatesOfTestCount(
+      params.testId!,
+      statusFilter,
+      userId!,
+      currentWorkspaceId!
+    )
+    const candidatesOfTest = await getALLCandidatesOfTest({
+      id: params.testId,
+      workspaceId: currentWorkspaceId as string,
+      userId: userId!,
+      currentWorkspaceId: currentWorkspaceId!,
+      currentPage,
+      pageSize,
+      statusFilter,
+    })
+    return json({
+      candidatesOfTest,
+      params,
+      workspaces,
+      currentWorkspaceId,
+      candidatesCount,
+      currentPage,
+      pageSize,
+    })
+  } catch (error: any) {
+    if (error.status === HTTP_CODE.ACCESS_DENIED) {
+      return redirect(routes.members)
+    }
+  }
 }
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()

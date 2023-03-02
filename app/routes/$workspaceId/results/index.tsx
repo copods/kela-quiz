@@ -4,6 +4,7 @@ import { json } from "@remix-run/node"
 
 import GroupByTests from "~/components/results/GroupByTests"
 import { routes } from "~/constants/route.constants"
+import { HTTP_CODE } from "~/interface/Interface"
 import { getALLCandidateTests, getWorkspaces } from "~/services/results.service"
 import { getUserId } from "~/session.server"
 
@@ -24,23 +25,30 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const sortBy = query.get("sortBy")
   const sortOrder = query.get("sort")
   if (!userId) return redirect(routes.signIn)
-  const candidateTest = await getALLCandidateTests(
-    currentWorkspaceId as string,
-    resultsItemsPerPage,
-    resultsCurrentPage,
-    statusFilter,
-    sortBy as string,
-    sortOrder as string,
-    userId
-  )
-  return json<LoaderData>({
-    candidateTest,
-    userId,
-    workspaces,
-    currentWorkspaceId,
-  })
+  try {
+    const candidateTest = await getALLCandidateTests(
+      currentWorkspaceId as string,
+      resultsItemsPerPage,
+      resultsCurrentPage,
+      statusFilter,
+      sortBy as string,
+      sortOrder as string,
+      userId
+    )
+    return json<LoaderData>({
+      candidateTest,
+      userId,
+      workspaces,
+      currentWorkspaceId,
+    })
+  } catch (error: any) {
+    if (error.status === HTTP_CODE.ACCESS_DENIED) {
+      return redirect(routes.members)
+    }
+  }
 }
 const ResultsRoute = () => {
   return <GroupByTests />
 }
+
 export default ResultsRoute

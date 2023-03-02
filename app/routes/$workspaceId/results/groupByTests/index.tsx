@@ -1,10 +1,9 @@
 import type { LoaderFunction } from "@remix-run/node"
-import { redirect } from "@remix-run/node"
-import { json } from "@remix-run/node"
+import { redirect, json } from "@remix-run/node"
 
 import GroupByTests from "~/components/results/GroupByTests"
 import { routes } from "~/constants/route.constants"
-import { sortByOrder } from "~/interface/Interface"
+import { HTTP_CODE, sortByOrder } from "~/interface/Interface"
 import {
   getALLCandidateTests,
   getALLCandidateTestsCount,
@@ -33,14 +32,19 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const sortBy = query.get("sortBy")
   const sortOrder = query.get("sort") || sortByOrder.desc
   const currentWorkspaceId = params.workspaceId as string
-  const testCount = await getALLCandidateTestsCount(
-    currentWorkspaceId,
-    statusFilter
-  )
-  const totalTestCount = await getTotalTestCounts(params.testId!)
   const workspaces = await getWorkspaces(userId as string)
   if (!userId) return redirect("/sign-in")
   try {
+    const totalTestCount = await getTotalTestCounts(
+      params.testId!,
+      currentWorkspaceId,
+      userId
+    )
+    const testCount = await getALLCandidateTestsCount(
+      currentWorkspaceId,
+      statusFilter,
+      userId
+    )
     const candidateTest = await getALLCandidateTests(
       currentWorkspaceId as string,
       resultsItemsPerPage,
@@ -61,7 +65,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
       totalTestCount,
     })
   } catch (error: any) {
-    if (error.status === 403) {
+    if (error.status === HTTP_CODE.ACCESS_DENIED) {
       return redirect(routes.members)
     }
   }
