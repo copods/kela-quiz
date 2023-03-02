@@ -79,6 +79,7 @@ function Footer({ currentWorkspaceId }: { currentWorkspaceId: string }) {
           aria-label={t("testTableItem.menu")}
           id={"sidenav-footer-menu"}
           menuDetails={menuItemsDetailsList}
+          dataCyID={"sidenav-footer-menu"}
           customClasses={{
             item: "text-gray-primary text-sm w-40",
             itemsContainer: "border border-gray-300 shadow-md p-1",

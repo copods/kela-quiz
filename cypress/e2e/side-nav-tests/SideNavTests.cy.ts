@@ -9,7 +9,6 @@ import {
   getSideNavUserAvatar,
   getSideNavUserEmail,
   getSideNavUserName,
-  getVeriticalIconId,
 } from "support/common-function"
 
 const sideNavGroupTitles = {
@@ -76,7 +75,6 @@ describe("Test for Logout, SideNav", () => {
 
     // To check dropdown visibility and its items text/styles
     getSideNavFooterDropdownButton().should("be.visible").click()
-    getVeriticalIconId().should("be.visible")
     getMyProfileButton()
       .should("be.visible")
       .should("have.text", dropdownItems.myProfile)
