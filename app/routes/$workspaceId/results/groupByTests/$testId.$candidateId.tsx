@@ -5,7 +5,6 @@ import invariant from "tiny-invariant"
 import ResultDetailsComponent from "~/components/results/ResultDetails"
 import { routes } from "~/constants/route.constants"
 import type { CandidateTest, Candidate } from "~/interface/Interface"
-import { HTTP_CODE } from "~/interface/Interface"
 import {
   getSectionWiseResultsOFIndividualCandidate,
   getWorkspaces,
@@ -37,8 +36,8 @@ export const loader: LoaderFunction = async ({ request, params }) => {
       currentWorkspaceId,
     })
   } catch (error: any) {
-    if (error.status === HTTP_CODE.ACCESS_DENIED) {
-      return redirect(routes.members)
+    if (error.status === 403) {
+      return redirect(routes.unauthorized)
     }
   }
 }
@@ -58,8 +57,8 @@ export const action: ActionFunction = async ({ request, params }) => {
     })
     return { updateStatus }
   } catch (error: any) {
-    if (error.status === HTTP_CODE.ACCESS_DENIED) {
-      return redirect(routes.members)
+    if (error.status === 403) {
+      return redirect(routes.unauthorized)
     }
   }
 }

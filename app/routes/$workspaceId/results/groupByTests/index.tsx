@@ -3,7 +3,7 @@ import { redirect, json } from "@remix-run/node"
 
 import GroupByTests from "~/components/results/GroupByTests"
 import { routes } from "~/constants/route.constants"
-import { HTTP_CODE, sortByOrder } from "~/interface/Interface"
+import { sortByOrder } from "~/interface/Interface"
 import {
   getALLCandidateTests,
   getALLCandidateTestsCount,
@@ -65,8 +65,8 @@ export const loader: LoaderFunction = async ({ request, params }) => {
       totalTestCount,
     })
   } catch (error: any) {
-    if (error.status === HTTP_CODE.ACCESS_DENIED) {
-      return redirect(routes.members)
+    if (error.status === 403) {
+      return redirect(routes.unauthorized)
     }
   }
 }

@@ -3,7 +3,6 @@ import type { LoaderFunction } from "@remix-run/server-runtime"
 
 import ResultDetailBySections from "~/components/results/ResultDetailBySections"
 import { routes } from "~/constants/route.constants"
-import { HTTP_CODE } from "~/interface/Interface"
 import { getResultDetailBySection } from "~/models/result.server"
 import { getUserId } from "~/session.server"
 
@@ -27,8 +26,8 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     )
     return json<LoaderData>({ params, sectionDetail })
   } catch (error: any) {
-    if (error.status === HTTP_CODE.ACCESS_DENIED) {
-      return redirect(routes.members)
+    if (error.status === 403) {
+      return redirect(routes.unauthorized)
     }
   }
 }

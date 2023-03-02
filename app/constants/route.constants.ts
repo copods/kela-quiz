@@ -13,4 +13,5 @@ export const routes = {
   settings: "/settings",
   forgotPassword: "/forgot-password",
   endExam: "/end-assessment",
+  unauthorized: "/forbidden",
 }

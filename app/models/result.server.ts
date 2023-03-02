@@ -17,8 +17,6 @@ export async function getAllCandidatesOfTestCount(
     ) {
       throw {
         status: 403,
-        message: "You have no access permission for this action",
-        data: null,
       }
     }
     const count = prisma.candidateTest.count({
@@ -65,8 +63,6 @@ export async function getAllCandidatesOfTest({
     ) {
       throw {
         status: 403,
-        message: "You have no access permission for this action",
-        data: null,
       }
     }
     return prisma.test.findFirst({
@@ -127,8 +123,6 @@ export async function getSectionWiseResultsOfIndividualCandidate({
     ) {
       throw {
         status: 403,
-        message: "You have no access permission for this action",
-        data: null,
       }
     }
     return await prisma.candidateTest.findUnique({
@@ -213,8 +207,6 @@ export async function updateCandidateStatus({
     ) {
       throw {
         status: 403,
-        message: "You have no access permission for this action",
-        data: null,
       }
     }
     return await prisma.candidateResult.update({
@@ -246,8 +238,6 @@ export async function getTotalTestCount(
     ) {
       throw {
         status: 403,
-        message: "You have no access permission for this action",
-        data: null,
       }
     }
     const totalCount = await prisma.test.count({
@@ -280,8 +270,6 @@ export async function getAllCandidateTestsCount(
     ) {
       throw {
         status: 403,
-        message: "You have no access permission for this action",
-        data: null,
       }
     }
     const testCount = await prisma.test.count({
@@ -323,8 +311,6 @@ export async function getAllCandidateTests(
     ) {
       throw {
         status: 403,
-        message: "You have no access permission for this action",
-        data: null,
       }
     }
     const res: Array<Test> = await prisma.test.findMany({
@@ -397,8 +383,6 @@ export async function getResultDetailBySection(
     ) {
       throw {
         status: 403,
-        message: "You have no access permission for this action",
-        data: null,
       }
     }
     return await prisma.sectionInCandidateTest.findUnique({

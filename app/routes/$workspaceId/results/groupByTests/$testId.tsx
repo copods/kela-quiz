@@ -7,7 +7,6 @@ import invariant from "tiny-invariant"
 import CandidateListOfTest from "~/components/results/CandidateListOfTest"
 import { actions } from "~/constants/action.constants"
 import { routes } from "~/constants/route.constants"
-import { HTTP_CODE } from "~/interface/Interface"
 import {
   getALLCandidatesOfTest,
   getALLCandidatesOfTestCount,
@@ -53,8 +52,8 @@ export const loader: LoaderFunction = async ({ request, params }) => {
       pageSize,
     })
   } catch (error: any) {
-    if (error.status === HTTP_CODE.ACCESS_DENIED) {
-      return redirect(routes.members)
+    if (error.status === 403) {
+      return redirect(routes.unauthorized)
     }
   }
 }
