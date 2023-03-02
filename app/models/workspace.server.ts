@@ -131,3 +131,14 @@ export async function getOwnersWorkspaces(userId: string) {
   })
   return ownerWorkspaceId
 }
+
+export async function updateUserWorkspace(
+  id: string,
+  name: string,
+  updatedById: string
+) {
+  await prisma.workspace.update({
+    where: { id },
+    data: { name, updatedById },
+  })
+}

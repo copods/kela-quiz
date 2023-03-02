@@ -196,6 +196,7 @@
     "selectCorrOption": "Select the Correct Option",
     "descIsReq": "Description is required",
     "nameIsReq": "Name is required",
+    "workspaceNameIsReq": "Workspace name is required",
     "testAddedSuccess": "Test added successfully..!",
     "testUpdatedSuccess": "Test updated sucessfully..!",
     "maxOptions": "you can add maximum six options.",
@@ -345,7 +346,8 @@
     "passShouldNotBeSame": "Current Password and New Password should not be same",
     "leaveWorkspace": "Leave workspace",
     "leave": "Leave",
-    "leaveWorkspaceConfirmation": "Are you sure you want to leave this workspace?"
+    "leaveWorkspaceConfirmation": "Are you sure you want to leave this workspace?",
+    "workspaceUpdated": "Workspace updated sucessfully..!"
   },
   "tabs": {
     "general": "General",
