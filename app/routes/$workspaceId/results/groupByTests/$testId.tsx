@@ -1,10 +1,12 @@
 import type { ActionFunction } from "@remix-run/node"
 import { json } from "@remix-run/node"
 import type { LoaderFunction } from "@remix-run/server-runtime"
+import { redirect } from "@remix-run/server-runtime"
 import invariant from "tiny-invariant"
 
 import CandidateListOfTest from "~/components/results/CandidateListOfTest"
 import { actions } from "~/constants/action.constants"
+import { routes } from "~/constants/route.constants"
 import {
   getALLCandidatesOfTest,
   getALLCandidatesOfTestCount,
@@ -48,19 +50,29 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     pageSize,
   })
 }
-export const action: ActionFunction = async ({ request }) => {
+export const action: ActionFunction = async ({ request, params }) => {
+  const userId = await getUserId(request)
+  const currentWorkspaceId = params.workspaceId
   const formData = await request.formData()
   const action = formData.get("action")
   if (action === actions.resendTestLink) {
     const testId = formData.get("testId") as string
     const candidateId = formData.get("candidateId") as string
     const id = formData.get("id") as string
-    const candidateInviteStatus = await getTestResendLink({
-      id,
-      candidateId,
-      testId,
-    })
-    return json({ candidateInviteStatus, candidateId })
+    try {
+      const candidateInviteStatus = await getTestResendLink({
+        id,
+        candidateId,
+        testId,
+        userId: userId!,
+        workspaceId: currentWorkspaceId!,
+      })
+      return json({ candidateInviteStatus, candidateId })
+    } catch (error: any) {
+      if (error.status === 403) {
+        return redirect(routes.members)
+      }
+    }
   }
 }
 function CandidateListRoute() {

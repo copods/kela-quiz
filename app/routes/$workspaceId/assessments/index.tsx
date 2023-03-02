@@ -63,7 +63,9 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   })
 }
 
-export const action: ActionFunction = async ({ request }) => {
+export const action: ActionFunction = async ({ request, params }) => {
+  const userId = await getUserId(request)
+  const currentWorkspaceId = params.workspaceId as string
   const formData = await request.formData()
   const action = formData.get("action")
   const createdById = await requireUserId(request)
@@ -92,13 +94,21 @@ export const action: ActionFunction = async ({ request }) => {
         testId,
       })
     }
-    const candidateInviteStatus = await getCandidateByAssessmentId({
-      emails,
-      createdById,
-      testId,
-    })
+    try {
+      const candidateInviteStatus = await getCandidateByAssessmentId({
+        emails,
+        createdById,
+        testId,
+        userId: userId!,
+        workspaceId: currentWorkspaceId,
+      })
 
-    return json({ candidateInviteStatus, testId })
+      return json({ candidateInviteStatus, testId })
+    } catch (error: any) {
+      if (error.status === 403) {
+        return redirect(routes.members)
+      }
+    }
   }
 }
 

@@ -2,6 +2,7 @@ import { env } from "process"
 
 import type { Question, User } from "@prisma/client"
 
+import { checkFeatureAuthorization } from "./authorization.server"
 import { sendTestInviteMail } from "./sendgrid.servers"
 
 import { prisma } from "~/db.server"
@@ -209,12 +210,30 @@ export async function resendTestLink({
   id,
   candidateId,
   testId,
+  userId,
+  workspaceId,
 }: {
   id: string
   candidateId: string
   testId: string
+  userId: string
+  workspaceId: string
 }) {
   try {
+    if (
+      !(await checkFeatureAuthorization(
+        userId,
+        workspaceId,
+        "invite_candidate",
+        "update"
+      ))
+    ) {
+      throw {
+        status: 403,
+        message: "You have no access permission for this action",
+        data: null,
+      }
+    }
     const candidateLink = `${candidateTestLink}${testId}`
     const candidate = await prisma.candidate.findUnique({
       where: { id: candidateId },
@@ -257,7 +276,7 @@ export async function resendTestLink({
       return "End Test"
     }
   } catch (error) {
-    return "error"
+    throw error
   }
 }
 
@@ -265,12 +284,30 @@ export async function createCandidate({
   emails,
   createdById,
   testId,
+  userId,
+  workspaceId,
 }: {
   emails: Array<string>
   createdById: User["id"]
   testId: string
+  userId: string
+  workspaceId: string
 }) {
   try {
+    if (
+      !(await checkFeatureAuthorization(
+        userId,
+        workspaceId,
+        "invite_candidate",
+        "create"
+      ))
+    ) {
+      throw {
+        status: 403,
+        message: "You have no access permission for this action",
+        data: null,
+      }
+    }
     const allInvitedUsers = await prisma.candidateTest.findMany({
       select: { candidate: { select: { email: true } }, testId: true },
     })
@@ -301,7 +338,7 @@ export async function createCandidate({
     }
     return { created: "created", emailCount, neverInvitedCount }
   } catch (error) {
-    return "error"
+    throw error
   }
 }
 
