@@ -13,4 +13,6 @@ export const routes = {
   settings: "/settings",
   forgotPassword: "/forgot-password",
   endExam: "/end-assessment",
+  myProfile: "/my-profile",
+  logout: "/logout",
 }
