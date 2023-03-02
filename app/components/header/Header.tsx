@@ -1,6 +1,6 @@
-import type { headerProps } from "~/interface/Interface"
+import type { HeaderProps } from "~/interface/Interface"
 
-const Header = ({ id, heading, size, rightChildren }: headerProps) => {
+const Header = ({ id, heading, size, rightChildren }: HeaderProps) => {
   return (
     <header className="flex items-center justify-between">
       <h2

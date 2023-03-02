@@ -1,8 +1,11 @@
 import {
+  getChangePasswordButton,
+  getLogoutButton,
+  getMyProfileButton,
   getNavGuideAssessment,
   getNavGuideGeneral,
   getNavGuideResult,
-  getSideNavLogoutBtn,
+  getSideNavFooterDropdownButton,
   getSideNavUserAvatar,
   getSideNavUserEmail,
   getSideNavUserName,
@@ -16,6 +19,12 @@ const sideNavGroupTitles = {
 const userName = "Copods Careers"
 const userEmail = "copods.demo.sendgrid@gmail.com"
 const userAvatarText = "CC"
+
+const dropdownItems = {
+  myProfile: "My Profile",
+  changePassword: "Change Password",
+  logout: "Logout",
+}
 describe("Test for Logout, SideNav", () => {
   it("Tests to check Attributes/Colors/Visibility/Texts", () => {
     // To login
@@ -64,10 +73,20 @@ describe("Test for Logout, SideNav", () => {
       .should("have.css", "font-weight", "500")
       .should("have.css", "color", "rgb(255, 255, 255)")
 
-    // To check style of logout button
-    getSideNavLogoutBtn()
-      .should("have.css", "background-color", "rgb(239, 68, 68)")
-      .should("have.css", "padding", "10px 8px")
-      .should("have.css", "cursor", "pointer")
+    // To check dropdown visibility and its items text/styles
+    getSideNavFooterDropdownButton().should("be.visible").click()
+    getMyProfileButton()
+      .should("be.visible")
+      .should("have.text", dropdownItems.myProfile)
+    getChangePasswordButton()
+      .should("be.visible")
+      .should("have.text", dropdownItems.changePassword)
+    getLogoutButton()
+      .should("be.visible")
+      .should("have.text", dropdownItems.logout)
+    getMyProfileButton()
+      .should("have.css", "font-size", "14px")
+      .should("have.css", "font-weight", "500")
+      .should("have.css", "color", "rgb(0, 0, 0)")
   })
 })
