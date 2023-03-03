@@ -21,7 +21,7 @@ import { getUserWorkspaces } from "~/models/workspace.server"
  * @param userId
  * @returns Test array
  */
-export const getALLCandidateTests = async (
+export const getDetailsOfAllAssessments = async (
   currentWorkspaceId: string,
   resultsItemsPerPage: number,
   resultsCurrentPage: number,
@@ -86,7 +86,7 @@ export const getTotalTestCounts = async (
  * @param userId
  * @returns total count
  */
-export const getALLCandidateTestsCount = async (
+export const getTotalAssessmentCount = async (
   currentWorkspaceId: string,
   statusFilter: string,
   userId: string
