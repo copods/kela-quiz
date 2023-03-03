@@ -69,7 +69,7 @@ const InviteCandidatePopup = ({
       setEmails([""])
     } else {
       if (
-        actionData?.candidateInviteStatus === t("candidateExamConstants.error")
+        actionData?.candidateInviteStatus === "candidateExamConstants.error"
       ) {
         if (actionData?.testId === testId) {
           toast.error(t("testsConstants.candidateAlreadyInvited"))

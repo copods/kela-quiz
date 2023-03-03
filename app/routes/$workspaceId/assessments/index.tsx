@@ -64,37 +64,37 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 }
 
 export const action: ActionFunction = async ({ request, params }) => {
-  const userId = await getUserId(request)
-  const currentWorkspaceId = params.workspaceId as string
-  const formData = await request.formData()
-  const action = formData.get("action")
-  const createdById = await requireUserId(request)
-  const testId = formData.get("inviteCandidates") as string
+  try {
+    const userId = await getUserId(request)
+    const currentWorkspaceId = params.workspaceId as string
+    const formData = await request.formData()
+    const action = formData.get("action")
+    const createdById = await requireUserId(request)
+    const testId = formData.get("inviteCandidates") as string
 
-  formData.delete("inviteCandidates")
+    formData.delete("inviteCandidates")
 
-  //deleting assssment by id
-  if (action === "testDelete") {
-    const response = await deleteAssessmentById(formData.get("id") as string)
-    return response
-  }
-
-  // creating candidate for assessment
-  if (testId !== null) {
-    let emails: Array<string> = []
-    await formData.forEach((fd) => {
-      if (fd != "") {
-        emails.push(fd as string)
-      }
-    })
-    if (emails.length === 0) {
-      return json({
-        status: 401,
-        message: "statusCheck.noEmailsInvite",
-        testId,
-      })
+    //deleting assssment by id
+    if (action === "testDelete") {
+      const response = await deleteAssessmentById(formData.get("id") as string)
+      return response
     }
-    try {
+
+    // creating candidate for assessment
+    if (testId !== null) {
+      let emails: Array<string> = []
+      await formData.forEach((fd) => {
+        if (fd != "") {
+          emails.push(fd as string)
+        }
+      })
+      if (emails.length === 0) {
+        return json({
+          status: 401,
+          message: "statusCheck.noEmailsInvite",
+          testId,
+        })
+      }
       const candidateInviteStatus = await getCandidateByAssessmentId({
         emails,
         createdById,
@@ -102,14 +102,16 @@ export const action: ActionFunction = async ({ request, params }) => {
         userId: userId!,
         workspaceId: currentWorkspaceId,
       })
-
       return json({ candidateInviteStatus, testId })
-    } catch (error: any) {
-      if (error.status === 403) {
-        return redirect(routes.unauthorized)
-      }
+    }
+  } catch (error: any) {
+    if (error.status === 403) {
+      return redirect(routes.unauthorized)
+    } else {
+      return error
     }
   }
+  return null
 }
 
 export default function Tests() {

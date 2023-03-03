@@ -76,7 +76,10 @@ export async function createCandidateTest({
     })
     return candidateTest
   } catch (error) {
-    throw new Error("candidateExamConstants.candidateTestCreateError")
+    throw {
+      candidateInviteStatus: "candidateExamConstants.error",
+      testId: testId,
+    }
   }
 }
 
