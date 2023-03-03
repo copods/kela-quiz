@@ -9,11 +9,8 @@ import SectionCardForResultDetail from "./SectionCardForResultDetail"
 
 import { routes } from "~/constants/route.constants"
 import type { SectionInCandidateTest } from "~/interface/Interface"
-// import { useTranslation } from 'react-i18next'
 
 const ResultDetailsComponent = () => {
-  // const { t } = useTranslation()
-
   const { params, sections, candidate, currentWorkspaceId } = useLoaderData()
   let navigate = useNavigate()
   const sortedSections = sections.sort(

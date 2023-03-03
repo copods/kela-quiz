@@ -18,6 +18,7 @@ import { getUserWorkspaces } from "~/models/workspace.server"
  * @param statusFilter
  * @param sortBy
  * @param sortOrder
+ * @param userId
  * @returns Test array
  */
 export const getALLCandidateTests = async (
@@ -26,16 +27,22 @@ export const getALLCandidateTests = async (
   resultsCurrentPage: number,
   statusFilter: string,
   sortBy: string,
-  sortOrder: string
+  sortOrder: string,
+  userId: string
 ) => {
-  return await getAllCandidateTests(
-    currentWorkspaceId as string,
-    resultsItemsPerPage,
-    resultsCurrentPage,
-    statusFilter,
-    sortBy as string,
-    sortOrder as string
-  )
+  try {
+    return await getAllCandidateTests(
+      currentWorkspaceId as string,
+      resultsItemsPerPage,
+      resultsCurrentPage,
+      statusFilter,
+      sortBy as string,
+      sortOrder as string,
+      userId
+    )
+  } catch (error) {
+    throw error
+  }
 }
 
 /**
@@ -56,23 +63,39 @@ export const getWorkspaces = async (userId: string) => {
 /**
  * this function will return total count of tests
  * @param id
+ * @param currentWorkspaceId
+ * @param userId
  * @returns total count
  */
-export const getTotalTestCounts = async (id: string) => {
-  return await getTotalTestCount(id)
+export const getTotalTestCounts = async (
+  id: string,
+  workspaceId: string,
+  userId: string
+) => {
+  try {
+    return await getTotalTestCount(id, workspaceId, userId)
+  } catch (error) {
+    throw error
+  }
 }
 
 /**
  * this function will return all candidate tests count
  * @param currentWorkspaceId
  * @param statusFilter
+ * @param userId
  * @returns total count
  */
 export const getALLCandidateTestsCount = async (
   currentWorkspaceId: string,
-  statusFilter: string
+  statusFilter: string,
+  userId: string
 ) => {
-  return await getAllCandidateTestsCount(currentWorkspaceId, statusFilter)
+  return await getAllCandidateTestsCount(
+    currentWorkspaceId,
+    statusFilter,
+    userId
+  )
 }
 
 /**
@@ -116,9 +139,20 @@ export const getTestResendLink = async ({
  */
 export const getALLCandidatesOfTestCount = async (
   id: string,
-  statusFilter: string
+  statusFilter: string,
+  userId: string,
+  workspaceId: string
 ) => {
-  return await getAllCandidatesOfTestCount(id, statusFilter)
+  try {
+    return await getAllCandidatesOfTestCount(
+      id,
+      statusFilter,
+      userId,
+      workspaceId
+    )
+  } catch (error) {
+    throw error
+  }
 }
 
 /**
@@ -133,23 +167,33 @@ export const getALLCandidatesOfTestCount = async (
 export const getALLCandidatesOfTest = async ({
   id,
   workspaceId,
+  userId,
+  currentWorkspaceId,
   currentPage,
   pageSize,
   statusFilter,
 }: {
   id: string
   workspaceId: string
+  userId: string
+  currentWorkspaceId: string
   currentPage: number
   pageSize: number
   statusFilter: string
 }) => {
-  return await getAllCandidatesOfTest({
-    id,
-    workspaceId,
-    currentPage,
-    pageSize,
-    statusFilter,
-  })
+  try {
+    return await getAllCandidatesOfTest({
+      id,
+      workspaceId,
+      userId,
+      currentWorkspaceId,
+      currentPage,
+      pageSize,
+      statusFilter,
+    })
+  } catch (error) {
+    throw error
+  }
 }
 
 /**
@@ -161,14 +205,24 @@ export const getALLCandidatesOfTest = async ({
 export const updateCandidateSTATUS = async ({
   id,
   candidateStatus,
+  currentWorkspaceId,
+  userId,
 }: {
   id: string
   candidateStatus: string
+  currentWorkspaceId: string
+  userId: string
 }) => {
-  return await updateCandidateStatus({
-    id,
-    candidateStatus,
-  })
+  try {
+    return await updateCandidateStatus({
+      id,
+      candidateStatus,
+      currentWorkspaceId,
+      userId,
+    })
+  } catch (error) {
+    throw error
+  }
 }
 
 /**
@@ -180,12 +234,18 @@ export const updateCandidateSTATUS = async ({
 export const getSectionWiseResultsOFIndividualCandidate = async ({
   testId,
   candidateId,
+  workspaceId,
+  userId,
 }: {
   testId: string
   candidateId: string
+  workspaceId: string
+  userId: string
 }) => {
   return await getSectionWiseResultsOfIndividualCandidate({
     testId,
     candidateId,
+    workspaceId,
+    userId,
   })
 }

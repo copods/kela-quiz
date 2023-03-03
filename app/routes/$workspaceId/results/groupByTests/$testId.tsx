@@ -21,34 +21,41 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const pageSize = Math.max(Number(query.get("pageSize") || 5), 5)
   const currentPage = Math.max(Number(query.get("page") || 1), 1)
   const statusFilter = query.get("filterByStatus") as string
-  const candidatesCount = await getALLCandidatesOfTestCount(
-    params.testId!,
-    statusFilter
-  )
   const userId = await getUserId(request)
   const currentWorkspaceId = params.workspaceId
   const workspaces = await getWorkspaces(userId as string)
   invariant(params.testId, "resultId not found")
-  const candidatesOfTest = await getALLCandidatesOfTest({
-    id: params.testId,
-    workspaceId: currentWorkspaceId as string,
-    currentPage,
-    pageSize,
-    statusFilter,
-  })
-  if (!candidatesOfTest) {
-    throw new Response("Not Found", { status: 404 })
-  }
 
-  return json({
-    candidatesOfTest,
-    params,
-    workspaces,
-    currentWorkspaceId,
-    candidatesCount,
-    currentPage,
-    pageSize,
-  })
+  try {
+    const candidatesCount = await getALLCandidatesOfTestCount(
+      params.testId!,
+      statusFilter,
+      userId!,
+      currentWorkspaceId!
+    )
+    const candidatesOfTest = await getALLCandidatesOfTest({
+      id: params.testId,
+      workspaceId: currentWorkspaceId as string,
+      userId: userId!,
+      currentWorkspaceId: currentWorkspaceId!,
+      currentPage,
+      pageSize,
+      statusFilter,
+    })
+    return json({
+      candidatesOfTest,
+      params,
+      workspaces,
+      currentWorkspaceId,
+      candidatesCount,
+      currentPage,
+      pageSize,
+    })
+  } catch (error: any) {
+    if (error.status === 403) {
+      return redirect(routes.unauthorized)
+    }
+  }
 }
 export const action: ActionFunction = async ({ request, params }) => {
   const userId = await getUserId(request)

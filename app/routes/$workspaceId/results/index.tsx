@@ -24,22 +24,30 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const sortBy = query.get("sortBy")
   const sortOrder = query.get("sort")
   if (!userId) return redirect(routes.signIn)
-  const candidateTest = await getALLCandidateTests(
-    currentWorkspaceId as string,
-    resultsItemsPerPage,
-    resultsCurrentPage,
-    statusFilter,
-    sortBy as string,
-    sortOrder as string
-  )
-  return json<LoaderData>({
-    candidateTest,
-    userId,
-    workspaces,
-    currentWorkspaceId,
-  })
+  try {
+    const candidateTest = await getALLCandidateTests(
+      currentWorkspaceId as string,
+      resultsItemsPerPage,
+      resultsCurrentPage,
+      statusFilter,
+      sortBy as string,
+      sortOrder as string,
+      userId
+    )
+    return json<LoaderData>({
+      candidateTest,
+      userId,
+      workspaces,
+      currentWorkspaceId,
+    })
+  } catch (error: any) {
+    if (error.status === 403) {
+      return redirect(routes.unauthorized)
+    }
+  }
 }
 const ResultsRoute = () => {
   return <GroupByTests />
 }
+
 export default ResultsRoute

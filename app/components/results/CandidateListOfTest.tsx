@@ -237,6 +237,9 @@ const CandidateListOfTest = () => {
               aria-label={t("testTableItem.menu")}
               id={data.id}
               menuDetails={menuItemsDetailsList}
+              customClasses={{
+                item: "text-primary text-xs w-36 shadow-sm",
+              }}
             />
           )}
         </div>
