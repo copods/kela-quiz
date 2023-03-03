@@ -106,7 +106,7 @@ export const action: ActionFunction = async ({ request, params }) => {
       return json({ candidateInviteStatus, testId })
     } catch (error: any) {
       if (error.status === 403) {
-        return redirect(routes.members)
+        return redirect(routes.unauthorized)
       }
     }
   }
