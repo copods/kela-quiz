@@ -8,7 +8,7 @@ import CandidateListOfTest from "~/components/results/CandidateListOfTest"
 import { actions } from "~/constants/action.constants"
 import { routes } from "~/constants/route.constants"
 import {
-  getAllCandidateCountOfTest,
+  getDetailsOfCandidatePerPage,
   getCountofAllCandidatesOfTest,
   getTestResendLink,
   getWorkspaces,
@@ -33,7 +33,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
       userId!,
       currentWorkspaceId!
     )
-    const candidatesOfTest = await getAllCandidateCountOfTest({
+    const candidatesOfTest = await getDetailsOfCandidatePerPage({
       id: params.testId,
       workspaceId: currentWorkspaceId as string,
       userId: userId!,

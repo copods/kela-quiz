@@ -154,7 +154,7 @@ export const getCountofAllCandidatesOfTest = async (
  * @param statusFilter
  * @returns tests
  */
-export const getAllCandidateCountOfTest = async ({
+export const getDetailsOfCandidatePerPage = async ({
   id,
   workspaceId,
   userId,
