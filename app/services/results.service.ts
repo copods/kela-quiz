@@ -127,7 +127,7 @@ export const getTestResendLink = async ({
  * @param statusFilter
  * @returns total count
  */
-export const getALLCandidatesOfTestCount = async (
+export const getCountofAllCandidatesOfTest = async (
   id: string,
   statusFilter: string,
   userId: string,
@@ -154,7 +154,7 @@ export const getALLCandidatesOfTestCount = async (
  * @param statusFilter
  * @returns tests
  */
-export const getALLCandidatesOfTest = async ({
+export const getAllCandidateCountOfTest = async ({
   id,
   workspaceId,
   userId,

@@ -359,7 +359,7 @@
     "urlNotFound": "The requested URL was not found on this server.",
     "gotoDashboard": "GoTo Dashboard"
   },
-  "403": {
+  "unauthorized": {
     "error": "The route you tried to access was not authorized",
     "gotoDashboard": "GoTo Dashboard"
   }
