@@ -360,7 +360,7 @@
     "gotoDashboard": "GoTo Dashboard"
   },
   "unauthorized": {
-    "error": "The route you tried to access was not authorized",
+    "error": "You are not authorised to access this route",
     "gotoDashboard": "GoTo Dashboard"
   }
 }
