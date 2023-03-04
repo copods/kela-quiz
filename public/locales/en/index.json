@@ -359,7 +359,7 @@
     "gotoDashboard": "Go To Dashboard"
   },
   "unauthorized": {
-    "error": "You are not authorised to access this route",
+    "error": "You are not authorized to access this route",
     "gotoDashboard": "Go To Dashboard"
   }
 }
