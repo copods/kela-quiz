@@ -8,8 +8,8 @@ import CandidateListOfTest from "~/components/results/CandidateListOfTest"
 import { actions } from "~/constants/action.constants"
 import { routes } from "~/constants/route.constants"
 import {
-  getALLCandidatesOfTest,
-  getALLCandidatesOfTestCount,
+  getDetailsOfCandidatePerPage,
+  getCountofAllCandidatesOfTest,
   getTestResendLink,
   getWorkspaces,
 } from "~/services/results.service"
@@ -27,13 +27,13 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   invariant(params.testId, "resultId not found")
 
   try {
-    const candidatesCount = await getALLCandidatesOfTestCount(
+    const candidatesCount = await getCountofAllCandidatesOfTest(
       params.testId!,
       statusFilter,
       userId!,
       currentWorkspaceId!
     )
-    const candidatesOfTest = await getALLCandidatesOfTest({
+    const candidatesOfTest = await getDetailsOfCandidatePerPage({
       id: params.testId,
       workspaceId: currentWorkspaceId as string,
       userId: userId!,

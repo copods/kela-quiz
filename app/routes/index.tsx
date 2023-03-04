@@ -7,7 +7,7 @@ import Logo from "~/components/Logo"
 import { routes } from "~/constants/route.constants"
 import { getUserId } from "~/session.server"
 
-export const loader: LoaderFunction = async ({ request, params }) => {
+export const loader: LoaderFunction = async ({ request }) => {
   const userId = await getUserId(request)
   if (userId) return redirect(routes.members)
   return redirect(routes.signIn)

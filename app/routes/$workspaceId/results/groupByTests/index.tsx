@@ -5,15 +5,15 @@ import GroupByTests from "~/components/results/GroupByTests"
 import { routes } from "~/constants/route.constants"
 import { sortByOrder } from "~/interface/Interface"
 import {
-  getALLCandidateTests,
-  getALLCandidateTestsCount,
+  getDetailsOfAllAssessments,
+  getTotalAssessmentCount,
   getTotalTestCounts,
   getWorkspaces,
 } from "~/services/results.service"
 import { getUserId } from "~/session.server"
 
 type LoaderData = {
-  candidateTest: Awaited<ReturnType<typeof getALLCandidateTests>>
+  candidateTest: Awaited<ReturnType<typeof getDetailsOfAllAssessments>>
   userId: Awaited<ReturnType<typeof getUserId>>
   workspaces: Awaited<ReturnType<typeof getWorkspaces>>
   currentWorkspaceId: string
@@ -40,12 +40,12 @@ export const loader: LoaderFunction = async ({ request, params }) => {
       currentWorkspaceId,
       userId
     )
-    const testCount = await getALLCandidateTestsCount(
+    const testCount = await getTotalAssessmentCount(
       currentWorkspaceId,
       statusFilter,
       userId
     )
-    const candidateTest = await getALLCandidateTests(
+    const candidateTest = await getDetailsOfAllAssessments(
       currentWorkspaceId as string,
       resultsItemsPerPage,
       resultsCurrentPage,

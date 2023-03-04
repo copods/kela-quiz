@@ -354,13 +354,12 @@
     "workspaces": "Workspaces"
   },
   "404": {
-    "error": "That's an error.",
     "notFound": "Not Found",
     "urlNotFound": "The requested URL was not found on this server.",
-    "gotoDashboard": "GoTo Dashboard"
+    "gotoDashboard": "Go To Dashboard"
   },
-  "403": {
-    "error": "The route you tried to access was not authorized",
-    "gotoDashboard": "GoTo Dashboard"
+  "unauthorized": {
+    "error": "You are not authorised to access this route",
+    "gotoDashboard": "Go To Dashboard"
   }
 }
