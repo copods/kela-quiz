@@ -358,5 +358,9 @@
     "notFound": "Not Found",
     "urlNotFound": "The requested URL was not found on this server.",
     "gotoDashboard": "GoTo Dashboard"
+  },
+  "unauthorized": {
+    "error": "You are not authorized to access this route",
+    "gotoDashboard": "Go To Dashboard"
   }
 }
