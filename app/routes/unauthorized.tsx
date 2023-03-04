@@ -1,7 +1,7 @@
 import { useNavigate } from "@remix-run/react"
 import { useTranslation } from "react-i18next"
 
-import unauthorrized from "../../public/assets/403.svg"
+import unauthorized from "../../public/assets/403.svg"
 
 const NotFound = () => {
   const { t } = useTranslation()
@@ -17,7 +17,7 @@ const NotFound = () => {
       <div className="flex flex-col items-center justify-center rounded-lg bg-white p-24">
         <div className="mb-4">
           <img
-            src={unauthorrized}
+            src={unauthorized}
             alt={t("unauthorized.error")}
             className="h-cooldownSVG w-cooldownSVG"
           />
