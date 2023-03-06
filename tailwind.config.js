@@ -10,6 +10,7 @@ module.exports = {
         primaryDisabled: "#A2A4D6",
         primaryOutlined: "#141649",
         questionBackground: "#F0F0F0",
+        hover: "#F8FBFF",
       },
       minWidth: {
         sectionCard: "400px",
