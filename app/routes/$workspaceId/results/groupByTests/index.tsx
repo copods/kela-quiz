@@ -7,7 +7,7 @@ import { sortByOrder } from "~/interface/Interface"
 import {
   getDetailsOfAllAssessments,
   getTotalAssessmentCount,
-  getTotalTestCounts,
+  getTotalCountOfTests,
   getWorkspaces,
 } from "~/services/results.service"
 import { getUserId } from "~/session.server"
@@ -35,7 +35,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const workspaces = await getWorkspaces(userId as string)
   if (!userId) return redirect("/sign-in")
   try {
-    const totalTestCount = await getTotalTestCounts(
+    const totalTestCount = await getTotalCountOfTests(
       params.testId!,
       currentWorkspaceId,
       userId
