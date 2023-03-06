@@ -78,8 +78,8 @@ function Login({ actionData, redirectTo }: LoginProps) {
     navigate(routes.forgotPassword)
   }
   return (
-    <div className="z-10 flex	min-h-480 w-full max-w-554 flex-col items-center justify-center rounded-lg bg-white px-24 drop-shadow-xl">
-      <div className="z-20 -mt-12 mb-6">
+    <div className="z-10 flex w-full max-w-554 flex-col items-center justify-center rounded-lg bg-white px-24 drop-shadow-xl">
+      <div className="z-20 -mt-8 mb-6">
         <Logo height="64" width="64" />
       </div>
       <div className="w-full">
@@ -146,7 +146,7 @@ function Login({ actionData, redirectTo }: LoginProps) {
           </div>
         </Form>
       </div>
-      <div className="flex pt-6">
+      <div className="flex pt-6 pb-4">
         <div className="text-base font-medium text-gray-500">
           {t("logIn.dontHaveAnAccountYet")}{" "}
           <span
