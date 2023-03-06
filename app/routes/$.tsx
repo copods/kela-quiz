@@ -14,14 +14,12 @@ const NotFound = () => {
 
   return (
     <div className="flex h-screen items-center justify-center bg-gray-50">
-      <div className="flex flex-col items-center justify-center rounded-lg bg-white p-24">
-        <div className="mb-4">
-          <img
-            src={notFound}
-            alt={t("404.notFound")}
-            className="h-cooldownSVG w-cooldownSVG"
-          />
-        </div>
+      <div className="flex flex-col items-center justify-center gap-4 rounded-lg bg-white p-24">
+        <img
+          src={notFound}
+          alt={t("404.notFound")}
+          className="h-cooldownSVG w-cooldownSVG"
+        />
         <div className="text-center leading-8">
           <p className="text-2xl font-bold">{t("404.error")}</p>
           <p className="text-2xl font-bold">{t("404.urlNotFound")}</p>
