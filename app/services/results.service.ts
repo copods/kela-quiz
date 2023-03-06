@@ -67,7 +67,7 @@ export const getWorkspaces = async (userId: string) => {
  * @param userId
  * @returns total count
  */
-export const getTotalTestCounts = async (
+export const getTotalTestsCount = async (
   id: string,
   workspaceId: string,
   userId: string

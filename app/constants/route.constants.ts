@@ -13,7 +13,7 @@ export const routes = {
   settings: "/settings",
   forgotPassword: "/forgot-password",
   endExam: "/end-assessment",
-  unauthorized: "/forbidden",
+  unauthorized: "/unauthorized",
   myProfile: "/my-profile",
   logout: "/logout",
 }
