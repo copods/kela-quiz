@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next"
 import Chip from "../common-components/Chip"
 import Divider from "../common-components/divider"
 
-import type { Option, CorrectAnswer, QuestionType } from "~/interface/Interface"
+import type { Option, QuestionType, CorrectAnswer } from "~/interface/Interface"
 import { QuestionTypes, QuestionStatus } from "~/interface/Interface"
 
 const ResultDetailsQuestionsPreview = ({
@@ -31,13 +31,19 @@ const ResultDetailsQuestionsPreview = ({
 }) => {
   const { t } = useTranslation()
 
-  const correctAnswersArray = correctAnswer.map(
-    (correctAnswer: CorrectAnswer) => correctAnswer.answer
-  )
-  function areEqualAnswers(
+  let correctAnswersArray
+  const [isCorrectAnswer, setCorrectAnswer] = useState(true)
+
+  if (correctAnswer.length > 0) {
+    correctAnswersArray = correctAnswer.map(
+      (correctAnswer: CorrectAnswer) => correctAnswer.answer
+    )
+  }
+
+  const comparingTextAnswers = (
     textAnswer: CorrectAnswer[],
     correctAnswersArray: string[]
-  ) {
+  ) => {
     let textAnswerArrayLength = textAnswer.length
     let correctAnswersArrayLength = correctAnswersArray.length
 
@@ -59,22 +65,45 @@ const ResultDetailsQuestionsPreview = ({
     // If all elements were same.
     return true
   }
+
+  const settingCorrectAnswer = (
+    answers: Array<CorrectAnswer> | Array<Option>,
+    questionType: string,
+    correctAnswers: any
+  ) => {
+    if (questionType === QuestionTypes.text) {
+      answers.forEach((value, index) => {
+        if (value !== correctAnswers[index].answer) {
+          setCorrectAnswer(false)
+        }
+      })
+    } else {
+      for (const [index, value] of answers.entries()) {
+        if (
+          (questionType === QuestionTypes.singleChoice ||
+            QuestionTypes.multipleChoice) &&
+          value.id !== correctAnswers[index]?.id
+        ) {
+          setCorrectAnswer(false)
+          break
+        }
+      }
+    }
+  }
   const optionContainer =
     "break-normal rounded-lg border border-solid border-gray-300 bg-gray-50 p-4 text-base font-normal text-gray-600"
 
-  const [isCorrectAnswer, setCorrectAnswer] = useState(true)
-
   useEffect(() => {
-    for (const [index, value] of textAnswer.entries()) {
-      if (value !== (correctAnswer[index].answer as unknown as CorrectAnswer)) {
-        setCorrectAnswer(false)
-        break
-      }
-    }
-    for (const [index, value] of selectedOptions.entries()) {
-      if (value.id !== correctOption[index]?.id) {
-        setCorrectAnswer(false)
-        break
+    if (questionType.value === QuestionTypes.text) {
+      settingCorrectAnswer(textAnswer, questionType.value, correctAnswer)
+    } else {
+      if (
+        selectedOptions.length >= correctOption.length ||
+        questionType.value === QuestionTypes.singleChoice
+      ) {
+        settingCorrectAnswer(selectedOptions, questionType.value, correctOption)
+      } else {
+        settingCorrectAnswer(correctOption, questionType.value, selectedOptions)
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -139,7 +168,9 @@ const ResultDetailsQuestionsPreview = ({
                 !isCorrectAnswer) ||
               (!checkOrder &&
                 questionType.value === QuestionTypes.text &&
-                areEqualAnswers(textAnswer, correctAnswersArray) === false) ||
+                correctAnswersArray &&
+                comparingTextAnswers(textAnswer, correctAnswersArray) ===
+                  false) ||
               (!isCorrectAnswer &&
                 questionType.value !== QuestionTypes.text) ? (
                 <Chip text={t("resultConstants.wrong")} variant={"error"} />
@@ -180,7 +211,9 @@ const ResultDetailsQuestionsPreview = ({
               !isCorrectAnswer) ||
               (!checkOrder &&
                 questionType.value === QuestionTypes.text &&
-                areEqualAnswers(textAnswer, correctAnswersArray) === false) ||
+                correctAnswersArray &&
+                comparingTextAnswers(textAnswer, correctAnswersArray) ===
+                  false) ||
               (!isCorrectAnswer &&
                 questionType.value !== QuestionTypes.text)) && (
               <div className="flex flex-col gap-6">
