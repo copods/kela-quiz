@@ -75,7 +75,7 @@ export const action: ActionFunction = async ({ request, params }) => {
     formData.delete("inviteCandidates")
 
     //deleting assssment by id
-    if (action === "testDelete") {
+    if (action === "deleteTest") {
       const response = await deleteAssessmentById(formData.get("id") as string)
       return response
     }
@@ -83,9 +83,9 @@ export const action: ActionFunction = async ({ request, params }) => {
     // creating candidate for assessment
     if (testId !== null) {
       let emails: Array<string> = []
-      await formData.forEach((fd) => {
-        if (fd != "") {
-          emails.push(fd as string)
+      await formData.forEach((data) => {
+        if (data != "") {
+          emails.push(data as string)
         }
       })
       if (emails.length === 0) {

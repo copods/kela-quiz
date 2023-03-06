@@ -77,7 +77,7 @@ export async function createCandidateTest({
     return candidateTest
   } catch (error) {
     throw {
-      candidateInviteStatus: "candidateExamConstants.error",
+      candidateInviteStatus: "already exists",
       testId: testId,
     }
   }
@@ -233,8 +233,6 @@ export async function resendTestLink({
     ) {
       throw {
         status: 403,
-        message: "You have no access permission for this action",
-        data: null,
       }
     }
     const candidateLink = `${candidateTestLink}${testId}`
@@ -307,8 +305,6 @@ export async function createCandidate({
     ) {
       throw {
         status: 403,
-        message: "You have no access permission for this action",
-        data: null,
       }
     }
     const allInvitedUsers = await prisma.candidateTest.findMany({
