@@ -260,11 +260,7 @@ export default function SectionPage() {
   ]
   const [sectionDetailFull, setSectionDetailFull] = useState(false)
   const [showAddSectionModal, setShowAddSectionModal] = useState(false)
-  const [order, setOrder] = useState(
-    getStoredValue("testsOrder")?.value
-      ? getStoredValue("testsOrder")?.value
-      : (sortByOrder.desc as string)
-  )
+  const [order, setOrder] = useState(sortByOrder.ascending as string)
   const [sortBy, setSortBy] = useState(
     getStoredValue("testsSortBy")?.value
       ? getStoredValue("testsSortBy")?.value
@@ -353,11 +349,8 @@ export default function SectionPage() {
   ])
 
   useEffect(() => {
-    setCustomStorage("testsOrder", order)
-  }, [order])
-
-  useEffect(() => {
     setCustomStorage("testsSortBy", sortBy)
+    setOrder(sortByOrder.ascending)
   }, [sortBy])
 
   useEffect(() => {
