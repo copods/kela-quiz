@@ -2,7 +2,7 @@ import { useState } from "react"
 
 import { useTranslation } from "react-i18next"
 
-import ResetPassword from "./ResetPassword"
+// import ResetPassword from "./ResetPassword"
 
 import { version } from "package.json"
 
@@ -36,10 +36,10 @@ const GeneralSettings = () => {
           </div>
         </div>
       </div>
-      <ResetPassword
+      {/* <ResetPassword
         openResetPassModel={openResetPassModel}
         setOpenResetPassModel={setOpenResetPassModel}
-      />
+      /> */}
     </>
   )
 }

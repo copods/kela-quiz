@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react"
 
-import { Form, useActionData, useTransition } from "@remix-run/react"
+import {
+  Form,
+  useActionData,
+  useFetcher,
+  useTransition,
+} from "@remix-run/react"
 import { useTranslation } from "react-i18next"
 import { toast } from "react-toastify"
 
@@ -29,12 +34,11 @@ const ResetPassword = ({
       if (generalSettings === "DONE") {
         setOpenResetPassModel(false) //reset password popUp wil be closed automatically if action is success
         toast.success(t("settings.passResetSuccessfully"))
-      } else if (generalSettings.errors?.status === 400) {
-        setOpenResetPassModel(true) //reset password popUp remain open if action is failed
       }
     }
   }, [generalSettings, setOpenResetPassModel, t])
   const transition = useTransition()
+  const fetcher = useFetcher()
 
   const [password, setPassword] = useState("")
   const [newPassword, setNewPassword] = useState("")
@@ -74,6 +78,19 @@ const ResetPassword = ({
         passNotMatchError: t("settings.passNotMatch"),
       })
     }
+  }
+
+  const onSubmit = () => {
+    fetcher.submit(
+      {
+        oldPassword: password,
+        confirmPassword: confirmPassword,
+        newPassword: newPassword,
+      },
+      {
+        method: "post",
+      }
+    )
   }
   const PasswordInputFieldProps = [
     // Input field props
@@ -131,6 +148,7 @@ const ResetPassword = ({
       passNotMatchError: "",
     })
   }, [openResetPassModel])
+
   useEffect(() => {
     setError({
       ...error,
@@ -199,6 +217,7 @@ const ResetPassword = ({
                 newPassword != confirmPassword ||
                 newPassword.length < 8
               }
+              onClick={onSubmit}
               datacy="submit"
             />
           </div>
