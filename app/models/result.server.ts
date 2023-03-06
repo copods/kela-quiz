@@ -1,406 +1,446 @@
-import type { CandidateResult, CandidateTest } from "@prisma/client"
+import type { CandidateTest } from "@prisma/client"
 import type { Test } from "@prisma/client"
+
+import { checkFeatureAuthorization } from "./authorization.server"
 
 import { prisma } from "~/db.server"
 
-export async function getPendingExamCandidateByTestId({
-  id,
-}: Pick<CandidateTest, "id">) {
-  return prisma.test.findFirst({
-    where: {
-      id,
-    },
-    include: {
-      candidateTest: {
-        where: {
-          startedAt: null,
-        },
-        include: {
-          candidate: {
-            select: {
-              email: true,
-              createdBy: true,
-            },
-          },
-        },
-      },
-    },
-  })
-}
-export async function getTestAttendedCandiated({
-  id,
-}: Pick<CandidateResult, "id">) {
-  return prisma.test.findFirst({
-    where: {
-      id,
-    },
-    include: {
-      candidateTest: {
-        where: {
-          NOT: {
-            startedAt: null,
-          },
-          endAt: null,
-        },
-        include: {
-          candidate: {
-            select: {
-              email: true,
-              createdBy: true,
-            },
-          },
-        },
-      },
-    },
-  })
-}
-export async function getResultsOfCandidatesByTestId({
-  testId,
-}: Pick<CandidateResult, "testId">) {
-  return prisma.candidateResult.findMany({
-    where: { testId },
-    select: {
-      id: true,
-      totalQuestion: true,
-      correctQuestion: true,
-      unanswered: true,
-      isQualified: true,
-      candidate: {
-        select: {
-          lastName: true,
-          firstName: true,
-          email: true,
-          createdBy: {
-            select: {
-              firstName: true,
-              lastName: true,
-            },
-          },
-        },
-      },
-    },
-  })
-}
-
 export async function getAllCandidatesOfTestCount(
   id: string,
-  statusFilter: string
+  statusFilter: string,
+  userId: string,
+  workspaceId: string
 ) {
-  const count = prisma.candidateTest.count({
-    where: {
-      ...(statusFilter === "complete"
-        ? { NOT: { endAt: { equals: null } } }
-        : statusFilter === "pending"
-        ? { endAt: { equals: null } }
-        : {}),
-      testId: id,
-    },
-  })
-  return count
+  try {
+    if (
+      !(await checkFeatureAuthorization(userId, workspaceId, "results", "read"))
+    ) {
+      throw {
+        status: 403,
+      }
+    }
+    const count = prisma.candidateTest.count({
+      where: {
+        ...(statusFilter === "complete"
+          ? { NOT: { endAt: { equals: null } } }
+          : statusFilter === "pending"
+          ? { endAt: { equals: null } }
+          : {}),
+        testId: id,
+      },
+    })
+    return count
+  } catch (error) {
+    throw error
+  }
 }
 
 export async function getAllCandidatesOfTest({
   id,
   workspaceId,
+  userId,
+  currentWorkspaceId,
   currentPage,
   pageSize,
   statusFilter,
 }: {
   id: string
   workspaceId: string
+  userId: string
+  currentWorkspaceId: string
   currentPage?: number
   pageSize?: number
   statusFilter?: string
 }) {
-  return prisma.test.findFirst({
-    where: {
-      id,
-      workspaceId,
-    },
-    include: {
-      candidateTest: {
-        take: pageSize,
-        where: {
-          ...(statusFilter === "complete"
-            ? { NOT: { endAt: { equals: null } } }
-            : statusFilter === "pending"
-            ? { endAt: { equals: null } }
-            : {}),
-        },
-        skip: (currentPage! - 1) * pageSize!,
-        orderBy: { createdAt: "desc" },
-        include: {
-          candidateResult: true,
-          candidate: {
-            select: {
-              email: true,
-              firstName: true,
-              lastName: true,
-              createdBy: {
-                select: {
-                  firstName: true,
-                  lastName: true,
+  try {
+    if (
+      !(await checkFeatureAuthorization(
+        userId,
+        currentWorkspaceId,
+        "results",
+        "read"
+      ))
+    ) {
+      throw {
+        status: 403,
+      }
+    }
+    return prisma.test.findFirst({
+      where: {
+        id,
+        workspaceId,
+      },
+      include: {
+        candidateTest: {
+          take: pageSize,
+          where: {
+            ...(statusFilter === "complete"
+              ? { NOT: { endAt: { equals: null } } }
+              : statusFilter === "pending"
+              ? { endAt: { equals: null } }
+              : {}),
+          },
+          skip: (currentPage! - 1) * pageSize!,
+          orderBy: { createdAt: "desc" },
+          include: {
+            candidateResult: true,
+            candidate: {
+              select: {
+                email: true,
+                firstName: true,
+                lastName: true,
+                createdBy: {
+                  select: {
+                    firstName: true,
+                    lastName: true,
+                  },
                 },
               },
             },
           },
         },
       },
-    },
-  })
-}
-
-export async function getResultsOfIndividualCandidates({ id }: { id: string }) {
-  return await prisma.candidateResult.findUnique({
-    where: {
-      id,
-    },
-    select: {
-      candidate: true,
-      testId: true,
-      candidateTestId: true,
-    },
-  })
+    })
+  } catch (error) {
+    throw error
+  }
 }
 
 export async function getSectionWiseResultsOfIndividualCandidate({
   testId,
   candidateId,
+  workspaceId,
+  userId,
 }: {
   testId: string
   candidateId: string
+  workspaceId: string
+  userId: string
 }) {
-  return await prisma.candidateTest.findUnique({
-    where: {
-      candidateId_testId: { candidateId, testId },
-    },
-    select: {
-      candidate: {
-        select: {
-          firstName: true,
-          lastName: true,
-        },
+  try {
+    if (
+      !(await checkFeatureAuthorization(userId, workspaceId, "results", "read"))
+    ) {
+      throw {
+        status: 403,
+      }
+    }
+    return await prisma.candidateTest.findUnique({
+      where: {
+        candidateId_testId: { candidateId, testId },
       },
-      sections: {
-        select: {
-          id: true,
-          startedAt: true,
-          endAt: true,
-          order: true,
-          section: {
-            select: {
-              id: true,
-              name: true,
-            },
+      select: {
+        candidate: {
+          select: {
+            firstName: true,
+            lastName: true,
           },
+        },
+        sections: {
+          select: {
+            id: true,
+            startedAt: true,
+            endAt: true,
+            order: true,
+            section: {
+              select: {
+                id: true,
+                name: true,
+              },
+            },
 
-          SectionWiseResult: {
-            select: {
-              id: true,
-              section: {
-                select: {
-                  startedAt: true,
-                  endAt: true,
-                  section: {
-                    select: {
-                      id: true,
-                      name: true,
-                      sectionInTest: {
-                        select: {
-                          timeInSeconds: true,
+            SectionWiseResult: {
+              select: {
+                id: true,
+                section: {
+                  select: {
+                    startedAt: true,
+                    endAt: true,
+                    section: {
+                      select: {
+                        id: true,
+                        name: true,
+                        sectionInTest: {
+                          select: {
+                            timeInSeconds: true,
+                          },
                         },
                       },
                     },
                   },
                 },
+                totalQuestion: true,
+                correctQuestion: true,
+                unanswered: true,
+                incorrect: true,
+                skipped: true,
               },
-              totalQuestion: true,
-              correctQuestion: true,
-              unanswered: true,
-              incorrect: true,
-              skipped: true,
             },
           },
         },
       },
-    },
-  })
+    })
+  } catch (error) {
+    throw error
+  }
 }
 
 export async function updateCandidateStatus({
   id,
   candidateStatus,
+  currentWorkspaceId,
+  userId,
 }: {
   id: string
   candidateStatus: string
+  currentWorkspaceId: string
+  userId: string
 }) {
-  return await prisma.candidateResult.update({
-    where: {
-      id,
-    },
-    data: {
-      isQualified: candidateStatus == "true" ? true : false,
-    },
-  })
+  try {
+    if (
+      !(await checkFeatureAuthorization(
+        userId,
+        currentWorkspaceId,
+        "results",
+        "read"
+      ))
+    ) {
+      throw {
+        status: 403,
+      }
+    }
+    return await prisma.candidateResult.update({
+      where: {
+        id,
+      },
+      data: {
+        isQualified: candidateStatus == "true" ? true : false,
+      },
+    })
+  } catch (error) {
+    throw error
+  }
 }
-export async function getTotalTestCount(workspaceId: string) {
-  const totalCount = await prisma.test.count({
-    where: {
-      workspaceId,
 
-      candidateTest: {
-        some: {
-          id: {
-            not: undefined,
+export async function getTotalTestCount(
+  workspaceId: string,
+  currentWorkspaceId: string,
+  userId: string
+) {
+  try {
+    if (
+      !(await checkFeatureAuthorization(
+        userId,
+        currentWorkspaceId,
+        "results",
+        "read"
+      ))
+    ) {
+      throw {
+        status: 403,
+      }
+    }
+    const totalCount = await prisma.test.count({
+      where: {
+        workspaceId,
+
+        candidateTest: {
+          some: {
+            id: {
+              not: undefined,
+            },
           },
         },
       },
-    },
-  })
-  return totalCount
+    })
+    return totalCount
+  } catch (error) {
+    throw error
+  }
 }
+
 export async function getAllCandidateTestsCount(
   workspaceId: string,
-  statusFilter: string
+  statusFilter: string,
+  userId: string
 ) {
-  const testCount = await prisma.test.count({
-    where: {
-      ...(statusFilter === "active"
-        ? { NOT: { deleted: { equals: true } } }
-        : statusFilter === "inactive"
-        ? { deleted: { equals: true } }
-        : {}),
-      workspaceId,
-      candidateTest: {
-        some: {
-          id: {
-            not: undefined,
+  try {
+    if (
+      !(await checkFeatureAuthorization(userId, workspaceId, "results", "read"))
+    ) {
+      throw {
+        status: 403,
+      }
+    }
+    const testCount = await prisma.test.count({
+      where: {
+        ...(statusFilter === "active"
+          ? { NOT: { deleted: { equals: true } } }
+          : statusFilter === "inactive"
+          ? { deleted: { equals: true } }
+          : {}),
+        workspaceId,
+        candidateTest: {
+          some: {
+            id: {
+              not: undefined,
+            },
           },
         },
       },
-    },
-  })
-  return testCount
+    })
+    return testCount
+  } catch (error) {
+    throw error
+  }
 }
+
 export async function getAllCandidateTests(
   workspaceId: string,
   resultsItemsPerPage: number = 5,
   resultsCurrentPage: number = 1,
   statusFilter: string,
   sortBy: string,
-  sortOrder: string
+  sortOrder: string,
+  userId: string
 ) {
   const PER_PAGE_ITEMS = resultsItemsPerPage
-  const res: Array<Test> = await prisma.test.findMany({
-    take: PER_PAGE_ITEMS,
-    skip: (resultsCurrentPage - 1) * PER_PAGE_ITEMS,
-    orderBy: { [sortBy ?? "createdAt"]: sortOrder ?? "asc" },
-    where: {
-      ...(statusFilter === "active"
-        ? { NOT: { deleted: { equals: true } } }
-        : statusFilter === "inactive"
-        ? { deleted: { equals: true } }
-        : {}),
-      workspaceId,
-      candidateTest: {
-        some: {
-          id: {
-            not: undefined,
+  try {
+    if (
+      !(await checkFeatureAuthorization(userId, workspaceId, "results", "read"))
+    ) {
+      throw {
+        status: 403,
+      }
+    }
+    const res: Array<Test> = await prisma.test.findMany({
+      take: PER_PAGE_ITEMS,
+      skip: (resultsCurrentPage - 1) * PER_PAGE_ITEMS,
+      orderBy: { [sortBy ?? "createdAt"]: sortOrder ?? "asc" },
+      where: {
+        ...(statusFilter === "active"
+          ? { NOT: { deleted: { equals: true } } }
+          : statusFilter === "inactive"
+          ? { deleted: { equals: true } }
+          : {}),
+        workspaceId,
+        candidateTest: {
+          some: {
+            id: {
+              not: undefined,
+            },
           },
         },
       },
-    },
-    include: {
-      _count: {
-        select: {
-          candidateResult: true,
-          candidateTest: true,
+      include: {
+        _count: {
+          select: {
+            candidateResult: true,
+            candidateTest: true,
+          },
+        },
+        candidateTest: {
+          select: {
+            id: true,
+            endAt: true,
+          },
         },
       },
-      candidateTest: {
-        select: {
-          id: true,
-          endAt: true,
-        },
-      },
-    },
-  })
-  if (res) {
-    res.forEach(
-      (
-        test: Test & {
-          count?: number
-          candidateTest?: Array<CandidateTest>
-        }
-      ) => {
-        let count = 0
-        test?.candidateTest?.forEach((candidateTest: CandidateTest) => {
-          if (candidateTest?.endAt !== null) {
-            count = count + 1
+    })
+    if (res) {
+      res.forEach(
+        (
+          test: Test & {
+            count?: number
+            candidateTest?: Array<CandidateTest>
           }
-        })
-        test["count"] = count
-      }
-    )
-  }
+        ) => {
+          let count = 0
+          test?.candidateTest?.forEach((candidateTest: CandidateTest) => {
+            if (candidateTest?.endAt !== null) {
+              count = count + 1
+            }
+          })
+          test["count"] = count
+        }
+      )
+    }
 
-  return res
+    return res
+  } catch (error) {
+    throw error
+  }
 }
 
-export async function getResultDetailBySection(id?: string) {
-  return await prisma.sectionInCandidateTest.findUnique({
-    where: {
-      id,
-    },
-    select: {
-      candidateTest: {
-        select: {
-          candidate: {
-            select: {
-              firstName: true,
-              lastName: true,
-            },
-          },
-        },
+export async function getResultDetailBySection(
+  id: string,
+  userId: string,
+  workspaceId: string
+) {
+  try {
+    if (
+      !(await checkFeatureAuthorization(userId, workspaceId, "results", "read"))
+    ) {
+      throw {
+        status: 403,
+      }
+    }
+    return await prisma.sectionInCandidateTest.findUnique({
+      where: {
+        id,
       },
-      section: {
-        select: {
-          name: true,
-        },
-      },
-      questions: {
-        select: {
-          question: {
-            select: {
-              question: true,
-              correctOptions: {
-                select: {
-                  option: true,
-                  id: true,
-                },
+      select: {
+        candidateTest: {
+          select: {
+            candidate: {
+              select: {
+                firstName: true,
+                lastName: true,
               },
-              questionType: {
-                select: {
-                  value: true,
-                },
-              },
-              options: true,
-              correctAnswer: true,
-              checkOrder: true,
             },
           },
-          answers: true,
-          status: true,
-          id: true,
-          selectedOptions: {
-            select: {
-              id: true,
-              option: true,
-              questionId: true,
+        },
+        section: {
+          select: {
+            name: true,
+          },
+        },
+        questions: {
+          select: {
+            question: {
+              select: {
+                question: true,
+                correctOptions: {
+                  select: {
+                    option: true,
+                    id: true,
+                  },
+                },
+                questionType: {
+                  select: {
+                    value: true,
+                  },
+                },
+                options: true,
+                correctAnswer: true,
+                checkOrder: true,
+              },
+            },
+            answers: true,
+            status: true,
+            id: true,
+            selectedOptions: {
+              select: {
+                id: true,
+                option: true,
+                questionId: true,
+              },
             },
           },
         },
       },
-    },
-  })
+    })
+  } catch (error) {
+    throw error
+  }
 }
