@@ -22,12 +22,12 @@ const getFormatedTime = (testTimeList: Array<{ timeInSeconds: number }>) => {
   return `${
     timeInHoursAndMinutes.h
       ? timeInHoursAndMinutes.h +
-        (timeInHoursAndMinutes.h === 1 ? "Hour" : "Hours")
+        (timeInHoursAndMinutes.h === 1 ? " Hour" : " Hours")
       : ""
   } ${
     timeInHoursAndMinutes.m
       ? timeInHoursAndMinutes.m +
-        (timeInHoursAndMinutes.m === 1 ? "Minute" : "Minutes")
+        (timeInHoursAndMinutes.m === 1 ? " Minute" : " Minutes")
       : ""
   }`
 }
