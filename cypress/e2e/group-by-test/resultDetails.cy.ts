@@ -103,9 +103,9 @@ describe("result details", () => {
     //checks view detail button and click
     getResultDetails().eq(1).should("have.text", "View Details").click()
 
-    //checks correct answer chip class
+    //checks wrong answer chip class
     getGivenAnswer()
-      .first()
+      .eq(1)
       .should("be.visible")
       .should("have.class", "text-xl font-medium text-gray-800")
       .should("have.text", "Given Answers")
@@ -113,7 +113,7 @@ describe("result details", () => {
       .within(() => {
         getChipTag().should(
           "have.class",
-          "rounded-full px-3 py-1 text-xs font-medium border border-green-100 bg-green-100 text-green-800"
+          "rounded-full px-3 py-1 text-xs font-medium border border-red-100 bg-red-100 text-red-800"
         )
       })
 
