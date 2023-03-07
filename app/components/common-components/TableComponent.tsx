@@ -53,9 +53,13 @@ NOTE: if you enable pagination, then pass all props related to pagination.
 const HeaderDataCell = ({
   width,
   title,
+  index,
+  totalHeader,
 }: {
   width?: string
   title: string
+  index: number
+  totalHeader: number
 }) => {
   return (
     <div
@@ -65,7 +69,13 @@ const HeaderDataCell = ({
       }}
       data-cy={title}
       id="table-th"
-      className="flex-1 border-b bg-gray-100 py-4 px-3 text-sm font-semibold text-gray-500 first:pl-9 last:pr-9"
+      className={`flex-1 border-b bg-gray-100 py-4 px-3 text-sm font-semibold text-gray-500 first:pl-9 last:pr-9 ${
+        index === 0
+          ? "rounded-tl-2xl"
+          : index === totalHeader
+          ? "rounded-tr-2xl"
+          : ""
+      }`}
     >
       {title}
     </div>
@@ -149,12 +159,14 @@ const Table = <T extends object>({
           paginationEnabled ? "rounded-t-2xl" : "rounded-2xl"
         }`}
       >
-        <div id="table-head-row" className="flex bg-gray-100">
+        <div id="table-head-row" className="flex rounded-t-2xl bg-gray-100">
           {columns.map((header, index) => (
             <HeaderDataCell
               key={header.field + index}
               width={header.width}
               title={header.title}
+              index={index}
+              totalHeader={columns.length - 1}
             />
           ))}
         </div>
