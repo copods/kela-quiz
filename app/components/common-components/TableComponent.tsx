@@ -90,7 +90,7 @@ const RenderDataCell = <T,>({
         minWidth: `${width}`,
         maxWidth: `${width}`,
       }}
-      className="max-h-20 flex-1 truncate border-b bg-white py-7 px-3  text-gray-700 first:pl-9 last:pr-9"
+      className="max-h-20 flex-1 truncate border-b  py-7 px-3  text-gray-700 first:pl-9 last:pr-9"
     >
       {render?.(rowData, index)}
     </div>
@@ -113,7 +113,7 @@ const TableDataCell = <T,>({
         minWidth: `${width}`,
         maxWidth: `${width}`,
       }}
-      className="max-h-20 flex-1 truncate border-b bg-white py-7 px-3 text-gray-700  first:pl-9 last:pr-9"
+      className="max-h-20 flex-1 truncate border-b  py-7 px-3 text-gray-700  first:pl-9 last:pr-9"
     >
       {rowData[field as keyof typeof rowData]}
     </div>
@@ -165,7 +165,7 @@ const Table = <T extends object>({
             <div
               id="table-row"
               key={String(rowData.id) + i}
-              className="tableRow flex"
+              className="tableRow flex bg-white hover:bg-hover"
             >
               {columns.map((column, j) =>
                 column.render ? (
