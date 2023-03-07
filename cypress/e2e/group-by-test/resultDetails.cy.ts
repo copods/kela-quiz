@@ -113,7 +113,7 @@ describe("result details", () => {
       .within(() => {
         getChipTag().should(
           "have.class",
-          "rounded-full px-3 py-1 text-xs font-medium border border-red-100 bg-red-100 text-red-800"
+          "rounded-full px-3 py-1 text-xs font-medium border border-green-100 bg-green-100 text-green-800"
         )
       })
 
