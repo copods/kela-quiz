@@ -319,7 +319,7 @@
     "memberAlreadyInvited": "Member already invited",
     "cannotAddTestZeroQuestion": "Cannot add test with 0 questions.",
     "notAdMoreThanAvailableQuestion": "Cannot add more than available questions",
-    "userProfileUpdatedSuccessfully": "User Profile is Updated successfully"
+    "userProfileUpdatedSuccessfully": "User Profile Updated successfully"
   },
   "otpConstants": {
     "header": "OTP Verification",
