@@ -353,7 +353,7 @@
     "general": "General",
     "workspaces": "Workspaces"
   },
-  "404": {
+  "notFound": {
     "notFound": "Not Found",
     "urlNotFound": "The requested URL was not found on this server.",
     "gotoDashboard": "Go To Dashboard"
