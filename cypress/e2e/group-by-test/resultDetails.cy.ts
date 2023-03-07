@@ -104,6 +104,7 @@ describe("result details", () => {
     getResultDetails().eq(1).should("have.text", "View Details").click()
 
     //checks correct answer chip class
+    cy.wait(2000)
     getGivenAnswer()
       .first()
       .should("be.visible")
@@ -118,6 +119,7 @@ describe("result details", () => {
       })
 
     //checks wrong answer chip class
+    cy.wait(2000)
     getGivenAnswer()
       .eq(1)
       .should("be.visible")
