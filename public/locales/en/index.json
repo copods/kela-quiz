@@ -358,5 +358,11 @@
     "notFound": "Not Found",
     "urlNotFound": "The requested URL was not found on this server.",
     "gotoDashboard": "GoTo Dashboard"
+  },
+  "emptyStateConstants": {
+    "noQuestionsState": "Add Questions to this Test",
+    "noTestsState": "No Tests to show",
+    "noAssessmentsState": "No Assessments to show",
+    "noResultsState": "No Results to show"
   }
 }

@@ -314,7 +314,9 @@ const TestList = () => {
           </div>
         </>
       ) : (
-        <EmptyStateComponent />
+        <EmptyStateComponent
+          text={t("emptyStateConstants.noAssessmentsState")}
+        />
       )}
       <InviteCandidatePopup
         openInvitePopup={candidatePopupOpen}
