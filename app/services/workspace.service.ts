@@ -115,8 +115,15 @@ export async function createWorkspace(workspace: string, userId: string) {
  * @param userId
  * @returns Object consisting workspaces of user
  */
-export async function getUserWorkspaceService(userId: string) {
-  return await getUserWorkspaces(userId)
+export async function getUserWorkspaceService(
+  userId: string,
+  workspaceId?: string
+) {
+  try {
+    return await getUserWorkspaces(userId, workspaceId!)
+  } catch (error) {
+    throw error
+  }
 }
 
 export async function updateCurrentUserWorkspace(
@@ -124,12 +131,12 @@ export async function updateCurrentUserWorkspace(
   workspaceName: string,
   workspaceUpdatorId: string
 ) {
-  return await updateUserWorkspace(
-    workspaceId,
-    workspaceName,
-    workspaceUpdatorId
-  )
-    .then((res) => {
+  try {
+    return await updateUserWorkspace(
+      workspaceId,
+      workspaceName,
+      workspaceUpdatorId
+    ).then((res) => {
       return json<ActionData>(
         {
           resp: {
@@ -140,16 +147,7 @@ export async function updateCurrentUserWorkspace(
         { status: 200 }
       )
     })
-    .catch((err) => {
-      let title = "statusCheck.commonError"
-      return json<ActionData>(
-        {
-          errors: {
-            title,
-            status: 400,
-          },
-        },
-        { status: 400 }
-      )
-    })
+  } catch (error) {
+    throw error
+  }
 }
