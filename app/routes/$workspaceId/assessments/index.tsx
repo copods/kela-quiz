@@ -40,41 +40,61 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     tests = AssessmentUpdate
     status = statusUpdate
   }
+  try {
+    //fetching all assessments
+    await getAllAssessments(
+      sortBy as string,
+      sortOrder as string,
+      currentWorkspaceId as string,
+      testsItemsPerPage,
+      testsCurrentPage,
+      callBack,
+      userId
+    )
 
-  //fetching all assessments
-  await getAllAssessments(
-    sortBy as string,
-    sortOrder as string,
-    currentWorkspaceId as string,
-    testsItemsPerPage,
-    testsCurrentPage,
-    callBack
-  )
-
-  const allTestsCount = await getAllAssessmentsCount(currentWorkspaceId)
-  return json<LoaderData>({
-    tests,
-    status,
-    workspaces,
-    currentWorkspaceId,
-    allTestsCount,
-    testsCurrentPage,
-    testsItemsPerPage,
-  })
+    const allTestsCount = await getAllAssessmentsCount(
+      currentWorkspaceId,
+      userId
+    )
+    return json<LoaderData>({
+      tests,
+      status,
+      workspaces,
+      currentWorkspaceId,
+      allTestsCount,
+      testsCurrentPage,
+      testsItemsPerPage,
+    })
+  } catch (error: any) {
+    if (error.status === 403) {
+      return redirect(routes.unauthorized)
+    }
+  }
 }
 
-export const action: ActionFunction = async ({ request }) => {
+export const action: ActionFunction = async ({ request, params }) => {
   const formData = await request.formData()
   const action = formData.get("action")
   const createdById = await requireUserId(request)
   const testId = formData.get("inviteCandidates") as string
-
   formData.delete("inviteCandidates")
+  const userId = await getUserId(request)
+  const currentWorkspaceId = params.workspaceId as string
 
   //deleting assssment by id
   if (action === "testDelete") {
-    const response = await deleteAssessmentById(formData.get("id") as string)
-    return response
+    try {
+      const response = await deleteAssessmentById(
+        formData.get("id") as string,
+        userId!,
+        currentWorkspaceId
+      )
+      return response
+    } catch (error: any) {
+      if (error.status === 403) {
+        return redirect(routes.unauthorized)
+      }
+    }
   }
 
   // creating candidate for assessment
