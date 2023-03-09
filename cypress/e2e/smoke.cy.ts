@@ -439,7 +439,7 @@ describe("smoke tests", () => {
   })
 
   it("Invite candidate for Assessment", () => {
-    cy.viewport(1200, 1000)
+    cy.viewport(2000, 1000)
 
     // To Login
     cy.login()
