@@ -41,9 +41,8 @@ const permissions: {
     results: {
       read: true,
     },
-    inviteCandidate: {
+    invite_candidate: {
       create: true,
-      read: true,
       update: true,
     },
   },
@@ -85,9 +84,8 @@ const permissions: {
     results: {
       read: false,
     },
-    inviteCandidate: {
+    invite_candidate: {
       create: false,
-      read: false,
       update: false,
     },
   },
@@ -129,9 +127,8 @@ const permissions: {
     results: {
       read: true,
     },
-    inviteCandidate: {
+    invite_candidate: {
       create: true,
-      read: true,
       update: true,
     },
   },

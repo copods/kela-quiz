@@ -1,8 +1,10 @@
 import { json } from "@remix-run/node"
 import type { ActionFunction, LoaderFunction } from "@remix-run/server-runtime"
+import { redirect } from "@remix-run/server-runtime"
 import invariant from "tiny-invariant"
 
 import TestDetails from "~/components/tests/TestDetails"
+import { routes } from "~/constants/route.constants"
 import {
   getAssessmentById,
   getCandidateByAssessmentId,
@@ -27,7 +29,9 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
   return json<LoaderData>({ testPreview, workspaces, currentWorkspaceId })
 }
-export const action: ActionFunction = async ({ request }) => {
+export const action: ActionFunction = async ({ request, params }) => {
+  const userId = await getUserId(request)
+  const currentWorkspaceId = params.workspaceId as string
   const formData = await request.formData()
   const createdById = await requireUserId(request)
   const testId = formData.get("inviteCandidates") as string
@@ -48,13 +52,21 @@ export const action: ActionFunction = async ({ request }) => {
         testId,
       })
     }
-    const candidateInviteStatus = await getCandidateByAssessmentId({
-      emails,
-      createdById,
-      testId,
-    })
+    try {
+      const candidateInviteStatus = await getCandidateByAssessmentId({
+        emails,
+        createdById,
+        testId,
+        userId: userId!,
+        workspaceId: currentWorkspaceId,
+      })
 
-    return json({ candidateInviteStatus, testId })
+      return json({ candidateInviteStatus, testId })
+    } catch (error: any) {
+      if (error.status === 403) {
+        return redirect(routes.unauthorized)
+      }
+    }
   }
 }
 export default function TestsDetailsRoute() {

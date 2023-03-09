@@ -87,16 +87,26 @@ export const getCandidateByAssessmentId = async ({
   emails,
   createdById,
   testId,
+  userId,
+  workspaceId,
 }: {
   emails: Array<string>
   createdById: User["id"]
   testId: string
+  userId: string
+  workspaceId: string
 }) => {
-  return await createCandidate({
-    emails,
-    createdById,
-    testId,
-  })
+  try {
+    return await createCandidate({
+      emails,
+      createdById,
+      testId,
+      userId,
+      workspaceId,
+    })
+  } catch (error) {
+    throw error
+  }
 }
 
 /** 
