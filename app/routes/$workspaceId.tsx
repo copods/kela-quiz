@@ -55,66 +55,63 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
 export const action: ActionFunction = async ({ request, params }) => {
   const formData = await request.formData() // getting formData
-  const action = formData.get("resetPassword") as string
-  if (action === "resetPassword") {
-    // action will perform if match with specific formData
-    const userId = await getUserId(request)
-    const oldPassword = formData.get("oldPassword")
-    const newPassword = formData.get("newPassword")
-    const confirmPasword = formData.get("confirmNewPassword")
+  // action will perform if match with specific formData
+  const userId = await getUserId(request)
+  const oldPassword = formData.get("oldPassword")
+  const newPassword = formData.get("newPassword")
+  const confirmPasword = formData.get("confirmPassword")
 
-    if (confirmPasword !== newPassword) {
-      // checking if newly entered password and confirm password is matched or not
-      return json<ActionData>(
-        {
-          errors: {
-            passNotMatched: "settings.passNotMatch",
-            status: 400,
-          },
+  if (confirmPasword !== newPassword) {
+    // checking if newly entered password and confirm password is matched or not
+    return json<ActionData>(
+      {
+        errors: {
+          passNotMatched: "settings.passNotMatch",
+          status: 400,
         },
+      },
+      { status: 400 }
+    )
+  }
+  if (typeof newPassword !== "string" || newPassword.length < 8) {
+    // checking if newly entered password is less than 8 characters then throws error
+    return json<ActionData>(
+      {
+        errors: {
+          maximumPasswordLimit: "settings.minPasswordLimit",
+          status: 400,
+        },
+      },
+      { status: 400 }
+    )
+  }
+  if (newPassword === oldPassword) {
+    // checking if current and newly entered password is same then throwing a error
+    return json<ActionData>(
+      {
+        errors: {
+          passShouldNotBeSame: "settings.passShouldNotBeSame",
+          status: 400,
+        },
+      },
+      { status: 400 }
+    )
+  }
+  if (newPassword === confirmPasword) {
+    // new password will be update if this condition is true
+    const general = await updateUserPassword(
+      userId as string,
+      newPassword as string,
+      oldPassword as string
+    )
+    if (general instanceof Error) {
+      // if old password user entered is not correct which is handled in backend
+      return json<ActionData>(
+        { errors: { valid: "statusCheck.passIsInvalid" } },
         { status: 400 }
       )
     }
-    if (typeof newPassword !== "string" || newPassword.length < 8) {
-      // checking if newly entered password is less than 8 characters then throws error
-      return json<ActionData>(
-        {
-          errors: {
-            maximumPasswordLimit: "settings.minPasswordLimit",
-            status: 400,
-          },
-        },
-        { status: 400 }
-      )
-    }
-    if (newPassword === oldPassword) {
-      // checking if current and newly entered password is same then throwing a error
-      return json<ActionData>(
-        {
-          errors: {
-            passShouldNotBeSame: "settings.passShouldNotBeSame",
-            status: 400,
-          },
-        },
-        { status: 400 }
-      )
-    }
-    if (newPassword === confirmPasword) {
-      // new password will be update if this condition is true
-      const general = await updateUserPassword(
-        userId as string,
-        newPassword as string,
-        oldPassword as string
-      )
-      if (general instanceof Error) {
-        // if old password user entered is not correct which is handled in backend
-        return json<ActionData>(
-          { errors: { valid: "statusCheck.passIsInvalid" } },
-          { status: 400 }
-        )
-      }
-      return general
-    }
+    return general
   }
   return null
 }
