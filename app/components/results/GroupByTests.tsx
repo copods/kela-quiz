@@ -207,7 +207,7 @@ const GroupByTests = () => {
           />
         </div>
       ) : (
-        <EmptyStateComponent />
+        <EmptyStateComponent text={t("emptyStateConstants.noResultsState")} />
       )}
     </div>
   )
