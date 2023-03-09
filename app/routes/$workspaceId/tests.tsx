@@ -456,7 +456,7 @@ export default function SectionPage() {
           </div>
         </div>
       ) : (
-        <EmptyStateComponent />
+        <EmptyStateComponent text={t("emptyStateConstants.noTestsState")} />
       )}
       <AddEditSection
         open={showAddSectionModal}
