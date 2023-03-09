@@ -26,9 +26,9 @@ function MenuItems({
         to={`/${currentWorkspaceId}${itemRoute}`}
         onClick={clearStorage}
         className={({ isActive }) =>
-          `flex flex-row items-start gap-2 rounded-lg p-3.5 ${
+          `flex flex-row items-start gap-2 rounded-lg p-3.5 hover:bg-hover ${
             isActive || location.pathname.includes(itemName.toLowerCase())
-              ? "active_nav_link bg-blue-50"
+              ? "active_nav_link bg-blue-50 hover:bg-blue-50"
               : ""
           }`
         }

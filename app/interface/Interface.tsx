@@ -2,9 +2,9 @@ import type React from "react"
 
 export interface InputFieldProps {
   name: string
-  label: string
-  placeholder: string
-  type: string
+  label?: string
+  placeholder?: string
+  type?: string
   isRequired?: boolean
   required: boolean
   value: string
@@ -12,6 +12,8 @@ export interface InputFieldProps {
   errorId: string
   customClasses?: { label: string; inputField: string }
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  helperText?: React.ReactNode
+  maxLength?: number
 }
 
 export interface PasswordFieldProps {
@@ -291,7 +293,6 @@ export interface CandidateResult {
   workspaceId?: string
   link?: string
 }
-
 export enum sortByOrder {
   ascending = "asc",
   name = "name",
@@ -415,5 +416,12 @@ export interface ChipComponent {
 export interface HeaderProps {
   id: string
   heading: string
+  size?: string
   rightChildren?: React.ReactNode
+}
+
+export interface SettingWorkspace {
+  id: string
+  workspace: { name: string }
+  workspaceId: string
 }

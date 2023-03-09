@@ -9,28 +9,24 @@ const TabComponent = ({ tab }: { tab: TabsComponent }) => {
   const isActive = location.pathname === tab.route // to get tabs path which would match with current location
 
   return (
-    <div className="flex rounded-lg">
+    <div className="flex gap-5 rounded-lg">
       <NavLink
         tabIndex={0}
         role={"button"}
         to={tab.route}
         id={tab.name}
         className={({ isActive }) =>
-          `relative flex flex-col-reverse gap-2 ${
-            isActive ? "cursor-pointer" : " "
-          }`
+          `flex flex-col-reverse gap-2 ${isActive ? "cursor-pointer" : " "}`
         }
       >
         <hr
-          className={`h-1 w-full rounded-1 border-0  ${
+          className={`h-1 w-full rounded-1 border-0   ${
             isActive ? "bg-primary" : "bg-transparent"
           }`}
         />
         <div
-          className={`px-6 py-4 text-base  ${
-            isActive
-              ? "font-semibold text-primary"
-              : "font-normal text-gray-600"
+          className={`text-base font-semibold ${
+            isActive ? "text-primary" : "text-gray-600"
           }`}
         >
           {tab.name}

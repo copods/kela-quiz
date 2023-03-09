@@ -138,22 +138,22 @@ const MyProfileComponent = () => {
         {inputFieldsProps.map((props) => {
           return (
             <div
-              className="flex w-6/12 flex-col gap-1"
+              className="flex w-6/12 flex-col gap-1.5"
               data-cy="userProfileDetails"
               key={props.name}
             >
-              <InputField
-                {...props}
-                customClasses={{
-                  inputField: viewMode ? "hidden" : "visible",
-                  label: "text-sm",
-                }}
-                isRequired={viewMode ? false : true}
-              />
-              {viewMode && (
-                <p className="text-base-500 font-medium text-gray-900">
-                  {props.value}
-                </p>
+              <span className="text-sm text-gray-800">
+                {props.label}
+                {!viewMode && <span className="text-red-600">*</span>}
+              </span>
+              {viewMode ? (
+                <>
+                  <p className="text-base-500 font-medium text-gray-900">
+                    {props.value}
+                  </p>
+                </>
+              ) : (
+                <InputField {...props} label={""} />
               )}
             </div>
           )

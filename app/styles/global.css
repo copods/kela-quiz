@@ -11,7 +11,6 @@
   -khtml-user-select: none;
   user-select: none;
 }
-
 *:focus-visible {
   outline: 2px dotted rgb(91, 91, 91);
   border-radius: 3px;

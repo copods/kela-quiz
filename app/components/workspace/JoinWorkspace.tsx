@@ -41,9 +41,9 @@ const JoinWorkspace = () => {
               {workspcaceInvitationData === "joined" ? (
                 <Button
                   tabIndex={0}
-                  title={t("404.gotoDashboard")}
+                  title={t("notFound.gotoDashboard")}
                   id="go-to-dashboard"
-                  buttonText={t("404.gotoDashboard")}
+                  buttonText={t("notFound.gotoDashboard")}
                   name="go-to-workspace"
                   variant="primary-outlined"
                   value={"reject"}
@@ -58,9 +58,9 @@ const JoinWorkspace = () => {
                 <div className="flex gap-8">
                   <Button
                     tabIndex={0}
-                    title={t("404.gotoDashboard")}
+                    title={t("notFound.gotoDashboard")}
                     id="go-to-dashboard"
-                    buttonText={t("404.gotoDashboard")}
+                    buttonText={t("notFound.gotoDashboard")}
                     name="go-to-workspace"
                     variant="primary-outlined"
                     value={"reject"}

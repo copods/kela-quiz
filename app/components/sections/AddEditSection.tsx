@@ -83,6 +83,7 @@ const AddEditSection = ({
         duplicateTitle: fetcherData?.errors?.title,
       })
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fetcherData?.createSectionFieldError, fetcherData?.errors?.check])
 
   const navigate = useNavigate()
@@ -99,6 +100,7 @@ const AddEditSection = ({
       navigate(`${location.pathname}${location.search}`)
       setOpen(false)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fetcherData?.resp?.data?.id, fetcherData?.resp?.status, setOpen, t])
   useEffect(() => {
     if (sectionName.length! > 1)
