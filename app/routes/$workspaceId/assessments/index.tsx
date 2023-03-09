@@ -40,27 +40,36 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     tests = AssessmentUpdate
     status = statusUpdate
   }
+  try {
+    //fetching all assessments
+    await getAllAssessments(
+      sortBy as string,
+      sortOrder as string,
+      currentWorkspaceId as string,
+      testsItemsPerPage,
+      testsCurrentPage,
+      callBack,
+      userId
+    )
 
-  //fetching all assessments
-  await getAllAssessments(
-    sortBy as string,
-    sortOrder as string,
-    currentWorkspaceId as string,
-    testsItemsPerPage,
-    testsCurrentPage,
-    callBack
-  )
-
-  const allTestsCount = await getAllAssessmentsCount(currentWorkspaceId)
-  return json<LoaderData>({
-    tests,
-    status,
-    workspaces,
-    currentWorkspaceId,
-    allTestsCount,
-    testsCurrentPage,
-    testsItemsPerPage,
-  })
+    const allTestsCount = await getAllAssessmentsCount(
+      currentWorkspaceId,
+      userId
+    )
+    return json<LoaderData>({
+      tests,
+      status,
+      workspaces,
+      currentWorkspaceId,
+      allTestsCount,
+      testsCurrentPage,
+      testsItemsPerPage,
+    })
+  } catch (error: any) {
+    if (error.status === 403) {
+      return redirect(routes.unauthorized)
+    }
+  }
 }
 
 export const action: ActionFunction = async ({ request, params }) => {

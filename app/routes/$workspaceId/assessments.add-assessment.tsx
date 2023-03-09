@@ -74,13 +74,25 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 }
 
 export const action: ActionFunction = async ({ request, params }) => {
+  const userId = await getUserId(request)
   const createdById = await requireUserId(request)
   const workspaceId = params.workspaceId
   const formData = await request.formData()
   const data = formData.get("data")
   const parsedData = JSON.parse(data as string)
 
-  return await createTestHandler(createdById, workspaceId as string, parsedData)
+  try {
+    return await createTestHandler(
+      createdById,
+      workspaceId as string,
+      parsedData,
+      userId!
+    )
+  } catch (error: any) {
+    if (error.status === 403) {
+      return redirect(routes.unauthorized)
+    }
+  }
 }
 
 const AddTest = () => {
@@ -97,6 +109,8 @@ const AddTest = () => {
         toast.error(t(actionData.errors?.title), {
           toastId: actionData.errors?.title,
         })
+      } else if (actionData.errors?.status === 403) {
+        navigate(routes.unauthorized)
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
