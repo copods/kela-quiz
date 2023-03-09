@@ -14,80 +14,101 @@ import { actions } from "~/constants/action.constants"
 import { routes } from "~/constants/route.constants"
 import type { UserWorkspace } from "~/interface/Interface"
 
+type SideNavGuideItem = {
+  navGuide: string
+  subItem: {
+    show: boolean
+    id: string
+    iconClass: string
+    itemName: string
+    itemRoute: string
+  }[]
+}
+
 const SideNav = () => {
   const { t } = useTranslation()
   const param = useParams()
   const [showAddWorkspaceModal, setShowAddWorkspaceModal] = useState(false)
-  const { workspaces = [], currentWorkspaceId } = useLoaderData()
+  const { workspaces = [], currentWorkspaceId, permission } = useLoaderData()
   const [workspace, setWorkspace] = useState<string>(param.workspaceId!)
   const fetcher = useFetcher()
   const tempWorkspaces = workspaces.map((userWorkspace: UserWorkspace) => {
     return { ...userWorkspace, ...userWorkspace.workspace }
   })
-  const sideNavGuide = [
-    // {
-    //   navGuide: 'Main Menu',
-    //   subItem: [
-    //     {
-    //       id: 'Dashboard',
-    //       iconClass: 'mdi:view-dashboard',
-    //       itemName: 'Dashboard',
-    //       itemRoute: routes.dashboard,
-    //     },
-    //   ],
-    // },
-    {
-      navGuide: "Results",
-      subItem: [
-        {
-          id: "group-by-tests",
-          iconClass: "mdi:chart-box-outline",
-          itemName: "commonConstants.results",
-          itemRoute: `${routes.resultGroupTest}`,
-        },
-        // {
-        //   id: 'Group_By_Candidate',
-        //   iconClass: 'mdi:chart-box-outline',
-        //   itemName: commonConstants.groupByCandidate,
-        //   itemRoute: 'groupByCandidate',
-        // },
-      ],
-    },
-    {
-      navGuide: "Assessments",
-      subItem: [
-        {
-          id: "tests",
-          iconClass: "carbon:result",
-          itemName: "testsConstants.assessments",
-          itemRoute: `${routes.assessments}`,
-        },
-        {
-          id: "sections",
-          iconClass: "ci:list-checklist-alt",
-          itemName: "routeFiles.tests",
-          itemRoute: `${routes.tests}`,
-        },
-      ],
-    },
-    {
-      navGuide: "General",
-      subItem: [
-        {
-          id: "members",
-          iconClass: "mdi:account-group",
-          itemName: "members.members",
-          itemRoute: routes.members,
-        },
-        {
-          id: "Settings",
-          iconClass: "mdi:cog",
-          itemName: "commonConstants.settings",
-          itemRoute: routes.generalSettings,
-        },
-      ],
-    },
-  ]
+  const [sideNavGuide, setSideNavGuide] = useState<SideNavGuideItem[]>([])
+
+  useEffect(() => {
+    setSideNavGuide([
+      // {
+      //   navGuide: 'Main Menu',
+      //   subItem: [
+      //     {
+      //       id: 'Dashboard',
+      //       iconClass: 'mdi:view-dashboard',
+      //       itemName: 'Dashboard',
+      //       itemRoute: routes.dashboard,
+      //     },
+      //   ],
+      // },
+      {
+        navGuide: "Results",
+        subItem: [
+          {
+            show: permission.results.read,
+            id: "group-by-tests",
+            iconClass: "mdi:chart-box-outline",
+            itemName: "commonConstants.results",
+            itemRoute: `${routes.resultGroupTest}`,
+          },
+          // {
+          //   id: 'Group_By_Candidate',
+          //   iconClass: 'mdi:chart-box-outline',
+          //   itemName: commonConstants.groupByCandidate,
+          //   itemRoute: 'groupByCandidate',
+          // },
+        ],
+      },
+      {
+        navGuide: "Assessments",
+        subItem: [
+          {
+            show: permission.assessments.read,
+            id: "tests",
+            iconClass: "carbon:result",
+            itemName: "testsConstants.assessments",
+            itemRoute: `${routes.assessments}`,
+          },
+          {
+            show: permission.tests.read,
+            id: "sections",
+            iconClass: "ci:list-checklist-alt",
+            itemName: "routeFiles.tests",
+            itemRoute: `${routes.tests}`,
+          },
+        ],
+      },
+      {
+        navGuide: "General",
+        subItem: [
+          {
+            show: permission.member.read,
+            id: "members",
+            iconClass: "mdi:account-group",
+            itemName: "members.members",
+            itemRoute: routes.members,
+          },
+          {
+            show: true,
+            id: "Settings",
+            iconClass: "mdi:cog",
+            itemName: "commonConstants.settings",
+            itemRoute: routes.generalSettings,
+          },
+        ],
+      },
+    ])
+  }, [workspace, param.workspaceId])
+
   function switchWorkpace(val: string) {
     if (val !== t("sideNav.addWorkspace") && workspace !== currentWorkspaceId) {
       fetcher.submit(
@@ -138,26 +159,30 @@ const SideNav = () => {
           <div className="flex flex-col gap-8" id="sideNavMenu">
             {sideNavGuide.map((guide, index) => {
               return (
-                <div className="10px flex flex-col gap-1" key={index}>
-                  <p
-                    id={`nav-guide-${guide.navGuide.toLowerCase()}`}
-                    className="non-italic px-2 pb-2 text-left text-xs font-semibold text-gray-400"
-                  >
-                    {guide.navGuide}
-                  </p>
-                  {guide.subItem.map((item, index) => {
-                    return (
-                      <MenuItems
-                        key={index}
-                        id={item.id}
-                        iconClass={item.iconClass}
-                        itemName={t(item.itemName)}
-                        itemRoute={item.itemRoute}
-                        currentWorkspaceId={currentWorkspaceId}
-                      />
-                    )
-                  })}
-                </div>
+                guide.subItem.find((sub) => sub.show)?.show && (
+                  <div className="10px flex flex-col gap-1" key={index}>
+                    <p
+                      id={`nav-guide-${guide.navGuide.toLowerCase()}`}
+                      className="non-italic px-2 pb-2 text-left text-xs font-semibold text-gray-400"
+                    >
+                      {guide.navGuide}
+                    </p>
+                    {guide.subItem.map((item, index) => {
+                      return (
+                        item.show && (
+                          <MenuItems
+                            key={index}
+                            id={item.id}
+                            iconClass={item.iconClass}
+                            itemName={t(item.itemName)}
+                            itemRoute={item.itemRoute}
+                            currentWorkspaceId={currentWorkspaceId}
+                          />
+                        )
+                      )
+                    })}
+                  </div>
+                )
               )
             })}
           </div>
