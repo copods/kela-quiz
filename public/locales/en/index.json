@@ -361,5 +361,11 @@
   "unauthorized": {
     "error": "You are not authorized to access this route",
     "gotoDashboard": "Go To Dashboard"
+  },
+  "emptyStateConstants": {
+    "noQuestionsState": "Add Questions to this Test",
+    "noTestsState": "No Tests to show",
+    "noAssessmentsState": "No Assessments to show",
+    "noResultsState": "No Results to show"
   }
 }
