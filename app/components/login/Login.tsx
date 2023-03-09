@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next"
 
 import Button from "../common-components/Button"
 import InputField from "../common-components/InputField"
+import PasswordInputFields from "../common-components/PasswordInputField"
 import Checkbox from "../form/CheckBox"
 
 import Logo from "~/components/Logo"
@@ -99,7 +100,11 @@ function Login({ actionData, redirectTo }: LoginProps) {
         >
           <div className="flex flex-col gap-6">
             {inputFieldsProps.map((props) => {
-              return <InputField {...props} key={props.name} />
+              return props.type === "text" ? (
+                <InputField {...props} key={props.name} />
+              ) : (
+                <PasswordInputFields {...props} key={props.name} />
+              )
             })}
           </div>
           <div className="flex justify-between pt-4 pb-7">
