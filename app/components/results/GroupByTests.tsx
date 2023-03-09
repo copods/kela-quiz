@@ -42,7 +42,7 @@ const GroupByTests = () => {
   const navigate = useNavigate()
   const candidateTestData = useLoaderData()
   const [sortDirection, onSortDirectionChange] = useState(
-    sortByOrder.ascending as string
+    sortByOrder.desc as string
   )
   const [resultsPageSize, setResultsPageSize] = useState(
     candidateTestData.resultsItemsPerPage
@@ -167,7 +167,11 @@ const GroupByTests = () => {
   }, [candidateTestData.resultsCurrentPage])
 
   useEffect(() => {
-    onSortDirectionChange(sortByOrder.ascending)
+    if (sortBy === sortByDetails[0].value) {
+      onSortDirectionChange(sortByOrder.ascending)
+    } else if (sortBy === sortByDetails[1].value) {
+      onSortDirectionChange(sortByOrder.desc)
+    }
   }, [sortBy])
 
   return (
