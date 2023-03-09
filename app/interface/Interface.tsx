@@ -10,7 +10,6 @@ export interface InputFieldProps {
   value: string
   error?: string
   errorId: string
-  customClasses?: { label: string; inputField: string }
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   helperText?: React.ReactNode
   maxLength?: number
