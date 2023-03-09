@@ -109,16 +109,26 @@ export const getTestResendLink = async ({
   id,
   candidateId,
   testId,
+  userId,
+  workspaceId,
 }: {
   id: string
   candidateId: string
   testId: string
+  userId: string
+  workspaceId: string
 }) => {
-  return await resendTestLink({
-    id,
-    candidateId,
-    testId,
-  })
+  try {
+    return await resendTestLink({
+      id,
+      candidateId,
+      testId,
+      userId,
+      workspaceId,
+    })
+  } catch (error) {
+    throw error
+  }
 }
 
 /**

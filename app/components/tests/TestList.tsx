@@ -92,7 +92,7 @@ const TestList = () => {
   const deleteTest = (id: string) => {
     submit(
       {
-        action: "testDelete",
+        action: "deleteTest",
         id: id,
       },
       { method: "post" }

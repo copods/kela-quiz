@@ -390,39 +390,45 @@ export const getFIRSTSection = async (
  * @param createdById
  * @param workspaceId
  * @param data
+ * @param userId
  * @returns
  */
 
 export const createTestHandler = async (
   createdById: string,
   workspaceId: string,
-  data: createTestData
+  data: createTestData,
+  userId: string
 ) => {
-  return await createTest(createdById, workspaceId as string, data)
-    .then((res) => {
-      return json<ActionData>(
-        {
-          resp: {
-            title: "statusCheck.assessmentAddedSuccessFully",
-            status: 200,
+  try {
+    return await createTest(createdById, workspaceId as string, data, userId)
+      .then((res) => {
+        return json<ActionData>(
+          {
+            resp: {
+              title: "statusCheck.assessmentAddedSuccessFully",
+              status: 200,
+            },
           },
-        },
-        { status: 200 }
-      )
-    })
-    .catch((err) => {
-      let title = "statusCheck.commonError"
-      if (err.code === "P2002") {
-        title = "statusCheck.assessmentAlreadyExist"
-      }
-      return json<ActionData>(
-        {
-          errors: {
-            title,
-            status: 400,
+          { status: 200 }
+        )
+      })
+      .catch((err) => {
+        let title = "statusCheck.commonError"
+        if (err.code === "P2002") {
+          title = "statusCheck.assessmentAlreadyExist"
+        }
+        return json<ActionData>(
+          {
+            errors: {
+              title,
+              status: err.status ?? 400,
+            },
           },
-        },
-        { status: 400 }
-      )
-    })
+          { status: 400 }
+        )
+      })
+  } catch (error) {
+    throw error
+  }
 }

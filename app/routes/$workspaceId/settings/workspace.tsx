@@ -1,6 +1,7 @@
 import { useEffect } from "react"
 
 import type { LoaderFunction, ActionFunction } from "@remix-run/node"
+import { redirect } from "@remix-run/node"
 import { json } from "@remix-run/node"
 import { useActionData, useLoaderData, useNavigate } from "@remix-run/react"
 import { t } from "i18next"
@@ -26,17 +27,26 @@ interface LoaderData {
 }
 
 export const loader: LoaderFunction = async ({ request, params }) => {
-  const currentWorkspaceId = params.workspaceId as string
-  const userId = (await getUserId(request)) as string
-  const workspaceOwner = await getActiveWorkspaceOwner(currentWorkspaceId)
-  const ownersWorkspaces = await getActiveOwnerWorkspaces(userId)
-  const userWorkspaces = await getUserWorkspaceService(userId)
-  return json<LoaderData>({
-    workspaceOwner,
-    ownersWorkspaces,
-    currentWorkspaceId,
-    userWorkspaces,
-  })
+  try {
+    const currentWorkspaceId = params.workspaceId as string
+    const userId = (await getUserId(request)) as string
+    const workspaceOwner = await getActiveWorkspaceOwner(currentWorkspaceId)
+    const ownersWorkspaces = await getActiveOwnerWorkspaces(userId)
+    const userWorkspaces = await getUserWorkspaceService(
+      userId,
+      currentWorkspaceId
+    )
+    return json<LoaderData>({
+      workspaceOwner,
+      ownersWorkspaces,
+      currentWorkspaceId,
+      userWorkspaces,
+    })
+  } catch (error: any) {
+    if (error.status === 403) {
+      return redirect(routes.unauthorized)
+    }
+  }
 }
 
 const actionConstants = {
@@ -57,12 +67,18 @@ export const action: ActionFunction = async ({ request, params }) => {
   if (action === actionConstants.updateUserWorkspace) {
     const name = formData.get("name") as string
     const workspaceId = formData.get("workspaceId") as string
-    const updateWorkspace = await updateCurrentUserWorkspace(
-      workspaceId,
-      name,
-      userId
-    )
-    return updateWorkspace
+    try {
+      const updateWorkspace = await updateCurrentUserWorkspace(
+        workspaceId,
+        name,
+        userId
+      )
+      return updateWorkspace
+    } catch (error: any) {
+      if (error.status === 403) {
+        return redirect(routes.unauthorized)
+      }
+    }
   } else if (action === actionConstants.leaveWorksapce) {
     const response = await leaveActiveWorkspace(workspaceId, userId)
     return response
