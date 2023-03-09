@@ -105,7 +105,9 @@ export const loader: LoaderFunction = async ({ request, params }) => {
       currentWorkspaceId as string,
       testCurrentPage,
       testItemsPerPage,
-      callBack
+      callBack,
+      userId!,
+      currentWorkspaceId
     )
     const selectedSectionId = params.sectionId
       ? params.sectionId?.toString()
@@ -127,12 +129,15 @@ export const loader: LoaderFunction = async ({ request, params }) => {
       sortBy,
       sortOrder,
     })
-  } catch (err) {
-    console.log(err)
+  } catch (error: any) {
+    if (error.status === 403) {
+      return redirect(routes.unauthorized)
+    }
   }
 }
 
 export const action: ActionFunction = async ({ request, params }) => {
+  const userId = await getUserId(request)
   const createdById = await requireUserId(request)
   const currentWorkspaceId = params.workspaceId as string
   const formData = await request.formData()
@@ -163,8 +168,20 @@ export const action: ActionFunction = async ({ request, params }) => {
     if (Object.values(createSectionFieldError).some(Boolean)) {
       return json({ createSectionFieldError }, { status: 400 })
     }
-    const response = await handleEditTest(name, description, id)
-    return response
+    try {
+      const response = await handleEditTest(
+        name,
+        description,
+        id,
+        userId!,
+        currentWorkspaceId
+      )
+      return response
+    } catch (error: any) {
+      if (error.status === 403) {
+        return redirect(routes.unauthorized)
+      }
+    }
   }
   if (action === "sectionAdd") {
     const name = formData.get("name")
@@ -177,12 +194,19 @@ export const action: ActionFunction = async ({ request, params }) => {
     if (Object.values(createSectionFieldError).some(Boolean)) {
       return json({ createSectionFieldError }, { status: 400 })
     }
-    return await handleAddTest(
-      name as string,
-      description as string,
-      createdById,
-      currentWorkspaceId
-    )
+    try {
+      return await handleAddTest(
+        name as string,
+        description as string,
+        createdById,
+        currentWorkspaceId,
+        userId!
+      )
+    } catch (error: any) {
+      if (error.status === 403) {
+        return redirect(routes.unauthorized)
+      }
+    }
   }
   if (action === "sectionDelete") {
     const currentPage = formData.get("currentPage") as string
@@ -190,7 +214,13 @@ export const action: ActionFunction = async ({ request, params }) => {
     const totalItems = formData.get("totalSectionsOnCurrentPage") as string
     const sortFilter = formData.get("filter") as string
     const deleteSectionId = formData.get("id") as string
-    await handleDeleteTest(deleteSectionId)
+    try {
+      await handleDeleteTest(deleteSectionId, userId!, currentWorkspaceId)
+    } catch (error: any) {
+      if (error.status === 403) {
+        return redirect(routes.unauthorized)
+      }
+    }
 
     const sectionId = await getFIRSTSection(
       sortFilter
@@ -286,6 +316,7 @@ export default function SectionPage() {
   if (t(data.status) != t("statusCheck.success")) {
     toast.error(t("statusCheck.commonError"))
   }
+
   useEffect(() => {
     if (sectionActionData?.deleted === "deleteLastTestOnPage") {
       toast.success(t("statusCheck.deletedSuccess"), {

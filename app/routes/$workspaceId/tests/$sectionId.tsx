@@ -1,45 +1,71 @@
 import { useEffect } from "react"
 
 import { json } from "@remix-run/node"
-import { useActionData } from "@remix-run/react"
+import { useActionData, useNavigate } from "@remix-run/react"
 import type { LoaderFunction, ActionFunction } from "@remix-run/server-runtime"
+import { redirect } from "@remix-run/server-runtime"
 import { useTranslation } from "react-i18next"
 import { toast } from "react-toastify"
 import invariant from "tiny-invariant"
 
 import SectionDetails from "~/components/sections/SectionDetails"
+import { routes } from "~/constants/route.constants"
 import { deleteQuestionStatus } from "~/interface/Interface"
 import {
   deleteTestQuestionById,
   getSectionDataById,
 } from "~/services/tests.service"
+import { getUserId } from "~/session.server"
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   invariant(params.sectionId, "sectionId not found")
-  const sectionDetails = await getSectionDataById({ id: params.sectionId })
-  if (!sectionDetails) {
-    throw new Response("Not Found", { status: 404 })
+  try {
+    const userId = await getUserId(request)
+    const currentWorkspaceId = params.workspaceId as string
+    const sectionDetails = await getSectionDataById({
+      id: params.sectionId,
+      userId,
+      workspaceId: currentWorkspaceId,
+    })
+    if (!sectionDetails) {
+      throw new Response("Not Found", { status: 404 })
+    }
+    return json({ sectionDetails, currentWorkspaceId })
+  } catch (error: any) {
+    if (error.status === 403) {
+      return redirect(routes.unauthorized)
+    }
   }
-  const currentWorkspaceId = params.workspaceId
-  return json({ sectionDetails, currentWorkspaceId })
 }
 export const action: ActionFunction = async ({ request, params }) => {
-  const formData = await request.formData()
-  const id = formData.get("id") as string
-  return await deleteTestQuestionById(id)
+  try {
+    const formData = await request.formData()
+    const id = formData.get("id") as string
+    const userId = await getUserId(request)
+    const currentWorkspaceId = params.workspaceId as string
+    return await deleteTestQuestionById(id, userId!, currentWorkspaceId)
+  } catch (error: any) {
+    if (error.status === 403) {
+      return redirect(routes.unauthorized)
+    }
+  }
 }
 export default function Section() {
   const { t } = useTranslation()
   const section = useActionData()
+  const navigate = useNavigate()
 
   useEffect(() => {
-    if (section?.resp?.title === deleteQuestionStatus.deleted) {
+    if (section?.errors?.status === 403) {
+      navigate(routes.unauthorized)
+    } else if (section?.resp?.title === deleteQuestionStatus.deleted) {
       toast.success(t("statusCheck.deletedSuccess"))
     } else if (section?.resp?.title === deleteQuestionStatus.notDeleted) {
       toast.error(t("sectionsConstants.questionNotDeleted"), {
         toastId: "question-not-deleted",
       })
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [section, t])
   return <SectionDetails />
 }

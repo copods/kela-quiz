@@ -85,7 +85,11 @@ export const action: ActionFunction = async ({ request, params }) => {
 
     //deleting assssment by id
     if (action === "deleteTest") {
-      const response = await deleteAssessmentById(formData.get("id") as string)
+      const response = await deleteAssessmentById(
+        formData.get("id") as string,
+        userId!,
+        currentWorkspaceId
+      )
       return response
     }
 

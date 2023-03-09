@@ -82,21 +82,25 @@ export const getAllTestsData = (
   currentWorkspaceId: string,
   testCurrentPage: number,
   testItemsPerPage: number,
-  cb: (sectionUpdate: Section[], statusUpdate: string) => void
+  cb: (sectionUpdate: Section[], statusUpdate: string) => void,
+  userId: string,
+  workspaceId: string
 ) => {
-  return getAllSections(
-    sortBy,
-    sortOrder,
-    currentWorkspaceId as string,
-    testCurrentPage,
-    testItemsPerPage
-  )
-    .then((res) => {
+  try {
+    return getAllSections(
+      sortBy,
+      sortOrder,
+      currentWorkspaceId as string,
+      testCurrentPage,
+      testItemsPerPage,
+      userId,
+      workspaceId
+    ).then((res) => {
       return cb(res as unknown as Section[], "statusCheck.success")
     })
-    .catch((err) => {
-      return cb(err, "")
-    })
+  } catch (error) {
+    throw error
+  }
 }
 
 /**
@@ -105,46 +109,52 @@ export const getAllTestsData = (
  * @param description
  * @param createdById
  * @param workspaceId
+ * @param userId
  * @returns
  */
 export const handleAddTest = async (
   name: string,
   description: string,
   createdById: string,
-  workspaceId: string
+  workspaceId: string,
+  userId: string
 ) => {
-  // fetching the data from server function
-  const addHandle = createSection({
-    name,
-    description,
-    createdById,
-    workspaceId,
-  })
-    .then((res) => {
-      return json<ActionData>(
-        {
-          resp: {
-            status: "statusCheck.testAddedSuccess",
-            data: res as Section,
-            check: new Date(),
+  try {
+    // fetching the data from server function
+    const addHandle = createSection({
+      name,
+      description,
+      createdById,
+      workspaceId,
+      userId,
+    })
+      .then((res) => {
+        return json<ActionData>(
+          {
+            resp: {
+              status: "statusCheck.testAddedSuccess",
+              data: res as Section,
+              check: new Date(),
+            },
           },
-        },
-        { status: 200 }
-      )
-    })
+          { status: 200 }
+        )
+      })
+      .catch((err) => {
+        let title = "statusCheck.commonError"
+        if (err.code === "P2002") {
+          title = "statusCheck.duplicate"
+        }
+        return json<ActionData>(
+          { errors: { title, status: err.status ?? 400, check: new Date() } },
+          { status: 400 }
+        )
+      })
 
-    .catch((err) => {
-      let title = "statusCheck.commonError"
-      if (err.code === "P2002") {
-        title = "statusCheck.duplicate"
-      }
-      return json<ActionData>(
-        { errors: { title, status: 400, check: new Date() } },
-        { status: 400 }
-      )
-    })
-
-  return addHandle
+    return addHandle
+  } catch (error) {
+    throw error
+  }
 }
 
 /**
@@ -152,12 +162,16 @@ export const handleAddTest = async (
  * @param name
  * @param description
  * @param id
+ * @param userId
+ * @param workspaceId
  * @returns updated section data
  */
 export const handleEditTest = async (
   name: string,
   description: string,
-  id: string
+  id: string,
+  userId: string,
+  workspaceId: string
 ) => {
   if (typeof name !== "string" || name.length === 0) {
     return json<ActionData>(
@@ -172,31 +186,41 @@ export const handleEditTest = async (
     )
   }
 
-  const editHandle = editSectionById(id, name, description)
-    .then((res) => {
-      return json<ActionData>(
-        {
-          resp: {
-            status: "statusCheck.testUpdatedSuccess",
-            data: res as Section,
+  try {
+    const editHandle = editSectionById(
+      id,
+      name,
+      description,
+      userId,
+      workspaceId
+    )
+      .then((res) => {
+        return json<ActionData>(
+          {
+            resp: {
+              status: "statusCheck.testUpdatedSuccess",
+              data: res as Section,
+            },
           },
-        },
-        { status: 200 }
-      )
-    })
+          { status: 200 }
+        )
+      })
 
-    .catch((err) => {
-      let title = "statusCheck.commonError"
-      if (err.code === "P2002") {
-        title = "statusCheck.duplicate"
-      }
-      return json<ActionData>(
-        { errors: { title, status: 400, check: new Date() } },
-        { status: 400 }
-      )
-    })
+      .catch((err) => {
+        let title = "statusCheck.commonError"
+        if (err.code === "P2002") {
+          title = "statusCheck.duplicate"
+        }
+        return json<ActionData>(
+          { errors: { title, status: err.status ?? 400, check: new Date() } },
+          { status: 400 }
+        )
+      })
 
-  return editHandle
+    return editHandle
+  } catch (error) {
+    throw error
+  }
 }
 
 /**
@@ -204,9 +228,17 @@ export const handleEditTest = async (
  * @param deleteSectionId
  * @returns update the section status from deleted false to deleted true
  */
-export const handleDeleteTest = async (deleteSectionId: string) => {
-  const deleteHandle = await deleteSectionById(deleteSectionId)
-    .then((res) => {
+export const handleDeleteTest = async (
+  deleteSectionId: string,
+  userId: string,
+  workspaceId: string
+) => {
+  try {
+    const deleteHandle = await deleteSectionById(
+      deleteSectionId,
+      userId,
+      workspaceId
+    ).then((res) => {
       return json<ActionData>(
         {
           resp: {
@@ -218,20 +250,10 @@ export const handleDeleteTest = async (deleteSectionId: string) => {
         { status: 200 }
       )
     })
-    .catch((err) => {
-      return json<ActionData>(
-        {
-          errors: {
-            title: "statusCheck.commonError",
-            status: 400,
-            check: new Date(),
-          },
-        },
-        { status: 400 }
-      )
-    })
-
-  return deleteHandle
+    return deleteHandle
+  } catch (error) {
+    throw error
+  }
 }
 
 /**
@@ -255,10 +277,24 @@ export const getAllSectionCount = async (userId: string) => {
 /**
  * Function will get testById
  * @param params.sectionId
+ * @param userId
+ * @param workspaceId
  * @returns test
  */
-export const getSectionDataById = async ({ id }: { id: string }) => {
-  return await getSectionById({ id })
+export const getSectionDataById = async ({
+  id,
+  userId,
+  workspaceId,
+}: {
+  id: string
+  userId: string | undefined
+  workspaceId: string
+}) => {
+  try {
+    return await getSectionById({ id, userId, workspaceId })
+  } catch (error) {
+    throw error
+  }
 }
 
 /**
@@ -272,27 +308,37 @@ export const getQuestionTypeFromTests = async () => {
 /**
  * Function will delete question by id
  * @param id
+ * @param userId
+ * @param workspaceId
  * @returns update the deleted field from false to true
  */
-export const deleteTestQuestionById = async (id: string) => {
-  return await deleteQuestionById(id)
-    .then((res) => {
-      return json<ActionData>(
-        { resp: { title: res, status: 200 } },
-        { status: 200 }
-      )
-    })
-    .catch(() => {
-      return json<ActionData>(
-        {
-          errors: {
-            title: "statusCheck.commonError",
-            status: 400,
+export const deleteTestQuestionById = async (
+  id: string,
+  userId: string,
+  workspaceId: string
+) => {
+  try {
+    return await deleteQuestionById(id, userId, workspaceId)
+      .then((res) => {
+        return json<ActionData>(
+          { resp: { title: res, status: 200 } },
+          { status: 200 }
+        )
+      })
+      .catch((err) => {
+        return json<ActionData>(
+          {
+            errors: {
+              title: "statusCheck.commonError",
+              status: err.status ?? 400,
+            },
           },
-        },
-        { status: 400 }
-      )
-    })
+          { status: 400 }
+        )
+      })
+  } catch (error) {
+    throw error
+  }
 }
 
 /**
@@ -318,6 +364,8 @@ export const getAllUsersData = async ({
  * @param createdById
  * @param checkOrder
  * @param addMoreQuestion
+ * @param userId
+ * @param workspaceId
  * @returns added question data
  */
 export const getAddQuestion = async (
@@ -328,35 +376,48 @@ export const getAddQuestion = async (
   sectionId: string,
   createdById: string,
   checkOrder: boolean,
-  addMoreQuestion: boolean
+  addMoreQuestion: boolean,
+  userId: string,
+  workspaceId: string
 ) => {
-  const ques = await addQuestion(
-    question,
-    options,
-    correctAnswer,
-    questionTypeId,
-    sectionId,
-    createdById,
-    checkOrder
-  )
-    .then((res) => {
-      return json<ActionData>(
-        {
-          success: {
-            data: "statusCheck.questionAddedSuccess",
-            addMoreQuestion: addMoreQuestion,
+  try {
+    const ques = await addQuestion(
+      question,
+      options,
+      correctAnswer,
+      questionTypeId,
+      sectionId,
+      createdById,
+      checkOrder,
+      userId,
+      workspaceId
+    )
+      .then((res) => {
+        return json<ActionData>(
+          {
+            success: {
+              data: "statusCheck.questionAddedSuccess",
+              addMoreQuestion: addMoreQuestion,
+            },
           },
-        },
-        { status: 200 }
-      )
-    })
-    .catch((err) => {
-      return json<ActionData>(
-        { error: { data: "statusCheck.questionNotAdded" } },
-        { status: 400 }
-      )
-    })
-  return ques
+          { status: 200 }
+        )
+      })
+      .catch((err) => {
+        return json<ActionData>(
+          {
+            error: {
+              data: "statusCheck.questionNotAdded",
+              status: err.status ?? 400,
+            },
+          },
+          { status: 400 }
+        )
+      })
+    return ques
+  } catch (error) {
+    throw error
+  }
 }
 
 /**

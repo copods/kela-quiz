@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import { json } from "@remix-run/node"
 import { useActionData, useLoaderData, useNavigate } from "@remix-run/react"
 import type { ActionFunction, LoaderFunction } from "@remix-run/server-runtime"
+import { redirect } from "@remix-run/server-runtime"
 import { useTranslation } from "react-i18next"
 import { toast } from "react-toastify"
 import invariant from "tiny-invariant"
@@ -32,38 +33,58 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
   invariant(params.sectionId, "sectionId not found")
 
-  const sectionDetails = await getSectionDataById({ id: params.sectionId })
+  try {
+    const sectionDetails = await getSectionDataById({
+      id: params.sectionId,
+      userId,
+      workspaceId: currentWorkspaceId,
+    })
 
-  if (!sectionDetails) {
-    throw new Response("Not Found", { status: 404 })
+    if (!sectionDetails) {
+      throw new Response("Not Found", { status: 404 })
+    }
+    return json<LoaderData>({
+      sectionDetails,
+      questionTypes,
+      workspaces,
+      currentWorkspaceId,
+    })
+  } catch (error: any) {
+    if (error.status === 403) {
+      return redirect(routes.unauthorized)
+    }
   }
-  return json<LoaderData>({
-    sectionDetails,
-    questionTypes,
-    workspaces,
-    currentWorkspaceId,
-  })
 }
 
-export const action: ActionFunction = async ({ request }) => {
-  const createdById = await requireUserId(request)
-  const formData = await request.formData()
-  const question = JSON.parse(formData.get("quesData") as string)
-  const response = await getAddQuestion(
-    question.question.replace(
-      /<p><br[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|]?><[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|]?p>/g,
-      ""
-    ),
-    question.options,
-    question.correctAnswer,
-    question.questionTypeId,
-    question.sectionId,
-    createdById,
-    question.checkOrder,
-    question?.addMoreQuestion
-  )
+export const action: ActionFunction = async ({ request, params }) => {
+  try {
+    const userId = await getUserId(request)
+    const currentWorkspaceId = params.workspaceId as string
+    const createdById = await requireUserId(request)
+    const formData = await request.formData()
+    const question = JSON.parse(formData.get("quesData") as string)
+    const response = await getAddQuestion(
+      question.question.replace(
+        /<p><br[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|]?><[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|]?p>/g,
+        ""
+      ),
+      question.options,
+      question.correctAnswer,
+      question.questionTypeId,
+      question.sectionId,
+      createdById,
+      question.checkOrder,
+      question?.addMoreQuestion,
+      userId!,
+      currentWorkspaceId
+    )
 
-  return response
+    return response
+  } catch (error: any) {
+    if (error.status === 403) {
+      return redirect(routes.unauthorized)
+    }
+  }
 }
 
 export default function AddQuestion() {
@@ -84,6 +105,8 @@ export default function AddQuestion() {
           `/${sectionDetail.currentWorkspaceId}${routes.tests}/${sectionDetail.sectionDetails?.id}`
         )
       }
+    } else if (actionData?.error?.status === 403) {
+      navigate(routes.unauthorized)
     } else if (actionData?.error) {
       toast.error(t(actionData?.data))
     }
