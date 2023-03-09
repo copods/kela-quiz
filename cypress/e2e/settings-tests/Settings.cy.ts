@@ -13,7 +13,6 @@ import {
   getResetPasswordPopup,
   getSettings,
   getSubmitBtn,
-  getTabsWrapper,
   getToaster,
   getWorkspaces,
 } from "support/common-function"
@@ -41,9 +40,6 @@ describe("Test for settings", () => {
     cy.location("pathname").should("include", "/settings/general")
     cy.get("h1").should("have.text", settings)
 
-    // To check gap between two tabs
-    getTabsWrapper().should("have.css", `gap`, "20px")
-
     // To check title classes
     cy.get("h1").should("to.have.class", "text-3xl font-bold")
 
@@ -51,7 +47,7 @@ describe("Test for settings", () => {
     getGeneral().within(() => {
       cy.get("hr").should(
         "have.class",
-        "h-1 w-full rounded-1 border-0 bg-primary"
+        "absolute -bottom-0.5 h-0.5 w-full border-0 bg-primary"
       )
     })
 
@@ -63,12 +59,21 @@ describe("Test for settings", () => {
     getWorkspaces().within(() => {
       cy.get("hr").should(
         "have.class",
-        "h-1 w-full rounded-1 border-0 bg-primary"
+        "absolute -bottom-0.5 h-0.5 w-full border-0 bg-primary"
       )
     })
 
     // To check workspace tab has correct text
     getWorkspaces().should("have.text", workspace)
+
+    // To check active tab is workspace
+    getWorkspaces().should("have.text", workspace).click()
+    getWorkspaces().within(() => {
+      cy.get("hr").should(
+        "have.class",
+        "h-1 w-full rounded-1 border-0 bg-primary"
+      )
+    })
 
     // To check heading in general has correct classes
     getGeneral().click()

@@ -15,11 +15,13 @@ model Workspace {
   userWorkspace   UserWorkspace[]
   createdAt       DateTime          @default(now())
   updatedAt       DateTime          @updatedAt
+  updatedById     String            @default("")
   section         Section[]
   test            Test[]
   candidateResult CandidateResult[]
 
   Invites Invites[]
+
   @@unique([name, createdById])
 }
 

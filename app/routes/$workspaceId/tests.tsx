@@ -260,8 +260,16 @@ export default function SectionPage() {
   ]
   const [sectionDetailFull, setSectionDetailFull] = useState(false)
   const [showAddSectionModal, setShowAddSectionModal] = useState(false)
-  const [order, setOrder] = useState(sortByOrder.desc as string)
-  const [sortBy, setSortBy] = useState(sortByDetails[1].value)
+  const [order, setOrder] = useState(
+    getStoredValue("testsOrder")?.value
+      ? getStoredValue("testsOrder")?.value
+      : (sortByOrder.desc as string)
+  )
+  const [sortBy, setSortBy] = useState(
+    getStoredValue("testsSortBy")?.value
+      ? getStoredValue("testsSortBy")?.value
+      : sortByDetails[1].value
+  )
   const [sectionActionErrors, setSectionActionErrors] = useState({})
   const [testsPageSize, setTestPageSize] = useState(
     getStoredValue("testActiveSize")?.value
@@ -339,9 +347,18 @@ export default function SectionPage() {
     data.getAllTestsCount,
     data.sections[0]?.id,
     location.search,
+    order,
     sortBy,
     sectionActionData?.sectionId,
   ])
+
+  useEffect(() => {
+    setCustomStorage("testsOrder", order)
+  }, [order])
+
+  useEffect(() => {
+    setCustomStorage("testsSortBy", sortBy)
+  }, [sortBy])
 
   useEffect(() => {
     const heading = document.getElementById("tests-heading")
@@ -439,7 +456,7 @@ export default function SectionPage() {
           </div>
         </div>
       ) : (
-        <EmptyStateComponent />
+        <EmptyStateComponent text={t("emptyStateConstants.noTestsState")} />
       )}
       <AddEditSection
         open={showAddSectionModal}

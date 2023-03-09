@@ -88,7 +88,7 @@ const SectionDetails = () => {
       </div>
       {/* QUESTION LIST  */}
       {searchedQuestion.length === 0 ? (
-        <EmptyStateComponent />
+        <EmptyStateComponent text={t("emptyStateConstants.noQuestionsState")} />
       ) : (
         searchedQuestion.map((question: Question, i: number) => {
           return (

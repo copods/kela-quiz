@@ -18,13 +18,13 @@ const NotFound = () => {
         <div className="mb-4">
           <img
             src={notFound}
-            alt={t("404.notFound")}
+            alt={t("notFound.notFound")}
             className="h-cooldownSVG w-cooldownSVG"
           />
         </div>
         <div className="text-center leading-8">
-          <p className="text-2xl font-bold">{t("404.error")}</p>
-          <p className="text-2xl font-bold">{t("404.urlNotFound")}</p>
+          <p className="text-2xl font-bold">{t("notFound.error")}</p>
+          <p className="text-2xl font-bold">{t("notFound.urlNotFound")}</p>
           <div
             className="font-semibold text-primary underline"
             tabIndex={0}
@@ -34,7 +34,7 @@ const NotFound = () => {
               if (e.key === "Enter") navigateToHomepage()
             }}
           >
-            {t("404.gotoDashboard")}
+            {t("notFound.gotoDashboard")}
           </div>
         </div>
       </div>

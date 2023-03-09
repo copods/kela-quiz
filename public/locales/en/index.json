@@ -196,6 +196,7 @@
     "selectCorrOption": "Select the Correct Option",
     "descIsReq": "Description is required",
     "nameIsReq": "Name is required",
+    "workspaceNameIsReq": "Workspace name is required",
     "testAddedSuccess": "Test added successfully..!",
     "testUpdatedSuccess": "Test updated sucessfully..!",
     "maxOptions": "you can add maximum six options.",
@@ -345,16 +346,23 @@
     "passShouldNotBeSame": "Current Password and New Password should not be same",
     "leaveWorkspace": "Leave workspace",
     "leave": "Leave",
-    "leaveWorkspaceConfirmation": "Are you sure you want to leave this workspace?"
+    "leaveWorkspaceConfirmation": "Are you sure you want to leave this workspace?",
+    "workspaceUpdated": "Workspace updated sucessfully..!"
   },
   "tabs": {
     "general": "General",
     "workspaces": "Workspaces"
   },
-  "404": {
+  "notFound": {
     "error": "That's an error.",
     "notFound": "Not Found",
     "urlNotFound": "The requested URL was not found on this server.",
     "gotoDashboard": "GoTo Dashboard"
+  },
+  "emptyStateConstants": {
+    "noQuestionsState": "Add Questions to this Test",
+    "noTestsState": "No Tests to show",
+    "noAssessmentsState": "No Assessments to show",
+    "noResultsState": "No Results to show"
   }
 }

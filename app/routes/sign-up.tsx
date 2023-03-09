@@ -122,6 +122,30 @@ export const action: ActionFunction = async ({ request }) => {
       )
     }
 
+    if (typeof password !== "string" || password.length < 8) {
+      // checking if newly entered password is less than 8 characters then throws error
+      return json<ActionData>(
+        {
+          errors: {
+            minPasswordLimit: "settings.minPasswordLimit",
+            status: 400,
+          },
+        },
+        { status: 400 }
+      )
+    }
+    if (confirmPassword !== password) {
+      // checking if newly entered password and confirm password is matched or not
+      return json<ActionData>(
+        {
+          errors: {
+            passNotMatched: "settings.passNotMatch",
+            status: 400,
+          },
+        },
+        { status: 400 }
+      )
+    }
     let addHandle = null
     await createUserBySignUp({
       firstName,

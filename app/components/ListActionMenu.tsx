@@ -14,6 +14,7 @@ const ListMenuItem = ({
   menuDetails,
   id,
   setId,
+  dataCyID,
   customClasses,
 }: {
   menuIcon: string
@@ -31,6 +32,7 @@ const ListMenuItem = ({
   }>
   id: string
   setId?: (e: string) => void
+  dataCyID?: string
   customClasses: { item: string; itemsContainer?: string }
 }) => {
   const {
@@ -65,7 +67,7 @@ const ListMenuItem = ({
               onClick={() => setId && setId(id)}
               className="text-2xl text-gray-600"
               icon={menuIcon}
-              id="vertical-icon"
+              id={`${dataCyID ? dataCyID : "vertical-icon"}`}
             />
           </Menu.Button>
         </div>
