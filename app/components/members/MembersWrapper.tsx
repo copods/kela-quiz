@@ -10,6 +10,7 @@ import EmptyStateComponent from "~/components/common-components/EmptyStateCompon
 import InvitedMembersList from "~/components/members/InvitedMembersList"
 import MembersHeader from "~/components/members/MembersHeader"
 import MembersList from "~/components/members/MembersList"
+import { routes } from "~/constants/route.constants"
 
 type ActionData = {
   errors?: {
@@ -49,6 +50,8 @@ const MembersWrapper = () => {
         toast.error(t(membersActionData.errors?.title), {
           toastId: membersActionData.errors?.title,
         })
+      } else if (membersActionData.errors?.status === 403) {
+        navigate(routes.unauthorized)
       }
     }
   }, [membersActionData, t])
