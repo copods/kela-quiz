@@ -118,11 +118,9 @@ export const action: ActionFunction = async ({ request, params }) => {
 
 const WorkspaceWrapper = () => {
   return (
-    <>
-      <AdminLayout>
-        <Outlet />
-      </AdminLayout>
-    </>
+    <AdminLayout>
+      <Outlet />
+    </AdminLayout>
   )
 }
 
