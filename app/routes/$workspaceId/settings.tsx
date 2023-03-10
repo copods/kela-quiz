@@ -96,7 +96,7 @@ export default function Settings() {
 
   useEffect(() => {
     if (location.pathname === "/settings")
-      return navigate("/settings/workspace")
+      return navigate(routes.workspaceSetting)
   }, [navigate, location.pathname])
   useEffect(() => {
     const heading = document.getElementById("settings-heading")

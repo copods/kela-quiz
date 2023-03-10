@@ -26,7 +26,7 @@ const ResetPassword = ({
 
   useEffect(() => {
     if (fetcher.data && fetcher.data === "DONE") {
-      setOpenResetPassModel(false) //reset password popUp wil be closed automatically if action is success
+      setOpenResetPassModel(false) //reset password popUp will be closed automatically if action is success
       toast.success(t("settings.passResetSuccessfully"))
     }
   }, [fetcher.data, setOpenResetPassModel, t])
