@@ -158,24 +158,26 @@ const TestList = () => {
     return (
       <>
         <div className="flex" id="action-cell">
-          <Icon
-            id={`invite-popup-open${index}`}
-            role={"button"}
-            tabIndex={0}
-            className="candidateInviteIcon cursor-pointer text-2xl text-primary focus:outline-dotted focus:outline-2"
-            icon={"ant-design:user-add-outlined"}
-            onClick={(e) => {
-              setCandidatePopupOpen(true)
-              setSelectedTest({ id: data.id, name: data.name })
-            }}
-            onKeyUp={(e) => {
-              if (e.key === "Enter") {
+          {testLoaderData.permission.invite_candidate.create && (
+            <Icon
+              id={`invite-popup-open${index}`}
+              role={"button"}
+              tabIndex={0}
+              className="candidateInviteIcon cursor-pointer text-2xl text-primary focus:outline-dotted focus:outline-2"
+              icon={"ant-design:user-add-outlined"}
+              onClick={(e) => {
                 setCandidatePopupOpen(true)
                 setSelectedTest({ id: data.id, name: data.name })
-              }
-            }}
-            aria-label={t("members.inviteMember")}
-          />
+              }}
+              onKeyUp={(e) => {
+                if (e.key === "Enter") {
+                  setCandidatePopupOpen(true)
+                  setSelectedTest({ id: data.id, name: data.name })
+                }
+              }}
+              aria-label={t("members.inviteMember")}
+            />
+          )}
           <ListActionMenu
             menuIcon={"mdi:dots-vertical"}
             onItemClick={setShowDeletePopup}

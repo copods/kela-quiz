@@ -5,6 +5,7 @@ import invariant from "tiny-invariant"
 
 import TestDetails from "~/components/tests/TestDetails"
 import { routes } from "~/constants/route.constants"
+import { checkUserFeatureAuthorization } from "~/models/authorization.server"
 import {
   getAssessmentById,
   getCandidateByAssessmentId,
@@ -16,10 +17,20 @@ type LoaderData = {
   testPreview: Awaited<ReturnType<typeof getAssessmentById>>
   workspaces: Awaited<ReturnType<typeof getWorkspaces>>
   currentWorkspaceId: string
+  permission: { [key: string]: { [key: string]: boolean } }
 }
 export const loader: LoaderFunction = async ({ request, params }) => {
   const userId = await getUserId(request)
   const currentWorkspaceId = params.workspaceId as string
+
+  const permission = await checkUserFeatureAuthorization(
+    userId!,
+    currentWorkspaceId
+  )
+  if (!permission.assessments.read) {
+    return redirect(routes.unauthorized)
+  }
+
   const workspaces = await getWorkspaces(userId as string)
   invariant(params.testId, "testId not found")
   const testPreview = await getAssessmentById({ id: params.testId })
@@ -27,7 +38,12 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     throw new Response("Not Found", { status: 404 })
   }
 
-  return json<LoaderData>({ testPreview, workspaces, currentWorkspaceId })
+  return json<LoaderData>({
+    testPreview,
+    workspaces,
+    currentWorkspaceId,
+    permission,
+  })
 }
 export const action: ActionFunction = async ({ request, params }) => {
   const userId = await getUserId(request)
