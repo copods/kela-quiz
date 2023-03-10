@@ -3,6 +3,7 @@ import { defineConfig } from "cypress"
 export default defineConfig({
   viewportHeight: 1000,
   viewportWidth: 1200,
+  defaultCommandTimeout: 8000,
   e2e: {
     setupNodeEvents: (on, config) => {
       const isDev = config.watchForFileChanges
