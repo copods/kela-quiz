@@ -114,7 +114,7 @@ describe("Visiting Assessment", () => {
       .should("have.css", "cursor", "pointer")
 
     // To check sort by name in ascending
-    cy.viewport(2000, 1000)
+    cy.viewport(1200, 1000)
     cy.get(".dropdownButton span span", { timeout: 6000 })
       .invoke("text")
       .then((el) => {

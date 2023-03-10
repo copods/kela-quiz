@@ -41,7 +41,7 @@ const commonConstants = {
 describe("Creating new assessment", () => {
   // creating test data
   it("Adding two section", () => {
-    cy.viewport(2000, 1000)
+    cy.viewport(1280, 1000)
     cy.login()
     cy.customVisit("/members")
 

@@ -132,7 +132,7 @@ function deleteUserByEmail(email: string) {
 
 const candidateRegistration = () => {
   const emailId = Math.random()
-  cy.viewport(2000, 1000)
+  cy.viewport(1280, 720)
   cy.login()
   cy.customVisit("/members")
   getGroupByTestId().click()
