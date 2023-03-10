@@ -41,15 +41,17 @@ export default function MembersHeader({
         >
           {t("members.members")}
         </h1>
-        <Button
-          tabIndex={0}
-          id="invite-member"
-          className="h-9 px-4"
-          onClick={() => setOpen(!open)}
-          variant="primary-solid"
-          title={t("members.inviteMember")}
-          buttonText={t("members.inviteMember")}
-        />
+        {membersData.permission.member.create && (
+          <Button
+            tabIndex={0}
+            id="invite-member"
+            className="h-9 px-4"
+            onClick={() => setOpen(!open)}
+            variant="primary-solid"
+            title={t("members.inviteMember")}
+            buttonText={t("members.inviteMember")}
+          />
+        )}
       </div>
       <AddMemberModal
         roles={membersData.roles}
