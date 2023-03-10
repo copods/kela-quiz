@@ -65,7 +65,7 @@ describe("smoke tests", () => {
     // To check Invalid Email Error
     getEmail().type("test@copods.co")
     getPassword().type("kQuiz@copods")
-    cy.findByRole("button").click()
+    cy.get("button").click()
     cy.wait(500)
     getPasswordError().should("have.text", "Incorrect email or password")
 
@@ -76,7 +76,7 @@ describe("smoke tests", () => {
     // To check Invalid Password Error
     getEmail().type("copods.demo.sendgrid@gmail.com")
     getPassword().type("anuragpate")
-    cy.findByRole("button").click()
+    cy.get("button").click()
     cy.wait(500)
     getPasswordError().should("have.text", "Incorrect email or password")
 
@@ -87,7 +87,7 @@ describe("smoke tests", () => {
     // To login
     getEmail().type("copods.demo.sendgrid@gmail.com")
     getPassword().type("kQuiz@copods")
-    cy.findByRole("button").click()
+    cy.get("button").click()
     cy.wait(1000)
 
     // To check cookies
