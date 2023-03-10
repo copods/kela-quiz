@@ -35,79 +35,59 @@ const SideNav = () => {
   const tempWorkspaces = workspaces.map((userWorkspace: UserWorkspace) => {
     return { ...userWorkspace, ...userWorkspace.workspace }
   })
-  const [sideNavGuide, setSideNavGuide] = useState<SideNavGuideItem[]>([])
 
-  useEffect(() => {
-    setSideNavGuide([
-      // {
-      //   navGuide: 'Main Menu',
-      //   subItem: [
-      //     {
-      //       id: 'Dashboard',
-      //       iconClass: 'mdi:view-dashboard',
-      //       itemName: 'Dashboard',
-      //       itemRoute: routes.dashboard,
-      //     },
-      //   ],
-      // },
-      {
-        navGuide: "Results",
-        subItem: [
-          {
-            show: permission.results.read,
-            id: "group-by-tests",
-            iconClass: "mdi:chart-box-outline",
-            itemName: "commonConstants.results",
-            itemRoute: `${routes.resultGroupTest}`,
-          },
-          // {
-          //   id: 'Group_By_Candidate',
-          //   iconClass: 'mdi:chart-box-outline',
-          //   itemName: commonConstants.groupByCandidate,
-          //   itemRoute: 'groupByCandidate',
-          // },
-        ],
-      },
-      {
-        navGuide: "Assessments",
-        subItem: [
-          {
-            show: permission.assessments.read,
-            id: "tests",
-            iconClass: "carbon:result",
-            itemName: "testsConstants.assessments",
-            itemRoute: `${routes.assessments}`,
-          },
-          {
-            show: permission.tests.read,
-            id: "sections",
-            iconClass: "ci:list-checklist-alt",
-            itemName: "routeFiles.tests",
-            itemRoute: `${routes.tests}`,
-          },
-        ],
-      },
-      {
-        navGuide: "General",
-        subItem: [
-          {
-            show: permission.member.read,
-            id: "members",
-            iconClass: "mdi:account-group",
-            itemName: "members.members",
-            itemRoute: routes.members,
-          },
-          {
-            show: true,
-            id: "Settings",
-            iconClass: "mdi:cog",
-            itemName: "commonConstants.settings",
-            itemRoute: routes.generalSettings,
-          },
-        ],
-      },
-    ])
-  }, [workspace, param.workspaceId])
+  const sideNavGuide: readonly SideNavGuideItem[] = [
+    {
+      navGuide: "Results",
+      subItem: [
+        {
+          show: permission.results.read,
+          id: "group-by-tests",
+          iconClass: "mdi:chart-box-outline",
+          itemName: "commonConstants.results",
+          itemRoute: `${routes.resultGroupTest}`,
+        },
+      ],
+    },
+    {
+      navGuide: "Assessments",
+      subItem: [
+        {
+          show: permission.assessments.read,
+          id: "tests",
+          iconClass: "carbon:result",
+          itemName: "testsConstants.assessments",
+          itemRoute: `${routes.assessments}`,
+        },
+        {
+          show: permission.tests.read,
+          id: "sections",
+          iconClass: "ci:list-checklist-alt",
+          itemName: "routeFiles.tests",
+          itemRoute: `${routes.tests}`,
+        },
+      ],
+    },
+    {
+      navGuide: "General",
+      subItem: [
+        {
+          show: permission.member.read,
+          id: "members",
+          iconClass: "mdi:account-group",
+          itemName: "members.members",
+          itemRoute: routes.members,
+        },
+        {
+          show: true,
+          id: "Settings",
+          iconClass: "mdi:cog",
+          itemName: "commonConstants.settings",
+          itemRoute: routes.generalSettings,
+        },
+      ],
+    },
+  ]
 
   function switchWorkpace(val: string) {
     if (val !== t("sideNav.addWorkspace") && workspace !== currentWorkspaceId) {
