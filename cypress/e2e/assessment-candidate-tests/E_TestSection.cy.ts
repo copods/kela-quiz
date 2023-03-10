@@ -160,6 +160,7 @@ describe("Tests for Test Section", () => {
     getStepperContents().last().find("div").find("img").should("be.visible")
 
     // To attempt question and click on next
+    cy.wait(500)
     getAnswerSectionLabel().eq(0).click()
     getAnswerSectionLabel().eq(1).click()
     cy.contains("button", commonContants.Next).click()
@@ -197,6 +198,7 @@ describe("Tests for Test Section", () => {
       .and("have.class", "bg-primary")
 
     // To check end test button works
+    cy.wait(500)
     getAnswerSectionLabel().last().click()
     cy.contains("button", commonContants.EndTest).should("be.visible").click()
   })
