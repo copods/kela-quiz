@@ -53,6 +53,7 @@ describe("Test for Logout, SideNav", () => {
       .should("have.css", "color", "rgb(156, 163, 175)")
 
     // To check text, styles of Username
+    cy.wait(1000)
     getSideNavUserName()
       .should("have.text", userName)
       .should("have.css", "color", "rgb(17, 24, 39)")
