@@ -182,6 +182,7 @@ describe("Visiting Assessment", () => {
       })
 
     // To check chip group
+    cy.wait(2000)
     getChipGroup().then(($elements) => {
       let strings = [...$elements]
       strings.forEach(($el) => {

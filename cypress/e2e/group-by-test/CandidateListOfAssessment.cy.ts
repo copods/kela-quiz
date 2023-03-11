@@ -16,6 +16,7 @@ describe("Visiting group by test of results page", () => {
     getGroupByItemTest().contains(test1).click()
 
     // checks title of candidate list should be visible and have css properties
+    cy.wait(2000)
     getTitle()
       .should("be.visible")
       .should("have.class", "text-3xl font-semibold text-gray-900")
