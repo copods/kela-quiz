@@ -87,6 +87,7 @@ describe("Test For MyProfile", () => {
 
     //On Clicking of Edit Save
     //visibility of Save button and Cancel button
+    cy.wait(1000)
     getEditProfileButton().click()
     getSaveButton().should("be.visible")
     getCancelButton().should("be.visible")
@@ -130,6 +131,7 @@ describe("Test For MyProfile", () => {
     })
 
     //Check if user Details are submitting properly
+    cy.wait(1000)
     getEditProfileButton().click()
     getFirstNameInput().clear().type(userDetails[0].name)
     getLastNameInput().clear().type(userDetails[1].name)
@@ -144,6 +146,7 @@ describe("Test For MyProfile", () => {
     //Resetting the userdetails
     getSideNavFooterDropdownButton().click()
     getMyProfileButton().click()
+    cy.wait(1000)
     getEditProfileButton().click()
     getFirstNameInput().clear().type(userDetails[0].name)
     getLastNameInput().clear().type(userDetails[1].name)
