@@ -194,7 +194,7 @@ const CandidateListOfTest = () => {
   ) => {
     const menuItemsDetailsList = [
       {
-        show: loaderData.permission.invite_candidate_update,
+        show: loaderData.permission.invite_candidate.update,
         id: "resend-invite",
         menuListText: t("resultConstants.resendInvite"),
         menuListLink: resendTestLink,
