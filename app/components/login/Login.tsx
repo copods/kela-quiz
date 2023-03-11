@@ -147,6 +147,7 @@ function Login({ actionData, redirectTo }: LoginProps) {
               variant="primary-solid"
               className="h-11 w-full"
               value={"login"}
+              data-cy="submit"
             />
           </div>
         </Form>

@@ -169,9 +169,10 @@ describe("Test for GroupByTestTable, Result", () => {
   })
 
   it("To check elemnts inside perticular test", () => {
-    cy.viewport(1500, 1000)
+    cy.viewport(2000, 1000)
     getGroupByTestId().click()
     getGroupByItemTest().contains(test1).click()
+    cy.wait(2000)
     getVeriticalIconId().should("be.visible").click()
     getCopyLinkId().should("be.visible")
     getResendInviteCandidate().click()
