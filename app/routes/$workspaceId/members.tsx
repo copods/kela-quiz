@@ -69,99 +69,119 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const currentWorkspaceOwner = await getActiveWorkspaceOwner(
     currentWorkspaceId
   )
-  const invitedMembers = await getALLInvitedMember(
-    currentWorkspaceId as string,
-    invitedMembersCurrentPage,
-    invitedMembersItemsPerPage
-  )
-  const workspaces = await getUserWorkspaceService(userId as string)
-  const roles = await getALLRoles()
-  if (!userId) return redirect(routes.signIn)
-  const users = await getALLUsers({
-    currentWorkspaceId,
-    membersCurrentPage,
-    membersItemsPerPage,
-  })
+  try {
+    const invitedMembers = await getALLInvitedMember(
+      currentWorkspaceId as string,
+      invitedMembersCurrentPage,
+      invitedMembersItemsPerPage,
+      userId!
+    )
+    const workspaces = await getUserWorkspaceService(userId as string)
+    const roles = await getALLRoles()
+    if (!userId) return redirect(routes.signIn)
+    const users = await getALLUsers({
+      currentWorkspaceId,
+      membersCurrentPage,
+      membersItemsPerPage,
+    })
 
-  const allUsersCount = await getALLUsersCount(currentWorkspaceId)
-  const invitedUsersCount = await getALLInvitedMemberCount(currentWorkspaceId)
-  return json<LoaderData>({
-    users,
-    roles,
-    userId,
-    workspaces,
-    currentWorkspaceId,
-    invitedMembers,
-    getUser,
-    membersCurrentPage,
-    membersItemsPerPage,
-    invitedMembersCurrentPage,
-    invitedMembersItemsPerPage,
-    allUsersCount,
-    invitedUsersCount,
-    currentWorkspaceOwner,
-  })
+    const allUsersCount = await getALLUsersCount(currentWorkspaceId)
+    const invitedUsersCount = await getALLInvitedMemberCount(currentWorkspaceId)
+    return json<LoaderData>({
+      users,
+      roles,
+      userId,
+      workspaces,
+      currentWorkspaceId,
+      invitedMembers,
+      getUser,
+      membersCurrentPage,
+      membersItemsPerPage,
+      invitedMembersCurrentPage,
+      invitedMembersItemsPerPage,
+      allUsersCount,
+      invitedUsersCount,
+      currentWorkspaceOwner,
+    })
+  } catch (error: any) {
+    if (error.status === 403) {
+      return redirect(routes.unauthorized)
+    }
+  }
 }
 
 export const action: ActionFunction = async ({ request, params }) => {
   const invitedByWorkspaceId = await requireWorkspaceId(request)
   const userId = await getUserId(request)
+  const currentWorkspaceId = params.workspaceId as string
   const formData = await request.formData()
   const action = await formData.get("action")
-  if (action === actions.inviteMember) {
-    const email = formData.get("email")
-    const roleId = formData.get("roleId")
+  try {
+    if (action === actions.inviteMember) {
+      const email = formData.get("email")
+      const roleId = formData.get("roleId")
 
-    const getUser = await getUserByID(userId as string)
-    // eslint-disable-next-line no-useless-escape
-    const EMAIL_REGEX = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
-    if (typeof email !== "string" || email.length === 0) {
-      return json<ActionData>(
-        { errors: { title: "toastConstants.emailRequired", status: 400 } },
-        { status: 400 }
-      )
+      const getUser = await getUserByID(userId as string)
+      // eslint-disable-next-line no-useless-escape
+      const EMAIL_REGEX = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
+      if (typeof email !== "string" || email.length === 0) {
+        return json<ActionData>(
+          { errors: { title: "toastConstants.emailRequired", status: 400 } },
+          { status: 400 }
+        )
+      }
+      if (!EMAIL_REGEX.test(email)) {
+        return json<ActionData>(
+          { errors: { title: "toastConstants.correctEmail", status: 400 } },
+          { status: 400 }
+        )
+      }
+      if (typeof roleId !== "string" || roleId.length === 0) {
+        return json<ActionData>(
+          { errors: { title: "toastConstants.roleRequired", status: 400 } },
+          { status: 400 }
+        )
+      }
+      if (email === getUser?.email) {
+        return json<ActionData>(
+          { errors: { title: "statusCheck.notInviteYourself", status: 400 } },
+          { status: 400 }
+        )
+      }
+      return await inviteNEWUser({
+        email,
+        roleId,
+        invitedByWorkspaceId,
+        userId,
+        workspaceId: currentWorkspaceId,
+      })
     }
-    if (!EMAIL_REGEX.test(email)) {
-      return json<ActionData>(
-        { errors: { title: "toastConstants.correctEmail", status: 400 } },
-        { status: 400 }
-      )
+    if (action === actions.resendMember) {
+      const response = await reinviteMember({
+        id: formData.get("id") as string,
+        userId,
+        workspaceId: currentWorkspaceId,
+      })
+      return response
     }
-    if (typeof roleId !== "string" || roleId.length === 0) {
-      return json<ActionData>(
-        { errors: { title: "toastConstants.roleRequired", status: 400 } },
-        { status: 400 }
+    if (action === actions.deleteMember) {
+      const { email } = (await getUserByID(
+        formData.get("id") as string
+      )) as User
+
+      const response = await deleteUserByID(
+        formData.get("id") as string,
+        currentWorkspaceId,
+        email,
+        userId!
       )
+      return response
     }
-    if (email === getUser?.email) {
-      return json<ActionData>(
-        { errors: { title: "statusCheck.notInviteYourself", status: 400 } },
-        { status: 400 }
-      )
+  } catch (error: any) {
+    if (error.status === 403) {
+      return redirect(routes.unauthorized)
     }
-    return await inviteNEWUser({
-      email,
-      roleId,
-      invitedByWorkspaceId,
-      userId,
-    })
   }
-
-  if (action === actions.resendMember) {
-    const response = await reinviteMember({ id: formData.get("id") as string })
-    return response
-  }
-  if (action === actions.deleteMember) {
-    const { email } = (await getUserByID(formData.get("id") as string)) as User
-
-    const response = await deleteUserByID(
-      formData.get("id") as string,
-      params.workspaceId as string,
-      email
-    )
-    return response
-  }
-
   return null
 }
 const Members = () => {
