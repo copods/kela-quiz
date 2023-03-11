@@ -4,6 +4,9 @@ import {
   getDialogCloseIcon,
   getDialogWrapper,
   getGeneral,
+  getH2,
+  getH3,
+  getHr,
   getInputContainerWrapper,
   getLabel,
   getNewPassword,
@@ -11,6 +14,7 @@ import {
   getOldPassword,
   getPasswordError,
   getResetPasswordPopup,
+  getResetPasswordPopupHeading,
   getSettings,
   getSubmitBtn,
   getToaster,
@@ -38,14 +42,14 @@ describe("Test for settings", () => {
     // To check location and title
     getSettings().should("have.text", settings).click()
     cy.location("pathname").should("include", "/settings/general")
-    cy.get("h1").should("have.text", settings)
+    getH2().should("have.text", settings)
 
     // To check title classes
-    cy.get("h1").should("to.have.class", "text-3xl font-bold")
+    getH2().should("to.have.class", "text-3xl font-bold")
 
     // To check initial active tab is general
     getGeneral().within(() => {
-      cy.get("hr").should(
+      getHr().should(
         "have.class",
         "absolute -bottom-0.5 h-0.5 w-full border-0 bg-primary"
       )
@@ -57,7 +61,7 @@ describe("Test for settings", () => {
     // To check active tab is workspace
     getWorkspaces().should("have.text", workspace).click()
     getWorkspaces().within(() => {
-      cy.get("hr").should(
+      getHr().should(
         "have.class",
         "absolute -bottom-0.5 h-0.5 w-full border-0 bg-primary"
       )
@@ -69,15 +73,15 @@ describe("Test for settings", () => {
     // To check active tab is workspace
     getWorkspaces().should("have.text", workspace).click()
     getWorkspaces().within(() => {
-      cy.get("hr").should(
+      getHr().should(
         "have.class",
-        "h-1 w-full rounded-1 border-0 bg-primary"
+        "absolute -bottom-0.5 h-0.5 w-full border-0 bg-primary"
       )
     })
 
     // To check heading in general has correct classes
     getGeneral().click()
-    cy.get("h3").should("have.class", "text-lg font-semibold")
+    getH3().should("have.class", "text-lg font-semibold")
 
     // To check if reset password pop up is opening
     getResetPasswordPopup().should("have.text", clickToChange).click()
@@ -88,10 +92,10 @@ describe("Test for settings", () => {
 
     // To check heading of reset password pop up
     getResetPasswordPopup().click()
-    cy.get("h2").should("have.text", resetPas)
+    getResetPasswordPopupHeading().should("have.text", resetPas)
 
     // To check if heading of reset password pop up has focus
-    cy.get("h2").should("be.focused")
+    getH2().should("be.focused")
 
     // To check if reset password pop up has input fields
     getOldPassword().should("be.visible")
