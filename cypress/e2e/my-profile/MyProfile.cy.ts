@@ -25,7 +25,7 @@ const userDetails = [
 ]
 
 const userNewDetails = ["Arpita", "Gupta"]
-const userAvatarText = "AG"
+const userAvatarText = "CC"
 
 describe("Test For MyProfile", () => {
   beforeEach("sign-in", () => {
