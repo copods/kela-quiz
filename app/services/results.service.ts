@@ -118,6 +118,7 @@ export const getALLCandidatesOfTestCount = async (
  * @param currentPage
  * @param pageSize
  * @param statusFilter
+ * @param searchText
  * @returns tests
  */
 export const getALLCandidatesOfTest = async ({
@@ -126,12 +127,14 @@ export const getALLCandidatesOfTest = async ({
   currentPage,
   pageSize,
   statusFilter,
+  searchText,
 }: {
   id: string
   workspaceId: string
   currentPage: number
   pageSize: number
   statusFilter: string
+  searchText?: string
 }) => {
   return await getAllCandidatesOfTest({
     id,
@@ -139,6 +142,7 @@ export const getALLCandidatesOfTest = async ({
     currentPage,
     pageSize,
     statusFilter,
+    searchText,
   })
 }
 

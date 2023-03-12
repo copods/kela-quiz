@@ -26,6 +26,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const userId = await getUserId(request)
   const currentWorkspaceId = params.workspaceId
   const workspaces = await getWorkspaces(userId as string)
+  const searchText = query.get("searchText") as string
   invariant(params.testId, "resultId not found")
   const candidatesOfTest = await getALLCandidatesOfTest({
     id: params.testId,
@@ -33,6 +34,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     currentPage,
     pageSize,
     statusFilter,
+    searchText,
   })
   if (!candidatesOfTest) {
     throw new Response("Not Found", { status: 404 })
