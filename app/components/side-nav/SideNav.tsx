@@ -132,7 +132,7 @@ const SideNav = () => {
                 setValue={setWorkspace}
                 setOpen={setShowAddWorkspaceModal}
                 actionName={t("sideNav.addWorkspace")}
-                callToAction={true}
+                callToAction={permission.workspace.create ? true : false}
               />
             </div>
           </div>
