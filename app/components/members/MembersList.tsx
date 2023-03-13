@@ -107,6 +107,7 @@ export default function MembersList({
       </>
     )
   }
+
   const membersColumn = [
     { title: "Name", field: "name", render: NameDataCell, width: "25%" },
     { title: "Email", field: "email", width: "30%" },
@@ -124,9 +125,9 @@ export default function MembersList({
     <div className="z-10 text-base">
       <Table
         columns={
-          currentLoggedInUserData[0].userWorkspace[0]?.role.id !== adminRoleId
-            ? membersColumn.filter((column) => column.title !== "Action")
-            : membersColumn
+          memberLoaderData.permission.member.delete
+            ? membersColumn
+            : membersColumn.filter((column) => column.title !== "Action")
         }
         data={memberLoaderData.users}
         paginationEnabled={true}
