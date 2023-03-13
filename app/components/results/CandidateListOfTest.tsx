@@ -68,7 +68,7 @@ const CandidateListOfTest = () => {
     setFilteredData(candidatesOfTest.candidateTest)
   }, [candidatesOfTest.candidateTest])
 
-  const onSearch = () => {
+  useEffect(() => {
     fetcher.submit(
       {
         searchText: searchText,
@@ -77,7 +77,7 @@ const CandidateListOfTest = () => {
         method: "get",
       }
     )
-  }
+  }, [searchText])
 
   useEffect(() => {
     if (fetcher.data) {
@@ -333,7 +333,6 @@ const CandidateListOfTest = () => {
           className="h-11 w-48 rounded-lg border px-5 pl-8 text-sm shadow-sm focus:outline-dotted"
           onChange={(e) => {
             setSearchText(e.target.value)
-            onSearch()
           }}
         />
         <div className="w-36">
