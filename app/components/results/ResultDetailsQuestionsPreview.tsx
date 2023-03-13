@@ -159,7 +159,10 @@ const ResultDetailsQuestionsPreview = ({
             className="text-xl font-medium text-gray-800"
             data-cy="givenAnswers"
           >
-            {t("resultConstants.givenAnswers")}
+            {questionType.value === QuestionTypes.multipleChoice ||
+            (questionType.value === QuestionTypes.text && checkOrder)
+              ? t("resultConstants.givenAnswers")
+              : t("resultConstants.givenAnswer")}
           </h3>
           {status === QuestionStatus.answered ? (
             <>
@@ -223,7 +226,10 @@ const ResultDetailsQuestionsPreview = ({
                     className="text-xl font-medium text-gray-800"
                     data-cy="correct-answer"
                   >
-                    {t("resultConstants.correctAnswer")}
+                    {questionType.value === QuestionTypes.multipleChoice ||
+                    (questionType.value === QuestionTypes.text && checkOrder)
+                      ? t("resultConstants.correctAnswers")
+                      : t("resultConstants.correctAnswer")}
                   </h3>
                 </div>
                 {/* if MCQ is incorrect */}
