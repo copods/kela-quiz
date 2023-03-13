@@ -6,6 +6,7 @@ import MembersWrapper from "~/components/members/MembersWrapper"
 import { actions } from "~/constants/action.constants"
 import { routes } from "~/constants/route.constants"
 import type { User } from "~/interface/Interface"
+import { checkUserFeatureAuthorization } from "~/models/authorization.server"
 import {
   getALLRoles,
   getALLUsers,
@@ -49,9 +50,21 @@ type LoaderData = {
   allUsersCount: number
   invitedUsersCount: number
   currentWorkspaceOwner: { createdById: string } | null
+  permission: { [key: string]: { [key: string]: boolean } }
 }
 
 export const loader: LoaderFunction = async ({ request, params }) => {
+  const userId = await getUserId(request)
+  const currentWorkspaceId = params.workspaceId as string
+
+  const permission = await checkUserFeatureAuthorization(
+    userId!,
+    currentWorkspaceId
+  )
+  if (!permission.member.read) {
+    return redirect(routes.unauthorized)
+  }
+
   const query = new URL(request.url).searchParams
   const membersItemsPerPage = Math.max(Number(query.get("MemberItems") || 5), 5) //To set the lower bound, so that minimum count will always be 1 for current page and 5 for items per page.
   const membersCurrentPage = Math.max(Number(query.get("MemberPage") || 1), 1)
@@ -63,9 +76,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     Number(query.get("InvitedMemberItems") || 5),
     5
   )
-  const userId = await getUserId(request)
   const getUser = await getUserByID(userId as string)
-  const currentWorkspaceId = params.workspaceId as string
   const currentWorkspaceOwner = await getActiveWorkspaceOwner(
     currentWorkspaceId
   )
@@ -102,6 +113,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
       allUsersCount,
       invitedUsersCount,
       currentWorkspaceOwner,
+      permission,
     })
   } catch (error: any) {
     if (error.status === 403) {

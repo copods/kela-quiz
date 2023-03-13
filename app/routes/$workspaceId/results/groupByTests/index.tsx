@@ -4,6 +4,7 @@ import { redirect, json } from "@remix-run/node"
 import GroupByTests from "~/components/results/GroupByTests"
 import { routes } from "~/constants/route.constants"
 import { sortByOrder } from "~/interface/Interface"
+import { checkUserFeatureAuthorization } from "~/models/authorization.server"
 import {
   getDetailsOfAllAssessments,
   getTotalAssessmentCount,
@@ -25,13 +26,22 @@ type LoaderData = {
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   const userId = await getUserId(request)
+  const currentWorkspaceId = params.workspaceId as string
+
+  const permission = await checkUserFeatureAuthorization(
+    userId!,
+    currentWorkspaceId
+  )
+  if (!permission.results.read) {
+    return redirect(routes.unauthorized)
+  }
+
   const query = new URL(request.url).searchParams
   const resultsItemsPerPage = Math.max(Number(query.get("limit") || 5), 5) //To set the lower bound, so that minimum count will always be 1 for current page and 5 for items per page.
   const resultsCurrentPage = Math.max(Number(query.get("page") || 1), 1)
   const statusFilter = (query.get("status") as string) || "active"
   const sortBy = query.get("sortBy")
   const sortOrder = query.get("sort") || sortByOrder.desc
-  const currentWorkspaceId = params.workspaceId as string
   const workspaces = await getWorkspaces(userId as string)
   if (!userId) return redirect("/sign-in")
   try {
