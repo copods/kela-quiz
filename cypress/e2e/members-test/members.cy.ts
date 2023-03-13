@@ -162,7 +162,7 @@ describe("Test for members", () => {
 
     // Owner badge tests
     // To check if owner badge is visible
-    cy.viewport(1280, 720)
+    cy.viewport(1500, 1000)
     getBadgeTag().should("be.visible")
 
     // To check if owner badge has text
