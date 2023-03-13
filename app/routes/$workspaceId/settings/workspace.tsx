@@ -10,6 +10,7 @@ import { toast } from "react-toastify"
 import { routes } from "../../../constants/route.constants"
 
 import Workspace from "~/components/settings/Workspace"
+import { checkUserFeatureAuthorization } from "~/models/authorization.server"
 import {
   getActiveOwnerWorkspaces,
   getActiveWorkspaceOwner,
@@ -24,12 +25,22 @@ interface LoaderData {
   ownersWorkspaces: Awaited<ReturnType<typeof getActiveOwnerWorkspaces>>
   currentWorkspaceId: string
   userWorkspaces: Awaited<ReturnType<typeof getUserWorkspaceService>>
+  permission: { [key: string]: { [key: string]: boolean } }
 }
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   try {
-    const currentWorkspaceId = params.workspaceId as string
     const userId = (await getUserId(request)) as string
+    const currentWorkspaceId = params.workspaceId as string
+
+    const permission = await checkUserFeatureAuthorization(
+      userId,
+      currentWorkspaceId
+    )
+    if (!permission.workspace.read) {
+      return redirect(routes.unauthorized)
+    }
+
     const workspaceOwner = await getActiveWorkspaceOwner(currentWorkspaceId)
     const ownersWorkspaces = await getActiveOwnerWorkspaces(userId)
     const userWorkspaces = await getUserWorkspaceService(
@@ -41,6 +52,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
       ownersWorkspaces,
       currentWorkspaceId,
       userWorkspaces,
+      permission,
     })
   } catch (error: any) {
     if (error.status === 403) {
