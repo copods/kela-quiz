@@ -1,4 +1,9 @@
-import { getSettings, getWorkspaces } from "support/common-function"
+import {
+  getH2,
+  getHr,
+  getSettings,
+  getWorkspaces,
+} from "support/common-function"
 const settings = "Settings"
 const workspace = "Workspaces"
 
@@ -14,12 +19,12 @@ describe("Test for settings", () => {
     cy.get("h1").should("have.text", settings)
 
     // To check title classes
-    cy.get("h1").should("to.have.class", "text-3xl font-bold")
+    getH2().should("to.have.class", "text-3xl font-bold")
 
     // To check active tab is workspace
     getWorkspaces().should("have.text", workspace).click()
     getWorkspaces().within(() => {
-      cy.get("hr").should(
+      getHr().should(
         "have.class",
         "absolute -bottom-0.5 h-0.5 w-full border-0 bg-primary"
       )
@@ -31,9 +36,9 @@ describe("Test for settings", () => {
     // To check active tab is workspace
     getWorkspaces().should("have.text", workspace).click()
     getWorkspaces().within(() => {
-      cy.get("hr").should(
+      getHr().should(
         "have.class",
-        "h-1 w-full rounded-1 border-0 bg-primary"
+        "absolute -bottom-0.5 h-0.5 w-full border-0 bg-primary"
       )
     })
   })
