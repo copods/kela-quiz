@@ -52,7 +52,6 @@ const CandidateListOfTest = () => {
       ? getStoredValue("candidateListFilter")?.value
       : filterByStatus[0].value
   )
-
   const filteredData =
     candidatesLoaderData.candidatesOfTest.candidateTest?.filter(
       (candidate: {

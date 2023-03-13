@@ -27,9 +27,6 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     userId!,
     currentWorkspaceId
   )
-  if (!permission.assessments.read) {
-    return redirect(routes.unauthorized)
-  }
 
   const workspaces = await getWorkspaces(userId as string)
   invariant(params.testId, "testId not found")

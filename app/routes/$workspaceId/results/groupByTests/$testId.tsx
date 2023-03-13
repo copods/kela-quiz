@@ -24,9 +24,6 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     userId!,
     currentWorkspaceId!
   )
-  if (!permission.results.read) {
-    return redirect(routes.unauthorized)
-  }
 
   const url = new URL(request.url)
   const query = url.searchParams
