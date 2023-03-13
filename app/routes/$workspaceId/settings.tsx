@@ -95,7 +95,7 @@ export default function Settings() {
   const { currentWorkspaceId } = useLoaderData()
 
   useEffect(() => {
-    if (location.pathname === "/settings")
+    if (location.pathname === routes.settings)
       return navigate(routes.workspaceSetting)
   }, [navigate, location.pathname])
   useEffect(() => {

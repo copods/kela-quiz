@@ -9,6 +9,10 @@ const SettingsTabs = ({
 }) => {
   const { t } = useTranslation()
   const tabs = [
+    // {
+    //   name: t("tabs.general"),
+    //   route: `/${currentWorkspaceId}/settings/general`,
+    // },
     {
       name: t("tabs.workspaces"),
       route: `/${currentWorkspaceId}/settings/workspace`,
