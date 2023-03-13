@@ -6,6 +6,7 @@ import TestList from "~/components/tests/TestList"
 import { routes } from "~/constants/route.constants"
 import type { Test } from "~/interface/Interface"
 import { sortByOrder } from "~/interface/Interface"
+import { checkUserFeatureAuthorization } from "~/models/authorization.server"
 import {
   getCandidateByAssessmentId,
   deleteAssessmentById,
@@ -22,13 +23,23 @@ type LoaderData = {
   allTestsCount: number
   testsCurrentPage: number
   testsItemsPerPage: number
+  permission: { [key: string]: { [key: string]: boolean } }
 }
 export const loader: LoaderFunction = async ({ request, params }) => {
+  const userId = (await getUserId(request)) as string
+  const currentWorkspaceId = params.workspaceId as string
+
+  const permission = await checkUserFeatureAuthorization(
+    userId,
+    currentWorkspaceId
+  )
+  if (!permission.assessments.read) {
+    return redirect(routes.unauthorized)
+  }
+
   const query = new URL(request.url).searchParams
   const testsItemsPerPage = Math.max(Number(query.get("limit") || 5), 5) //To set the lower bound, so that minimum count will always be 1 for current page and 5 for items per page.
   const testsCurrentPage = Math.max(Number(query.get("page") || 1), 1)
-  const userId = await getUserId(request)
-  const currentWorkspaceId = params.workspaceId as string
   const workspaces = await getWorkspaces(userId as string)
   if (!userId) return redirect(routes.signIn)
   let tests: Array<Test> = []
@@ -64,6 +75,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
       allTestsCount,
       testsCurrentPage,
       testsItemsPerPage,
+      permission,
     })
   } catch (error: any) {
     if (error.status === 403) {
