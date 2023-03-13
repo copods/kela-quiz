@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next"
 
 import Button from "../common-components/Button"
 import InputField from "../common-components/InputField"
+import PasswordInputFields from "../common-components/PasswordInputField"
 import Checkbox from "../form/CheckBox"
 
 import Logo from "~/components/Logo"
@@ -78,8 +79,8 @@ function Login({ actionData, redirectTo }: LoginProps) {
     navigate(routes.forgotPassword)
   }
   return (
-    <div className="z-10 flex	min-h-480 w-full max-w-554 flex-col items-center justify-center rounded-lg bg-white px-24 drop-shadow-xl">
-      <div className="z-20 -mt-12 mb-6">
+    <div className="z-10 flex w-full max-w-554 flex-col items-center justify-center rounded-lg bg-white px-24 drop-shadow-xl">
+      <div className="z-20 -mt-8 mb-6">
         <Logo height="64" width="64" />
       </div>
       <div className="w-full">
@@ -99,7 +100,11 @@ function Login({ actionData, redirectTo }: LoginProps) {
         >
           <div className="flex flex-col gap-6">
             {inputFieldsProps.map((props) => {
-              return <InputField {...props} key={props.name} />
+              return props.type === "text" ? (
+                <InputField {...props} key={props.name} />
+              ) : (
+                <PasswordInputFields {...props} key={props.name} />
+              )
             })}
           </div>
           <div className="flex justify-between pt-4 pb-7">
@@ -142,11 +147,12 @@ function Login({ actionData, redirectTo }: LoginProps) {
               variant="primary-solid"
               className="h-11 w-full"
               value={"login"}
+              data-cy="submit"
             />
           </div>
         </Form>
       </div>
-      <div className="flex pt-6">
+      <div className="flex pt-6 pb-4">
         <div className="text-base font-medium text-gray-500">
           {t("logIn.dontHaveAnAccountYet")}{" "}
           <span

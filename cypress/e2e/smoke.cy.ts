@@ -62,11 +62,12 @@ describe("smoke tests", () => {
   it("Login form validations", () => {
     visitSignIn()
 
+    cy.wait(2000)
     // To check Invalid Email Error
     getEmail().type("test@copods.co")
     getPassword().type("kQuiz@copods")
-    cy.findByRole("button").click()
-    cy.wait(1000)
+    getSubmitBtn().click()
+    cy.wait(500)
     getPasswordError().should("have.text", "Incorrect email or password")
 
     // To clear fields
@@ -76,8 +77,8 @@ describe("smoke tests", () => {
     // To check Invalid Password Error
     getEmail().type("copods.demo.sendgrid@gmail.com")
     getPassword().type("anuragpate")
-    cy.findByRole("button").click()
-    cy.wait(1000)
+    getSubmitBtn().click()
+    cy.wait(500)
     getPasswordError().should("have.text", "Incorrect email or password")
 
     // To clear fields
@@ -87,7 +88,7 @@ describe("smoke tests", () => {
     // To login
     getEmail().type("copods.demo.sendgrid@gmail.com")
     getPassword().type("kQuiz@copods")
-    cy.findByRole("button").click()
+    getSubmitBtn().click()
     cy.wait(1000)
 
     // To check cookies
