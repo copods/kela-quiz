@@ -63,6 +63,7 @@ describe("smoke tests", () => {
     visitSignIn()
     cy.wait(2000)
 
+    cy.wait(2000)
     // To check Invalid Email Error
     getEmail().type("test@copods.co")
     getPassword().type("kQuiz@copods")

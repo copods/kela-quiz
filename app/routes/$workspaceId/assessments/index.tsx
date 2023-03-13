@@ -26,11 +26,11 @@ type LoaderData = {
   permission: { [key: string]: { [key: string]: boolean } }
 }
 export const loader: LoaderFunction = async ({ request, params }) => {
-  const userId = await getUserId(request)
+  const userId = (await getUserId(request)) as string
   const currentWorkspaceId = params.workspaceId as string
 
   const permission = await checkUserFeatureAuthorization(
-    userId!,
+    userId,
     currentWorkspaceId
   )
   if (!permission.assessments.read) {

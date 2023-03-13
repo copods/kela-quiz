@@ -150,6 +150,7 @@ const TestList = () => {
   const TestInvite = (data: Test, index: number) => {
     const menuItemsDetailsList = [
       {
+        show: testLoaderData.permission.assessments.delete,
         id: "Delete",
         menuListText: `${t("commonConstants.delete")}`,
         menuListIcon: "ic:outline-delete-outline",
@@ -182,7 +183,7 @@ const TestList = () => {
             menuIcon={"mdi:dots-vertical"}
             onItemClick={setShowDeletePopup}
             open={showDeletePopup}
-            menuDetails={menuItemsDetailsList}
+            menuDetails={menuItemsDetailsList.filter((items) => items.show)}
             aria-label={t("testTableItem.menu")}
             id={data.id}
             setId={setId}
@@ -274,20 +275,22 @@ const TestList = () => {
         >
           {t("testsConstants.assessments")}
         </h2>
-        <Button
-          className="px-5"
-          onClick={() =>
-            navigate(
-              `/${testLoaderData.currentWorkspaceId}${routes.addAssessment}`
-            )
-          }
-          id="add-test"
-          tabIndex={0}
-          variant="primary-solid"
-          title={t("testsConstants.addTestbutton")}
-          aria-label={t("testsConstants.addTestbutton")}
-          buttonText={`+ ${t("testsConstants.addTestbutton")}`}
-        />
+        {testLoaderData.permission.assessments.create && (
+          <Button
+            className="px-5"
+            onClick={() =>
+              navigate(
+                `/${testLoaderData.currentWorkspaceId}${routes.addAssessment}`
+              )
+            }
+            id="add-test"
+            tabIndex={0}
+            variant="primary-solid"
+            title={t("testsConstants.addTestbutton")}
+            aria-label={t("testsConstants.addTestbutton")}
+            buttonText={`+ ${t("testsConstants.addTestbutton")}`}
+          />
+        )}
       </header>
       {tests.length > 0 ? (
         <>
