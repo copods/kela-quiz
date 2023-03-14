@@ -19,14 +19,15 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const pageSize = Math.max(Number(query.get("pageSize") || 5), 5)
   const currentPage = Math.max(Number(query.get("page") || 1), 1)
   const statusFilter = query.get("filterByStatus") as string
+  const searchText = query.get("searchText") as string
   const candidatesCount = await getALLCandidatesOfTestCount(
     params.testId!,
-    statusFilter
+    statusFilter,
+    searchText
   )
   const userId = await getUserId(request)
   const currentWorkspaceId = params.workspaceId
   const workspaces = await getWorkspaces(userId as string)
-  const searchText = query.get("searchText") as string
   invariant(params.testId, "resultId not found")
   const candidatesOfTest = await getALLCandidatesOfTest({
     id: params.testId,

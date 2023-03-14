@@ -106,9 +106,10 @@ export const getTestResendLink = async ({
  */
 export const getALLCandidatesOfTestCount = async (
   id: string,
-  statusFilter: string
+  statusFilter: string,
+  searchText?: string
 ) => {
-  return await getAllCandidatesOfTestCount(id, statusFilter)
+  return await getAllCandidatesOfTestCount(id, statusFilter, searchText)
 }
 
 /**

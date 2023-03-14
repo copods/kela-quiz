@@ -63,6 +63,9 @@ const CandidateListOfTest = () => {
   const [currentPage, setCurrentPage] = useState(
     candidatesLoaderData.currentPage
   )
+  const [candidateCounts, setCandidateCounts] = useState(
+    candidatesLoaderData.candidatesCount
+  )
 
   useEffect(() => {
     setFilteredData(candidatesOfTest.candidateTest)
@@ -77,11 +80,13 @@ const CandidateListOfTest = () => {
         method: "get",
       }
     )
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchText])
 
   useEffect(() => {
     if (fetcher.data) {
       setFilteredData(fetcher.data.candidatesOfTest.candidateTest)
+      setCandidateCounts(fetcher.data.candidatesCount)
     }
   }, [fetcher.data])
 
@@ -353,7 +358,7 @@ const CandidateListOfTest = () => {
         setPageSize={setPageSize}
         currentPage={currentPage}
         onPageChange={setCurrentPage}
-        totalItems={candidatesLoaderData.candidatesCount}
+        totalItems={candidateCounts}
       />
     </div>
   )
