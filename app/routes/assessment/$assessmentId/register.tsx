@@ -1,7 +1,9 @@
 import type { LoaderFunction, ActionFunction } from "@remix-run/node"
+import { json } from "@remix-run/node"
 import { redirect } from "@remix-run/node"
 
 import CandidateRegister from "~/components/assessment/CandidateRegister"
+import { getCandidateDetailsIfExists } from "~/models/assessment.server"
 import {
   checkIfTestLinkIsValidAndRedirect,
   getCandidateIDFromAssessmentId,
@@ -14,12 +16,15 @@ export const loader: LoaderFunction = async ({ params, request }) => {
     params.assessmentId as string,
     "register"
   )
+  const candidateDetails = await getCandidateDetailsIfExists(
+    params.assessmentId as string
+  )
   if (typeof candidateNextRoute === "string") {
     return redirect(candidateNextRoute)
   } else if (candidateNextRoute === null) {
     throw new Response("Not Found", { status: 404 })
   }
-  return null
+  return json({ candidateDetails })
 }
 
 export const action: ActionFunction = async ({ params, request }) => {
