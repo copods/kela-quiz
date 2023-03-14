@@ -7,6 +7,7 @@ import invariant from "tiny-invariant"
 import CandidateListOfTest from "~/components/results/CandidateListOfTest"
 import { actions } from "~/constants/action.constants"
 import { routes } from "~/constants/route.constants"
+import { checkUserFeatureAuthorization } from "~/models/authorization.server"
 import {
   getDetailsOfCandidatePerPage,
   getCountofAllCandidatesOfTest,
@@ -16,13 +17,19 @@ import {
 import { getUserId } from "~/session.server"
 
 export const loader: LoaderFunction = async ({ request, params }) => {
+  const userId = await getUserId(request)
+  const currentWorkspaceId = params.workspaceId
+
+  const permission = await checkUserFeatureAuthorization(
+    userId!,
+    currentWorkspaceId!
+  )
+
   const url = new URL(request.url)
   const query = url.searchParams
   const pageSize = Math.max(Number(query.get("pageSize") || 5), 5)
   const currentPage = Math.max(Number(query.get("page") || 1), 1)
   const statusFilter = query.get("filterByStatus") as string
-  const userId = await getUserId(request)
-  const currentWorkspaceId = params.workspaceId
   const workspaces = await getWorkspaces(userId as string)
   invariant(params.testId, "resultId not found")
 
@@ -50,6 +57,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
       candidatesCount,
       currentPage,
       pageSize,
+      permission,
     })
   } catch (error: any) {
     if (error.status === 403) {
