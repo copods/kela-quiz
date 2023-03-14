@@ -50,7 +50,7 @@ const TestList = () => {
   const { setCustomStorage, getStoredValue } = useCommonContext()
   //sort filter data
   const [sortDirection, onSortDirectionChange] = useState(
-    sortByOrder.ascending as string
+    sortByOrder.desc as string
   )
 
   const sortByDetails = [
