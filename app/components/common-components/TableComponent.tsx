@@ -151,25 +151,19 @@ const Table = <T extends object>({
     return null
   }
   return (
-    <div style={{ maxHeight: "inherit" }}>
-      <div
-        id="table"
-        style={{ maxHeight: "inherit" }}
-        className={`border-t border-r border-l shadow ${
-          paginationEnabled ? "rounded-t-2xl" : "rounded-2xl"
-        }`}
-      >
-        <div id="table-head-row" className="flex rounded-t-2xl bg-gray-100">
-          {columns.map((header, index) => (
-            <HeaderDataCell
-              key={header.field + index}
-              width={header.width}
-              title={header.title}
-              index={index}
-              totalHeader={columns.length - 1}
-            />
-          ))}
-        </div>
+    <div className="flex h-full flex-1 flex-col overflow-hidden">
+      <div id="table-head-row" className="flex rounded-t-2xl  bg-gray-100">
+        {columns.map((header, index) => (
+          <HeaderDataCell
+            key={header.field + index}
+            width={header.width}
+            title={header.title}
+            index={index}
+            totalHeader={columns.length - 1}
+          />
+        ))}
+      </div>
+      <div className="max-h-full overflow-auto">
         {data.length === 0 ? (
           <TableEmptyState />
         ) : (
