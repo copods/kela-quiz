@@ -11,6 +11,7 @@ import invariant from "tiny-invariant"
 import SectionDetails from "~/components/sections/SectionDetails"
 import { routes } from "~/constants/route.constants"
 import { deleteQuestionStatus } from "~/interface/Interface"
+import { checkUserFeatureAuthorization } from "~/models/authorization.server"
 import {
   deleteTestQuestionById,
   getSectionDataById,
@@ -22,6 +23,14 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   try {
     const userId = await getUserId(request)
     const currentWorkspaceId = params.workspaceId as string
+    const permission = await checkUserFeatureAuthorization(
+      userId!,
+      currentWorkspaceId
+    )
+
+    if (!permission.questions.read) {
+      return redirect(routes.unauthorized)
+    }
     const sectionDetails = await getSectionDataById({
       id: params.sectionId,
       userId,
@@ -30,7 +39,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     if (!sectionDetails) {
       throw new Response("Not Found", { status: 404 })
     }
-    return json({ sectionDetails, currentWorkspaceId })
+    return json({ sectionDetails, currentWorkspaceId, permission })
   } catch (error: any) {
     if (error.status === 403) {
       return redirect(routes.unauthorized)
