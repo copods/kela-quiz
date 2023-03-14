@@ -250,9 +250,11 @@
     "incorrect": "Incorrect",
     "viewDetails": "View Details",
     "correctAnswer": "Correct Answer",
+    "correctAnswers": "Correct Answers",
     "copyLink": "Copy Link",
     "text": "TEXT",
     "givenAnswers": "Given Answers",
+    "givenAnswer": "Given Answer",
     "wrong": "Wrong"
   },
   "forgotPasswordConstants": {
