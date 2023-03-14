@@ -16,7 +16,7 @@ const QuestionCard = ({
   expandedIndex,
   onAccordianToggle,
   index,
-  permission,
+  deletePermission,
 }: {
   question: Question & {
     questionType?: QuestionType
@@ -24,7 +24,7 @@ const QuestionCard = ({
   expandedIndex: number
   onAccordianToggle: (e: number) => void
   index: number
-  permission: { [key: string]: { [key: string]: boolean } }
+  deletePermission: { [key: string]: { [key: string]: boolean } }
 }) => {
   const [openDeleteQuestionPopUp, setOpenDeleteQuestionPopUp] = useState(false)
   const [hoverState, setHoverState] = useState(false)
@@ -80,7 +80,7 @@ const QuestionCard = ({
         </div>
         <div className="flex min-w-fit items-center justify-between lg:flex-1 lg:justify-end lg:gap-2">
           <div className="flex items-center">
-            {permission && hoverState ? (
+            {deletePermission && hoverState ? (
               <Icon
                 tabIndex={0}
                 data-cy="delete-question"

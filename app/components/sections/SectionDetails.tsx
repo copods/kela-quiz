@@ -100,7 +100,7 @@ const SectionDetails = () => {
               expandedIndex={currentAccordian}
               onAccordianToggle={setCurrentAccordian}
               index={i}
-              permission={sectionDetails.permission.questions.delete}
+              deletePermission={sectionDetails.permission.questions.delete}
             />
           )
         })

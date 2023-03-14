@@ -98,82 +98,81 @@ const SectionCard = ({
         <h2 className="sectionName break-all text-xl font-semibold text-gray-700">
           {name}
         </h2>
-        {data.permission.tests.delete ||
-          (data.permission.tests.update && (
-            <div className="flex">
-              <Menu
-                as="div"
-                className="verticalDots relative inline-block text-left"
-              >
-                <Menu.Button id="menu-button" className={id}>
-                  <Icon
-                    className="text-2xl text-gray-600"
-                    icon={"mdi:dots-vertical"}
-                  />
-                </Menu.Button>
-                <Menu.Items className="absolute right-0 mt-2 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5">
-                  <div className="py-1">
-                    <Menu.Item>
-                      {({ active }) => (
-                        <div className="flex flex-col gap-1">
-                          {data.permission.tests.update && (
-                            <button
-                              tabIndex={0}
-                              id="edit-test-button"
-                              data-cy="edit-section"
-                              className="text-gray-primary undefined inline-flex w-36 items-center justify-start bg-white px-2 py-2 text-xs font-medium text-primary transition delay-75 ease-in-out hover:bg-gray-100"
-                              onClick={() => {
-                                setEditMode(true)
-                                setEditItem({
-                                  name: name,
-                                  description: description,
-                                })
-                              }}
-                              name="editSection"
-                              title={t("commonConstants.edit")}
-                            >
-                              <>
-                                <Icon
-                                  icon={"material-symbols:edit-outline-sharp"}
-                                  className="mr-2 h-5 w-5
+        {(data.permission.tests.delete || data.permission.tests.update) && (
+          <div className="flex">
+            <Menu
+              as="div"
+              className="verticalDots relative inline-block text-left"
+            >
+              <Menu.Button id="menu-button" className={id}>
+                <Icon
+                  className="text-2xl text-gray-600"
+                  icon={"mdi:dots-vertical"}
+                />
+              </Menu.Button>
+              <Menu.Items className="absolute right-0 mt-2 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5">
+                <div className="py-1">
+                  <Menu.Item>
+                    {({ active }) => (
+                      <div className="flex flex-col gap-1">
+                        {data.permission.tests.update && (
+                          <button
+                            tabIndex={0}
+                            id="edit-test-button"
+                            data-cy="edit-section"
+                            className="text-gray-primary undefined inline-flex w-36 items-center justify-start bg-white px-2 py-2 text-xs font-medium text-primary transition delay-75 ease-in-out hover:bg-gray-100"
+                            onClick={() => {
+                              setEditMode(true)
+                              setEditItem({
+                                name: name,
+                                description: description,
+                              })
+                            }}
+                            name="editSection"
+                            title={t("commonConstants.edit")}
+                          >
+                            <>
+                              <Icon
+                                icon={"material-symbols:edit-outline-sharp"}
+                                className="mr-2 h-5 w-5
                         text-black"
-                                  aria-hidden="true"
-                                />
-                                {t("commonConstants.edit")}
-                              </>
-                            </button>
-                          )}
-                          {data.permission.tests.delete && (
-                            <button
-                              tabIndex={0}
-                              id="delete-test-button"
-                              data-cy="delete-section"
-                              className="text-gray-primary undefined inline-flex w-36 items-center justify-start bg-white px-2 py-2 text-xs font-medium text-primary transition delay-75 ease-in-out hover:bg-gray-100"
-                              onClick={() => {
-                                setIsDelete(true)
-                              }}
-                              name="deleteSection"
-                              title={t("commonConstants.delete")}
-                            >
-                              <>
-                                <Icon
-                                  icon={"ic:outline-delete-outline"}
-                                  className="mr-2 h-5 w-5
+                                aria-hidden="true"
+                              />
+                              {t("commonConstants.edit")}
+                            </>
+                          </button>
+                        )}
+                        {data.permission.tests.delete && (
+                          <button
+                            tabIndex={0}
+                            id="delete-test-button"
+                            data-cy="delete-section"
+                            className="text-gray-primary undefined inline-flex w-36 items-center justify-start bg-white px-2 py-2 text-xs font-medium text-primary transition delay-75 ease-in-out hover:bg-gray-100"
+                            onClick={() => {
+                              setIsDelete(true)
+                            }}
+                            name="deleteSection"
+                            title={t("commonConstants.delete")}
+                          >
+                            <>
+                              <Icon
+                                icon={"ic:outline-delete-outline"}
+                                className="mr-2 h-5 w-5
                         text-red-500"
-                                  aria-hidden="true"
-                                />
-                                {t("commonConstants.delete")}
-                              </>
-                            </button>
-                          )}
-                        </div>
-                      )}
-                    </Menu.Item>
-                  </div>
-                </Menu.Items>
-              </Menu>
-            </div>
-          ))}
+                                aria-hidden="true"
+                              />
+                              {t("commonConstants.delete")}
+                            </>
+                          </button>
+                        )}
+                      </div>
+                    )}
+                  </Menu.Item>
+                </div>
+              </Menu.Items>
+            </Menu>
+          </div>
+        )}
       </div>
       <div className="flex text-xs text-gray-400">
         <span>By {createdBy}</span>
