@@ -79,7 +79,7 @@ describe("result details", () => {
     getGivenAnswer()
       .should("be.visible")
       .should("have.class", "text-xl font-medium text-gray-800")
-      .should("have.text", "Given Answer")
+      .should("have.text", "Given Answers")
       .parent()
       .within(() => {
         getChipTag().should(
