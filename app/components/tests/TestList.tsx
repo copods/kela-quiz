@@ -50,7 +50,7 @@ const TestList = () => {
   const { setCustomStorage, getStoredValue } = useCommonContext()
   //sort filter data
   const [sortDirection, onSortDirectionChange] = useState(
-    sortByOrder.ascending as string
+    sortByOrder.desc as string
   )
 
   const sortByDetails = [
@@ -250,7 +250,11 @@ const TestList = () => {
 
   useEffect(() => {
     setCustomStorage("assessmentSort", sortBy)
-    onSortDirectionChange(sortByOrder.ascending)
+    if (sortBy === sortByDetails[0].value) {
+      onSortDirectionChange(sortByOrder.ascending)
+    } else if (sortBy === sortByDetails[1].value) {
+      onSortDirectionChange(sortByOrder.desc)
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sortBy])
 
