@@ -161,6 +161,7 @@ describe("Visiting Assessment", () => {
       })
 
     // To check sort by date in descending
+    getSortFilterBody().get("#ascend").click()
     getSortFilterBody().get("#descend").click()
     sortFilterContainer().within(() => {
       getDropdownButton()
