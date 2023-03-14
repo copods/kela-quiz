@@ -108,7 +108,7 @@ describe("result details", () => {
       .first()
       .should("be.visible")
       .should("have.class", "text-xl font-medium text-gray-800")
-      .should("have.text", "Given Answer")
+      .should("have.text", "Given Answers")
       .parent()
       .within(() => {
         getChipTag().should(
@@ -122,7 +122,7 @@ describe("result details", () => {
       .eq(1)
       .should("be.visible")
       .should("have.class", "text-xl font-medium text-gray-800")
-      .should("have.text", "Given Answers")
+      .should("have.text", "Given Answer")
       .parent()
       .within(() => {
         getChipTag().should(
