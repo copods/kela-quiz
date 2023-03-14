@@ -126,19 +126,6 @@ describe("Visiting Assessment", () => {
         }
       })
 
-    // To check sort by name in descending
-    getSortFilterBody().get("#descend").click()
-    cy.get(".dropdownButton span span", { timeout: 6000 })
-      .invoke("text")
-      .then((el) => {
-        if (el === "Name") {
-          getTestNameNavigation().then(($elements) => {
-            let strings = [...$elements].map(($el) => $el.innerText)
-            expect(strings).to.deep.equal(strings.reverse())
-          })
-        }
-      })
-
     // To check sort by date in ascending
     getSortFilterBody().get("#ascend").click()
     sortFilterContainer().within(() => {
@@ -156,6 +143,19 @@ describe("Visiting Assessment", () => {
           getTestNameNavigation().then(($elements) => {
             let strings = [...$elements].map(($el) => $el.innerText)
             expect(strings).to.deep.equal(strings.sort())
+          })
+        }
+      })
+
+    // To check sort by name in descending
+    getSortFilterBody().get("#descend").click()
+    cy.get(".dropdownButton span span", { timeout: 6000 })
+      .invoke("text")
+      .then((el) => {
+        if (el === "Name") {
+          getTestNameNavigation().then(($elements) => {
+            let strings = [...$elements].map(($el) => $el.innerText)
+            expect(strings).to.deep.equal(strings.reverse())
           })
         }
       })
