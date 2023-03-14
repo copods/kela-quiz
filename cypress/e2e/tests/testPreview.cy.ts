@@ -25,6 +25,7 @@ describe("Test for testPreview", () => {
     cy.customVisit("/members")
   })
   it("checks preview data", () => {
+    cy.viewport(2000, 1000)
     getTests().click()
     cy.location("pathname", { timeout: 60000 }).should(
       "include",
