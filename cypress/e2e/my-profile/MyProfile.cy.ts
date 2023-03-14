@@ -25,7 +25,7 @@ const userDetails = [
 ]
 
 const userNewDetails = ["Arpita", "Gupta"]
-const userAvatarText = "AG"
+const userAvatarText = "CC"
 
 describe("Test For MyProfile", () => {
   beforeEach("sign-in", () => {
@@ -87,6 +87,7 @@ describe("Test For MyProfile", () => {
 
     //On Clicking of Edit Save
     //visibility of Save button and Cancel button
+    cy.wait(1000)
     getEditProfileButton().click()
     getSaveButton().should("be.visible")
     getCancelButton().should("be.visible")
@@ -131,19 +132,20 @@ describe("Test For MyProfile", () => {
 
     //Check if user Details are submitting properly
     getEditProfileButton().click()
-    getFirstNameInput().clear().type(userNewDetails[0])
-    getLastNameInput().clear().type(userNewDetails[1])
+    getFirstNameInput().clear().type(userDetails[0].name)
+    getLastNameInput().clear().type(userDetails[1].name)
     getSaveButton().click()
     getToaster().should("have.text", "User Profile is Updated successfully")
     getSideNavUserName().should(
       "have.text",
-      `${userNewDetails[0]} ${userNewDetails[1]}`
+      `${userDetails[0].name} ${userDetails[1].name}`
     )
     getSideNavUserAvatar().should("have.text", userAvatarText)
 
     //Resetting the userdetails
     getSideNavFooterDropdownButton().click()
     getMyProfileButton().click()
+    cy.wait(1000)
     getEditProfileButton().click()
     getFirstNameInput().clear().type(userDetails[0].name)
     getLastNameInput().clear().type(userDetails[1].name)
