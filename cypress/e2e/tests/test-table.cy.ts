@@ -127,7 +127,6 @@ describe("Visiting Assessment", () => {
       })
 
     // To check sort by name in descending
-    getSortFilterBody().get("#ascend").click()
     getSortFilterBody().get("#descend").click()
     cy.get(".dropdownButton span span", { timeout: 6000 })
       .invoke("text")
