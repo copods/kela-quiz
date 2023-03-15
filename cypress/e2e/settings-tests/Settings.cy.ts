@@ -16,7 +16,7 @@ describe("Test for settings", () => {
     // To check location and title
     getSettings().should("have.text", settings).click()
     cy.location("pathname").should("include", "/settings/workspace")
-    cy.get("h1").should("have.text", settings)
+    cy.get("h2").should("have.text", settings)
 
     // To check title classes
     getH2().should("to.have.class", "text-3xl font-bold")
