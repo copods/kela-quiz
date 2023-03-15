@@ -24,7 +24,7 @@ const QuestionCard = ({
   expandedIndex: number
   onAccordianToggle: (e: number) => void
   index: number
-  deletePermission: { [key: string]: { [key: string]: boolean } }
+  deletePermission: boolean
 }) => {
   const [openDeleteQuestionPopUp, setOpenDeleteQuestionPopUp] = useState(false)
   const [hoverState, setHoverState] = useState(false)
