@@ -1,7 +1,7 @@
 import {
-  getH2,
   getHr,
   getSettings,
+  getSettingsHeading,
   getWorkspaces,
 } from "support/common-function"
 const settings = "Settings"
@@ -16,10 +16,10 @@ describe("Test for settings", () => {
     // To check location and title
     getSettings().should("have.text", settings).click()
     cy.location("pathname").should("include", "/settings/workspace")
-    cy.get("h2").should("have.text", settings)
+    getSettingsHeading().should("have.text", settings)
 
     // To check title classes
-    getH2().should("to.have.class", "text-3xl font-bold")
+    getSettingsHeading().should("to.have.class", "text-3xl font-bold")
 
     // To check active tab is workspace
     getWorkspaces().should("have.text", workspace).click()
