@@ -178,14 +178,14 @@ const ResetPassword = ({
             )
           })}
         </div>
-        {newPassword ? (
+        {newPassword && (
           <span className="flex gap-1 text-sm">
             {t("commonConstants.passwordStrength")}:
             <span className={getPasswordStrengthColor(passwordStrength)}>
               {passwordStrength}
             </span>
           </span>
-        ) : null}
+        )}
         <div className="mt-6 flex items-center justify-center">
           <Button
             tabIndex={0}
