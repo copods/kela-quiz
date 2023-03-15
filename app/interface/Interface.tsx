@@ -2,15 +2,17 @@ import type React from "react"
 
 export interface InputFieldProps {
   name: string
-  label: string
-  placeholder: string
-  type: string
+  label?: string
+  placeholder?: string
+  type?: string
   isRequired?: boolean
   required: boolean
   value: string
   error?: string
   errorId: string
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  helperText?: React.ReactNode
+  maxLength?: number
 }
 
 export interface PasswordFieldProps {
@@ -410,8 +412,15 @@ export interface ChipComponent {
   warning: string
 }
 
-export interface headerProps {
+export interface HeaderProps {
   id: string
   heading: string
+  size?: string
   rightChildren?: React.ReactNode
+}
+
+export interface SettingWorkspace {
+  id: string
+  workspace: { name: string }
+  workspaceId: string
 }

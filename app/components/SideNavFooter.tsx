@@ -1,13 +1,50 @@
-import { Icon } from "@iconify/react"
-import { Form } from "@remix-run/react"
+import { useState } from "react"
+
+import { useFetcher, useNavigate } from "@remix-run/react"
 import { useTranslation } from "react-i18next"
 
-import Button from "./common-components/Button"
+import ListActionMenu from "../components/ListActionMenu"
 
+import { routes } from "~/constants/route.constants"
 import { useUser } from "~/utils"
 
-function Footer() {
+function Footer({
+  currentWorkspaceId,
+  openResetPassModel,
+  setOpenResetPassModel,
+}: {
+  currentWorkspaceId: string
+  openResetPassModel: boolean
+  setOpenResetPassModel: (e: boolean) => void
+}) {
   const { t } = useTranslation()
+  const navigate = useNavigate()
+  const fetcher = useFetcher()
+
+  const [menuListOpen, setmenuListOpen] = useState<boolean>(false)
+  const [menuOpeningClosing, setMenuOpeningClosing] = useState<boolean>(false)
+
+  const menuItemsDetailsList = [
+    {
+      id: "my-profile",
+      menuListText: t("commonConstants.myProfile"),
+      handleItemAction: () =>
+        navigate(`/${currentWorkspaceId}${routes.myProfile}`),
+    },
+    {
+      id: "change-password",
+      menuListText: t("commonConstants.changePassword"),
+      handleItemAction: () => {
+        setOpenResetPassModel(!openResetPassModel)
+      },
+    },
+    {
+      id: "logout",
+      menuListText: t("commonConstants.logout"),
+      handleItemAction: () =>
+        fetcher.submit({}, { method: "post", action: "/logout" }),
+    },
+  ]
 
   const user = useUser()
   return (
@@ -39,22 +76,25 @@ function Footer() {
             </p>
           </div>
         </div>
-        <Form action="/logout" method="post">
-          <Button
-            tabIndex={0}
-            type="submit"
-            id="logout-button"
-            variant="secondary-solid"
-            padding="px-2"
-            title={t("commonConstants.logout")}
-            buttonText={
-              <Icon
-                icon="mdi:logout-variant"
-                className="relative h-5 w-5 text-gray-50"
-              />
-            }
-          />
-        </Form>
+        <ListActionMenu
+          menuIcon={
+            menuOpeningClosing
+              ? "ic:baseline-arrow-drop-up"
+              : "gridicons:dropdown"
+          }
+          menuOpeningClosing={menuOpeningClosing}
+          setMenuOpeningClosing={setMenuOpeningClosing}
+          onItemClick={setmenuListOpen}
+          open={menuListOpen}
+          aria-label={t("testTableItem.menu")}
+          id={"sidenav-footer-menu"}
+          menuDetails={menuItemsDetailsList}
+          dataCyID={"sidenav-footer-menu"}
+          customClasses={{
+            item: "text-gray-primary text-sm w-40",
+            itemsContainer: "border border-gray-300 shadow-md p-1",
+          }}
+        />
       </div>
     </div>
   )

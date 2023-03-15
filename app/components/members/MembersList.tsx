@@ -124,7 +124,7 @@ export default function MembersList({
     <div className="z-10 text-base">
       <Table
         columns={
-          currentLoggedInUserData[0].userWorkspace[0]?.role.id !== adminRoleId
+          currentLoggedInUserData[0]?.userWorkspace[0]?.role.id !== adminRoleId
             ? membersColumn.filter((column) => column.title !== "Action")
             : membersColumn
         }

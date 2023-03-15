@@ -12,7 +12,9 @@ import Workspace from "~/components/settings/Workspace"
 import {
   getActiveOwnerWorkspaces,
   getActiveWorkspaceOwner,
+  getUserWorkspaceService,
   leaveActiveWorkspace,
+  updateCurrentUserWorkspace,
 } from "~/services/workspace.service"
 import { getUserId } from "~/session.server"
 
@@ -20,6 +22,7 @@ interface LoaderData {
   workspaceOwner: Awaited<ReturnType<typeof getActiveWorkspaceOwner>>
   ownersWorkspaces: Awaited<ReturnType<typeof getActiveOwnerWorkspaces>>
   currentWorkspaceId: string
+  userWorkspaces: Awaited<ReturnType<typeof getUserWorkspaceService>>
 }
 
 export const loader: LoaderFunction = async ({ request, params }) => {
@@ -27,24 +30,56 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const userId = (await getUserId(request)) as string
   const workspaceOwner = await getActiveWorkspaceOwner(currentWorkspaceId)
   const ownersWorkspaces = await getActiveOwnerWorkspaces(userId)
+  const userWorkspaces = await getUserWorkspaceService(userId)
   return json<LoaderData>({
     workspaceOwner,
     ownersWorkspaces,
     currentWorkspaceId,
+    userWorkspaces,
   })
 }
+
+const actionConstants = {
+  leaveWorksapce: "leaveWorkspace",
+  updateWorkspace: "updateWorkspace",
+  updateUserWorkspace: "updateUserWorkspace",
+}
+
 export const action: ActionFunction = async ({ request, params }) => {
   const workspaceId = params.workspaceId as string
   const userId = (await getUserId(request)) as string
-  const response = await leaveActiveWorkspace(workspaceId, userId)
-  return response
+  const formData = await request.formData()
+
+  const action =
+    formData.get(actionConstants.updateWorkspace) ||
+    formData.get(actionConstants.leaveWorksapce)
+
+  if (action === actionConstants.updateUserWorkspace) {
+    const name = formData.get("name") as string
+    const workspaceId = formData.get("workspaceId") as string
+    const updateWorkspace = await updateCurrentUserWorkspace(
+      workspaceId,
+      name,
+      userId
+    )
+    return updateWorkspace
+  } else if (action === actionConstants.leaveWorksapce) {
+    const response = await leaveActiveWorkspace(workspaceId, userId)
+    return response
+  }
 }
 const WorkspaceSetting = () => {
   const actionData = useActionData()
   const workspaceLoaderData = useLoaderData()
   const navigate = useNavigate()
+
   useEffect(() => {
-    if (actionData?.resp?.status === 200) {
+    if (
+      actionData?.resp?.status === 200 &&
+      actionData?.resp?.title === "settings.workspaceUpdated"
+    ) {
+      toast.success(t(actionData?.resp?.title))
+    } else if (actionData?.resp?.status === 200) {
       toast.success(t(actionData?.resp?.title))
       navigate(`/${workspaceLoaderData?.ownersWorkspace?.id}${routes.members}`)
     } else if (actionData?.resp?.status === 400) {

@@ -83,7 +83,11 @@
     "items": "Items",
     "onGoing": "Ongoing",
     "notAttempted": "Not attempted",
-    "switchAccount": "Switch Account"
+    "switchAccount": "Switch Account",
+    "myProfile": "My Profile",
+    "save": "Save",
+    "saving": "Saving...",
+    "changePassword": "Change Password"
   },
   "sideNav": {
     "sideNavHeading": "Quiz",
@@ -192,6 +196,7 @@
     "selectCorrOption": "Select the Correct Option",
     "descIsReq": "Description is required",
     "nameIsReq": "Name is required",
+    "workspaceNameIsReq": "Workspace name is required",
     "testAddedSuccess": "Test added successfully..!",
     "testUpdatedSuccess": "Test updated sucessfully..!",
     "maxOptions": "you can add maximum six options.",
@@ -245,9 +250,11 @@
     "incorrect": "Incorrect",
     "viewDetails": "View Details",
     "correctAnswer": "Correct Answer",
+    "correctAnswers": "Correct Answers",
     "copyLink": "Copy Link",
     "text": "TEXT",
     "givenAnswers": "Given Answers",
+    "givenAnswer": "Given Answer",
     "wrong": "Wrong"
   },
   "forgotPasswordConstants": {
@@ -314,7 +321,8 @@
     "workspaceNameIsRequired": "Workspace name is required",
     "memberAlreadyInvited": "Member already invited",
     "cannotAddTestZeroQuestion": "Cannot add test with 0 questions.",
-    "notAdMoreThanAvailableQuestion": "Cannot add more than available questions"
+    "notAdMoreThanAvailableQuestion": "Cannot add more than available questions",
+    "userProfileUpdatedSuccessfully": "User Profile Updated successfully"
   },
   "otpConstants": {
     "header": "OTP Verification",
@@ -340,16 +348,23 @@
     "passShouldNotBeSame": "Current Password and New Password should not be same",
     "leaveWorkspace": "Leave workspace",
     "leave": "Leave",
-    "leaveWorkspaceConfirmation": "Are you sure you want to leave this workspace?"
+    "leaveWorkspaceConfirmation": "Are you sure you want to leave this workspace?",
+    "workspaceUpdated": "Workspace updated sucessfully..!"
   },
   "tabs": {
     "general": "General",
     "workspaces": "Workspaces"
   },
-  "404": {
+  "notFound": {
     "error": "That's an error.",
     "notFound": "Not Found",
     "urlNotFound": "The requested URL was not found on this server.",
     "gotoDashboard": "GoTo Dashboard"
+  },
+  "emptyStateConstants": {
+    "noQuestionsState": "Add Questions to this Test",
+    "noTestsState": "No Tests to show",
+    "noAssessmentsState": "No Assessments to show",
+    "noResultsState": "No Results to show"
   }
 }

@@ -10,7 +10,10 @@ export const routes = {
   resultGroupTest: "/results/groupByTests",
   members: "/members",
   generalSettings: "/settings/general",
+  workspaceSetting: "/settings/workspace",
   settings: "/settings",
   forgotPassword: "/forgot-password",
   endExam: "/end-assessment",
+  myProfile: "/my-profile",
+  logout: "/logout",
 }

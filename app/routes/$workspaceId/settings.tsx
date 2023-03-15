@@ -12,6 +12,8 @@ import {
 } from "@remix-run/react"
 import { useTranslation } from "react-i18next"
 
+import { version } from "package.json"
+import Header from "~/components/header/Header"
 import SettingsTabs from "~/components/settings/SettingTab"
 import { actions } from "~/constants/action.constants"
 import { routes } from "~/constants/route.constants"
@@ -93,27 +95,33 @@ export default function Settings() {
   const { currentWorkspaceId } = useLoaderData()
 
   useEffect(() => {
-    if (location.pathname === "/settings") return navigate("/settings/general")
+    if (location.pathname === routes.settings)
+      return navigate(routes.workspaceSetting)
   }, [navigate, location.pathname])
   useEffect(() => {
     const heading = document.getElementById("settings-heading")
     heading?.focus()
   }, [])
+
+  const VersionOfApplication = () => {
+    const splitVersionText = version.split("-development")
+    return (
+      <span className="text-base font-normal text-gray-600">
+        {`${t("settings.version")} ${splitVersionText[0]}`}
+      </span>
+    )
+  }
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex items-center justify-between">
-        <h1
-          id="settings-heading"
-          tabIndex={0}
-          role={t("commonConstants.settings")}
-          aria-label={t("commonConstants.settings")}
-          className="text-3xl font-bold"
-        >
-          {t("commonConstants.settings")}
-        </h1>
+      <Header
+        id="settings-heading"
+        heading={t("commonConstants.settings")}
+        rightChildren={<VersionOfApplication />}
+      />
+      <div className="flex flex-col gap-5">
+        <SettingsTabs currentWorkspaceId={currentWorkspaceId} />
+        <Outlet />
       </div>
-      <SettingsTabs currentWorkspaceId={currentWorkspaceId} />
-      <Outlet />
     </div>
   )
 }

@@ -9,12 +9,7 @@ import Table from "../common-components/TableComponent"
 
 import { useCommonContext } from "~/context/Common.context"
 import { sortByOrder } from "~/interface/Interface"
-import type {
-  CandidateTest,
-  tableColumnType,
-  OtherFilters,
-  Test,
-} from "~/interface/Interface"
+import type { tableColumnType, OtherFilters, Test } from "~/interface/Interface"
 
 const sortByDetails = [
   {
@@ -67,16 +62,6 @@ const GroupByTests = () => {
   )
 
   const candidateTests = candidateTestData.candidateTest
-  const candidateTestsArray = candidateTests.filter(
-    (
-      items: Test & {
-        count?: number | undefined
-        candidateTest?: CandidateTest
-      }
-    ) => {
-      return items.candidateTest?.length !== 0 || items.deleted === false
-    }
-  )
 
   useEffect(() => {
     const heading = document.getElementById("heading")
@@ -181,6 +166,14 @@ const GroupByTests = () => {
     setResultsCurrentPage(candidateTestData.resultsCurrentPage)
   }, [candidateTestData.resultsCurrentPage])
 
+  useEffect(() => {
+    if (sortBy === sortByDetails[0].value) {
+      onSortDirectionChange(sortByOrder.ascending)
+    } else if (sortBy === sortByDetails[1].value) {
+      onSortDirectionChange(sortByOrder.desc)
+    }
+  }, [sortBy])
+
   return (
     <div
       className="flex h-full flex-col gap-6 p-1"
@@ -205,7 +198,7 @@ const GroupByTests = () => {
               onSortDirectionChange={onSortDirectionChange}
               sortBy={sortBy}
               onSortChange={onSortChange}
-              totalItems={candidateTestsArray.length}
+              totalItems={candidateTestData.testCount}
               showSelected={false}
               otherFilters={otherFilters}
             />
@@ -222,7 +215,7 @@ const GroupByTests = () => {
           />
         </div>
       ) : (
-        <EmptyStateComponent />
+        <EmptyStateComponent text={t("emptyStateConstants.noResultsState")} />
       )}
     </div>
   )

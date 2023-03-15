@@ -184,6 +184,9 @@ const TestList = () => {
             aria-label={t("testTableItem.menu")}
             id={data.id}
             setId={setId}
+            customClasses={{
+              item: "text-primary text-xs w-36 shadow-sm",
+            }}
           />
         </div>
         {id === data.id && (
@@ -247,6 +250,11 @@ const TestList = () => {
 
   useEffect(() => {
     setCustomStorage("assessmentSort", sortBy)
+    if (sortBy === sortByDetails[0].value) {
+      onSortDirectionChange(sortByOrder.ascending)
+    } else if (sortBy === sortByDetails[1].value) {
+      onSortDirectionChange(sortByOrder.desc)
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sortBy])
 
@@ -311,7 +319,9 @@ const TestList = () => {
           </div>
         </>
       ) : (
-        <EmptyStateComponent />
+        <EmptyStateComponent
+          text={t("emptyStateConstants.noAssessmentsState")}
+        />
       )}
       <InviteCandidatePopup
         openInvitePopup={candidatePopupOpen}

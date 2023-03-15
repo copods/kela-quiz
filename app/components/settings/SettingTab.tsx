@@ -9,17 +9,20 @@ const SettingsTabs = ({
 }) => {
   const { t } = useTranslation()
   const tabs = [
-    {
-      name: t("tabs.general"),
-      route: `/${currentWorkspaceId}/settings/general`,
-    },
+    // {
+    //   name: t("tabs.general"),
+    //   route: `/${currentWorkspaceId}/settings/general`,
+    // },
     {
       name: t("tabs.workspaces"),
       route: `/${currentWorkspaceId}/settings/workspace`,
     },
   ]
   return (
-    <div className="tabsWrapper flex gap-5">
+    <div
+      className="tabsWrapper flex border-b-2 border-solid
+     border-gray-300"
+    >
       {tabs.map((tab, i) => {
         return <TabComponent key={i} tab={tab} />
       })}

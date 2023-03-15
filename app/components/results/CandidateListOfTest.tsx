@@ -3,7 +3,13 @@ import { useEffect, useState } from "react"
 import moment from "moment"
 
 import { Icon } from "@iconify/react"
-import { Link, useActionData, useNavigate, useSubmit } from "@remix-run/react"
+import {
+  Link,
+  useActionData,
+  useFetcher,
+  useNavigate,
+  useSubmit,
+} from "@remix-run/react"
 import { useLoaderData } from "@remix-run/react"
 import { useTranslation } from "react-i18next"
 import { toast } from "react-toastify"
@@ -43,6 +49,7 @@ const CandidateListOfTest = () => {
   const { t } = useTranslation()
   let navigate = useNavigate()
   const submit = useSubmit()
+  const fetcher = useFetcher()
   const actionData = useActionData()
   const [menuListOpen, setmenuListOpen] = useState<boolean>(false)
   const [searchText, setSearchText] = useState("")
@@ -51,21 +58,37 @@ const CandidateListOfTest = () => {
       ? getStoredValue("candidateListFilter")?.value
       : filterByStatus[0].value
   )
-
-  const filteredData =
-    candidatesLoaderData.candidatesOfTest.candidateTest?.filter(
-      (candidate: {
-        candidate: { firstName: string; lastName: string; email: string }
-      }) => {
-        return `${candidate?.candidate?.firstName} ${candidate?.candidate?.lastName} ${candidate?.candidate?.email}`
-          .toLowerCase()
-          .includes(searchText.toLowerCase())
-      }
-    )
+  let [filteredData, setFilteredData] = useState(candidatesOfTest.candidateTest)
   const [pageSize, setPageSize] = useState(5)
   const [currentPage, setCurrentPage] = useState(
     candidatesLoaderData.currentPage
   )
+  const [candidateCounts, setCandidateCounts] = useState(
+    candidatesLoaderData.candidatesCount
+  )
+
+  useEffect(() => {
+    setFilteredData(candidatesOfTest.candidateTest)
+  }, [candidatesOfTest.candidateTest])
+
+  useEffect(() => {
+    fetcher.submit(
+      {
+        searchText: searchText,
+      },
+      {
+        method: "get",
+      }
+    )
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchText])
+
+  useEffect(() => {
+    if (fetcher.data) {
+      setFilteredData(fetcher.data.candidatesOfTest.candidateTest)
+      setCandidateCounts(fetcher.data.candidatesCount)
+    }
+  }, [fetcher.data])
 
   useEffect(() => {
     navigate(`?page=${1}&pageSize=${pageSize}&filterByStatus=${statusFilter}`, {
@@ -237,6 +260,9 @@ const CandidateListOfTest = () => {
               aria-label={t("testTableItem.menu")}
               id={data.id}
               menuDetails={menuItemsDetailsList}
+              customClasses={{
+                item: "text-primary text-xs w-36 shadow-sm",
+              }}
             />
           )}
         </div>
@@ -310,7 +336,9 @@ const CandidateListOfTest = () => {
           placeholder={t("testsConstants.searchCandidate")}
           title={t("testsConstants.searchCandidate")}
           className="h-11 w-48 rounded-lg border px-5 pl-8 text-sm shadow-sm focus:outline-dotted"
-          onChange={(e) => setSearchText(e.target.value)}
+          onChange={(e) => {
+            setSearchText(e.target.value)
+          }}
         />
         <div className="w-36">
           <DropdownField
@@ -330,7 +358,7 @@ const CandidateListOfTest = () => {
         setPageSize={setPageSize}
         currentPage={currentPage}
         onPageChange={setCurrentPage}
-        totalItems={candidatesLoaderData.candidatesCount}
+        totalItems={candidateCounts}
       />
     </div>
   )
