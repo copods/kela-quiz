@@ -20,15 +20,17 @@ const getFormatedTime = (testTimeList: Array<{ timeInSeconds: number }>) => {
 
   const timeInHoursAndMinutes = getHoursAndMinutes(totalTimeInSeconds)
 
-  return `${timeInHoursAndMinutes.h
-    ? timeInHoursAndMinutes.h +
-    (timeInHoursAndMinutes.h === 1 ? " Hour" : " Hours")
-    : ""
-    } ${timeInHoursAndMinutes.m
-      ? timeInHoursAndMinutes.m +
-      (timeInHoursAndMinutes.m === 1 ? " Minute" : " Minutes")
+  return `${
+    timeInHoursAndMinutes.h
+      ? timeInHoursAndMinutes.h +
+        (timeInHoursAndMinutes.h === 1 ? " Hour" : " Hours")
       : ""
-    }`
+  } ${
+    timeInHoursAndMinutes.m
+      ? timeInHoursAndMinutes.m +
+        (timeInHoursAndMinutes.m === 1 ? " Minute" : " Minutes")
+      : ""
+  }`
 }
 
 export async function createIndividualCandidate({
