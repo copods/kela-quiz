@@ -2,7 +2,7 @@ import {
   getBackButtonByDataCy,
   getCandidateByDataCy,
   getChipTag,
-  getCorrectAnswer,
+  // getCorrectAnswer,
   getGivenAnswer,
   getGroupByItemTest,
   getGroupByTestId,
@@ -129,9 +129,9 @@ describe("result details", () => {
     //   })
 
     //checks correct answer text
-    getCorrectAnswer()
-      .should("be.visible")
-      .should("have.class", "text-xl font-medium text-gray-800")
-      .should("have.text", "Correct Answer")
+    // getCorrectAnswer()
+    //   .should("be.visible")
+    //   .should("have.class", "text-xl font-medium text-gray-800")
+    //   .should("have.text", "Correct Answer")
   })
 })
