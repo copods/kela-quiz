@@ -179,18 +179,20 @@ const TestList = () => {
               aria-label={t("members.inviteMember")}
             />
           )}
-          <ListActionMenu
-            menuIcon={"mdi:dots-vertical"}
-            onItemClick={setShowDeletePopup}
-            open={showDeletePopup}
-            menuDetails={menuItemsDetailsList.filter((items) => items.show)}
-            aria-label={t("testTableItem.menu")}
-            id={data.id}
-            setId={setId}
-            customClasses={{
-              item: "text-primary text-xs w-36 shadow-sm",
-            }}
-          />
+          {menuItemsDetailsList.some((item) => item.show) && (
+            <ListActionMenu
+              menuIcon={"mdi:dots-vertical"}
+              onItemClick={setShowDeletePopup}
+              open={showDeletePopup}
+              menuDetails={menuItemsDetailsList.filter((items) => items.show)}
+              aria-label={t("testTableItem.menu")}
+              id={data.id}
+              setId={setId}
+              customClasses={{
+                item: "text-primary text-xs w-36 shadow-sm",
+              }}
+            />
+          )}
         </div>
         {id === data.id && (
           <DeletePopUp
