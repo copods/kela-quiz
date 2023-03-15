@@ -142,6 +142,7 @@ describe("Test for GroupByTestTable, Result", () => {
       })
 
     // sort by created date in descending order
+    getAscSort().click()
     getDescendSort().click()
     sortFilterContainer().within(() => {
       getDropdownButton().eq(0).click({ multiple: true })
