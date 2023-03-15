@@ -300,7 +300,6 @@ const TestList = () => {
               showSelected={false}
             />
           </div>
-          {/* <div className=""> */}
           <Table
             columns={testColumns}
             data={tests}
@@ -311,7 +310,6 @@ const TestList = () => {
             onPageChange={setTestsCurrentPage}
             totalItems={testLoaderData.allTestsCount}
           />
-          {/* </div> */}
         </>
       ) : (
         <EmptyStateComponent

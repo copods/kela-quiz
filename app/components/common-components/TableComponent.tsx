@@ -151,8 +151,11 @@ const Table = <T extends object>({
     return null
   }
   return (
-    <div className="flex h-full flex-1 flex-col overflow-hidden">
-      <div id="table-head-row" className="flex rounded-t-2xl  bg-gray-100">
+    <div className="flex h-full flex-1 flex-col overflow-auto rounded-2xl">
+      <div
+        id="table-head-row"
+        className="sticky top-0 z-10 flex rounded-t-2xl bg-gray-100"
+      >
         {columns.map((header, index) => (
           <HeaderDataCell
             key={header.field + index}
@@ -163,7 +166,7 @@ const Table = <T extends object>({
           />
         ))}
       </div>
-      <div className="max-h-full overflow-auto">
+      <div className="py-0.5">
         {data.length === 0 ? (
           <TableEmptyState />
         ) : (
@@ -196,7 +199,7 @@ const Table = <T extends object>({
         )}
       </div>
       {paginationEnabled ? (
-        <div className="z-0 rounded-b-2xl border bg-white px-9 py-5 shadow">
+        <div className="sticky bottom-0 z-0 rounded-b-2xl border  bg-white px-9 py-5 shadow">
           <Pagination
             currentPage={currentPage!}
             onPageChange={(page) => onPageChange?.(page)}
