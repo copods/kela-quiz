@@ -1,4 +1,4 @@
-import type { CandidateResult, CandidateTest } from "@prisma/client"
+import type { CandidateResult, CandidateTest, Prisma } from "@prisma/client"
 import type { Test } from "@prisma/client"
 
 import { prisma } from "~/db.server"
@@ -84,8 +84,18 @@ export async function getResultsOfCandidatesByTestId({
 
 export async function getAllCandidatesOfTestCount(
   id: string,
-  statusFilter: string
+  statusFilter: string,
+  searchText?: string
 ) {
+  const searchFilter: Prisma.CandidateWhereInput = searchText
+    ? {
+        OR: [
+          { firstName: { contains: searchText, mode: "insensitive" } },
+          { lastName: { contains: searchText, mode: "insensitive" } },
+          { email: { contains: searchText, mode: "insensitive" } },
+        ],
+      }
+    : {}
   const count = prisma.candidateTest.count({
     where: {
       ...(statusFilter === "complete"
@@ -94,6 +104,9 @@ export async function getAllCandidatesOfTestCount(
         ? { endAt: { equals: null } }
         : {}),
       testId: id,
+      candidate: {
+        ...searchFilter,
+      },
     },
   })
   return count
@@ -105,13 +118,25 @@ export async function getAllCandidatesOfTest({
   currentPage,
   pageSize,
   statusFilter,
+  searchText,
 }: {
   id: string
   workspaceId: string
   currentPage?: number
   pageSize?: number
   statusFilter?: string
+  searchText?: string
 }) {
+  const searchFilter: Prisma.CandidateWhereInput = searchText
+    ? {
+        OR: [
+          { firstName: { contains: searchText, mode: "insensitive" } },
+          { lastName: { contains: searchText, mode: "insensitive" } },
+          { email: { contains: searchText, mode: "insensitive" } },
+        ],
+      }
+    : {}
+
   return prisma.test.findFirst({
     where: {
       id,
@@ -126,6 +151,9 @@ export async function getAllCandidatesOfTest({
             : statusFilter === "pending"
             ? { endAt: { equals: null } }
             : {}),
+          candidate: {
+            ...searchFilter,
+          },
         },
         skip: (currentPage! - 1) * pageSize!,
         orderBy: { createdAt: "desc" },
