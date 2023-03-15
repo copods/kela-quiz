@@ -9,7 +9,15 @@ import { routes } from "~/constants/route.constants"
 import { useCommonContext } from "~/context/Common.context"
 import { useUser } from "~/utils"
 
-function Footer({ currentWorkspaceId }: { currentWorkspaceId: string }) {
+function Footer({
+  currentWorkspaceId,
+  openResetPassModel,
+  setOpenResetPassModel,
+}: {
+  currentWorkspaceId: string
+  openResetPassModel: boolean
+  setOpenResetPassModel: (e: boolean) => void
+}) {
   const { t } = useTranslation()
   const { clearStoredValue } = useCommonContext()
   const navigate = useNavigate()
@@ -28,7 +36,9 @@ function Footer({ currentWorkspaceId }: { currentWorkspaceId: string }) {
     {
       id: "change-password",
       menuListText: t("commonConstants.changePassword"),
-      handleItemAction: () => console.log("change password"),
+      handleItemAction: () => {
+        setOpenResetPassModel(!openResetPassModel)
+      },
     },
     {
       id: "logout",

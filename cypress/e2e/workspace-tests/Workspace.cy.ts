@@ -27,7 +27,7 @@ describe("Test for settings", () => {
 
     // To check location and title
     getSettings().should("have.text", settings).click()
-    cy.location("pathname").should("include", "/settings/general")
+    cy.location("pathname").should("include", "/settings/workspace")
     getH2().should("have.text", settings)
 
     // To check workspace tab has correct text
