@@ -250,6 +250,11 @@ const TestList = () => {
 
   useEffect(() => {
     setCustomStorage("assessmentSort", sortBy)
+    if (sortBy === sortByDetails[0].value) {
+      onSortDirectionChange(sortByOrder.ascending)
+    } else if (sortBy === sortByDetails[1].value) {
+      onSortDirectionChange(sortByOrder.desc)
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sortBy])
 
