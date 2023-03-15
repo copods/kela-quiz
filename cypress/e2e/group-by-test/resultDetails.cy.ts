@@ -132,5 +132,6 @@ describe("result details", () => {
     // getCorrectAnswer()
     //   .should("be.visible")
     //   .should("have.class", "text-xl font-medium text-gray-800")
+    //   .should("have.text", "Correct Answer")
   })
 })
