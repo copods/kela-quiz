@@ -23,6 +23,7 @@ import { routes } from "~/constants/route.constants"
 import { useCommonContext } from "~/context/Common.context"
 import { sortByOrder } from "~/interface/Interface"
 import type { Section } from "~/interface/Interface"
+import { checkUserFeatureAuthorization } from "~/models/authorization.server"
 import {
   getAllSectionCount,
   getAllTestsData,
@@ -72,10 +73,22 @@ export type LoaderData = {
   getAllTestsCount: number
   sortBy: string | null
   sortOrder: string | null
+  permission: { [key: string]: { [key: string]: boolean } }
 }
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   try {
+    const userId = await getUserId(request)
+    const currentWorkspaceId = params.workspaceId as string
+
+    const permission = await checkUserFeatureAuthorization(
+      userId!,
+      currentWorkspaceId
+    )
+
+    if (!permission.tests.read) {
+      return redirect(routes.unauthorized)
+    }
     // taking search params from URL
     const query = new URL(request.url).searchParams
 
@@ -86,8 +99,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     const sortBy = query.get("sortBy") || "name"
 
     const sortOrder = query.get("sort") || sortByOrder.desc
-    const userId = await getUserId(request)
-    const currentWorkspaceId = params.workspaceId as string
+
     const workspaces = await getWorkspaces(userId as string)
 
     let sections: Array<Section> = []
@@ -128,6 +140,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
       getAllTestsCount,
       sortBy,
       sortOrder,
+      permission,
     })
   } catch (error: any) {
     if (error.status === 403) {
@@ -425,15 +438,17 @@ export default function SectionPage() {
         >
           {t("routeFiles.tests")}
         </h2>
-        <Button
-          id="add-section"
-          data-cy="submit"
-          className="h-9 px-5"
-          variant="primary-solid"
-          onClick={() => setShowAddSectionModal(!showAddSectionModal)}
-          title={t("sectionsConstants.addTests")}
-          buttonText={`+ ${t("sectionsConstants.addTests")}`}
-        />
+        {data.permission.tests.create && (
+          <Button
+            id="add-section"
+            data-cy="submit"
+            className="h-9 px-5"
+            variant="primary-solid"
+            onClick={() => setShowAddSectionModal(!showAddSectionModal)}
+            title={t("sectionsConstants.addTests")}
+            buttonText={`+ ${t("sectionsConstants.addTests")}`}
+          />
+        )}
       </header>
       {data.sections.length > 0 && location.pathname.includes("/tests/") ? (
         <div

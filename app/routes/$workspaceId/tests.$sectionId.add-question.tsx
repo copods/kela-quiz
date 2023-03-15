@@ -10,6 +10,7 @@ import invariant from "tiny-invariant"
 
 import AddQuestionInSection from "~/components/sections/add-question/AddQuestionInSection"
 import { routes } from "~/constants/route.constants"
+import { checkUserFeatureAuthorization } from "~/models/authorization.server"
 import {
   getAddQuestion,
   getQuestionTypeFromTests,
@@ -23,6 +24,7 @@ type LoaderData = {
   questionTypes: Awaited<ReturnType<typeof getQuestionTypeFromTests>>
   workspaces: Awaited<ReturnType<typeof getWorkspaces>>
   currentWorkspaceId: string
+  permission: { [key: string]: { [key: string]: boolean } }
 }
 
 export const loader: LoaderFunction = async ({ request, params }) => {
@@ -30,6 +32,15 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const userId = await getUserId(request)
   const currentWorkspaceId = params.workspaceId as string
   const workspaces = await getWorkspaces(userId as string)
+
+  const permission = await checkUserFeatureAuthorization(
+    userId!,
+    currentWorkspaceId
+  )
+
+  if (!permission.questions.read) {
+    return redirect(routes.unauthorized)
+  }
 
   invariant(params.sectionId, "sectionId not found")
 
@@ -48,6 +59,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
       questionTypes,
       workspaces,
       currentWorkspaceId,
+      permission,
     })
   } catch (error: any) {
     if (error.status === 403) {
