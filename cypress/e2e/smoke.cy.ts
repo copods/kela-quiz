@@ -61,7 +61,6 @@ describe("smoke tests", () => {
 
   it("Login form validations", () => {
     visitSignIn()
-    cy.wait(2000)
 
     cy.wait(2000)
     // To check Invalid Email Error

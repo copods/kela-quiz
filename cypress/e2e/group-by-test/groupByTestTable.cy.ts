@@ -173,7 +173,6 @@ describe("Test for GroupByTestTable, Result", () => {
     cy.viewport(2000, 1000)
     getGroupByTestId().click()
     getGroupByItemTest().contains(test1).click()
-    cy.wait(3000)
     getVeriticalIconId().should("be.visible").click()
     getCopyLinkId().should("be.visible")
     getResendInviteCandidate().click()

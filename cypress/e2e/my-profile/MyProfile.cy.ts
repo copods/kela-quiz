@@ -131,7 +131,6 @@ describe("Test For MyProfile", () => {
     })
 
     //Check if user Details are submitting properly
-    cy.wait(1000)
     getEditProfileButton().click()
     getFirstNameInput().clear().type(userDetails[0].name)
     getLastNameInput().clear().type(userDetails[1].name)
