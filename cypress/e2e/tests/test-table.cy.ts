@@ -115,19 +115,14 @@ describe("Visiting Assessment", () => {
 
     // To check sort by name in ascending
     cy.viewport(1200, 1000)
-    cy.get(".dropdownButton span span", { timeout: 6000 })
-      .invoke("text")
-      .then((el) => {
-        if (el === "Name") {
-          getTestNameNavigation().then(($elements) => {
-            let strings = [...$elements].map(($el) => $el.innerText)
-            expect(strings).to.deep.equal(strings.sort())
-          })
-        }
-      })
-
-    // To check sort by name in descending
-    getSortFilterBody().get("#descend").click()
+    sortFilterContainer().within(() => {
+      getDropdownButton()
+        .click({ multiple: true })
+        .get("li div")
+        .get(".dropdown-option")
+        .get(".not-selected")
+        .click()
+    })
     cy.get(".dropdownButton span span", { timeout: 6000 })
       .invoke("text")
       .then((el) => {
@@ -139,8 +134,20 @@ describe("Visiting Assessment", () => {
         }
       })
 
-    // To check sort by date in ascending
+    // To check sort by name in descending
     getSortFilterBody().get("#ascend").click()
+    cy.get(".dropdownButton span span", { timeout: 6000 })
+      .invoke("text")
+      .then((el) => {
+        if (el === "Name") {
+          getTestNameNavigation().then(($elements) => {
+            let strings = [...$elements].map(($el) => $el.innerText)
+            expect(strings).to.deep.equal(strings.sort())
+          })
+        }
+      })
+
+    // To check sort by date in ascending
     sortFilterContainer().within(() => {
       getDropdownButton()
         .click({ multiple: true })
