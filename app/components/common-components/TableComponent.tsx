@@ -153,20 +153,24 @@ const Table = <T extends object>({
   return (
     <div className="flex h-full flex-1 flex-col overflow-auto rounded-2xl">
       <div
-        id="table-head-row"
-        className="sticky top-0 z-10 flex rounded-t-2xl bg-gray-100"
+        className={`border-t border-r border-l shadow ${
+          paginationEnabled ? "rounded-t-2xl" : "rounded-2xl"
+        }`}
       >
-        {columns.map((header, index) => (
-          <HeaderDataCell
-            key={header.field + index}
-            width={header.width}
-            title={header.title}
-            index={index}
-            totalHeader={columns.length - 1}
-          />
-        ))}
-      </div>
-      <div className="py-0.5">
+        <div
+          id="table-head-row"
+          className="sticky top-0 z-10 flex rounded-t-2xl bg-gray-100"
+        >
+          {columns.map((header, index) => (
+            <HeaderDataCell
+              key={header.field + index}
+              width={header.width}
+              title={header.title}
+              index={index}
+              totalHeader={columns.length - 1}
+            />
+          ))}
+        </div>
         {data.length === 0 ? (
           <TableEmptyState />
         ) : (
