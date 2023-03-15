@@ -8,6 +8,7 @@ import AddWorkspace from "../workspace/AddWorkspace"
 
 import MenuItems from "./MenuItems"
 
+import ResetPassword from "~/components/settings/ResetPassword"
 import Footer from "~/components/SideNavFooter"
 import Header from "~/components/SideNavHeader"
 import { actions } from "~/constants/action.constants"
@@ -83,7 +84,7 @@ const SideNav = () => {
           id: "Settings",
           iconClass: "mdi:cog",
           itemName: "commonConstants.settings",
-          itemRoute: routes.generalSettings,
+          itemRoute: routes.workspaceSetting,
         },
       ],
     },
@@ -113,6 +114,9 @@ const SideNav = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [param.workspaceId])
+
+  const [openResetPassModel, setOpenResetPassModel] = useState<boolean>(false)
+
   return (
     <>
       <div
@@ -168,7 +172,11 @@ const SideNav = () => {
           </div>
         </div>
         <div className="justify-end">
-          <Footer currentWorkspaceId={currentWorkspaceId} />
+          <Footer
+            currentWorkspaceId={currentWorkspaceId}
+            openResetPassModel={openResetPassModel}
+            setOpenResetPassModel={setOpenResetPassModel}
+          />
         </div>
       </div>
       <AddWorkspace
@@ -176,6 +184,10 @@ const SideNav = () => {
         setShowAddWorkspaceModal={setShowAddWorkspaceModal}
         setWorkspaceId={setWorkspace}
         currentWorkspaceId={currentWorkspaceId}
+      />
+      <ResetPassword
+        openResetPassModel={openResetPassModel}
+        setOpenResetPassModel={setOpenResetPassModel}
       />
     </>
   )

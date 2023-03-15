@@ -51,6 +51,21 @@ const ListMenuItem = ({
     }
   }, [open, id])
 
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        elementRef.current &&
+        !elementRef.current.contains(event.target as Node)
+      ) {
+        setMenuOpeningClosing && setMenuOpeningClosing(false)
+      }
+    }
+    document.addEventListener("click", handleClickOutside)
+    return () => {
+      document.removeEventListener("click", handleClickOutside)
+    }
+  }, [elementRef])
+
   return (
     <>
       <Menu as="div" className="relative flex">

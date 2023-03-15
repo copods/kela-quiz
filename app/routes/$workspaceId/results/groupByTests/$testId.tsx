@@ -30,6 +30,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const pageSize = Math.max(Number(query.get("pageSize") || 5), 5)
   const currentPage = Math.max(Number(query.get("page") || 1), 1)
   const statusFilter = query.get("filterByStatus") as string
+  const searchText = query.get("searchText") as string
   const workspaces = await getWorkspaces(userId as string)
   invariant(params.testId, "resultId not found")
 
@@ -38,7 +39,8 @@ export const loader: LoaderFunction = async ({ request, params }) => {
       params.testId!,
       statusFilter,
       userId!,
-      currentWorkspaceId!
+      currentWorkspaceId!,
+      searchText
     )
     const candidatesOfTest = await getDetailsOfCandidatePerPage({
       id: params.testId,
@@ -48,6 +50,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
       currentPage,
       pageSize,
       statusFilter,
+      searchText,
     })
     return json({
       candidatesOfTest,
