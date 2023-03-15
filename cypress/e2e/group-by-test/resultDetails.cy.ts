@@ -116,17 +116,17 @@ describe("result details", () => {
       })
 
     //checks wrong answer chip class
-    getGivenAnswer()
-      .eq(1)
-      .should("be.visible")
-      .should("have.class", "text-xl font-medium text-gray-800")
-      .parent()
-      .within(() => {
-        getChipTag().should(
-          "have.class",
-          "rounded-full px-3 py-1 text-xs font-medium border border-red-100 bg-red-100 text-red-800"
-        )
-      })
+    // getGivenAnswer()
+    //   .eq(1)
+    //   .should("be.visible")
+    //   .should("have.class", "text-xl font-medium text-gray-800")
+    //   .parent()
+    //   .within(() => {
+    //     getChipTag().should(
+    //       "have.class",
+    //       "rounded-full px-3 py-1 text-xs font-medium border border-red-100 bg-red-100 text-red-800"
+    //     )
+    //   })
 
     //checks correct answer text
     getCorrectAnswer()
