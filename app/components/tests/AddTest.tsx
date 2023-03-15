@@ -66,7 +66,6 @@ const AddTestComponent = ({
   const [currentTab, setCurrentTab] = useState(0) // testDetails  ||  selectSections  ||  preview
   const [name, onNameChange] = useState("")
   const [description, setDescription] = useState("")
-
   const navigate = useNavigate()
   const updateSection = (data: AddedSectionDetails, index: number) => {
     setSectionsCopy((sec) => {
