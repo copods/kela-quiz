@@ -2,10 +2,10 @@ import {
   getCancelEditWorkspaceBtn,
   getCurrentWorkspace,
   getEditWorkspaceBtn,
-  getH2,
   getHr,
   getSaveWorkspaceBtn,
   getSettings,
+  getSettingsHeading,
   getToaster,
   getWorkspaceNameInput,
   getWorkspaces,
@@ -28,7 +28,7 @@ describe("Test for settings", () => {
     // To check location and title
     getSettings().should("have.text", settings).click()
     cy.location("pathname").should("include", "/settings/workspace")
-    getH2().should("have.text", settings)
+    getSettingsHeading().should("have.text", settings)
 
     // To check workspace tab has correct text
     getWorkspaces().should("have.text", workspace)
