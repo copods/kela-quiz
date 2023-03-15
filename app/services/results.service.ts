@@ -141,14 +141,16 @@ export const getCountofAllCandidatesOfTest = async (
   id: string,
   statusFilter: string,
   userId: string,
-  workspaceId: string
+  workspaceId: string,
+  searchText?: string
 ) => {
   try {
     return await getAllCandidatesOfTestCount(
       id,
       statusFilter,
       userId,
-      workspaceId
+      workspaceId,
+      searchText
     )
   } catch (error) {
     throw error
@@ -162,6 +164,7 @@ export const getCountofAllCandidatesOfTest = async (
  * @param currentPage
  * @param pageSize
  * @param statusFilter
+ * @param searchText
  * @returns tests
  */
 export const getDetailsOfCandidatePerPage = async ({
@@ -172,6 +175,7 @@ export const getDetailsOfCandidatePerPage = async ({
   currentPage,
   pageSize,
   statusFilter,
+  searchText,
 }: {
   id: string
   workspaceId: string
@@ -180,6 +184,7 @@ export const getDetailsOfCandidatePerPage = async ({
   currentPage: number
   pageSize: number
   statusFilter: string
+  searchText?: string
 }) => {
   try {
     return await getAllCandidatesOfTest({
@@ -190,6 +195,7 @@ export const getDetailsOfCandidatePerPage = async ({
       currentPage,
       pageSize,
       statusFilter,
+      searchText,
     })
   } catch (error) {
     throw error
