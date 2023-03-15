@@ -135,7 +135,7 @@ describe("Test For MyProfile", () => {
     getFirstNameInput().clear().type(userDetails[0].name)
     getLastNameInput().clear().type(userDetails[1].name)
     getSaveButton().click()
-    getToaster().should("have.text", "User Profile is Updated successfully")
+    getToaster().should("have.text", "User Profile Updated successfully")
     getSideNavUserName().should(
       "have.text",
       `${userDetails[0].name} ${userDetails[1].name}`

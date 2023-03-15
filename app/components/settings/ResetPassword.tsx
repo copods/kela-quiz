@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 
-import { Form, useActionData, useTransition } from "@remix-run/react"
+import { useFetcher, useTransition } from "@remix-run/react"
 import { useTranslation } from "react-i18next"
 import { toast } from "react-toastify"
 
@@ -22,18 +22,14 @@ const ResetPassword = ({
   setOpenResetPassModel: (e: boolean) => void
 }) => {
   const { t } = useTranslation()
-  const generalSettings = useActionData()
+  const fetcher = useFetcher()
 
   useEffect(() => {
-    if (generalSettings) {
-      if (generalSettings === "DONE") {
-        setOpenResetPassModel(false) //reset password popUp wil be closed automatically if action is success
-        toast.success(t("settings.passResetSuccessfully"))
-      } else if (generalSettings.errors?.status === 400) {
-        setOpenResetPassModel(true) //reset password popUp remain open if action is failed
-      }
+    if (fetcher.data && fetcher.data === "DONE") {
+      setOpenResetPassModel(false) //reset password popUp will be closed automatically if action is success
+      toast.success(t("settings.passResetSuccessfully"))
     }
-  }, [generalSettings, setOpenResetPassModel, t])
+  }, [fetcher.data, setOpenResetPassModel, t])
   const transition = useTransition()
 
   const [password, setPassword] = useState("")
@@ -43,10 +39,9 @@ const ResetPassword = ({
   const [error, setError] = useState({
     passMinLengthError: "",
     passNotMatchError: "",
-    passIsInvalid: generalSettings?.errors?.valid,
-    passShouldNotBeSame: generalSettings?.errors?.passShouldNotBeSame,
+    passIsInvalid: fetcher.data?.errors?.valid,
+    passShouldNotBeSame: fetcher.data?.errors?.passShouldNotBeSame,
   })
-
   const comparePasswords = (password: string, confirmPassword: string) => {
     if (password.length <= 0 || confirmPassword.length <= 0) {
       if (password.length !== 0 && password.length < 8) {
@@ -75,7 +70,20 @@ const ResetPassword = ({
       })
     }
   }
-  const PasswordInputFieldProps = [
+
+  const onSubmit = () => {
+    fetcher.submit(
+      {
+        oldPassword: password,
+        confirmPassword: confirmPassword,
+        newPassword: newPassword,
+      },
+      {
+        method: "post",
+      }
+    )
+  }
+  const passwordInputFieldProps = [
     // Input field props
     {
       label: t("settings.enterOldPassword"),
@@ -131,14 +139,17 @@ const ResetPassword = ({
       passNotMatchError: "",
     })
   }, [openResetPassModel])
+
   useEffect(() => {
-    setError({
-      ...error,
-      passIsInvalid: generalSettings?.errors?.valid,
-      passShouldNotBeSame: generalSettings?.errors?.passShouldNotBeSame,
-    })
+    if (fetcher?.data && fetcher?.data?.errors) {
+      setError({
+        ...error,
+        passIsInvalid: fetcher?.data?.errors?.valid,
+        passShouldNotBeSame: fetcher?.data?.errors?.passShouldNotBeSame,
+      })
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [generalSettings])
+  }, [fetcher.data])
 
   useEffect(() => {
     const value = checkPasswordStrength(newPassword)
@@ -155,55 +166,53 @@ const ResetPassword = ({
       ariaLabel={t("settings.resetPas")}
       tabIndex={0}
     >
-      <Form method="post">
-        <div className="flex flex-col gap-2">
-          <div className="input-container-wrapper flex flex-col gap-6">
-            {PasswordInputFieldProps.map((props) => {
-              return (
-                <PasswordInputFields
-                  onBlur={() => comparePasswords(newPassword, confirmPassword)}
-                  {...props}
-                  key={props.name}
-                />
-              )
-            })}
-          </div>
-          {newPassword ? (
-            <span className="flex gap-1 text-sm">
-              {t("commonConstants.passwordStrength")}:
-              <span className={getPasswordStrengthColor(passwordStrength)}>
-                {passwordStrength}
-              </span>
-            </span>
-          ) : null}
-          <div className="mt-6 flex items-center justify-center">
-            <Button
-              tabIndex={0}
-              name="resetPassword"
-              value="resetPassword"
-              title={
-                transition.state === "submitting"
-                  ? t("settings.passResetting")
-                  : t("settings.resetPas")
-              }
-              buttonText={
-                transition.state === "submitting"
-                  ? t("settings.passResetting")
-                  : t("settings.resetPas")
-              }
-              type="submit"
-              variant="primary-solid"
-              className="h-11 w-full text-base"
-              isDisabled={
-                !(newPassword && confirmPassword && password) ||
-                newPassword != confirmPassword ||
-                newPassword.length < 8
-              }
-              datacy="submit"
-            />
-          </div>
+      <div className="flex flex-col gap-2">
+        <div className="input-container-wrapper flex flex-col gap-6">
+          {passwordInputFieldProps.map((props) => {
+            return (
+              <PasswordInputFields
+                onBlur={() => comparePasswords(newPassword, confirmPassword)}
+                {...props}
+                key={props.name}
+              />
+            )
+          })}
         </div>
-      </Form>
+        {newPassword && (
+          <span className="flex gap-1 text-sm">
+            {t("commonConstants.passwordStrength")}:
+            <span className={getPasswordStrengthColor(passwordStrength)}>
+              {passwordStrength}
+            </span>
+          </span>
+        )}
+        <div className="mt-6 flex items-center justify-center">
+          <Button
+            tabIndex={0}
+            name="resetPassword"
+            value="resetPassword"
+            title={
+              transition.state === "submitting"
+                ? t("settings.passResetting")
+                : t("settings.resetPas")
+            }
+            buttonText={
+              transition.state === "submitting"
+                ? t("settings.passResetting")
+                : t("settings.resetPas")
+            }
+            variant="primary-solid"
+            className="h-11 w-full text-base"
+            isDisabled={
+              !(newPassword && confirmPassword && password) ||
+              newPassword != confirmPassword ||
+              newPassword.length < 8
+            }
+            onClick={onSubmit}
+            datacy="submit"
+          />
+        </div>
+      </div>
     </DialogWrapper>
   )
 }
