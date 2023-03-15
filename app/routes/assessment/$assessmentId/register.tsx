@@ -3,9 +3,9 @@ import { json } from "@remix-run/node"
 import { redirect } from "@remix-run/node"
 
 import CandidateRegister from "~/components/assessment/CandidateRegister"
-import { getCandidateDetailsIfExists } from "~/models/assessment.server"
 import {
   checkIfTestLinkIsValidAndRedirect,
+  getCandidateDetails,
   getCandidateIDFromAssessmentId,
   updateCandidateDetail,
   updateNextStep,
@@ -16,7 +16,7 @@ export const loader: LoaderFunction = async ({ params, request }) => {
     params.assessmentId as string,
     "register"
   )
-  const candidateDetails = await getCandidateDetailsIfExists(
+  const candidateDetails = await getCandidateDetails(
     params.assessmentId as string
   )
   if (typeof candidateNextRoute === "string") {

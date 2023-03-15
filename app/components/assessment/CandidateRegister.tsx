@@ -8,13 +8,17 @@ import InputField from "~/components/common-components/InputField"
 
 function CandidateRegister() {
   const { t } = useTranslation()
-  const loader = useLoaderData()
+  const loaderData = useLoaderData()
 
   const [firstName, setFirstName] = useState(
-    loader.candidateDetails.firstName ? loader.candidateDetails.firstName : ""
+    loaderData.candidateDetails.firstName
+      ? loaderData.candidateDetails.firstName
+      : ""
   )
   const [lastName, setLastName] = useState(
-    loader.candidateDetails.lastName ? loader.candidateDetails.lastName : ""
+    loaderData.candidateDetails.lastName
+      ? loaderData.candidateDetails.lastName
+      : ""
   )
 
   const { state } = useTransition()
