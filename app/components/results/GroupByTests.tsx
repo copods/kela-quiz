@@ -166,6 +166,14 @@ const GroupByTests = () => {
     setResultsCurrentPage(candidateTestData.resultsCurrentPage)
   }, [candidateTestData.resultsCurrentPage])
 
+  useEffect(() => {
+    if (sortBy === sortByDetails[0].value) {
+      onSortDirectionChange(sortByOrder.ascending)
+    } else if (sortBy === sortByDetails[1].value) {
+      onSortDirectionChange(sortByOrder.desc)
+    }
+  }, [sortBy])
+
   return (
     <div
       className="flex h-full flex-col gap-6 p-1"

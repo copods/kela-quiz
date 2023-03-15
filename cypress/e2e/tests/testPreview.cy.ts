@@ -14,7 +14,7 @@ import {
 
 import { cypress, testsConstants } from "~/constants/common.constants"
 
-const test1 = `Aptitude - assessment1`
+const test1 = `Quantitative - assessment1`
 const selectedSectionText = "Selected Tests"
 const assessmentDetailsText = "Assessment Details"
 const inviteCandidate = "Invite Candidate"
@@ -25,6 +25,7 @@ describe("Test for testPreview", () => {
     cy.customVisit("/members")
   })
   it("checks preview data", () => {
+    cy.viewport(2000, 1000)
     getTests().click()
     cy.location("pathname", { timeout: 60000 }).should(
       "include",
