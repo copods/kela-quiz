@@ -83,7 +83,7 @@ const ResetPassword = ({
       }
     )
   }
-  const PasswordInputFieldProps = [
+  const passwordInputFieldProps = [
     // Input field props
     {
       label: t("settings.enterOldPassword"),
@@ -168,7 +168,7 @@ const ResetPassword = ({
     >
       <div className="flex flex-col gap-2">
         <div className="input-container-wrapper flex flex-col gap-6">
-          {PasswordInputFieldProps.map((props) => {
+          {passwordInputFieldProps.map((props) => {
             return (
               <PasswordInputFields
                 onBlur={() => comparePasswords(newPassword, confirmPassword)}
