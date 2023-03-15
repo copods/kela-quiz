@@ -89,20 +89,20 @@ export async function getAllCandidatesOfTestCount(
 ) {
   const searchFilter: Prisma.CandidateWhereInput = searchText
     ? {
-      OR: [
-        { firstName: { contains: searchText, mode: "insensitive" } },
-        { lastName: { contains: searchText, mode: "insensitive" } },
-        { email: { contains: searchText, mode: "insensitive" } },
-      ],
-    }
+        OR: [
+          { firstName: { contains: searchText, mode: "insensitive" } },
+          { lastName: { contains: searchText, mode: "insensitive" } },
+          { email: { contains: searchText, mode: "insensitive" } },
+        ],
+      }
     : {}
   const count = prisma.candidateTest.count({
     where: {
       ...(statusFilter === "complete"
         ? { NOT: { endAt: { equals: null } } }
         : statusFilter === "pending"
-          ? { endAt: { equals: null } }
-          : {}),
+        ? { endAt: { equals: null } }
+        : {}),
       testId: id,
       candidate: {
         ...searchFilter,
@@ -129,12 +129,12 @@ export async function getAllCandidatesOfTest({
 }) {
   const searchFilter: Prisma.CandidateWhereInput = searchText
     ? {
-      OR: [
-        { firstName: { contains: searchText, mode: "insensitive" } },
-        { lastName: { contains: searchText, mode: "insensitive" } },
-        { email: { contains: searchText, mode: "insensitive" } },
-      ],
-    }
+        OR: [
+          { firstName: { contains: searchText, mode: "insensitive" } },
+          { lastName: { contains: searchText, mode: "insensitive" } },
+          { email: { contains: searchText, mode: "insensitive" } },
+        ],
+      }
     : {}
 
   return prisma.test.findFirst({
@@ -149,8 +149,8 @@ export async function getAllCandidatesOfTest({
           ...(statusFilter === "complete"
             ? { NOT: { endAt: { equals: null } } }
             : statusFilter === "pending"
-              ? { endAt: { equals: null } }
-              : {}),
+            ? { endAt: { equals: null } }
+            : {}),
           candidate: {
             ...searchFilter,
           },
@@ -296,8 +296,8 @@ export async function getAllCandidateTestsCount(
       ...(statusFilter === "active"
         ? { NOT: { deleted: { equals: true } } }
         : statusFilter === "inactive"
-          ? { deleted: { equals: true } }
-          : {}),
+        ? { deleted: { equals: true } }
+        : {}),
       workspaceId,
       candidateTest: {
         some: {
@@ -327,8 +327,8 @@ export async function getAllCandidateTests(
       ...(statusFilter === "active"
         ? { NOT: { deleted: { equals: true } } }
         : statusFilter === "inactive"
-          ? { deleted: { equals: true } }
-          : {}),
+        ? { deleted: { equals: true } }
+        : {}),
       workspaceId,
       candidateTest: {
         some: {
