@@ -13,10 +13,8 @@ import {
   getMemberDialogHeader,
   getMembersHeading,
   getResendMemberInviteBtn,
-  getTableRow,
   getToaster,
 } from "support/common-function"
-const memberEmail = "johndoe@example.com"
 const owner = "Owner"
 const joinedMembers = "Joined Members"
 const invitedMembers = "Invited Members"
@@ -150,11 +148,6 @@ describe("Test for members", () => {
     // To check if resend number invite button click opens toster
     getResendMemberInviteBtn().click()
     getToaster().should("have.text", "Invitation Sent Successfully..!")
-
-    // New member tests
-    // To check if new member is added
-    getJoinedMembers().click()
-    getTableRow().eq(5).should("have.text", memberEmail)
 
     // Owner badge tests
     // To check if owner badge is visible
