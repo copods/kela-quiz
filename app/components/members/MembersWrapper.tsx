@@ -83,12 +83,12 @@ const MembersWrapper = () => {
   const membersTabs = [
     {
       name: "Joined Members",
-      route: () => setActiveTab("joined_members"),
+      action: () => setActiveTab("joined_members"),
       active: activeTab === "joined_members",
     },
     {
       name: "Invited Members",
-      route: () => setActiveTab("invited_members"),
+      action: () => setActiveTab("invited_members"),
       active: activeTab === "invited_members",
     },
   ]

@@ -6,8 +6,8 @@ const TabComponent = ({ tab }: { tab: TabsComponent }) => {
       id={tab.name.replace(" ", "_")}
       tabIndex={0}
       role={"button"}
-      onClick={tab.route}
-      onKeyUp={(e) => e.key === "Enter" && tab.route()}
+      onClick={tab.action}
+      onKeyUp={(e) => e.key === "Enter" && tab.action()}
       className="relative flex cursor-pointer flex-col-reverse rounded-lg"
     >
       <hr

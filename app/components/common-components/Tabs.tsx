@@ -3,7 +3,7 @@ import TabComponent from "./TabsComponent"
 const Tabs = ({
   tabs,
 }: {
-  tabs: { name: string; route: () => void; active: boolean }[]
+  tabs: { name: string; action: () => void; active: boolean }[]
 }) => {
   return (
     <div

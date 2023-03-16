@@ -115,12 +115,12 @@ export default function Settings() {
   const settingsTabs = [
     // {
     //   name: t("tabs.general"),
-    //   route: () => navigate(`/${currentWorkspaceId}/settings/general`),
+    //   action: () => navigate(`/${currentWorkspaceId}/settings/general`),
     //   active: location.pathname.includes("/settings/general"),
     // },
     {
       name: t("tabs.workspaces"),
-      route: () => navigate(`/${currentWorkspaceId}/settings/workspace`),
+      action: () => navigate(`/${currentWorkspaceId}/settings/workspace`),
       active: location.pathname.includes("/settings/workspace"),
     },
   ]

@@ -382,7 +382,7 @@ export interface UserWorkspace {
 }
 export interface TabsComponent {
   name: string
-  route: () => void
+  action: () => void
   active: boolean
 }
 
