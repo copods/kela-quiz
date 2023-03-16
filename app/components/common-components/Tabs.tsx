@@ -1,6 +1,10 @@
-import TabComponent from "../common-components/TabsComponent"
+import TabComponent from "./TabsComponent"
 
-const Tabs = ({ tabs }: { tabs: { name: string; route: string }[] }) => {
+const Tabs = ({
+  tabs,
+}: {
+  tabs: { name: string; route: () => void; active: boolean }[]
+}) => {
   return (
     <div
       className="tabsWrapper flex border-b-2 border-solid

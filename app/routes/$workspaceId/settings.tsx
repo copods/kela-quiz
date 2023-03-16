@@ -13,8 +13,8 @@ import {
 import { useTranslation } from "react-i18next"
 
 import { version } from "package.json"
+import Tabs from "~/components/common-components/Tabs"
 import Header from "~/components/header/Header"
-import Tabs from "~/components/settings/SettingTab"
 import { actions } from "~/constants/action.constants"
 import { routes } from "~/constants/route.constants"
 import {
@@ -115,11 +115,13 @@ export default function Settings() {
   const settingsTabs = [
     // {
     //   name: t("tabs.general"),
-    //   route: `/${currentWorkspaceId}/settings/general`,
+    //   route: () => navigate(`/${currentWorkspaceId}/settings/general`),
+    //   active: location.pathname.includes("/settings/general"),
     // },
     {
       name: t("tabs.workspaces"),
-      route: `/${currentWorkspaceId}/settings/workspace`,
+      route: () => navigate(`/${currentWorkspaceId}/settings/workspace`),
+      active: location.pathname.includes("/settings/workspace"),
     },
   ]
 

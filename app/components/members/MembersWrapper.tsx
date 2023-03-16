@@ -6,6 +6,8 @@ import { useActionData, useLoaderData, useNavigate } from "@remix-run/react"
 import { useTranslation } from "react-i18next"
 import { toast } from "react-toastify"
 
+import Tabs from "../common-components/Tabs"
+
 import EmptyStateComponent from "~/components/common-components/EmptyStateComponent"
 import InvitedMembersList from "~/components/members/InvitedMembersList"
 import MembersHeader from "~/components/members/MembersHeader"
@@ -37,6 +39,7 @@ const MembersWrapper = () => {
     memberLoaderData.invitedMembersCurrentPage
   )
   const [invitedMemberPageSize, setInvitedMemberPageSize] = useState(5)
+  const [activeTab, setActiveTab] = useState("joined_members")
 
   //useEffects
   useEffect(() => {
@@ -76,24 +79,39 @@ const MembersWrapper = () => {
     invitedMemberCurrentPage,
     invitedMemberPageSize,
   ])
+
+  const membersTabs = [
+    {
+      name: "Joined Members",
+      route: () => setActiveTab("joined_members"),
+      active: activeTab === "joined_members",
+    },
+    {
+      name: "Invited Members",
+      route: () => setActiveTab("invited_members"),
+      active: activeTab === "invited_members",
+    },
+  ]
+
   return (
     <div className="flex flex-col gap-6 p-1">
       <MembersHeader
         actionStatus={actionStatus}
         setActionStatus={setActionStatus}
       />
+      <Tabs tabs={membersTabs} />
       <div className="flex flex-col gap-4 text-2xl">
-        <h1
+        {/* <h1
           tabIndex={0}
           role={t("members.joinedMembers")}
           aria-label={t("members.joinedMembers")}
           id="joined-member-heading"
         >
           {t("members.joinedMembers")}
-        </h1>
+        </h1> */}
         {memberLoaderData.users.length === 0 ? (
           <EmptyStateComponent />
-        ) : (
+        ) : activeTab === "joined_members" ? (
           <MembersList
             membersCurrentPage={membersCurrentPage}
             setMembersCurrentPage={setMembersCurrentPage}
@@ -101,16 +119,15 @@ const MembersWrapper = () => {
             setMembersPageSize={setMembersPageSize}
             roles={memberLoaderData?.roles}
           />
-        )}
-      </div>
-      <div>
-        <InvitedMembersList
-          actionStatus={membersActionData?.resp?.title}
-          invitedMemberCurrentPage={invitedMemberCurrentPage}
-          setInvitedMemberPage={setInvitedMemberPage}
-          invitedMemberPageSize={invitedMemberPageSize}
-          setInvitedMemberPageSize={setInvitedMemberPageSize}
-        />
+        ) : activeTab === "invited_members" ? (
+          <InvitedMembersList
+            actionStatus={membersActionData?.resp?.title}
+            invitedMemberCurrentPage={invitedMemberCurrentPage}
+            setInvitedMemberPage={setInvitedMemberPage}
+            invitedMemberPageSize={invitedMemberPageSize}
+            setInvitedMemberPageSize={setInvitedMemberPageSize}
+          />
+        ) : null}
       </div>
     </div>
   )

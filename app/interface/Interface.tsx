@@ -382,7 +382,8 @@ export interface UserWorkspace {
 }
 export interface TabsComponent {
   name: string
-  route: string
+  route: () => void
+  active: boolean
 }
 
 export interface OtherFilters {
