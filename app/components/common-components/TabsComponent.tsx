@@ -3,6 +3,7 @@ import type { TabsComponent } from "~/interface/Interface"
 const TabComponent = ({ tab }: { tab: TabsComponent }) => {
   return (
     <div
+      id={tab.name.replace(" ", "_")}
       tabIndex={0}
       role={"button"}
       onClick={tab.route}

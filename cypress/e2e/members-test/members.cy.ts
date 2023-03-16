@@ -5,10 +5,11 @@ import {
   getDialogCloseIcon,
   getDropdown,
   getEmail,
+  getHr,
   getInviteBtn,
-  getInvitedMemberHeading,
+  getInvitedMembers,
   getInviteMemberBtn,
-  getJoinedMemberHeading,
+  getJoinedMembers,
   getMemberDialogHeader,
   getMembersHeading,
   getResendMemberInviteBtn,
@@ -17,6 +18,9 @@ import {
 } from "support/common-function"
 const memberEmail = "johndoe@example.com"
 const owner = "Owner"
+const joinedMembers = "Joined Members"
+const invitedMembers = "Invited Members"
+
 describe("Test for members", () => {
   beforeEach("sign-in", () => {
     cy.login()
@@ -50,6 +54,16 @@ describe("Test for members", () => {
       "background-color",
       "rgb(53, 57, 136)"
     )
+
+    // Check active tab is Joined Members
+    getJoinedMembers()
+      .should("have.text", joinedMembers)
+      .within(() => {
+        getHr().should(
+          "have.class",
+          "absolute -bottom-0.5 h-0.5 w-full border-0 bg-primary"
+        )
+      })
 
     // Invite Dialog tests
     // To check if invite Dialog is visible
@@ -115,35 +129,16 @@ describe("Test for members", () => {
     getInviteBtn().should("have.css", "background-color", "rgb(53, 57, 136)")
     getCancelBtn().click()
 
-    // Joined memeber heading tests
-    // To check if joined memeber heading is visible
-    getJoinedMemberHeading().should("be.visible")
-
-    // To check if joined member heading has text
-    getJoinedMemberHeading().should("have.text", "Joined Members")
-
-    // To check if joined member heading has tabindex
-    getJoinedMemberHeading().should("have.attr", "tabindex", "0")
-
-    // To check if joined member heading has aria label
-    getJoinedMemberHeading().should("have.attr", "aria-label", "Joined Members")
-
-    // Invite member heading tests
-    // To check if invite member heading is visible
-    getInvitedMemberHeading().should("be.visible")
-
-    // To check if invite member heading has text
-    getInvitedMemberHeading().should("have.text", "Invited Member")
-
-    // To check if invite member heading has tabindex
-    getInvitedMemberHeading().should("have.attr", "tabindex", "0")
-
-    // To check if invite member heading has aria label
-    getInvitedMemberHeading().should(
-      "have.attr",
-      "aria-label",
-      "Invited Member"
-    )
+    // Check active tab is Invited Members
+    getInvitedMembers().click()
+    getInvitedMembers()
+      .should("have.text", invitedMembers)
+      .within(() => {
+        getHr().should(
+          "have.class",
+          "absolute -bottom-0.5 h-0.5 w-full border-0 bg-primary"
+        )
+      })
 
     // Resend member invite button tests
     // To check if resend member invite button is visible
