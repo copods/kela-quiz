@@ -1,23 +1,6 @@
-import { useTranslation } from "react-i18next"
-
 import TabComponent from "../common-components/TabsComponent"
 
-const SettingsTabs = ({
-  currentWorkspaceId,
-}: {
-  currentWorkspaceId: string
-}) => {
-  const { t } = useTranslation()
-  const tabs = [
-    // {
-    //   name: t("tabs.general"),
-    //   route: `/${currentWorkspaceId}/settings/general`,
-    // },
-    {
-      name: t("tabs.workspaces"),
-      route: `/${currentWorkspaceId}/settings/workspace`,
-    },
-  ]
+const Tabs = ({ tabs }: { tabs: { name: string; route: string }[] }) => {
   return (
     <div
       className="tabsWrapper flex border-b-2 border-solid
@@ -29,4 +12,4 @@ const SettingsTabs = ({
     </div>
   )
 }
-export default SettingsTabs
+export default Tabs
