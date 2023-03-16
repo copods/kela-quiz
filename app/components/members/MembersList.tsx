@@ -7,6 +7,7 @@ import { useLoaderData, useSubmit } from "@remix-run/react"
 import { useTranslation } from "react-i18next"
 
 import Badge from "../common-components/Badge"
+import Chip from "../common-components/Chip"
 import DeletePopUp from "../common-components/DeletePopUp"
 import Table from "../common-components/TableComponent"
 
@@ -30,6 +31,7 @@ export default function MembersList({
   const memberLoaderData = useLoaderData()
   const loggedInUser = memberLoaderData.userId
   const [openDeleteModal, setOpenDeleteModal] = useState(false)
+  const [openRoleModal, setOpenRoleModal] = useState(false)
   const [memberId, setMemberId] = useState("")
   const workspaceOwner = memberLoaderData.currentWorkspaceOwner.createdById
   const adminRoleId = roles.find((role) => role.name === "Admin")?.id
@@ -52,8 +54,27 @@ export default function MembersList({
       </div>
     )
   }
-  const RoleDataCell = (data: { userWorkspace: UserWorkspace[] }) => {
-    return <span>{data?.userWorkspace[0]?.role?.name}</span>
+
+  const RoleDataCell = (data: User & { userWorkspace: UserWorkspace[] }) => {
+    const openPopUp = () => {
+      console.log("hello world")
+      setMemberId(data.id)
+      setOpenRoleModal(!openRoleModal)
+    }
+
+    const chipDetails = {
+      text: data?.userWorkspace[0]?.role?.name,
+      variant: "role",
+      readOnly: false,
+      onClick: () => openPopUp(),
+    }
+    return (
+      <>
+        <Chip {...chipDetails} />
+        {memberId === data.id &&
+          currentLoggedInUserData[0].userWorkspace[0]?.role.id === adminRoleId}
+      </>
+    )
   }
   const JoinedOnCell = (data: Invites) => {
     return <span>{moment(data?.createdAt).format("DD MMMM YY")}</span>
