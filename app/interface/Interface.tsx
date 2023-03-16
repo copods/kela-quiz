@@ -298,6 +298,7 @@ export interface CandidateResult {
   workspaceId?: string
   link?: string
 }
+
 export enum sortByOrder {
   ascending = "asc",
   name = "name",

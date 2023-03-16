@@ -51,6 +51,7 @@ const CandidateListOfTest = () => {
   const submit = useSubmit()
   const fetcher = useFetcher()
   const actionData = useActionData()
+  const loaderData = useLoaderData()
   const [menuListOpen, setmenuListOpen] = useState<boolean>(false)
   const [searchText, setSearchText] = useState("")
   const [statusFilter, setStatusFilter] = useState(
@@ -216,6 +217,7 @@ const CandidateListOfTest = () => {
   ) => {
     const menuItemsDetailsList = [
       {
+        show: loaderData.permission.invite_candidate.update,
         id: "resend-invite",
         menuListText: t("resultConstants.resendInvite"),
         menuListLink: resendTestLink,
@@ -224,6 +226,7 @@ const CandidateListOfTest = () => {
           resendInvite(data.id, data.candidateId, data.testId),
       },
       {
+        show: true,
         id: "copy-link",
         menuListText: t("resultConstants.copyLink"),
         menuListIcon: "material-symbols:content-copy-outline",
@@ -259,7 +262,7 @@ const CandidateListOfTest = () => {
               open={menuListOpen}
               aria-label={t("testTableItem.menu")}
               id={data.id}
-              menuDetails={menuItemsDetailsList}
+              menuDetails={menuItemsDetailsList.filter((list) => list.show)}
               customClasses={{
                 item: "text-primary text-xs w-36 shadow-sm",
               }}

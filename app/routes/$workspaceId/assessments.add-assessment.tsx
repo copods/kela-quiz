@@ -36,51 +36,71 @@ export type ActionData = {
   }
 }
 export const loader: LoaderFunction = async ({ request, params }) => {
-  const userId = await getUserId(request)
-  const currentWorkspaceId = params.workspaceId as string
-  const workspaces = await getUserWorkspaceService(userId as string)
+  try {
+    const userId = await getUserId(request)
+    const currentWorkspaceId = params.workspaceId as string
+    const workspaces = await getUserWorkspaceService(userId as string)
 
-  const query = new URL(request.url).searchParams
-  const sortBy = query.get("sortBy") as string
-  const sortOrder = query.get("sortOrder") as string
-  const testItemsPerPage = Math.max(Number(query.get("pageSize") || 3), 3)
-  const testCurrentPage = Math.max(Number(query.get("currentPage") || 1), 1)
+    const query = new URL(request.url).searchParams
+    const sortBy = query.get("sortBy") as string
+    const sortOrder = query.get("sortOrder") as string
+    const testItemsPerPage = Math.max(Number(query.get("pageSize") || 3), 3)
+    const testCurrentPage = Math.max(Number(query.get("currentPage") || 1), 1)
 
-  const getAllSectionsCount = await getAllSectionCount(currentWorkspaceId)
+    const getAllSectionsCount = await getAllSectionCount(currentWorkspaceId)
 
-  if (!userId) return redirect(routes.signIn)
+    if (!userId) return redirect(routes.signIn)
 
-  let sections: Array<Section> = []
-  let status: string = ""
-  const callBack = (sectionUpdate: Section[], statusUpdate: string) => {
-    sections = sectionUpdate
-    status = statusUpdate
+    let sections: Array<Section> = []
+    let status: string = ""
+    const callBack = (sectionUpdate: Section[], statusUpdate: string) => {
+      sections = sectionUpdate
+      status = statusUpdate
+    }
+    await getAllTestsData(
+      sortBy,
+      sortOrder,
+      currentWorkspaceId as string,
+      testCurrentPage,
+      testItemsPerPage,
+      callBack,
+      userId,
+      currentWorkspaceId
+    )
+    return json<LoaderData>({
+      sections,
+      status,
+      workspaces,
+      currentWorkspaceId,
+      getAllSectionsCount,
+    })
+  } catch (error: any) {
+    if (error.status === 403) {
+      return redirect(routes.unauthorized)
+    }
   }
-  await getAllTestsData(
-    sortBy,
-    sortOrder,
-    currentWorkspaceId as string,
-    testCurrentPage,
-    testItemsPerPage,
-    callBack
-  )
-  return json<LoaderData>({
-    sections,
-    status,
-    workspaces,
-    currentWorkspaceId,
-    getAllSectionsCount,
-  })
 }
 
 export const action: ActionFunction = async ({ request, params }) => {
+  const userId = await getUserId(request)
   const createdById = await requireUserId(request)
   const workspaceId = params.workspaceId
   const formData = await request.formData()
   const data = formData.get("data")
   const parsedData = JSON.parse(data as string)
 
-  return await createTestHandler(createdById, workspaceId as string, parsedData)
+  try {
+    return await createTestHandler(
+      createdById,
+      workspaceId as string,
+      parsedData,
+      userId!
+    )
+  } catch (error: any) {
+    if (error.status === 403) {
+      return redirect(routes.unauthorized)
+    }
+  }
 }
 
 const AddTest = () => {
@@ -97,6 +117,8 @@ const AddTest = () => {
         toast.error(t(actionData.errors?.title), {
           toastId: actionData.errors?.title,
         })
+      } else if (actionData.errors?.status === 403) {
+        navigate(routes.unauthorized)
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

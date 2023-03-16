@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next"
 import ListActionMenu from "../components/ListActionMenu"
 
 import { routes } from "~/constants/route.constants"
+import { useCommonContext } from "~/context/Common.context"
 import { useUser } from "~/utils"
 
 function Footer({
@@ -18,6 +19,7 @@ function Footer({
   setOpenResetPassModel: (e: boolean) => void
 }) {
   const { t } = useTranslation()
+  const { clearStoredValue } = useCommonContext()
   const navigate = useNavigate()
   const fetcher = useFetcher()
 
@@ -41,8 +43,10 @@ function Footer({
     {
       id: "logout",
       menuListText: t("commonConstants.logout"),
-      handleItemAction: () =>
-        fetcher.submit({}, { method: "post", action: "/logout" }),
+      handleItemAction: () => {
+        clearStoredValue("authorizationValidations")
+        fetcher.submit({}, { method: "post", action: "/logout" })
+      },
     },
   ]
 

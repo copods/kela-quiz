@@ -1,6 +1,7 @@
 import { useEffect } from "react"
 
 import type { LoaderFunction, ActionFunction } from "@remix-run/node"
+import { redirect } from "@remix-run/node"
 import { json } from "@remix-run/node"
 import { useActionData, useLoaderData, useNavigate } from "@remix-run/react"
 import { t } from "i18next"
@@ -9,6 +10,7 @@ import { toast } from "react-toastify"
 import { routes } from "../../../constants/route.constants"
 
 import Workspace from "~/components/settings/Workspace"
+import { checkUserFeatureAuthorization } from "~/models/authorization.server"
 import {
   getActiveOwnerWorkspaces,
   getActiveWorkspaceOwner,
@@ -23,20 +25,40 @@ interface LoaderData {
   ownersWorkspaces: Awaited<ReturnType<typeof getActiveOwnerWorkspaces>>
   currentWorkspaceId: string
   userWorkspaces: Awaited<ReturnType<typeof getUserWorkspaceService>>
+  permission: { [key: string]: { [key: string]: boolean } }
 }
 
 export const loader: LoaderFunction = async ({ request, params }) => {
-  const currentWorkspaceId = params.workspaceId as string
-  const userId = (await getUserId(request)) as string
-  const workspaceOwner = await getActiveWorkspaceOwner(currentWorkspaceId)
-  const ownersWorkspaces = await getActiveOwnerWorkspaces(userId)
-  const userWorkspaces = await getUserWorkspaceService(userId)
-  return json<LoaderData>({
-    workspaceOwner,
-    ownersWorkspaces,
-    currentWorkspaceId,
-    userWorkspaces,
-  })
+  try {
+    const userId = (await getUserId(request)) as string
+    const currentWorkspaceId = params.workspaceId as string
+
+    const permission = await checkUserFeatureAuthorization(
+      userId,
+      currentWorkspaceId
+    )
+    if (!permission.workspace.read) {
+      return redirect(routes.unauthorized)
+    }
+
+    const workspaceOwner = await getActiveWorkspaceOwner(currentWorkspaceId)
+    const ownersWorkspaces = await getActiveOwnerWorkspaces(userId)
+    const userWorkspaces = await getUserWorkspaceService(
+      userId,
+      currentWorkspaceId
+    )
+    return json<LoaderData>({
+      workspaceOwner,
+      ownersWorkspaces,
+      currentWorkspaceId,
+      userWorkspaces,
+      permission,
+    })
+  } catch (error: any) {
+    if (error.status === 403) {
+      return redirect(routes.unauthorized)
+    }
+  }
 }
 
 const actionConstants = {
@@ -57,12 +79,18 @@ export const action: ActionFunction = async ({ request, params }) => {
   if (action === actionConstants.updateUserWorkspace) {
     const name = formData.get("name") as string
     const workspaceId = formData.get("workspaceId") as string
-    const updateWorkspace = await updateCurrentUserWorkspace(
-      workspaceId,
-      name,
-      userId
-    )
-    return updateWorkspace
+    try {
+      const updateWorkspace = await updateCurrentUserWorkspace(
+        workspaceId,
+        name,
+        userId
+      )
+      return updateWorkspace
+    } catch (error: any) {
+      if (error.status === 403) {
+        return redirect(routes.unauthorized)
+      }
+    }
   } else if (action === actionConstants.leaveWorksapce) {
     const response = await leaveActiveWorkspace(workspaceId, userId)
     return response

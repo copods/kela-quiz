@@ -4,6 +4,7 @@ import { Outlet } from "@remix-run/react"
 
 import AdminLayout from "~/components/layouts/AdminLayout"
 import { routes } from "~/constants/route.constants"
+import { checkUserFeatureAuthorization } from "~/models/authorization.server"
 import {
   getDefaultWorkspaceIdForUserQuery,
   getUserWorkspaces,
@@ -29,8 +30,13 @@ export type ActionData = {
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   const userId = await getUserId(request)
-  if (!userId) return redirect(routes.signIn)
   let currentWorkspaceId = params.workspaceId as string
+  if (!userId) return redirect(routes.signIn)
+
+  const permission = await checkUserFeatureAuthorization(
+    userId!,
+    currentWorkspaceId
+  )
 
   const verfiedWorkspaceId = await verifyWorkspaceId({
     userId,
@@ -50,7 +56,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
   const workspaces = await getUserWorkspaces(userId as string)
 
-  return json({ workspaces, currentWorkspaceId })
+  return json({ workspaces, currentWorkspaceId, permission })
 }
 
 export const action: ActionFunction = async ({ request, params }) => {

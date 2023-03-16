@@ -7,6 +7,7 @@ import { toast } from "react-toastify"
 import Button from "../common-components/Button"
 import DialogWrapper from "../common-components/Dialog"
 
+import { routes } from "~/constants/route.constants"
 import { useCommonContext } from "~/context/Common.context"
 import type { LoaderData } from "~/routes/$workspaceId/tests"
 import { trimValue } from "~/utils"
@@ -88,7 +89,9 @@ const AddEditSection = ({
 
   const navigate = useNavigate()
   useEffect(() => {
-    if (fetcherData?.resp?.status === "statusCheck.testAddedSuccess") {
+    if (fetcherData?.errors?.status === 403) {
+      return navigate(routes.unauthorized)
+    } else if (fetcherData?.resp?.status === "statusCheck.testAddedSuccess") {
       toast.success(t(fetcherData?.resp?.status as string), {
         toastId: "test-added-sucessfully",
       })
@@ -101,7 +104,13 @@ const AddEditSection = ({
       setOpen(false)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fetcherData?.resp?.data?.id, fetcherData?.resp?.status, setOpen, t])
+  }, [
+    fetcherData?.resp?.data?.id,
+    fetcherData?.resp?.status,
+    setOpen,
+    t,
+    fetcherData?.errors,
+  ])
   useEffect(() => {
     if (sectionName.length! > 1)
       setSectionActionErrors({

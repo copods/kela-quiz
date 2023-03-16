@@ -69,7 +69,7 @@ const ListMenuItem = ({
   return (
     <>
       <Menu as="div" className="relative flex">
-        <div ref={elementRef}>
+        <div className="flex" ref={elementRef}>
           <Menu.Button
             className={`${id} self-center`}
             onClick={() => {

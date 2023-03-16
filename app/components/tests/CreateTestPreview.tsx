@@ -1,6 +1,7 @@
 import { useState } from "react"
 
 import { Icon } from "@iconify/react"
+import { useLoaderData } from "@remix-run/react"
 import { useTranslation } from "react-i18next"
 
 import InviteCandidatePopup from "./InviteCandidatePopup"
@@ -25,7 +26,7 @@ const TestPreview = ({
   showInviteAction?: boolean
 }) => {
   const { t } = useTranslation()
-
+  const loaderData = useLoaderData()
   const changeSelectedSectionsOrder = (index: number, action: string) => {
     if (
       (index === 0 && action === "up") ||
@@ -62,7 +63,7 @@ const TestPreview = ({
           >
             {t("testsConstants.testDetailsText")}
           </h1>
-          {showInviteAction && (
+          {showInviteAction && loaderData.permission.invite_candidate.create && (
             <div>
               <div
                 role={"button"}

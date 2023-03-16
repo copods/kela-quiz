@@ -4,6 +4,7 @@ import { faker } from "@faker-js/faker"
 import type { Password, User } from "@prisma/client"
 import bcrypt from "bcryptjs"
 
+import { checkFeatureAuthorization } from "./authorization.server"
 import { sendMail, sendNewPassword } from "./sendgrid.servers"
 
 import { prisma } from "~/db.server"
@@ -17,31 +18,43 @@ export async function getUserById(id: User["id"]) {
 export async function deleteUserById(
   userId: string,
   workspaceId: string,
-  email: string
+  email: string,
+  id: string
 ) {
-  const deleteUserWorkspace = await prisma.userWorkspace.deleteMany({
-    where: { userId, workspaceId },
-  })
-  const invitedIdByEmail = await prisma.invites.findMany({
-    where: {
-      email: email,
-      workspaceId,
-      deleted: false,
-    },
-    select: {
-      id: true,
-    },
-  })
-  await prisma.invites.update({
-    where: {
-      id: invitedIdByEmail[0].id,
-    },
-    data: {
-      deleted: true,
-      deletedAt: new Date().toString(),
-    },
-  })
-  return deleteUserWorkspace
+  try {
+    if (
+      !(await checkFeatureAuthorization(id, workspaceId, "member", "delete"))
+    ) {
+      throw {
+        status: 403,
+      }
+    }
+    const deleteUserWorkspace = await prisma.userWorkspace.deleteMany({
+      where: { userId, workspaceId },
+    })
+    const invitedIdByEmail = await prisma.invites.findMany({
+      where: {
+        email: email,
+        workspaceId,
+        deleted: false,
+      },
+      select: {
+        id: true,
+      },
+    })
+    await prisma.invites.update({
+      where: {
+        id: invitedIdByEmail[0].id,
+      },
+      data: {
+        deleted: true,
+        deletedAt: new Date().toString(),
+      },
+    })
+    return deleteUserWorkspace
+  } catch (error) {
+    throw error
+  }
 }
 
 export async function getUserByEmail(email: User["email"]) {
