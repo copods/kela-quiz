@@ -67,7 +67,7 @@ const QuestionCard = ({
         )
       }}
     >
-      <div className="break flex flex-col-reverse items-start justify-between gap-6 text-base text-gray-600 xl:flex-row">
+      <div className="flex">
         <div className="ql-editor !min-h-full p-0">
           <div
             className="question flex-1 cursor-pointer flex-row"
