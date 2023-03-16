@@ -151,6 +151,7 @@ describe("Test for members", () => {
 
     // Owner badge tests
     // To check if owner badge is visible
+    getJoinedMembers().click()
     cy.viewport(1500, 1000)
     getBadgeTag().should("be.visible")
 
