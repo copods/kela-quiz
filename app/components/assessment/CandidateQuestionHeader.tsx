@@ -8,7 +8,6 @@ import type { SectionInCandidateTest } from "~/interface/Interface"
 
 const CandidateQuestionHeader = () => {
   const { candidateTests, section } = useLoaderData()
-  console.log(section)
   const { t } = useTranslation()
 
   let candidateSection: SectionInCandidateTest | null = null
