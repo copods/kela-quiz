@@ -3,28 +3,33 @@ import { Fragment } from "react"
 import { Dialog, Transition } from "@headlessui/react"
 import { Icon } from "@iconify/react"
 
-import type { DialogWrapperProps } from "~/interface/Interface"
+import type {
+  DialogNewWrapperProps,
+  DialogWrapperProps,
+} from "~/interface/Interface"
 
 export const DialogHeader = ({
   heading,
   onClose,
 }: {
-  heading: string
-  onClose: (e: boolean) => void
+  heading?: string
+  onClose?: (e: boolean) => void
 }) => {
   return (
-    <div>
-      <div className="flex items-center justify-between p-4">
+    <>
+      <div className="flex items-center justify-between px-5 py-4">
         {/* dialog wrapper heading */}
-        <h2
-          className="text-2xl font-bold text-gray-700"
-          data-cy="dialog-header"
-          title={heading}
-          role={heading}
-          tabIndex={0}
-        >
-          {heading}
-        </h2>
+        {heading && (
+          <h2
+            className="text-lg font-semibold text-gray-700"
+            data-cy="dialog-header"
+            title={heading}
+            role={heading}
+            tabIndex={0}
+          >
+            {heading}
+          </h2>
+        )}
         {/* dialog wrapper close icon for close the dialog */}
         {onClose && (
           <Icon
@@ -39,24 +44,29 @@ export const DialogHeader = ({
           />
         )}
       </div>
-      <hr className="h-px w-full border-0 bg-gray-300" />
-    </div>
+      <hr className="h-px w-full border-0 bg-gray-200" />
+    </>
   )
 }
 
 export const DialogContent = ({ children }: { children: JSX.Element }) => {
-  return <div className="px-5">{children}</div>
+  return <div className="p-5">{children}</div>
 }
 
 export const DialogFooter = ({ children }: { children: JSX.Element }) => {
-  return <div className="p-4">{children}</div>
+  return (
+    <>
+      <hr className="h-px w-full border-0 bg-gray-200" />
+      <div className="px-5 py-4">{children}</div>
+    </>
+  )
 }
 
 export const DialogWrapperNew = ({
   open,
   setOpen,
   children,
-}: DialogWrapperProps) => {
+}: DialogNewWrapperProps) => {
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={() => setOpen(false)}>
