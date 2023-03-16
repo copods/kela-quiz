@@ -9,6 +9,7 @@ import {
   endAssessment,
   endCurrentSection,
   getCandidate,
+  getCandidateDetailsIfExists,
   getCandidateEmail,
   getCandidateIDFromAssessmentID,
   getCandidateSectionDetails,
@@ -393,4 +394,13 @@ export async function endCandidateAssessment(
   })
   await endAssessment(assessmentId as string)
   return redirect(`/assessment/${assessmentId}/end-assessment`)
+}
+
+/**
+ * Functions will return candidate details if it already exists
+ * @param assessmentId
+ * @returns candidate details
+ */
+export async function getCandidateDetails(assessmentId: string) {
+  return getCandidateDetailsIfExists(assessmentId as string)
 }

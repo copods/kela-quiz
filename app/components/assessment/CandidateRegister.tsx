@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 
-import { Form, useTransition } from "@remix-run/react"
+import { Form, useLoaderData, useTransition } from "@remix-run/react"
 import { useTranslation } from "react-i18next"
 
 import Button from "~/components/common-components/Button"
@@ -8,9 +8,18 @@ import InputField from "~/components/common-components/InputField"
 
 function CandidateRegister() {
   const { t } = useTranslation()
+  const loaderData = useLoaderData()
 
-  const [firstName, setFirstName] = useState("")
-  const [lastName, setLastName] = useState("")
+  const [firstName, setFirstName] = useState(
+    loaderData.candidateDetails.firstName
+      ? loaderData.candidateDetails.firstName
+      : ""
+  )
+  const [lastName, setLastName] = useState(
+    loaderData.candidateDetails.lastName
+      ? loaderData.candidateDetails.lastName
+      : ""
+  )
 
   const { state } = useTransition()
   const busy = state === "submitting"
