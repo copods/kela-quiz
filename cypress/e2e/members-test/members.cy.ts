@@ -153,6 +153,7 @@ describe("Test for members", () => {
 
     // New member tests
     // To check if new member is added
+    getJoinedMembers().click()
     getTableRow().eq(5).should("have.text", memberEmail)
 
     // Owner badge tests
