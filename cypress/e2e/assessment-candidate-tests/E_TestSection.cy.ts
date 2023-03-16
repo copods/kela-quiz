@@ -11,8 +11,8 @@ import {
 } from "support/common-function"
 
 const commonContants = {
-  sectionHeadingOne: "Section 1 - 2: Quantitative - assessment1",
-  sectionHeadingTwo: "Section 2 - 2: Quantitative - assessment1",
+  sectionHeadingOne: "Section 1 - 2: Quantitive - section1",
+  sectionHeadingTwo: "Section 2 - 2: Quantitive - section2",
   coolDown: "cooldown",
   congratulationText: "Congratulations! You have completed the exam",
   Next: "Next",
