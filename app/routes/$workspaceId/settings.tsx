@@ -13,8 +13,8 @@ import {
 import { useTranslation } from "react-i18next"
 
 import { version } from "package.json"
+import Tabs from "~/components/common-components/Tabs"
 import Header from "~/components/header/Header"
-import SettingsTabs from "~/components/settings/SettingTab"
 import { actions } from "~/constants/action.constants"
 import { routes } from "~/constants/route.constants"
 import {
@@ -111,6 +111,20 @@ export default function Settings() {
       </span>
     )
   }
+
+  const settingsTabs = [
+    // {
+    //   name: t("tabs.general"),
+    //   action: () => navigate(`/${currentWorkspaceId}/settings/general`),
+    //   active: location.pathname.includes("/settings/general"),
+    // },
+    {
+      name: t("tabs.workspaces"),
+      action: () => navigate(`/${currentWorkspaceId}/settings/workspace`),
+      active: location.pathname.includes("/settings/workspace"),
+    },
+  ]
+
   return (
     <div className="flex flex-col gap-6">
       <Header
@@ -119,7 +133,7 @@ export default function Settings() {
         rightChildren={<VersionOfApplication />}
       />
       <div className="flex flex-col gap-5">
-        <SettingsTabs currentWorkspaceId={currentWorkspaceId} />
+        <Tabs tabs={settingsTabs} />
         <Outlet />
       </div>
     </div>
