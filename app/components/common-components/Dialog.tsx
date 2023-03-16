@@ -19,7 +19,7 @@ export const DialogHeader = ({
     <>
       <div className="flex items-center justify-between px-5 py-4">
         {/* dialog wrapper heading */}
-        {heading && (
+        {heading ? (
           <h2
             className="text-lg font-semibold text-gray-700"
             data-cy="dialog-header"
@@ -29,9 +29,9 @@ export const DialogHeader = ({
           >
             {heading}
           </h2>
-        )}
+        ) : null}
         {/* dialog wrapper close icon for close the dialog */}
-        {onClose && (
+        {onClose ? (
           <Icon
             tabIndex={0}
             id="dialog-close-icon"
@@ -42,7 +42,7 @@ export const DialogHeader = ({
             }}
             onClick={() => onClose(false)}
           />
-        )}
+        ) : null}
       </div>
       <hr className="h-px w-full border-0 bg-gray-200" />
     </>
