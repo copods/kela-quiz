@@ -4,8 +4,9 @@ import { Icon } from "@iconify/react"
 import { Form } from "@remix-run/react"
 import { useTranslation } from "react-i18next"
 
+import DialogWrapper from "../common-components/Dialog"
+
 import Button from "./Button"
-import DialogWrapper from "./Dialog"
 export default function DeletePopUp({
   setOpen,
   open,

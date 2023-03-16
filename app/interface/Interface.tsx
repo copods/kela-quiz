@@ -40,6 +40,12 @@ export interface DialogWrapperProps {
   tabIndex?: number
 }
 
+export interface DialogNewWrapperProps {
+  open: boolean
+  setOpen: (e: boolean) => void
+  children: JSX.Element
+}
+
 export interface ButtonProps {
   name?: string
   id?: string
