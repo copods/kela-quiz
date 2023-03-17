@@ -23,6 +23,7 @@ import { routes } from "~/constants/route.constants"
 import { useCommonContext } from "~/context/Common.context"
 import { sortByOrder } from "~/interface/Interface"
 import type { Section } from "~/interface/Interface"
+import { checkUserFeatureAuthorization } from "~/models/authorization.server"
 import {
   getAllSectionCount,
   getAllTestsData,
@@ -72,10 +73,22 @@ export type LoaderData = {
   getAllTestsCount: number
   sortBy: string | null
   sortOrder: string | null
+  permission: { [key: string]: { [key: string]: boolean } }
 }
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   try {
+    const userId = await getUserId(request)
+    const currentWorkspaceId = params.workspaceId as string
+
+    const permission = await checkUserFeatureAuthorization(
+      userId!,
+      currentWorkspaceId
+    )
+
+    if (!permission.tests.read) {
+      return redirect(routes.unauthorized)
+    }
     // taking search params from URL
     const query = new URL(request.url).searchParams
 
@@ -86,8 +99,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     const sortBy = query.get("sortBy") || "name"
 
     const sortOrder = query.get("sort") || sortByOrder.desc
-    const userId = await getUserId(request)
-    const currentWorkspaceId = params.workspaceId as string
+
     const workspaces = await getWorkspaces(userId as string)
 
     let sections: Array<Section> = []
@@ -105,7 +117,9 @@ export const loader: LoaderFunction = async ({ request, params }) => {
       currentWorkspaceId as string,
       testCurrentPage,
       testItemsPerPage,
-      callBack
+      callBack,
+      userId!,
+      currentWorkspaceId
     )
     const selectedSectionId = params.sectionId
       ? params.sectionId?.toString()
@@ -126,13 +140,17 @@ export const loader: LoaderFunction = async ({ request, params }) => {
       getAllTestsCount,
       sortBy,
       sortOrder,
+      permission,
     })
-  } catch (err) {
-    console.log(err)
+  } catch (error: any) {
+    if (error.status === 403) {
+      return redirect(routes.unauthorized)
+    }
   }
 }
 
 export const action: ActionFunction = async ({ request, params }) => {
+  const userId = await getUserId(request)
   const createdById = await requireUserId(request)
   const currentWorkspaceId = params.workspaceId as string
   const formData = await request.formData()
@@ -163,8 +181,20 @@ export const action: ActionFunction = async ({ request, params }) => {
     if (Object.values(createSectionFieldError).some(Boolean)) {
       return json({ createSectionFieldError }, { status: 400 })
     }
-    const response = await handleEditTest(name, description, id)
-    return response
+    try {
+      const response = await handleEditTest(
+        name,
+        description,
+        id,
+        userId!,
+        currentWorkspaceId
+      )
+      return response
+    } catch (error: any) {
+      if (error.status === 403) {
+        return redirect(routes.unauthorized)
+      }
+    }
   }
   if (action === "sectionAdd") {
     const name = formData.get("name")
@@ -177,12 +207,19 @@ export const action: ActionFunction = async ({ request, params }) => {
     if (Object.values(createSectionFieldError).some(Boolean)) {
       return json({ createSectionFieldError }, { status: 400 })
     }
-    return await handleAddTest(
-      name as string,
-      description as string,
-      createdById,
-      currentWorkspaceId
-    )
+    try {
+      return await handleAddTest(
+        name as string,
+        description as string,
+        createdById,
+        currentWorkspaceId,
+        userId!
+      )
+    } catch (error: any) {
+      if (error.status === 403) {
+        return redirect(routes.unauthorized)
+      }
+    }
   }
   if (action === "sectionDelete") {
     const currentPage = formData.get("currentPage") as string
@@ -190,7 +227,13 @@ export const action: ActionFunction = async ({ request, params }) => {
     const totalItems = formData.get("totalSectionsOnCurrentPage") as string
     const sortFilter = formData.get("filter") as string
     const deleteSectionId = formData.get("id") as string
-    await handleDeleteTest(deleteSectionId)
+    try {
+      await handleDeleteTest(deleteSectionId, userId!, currentWorkspaceId)
+    } catch (error: any) {
+      if (error.status === 403) {
+        return redirect(routes.unauthorized)
+      }
+    }
 
     const sectionId = await getFIRSTSection(
       sortFilter
@@ -282,6 +325,7 @@ export default function SectionPage() {
   if (t(data.status) != t("statusCheck.success")) {
     toast.error(t("statusCheck.commonError"))
   }
+
   useEffect(() => {
     if (sectionActionData?.deleted === "deleteLastTestOnPage") {
       toast.success(t("statusCheck.deletedSuccess"), {
@@ -394,15 +438,17 @@ export default function SectionPage() {
         >
           {t("routeFiles.tests")}
         </h2>
-        <Button
-          id="add-section"
-          data-cy="submit"
-          className="h-9 px-5"
-          variant="primary-solid"
-          onClick={() => setShowAddSectionModal(!showAddSectionModal)}
-          title={t("sectionsConstants.addTests")}
-          buttonText={`+ ${t("sectionsConstants.addTests")}`}
-        />
+        {data.permission.tests.create && (
+          <Button
+            id="add-section"
+            data-cy="submit"
+            className="h-9 px-5"
+            variant="primary-solid"
+            onClick={() => setShowAddSectionModal(!showAddSectionModal)}
+            title={t("sectionsConstants.addTests")}
+            buttonText={`+ ${t("sectionsConstants.addTests")}`}
+          />
+        )}
       </header>
       {data.sections.length > 0 && location.pathname.includes("/tests/") ? (
         <div

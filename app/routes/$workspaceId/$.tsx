@@ -23,7 +23,6 @@ const NotFound = () => {
           />
         </div>
         <div className="text-center leading-8">
-          <p className="text-2xl font-bold">{t("notFound.error")}</p>
           <p className="text-2xl font-bold">{t("notFound.urlNotFound")}</p>
           <div
             className="font-semibold text-primary underline"
