@@ -86,9 +86,12 @@ const CandidateListOfTest = () => {
   useEffect(() => {
     if (fetcher.data) {
       setFilteredData(fetcher.data.candidatesOfTest.candidateTest)
-      setCandidateCounts(fetcher.data.candidatesCount)
     }
   }, [fetcher.data])
+
+  useEffect(() => {
+    setCandidateCounts(candidatesLoaderData.candidatesCount)
+  }, [candidatesLoaderData.candidatesCount])
 
   useEffect(() => {
     navigate(`?page=${1}&pageSize=${pageSize}&filterByStatus=${statusFilter}`, {
