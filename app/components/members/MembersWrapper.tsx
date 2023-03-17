@@ -117,7 +117,9 @@ const MembersWrapper = () => {
           />
         ) : activeTab === "invited_members" &&
           !memberLoaderData.invitedMembers.length ? (
-          <EmptyStateComponent text="No members are invited" />
+          <EmptyStateComponent
+            text={t("commonConstants.invitedMemberEmptyState")}
+          />
         ) : activeTab === "invited_members" ? (
           <InvitedMembersList
             actionStatus={membersActionData?.resp?.title}
