@@ -299,7 +299,8 @@
     "candidateInsWelcome": "Welcome",
     "testCompleted": "Congratulations! You have completed the exam",
     "candidateContact": "We will contact you soon",
-    "alreadyExamSubmitted": "Hey! you have already submitted the exam"
+    "alreadyExamSubmitted": "Hey! you have already submitted the exam",
+    "ExpiredLink": "Link has expired"
   },
   "toastConstants": {
     "addAssessment": "Enter Name to add assessment",
@@ -356,10 +357,13 @@
     "workspaces": "Workspaces"
   },
   "notFound": {
-    "error": "That's an error.",
     "notFound": "Not Found",
     "urlNotFound": "The requested URL was not found on this server.",
-    "gotoDashboard": "GoTo Dashboard"
+    "gotoDashboard": "Go To Dashboard"
+  },
+  "unauthorized": {
+    "error": "You are not authorized to access this route",
+    "gotoDashboard": "Go To Dashboard"
   },
   "emptyStateConstants": {
     "noQuestionsState": "Add Questions to this Test",

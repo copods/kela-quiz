@@ -30,6 +30,7 @@ export type ActionData = {
  * @param testsItemsPerPage
  * @param testsCurrentPage
  * @param cb
+ * @param userId
  * @returns all Assessments data
  */
 export const getAllAssessments = async (
@@ -38,43 +39,54 @@ export const getAllAssessments = async (
   currentWorkspaceId: string,
   testsItemsPerPage: number,
   testsCurrentPage: number,
-  cb: (AssessmentUpdate: Test[], statusUpdate: string) => void
+  cb: (AssessmentUpdate: Test[], statusUpdate: string) => void,
+  userId: string
 ) => {
-  return await getAllTests(
-    sortBy as string,
-    sortOrder as string,
-    currentWorkspaceId as string,
-    testsItemsPerPage,
-    testsCurrentPage
-  )
-    .then((res) => {
-      return cb(res as Test[], "statusCheck.success")
-    })
-    .catch((err) => {
-      return cb(err, "")
-    })
+  try {
+    return await getAllTests(
+      sortBy as string,
+      sortOrder as string,
+      currentWorkspaceId as string,
+      testsItemsPerPage,
+      testsCurrentPage,
+      userId
+    )
+      .then((res) => {
+        return cb(res as Test[], "statusCheck.success")
+      })
+      .catch((err) => {
+        return cb(err, "")
+      })
+  } catch (error) {
+    throw error
+  }
 }
 
 /** function for deleting the assessment by id
  * @param id
+ * @param userId
+ * @param workspaceId
  * @returns this function will delete the assessment by id
  */
 
-export const deleteAssessmentById = async (id: string) => {
-  const deletedHandle = await deleteTestById(id)
-    .then((res) => {
-      return json<ActionData>(
-        { resp: { statusCode: 200, message: "statusCheck.deletedSuccess" } },
-        { status: 200 }
-      )
-    })
-    .catch((err) => {
-      return json<ActionData>(
-        { errors: { statusCode: 400, message: "statusCheck.commonError" } },
-        { status: 400 }
-      )
-    })
-  return deletedHandle
+export const deleteAssessmentById = async (
+  id: string,
+  userId: string,
+  workspaceId: string
+) => {
+  try {
+    const deletedHandle = await deleteTestById(id, userId, workspaceId).then(
+      (res) => {
+        return json<ActionData>(
+          { resp: { statusCode: 200, message: "statusCheck.deletedSuccess" } },
+          { status: 200 }
+        )
+      }
+    )
+    return deletedHandle
+  } catch (error) {
+    throw error
+  }
 }
 
 /**  function for creating the candidate
@@ -87,24 +99,41 @@ export const getCandidateByAssessmentId = async ({
   emails,
   createdById,
   testId,
+  userId,
+  workspaceId,
 }: {
   emails: Array<string>
   createdById: User["id"]
   testId: string
+  userId: string
+  workspaceId: string
 }) => {
-  return await createCandidate({
-    emails,
-    createdById,
-    testId,
-  })
+  try {
+    return await createCandidate({
+      emails,
+      createdById,
+      testId,
+      userId,
+      workspaceId,
+    })
+  } catch (error) {
+    throw error
+  }
 }
 
 /** 
  *@param currentWorkspaceId
  @returns number of count of total assessments
  */
-export const getAllAssessmentsCount = async (currentWorkspaceId: string) => {
-  return await getAllTestsCount(currentWorkspaceId)
+export const getAllAssessmentsCount = async (
+  currentWorkspaceId: string,
+  userId: string
+) => {
+  try {
+    return await getAllTestsCount(currentWorkspaceId, userId)
+  } catch (error) {
+    throw error
+  }
 }
 
 /**

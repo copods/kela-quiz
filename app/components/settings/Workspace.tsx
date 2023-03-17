@@ -123,7 +123,9 @@ const Workspace = () => {
             inputValue={inputValue}
           />
         ) : (
-          <EditButton setIsEdit={setIsEdit} />
+          workspaceLoaderData.permission.workspace.update && (
+            <EditButton setIsEdit={setIsEdit} />
+          )
         )}
       </div>
       <div className="flex flex-col gap-8">

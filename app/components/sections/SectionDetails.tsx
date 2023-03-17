@@ -70,21 +70,23 @@ const SectionDetails = () => {
             />
           </div>
         )}
-        <Button
-          tabIndex={0}
-          onClick={() => {
-            navigate(
-              `/${sectionDetails.currentWorkspaceId}${routes.tests}/${sectionDetails.sectionDetails?.id}${routes.addQuestion}`
-            )
-            setCustomStorage("activeTest", sectionDetails.sectionDetails?.id)
-          }}
-          id="add-question"
-          className="h-9 w-36 px-5"
-          buttonText={`+ ${t("addQuestion.addQuestion")}`}
-          variant="primary-solid"
-          title={t("addQuestion.addQuestion")}
-          aria-label={t("addQuestion.addQuestion")}
-        />
+        {sectionDetails.permission.questions.create && (
+          <Button
+            tabIndex={0}
+            onClick={() => {
+              navigate(
+                `/${sectionDetails.currentWorkspaceId}${routes.tests}/${sectionDetails.sectionDetails?.id}${routes.addQuestion}`
+              )
+              setCustomStorage("activeTest", sectionDetails.sectionDetails?.id)
+            }}
+            id="add-question"
+            className="h-9 w-36 px-5"
+            buttonText={`+ ${t("addQuestion.addQuestion")}`}
+            variant="primary-solid"
+            title={t("addQuestion.addQuestion")}
+            aria-label={t("addQuestion.addQuestion")}
+          />
+        )}
       </div>
       {/* QUESTION LIST  */}
       {searchedQuestion.length === 0 ? (
@@ -98,6 +100,7 @@ const SectionDetails = () => {
               expandedIndex={currentAccordian}
               onAccordianToggle={setCurrentAccordian}
               index={i}
+              deletePermission={sectionDetails.permission.questions.delete}
             />
           )
         })

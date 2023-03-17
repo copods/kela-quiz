@@ -1,3 +1,4 @@
+import { checkFeatureAuthorization } from "./authorization.server"
 import { getAdminId } from "./user.server"
 
 import { prisma } from "~/db.server"
@@ -10,21 +11,37 @@ export async function getCurrentWorkspaceOwner(currentWorkspaceId: string) {
   })
   return workspaceOwner
 }
-export async function getUserWorkspaces(userId: string) {
-  return await prisma.userWorkspace.findMany({
-    where: {
-      userId,
-    },
-    select: {
-      id: true,
-      workspaceId: true,
-      workspace: {
-        select: {
-          name: true,
+export async function getUserWorkspaces(userId: string, workspaceId?: string) {
+  try {
+    if (
+      !(await checkFeatureAuthorization(
+        userId,
+        workspaceId!,
+        "workspace",
+        "read"
+      ))
+    ) {
+      throw {
+        status: 403,
+      }
+    }
+    return await prisma.userWorkspace.findMany({
+      where: {
+        userId,
+      },
+      select: {
+        id: true,
+        workspaceId: true,
+        workspace: {
+          select: {
+            name: true,
+          },
         },
       },
-    },
-  })
+    })
+  } catch (error) {
+    throw error
+  }
 }
 export async function joinWorkspace({ invitedId }: { invitedId: string }) {
   // user will join the workspace for he/she invited
@@ -137,8 +154,19 @@ export async function updateUserWorkspace(
   name: string,
   updatedById: string
 ) {
-  await prisma.workspace.update({
-    where: { id },
-    data: { name, updatedById },
-  })
+  try {
+    if (
+      !(await checkFeatureAuthorization(updatedById, id, "workspace", "update"))
+    ) {
+      throw {
+        status: 403,
+      }
+    }
+    await prisma.workspace.update({
+      where: { id },
+      data: { name, updatedById },
+    })
+  } catch (error) {
+    throw error
+  }
 }

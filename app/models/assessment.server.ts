@@ -35,6 +35,25 @@ export async function getCandidateIDFromAssessmentID(id: CandidateTest["id"]) {
   }
 }
 
+export async function getCandidateDetailsIfExists(
+  assessmentId: CandidateTest["id"]
+) {
+  const candidateEmail = await prisma.candidateTest.findUnique({
+    where: { id: assessmentId },
+    select: { candidate: { select: { email: true } } },
+  })
+
+  return await prisma.candidate.findUnique({
+    where: {
+      email: candidateEmail?.candidate.email,
+    },
+    select: {
+      firstName: true,
+      lastName: true,
+    },
+  })
+}
+
 async function generateOTP() {
   // generate random 4 digit OTP
   var digits = "1234567896"
@@ -745,6 +764,7 @@ async function calculateResultBySectionId(sectionid?: string) {
     return sec
   }
 }
+
 async function calculateOverallResult(id: CandidateTest["id"]) {
   let totalQuestionInTest = 0
   let unansweredInTest = 0
