@@ -75,20 +75,21 @@ const CandidateListOfTest = () => {
     fetcher.submit(
       {
         searchText: searchText,
+        filterByStatus: statusFilter,
       },
       {
         method: "get",
       }
     )
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchText])
+  }, [searchText, statusFilter])
 
   useEffect(() => {
     if (fetcher.data) {
       setFilteredData(fetcher.data.candidatesOfTest.candidateTest)
       setCandidateCounts(fetcher.data.candidatesCount)
     }
-  }, [fetcher.data])
+  }, [fetcher.data, searchText])
 
   useEffect(() => {
     navigate(`?page=${1}&pageSize=${pageSize}&filterByStatus=${statusFilter}`, {
