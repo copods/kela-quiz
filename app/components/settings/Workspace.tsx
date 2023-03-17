@@ -4,7 +4,11 @@ import { useLoaderData, useSubmit } from "@remix-run/react"
 import { useTranslation } from "react-i18next"
 
 import Button from "../common-components/Button"
-import DialogWrapper from "../common-components/Dialog"
+import {
+  DialogContent,
+  DialogFooter,
+  DialogWrapperNew,
+} from "../common-components/Dialog"
 
 import { WorkspaceDetailsSection } from "./WorkspaceDetailsSection"
 
@@ -153,43 +157,44 @@ const Workspace = () => {
                 ?.map((workspace: { id: string }) => workspace.id)
                 .includes(workspaceLoaderData?.currentWorkspaceId)}
             />
-            <DialogWrapper
+            <DialogWrapperNew
               open={showLeaveWorkspacePopup}
               setOpen={setShowLeaveWorkspacePopup}
-              header={false}
             >
-              <div className="flex flex-col gap-4">
-                <div>
+              <>
+                <DialogContent>
                   <p>{t("settings.leaveWorkspaceConfirmation")}</p>
-                </div>
-                <div className="flex justify-end gap-4">
-                  <Button
-                    tabIndex={0}
-                    id="cancel-leave-workspace"
-                    variant="primary-outlined"
-                    type="button"
-                    name="cancel"
-                    className="px-5"
-                    title={t("commonConstants.cancel")}
-                    buttonText={t("commonConstants.cancel")}
-                    onClick={() =>
-                      setShowLeaveWorkspacePopup(!showLeaveWorkspacePopup)
-                    }
-                  />
-                  <Button
-                    tabIndex={0}
-                    id="confirm-leave-workspace"
-                    variant="secondary-solid"
-                    type="button"
-                    name="leave"
-                    className="px-5"
-                    title={t("settings.leaveWorkspace")}
-                    buttonText={t("settings.leave")}
-                    onClick={() => leaveWorkspace()}
-                  />
-                </div>
-              </div>
-            </DialogWrapper>
+                </DialogContent>
+                <DialogFooter>
+                  <div className="flex justify-end gap-4">
+                    <Button
+                      tabIndex={0}
+                      id="cancel-leave-workspace"
+                      variant="primary-outlined"
+                      type="button"
+                      name="cancel"
+                      className="px-5"
+                      title={t("commonConstants.cancel")}
+                      buttonText={t("commonConstants.cancel")}
+                      onClick={() =>
+                        setShowLeaveWorkspacePopup(!showLeaveWorkspacePopup)
+                      }
+                    />
+                    <Button
+                      tabIndex={0}
+                      id="confirm-leave-workspace"
+                      variant="secondary-solid"
+                      type="button"
+                      name="leave"
+                      className="px-5"
+                      title={t("settings.leaveWorkspace")}
+                      buttonText={t("settings.leave")}
+                      onClick={() => leaveWorkspace()}
+                    />
+                  </div>
+                </DialogFooter>
+              </>
+            </DialogWrapperNew>
           </>
         )}
       </div>

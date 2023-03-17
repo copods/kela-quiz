@@ -14,6 +14,9 @@ export const DialogHeader = ({
 }: {
   heading?: string
   onClose?: (e: boolean) => void
+  role?: string
+  ariaLabel?: string
+  tabIndex?: number
 }) => {
   return (
     <>

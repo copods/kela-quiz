@@ -4,7 +4,12 @@ import { useSubmit, useTransition } from "@remix-run/react"
 import { useTranslation } from "react-i18next"
 
 import Button from "../common-components/Button"
-import DialogWrapper from "../common-components/Dialog"
+import {
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogWrapperNew,
+} from "../common-components/Dialog"
 import DropdownField from "../common-components/Dropdown"
 
 import InputField from "~/components/common-components/InputField"
@@ -61,37 +66,40 @@ export default function AddMemberModal({
     },
   ]
   return (
-    <DialogWrapper
-      open={open}
-      heading={t("members.inviteMember")}
-      setOpen={setOpen}
-      header={true}
-      role={t("members.inviteMember")}
-      ariaLabel={t("members.inviteMember")}
-      tabIndex={0}
-    >
-      <div>
-        <div className="flex flex-col gap-6">
-          {inputFieldsProps.map((props) => {
-            return <InputField {...props} key={props.name} />
-          })}
+    <DialogWrapperNew open={open} setOpen={setOpen}>
+      <>
+        <DialogHeader
+          heading={t("members.inviteMember")}
+          onClose={setOpen}
+          role={t("members.inviteMember")}
+          ariaLabel={t("members.inviteMember")}
+          tabIndex={0}
+        />
+        <DialogContent>
+          <div className="flex flex-col gap-6">
+            {inputFieldsProps.map((props) => {
+              return <InputField {...props} key={props.name} />
+            })}
 
-          <div className="flex flex-col gap-1.5" id="add-member-modal">
-            <div>
-              <label htmlFor="" className="text-gray-800">
-                {t("members.role")}
-                <span className="text-red-600">*</span>
-              </label>
+            <div className="flex flex-col gap-1.5" id="add-member-modal">
+              <div>
+                <label htmlFor="" className="text-gray-800">
+                  {t("members.role")}
+                  <span className="text-red-600">*</span>
+                </label>
+              </div>
+              <DropdownField
+                data={roles}
+                name="roleId"
+                displayKey={"name"}
+                valueKey={"id"}
+                value={role}
+                setValue={setRole}
+              />
             </div>
-            <DropdownField
-              data={roles}
-              name="roleId"
-              displayKey={"name"}
-              valueKey={"id"}
-              value={role}
-              setValue={setRole}
-            />
           </div>
+        </DialogContent>
+        <DialogFooter>
           <div className="flex justify-end gap-2">
             <Button
               tabIndex={0}
@@ -127,8 +135,8 @@ export default function AddMemberModal({
               onClick={() => submitMemberForm()}
             />
           </div>
-        </div>
-      </div>
-    </DialogWrapper>
+        </DialogFooter>
+      </>
+    </DialogWrapperNew>
   )
 }
