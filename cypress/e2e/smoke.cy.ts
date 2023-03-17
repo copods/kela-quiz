@@ -465,6 +465,6 @@ describe("smoke tests", () => {
     cy.location().then((res) => {
       cy.customVisit(`${res.pathname}-error`)
     })
-    cy.contains("That's an error.")
+    cy.contains("The requested URL was not found on this server.")
   })
 })

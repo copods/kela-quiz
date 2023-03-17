@@ -40,6 +40,12 @@ export interface DialogWrapperProps {
   tabIndex?: number
 }
 
+export interface DialogNewWrapperProps {
+  open: boolean
+  setOpen: (e: boolean) => void
+  children: JSX.Element
+}
+
 export interface ButtonProps {
   name?: string
   id?: string
@@ -292,6 +298,7 @@ export interface CandidateResult {
   workspaceId?: string
   link?: string
 }
+
 export enum sortByOrder {
   ascending = "asc",
   name = "name",
@@ -382,7 +389,8 @@ export interface UserWorkspace {
 }
 export interface TabsComponent {
   name: string
-  route: string
+  action: () => void
+  active: boolean
 }
 
 export interface OtherFilters {

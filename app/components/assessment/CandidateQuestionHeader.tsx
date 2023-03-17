@@ -31,7 +31,7 @@ const CandidateQuestionHeader = () => {
         data-cy="testSectionHeading"
       >
         Section {section.order} - {candidateTests.sections.length}:{" "}
-        {candidateTests.test.name}
+        {section.section.name}
       </div>
       <div className="flex w-64 items-center justify-end">
         <TimerComponent

@@ -66,7 +66,7 @@ export default function MembersList({
       if (
         loggedInUser !== data.id &&
         workspaceOwner !== data.id &&
-        currentLoggedInUserData[0].userWorkspace[0]?.role.id === adminRoleId
+        currentLoggedInUserData[0]?.userWorkspace[0]?.role.id === adminRoleId
       ) {
         setMemberId(data.id)
         setOpenDeleteModal(!openDeleteModal)
@@ -85,7 +85,7 @@ export default function MembersList({
           }}
           icon="ic:outline-delete-outline"
           className={`h-6 w-6 ${
-            currentLoggedInUserData[0].userWorkspace[0]?.role.id !==
+            currentLoggedInUserData[0]?.userWorkspace[0]?.role.id !==
               adminRoleId ||
             loggedInUser === data.id ||
             workspaceOwner === data.id
@@ -94,7 +94,7 @@ export default function MembersList({
           }`}
         />
         {memberId === data.id &&
-          currentLoggedInUserData[0].userWorkspace[0]?.role.id ===
+          currentLoggedInUserData[0]?.userWorkspace[0]?.role.id ===
             adminRoleId && (
             <DeletePopUp
               setOpen={setOpenDeleteModal}
@@ -107,6 +107,7 @@ export default function MembersList({
       </>
     )
   }
+
   const membersColumn = [
     { title: "Name", field: "name", render: NameDataCell, width: "25%" },
     { title: "Email", field: "email", width: "30%" },
@@ -124,9 +125,9 @@ export default function MembersList({
     <div className="z-10 text-base">
       <Table
         columns={
-          currentLoggedInUserData[0]?.userWorkspace[0]?.role.id !== adminRoleId
-            ? membersColumn.filter((column) => column.title !== "Action")
-            : membersColumn
+          memberLoaderData.permission.member.delete
+            ? membersColumn
+            : membersColumn.filter((column) => column.title !== "Action")
         }
         data={memberLoaderData.users}
         paginationEnabled={true}
