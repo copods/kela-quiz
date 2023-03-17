@@ -74,22 +74,14 @@ export default function MembersList({
     }
     return (
       <>
-        {currentLoggedInUserData[0].userWorkspace[0]?.role.id ===
-        adminRoleId ? (
-          <span>{data?.userWorkspace[0]?.role?.name}</span>
-        ) : (
+        {memberLoaderData.permission.member.update ? (
           <Chip
             text={data?.userWorkspace[0]?.role?.name}
             variant="editIcon"
-            rightChildren={
-              currentLoggedInUserData[0].userWorkspace[0]?.role.id !==
-              adminRoleId ? (
-                <EditIcon />
-              ) : (
-                <></>
-              )
-            }
+            rightChildren={<EditIcon />}
           />
+        ) : (
+          <span>{data?.userWorkspace[0]?.role?.name}</span>
         )}
         {memberId === data.id && (
           <ChangeRolePopUp
