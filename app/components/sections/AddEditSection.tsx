@@ -160,55 +160,55 @@ const AddEditSection = ({
           aria-label={t("sectionsConstants.addTests")}
           tabIndex={0}
         />
-        <DialogContent>
-          <>
-            <div className="pb-6">
-              <input
+        <Form method="post">
+          <DialogContent>
+            <>
+              <div className="pb-6">
+                <input
+                  tabIndex={0}
+                  type="text"
+                  name="name"
+                  id="addEditSection-name"
+                  className="h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
+                  placeholder={`${t("commonConstants.enterTestsName")}*`}
+                  onChange={(e) => setSectionName(trimValue(e.target.value))}
+                  value={sectionName}
+                  maxLength={52}
+                />
+                {sectionActionErrors?.title ? (
+                  <p
+                    id="addEditSection-title-error"
+                    className="px-3 text-red-500"
+                  >
+                    {t(sectionActionErrors?.title)}
+                  </p>
+                ) : sectionActionErrors?.duplicateTitle ? (
+                  <p id="duplicete-title-error" className="px-3 text-red-500">
+                    {t(sectionActionErrors?.duplicateTitle)}
+                  </p>
+                ) : null}
+              </div>
+              <textarea
                 tabIndex={0}
-                type="text"
-                name="name"
-                id="addEditSection-name"
-                className="h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
-                placeholder={`${t("commonConstants.enterTestsName")}*`}
-                onChange={(e) => setSectionName(trimValue(e.target.value))}
-                value={sectionName}
-                maxLength={52}
+                name="description"
+                id="section-description"
+                rows={4}
+                className="max-h-280 w-full overflow-auto rounded-lg border border-gray-200 px-3 py-4 text-base"
+                onChange={(e) => setDescription(trimValue(e.target.value))}
+                value={description}
+                placeholder={`${t("commonConstants.enterTestsDesc")}*`}
               />
-              {sectionActionErrors?.title ? (
+              {sectionActionErrors?.description ? (
                 <p
-                  id="addEditSection-title-error"
+                  id="addEditSection-description-error"
                   className="px-3 text-red-500"
                 >
-                  {t(sectionActionErrors?.title)}
-                </p>
-              ) : sectionActionErrors?.duplicateTitle ? (
-                <p id="duplicete-title-error" className="px-3 text-red-500">
-                  {t(sectionActionErrors?.duplicateTitle)}
+                  {t(sectionActionErrors?.description)}
                 </p>
               ) : null}
-            </div>
-            <textarea
-              tabIndex={0}
-              name="description"
-              id="section-description"
-              rows={4}
-              className="max-h-280 w-full overflow-auto rounded-lg border border-gray-200 px-3 py-4 text-base"
-              onChange={(e) => setDescription(trimValue(e.target.value))}
-              value={description}
-              placeholder={`${t("commonConstants.enterTestsDesc")}*`}
-            />
-            {sectionActionErrors?.description ? (
-              <p
-                id="addEditSection-description-error"
-                className="px-3 text-red-500"
-              >
-                {t(sectionActionErrors?.description)}
-              </p>
-            ) : null}
-          </>
-        </DialogContent>
-        <DialogFooter>
-          <Form method="post">
+            </>
+          </DialogContent>
+          <DialogFooter>
             <div className="flex justify-end gap-2">
               <Button
                 tabIndex={0}
@@ -258,8 +258,8 @@ const AddEditSection = ({
                 }
               />
             </div>
-          </Form>
-        </DialogFooter>
+          </DialogFooter>
+        </Form>
       </>
     </DialogWrapperNew>
   )

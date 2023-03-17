@@ -90,6 +90,7 @@ export default function AddWorkspace({
           heading={t("sideNav.addWorkspace")}
           role={t("sideNav.addWorkspace")}
           aria-label={t("sideNav.addWorkspace")}
+          onClose={setShowAddWorkspaceModal!}
           tabIndex={0}
         />
         <DialogContent>
