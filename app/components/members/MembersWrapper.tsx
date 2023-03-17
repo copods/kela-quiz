@@ -97,21 +97,13 @@ const MembersWrapper = () => {
   ]
 
   return (
-    <div className="flex flex-col gap-6 p-1">
+    <div className="flex h-full flex-col gap-6 p-1">
       <MembersHeader
         actionStatus={actionStatus}
         setActionStatus={setActionStatus}
       />
       <Tabs tabs={membersTabs} />
-      <div className="flex flex-col gap-4 text-2xl">
-        {/* <h1
-          tabIndex={0}
-          role={t("members.joinedMembers")}
-          aria-label={t("members.joinedMembers")}
-          id="joined-member-heading"
-        >
-          {t("members.joinedMembers")}
-        </h1> */}
+      <div className="flex h-full flex-col gap-4 overflow-auto text-2xl">
         {memberLoaderData.users.length === 0 ? (
           <EmptyStateComponent />
         ) : activeTab === "joined_members" ? (
