@@ -6,6 +6,7 @@ import MembersWrapper from "~/components/members/MembersWrapper"
 import { actions } from "~/constants/action.constants"
 import { routes } from "~/constants/route.constants"
 import type { User } from "~/interface/Interface"
+import { updateUserRole } from "~/models/user.server"
 import {
   getALLRoles,
   getALLUsers,
@@ -158,6 +159,14 @@ export const action: ActionFunction = async ({ request, params }) => {
       formData.get("id") as string,
       params.workspaceId as string,
       email
+    )
+    return response
+  }
+  if (action === actions.updateRole) {
+    const response = await updateUserRole(
+      userId as string,
+      invitedByWorkspaceId,
+      formData.get("roleId") as string
     )
     return response
   }

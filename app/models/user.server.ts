@@ -374,3 +374,21 @@ export async function updateUserData(
     },
   })
 }
+
+export async function updateUserRole(
+  userId: string,
+  invitedByWorkspaceId: string,
+  roleId: string
+) {
+  return await prisma.userWorkspace.update({
+    where: {
+      workspaceId_userId: {
+        workspaceId: invitedByWorkspaceId,
+        userId,
+      },
+    },
+    data: {
+      roleId: roleId,
+    },
+  })
+}

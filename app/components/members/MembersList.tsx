@@ -7,6 +7,7 @@ import { useLoaderData, useSubmit } from "@remix-run/react"
 import { useTranslation } from "react-i18next"
 
 import Badge from "../common-components/Badge"
+import ChangeRolePopUp from "../common-components/ChangeRolePopUp"
 import Chip from "../common-components/Chip"
 import DeletePopUp from "../common-components/DeletePopUp"
 import Table from "../common-components/TableComponent"
@@ -56,23 +57,47 @@ export default function MembersList({
   }
 
   const RoleDataCell = (data: User & { userWorkspace: UserWorkspace[] }) => {
+    console.log("data", data)
     const openPopUp = () => {
-      console.log("hello world")
       setMemberId(data.id)
       setOpenRoleModal(!openRoleModal)
     }
 
-    const chipDetails = {
-      text: data?.userWorkspace[0]?.role?.name,
-      variant: "role",
-      readOnly: false,
-      onClick: () => openPopUp(),
+    const EditIcon = () => {
+      return (
+        <Icon
+          className="cursor-pointer text-base"
+          icon={"mdi:pencil"}
+          onClick={openPopUp}
+        />
+      )
     }
     return (
       <>
-        <Chip {...chipDetails} />
-        {memberId === data.id &&
-          currentLoggedInUserData[0].userWorkspace[0]?.role.id === adminRoleId}
+        {currentLoggedInUserData[0].userWorkspace[0]?.role.id ===
+        adminRoleId ? (
+          <span>{data?.userWorkspace[0]?.role?.name}</span>
+        ) : (
+          <Chip
+            text={data?.userWorkspace[0]?.role?.name}
+            variant="editIcon"
+            rightChildren={
+              currentLoggedInUserData[0].userWorkspace[0]?.role.id !==
+              adminRoleId ? (
+                <EditIcon />
+              ) : (
+                <></>
+              )
+            }
+          />
+        )}
+        {memberId === data.id && (
+          <ChangeRolePopUp
+            setOpen={setOpenRoleModal}
+            open={openRoleModal}
+            roles={roles}
+          />
+        )}
       </>
     )
   }
