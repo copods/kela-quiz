@@ -12,6 +12,7 @@ import {
   getAllUsers,
   getAllUsersCount,
   getUserById,
+  updateUserRole,
 } from "~/models/user.server"
 
 type ActionData = {
@@ -245,6 +246,18 @@ export async function inviteNEWUser({
           { status: 400 }
         )
       })
+  } catch (error) {
+    throw error
+  }
+}
+
+export async function editUserRole(
+  userId: string,
+  workspaceId: string,
+  roleId: string
+) {
+  try {
+    return await updateUserRole(userId, workspaceId, roleId)
   } catch (error) {
     throw error
   }

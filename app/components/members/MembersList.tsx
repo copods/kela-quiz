@@ -57,29 +57,31 @@ export default function MembersList({
   }
 
   const RoleDataCell = (data: User & { userWorkspace: UserWorkspace[] }) => {
-    console.log("data", data)
     const openPopUp = () => {
       setMemberId(data.id)
       setOpenRoleModal(!openRoleModal)
     }
 
     const EditIcon = () => {
-      return (
-        <Icon
-          className="cursor-pointer text-base"
-          icon={"mdi:pencil"}
-          onClick={openPopUp}
-        />
-      )
+      return <Icon className="cursor-pointer text-base" icon={"mdi:pencil"} />
     }
     return (
       <>
-        {memberLoaderData.permission.member.update ? (
-          <Chip
-            text={data?.userWorkspace[0]?.role?.name}
-            variant="editIcon"
-            rightChildren={<EditIcon />}
-          />
+        {data?.userWorkspace[0]?.role.id !== adminRoleId &&
+        memberLoaderData.permission.member.update ? (
+          <div
+            className="cursor-pointer"
+            role="button"
+            onClick={() => openPopUp()}
+            onKeyDown={(e) => e.key === "Enter" && openPopUp()}
+            tabIndex={0}
+          >
+            <Chip
+              text={data?.userWorkspace[0]?.role?.name}
+              variant="editIcon"
+              rightChildren={<EditIcon />}
+            />
+          </div>
         ) : (
           <span>{data?.userWorkspace[0]?.role?.name}</span>
         )}
@@ -87,6 +89,8 @@ export default function MembersList({
           <ChangeRolePopUp
             setOpen={setOpenRoleModal}
             open={openRoleModal}
+            currentRole={data?.userWorkspace[0]?.role?.name}
+            memberId={memberId}
             roles={roles}
           />
         )}
@@ -149,7 +153,7 @@ export default function MembersList({
   const membersColumn = [
     { title: "Name", field: "name", render: NameDataCell, width: "25%" },
     { title: "Email", field: "email", width: "30%" },
-    { title: "Role", field: "role", render: RoleDataCell },
+    { title: "Role", field: "role", render: RoleDataCell, width: "15%" },
     {
       title: "Joined On",
       field: "createdAt",

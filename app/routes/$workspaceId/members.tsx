@@ -7,7 +7,6 @@ import { actions } from "~/constants/action.constants"
 import { routes } from "~/constants/route.constants"
 import type { User } from "~/interface/Interface"
 import { checkUserFeatureAuthorization } from "~/models/authorization.server"
-import { updateUserRole } from "~/models/user.server"
 import {
   getALLRoles,
   getALLUsers,
@@ -18,6 +17,7 @@ import {
   reinviteMember,
   deleteUserByID,
   inviteNEWUser,
+  editUserRole,
 } from "~/services/members.service"
 import {
   getActiveWorkspaceOwner,
@@ -191,8 +191,8 @@ export const action: ActionFunction = async ({ request, params }) => {
       return response
     }
     if (action === actions.updateRole) {
-      const response = await updateUserRole(
-        userId as string,
+      const response = await editUserRole(
+        formData.get("memberId") as string,
         invitedByWorkspaceId,
         formData.get("roleId") as string
       )

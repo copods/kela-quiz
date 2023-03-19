@@ -1,7 +1,8 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
-import { Form, useSubmit } from "@remix-run/react"
+import { Form, useActionData, useSubmit } from "@remix-run/react"
 import { t } from "i18next"
+import { toast } from "react-toastify"
 
 import DropdownField from "../common-components/Dropdown"
 
@@ -18,13 +19,18 @@ import type { Role } from "~/interface/Interface"
 export default function ChangeRolePopUp({
   open,
   setOpen,
+  currentRole,
+  memberId,
   roles,
 }: {
   open: boolean
   setOpen: (e: boolean) => void
+  currentRole: string
+  memberId: string
   roles: Role[]
 }) {
-  const [userRole, setUserRole] = useState(roles[0].name)
+  const [userRole, setUserRole] = useState(currentRole)
+  const actionData = useActionData()
 
   const submit = useSubmit()
 
@@ -33,7 +39,7 @@ export default function ChangeRolePopUp({
     submit(
       {
         roleId: userRoleId[0].id,
-        roleName: userRole,
+        memberId: memberId,
         action: "updateRole",
       },
       {
@@ -41,6 +47,18 @@ export default function ChangeRolePopUp({
       }
     )
   }
+
+  useEffect(() => {
+    if (actionData === "Done") {
+      toast.success(t("toastConstants.roleUpdatedSuccessfully"))
+      setOpen(!open)
+    } else if (actionData === "NotDone") {
+      toast.error(t("statusCheck.commonError"))
+      setOpen(!open)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [actionData])
+
   return (
     <DialogWrapperNew open={open} setOpen={setOpen}>
       <>

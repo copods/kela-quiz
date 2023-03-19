@@ -393,15 +393,21 @@ export async function updateUserRole(
   invitedByWorkspaceId: string,
   roleId: string
 ) {
-  return await prisma.userWorkspace.update({
+  const updateRole = await prisma.userWorkspace.update({
     where: {
       workspaceId_userId: {
         workspaceId: invitedByWorkspaceId,
-        userId,
+        userId: userId,
       },
     },
     data: {
       roleId: roleId,
     },
   })
+
+  if (updateRole) {
+    return "Done"
+  } else {
+    return "NotDone"
+  }
 }

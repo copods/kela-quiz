@@ -12,8 +12,7 @@ const Chip = ({
     error: "border border-red-100 bg-red-100 text-red-800",
     warning: "border border-yellow-100 bg-yellow-100 text-yellow-800",
     default: "border border-black text-grey-800",
-    editIcon:
-      "border border-gray-200 text-gray-700 bg-blue-50 px-4 text-base py-1.5 w-3/6",
+    editIcon: "border border-gray-200 text-gray-700 bg-blue-50 text-base",
   }
   return (
     <div
