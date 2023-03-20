@@ -87,7 +87,11 @@
     "myProfile": "My Profile",
     "save": "Save",
     "saving": "Saving...",
-    "changePassword": "Change Password"
+    "changePassword": "Change Password",
+    "deleteMember": "Delete Member",
+    "deleteQuestion": "Delete Question",
+    "deleteTest": "Delete Test",
+    "deleteAssessment": "Delete Assessment"
   },
   "sideNav": {
     "sideNavHeading": "Quiz",

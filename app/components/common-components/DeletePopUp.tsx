@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next"
 import {
   DialogContent,
   DialogFooter,
+  DialogHeader,
   DialogWrapper,
 } from "../common-components/Dialog"
 
@@ -20,6 +21,7 @@ export default function DeletePopUp({
   status,
   deleteItemType,
   deleteItem,
+  header,
 }: {
   open: boolean
   setOpen: (e: boolean) => void
@@ -29,6 +31,7 @@ export default function DeletePopUp({
   status?: string | undefined
   deleteItemType: string
   deleteItem?: string
+  header: string
 }) {
   const { t } = useTranslation()
 
@@ -47,6 +50,7 @@ export default function DeletePopUp({
   return (
     <DialogWrapper open={open} setOpen={setOpen}>
       <>
+        <DialogHeader heading={header} onClose={setOpen} />
         <DialogContent>
           <div id="delete-dialog" className="bg-white">
             <div className="sm:flex sm:items-start ">
@@ -61,7 +65,7 @@ export default function DeletePopUp({
                 <span className="text-sm text-gray-500">
                   {t("deletePopUp.alert")} {deleteItemType}
                 </span>
-                <p className="bold text-sm text-gray-500">
+                <p className="bold text-sm font-medium ">
                   {deleteItem} {subAlert}
                 </p>
               </div>

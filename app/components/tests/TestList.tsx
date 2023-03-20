@@ -203,6 +203,7 @@ const TestList = () => {
             status={testLoaderData.status}
             deleteItem={data.name}
             deleteItemType={t("testsConstants.assessment")}
+            header={t("commonConstants.deleteAssessment")}
           />
         )}
       </>
