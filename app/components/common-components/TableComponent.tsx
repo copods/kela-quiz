@@ -151,9 +151,9 @@ const Table = <T extends object>({
     return null
   }
   return (
-    <div className="flex h-full flex-1 flex-col overflow-auto rounded-2xl">
+    <div className="flex h-full flex-1 flex-col overflow-auto rounded-2xl border-t">
       <div
-        className={`border-t border-r border-l shadow ${
+        className={`border-l border-r shadow ${
           paginationEnabled ? "rounded-t-2xl" : "rounded-2xl"
         }`}
       >
