@@ -122,7 +122,7 @@ export default function MembersList({
   ]
 
   return (
-    <div className="z-10 text-base">
+    <div className="z-10 h-full text-base">
       <Table
         columns={
           memberLoaderData.permission.member.delete
