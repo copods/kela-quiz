@@ -9,7 +9,7 @@ import {
   DialogContent,
   DialogFooter,
   DialogHeader,
-  DialogWrapperNew,
+  DialogWrapper,
 } from "../common-components/Dialog"
 
 import { routes } from "~/constants/route.constants"
@@ -147,7 +147,7 @@ const AddEditSection = ({
     addSection?.(name, description)
   }
   return (
-    <DialogWrapperNew open={open} setOpen={setOpen}>
+    <DialogWrapper open={open} setOpen={setOpen}>
       <>
         <DialogHeader
           heading={
@@ -261,7 +261,7 @@ const AddEditSection = ({
           </DialogFooter>
         </Form>
       </>
-    </DialogWrapperNew>
+    </DialogWrapper>
   )
 }
 export default AddEditSection

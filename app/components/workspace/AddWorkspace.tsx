@@ -9,7 +9,7 @@ import {
   DialogContent,
   DialogFooter,
   DialogHeader,
-  DialogWrapperNew,
+  DialogWrapper,
 } from "../common-components/Dialog"
 import InputField from "../common-components/InputField"
 
@@ -81,7 +81,7 @@ export default function AddWorkspace({
     },
   ]
   return (
-    <DialogWrapperNew
+    <DialogWrapper
       open={showAddWorkspaceModal}
       setOpen={setShowAddWorkspaceModal!}
     >
@@ -136,6 +136,6 @@ export default function AddWorkspace({
           </div>
         </DialogFooter>
       </>
-    </DialogWrapperNew>
+    </DialogWrapper>
   )
 }

@@ -62,7 +62,7 @@ export const DialogFooter = ({ children }: { children: JSX.Element }) => {
   )
 }
 
-export const DialogWrapperNew = ({
+export const DialogWrapper = ({
   open,
   setOpen,
   children,

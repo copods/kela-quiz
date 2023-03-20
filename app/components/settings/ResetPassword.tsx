@@ -9,7 +9,7 @@ import {
   DialogContent,
   DialogFooter,
   DialogHeader,
-  DialogWrapperNew,
+  DialogWrapper,
 } from "../common-components/Dialog"
 import PasswordInputFields from "../common-components/PasswordInputField"
 
@@ -162,7 +162,7 @@ const ResetPassword = ({
   }, [newPassword])
 
   return (
-    <DialogWrapperNew open={openResetPassModel} setOpen={setOpenResetPassModel}>
+    <DialogWrapper open={openResetPassModel} setOpen={setOpenResetPassModel}>
       <>
         <DialogHeader
           heading={t("settings.resetPas")}
@@ -225,7 +225,7 @@ const ResetPassword = ({
           </div>
         </DialogFooter>
       </>
-    </DialogWrapperNew>
+    </DialogWrapper>
   )
 }
 export default ResetPassword

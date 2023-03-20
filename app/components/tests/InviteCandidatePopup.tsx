@@ -11,7 +11,7 @@ import {
   DialogContent,
   DialogFooter,
   DialogHeader,
-  DialogWrapperNew,
+  DialogWrapper,
 } from "../common-components/Dialog"
 interface error {
   [key: number]: string
@@ -118,7 +118,7 @@ const InviteCandidatePopup = ({
       })
   }
   return (
-    <DialogWrapperNew open={openInvitePopup} setOpen={setOpenInvitePopup}>
+    <DialogWrapper open={openInvitePopup} setOpen={setOpenInvitePopup}>
       <>
         <DialogHeader
           heading={t("inviteMemeberPopUpConstants.inviteCandidate")}
@@ -219,7 +219,7 @@ const InviteCandidatePopup = ({
           </DialogFooter>
         </Form>
       </>
-    </DialogWrapperNew>
+    </DialogWrapper>
   )
 }
 

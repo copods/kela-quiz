@@ -8,7 +8,7 @@ import {
   DialogContent,
   DialogFooter,
   DialogHeader,
-  DialogWrapperNew,
+  DialogWrapper,
 } from "../common-components/Dialog"
 import DropdownField from "../common-components/Dropdown"
 
@@ -66,7 +66,7 @@ export default function AddMemberModal({
     },
   ]
   return (
-    <DialogWrapperNew open={open} setOpen={setOpen}>
+    <DialogWrapper open={open} setOpen={setOpen}>
       <>
         <DialogHeader
           heading={t("members.inviteMember")}
@@ -137,6 +137,6 @@ export default function AddMemberModal({
           </div>
         </DialogFooter>
       </>
-    </DialogWrapperNew>
+    </DialogWrapper>
   )
 }

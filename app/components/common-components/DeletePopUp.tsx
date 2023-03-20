@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next"
 import {
   DialogContent,
   DialogFooter,
-  DialogWrapperNew,
+  DialogWrapper,
 } from "../common-components/Dialog"
 
 import Button from "./Button"
@@ -45,7 +45,7 @@ export default function DeletePopUp({
   }, [open])
 
   return (
-    <DialogWrapperNew open={open} setOpen={setOpen}>
+    <DialogWrapper open={open} setOpen={setOpen}>
       <>
         <DialogContent>
           <div id="delete-dialog" className="bg-white">
@@ -103,6 +103,6 @@ export default function DeletePopUp({
           </div>
         </DialogFooter>
       </>
-    </DialogWrapperNew>
+    </DialogWrapper>
   )
 }

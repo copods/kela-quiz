@@ -7,7 +7,7 @@ import Button from "../common-components/Button"
 import {
   DialogContent,
   DialogFooter,
-  DialogWrapperNew,
+  DialogWrapper,
 } from "../common-components/Dialog"
 
 import { WorkspaceDetailsSection } from "./WorkspaceDetailsSection"
@@ -157,7 +157,7 @@ const Workspace = () => {
                 ?.map((workspace: { id: string }) => workspace.id)
                 .includes(workspaceLoaderData?.currentWorkspaceId)}
             />
-            <DialogWrapperNew
+            <DialogWrapper
               open={showLeaveWorkspacePopup}
               setOpen={setShowLeaveWorkspacePopup}
             >
@@ -194,7 +194,7 @@ const Workspace = () => {
                   </div>
                 </DialogFooter>
               </>
-            </DialogWrapperNew>
+            </DialogWrapper>
           </>
         )}
       </div>
