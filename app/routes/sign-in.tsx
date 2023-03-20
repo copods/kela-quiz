@@ -34,7 +34,7 @@ export const action: ActionFunction = async ({ request }) => {
   const password = formData.get("password")
   if (!email) {
     return json<ActionData>(
-      { errors: { email: "statusCheck.emailIsReq" } },
+      { errors: { email: "commonConstants.emailRequired" } },
       { status: 400 }
     )
   }

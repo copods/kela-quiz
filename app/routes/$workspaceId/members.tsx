@@ -138,7 +138,7 @@ export const action: ActionFunction = async ({ request, params }) => {
       const EMAIL_REGEX = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
       if (typeof email !== "string" || email.length === 0) {
         return json<ActionData>(
-          { errors: { title: "toastConstants.emailRequired", status: 400 } },
+          { errors: { title: "commonConstants.emailRequired", status: 400 } },
           { status: 400 }
         )
       }

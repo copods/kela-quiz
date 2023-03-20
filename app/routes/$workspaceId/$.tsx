@@ -33,7 +33,7 @@ const NotFound = () => {
               if (e.key === "Enter") navigateToHomepage()
             }}
           >
-            {t("notFound.gotoDashboard")}
+            {t("commonConstants.gotoDashboard")}
           </div>
         </div>
       </div>

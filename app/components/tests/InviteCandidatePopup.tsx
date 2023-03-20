@@ -198,13 +198,13 @@ const InviteCandidatePopup = ({
             variant="primary-solid"
             title={
               transition.state === "submitting"
-                ? t("inviteMemeberPopUpConstants.inviting")
-                : t("inviteMemeberPopUpConstants.invite")
+                ? t("commonConstants.inviting")
+                : t("commonConstants.invite")
             }
             buttonText={
               transition.state === "submitting"
-                ? t("inviteMemeberPopUpConstants.inviting")
-                : t("inviteMemeberPopUpConstants.invite")
+                ? t("commonConstants.inviting")
+                : t("commonConstants.invite")
             }
             datacy="submit"
           />

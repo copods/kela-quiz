@@ -159,11 +159,11 @@ const ResetPassword = ({
   return (
     <DialogWrapper
       open={openResetPassModel}
-      heading={t("settings.resetPas")}
+      heading={t("forgotPasswordConstants.resetPassword")}
       setOpen={setOpenResetPassModel}
       header={true}
-      role={t("settings.resetPas")}
-      ariaLabel={t("settings.resetPas")}
+      role={t("forgotPasswordConstants.resetPassword")}
+      ariaLabel={t("forgotPasswordConstants.resetPassword")}
       tabIndex={0}
     >
       <div className="flex flex-col gap-2">
@@ -194,12 +194,12 @@ const ResetPassword = ({
             title={
               transition.state === "submitting"
                 ? t("settings.passResetting")
-                : t("settings.resetPas")
+                : t("forgotPasswordConstants.resetPassword")
             }
             buttonText={
               transition.state === "submitting"
                 ? t("settings.passResetting")
-                : t("settings.resetPas")
+                : t("forgotPasswordConstants.resetPassword")
             }
             variant="primary-solid"
             className="h-11 w-full text-base"
