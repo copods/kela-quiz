@@ -66,7 +66,10 @@ export default function ChangeRolePopUp({
         <DialogContent>
           <div id="change-role-dialog" className="bg-white">
             <div className="flex-col gap-5 sm:flex sm:items-start">
-              <div className="text-sm font-normal text-gray-600">
+              <div
+                className="text-sm font-normal text-gray-600"
+                data-cy="role-heading"
+              >
                 Select a role that you want to assign.
               </div>
               <div className="w-full">
@@ -82,37 +85,38 @@ export default function ChangeRolePopUp({
           </div>
         </DialogContent>
         <DialogFooter>
-          <>
-            <div className="gap-2 sm:flex sm:flex-row-reverse">
-              <Form method="post">
-                <Button
-                  tabIndex={0}
-                  id="confirm-delete"
-                  variant="primary-solid"
-                  type="button"
-                  name="delete"
-                  className="px-5"
-                  title={t("commonConstants.proceed")}
-                  buttonText={t("commonConstants.proceed")}
-                  onClick={() => {
-                    onSubmit()
-                  }}
-                />
-              </Form>
+          <div
+            className="gap-2 sm:flex sm:flex-row-reverse"
+            data-cy="dialog-footer"
+          >
+            <Form method="post">
               <Button
                 tabIndex={0}
+                id="proceed"
+                variant="primary-solid"
                 type="button"
-                id="cancel-change-role-pop-up"
-                variant="primary-outlined"
+                name="delete"
                 className="px-5"
-                title={t("commonConstants.cancel")}
-                buttonText={t("commonConstants.cancel")}
+                title={t("commonConstants.proceed")}
+                buttonText={t("commonConstants.proceed")}
                 onClick={() => {
-                  if (setOpen !== undefined) setOpen(false)
+                  onSubmit()
                 }}
               />
-            </div>
-          </>
+            </Form>
+            <Button
+              tabIndex={0}
+              type="button"
+              id="cancel-change-role-pop-up"
+              variant="primary-outlined"
+              className="px-5"
+              title={t("commonConstants.cancel")}
+              buttonText={t("commonConstants.cancel")}
+              onClick={() => {
+                if (setOpen !== undefined) setOpen(false)
+              }}
+            />
+          </div>
         </DialogFooter>
       </>
     </DialogWrapperNew>
