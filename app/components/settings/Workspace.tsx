@@ -5,7 +5,6 @@ import { useTranslation } from "react-i18next"
 
 import Button from "../common-components/Button"
 import DialogWrapper from "../common-components/Dialog"
-import { NewDropdownField } from "../common-components/Dropdown"
 
 import { WorkspaceDetailsSection } from "./WorkspaceDetailsSection"
 
@@ -113,25 +112,6 @@ const Workspace = () => {
     setIsError(false)
   }, [inputValue])
 
-  const options = [
-    {
-      id: 1,
-      value: "D",
-      name: "Dhruv",
-      middleName: "y",
-      surname: "Samant",
-    },
-    {
-      id: 2,
-      value: "R",
-      name: "Rahul",
-      middleName: "z",
-      surname: "Konda",
-    },
-  ]
-
-  const [val, setVal] = useState("")
-
   return (
     <div className="flex flex-col justify-start gap-6">
       <div className="flex h-10 items-center justify-between">
@@ -213,14 +193,6 @@ const Workspace = () => {
           </>
         )}
       </div>
-      <NewDropdownField
-        dropdownOptions={options}
-        labelKey={"name"}
-        valueKey={"value"}
-        value={val}
-        setValue={setVal}
-        helperText={"middleName"}
-      />
     </div>
   )
 }

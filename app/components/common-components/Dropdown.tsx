@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next"
 import { QuestionTypes } from "../../interface/Interface"
 
 type Action = {
-  actionCb: () => void
+  actionCb: (e: boolean | string) => void
   actionName: string | number
   actionIcon?: JSX.Element
 }
@@ -173,11 +173,11 @@ export const NewDropdownField = ({
   action,
 }: {
   dropdownOptions: any
-  labelKey: string
-  valueKey: string
+  labelKey?: string
+  valueKey?: string
   value: string
   setValue: (e: string) => void
-  helperText: string
+  helperText?: string
   action?: Action[]
 }) => {
   const { t } = useTranslation()
@@ -187,13 +187,15 @@ export const NewDropdownField = ({
   }
 
   const getLabelFromValue = (val: string) => {
-    for (let options of dropdownOptions) {
-      if (options[valueKey] === val) {
-        return options[labelKey]
+    if (valueKey && labelKey) {
+      for (let options of dropdownOptions) {
+        if (options[valueKey] === val) {
+          return options[labelKey]
+        }
       }
     }
   }
-
+  console.log(dropdownOptions)
   return (
     <Listbox value={value} onChange={(val: string) => setValue(val)}>
       {({ open }) => (
@@ -211,7 +213,7 @@ export const NewDropdownField = ({
               <span className="flex items-center">
                 {value ? (
                   <span className="block truncate text-base">
-                    {getLabelFromValue(value)}
+                    {labelKey ? getLabelFromValue(value) : value}
                   </span>
                 ) : (
                   <span className="text-base text-gray-400">Select</span>
@@ -233,6 +235,32 @@ export const NewDropdownField = ({
               leaveTo="opacity-0"
             >
               <Listbox.Options className="dropDownSelect absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                {action &&
+                  action.map((action) => (
+                    <Listbox.Option
+                      key={action.actionName}
+                      className={({ active }) =>
+                        classNames(
+                          active ? "bg-primary text-white" : "text-gray-900",
+                          "relative z-20 cursor-pointer select-none py-2 px-3"
+                        )
+                      }
+                      value={action.actionName}
+                      onClick={() => {
+                        action.actionCb(true)
+                      }}
+                    >
+                      <div className="flex items-center">
+                        {action.actionIcon && action.actionIcon}
+                        <span
+                          className="dropdown-option ml-2 block truncate font-normal"
+                          id="option"
+                        >
+                          {action.actionName}
+                        </span>
+                      </div>
+                    </Listbox.Option>
+                  ))}
                 {dropdownOptions.map((options: any) => (
                   <Listbox.Option
                     className={({ active }) =>
@@ -241,12 +269,12 @@ export const NewDropdownField = ({
                         "relative z-20 cursor-pointer select-none py-3 px-4"
                       )
                     }
-                    key={options[valueKey] ? options[valueKey] : options}
-                    value={options[valueKey]}
+                    key={valueKey ? options[valueKey] : options}
+                    value={valueKey ? options[valueKey] : options}
                   >
                     {({ selected, active }) => (
                       <>
-                        <div className="flex flex-col">
+                        <div className="flex flex-col gap-0.5">
                           <span
                             className={classNames(
                               selected
@@ -256,9 +284,13 @@ export const NewDropdownField = ({
                             )}
                             id="option"
                           >
-                            {options[labelKey]}
+                            {labelKey ? options[labelKey] : options}
                           </span>
-                          {helperText && <span>{options[helperText]}</span>}
+                          {helperText && (
+                            <span className="text-xs leading-4 text-gray-500">
+                              {options[helperText]}
+                            </span>
+                          )}
                         </div>
                         {selected ? (
                           <span
