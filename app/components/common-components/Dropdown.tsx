@@ -195,7 +195,7 @@ export const NewDropdownField = ({
       }
     }
   }
-  console.log(dropdownOptions)
+
   return (
     <Listbox value={value} onChange={(val: string) => setValue(val)}>
       {({ open }) => (
