@@ -28,7 +28,7 @@ const joinedMembers = "Joined Members"
 const invitedMembers = "Invited Members"
 const changeRoleHeading = "Change Role"
 const changeRoleContent = "Select a role that you want to assign."
-const roles = ["Admin", "Test Creator", "Recruiter"]
+const roles = ["Admin", "Recruiter", "Test Creator"]
 
 describe("Test for members", () => {
   beforeEach("sign-in", () => {
@@ -36,7 +36,7 @@ describe("Test for members", () => {
     cy.customVisit("/members")
   })
 
-  xit("Tests to check Attributes/Colors/Visibility/Texts", () => {
+  it("Tests to check Attributes/Colors/Visibility/Texts", () => {
     // Header tests
     // To check if header is visible
     getMembersHeading().should("be.visible")
@@ -172,7 +172,7 @@ describe("Test for members", () => {
 
   it("Tests to Check Change Role", () => {
     //Chip should be there
-    getChipTag().should("have.text", roles[2])
+    getChipTag().should("have.text", roles[1])
     getChipTag().click()
 
     //To check dialog Functionality/visibility
@@ -181,7 +181,7 @@ describe("Test for members", () => {
     getRoleChangeContent().should("have.text", changeRoleContent)
     getChangeRoleId().then((eq) => {
       cy.wrap(eq).within(() => {
-        getElementInsideOfDropdown().should("have.text", roles[2])
+        getElementInsideOfDropdown().should("have.text", roles[1])
         getDropdown().click()
         getDropdownOptions().get("li").should("have.length", 3)
         getDropdownOptions()
@@ -192,13 +192,13 @@ describe("Test for members", () => {
           })
         getDropdownOptions()
           .get("li")
-          .eq(2)
+          .eq(1)
           .should(
             "have.class",
             "bg-primary text-white relative z-20 cursor-pointer select-none py-2 px-3"
           )
-        getDropdownOptions().get("li").eq(1).click()
-        getElementInsideOfDropdown().should("have.text", roles[1])
+        getDropdownOptions().get("li").eq(2).click()
+        getElementInsideOfDropdown().should("have.text", roles[2])
       })
     })
     getDialogFooter()
@@ -206,17 +206,17 @@ describe("Test for members", () => {
       .should("have.text", "Cancel")
     getDialogFooter().get("#proceed").should("have.text", "Proceed")
     getDialogFooter().get("#cancel-change-role-pop-up").click()
-    getChipTag().should("have.text", roles[2])
+    getChipTag().should("have.text", roles[1])
 
     getChipTag().click()
     getChangeRoleId().then((eq) => {
       cy.wrap(eq).within(() => {
         getDropdown().click()
-        getDropdownOptions().get("li").eq(1).click()
+        getDropdownOptions().get("li").eq(2).click()
       })
     })
     getDialogFooter().get("#proceed").click()
     getToaster().should("have.text", "Role Updated Successfully")
-    getChipTag().should("have.text", roles[1])
+    getChipTag().should("have.text", roles[2])
   })
 })
