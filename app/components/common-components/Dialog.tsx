@@ -3,7 +3,7 @@ import { Fragment } from "react"
 import { Dialog, Transition } from "@headlessui/react"
 import { Icon } from "@iconify/react"
 
-import type { DialogNewWrapperProps } from "~/interface/Interface"
+import type { DialogWrapperProps } from "~/interface/Interface"
 
 export const DialogHeader = ({
   heading,
@@ -66,7 +66,7 @@ export const DialogWrapper = ({
   open,
   setOpen,
   children,
-}: DialogNewWrapperProps) => {
+}: DialogWrapperProps) => {
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={() => setOpen(false)}>

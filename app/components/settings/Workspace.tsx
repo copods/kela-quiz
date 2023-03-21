@@ -7,6 +7,7 @@ import Button from "../common-components/Button"
 import {
   DialogContent,
   DialogFooter,
+  DialogHeader,
   DialogWrapper,
 } from "../common-components/Dialog"
 import ListMenuItem from "../ListActionMenu"
@@ -71,6 +72,8 @@ const EditButton = ({ setIsEdit }: { setIsEdit: (val: boolean) => void }) => {
 
 const Workspace = () => {
   const [showLeaveWorkspacePopup, setShowLeaveWorkspacePopup] = useState(false)
+  const [showChangeOwnershipPopup, setShowChangeOwnershipPopup] =
+    useState(false)
   const [actionDropdown, setActionDropdown] = useState(false)
   const [isEdit, setIsEdit] = useState(false)
   const workspaceLoaderData = useLoaderData()
@@ -158,7 +161,7 @@ const Workspace = () => {
                 id: t("settings.transferOwnership"),
                 menuListText: t("settings.transferOwnership"),
                 handleItemAction: () =>
-                  setShowLeaveWorkspacePopup(!showLeaveWorkspacePopup),
+                  setShowChangeOwnershipPopup(!showChangeOwnershipPopup),
               },
             ]}
           />
@@ -176,6 +179,10 @@ const Workspace = () => {
           setOpen={setShowLeaveWorkspacePopup}
         >
           <>
+            <DialogHeader
+              heading={t("settings.leaveWorkspace")}
+              onClose={setShowLeaveWorkspacePopup}
+            />
             <DialogContent>
               <p>{t("settings.leaveWorkspaceConfirmation")}</p>
             </DialogContent>
@@ -204,6 +211,73 @@ const Workspace = () => {
                   title={t("settings.leaveWorkspace")}
                   buttonText={t("settings.leave")}
                   onClick={() => leaveWorkspace()}
+                />
+              </div>
+            </DialogFooter>
+          </>
+        </DialogWrapper>
+        <DialogWrapper
+          open={showChangeOwnershipPopup}
+          setOpen={setShowChangeOwnershipPopup}
+        >
+          <>
+            <DialogHeader
+              heading={t("settings.transferOwnership")}
+              onClose={setShowChangeOwnershipPopup}
+            />
+            <DialogContent>
+              <div className="flex flex-col gap-5">
+                <div className="flex flex-col gap-3">
+                  <span className="text-left text-sm leading-5 text-gray-800">
+                    Title here
+                  </span>
+                  <ul className="ml-4 list-disc text-sm text-gray-600">
+                    <li>
+                      It is a long established fact that a reader will be
+                      distracted.
+                    </li>
+                    <li>
+                      The point of using Lorem Ipsum is that it has a
+                      more-or-less.
+                    </li>
+                    <li>
+                      Contrary to popular belief, Lorem Ipsum is not simply
+                      random.
+                    </li>
+                  </ul>
+                </div>
+                <div>
+                  <span className="text-left leading-6 text-gray-800">
+                    Select a user to assign as Owner
+                  </span>
+                </div>
+              </div>
+            </DialogContent>
+            <DialogFooter>
+              <div className="flex justify-end gap-4">
+                <Button
+                  tabIndex={0}
+                  id="cancel-transfer-ownership"
+                  variant="primary-outlined"
+                  type="button"
+                  name="cancel"
+                  className="px-5"
+                  title={t("commonConstants.cancel")}
+                  buttonText={t("commonConstants.cancel")}
+                  onClick={() =>
+                    setShowChangeOwnershipPopup(!showChangeOwnershipPopup)
+                  }
+                />
+                <Button
+                  tabIndex={0}
+                  id="confirm-transfer-ownership"
+                  variant="primary-solid"
+                  type="button"
+                  name="confirm"
+                  className="px-5"
+                  title={t("commonConstants.proceed")}
+                  buttonText={t("commonConstants.proceed")}
+                  onClick={() => console.log("hit")}
                 />
               </div>
             </DialogFooter>
