@@ -88,6 +88,10 @@
     "save": "Save",
     "saving": "Saving...",
     "changePassword": "Change Password",
+    "deleteMember": "Delete Member",
+    "deleteQuestion": "Delete Question",
+    "deleteTest": "Delete Test",
+    "deleteAssessment": "Delete Assessment"
     "invitedMemberEmptyState": "No members are invited"
   },
   "sideNav": {
