@@ -192,6 +192,7 @@ export const action: ActionFunction = async ({ request, params }) => {
     }
     if (action === actions.updateRole) {
       const response = await editUserRole(
+        userId as string,
         formData.get("memberId") as string,
         invitedByWorkspaceId,
         formData.get("roleId") as string

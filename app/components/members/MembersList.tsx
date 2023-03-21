@@ -35,13 +35,6 @@ export default function MembersList({
   const [openRoleModal, setOpenRoleModal] = useState(false)
   const [memberId, setMemberId] = useState("")
   const workspaceOwner = memberLoaderData.currentWorkspaceOwner.createdById
-  const adminRoleId = roles.find((role) => role.name === "Admin")?.id
-
-  const currentLoggedInUserData = memberLoaderData.users.filter(
-    (data: { id: string }) => {
-      return data.id === loggedInUser
-    }
-  )
 
   const NameDataCell = (data: User) => {
     return (
@@ -65,9 +58,11 @@ export default function MembersList({
     const EditIcon = () => {
       return <Icon className="cursor-pointer text-base" icon={"mdi:pencil"} />
     }
+    const sortRoles = roles.sort()
     return (
       <>
-        {data?.userWorkspace[0]?.role.id !== adminRoleId &&
+        {loggedInUser !== data.id &&
+        workspaceOwner !== data.id &&
         memberLoaderData.permission.member.update ? (
           <div
             className="cursor-pointer"
@@ -91,7 +86,7 @@ export default function MembersList({
             open={openRoleModal}
             currentRole={data?.userWorkspace[0]?.role?.name}
             memberId={memberId}
-            roles={roles}
+            roles={sortRoles}
           />
         )}
       </>
@@ -105,16 +100,11 @@ export default function MembersList({
   }
   const MemberDelete = (data: User & { userWorkspace: UserWorkspace[] }) => {
     const openPopUp = () => {
-      if (
-        loggedInUser !== data.id &&
-        workspaceOwner !== data.id &&
-        currentLoggedInUserData[0]?.userWorkspace[0]?.role.id === adminRoleId
-      ) {
+      if (loggedInUser !== data.id && workspaceOwner !== data.id) {
         setMemberId(data.id)
         setOpenDeleteModal(!openDeleteModal)
       }
     }
-
     return (
       <>
         <Icon
@@ -127,25 +117,20 @@ export default function MembersList({
           }}
           icon="ic:outline-delete-outline"
           className={`h-6 w-6 ${
-            currentLoggedInUserData[0]?.userWorkspace[0]?.role.id !==
-              adminRoleId ||
-            loggedInUser === data.id ||
-            workspaceOwner === data.id
+            loggedInUser === data.id || workspaceOwner === data.id
               ? "cursor-not-allowed text-red-200"
               : "cursor-pointer text-red-500"
           }`}
         />
-        {memberId === data.id &&
-          currentLoggedInUserData[0]?.userWorkspace[0]?.role.id ===
-            adminRoleId && (
-            <DeletePopUp
-              setOpen={setOpenDeleteModal}
-              open={openDeleteModal}
-              onDelete={() => deleteUser(data.id)}
-              deleteItem={`${data.firstName} ${data.lastName}`}
-              deleteItemType={t("members.member")}
-            />
-          )}
+        {memberId === data.id && (
+          <DeletePopUp
+            setOpen={setOpenDeleteModal}
+            open={openDeleteModal}
+            onDelete={() => deleteUser(data.id)}
+            deleteItem={`${data.firstName} ${data.lastName}`}
+            deleteItemType={t("members.member")}
+          />
+        )}
       </>
     )
   }
@@ -153,7 +138,12 @@ export default function MembersList({
   const membersColumn = [
     { title: "Name", field: "name", render: NameDataCell, width: "25%" },
     { title: "Email", field: "email", width: "30%" },
-    { title: "Role", field: "role", render: RoleDataCell, width: "15%" },
+    {
+      title: "Role",
+      field: "role",
+      render: RoleDataCell,
+      width: memberLoaderData.permission.member.delete ? "15%" : "",
+    },
     {
       title: "Joined On",
       field: "createdAt",

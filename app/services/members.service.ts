@@ -252,12 +252,13 @@ export async function inviteNEWUser({
 }
 
 export async function editUserRole(
+  id: string,
   userId: string,
   workspaceId: string,
   roleId: string
 ) {
   try {
-    return await updateUserRole(userId, workspaceId, roleId)
+    return await updateUserRole(id, userId, workspaceId, roleId)
   } catch (error) {
     throw error
   }

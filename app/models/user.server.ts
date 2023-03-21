@@ -389,25 +389,37 @@ export async function updateUserData(
 }
 
 export async function updateUserRole(
+  id: string,
   userId: string,
-  invitedByWorkspaceId: string,
+  workspaceId: string,
   roleId: string
 ) {
-  const updateRole = await prisma.userWorkspace.update({
-    where: {
-      workspaceId_userId: {
-        workspaceId: invitedByWorkspaceId,
-        userId: userId,
+  try {
+    if (
+      !(await checkFeatureAuthorization(id, workspaceId, "member", "update"))
+    ) {
+      throw {
+        status: 403,
+      }
+    }
+    const updateRole = await prisma.userWorkspace.update({
+      where: {
+        workspaceId_userId: {
+          workspaceId: workspaceId,
+          userId: userId,
+        },
       },
-    },
-    data: {
-      roleId: roleId,
-    },
-  })
+      data: {
+        roleId: roleId,
+      },
+    })
 
-  if (updateRole) {
-    return "Done"
-  } else {
-    return "NotDone"
+    if (updateRole) {
+      return "Done"
+    } else {
+      return "NotDone"
+    }
+  } catch (error) {
+    throw error
   }
 }
