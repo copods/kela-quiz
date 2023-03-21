@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next"
 
 import Button from "../common-components/Button"
 import DialogWrapper from "../common-components/Dialog"
+import ListMenuItem from "../ListActionMenu"
 
 import { WorkspaceDetailsSection } from "./WorkspaceDetailsSection"
 
@@ -66,6 +67,7 @@ const EditButton = ({ setIsEdit }: { setIsEdit: (val: boolean) => void }) => {
 
 const Workspace = () => {
   const [showLeaveWorkspacePopup, setShowLeaveWorkspacePopup] = useState(false)
+  const [actionDropdown, setActionDropdown] = useState(false)
   const [isEdit, setIsEdit] = useState(false)
   const workspaceLoaderData = useLoaderData()
   const [inputValue, setInputValue] = useState(
@@ -116,17 +118,47 @@ const Workspace = () => {
     <div className="flex flex-col justify-start gap-6">
       <div className="flex h-10 items-center justify-between">
         <Header id="workspace-header" heading="Details" size="text-2xl" />
-        {isEdit ? (
-          <CancelAndSaveButton
-            updateWorkspaceCb={updateWorkspace}
-            cancelEditCb={cancelEdit}
-            inputValue={inputValue}
+        <div className="flex items-center gap-4">
+          {isEdit ? (
+            <CancelAndSaveButton
+              updateWorkspaceCb={updateWorkspace}
+              cancelEditCb={cancelEdit}
+              inputValue={inputValue}
+            />
+          ) : (
+            workspaceLoaderData.permission.workspace.update && (
+              <EditButton setIsEdit={setIsEdit} />
+            )
+          )}
+          <ListMenuItem
+            id={"workspace-action"}
+            menuIcon={"mdi:dots-vertical"}
+            open={actionDropdown}
+            onItemClick={setActionDropdown}
+            menuDetails={[
+              {
+                id: t("settings.leaveWorkspace"),
+                menuListText: t("settings.leaveWorkspace"),
+                menuListHelperText: workspaceLoaderData?.ownersWorkspaces
+                  ?.map((workspace: { id: string }) => workspace.id)
+                  .includes(workspaceLoaderData?.currentWorkspaceId)
+                  ? t("settings.ownerLeaveWorkspace")
+                  : "",
+                handleItemAction: () =>
+                  setShowLeaveWorkspacePopup(!showLeaveWorkspacePopup),
+                disabled: workspaceLoaderData?.ownersWorkspaces
+                  ?.map((workspace: { id: string }) => workspace.id)
+                  .includes(workspaceLoaderData?.currentWorkspaceId),
+              },
+              {
+                id: t("settings.transferOwnership"),
+                menuListText: t("settings.transferOwnership"),
+                handleItemAction: () =>
+                  setShowLeaveWorkspacePopup(!showLeaveWorkspacePopup),
+              },
+            ]}
           />
-        ) : (
-          workspaceLoaderData.permission.workspace.update && (
-            <EditButton setIsEdit={setIsEdit} />
-          )
-        )}
+        </div>
       </div>
       <div className="flex flex-col gap-8">
         <WorkspaceDetailsSection
@@ -135,63 +167,43 @@ const Workspace = () => {
           inputValue={inputValue}
           setInputValue={setInputValue}
         />
-        {!isEdit && (
-          <>
-            <Button
-              tabIndex={0}
-              id="leave-workspace"
-              variant="secondary-solid"
-              type="button"
-              name="leave"
-              className="w-max px-5"
-              title={t("settings.leaveWorkspace")}
-              buttonText={t("settings.leaveWorkspace")}
-              onClick={() =>
-                setShowLeaveWorkspacePopup(!showLeaveWorkspacePopup)
-              }
-              isDisabled={workspaceLoaderData?.ownersWorkspaces
-                ?.map((workspace: { id: string }) => workspace.id)
-                .includes(workspaceLoaderData?.currentWorkspaceId)}
-            />
-            <DialogWrapper
-              open={showLeaveWorkspacePopup}
-              setOpen={setShowLeaveWorkspacePopup}
-              header={false}
-            >
-              <div className="flex flex-col gap-4">
-                <div>
-                  <p>{t("settings.leaveWorkspaceConfirmation")}</p>
-                </div>
-                <div className="flex justify-end gap-4">
-                  <Button
-                    tabIndex={0}
-                    id="cancel-leave-workspace"
-                    variant="primary-outlined"
-                    type="button"
-                    name="cancel"
-                    className="px-5"
-                    title={t("commonConstants.cancel")}
-                    buttonText={t("commonConstants.cancel")}
-                    onClick={() =>
-                      setShowLeaveWorkspacePopup(!showLeaveWorkspacePopup)
-                    }
-                  />
-                  <Button
-                    tabIndex={0}
-                    id="confirm-leave-workspace"
-                    variant="secondary-solid"
-                    type="button"
-                    name="leave"
-                    className="px-5"
-                    title={t("settings.leaveWorkspace")}
-                    buttonText={t("settings.leave")}
-                    onClick={() => leaveWorkspace()}
-                  />
-                </div>
-              </div>
-            </DialogWrapper>
-          </>
-        )}
+        <DialogWrapper
+          open={showLeaveWorkspacePopup}
+          setOpen={setShowLeaveWorkspacePopup}
+          header={false}
+        >
+          <div className="flex flex-col gap-4">
+            <div>
+              <p>{t("settings.leaveWorkspaceConfirmation")}</p>
+            </div>
+            <div className="flex justify-end gap-4">
+              <Button
+                tabIndex={0}
+                id="cancel-leave-workspace"
+                variant="primary-outlined"
+                type="button"
+                name="cancel"
+                className="px-5"
+                title={t("commonConstants.cancel")}
+                buttonText={t("commonConstants.cancel")}
+                onClick={() =>
+                  setShowLeaveWorkspacePopup(!showLeaveWorkspacePopup)
+                }
+              />
+              <Button
+                tabIndex={0}
+                id="confirm-leave-workspace"
+                variant="secondary-solid"
+                type="button"
+                name="leave"
+                className="px-5"
+                title={t("settings.leaveWorkspace")}
+                buttonText={t("settings.leave")}
+                onClick={() => leaveWorkspace()}
+              />
+            </div>
+          </div>
+        </DialogWrapper>
       </div>
     </div>
   )
