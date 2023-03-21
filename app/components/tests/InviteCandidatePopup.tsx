@@ -7,7 +7,12 @@ import { useTranslation } from "react-i18next"
 import { toast } from "react-toastify"
 
 import Button from "../common-components/Button"
-import DialogWrapper from "../common-components/Dialog"
+import {
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogWrapper,
+} from "../common-components/Dialog"
 interface error {
   [key: number]: string
 }
@@ -113,103 +118,107 @@ const InviteCandidatePopup = ({
       })
   }
   return (
-    <DialogWrapper
-      open={openInvitePopup}
-      heading={t("inviteMemeberPopUpConstants.inviteCandidate")}
-      setOpen={setOpenInvitePopup}
-      header={true}
-      role={t("inviteMemeberPopUpConstants.inviteCandidate")}
-      ariaLabel={t("inviteMemeberPopUpConstants.inviteCandidate")}
-      tabIndex={0}
-    >
-      <Form
-        method="post"
-        className=" items-end justify-center p-4 sm:items-center sm:p-0"
-      >
-        <p className="pb-4 text-base font-normal text-gray-700">
-          {t("inviteMemeberPopUpConstants.enterCandidatesEmail")}{" "}
-          <span className="font-semibold">`{testName}`</span>{" "}
-          {t("testsConstants.assessment")}.
-        </p>
-        <div className="flex flex-row justify-between pb-2">
-          <span className="text-sm font-medium text-gray-500">
-            {t("inviteMemeberPopUpConstants.candidateEmail")}
-          </span>
-          <span
-            role={"button"}
-            id="invite-more"
-            tabIndex={0}
-            className="cursor-pointer px-0.5 text-sm font-normal text-primary"
-            onClick={() => setEmails([...emails, ""])}
-            onKeyUp={(e) => {
-              if (e.key === "Enter") setEmails([...emails, ""])
-            }}
-            title={t("inviteMemeberPopUpConstants.inviteMore")}
-            aria-label={t("inviteMemeberPopUpConstants.inviteMore")}
-          >
-            {t("inviteMemeberPopUpConstants.inviteMore")} +
-          </span>
-        </div>
-        <div className="max-h-280 overflow-auto">
-          {emails.map((email, i) => {
-            return (
-              <div className="pb-2" key={i}>
-                <input
+    <DialogWrapper open={openInvitePopup} setOpen={setOpenInvitePopup}>
+      <>
+        <DialogHeader
+          heading={t("inviteMemeberPopUpConstants.inviteCandidate")}
+          onClose={setOpenInvitePopup}
+          role={t("inviteMemeberPopUpConstants.inviteCandidate")}
+          ariaLabel={t("inviteMemeberPopUpConstants.inviteCandidate")}
+          tabIndex={0}
+        />
+        <Form method="post">
+          <DialogContent>
+            <>
+              <p className="pb-4 text-base font-normal text-gray-700">
+                {t("inviteMemeberPopUpConstants.enterCandidatesEmail")}{" "}
+                <span className="font-semibold">`{testName}`</span>{" "}
+                {t("testsConstants.assessment")}.
+              </p>
+              <div className="flex flex-row justify-between pb-2">
+                <span className="text-sm font-medium text-gray-500">
+                  {t("inviteMemeberPopUpConstants.candidateEmail")}
+                </span>
+                <span
+                  role={"button"}
+                  id="invite-more"
                   tabIndex={0}
-                  type="email"
-                  name={`email`}
-                  onFocus={() => {
-                    validateEmails(emails, i)
+                  className="cursor-pointer px-0.5 text-sm font-normal text-primary"
+                  onClick={() => setEmails([...emails, ""])}
+                  onKeyUp={(e) => {
+                    if (e.key === "Enter") setEmails([...emails, ""])
                   }}
-                  onChange={(e) => updateEmail(e, i)}
-                  className="inviteInput h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
-                  placeholder="johndoe@example.com"
-                  title={t("commonConstants.email")}
-                  aria-label={t("commonConstants.email")}
-                />
-                {Object.entries(errors).map(([key]) =>
-                  Number(key) === i ? (
-                    <p key={key} className="text-red-700">
-                      {t("statusCheck.emailIsInvalid")}
-                    </p>
-                  ) : (
-                    ""
-                  )
-                )}
+                  title={t("inviteMemeberPopUpConstants.inviteMore")}
+                  aria-label={t("inviteMemeberPopUpConstants.inviteMore")}
+                >
+                  {t("inviteMemeberPopUpConstants.inviteMore")} +
+                </span>
               </div>
-            )
-          })}
-        </div>
-        <div className="flex justify-end gap-2 pt-4">
-          <Button
-            type="button"
-            className="h-9 px-4"
-            variant="primary-outlined"
-            title={t("commonConstants.cancel")}
-            buttonText={t("commonConstants.cancel")}
-            onClick={updatePopupAndEmailState}
-          />
-          <Button
-            type="submit"
-            name="inviteCandidates"
-            value={testId}
-            id="submit-button"
-            className="h-9 px-4"
-            variant="primary-solid"
-            title={
-              transition.state === "submitting"
-                ? t("inviteMemeberPopUpConstants.inviting")
-                : t("inviteMemeberPopUpConstants.invite")
-            }
-            buttonText={
-              transition.state === "submitting"
-                ? t("inviteMemeberPopUpConstants.inviting")
-                : t("inviteMemeberPopUpConstants.invite")
-            }
-            datacy="submit"
-          />
-        </div>
-      </Form>
+              <div className="max-h-280 overflow-auto">
+                {emails.map((email, i) => {
+                  return (
+                    <div className="pb-2" key={i}>
+                      <input
+                        tabIndex={0}
+                        type="email"
+                        name={`email`}
+                        onFocus={() => {
+                          validateEmails(emails, i)
+                        }}
+                        onChange={(e) => updateEmail(e, i)}
+                        className="inviteInput h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
+                        placeholder="johndoe@example.com"
+                        title={t("commonConstants.email")}
+                        aria-label={t("commonConstants.email")}
+                      />
+                      {Object.entries(errors).map(([key]) =>
+                        Number(key) === i ? (
+                          <p key={key} className="text-red-700">
+                            {t("statusCheck.emailIsInvalid")}
+                          </p>
+                        ) : (
+                          ""
+                        )
+                      )}
+                    </div>
+                  )
+                })}
+              </div>
+            </>
+          </DialogContent>
+          <DialogFooter>
+            <div className="flex justify-end gap-2 pt-4">
+              <Button
+                type="button"
+                className="h-9 px-4"
+                variant="primary-outlined"
+                title={t("commonConstants.cancel")}
+                buttonText={t("commonConstants.cancel")}
+                onClick={updatePopupAndEmailState}
+              />
+              <Button
+                type="submit"
+                name="inviteCandidates"
+                value={testId}
+                id="submit-button"
+                className="h-9 px-4"
+                variant="primary-solid"
+                title={
+                  transition.state === "submitting"
+                    ? t("inviteMemeberPopUpConstants.inviting")
+                    : t("inviteMemeberPopUpConstants.invite")
+                }
+                buttonText={
+                  transition.state === "submitting"
+                    ? t("inviteMemeberPopUpConstants.inviting")
+                    : t("inviteMemeberPopUpConstants.invite")
+                }
+                datacy="submit"
+              />
+            </div>
+          </DialogFooter>
+        </Form>
+      </>
     </DialogWrapper>
   )
 }

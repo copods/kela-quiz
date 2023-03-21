@@ -85,6 +85,7 @@ export default function MembersList({
             onDelete={() => deleteUser(data.id)}
             deleteItem={`${data.firstName} ${data.lastName}`}
             deleteItemType={t("members.member")}
+            header={t("commonConstants.deleteMember")}
           />
         )}
       </>
