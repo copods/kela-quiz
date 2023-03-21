@@ -32,13 +32,6 @@ export default function MembersList({
   const [openDeleteModal, setOpenDeleteModal] = useState(false)
   const [memberId, setMemberId] = useState("")
   const workspaceOwner = memberLoaderData.currentWorkspaceOwner.createdById
-  const adminRoleId = roles.find((role) => role.name === "Admin")?.id
-
-  const currentLoggedInUserData = memberLoaderData.users.filter(
-    (data: { id: string }) => {
-      return data.id === loggedInUser
-    }
-  )
 
   const NameDataCell = (data: User) => {
     return (
@@ -63,16 +56,11 @@ export default function MembersList({
   }
   const MemberDelete = (data: User & { userWorkspace: UserWorkspace[] }) => {
     const openPopUp = () => {
-      if (
-        loggedInUser !== data.id &&
-        workspaceOwner !== data.id &&
-        currentLoggedInUserData[0]?.userWorkspace[0]?.role.id === adminRoleId
-      ) {
+      if (loggedInUser !== data.id && workspaceOwner !== data.id) {
         setMemberId(data.id)
         setOpenDeleteModal(!openDeleteModal)
       }
     }
-
     return (
       <>
         <Icon
@@ -85,26 +73,21 @@ export default function MembersList({
           }}
           icon="ic:outline-delete-outline"
           className={`h-6 w-6 ${
-            currentLoggedInUserData[0]?.userWorkspace[0]?.role.id !==
-              adminRoleId ||
-            loggedInUser === data.id ||
-            workspaceOwner === data.id
+            loggedInUser === data.id || workspaceOwner === data.id
               ? "cursor-not-allowed text-red-200"
               : "cursor-pointer text-red-500"
           }`}
         />
-        {memberId === data.id &&
-          currentLoggedInUserData[0]?.userWorkspace[0]?.role.id ===
-            adminRoleId && (
-            <DeletePopUp
-              setOpen={setOpenDeleteModal}
-              open={openDeleteModal}
-              onDelete={() => deleteUser(data.id)}
-              deleteItem={`${data.firstName} ${data.lastName}`}
-              deleteItemType={t("members.member")}
-              header={t("commonConstants.deleteMember")}
-            />
-          )}
+        {memberId === data.id && (
+          <DeletePopUp
+            setOpen={setOpenDeleteModal}
+            open={openDeleteModal}
+            onDelete={() => deleteUser(data.id)}
+            deleteItem={`${data.firstName} ${data.lastName}`}
+            deleteItemType={t("members.member")}
+            header={t("commonConstants.deleteMember")}
+          />
+        )}
       </>
     )
   }
@@ -123,7 +106,7 @@ export default function MembersList({
   ]
 
   return (
-    <div className="z-10 text-base">
+    <div className="z-10 h-full text-base">
       <Table
         columns={
           memberLoaderData.permission.member.delete

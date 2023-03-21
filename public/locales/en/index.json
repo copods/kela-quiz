@@ -92,6 +92,7 @@
     "deleteQuestion": "Delete Question",
     "deleteTest": "Delete Test",
     "deleteAssessment": "Delete Assessment"
+    "invitedMemberEmptyState": "No members are invited"
   },
   "sideNav": {
     "sideNavHeading": "Quiz",
