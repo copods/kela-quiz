@@ -58,7 +58,15 @@ export default function MembersList({
     const EditIcon = () => {
       return <Icon className="cursor-pointer text-base" icon={"mdi:pencil"} />
     }
-    const sortRoles = roles.sort()
+
+    const sortRoles = roles.sort((a, b) => {
+      if (a.name.toLowerCase() < b.name.toLowerCase()) {
+        return -1
+      } else {
+        return 1
+      }
+    })
+
     return (
       <>
         {loggedInUser !== data.id &&
