@@ -286,9 +286,13 @@ export const NewDropdownField = <
                     i: number
                   ) => (
                     <Listbox.Option
-                      className={({ active }) =>
+                      className={({ selected, active }) =>
                         classNames(
-                          active ? "bg-primary text-white" : "text-gray-900",
+                          selected
+                            ? "bg-blue-50"
+                            : active
+                            ? "bg-hover"
+                            : "text-gray-900",
                           "relative z-20 cursor-pointer select-none py-3 px-4"
                         )
                       }
@@ -307,7 +311,7 @@ export const NewDropdownField = <
                             <span
                               className={classNames(
                                 selected
-                                  ? "font-semibold"
+                                  ? "font-semibold text-primary"
                                   : "not-selected font-normal",
                                 "dropdown-option block truncate"
                               )}
@@ -332,8 +336,7 @@ export const NewDropdownField = <
                           {selected ? (
                             <span
                               className={classNames(
-                                active ? "text-white" : "text-primary",
-                                "absolute inset-y-0 right-0 flex items-center pr-4"
+                                "absolute inset-y-0 right-0 flex items-center pr-4 text-primary"
                               )}
                             >
                               <Icon
