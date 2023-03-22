@@ -89,7 +89,6 @@ async function seed() {
         isDefault: true,
       },
     })
-    console.log({ user: user.workspace })
     await prisma.workspace.update({
       where: {
         id: user.workspace[0].id,
