@@ -415,9 +415,10 @@ export interface AddedSectionDetails {
   target: string
 }
 export interface ChipComponent {
-  success: string
-  error: string
-  warning: string
+  success?: string
+  error?: string
+  warning?: string
+  default?: string
 }
 
 export interface HeaderProps {

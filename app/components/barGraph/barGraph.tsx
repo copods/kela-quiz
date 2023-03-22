@@ -95,33 +95,36 @@ const BarGraph = ({
       shadow: true,
       padding: 15,
       followTouchMove: true,
-      formatter: function (): any {
-        return this.points?.reduce(
-          (
-            acc: TooltipFormatterContextObject
-          ): TooltipFormatterContextObject => {
-            return ("<div>" +
-              "Total" +
-              ": " +
-              '<span style="color: #353988; fontWeight: 500; margin: 20px">' +
-              getLabelData(acc.key as string, "total") +
-              "</span>" +
-              "<div/> </br>" +
-              "<div>" +
-              "Correct" +
-              ": " +
-              '<span style="color: #059669; fontWeight: 500; margin: 20px">' +
-              getLabelData(acc.key as string, "correct") +
-              "</span>" +
-              "<div/> </br>" +
-              "<div>" +
-              "Skipped" +
-              ": " +
-              '<span style="color: #D97706; fontWeight: 500; margin: 20px">' +
-              getLabelData(acc.key as string, "skipped") +
-              "</span>" +
-              "<div/>") as unknown as TooltipFormatterContextObject
-          }
+      formatter: function (): string {
+        return (
+          this.points?.reduce(
+            (
+              acc: TooltipFormatterContextObject
+            ): TooltipFormatterContextObject => {
+              return ("<div>" +
+                "Total" +
+                ": " +
+                '<span style="color: #353988; fontWeight: 500; margin: 20px">' +
+                getLabelData(acc.key as string, "total") +
+                "</span>" +
+                "<div/> </br>" +
+                "<div>" +
+                "Correct" +
+                ": " +
+                '<span style="color: #059669; fontWeight: 500; margin: 20px">' +
+                getLabelData(acc.key as string, "correct") +
+                "</span>" +
+                "<div/> </br>" +
+                "<div>" +
+                "Skipped" +
+                ": " +
+                '<span style="color: #D97706; fontWeight: 500; margin: 20px">' +
+                getLabelData(acc.key as string, "skipped") +
+                "</span>" +
+                "<div/>") as unknown as TooltipFormatterContextObject
+            }
+          ),
+          ""
         )
       },
     },
