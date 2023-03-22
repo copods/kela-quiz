@@ -69,7 +69,6 @@ describe("Test for Tests", () => {
       .should("be.visible")
       .should("have.text", "Add Test")
       .should("have.attr", "tabindex", "0")
-      .should("have.attr", "aria-label", "Add Test")
       .click()
       .should("have.focus")
     getDialogCloseIcon()

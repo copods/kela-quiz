@@ -11,7 +11,7 @@ import {
   DialogContent,
   DialogFooter,
   DialogHeader,
-  DialogWrapperNew,
+  DialogWrapper,
 } from "./Dialog"
 
 import type { Role } from "~/interface/Interface"
@@ -60,7 +60,7 @@ export default function ChangeRolePopUp({
   }, [actionData])
 
   return (
-    <DialogWrapperNew open={open} setOpen={setOpen}>
+    <DialogWrapper open={open} setOpen={setOpen}>
       <>
         <DialogHeader heading="Change Role" />
         <DialogContent>
@@ -117,6 +117,6 @@ export default function ChangeRolePopUp({
           </div>
         </DialogFooter>
       </>
-    </DialogWrapperNew>
+    </DialogWrapper>
   )
 }
