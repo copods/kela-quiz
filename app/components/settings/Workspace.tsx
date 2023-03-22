@@ -10,6 +10,7 @@ import {
   DialogHeader,
   DialogWrapper,
 } from "../common-components/Dialog"
+import { NewDropdownField } from "../common-components/Dropdown"
 import ListMenuItem from "../ListActionMenu"
 
 import { WorkspaceDetailsSection } from "./WorkspaceDetailsSection"
@@ -74,6 +75,7 @@ const Workspace = () => {
   const [showLeaveWorkspacePopup, setShowLeaveWorkspacePopup] = useState(false)
   const [showChangeOwnershipPopup, setShowChangeOwnershipPopup] =
     useState(false)
+  const [newOwner, setNewOwner] = useState("")
   const [actionDropdown, setActionDropdown] = useState(false)
   const [isEdit, setIsEdit] = useState(false)
   const workspaceLoaderData = useLoaderData()
@@ -83,6 +85,9 @@ const Workspace = () => {
         workspaces?.workspaceId === workspaceLoaderData?.currentWorkspaceId
     )?.workspace?.name
   )
+
+  console.log({ workspaceLoaderData })
+
   const [isError, setIsError] = useState(false)
   const { t } = useTranslation()
   const submit = useSubmit()
@@ -246,10 +251,17 @@ const Workspace = () => {
                     </li>
                   </ul>
                 </div>
-                <div>
+                <div className="flex flex-col gap-1.5">
                   <span className="text-left leading-6 text-gray-800">
                     Select a user to assign as Owner
                   </span>
+                  <NewDropdownField
+                    dropdownOptions={[
+                      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
+                    ]}
+                    value={newOwner}
+                    setValue={setNewOwner}
+                  />
                 </div>
               </div>
             </DialogContent>

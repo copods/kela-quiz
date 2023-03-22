@@ -37,6 +37,7 @@ export async function getUserWorkspaces(userId: string, workspaceId?: string) {
             name: true,
           },
         },
+        user: true,
       },
     })
   } catch (error) {
@@ -93,6 +94,7 @@ export async function addWorkspace(workspaceName: string, userId: string) {
     data: {
       name: workspaceName,
       createdById: userId,
+      ownerId: userId,
     },
   })
   const roleId = await getAdminId()
