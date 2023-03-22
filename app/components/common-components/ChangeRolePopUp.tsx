@@ -49,10 +49,10 @@ export default function ChangeRolePopUp({
   }
 
   useEffect(() => {
-    if (actionData === "Done") {
+    if (actionData?.response?.status === 203) {
       toast.success(t("toastConstants.roleUpdatedSuccessfully"))
       setOpen(!open)
-    } else if (actionData === "NotDone") {
+    } else if (actionData?.response?.status === 400) {
       toast.error(t("statusCheck.commonError"))
       setOpen(!open)
     }

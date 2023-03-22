@@ -151,7 +151,7 @@ export default function MembersList({
       title: "Role",
       field: "role",
       render: RoleDataCell,
-      width: memberLoaderData.permission.member.delete && "15%",
+      width: memberLoaderData.permission.member.delete ? "15%" : "",
     },
     {
       title: "Joined On",

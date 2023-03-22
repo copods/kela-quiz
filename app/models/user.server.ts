@@ -415,9 +415,17 @@ export async function updateUserRole(
     })
 
     if (updateRole) {
-      return "Done"
+      return {
+        response: {
+          status: 203,
+        },
+      }
     } else {
-      return "NotDone"
+      return {
+        response: {
+          status: 400,
+        },
+      }
     }
   } catch (error) {
     throw error
