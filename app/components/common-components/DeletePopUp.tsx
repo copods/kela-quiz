@@ -4,7 +4,12 @@ import { Icon } from "@iconify/react"
 import { Form } from "@remix-run/react"
 import { useTranslation } from "react-i18next"
 
-import DialogWrapper from "../common-components/Dialog"
+import {
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogWrapper,
+} from "../common-components/Dialog"
 
 import Button from "./Button"
 export default function DeletePopUp({
@@ -16,6 +21,7 @@ export default function DeletePopUp({
   status,
   deleteItemType,
   deleteItem,
+  header,
 }: {
   open: boolean
   setOpen: (e: boolean) => void
@@ -25,6 +31,7 @@ export default function DeletePopUp({
   status?: string | undefined
   deleteItemType: string
   deleteItem?: string
+  header: string
 }) {
   const { t } = useTranslation()
 
@@ -41,10 +48,11 @@ export default function DeletePopUp({
   }, [open])
 
   return (
-    <div>
-      <DialogWrapper open={open} setOpen={setOpen} header={false}>
-        <div>
-          <div id="delete-dialog" className="bg-white sm:pb-4">
+    <DialogWrapper open={open} setOpen={setOpen}>
+      <>
+        <DialogHeader heading={header} onClose={setOpen} />
+        <DialogContent>
+          <div id="delete-dialog" className="bg-white">
             <div className="sm:flex sm:items-start ">
               <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
                 <Icon
@@ -57,12 +65,14 @@ export default function DeletePopUp({
                 <span className="text-sm text-gray-500">
                   {t("deletePopUp.alert")} {deleteItemType}
                 </span>
-                <p className="bold text-sm text-gray-500">
+                <p className="bold text-sm font-medium ">
                   {deleteItem} {subAlert}
                 </p>
               </div>
             </div>
           </div>
+        </DialogContent>
+        <DialogFooter>
           <div className="gap-2 sm:flex sm:flex-row-reverse">
             <Form method="post">
               <Button
@@ -95,8 +105,8 @@ export default function DeletePopUp({
               }}
             />
           </div>
-        </div>
-      </DialogWrapper>
-    </div>
+        </DialogFooter>
+      </>
+    </DialogWrapper>
   )
 }

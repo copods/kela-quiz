@@ -89,7 +89,11 @@
     "changePassword": "Change Password",
     "invitedMemberEmptyState": "No members are invited",
     "emailRequired": "Email is required",
-    "workspaceNameIsRequired": "Workspace name is required"
+    "workspaceNameIsRequired": "Workspace name is required",
+    "deleteMember": "Delete Member",
+    "deleteQuestion": "Delete Question",
+    "deleteTest": "Delete Test",
+    "deleteAssessment": "Delete Assessment"
   },
   "sideNav": {
     "sideNavHeading": "Quiz",

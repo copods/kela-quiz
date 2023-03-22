@@ -5,7 +5,12 @@ import { useTranslation } from "react-i18next"
 import { toast } from "react-toastify"
 
 import Button from "../common-components/Button"
-import DialogWrapper from "../common-components/Dialog"
+import {
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogWrapper,
+} from "../common-components/Dialog"
 import PasswordInputFields from "../common-components/PasswordInputField"
 
 import {
@@ -157,62 +162,69 @@ const ResetPassword = ({
   }, [newPassword])
 
   return (
-    <DialogWrapper
-      open={openResetPassModel}
-      heading={t("forgotPasswordConstants.resetPassword")}
-      setOpen={setOpenResetPassModel}
-      header={true}
-      role={t("forgotPasswordConstants.resetPassword")}
-      ariaLabel={t("forgotPasswordConstants.resetPassword")}
-      tabIndex={0}
-    >
-      <div className="flex flex-col gap-2">
-        <div className="input-container-wrapper flex flex-col gap-6">
-          {passwordInputFieldProps.map((props) => {
-            return (
-              <PasswordInputFields
-                onBlur={() => comparePasswords(newPassword, confirmPassword)}
-                {...props}
-                key={props.name}
-              />
-            )
-          })}
-        </div>
-        {newPassword && (
-          <span className="flex gap-1 text-sm">
-            {t("commonConstants.passwordStrength")}:
-            <span className={getPasswordStrengthColor(passwordStrength)}>
-              {passwordStrength}
-            </span>
-          </span>
-        )}
-        <div className="mt-6 flex items-center justify-center">
-          <Button
-            tabIndex={0}
-            name="resetPassword"
-            value="resetPassword"
-            title={
-              transition.state === "submitting"
-                ? t("settings.passResetting")
-                : t("forgotPasswordConstants.resetPassword")
-            }
-            buttonText={
-              transition.state === "submitting"
-                ? t("settings.passResetting")
-                : t("forgotPasswordConstants.resetPassword")
-            }
-            variant="primary-solid"
-            className="h-11 w-full text-base"
-            isDisabled={
-              !(newPassword && confirmPassword && password) ||
-              newPassword != confirmPassword ||
-              newPassword.length < 8
-            }
-            onClick={onSubmit}
-            datacy="submit"
-          />
-        </div>
-      </div>
+    <DialogWrapper open={openResetPassModel} setOpen={setOpenResetPassModel}>
+      <>
+        <DialogHeader
+          heading={t("settings.resetPas")}
+          onClose={setOpenResetPassModel}
+          role={t("settings.resetPas")}
+          ariaLabel={t("settings.resetPas")}
+          tabIndex={0}
+        />
+        <DialogContent>
+          <div className="flex flex-col gap-2">
+            <div className="input-container-wrapper flex flex-col gap-6">
+              {passwordInputFieldProps.map((props) => {
+                return (
+                  <PasswordInputFields
+                    onBlur={() =>
+                      comparePasswords(newPassword, confirmPassword)
+                    }
+                    {...props}
+                    key={props.name}
+                  />
+                )
+              })}
+            </div>
+            {newPassword && (
+              <span className="flex gap-1 text-sm">
+                {t("commonConstants.passwordStrength")}:
+                <span className={getPasswordStrengthColor(passwordStrength)}>
+                  {passwordStrength}
+                </span>
+              </span>
+            )}
+          </div>
+        </DialogContent>
+        <DialogFooter>
+          <div className="mt-6 flex items-center justify-center">
+            <Button
+              tabIndex={0}
+              name="resetPassword"
+              value="resetPassword"
+              title={
+                transition.state === "submitting"
+                  ? t("settings.passResetting")
+                  : t("settings.resetPas")
+              }
+              buttonText={
+                transition.state === "submitting"
+                  ? t("settings.passResetting")
+                  : t("settings.resetPas")
+              }
+              variant="primary-solid"
+              className="h-11 w-full text-base"
+              isDisabled={
+                !(newPassword && confirmPassword && password) ||
+                newPassword != confirmPassword ||
+                newPassword.length < 8
+              }
+              onClick={onSubmit}
+              datacy="submit"
+            />
+          </div>
+        </DialogFooter>
+      </>
     </DialogWrapper>
   )
 }
