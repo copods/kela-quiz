@@ -163,7 +163,20 @@ function DropdownField({
 
 export default DropdownField
 
-export const NewDropdownField = ({
+type DropdownOptions<T> = Array<
+  T extends object
+    ? T
+    : T extends string
+    ? string
+    : T extends number
+    ? number
+    : never
+>
+
+export const NewDropdownField = <
+  T extends object | string | number,
+  U extends keyof T
+>({
   dropdownOptions,
   labelKey,
   valueKey,
@@ -172,9 +185,9 @@ export const NewDropdownField = ({
   helperText,
   action,
 }: {
-  dropdownOptions: any
-  labelKey?: string
-  valueKey?: string
+  dropdownOptions: DropdownOptions<T>
+  labelKey?: U
+  valueKey?: U
   value: string
   setValue: (e: string) => void
   helperText?: string
@@ -188,9 +201,9 @@ export const NewDropdownField = ({
 
   const getLabelFromValue = (val: string) => {
     if (valueKey && labelKey) {
-      for (let options of dropdownOptions) {
-        if (options[valueKey] === val) {
-          return options[labelKey]
+      for (let option of dropdownOptions as DropdownOptions<T>) {
+        if ((option as Record<typeof valueKey, string>)[valueKey] === val) {
+          return (option as Record<typeof valueKey, string>)[labelKey]
         }
       }
     }
@@ -261,55 +274,80 @@ export const NewDropdownField = ({
                       </div>
                     </Listbox.Option>
                   ))}
-                {dropdownOptions.map((options: any) => (
-                  <Listbox.Option
-                    className={({ active }) =>
-                      classNames(
-                        active ? "bg-primary text-white" : "text-gray-900",
-                        "relative z-20 cursor-pointer select-none py-3 px-4"
-                      )
-                    }
-                    key={valueKey ? options[valueKey] : options}
-                    value={valueKey ? options[valueKey] : options}
-                  >
-                    {({ selected, active }) => (
-                      <>
-                        <div className="flex flex-col gap-0.5">
-                          <span
-                            className={classNames(
-                              selected
-                                ? "font-semibold"
-                                : "not-selected font-normal",
-                              "dropdown-option block truncate"
-                            )}
-                            id="option"
-                          >
-                            {labelKey ? options[labelKey] : options}
-                          </span>
-                          {helperText && (
-                            <span className="text-xs leading-4 text-gray-500">
-                              {options[helperText]}
+                {(dropdownOptions as DropdownOptions<T>).map(
+                  (
+                    option: T extends object
+                      ? T
+                      : T extends string
+                      ? string
+                      : T extends number
+                      ? number
+                      : never,
+                    i: number
+                  ) => (
+                    <Listbox.Option
+                      className={({ active }) =>
+                        classNames(
+                          active ? "bg-primary text-white" : "text-gray-900",
+                          "relative z-20 cursor-pointer select-none py-3 px-4"
+                        )
+                      }
+                      key={i}
+                      value={
+                        valueKey
+                          ? (option as Record<typeof valueKey, string>)[
+                              valueKey
+                            ]
+                          : option
+                      }
+                    >
+                      {({ selected, active }) => (
+                        <>
+                          <div className="flex flex-col gap-0.5">
+                            <span
+                              className={classNames(
+                                selected
+                                  ? "font-semibold"
+                                  : "not-selected font-normal",
+                                "dropdown-option block truncate"
+                              )}
+                              id="option"
+                            >
+                              {labelKey
+                                ? (option as Record<typeof labelKey, string>)[
+                                    labelKey
+                                  ]
+                                : option}
                             </span>
-                          )}
-                        </div>
-                        {selected ? (
-                          <span
-                            className={classNames(
-                              active ? "text-white" : "text-primary",
-                              "absolute inset-y-0 right-0 flex items-center pr-4"
+                            {helperText && (
+                              <span className="text-xs leading-4 text-gray-500">
+                                {
+                                  (option as Record<typeof helperText, string>)[
+                                    helperText
+                                  ]
+                                }
+                              </span>
                             )}
-                          >
-                            <Icon
-                              icon="ic:round-check"
-                              className="h-5 w-5"
-                              aria-hidden="true"
-                            />
-                          </span>
-                        ) : null}
-                      </>
-                    )}
-                  </Listbox.Option>
-                ))}
+                          </div>
+                          {selected ? (
+                            <span
+                              className={classNames(
+                                active ? "text-white" : "text-primary",
+                                "absolute inset-y-0 right-0 flex items-center pr-4"
+                              )}
+                            >
+                              <Icon
+                                icon="ic:round-check"
+                                className="h-5 w-5"
+                                aria-hidden="true"
+                              />
+                            </span>
+                          ) : null}
+                        </>
+                      )}
+                    </Listbox.Option>
+                  )
+                )}
               </Listbox.Options>
             </Transition>
           </div>
