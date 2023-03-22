@@ -357,7 +357,8 @@
     "leaveWorkspaceConfirmation": "Are you sure you want to leave this workspace?",
     "workspaceUpdated": "Workspace updated sucessfully..!",
     "ownerLeaveWorkspace": "Owner can not leave the workspace.",
-    "transferOwnership": "Transfer Ownership"
+    "transferOwnership": "Transfer Ownership",
+    "ownerUpdated": "Owner updated"
   },
   "tabs": {
     "general": "General",

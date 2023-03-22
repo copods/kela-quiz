@@ -85,9 +85,6 @@ const Workspace = () => {
         workspaces?.workspaceId === workspaceLoaderData?.currentWorkspaceId
     )?.workspace?.name
   )
-
-  console.log({ workspaceLoaderData })
-
   const [isError, setIsError] = useState(false)
   const { t } = useTranslation()
   const submit = useSubmit()
@@ -122,10 +119,25 @@ const Workspace = () => {
     }
   }
 
+  const updateWorkspaceOwner = () => {
+    if (newOwner) {
+      submit(
+        {
+          updateOwner: "updateOwner",
+          newOwner,
+        },
+        { method: "post" }
+      )
+    }
+  }
+
   useEffect(() => {
     setIsError(false)
   }, [inputValue])
 
+  useEffect(() => {
+    setNewOwner("")
+  }, [showChangeOwnershipPopup])
   return (
     <div className="flex flex-col justify-start gap-6">
       <div className="flex h-10 items-center justify-between">
@@ -168,7 +180,14 @@ const Workspace = () => {
                 handleItemAction: () =>
                   setShowChangeOwnershipPopup(!showChangeOwnershipPopup),
               },
-            ]}
+            ].filter((menu) => {
+              return workspaceLoaderData?.ownersWorkspaces
+                ?.map((workspace: { id: string }) => workspace.id)
+                .includes(workspaceLoaderData?.currentWorkspaceId) &&
+                workspaceLoaderData.allAdmins.length
+                ? menu
+                : menu.id !== t("settings.transferOwnership")
+            })}
           />
         </div>
       </div>
@@ -256,9 +275,10 @@ const Workspace = () => {
                     Select a user to assign as Owner
                   </span>
                   <NewDropdownField
-                    dropdownOptions={[
-                      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
-                    ]}
+                    dropdownOptions={workspaceLoaderData.allAdmins}
+                    labelKey={"fullName"}
+                    valueKey={"id"}
+                    helperText={"email"}
                     value={newOwner}
                     setValue={setNewOwner}
                   />
@@ -289,7 +309,8 @@ const Workspace = () => {
                   className="px-5"
                   title={t("commonConstants.proceed")}
                   buttonText={t("commonConstants.proceed")}
-                  onClick={() => console.log("hit")}
+                  isDisabled={newOwner?.length ? false : true}
+                  onClick={updateWorkspaceOwner}
                 />
               </div>
             </DialogFooter>

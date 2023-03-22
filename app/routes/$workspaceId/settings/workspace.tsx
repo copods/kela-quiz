@@ -14,9 +14,11 @@ import { checkUserFeatureAuthorization } from "~/models/authorization.server"
 import {
   getActiveOwnerWorkspaces,
   getActiveWorkspaceOwner,
+  getAllCurrentWorkspaceAdmins,
   getUserWorkspaceService,
   leaveActiveWorkspace,
   updateCurrentUserWorkspace,
+  updateCurrentWorkspaceOwner,
 } from "~/services/workspace.service"
 import { getUserId } from "~/session.server"
 
@@ -26,6 +28,7 @@ interface LoaderData {
   currentWorkspaceId: string
   userWorkspaces: Awaited<ReturnType<typeof getUserWorkspaceService>>
   permission: { [key: string]: { [key: string]: boolean } }
+  allAdmins: { fullName: string; email: string }[]
 }
 
 export const loader: LoaderFunction = async ({ request, params }) => {
@@ -47,12 +50,21 @@ export const loader: LoaderFunction = async ({ request, params }) => {
       userId,
       currentWorkspaceId
     )
+    const allAdmins = (
+      await getAllCurrentWorkspaceAdmins(currentWorkspaceId, userId)
+    ).map(({ user }) => ({
+      fullName: `${user.firstName} ${user.lastName}`,
+      email: user.email,
+      id: user.id,
+    }))
+
     return json<LoaderData>({
       workspaceOwner,
       ownersWorkspaces,
       currentWorkspaceId,
       userWorkspaces,
       permission,
+      allAdmins,
     })
   } catch (error: any) {
     if (error.status === 403) {
@@ -65,16 +77,19 @@ const actionConstants = {
   leaveWorksapce: "leaveWorkspace",
   updateWorkspace: "updateWorkspace",
   updateUserWorkspace: "updateUserWorkspace",
+  updateOwner: "updateOwner",
 }
 
 export const action: ActionFunction = async ({ request, params }) => {
   const workspaceId = params.workspaceId as string
+  const currentWorkspaceId = params.workspaceId as string
   const userId = (await getUserId(request)) as string
   const formData = await request.formData()
 
   const action =
     formData.get(actionConstants.updateWorkspace) ||
-    formData.get(actionConstants.leaveWorksapce)
+    formData.get(actionConstants.leaveWorksapce) ||
+    formData.get(actionConstants.updateOwner)
 
   if (action === actionConstants.updateUserWorkspace) {
     const name = formData.get("name") as string
@@ -91,6 +106,9 @@ export const action: ActionFunction = async ({ request, params }) => {
         return redirect(routes.unauthorized)
       }
     }
+  } else if (action === actionConstants.updateOwner) {
+    const newOwnerId = formData.get("newOwner") as string
+    return await updateCurrentWorkspaceOwner(currentWorkspaceId, newOwnerId)
   } else if (action === actionConstants.leaveWorksapce) {
     const response = await leaveActiveWorkspace(workspaceId, userId)
     return response

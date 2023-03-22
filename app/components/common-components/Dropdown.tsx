@@ -186,8 +186,8 @@ export const NewDropdownField = <
   action,
 }: {
   dropdownOptions: DropdownOptions<T>
-  labelKey?: U
-  valueKey?: U
+  labelKey?: U | string
+  valueKey?: U | string
   value: string
   setValue: (e: string) => void
   helperText?: string
@@ -203,7 +203,7 @@ export const NewDropdownField = <
     if (valueKey && labelKey) {
       for (let option of dropdownOptions as DropdownOptions<T>) {
         if ((option as Record<typeof valueKey, string>)[valueKey] === val) {
-          return (option as Record<typeof valueKey, string>)[labelKey]
+          return (option as Record<typeof labelKey, string>)[labelKey]
         }
       }
     }
