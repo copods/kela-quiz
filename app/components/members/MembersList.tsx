@@ -75,7 +75,7 @@ export default function MembersList({
           <div
             className="cursor-pointer"
             role="button"
-            onClick={() => openPopUp()}
+            onClick={openPopUp}
             onKeyDown={(e) => e.key === "Enter" && openPopUp()}
             tabIndex={0}
           >
@@ -150,7 +150,7 @@ export default function MembersList({
       title: "Role",
       field: "role",
       render: RoleDataCell,
-      width: memberLoaderData.permission.member.delete ? "15%" : "",
+      width: memberLoaderData.permission.member.delete && "15%",
     },
     {
       title: "Joined On",

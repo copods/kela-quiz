@@ -191,13 +191,12 @@ export const action: ActionFunction = async ({ request, params }) => {
       return response
     }
     if (action === actions.updateRole) {
-      const response = await editUserRole(
+      return await editUserRole(
         userId as string,
         formData.get("memberId") as string,
         invitedByWorkspaceId,
         formData.get("roleId") as string
       )
-      return response
     }
   } catch (error: any) {
     if (error.status === 403) {

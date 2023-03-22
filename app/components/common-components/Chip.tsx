@@ -20,7 +20,7 @@ const Chip = ({
       data-cy="chip-tag"
     >
       {text}
-      {rightChildren && rightChildren}
+      {rightChildren ? rightChildren : null}
     </div>
   )
 }

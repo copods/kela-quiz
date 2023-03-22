@@ -251,6 +251,15 @@ export async function inviteNEWUser({
   }
 }
 
+/**
+ * Function to invite new user
+ * @param id
+ * @param userId
+ * @param workspaceId
+ * @param roleId
+ * @returns json response
+ */
+
 export async function editUserRole(
   id: string,
   userId: string,

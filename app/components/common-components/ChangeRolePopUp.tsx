@@ -99,9 +99,7 @@ export default function ChangeRolePopUp({
                 className="px-5"
                 title={t("commonConstants.proceed")}
                 buttonText={t("commonConstants.proceed")}
-                onClick={() => {
-                  onSubmit()
-                }}
+                onClick={onSubmit}
               />
             </Form>
             <Button
