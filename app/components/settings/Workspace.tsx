@@ -128,6 +128,7 @@ const Workspace = () => {
         },
         { method: "post" }
       )
+      setShowChangeOwnershipPopup(false)
     }
   }
 
@@ -138,6 +139,7 @@ const Workspace = () => {
   useEffect(() => {
     setNewOwner("")
   }, [showChangeOwnershipPopup])
+
   return (
     <div className="flex flex-col justify-start gap-6">
       <div className="flex h-10 items-center justify-between">
@@ -159,6 +161,7 @@ const Workspace = () => {
             menuIcon={"mdi:dots-vertical"}
             open={actionDropdown}
             onItemClick={setActionDropdown}
+            dataCyID={"workspace-list-menu"}
             menuDetails={[
               {
                 id: t("settings.leaveWorkspace"),
@@ -175,19 +178,19 @@ const Workspace = () => {
                   .includes(workspaceLoaderData?.currentWorkspaceId),
               },
               {
-                id: t("settings.transferOwnership"),
+                id: "transfer-ownership",
                 menuListText: t("settings.transferOwnership"),
                 handleItemAction: () =>
                   setShowChangeOwnershipPopup(!showChangeOwnershipPopup),
               },
-            ].filter((menu) => {
-              return workspaceLoaderData?.ownersWorkspaces
+            ].filter((menu) =>
+              workspaceLoaderData?.ownersWorkspaces
                 ?.map((workspace: { id: string }) => workspace.id)
                 .includes(workspaceLoaderData?.currentWorkspaceId) &&
-                workspaceLoaderData.allAdmins.length
+              workspaceLoaderData.allAdmins.length
                 ? menu
                 : menu.id !== t("settings.transferOwnership")
-            })}
+            )}
           />
         </div>
       </div>
@@ -275,6 +278,7 @@ const Workspace = () => {
                     Select a user to assign as Owner
                   </span>
                   <NewDropdownField
+                    id={"admin-dropdown"}
                     dropdownOptions={workspaceLoaderData.allAdmins}
                     labelKey={"fullName"}
                     valueKey={"id"}

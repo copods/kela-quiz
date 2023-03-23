@@ -184,12 +184,14 @@ export const NewDropdownField = <
   setValue,
   helperText,
   action,
+  id,
 }: {
   dropdownOptions: DropdownOptions<T>
   labelKey?: U | string
   valueKey?: U | string
   value: string
   setValue: (e: string) => void
+  id?: string
   helperText?: string
   action?: Action[]
 }) => {
@@ -215,7 +217,7 @@ export const NewDropdownField = <
         <>
           <div
             className="dropdown relative w-full"
-            id="dropdown"
+            id={id ?? "dropdown"}
             title={t("sectionsConstants.dropdown")}
             aria-label={t("sectionsConstants.dropdown")}
           >

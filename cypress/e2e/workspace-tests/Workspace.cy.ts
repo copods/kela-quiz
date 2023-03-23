@@ -1,12 +1,18 @@
 import {
+  getBadgeTag,
   getCancelEditWorkspaceBtn,
+  getConfirmOwnershipBtn,
   getCurrentWorkspace,
   getEditWorkspaceBtn,
   getHr,
+  getJoinedMembers,
+  getOwnerDropdown,
   getSaveWorkspaceBtn,
   getSettings,
   getSettingsHeading,
   getToaster,
+  getTransferOwnership,
+  getWorkspaceListMenu,
   getWorkspaceNameInput,
   getWorkspaces,
 } from "support/common-function"
@@ -20,11 +26,13 @@ const defaultWorkspace = "Default Workspace"
 const updatedName = "Updated Name"
 
 describe("Test for settings", () => {
-  it("Tests to check Attributes/Colors/Visibility/Texts and to check if we can reset the password", () => {
+  beforeEach(() => {
     // To login
     cy.login()
     cy.customVisit("/members")
+  })
 
+  it("Tests to check Attributes/Colors/Visibility/Texts and to check if we can reset the password", () => {
     // To check location and title
     getSettings().should("have.text", settings).click()
     cy.location("pathname").should("include", "/settings/workspace")
@@ -74,5 +82,29 @@ describe("Test for settings", () => {
     getEditWorkspaceBtn().click()
     getWorkspaceNameInput().clear()
     getSaveWorkspaceBtn().should("have.attr", "disabled")
+  })
+
+  it("To check if we can transfer ownership", () => {
+    getSettings().click()
+    getWorkspaceListMenu().click()
+    getTransferOwnership().click()
+    getOwnerDropdown()
+      .click()
+      .find("ul")
+      .children()
+      .each((element, index) => {
+        if (index === 0) {
+          cy.wrap(element).click()
+          return
+        }
+      })
+    getConfirmOwnershipBtn().click()
+    getToaster().should("have.text", "Owner updated")
+    getJoinedMembers().click()
+    cy.viewport(1500, 1000)
+    getBadgeTag()
+      .should("be.visible")
+      .parent()
+      .should("contain", "Copods Admin")
   })
 })

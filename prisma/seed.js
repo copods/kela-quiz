@@ -4,8 +4,9 @@ const bcrypt = require("bcryptjs")
 const prisma = new PrismaClient()
 
 async function seed() {
-  const adminEmail = "copods.demo.sendgrid@gmail.com"
+  const ownerEmail = "copods.demo.sendgrid@gmail.com"
   const recruiterEmail = "copods.demo.sendgrid+1@gmail.com"
+  const adminEmail = "copods.demo.sendgrid+2@gmail.com"
 
   const hashedPassword = await bcrypt.hash("kQuiz@copods", 10)
 
@@ -47,13 +48,13 @@ async function seed() {
   const createMasterAdmin = async () => {
     user = await prisma.user.upsert({
       where: {
-        email: adminEmail,
+        email: ownerEmail,
       },
       update: {
-        email: adminEmail,
+        email: ownerEmail,
       },
       create: {
-        email: adminEmail,
+        email: ownerEmail,
         password: {
           create: {
             hash: hashedPassword,
@@ -138,6 +139,45 @@ async function seed() {
     })
   }
 
+  const createAdmin = async () => {
+    const admin = await prisma.user.upsert({
+      where: {
+        email: adminEmail,
+      },
+      update: {
+        email: adminEmail,
+      },
+      create: {
+        email: adminEmail,
+        password: {
+          create: {
+            hash: hashedPassword,
+          },
+        },
+        firstName: "Copods",
+        lastName: "Admin",
+        roleId: roles[0].id,
+      },
+    })
+    await prisma.userWorkspace.upsert({
+      where: {
+        workspaceId_userId: {
+          userId: admin.id,
+          workspaceId: user.workspace[0].id,
+        },
+      },
+      update: {
+        userId: admin.id,
+      },
+      create: {
+        userId: admin.id,
+        workspaceId: user.workspace[0].id,
+        roleId: roles[0].id,
+        isDefault: false,
+      },
+    })
+  }
+
   const questionType = [
     {
       displayName: "Single Choice",
@@ -175,6 +215,7 @@ async function seed() {
   await createMasterAdmin()
   await createRecruiter()
   await createQuestionType()
+  await createAdmin()
 
   console.log(`Database has been seeded. 🌱`)
 }
