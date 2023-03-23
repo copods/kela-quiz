@@ -147,7 +147,7 @@ export default function OptionForQuestion({
           </div>
         ) : (
           <div className="flex items-center justify-center gap-2 text-base font-medium text-gray-600">
-            {t("addQuestion.checkOrder")}
+            {t("commonConstants.checkOrder")}
             <Toggle toggle={checkOrder} onToggleChange={setCheckOrder} />
           </div>
         )}

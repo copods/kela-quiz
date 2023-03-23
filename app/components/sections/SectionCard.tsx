@@ -192,6 +192,7 @@ const SectionCard = ({
         deleteItem={name}
         deleteItemType={t("testsConstants.testText")}
         setDeleted={setDeleted}
+        header={t("commonConstants.deleteTest")}
       />
       <AddEditSection
         open={editMode}

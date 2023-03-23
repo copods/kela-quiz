@@ -29,17 +29,6 @@ export interface PasswordFieldProps {
   onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void
 }
 
-export interface DialogWrapperProps {
-  heading?: string
-  role?: string
-  ariaLabel?: string
-  children: JSX.Element
-  open: boolean
-  setOpen: (e: boolean) => void
-  header: boolean
-  tabIndex?: number
-}
-
 export interface DialogNewWrapperProps {
   open: boolean
   setOpen: (e: boolean) => void

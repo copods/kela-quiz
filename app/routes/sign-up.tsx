@@ -77,7 +77,7 @@ export const action: ActionFunction = async ({ request }) => {
       return json<ActionData>(
         {
           errors: {
-            emailRequired: "toastConstants.emailRequired",
+            emailRequired: "commonConstants.emailRequired",
             status: 400,
           },
         },
