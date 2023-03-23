@@ -108,7 +108,11 @@ export const action: ActionFunction = async ({ request, params }) => {
     }
   } else if (action === actionConstants.updateOwner) {
     const newOwnerId = formData.get("newOwner") as string
-    return await updateCurrentWorkspaceOwner(currentWorkspaceId, newOwnerId)
+    return await updateCurrentWorkspaceOwner(
+      userId,
+      currentWorkspaceId,
+      newOwnerId
+    )
   } else if (action === actionConstants.leaveWorksapce) {
     const response = await leaveActiveWorkspace(workspaceId, userId)
     return response

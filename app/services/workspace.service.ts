@@ -166,11 +166,12 @@ export async function getAllCurrentWorkspaceAdmins(
 }
 
 export async function updateCurrentWorkspaceOwner(
+  userId: string,
   currentWorkspaceId: string,
   newOwnerId: string
 ) {
   try {
-    return await updateWorkspaceOwner(currentWorkspaceId, newOwnerId)
+    return await updateWorkspaceOwner(userId, currentWorkspaceId, newOwnerId)
       .then((res) => {
         return json<ActionData>(
           {

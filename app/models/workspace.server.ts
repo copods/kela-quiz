@@ -196,13 +196,30 @@ export async function getCurrentWorkspaceAdmins(
 }
 
 export async function updateWorkspaceOwner(
+  userId: string,
   currentWorkspaceId: string,
   newOwnerId: string
 ) {
-  await prisma.workspace.update({
-    where: { id: currentWorkspaceId },
-    data: {
-      ownerId: newOwnerId,
-    },
-  })
+  try {
+    if (
+      !(await checkFeatureAuthorization(
+        userId,
+        currentWorkspaceId,
+        "workspace",
+        "update"
+      ))
+    ) {
+      throw {
+        status: 403,
+      }
+    }
+    await prisma.workspace.update({
+      where: { id: currentWorkspaceId },
+      data: {
+        ownerId: newOwnerId,
+      },
+    })
+  } catch (error) {
+    throw error
+  }
 }
