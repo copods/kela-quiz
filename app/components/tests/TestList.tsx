@@ -203,6 +203,7 @@ const TestList = () => {
             status={testLoaderData.status}
             deleteItem={data.name}
             deleteItemType={t("testsConstants.assessment")}
+            header={t("commonConstants.deleteAssessment")}
           />
         )}
       </>
@@ -312,18 +313,16 @@ const TestList = () => {
               showSelected={false}
             />
           </div>
-          <div className="flex flex-1 flex-col rounded-lg pb-6">
-            <Table
-              columns={testColumns}
-              data={tests}
-              paginationEnabled={true}
-              pageSize={testsPageSize}
-              setPageSize={setTestsPageSize}
-              currentPage={testsCurrentPage}
-              onPageChange={setTestsCurrentPage}
-              totalItems={testLoaderData.allTestsCount}
-            />
-          </div>
+          <Table
+            columns={testColumns}
+            data={tests}
+            paginationEnabled={true}
+            pageSize={testsPageSize}
+            setPageSize={setTestsPageSize}
+            currentPage={testsCurrentPage}
+            onPageChange={setTestsCurrentPage}
+            totalItems={testLoaderData.allTestsCount}
+          />
         </>
       ) : (
         <EmptyStateComponent

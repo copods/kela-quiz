@@ -75,7 +75,7 @@ export const action: ActionFunction = async ({ request }) => {
       return json<ActionData>(
         {
           errors: {
-            title: "toastConstants.workspaceNameIsRequired",
+            title: "commonConstants.workspaceNameIsRequired",
             status: 400,
           },
         },

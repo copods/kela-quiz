@@ -162,6 +162,7 @@ const QuestionCard = ({
             open={openDeleteQuestionPopUp}
             onDelete={deleteQuestion}
             deleteItemType={t("candidateExamConstants.question")}
+            header={t("commonConstants.deleteQuestion")}
           />
         }
       </div>
