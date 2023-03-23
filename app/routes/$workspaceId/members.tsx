@@ -17,6 +17,7 @@ import {
   reinviteMember,
   deleteUserByID,
   inviteNEWUser,
+  editUserRole,
 } from "~/services/members.service"
 import {
   getActiveWorkspaceOwner,
@@ -189,11 +190,20 @@ export const action: ActionFunction = async ({ request, params }) => {
       )
       return response
     }
+    if (action === actions.updateRole) {
+      return await editUserRole(
+        userId as string,
+        formData.get("memberId") as string,
+        invitedByWorkspaceId,
+        formData.get("roleId") as string
+      )
+    }
   } catch (error: any) {
     if (error.status === 403) {
       return redirect(routes.unauthorized)
     }
   }
+
   return null
 }
 const Members = () => {

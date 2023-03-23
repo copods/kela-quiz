@@ -245,3 +245,8 @@ export const getTransferOwnership = () =>
 export const getOwnerDropdown = () => cy.get("#admin-dropdown")
 export const getConfirmOwnershipBtn = () =>
   cy.get("#confirm-transfer-ownership")
+export const getTable = () => cy.get("#table-row #table-td")
+export const getChangeRoleId = () => cy.get("#change-role-dialog")
+export const getRoleChangeContent = () => cy.get('[data-cy="role-heading"]')
+export const getDropdownOptions = () => cy.get(".dropDownSelect")
+export const getDialogFooter = () => cy.get("[data-cy='dialog-footer']")
