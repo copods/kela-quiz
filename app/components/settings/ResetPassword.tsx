@@ -165,10 +165,10 @@ const ResetPassword = ({
     <DialogWrapper open={openResetPassModel} setOpen={setOpenResetPassModel}>
       <>
         <DialogHeader
-          heading={t("settings.resetPas")}
+          heading={t("forgotPasswordConstants.resetPassword")}
           onClose={setOpenResetPassModel}
-          role={t("settings.resetPas")}
-          ariaLabel={t("settings.resetPas")}
+          role={t("forgotPasswordConstants.resetPassword")}
+          ariaLabel={t("forgotPasswordConstants.resetPassword")}
           tabIndex={0}
         />
         <DialogContent>
@@ -205,12 +205,12 @@ const ResetPassword = ({
               title={
                 transition.state === "submitting"
                   ? t("settings.passResetting")
-                  : t("settings.resetPas")
+                  : t("forgotPasswordConstants.resetPassword")
               }
               buttonText={
                 transition.state === "submitting"
                   ? t("settings.passResetting")
-                  : t("settings.resetPas")
+                  : t("forgotPasswordConstants.resetPassword")
               }
               variant="primary-solid"
               className="h-11 w-full text-base"

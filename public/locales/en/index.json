@@ -38,7 +38,6 @@
     "add": "Add",
     "byText": "By",
     "continue": "Continue",
-    "total": "Total",
     "placeholderForOptionInput": "Write your option here",
     "sortAscending": "Sort Ascending",
     "sortDescending": "Sort Descending",
@@ -88,11 +87,13 @@
     "save": "Save",
     "saving": "Saving...",
     "changePassword": "Change Password",
+    "invitedMemberEmptyState": "No members are invited",
+    "emailRequired": "Email is required",
+    "workspaceNameIsRequired": "Workspace name is required",
     "deleteMember": "Delete Member",
     "deleteQuestion": "Delete Question",
     "deleteTest": "Delete Test",
-    "deleteAssessment": "Delete Assessment",
-    "invitedMemberEmptyState": "No members are invited"
+    "deleteAssessment": "Delete Assessment"
   },
   "sideNav": {
     "sideNavHeading": "Quiz",
@@ -105,9 +106,7 @@
     "closePopUp": "Close Pop Up",
     "enterCandidatesEmail": "Enter candidate’s email below to invite them for",
     "candidateEmail": "Candidate Email",
-    "inviteMore": "Invite More",
-    "invite": "Invite",
-    "inviting": "Inviting"
+    "inviteMore": "Invite More"
   },
   "testTableItem": {
     "menu": "Menu"
@@ -127,7 +126,6 @@
   },
   "addQuestion": {
     "createOptions": "Create Options",
-    "checkOrder": "Check Order",
     "addOptions": "Add Options",
     "addQuestion": "Add Question",
     "note": "Note",
@@ -162,7 +160,6 @@
     "testDetailsText": "Assessment Details",
     "descriptionText": "Description",
     "totalTimeText": "Total Time",
-    "totalQuestionsText": "Total Questions",
     "totalTests": "Total Tests",
     "selectedTests": "Selected Tests",
     "testText": "Test",
@@ -201,7 +198,6 @@
     "selectCorrOption": "Select the Correct Option",
     "descIsReq": "Description is required",
     "nameIsReq": "Name is required",
-    "workspaceNameIsReq": "Workspace name is required",
     "testAddedSuccess": "Test added successfully..!",
     "testUpdatedSuccess": "Test updated sucessfully..!",
     "maxOptions": "you can add maximum six options.",
@@ -216,9 +212,7 @@
     "questionNotAdded": "Question Not Added Successfully",
     "firstNameReq": "FirstName is required",
     "lastNameReq": "LastName is required",
-    "emailIsReq": "Email is required",
     "roleIdIsReq": "roleId is required",
-    "memberAddedSuccess": "Member Added Successfully..!",
     "erroSendingOtp": "Error in sending OTP..",
     "otpSent": "Otp sent. Please check your email",
     "correctOtp": "Please enter correct OTP",
@@ -275,16 +269,12 @@
     "timeLimit": "Time Limit",
     "cooldown": "Cooldown Image",
     "startNewSection": "Start New Section",
-    "assessmentDetails": "Assessment Details",
     "assessmentTests": "Assessment Tests",
     "assessmentEnd": "Assessment Ended",
     "endAssessment": "End Assessment SVG",
     "wrongLink": "Wrong Link",
     "minutes": "Mins",
-    "description": "Description",
-    "total": "Total",
     "question": "Question",
-    "questions": "Questions",
     "endTest": "End Test",
     "nextSection": "Next Section",
     "candidateAcceptance": "I understand that once I begin the assessment I cannot leave and  return to this assessment at a later time.",
@@ -311,11 +301,9 @@
     "addAssessment": "Enter Name to add assessment",
     "enterDescription": "Enter description to add assessment",
     "addTest": "Add test to add assessment",
-    "enterQuestion": "Enter the Question",
     "enterOption": "Enter all the Options",
     "firstNameRequired": "First Name is required",
     "lastNameRequired": "Last Name is required",
-    "emailRequired": "Email is required",
     "roleRequired": "Role is required",
     "correctEmail": "Please provide a valid email address",
     "memberAdded": "Member Added Successfully..!",
@@ -324,7 +312,6 @@
     "signUpSuccessfull": "Sign Up successfully",
     "workspaceAdded": "Workspace Added",
     "duplicateWorkspace": "Duplicate Workspace",
-    "workspaceNameIsRequired": "Workspace name is required",
     "memberAlreadyInvited": "Member already invited",
     "cannotAddTestZeroQuestion": "Cannot add test with 0 questions.",
     "notAdMoreThanAvailableQuestion": "Cannot add more than available questions",
@@ -342,7 +329,6 @@
     "passNotMatch": "Password do not match",
     "enterNewPass": "Enter New Password",
     "reEnterPass": "Re-Enter Password",
-    "resetPas": "Reset Password",
     "version": "Version",
     "password": "Password",
     "clickToChange": "Click to change",
@@ -366,12 +352,10 @@
   },
   "notFound": {
     "notFound": "Not Found",
-    "urlNotFound": "The requested URL was not found on this server.",
-    "gotoDashboard": "Go To Dashboard"
+    "urlNotFound": "The requested URL was not found on this server."
   },
   "unauthorized": {
-    "error": "You are not authorized to access this route",
-    "gotoDashboard": "Go To Dashboard"
+    "error": "You are not authorized to access this route"
   },
   "emptyStateConstants": {
     "noQuestionsState": "Add Questions to this Test",

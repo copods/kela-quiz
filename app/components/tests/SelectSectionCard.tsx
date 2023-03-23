@@ -113,7 +113,7 @@ const SelectSectionCard = ({
         </span>
       </div>
       <div className="flex text-xs text-gray-400">
-        {t("testsConstants.totalQuestionsText")}:{" "}
+        {t("commonConstants.totalQuestionsText")}:{" "}
         <span className="count">{questionCount}</span>
       </div>
       <hr className="h-px w-full border-0 bg-gray-300" />
@@ -123,7 +123,7 @@ const SelectSectionCard = ({
             htmlFor="noOfQuestion"
             className="text-xs font-medium text-gray-600"
           >
-            {t("testsConstants.totalQuestionsText")}
+            {t("commonConstants.totalQuestionsText")}
           </label>
           <input
             tabIndex={0}
