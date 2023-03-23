@@ -87,6 +87,7 @@ describe("Test for settings", () => {
   it("To check if we can transfer ownership", () => {
     getSettings().click()
     getWorkspaceListMenu().click()
+    cy.wait(1000)
     getTransferOwnership().click()
     getOwnerDropdown()
       .click()
