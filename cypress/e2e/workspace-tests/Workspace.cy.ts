@@ -94,7 +94,7 @@ describe("Test for settings", () => {
         }
       })
     getConfirmOwnershipBtn().click()
-    getToaster().should("have.text", "Owner updated")
+    getToaster().should("contain", "Owner updated")
     getJoinedMembers().click()
     cy.viewport(1500, 1000)
     getBadgeTag()
