@@ -178,45 +178,6 @@ async function seed() {
     })
   }
 
-  const createRecruiter = async () => {
-    const recruiter = await prisma.user.upsert({
-      where: {
-        email: recruiterEmail,
-      },
-      update: {
-        email: recruiterEmail,
-      },
-      create: {
-        email: recruiterEmail,
-        password: {
-          create: {
-            hash: hashedPassword,
-          },
-        },
-        firstName: "Copods",
-        lastName: "Recruiter",
-        roleId: roles[2].id,
-      },
-    })
-    await prisma.userWorkspace.upsert({
-      where: {
-        workspaceId_userId: {
-          userId: recruiter.id,
-          workspaceId: user.workspace[0].id,
-        },
-      },
-      update: {
-        userId: recruiter.id,
-      },
-      create: {
-        userId: recruiter.id,
-        workspaceId: user.workspace[0].id,
-        roleId: roles[2].id,
-        isDefault: false,
-      },
-    })
-  }
-
   const questionType = [
     {
       displayName: "Single Choice",
