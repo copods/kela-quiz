@@ -189,7 +189,7 @@ const Workspace = () => {
                 .includes(workspaceLoaderData?.currentWorkspaceId) &&
               workspaceLoaderData.allAdmins.length
                 ? menu
-                : menu.id !== t("settings.transferOwnership")
+                : menu.id !== "transfer-ownership"
             )}
           />
         </div>
