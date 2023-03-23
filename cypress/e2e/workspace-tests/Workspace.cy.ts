@@ -26,13 +26,11 @@ const defaultWorkspace = "Default Workspace"
 const updatedName = "Updated Name"
 
 describe("Test for settings", () => {
-  beforeEach(() => {
+  it("Tests to check Attributes/Colors/Visibility/Texts and to check if we can reset the password", () => {
     // To login
     cy.login()
     cy.customVisit("/members")
-  })
 
-  it("Tests to check Attributes/Colors/Visibility/Texts and to check if we can reset the password", () => {
     // To check location and title
     getSettings().should("have.text", settings).click()
     cy.location("pathname").should("include", "/settings/workspace")
@@ -82,12 +80,8 @@ describe("Test for settings", () => {
     getEditWorkspaceBtn().click()
     getWorkspaceNameInput().clear()
     getSaveWorkspaceBtn().should("have.attr", "disabled")
-  })
 
-  it("To check if we can transfer ownership", () => {
-    getSettings().click()
     getWorkspaceListMenu().click()
-    cy.wait(2000)
     getTransferOwnership().click()
     getOwnerDropdown()
       .click()
