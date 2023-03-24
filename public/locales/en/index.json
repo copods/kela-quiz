@@ -93,7 +93,8 @@
     "deleteMember": "Delete Member",
     "deleteQuestion": "Delete Question",
     "deleteTest": "Delete Test",
-    "deleteAssessment": "Delete Assessment"
+    "deleteAssessment": "Delete Assessment",
+    "noRecords": "No Records"
   },
   "sideNav": {
     "sideNavHeading": "Quiz",

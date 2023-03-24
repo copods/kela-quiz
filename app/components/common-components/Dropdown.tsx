@@ -172,11 +172,13 @@ type DropdownOptions<T> = Array<
     ? string
     : T extends number
     ? number
+    : T extends boolean
+    ? boolean
     : never
 >
 
 export const NewDropdownField = <
-  T extends object | string | number,
+  T extends object | string | number | boolean,
   U extends keyof T
 >({
   dropdownOptions,
@@ -302,6 +304,8 @@ export const NewDropdownField = <
                         ? string
                         : T extends number
                         ? number
+                        : T extends boolean
+                        ? boolean
                         : never,
                       i: number
                     ) => (
@@ -373,6 +377,21 @@ export const NewDropdownField = <
                         )}
                       </Listbox.Option>
                     )
+                  )}
+                  {dropdownOptions.length === 0 && (
+                    <Listbox.Option
+                      className={`relative z-20 cursor-not-allowed select-none py-3 px-4`}
+                      value={null}
+                    >
+                      <div className="flex items-center">
+                        <span
+                          className="dropdown-option ml-2 block truncate font-normal"
+                          id="option"
+                        >
+                          {t("commonConstants.noRecords")}
+                        </span>
+                      </div>
+                    </Listbox.Option>
                   )}
                 </div>
               </Listbox.Options>

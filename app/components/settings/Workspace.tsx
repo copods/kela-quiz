@@ -183,14 +183,7 @@ const Workspace = () => {
                 handleItemAction: () =>
                   setShowChangeOwnershipPopup(!showChangeOwnershipPopup),
               },
-            ].filter((menu) =>
-              workspaceLoaderData?.ownersWorkspaces
-                ?.map((workspace: { id: string }) => workspace.id)
-                .includes(workspaceLoaderData?.currentWorkspaceId) &&
-              workspaceLoaderData.allAdmins.length
-                ? menu
-                : menu.id !== "transfer-ownership"
-            )}
+            ]}
           />
         </div>
       </div>
@@ -279,7 +272,11 @@ const Workspace = () => {
                   </span>
                   <NewDropdownField
                     id={"admin-dropdown"}
-                    dropdownOptions={workspaceLoaderData.allAdmins}
+                    dropdownOptions={
+                      workspaceLoaderData.allAdmins.length
+                        ? workspaceLoaderData.allAdmins
+                        : []
+                    }
                     labelKey={"fullName"}
                     valueKey={"id"}
                     helperText={"email"}
