@@ -175,7 +175,7 @@ describe("Test for members", () => {
     //Chip should be there
     getTable().each(() => {})
     getChipTag().each((el) => {
-      if (el.text() === roles[0]) {
+      if (el.text() === roles[1]) {
         el.click()
       }
     })
@@ -212,7 +212,7 @@ describe("Test for members", () => {
     getDialogFooter().get("#proceed").should("have.text", "Proceed")
     getDialogFooter().get("#cancel-change-role-pop-up").click()
     getChipTag().each((el) => {
-      if (el.text() === roles[0]) {
+      if (el.text() === roles[1]) {
         el.click()
       }
     })
