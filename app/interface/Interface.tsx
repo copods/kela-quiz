@@ -66,7 +66,12 @@ export interface ActionData {
 }
 
 export interface CheckboxProps {
-  [x: string]: any
+  [x: string]:
+    | React.ChangeEventHandler<HTMLInputElement>
+    | string
+    | boolean
+    | undefined
+
   handleChange: React.ChangeEventHandler<HTMLInputElement>
   name?: string
   isChecked?: boolean
@@ -404,9 +409,11 @@ export interface AddedSectionDetails {
   target: string
 }
 export interface ChipComponent {
-  success: string
-  error: string
-  warning: string
+  success?: string
+  error?: string
+  warning?: string
+  default?: string
+  editIcon?: string
 }
 
 export interface HeaderProps {

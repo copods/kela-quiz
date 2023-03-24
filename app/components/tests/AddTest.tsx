@@ -81,10 +81,10 @@ const AddTestComponent = ({
       } else if (isSelectedSectionExist) {
         if (data.isSelected) {
           // updating the sections whenever we are updating question or Time
-          allSelectedSections.forEach((selected: any) => {
+          allSelectedSections.forEach((selected: TestSection) => {
             const targetData = data.target as keyof TestSection
             if (selected.id === sec[index].id && targetData in selected) {
-              selected[targetData] = sec[index][targetData]
+              ;(selected[targetData] as unknown) = sec[index][targetData]
             }
           })
         } else {
