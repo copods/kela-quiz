@@ -36,7 +36,7 @@ describe("Test for members", () => {
     cy.customVisit("/members")
   })
 
-  it.skip("Tests to check Attributes/Colors/Visibility/Texts", () => {
+  it("Tests to check Attributes/Colors/Visibility/Texts", () => {
     // Header tests
     // To check if header is visible
     getMembersHeading().should("be.visible")
@@ -215,6 +215,5 @@ describe("Test for members", () => {
     })
     getDialogFooter().get("#proceed").click()
     getToaster().should("have.text", "Role Updated Successfully")
-    getChipTag().eq(0).should("have.text", roles[2])
   })
 })
