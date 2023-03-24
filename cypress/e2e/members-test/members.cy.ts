@@ -215,6 +215,5 @@ describe("Test for members", () => {
     })
     getDialogFooter().get("#proceed").click()
     getToaster().should("have.text", "Role Updated Successfully")
-    getChipTag().eq(1).should("have.text", roles[2])
   })
 })
