@@ -413,6 +413,7 @@ export interface ChipComponent {
   error?: string
   warning?: string
   default?: string
+  editIcon?: string
 }
 
 export interface HeaderProps {
