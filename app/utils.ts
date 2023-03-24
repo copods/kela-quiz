@@ -45,16 +45,16 @@ export function useMatchesData(
   return route?.data
 }
 
-function isUser(user: any): user is User {
+function isUser(user: User): user is User {
   return user && typeof user === "object" && typeof user.email === "string"
 }
 
 export function useOptionalUser(): User | undefined {
   const data = useMatchesData("root")
-  if (!data || !isUser(data.user)) {
+  if (!data || !isUser(data.user as User)) {
     return undefined
   }
-  return data.user
+  return data.user as User
 }
 
 export function useUser(): User {
