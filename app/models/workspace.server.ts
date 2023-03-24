@@ -182,11 +182,17 @@ export async function getCurrentWorkspaceAdmins(
     return await prisma.userWorkspace.findMany({
       where: {
         workspaceId,
-        user: { role: { name: "Admin" }, NOT: { id: userId } },
+        userId: { not: userId },
+        role: { name: "Admin" },
       },
       select: {
         user: {
-          select: { firstName: true, lastName: true, email: true, id: true },
+          select: {
+            firstName: true,
+            lastName: true,
+            email: true,
+            id: true,
+          },
         },
       },
     })
