@@ -295,7 +295,8 @@
     "testCompleted": "Congratulations! You have completed the exam",
     "candidateContact": "We will contact you soon",
     "alreadyExamSubmitted": "Hey! you have already submitted the exam",
-    "ExpiredLink": "Link has expired"
+    "ExpiredLink": "Link has expired",
+    "feedbackForm": "Give us feedback"
   },
   "toastConstants": {
     "addAssessment": "Enter Name to add assessment",

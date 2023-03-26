@@ -185,6 +185,7 @@ model Test {
   SectionWiseResult SectionWiseResult[]
   workspace         Workspace?          @relation(fields: [workspaceId], references: [id])
   workspaceId       String?
+  FeedbackForm      FeedbackForm[]
 
   @@unique([name, deletedAt, deleted, workspaceId])
 }
@@ -203,18 +204,19 @@ model SectionInTest {
 }
 
 model Candidate {
-  id          String            @id @default(uuid())
-  email       String            @unique
-  firstName   String?
-  lastName    String?
-  isQualified Boolean?
-  OTP         Int               @default(0)
-  tests       CandidateTest[]
-  results     CandidateResult[]
-  createdBy   User              @relation(fields: [createdById], references: [id])
-  createdById String
-  createdAt   DateTime          @default(now())
-  updatedAt   DateTime          @updatedAt
+  id           String            @id @default(uuid())
+  email        String            @unique
+  firstName    String?
+  lastName     String?
+  isQualified  Boolean?
+  OTP          Int               @default(0)
+  tests        CandidateTest[]
+  results      CandidateResult[]
+  createdBy    User              @relation(fields: [createdById], references: [id])
+  createdById  String
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+  FeedbackForm FeedbackForm[]
 }
 
 model CandidateTest {
@@ -325,4 +327,23 @@ model SectionWiseResult {
   updatedAt DateTime @updatedAt
 
   @@unique([sectionInCandidateTestId, testId])
+}
+
+model FeedbackForm {
+  id           String         @id @default(uuid())
+  test         Test           @relation(fields: [testId], references: [id])
+  testId       String
+  candidate    Candidate      @relation(fields: [candidateId], references: [id])
+  candidateId  String
+  questionForm QuestionForm[]
+}
+
+model QuestionForm {
+  id             String        @id @default(uuid())
+  question       String
+  option         String
+  FeedbackForm   FeedbackForm? @relation(fields: [feedbackFormId], references: [id])
+  feedbackFormId String?
+
+  @@unique([id])
 }
