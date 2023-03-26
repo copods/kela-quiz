@@ -37,7 +37,7 @@ describe("Test for members", () => {
     cy.customVisit("/members")
   })
 
-  xit("Tests to check Attributes/Colors/Visibility/Texts", () => {
+  it("Tests to check Attributes/Colors/Visibility/Texts", () => {
     // Header tests
     // To check if header is visible
     getMembersHeading().should("be.visible")
@@ -186,7 +186,7 @@ describe("Test for members", () => {
     getRoleChangeContent().should("have.text", changeRoleContent)
     getChangeRoleId().then((eq) => {
       cy.wrap(eq).within(() => {
-        getElementInsideOfDropdown().should("have.text", roles[0])
+        getElementInsideOfDropdown().should("have.text", roles[1])
         getDropdown().click()
         getDropdownOptions().get("li").should("have.length", 3)
         getDropdownOptions()
@@ -197,7 +197,7 @@ describe("Test for members", () => {
           })
         getDropdownOptions()
           .get("li")
-          .eq(0)
+          .eq(1)
           .should(
             "have.class",
             "bg-primary text-white relative z-20 cursor-pointer select-none py-2 px-3"
