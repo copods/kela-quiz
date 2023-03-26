@@ -240,7 +240,8 @@ export const getH3 = () => cy.get("h3")
 export const getSettingsHeading = () => cy.get("#settings-heading")
 export const getLogoutBtn = () => cy.get('[data-cy="logout"]')
 export const getWorkspaceListMenu = () => cy.get("#workspace-list-menu")
-export const getTransferOwnership = () => cy.get("#transfer-ownership")
+export const getTransferOwnership = () =>
+  cy.get('[data-cy="transfer-ownership"]')
 export const getOwnerDropdown = () => cy.get("#admin-dropdown")
 export const getConfirmOwnershipBtn = () =>
   cy.get("#confirm-transfer-ownership")
