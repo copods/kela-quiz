@@ -186,6 +186,7 @@ export const NewDropdownField = <
   setValue,
   helperText,
   action,
+  height = "lg",
 }: {
   dropdownOptions: DropdownOptions<T>
   labelKey?: U
@@ -194,6 +195,7 @@ export const NewDropdownField = <
   setValue: (e: string) => void
   helperText?: string
   action?: Action[]
+  height?: "sm" | "lg"
 }) => {
   const { t } = useTranslation()
 
@@ -231,12 +233,26 @@ export const NewDropdownField = <
           >
             <Listbox.Button
               id="dropdownButton"
-              className="dropdownButton relative h-12 w-full cursor-pointer rounded-md border border-gray-200 bg-white px-3 py-3 text-left shadow-sm sm:text-sm"
+              className={`dropdownButton relative ${
+                height === "lg"
+                  ? "h-12 p-3"
+                  : height === "sm"
+                  ? "h-9 px-2 py-2.5"
+                  : "h-12 p-3"
+              } w-full cursor-pointer rounded-md border border-gray-200 bg-white text-left shadow-sm sm:text-sm`}
               onClick={() => setIsElementOpen((prev) => !prev)}
             >
               <span className="flex items-center">
                 {value ? (
-                  <span className="block truncate text-base">
+                  <span
+                    className={`block truncate ${
+                      height === "lg"
+                        ? "text-base"
+                        : height === "sm"
+                        ? "text-xs"
+                        : "text-base"
+                    }`}
+                  >
                     {labelKey ? getLabelFromValue(value) : value}
                   </span>
                 ) : (
@@ -311,7 +327,12 @@ export const NewDropdownField = <
                               : active
                               ? "bg-hover"
                               : "text-gray-900",
-                            "relative z-20 cursor-pointer select-none py-3 px-4"
+                            "relative z-20 cursor-pointer select-none ",
+                            height === "lg"
+                              ? "py-3 px-4"
+                              : height === "sm"
+                              ? "py-2.5 px-2"
+                              : "py-3 px-4"
                           )
                         }
                         key={i}
@@ -331,7 +352,8 @@ export const NewDropdownField = <
                                   selected
                                     ? "font-semibold text-primary"
                                     : "not-selected font-normal",
-                                  "dropdown-option block truncate"
+                                  "dropdown-option block truncate",
+                                  height === "sm" ? "text-xs" : ""
                                 )}
                                 id="option"
                               >

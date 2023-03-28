@@ -17,4 +17,5 @@ export const routes = {
   unauthorized: "/unauthorized",
   myProfile: "/my-profile",
   logout: "/logout",
+  feedback: "/feedback",
 }

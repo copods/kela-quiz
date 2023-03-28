@@ -93,7 +93,9 @@
     "deleteMember": "Delete Member",
     "deleteQuestion": "Delete Question",
     "deleteTest": "Delete Test",
-    "deleteAssessment": "Delete Assessment"
+    "deleteAssessment": "Delete Assessment",
+    "feedback": "Feedback",
+    "filters": "Filters"
   },
   "sideNav": {
     "sideNavHeading": "Quiz",
@@ -360,5 +362,12 @@
     "noTestsState": "No Tests to show",
     "noAssessmentsState": "No Assessments to show",
     "noResultsState": "No Results to show"
+  },
+  "feedback": {
+    "totalFeedback": "Total Feedback",
+    "positiveFeedback": "Positive Feedback",
+    "negativeFeedback": "Negative Feedback",
+    "neutralFeedback": "Neutral Feedback",
+    "allFeedbacks": "All Feedbacks"
   }
 }
