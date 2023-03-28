@@ -69,7 +69,7 @@ const HeaderDataCell = ({
       }}
       data-cy={title}
       id="table-th"
-      className={`flex-1 border-b bg-gray-100 py-4 px-3 text-sm font-semibold text-gray-500 first:pl-9 last:pr-9 ${
+      className={`flex h-14 flex-1 items-center border-b bg-gray-100 px-4 text-sm font-semibold text-gray-500 ${
         index === 0
           ? "rounded-tl-2xl"
           : index === totalHeader
@@ -100,7 +100,7 @@ const RenderDataCell = <T,>({
         minWidth: `${width}`,
         maxWidth: `${width}`,
       }}
-      className="max-h-20 flex-1 truncate border-b  py-7 px-3  text-gray-700 first:pl-9 last:pr-9"
+      className="flex h-16 max-h-20 flex-1 items-center truncate border-b px-4 text-gray-700"
     >
       {render?.(rowData, index)}
     </div>
@@ -123,7 +123,7 @@ const TableDataCell = <T,>({
         minWidth: `${width}`,
         maxWidth: `${width}`,
       }}
-      className="max-h-20 flex-1 truncate border-b  py-7 px-3 text-gray-700  first:pl-9 last:pr-9"
+      className="flex h-16 max-h-20 flex-1 items-center truncate border-b px-4 text-gray-700"
     >
       {rowData[field as keyof typeof rowData]}
     </div>
@@ -151,15 +151,15 @@ const Table = <T extends object>({
     return null
   }
   return (
-    <div className="flex h-full flex-1 flex-col overflow-auto rounded-2xl border-t">
+    <div className="flex h-full flex-1 flex-col overflow-auto rounded-md border-t">
       <div
         className={`border-l border-r shadow ${
-          paginationEnabled ? "rounded-t-2xl" : "rounded-2xl"
+          paginationEnabled ? "rounded-t-md" : "rounded-md"
         }`}
       >
         <div
           id="table-head-row"
-          className="sticky top-0 z-10 flex rounded-t-2xl bg-gray-100"
+          className="sticky top-0 z-10 flex rounded-t-md bg-gray-100"
         >
           {columns.map((header, index) => (
             <HeaderDataCell
@@ -203,7 +203,7 @@ const Table = <T extends object>({
         )}
       </div>
       {paginationEnabled ? (
-        <div className="sticky bottom-0 z-0 rounded-b-2xl border bg-white px-9 py-5 shadow">
+        <div className="sticky bottom-0 z-0 flex h-12 items-center rounded-b-md border bg-white px-4 shadow">
           <Pagination
             currentPage={currentPage!}
             onPageChange={(page) => onPageChange?.(page)}
