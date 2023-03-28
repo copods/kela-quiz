@@ -1,5 +1,5 @@
 export default {
-  debug: true,
+  debug: false,
   fallbackLng: "en",
   supportedLngs: ["en"],
   defaultNS: "index",
