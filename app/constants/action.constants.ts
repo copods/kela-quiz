@@ -9,4 +9,5 @@ export enum actions {
   addWorkspace = "Add Workspace",
   login = "login",
   deleteQuestion = "deleteQuestion",
+  updateRole = "updateRole",
 }

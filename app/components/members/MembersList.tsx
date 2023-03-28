@@ -7,6 +7,8 @@ import { useLoaderData, useSubmit } from "@remix-run/react"
 import { useTranslation } from "react-i18next"
 
 import Badge from "../common-components/Badge"
+import ChangeRolePopUp from "../common-components/ChangeRolePopUp"
+import Chip from "../common-components/Chip"
 import DeletePopUp from "../common-components/DeletePopUp"
 import Table from "../common-components/TableComponent"
 
@@ -30,6 +32,7 @@ export default function MembersList({
   const memberLoaderData = useLoaderData()
   const loggedInUser = memberLoaderData.userId
   const [openDeleteModal, setOpenDeleteModal] = useState(false)
+  const [openRoleModal, setOpenRoleModal] = useState(false)
   const [memberId, setMemberId] = useState("")
   const workspaceOwner = memberLoaderData.currentWorkspaceOwner.createdById
 
@@ -45,8 +48,57 @@ export default function MembersList({
       </div>
     )
   }
-  const RoleDataCell = (data: { userWorkspace: UserWorkspace[] }) => {
-    return <span>{data?.userWorkspace[0]?.role?.name}</span>
+
+  const RoleDataCell = (data: User & { userWorkspace: UserWorkspace[] }) => {
+    const openPopUp = () => {
+      setMemberId(data.id)
+      setOpenRoleModal(!openRoleModal)
+    }
+
+    const EditIcon = () => {
+      return <Icon className="cursor-pointer text-base" icon={"mdi:pencil"} />
+    }
+
+    const sortRoles = roles.sort((a, b) => {
+      if (a.name.toLowerCase() < b.name.toLowerCase()) {
+        return -1
+      } else {
+        return 1
+      }
+    })
+
+    return (
+      <>
+        {loggedInUser !== data.id &&
+        workspaceOwner !== data.id &&
+        memberLoaderData.permission.member.update ? (
+          <div
+            className="cursor-pointer"
+            role="button"
+            onClick={openPopUp}
+            onKeyDown={(e) => e.key === "Enter" && openPopUp()}
+            tabIndex={0}
+          >
+            <Chip
+              text={data?.userWorkspace[0]?.role?.name}
+              variant="editIcon"
+              rightChildren={<EditIcon />}
+            />
+          </div>
+        ) : (
+          <span>{data?.userWorkspace[0]?.role?.name}</span>
+        )}
+        {memberId === data.id && (
+          <ChangeRolePopUp
+            setOpen={setOpenRoleModal}
+            open={openRoleModal}
+            currentRole={data?.userWorkspace[0]?.role?.name}
+            memberId={memberId}
+            roles={sortRoles}
+          />
+        )}
+      </>
+    )
   }
   const JoinedOnCell = (data: Invites) => {
     return <span>{moment(data?.createdAt).format("DD MMMM YY")}</span>
@@ -95,7 +147,12 @@ export default function MembersList({
   const membersColumn = [
     { title: "Name", field: "name", render: NameDataCell, width: "25%" },
     { title: "Email", field: "email", width: "30%" },
-    { title: "Role", field: "role", render: RoleDataCell },
+    {
+      title: "Role",
+      field: "role",
+      render: RoleDataCell,
+      width: memberLoaderData.permission.member.delete ? "15%" : "",
+    },
     {
       title: "Joined On",
       field: "createdAt",

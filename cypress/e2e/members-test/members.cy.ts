@@ -14,10 +14,21 @@ import {
   getMembersHeading,
   getResendMemberInviteBtn,
   getToaster,
+  getChipTag,
+  getDialogWrapper,
+  getResetPasswordPopupHeading,
+  getRoleChangeContent,
+  getChangeRoleId,
+  getElementInsideOfDropdown,
+  getDropdownOptions,
+  getDialogFooter,
 } from "support/common-function"
 const owner = "Owner"
 const joinedMembers = "Joined Members"
 const invitedMembers = "Invited Members"
+const changeRoleHeading = "Change Role"
+const changeRoleContent = "Select a role that you want to assign."
+const roles = ["Admin", "Recruiter", "Test Creator"]
 
 describe("Test for members", () => {
   beforeEach("sign-in", () => {
@@ -157,5 +168,55 @@ describe("Test for members", () => {
 
     // To check if owner badge has text
     getBadgeTag().should("have.text", owner)
+  })
+
+  it("Tests to Check Change Role", () => {
+    //Chip should be there
+    getChipTag().should("have.text", roles[1])
+    getChipTag().click()
+
+    //To check dialog Functionality/visibility
+    getDialogWrapper().should("be.visible")
+    getResetPasswordPopupHeading().should("have.text", changeRoleHeading)
+    getRoleChangeContent().should("have.text", changeRoleContent)
+    getChangeRoleId().then((eq) => {
+      cy.wrap(eq).within(() => {
+        getElementInsideOfDropdown().should("have.text", roles[1])
+        getDropdown().click()
+        getDropdownOptions().get("li").should("have.length", 3)
+        getDropdownOptions()
+          .get("li")
+          .each((el, index) => {
+            const element = el.text()
+            expect(element).to.deep.equal(roles[index])
+          })
+        getDropdownOptions()
+          .get("li")
+          .eq(1)
+          .should(
+            "have.class",
+            "bg-primary text-white relative z-20 cursor-pointer select-none py-2 px-3"
+          )
+        getDropdownOptions().get("li").eq(2).click()
+        getElementInsideOfDropdown().should("have.text", roles[2])
+      })
+    })
+    getDialogFooter()
+      .get("#cancel-change-role-pop-up")
+      .should("have.text", "Cancel")
+    getDialogFooter().get("#proceed").should("have.text", "Proceed")
+    getDialogFooter().get("#cancel-change-role-pop-up").click()
+    getChipTag().should("have.text", roles[1])
+
+    getChipTag().click()
+    getChangeRoleId().then((eq) => {
+      cy.wrap(eq).within(() => {
+        getDropdown().click()
+        getDropdownOptions().get("li").eq(2).click()
+      })
+    })
+    getDialogFooter().get("#proceed").click()
+    getToaster().should("have.text", "Role Updated Successfully")
+    getChipTag().should("have.text", roles[2])
   })
 })
