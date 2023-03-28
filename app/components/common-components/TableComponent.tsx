@@ -69,11 +69,11 @@ const HeaderDataCell = ({
       }}
       data-cy={title}
       id="table-th"
-      className={`flex h-14 flex-1 items-center border-b bg-gray-100 px-4 text-sm font-semibold text-gray-500 ${
+      className={`flex h-14 flex-1 items-center border-b bg-tableBg px-4 text-sm font-semibold text-gray-500 ${
         index === 0
-          ? "rounded-tl-2xl"
+          ? "rounded-tl-md"
           : index === totalHeader
-          ? "rounded-tr-2xl"
+          ? "rounded-tr-md"
           : ""
       }`}
     >
@@ -151,9 +151,9 @@ const Table = <T extends object>({
     return null
   }
   return (
-    <div className="flex h-full flex-1 flex-col overflow-auto rounded-md border-t">
+    <div className="flex h-full flex-1 flex-col overflow-auto rounded-md border-t border-tableBorder">
       <div
-        className={`border-l border-r shadow ${
+        className={`border-l border-r border-tableBorder shadow-[0px_10px_20px_rgba(0,0,0,0.04)] ${
           paginationEnabled ? "rounded-t-md" : "rounded-md"
         }`}
       >
@@ -203,7 +203,7 @@ const Table = <T extends object>({
         )}
       </div>
       {paginationEnabled ? (
-        <div className="sticky bottom-0 z-0 flex h-12 items-center rounded-b-md border bg-white px-4 shadow">
+        <div className="sticky bottom-0 z-0 flex h-12 items-center rounded-b-md border border-tableBorder bg-tableBg px-4 shadow">
           <Pagination
             currentPage={currentPage!}
             onPageChange={(page) => onPageChange?.(page)}
