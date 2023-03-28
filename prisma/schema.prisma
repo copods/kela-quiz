@@ -185,7 +185,6 @@ model Test {
   SectionWiseResult SectionWiseResult[]
   workspace         Workspace?          @relation(fields: [workspaceId], references: [id])
   workspaceId       String?
-  FeedbackForm      FeedbackForm[]
 
   @@unique([name, deletedAt, deleted, workspaceId])
 }
@@ -235,6 +234,7 @@ model CandidateTest {
   updatedAt          DateTime                 @updatedAt
   linkSentOn         DateTime?                @default(now())
   sectionWiseResults SectionWiseResult[]
+  FeedbackForm       FeedbackForm[]
 
   @@unique([candidateId, testId])
 }
@@ -330,18 +330,20 @@ model SectionWiseResult {
 }
 
 model FeedbackForm {
-  id           String         @id @default(uuid())
-  test         Test           @relation(fields: [testId], references: [id])
-  testId       String
-  candidate    Candidate      @relation(fields: [candidateId], references: [id])
-  candidateId  String
+  id              String        @id @default(uuid())
+  candidateTest   CandidateTest @relation(fields: [candidateTestId], references: [id])
+  candidateTestId String
+
   questionForm QuestionForm[]
+  candidate    Candidate?     @relation(fields: [candidateId], references: [id])
+  candidateId  String?
 }
 
 model QuestionForm {
   id             String        @id @default(uuid())
   question       String
   option         String
+  questionType   String
   FeedbackForm   FeedbackForm? @relation(fields: [feedbackFormId], references: [id])
   feedbackFormId String?
 

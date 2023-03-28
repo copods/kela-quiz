@@ -841,3 +841,34 @@ async function calculateOverallResult(id: CandidateTest["id"]) {
     })
   }
 }
+
+export async function candidateFeedback(
+  TestId: Test["id"],
+  feedbackDetails: Array<{
+    question: string
+    option: string
+    questionType: string
+  }>
+) {
+  try {
+    const tests = await prisma.candidateTest.findFirst({
+      where: { id: TestId },
+      include: {
+        candidate: true,
+      },
+    })
+    if (tests) {
+      await prisma.feedbackForm.create({
+        data: {
+          candidateTestId: TestId,
+          candidateId: tests.candidateId,
+          questionForm: {
+            create: feedbackDetails,
+          },
+        },
+      })
+    }
+  } catch (error) {
+    throw new Error("Something went wrong..!")
+  }
+}

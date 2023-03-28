@@ -3,6 +3,7 @@ import moment from "moment"
 import { redirect } from "@remix-run/node"
 
 import {
+  candidateFeedback,
   candidateSectionStart,
   candidateTestStart,
   checkIfTestLinkIsValid,
@@ -74,6 +75,8 @@ export async function checkIfTestLinkIsValidAndRedirect(
           return `/assessment/${assessmentID}/${candidateStepObj.currentSectionId}/cooldown`
         case "end":
           return `/assessment/${assessmentID}/end-assessment`
+        case "feedback-form":
+          return `/assessment/${assessmentID}/feedback-form`
         case "already-submitted":
           return `/assessment/${assessmentID}/already-submitted`
       }
@@ -83,15 +86,15 @@ export async function checkIfTestLinkIsValidAndRedirect(
   if (currentCandidateStep?.endAt) {
     const CurrentTime = moment(new Date())
     const examEndedBefore = moment(currentCandidateStep?.endAt)
-    const duration = CurrentTime.diff(examEndedBefore, "minute")
-    if (duration >= 1) {
+    const duration = CurrentTime.diff(examEndedBefore, "seconds")
+    if (duration >= 5) {
       await updateNextStep({
         assessmentId: assessmentID as string,
-        nextRoute: "already-submitted",
+        nextRoute: "feedback-form",
         isSection: false,
       })
       if (currentRoute !== candidateStepObj.nextRoute) {
-        return `/assessment/${assessmentID}/already-submitted`
+        return `/assessment/${assessmentID}/feedback-form`
       }
     } else {
       if (currentRoute !== candidateStepObj.nextRoute) {
@@ -403,4 +406,22 @@ export async function endCandidateAssessment(
  */
 export async function getCandidateDetails(assessmentId: string) {
   return getCandidateDetailsIfExists(assessmentId as string)
+}
+
+/**
+ *
+ * @param assessmentId
+ * @param feedbackDetails
+ * @returns
+ */
+
+export async function candidateFeedbackDetails(
+  assessmentId: string,
+  feedbackDetails: Array<{
+    question: string
+    option: string
+    questionType: string
+  }>
+) {
+  return await candidateFeedback(assessmentId, feedbackDetails)
 }
