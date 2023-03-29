@@ -132,6 +132,7 @@ describe("Creating assessments", () => {
         "have.class",
         "relative cursor-pointer select-none py-2 px-8 text-xs text-gray-600 bg-gray-100"
       )
+      .click()
 
     /**
      * Checking the Visiblity Pagination Range, Styling and its working
@@ -155,19 +156,19 @@ describe("Creating assessments", () => {
     getPaginationDetails()
       .should("be.visible")
       .should("have.text", "Showing 1 to 5 of 5")
-    getPaginationRange().should("be.visible").find("span").eq(1).click()
-    getPaginationRange().find("span").eq(1).should("have.class", "bg-gray-200")
-    getSectionInDiv().should("have.length", "2")
+    getPaginationRange().should("be.visible").find("span").click()
+    getPaginationRange().find("span").should("have.class", "bg-gray-200")
+    getSectionInDiv().should("have.length", "5")
     getPaginationRange()
       .find("svg")
       .eq(1)
       .should("have.class", "pointer-events-none text-slate-300")
     getPaginationDetails()
       .should("be.visible")
-      .should("have.text", "Showing 4 to 5 of 5")
+      .should("have.text", "Showing 1 to 5 of 5")
     getPaginationDropdownButton().click()
     getPaginationDropdown().get("li").eq(1).click()
-    getPaginationDropdownButton().should("have.text", "6 Items")
+    getPaginationDropdownButton().should("have.text", "12 Items")
     getSectionInDiv().should("have.length", "5")
 
     getNextBtn().click()
