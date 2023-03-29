@@ -9,9 +9,13 @@ type tableData = {
 
 export const TestNameRenderer = (data: tableData, index: number) => {
   return (
-    <span key={index} className="text-base font-semibold text-primary">
+    <div
+      key={index}
+      title={data.test_name}
+      className="truncate text-base font-semibold text-primary"
+    >
       {data.test_name}
-    </span>
+    </div>
   )
 }
 
