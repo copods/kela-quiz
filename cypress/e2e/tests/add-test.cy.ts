@@ -35,13 +35,7 @@ const addTestPageButtons = {
   back: "Back",
   submit: "Submit",
 }
-const paginationDropdownItems = [
-  "3 Items",
-  "6 Items",
-  "12 Items",
-  "18 Items",
-  "24 Items",
-]
+const paginationDropdownItems = ["6 Items", "12 Items", "18 Items", "24 Items"]
 describe("Creating assessments", () => {
   beforeEach("sign-in", () => {
     cy.login()
@@ -118,7 +112,7 @@ describe("Creating assessments", () => {
      */
     getPaginationDropdownButton()
       .should("be.visible")
-      .should("have.text", "3 Items")
+      .should("have.text", "6 Items")
     getSectionInDiv().should("have.length", "3")
     getPaginationDropdownButton().click()
     getPaginationDropdown()
