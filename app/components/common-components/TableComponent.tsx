@@ -203,7 +203,7 @@ const Table = <T extends object>({
         )}
       </div>
       {paginationEnabled ? (
-        <div className="sticky bottom-0 z-0 flex h-[2.875rem] items-center rounded-b-md border border-tableBorder bg-tableBg px-4 shadow">
+        <div className="sticky bottom-0 z-0 flex min-h-[2.875rem] items-center rounded-b-md border border-tableBorder bg-tableBg px-4 shadow">
           <Pagination
             currentPage={currentPage!}
             onPageChange={(page) => onPageChange?.(page)}
