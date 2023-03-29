@@ -11,7 +11,10 @@ import Header from "../header/Header"
 
 import { FeedbackCard } from "./FeedbackCard"
 import { FeedbackTableHeader } from "./FeedbackTableHeader"
-import { TestNameRenderer } from "./FeedbackTableRenderers"
+import {
+  FeedbackTypeRenderer,
+  TestNameRenderer,
+} from "./FeedbackTableRenderers"
 
 import type { tableColumnType } from "~/interface/Interface"
 
@@ -68,7 +71,7 @@ export const FeedbackContainer = () => {
     {
       title: "Feedback Type",
       field: "feedback_type",
-      // render: "Feedback Type",
+      render: FeedbackTypeRenderer,
       width: "10%",
     },
     {
@@ -106,7 +109,7 @@ export const FeedbackContainer = () => {
       test_name: "Fresher’s Pre Interview Assesment",
       candidate_name: "Anurag Patel",
       candidate_email: "anuragpatel@kquiz.com",
-      feedback_type: "Positive",
+      feedback_type: "Negative",
       given_on: "21 June 2022",
       action: "Action",
     },
@@ -114,7 +117,7 @@ export const FeedbackContainer = () => {
       test_name: "Fresher’s Pre Interview Assesment",
       candidate_name: "Anurag Patel",
       candidate_email: "anuragpatel@kquiz.com",
-      feedback_type: "Positive",
+      feedback_type: "Neutral",
       given_on: "21 June 2022",
       action: "Action",
     },

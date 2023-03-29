@@ -1,9 +1,9 @@
 import { useState } from "react"
 
-import { Icon } from "@iconify/react"
+// import { Icon } from "@iconify/react"
 import { t } from "i18next"
 
-import downloadExcelIcon from "../../../public/assets/downloadExcel.svg"
+// import downloadExcelIcon from "../../../public/assets/downloadExcel.svg"
 import { NewDropdownField } from "../common-components/Dropdown"
 
 export const FeedbackTableHeader = () => {
@@ -39,10 +39,10 @@ export const FeedbackTableHeader = () => {
           />
         </div>
       </div>
-      <div className="ml-auto flex items-center gap-1.5">
+      {/* <div className="ml-auto flex items-center gap-1.5">
         <img src={downloadExcelIcon} alt="download icon" />
         <Icon icon="ic:round-keyboard-arrow-down" id="icon" />
-      </div>
+      </div> */}
     </div>
   )
 }
