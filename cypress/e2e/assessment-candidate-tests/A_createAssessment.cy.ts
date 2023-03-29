@@ -98,7 +98,7 @@ describe("Creating new assessment", () => {
     })
     getQlEditorInput().clear().type(commonConstants?.useRefAns)
     getSaveAndExit().click()
-    cy.wait(2000)
+    cy.wait(3000)
 
     //Add Question to Section2
     getSectionName().contains(commonConstants?.section2).click()
