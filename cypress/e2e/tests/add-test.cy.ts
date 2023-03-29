@@ -113,7 +113,7 @@ describe("Creating assessments", () => {
     getPaginationDropdownButton()
       .should("be.visible")
       .should("have.text", "6 Items")
-    getSectionInDiv().should("have.length", "3")
+    getSectionInDiv().should("have.length", "5")
     getPaginationDropdownButton().click()
     getPaginationDropdown()
       .should("be.visible")
@@ -154,7 +154,7 @@ describe("Creating assessments", () => {
      */
     getPaginationDetails()
       .should("be.visible")
-      .should("have.text", "Showing 1 to 3 of 5")
+      .should("have.text", "Showing 1 to 5 of 5")
     getPaginationRange().should("be.visible").find("span").eq(1).click()
     getPaginationRange().find("span").eq(1).should("have.class", "bg-gray-200")
     getSectionInDiv().should("have.length", "2")
