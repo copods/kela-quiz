@@ -872,3 +872,40 @@ export async function candidateFeedback(
     throw new Error("Something went wrong..!")
   }
 }
+
+export async function getAssessmentName(assessmentId: string) {
+  try {
+    const test = await prisma.candidateTest.findFirst({
+      where: { id: assessmentId },
+      include: {
+        test: {
+          select: {
+            name: true,
+          },
+        },
+      },
+    })
+    if (test) {
+      return test.test.name
+    }
+  } catch (error) {
+    throw new Error("Something went wrong..!")
+  }
+}
+
+export async function checkIfFeedbackAlreadySubmitted(assessmentId: string) {
+  try {
+    const value = await prisma.feedbackForm.findFirst({
+      where: {
+        candidateTestId: assessmentId,
+      },
+    })
+    if (value) {
+      return true
+    } else {
+      return false
+    }
+  } catch (error) {
+    throw new Error("Something went wrong..!")
+  }
+}

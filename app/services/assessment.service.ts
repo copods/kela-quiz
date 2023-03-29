@@ -1,11 +1,13 @@
 import moment from "moment"
 
 import { redirect } from "@remix-run/node"
+import { json } from "remix-utils"
 
 import {
   candidateFeedback,
   candidateSectionStart,
   candidateTestStart,
+  checkIfFeedbackAlreadySubmitted,
   checkIfTestLinkIsValid,
   endAssessment,
   endCurrentSection,
@@ -33,6 +35,17 @@ export type CandidateStep = {
   currentSectionId?: string
 }
 
+type ActionData = {
+  errors?: {
+    title: string
+    status: number
+  }
+  resp?: {
+    title: string
+    status: number
+    feedbackSubmitted: boolean
+  }
+}
 /**
  * Functions checks if the given assessment link is valid. If true, it will return the url to redirect the user to (only if current route does not match the next route in DB)
  * If false, it will return null and this will result in a 404 Not Found
@@ -82,24 +95,12 @@ export async function checkIfTestLinkIsValidAndRedirect(
       }
     }
   }
-
-  if (currentCandidateStep?.endAt) {
-    const CurrentTime = moment(new Date())
-    const examEndedBefore = moment(currentCandidateStep?.endAt)
-    const duration = CurrentTime.diff(examEndedBefore, "seconds")
-    if (duration >= 5) {
-      await updateNextStep({
-        assessmentId: assessmentID as string,
-        nextRoute: "feedback-form",
-        isSection: false,
-      })
-      if (currentRoute !== candidateStepObj.nextRoute) {
-        return `/assessment/${assessmentID}/feedback-form`
-      }
-    } else {
-      if (currentRoute !== candidateStepObj.nextRoute) {
-        return `/assessment/${assessmentID}/end-assessment`
-      }
+  if (currentRoute === "end") {
+    const feedbackSubmittedAlready = await checkIfFeedbackAlreadySubmitted(
+      assessmentID
+    )
+    if (currentCandidateStep?.endAt && feedbackSubmittedAlready) {
+      return `/assessment/${assessmentID}/already-submitted`
     }
   }
 }
@@ -412,7 +413,7 @@ export async function getCandidateDetails(assessmentId: string) {
  *
  * @param assessmentId
  * @param feedbackDetails
- * @returns
+ * @returns json
  */
 
 export async function candidateFeedbackDetails(
@@ -424,4 +425,22 @@ export async function candidateFeedbackDetails(
   }>
 ) {
   return await candidateFeedback(assessmentId, feedbackDetails)
+    .then((res) => {
+      return json<ActionData>({
+        resp: {
+          title: "commonConstants.success",
+          status: 200,
+          feedbackSubmitted: true,
+        },
+      })
+    })
+    .catch((err) => {
+      let title = "commonConstants.commonError"
+      return json<ActionData>({
+        errors: {
+          title,
+          status: 400,
+        },
+      })
+    })
 }

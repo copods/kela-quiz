@@ -296,7 +296,10 @@
     "candidateContact": "We will contact you soon",
     "alreadyExamSubmitted": "Hey! you have already submitted the exam",
     "ExpiredLink": "Link has expired",
-    "feedbackForm": "Give us feedback"
+    "feedbackButtonText": "Give us feedback",
+    "feedbackSubmissionHeading": "Thank you for leaving feedback for us.",
+    "feedbackSubmissionContent": "We love hearing from you!",
+    "feedbackHeader": "Feedback"
   },
   "toastConstants": {
     "addAssessment": "Enter Name to add assessment",

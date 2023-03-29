@@ -3,7 +3,7 @@ import { env } from "process"
 import type { Question, User } from "@prisma/client"
 
 import { checkFeatureAuthorization } from "./authorization.server"
-import { sendTestInviteMail } from "./sendgrid.servers"
+import { sendTestFeedbackMail, sendTestInviteMail } from "./sendgrid.servers"
 
 import { prisma } from "~/db.server"
 import { getHoursAndMinutes } from "~/utils"
@@ -379,6 +379,40 @@ export async function remindCandidate() {
         candidate.link as string,
         getFormatedTime(candidate.test?.sections) as string
       )
+    })
+  }
+}
+
+export async function remindCandidateForFeedback() {
+  let minTime: string | number = Date.now() - 2 * 60 * 1000
+  let maxTime: string | number = Date.now() - 3 * 60 * 1000
+  minTime = new Date(minTime).toISOString()
+  maxTime = new Date(maxTime).toISOString()
+
+  const candidates = await prisma.candidateTest.findMany({
+    where: {
+      endAt: {
+        lte: maxTime,
+        gte: minTime,
+      },
+
+      FeedbackForm: {
+        none: {},
+      },
+    },
+    select: {
+      link: true,
+      candidate: {
+        select: {
+          email: true,
+        },
+      },
+    },
+  })
+
+  if (candidates.length) {
+    candidates.forEach((candidate) => {
+      sendTestFeedbackMail(candidate.candidate.email, candidate.link as string)
     })
   }
 }
