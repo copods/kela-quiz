@@ -97,10 +97,13 @@ const FeedbackForm = () => {
   return (
     <div className="flex h-screen flex-col bg-gray-50">
       <Header />
-      <div className="flex flex-1  justify-center bg-questionBackground pt-14 ">
+      <div className="flex flex-1 justify-center bg-questionBackground pt-14 ">
         {!feedbackSubmitted ? (
           <div className="flex h-728 w-728 flex-col overflow-hidden rounded-lg bg-white shadow-sm">
-            <div className="flex w-full justify-center border-b border-gray-200 py-6 text-2xl font-bold text-gray-900">
+            <div
+              className="flex w-full justify-center border-b border-gray-200 py-6 text-2xl font-bold text-gray-900"
+              data-cy="feedback-form-header"
+            >
               {`${t(
                 "candidateExamConstants.feedbackHeader"
               )}-${assessmentName}`}
@@ -114,6 +117,7 @@ const FeedbackForm = () => {
                   <div
                     className="flex flex-col gap-5 border-b border-gray-200 py-8 px-8"
                     key={feedback.id}
+                    data-cy="feedback-question"
                   >
                     <span className="text-lg font-medium text-gray-700">
                       {feedback.required
@@ -144,7 +148,10 @@ const FeedbackForm = () => {
                 )
               })}
             </div>
-            <div className="flex justify-center border-t border-gray-200 py-6">
+            <div
+              className="flex justify-center border-t border-gray-200 py-6"
+              data-cy="feedback-form-footer"
+            >
               <Button
                 className="h-12 w-1/2 text-base"
                 variant="primary-solid"
