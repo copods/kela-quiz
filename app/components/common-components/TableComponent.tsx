@@ -69,7 +69,7 @@ const HeaderDataCell = ({
       }}
       data-cy={title}
       id="table-th"
-      className={`flex h-3.25 flex-1 items-center border-b bg-tableBg px-4 text-sm text-gray-500 ${
+      className={`flex h-[3.25rem] flex-1 items-center border-b bg-tableBg px-4 text-sm text-gray-500 ${
         index === 0
           ? "rounded-tl-md"
           : index === totalHeader
@@ -151,15 +151,15 @@ const Table = <T extends object>({
     return null
   }
   return (
-    <div className="flex h-full flex-1 flex-col overflow-hidden rounded-md border-tableBorder">
+    <div className="flex h-full flex-1 flex-col overflow-auto rounded-md border-t border-tableBorder">
       <div
-        className={`flex max-h-full flex-col overflow-hidden border-l border-r border-t border-tableBorder shadow-tableShadow ${
+        className={`border-l border-r border-tableBorder shadow-[0px_10px_20px_rgba(0,0,0,0.04)] ${
           paginationEnabled ? "rounded-t-md" : "rounded-md"
         }`}
       >
         <div
           id="table-head-row"
-          className="sticky top-[1px] z-10 flex rounded-t-md bg-gray-100"
+          className="sticky top-0 z-10 flex rounded-t-md bg-gray-100"
         >
           {columns.map((header, index) => (
             <HeaderDataCell
@@ -174,38 +174,36 @@ const Table = <T extends object>({
         {data.length === 0 ? (
           <TableEmptyState />
         ) : (
-          <div className="h-full flex-1  overflow-auto">
-            {data.map((rowData: T & { id?: number }, i) => (
-              <div
-                id="table-row"
-                key={String(rowData.id) + i}
-                className="tableRow flex  bg-white hover:bg-hover"
-              >
-                {columns.map((column, j) =>
-                  column.render ? (
-                    <RenderDataCell
-                      key={column.field + j}
-                      width={column.width}
-                      rowData={rowData}
-                      index={i}
-                      render={column.render}
-                    />
-                  ) : (
-                    <TableDataCell
-                      key={column.field + i}
-                      field={column.field}
-                      width={column.width}
-                      rowData={rowData}
-                    />
-                  )
-                )}
-              </div>
-            ))}
-          </div>
+          data.map((rowData: T & { id?: number }, i) => (
+            <div
+              id="table-row"
+              key={String(rowData.id) + i}
+              className="tableRow flex bg-white hover:bg-hover"
+            >
+              {columns.map((column, j) =>
+                column.render ? (
+                  <RenderDataCell
+                    key={column.field + j}
+                    width={column.width}
+                    rowData={rowData}
+                    index={i}
+                    render={column.render}
+                  />
+                ) : (
+                  <TableDataCell
+                    key={column.field + i}
+                    field={column.field}
+                    width={column.width}
+                    rowData={rowData}
+                  />
+                )
+              )}
+            </div>
+          ))
         )}
       </div>
       {paginationEnabled ? (
-        <div className="sticky bottom-0 z-0 flex min-h-2.875 items-center rounded-b-md border border-tableBorder bg-tableBg px-4">
+        <div className="sticky bottom-0 z-0 flex min-h-[2.875rem] items-center rounded-b-md border border-tableBorder bg-tableBg px-4 shadow">
           <Pagination
             currentPage={currentPage!}
             onPageChange={(page) => onPageChange?.(page)}

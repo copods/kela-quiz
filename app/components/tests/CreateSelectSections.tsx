@@ -31,10 +31,9 @@ const SelectSections = ({
   const [sortDirection, onSortDirectionChange] = useState(
     sortByOrder.ascending as string
   )
-  const items = [6, 12, 18, 24]
   const [sortBy, onSortChange] = useState("createdAt")
   const [sectionsCurrentPage, setSectionsCurrentPage] = useState(1)
-  const [sectionsPageSize, setSectionsPageSize] = useState(items[0])
+  const [sectionsPageSize, setSectionsPageSize] = useState(6)
   const [pseudoDivs, setPseudoDivs] = useState([1])
 
   const filterByType = [
@@ -141,7 +140,7 @@ const SelectSections = ({
           </div>
           <Pagination
             currentPage={sectionsCurrentPage}
-            pageSizeOptions={items}
+            pageSizeOptions={[6, 12, 18, 24]}
             onPageChange={(page) => setSectionsCurrentPage?.(page)}
             pageSize={sectionsPageSize}
             setPageSize={setSectionsPageSize}
