@@ -299,7 +299,11 @@
     "feedbackButtonText": "Give us feedback",
     "feedbackSubmissionHeading": "Thank you for leaving feedback for us.",
     "feedbackSubmissionContent": "We love hearing from you!",
-    "feedbackHeader": "Feedback"
+    "feedbackHeader": "Feedback",
+    "feedbackFirstQuestion": "How do you like the experience of K-Quiz portal?",
+    "feedbackSecondQuestion": "How do you rate the difficulty level of the test?",
+    "feedbackThirdQuestion": "Please rate your overall experience",
+    "feedbackFourthQuestion": "Write your feedback"
   },
   "toastConstants": {
     "addAssessment": "Enter Name to add assessment",

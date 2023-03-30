@@ -7,7 +7,7 @@ import Button from "../common-components/Button"
 import Header from "./Header"
 const AlredySubmitted = () => {
   const { t } = useTranslation()
-  const loader = JSON.parse(useLoaderData())
+  const feedbackSubmitted = JSON.parse(useLoaderData())
 
   const path = useLocation()
   const navigate = useNavigate()
@@ -26,7 +26,7 @@ const AlredySubmitted = () => {
               <span className="text-2xl font-bold text-gray-900">
                 {t("candidateExamConstants.alreadyExamSubmitted")}
               </span>
-              {!loader && (
+              {!feedbackSubmitted && (
                 <Button
                   className="h-12 w-1/2 text-base"
                   variant="primary-solid"

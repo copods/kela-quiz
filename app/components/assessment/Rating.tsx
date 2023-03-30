@@ -19,7 +19,7 @@ const Rating = ({
                 className={`flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg ${
                   option === counter
                     ? "bg-primary text-white"
-                    : "bg-blue-50  hover:bg-blue-100  "
+                    : "bg-blue-50 hover:bg-blue-100"
                 }`}
               >
                 {counter}
