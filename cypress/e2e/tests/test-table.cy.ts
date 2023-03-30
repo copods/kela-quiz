@@ -87,7 +87,7 @@ describe("Visiting Assessment", () => {
       .should("have.css", "font-weight", "400")
       .should(
         "have.class",
-        "flex h-[3.25rem] flex-1 items-center border-b bg-tableBg px-4 text-sm text-gray-500"
+        "flex h-3.25 flex-1 items-center border-b bg-tableBg px-4 text-sm text-gray-500"
       )
 
     // To check table title - Created By
