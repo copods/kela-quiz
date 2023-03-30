@@ -35,11 +35,11 @@ export const loader: LoaderFunction = async ({ params, request }) => {
 export const action: ActionFunction = async ({ params, request }) => {
   try {
     const formData = await request.formData()
-    const details = formData.get("details") as any
+    const details = JSON.parse(formData.get("details") as string)
     const assessmentId = params.assessmentId as string
     const feedbackSubmitted = await candidateFeedbackDetails(
       assessmentId,
-      details
+      details.data
     )
     return feedbackSubmitted
   } catch (err) {

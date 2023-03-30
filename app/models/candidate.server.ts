@@ -384,8 +384,8 @@ export async function remindCandidate() {
 }
 
 export async function remindCandidateForFeedback() {
-  let minTime: string | number = Date.now() - 2 * 60 * 1000
-  let maxTime: string | number = Date.now() - 3 * 60 * 1000
+  let minTime: string | number = Date.now() - 2 * 60 * 60 * 1000
+  let maxTime: string | number = Date.now() - 3 * 60 * 60 * 1000
   minTime = new Date(minTime).toISOString()
   maxTime = new Date(maxTime).toISOString()
 
