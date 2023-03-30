@@ -153,7 +153,7 @@ const Table = <T extends object>({
   return (
     <div className="flex h-full flex-1 flex-col overflow-auto rounded-md border-t border-tableBorder">
       <div
-        className={`border-l border-r border-tableBorder shadow-[0px_10px_20px_rgba(0,0,0,0.04)] ${
+        className={`border-l border-r border-tableBorder shadow-tableShadow ${
           paginationEnabled ? "rounded-t-md" : "rounded-md"
         }`}
       >
@@ -203,7 +203,7 @@ const Table = <T extends object>({
         )}
       </div>
       {paginationEnabled ? (
-        <div className="sticky bottom-0 z-0 flex min-h-[2.875rem] items-center rounded-b-md border border-tableBorder bg-tableBg px-4 shadow">
+        <div className="sticky bottom-0 z-0 flex min-h-[2.875rem] items-center rounded-b-md border border-tableBorder bg-tableBg px-4">
           <Pagination
             currentPage={currentPage!}
             onPageChange={(page) => onPageChange?.(page)}
