@@ -264,10 +264,7 @@ describe("Tests for Test Section", () => {
 
     getFeedbackQuestion()
       .should("have.length", 4)
-      .should(
-        "have.class",
-        "flex flex-col gap-5 border-b border-gray-200 py-8 px-8"
-      )
+      .should("have.class", "flex flex-col gap-5 border-b border-gray-200 p-8")
 
     getFeedbackQuestion().each((el, index) => {
       cy.wrap(el).within(() => {
