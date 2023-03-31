@@ -337,6 +337,9 @@ model UserFeedback {
   userFeedbackQuestion UserFeedbackQuestion[]
   candidate            Candidate?             @relation(fields: [candidateId], references: [id])
   candidateId          String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model UserFeedbackQuestion {
