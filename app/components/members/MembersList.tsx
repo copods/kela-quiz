@@ -34,7 +34,7 @@ export default function MembersList({
   const [openDeleteModal, setOpenDeleteModal] = useState(false)
   const [openRoleModal, setOpenRoleModal] = useState(false)
   const [memberId, setMemberId] = useState("")
-  const workspaceOwner = memberLoaderData.currentWorkspaceOwner.createdById
+  const workspaceOwner = memberLoaderData.currentWorkspaceOwner.ownerId
 
   const NameDataCell = (data: User) => {
     return (

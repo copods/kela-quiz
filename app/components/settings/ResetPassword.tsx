@@ -197,7 +197,7 @@ const ResetPassword = ({
           </div>
         </DialogContent>
         <DialogFooter>
-          <div className="mt-6 flex items-center justify-center">
+          <div className="flex items-center justify-center">
             <Button
               tabIndex={0}
               name="resetPassword"

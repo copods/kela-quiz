@@ -1,5 +1,3 @@
-import { env } from "process"
-
 import { faker } from "@faker-js/faker"
 import type { Password, User } from "@prisma/client"
 import bcrypt from "bcryptjs"
@@ -165,6 +163,7 @@ export async function createUserBySignUp({
       workspace: {
         select: {
           id: true,
+          createdById: true,
         },
       },
     },
@@ -179,6 +178,11 @@ export async function createUserBySignUp({
     },
   })
 
+  await prisma.workspace.update({
+    where: { id: user.workspace[0].id },
+    data: { ownerId: user.workspace[0].createdById },
+  })
+
   const role = await prisma.role.findUnique({
     where: {
       id: roleId,
@@ -187,88 +191,6 @@ export async function createUserBySignUp({
 
   await sendMail(email, firstName, password, role?.name as string)
   return user
-}
-
-export async function createNewUser({
-  firstName,
-  lastName,
-  email,
-  roleId,
-  defaultWorkspaceName,
-  createdById,
-  invitedByWorkspaceId,
-}: {
-  firstName: string
-  lastName: string
-  email: string
-  defaultWorkspaceName: string
-  roleId: string
-  createdById: User["id"]
-  invitedByWorkspaceId: string
-}) {
-  const password = faker.internet.password()
-  const hashedPassword = await bcrypt.hash(password, 10)
-  const user = await prisma.user.create({
-    data: {
-      firstName,
-      lastName,
-      email,
-      roleId,
-      password: {
-        create: {
-          hash: hashedPassword,
-        },
-      },
-
-      workspace: {
-        create: {
-          name: defaultWorkspaceName,
-        },
-      },
-    },
-    select: {
-      id: true,
-      roleId: true,
-      workspace: {
-        select: {
-          id: true,
-        },
-      },
-    },
-  })
-
-  const adminRoleId = await getAdminId()
-
-  await prisma.userWorkspace.create({
-    data: {
-      userId: user.id as string,
-      workspaceId: user.workspace[0].id,
-      roleId: adminRoleId as string,
-      isDefault: true,
-    },
-  })
-
-  await prisma.userWorkspace.create({
-    data: {
-      userId: user.id as string,
-      workspaceId: invitedByWorkspaceId,
-      roleId: roleId,
-      isDefault: false,
-    },
-  })
-  const role = await prisma.role.findUnique({
-    where: {
-      id: roleId,
-    },
-  })
-  const passwordGenerationLink =
-    env.PUBLIC_URL + "/members/" + user?.id + "/create-password"
-  return await sendMail(
-    passwordGenerationLink,
-    email,
-    firstName,
-    role?.name || "NA"
-  )
 }
 
 export async function sendResetPassword(email: string) {
