@@ -203,18 +203,19 @@ model SectionInTest {
 }
 
 model Candidate {
-  id          String            @id @default(uuid())
-  email       String            @unique
-  firstName   String?
-  lastName    String?
-  isQualified Boolean?
-  OTP         Int               @default(0)
-  tests       CandidateTest[]
-  results     CandidateResult[]
-  createdBy   User              @relation(fields: [createdById], references: [id])
-  createdById String
-  createdAt   DateTime          @default(now())
-  updatedAt   DateTime          @updatedAt
+  id           String            @id @default(uuid())
+  email        String            @unique
+  firstName    String?
+  lastName     String?
+  isQualified  Boolean?
+  OTP          Int               @default(0)
+  tests        CandidateTest[]
+  results      CandidateResult[]
+  createdBy    User              @relation(fields: [createdById], references: [id])
+  createdById  String
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+  FeedbackForm FeedbackForm[]
 }
 
 model CandidateTest {
@@ -233,6 +234,7 @@ model CandidateTest {
   updatedAt          DateTime                 @updatedAt
   linkSentOn         DateTime?                @default(now())
   sectionWiseResults SectionWiseResult[]
+  FeedbackForm       FeedbackForm[]
 
   @@unique([candidateId, testId])
 }
@@ -325,4 +327,25 @@ model SectionWiseResult {
   updatedAt DateTime @updatedAt
 
   @@unique([sectionInCandidateTestId, testId])
+}
+
+model FeedbackForm {
+  id              String        @id @default(uuid())
+  candidateTest   CandidateTest @relation(fields: [candidateTestId], references: [id])
+  candidateTestId String
+
+  questionForm QuestionForm[]
+  candidate    Candidate?     @relation(fields: [candidateId], references: [id])
+  candidateId  String?
+}
+
+model QuestionForm {
+  id             String        @id @default(uuid())
+  question       String
+  option         String
+  questionType   String
+  FeedbackForm   FeedbackForm? @relation(fields: [feedbackFormId], references: [id])
+  feedbackFormId String?
+
+  @@unique([id])
 }

@@ -27,7 +27,11 @@ module.exports = {
       },
       height: {
         cooldownSVG: "355px",
+<<<<<<< HEAD
         3.25: "52px",
+=======
+        728: "728px",
+>>>>>>> bf9a013391ece2fbdf39cf200d63df30eb52bcc4
       },
       width: {
         sectionCard: `30%`,
@@ -36,6 +40,7 @@ module.exports = {
         cooldownSVG: "389px",
         438: "438px",
         358: "358px",
+        728: "728px",
       },
       maxWidth: {
         554: "554px",

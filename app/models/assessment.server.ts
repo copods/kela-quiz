@@ -841,3 +841,71 @@ async function calculateOverallResult(id: CandidateTest["id"]) {
     })
   }
 }
+
+export async function candidateFeedback(
+  TestId: Test["id"],
+  feedbackDetails: Array<{
+    question: string
+    option: string
+    questionType: string
+  }>
+) {
+  try {
+    const tests = await prisma.candidateTest.findFirst({
+      where: { id: TestId },
+      include: {
+        candidate: true,
+      },
+    })
+    if (tests) {
+      await prisma.feedbackForm.create({
+        data: {
+          candidateTestId: TestId,
+          candidateId: tests.candidateId,
+          questionForm: {
+            create: feedbackDetails,
+          },
+        },
+      })
+    }
+  } catch (error) {
+    throw new Error("Something went wrong..!")
+  }
+}
+
+export async function getAssessmentName(assessmentId: string) {
+  try {
+    const test = await prisma.candidateTest.findFirst({
+      where: { id: assessmentId },
+      include: {
+        test: {
+          select: {
+            name: true,
+          },
+        },
+      },
+    })
+    if (test) {
+      return test.test.name
+    }
+  } catch (error) {
+    throw new Error("Something went wrong..!")
+  }
+}
+
+export async function checkIfFeedbackAlreadySubmitted(assessmentId: string) {
+  try {
+    const value = await prisma.feedbackForm.findFirst({
+      where: {
+        candidateTestId: assessmentId,
+      },
+    })
+    if (value) {
+      return true
+    } else {
+      return false
+    }
+  } catch (error) {
+    throw new Error("Something went wrong..!")
+  }
+}
