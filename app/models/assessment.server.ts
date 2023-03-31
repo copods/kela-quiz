@@ -858,11 +858,11 @@ export async function candidateFeedback(
       },
     })
     if (tests) {
-      await prisma.feedbackForm.create({
+      await prisma.userFeedback.create({
         data: {
           candidateTestId: TestId,
           candidateId: tests.candidateId,
-          questionForm: {
+          userFeedbackQuestion: {
             create: feedbackDetails,
           },
         },
@@ -895,7 +895,7 @@ export async function getAssessmentName(assessmentId: string) {
 
 export async function checkIfFeedbackAlreadySubmitted(assessmentId: string) {
   try {
-    const value = await prisma.feedbackForm.findFirst({
+    const value = await prisma.userFeedback.findFirst({
       where: {
         candidateTestId: assessmentId,
       },

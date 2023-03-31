@@ -31,7 +31,7 @@ const FeedbackForm = () => {
   const feebackDetails = [
     {
       id: "experience-level",
-      question: t("candidateExamConstants.feedbackFirstQuestion"),
+      question: "How do you like the experience of K-Quiz portal?",
       option: experienceValue,
       questionType: "rating",
       required: true,
@@ -39,7 +39,7 @@ const FeedbackForm = () => {
     },
     {
       id: "difficulty-level",
-      question: t("candidateExamConstants.feedbackSecondQuestion"),
+      question: "How do you rate the difficulty level of the test?",
       option: levelValue,
       questionType: "rating",
       required: true,
@@ -47,7 +47,7 @@ const FeedbackForm = () => {
     },
     {
       id: "overall-experience",
-      question: t("candidateExamConstants.feedbackThirdQuestion"),
+      question: "Please rate your overall experience",
       option: overallValue,
       questionType: "rating",
       required: true,
@@ -55,7 +55,7 @@ const FeedbackForm = () => {
     },
     {
       id: "feedback-comment",
-      question: t("candidateExamConstants.feedbackFourthQuestion"),
+      question: "Write your feedback",
       option: feebackComment,
       questionType: "text",
       required: false,

@@ -396,7 +396,7 @@ export async function remindCandidateForFeedback() {
         gte: minTime,
       },
 
-      FeedbackForm: {
+      UserFeedback: {
         none: {},
       },
     },
