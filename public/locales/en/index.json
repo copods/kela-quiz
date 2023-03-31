@@ -317,7 +317,8 @@
     "cannotAddTestZeroQuestion": "Cannot add test with 0 questions.",
     "notAdMoreThanAvailableQuestion": "Cannot add more than available questions",
     "userProfileUpdatedSuccessfully": "User Profile Updated Successfully",
-    "roleUpdatedSuccessfully": "Role Updated Successfully"
+    "roleUpdatedSuccessfully": "Role Updated Successfully",
+    "ownerTransferOwnerShip": "Only Owner can Transfer Ownership"
   },
   "otpConstants": {
     "header": "OTP Verification",

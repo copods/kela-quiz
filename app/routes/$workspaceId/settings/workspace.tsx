@@ -125,6 +125,7 @@ const WorkspaceSetting = () => {
 
   useEffect(() => {
     if (
+      actionData !== undefined &&
       actionData?.resp?.status === 200 &&
       actionData?.resp?.title === "settings.workspaceUpdated"
     ) {
@@ -134,9 +135,12 @@ const WorkspaceSetting = () => {
       navigate(`/${workspaceLoaderData?.ownersWorkspace?.id}${routes.members}`)
     } else if (actionData?.resp?.status === 400) {
       toast.error(t(actionData?.resp?.title))
+    } else if (actionData?.errors?.status === 400) {
+      toast.error(t("toastConstants.ownerTransferOwnerShip"))
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [actionData?.resp])
+  }, [actionData])
   return (
     <div>
       <Workspace />

@@ -125,10 +125,23 @@ const Workspace = () => {
         {
           updateOwner: "updateOwner",
           newOwner,
+          oldOwner: workspaceLoaderData.workspaceOwner.ownerId,
         },
         { method: "post" }
       )
       setShowChangeOwnershipPopup(false)
+    }
+  }
+
+  const isItemDisabled = (item: string) => {
+    const checkIfCurrentWorkspaceId = workspaceLoaderData?.ownersWorkspaces
+      ?.map((workspace: { id: string }) => workspace.id)
+      .includes(workspaceLoaderData?.currentWorkspaceId)
+
+    if (item === "workspace-action") {
+      return checkIfCurrentWorkspaceId
+    } else {
+      return !checkIfCurrentWorkspaceId
     }
   }
 
@@ -173,15 +186,14 @@ const Workspace = () => {
                   : "",
                 handleItemAction: () =>
                   setShowLeaveWorkspacePopup(!showLeaveWorkspacePopup),
-                disabled: workspaceLoaderData?.ownersWorkspaces
-                  ?.map((workspace: { id: string }) => workspace.id)
-                  .includes(workspaceLoaderData?.currentWorkspaceId),
+                disabled: isItemDisabled("workspace-action"),
               },
               {
                 id: "transfer-ownership",
                 menuListText: t("settings.transferOwnership"),
                 handleItemAction: () =>
                   setShowChangeOwnershipPopup(!showChangeOwnershipPopup),
+                disabled: isItemDisabled("transfer-ownership"),
               },
             ]}
           />

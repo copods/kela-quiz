@@ -219,12 +219,26 @@ export async function updateWorkspaceOwner(
         status: 403,
       }
     }
-    await prisma.workspace.update({
-      where: { id: currentWorkspaceId },
-      data: {
-        ownerId: newOwnerId,
+
+    const oldOwner = await prisma.workspace.findFirst({
+      where: {
+        id: currentWorkspaceId,
+        ownerId: userId,
       },
     })
+
+    if (oldOwner) {
+      await prisma.workspace.update({
+        where: { id: currentWorkspaceId },
+        data: {
+          ownerId: newOwnerId,
+        },
+      })
+    } else {
+      throw {
+        status: 400,
+      }
+    }
   } catch (error) {
     throw error
   }
