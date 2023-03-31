@@ -12,6 +12,7 @@ model Workspace {
   name            String
   createdBy       User              @relation(fields: [createdById], references: [id])
   createdById     String
+  ownerId         String            @default("")
   userWorkspace   UserWorkspace[]
   createdAt       DateTime          @default(now())
   updatedAt       DateTime          @updatedAt

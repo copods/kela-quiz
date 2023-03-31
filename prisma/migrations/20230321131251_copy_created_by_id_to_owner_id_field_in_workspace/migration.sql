@@ -1,0 +1,1 @@
+UPDATE "Workspace" SET "ownerId" = "createdById";

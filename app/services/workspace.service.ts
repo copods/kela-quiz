@@ -2,11 +2,13 @@ import { json } from "@remix-run/node"
 
 import {
   addWorkspace,
+  getCurrentWorkspaceAdmins,
   getCurrentWorkspaceOwner,
   getOwnersWorkspaces,
   getUserWorkspaces,
   leaveWorkspace,
   updateUserWorkspace,
+  updateWorkspaceOwner,
 } from "~/models/workspace.server"
 
 type ActionData = {
@@ -147,6 +149,52 @@ export async function updateCurrentUserWorkspace(
         { status: 200 }
       )
     })
+  } catch (error) {
+    throw error
+  }
+}
+
+export async function getAllCurrentWorkspaceAdmins(
+  currentWorkspaceId: string,
+  userId: string
+) {
+  try {
+    return await getCurrentWorkspaceAdmins(currentWorkspaceId, userId)
+  } catch (error) {
+    throw error
+  }
+}
+
+export async function updateCurrentWorkspaceOwner(
+  userId: string,
+  currentWorkspaceId: string,
+  newOwnerId: string
+) {
+  try {
+    return await updateWorkspaceOwner(userId, currentWorkspaceId, newOwnerId)
+      .then((res) => {
+        return json<ActionData>(
+          {
+            resp: {
+              title: "settings.ownerUpdated",
+              status: 200,
+            },
+          },
+          { status: 200 }
+        )
+      })
+      .catch((err) => {
+        let title = "statusCheck.commonError"
+        return json<ActionData>(
+          {
+            errors: {
+              title,
+              status: 400,
+            },
+          },
+          { status: 400 }
+        )
+      })
   } catch (error) {
     throw error
   }

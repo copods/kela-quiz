@@ -94,7 +94,8 @@
     "deleteQuestion": "Delete Question",
     "deleteTest": "Delete Test",
     "deleteAssessment": "Delete Assessment",
-    "totalQuestionsText": "Total Questions"
+    "totalQuestionsText": "Total Questions",
+    "noRecords": "No Records"
   },
   "sideNav": {
     "sideNavHeading": "Quiz",
@@ -319,7 +320,8 @@
     "cannotAddTestZeroQuestion": "Cannot add test with 0 questions.",
     "notAdMoreThanAvailableQuestion": "Cannot add more than available questions",
     "userProfileUpdatedSuccessfully": "User Profile Updated Successfully",
-    "roleUpdatedSuccessfully": "Role Updated Successfully"
+    "roleUpdatedSuccessfully": "Role Updated Successfully",
+    "ownerTransferOwnerShip": "Only Owner can Transfer Ownership"
   },
   "otpConstants": {
     "header": "OTP Verification",
@@ -345,7 +347,10 @@
     "leaveWorkspace": "Leave workspace",
     "leave": "Leave",
     "leaveWorkspaceConfirmation": "Are you sure you want to leave this workspace?",
-    "workspaceUpdated": "Workspace updated sucessfully..!"
+    "workspaceUpdated": "Workspace updated sucessfully..!",
+    "ownerLeaveWorkspace": "Owner can not leave the workspace.",
+    "transferOwnership": "Transfer Ownership",
+    "ownerUpdated": "Owner updated"
   },
   "tabs": {
     "general": "General",

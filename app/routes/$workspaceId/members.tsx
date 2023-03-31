@@ -50,7 +50,7 @@ type LoaderData = {
   invitedMembersCurrentPage: number
   allUsersCount: number
   invitedUsersCount: number
-  currentWorkspaceOwner: { createdById: string } | null
+  currentWorkspaceOwner: { ownerId: string } | null
   permission: { [key: string]: { [key: string]: boolean } }
 }
 

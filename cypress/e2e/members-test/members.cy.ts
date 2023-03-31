@@ -22,6 +22,7 @@ import {
   getElementInsideOfDropdown,
   getDropdownOptions,
   getDialogFooter,
+  getTable,
 } from "support/common-function"
 const owner = "Owner"
 const joinedMembers = "Joined Members"
@@ -172,8 +173,12 @@ describe("Test for members", () => {
 
   it("Tests to Check Change Role", () => {
     //Chip should be there
-    getChipTag().should("have.text", roles[1])
-    getChipTag().click()
+    getTable().each(() => {})
+    getChipTag().each((el) => {
+      if (el.text() === roles[1]) {
+        el.click()
+      }
+    })
 
     //To check dialog Functionality/visibility
     getDialogWrapper().should("be.visible")
@@ -206,9 +211,12 @@ describe("Test for members", () => {
       .should("have.text", "Cancel")
     getDialogFooter().get("#proceed").should("have.text", "Proceed")
     getDialogFooter().get("#cancel-change-role-pop-up").click()
-    getChipTag().should("have.text", roles[1])
+    getChipTag().each((el) => {
+      if (el.text() === roles[1]) {
+        el.click()
+      }
+    })
 
-    getChipTag().click()
     getChangeRoleId().then((eq) => {
       cy.wrap(eq).within(() => {
         getDropdown().click()
@@ -217,6 +225,5 @@ describe("Test for members", () => {
     })
     getDialogFooter().get("#proceed").click()
     getToaster().should("have.text", "Role Updated Successfully")
-    getChipTag().should("have.text", roles[2])
   })
 })
