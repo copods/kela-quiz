@@ -94,6 +94,7 @@
     "deleteQuestion": "Delete Question",
     "deleteTest": "Delete Test",
     "deleteAssessment": "Delete Assessment",
+    "totalQuestionsText": "Total Questions",
     "noRecords": "No Records"
   },
   "sideNav": {
@@ -107,7 +108,8 @@
     "closePopUp": "Close Pop Up",
     "enterCandidatesEmail": "Enter candidate’s email below to invite them for",
     "candidateEmail": "Candidate Email",
-    "inviteMore": "Invite More"
+    "inviteMore": "Invite More",
+    "invite": "Invite"
   },
   "testTableItem": {
     "menu": "Menu"
@@ -296,7 +298,8 @@
     "testCompleted": "Congratulations! You have completed the exam",
     "candidateContact": "We will contact you soon",
     "alreadyExamSubmitted": "Hey! you have already submitted the exam",
-    "ExpiredLink": "Link has expired"
+    "ExpiredLink": "Link has expired",
+    "alreadySubmitted": "You have already submitted the exam"
   },
   "toastConstants": {
     "addAssessment": "Enter Name to add assessment",
