@@ -13,9 +13,11 @@ CREATE TABLE "UserFeedback" (
 CREATE TABLE "UserFeedbackQuestion" (
     "id" TEXT NOT NULL,
     "question" TEXT NOT NULL,
-    "option" TEXT NOT NULL,
+    "value" TEXT NOT NULL,
     "questionType" TEXT NOT NULL,
     "userFeedbackId" TEXT,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "UserFeedbackQuestion_pkey" PRIMARY KEY ("id")
 );

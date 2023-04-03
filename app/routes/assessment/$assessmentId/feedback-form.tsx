@@ -8,7 +8,7 @@ import {
   getAssessmentName,
 } from "~/models/assessment.server"
 import {
-  candidateFeedbackDetails,
+  setCandidateFeedbackDetails,
   checkIfTestLinkIsValidAndRedirect,
 } from "~/services/assessment.service"
 
@@ -37,7 +37,7 @@ export const action: ActionFunction = async ({ params, request }) => {
     const formData = await request.formData()
     const details = JSON.parse(formData.get("details") as string)
     const assessmentId = params.assessmentId as string
-    const feedbackSubmitted = await candidateFeedbackDetails(
+    const feedbackSubmitted = await setCandidateFeedbackDetails(
       assessmentId,
       details.data
     )

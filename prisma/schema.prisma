@@ -12,6 +12,7 @@ model Workspace {
   name            String
   createdBy       User              @relation(fields: [createdById], references: [id])
   createdById     String
+  ownerId         String            @default("")
   userWorkspace   UserWorkspace[]
   createdAt       DateTime          @default(now())
   updatedAt       DateTime          @updatedAt
@@ -345,10 +346,13 @@ model UserFeedback {
 model UserFeedbackQuestion {
   id             String        @id @default(uuid())
   question       String
-  option         String
+  value          String
   questionType   String
   UserFeedback   UserFeedback? @relation(fields: [userFeedbackId], references: [id])
   userFeedbackId String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@unique([id])
 }

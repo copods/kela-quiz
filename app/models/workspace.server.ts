@@ -2,15 +2,17 @@ import { checkFeatureAuthorization } from "./authorization.server"
 import { getAdminId } from "./user.server"
 
 import { prisma } from "~/db.server"
+
 export async function getCurrentWorkspaceOwner(currentWorkspaceId: string) {
   const workspaceOwner = await prisma.workspace.findUnique({
     where: { id: currentWorkspaceId },
     select: {
-      createdById: true,
+      ownerId: true,
     },
   })
   return workspaceOwner
 }
+
 export async function getUserWorkspaces(userId: string, workspaceId?: string) {
   try {
     if (
@@ -93,6 +95,7 @@ export async function addWorkspace(workspaceName: string, userId: string) {
     data: {
       name: workspaceName,
       createdById: userId,
+      ownerId: userId,
     },
   })
   const roleId = await getAdminId()
@@ -144,7 +147,7 @@ export async function leaveWorkspace(workspaceId: string, userId: string) {
 
 export async function getOwnersWorkspaces(userId: string) {
   const ownerWorkspaceId = await prisma.workspace.findMany({
-    where: { createdById: userId },
+    where: { ownerId: userId },
   })
   return ownerWorkspaceId
 }
@@ -166,6 +169,76 @@ export async function updateUserWorkspace(
       where: { id },
       data: { name, updatedById },
     })
+  } catch (error) {
+    throw error
+  }
+}
+
+export async function getCurrentWorkspaceAdmins(
+  workspaceId: string,
+  userId: string
+) {
+  try {
+    return await prisma.userWorkspace.findMany({
+      where: {
+        workspaceId,
+        userId: { not: userId },
+        role: { name: "Admin" },
+      },
+      select: {
+        user: {
+          select: {
+            firstName: true,
+            lastName: true,
+            email: true,
+            id: true,
+          },
+        },
+      },
+    })
+  } catch (error) {
+    throw error
+  }
+}
+
+export async function updateWorkspaceOwner(
+  userId: string,
+  currentWorkspaceId: string,
+  newOwnerId: string
+) {
+  try {
+    if (
+      !(await checkFeatureAuthorization(
+        userId,
+        currentWorkspaceId,
+        "workspace",
+        "update"
+      ))
+    ) {
+      throw {
+        status: 403,
+      }
+    }
+
+    const oldOwner = await prisma.workspace.findFirst({
+      where: {
+        id: currentWorkspaceId,
+        ownerId: userId,
+      },
+    })
+
+    if (oldOwner) {
+      await prisma.workspace.update({
+        where: { id: currentWorkspaceId },
+        data: {
+          ownerId: newOwnerId,
+        },
+      })
+    } else {
+      throw {
+        status: 400,
+      }
+    }
   } catch (error) {
     throw error
   }

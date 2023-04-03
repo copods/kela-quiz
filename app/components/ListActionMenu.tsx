@@ -25,15 +25,17 @@ const ListMenuItem = ({
   menuDetails: Array<{
     id: string
     menuListText: string
+    menuListHelperText?: string
     menuListIcon?: string
     menuListLink?: string
     menuLinkAltTagLine?: string
     handleItemAction?: () => void
+    disabled?: boolean
   }>
   id: string
   setId?: (e: string) => void
   dataCyID?: string
-  customClasses: { item: string; itemsContainer?: string }
+  customClasses?: { item: string; itemsContainer?: string }
 }) => {
   const {
     elementRef,
@@ -96,16 +98,13 @@ const ListMenuItem = ({
           leaveTo="transform opacity-0 scale-95"
         >
           <Menu.Items
-            className={`absolute right-0 top-8 z-40 origin-bottom-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 ${
+            className={`absolute right-0 top-8 z-40 min-w-max origin-bottom-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 ${
               elementViewPortVisiblility
                 ? ""
                 : "-top-2 -translate-y-full transform"
-            } ${customClasses.itemsContainer}`}
+            } ${customClasses ? customClasses?.itemsContainer : ""}`}
           >
-            <div
-              className="dropdown flex flex-col px-1 py-1"
-              ref={componentRef}
-            >
+            <div className="dropdown flex flex-col py-2" ref={componentRef}>
               {menuDetails?.map((menuItem) => {
                 return (
                   <Menu.Item key={menuItem.id}>
@@ -113,12 +112,17 @@ const ListMenuItem = ({
                       <button
                         tabIndex={0}
                         name="deleteTest"
-                        className={`deleteTest inline-flex items-center justify-start rounded-md border border-none px-2 py-2 font-medium transition delay-75 ease-in-out hover:bg-gray-100 ${customClasses.item}`}
+                        className={`deleteTest max-w-75 items-start border border-none px-5 py-3 font-medium transition delay-75 ease-in-out hover:bg-blue-50 ${
+                          customClasses ? customClasses?.item : ""
+                        } ${menuItem?.disabled ? "cursor-not-allowed" : ""}`}
                         onClick={() => {
-                          onItemClick(true)
-                          setMenuOpeningClosing && setMenuOpeningClosing(false)
-                          menuItem.handleItemAction &&
-                            menuItem.handleItemAction()
+                          if (!menuItem?.disabled) {
+                            onItemClick(true)
+                            setMenuOpeningClosing &&
+                              setMenuOpeningClosing(false)
+                            menuItem.handleItemAction &&
+                              menuItem.handleItemAction()
+                          }
                         }}
                         data-cy={menuItem.id}
                       >
@@ -137,7 +141,14 @@ const ListMenuItem = ({
                               className="mr-1"
                             />
                           )}
-                          {menuItem?.menuListText}
+                          <div className="flex flex-col items-start gap-1">
+                            <span className="text-left text-sm">
+                              {menuItem?.menuListText}
+                            </span>
+                            <div className="text-left text-xs text-gray-500">
+                              {menuItem?.menuListHelperText}
+                            </div>
+                          </div>
                         </>
                       </button>
                     )}

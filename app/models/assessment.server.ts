@@ -842,11 +842,11 @@ async function calculateOverallResult(id: CandidateTest["id"]) {
   }
 }
 
-export async function candidateFeedback(
+export async function createCandidateAssessmentFeedback(
   TestId: Test["id"],
   feedbackDetails: Array<{
     question: string
-    option: string
+    value: string
     questionType: string
   }>
 ) {

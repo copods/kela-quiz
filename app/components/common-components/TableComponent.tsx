@@ -69,7 +69,7 @@ const HeaderDataCell = ({
       }}
       data-cy={title}
       id="table-th"
-      className={`flex h-3.25 flex-1 items-center border-b bg-tableBg px-4 text-sm text-gray-500 ${
+      className={`flex flex-1 items-center border-b bg-tableBg px-4 text-sm text-gray-500 ${
         index === 0
           ? "rounded-tl-md"
           : index === totalHeader
@@ -159,7 +159,7 @@ const Table = <T extends object>({
       >
         <div
           id="table-head-row"
-          className="sticky top-0 z-10 flex rounded-t-md bg-gray-100"
+          className="sticky top-0 z-10 flex h-3.25 rounded-t-md bg-gray-100"
         >
           {columns.map((header, index) => (
             <HeaderDataCell

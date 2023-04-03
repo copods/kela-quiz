@@ -29,7 +29,7 @@ export interface PasswordFieldProps {
   onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void
 }
 
-export interface DialogNewWrapperProps {
+export interface DialogWrapperProps {
   open: boolean
   setOpen: (e: boolean) => void
   children: JSX.Element
@@ -432,7 +432,7 @@ export interface SettingWorkspace {
 export interface CandidateFeedbackDetails {
   id: string
   question: string
-  option: string
+  value: string
   questionType: string
   required: boolean
   handleChange: (e: string) => void

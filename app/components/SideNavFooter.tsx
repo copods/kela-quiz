@@ -95,8 +95,8 @@ function Footer({
           menuDetails={menuItemsDetailsList}
           dataCyID={"sidenav-footer-menu"}
           customClasses={{
-            item: "text-gray-primary text-sm w-40",
-            itemsContainer: "border border-gray-300 shadow-md p-1",
+            item: "text-gray-primary text-sm",
+            itemsContainer: "border border-gray-300 shadow-md",
           }}
         />
       </div>

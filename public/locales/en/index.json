@@ -96,7 +96,8 @@
     "deleteAssessment": "Delete Assessment",
     "feedback": "Feedback",
     "filters": "Filters",
-    "totalQuestionsText": "Total Questions"
+    "totalQuestionsText": "Total Questions",
+    "noRecords": "No Records"
   },
   "sideNav": {
     "sideNavHeading": "Quiz",
@@ -300,11 +301,11 @@
     "candidateContact": "We will contact you soon",
     "alreadyExamSubmitted": "Hey! you have already submitted the exam",
     "ExpiredLink": "Link has expired",
-    "alreadySubmitted": "You have already submitted the exam",
     "feedbackButtonText": "Give us feedback",
     "feedbackSubmissionHeading": "Thank you for leaving feedback for us.",
     "feedbackSubmissionContent": "We love hearing from you!",
-    "feedbackHeader": "Feedback"
+    "feedbackHeader": "Feedback",
+    "alreadySubmitted": "You have already submitted the exam"
   },
   "toastConstants": {
     "addAssessment": "Enter Name to add assessment",
@@ -325,7 +326,8 @@
     "cannotAddTestZeroQuestion": "Cannot add test with 0 questions.",
     "notAdMoreThanAvailableQuestion": "Cannot add more than available questions",
     "userProfileUpdatedSuccessfully": "User Profile Updated Successfully",
-    "roleUpdatedSuccessfully": "Role Updated Successfully"
+    "roleUpdatedSuccessfully": "Role Updated Successfully",
+    "ownerTransferOwnerShip": "Only Owner can Transfer Ownership"
   },
   "otpConstants": {
     "header": "OTP Verification",
@@ -351,7 +353,10 @@
     "leaveWorkspace": "Leave workspace",
     "leave": "Leave",
     "leaveWorkspaceConfirmation": "Are you sure you want to leave this workspace?",
-    "workspaceUpdated": "Workspace updated sucessfully..!"
+    "workspaceUpdated": "Workspace updated sucessfully..!",
+    "ownerLeaveWorkspace": "Owner can not leave the workspace.",
+    "transferOwnership": "Transfer Ownership",
+    "ownerUpdated": "Owner updated"
   },
   "tabs": {
     "general": "General",

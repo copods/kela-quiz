@@ -172,11 +172,13 @@ type DropdownOptions<T> = Array<
     ? string
     : T extends number
     ? number
+    : T extends boolean
+    ? boolean
     : never
 >
 
 export const NewDropdownField = <
-  T extends object | string | number,
+  T extends object | string | number | boolean,
   U extends keyof T
 >({
   dropdownOptions,
@@ -187,12 +189,14 @@ export const NewDropdownField = <
   helperText,
   action,
   height = "lg",
+  id,
 }: {
   dropdownOptions: DropdownOptions<T>
-  labelKey?: U
-  valueKey?: U
+  labelKey?: U | string
+  valueKey?: U | string
   value: string
   setValue: (e: string) => void
+  id?: string
   helperText?: string
   action?: Action[]
   height?: "sm" | "lg"
@@ -207,7 +211,7 @@ export const NewDropdownField = <
     if (valueKey && labelKey) {
       for (let option of dropdownOptions as DropdownOptions<T>) {
         if ((option as Record<typeof valueKey, string>)[valueKey] === val) {
-          return (option as Record<typeof valueKey, string>)[labelKey]
+          return (option as Record<typeof labelKey, string>)[labelKey]
         }
       }
     }
@@ -226,7 +230,7 @@ export const NewDropdownField = <
         <>
           <div
             className="dropdown relative w-full"
-            id="dropdown"
+            id={id ?? "dropdown"}
             title={t("sectionsConstants.dropdown")}
             aria-label={t("sectionsConstants.dropdown")}
             ref={elementRef}
@@ -316,6 +320,8 @@ export const NewDropdownField = <
                         ? string
                         : T extends number
                         ? number
+                        : T extends boolean
+                        ? boolean
                         : never,
                       i: number
                     ) => (
@@ -393,6 +399,21 @@ export const NewDropdownField = <
                         )}
                       </Listbox.Option>
                     )
+                  )}
+                  {dropdownOptions.length === 0 && (
+                    <Listbox.Option
+                      className={`relative z-20 cursor-not-allowed select-none py-3 px-4`}
+                      value={null}
+                    >
+                      <div className="flex items-center">
+                        <span
+                          className="dropdown-option ml-2 block truncate font-normal"
+                          id="option"
+                        >
+                          {t("commonConstants.noRecords")}
+                        </span>
+                      </div>
+                    </Listbox.Option>
                   )}
                 </div>
               </Listbox.Options>

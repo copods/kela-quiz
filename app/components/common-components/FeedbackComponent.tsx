@@ -47,7 +47,7 @@ const FeedbackComponent = ({
                 <Rating
                   id={feedback.id}
                   count={["1", "2", "3", "4", "5"]}
-                  option={feedback.option}
+                  option={feedback.value}
                   handleChange={(data) => {
                     !readOnly && feedback.handleChange(data)
                   }}
@@ -65,7 +65,7 @@ const FeedbackComponent = ({
                   disabled={readOnly && true}
                   maxLength={500}
                 >
-                  {feedback.option}
+                  {feedback.value}
                 </textarea>
               )}
             </div>
@@ -86,9 +86,9 @@ const FeedbackComponent = ({
             value="submit"
             name="submit"
             isDisabled={
-              !feebackDetails[0].option ||
-              !feebackDetails[1].option ||
-              !feebackDetails[2].option
+              !feebackDetails[0].value ||
+              !feebackDetails[1].value ||
+              !feebackDetails[2].value
             }
             onClick={handleChange}
           />
