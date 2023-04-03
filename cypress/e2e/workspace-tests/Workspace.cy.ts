@@ -1,12 +1,18 @@
 import {
+  getBadgeTag,
   getCancelEditWorkspaceBtn,
+  getConfirmOwnershipBtn,
   getCurrentWorkspace,
   getEditWorkspaceBtn,
   getHr,
+  getJoinedMembers,
+  getOwnerDropdown,
   getSaveWorkspaceBtn,
   getSettings,
   getSettingsHeading,
   getToaster,
+  getTransferOwnership,
+  getWorkspaceListMenu,
   getWorkspaceNameInput,
   getWorkspaces,
 } from "support/common-function"
@@ -74,5 +80,26 @@ describe("Test for settings", () => {
     getEditWorkspaceBtn().click()
     getWorkspaceNameInput().clear()
     getSaveWorkspaceBtn().should("have.attr", "disabled")
+
+    getWorkspaceListMenu().click()
+    getTransferOwnership().click()
+    getOwnerDropdown()
+      .click()
+      .find("ul")
+      .children()
+      .each((element, index) => {
+        if (index === 0) {
+          cy.wrap(element).click()
+          return
+        }
+      })
+    getConfirmOwnershipBtn().click()
+    getToaster().should("contain", "Owner updated")
+    getJoinedMembers().click()
+    cy.viewport(1500, 1000)
+    getBadgeTag()
+      .should("be.visible")
+      .parent()
+      .should("contain", "Copods Admin")
   })
 })
