@@ -432,7 +432,7 @@ export interface SettingWorkspace {
 export interface CandidateFeedbackDetails {
   id: string
   question: string
-  option: string
+  value: string
   questionType: string
   required: boolean
   handleChange: (e: string) => void

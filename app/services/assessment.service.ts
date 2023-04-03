@@ -4,11 +4,11 @@ import { redirect } from "@remix-run/node"
 import { json } from "remix-utils"
 
 import {
-  candidateFeedback,
   candidateSectionStart,
   candidateTestStart,
   checkIfFeedbackAlreadySubmitted,
   checkIfTestLinkIsValid,
+  createCandidateAssessmentFeedback,
   endAssessment,
   endCurrentSection,
   getCandidate,
@@ -416,15 +416,15 @@ export async function getCandidateDetails(assessmentId: string) {
  * @returns json
  */
 
-export async function candidateFeedbackDetails(
+export async function setCandidateFeedbackDetails(
   assessmentId: string,
   feedbackDetails: Array<{
     question: string
-    option: string
+    value: string
     questionType: string
   }>
 ) {
-  return await candidateFeedback(assessmentId, feedbackDetails)
+  return await createCandidateAssessmentFeedback(assessmentId, feedbackDetails)
     .then((res) => {
       return json<ActionData>({
         resp: {

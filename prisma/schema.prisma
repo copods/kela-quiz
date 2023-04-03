@@ -346,10 +346,13 @@ model UserFeedback {
 model UserFeedbackQuestion {
   id             String        @id @default(uuid())
   question       String
-  option         String
+  value          String
   questionType   String
   UserFeedback   UserFeedback? @relation(fields: [userFeedbackId], references: [id])
   userFeedbackId String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@unique([id])
 }

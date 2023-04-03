@@ -28,11 +28,11 @@ const FeedbackForm = () => {
     feedbackSubmittedAlready
   )
 
-  const feebackDetails = [
+  const candidateFeedbackDetails = [
     {
       id: "experience-level",
       question: "How do you like the experience of K-Quiz portal?",
-      option: experienceValue,
+      value: experienceValue,
       questionType: "rating",
       required: true,
       handleChange: (value: string) => setExperienceValue(value),
@@ -40,7 +40,7 @@ const FeedbackForm = () => {
     {
       id: "difficulty-level",
       question: "How do you rate the difficulty level of the test?",
-      option: levelValue,
+      value: levelValue,
       questionType: "rating",
       required: true,
       handleChange: (value: string) => setLevelValue(value),
@@ -48,7 +48,7 @@ const FeedbackForm = () => {
     {
       id: "overall-experience",
       question: "Please rate your overall experience",
-      option: overallValue,
+      value: overallValue,
       questionType: "rating",
       required: true,
       handleChange: (value: string) => setOverAllValue(value),
@@ -56,7 +56,7 @@ const FeedbackForm = () => {
     {
       id: "feedback-comment",
       question: "Write your feedback",
-      option: feebackComment,
+      value: feebackComment,
       questionType: "text",
       required: false,
       handleChange: (value: string) => setFeedbackComment(value),
@@ -65,10 +65,12 @@ const FeedbackForm = () => {
   const submit = useSubmit()
 
   const onSubmit = () => {
-    const data = feebackDetails.map((item: CandidateFeedbackDetails) => {
-      const { handleChange, id, required, ...mainValue } = item
-      return mainValue
-    })
+    const data = candidateFeedbackDetails.map(
+      (item: CandidateFeedbackDetails) => {
+        const { handleChange, id, required, ...mainValue } = item
+        return mainValue
+      }
+    )
     submit(
       { details: JSON.stringify({ data: data }) },
       {
@@ -100,7 +102,7 @@ const FeedbackForm = () => {
       <div className="flex flex-1 justify-center bg-questionBackground pt-14 ">
         {!feedbackSubmitted ? (
           <FeedbackComponent
-            feebackDetails={feebackDetails}
+            feebackDetails={candidateFeedbackDetails}
             assessmentName={assessmentName}
             readOnly={false}
             elementRef={bottomRef}
