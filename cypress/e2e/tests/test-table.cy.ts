@@ -81,14 +81,13 @@ describe("Visiting Assessment", () => {
       .should("have.css", "font-size", "14px")
 
     // To check table title - Created on
-    cy.viewport(1200, 1000)
     getCreatedOnHeader()
       .should("have.text", tableTitles.createdOn)
       .should("have.css", "color", "rgb(107, 114, 128)")
       .should("have.css", "font-weight", "400")
       .should(
         "have.class",
-        "flex h-3.25 flex-1 items-center border-b bg-tableBg px-4 text-sm text-gray-500"
+        "flex flex-1 items-center border-b bg-tableBg px-4 text-sm text-gray-500"
       )
 
     // To check table title - Created By
