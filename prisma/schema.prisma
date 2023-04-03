@@ -21,7 +21,8 @@ model Workspace {
   test            Test[]
   candidateResult CandidateResult[]
 
-  Invites Invites[]
+  Invites      Invites[]
+  UserFeedback UserFeedback[]
 
   @@unique([name, createdById])
 }
@@ -334,6 +335,9 @@ model UserFeedback {
   id              String        @id @default(uuid())
   candidateTest   CandidateTest @relation(fields: [candidateTestId], references: [id])
   candidateTestId String
+
+  workspace   Workspace @relation(fields: [workspaceId], references: [id])
+  workspaceId String
 
   userFeedbackQuestion UserFeedbackQuestion[]
   candidate            Candidate?             @relation(fields: [candidateId], references: [id])
