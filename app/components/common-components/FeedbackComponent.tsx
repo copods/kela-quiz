@@ -21,6 +21,13 @@ const FeedbackComponent = ({
   elementRef?: MutableRefObject<HTMLDivElement>
   handleChange: () => void
 }) => {
+  const isButtonDisabled = () => {
+    const isDisabled = feebackDetails.some(
+      (feedback) => !feedback.value && feedback.required
+    )
+    return isDisabled
+  }
+
   return (
     <div className="flex h-728 w-728 flex-col overflow-hidden rounded-lg bg-white shadow-sm">
       <div
@@ -46,7 +53,7 @@ const FeedbackComponent = ({
               {feedback.required ? (
                 <Rating
                   id={feedback.id}
-                  count={["1", "2", "3", "4", "5"]}
+                  ratings={["1", "2", "3", "4", "5"]}
                   option={feedback.value}
                   handleChange={(data) => {
                     !readOnly && feedback.handleChange(data)
@@ -85,11 +92,7 @@ const FeedbackComponent = ({
             type="submit"
             value="submit"
             name="submit"
-            isDisabled={
-              !feebackDetails[0].value ||
-              !feebackDetails[1].value ||
-              !feebackDetails[2].value
-            }
+            isDisabled={isButtonDisabled()}
             onClick={handleChange}
           />
         )}

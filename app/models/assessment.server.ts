@@ -851,22 +851,40 @@ export async function createCandidateAssessmentFeedback(
   }>
 ) {
   try {
-    const tests = await prisma.candidateTest.findFirst({
+    const test = await prisma.candidateTest.findFirst({
       where: { id: TestId },
       include: {
         candidate: true,
         test: true,
       },
     })
-    if (tests) {
+    let count = 0
+    let questionsLength = 0
+    let feedbackType = ""
+    feedbackDetails.forEach((feedback) => {
+      if (feedback.questionType === "rating") {
+        count = count + Number(feedback.value)
+        questionsLength = questionsLength + 1
+      }
+    })
+    if (count > questionsLength * 3) {
+      feedbackType = "Positive"
+    } else if (count < questionsLength * 3) {
+      feedbackType = "Negative"
+    } else if ((count = questionsLength * 3)) {
+      feedbackType = "Neutral"
+    }
+
+    if (test) {
       await prisma.userFeedback.create({
         data: {
           candidateTestId: TestId,
-          candidateId: tests.candidateId,
-          workspaceId: tests.test.workspaceId as string,
+          candidateId: test.candidateId,
+          workspaceId: test.test.workspaceId as string,
           userFeedbackQuestion: {
             create: feedbackDetails,
           },
+          feedbackType: feedbackType,
         },
       })
     }

@@ -4,6 +4,7 @@ CREATE TABLE "UserFeedback" (
     "candidateTestId" TEXT NOT NULL,
     "workspaceId" TEXT NOT NULL,
     "candidateId" TEXT,
+    "feedbackType" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
