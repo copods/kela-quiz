@@ -851,19 +851,19 @@ export async function createCandidateAssessmentFeedback(
   }>
 ) {
   try {
-    const tests = await prisma.candidateTest.findFirst({
+    const test = await prisma.candidateTest.findFirst({
       where: { id: TestId },
       include: {
         candidate: true,
         test: true,
       },
     })
-    if (tests) {
+    if (test) {
       await prisma.userFeedback.create({
         data: {
           candidateTestId: TestId,
-          candidateId: tests.candidateId,
-          workspaceId: tests.test.workspaceId as string,
+          candidateId: test.candidateId,
+          workspaceId: test.test.workspaceId as string,
           userFeedbackQuestion: {
             create: feedbackDetails,
           },

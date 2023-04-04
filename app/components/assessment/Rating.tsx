@@ -1,36 +1,36 @@
 const Rating = ({
   id,
-  count = ["1", "2", "3", "4", "5"],
+  ratings = ["1", "2", "3", "4", "5"],
   option,
   handleChange,
 }: {
   id: string
-  count: string[]
+  ratings: string[]
   option: string
   handleChange: (e: string) => void
 }): JSX.Element => {
   return (
     <div className="flex w-fit flex-col justify-between gap-2" key={id}>
       <div className="flex flex-row gap-4">
-        {count.map((counter) => {
+        {ratings.map((rating) => {
           return (
-            <label key={counter} htmlFor={counter.toString() + id}>
+            <label key={rating} htmlFor={rating.toString() + id}>
               <span
                 className={`flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg ${
-                  option === counter
+                  option === rating
                     ? "bg-primary text-white"
                     : "bg-blue-50 hover:bg-blue-100"
                 }`}
               >
-                {counter}
+                {rating}
               </span>
               <input
                 name={id}
                 hidden
-                key={counter}
+                key={rating}
                 type="radio"
-                value={counter}
-                id={counter.toString() + id}
+                value={rating}
+                id={rating.toString() + id}
                 onChange={(e) => {
                   handleChange(e.target.value)
                 }}
