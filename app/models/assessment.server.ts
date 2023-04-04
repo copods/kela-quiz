@@ -855,6 +855,7 @@ export async function createCandidateAssessmentFeedback(
       where: { id: TestId },
       include: {
         candidate: true,
+        test: true,
       },
     })
     if (tests) {
@@ -862,6 +863,7 @@ export async function createCandidateAssessmentFeedback(
         data: {
           candidateTestId: TestId,
           candidateId: tests.candidateId,
+          workspaceId: tests.test.workspaceId as string,
           userFeedbackQuestion: {
             create: feedbackDetails,
           },
