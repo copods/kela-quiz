@@ -1,5 +1,6 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
+import { useLoaderData, useNavigate } from "@remix-run/react"
 import { t } from "i18next"
 
 import negativeFeedbackIcon from "../../../public/assets/negativeFeedback.svg"
@@ -12,39 +13,55 @@ import Header from "../header/Header"
 import { FeedbackCard } from "./FeedbackCard"
 import { FeedbackTableHeader } from "./FeedbackTableHeader"
 import {
+  ActionRenderer,
+  CandidateEmailRenderer,
+  CandidateNameRenderer,
   FeedbackTypeRenderer,
+  GivenOnRenderer,
   TestNameRenderer,
 } from "./FeedbackTableRenderers"
 
-import type { tableColumnType } from "~/interface/Interface"
+import type { CandidateFeedbacks, tableColumnType } from "~/interface/Interface"
 
 export const FeedbackContainer = () => {
-  const [tablePageSize, setTablePageSize] = useState(5)
-  const [tablePageNumber, setTablePageNumber] = useState(1)
+  const candidatesFeedbackData = JSON.parse(useLoaderData())
+  const [feedbackCurrentPage, setFeedbackCurrentPage] = useState(
+    candidatesFeedbackData.feedbackCurrentPage
+  )
+  const [feedbackPageSize, setFeedbackPageSize] = useState(5)
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    setFeedbackCurrentPage(candidatesFeedbackData.feedbackCurrentPage)
+  }, [candidatesFeedbackData.feedbackCurrentPage])
+  console.log("feedback Details", candidatesFeedbackData)
 
   const feedBackCardDetails = [
     {
       id: "totalFeedback",
       title: t("feedback.totalFeedback"),
-      value: 2109,
+      value:
+        candidatesFeedbackData.totalFeedbackCounts.positive +
+        candidatesFeedbackData.totalFeedbackCounts.negative +
+        candidatesFeedbackData.totalFeedbackCounts.neutral,
       icon: totalFeedbackIcon,
     },
     {
       id: "positiveFeedback",
       title: t("feedback.positiveFeedback"),
-      value: 1754,
+      value: candidatesFeedbackData.totalFeedbackCounts.positive,
       icon: positiveFeedbackIcon,
     },
     {
       id: "negativeFeedback",
       title: t("feedback.negativeFeedback"),
-      value: 98,
+      value: candidatesFeedbackData.totalFeedbackCounts.negative,
       icon: negativeFeedbackIcon,
     },
     {
       id: "neutralFeedback",
       title: t("feedback.neutralFeedback"),
-      value: 256,
+      value: candidatesFeedbackData.totalFeedbackCounts.neutral,
       icon: neutralFeedbackIcon,
     },
   ]
@@ -59,13 +76,13 @@ export const FeedbackContainer = () => {
     {
       title: "Candidate Name",
       field: "candidate_name",
-      // render: "Candidate Name",
+      render: CandidateNameRenderer,
       width: "15%",
     },
     {
       title: "Candidate Email",
       field: "candidate_email",
-      // render: "Candidate Email",
+      render: CandidateEmailRenderer,
       width: "20%",
     },
     {
@@ -77,59 +94,37 @@ export const FeedbackContainer = () => {
     {
       title: "Given On",
       field: "given_on",
-      // render: "Given On",
+      render: GivenOnRenderer,
       width: "15%",
     },
     {
       title: "Action",
       field: "action",
-      // render: "action",
+      render: ActionRenderer,
       width: "10%",
     },
   ]
 
-  const tableData = [
-    {
-      test_name: "Fresher’s Pre Interview Assesment",
-      candidate_name: "Anurag Patel",
-      candidate_email: "anuragpatel@kquiz.com",
-      feedback_type: "Positive",
-      given_on: "21 June 2022",
-      action: "Action",
-    },
-    {
-      test_name: "Fresher’s Pre Interview Assesment",
-      candidate_name: "Anurag Patel",
-      candidate_email: "anuragpatel@kquiz.com",
-      feedback_type: "Positive",
-      given_on: "21 June 2022",
-      action: "Action",
-    },
-    {
-      test_name: "Fresher’s Pre Interview Assesment",
-      candidate_name: "Anurag Patel",
-      candidate_email: "anuragpatel@kquiz.com",
-      feedback_type: "Negative",
-      given_on: "21 June 2022",
-      action: "Action",
-    },
-    {
-      test_name: "Fresher’s Pre Interview Assesment",
-      candidate_name: "Anurag Patel",
-      candidate_email: "anuragpatel@kquiz.com",
-      feedback_type: "Neutral",
-      given_on: "21 June 2022",
-      action: "Action",
-    },
-    {
-      test_name: "Fresher’s Pre Interview Assesment",
-      candidate_name: "Anurag Patel",
-      candidate_email: "anuragpatel@kquiz.com",
-      feedback_type: "Positive",
-      given_on: "21 June 2022",
-      action: "Action",
-    },
-  ]
+  const tableData = candidatesFeedbackData.userFeedback.map(
+    (feedback: CandidateFeedbacks) => {
+      return {
+        test_name: feedback.candidate.tests[0].test.name,
+        candidate_name:
+          feedback.candidate.firstName + " " + feedback.candidate.lastName,
+        candidate_email: feedback.candidate.email,
+        feedback_type: feedback.feedbackType,
+        given_on: feedback.createdAt,
+      }
+    }
+  )
+
+  useEffect(() => {
+    navigate(`?page=${feedbackCurrentPage}&limit=${feedbackPageSize}`, {
+      replace: true,
+    })
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [feedbackPageSize, feedbackCurrentPage])
 
   return (
     <div className="flex h-full flex-col gap-10">
@@ -151,12 +146,12 @@ export const FeedbackContainer = () => {
           <Table
             data={tableData}
             columns={testColumns}
-            paginationEnabled={true}
-            pageSize={tablePageSize}
-            setPageSize={setTablePageSize}
-            currentPage={tablePageNumber}
-            onPageChange={setTablePageNumber}
-            totalItems={tableData.length}
+            paginationEnabled={tableData.length > 0 && true}
+            pageSize={feedbackPageSize}
+            setPageSize={setFeedbackPageSize}
+            currentPage={feedbackCurrentPage}
+            onPageChange={setFeedbackCurrentPage}
+            totalItems={candidatesFeedbackData.allCandidatesFeedbackCount}
           />
         </div>
       </div>

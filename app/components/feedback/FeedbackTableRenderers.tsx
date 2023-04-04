@@ -1,3 +1,7 @@
+import moment from "moment"
+
+import { Icon } from "@iconify/react"
+
 import Chip from "../common-components/Chip"
 
 type tableData = {
@@ -35,5 +39,28 @@ export const FeedbackTypeRenderer = (data: tableData, index: number) => {
           : "default"
       }
     />
+  )
+}
+
+export const GivenOnRenderer = (data: tableData) => {
+  return <span>{moment(data?.given_on).format("DD MMMM YYYY")}</span>
+}
+
+export const CandidateNameRenderer = (data: tableData) => {
+  return <span>{data.candidate_name}</span>
+}
+
+export const CandidateEmailRenderer = (data: tableData) => {
+  return <span>{data.candidate_email}</span>
+}
+
+export const ActionRenderer = (data: tableData) => {
+  return (
+    <div className="flex gap-4">
+      <Icon
+        icon="material-symbols:mail-outline"
+        className="bg-light-200 gray-800 cursor-pointer text-2xl focus:outline-dotted focus:outline-2"
+      />
+    </div>
   )
 }
