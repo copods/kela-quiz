@@ -27,6 +27,7 @@ module.exports = {
       },
       height: {
         cooldownSVG: "355px",
+        728: "728px",
         3.25: "52px",
         728: "728px",
       },
