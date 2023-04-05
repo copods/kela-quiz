@@ -1,11 +1,14 @@
 import moment from "moment"
 
 import { redirect } from "@remix-run/node"
+import { json } from "remix-utils"
 
 import {
   candidateSectionStart,
   candidateTestStart,
+  checkIfFeedbackAlreadySubmitted,
   checkIfTestLinkIsValid,
+  createCandidateAssessmentFeedback,
   endAssessment,
   endCurrentSection,
   getCandidate,
@@ -32,6 +35,17 @@ export type CandidateStep = {
   currentSectionId?: string
 }
 
+type ActionData = {
+  errors?: {
+    title: string
+    status: number
+  }
+  resp?: {
+    title: string
+    status: number
+    feedbackSubmitted: boolean
+  }
+}
 /**
  * Functions checks if the given assessment link is valid. If true, it will return the url to redirect the user to (only if current route does not match the next route in DB)
  * If false, it will return null and this will result in a 404 Not Found
@@ -74,29 +88,19 @@ export async function checkIfTestLinkIsValidAndRedirect(
           return `/assessment/${assessmentID}/${candidateStepObj.currentSectionId}/cooldown`
         case "end":
           return `/assessment/${assessmentID}/end-assessment`
+        case "feedback-form":
+          return `/assessment/${assessmentID}/feedback-form`
         case "already-submitted":
           return `/assessment/${assessmentID}/already-submitted`
       }
     }
   }
-
-  if (currentCandidateStep?.endAt) {
-    const CurrentTime = moment(new Date())
-    const examEndedBefore = moment(currentCandidateStep?.endAt)
-    const duration = CurrentTime.diff(examEndedBefore, "minute")
-    if (duration >= 1) {
-      await updateNextStep({
-        assessmentId: assessmentID as string,
-        nextRoute: "already-submitted",
-        isSection: false,
-      })
-      if (currentRoute !== candidateStepObj.nextRoute) {
-        return `/assessment/${assessmentID}/already-submitted`
-      }
-    } else {
-      if (currentRoute !== candidateStepObj.nextRoute) {
-        return `/assessment/${assessmentID}/end-assessment`
-      }
+  if (currentRoute === "end") {
+    const feedbackSubmittedAlready = await checkIfFeedbackAlreadySubmitted(
+      assessmentID
+    )
+    if (currentCandidateStep?.endAt && feedbackSubmittedAlready) {
+      return `/assessment/${assessmentID}/already-submitted`
     }
   }
 }
@@ -403,4 +407,40 @@ export async function endCandidateAssessment(
  */
 export async function getCandidateDetails(assessmentId: string) {
   return getCandidateDetailsIfExists(assessmentId as string)
+}
+
+/**
+ *
+ * @param assessmentId
+ * @param feedbackDetails
+ * @returns json
+ */
+
+export async function setCandidateFeedbackDetails(
+  assessmentId: string,
+  feedbackDetails: Array<{
+    question: string
+    value: string
+    questionType: string
+  }>
+) {
+  return await createCandidateAssessmentFeedback(assessmentId, feedbackDetails)
+    .then((res) => {
+      return json<ActionData>({
+        resp: {
+          title: "commonConstants.success",
+          status: 200,
+          feedbackSubmitted: true,
+        },
+      })
+    })
+    .catch((err) => {
+      let title = "commonConstants.commonError"
+      return json<ActionData>({
+        errors: {
+          title,
+          status: 400,
+        },
+      })
+    })
 }

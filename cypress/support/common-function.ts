@@ -250,3 +250,9 @@ export const getChangeRoleId = () => cy.get("#change-role-dialog")
 export const getRoleChangeContent = () => cy.get('[data-cy="role-heading"]')
 export const getDropdownOptions = () => cy.get(".dropDownSelect")
 export const getDialogFooter = () => cy.get("[data-cy='dialog-footer']")
+export const getFeedbackHeader = () =>
+  cy.get("[data-cy='feedback-form-header']")
+export const getFeedbackFooter = () =>
+  cy.get("[data-cy='feedback-form-footer']")
+
+export const getFeedbackQuestion = () => cy.get("[data-cy='feedback-question']")

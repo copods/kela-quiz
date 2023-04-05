@@ -428,3 +428,12 @@ export interface SettingWorkspace {
   workspace: { name: string }
   workspaceId: string
 }
+
+export interface CandidateFeedbackDetails {
+  id: string
+  question: string
+  value: string
+  questionType: string
+  required: boolean
+  handleChange: (e: string) => void
+}
