@@ -39,6 +39,7 @@ export const FeedbackContainer = () => {
     id: "all_tests",
     name: "All Tests",
   })
+  const [sortFilter, setSortFilter] = useState(candidatesFeedbackData.sortBy)
 
   useEffect(() => {
     setFeedbackCurrentPage(candidatesFeedbackData.feedbackCurrentPage)
@@ -122,36 +123,27 @@ export const FeedbackContainer = () => {
         candidate_email: feedback.candidate.email,
         feedback_type: feedback.feedbackType,
         given_on: feedback.createdAt,
+        action: feedback.userFeedbackQuestion,
       }
     }
   )
 
   useEffect(() => {
     navigate(
-      `?page=${feedbackCurrentPage}&limit=${feedbackPageSize}&feedbackType=${feedbackTypeFilter}&testId=${testFilter}`,
+      `?page=${feedbackCurrentPage}&limit=${feedbackPageSize}&feedbackType=${feedbackTypeFilter}&testId=${testFilter}&sortBy=${sortFilter}`,
       {
         replace: true,
       }
     )
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [feedbackPageSize, feedbackCurrentPage])
-
-  useEffect(() => {
-    navigate(
-      `?page=${feedbackCurrentPage}&limit=${feedbackPageSize}&feedbackType=${feedbackTypeFilter}&testId=${testFilter}`,
-      { replace: true }
-    )
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [feedbackTypeFilter])
-
-  useEffect(() => {
-    navigate(
-      `?page=${feedbackCurrentPage}&limit=${feedbackPageSize}&feedbackType=${feedbackTypeFilter}&testId=${testFilter}`,
-      { replace: true }
-    )
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [testFilter])
+  }, [
+    feedbackPageSize,
+    feedbackCurrentPage,
+    feedbackTypeFilter,
+    testFilter,
+    sortFilter,
+  ])
 
   return (
     <div className="flex h-full flex-col gap-10">
@@ -177,6 +169,8 @@ export const FeedbackContainer = () => {
             testFilter={testFilter}
             setTestFilter={(e: string) => setTestFilter(e)}
             totalTests={candidatesFeedbackData.allTests}
+            sortFilter={sortFilter}
+            setSortFilter={(e: string) => setSortFilter(e)}
           />
           <Table
             data={tableData}

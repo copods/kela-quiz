@@ -20,6 +20,7 @@ type LoaderData = {
   totalFeedbackCounts: Awaited<ReturnType<typeof getAllFeedbacksCounts>>
   testId: string
   allTests: Awaited<ReturnType<typeof getAllTestsForFeedbackFilter>>
+  sortBy: string
 }
 
 export const loader: LoaderFunction = async ({ request, params }) => {
@@ -30,13 +31,15 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const feedbackCurrentPage = Math.max(Number(query.get("page") || 1), 1)
   const feedbackType = query.get("feedbackType") || "all_feedbacks"
   const testId = query.get("testId") || "all_tests"
+  const sortBy = query.get("sortBy") || "Newer"
 
   const userFeedback = await getCandidatesFeedback(
     currentWorkspaceId,
     feedbackItemsPerPage,
     feedbackCurrentPage,
     feedbackType,
-    testId
+    testId,
+    sortBy
   )
   const allCandidatesFeedbackCount = await getAllCandidatesFeedbackCount(
     currentWorkspaceId
@@ -53,6 +56,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     totalFeedbackCounts,
     testId,
     allTests,
+    sortBy,
   })
 }
 

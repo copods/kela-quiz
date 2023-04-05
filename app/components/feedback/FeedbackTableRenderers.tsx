@@ -1,8 +1,14 @@
+import { useState } from "react"
+
 import moment from "moment"
 
 import { Icon } from "@iconify/react"
 
 import Chip from "../common-components/Chip"
+import { DialogWrapper } from "../common-components/Dialog"
+import FeedbackComponent from "../common-components/FeedbackComponent"
+
+import type { CandidateFeedbackDetails } from "~/interface/Interface"
 
 type tableData = {
   test_name: string
@@ -10,7 +16,7 @@ type tableData = {
   candidate_email: string
   feedback_type: string
   given_on: string
-  action: string
+  action: CandidateFeedbackDetails[]
 }
 
 export const TestNameRenderer = (data: tableData, index: number) => {
@@ -55,12 +61,59 @@ export const CandidateEmailRenderer = (data: tableData) => {
 }
 
 export const ActionRenderer = (data: tableData) => {
+  const [openfeedbackDetails, setOpenFeedbackDetails] = useState(false)
+  const feedbackGivenByDetails = {
+    name: data.candidate_name,
+    email: data.candidate_email,
+  }
+
+  const handleChange = () => {
+    setOpenFeedbackDetails(false)
+  }
+  const sendEmail = () => {
+    let email = data.candidate_email
+    let subject = "Regarding your feedback"
+    let emailBody = `Hello ${data.candidate_name}%3A%0D%0A%0D%0ABest Regards%2C%0D%0A%20Copods`
+    let cc = "K-Quiz@copods.co"
+    document.location =
+      "mailto:" +
+      email +
+      "?subject=" +
+      subject +
+      "&cc=" +
+      cc +
+      "&body=" +
+      emailBody
+  }
+
   return (
-    <div className="flex gap-4">
-      <Icon
-        icon="material-symbols:mail-outline"
-        className="bg-light-200 gray-800 cursor-pointer text-2xl focus:outline-dotted focus:outline-2"
-      />
-    </div>
+    <>
+      <div className="flex gap-3">
+        <Icon
+          icon="ic:outline-message"
+          className="gray-800 cursor-pointer text-2xl focus:outline-dotted focus:outline-2"
+          onClick={() => setOpenFeedbackDetails(!openfeedbackDetails)}
+        />
+        <Icon
+          icon="material-symbols:mail-outline"
+          className="gray-800 cursor-pointer text-2xl focus:outline-dotted focus:outline-2"
+          onClick={() => sendEmail()}
+        />
+      </div>
+      {openfeedbackDetails && (
+        <DialogWrapper
+          open={openfeedbackDetails}
+          setOpen={setOpenFeedbackDetails}
+        >
+          <FeedbackComponent
+            feebackDetails={data.action}
+            assessmentName={data.test_name}
+            givenBy={feedbackGivenByDetails}
+            readOnly={true}
+            handleChange={handleChange}
+          />
+        </DialogWrapper>
+      )}
+    </>
   )
 }

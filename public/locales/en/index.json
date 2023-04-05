@@ -94,10 +94,12 @@
     "deleteQuestion": "Delete Question",
     "deleteTest": "Delete Test",
     "deleteAssessment": "Delete Assessment",
-    "feedback": "Feedback",
+    "feedback": "Feedbacks",
     "filters": "Filters",
     "totalQuestionsText": "Total Questions",
-    "noRecords": "No Records"
+    "noRecords": "No Records",
+    "sortBy": "Sort by",
+    "close": "Close"
   },
   "sideNav": {
     "sideNavHeading": "Quiz",
@@ -380,6 +382,7 @@
     "positiveFeedback": "Positive Feedback",
     "negativeFeedback": "Negative Feedback",
     "neutralFeedback": "Neutral Feedback",
-    "allFeedbacks": "All Feedbacks"
+    "allFeedbacks": "All Feedbacks",
+    "replyWithMail": "Reply with email"
   }
 }

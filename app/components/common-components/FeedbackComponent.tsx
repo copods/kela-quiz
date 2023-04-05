@@ -11,12 +11,14 @@ import type { CandidateFeedbackDetails } from "~/interface/Interface"
 const FeedbackComponent = ({
   feebackDetails,
   assessmentName,
+  givenBy,
   readOnly,
   elementRef,
   handleChange,
 }: {
   feebackDetails: CandidateFeedbackDetails[]
   assessmentName: string
+  givenBy?: { name: string; email: string }
   readOnly: boolean
   elementRef?: MutableRefObject<HTMLDivElement>
   handleChange: () => void
@@ -31,10 +33,15 @@ const FeedbackComponent = ({
   return (
     <div className="flex h-728 w-728 flex-col overflow-hidden rounded-lg bg-white shadow-sm">
       <div
-        className="flex w-full justify-center border-b border-gray-200 py-6 text-2xl font-bold text-gray-900"
+        className="flex w-full flex-col items-center border-b border-gray-200 py-6"
         data-cy="feedback-form-header"
       >
-        {`${t("candidateExamConstants.feedbackHeader")}-${assessmentName}`}
+        <span className="text-2xl font-bold text-gray-900">{`${t(
+          "candidateExamConstants.feedbackHeader"
+        )}-${assessmentName}`}</span>
+        {givenBy && (
+          <span className="text-sm font-medium text-gray-500">{`by ${givenBy.name} | ${givenBy.email} `}</span>
+        )}
       </div>
       <div className="flex flex-1 flex-col overflow-auto" ref={elementRef}>
         {feebackDetails.map((feedback) => {
@@ -45,12 +52,12 @@ const FeedbackComponent = ({
               data-cy="feedback-question"
             >
               <span className="text-lg font-medium text-gray-700">
-                {feedback.required
+                {feedback.required || readOnly
                   ? feedback.question
                   : `${feedback.question} (Optional)`}
               </span>
 
-              {feedback.required ? (
+              {feedback.questionType === "rating" ? (
                 <Rating
                   id={feedback.id}
                   ratings={["1", "2", "3", "4", "5"]}
@@ -80,10 +87,31 @@ const FeedbackComponent = ({
         })}
       </div>
       <div
-        className="flex justify-center border-t border-gray-200 py-6"
+        className={`flex border-t border-gray-200 py-6 px-8 ${
+          readOnly ? "justify-end" : "justify-center"
+        }`}
         data-cy="feedback-form-footer"
       >
-        {readOnly ? null : (
+        {readOnly ? (
+          <div className="flex items-center gap-4">
+            <span
+              className="cursor-pointer text-sm font-medium text-gray-500"
+              tabIndex={0}
+              role="button"
+              onKeyUp={() => {}}
+              onClick={handleChange}
+            >
+              {t("feedback.replyWithMail")}
+            </span>
+            <Button
+              className="text-base"
+              variant="primary-solid"
+              title={t("commonConstants.close")}
+              buttonText={t("commonConstants.close")}
+              onClick={handleChange}
+            />
+          </div>
+        ) : (
           <Button
             className="h-12 w-1/2 text-base"
             variant="primary-solid"

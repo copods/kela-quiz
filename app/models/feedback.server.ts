@@ -4,7 +4,8 @@ export async function getCandidatesFeedback(
   feedbackItemsPerPage = 5,
   feedbackCurrentPage = 1,
   feedbackfilterType = "",
-  testId = ""
+  testId = "",
+  sortBy = "Newer"
 ) {
   switch (feedbackfilterType) {
     case "all_feedbacks":
@@ -21,21 +22,20 @@ export async function getCandidatesFeedback(
       break
   }
 
-  if (testId === "all_tests") {
-    testId = ""
-  }
-
   const PER_PAGE_ITEMS = feedbackItemsPerPage
   try {
     return await prisma.userFeedback.findMany({
       take: PER_PAGE_ITEMS,
       skip: (feedbackCurrentPage - 1) * PER_PAGE_ITEMS,
+      orderBy: {
+        createdAt: sortBy === "Newer" ? "desc" : "asc",
+      },
       where: {
         workspaceId: workspaceId,
         feedbackType: feedbackfilterType ? feedbackfilterType : {},
         candidateTest: {
           test: {
-            id: testId ? testId : {},
+            id: testId === "all_tests" ? {} : testId,
           },
         },
       },
