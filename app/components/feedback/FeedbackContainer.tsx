@@ -31,10 +31,18 @@ export const FeedbackContainer = () => {
   const [feedbackPageSize, setFeedbackPageSize] = useState(5)
   const navigate = useNavigate()
 
+  const [feedbackTypeFilter, setFeedbackTypeFilter] = useState(
+    candidatesFeedbackData.feedbackType
+  )
+  const [testFilter, setTestFilter] = useState("all_tests")
+  candidatesFeedbackData.allTests.splice(0, 0, {
+    id: "all_tests",
+    name: "All Tests",
+  })
+
   useEffect(() => {
     setFeedbackCurrentPage(candidatesFeedbackData.feedbackCurrentPage)
   }, [candidatesFeedbackData.feedbackCurrentPage])
-  console.log("feedback Details", candidatesFeedbackData)
 
   const feedBackCardDetails = [
     {
@@ -119,12 +127,31 @@ export const FeedbackContainer = () => {
   )
 
   useEffect(() => {
-    navigate(`?page=${feedbackCurrentPage}&limit=${feedbackPageSize}`, {
-      replace: true,
-    })
+    navigate(
+      `?page=${feedbackCurrentPage}&limit=${feedbackPageSize}&feedbackType=${feedbackTypeFilter}&testId=${testFilter}`,
+      {
+        replace: true,
+      }
+    )
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [feedbackPageSize, feedbackCurrentPage])
+
+  useEffect(() => {
+    navigate(
+      `?page=${feedbackCurrentPage}&limit=${feedbackPageSize}&feedbackType=${feedbackTypeFilter}&testId=${testFilter}`,
+      { replace: true }
+    )
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [feedbackTypeFilter])
+
+  useEffect(() => {
+    navigate(
+      `?page=${feedbackCurrentPage}&limit=${feedbackPageSize}&feedbackType=${feedbackTypeFilter}&testId=${testFilter}`,
+      { replace: true }
+    )
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [testFilter])
 
   return (
     <div className="flex h-full flex-col gap-10">
@@ -142,7 +169,15 @@ export const FeedbackContainer = () => {
           ))}
         </div>
         <div className="flex h-full flex-col gap-5">
-          <FeedbackTableHeader />
+          <FeedbackTableHeader
+            feedbackTypeFilter={feedbackTypeFilter}
+            setFeedbackTypeFilter={(e: string) => {
+              setFeedbackTypeFilter(e)
+            }}
+            testFilter={testFilter}
+            setTestFilter={(e: string) => setTestFilter(e)}
+            totalTests={candidatesFeedbackData.allTests}
+          />
           <Table
             data={tableData}
             columns={testColumns}

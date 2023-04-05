@@ -1,14 +1,28 @@
-import { useState } from "react"
-
 // import { Icon } from "@iconify/react"
 import { t } from "i18next"
 
 // import downloadExcelIcon from "../../../public/assets/downloadExcel.svg"
 import { NewDropdownField } from "../common-components/Dropdown"
 
-export const FeedbackTableHeader = () => {
-  const [testFilter, setTestFilter] = useState("All Tests")
-  const [feedbackFilter, setFeedbackFilter] = useState("All Feedbacks")
+export const FeedbackTableHeader = ({
+  feedbackTypeFilter,
+  setFeedbackTypeFilter,
+  testFilter,
+  setTestFilter,
+  totalTests,
+}: {
+  feedbackTypeFilter: string
+  setFeedbackTypeFilter: (e: string) => void
+  testFilter: string
+  setTestFilter: (e: string) => void
+  totalTests: Array<{ id: string; name: string }>
+}) => {
+  const feedbackTypeOptions = [
+    { name: "All Feedbacks", value: "all_feedbacks" },
+    { name: "Positive", value: "positive" },
+    { name: "Negative", value: "negative" },
+    { name: "Neutral", value: "neutral" },
+  ]
   return (
     <div className="flex h-9">
       <div className="flex items-center gap-4">
@@ -19,23 +33,22 @@ export const FeedbackTableHeader = () => {
         </span>
         <div className="w-52">
           <NewDropdownField
-            dropdownOptions={["All Tests", 2, 3, 4]}
+            dropdownOptions={totalTests}
             value={testFilter}
             setValue={setTestFilter}
             height="sm"
+            labelKey="name"
+            valueKey="id"
           />
         </div>
         <div className="w-52">
           <NewDropdownField
-            dropdownOptions={[
-              "All Feedbacks",
-              "Positive",
-              "Negative",
-              "Neutral",
-            ]}
-            value={feedbackFilter}
-            setValue={setFeedbackFilter}
+            dropdownOptions={feedbackTypeOptions}
+            value={feedbackTypeFilter}
+            setValue={setFeedbackTypeFilter}
             height="sm"
+            labelKey="name"
+            valueKey="value"
           />
         </div>
       </div>

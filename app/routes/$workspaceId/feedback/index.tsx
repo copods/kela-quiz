@@ -5,6 +5,7 @@ import { FeedbackContainer } from "~/components/feedback/FeedbackContainer"
 import {
   getAllCandidatesFeedbackCount,
   getAllFeedbacksCounts,
+  getAllTestsForFeedbackFilter,
   getCandidatesFeedback,
 } from "~/models/feedback.server"
 
@@ -15,7 +16,10 @@ type LoaderData = {
   allCandidatesFeedbackCount: Awaited<
     ReturnType<typeof getAllCandidatesFeedbackCount>
   >
+  feedbackType: string
   totalFeedbackCounts: Awaited<ReturnType<typeof getAllFeedbacksCounts>>
+  testId: string
+  allTests: Awaited<ReturnType<typeof getAllTestsForFeedbackFilter>>
 }
 
 export const loader: LoaderFunction = async ({ request, params }) => {
@@ -24,23 +28,31 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const query = new URL(request.url).searchParams
   const feedbackItemsPerPage = Math.max(Number(query.get("limit") || 5), 5)
   const feedbackCurrentPage = Math.max(Number(query.get("page") || 1), 1)
+  const feedbackType = query.get("feedbackType") || "all_feedbacks"
+  const testId = query.get("testId") || "all_tests"
 
   const userFeedback = await getCandidatesFeedback(
     currentWorkspaceId,
     feedbackItemsPerPage,
-    feedbackCurrentPage
+    feedbackCurrentPage,
+    feedbackType,
+    testId
   )
   const allCandidatesFeedbackCount = await getAllCandidatesFeedbackCount(
     currentWorkspaceId
   )
   const totalFeedbackCounts = await getAllFeedbacksCounts(currentWorkspaceId)
+  const allTests = await getAllTestsForFeedbackFilter(currentWorkspaceId)
 
   return json<LoaderData>({
     userFeedback,
     feedbackCurrentPage,
     feedbackItemsPerPage,
     allCandidatesFeedbackCount,
+    feedbackType,
     totalFeedbackCounts,
+    testId,
+    allTests,
   })
 }
 
