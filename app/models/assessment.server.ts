@@ -858,20 +858,22 @@ export async function createCandidateAssessmentFeedback(
         test: true,
       },
     })
-    let count = 0
+    let ratingCount = 0
     let questionsLength = 0
     let feedbackType = ""
     feedbackDetails.forEach((feedback) => {
       if (feedback.questionType === "rating") {
-        count = count + Number(feedback.value)
+        ratingCount += Number(feedback.value)
         questionsLength = questionsLength + 1
       }
     })
-    if (count > questionsLength * 3) {
+
+    const averageRating = ratingCount / questionsLength
+    if (averageRating > 3) {
       feedbackType = "Positive"
-    } else if (count < questionsLength * 3) {
+    } else if (averageRating < 3) {
       feedbackType = "Negative"
-    } else if ((count = questionsLength * 3)) {
+    } else if (averageRating === 3) {
       feedbackType = "Neutral"
     }
 
