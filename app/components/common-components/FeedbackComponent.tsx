@@ -15,6 +15,7 @@ const FeedbackComponent = ({
   readOnly,
   elementRef,
   handleChange,
+  emailReplyHandleChange,
 }: {
   feebackDetails: CandidateFeedbackDetails[]
   assessmentName: string
@@ -22,6 +23,7 @@ const FeedbackComponent = ({
   readOnly: boolean
   elementRef?: MutableRefObject<HTMLDivElement>
   handleChange: () => void
+  emailReplyHandleChange?: () => void
 }) => {
   const isButtonDisabled = () => {
     const isDisabled = feebackDetails.some(
@@ -99,7 +101,7 @@ const FeedbackComponent = ({
               tabIndex={0}
               role="button"
               onKeyUp={() => {}}
-              onClick={handleChange}
+              onClick={emailReplyHandleChange}
             >
               {t("feedback.replyWithMail")}
             </span>

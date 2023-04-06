@@ -61,7 +61,7 @@ export const CandidateEmailRenderer = (data: tableData) => {
 }
 
 export const ActionRenderer = (data: tableData) => {
-  const [openfeedbackDetails, setOpenFeedbackDetails] = useState(false)
+  const [openFeedbackDetails, setOpenFeedbackDetails] = useState(false)
   const feedbackGivenByDetails = {
     name: data.candidate_name,
     email: data.candidate_email,
@@ -70,6 +70,11 @@ export const ActionRenderer = (data: tableData) => {
   const handleChange = () => {
     setOpenFeedbackDetails(false)
   }
+  const emailReplyHandleChange = () => {
+    sendEmail()
+    setOpenFeedbackDetails(false)
+  }
+
   const sendEmail = () => {
     let email = data.candidate_email
     let subject = "Regarding your feedback"
@@ -92,7 +97,7 @@ export const ActionRenderer = (data: tableData) => {
         <Icon
           icon="ic:outline-message"
           className="gray-800 cursor-pointer text-2xl focus:outline-dotted focus:outline-2"
-          onClick={() => setOpenFeedbackDetails(!openfeedbackDetails)}
+          onClick={() => setOpenFeedbackDetails(!openFeedbackDetails)}
         />
         <Icon
           icon="material-symbols:mail-outline"
@@ -100,9 +105,9 @@ export const ActionRenderer = (data: tableData) => {
           onClick={() => sendEmail()}
         />
       </div>
-      {openfeedbackDetails && (
+      {openFeedbackDetails && (
         <DialogWrapper
-          open={openfeedbackDetails}
+          open={openFeedbackDetails}
           setOpen={setOpenFeedbackDetails}
         >
           <FeedbackComponent
@@ -111,6 +116,7 @@ export const ActionRenderer = (data: tableData) => {
             givenBy={feedbackGivenByDetails}
             readOnly={true}
             handleChange={handleChange}
+            emailReplyHandleChange={emailReplyHandleChange}
           />
         </DialogWrapper>
       )}
