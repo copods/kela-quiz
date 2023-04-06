@@ -1,10 +1,12 @@
-import { Fragment } from "react"
+import { Fragment, useState } from "react"
 
 import { Listbox, Transition } from "@headlessui/react"
 import { Icon } from "@iconify/react"
 import { useTranslation } from "react-i18next"
 
 import { QuestionTypes } from "../../interface/Interface"
+
+import InputField from "./InputField"
 
 import { useElementPositionHandler } from "~/hooks/useElementPositionHandler"
 
@@ -189,6 +191,7 @@ export const NewDropdownField = <
   helperText,
   action,
   id,
+  hasSearchBar,
 }: {
   dropdownOptions: DropdownOptions<T>
   labelKey?: U | string
@@ -198,11 +201,36 @@ export const NewDropdownField = <
   id?: string
   helperText?: string
   action?: Action[]
+  hasSearchBar: boolean
 }) => {
   const { t } = useTranslation()
 
   function classNames(...classes: Array<string>) {
     return classes.filter(Boolean).join(" ")
+  }
+
+  const [searchLabel, setSearchLabel] = useState("")
+  const [newDropdownOptions, setNewDropdownOptions] = useState(dropdownOptions)
+
+  const searchFieldProps = {
+    placeholder: "Search...",
+    type: "text",
+    name: "search",
+    required: false,
+    value: searchLabel,
+    errorId: "name-error",
+    onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
+      setSearchLabel(event?.target.value)
+      if (labelKey) {
+        setNewDropdownOptions(
+          (dropdownOptions as DropdownOptions<T>).filter((option) => {
+            return (option as Record<typeof labelKey, string>)[labelKey]
+              .toLowerCase()
+              .includes(event?.target.value.toLowerCase())
+          })
+        )
+      }
+    },
   }
 
   const getLabelFromValue = (val: string) => {
@@ -270,6 +298,14 @@ export const NewDropdownField = <
                 }`}
               >
                 <div ref={componentRef}>
+                  {hasSearchBar && (
+                    <>
+                      <div className="p-3">
+                        <InputField {...searchFieldProps} />
+                      </div>
+                      <hr className="h-px w-full border-0 bg-gray-200" />
+                    </>
+                  )}
                   {action &&
                     action.map((action) => (
                       <Listbox.Option
@@ -296,7 +332,7 @@ export const NewDropdownField = <
                         </div>
                       </Listbox.Option>
                     ))}
-                  {(dropdownOptions as DropdownOptions<T>).map(
+                  {(newDropdownOptions as DropdownOptions<T>).map(
                     (
                       option: T extends object
                         ? T
@@ -378,7 +414,7 @@ export const NewDropdownField = <
                       </Listbox.Option>
                     )
                   )}
-                  {dropdownOptions.length === 0 && (
+                  {newDropdownOptions.length === 0 && (
                     <Listbox.Option
                       className={`relative z-20 cursor-not-allowed select-none py-3 px-4`}
                       value={null}
