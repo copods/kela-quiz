@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 
-import { useLoaderData, useNavigate } from "@remix-run/react"
+import { useLoaderData, useLocation, useNavigate } from "@remix-run/react"
 import { t } from "i18next"
 
 import negativeFeedbackIcon from "../../../public/assets/negativeFeedback.svg"
@@ -36,6 +36,7 @@ export const FeedbackContainer = () => {
   )
   const [testFilter, setTestFilter] = useState("all_tests")
   const [sortFilter, setSortFilter] = useState(candidatesFeedbackData.sortBy)
+  const location = useLocation()
 
   const navigate = useNavigate()
   candidatesFeedbackData.allTests.splice(0, 0, {
@@ -127,6 +128,15 @@ export const FeedbackContainer = () => {
   )
 
   useEffect(() => {
+    console.log("feedback slug is loading")
+    navigate(
+      `?page=${1}&limit=${feedbackPageSize}&feedbackType=${feedbackTypeFilter}&testId=${testFilter}&sortBy=${sortFilter}`,
+      { replace: true }
+    )
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [feedbackTypeFilter])
+
+  useEffect(() => {
     navigate(
       `?page=${feedbackCurrentPage}&limit=${feedbackPageSize}&feedbackType=${feedbackTypeFilter}&testId=${testFilter}&sortBy=${sortFilter}`,
       {
@@ -141,15 +151,8 @@ export const FeedbackContainer = () => {
     feedbackTypeFilter,
     testFilter,
     sortFilter,
+    location.search,
   ])
-
-  useEffect(() => {
-    navigate(
-      `?page=${1}&limit=${feedbackPageSize}&feedbackType=${feedbackTypeFilter}&testId=${testFilter}&sortBy=${sortFilter}`,
-      { replace: true }
-    )
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [feedbackTypeFilter])
 
   useEffect(() => {
     setFeedbackCurrentPage(candidatesFeedbackData.feedbackCurrentPage)
