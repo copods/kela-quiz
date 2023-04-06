@@ -1,4 +1,4 @@
-import { highlight, languages } from "prismjs/components/prism-core"
+import { highlight, languages } from "prismjs"
 import Editor from "react-simple-code-editor"
 
 import "prismjs/components/prism-clike"
@@ -10,7 +10,7 @@ const CodeEditor = ({ code, setCode }: any) => {
     <Editor
       value={code}
       onValueChange={(code) => setCode(code)}
-      highlight={(code) => highlight(code, languages.js)}
+      highlight={(code) => highlight(code, languages.js, "")}
       padding={10}
       style={{
         fontFamily: '"Fira code", "Fira Mono", monospace',
