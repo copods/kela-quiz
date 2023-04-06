@@ -29,7 +29,6 @@ module.exports = {
         cooldownSVG: "355px",
         728: "728px",
         3.25: "52px",
-        728: "728px",
       },
       width: {
         sectionCard: `30%`,
