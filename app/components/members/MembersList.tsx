@@ -73,7 +73,7 @@ export default function MembersList({
         workspaceOwner !== data.id &&
         memberLoaderData.permission.member.update ? (
           <div
-            className="cursor-pointer"
+            className="w-full cursor-pointer"
             role="button"
             onClick={openPopUp}
             onKeyDown={(e) => e.key === "Enter" && openPopUp()}
