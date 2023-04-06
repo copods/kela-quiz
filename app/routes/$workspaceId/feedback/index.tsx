@@ -1,4 +1,5 @@
 import type { LoaderFunction } from "@remix-run/server-runtime"
+import { redirect } from "@remix-run/server-runtime"
 import { json } from "remix-utils"
 
 import { FeedbackContainer } from "~/components/feedback/FeedbackContainer"
@@ -8,6 +9,7 @@ import {
   getAllTestsForFeedbackFilter,
   getCandidatesFeedback,
 } from "~/models/feedback.server"
+import { getUserId } from "~/session.server"
 
 type LoaderData = {
   userFeedback: Awaited<ReturnType<typeof getCandidatesFeedback>>
@@ -24,6 +26,7 @@ type LoaderData = {
 }
 
 export const loader: LoaderFunction = async ({ request, params }) => {
+  const userId = await getUserId(request)
   const currentWorkspaceId = params.workspaceId as string
 
   const query = new URL(request.url).searchParams
@@ -32,6 +35,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const feedbackType = query.get("feedbackType") || "all_feedbacks"
   const testId = query.get("testId") || "all_tests"
   const sortBy = query.get("sortBy") || "Newer"
+  if (!userId) return redirect("/sign-in")
 
   const userFeedback = await getCandidatesFeedback(
     currentWorkspaceId,

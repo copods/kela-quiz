@@ -25,25 +25,23 @@ import type { CandidateFeedbacks, tableColumnType } from "~/interface/Interface"
 
 export const FeedbackContainer = () => {
   const candidatesFeedbackData = JSON.parse(useLoaderData())
+
   const [feedbackCurrentPage, setFeedbackCurrentPage] = useState(
     candidatesFeedbackData.feedbackCurrentPage
   )
   const [feedbackPageSize, setFeedbackPageSize] = useState(5)
-  const navigate = useNavigate()
 
   const [feedbackTypeFilter, setFeedbackTypeFilter] = useState(
     candidatesFeedbackData.feedbackType
   )
   const [testFilter, setTestFilter] = useState("all_tests")
+  const [sortFilter, setSortFilter] = useState(candidatesFeedbackData.sortBy)
+
+  const navigate = useNavigate()
   candidatesFeedbackData.allTests.splice(0, 0, {
     id: "all_tests",
     name: "All Tests",
   })
-  const [sortFilter, setSortFilter] = useState(candidatesFeedbackData.sortBy)
-
-  useEffect(() => {
-    setFeedbackCurrentPage(candidatesFeedbackData.feedbackCurrentPage)
-  }, [candidatesFeedbackData.feedbackCurrentPage])
 
   const feedBackCardDetails = [
     {
@@ -144,6 +142,18 @@ export const FeedbackContainer = () => {
     testFilter,
     sortFilter,
   ])
+
+  useEffect(() => {
+    navigate(
+      `?page=${1}&limit=${feedbackPageSize}&feedbackType=${feedbackTypeFilter}&testId=${testFilter}&sortBy=${sortFilter}`,
+      { replace: true }
+    )
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [feedbackTypeFilter])
+
+  useEffect(() => {
+    setFeedbackCurrentPage(candidatesFeedbackData.feedbackCurrentPage)
+  }, [candidatesFeedbackData.feedbackCurrentPage])
 
   return (
     <div className="flex h-full flex-col gap-10">

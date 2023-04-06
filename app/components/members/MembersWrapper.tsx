@@ -57,6 +57,7 @@ const MembersWrapper = () => {
         navigate(routes.unauthorized)
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [membersActionData, t])
   useEffect(() => {
     if (
