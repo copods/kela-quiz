@@ -7,6 +7,7 @@ import negativeFeedbackIcon from "../../../public/assets/negativeFeedback.svg"
 import neutralFeedbackIcon from "../../../public/assets/neutralFeedback.svg"
 import positiveFeedbackIcon from "../../../public/assets/positiveFeedback.svg"
 import totalFeedbackIcon from "../../../public/assets/totalFeedback.svg"
+import EmptyStateComponent from "../common-components/EmptyStateComponent"
 import Table from "../common-components/TableComponent"
 import Header from "../header/Header"
 
@@ -161,42 +162,46 @@ export const FeedbackContainer = () => {
   return (
     <div className="flex h-full flex-col gap-10">
       <Header heading={t("commonConstants.feedback")} id="feedback" />
-      <div className="flex h-full w-full flex-col gap-8">
-        <div className="flex w-full gap-5">
-          {feedBackCardDetails.map((cardData, index) => (
-            <FeedbackCard
-              key={index}
-              id={cardData.id}
-              title={cardData.title}
-              value={cardData.value}
-              icon={cardData.icon}
+      {candidatesFeedbackData.allCandidatesFeedbackCount ? (
+        <div className="flex h-full w-full flex-col gap-8">
+          <div className="flex w-full gap-5">
+            {feedBackCardDetails.map((cardData, index) => (
+              <FeedbackCard
+                key={index}
+                id={cardData.id}
+                title={cardData.title}
+                value={cardData.value}
+                icon={cardData.icon}
+              />
+            ))}
+          </div>
+          <div className="flex h-full flex-col gap-5">
+            <FeedbackTableHeader
+              feedbackTypeFilter={feedbackTypeFilter}
+              setFeedbackTypeFilter={(e: string) => {
+                setFeedbackTypeFilter(e)
+              }}
+              testFilter={testFilter}
+              setTestFilter={(e: string) => setTestFilter(e)}
+              totalTests={candidatesFeedbackData.allTests}
+              sortFilter={sortFilter}
+              setSortFilter={(e: string) => setSortFilter(e)}
             />
-          ))}
+            <Table
+              data={tableData}
+              columns={testColumns}
+              paginationEnabled={tableData.length > 0 && true}
+              pageSize={feedbackPageSize}
+              setPageSize={setFeedbackPageSize}
+              currentPage={feedbackCurrentPage}
+              onPageChange={setFeedbackCurrentPage}
+              totalItems={candidatesFeedbackData.allCandidatesFeedbackCount}
+            />
+          </div>
         </div>
-        <div className="flex h-full flex-col gap-5">
-          <FeedbackTableHeader
-            feedbackTypeFilter={feedbackTypeFilter}
-            setFeedbackTypeFilter={(e: string) => {
-              setFeedbackTypeFilter(e)
-            }}
-            testFilter={testFilter}
-            setTestFilter={(e: string) => setTestFilter(e)}
-            totalTests={candidatesFeedbackData.allTests}
-            sortFilter={sortFilter}
-            setSortFilter={(e: string) => setSortFilter(e)}
-          />
-          <Table
-            data={tableData}
-            columns={testColumns}
-            paginationEnabled={tableData.length > 0 && true}
-            pageSize={feedbackPageSize}
-            setPageSize={setFeedbackPageSize}
-            currentPage={feedbackCurrentPage}
-            onPageChange={setFeedbackCurrentPage}
-            totalItems={candidatesFeedbackData.allCandidatesFeedbackCount}
-          />
-        </div>
-      </div>
+      ) : (
+        <EmptyStateComponent text={t("emptyStateConstants.noFeedbackState")} />
+      )}
     </div>
   )
 }

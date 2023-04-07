@@ -375,7 +375,8 @@
     "noQuestionsState": "Add Questions to this Test",
     "noTestsState": "No Tests to show",
     "noAssessmentsState": "No Assessments to show",
-    "noResultsState": "No Results to show"
+    "noResultsState": "No Results to show",
+    "noFeedbackState": "No Feedbacks to show"
   },
   "feedback": {
     "totalFeedback": "Total Feedback",
