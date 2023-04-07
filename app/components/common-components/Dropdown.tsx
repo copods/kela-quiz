@@ -191,7 +191,7 @@ export const NewDropdownField = <
   helperText,
   action,
   id,
-  hasSearchBar,
+  isSearchable,
 }: {
   dropdownOptions: DropdownOptions<T>
   labelKey?: U | string
@@ -201,7 +201,7 @@ export const NewDropdownField = <
   id?: string
   helperText?: string
   action?: Action[]
-  hasSearchBar: boolean
+  isSearchable: boolean
 }) => {
   const { t } = useTranslation()
 
@@ -298,7 +298,7 @@ export const NewDropdownField = <
                 }`}
               >
                 <div ref={componentRef}>
-                  {hasSearchBar && (
+                  {isSearchable && (
                     <>
                       <div className="p-3">
                         <InputField {...searchFieldProps} />
