@@ -43,6 +43,7 @@ export const FeedbackTableHeader = ({
             height="sm"
             labelKey="name"
             valueKey="id"
+            isSearchable={true}
           />
         </div>
         <div className="w-52">
@@ -53,6 +54,7 @@ export const FeedbackTableHeader = ({
             height="sm"
             labelKey="name"
             valueKey="value"
+            isSearchable={false}
           />
         </div>
         <span className="h-4 w-[1px] border-r-[1px] border-gray-300"></span>
@@ -65,6 +67,7 @@ export const FeedbackTableHeader = ({
             value={sortFilter}
             setValue={setSortFilter}
             height="sm"
+            isSearchable={false}
           />
         </div>
       </div>
