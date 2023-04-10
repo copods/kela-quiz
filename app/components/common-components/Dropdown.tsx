@@ -225,8 +225,6 @@ export const NewDropdownField = <
     },
   }
 
-  console.log(dropdownOptions)
-
   const getLabelFromValue = (val: string) => {
     if (valueKey && labelKey) {
       for (let option of dropdownOptions as DropdownOptions<T>) {
