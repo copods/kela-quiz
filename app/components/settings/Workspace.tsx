@@ -297,7 +297,6 @@ const Workspace = () => {
                     helperText={"email"}
                     value={newOwner}
                     setValue={setNewOwner}
-                    isSearchable={false}
                   />
                 </div>
               </div>
