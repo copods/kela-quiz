@@ -66,6 +66,7 @@ const ListMenuItem = ({
     return () => {
       document.removeEventListener("click", handleClickOutside)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [elementRef])
 
   return (
@@ -112,8 +113,8 @@ const ListMenuItem = ({
                       <button
                         tabIndex={0}
                         name="deleteTest"
-                        className={`deleteTest max-w-75 items-start border border-none px-5 py-3 font-medium transition delay-75 ease-in-out hover:bg-blue-50 ${
-                          customClasses ? customClasses?.item : ""
+                        className={`deleteTest items-start border border-none px-2 py-2 font-medium transition delay-75 ease-in-out hover:bg-blue-50 ${
+                          customClasses?.item ? customClasses.item : ""
                         } ${menuItem?.disabled ? "cursor-not-allowed" : ""}`}
                         onClick={() => {
                           if (!menuItem?.disabled) {
@@ -126,7 +127,7 @@ const ListMenuItem = ({
                         }}
                         data-cy={menuItem.id}
                       >
-                        <>
+                        <div className="flex">
                           {menuItem?.menuListIcon && (
                             <Icon
                               icon={menuItem?.menuListIcon as string}
@@ -149,7 +150,7 @@ const ListMenuItem = ({
                               {menuItem?.menuListHelperText}
                             </div>
                           </div>
-                        </>
+                        </div>
                       </button>
                     )}
                   </Menu.Item>

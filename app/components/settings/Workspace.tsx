@@ -175,6 +175,9 @@ const Workspace = () => {
             open={actionDropdown}
             onItemClick={setActionDropdown}
             dataCyID={"workspace-list-menu"}
+            customClasses={{
+              item: "py-3 px-5",
+            }}
             menuDetails={[
               {
                 id: t("settings.leaveWorkspace"),
