@@ -234,6 +234,9 @@ model CandidateTest {
   updatedAt          DateTime                 @updatedAt
   linkSentOn         DateTime?                @default(now())
   sectionWiseResults SectionWiseResult[]
+  candidatePicture   String?
+  surveillanceImages String[]
+  surveillanceErrors String[]
 
   @@unique([candidateId, testId])
 }
