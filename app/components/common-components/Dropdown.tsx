@@ -340,12 +340,13 @@ export const NewDropdownField = <
                       </Listbox.Option>
                     ))}
                   {(dropdownOptions as DropdownOptions<T>)
-                    .filter(
-                      (option) =>
-                        labelKey &&
-                        (option as Record<typeof labelKey, string>)[labelKey]
-                          .toLocaleLowerCase()
-                          .includes(searchLabel?.toLocaleLowerCase())
+                    .filter((option) =>
+                      (labelKey
+                        ? (option as Record<typeof labelKey, string>)[labelKey]
+                        : (option as string)
+                      )
+                        .toLocaleLowerCase()
+                        .includes(searchLabel?.toLocaleLowerCase())
                     )
                     .map(
                       (
