@@ -18,13 +18,25 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const workspaces = await getWorkspaces(userId as string)
   invariant(params.testId, "resultId not found")
   try {
-    const { sections, candidate } =
+    const {
+      sections,
+      candidate,
+      candidatePicture,
+      surveillanceImages,
+      surveillanceErrors,
+    } =
       (await getSectionWiseResultsOFIndividualCandidate({
         testId: params?.testId as string,
         candidateId: params?.candidateId as string,
         workspaceId: currentWorkspaceId,
         userId: userId!,
-      })) || ({} as CandidateTest & { candidate: Candidate })
+      })) ||
+      ({} as CandidateTest & {
+        candidate: Candidate
+        candidatePicture: string
+        surveillanceImages: string[]
+        surveillanceErrors: string[]
+      })
     if (!sections || !candidate) {
       throw new Response("Not Found", { status: 404 })
     }
@@ -34,6 +46,9 @@ export const loader: LoaderFunction = async ({ request, params }) => {
       candidate,
       workspaces,
       currentWorkspaceId,
+      candidatePicture,
+      surveillanceImages,
+      surveillanceErrors,
     })
   } catch (error: any) {
     if (error.status === 403) {
