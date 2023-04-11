@@ -1,7 +1,15 @@
+import { useState } from "react"
+
 import { Icon } from "@iconify/react"
 import { useLoaderData, useNavigate } from "@remix-run/react"
+import { useTranslation } from "react-i18next"
 
 import BarGraph from "../barGraph/barGraph"
+import {
+  DialogContent,
+  DialogHeader,
+  DialogWrapper,
+} from "../common-components/Dialog"
 import Divider from "../common-components/divider"
 import EmptyStateComponent from "../common-components/EmptyStateComponent"
 
@@ -11,8 +19,21 @@ import { routes } from "~/constants/route.constants"
 import type { SectionInCandidateTest } from "~/interface/Interface"
 
 const ResultDetailsComponent = () => {
-  const { params, sections, candidate, currentWorkspaceId } = useLoaderData()
+  const {
+    params,
+    sections,
+    candidate,
+    currentWorkspaceId,
+    candidatePicture,
+    surveillanceImages,
+    surveillanceErrors,
+  } = useLoaderData()
   let navigate = useNavigate()
+
+  const { t } = useTranslation()
+
+  const [surveillanceDialogOpen, setSurveillanceDialogOpen] = useState(false)
+
   const sortedSections = sections.sort(
     (a: SectionInCandidateTest, b: SectionInCandidateTest) => {
       return a.order - b.order
@@ -80,10 +101,57 @@ const ResultDetailsComponent = () => {
               )
             })}
           </div>
+          {surveillanceImages?.length > 0 && (
+            <>
+              <Divider height="1px" />
+              <div className="flex h-12 min-h-2.875 w-full items-center justify-between rounded-lg border border-gray-300 bg-white px-6">
+                <div className="text-base font-semibold text-gray-700">
+                  {t("resultConstants.cameraSurveillance")}
+                </div>
+                <div
+                  role="button"
+                  tabIndex={0}
+                  className="cursor-pointer text-sm text-base font-semibold text-primary"
+                  onClick={() => setSurveillanceDialogOpen(true)}
+                  onKeyUp={(e) => {
+                    if (e.key === "Enter") setSurveillanceDialogOpen(true)
+                  }}
+                >
+                  {t("resultConstants.viewDetails")}
+                </div>
+              </div>
+            </>
+          )}
         </>
       ) : (
         <EmptyStateComponent />
       )}
+      <DialogWrapper
+        open={surveillanceDialogOpen}
+        setOpen={setSurveillanceDialogOpen}
+      >
+        <>
+          <DialogHeader
+            heading={t("resultConstants.cameraSurveillance")}
+            onClose={() => setSurveillanceDialogOpen(false)}
+          />
+          <DialogContent>
+            <div className="flex flex-wrap gap-6">
+              {surveillanceImages?.map((image: string, index: number) => {
+                return (
+                  <img
+                    src={image}
+                    alt="img"
+                    key={index}
+                    width={180}
+                    height={110}
+                  />
+                )
+              })}
+            </div>
+          </DialogContent>
+        </>
+      </DialogWrapper>
     </div>
   )
 }
