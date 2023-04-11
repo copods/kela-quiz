@@ -129,7 +129,6 @@ export const FeedbackContainer = () => {
   )
 
   useEffect(() => {
-    console.log("feedback slug is loading")
     navigate(
       `?page=${1}&limit=${feedbackPageSize}&feedbackType=${feedbackTypeFilter}&testId=${testFilter}&sortBy=${sortFilter}`,
       { replace: true }
@@ -154,6 +153,16 @@ export const FeedbackContainer = () => {
     sortFilter,
     location.search,
   ])
+
+  useEffect(() => {
+    navigate(
+      `?page=${1}&limit=${feedbackPageSize}&feedbackType=${feedbackTypeFilter}&testId=${testFilter}&sortBy=${sortFilter}`,
+      {
+        replace: true,
+      }
+    )
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [feedbackTypeFilter, testFilter, sortFilter])
 
   useEffect(() => {
     setFeedbackCurrentPage(candidatesFeedbackData.feedbackCurrentPage)
