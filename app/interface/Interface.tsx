@@ -437,3 +437,29 @@ export interface CandidateFeedbackDetails {
   required: boolean
   handleChange: (e: string) => void
 }
+
+export interface CandidateFeedbacks {
+  id: string
+  candidate: {
+    firstName: string
+    lastName: string
+    email: string
+    tests: Array<{ test: { name: string } }>
+  }
+  candidateId: string
+  candidateTestId: string
+  createdAt: string
+  feedbackType: string
+  updatedAt: string
+  userFeedbackQuestion: userFeedbackQuestion[]
+  workspaceId: string
+}
+export interface userFeedbackQuestion {
+  createdAt: string
+  id: string
+  question: string
+  questionType: string
+  updatedAt: string
+  userFeedbackId: string
+  value: string
+}

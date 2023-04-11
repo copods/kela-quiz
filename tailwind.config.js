@@ -11,6 +11,7 @@ module.exports = {
         primaryOutlined: "#141649",
         questionBackground: "#F0F0F0",
         hover: "#F8FBFF",
+        feedbackColor: "#2A3342",
         tableBorder: "#DFE5E9",
         tableBg: "#F9FBFC",
       },
