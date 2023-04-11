@@ -186,6 +186,7 @@ model Test {
   SectionWiseResult SectionWiseResult[]
   workspace         Workspace?          @relation(fields: [workspaceId], references: [id])
   workspaceId       String?
+  webcamEnabled     Boolean             @default(false)
 
   @@unique([name, deletedAt, deleted, workspaceId])
 }
