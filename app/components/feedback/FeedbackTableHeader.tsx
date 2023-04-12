@@ -28,7 +28,7 @@ export const FeedbackTableHeader = ({
     { name: "Neutral", value: "neutral" },
   ]
   return (
-    <div className="flex h-9">
+    <div className="flex h-9" data-cy="feedback-table-header">
       <div className="flex items-center gap-4">
         <span className="text-xl">{t("commonConstants.feedback")}</span>
         <span className="h-4 w-[1px] border-r-[1px] border-gray-300"></span>
@@ -37,6 +37,7 @@ export const FeedbackTableHeader = ({
         </span>
         <div className="w-52">
           <NewDropdownField
+            id="tests-filter-dropdown"
             dropdownOptions={totalTests}
             value={testFilter}
             setValue={setTestFilter}
@@ -48,6 +49,7 @@ export const FeedbackTableHeader = ({
         </div>
         <div className="w-52">
           <NewDropdownField
+            id="feedback-type-dropdown"
             dropdownOptions={feedbackTypeOptions}
             value={feedbackTypeFilter}
             setValue={setFeedbackTypeFilter}
@@ -63,6 +65,7 @@ export const FeedbackTableHeader = ({
         </span>
         <div className="w-52">
           <NewDropdownField
+            id="sort-filter-dropdown"
             dropdownOptions={["Newer", "Older"]}
             value={sortFilter}
             setValue={setSortFilter}

@@ -259,7 +259,7 @@ describe("Tests for Test Section", () => {
       .should("have.text", commonContants.feedbackHeaderText)
       .should(
         "have.class",
-        "flex w-full justify-center border-b border-gray-200 py-6 text-2xl font-bold text-gray-900"
+        "flex w-full flex-col items-center border-b border-gray-200 py-6"
       )
 
     getFeedbackQuestion()
@@ -306,7 +306,7 @@ describe("Tests for Test Section", () => {
 
     getFeedbackFooter().should(
       "have.class",
-      "flex justify-center border-t border-gray-200 py-6"
+      "flex border-t border-gray-200 py-6 px-8 justify-center"
     )
     getFeedbackFooter()
       .find("button")
