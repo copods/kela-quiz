@@ -18,4 +18,5 @@ export const routes = {
   myProfile: "/my-profile",
   logout: "/logout",
   feedback: "/feedback",
+  feedbackForm: "/feedback-form",
 }

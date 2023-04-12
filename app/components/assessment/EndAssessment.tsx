@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from "@remix-run/react"
+import { useSubmit } from "@remix-run/react"
 import { useTranslation } from "react-i18next"
 
 import EndAssessmentIcon from "../../../public/assets/Frame.svg"
@@ -8,9 +8,7 @@ import Header from "./Header"
 
 const EndAssessment = () => {
   const { t } = useTranslation()
-  const path = useLocation()
-  const navigate = useNavigate()
-
+  const submit = useSubmit()
   return (
     <div className="flex h-screen flex-col bg-gray-50">
       <Header />
@@ -34,10 +32,8 @@ const EndAssessment = () => {
                 type="submit"
                 value="submit"
                 name="submit"
-                onClick={() => {
-                  navigate(
-                    path.pathname.replace("end-assessment", "feedback-form")
-                  )
+                onClick={async () => {
+                  submit({ action: "giveFeedback" }, { method: "post" })
                 }}
               />
             </div>

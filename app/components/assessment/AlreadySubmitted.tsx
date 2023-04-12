@@ -1,4 +1,4 @@
-import { useLoaderData, useLocation, useNavigate } from "@remix-run/react"
+import { useLoaderData, useSubmit } from "@remix-run/react"
 import { useTranslation } from "react-i18next"
 
 import alreadySubmitted from "../../../public/assets/alreadySubmitted.svg"
@@ -8,9 +8,7 @@ import Header from "./Header"
 const AlredySubmitted = () => {
   const { t } = useTranslation()
   const feedbackSubmitted = JSON.parse(useLoaderData())
-
-  const path = useLocation()
-  const navigate = useNavigate()
+  const submit = useSubmit()
   return (
     <div className="flex h-screen flex-col bg-gray-50">
       <Header />
@@ -36,9 +34,7 @@ const AlredySubmitted = () => {
                   value="submit"
                   name="submit"
                   onClick={() => {
-                    navigate(
-                      path.pathname.replace("end-assessment", "feedback-form")
-                    )
+                    submit({ action: "giveFeedback" }, { method: "post" })
                   }}
                 />
               )}

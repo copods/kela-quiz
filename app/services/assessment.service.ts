@@ -6,7 +6,6 @@ import { json } from "remix-utils"
 import {
   candidateSectionStart,
   candidateTestStart,
-  checkIfFeedbackAlreadySubmitted,
   checkIfTestLinkIsValid,
   createCandidateAssessmentFeedback,
   endAssessment,
@@ -72,11 +71,7 @@ export async function checkIfTestLinkIsValidAndRedirect(
 
   const candidateStepObj = currentCandidateStep?.candidateStep as CandidateStep
 
-  if (
-    candidateStepObj &&
-    candidateStepObj.nextRoute &&
-    !currentCandidateStep?.endAt
-  ) {
+  if (candidateStepObj && candidateStepObj.nextRoute) {
     if (currentRoute !== candidateStepObj.nextRoute) {
       switch (candidateStepObj.nextRoute) {
         case "register":
@@ -95,12 +90,24 @@ export async function checkIfTestLinkIsValidAndRedirect(
       }
     }
   }
-  if (currentRoute === "end") {
-    const feedbackSubmittedAlready = await checkIfFeedbackAlreadySubmitted(
-      assessmentID
-    )
-    if (currentCandidateStep?.endAt && feedbackSubmittedAlready) {
-      return `/assessment/${assessmentID}/already-submitted`
+
+  if (currentCandidateStep?.endAt) {
+    const CurrentTime = moment(new Date())
+    const examEndedBefore = moment(currentCandidateStep?.endAt)
+    const duration = CurrentTime.diff(examEndedBefore, "minute")
+    if (duration >= 5) {
+      await updateNextStep({
+        assessmentId: assessmentID as string,
+        nextRoute: "already-submitted",
+        isSection: false,
+      })
+      if (currentRoute !== candidateStepObj.nextRoute) {
+        return `/assessment/${assessmentID}/already-submitted`
+      }
+    } else {
+      if (currentRoute !== candidateStepObj.nextRoute) {
+        return `/assessment/${assessmentID}/end-assessment`
+      }
     }
   }
 }
