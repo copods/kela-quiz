@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 import { useLoaderData, useSubmit } from "@remix-run/react"
 import { useTranslation } from "react-i18next"
@@ -23,10 +23,14 @@ const CandidateInstruction = () => {
   const { firstSection, instructions, candidate, webCamEnabled } =
     useLoaderData()
 
+  const webcamRef = useRef(null)
   const [webcamPopup, setOpenWebcamPopup] = useState(false)
   const [img, setImg] = useState("")
-  const [faceCount, setFaceCount] = useState("")
-  console.log(faceCount)
+  const [faceCount, setFaceCount] = useState(0)
+  const [pictureClickState, setPicktreClickState] = useState({
+    msg: "",
+    state: "",
+  })
 
   const candidateSections = instructions?.test?.sections.sort(
     (a: TestSection & { order: number }, b: TestSection & { order: number }) =>
@@ -34,24 +38,55 @@ const CandidateInstruction = () => {
   )
   const submit = useSubmit()
 
+  useEffect(() => {
+    console.log(faceCount, firstSection, submit)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [t])
+
   const startTestForCandidate = () => {
     console.log(webCamEnabled)
     if (webCamEnabled) {
       setOpenWebcamPopup(true)
       return
     } else {
-      startTest()
+      submit(
+        {
+          proceedToTest: "true",
+          firstSectionId: firstSection.id,
+        },
+        { method: "post" }
+      )
     }
   }
 
-  const startTest = () => {
+  const proceedToTestAfterClicking = () => {
     submit(
       {
+        savePicture: "true",
         proceedToTest: "true",
         firstSectionId: firstSection.id,
+        candidatePicture: img,
       },
       { method: "post" }
     )
+  }
+
+  const handleCapture = async () => {
+    await (webcamRef.current as any)?.getSnapshot()
+    if (faceCount !== 1) {
+      console.log("faces are not one")
+      setPicktreClickState({
+        state: "fail",
+        msg: `Getting ${
+          faceCount > 1 ? "more" : "less"
+        } than one face in frame.`,
+      })
+    } else {
+      setPicktreClickState({
+        state: "success",
+        msg: `Picture saved successfully`,
+      })
+    }
   }
 
   const getTotalTimeInMin = () => {
@@ -185,13 +220,35 @@ const CandidateInstruction = () => {
                 img={img}
                 setImg={setImg}
                 getFaceCount={setFaceCount}
+                ref={webcamRef}
               />
+              <div>
+                <Button
+                  variant="secondary-solid"
+                  buttonText="Capture"
+                  onClick={() => handleCapture()}
+                />
+                <span
+                  className={`${
+                    pictureClickState.state == "success"
+                      ? "text-green-600"
+                      : "text-red-600"
+                  }`}
+                >
+                  {pictureClickState.msg}
+                </span>
+              </div>
             </>
           </DialogContent>
           <DialogFooter>
             <div className="flex justify-end gap-4">
               <Button variant="primary-outlined" buttonText="Cancel" />
-              <Button variant="primary-solid" buttonText="Proceed" />
+              <Button
+                variant="primary-solid"
+                buttonText="Proceed"
+                isDisabled={pictureClickState.state != "success"}
+                onClick={() => proceedToTestAfterClicking()}
+              />
             </div>
           </DialogFooter>
         </>

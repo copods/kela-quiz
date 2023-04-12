@@ -24,9 +24,9 @@ const ResultDetailsComponent = () => {
     sections,
     candidate,
     currentWorkspaceId,
-    candidatePicture,
+    // candidatePicture,
     surveillanceImages,
-    surveillanceErrors,
+    // surveillanceErrors,
   } = useLoaderData()
   let navigate = useNavigate()
 

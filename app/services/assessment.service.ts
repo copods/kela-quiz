@@ -22,6 +22,7 @@ import {
   skipAnswerAndNextQuestion,
   startAndGetQuestion,
   updateCandidateFirstLastName,
+  updateCandidatePicture,
   updateNextCandidateStep,
   verifyOTP,
 } from "~/models/assessment.server"
@@ -409,8 +410,18 @@ export async function getCandidateDetails(assessmentId: string) {
 /**
  * Functions will return candidate details if it already exists
  * @param assessmentId
- * @returns candidate details
+ * @returns webcam details
  */
 export async function getWebcamEnabledforTest(assessmentId: string) {
   return getTestWebcamEnabled(assessmentId as string)
+}
+
+/**
+ * Functions will return candidate details if it already exists
+ * @param assessmentId
+ * @param candidatePicture
+ * @returns candidate details
+ */
+export async function updateCandidatePictureForTest(assessmentId: string, candidatePicture: string) {
+  return updateCandidatePicture({ assessmentId: assessmentId as string, candidatePicture })
 }

@@ -852,3 +852,16 @@ export async function getTestWebcamEnabled(
 
   return webcamEnabled?.test?.webcamEnabled
 }
+
+export async function updateCandidatePicture({
+  assessmentId, candidatePicture
+}: {
+  assessmentId: CandidateTest["id"],
+  candidatePicture: string
+}) {
+
+  return await prisma.candidateTest.update({
+    where: { id: assessmentId },
+    data: { candidatePicture },
+  })
+} 

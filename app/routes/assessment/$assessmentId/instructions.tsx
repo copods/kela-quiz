@@ -13,6 +13,7 @@ import {
   getWebcamEnabledforTest,
   startCandidateSection,
   startTest,
+  updateCandidatePictureForTest,
   updateNextStep,
 } from "~/services/assessment.service"
 
@@ -47,8 +48,17 @@ export const loader: LoaderFunction = async ({ params, request }) => {
 
 export const action: ActionFunction = async ({ request, params }) => {
   const formData = await request.formData()
+  const savePicture = formData.get("savePicture")
+  const candidatePicture = formData.get("candidatePicture")
   const proceed = formData.get("proceedToTest")
   const firstSectionId = formData.get("firstSectionId") as string
+
+  if (savePicture) {
+    await updateCandidatePictureForTest(
+      params.assessmentId as string,
+      candidatePicture as string
+    )
+  }
 
   if (proceed) {
     await updateNextStep({
