@@ -10,6 +10,7 @@ import {
   getSectionInCandidateTest,
   getSectionInTest,
   getTestInstructions,
+  getWebcamEnabledforTest,
   startCandidateSection,
   startTest,
   updateNextStep,
@@ -27,6 +28,10 @@ export const loader: LoaderFunction = async ({ params, request }) => {
     throw new Response("Not Found", { status: 404 })
   }
 
+  const webCamEnabled = await getWebcamEnabledforTest(
+    params.assessmentId as string
+  )
+
   const instructions = await getTestInstructions(params.assessmentId as string)
   const firstSection = await getSectionByOrder(
     instructions?.test.id as string,
@@ -37,7 +42,7 @@ export const loader: LoaderFunction = async ({ params, request }) => {
     params.assessmentId as string
   )
 
-  return json({ instructions, firstSection, candidate })
+  return json({ instructions, firstSection, candidate, webCamEnabled })
 }
 
 export const action: ActionFunction = async ({ request, params }) => {

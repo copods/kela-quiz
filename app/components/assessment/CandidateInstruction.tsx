@@ -1,9 +1,18 @@
+import { useState } from "react"
+
 import { useLoaderData, useSubmit } from "@remix-run/react"
 import { useTranslation } from "react-i18next"
 
 import Button from "../common-components/Button"
+import {
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogWrapper,
+} from "../common-components/Dialog"
 
 import Header from "./Header"
+import WebCamGetPicture from "./WebCamGetPicture"
 
 import checkIcon from "~/../public/assets/checkIcon.svg"
 import contactSupport from "~/../public/assets/contactSupport.svg"
@@ -11,14 +20,31 @@ import type { SectionInTest, TestSection } from "~/interface/Interface"
 
 const CandidateInstruction = () => {
   const { t } = useTranslation()
-  const { firstSection, instructions, candidate } = useLoaderData()
+  const { firstSection, instructions, candidate, webCamEnabled } =
+    useLoaderData()
+
+  const [webcamPopup, setOpenWebcamPopup] = useState(false)
+  const [img, setImg] = useState("")
+  const [faceCount, setFaceCount] = useState("")
+  console.log(faceCount)
 
   const candidateSections = instructions?.test?.sections.sort(
     (a: TestSection & { order: number }, b: TestSection & { order: number }) =>
       a.order > b.order ? 1 : b.order > a.order ? -1 : 0
   )
   const submit = useSubmit()
+
   const startTestForCandidate = () => {
+    console.log(webCamEnabled)
+    if (webCamEnabled) {
+      setOpenWebcamPopup(true)
+      return
+    } else {
+      startTest()
+    }
+  }
+
+  const startTest = () => {
     submit(
       {
         proceedToTest: "true",
@@ -136,6 +162,40 @@ const CandidateInstruction = () => {
           </div>
         </div>
       </div>
+      <DialogWrapper open={webcamPopup} setOpen={setOpenWebcamPopup}>
+        <>
+          <DialogHeader
+            heading="Start Exam"
+            onClose={() => {
+              setOpenWebcamPopup(false)
+            }}
+          />
+          <DialogContent>
+            <>
+              <p className="mb-1 text-base font-medium text-gray-700">
+                To continue with this attempt you must upload your photo using
+                webcam
+              </p>
+              <p className="text-sm text-gray-600">
+                This exam requires webcam validation process. You must allow the
+                webcam and it will be compared with your picture (Please allow
+                your web browser to access your camera.)
+              </p>
+              <WebCamGetPicture
+                img={img}
+                setImg={setImg}
+                getFaceCount={setFaceCount}
+              />
+            </>
+          </DialogContent>
+          <DialogFooter>
+            <div className="flex justify-end gap-4">
+              <Button variant="primary-outlined" buttonText="Cancel" />
+              <Button variant="primary-solid" buttonText="Proceed" />
+            </div>
+          </DialogFooter>
+        </>
+      </DialogWrapper>
     </div>
   )
 }

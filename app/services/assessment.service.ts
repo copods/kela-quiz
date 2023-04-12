@@ -17,6 +17,7 @@ import {
   getOrderedSection,
   getTestInstructionForCandidate,
   getTestSectionDetails,
+  getTestWebcamEnabled,
   resendOtp,
   skipAnswerAndNextQuestion,
   startAndGetQuestion,
@@ -403,4 +404,13 @@ export async function endCandidateAssessment(
  */
 export async function getCandidateDetails(assessmentId: string) {
   return getCandidateDetailsIfExists(assessmentId as string)
+}
+
+/**
+ * Functions will return candidate details if it already exists
+ * @param assessmentId
+ * @returns candidate details
+ */
+export async function getWebcamEnabledforTest(assessmentId: string) {
+  return getTestWebcamEnabled(assessmentId as string)
 }

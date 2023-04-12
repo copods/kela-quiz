@@ -487,8 +487,8 @@ export async function skipAnswerAndNextQuestion({
           selectedOptions?.length || answers?.length
             ? "ANSWERED"
             : question?.status === "ANSWERED"
-            ? "ANSWERED"
-            : "SKIPPED",
+              ? "ANSWERED"
+              : "SKIPPED",
         answeredAt: new Date(),
       },
       select: {
@@ -840,4 +840,15 @@ async function calculateOverallResult(id: CandidateTest["id"]) {
       },
     })
   }
+}
+
+export async function getTestWebcamEnabled(
+  assessmentId: CandidateTest["id"]
+) {
+  const webcamEnabled = await prisma.candidateTest.findUnique({
+    where: { id: assessmentId },
+    select: { test: { select: { webcamEnabled: true } } },
+  })
+
+  return webcamEnabled?.test?.webcamEnabled
 }
