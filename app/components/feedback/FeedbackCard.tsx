@@ -10,7 +10,7 @@ export const FeedbackCard = ({
   icon: string
 }) => {
   return (
-    <div className="flex flex-1 gap-4 rounded-lg border border-gray-200 bg-white p-6 shadow-[0px_1px_10px_rgba(0,0,0,0.08)]">
+    <div className="col-span-1 flex gap-4 rounded-lg border border-gray-200 bg-white p-6 shadow-[0px_1px_10px_rgba(0,0,0,0.08)]">
       <img src={icon} alt={title} />
       <div className="flex flex-col gap-2">
         <span className="text-sm text-gray-600">{title}</span>
