@@ -173,7 +173,10 @@ export const FeedbackContainer = () => {
       <Header heading={t("commonConstants.feedback")} id="feedback" />
       {candidatesFeedbackData.allCandidatesFeedbackCount ? (
         <div className="flex h-full w-full flex-col gap-8">
-          <div className="grid grid-cols-4 gap-5">
+          <div
+            className="grid grid-cols-4 gap-5"
+            data-cy="feedback-card-container"
+          >
             {feedBackCardDetails.map((cardData, index) => (
               <FeedbackCard
                 key={index}

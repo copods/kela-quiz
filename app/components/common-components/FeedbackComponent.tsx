@@ -111,6 +111,7 @@ const FeedbackComponent = ({
               title={t("commonConstants.close")}
               buttonText={t("commonConstants.close")}
               onClick={handleChange}
+              data-cy="close"
             />
           </div>
         ) : (
