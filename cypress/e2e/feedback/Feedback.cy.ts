@@ -1,13 +1,24 @@
 import {
+  getActionHeader,
+  getCandidateEmailHeader,
+  getCandidateNameHeader,
+  getChipTag,
+  getCloseButton,
   getDropdownOptions,
   getFeedback,
   getFeedbackCardsContainer,
+  getFeedbackDetailsIcon,
+  getFeedbackHeader,
+  getFeedbackQuestion,
   getFeedbackTableHeader,
   getFeedbackTitle,
   getFeedbackTypeDropdown,
   getFeedbackTypeDropdownText,
+  getFeedbackTypeHeader,
+  getGivenOnHeader,
   getSortFilterDropdown,
   getSortFilterDropdownText,
+  getTestNameHeader,
   getTestsFilterDropdown,
   getTestsFilterDropdownText,
 } from "support/common-function"
@@ -36,6 +47,27 @@ describe("Tests for Feedback", () => {
 
   const sortfilterDropdownOptions = ["Newer", "Older"]
 
+  const tableTitles = {
+    testName: "Test Name",
+    candidateName: "Candidate Name",
+    candidateEmail: "Candidate Email",
+    feedbackType: "Feedback Type",
+    givenOn: "Given On",
+    actions: "Action",
+  }
+
+  const commonContants = {
+    feedbackHeaderText: "Feedback-Quantitative - assessment1",
+    close: "Close",
+  }
+
+  const feedbackQuestions = [
+    "How do you like the experience of K-Quiz portal?",
+    "How do you rate the difficulty level of the test?",
+    "Please rate your overall experience",
+    "Write your feedback",
+  ]
+  const feedbackOption = ["1", "2", "3", "4", "5"]
   it("Test to check feedback Functionality/styling", () => {
     cy.login()
     cy.customVisit("/members")
@@ -110,9 +142,12 @@ describe("Tests for Feedback", () => {
         expect(string).to.have.string(testDropdownOptions[index])
       })
     getDropdownOptions()
-      .get("div div li .dropdown-option")
+      .get("div div li")
       .eq(0)
-      .should("have.class", "")
+      .should(
+        "have.class",
+        "bg-blue-50 relative z-20 cursor-pointer select-none py-3 px-4"
+      )
     getTestsFilterDropdown().click()
 
     //To check the feedback Type filter styling/functionality
@@ -124,6 +159,13 @@ describe("Tests for Feedback", () => {
         const string = el[0].innerText
         expect(string).to.have.string(feedbackTypeOptions[index])
       })
+    getDropdownOptions()
+      .get("div div li")
+      .eq(0)
+      .should(
+        "have.class",
+        "bg-blue-50 relative z-20 cursor-pointer select-none py-3 px-4"
+      )
     getFeedbackTypeDropdown().click()
 
     //To check the Sorting filter styling/functionality
@@ -138,6 +180,123 @@ describe("Tests for Feedback", () => {
         const string = el[0].innerText
         expect(string).to.have.string(sortfilterDropdownOptions[index])
       })
-    getFeedbackTypeDropdown().click()
+    getDropdownOptions()
+      .get("div div li")
+      .eq(0)
+      .should(
+        "have.class",
+        "bg-blue-50 relative z-20 cursor-pointer select-none py-3 px-4"
+      )
+    getSortFilterDropdown().click()
+
+    //To check the feedback table styling/functionality
+
+    // To check table title - Sr.No
+    getTestNameHeader()
+      .should("have.text", tableTitles.testName)
+      .should("have.css", "color", "rgb(107, 114, 128)")
+      .should("have.css", "font-weight", "400")
+      .should("have.css", "font-size", "14px")
+
+    // To check table title - assessment
+    getCandidateNameHeader()
+      .should("have.text", tableTitles.candidateName)
+      .should("have.css", "color", "rgb(107, 114, 128)")
+      .should("have.css", "font-weight", "400")
+      .should("have.css", "font-size", "14px")
+
+    // To check table title - test
+    getCandidateEmailHeader()
+      .should("have.text", tableTitles.candidateEmail)
+      .should("have.css", "color", "rgb(107, 114, 128)")
+      .should("have.css", "font-weight", "400")
+      .should("have.css", "font-size", "14px")
+
+    // To check table title - Created on
+    getFeedbackTypeHeader()
+      .should("have.text", tableTitles.feedbackType)
+      .should("have.css", "color", "rgb(107, 114, 128)")
+      .should("have.css", "font-weight", "400")
+      .should(
+        "have.class",
+        "flex flex-1 items-center border-b bg-tableBg px-4 text-sm text-gray-500"
+      )
+
+    // To check table title - Created By
+    getGivenOnHeader()
+      .should("have.text", tableTitles.givenOn)
+      .should("have.css", "color", "rgb(107, 114, 128)")
+      .should("have.css", "font-weight", "400")
+      .should("have.css", "font-size", "14px")
+
+    // To check table title - Actions
+    getActionHeader()
+      .should("have.text", tableTitles.actions)
+      .should("have.css", "color", "rgb(107, 114, 128)")
+      .should("have.css", "font-weight", "400")
+      .should("have.css", "font-size", "14px")
+
+    //To check chip colour and text
+    getChipTag()
+      .should(
+        "have.class",
+        "flex items-center justify-between rounded-full px-3 py-1 text-xs font-medium border border-green-100 bg-green-100 text-green-800"
+      )
+      .should("have.text", "Positive")
+  })
+
+  it("Test to check Candidate feedback details/styling", () => {
+    cy.login()
+    cy.customVisit("/members")
+    getFeedback().click()
+    getFeedbackDetailsIcon().click()
+    // To check if  Attributes/Colors/Visibility/Texts of form
+    getFeedbackHeader().should(
+      "have.class",
+      "flex w-full flex-col items-center border-b border-gray-200 py-6"
+    )
+
+    getFeedbackQuestion()
+      .should("have.length", 4)
+      .should("have.class", "flex flex-col gap-5 border-b border-gray-200 p-8")
+
+    getFeedbackQuestion().each((el, index) => {
+      cy.wrap(el).within(() => {
+        el.find("span")
+          .text(feedbackQuestions[index])
+          .hasClass("text-lg font-medium text-gray-700")
+        if (index === 3) {
+          el.find("textarea").hasClass(
+            "rounded-lg border border-gray-200 px-3.5 py-2.5"
+          )
+        } else {
+          el.find("div").hasClass("flex w-fit flex-col justify-between gap-2")
+          el.find("div").find("div").eq(0).hasClass("flex flex-row gap-4")
+          el.find("div")
+            .find("div")
+            .eq(0)
+            .find("label")
+            .each((index, element) => {
+              cy.wrap(element).within(() => {
+                el.find("span")
+                  .text(feedbackOption[index])
+                  .hasClass(
+                    "flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg bg-blue-50  hover:bg-blue-100"
+                  )
+                el.find("input").val(feedbackOption[index])
+              })
+            })
+          el.find("div").find("div").eq(1).hasClass("flex justify-between")
+          el.find("div")
+            .find("div")
+            .eq(1)
+            .find("span")
+            .eq(0)
+            .text("Not Satisfied")
+          el.find("div").find("div").eq(1).find("span").eq(0).text("Satisfied")
+        }
+      })
+    })
+    getCloseButton().should("have.text", commonContants.close).click()
   })
 })

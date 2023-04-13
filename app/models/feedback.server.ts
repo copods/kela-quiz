@@ -47,6 +47,11 @@ export async function getCandidatesFeedback(
             lastName: true,
             email: true,
             tests: {
+              where: {
+                test: {
+                  id: testId === "all_tests" ? {} : testId,
+                },
+              },
               select: {
                 test: {
                   select: {
@@ -64,10 +69,34 @@ export async function getCandidatesFeedback(
   }
 }
 
-export async function getAllCandidatesFeedbackCount(workspaceId: string) {
+export async function getAllCandidatesFeedbackCount(
+  workspaceId: string,
+  feedbackType: string,
+  testId: string
+) {
+  switch (feedbackType) {
+    case "all_feedbacks":
+      feedbackType = ""
+      break
+    case "positive":
+      feedbackType = "Positive"
+      break
+    case "negative":
+      feedbackType = "Negative"
+      break
+    case "neutral":
+      feedbackType = "Neutral"
+      break
+  }
   return prisma.userFeedback.count({
     where: {
-      workspaceId,
+      workspaceId: workspaceId,
+      feedbackType: feedbackType ? feedbackType : {},
+      candidateTest: {
+        test: {
+          id: testId === "all_tests" ? {} : testId,
+        },
+      },
     },
   })
 }

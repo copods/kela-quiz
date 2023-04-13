@@ -273,3 +273,13 @@ export const getSortFilterDropdown = () =>
   cy.get("#sort-filter-dropdown>button")
 export const getSortFilterDropdownText = () =>
   cy.get("#sort-filter-dropdown>button>span>span")
+export const getTestNameHeader = () => cy.get('[data-cy="Test Name"]')
+export const getCandidateNameHeader = () => cy.get('[data-cy="Candidate Name"]')
+export const getCandidateEmailHeader = () =>
+  cy.get('[data-cy="Candidate Email"]')
+export const getFeedbackTypeHeader = () => cy.get('[data-cy="Feedback Type"]')
+export const getGivenOnHeader = () => cy.get('[data-cy="Given On"]')
+export const getFeedbackDetailsIcon = () =>
+  cy.get("[data-cy='feedback-details']")
+export const getSendEmailIcon = () => cy.get("data-cy='send-email'")
+export const getCloseButton = () => cy.get("[data-cy='close']")

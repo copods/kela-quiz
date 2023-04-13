@@ -46,7 +46,9 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     sortBy
   )
   const allCandidatesFeedbackCount = await getAllCandidatesFeedbackCount(
-    currentWorkspaceId
+    currentWorkspaceId,
+    feedbackType,
+    testId
   )
   const totalFeedbackCounts = await getAllFeedbacksCounts(currentWorkspaceId)
   const allTests = await getAllTestsForFeedbackFilter(currentWorkspaceId)

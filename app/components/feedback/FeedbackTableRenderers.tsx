@@ -95,11 +95,13 @@ export const ActionRenderer = (data: tableData) => {
     <>
       <div className="flex gap-3">
         <Icon
+          data-cy="feedback-details"
           icon="ic:outline-message"
           className="gray-800 cursor-pointer text-2xl focus:outline-dotted focus:outline-2"
           onClick={() => setOpenFeedbackDetails(!openFeedbackDetails)}
         />
         <Icon
+          data-cy="send-email"
           icon="material-symbols:mail-outline"
           className="gray-800 cursor-pointer text-2xl focus:outline-dotted focus:outline-2"
           onClick={() => sendEmail()}
