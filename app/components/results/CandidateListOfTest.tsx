@@ -135,10 +135,6 @@ const CandidateListOfTest = () => {
       actionData?.candidateInviteStatus === t("candidateExamConstants.endTest")
     ) {
       toast.error(t("testsConstants.testEnded"))
-    } else if (
-      actionData?.candidateInviteStatus === t("commonConstants.onGoing")
-    ) {
-      toast.error(t("testsConstants.ongoingTest"))
     }
   }, [actionData, t])
 

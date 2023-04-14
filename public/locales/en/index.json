@@ -187,8 +187,7 @@
     "searchCandidate": "Search Candidate",
     "min": "Min",
     "copyLink": "Link Copied Successfully",
-    "copyLinkFailed": "Fail",
-    "ongoingTest": "Candidate is giving Exam already"
+    "copyLinkFailed": "Fail"
   },
   "componentGlobalConstants": {
     "totalCounts": "Total Counts",
