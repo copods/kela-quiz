@@ -273,8 +273,6 @@ export async function resendTestLink({
         ) as string
       )
       return "created"
-    } else if (candidateTest?.endAt === null) {
-      return "Ongoing"
     } else {
       return "End Test"
     }
