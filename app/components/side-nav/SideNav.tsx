@@ -81,6 +81,13 @@ const SideNav = () => {
         },
         {
           show: true,
+          id: "feedback",
+          iconClass: "ic:outline-feedback",
+          itemName: "commonConstants.feedback",
+          itemRoute: routes.feedback,
+        },
+        {
+          show: true,
           id: "Settings",
           iconClass: "mdi:cog",
           itemName: "commonConstants.settings",

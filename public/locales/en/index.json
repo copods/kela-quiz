@@ -94,8 +94,12 @@
     "deleteQuestion": "Delete Question",
     "deleteTest": "Delete Test",
     "deleteAssessment": "Delete Assessment",
+    "feedback": "Feedback",
+    "filters": "Filters",
     "totalQuestionsText": "Total Questions",
-    "noRecords": "No Records"
+    "noRecords": "No Records",
+    "sortBy": "Sort by",
+    "close": "Close"
   },
   "sideNav": {
     "sideNavHeading": "Quiz",
@@ -299,6 +303,10 @@
     "candidateContact": "We will contact you soon",
     "alreadyExamSubmitted": "Hey! you have already submitted the exam",
     "ExpiredLink": "Link has expired",
+    "feedbackButtonText": "Give us feedback",
+    "feedbackSubmissionHeading": "Thank you for leaving feedback for us.",
+    "feedbackSubmissionContent": "We love hearing from you!",
+    "feedbackHeader": "Feedback",
     "alreadySubmitted": "You have already submitted the exam"
   },
   "toastConstants": {
@@ -367,6 +375,15 @@
     "noQuestionsState": "Add Questions to this Test",
     "noTestsState": "No Tests to show",
     "noAssessmentsState": "No Assessments to show",
-    "noResultsState": "No Results to show"
+    "noResultsState": "No Results to show",
+    "noFeedbackState": "No Feedbacks to show"
+  },
+  "feedback": {
+    "totalFeedback": "Total Feedback",
+    "positiveFeedback": "Positive Feedback",
+    "negativeFeedback": "Negative Feedback",
+    "neutralFeedback": "Neutral Feedback",
+    "allFeedbacks": "All Feedbacks",
+    "replyWithMail": "Reply with email"
   }
 }

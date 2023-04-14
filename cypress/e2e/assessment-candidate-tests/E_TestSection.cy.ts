@@ -3,6 +3,9 @@ import {
   getAnswerSectionHeading,
   getAnswerSectionLabel,
   getcoolDownCard,
+  getFeedbackFooter,
+  getFeedbackHeader,
+  getFeedbackQuestion,
   getQuestion,
   getQuestionSectionHeading,
   getRemainingTime,
@@ -20,7 +23,20 @@ const commonContants = {
   EndTest: "End Test",
   Finish: "Finish",
   section1: "Quantitive - section1",
+  feedbackButtonText: "Give us feedback",
+  feedbackHeaderText: "Feedback-Quantitative - assessment1",
+  submit: "Submit",
+  feedbackThankYouText: "Thank you for leaving feedback for us.",
+  feedbackHearingText: "We love hearing from you!",
 }
+const feedbackQuestions = [
+  "How do you like the experience of K-Quiz portal?",
+  "How do you rate the difficulty level of the test?",
+  "Please rate your overall experience",
+  "Write your feedback (Optional)",
+]
+const feedbackOption = ["1", "2", "3", "4", "5"]
+
 describe("Tests for Test Section", () => {
   it("Checks,registration, OTP Verification and Instruction", () => {
     cy.candidateRegistration()
@@ -207,7 +223,7 @@ describe("Tests for Test Section", () => {
    * End assessment
    */
 
-  it("Tests to check Attributes/Colors/Visibility/Texts of end assessment", () => {
+  it("Tests to check Attributes/Colors/Visibility/Texts of end assessment and Functionality", () => {
     // To check if page url is correct
     cy.url().should("include", "end-assessment")
 
@@ -221,5 +237,109 @@ describe("Tests for Test Section", () => {
       .should("have.class", "text-2xl")
       .and("have.class", "font-bold")
       .and("have.class", "text-gray-900")
+
+    getcoolDownCard()
+      .find("button")
+      .should("have.text", commonContants.feedbackButtonText)
+      .should("have.class", "bg-primary")
+      .and("have.class", "text-gray-50")
+
+    getcoolDownCard().find("button").click()
+  })
+
+  /**
+   * Feedback Form
+   */
+  it("Tests to check Attributes/Colors/Visibility/Texts of feedback Form and Functionality", () => {
+    // To check if page url is correct
+    cy.url().should("include", "feedback-form")
+
+    // To check if  Attributes/Colors/Visibility/Texts of form
+    getFeedbackHeader()
+      .should("have.text", commonContants.feedbackHeaderText)
+      .should(
+        "have.class",
+        "flex w-full flex-col items-center border-b border-gray-200 py-6"
+      )
+
+    getFeedbackQuestion()
+      .should("have.length", 4)
+      .should("have.class", "flex flex-col gap-5 border-b border-gray-200 p-8")
+
+    getFeedbackQuestion().each((el, index) => {
+      cy.wrap(el).within(() => {
+        el.find("span")
+          .text(feedbackQuestions[index])
+          .hasClass("text-lg font-medium text-gray-700")
+        if (index === 3) {
+          el.find("textarea").hasClass(
+            "rounded-lg border border-gray-200 px-3.5 py-2.5"
+          )
+        } else {
+          el.find("div").hasClass("flex w-fit flex-col justify-between gap-2")
+          el.find("div").find("div").eq(0).hasClass("flex flex-row gap-4")
+          el.find("div")
+            .find("div")
+            .eq(0)
+            .find("label")
+            .each((index, element) => {
+              cy.wrap(element).within(() => {
+                el.find("span")
+                  .text(feedbackOption[index])
+                  .hasClass(
+                    "flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg bg-blue-50  hover:bg-blue-100"
+                  )
+                el.find("input").val(feedbackOption[index])
+              })
+            })
+          el.find("div").find("div").eq(1).hasClass("flex justify-between")
+          el.find("div")
+            .find("div")
+            .eq(1)
+            .find("span")
+            .eq(0)
+            .text("Not Satisfied")
+          el.find("div").find("div").eq(1).find("span").eq(0).text("Satisfied")
+        }
+      })
+    })
+
+    getFeedbackFooter().should(
+      "have.class",
+      "flex border-t border-gray-200 py-6 px-8 justify-center"
+    )
+    getFeedbackFooter()
+      .find("button")
+      .should(
+        "have.class",
+        "py-2.5 px-5 rounded-md items-center inline-flex shadow-sm text-xs font-medium justify-center bg-primary text-gray-50 false disabled:bg-primaryDisabled h-12 w-1/2 text-base"
+      )
+      .should("have.text", commonContants.submit)
+    //Check the functionality
+    getFeedbackQuestion().eq(0).find("div").find("label").eq(0).click()
+    getFeedbackQuestion().eq(1).find("div").find("label").eq(1).click()
+    getFeedbackQuestion().eq(2).find("div").find("label").eq(2).click()
+    getFeedbackFooter().find("button").should("be.enabled")
+
+    //After submit the Form
+    getFeedbackFooter().find("button").click()
+    getcoolDownCard().find("img").should("be.visible")
+    getcoolDownCard()
+      .find("div")
+      .should("have.class", "flex flex-col items-center gap-6")
+      .find("span")
+      .should("have.length", "2")
+    getcoolDownCard()
+      .find("div")
+      .find("span")
+      .eq(0)
+      .should("have.class", "text-2xl font-bold text-gray-900")
+      .should("have.text", commonContants.feedbackThankYouText)
+    getcoolDownCard()
+      .find("div")
+      .find("span")
+      .eq(1)
+      .should("have.class", "text-lg font-medium text-gray-500")
+      .should("have.text", commonContants.feedbackHearingText)
   })
 })
