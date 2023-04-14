@@ -21,7 +21,8 @@ model Workspace {
   test            Test[]
   candidateResult CandidateResult[]
 
-  Invites Invites[]
+  Invites      Invites[]
+  UserFeedback UserFeedback[]
 
   @@unique([name, createdById])
 }
@@ -204,18 +205,19 @@ model SectionInTest {
 }
 
 model Candidate {
-  id          String            @id @default(uuid())
-  email       String            @unique
-  firstName   String?
-  lastName    String?
-  isQualified Boolean?
-  OTP         Int               @default(0)
-  tests       CandidateTest[]
-  results     CandidateResult[]
-  createdBy   User              @relation(fields: [createdById], references: [id])
-  createdById String
-  createdAt   DateTime          @default(now())
-  updatedAt   DateTime          @updatedAt
+  id           String            @id @default(uuid())
+  email        String            @unique
+  firstName    String?
+  lastName     String?
+  isQualified  Boolean?
+  OTP          Int               @default(0)
+  tests        CandidateTest[]
+  results      CandidateResult[]
+  createdBy    User              @relation(fields: [createdById], references: [id])
+  createdById  String
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+  UserFeedback UserFeedback[]
 }
 
 model CandidateTest {
@@ -234,6 +236,7 @@ model CandidateTest {
   updatedAt          DateTime                 @updatedAt
   linkSentOn         DateTime?                @default(now())
   sectionWiseResults SectionWiseResult[]
+  UserFeedback       UserFeedback[]
 
   @@unique([candidateId, testId])
 }
@@ -321,9 +324,39 @@ model SectionWiseResult {
 
   candidateTest   CandidateTest @relation(fields: [candidateTestId], references: [id])
   candidateTestId String
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  @@unique([sectionInCandidateTestId, testId])
+}
+
+model UserFeedback {
+  id              String        @id @default(uuid())
+  candidateTest   CandidateTest @relation(fields: [candidateTestId], references: [id])
+  candidateTestId String
+
+  workspace   Workspace @relation(fields: [workspaceId], references: [id])
+  workspaceId String
+
+  userFeedbackQuestion UserFeedbackQuestion[]
+  candidate            Candidate?             @relation(fields: [candidateId], references: [id])
+  candidateId          String?
+  feedbackType         String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model UserFeedbackQuestion {
+  id             String        @id @default(uuid())
+  question       String
+  value          String
+  questionType   String
+  UserFeedback   UserFeedback? @relation(fields: [userFeedbackId], references: [id])
+  userFeedbackId String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@unique([sectionInCandidateTestId, testId])
+  @@unique([id])
 }

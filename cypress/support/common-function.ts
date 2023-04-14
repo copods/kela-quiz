@@ -250,3 +250,36 @@ export const getChangeRoleId = () => cy.get("#change-role-dialog")
 export const getRoleChangeContent = () => cy.get('[data-cy="role-heading"]')
 export const getDropdownOptions = () => cy.get(".dropDownSelect")
 export const getDialogFooter = () => cy.get("[data-cy='dialog-footer']")
+export const getFeedbackHeader = () =>
+  cy.get("[data-cy='feedback-form-header']")
+export const getFeedbackFooter = () =>
+  cy.get("[data-cy='feedback-form-footer']")
+export const getFeedbackQuestion = () => cy.get("[data-cy='feedback-question']")
+export const getFeedback = () => cy.get("#feedback")
+export const getFeedbackTitle = () => cy.get("#feedback")
+export const getFeedbackCardsContainer = () =>
+  cy.get("[data-cy='feedback-card-container']")
+export const getFeedbackTableHeader = () =>
+  cy.get("[data-cy='feedback-table-header']")
+export const getTestsFilterDropdown = () =>
+  cy.get("#tests-filter-dropdown>button")
+export const getTestsFilterDropdownText = () =>
+  cy.get("#tests-filter-dropdown>button>span>span")
+export const getFeedbackTypeDropdown = () =>
+  cy.get("#feedback-type-dropdown>button")
+export const getFeedbackTypeDropdownText = () =>
+  cy.get("#feedback-type-dropdown>button>span>span")
+export const getSortFilterDropdown = () =>
+  cy.get("#sort-filter-dropdown>button")
+export const getSortFilterDropdownText = () =>
+  cy.get("#sort-filter-dropdown>button>span>span")
+export const getTestNameHeader = () => cy.get('[data-cy="Test Name"]')
+export const getCandidateNameHeader = () => cy.get('[data-cy="Candidate Name"]')
+export const getCandidateEmailHeader = () =>
+  cy.get('[data-cy="Candidate Email"]')
+export const getFeedbackTypeHeader = () => cy.get('[data-cy="Feedback Type"]')
+export const getGivenOnHeader = () => cy.get('[data-cy="Given On"]')
+export const getFeedbackDetailsIcon = () =>
+  cy.get("[data-cy='feedback-details']")
+export const getSendEmailIcon = () => cy.get("data-cy='send-email'")
+export const getCloseButton = () => cy.get("[data-cy='close']")

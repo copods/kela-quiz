@@ -190,6 +190,7 @@ export const NewDropdownField = <
   setValue,
   helperText,
   action,
+  height = "lg",
   id,
   isSearchable = false,
 }: {
@@ -201,6 +202,7 @@ export const NewDropdownField = <
   id?: string
   helperText?: string
   action?: Action[]
+  height?: "sm" | "lg"
   isSearchable?: boolean
 }) => {
   const { t } = useTranslation()
@@ -222,8 +224,6 @@ export const NewDropdownField = <
       setSearchLabel(event?.target.value)
     },
   }
-
-  console.log(dropdownOptions)
 
   const getLabelFromValue = (val: string) => {
     if (valueKey && labelKey) {
@@ -255,12 +255,26 @@ export const NewDropdownField = <
           >
             <Listbox.Button
               id="dropdownButton"
-              className="dropdownButton relative h-12 w-full cursor-pointer rounded-md border border-gray-200 bg-white px-3 py-3 text-left shadow-sm sm:text-sm"
+              className={`dropdownButton relative ${
+                height === "lg"
+                  ? "h-12 p-3"
+                  : height === "sm"
+                  ? "h-9 px-2 py-2.5"
+                  : "h-12 p-3"
+              } w-full cursor-pointer rounded-md border border-gray-200 bg-white text-left shadow-sm sm:text-sm`}
               onClick={() => setIsElementOpen((prev) => !prev)}
             >
               <span className="flex items-center">
                 {value ? (
-                  <span className="block truncate text-base">
+                  <span
+                    className={`block truncate ${
+                      height === "lg"
+                        ? "text-base"
+                        : height === "sm"
+                        ? "text-xs"
+                        : "text-base"
+                    }`}
+                  >
                     {labelKey ? getLabelFromValue(value) : value}
                   </span>
                 ) : (
@@ -283,7 +297,7 @@ export const NewDropdownField = <
               leaveTo="opacity-0"
             >
               <Listbox.Options
-                className={`dropDownSelect absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm ${
+                className={`dropDownSelect absolute z-20 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm ${
                   elementViewPortVisiblility
                     ? ""
                     : "-top-2 -translate-y-full transform"
@@ -326,12 +340,13 @@ export const NewDropdownField = <
                       </Listbox.Option>
                     ))}
                   {(dropdownOptions as DropdownOptions<T>)
-                    .filter(
-                      (option) =>
-                        labelKey &&
-                        (option as Record<typeof labelKey, string>)[labelKey]
-                          .toLocaleLowerCase()
-                          .includes(searchLabel?.toLocaleLowerCase())
+                    .filter((option) =>
+                      (labelKey
+                        ? (option as Record<typeof labelKey, string>)[labelKey]
+                        : (option as string)
+                      )
+                        .toLocaleLowerCase()
+                        .includes(searchLabel?.toLocaleLowerCase())
                     )
                     .map(
                       (

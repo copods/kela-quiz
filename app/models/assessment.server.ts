@@ -841,3 +841,93 @@ async function calculateOverallResult(id: CandidateTest["id"]) {
     })
   }
 }
+
+export async function createCandidateAssessmentFeedback(
+  TestId: Test["id"],
+  feedbackDetails: Array<{
+    question: string
+    value: string
+    questionType: string
+  }>
+) {
+  try {
+    const test = await prisma.candidateTest.findFirst({
+      where: { id: TestId },
+      include: {
+        candidate: true,
+        test: true,
+      },
+    })
+    let ratingCount = 0
+    let questionsLength = 0
+    let feedbackType = ""
+    feedbackDetails.forEach((feedback) => {
+      if (feedback.questionType === "rating") {
+        ratingCount += Number(feedback.value)
+        questionsLength = questionsLength + 1
+      }
+    })
+
+    const averageRating = ratingCount / questionsLength
+    if (averageRating > 3) {
+      feedbackType = "Positive"
+    } else if (averageRating < 3) {
+      feedbackType = "Negative"
+    } else if (averageRating === 3) {
+      feedbackType = "Neutral"
+    }
+
+    if (test) {
+      await prisma.userFeedback.create({
+        data: {
+          candidateTestId: TestId,
+          candidateId: test.candidateId,
+          workspaceId: test.test.workspaceId as string,
+          userFeedbackQuestion: {
+            create: feedbackDetails,
+          },
+          feedbackType: feedbackType,
+        },
+      })
+    }
+  } catch (error) {
+    throw new Error("Something went wrong..!")
+  }
+}
+
+export async function getAssessmentName(assessmentId: string) {
+  try {
+    const test = await prisma.candidateTest.findFirst({
+      where: { id: assessmentId },
+      include: {
+        test: {
+          select: {
+            name: true,
+          },
+        },
+      },
+    })
+    if (test) {
+      return test.test.name
+    }
+  } catch (error) {
+    throw new Error("Something went wrong..!")
+  }
+}
+
+export async function checkIfFeedbackAlreadySubmitted(assessmentId: string) {
+  try {
+    const value = await prisma.userFeedback.findFirst({
+      where: {
+        candidateTestId: assessmentId,
+      },
+    })
+    if (value) {
+      return true
+    } else {
+      return false
+    }
+  } catch (error) {
+    throw new Error("Something went wrong..!")
+  }
+}

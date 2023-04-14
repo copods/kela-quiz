@@ -101,7 +101,7 @@ const TestList = () => {
 
   //render functions for table
   const SeriaLNoCell = (data: Test, index: number) => {
-    return <span>{index + 1}</span>
+    return <span>{(testsCurrentPage - 1) * testsPageSize + index + 1}</span>
   }
   const TestNameDataCell = (data: Test, index: number) => {
     return (

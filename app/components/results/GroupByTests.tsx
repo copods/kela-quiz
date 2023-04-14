@@ -69,7 +69,7 @@ const GroupByTests = () => {
   }, [])
 
   const SrNoDataCell = (data: Test, index: number) => {
-    return <span>{index + 1}</span>
+    return <span>{(resultsCurrentPage - 1) * resultsPageSize + index + 1}</span>
   }
   const AssessmentDataCell = (data: Test) => {
     return (
