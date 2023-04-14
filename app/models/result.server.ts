@@ -34,7 +34,7 @@ export async function getAllCandidatesOfTestCount(
         ...(statusFilter === "complete"
           ? { NOT: { endAt: { equals: null } } }
           : statusFilter === "pending"
-          ? { endAt: { equals: null } }
+          ? { startedAt: { equals: null } }
           : {}),
         testId: id,
         candidate: {
@@ -102,7 +102,7 @@ export async function getAllCandidatesOfTest({
             ...(statusFilter === "complete"
               ? { NOT: { endAt: { equals: null } } }
               : statusFilter === "pending"
-              ? { endAt: { equals: null } }
+              ? { startedAt: { equals: null } }
               : {}),
             candidate: {
               ...searchFilter,
