@@ -264,21 +264,15 @@ const Workspace = () => {
               <div className="flex flex-col gap-5">
                 <div className="flex flex-col gap-3">
                   <span className="text-left text-sm leading-5 text-gray-800">
-                    Title here
+                    Important Note
                   </span>
                   <ul className="ml-4 list-disc text-sm text-gray-600">
                     <li>
-                      It is a long established fact that a reader will be
-                      distracted.
+                      Transfer action is immediate action. You cannot undo this
+                      action
                     </li>
-                    <li>
-                      The point of using Lorem Ipsum is that it has a
-                      more-or-less.
-                    </li>
-                    <li>
-                      Contrary to popular belief, Lorem Ipsum is not simply
-                      random.
-                    </li>
+                    <li>You can tranfer ownership to Admin only</li>
+                    <li>You will be demoted to Admin role</li>
                   </ul>
                 </div>
                 <div className="flex flex-col gap-1.5">
