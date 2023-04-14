@@ -146,7 +146,7 @@ const CandidateListOfTest = () => {
     )
   }
   const SeriaLNoCell = (data: { [key: string]: string }, index: number) => {
-    return <span>{index + 1}</span>
+    return <span>{(currentPage - 1) * pageSize + index + 1}</span>
   }
   const NameDataCell = (
     data: CandidateTest & { candidate: Candidate } & {
