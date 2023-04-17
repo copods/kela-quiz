@@ -44,7 +44,6 @@ export const FeedbackContainer = () => {
     id: "all_tests",
     name: "All Tests",
   })
-
   const feedBackCardDetails = [
     {
       id: "totalFeedback",
@@ -171,7 +170,10 @@ export const FeedbackContainer = () => {
   return (
     <div className="flex h-full flex-col gap-10">
       <Header heading={t("commonConstants.feedback")} id="feedback" />
-      {!candidatesFeedbackData.totalFeedbackCount ? (
+      {candidatesFeedbackData.totalFeedbackCounts.positive +
+        candidatesFeedbackData.totalFeedbackCounts.negative +
+        candidatesFeedbackData.totalFeedbackCounts.neutral >
+      0 ? (
         <div className="flex h-full w-full flex-col gap-8">
           <div
             className="grid grid-cols-4 gap-5"
