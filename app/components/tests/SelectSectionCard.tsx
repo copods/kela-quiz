@@ -156,7 +156,7 @@ const SelectSectionCard = ({
             name="totalTime"
             value={section.time}
             onChange={(e) => {
-              updateThisSection("time", e.target.value)
+              updateThisSection("time", e.target.value.slice(0, 2))
             }}
             className={`mt-1 h-11 w-full rounded-lg border border-gray-300 px-3 text-xs ${
               section.isSelected ? "bg-white" : "bg-gray-200"

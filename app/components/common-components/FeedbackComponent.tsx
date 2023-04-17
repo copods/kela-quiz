@@ -72,7 +72,7 @@ const FeedbackComponent = ({
                 <textarea
                   id={feedback.id}
                   name={feedback.id}
-                  placeholder="Select"
+                  placeholder={!readOnly ? "Select" : ""}
                   className="rounded-lg border border-gray-200 px-3.5 py-2.5"
                   rows={6}
                   onChange={(e) =>

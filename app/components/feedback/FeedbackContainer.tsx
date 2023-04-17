@@ -171,7 +171,7 @@ export const FeedbackContainer = () => {
   return (
     <div className="flex h-full flex-col gap-10">
       <Header heading={t("commonConstants.feedback")} id="feedback" />
-      {candidatesFeedbackData.allCandidatesFeedbackCount ? (
+      {!candidatesFeedbackData.totalFeedbackCount ? (
         <div className="flex h-full w-full flex-col gap-8">
           <div
             className="grid grid-cols-4 gap-5"
