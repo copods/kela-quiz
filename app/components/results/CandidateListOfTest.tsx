@@ -131,8 +131,7 @@ const CandidateListOfTest = () => {
       t("candidateExamConstants.candidateTestCreated")
     ) {
       toast.success(t("testsConstants.reinvited"))
-    }
-    if (
+    } else if (
       actionData?.candidateInviteStatus === t("candidateExamConstants.endTest")
     ) {
       toast.error(t("testsConstants.testEnded"))
@@ -218,7 +217,7 @@ const CandidateListOfTest = () => {
   ) => {
     const menuItemsDetailsList = [
       {
-        show: loaderData.permission.invite_candidate.update,
+        show: loaderData.permission.invite_candidate.update && !data.startedAt,
         id: "resend-invite",
         menuListText: t("resultConstants.resendInvite"),
         menuListLink: resendTestLink,

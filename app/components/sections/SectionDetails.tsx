@@ -22,6 +22,7 @@ const SectionDetails = () => {
   const navigate = useNavigate()
   useEffect(() => {
     setSearchText("")
+    setCurrentAccordian(-1)
   }, [navigate])
   const searchedQuestion = sectionDetails.sectionDetails?.questions.filter(
     (question: Question) => {
@@ -66,7 +67,10 @@ const SectionDetails = () => {
               placeholder={t("sectionsConstants.search")}
               title={t("sectionsConstants.search")}
               className="h-9 w-48 rounded-lg border px-5 pl-8 text-sm focus:outline-dotted"
-              onChange={(e) => setSearchText(e.target.value)}
+              onChange={(e) => {
+                setSearchText(e.target.value)
+                setCurrentAccordian(-1)
+              }}
             />
           </div>
         )}
