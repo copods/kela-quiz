@@ -213,7 +213,10 @@ const CandidateListOfTest = () => {
     return <span>{getPercent() ?? "NA"}</span>
   }
   const StatusCell = (
-    data: { candidateResult: CandidateResult[] } & CandidateResult
+    data: {
+      candidateResult: CandidateResult[]
+      linkSentOn: string
+    } & CandidateResult
   ) => {
     const menuItemsDetailsList = [
       {
@@ -233,6 +236,10 @@ const CandidateListOfTest = () => {
         handleItemAction: () => copyLink(data.link as string),
       },
     ]
+    const now = moment(new Date())
+    const LinkSendedTime = moment(data?.linkSentOn)
+    const duration = now.diff(LinkSendedTime, "hours")
+
     return (
       <div id="status-cell" className="flex items-center">
         <div
@@ -244,12 +251,12 @@ const CandidateListOfTest = () => {
             <span className="rounded-full bg-yellow-200 px-2 py-1 text-xs">
               {t("commonConstants.pending")}
             </span>
-          ) : data.startedAt != null && data.endAt === null ? (
+          ) : data.startedAt != null && data.endAt === null && duration < 48 ? (
             <span className="rounded-full bg-blue-50 px-2 py-1 text-xs">
               {t("commonConstants.onGoing")}
             </span>
           ) : (
-            data.endAt != null && (
+            (data.endAt != null || duration >= 48) && (
               <span className="rounded-full bg-green-200 px-2 py-1 text-xs">
                 {t("commonConstants.completed")}
               </span>
@@ -356,7 +363,7 @@ const CandidateListOfTest = () => {
       <Table
         columns={column}
         data={filteredData}
-        paginationEnabled={true}
+        paginationEnabled={filteredData.length > 0 && true}
         pageSize={pageSize}
         setPageSize={setPageSize}
         currentPage={currentPage}

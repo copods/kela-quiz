@@ -433,7 +433,14 @@ export const NewDropdownField = <
                         </Listbox.Option>
                       )
                     )}
-                  {dropdownOptions.length === 0 && (
+                  {(dropdownOptions as DropdownOptions<T>).filter((option) =>
+                    (labelKey
+                      ? (option as Record<typeof labelKey, string>)[labelKey]
+                      : (option as string)
+                    )
+                      .toLocaleLowerCase()
+                      .includes(searchLabel?.toLocaleLowerCase())
+                  ).length === 0 && (
                     <Listbox.Option
                       className={`relative z-20 cursor-not-allowed select-none py-3 px-4`}
                       value={null}
