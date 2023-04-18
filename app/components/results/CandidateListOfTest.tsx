@@ -67,7 +67,6 @@ const CandidateListOfTest = () => {
   const [candidateCounts, setCandidateCounts] = useState(
     candidatesLoaderData.candidatesCount
   )
-  console.log("candidates counts", candidateCounts)
 
   useEffect(() => {
     setFilteredData(candidatesOfTest.candidateTest)
