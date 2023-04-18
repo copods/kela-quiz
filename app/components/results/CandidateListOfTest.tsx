@@ -67,6 +67,7 @@ const CandidateListOfTest = () => {
   const [candidateCounts, setCandidateCounts] = useState(
     candidatesLoaderData.candidatesCount
   )
+  console.log("candidates counts", candidateCounts)
 
   useEffect(() => {
     setFilteredData(candidatesOfTest.candidateTest)
@@ -363,7 +364,7 @@ const CandidateListOfTest = () => {
       <Table
         columns={column}
         data={filteredData}
-        paginationEnabled={true}
+        paginationEnabled={filteredData.length > 0 && true}
         pageSize={pageSize}
         setPageSize={setPageSize}
         currentPage={currentPage}
