@@ -258,6 +258,7 @@
     "memberAlreadyInvited": "Member already invited",
     "cannotAddTestZeroQuestion": "Cannot add test with 0 questions.",
     "notAdMoreThanAvailableQuestion": "Cannot add more than available questions",
+    "notAdMoreThanAvailableTime": "You Cannot add more than",
     "userProfileUpdatedSuccessfully": "User Profile Updated Successfully",
     "roleUpdatedSuccessfully": "Role Updated Successfully",
     "ownerTransferOwnerShip": "Only Owner can Transfer Ownership"

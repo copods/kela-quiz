@@ -60,6 +60,19 @@ const SelectSectionCard = ({
         tempSection.totalQuestions = parseInt(value || "")
         break
       case "time":
+        if (parseInt(value || "") > questionCount * 5) {
+          toast.error(
+            `${t("toastConstants.notAdMoreThanAvailableTime")} ${
+              questionCount * 5
+            }minutes`,
+            {
+              toastId: `${t("toastConstants.notAdMoreThanAvailableTime")} ${
+                questionCount * 5
+              }minutes`,
+            }
+          )
+          return
+        }
         tempSection.time = parseInt(value || "")
         break
     }
