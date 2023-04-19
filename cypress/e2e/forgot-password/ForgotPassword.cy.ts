@@ -68,7 +68,7 @@ describe("Forgot password", () => {
       .should("be.visible")
       .should(
         "have.class",
-        "h-11 w-full rounded-lg border border-gray-200 px-3.5 py-2.5 text-lg"
+        "w-full rounded-lg border border-gray-200 px-3.5 py-2.5 text-lg h-11"
       )
       .click()
       .should("be.focused")
