@@ -60,6 +60,19 @@ const SelectSectionCard = ({
         tempSection.totalQuestions = parseInt(value || "")
         break
       case "time":
+        if (parseInt(value || "") > questionCount * 5) {
+          toast.error(
+            `${t("toastConstants.notAdMoreThanAvailableTime")} ${
+              questionCount * 5
+            }minutes`,
+            {
+              toastId: `${t("toastConstants.notAdMoreThanAvailableTime")} ${
+                questionCount * 5
+              }minutes`,
+            }
+          )
+          return
+        }
         tempSection.time = parseInt(value || "")
         break
     }
@@ -156,7 +169,7 @@ const SelectSectionCard = ({
             name="totalTime"
             value={section.time}
             onChange={(e) => {
-              updateThisSection("time", e.target.value)
+              updateThisSection("time", e.target.value.slice(0, 2))
             }}
             className={`mt-1 h-11 w-full rounded-lg border border-gray-300 px-3 text-xs ${
               section.isSelected ? "bg-white" : "bg-gray-200"
