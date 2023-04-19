@@ -75,8 +75,9 @@ export const getTableRow = () => cy.get("#table-row #table-td")
 export const getBadgeTag = () => cy.get('[data-cy="badge-tag"]')
 export const getGeneral = () => cy.get("#General")
 export const getWorkspaces = () => cy.get("#Workspaces")
+export const getJoinedMembers = () => cy.get("#Joined_Members")
+export const getInvitedMembers = () => cy.get("#Invited_Members")
 export const getResetPasswordPopup = () => cy.get(".resetPassOpenPopUpLink")
-
 export const getOldPassword = () => cy.get("#oldPassword")
 export const getNewPassword = () => cy.get("#newPassword")
 export const getConfirmNewPassword = () => cy.get("#confirmNewPassword")
@@ -232,10 +233,53 @@ export const getCancelEditWorkspaceBtn = () => cy.get("#cancel-edit-workspace")
 export const getSaveWorkspaceBtn = () => cy.get("#save-workspace")
 export const getEditWorkspaceBtn = () => cy.get("#edit-workspace")
 export const getCurrentWorkspace = () => cy.get("#current-workspace")
-export const getLeaveWorkspaceBtn = () => cy.get("#leave-workspace")
 export const getWorkspaceNameInput = () => cy.get("#workspace-name-input")
 export const getWorkspaceInputError = () => cy.get("#workspace-input-error")
 export const getH2 = () => cy.get("h2")
 export const getH3 = () => cy.get("h3")
 export const getSettingsHeading = () => cy.get("#settings-heading")
 export const getLogoutBtn = () => cy.get('[data-cy="logout"]')
+export const getWorkspaceListMenu = () => cy.get("#workspace-list-menu")
+export const getTransferOwnership = () =>
+  cy.get('[data-cy="transfer-ownership"]')
+export const getOwnerDropdown = () => cy.get("#admin-dropdown")
+export const getConfirmOwnershipBtn = () =>
+  cy.get("#confirm-transfer-ownership")
+export const getTable = () => cy.get("#table-row #table-td")
+export const getChangeRoleId = () => cy.get("#change-role-dialog")
+export const getRoleChangeContent = () => cy.get('[data-cy="role-heading"]')
+export const getDropdownOptions = () => cy.get(".dropDownSelect")
+export const getDialogFooter = () => cy.get("[data-cy='dialog-footer']")
+export const getFeedbackHeader = () =>
+  cy.get("[data-cy='feedback-form-header']")
+export const getFeedbackFooter = () =>
+  cy.get("[data-cy='feedback-form-footer']")
+export const getFeedbackQuestion = () => cy.get("[data-cy='feedback-question']")
+export const getFeedback = () => cy.get("#feedback")
+export const getFeedbackTitle = () => cy.get("#feedback")
+export const getFeedbackCardsContainer = () =>
+  cy.get("[data-cy='feedback-card-container']")
+export const getFeedbackTableHeader = () =>
+  cy.get("[data-cy='feedback-table-header']")
+export const getTestsFilterDropdown = () =>
+  cy.get("#tests-filter-dropdown>button")
+export const getTestsFilterDropdownText = () =>
+  cy.get("#tests-filter-dropdown>button>span>span")
+export const getFeedbackTypeDropdown = () =>
+  cy.get("#feedback-type-dropdown>button")
+export const getFeedbackTypeDropdownText = () =>
+  cy.get("#feedback-type-dropdown>button>span>span")
+export const getSortFilterDropdown = () =>
+  cy.get("#sort-filter-dropdown>button")
+export const getSortFilterDropdownText = () =>
+  cy.get("#sort-filter-dropdown>button>span>span")
+export const getTestNameHeader = () => cy.get('[data-cy="Test Name"]')
+export const getCandidateNameHeader = () => cy.get('[data-cy="Candidate Name"]')
+export const getCandidateEmailHeader = () =>
+  cy.get('[data-cy="Candidate Email"]')
+export const getFeedbackTypeHeader = () => cy.get('[data-cy="Feedback Type"]')
+export const getGivenOnHeader = () => cy.get('[data-cy="Given On"]')
+export const getFeedbackDetailsIcon = () =>
+  cy.get("[data-cy='feedback-details']")
+export const getSendEmailIcon = () => cy.get("data-cy='send-email'")
+export const getCloseButton = () => cy.get("[data-cy='close']")

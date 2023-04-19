@@ -13,6 +13,7 @@ export interface InputFieldProps {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   helperText?: React.ReactNode
   maxLength?: number
+  variant?: string
 }
 
 export interface PasswordFieldProps {
@@ -30,14 +31,9 @@ export interface PasswordFieldProps {
 }
 
 export interface DialogWrapperProps {
-  heading?: string
-  role?: string
-  ariaLabel?: string
-  children: JSX.Element
   open: boolean
   setOpen: (e: boolean) => void
-  header: boolean
-  tabIndex?: number
+  children: JSX.Element
 }
 
 export interface ButtonProps {
@@ -71,7 +67,12 @@ export interface ActionData {
 }
 
 export interface CheckboxProps {
-  [x: string]: any
+  [x: string]:
+    | React.ChangeEventHandler<HTMLInputElement>
+    | string
+    | boolean
+    | undefined
+
   handleChange: React.ChangeEventHandler<HTMLInputElement>
   name?: string
   isChecked?: boolean
@@ -292,6 +293,7 @@ export interface CandidateResult {
   workspaceId?: string
   link?: string
 }
+
 export enum sortByOrder {
   ascending = "asc",
   name = "name",
@@ -382,7 +384,8 @@ export interface UserWorkspace {
 }
 export interface TabsComponent {
   name: string
-  route: string
+  action: () => void
+  active: boolean
 }
 
 export interface OtherFilters {
@@ -407,9 +410,11 @@ export interface AddedSectionDetails {
   target: string
 }
 export interface ChipComponent {
-  success: string
-  error: string
-  warning: string
+  success?: string
+  error?: string
+  warning?: string
+  default?: string
+  editIcon?: string
 }
 
 export interface HeaderProps {
@@ -423,4 +428,44 @@ export interface SettingWorkspace {
   id: string
   workspace: { name: string }
   workspaceId: string
+}
+
+export interface CandidateFeedbackDetails {
+  id: string
+  question: string
+  value: string
+  questionType: string
+  required: boolean
+  handleChange: (e: string) => void
+}
+
+export interface CandidateFeedbacks {
+  id: string
+  candidate: {
+    firstName: string
+    lastName: string
+    email: string
+    tests: Array<{ test: { name: string } }>
+  }
+  candidateId: string
+  candidateTestId: string
+  createdAt: string
+  feedbackType: string
+  updatedAt: string
+  userFeedbackQuestion: userFeedbackQuestion[]
+  workspaceId: string
+}
+export interface userFeedbackQuestion {
+  createdAt: string
+  id: string
+  question: string
+  questionType: string
+  updatedAt: string
+  userFeedbackId: string
+  value: string
+}
+
+export interface InputFieldVariant {
+  small?: string
+  default?: string
 }

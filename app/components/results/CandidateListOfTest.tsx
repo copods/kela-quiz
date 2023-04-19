@@ -51,6 +51,7 @@ const CandidateListOfTest = () => {
   const submit = useSubmit()
   const fetcher = useFetcher()
   const actionData = useActionData()
+  const loaderData = useLoaderData()
   const [menuListOpen, setmenuListOpen] = useState<boolean>(false)
   const [searchText, setSearchText] = useState("")
   const [statusFilter, setStatusFilter] = useState(
@@ -130,8 +131,7 @@ const CandidateListOfTest = () => {
       t("candidateExamConstants.candidateTestCreated")
     ) {
       toast.success(t("testsConstants.reinvited"))
-    }
-    if (
+    } else if (
       actionData?.candidateInviteStatus === t("candidateExamConstants.endTest")
     ) {
       toast.error(t("testsConstants.testEnded"))
@@ -145,7 +145,7 @@ const CandidateListOfTest = () => {
     )
   }
   const SeriaLNoCell = (data: { [key: string]: string }, index: number) => {
-    return <span>{index + 1}</span>
+    return <span>{(currentPage - 1) * pageSize + index + 1}</span>
   }
   const NameDataCell = (
     data: CandidateTest & { candidate: Candidate } & {
@@ -213,10 +213,14 @@ const CandidateListOfTest = () => {
     return <span>{getPercent() ?? "NA"}</span>
   }
   const StatusCell = (
-    data: { candidateResult: CandidateResult[] } & CandidateResult
+    data: {
+      candidateResult: CandidateResult[]
+      linkSentOn: string
+    } & CandidateResult
   ) => {
     const menuItemsDetailsList = [
       {
+        show: loaderData.permission.invite_candidate.update && !data.startedAt,
         id: "resend-invite",
         menuListText: t("resultConstants.resendInvite"),
         menuListLink: resendTestLink,
@@ -225,12 +229,17 @@ const CandidateListOfTest = () => {
           resendInvite(data.id, data.candidateId, data.testId),
       },
       {
+        show: true,
         id: "copy-link",
         menuListText: t("resultConstants.copyLink"),
         menuListIcon: "material-symbols:content-copy-outline",
         handleItemAction: () => copyLink(data.link as string),
       },
     ]
+    const now = moment(new Date())
+    const LinkSendedTime = moment(data?.linkSentOn)
+    const duration = now.diff(LinkSendedTime, "hours")
+
     return (
       <div id="status-cell" className="flex items-center">
         <div
@@ -242,12 +251,12 @@ const CandidateListOfTest = () => {
             <span className="rounded-full bg-yellow-200 px-2 py-1 text-xs">
               {t("commonConstants.pending")}
             </span>
-          ) : data.startedAt != null && data.endAt === null ? (
+          ) : data.startedAt != null && data.endAt === null && duration < 48 ? (
             <span className="rounded-full bg-blue-50 px-2 py-1 text-xs">
               {t("commonConstants.onGoing")}
             </span>
           ) : (
-            data.endAt != null && (
+            (data.endAt != null || duration >= 48) && (
               <span className="rounded-full bg-green-200 px-2 py-1 text-xs">
                 {t("commonConstants.completed")}
               </span>
@@ -260,7 +269,7 @@ const CandidateListOfTest = () => {
               open={menuListOpen}
               aria-label={t("testTableItem.menu")}
               id={data.id}
-              menuDetails={menuItemsDetailsList}
+              menuDetails={menuItemsDetailsList.filter((list) => list.show)}
               customClasses={{
                 item: "text-primary text-xs w-36 shadow-sm",
               }}
@@ -354,7 +363,7 @@ const CandidateListOfTest = () => {
       <Table
         columns={column}
         data={filteredData}
-        paginationEnabled={true}
+        paginationEnabled={filteredData.length > 0 && true}
         pageSize={pageSize}
         setPageSize={setPageSize}
         currentPage={currentPage}

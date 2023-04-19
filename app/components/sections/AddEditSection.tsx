@@ -5,8 +5,14 @@ import { useTranslation } from "react-i18next"
 import { toast } from "react-toastify"
 
 import Button from "../common-components/Button"
-import DialogWrapper from "../common-components/Dialog"
+import {
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogWrapper,
+} from "../common-components/Dialog"
 
+import { routes } from "~/constants/route.constants"
 import { useCommonContext } from "~/context/Common.context"
 import type { LoaderData } from "~/routes/$workspaceId/tests"
 import { trimValue } from "~/utils"
@@ -88,7 +94,9 @@ const AddEditSection = ({
 
   const navigate = useNavigate()
   useEffect(() => {
-    if (fetcherData?.resp?.status === "statusCheck.testAddedSuccess") {
+    if (fetcherData?.errors?.status === 403) {
+      return navigate(routes.unauthorized)
+    } else if (fetcherData?.resp?.status === "statusCheck.testAddedSuccess") {
       toast.success(t(fetcherData?.resp?.status as string), {
         toastId: "test-added-sucessfully",
       })
@@ -101,7 +109,14 @@ const AddEditSection = ({
       setOpen(false)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fetcherData?.resp?.data?.id, fetcherData?.resp?.status, setOpen, t])
+  }, [
+    fetcherData?.resp?.data?.id,
+    fetcherData?.resp?.status,
+    setOpen,
+    t,
+    fetcherData?.errors,
+    fetcherData,
+  ])
   useEffect(() => {
     if (sectionName.length! > 1)
       setSectionActionErrors({
@@ -133,112 +148,120 @@ const AddEditSection = ({
     addSection?.(name, description)
   }
   return (
-    <DialogWrapper
-      open={open}
-      heading={
-        editItem
-          ? t("sectionsConstants.editTest")
-          : t("sectionsConstants.addTests")
-      }
-      setOpen={setOpen}
-      header={true}
-      role={t("sectionsConstants.addTests")}
-      aria-label={t("sectionsConstants.addTests")}
-      tabIndex={0}
-    >
-      <Form method="post">
-        <div className="pb-6">
-          <input
-            tabIndex={0}
-            type="text"
-            name="name"
-            id="addEditSection-name"
-            className="h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
-            placeholder={`${t("commonConstants.enterTestsName")}*`}
-            onChange={(e) => setSectionName(trimValue(e.target.value))}
-            value={sectionName}
-            maxLength={52}
-          />
-          {sectionActionErrors?.title ? (
-            <p id="addEditSection-title-error" className="px-3 text-red-500">
-              {t(sectionActionErrors?.title)}
-            </p>
-          ) : sectionActionErrors?.duplicateTitle ? (
-            <p id="duplicete-title-error" className="px-3 text-red-500">
-              {t(sectionActionErrors?.duplicateTitle)}
-            </p>
-          ) : null}
-        </div>
-        <div className="pb-6">
-          <textarea
-            tabIndex={0}
-            name="description"
-            id="section-description"
-            rows={4}
-            className="max-h-280 w-full overflow-auto rounded-lg border border-gray-200 px-3 py-4 text-base"
-            onChange={(e) => setDescription(trimValue(e.target.value))}
-            value={description}
-            placeholder={`${t("commonConstants.enterTestsDesc")}*`}
-          />
-          {sectionActionErrors?.description ? (
-            <p
-              id="addEditSection-description-error"
-              className="px-3 text-red-500"
-            >
-              {t(sectionActionErrors?.description)}
-            </p>
-          ) : null}
-        </div>
-        <div className="flex justify-end gap-2">
-          <Button
-            tabIndex={0}
-            type="button"
-            id="cancel-button"
-            className="h-9 px-4"
-            onClick={() => {
-              setOpen(false)
-              setSectionActionErrors?.({ title: "", description: "" })
-            }}
-            variant="primary-outlined"
-            title={t("commonConstants.cancel")}
-            buttonText={t("commonConstants.cancel")}
-          />
-          <Button
-            tabIndex={0}
-            type="button"
-            id="submit-button"
-            className="h-9 px-4"
-            name={editItem ? "edit-section" : "add-section"}
-            value="add"
-            isDisabled={transition.state === "submitting"}
-            variant="primary-solid"
-            datacy="submit"
-            onClick={() =>
-              editItem
-                ? handleEdit(sectionName, description)
-                : handleAdd(sectionName, description)
-            }
-            title={
-              transition.state === "submitting"
-                ? editItem
-                  ? t("commonConstants.updating")
-                  : t("commonConstants.adding")
-                : editItem
-                ? t("commonConstants.edit")
-                : t("commonConstants.add")
-            }
-            buttonText={
-              transition.state === "submitting"
-                ? editItem
-                  ? t("commonConstants.updating")
-                  : t("commonConstants.adding")
-                : editItem
-                ? t("commonConstants.update")
-                : t("commonConstants.add")
-            }
-          />
-        </div>
-      </Form>
+    <DialogWrapper open={open} setOpen={setOpen}>
+      <>
+        <DialogHeader
+          heading={
+            editItem
+              ? t("sectionsConstants.editTest")
+              : t("sectionsConstants.addTests")
+          }
+          onClose={setOpen}
+          role={t("sectionsConstants.addTests")}
+          aria-label={t("sectionsConstants.addTests")}
+          tabIndex={0}
+        />
+        <Form method="post">
+          <DialogContent>
+            <>
+              <div className="pb-6">
+                <input
+                  tabIndex={0}
+                  type="text"
+                  name="name"
+                  id="addEditSection-name"
+                  className="h-11 w-full rounded-lg border border-gray-200 px-3 text-base"
+                  placeholder={`${t("commonConstants.enterTestsName")}*`}
+                  onChange={(e) => setSectionName(trimValue(e.target.value))}
+                  value={sectionName}
+                  maxLength={52}
+                />
+                {sectionActionErrors?.title ? (
+                  <p
+                    id="addEditSection-title-error"
+                    className="px-3 text-red-500"
+                  >
+                    {t(sectionActionErrors?.title)}
+                  </p>
+                ) : sectionActionErrors?.duplicateTitle ? (
+                  <p id="duplicete-title-error" className="px-3 text-red-500">
+                    {t(sectionActionErrors?.duplicateTitle)}
+                  </p>
+                ) : null}
+              </div>
+              <textarea
+                tabIndex={0}
+                name="description"
+                id="section-description"
+                rows={4}
+                className="max-h-280 w-full overflow-auto rounded-lg border border-gray-200 px-3 py-4 text-base"
+                onChange={(e) => setDescription(trimValue(e.target.value))}
+                value={description}
+                placeholder={`${t("commonConstants.enterTestsDesc")}*`}
+              />
+              {sectionActionErrors?.description ? (
+                <p
+                  id="addEditSection-description-error"
+                  className="px-3 text-red-500"
+                >
+                  {t(sectionActionErrors?.description)}
+                </p>
+              ) : null}
+            </>
+          </DialogContent>
+          <DialogFooter>
+            <div className="flex justify-end gap-2">
+              <Button
+                tabIndex={0}
+                type="button"
+                id="cancel-button"
+                className="h-9 px-4"
+                onClick={() => {
+                  setOpen(false)
+                  setSectionActionErrors?.({ title: "", description: "" })
+                }}
+                variant="primary-outlined"
+                title={t("commonConstants.cancel")}
+                buttonText={t("commonConstants.cancel")}
+              />
+              <Button
+                tabIndex={0}
+                type="button"
+                id="submit-button"
+                className="h-9 px-4"
+                name={editItem ? "edit-section" : "add-section"}
+                value="add"
+                isDisabled={transition.state === "submitting"}
+                variant="primary-solid"
+                datacy="submit"
+                onClick={() =>
+                  editItem
+                    ? handleEdit(sectionName, description)
+                    : handleAdd(sectionName, description)
+                }
+                title={
+                  transition.state === "submitting"
+                    ? editItem
+                      ? t("commonConstants.updating")
+                      : t("commonConstants.adding")
+                    : editItem
+                    ? t("commonConstants.edit")
+                    : t("commonConstants.add")
+                }
+                buttonText={
+                  transition.state === "submitting"
+                    ? editItem
+                      ? t("commonConstants.updating")
+                      : t("commonConstants.adding")
+                    : editItem
+                    ? t("commonConstants.update")
+                    : t("commonConstants.add")
+                }
+              />
+            </div>
+          </DialogFooter>
+        </Form>
+      </>
     </DialogWrapper>
   )
 }

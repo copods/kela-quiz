@@ -1,3 +1,4 @@
+import type { ChangeEvent } from "react"
 import { useEffect, useState } from "react"
 
 import { useLoaderData } from "@remix-run/react"
@@ -50,22 +51,30 @@ const Question = () => {
     }
   }, [])
 
-  const onChangeHandle = (event: any, index?: number) => {
+  const onChangeHandle = (
+    event:
+      | Option
+      | ChangeEvent<HTMLInputElement>
+      | ChangeEvent<HTMLTextAreaElement>,
+    index?: number
+  ) => {
     if (questionType === QuestionTypes.singleChoice) {
-      setUserAnswer(event.id)
+      setUserAnswer((event as Option).id)
     }
     if (questionType === QuestionTypes.text) {
       setUserAnswer((oldVal: Array<string>) => {
-        oldVal[index || 0] = event.target.value
+        oldVal[index || 0] = (
+          event as ChangeEvent<HTMLInputElement>
+        ).target.value
         return [...oldVal]
       })
     }
     if (questionType === QuestionTypes.multipleChoice) {
       setUserAnswer((val: string[]) => {
-        if (userAnswer.indexOf(event.id) === -1) {
-          return [...val, event.id]
+        if (userAnswer.indexOf((event as Option).id) === -1) {
+          return [...val, (event as Option).id]
         } else {
-          val.splice(userAnswer.indexOf(event.id), 1)
+          val.splice(userAnswer.indexOf((event as Option).id), 1)
           return [...val]
         }
       })

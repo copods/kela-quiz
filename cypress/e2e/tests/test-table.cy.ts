@@ -63,45 +63,45 @@ describe("Visiting Assessment", () => {
     getTableTh()
       .should("have.text", tableTitles.srNo)
       .should("have.css", "color", "rgb(107, 114, 128)")
-      .should("have.css", "font-weight", "600")
+      .should("have.css", "font-weight", "400")
       .should("have.css", "font-size", "14px")
 
     // To check table title - assessment
     getAssessmentHeader()
       .should("have.text", tableTitles.assessment)
       .should("have.css", "color", "rgb(107, 114, 128)")
-      .should("have.css", "font-weight", "600")
+      .should("have.css", "font-weight", "400")
       .should("have.css", "font-size", "14px")
 
     // To check table title - test
     getTestHeader()
       .should("have.text", tableTitles.test)
       .should("have.css", "color", "rgb(107, 114, 128)")
-      .should("have.css", "font-weight", "600")
+      .should("have.css", "font-weight", "400")
       .should("have.css", "font-size", "14px")
 
     // To check table title - Created on
     getCreatedOnHeader()
       .should("have.text", tableTitles.createdOn)
       .should("have.css", "color", "rgb(107, 114, 128)")
-      .should("have.css", "font-weight", "600")
+      .should("have.css", "font-weight", "400")
       .should(
         "have.class",
-        "flex-1 border-b bg-gray-100 py-4 px-3 text-sm font-semibold text-gray-500 first:pl-9 last:pr-9"
+        "flex flex-1 items-center border-b bg-tableBg px-4 text-sm text-gray-500"
       )
 
     // To check table title - Created By
     getCreatedByHeader()
       .should("have.text", tableTitles.createdBy)
       .should("have.css", "color", "rgb(107, 114, 128)")
-      .should("have.css", "font-weight", "600")
+      .should("have.css", "font-weight", "400")
       .should("have.css", "font-size", "14px")
 
     // To check table title - Actions
     getActionHeader()
       .should("have.text", tableTitles.actions)
       .should("have.css", "color", "rgb(107, 114, 128)")
-      .should("have.css", "font-weight", "600")
+      .should("have.css", "font-weight", "400")
       .should("have.css", "font-size", "14px")
 
     // To check add assessment button styles

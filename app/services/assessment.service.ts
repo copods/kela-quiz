@@ -1,14 +1,17 @@
 import moment from "moment"
 
 import { redirect } from "@remix-run/node"
+import { json } from "remix-utils"
 
 import {
   candidateSectionStart,
   candidateTestStart,
   checkIfTestLinkIsValid,
+  createCandidateAssessmentFeedback,
   endAssessment,
   endCurrentSection,
   getCandidate,
+  getCandidateDetailsIfExists,
   getCandidateEmail,
   getCandidateIDFromAssessmentID,
   getCandidateSectionDetails,
@@ -31,6 +34,17 @@ export type CandidateStep = {
   currentSectionId?: string
 }
 
+type ActionData = {
+  errors?: {
+    title: string
+    status: number
+  }
+  resp?: {
+    title: string
+    status: number
+    feedbackSubmitted: boolean
+  }
+}
 /**
  * Functions checks if the given assessment link is valid. If true, it will return the url to redirect the user to (only if current route does not match the next route in DB)
  * If false, it will return null and this will result in a 404 Not Found
@@ -57,11 +71,7 @@ export async function checkIfTestLinkIsValidAndRedirect(
 
   const candidateStepObj = currentCandidateStep?.candidateStep as CandidateStep
 
-  if (
-    candidateStepObj &&
-    candidateStepObj.nextRoute &&
-    !currentCandidateStep?.endAt
-  ) {
+  if (candidateStepObj && candidateStepObj.nextRoute) {
     if (currentRoute !== candidateStepObj.nextRoute) {
       switch (candidateStepObj.nextRoute) {
         case "register":
@@ -73,6 +83,8 @@ export async function checkIfTestLinkIsValidAndRedirect(
           return `/assessment/${assessmentID}/${candidateStepObj.currentSectionId}/cooldown`
         case "end":
           return `/assessment/${assessmentID}/end-assessment`
+        case "feedback-form":
+          return `/assessment/${assessmentID}/feedback-form`
         case "already-submitted":
           return `/assessment/${assessmentID}/already-submitted`
       }
@@ -83,7 +95,7 @@ export async function checkIfTestLinkIsValidAndRedirect(
     const CurrentTime = moment(new Date())
     const examEndedBefore = moment(currentCandidateStep?.endAt)
     const duration = CurrentTime.diff(examEndedBefore, "minute")
-    if (duration >= 1) {
+    if (duration >= 5) {
       await updateNextStep({
         assessmentId: assessmentID as string,
         nextRoute: "already-submitted",
@@ -393,4 +405,49 @@ export async function endCandidateAssessment(
   })
   await endAssessment(assessmentId as string)
   return redirect(`/assessment/${assessmentId}/end-assessment`)
+}
+
+/**
+ * Functions will return candidate details if it already exists
+ * @param assessmentId
+ * @returns candidate details
+ */
+export async function getCandidateDetails(assessmentId: string) {
+  return getCandidateDetailsIfExists(assessmentId as string)
+}
+
+/**
+ *
+ * @param assessmentId
+ * @param feedbackDetails
+ * @returns json
+ */
+
+export async function setCandidateFeedbackDetails(
+  assessmentId: string,
+  feedbackDetails: Array<{
+    question: string
+    value: string
+    questionType: string
+  }>
+) {
+  return await createCandidateAssessmentFeedback(assessmentId, feedbackDetails)
+    .then((res) => {
+      return json<ActionData>({
+        resp: {
+          title: "commonConstants.success",
+          status: 200,
+          feedbackSubmitted: true,
+        },
+      })
+    })
+    .catch((err) => {
+      let title = "commonConstants.commonError"
+      return json<ActionData>({
+        errors: {
+          title,
+          status: 400,
+        },
+      })
+    })
 }

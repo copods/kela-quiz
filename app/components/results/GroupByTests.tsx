@@ -69,7 +69,7 @@ const GroupByTests = () => {
   }, [])
 
   const SrNoDataCell = (data: Test, index: number) => {
-    return <span>{index + 1}</span>
+    return <span>{(resultsCurrentPage - 1) * resultsPageSize + index + 1}</span>
   }
   const AssessmentDataCell = (data: Test) => {
     return (
@@ -190,7 +190,7 @@ const GroupByTests = () => {
         {t("commonConstants.results")}
       </h1>
       {candidateTestData.totalTestCount ? (
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-1 flex-col gap-6 overflow-hidden">
           <div id="sort-filter-container" className="w-48">
             <SortFilter
               filterData={sortByDetails}

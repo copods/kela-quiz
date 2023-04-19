@@ -2,7 +2,8 @@ import { env } from "process"
 
 import type { Question, User } from "@prisma/client"
 
-import { sendTestInviteMail } from "./sendgrid.servers"
+import { checkFeatureAuthorization } from "./authorization.server"
+import { sendTestFeedbackMail, sendTestInviteMail } from "./sendgrid.servers"
 
 import { prisma } from "~/db.server"
 import { getHoursAndMinutes } from "~/utils"
@@ -75,7 +76,10 @@ export async function createCandidateTest({
     })
     return candidateTest
   } catch (error) {
-    throw new Error("candidateExamConstants.candidateTestCreateError")
+    throw {
+      candidateInviteStatus: "already exists",
+      testId: testId,
+    }
   }
 }
 
@@ -209,12 +213,28 @@ export async function resendTestLink({
   id,
   candidateId,
   testId,
+  userId,
+  workspaceId,
 }: {
   id: string
   candidateId: string
   testId: string
+  userId: string
+  workspaceId: string
 }) {
   try {
+    if (
+      !(await checkFeatureAuthorization(
+        userId,
+        workspaceId,
+        "invite_candidate",
+        "update"
+      ))
+    ) {
+      throw {
+        status: 403,
+      }
+    }
     const candidateLink = `${candidateTestLink}${testId}`
     const candidate = await prisma.candidate.findUnique({
       where: { id: candidateId },
@@ -257,7 +277,7 @@ export async function resendTestLink({
       return "End Test"
     }
   } catch (error) {
-    return "error"
+    throw error
   }
 }
 
@@ -265,12 +285,28 @@ export async function createCandidate({
   emails,
   createdById,
   testId,
+  userId,
+  workspaceId,
 }: {
   emails: Array<string>
   createdById: User["id"]
   testId: string
+  userId: string
+  workspaceId: string
 }) {
   try {
+    if (
+      !(await checkFeatureAuthorization(
+        userId,
+        workspaceId,
+        "invite_candidate",
+        "create"
+      ))
+    ) {
+      throw {
+        status: 403,
+      }
+    }
     const allInvitedUsers = await prisma.candidateTest.findMany({
       select: { candidate: { select: { email: true } }, testId: true },
     })
@@ -301,7 +337,7 @@ export async function createCandidate({
     }
     return { created: "created", emailCount, neverInvitedCount }
   } catch (error) {
-    return "error"
+    throw error
   }
 }
 
@@ -343,6 +379,40 @@ export async function remindCandidate() {
         candidate.link as string,
         getFormatedTime(candidate.test?.sections) as string
       )
+    })
+  }
+}
+
+export async function remindCandidateForFeedback() {
+  let minTime: string | number = Date.now() - 2 * 60 * 60 * 1000
+  let maxTime: string | number = Date.now() - 3 * 60 * 60 * 1000
+  minTime = new Date(minTime).toISOString()
+  maxTime = new Date(maxTime).toISOString()
+
+  const candidates = await prisma.candidateTest.findMany({
+    where: {
+      endAt: {
+        lte: maxTime,
+        gte: minTime,
+      },
+
+      UserFeedback: {
+        none: {},
+      },
+    },
+    select: {
+      link: true,
+      candidate: {
+        select: {
+          email: true,
+        },
+      },
+    },
+  })
+
+  if (candidates.length) {
+    candidates.forEach((candidate) => {
+      sendTestFeedbackMail(candidate.candidate.email, candidate.link as string)
     })
   }
 }

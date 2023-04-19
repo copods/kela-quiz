@@ -50,7 +50,7 @@ export const WorkspaceDetailsSection = ({
             }
             required={false}
             errorId={"workspace-input-error"}
-            error={isError ? "statusCheck.workspaceNameIsReq" : ""}
+            error={isError ? "commonConstants.workspaceNameIsRequired" : ""}
             helperText={<MaxLength t={t} inputValue={inputValue} />}
             maxLength={32}
           />

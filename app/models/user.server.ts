@@ -1,9 +1,8 @@
-import { env } from "process"
-
 import { faker } from "@faker-js/faker"
 import type { Password, User } from "@prisma/client"
 import bcrypt from "bcryptjs"
 
+import { checkFeatureAuthorization } from "./authorization.server"
 import { sendMail, sendNewPassword } from "./sendgrid.servers"
 
 import { prisma } from "~/db.server"
@@ -17,31 +16,43 @@ export async function getUserById(id: User["id"]) {
 export async function deleteUserById(
   userId: string,
   workspaceId: string,
-  email: string
+  email: string,
+  id: string
 ) {
-  const deleteUserWorkspace = await prisma.userWorkspace.deleteMany({
-    where: { userId, workspaceId },
-  })
-  const invitedIdByEmail = await prisma.invites.findMany({
-    where: {
-      email: email,
-      workspaceId,
-      deleted: false,
-    },
-    select: {
-      id: true,
-    },
-  })
-  await prisma.invites.update({
-    where: {
-      id: invitedIdByEmail[0].id,
-    },
-    data: {
-      deleted: true,
-      deletedAt: new Date().toString(),
-    },
-  })
-  return deleteUserWorkspace
+  try {
+    if (
+      !(await checkFeatureAuthorization(id, workspaceId, "member", "delete"))
+    ) {
+      throw {
+        status: 403,
+      }
+    }
+    const deleteUserWorkspace = await prisma.userWorkspace.deleteMany({
+      where: { userId, workspaceId },
+    })
+    const invitedIdByEmail = await prisma.invites.findMany({
+      where: {
+        email: email,
+        workspaceId,
+        deleted: false,
+      },
+      select: {
+        id: true,
+      },
+    })
+    await prisma.invites.update({
+      where: {
+        id: invitedIdByEmail[0].id,
+      },
+      data: {
+        deleted: true,
+        deletedAt: new Date().toString(),
+      },
+    })
+    return deleteUserWorkspace
+  } catch (error) {
+    throw error
+  }
 }
 
 export async function getUserByEmail(email: User["email"]) {
@@ -152,6 +163,7 @@ export async function createUserBySignUp({
       workspace: {
         select: {
           id: true,
+          createdById: true,
         },
       },
     },
@@ -166,6 +178,11 @@ export async function createUserBySignUp({
     },
   })
 
+  await prisma.workspace.update({
+    where: { id: user.workspace[0].id },
+    data: { ownerId: user.workspace[0].createdById },
+  })
+
   const role = await prisma.role.findUnique({
     where: {
       id: roleId,
@@ -174,88 +191,6 @@ export async function createUserBySignUp({
 
   await sendMail(email, firstName, password, role?.name as string)
   return user
-}
-
-export async function createNewUser({
-  firstName,
-  lastName,
-  email,
-  roleId,
-  defaultWorkspaceName,
-  createdById,
-  invitedByWorkspaceId,
-}: {
-  firstName: string
-  lastName: string
-  email: string
-  defaultWorkspaceName: string
-  roleId: string
-  createdById: User["id"]
-  invitedByWorkspaceId: string
-}) {
-  const password = faker.internet.password()
-  const hashedPassword = await bcrypt.hash(password, 10)
-  const user = await prisma.user.create({
-    data: {
-      firstName,
-      lastName,
-      email,
-      roleId,
-      password: {
-        create: {
-          hash: hashedPassword,
-        },
-      },
-
-      workspace: {
-        create: {
-          name: defaultWorkspaceName,
-        },
-      },
-    },
-    select: {
-      id: true,
-      roleId: true,
-      workspace: {
-        select: {
-          id: true,
-        },
-      },
-    },
-  })
-
-  const adminRoleId = await getAdminId()
-
-  await prisma.userWorkspace.create({
-    data: {
-      userId: user.id as string,
-      workspaceId: user.workspace[0].id,
-      roleId: adminRoleId as string,
-      isDefault: true,
-    },
-  })
-
-  await prisma.userWorkspace.create({
-    data: {
-      userId: user.id as string,
-      workspaceId: invitedByWorkspaceId,
-      roleId: roleId,
-      isDefault: false,
-    },
-  })
-  const role = await prisma.role.findUnique({
-    where: {
-      id: roleId,
-    },
-  })
-  const passwordGenerationLink =
-    env.PUBLIC_URL + "/members/" + user?.id + "/create-password"
-  return await sendMail(
-    passwordGenerationLink,
-    email,
-    firstName,
-    role?.name || "NA"
-  )
 }
 
 export async function sendResetPassword(email: string) {
@@ -373,4 +308,48 @@ export async function updateUserData(
       lastName,
     },
   })
+}
+
+export async function updateUserRole(
+  id: string,
+  userId: string,
+  workspaceId: string,
+  roleId: string
+) {
+  try {
+    if (
+      !(await checkFeatureAuthorization(id, workspaceId, "member", "update"))
+    ) {
+      throw {
+        status: 403,
+      }
+    }
+    const updateRole = await prisma.userWorkspace.update({
+      where: {
+        workspaceId_userId: {
+          workspaceId: workspaceId,
+          userId: userId,
+        },
+      },
+      data: {
+        roleId: roleId,
+      },
+    })
+
+    if (updateRole) {
+      return {
+        response: {
+          status: 203,
+        },
+      }
+    } else {
+      return {
+        response: {
+          status: 400,
+        },
+      }
+    }
+  } catch (error) {
+    throw error
+  }
 }

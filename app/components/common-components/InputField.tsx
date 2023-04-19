@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next"
 
-import type { InputFieldProps } from "~/interface/Interface"
+import type { InputFieldProps, InputFieldVariant } from "~/interface/Interface"
 
 function InputField({
   name,
@@ -10,9 +10,14 @@ function InputField({
   isRequired = false,
   helperText,
   maxLength,
+  variant = "default",
   ...props
 }: InputFieldProps) {
   const { t } = useTranslation()
+  const variantMap: InputFieldVariant = {
+    small: "text-base h-10",
+    default: "text-lg h-11",
+  }
   return (
     <div className="flex flex-col gap-1.5">
       {label && (
@@ -26,9 +31,9 @@ function InputField({
         id={name}
         name={name}
         {...props}
-        className={
-          "h-11 w-full rounded-lg border border-gray-200 px-3.5 py-2.5 text-lg"
-        }
+        className={` w-full rounded-lg border border-gray-200 px-3.5 py-2.5 ${
+          variantMap[variant as keyof InputFieldVariant]
+        }`}
         title={props.placeholder}
         maxLength={maxLength}
       />

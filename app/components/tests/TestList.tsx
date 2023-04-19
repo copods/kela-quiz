@@ -92,7 +92,7 @@ const TestList = () => {
   const deleteTest = (id: string) => {
     submit(
       {
-        action: "testDelete",
+        action: "deleteTest",
         id: id,
       },
       { method: "post" }
@@ -101,7 +101,7 @@ const TestList = () => {
 
   //render functions for table
   const SeriaLNoCell = (data: Test, index: number) => {
-    return <span>{index + 1}</span>
+    return <span>{(testsCurrentPage - 1) * testsPageSize + index + 1}</span>
   }
   const TestNameDataCell = (data: Test, index: number) => {
     return (
@@ -150,6 +150,7 @@ const TestList = () => {
   const TestInvite = (data: Test, index: number) => {
     const menuItemsDetailsList = [
       {
+        show: testLoaderData.permission.assessments.delete,
         id: "Delete",
         menuListText: `${t("commonConstants.delete")}`,
         menuListIcon: "ic:outline-delete-outline",
@@ -158,36 +159,40 @@ const TestList = () => {
     return (
       <>
         <div className="flex" id="action-cell">
-          <Icon
-            id={`invite-popup-open${index}`}
-            role={"button"}
-            tabIndex={0}
-            className="candidateInviteIcon cursor-pointer text-2xl text-primary focus:outline-dotted focus:outline-2"
-            icon={"ant-design:user-add-outlined"}
-            onClick={(e) => {
-              setCandidatePopupOpen(true)
-              setSelectedTest({ id: data.id, name: data.name })
-            }}
-            onKeyUp={(e) => {
-              if (e.key === "Enter") {
+          {testLoaderData.permission.invite_candidate.create && (
+            <Icon
+              id={`invite-popup-open${index}`}
+              role={"button"}
+              tabIndex={0}
+              className="candidateInviteIcon cursor-pointer text-2xl text-primary focus:outline-dotted focus:outline-2"
+              icon={"ant-design:user-add-outlined"}
+              onClick={(e) => {
                 setCandidatePopupOpen(true)
                 setSelectedTest({ id: data.id, name: data.name })
-              }
-            }}
-            aria-label={t("members.inviteMember")}
-          />
-          <ListActionMenu
-            menuIcon={"mdi:dots-vertical"}
-            onItemClick={setShowDeletePopup}
-            open={showDeletePopup}
-            menuDetails={menuItemsDetailsList}
-            aria-label={t("testTableItem.menu")}
-            id={data.id}
-            setId={setId}
-            customClasses={{
-              item: "text-primary text-xs w-36 shadow-sm",
-            }}
-          />
+              }}
+              onKeyUp={(e) => {
+                if (e.key === "Enter") {
+                  setCandidatePopupOpen(true)
+                  setSelectedTest({ id: data.id, name: data.name })
+                }
+              }}
+              aria-label={t("members.inviteMember")}
+            />
+          )}
+          {menuItemsDetailsList.some((item) => item.show) && (
+            <ListActionMenu
+              menuIcon={"mdi:dots-vertical"}
+              onItemClick={setShowDeletePopup}
+              open={showDeletePopup}
+              menuDetails={menuItemsDetailsList.filter((items) => items.show)}
+              aria-label={t("testTableItem.menu")}
+              id={data.id}
+              setId={setId}
+              customClasses={{
+                item: "text-primary text-xs w-36 shadow-sm",
+              }}
+            />
+          )}
         </div>
         {id === data.id && (
           <DeletePopUp
@@ -198,6 +203,7 @@ const TestList = () => {
             status={testLoaderData.status}
             deleteItem={data.name}
             deleteItemType={t("testsConstants.assessment")}
+            header={t("commonConstants.deleteAssessment")}
           />
         )}
       </>
@@ -277,20 +283,22 @@ const TestList = () => {
         >
           {t("testsConstants.assessments")}
         </h2>
-        <Button
-          className="px-5"
-          onClick={() =>
-            navigate(
-              `/${testLoaderData.currentWorkspaceId}${routes.addAssessment}`
-            )
-          }
-          id="add-test"
-          tabIndex={0}
-          variant="primary-solid"
-          title={t("testsConstants.addTestbutton")}
-          aria-label={t("testsConstants.addTestbutton")}
-          buttonText={`+ ${t("testsConstants.addTestbutton")}`}
-        />
+        {testLoaderData.permission.assessments.create && (
+          <Button
+            className="px-5"
+            onClick={() =>
+              navigate(
+                `/${testLoaderData.currentWorkspaceId}${routes.addAssessment}`
+              )
+            }
+            id="add-test"
+            tabIndex={0}
+            variant="primary-solid"
+            title={t("testsConstants.addTestbutton")}
+            aria-label={t("testsConstants.addTestbutton")}
+            buttonText={`+ ${t("testsConstants.addTestbutton")}`}
+          />
+        )}
       </header>
       {tests.length > 0 ? (
         <>
@@ -305,18 +313,16 @@ const TestList = () => {
               showSelected={false}
             />
           </div>
-          <div className="flex flex-1 flex-col rounded-lg pb-6">
-            <Table
-              columns={testColumns}
-              data={tests}
-              paginationEnabled={true}
-              pageSize={testsPageSize}
-              setPageSize={setTestsPageSize}
-              currentPage={testsCurrentPage}
-              onPageChange={setTestsCurrentPage}
-              totalItems={testLoaderData.allTestsCount}
-            />
-          </div>
+          <Table
+            columns={testColumns}
+            data={tests}
+            paginationEnabled={true}
+            pageSize={testsPageSize}
+            setPageSize={setTestsPageSize}
+            currentPage={testsCurrentPage}
+            onPageChange={setTestsCurrentPage}
+            totalItems={testLoaderData.allTestsCount}
+          />
         </>
       ) : (
         <EmptyStateComponent

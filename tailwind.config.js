@@ -11,6 +11,9 @@ module.exports = {
         primaryOutlined: "#141649",
         questionBackground: "#F0F0F0",
         hover: "#F8FBFF",
+        feedbackColor: "#2A3342",
+        tableBorder: "#DFE5E9",
+        tableBg: "#F9FBFC",
       },
       minWidth: {
         sectionCard: "400px",
@@ -24,6 +27,8 @@ module.exports = {
       },
       height: {
         cooldownSVG: "355px",
+        728: "728px",
+        3.25: "52px",
       },
       width: {
         sectionCard: `30%`,
@@ -32,16 +37,19 @@ module.exports = {
         cooldownSVG: "389px",
         438: "438px",
         358: "358px",
+        728: "728px",
       },
       maxWidth: {
         554: "554px",
         454: "454px",
         96: "384px",
+        75: "300px",
         32: "128px",
       },
       minHeight: {
         480: "480px",
         16: "64px",
+        2.875: "46px",
       },
       maxHeight: {
         352: "352px",
@@ -57,6 +65,8 @@ module.exports = {
 
       boxShadow: {
         base: "0px 1px 3px rgba(0, 0, 0, 0.1), 0px 1px 2px rgba(0, 0, 0, 0.06)",
+        tableShadow: "0px 10px 20px rgba(0,0,0,0.04)",
+        cardShadow: "0px_1px_10px_rgba(0,0,0,0.08)",
       },
       gridTemplateColumns: {
         18: "repeat(18, minmax(0, 1fr))",

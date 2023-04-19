@@ -1,7 +1,6 @@
 import moment from "moment"
 
 import { useLoaderData, useSubmit } from "@remix-run/react"
-import { useTranslation } from "react-i18next"
 
 import Table from "../common-components/TableComponent"
 
@@ -22,7 +21,6 @@ const InvitedMembersList = ({
   setInvitedMemberPageSize: (e: number) => void
 }) => {
   const membersData = useLoaderData()
-  const { t } = useTranslation()
   const invitedMember = membersData.invitedMembers
   const submit = useSubmit()
   const memberLoaderData = useLoaderData()
@@ -89,27 +87,17 @@ const InvitedMembersList = ({
   return (
     <>
       {invitedMember?.length !== 0 && (
-        <div className="flex flex-col gap-4 text-2xl">
-          <h1
-            tabIndex={0}
-            role={t("members.invitedMember")}
-            aria-label={t("members.invitedMember")}
-            id="invited-member-heading"
-          >
-            {t("members.invitedMember")}
-          </h1>
-          <div className="text-base">
-            <Table
-              columns={invitedMembersColumn}
-              data={memberLoaderData.invitedMembers}
-              paginationEnabled={true}
-              pageSize={invitedMemberPageSize}
-              setPageSize={setInvitedMemberPageSize}
-              currentPage={invitedMemberCurrentPage}
-              onPageChange={setInvitedMemberPage}
-              totalItems={memberLoaderData.invitedUsersCount}
-            />
-          </div>
+        <div className="flex h-full flex-col gap-4 text-base">
+          <Table
+            columns={invitedMembersColumn}
+            data={memberLoaderData.invitedMembers}
+            paginationEnabled={true}
+            pageSize={invitedMemberPageSize}
+            setPageSize={setInvitedMemberPageSize}
+            currentPage={invitedMemberCurrentPage}
+            onPageChange={setInvitedMemberPage}
+            totalItems={memberLoaderData.invitedUsersCount}
+          />
         </div>
       )}
     </>

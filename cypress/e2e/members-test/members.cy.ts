@@ -5,18 +5,32 @@ import {
   getDialogCloseIcon,
   getDropdown,
   getEmail,
+  getHr,
   getInviteBtn,
-  getInvitedMemberHeading,
+  getInvitedMembers,
   getInviteMemberBtn,
-  getJoinedMemberHeading,
+  getJoinedMembers,
   getMemberDialogHeader,
   getMembersHeading,
   getResendMemberInviteBtn,
-  getTableRow,
   getToaster,
+  getChipTag,
+  getDialogWrapper,
+  getResetPasswordPopupHeading,
+  getRoleChangeContent,
+  getChangeRoleId,
+  getElementInsideOfDropdown,
+  getDropdownOptions,
+  getDialogFooter,
+  getTable,
 } from "support/common-function"
-const memberEmail = "johndoe@example.com"
 const owner = "Owner"
+const joinedMembers = "Joined Members"
+const invitedMembers = "Invited Members"
+const changeRoleHeading = "Change Role"
+const changeRoleContent = "Select a role that you want to assign."
+const roles = ["Admin", "Recruiter", "Test Creator"]
+
 describe("Test for members", () => {
   beforeEach("sign-in", () => {
     cy.login()
@@ -50,6 +64,16 @@ describe("Test for members", () => {
       "background-color",
       "rgb(53, 57, 136)"
     )
+
+    // Check active tab is Joined Members
+    getJoinedMembers()
+      .should("have.text", joinedMembers)
+      .within(() => {
+        getHr().should(
+          "have.class",
+          "absolute -bottom-0.5 h-0.5 w-full border-0 bg-primary"
+        )
+      })
 
     // Invite Dialog tests
     // To check if invite Dialog is visible
@@ -115,35 +139,16 @@ describe("Test for members", () => {
     getInviteBtn().should("have.css", "background-color", "rgb(53, 57, 136)")
     getCancelBtn().click()
 
-    // Joined memeber heading tests
-    // To check if joined memeber heading is visible
-    getJoinedMemberHeading().should("be.visible")
-
-    // To check if joined member heading has text
-    getJoinedMemberHeading().should("have.text", "Joined Members")
-
-    // To check if joined member heading has tabindex
-    getJoinedMemberHeading().should("have.attr", "tabindex", "0")
-
-    // To check if joined member heading has aria label
-    getJoinedMemberHeading().should("have.attr", "aria-label", "Joined Members")
-
-    // Invite member heading tests
-    // To check if invite member heading is visible
-    getInvitedMemberHeading().should("be.visible")
-
-    // To check if invite member heading has text
-    getInvitedMemberHeading().should("have.text", "Invited Member")
-
-    // To check if invite member heading has tabindex
-    getInvitedMemberHeading().should("have.attr", "tabindex", "0")
-
-    // To check if invite member heading has aria label
-    getInvitedMemberHeading().should(
-      "have.attr",
-      "aria-label",
-      "Invited Member"
-    )
+    // Check active tab is Invited Members
+    getInvitedMembers().click()
+    getInvitedMembers()
+      .should("have.text", invitedMembers)
+      .within(() => {
+        getHr().should(
+          "have.class",
+          "absolute -bottom-0.5 h-0.5 w-full border-0 bg-primary"
+        )
+      })
 
     // Resend member invite button tests
     // To check if resend member invite button is visible
@@ -156,16 +161,69 @@ describe("Test for members", () => {
     getResendMemberInviteBtn().click()
     getToaster().should("have.text", "Invitation Sent Successfully..!")
 
-    // New member tests
-    // To check if new member is added
-    getTableRow().eq(5).should("have.text", memberEmail)
-
     // Owner badge tests
     // To check if owner badge is visible
+    getJoinedMembers().click()
     cy.viewport(1500, 1000)
     getBadgeTag().should("be.visible")
 
     // To check if owner badge has text
     getBadgeTag().should("have.text", owner)
+  })
+
+  it("Tests to Check Change Role", () => {
+    //Chip should be there
+    getTable().each(() => {})
+    getChipTag().each((el) => {
+      if (el.text() === roles[1]) {
+        el.click()
+      }
+    })
+
+    //To check dialog Functionality/visibility
+    getDialogWrapper().should("be.visible")
+    getResetPasswordPopupHeading().should("have.text", changeRoleHeading)
+    getRoleChangeContent().should("have.text", changeRoleContent)
+    getChangeRoleId().then((eq) => {
+      cy.wrap(eq).within(() => {
+        getElementInsideOfDropdown().should("have.text", roles[1])
+        getDropdown().click()
+        getDropdownOptions().get("li").should("have.length", 3)
+        getDropdownOptions()
+          .get("li")
+          .each((el, index) => {
+            const element = el.text()
+            expect(element).to.deep.equal(roles[index])
+          })
+        getDropdownOptions()
+          .get("li")
+          .eq(1)
+          .should(
+            "have.class",
+            "bg-primary text-white relative z-20 cursor-pointer select-none py-2 px-3"
+          )
+        getDropdownOptions().get("li").eq(2).click()
+        getElementInsideOfDropdown().should("have.text", roles[2])
+      })
+    })
+    getDialogFooter()
+      .get("#cancel-change-role-pop-up")
+      .should("have.text", "Cancel")
+    getDialogFooter().get("#proceed").should("have.text", "Proceed")
+    getDialogFooter().get("#cancel-change-role-pop-up").click()
+    getChipTag().each((el) => {
+      if (el.text() === roles[1]) {
+        el.click()
+      }
+    })
+
+    getChangeRoleId().then((eq) => {
+      cy.wrap(eq).within(() => {
+        getDropdown().click()
+        getDropdownOptions().get("li").eq(2).click()
+      })
+    })
+    getDialogFooter().get("#proceed").click()
+    getToaster().should("have.text", "Role Updated Successfully")
   })
 })

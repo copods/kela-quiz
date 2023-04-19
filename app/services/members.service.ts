@@ -12,6 +12,7 @@ import {
   getAllUsers,
   getAllUsersCount,
   getUserById,
+  updateUserRole,
 } from "~/models/user.server"
 
 type ActionData = {
@@ -84,13 +85,19 @@ export async function getUserByID(userId: string) {
 export async function getALLInvitedMember(
   currentWorkspaceId: string,
   invitedMembersCurrentPage: number,
-  invitedMembersItemsPerPage: number
+  invitedMembersItemsPerPage: number,
+  userId: string
 ) {
-  return await getAllInvitedMember(
-    currentWorkspaceId,
-    invitedMembersCurrentPage,
-    invitedMembersItemsPerPage
-  )
+  try {
+    return await getAllInvitedMember(
+      currentWorkspaceId,
+      userId,
+      invitedMembersCurrentPage,
+      invitedMembersItemsPerPage
+    )
+  } catch (error) {
+    throw error
+  }
 }
 
 /**
@@ -107,31 +114,43 @@ export async function getALLInvitedMemberCount(currentWorkspaceId: string) {
  * @param id
  * @returns json response
  */
-export async function reinviteMember({ id }: { id: string }) {
-  return await reinviteMemberForWorkspace({ id })
-    .then(() => {
-      return json<ActionData>(
-        {
-          resp: {
-            title: "toastConstants.invitationSent",
-            status: 200,
+export async function reinviteMember({
+  id,
+  userId,
+  workspaceId,
+}: {
+  id: string
+  userId: string | undefined
+  workspaceId: string
+}) {
+  try {
+    return await reinviteMemberForWorkspace({ id, userId, workspaceId })
+      .then(() => {
+        return json<ActionData>(
+          {
+            resp: {
+              title: "toastConstants.invitationSent",
+              status: 200,
+            },
           },
-        },
-        { status: 200 }
-      )
-    })
-    .catch((err) => {
-      let title = "statusCheck.commonError"
-      return json<ActionData>(
-        {
-          errors: {
-            title,
-            status: 400,
+          { status: 200 }
+        )
+      })
+      .catch((err) => {
+        let title = "statusCheck.commonError"
+        return json<ActionData>(
+          {
+            errors: {
+              title,
+              status: err.status ?? 400,
+            },
           },
-        },
-        { status: 400 }
-      )
-    })
+          { status: 400 }
+        )
+      })
+  } catch (error) {
+    throw error
+  }
 }
 
 /**
@@ -139,31 +158,37 @@ export async function reinviteMember({ id }: { id: string }) {
  * @param id
  * @param workspaceId
  * @param email
+ * @param userId
  * @returns json response
  */
 export async function deleteUserByID(
   id: string,
   workspaceId: string,
-  email: string
+  email: string,
+  userId: string
 ) {
-  return await deleteUserById(id, workspaceId, email)
-    .then((res) => {
-      return json<ActionData>(
-        { resp: { title: "statusCheck.deletedSuccess", status: 200 } },
-        { status: 200 }
-      )
-    })
-    .catch((err) => {
-      return json<ActionData>(
-        {
-          errors: {
-            title: "statusCheck.commonError",
-            status: 400,
+  try {
+    return await deleteUserById(id, workspaceId, email, userId)
+      .then((res) => {
+        return json<ActionData>(
+          { resp: { title: "statusCheck.deletedSuccess", status: 200 } },
+          { status: 200 }
+        )
+      })
+      .catch((err) => {
+        return json<ActionData>(
+          {
+            errors: {
+              title: "statusCheck.commonError",
+              status: err.status ?? 400,
+            },
           },
-        },
-        { status: 400 }
-      )
-    })
+          { status: 400 }
+        )
+      })
+  } catch (error) {
+    throw error
+  }
 }
 
 /**
@@ -179,42 +204,71 @@ export async function inviteNEWUser({
   roleId,
   invitedByWorkspaceId,
   userId,
+  workspaceId,
 }: {
   email: string
   roleId: string
   invitedByWorkspaceId: string
   userId: string | undefined
+  workspaceId: string
 }) {
-  return await inviteNewUser({
-    email,
-    roleId,
-    invitedByWorkspaceId,
-    userId,
-  })
-    .then((res) => {
-      return json<ActionData>(
-        {
-          resp: {
-            title: "toastConstants.invitationSent",
-            status: 200,
-          },
-        },
-        { status: 200 }
-      )
+  try {
+    return await inviteNewUser({
+      email,
+      roleId,
+      invitedByWorkspaceId,
+      userId,
+      workspaceId,
     })
-    .catch((err) => {
-      let title = "statusCheck.commonError"
-      if (err.code === "P2002") {
-        title = "toastConstants.memberAlreadyInvited"
-      }
-      return json<ActionData>(
-        {
-          errors: {
-            title,
-            status: 400,
+      .then((res) => {
+        return json<ActionData>(
+          {
+            resp: {
+              title: "toastConstants.invitationSent",
+              status: 200,
+            },
           },
-        },
-        { status: 400 }
-      )
-    })
+          { status: 200 }
+        )
+      })
+      .catch((err) => {
+        let title = "statusCheck.commonError"
+        if (err.code === "P2002") {
+          title = "toastConstants.memberAlreadyInvited"
+        }
+        return json<ActionData>(
+          {
+            errors: {
+              title,
+              status: err.status ?? 400,
+            },
+          },
+          { status: 400 }
+        )
+      })
+  } catch (error) {
+    throw error
+  }
+}
+
+/**
+ * Function to invite new user
+ * @param id
+ * @param userId
+ * @param workspaceId
+ * @param roleId
+ * @returns json response
+ */
+
+export async function editUserRole(
+  id: string,
+  userId: string,
+  workspaceId: string,
+  roleId: string
+) {
+  try {
+    return await updateUserRole(id, userId, workspaceId, roleId)
+  } catch (error) {
+    throw error
+  }
 }

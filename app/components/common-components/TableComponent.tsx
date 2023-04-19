@@ -69,11 +69,11 @@ const HeaderDataCell = ({
       }}
       data-cy={title}
       id="table-th"
-      className={`flex-1 border-b bg-gray-100 py-4 px-3 text-sm font-semibold text-gray-500 first:pl-9 last:pr-9 ${
+      className={`flex flex-1 items-center border-b bg-tableBg px-4 text-sm text-gray-500 ${
         index === 0
-          ? "rounded-tl-2xl"
+          ? "rounded-tl-md"
           : index === totalHeader
-          ? "rounded-tr-2xl"
+          ? "rounded-tr-md"
           : ""
       }`}
     >
@@ -100,7 +100,7 @@ const RenderDataCell = <T,>({
         minWidth: `${width}`,
         maxWidth: `${width}`,
       }}
-      className="max-h-20 flex-1 truncate border-b  py-7 px-3  text-gray-700 first:pl-9 last:pr-9"
+      className="flex h-16 max-h-20 flex-1 items-center truncate border-b px-4 text-gray-700"
     >
       {render?.(rowData, index)}
     </div>
@@ -123,7 +123,7 @@ const TableDataCell = <T,>({
         minWidth: `${width}`,
         maxWidth: `${width}`,
       }}
-      className="max-h-20 flex-1 truncate border-b  py-7 px-3 text-gray-700  first:pl-9 last:pr-9"
+      className="flex h-16 max-h-20 flex-1 items-center truncate border-b px-4 text-gray-700"
     >
       {rowData[field as keyof typeof rowData]}
     </div>
@@ -151,15 +151,16 @@ const Table = <T extends object>({
     return null
   }
   return (
-    <div style={{ maxHeight: "inherit" }}>
+    <div className="flex h-full flex-1 flex-col overflow-auto rounded-md border-t border-tableBorder">
       <div
-        id="table"
-        style={{ maxHeight: "inherit" }}
-        className={`border-t border-r border-l shadow ${
-          paginationEnabled ? "rounded-t-2xl" : "rounded-2xl"
+        className={`border-l border-r border-tableBorder shadow-tableShadow ${
+          paginationEnabled ? "rounded-t-md" : "rounded-md"
         }`}
       >
-        <div id="table-head-row" className="flex rounded-t-2xl bg-gray-100">
+        <div
+          id="table-head-row"
+          className="sticky top-0 z-10 flex h-3.25 rounded-t-md bg-gray-100"
+        >
           {columns.map((header, index) => (
             <HeaderDataCell
               key={header.field + index}
@@ -202,7 +203,7 @@ const Table = <T extends object>({
         )}
       </div>
       {paginationEnabled ? (
-        <div className="z-0 rounded-b-2xl border bg-white px-9 py-5 shadow">
+        <div className="sticky bottom-0 z-0 flex min-h-2.875 items-center rounded-b-md border border-tableBorder bg-tableBg px-4">
           <Pagination
             currentPage={currentPage!}
             onPageChange={(page) => onPageChange?.(page)}

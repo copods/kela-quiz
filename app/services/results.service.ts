@@ -18,24 +18,31 @@ import { getUserWorkspaces } from "~/models/workspace.server"
  * @param statusFilter
  * @param sortBy
  * @param sortOrder
+ * @param userId
  * @returns Test array
  */
-export const getALLCandidateTests = async (
+export const getDetailsOfAllAssessments = async (
   currentWorkspaceId: string,
   resultsItemsPerPage: number,
   resultsCurrentPage: number,
   statusFilter: string,
   sortBy: string,
-  sortOrder: string
+  sortOrder: string,
+  userId: string
 ) => {
-  return await getAllCandidateTests(
-    currentWorkspaceId as string,
-    resultsItemsPerPage,
-    resultsCurrentPage,
-    statusFilter,
-    sortBy as string,
-    sortOrder as string
-  )
+  try {
+    return await getAllCandidateTests(
+      currentWorkspaceId as string,
+      resultsItemsPerPage,
+      resultsCurrentPage,
+      statusFilter,
+      sortBy as string,
+      sortOrder as string,
+      userId
+    )
+  } catch (error) {
+    throw error
+  }
 }
 
 /**
@@ -56,23 +63,39 @@ export const getWorkspaces = async (userId: string) => {
 /**
  * this function will return total count of tests
  * @param id
+ * @param currentWorkspaceId
+ * @param userId
  * @returns total count
  */
-export const getTotalTestCounts = async (id: string) => {
-  return await getTotalTestCount(id)
+export const getTotalTestsCount = async (
+  id: string,
+  workspaceId: string,
+  userId: string
+) => {
+  try {
+    return await getTotalTestCount(id, workspaceId, userId)
+  } catch (error) {
+    throw error
+  }
 }
 
 /**
  * this function will return all candidate tests count
  * @param currentWorkspaceId
  * @param statusFilter
+ * @param userId
  * @returns total count
  */
-export const getALLCandidateTestsCount = async (
+export const getTotalAssessmentCount = async (
   currentWorkspaceId: string,
-  statusFilter: string
+  statusFilter: string,
+  userId: string
 ) => {
-  return await getAllCandidateTestsCount(currentWorkspaceId, statusFilter)
+  return await getAllCandidateTestsCount(
+    currentWorkspaceId,
+    statusFilter,
+    userId
+  )
 }
 
 /**
@@ -86,16 +109,26 @@ export const getTestResendLink = async ({
   id,
   candidateId,
   testId,
+  userId,
+  workspaceId,
 }: {
   id: string
   candidateId: string
   testId: string
+  userId: string
+  workspaceId: string
 }) => {
-  return await resendTestLink({
-    id,
-    candidateId,
-    testId,
-  })
+  try {
+    return await resendTestLink({
+      id,
+      candidateId,
+      testId,
+      userId,
+      workspaceId,
+    })
+  } catch (error) {
+    throw error
+  }
 }
 
 /**
@@ -104,12 +137,24 @@ export const getTestResendLink = async ({
  * @param statusFilter
  * @returns total count
  */
-export const getALLCandidatesOfTestCount = async (
+export const getCountofAllCandidatesOfTest = async (
   id: string,
   statusFilter: string,
+  userId: string,
+  workspaceId: string,
   searchText?: string
 ) => {
-  return await getAllCandidatesOfTestCount(id, statusFilter, searchText)
+  try {
+    return await getAllCandidatesOfTestCount(
+      id,
+      statusFilter,
+      userId,
+      workspaceId,
+      searchText
+    )
+  } catch (error) {
+    throw error
+  }
 }
 
 /**
@@ -122,9 +167,11 @@ export const getALLCandidatesOfTestCount = async (
  * @param searchText
  * @returns tests
  */
-export const getALLCandidatesOfTest = async ({
+export const getDetailsOfCandidatePerPage = async ({
   id,
   workspaceId,
+  userId,
+  currentWorkspaceId,
   currentPage,
   pageSize,
   statusFilter,
@@ -132,19 +179,27 @@ export const getALLCandidatesOfTest = async ({
 }: {
   id: string
   workspaceId: string
+  userId: string
+  currentWorkspaceId: string
   currentPage: number
   pageSize: number
   statusFilter: string
   searchText?: string
 }) => {
-  return await getAllCandidatesOfTest({
-    id,
-    workspaceId,
-    currentPage,
-    pageSize,
-    statusFilter,
-    searchText,
-  })
+  try {
+    return await getAllCandidatesOfTest({
+      id,
+      workspaceId,
+      userId,
+      currentWorkspaceId,
+      currentPage,
+      pageSize,
+      statusFilter,
+      searchText,
+    })
+  } catch (error) {
+    throw error
+  }
 }
 
 /**
@@ -156,14 +211,24 @@ export const getALLCandidatesOfTest = async ({
 export const updateCandidateSTATUS = async ({
   id,
   candidateStatus,
+  currentWorkspaceId,
+  userId,
 }: {
   id: string
   candidateStatus: string
+  currentWorkspaceId: string
+  userId: string
 }) => {
-  return await updateCandidateStatus({
-    id,
-    candidateStatus,
-  })
+  try {
+    return await updateCandidateStatus({
+      id,
+      candidateStatus,
+      currentWorkspaceId,
+      userId,
+    })
+  } catch (error) {
+    throw error
+  }
 }
 
 /**
@@ -175,12 +240,18 @@ export const updateCandidateSTATUS = async ({
 export const getSectionWiseResultsOFIndividualCandidate = async ({
   testId,
   candidateId,
+  workspaceId,
+  userId,
 }: {
   testId: string
   candidateId: string
+  workspaceId: string
+  userId: string
 }) => {
   return await getSectionWiseResultsOfIndividualCandidate({
     testId,
     candidateId,
+    workspaceId,
+    userId,
   })
 }

@@ -34,7 +34,7 @@ export const action: ActionFunction = async ({ request }) => {
   const password = formData.get("password")
   if (!email) {
     return json<ActionData>(
-      { errors: { email: "statusCheck.emailIsReq" } },
+      { errors: { email: "commonConstants.emailRequired" } },
       { status: 400 }
     )
   }
@@ -87,6 +87,7 @@ export default function LoginPage() {
   const [searchParams] = useSearchParams()
   const redirectTo = searchParams.get("redirectTo") || routes.members
   const actionData = useActionData() as ActionData
+
   return (
     <div className="flex min-h-full items-center justify-center bg-gray-50">
       <Login actionData={actionData} redirectTo={redirectTo} />

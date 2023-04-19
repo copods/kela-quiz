@@ -4,7 +4,14 @@ import { useLoaderData, useSubmit } from "@remix-run/react"
 import { useTranslation } from "react-i18next"
 
 import Button from "../common-components/Button"
-import DialogWrapper from "../common-components/Dialog"
+import {
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogWrapper,
+} from "../common-components/Dialog"
+import { NewDropdownField } from "../common-components/Dropdown"
+import ListMenuItem from "../ListActionMenu"
 
 import { WorkspaceDetailsSection } from "./WorkspaceDetailsSection"
 
@@ -66,6 +73,10 @@ const EditButton = ({ setIsEdit }: { setIsEdit: (val: boolean) => void }) => {
 
 const Workspace = () => {
   const [showLeaveWorkspacePopup, setShowLeaveWorkspacePopup] = useState(false)
+  const [showChangeOwnershipPopup, setShowChangeOwnershipPopup] =
+    useState(false)
+  const [newOwner, setNewOwner] = useState("")
+  const [actionDropdown, setActionDropdown] = useState(false)
   const [isEdit, setIsEdit] = useState(false)
   const workspaceLoaderData = useLoaderData()
   const [inputValue, setInputValue] = useState(
@@ -108,23 +119,88 @@ const Workspace = () => {
     }
   }
 
+  const updateWorkspaceOwner = () => {
+    if (newOwner) {
+      submit(
+        {
+          updateOwner: "updateOwner",
+          newOwner,
+          oldOwner: workspaceLoaderData.workspaceOwner.ownerId,
+        },
+        { method: "post" }
+      )
+      setShowChangeOwnershipPopup(false)
+    }
+  }
+
+  const isItemDisabled = (item: string) => {
+    const checkIfCurrentWorkspaceId = workspaceLoaderData?.ownersWorkspaces
+      ?.map((workspace: { id: string }) => workspace.id)
+      .includes(workspaceLoaderData?.currentWorkspaceId)
+
+    if (item === "workspace-action") {
+      return checkIfCurrentWorkspaceId
+    } else {
+      return !checkIfCurrentWorkspaceId
+    }
+  }
+
   useEffect(() => {
     setIsError(false)
   }, [inputValue])
+
+  useEffect(() => {
+    setNewOwner("")
+  }, [showChangeOwnershipPopup])
 
   return (
     <div className="flex flex-col justify-start gap-6">
       <div className="flex h-10 items-center justify-between">
         <Header id="workspace-header" heading="Details" size="text-2xl" />
-        {isEdit ? (
-          <CancelAndSaveButton
-            updateWorkspaceCb={updateWorkspace}
-            cancelEditCb={cancelEdit}
-            inputValue={inputValue}
+        <div className="flex items-center gap-4">
+          {isEdit ? (
+            <CancelAndSaveButton
+              updateWorkspaceCb={updateWorkspace}
+              cancelEditCb={cancelEdit}
+              inputValue={inputValue}
+            />
+          ) : (
+            workspaceLoaderData.permission.workspace.update && (
+              <EditButton setIsEdit={setIsEdit} />
+            )
+          )}
+          <ListMenuItem
+            id={"workspace-action"}
+            menuIcon={"mdi:dots-vertical"}
+            open={actionDropdown}
+            onItemClick={setActionDropdown}
+            dataCyID={"workspace-list-menu"}
+            customClasses={{
+              item: "py-3 px-5",
+            }}
+            menuDetails={[
+              {
+                id: t("settings.leaveWorkspace"),
+                menuListText: t("settings.leaveWorkspace"),
+                menuListHelperText: workspaceLoaderData?.ownersWorkspaces
+                  ?.map((workspace: { id: string }) => workspace.id)
+                  .includes(workspaceLoaderData?.currentWorkspaceId)
+                  ? t("settings.ownerLeaveWorkspace")
+                  : "",
+                handleItemAction: () =>
+                  setShowLeaveWorkspacePopup(!showLeaveWorkspacePopup),
+                disabled: isItemDisabled("workspace-action"),
+              },
+              {
+                id: "transfer-ownership",
+                menuListText: t("settings.transferOwnership"),
+                handleItemAction: () =>
+                  setShowChangeOwnershipPopup(!showChangeOwnershipPopup),
+                disabled: isItemDisabled("transfer-ownership"),
+              },
+            ]}
           />
-        ) : (
-          <EditButton setIsEdit={setIsEdit} />
-        )}
+        </div>
       </div>
       <div className="flex flex-col gap-8">
         <WorkspaceDetailsSection
@@ -133,63 +209,123 @@ const Workspace = () => {
           inputValue={inputValue}
           setInputValue={setInputValue}
         />
-        {!isEdit && (
+        <DialogWrapper
+          open={showLeaveWorkspacePopup}
+          setOpen={setShowLeaveWorkspacePopup}
+        >
           <>
-            <Button
-              tabIndex={0}
-              id="leave-workspace"
-              variant="secondary-solid"
-              type="button"
-              name="leave"
-              className="w-max px-5"
-              title={t("settings.leaveWorkspace")}
-              buttonText={t("settings.leaveWorkspace")}
-              onClick={() =>
-                setShowLeaveWorkspacePopup(!showLeaveWorkspacePopup)
-              }
-              isDisabled={workspaceLoaderData?.ownersWorkspaces
-                ?.map((workspace: { id: string }) => workspace.id)
-                .includes(workspaceLoaderData?.currentWorkspaceId)}
+            <DialogHeader
+              heading={t("settings.leaveWorkspace")}
+              onClose={setShowLeaveWorkspacePopup}
             />
-            <DialogWrapper
-              open={showLeaveWorkspacePopup}
-              setOpen={setShowLeaveWorkspacePopup}
-              header={false}
-            >
-              <div className="flex flex-col gap-4">
-                <div>
-                  <p>{t("settings.leaveWorkspaceConfirmation")}</p>
+            <DialogContent>
+              <p>{t("settings.leaveWorkspaceConfirmation")}</p>
+            </DialogContent>
+            <DialogFooter>
+              <div className="flex justify-end gap-4">
+                <Button
+                  tabIndex={0}
+                  id="cancel-leave-workspace"
+                  variant="primary-outlined"
+                  type="button"
+                  name="cancel"
+                  className="px-5"
+                  title={t("commonConstants.cancel")}
+                  buttonText={t("commonConstants.cancel")}
+                  onClick={() =>
+                    setShowLeaveWorkspacePopup(!showLeaveWorkspacePopup)
+                  }
+                />
+                <Button
+                  tabIndex={0}
+                  id="confirm-leave-workspace"
+                  variant="secondary-solid"
+                  type="button"
+                  name="leave"
+                  className="px-5"
+                  title={t("settings.leaveWorkspace")}
+                  buttonText={t("settings.leave")}
+                  onClick={() => leaveWorkspace()}
+                />
+              </div>
+            </DialogFooter>
+          </>
+        </DialogWrapper>
+        <DialogWrapper
+          open={showChangeOwnershipPopup}
+          setOpen={setShowChangeOwnershipPopup}
+        >
+          <>
+            <DialogHeader
+              heading={t("settings.transferOwnership")}
+              onClose={setShowChangeOwnershipPopup}
+            />
+            <DialogContent>
+              <div className="flex flex-col gap-5">
+                <div className="flex flex-col gap-3">
+                  <span className="text-left text-sm leading-5 text-gray-800">
+                    Important Note
+                  </span>
+                  <ul className="ml-4 list-disc text-sm text-gray-600">
+                    <li>
+                      Transfer action is immediate action. You cannot undo this
+                      action
+                    </li>
+                    <li>You can tranfer ownership to Admin only</li>
+                    <li>You will be demoted to Admin role</li>
+                  </ul>
                 </div>
-                <div className="flex justify-end gap-4">
-                  <Button
-                    tabIndex={0}
-                    id="cancel-leave-workspace"
-                    variant="primary-outlined"
-                    type="button"
-                    name="cancel"
-                    className="px-5"
-                    title={t("commonConstants.cancel")}
-                    buttonText={t("commonConstants.cancel")}
-                    onClick={() =>
-                      setShowLeaveWorkspacePopup(!showLeaveWorkspacePopup)
+                <div className="flex flex-col gap-1.5">
+                  <span className="text-left leading-6 text-gray-800">
+                    Select a user to assign as Owner
+                  </span>
+                  <NewDropdownField
+                    id={"admin-dropdown"}
+                    dropdownOptions={
+                      workspaceLoaderData.allAdmins.length
+                        ? workspaceLoaderData.allAdmins
+                        : []
                     }
-                  />
-                  <Button
-                    tabIndex={0}
-                    id="confirm-leave-workspace"
-                    variant="secondary-solid"
-                    type="button"
-                    name="leave"
-                    className="px-5"
-                    title={t("settings.leaveWorkspace")}
-                    buttonText={t("settings.leave")}
-                    onClick={() => leaveWorkspace()}
+                    labelKey={"fullName"}
+                    valueKey={"id"}
+                    helperText={"email"}
+                    value={newOwner}
+                    setValue={setNewOwner}
                   />
                 </div>
               </div>
-            </DialogWrapper>
+            </DialogContent>
+            <DialogFooter>
+              <div className="flex justify-end gap-4">
+                <Button
+                  tabIndex={0}
+                  id="cancel-transfer-ownership"
+                  variant="primary-outlined"
+                  type="button"
+                  name="cancel"
+                  className="px-5"
+                  title={t("commonConstants.cancel")}
+                  buttonText={t("commonConstants.cancel")}
+                  onClick={() =>
+                    setShowChangeOwnershipPopup(!showChangeOwnershipPopup)
+                  }
+                />
+                <Button
+                  tabIndex={0}
+                  id="confirm-transfer-ownership"
+                  variant="primary-solid"
+                  type="button"
+                  name="confirm"
+                  className="px-5"
+                  title={t("commonConstants.proceed")}
+                  buttonText={t("commonConstants.proceed")}
+                  isDisabled={newOwner?.length ? false : true}
+                  onClick={updateWorkspaceOwner}
+                />
+              </div>
+            </DialogFooter>
           </>
-        )}
+        </DialogWrapper>
       </div>
     </div>
   )

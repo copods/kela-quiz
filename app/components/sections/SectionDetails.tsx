@@ -22,6 +22,7 @@ const SectionDetails = () => {
   const navigate = useNavigate()
   useEffect(() => {
     setSearchText("")
+    setCurrentAccordian(-1)
   }, [navigate])
   const searchedQuestion = sectionDetails.sectionDetails?.questions.filter(
     (question: Question) => {
@@ -66,25 +67,30 @@ const SectionDetails = () => {
               placeholder={t("sectionsConstants.search")}
               title={t("sectionsConstants.search")}
               className="h-9 w-48 rounded-lg border px-5 pl-8 text-sm focus:outline-dotted"
-              onChange={(e) => setSearchText(e.target.value)}
+              onChange={(e) => {
+                setSearchText(e.target.value)
+                setCurrentAccordian(-1)
+              }}
             />
           </div>
         )}
-        <Button
-          tabIndex={0}
-          onClick={() => {
-            navigate(
-              `/${sectionDetails.currentWorkspaceId}${routes.tests}/${sectionDetails.sectionDetails?.id}${routes.addQuestion}`
-            )
-            setCustomStorage("activeTest", sectionDetails.sectionDetails?.id)
-          }}
-          id="add-question"
-          className="h-9 w-36 px-5"
-          buttonText={`+ ${t("addQuestion.addQuestion")}`}
-          variant="primary-solid"
-          title={t("addQuestion.addQuestion")}
-          aria-label={t("addQuestion.addQuestion")}
-        />
+        {sectionDetails.permission.questions.create && (
+          <Button
+            tabIndex={0}
+            onClick={() => {
+              navigate(
+                `/${sectionDetails.currentWorkspaceId}${routes.tests}/${sectionDetails.sectionDetails?.id}${routes.addQuestion}`
+              )
+              setCustomStorage("activeTest", sectionDetails.sectionDetails?.id)
+            }}
+            id="add-question"
+            className="h-9 w-36 px-5"
+            buttonText={`+ ${t("addQuestion.addQuestion")}`}
+            variant="primary-solid"
+            title={t("addQuestion.addQuestion")}
+            aria-label={t("addQuestion.addQuestion")}
+          />
+        )}
       </div>
       {/* QUESTION LIST  */}
       {searchedQuestion.length === 0 ? (
@@ -98,6 +104,7 @@ const SectionDetails = () => {
               expandedIndex={currentAccordian}
               onAccordianToggle={setCurrentAccordian}
               index={i}
+              deletePermission={sectionDetails.permission.questions.delete}
             />
           )
         })
