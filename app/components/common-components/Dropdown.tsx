@@ -223,6 +223,7 @@ export const NewDropdownField = <
     onChange: function (event: React.ChangeEvent<HTMLInputElement>) {
       setSearchLabel(event?.target.value)
     },
+    variant: "small",
   }
 
   const getLabelFromValue = (val: string) => {

@@ -13,6 +13,7 @@ export interface InputFieldProps {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   helperText?: React.ReactNode
   maxLength?: number
+  variant?: string
 }
 
 export interface PasswordFieldProps {
@@ -462,4 +463,9 @@ export interface userFeedbackQuestion {
   updatedAt: string
   userFeedbackId: string
   value: string
+}
+
+export interface InputFieldVariant {
+  small?: string
+  default?: string
 }
