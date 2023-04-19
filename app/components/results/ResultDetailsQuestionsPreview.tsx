@@ -72,7 +72,9 @@ const ResultDetailsQuestionsPreview = ({
     correctAnswers: any
   ) => {
     if (questionType === QuestionTypes.text) {
-      answers.length === 0 && setCorrectAnswer(false)
+      if (answers.length === 0) {
+        setCorrectAnswer(false)
+      }
       answers.forEach((value, index) => {
         if (value !== correctAnswers[index].answer) {
           setCorrectAnswer(false)
