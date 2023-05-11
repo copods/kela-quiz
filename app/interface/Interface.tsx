@@ -454,6 +454,7 @@ export interface CandidateFeedbacks {
   updatedAt: string
   userFeedbackQuestion: userFeedbackQuestion[]
   workspaceId: string
+  candidateTest: CandidateTest
 }
 export interface userFeedbackQuestion {
   createdAt: string

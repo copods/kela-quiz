@@ -46,22 +46,13 @@ export async function getCandidatesFeedback(
             firstName: true,
             lastName: true,
             email: true,
-            tests: {
-              where: {
-                test: {
-                  id: testId === "all_tests" ? {} : testId,
-                },
-              },
-              select: {
-                test: {
-                  select: {
-                    name: true,
-                  },
-                },
-              },
-            },
           },
         },
+        candidateTest: {
+          select: {
+            test: true
+          }
+        }
       },
     })
   } catch (error) {

@@ -35,7 +35,7 @@ const FeedbackComponent = ({
   return (
     <div className="flex h-728 w-728 flex-col overflow-hidden rounded-lg bg-white shadow-sm">
       <div
-        className="flex w-full flex-col items-center border-b border-gray-200 py-6"
+        className="flex w-full flex-col items-center border-b border-gray-200 py-6 px-4"
         data-cy="feedback-form-header"
       >
         <span className="text-2xl font-bold text-gray-900">{`${t(
