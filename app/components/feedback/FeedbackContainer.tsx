@@ -116,7 +116,7 @@ export const FeedbackContainer = () => {
   const tableData = candidatesFeedbackData.userFeedback.map(
     (feedback: CandidateFeedbacks) => {
       return {
-        test_name: feedback.candidate.tests[0].test.name,
+        test_name: feedback.candidateTest.test.name,
         candidate_name:
           feedback.candidate.firstName + " " + feedback.candidate.lastName,
         candidate_email: feedback.candidate.email,
