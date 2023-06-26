@@ -53,7 +53,7 @@ function getClient() {
   const client = new PrismaClient({
     datasources: {
       db: {
-        url: databaseUrl.toString(),
+        url: DATABASE_URL
       },
     },
   })
