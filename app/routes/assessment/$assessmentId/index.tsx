@@ -5,7 +5,7 @@ import { checkIfTestLinkIsValidAndRedirect } from "~/services/assessment.service
 
 export const loader: LoaderFunction = async ({ params, request }) => {
   const nextCandidateRoute = await checkIfTestLinkIsValidAndRedirect(
-    params?.assessmentId!,
+    params?.assessmentId as string,
     "/"
   )
   if (typeof nextCandidateRoute === "string") {

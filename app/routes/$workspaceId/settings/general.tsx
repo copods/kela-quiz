@@ -1,6 +1,5 @@
 import type { ActionFunction, LoaderFunction } from "@remix-run/node"
-import { json } from "@remix-run/node"
-import { redirect } from "@remix-run/node"
+import { json, redirect } from "@remix-run/node"
 
 import GeneralSettings from "~/components/settings/GeneralSettings"
 import { routes } from "~/constants/route.constants"

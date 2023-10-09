@@ -1,5 +1,4 @@
-import { redirect } from "@remix-run/node"
-import { json } from "@remix-run/node"
+import { redirect, json } from "@remix-run/node"
 import type { LoaderFunction } from "@remix-run/server-runtime"
 
 import Header from "~/components/assessment/Header"
