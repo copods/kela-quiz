@@ -30,7 +30,7 @@ export const FeedbackContainer = () => {
   const [feedbackCurrentPage, setFeedbackCurrentPage] = useState(
     candidatesFeedbackData.feedbackCurrentPage
   )
-  const [feedbackPageSize, setFeedbackPageSize] = useState(5)
+  const [feedbackPageSize, setFeedbackPageSize] = useState(10)
 
   const [feedbackTypeFilter, setFeedbackTypeFilter] = useState(
     candidatesFeedbackData.feedbackType

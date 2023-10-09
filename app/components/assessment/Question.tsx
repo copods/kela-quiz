@@ -2,6 +2,7 @@ import type { ChangeEvent } from "react"
 import { useEffect, useState } from "react"
 
 import { useLoaderData } from "@remix-run/react"
+import { useTranslation } from "react-i18next"
 
 import Checkbox from "../form/CheckBox"
 
@@ -13,6 +14,7 @@ import type { Option } from "~/interface/Interface"
 import { QuestionTypes } from "~/interface/Interface"
 
 const Question = () => {
+  const { t } = useTranslation()
   const { question } = useLoaderData()
   const questionType = question?.question?.questionType?.value
   const [userAnswer, setUserAnswer] = useState(
@@ -87,7 +89,7 @@ const Question = () => {
 
       <div className="flex w-full flex-1 flex-col overflow-hidden bg-questionBackground">
         <form method="post" className="flex max-h-full flex-1 flex-col">
-          <div className="py-5 px-5">
+          <div className="px-5 py-5">
             <CandidateQuestionStepper />
           </div>
           <div className="mx-5 mb-5 flex h-full overflow-auto rounded-lg border bg-white">
@@ -110,6 +112,11 @@ const Question = () => {
                     __html: question?.question?.question,
                   }}
                 />
+                {questionType === QuestionTypes.multipleChoice && (
+                  <div className="pt-16 text-base font-semibold">
+                    {t("candidateExamConstants.noteMultipleQuestions")}
+                  </div>
+                )}
               </div>
             </div>
             <div

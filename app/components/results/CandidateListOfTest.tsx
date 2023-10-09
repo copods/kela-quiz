@@ -9,8 +9,8 @@ import {
   useFetcher,
   useNavigate,
   useSubmit,
+  useLoaderData,
 } from "@remix-run/react"
-import { useLoaderData } from "@remix-run/react"
 import { useTranslation } from "react-i18next"
 import { toast } from "react-toastify"
 
@@ -60,7 +60,7 @@ const CandidateListOfTest = () => {
       : filterByStatus[0].value
   )
   let [filteredData, setFilteredData] = useState(candidatesOfTest.candidateTest)
-  const [pageSize, setPageSize] = useState(5)
+  const [pageSize, setPageSize] = useState(10)
   const [currentPage, setCurrentPage] = useState(
     candidatesLoaderData.currentPage
   )

@@ -1,5 +1,4 @@
-import type { CandidateTest, Prisma } from "@prisma/client"
-import type { Test } from "@prisma/client"
+import type { CandidateTest, Prisma , Test } from "@prisma/client"
 
 import { checkFeatureAuthorization } from "./authorization.server"
 
@@ -325,7 +324,7 @@ export async function getAllCandidateTestsCount(
 
 export async function getAllCandidateTests(
   workspaceId: string,
-  resultsItemsPerPage: number = 5,
+  resultsItemsPerPage: number = 10,
   resultsCurrentPage: number = 1,
   statusFilter: string,
   sortBy: string,

@@ -241,7 +241,8 @@
     "feedbackSubmissionHeading": "Thank you for leaving feedback for us.",
     "feedbackSubmissionContent": "We love hearing from you!",
     "feedbackHeader": "Feedback",
-    "alreadySubmitted": "You have already submitted the exam"
+    "alreadySubmitted": "You have already submitted the exam",
+    "noteMultipleQuestions": "Note: Multiple options can be correct"
   },
   "toastConstants": {
     "addAssessment": "Enter Name to add assessment",

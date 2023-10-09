@@ -20,7 +20,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const currentWorkspaceId = params.workspaceId as string
   try {
     const sectionDetail = await getResultDetailBySection(
-      params?.sectionId!,
+      params?.sectionId as string,
       userId!,
       currentWorkspaceId
     )
