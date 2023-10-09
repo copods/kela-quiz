@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react"
 
-import { useSubmit } from "@remix-run/react"
-import { Form } from "@remix-run/react"
+import { useSubmit, Form } from "@remix-run/react"
 import { useTranslation } from "react-i18next"
 
 import Button from "../common-components/Button"

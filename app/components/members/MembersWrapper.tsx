@@ -35,11 +35,11 @@ const MembersWrapper = () => {
   const [membersCurrentPage, setMembersCurrentPage] = useState(
     memberLoaderData.membersCurrentPage
   )
-  const [membersPageSize, setMembersPageSize] = useState(5)
+  const [membersPageSize, setMembersPageSize] = useState(10)
   const [invitedMemberCurrentPage, setInvitedMemberPage] = useState(
     memberLoaderData.invitedMembersCurrentPage
   )
-  const [invitedMemberPageSize, setInvitedMemberPageSize] = useState(5)
+  const [invitedMemberPageSize, setInvitedMemberPageSize] = useState(10)
   const [activeTab, setActiveTab] = useState("joined_members")
 
   //useEffects

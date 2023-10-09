@@ -1,9 +1,7 @@
 import { useEffect } from "react"
 
-import type { ActionFunction } from "@remix-run/node"
-import type { LoaderFunction } from "@remix-run/node"
-import { redirect } from "@remix-run/node"
-import { json } from "@remix-run/node"
+import { json, redirect } from "@remix-run/node"
+import type { ActionFunction, LoaderFunction } from "@remix-run/node"
 import {
   Outlet,
   useLoaderData,

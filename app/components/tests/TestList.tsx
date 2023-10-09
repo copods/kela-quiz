@@ -71,7 +71,7 @@ const TestList = () => {
   const [testsCurrentPage, setTestsCurrentPage] = useState(
     testLoaderData.testsCurrentPage
   )
-  const [testsPageSize, setTestsPageSize] = useState(5)
+  const [testsPageSize, setTestsPageSize] = useState(10)
   const [candidatePopupOpen, setCandidatePopupOpen] = useState<boolean>(false)
   const [showDeletePopup, setShowDeletePopup] = useState(false)
   const [deleted, setDeleted] = useState(false)

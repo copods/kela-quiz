@@ -1,6 +1,4 @@
-import { useNavigate } from "@remix-run/react"
-import { useLoaderData } from "@remix-run/react"
-import { Form } from "@remix-run/react"
+import { useNavigate, Form, useLoaderData } from "@remix-run/react"
 import { useTranslation } from "react-i18next"
 
 import logo from "../../../public/assets/member-invitation.svg"
@@ -64,7 +62,7 @@ const JoinWorkspace = () => {
                     name="go-to-workspace"
                     variant="primary-outlined"
                     value={"reject"}
-                    className="py-3 px-9"
+                    className="px-9 py-3"
                     onClick={() => navigate(`${routes.signIn}`)}
                   />
                   <Form
@@ -79,7 +77,7 @@ const JoinWorkspace = () => {
                       name="logout"
                       variant="primary-solid"
                       value={t("commonConstants.switchAccount")}
-                      className="py-3 px-9"
+                      className="px-9 py-3"
                     />
                   </Form>
                 </div>

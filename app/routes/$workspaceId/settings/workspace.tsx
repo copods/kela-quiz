@@ -1,8 +1,7 @@
 import { useEffect } from "react"
 
 import type { LoaderFunction, ActionFunction } from "@remix-run/node"
-import { redirect } from "@remix-run/node"
-import { json } from "@remix-run/node"
+import { redirect, json } from "@remix-run/node"
 import { useActionData, useLoaderData, useNavigate } from "@remix-run/react"
 import { t } from "i18next"
 import { toast } from "react-toastify"
