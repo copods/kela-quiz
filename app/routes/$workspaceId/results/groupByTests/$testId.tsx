@@ -27,7 +27,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
   const url = new URL(request.url)
   const query = url.searchParams
-  const pageSize = Math.max(Number(query.get("pageSize") || 5), 5)
+  const pageSize = Math.max(Number(query.get("pageSize") || 10), 10)
   const currentPage = Math.max(Number(query.get("page") || 1), 1)
   const statusFilter = query.get("filterByStatus") as string
   const searchText = query.get("searchText") as string
