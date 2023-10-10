@@ -66,7 +66,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   }
 
   const query = new URL(request.url).searchParams
-  const membersItemsPerPage = Math.max(Number(query.get("MemberItems") || 5), 5) //To set the lower bound, so that minimum count will always be 1 for current page and 5 for items per page.
+  const membersItemsPerPage = Math.max(Number(query.get("MemberItems") || 10), 10) //To set the lower bound, so that minimum count will always be 1 for current page and 5 for items per page.
   const membersCurrentPage = Math.max(Number(query.get("MemberPage") || 1), 1)
   const invitedMembersCurrentPage = Math.max(
     Number(query.get("InvitedMemberPage") || 1),
