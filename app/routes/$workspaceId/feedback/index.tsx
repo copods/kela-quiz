@@ -30,7 +30,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const currentWorkspaceId = params.workspaceId as string
 
   const query = new URL(request.url).searchParams
-  const feedbackItemsPerPage = Math.max(Number(query.get("limit") || 5), 5)
+  const feedbackItemsPerPage = Math.max(Number(query.get("limit") || 10), 10)
   const feedbackCurrentPage = Math.max(Number(query.get("page") || 1), 1)
   const feedbackType = query.get("feedbackType") || "all_feedbacks"
   const testId = query.get("testId") || "all_tests"
