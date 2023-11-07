@@ -226,7 +226,7 @@ const CandidateListOfTest = () => {
         menuListLink: resendTestLink,
         menuLinkAltTagLine: t("resultConstants.resendAssessmentInvite"),
         handleItemAction: () =>
-          resendInvite(data.id, data.candidateId, data.testId),
+          resendInvite(data.id, data.candidateId, data.id),
       },
       {
         show: true,
