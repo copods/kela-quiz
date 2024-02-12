@@ -563,3 +563,130 @@ export async function sendTestFeedbackMail(email: string, link: string) {
 
   return "Done"
 }
+
+export async function sendTestResponseMail(email: string,candidateName:string, isQualified: boolean) {
+  const to = email
+  const from = "careers@copods.co"
+  const subject = isQualified ? `Congratulations ${candidateName}!` :  `Better luck next time ${candidateName}!`
+  const text = "K - Quiz @ Copods"
+  const logo = "K - Quiz logo"
+  const htmlNotQualified = `
+  <html>
+  <head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  </head>
+  <body>
+  <div style="min-height:200px;font-family:'Poppins', sans-serif;background-color:#F3F4F6">
+  <div style="background:#353988;padding:15px 0px;text-align:center">
+  <img src="https://res.cloudinary.com/drpi0krkh/image/upload/v1664196350/Logo_1_jhtgxs.png" alt=${logo} height="26" width="30" />
+</div>
+<div  style="font-family:'Poppins', sans-serif;background-color:#F3F4F6">
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+  <td style="background-color:#353988;padding-right:20px;padding-left:20px">
+          <p style="text-align:center;font-size:20px;line-height:28px;color:#4B5563;background:#fff;margin:0 auto;padding:20px;max-width: 350px;padding-bottom:13px;"><span></span></p></tr>
+      </td>
+  </tr>
+      <tr>
+    <td align="center">
+        <div style="background:#fff;margin:0 auto;padding:20px;max-width: 350px; padding-top: 0px;">
+      <div style="font-size:16px; line-height:24px;margin-bottom:16px">
+       
+        <br>
+        <p style="text-align:left;color:#4B5563;margin:0;font-size:18px"><b>
+        Better luck next time ${candidateName}!</b> 
+        </p>
+        <br>
+        <p style="text-align:left;color:#4B5563;margin:0;">Your score is below the qualifying percentage.
+        </p>
+        <br>
+        <p style="text-align:left;color:#4B5563;margin:0;">We appreciate your participation, and interest in Copods. If you have any questions, you can reach us at careers@copods.co</p>
+        <br/>
+        <p style="text-align:left;color:#4B5563;margin:0;">Wishing you the best for your endeavours, and do follow us on 
+        <a href="https://www.linkedin.com/company/copods"><img src="https://res.cloudinary.com/drpi0krkh/image/upload/v1707735468/linkedin_j2twnk.png" alt="linekdin" height="24"></a>, 
+        <a href="https://www.instagram.com/copods.co"><img src="https://res.cloudinary.com/drpi0krkh/image/upload/v1707735467/instagram_ntkceo.png" alt="instagram" height="24"></a>
+         for tracking opportunitieas and possibilities of collaborating in the future.
+</p>
+      </div>
+    </div>
+    </td>
+</tr>
+</table>
+
+    <div style="text-align:center;padding: 20px 20px 24px;font-family:'Poppins', sans-serif;">K - Quiz @ Copods</div>
+  </div>
+  </body>
+</html>
+      `
+
+      const htmlQualified=`
+      <html>
+        <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+        </head>
+        <body>
+        <div style="min-height:200px;font-family:'Poppins', sans-serif;background-color:#F3F4F6">
+        <div style="background:#353988;padding:15px 0px;text-align:center">
+        <img src="https://res.cloudinary.com/drpi0krkh/image/upload/v1664196350/Logo_1_jhtgxs.png" alt=${logo} height="26" width="30" />
+      </div>
+      <div  style="font-family:'Poppins', sans-serif;background-color:#F3F4F6">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+        <td style="background-color:#353988;padding-right:20px;padding-left:20px">
+                <p style="text-align:center;font-size:20px;line-height:28px;color:#4B5563;background:#fff;margin:0 auto;padding:20px;max-width: 350px;padding-bottom:13px;"><span></span></p></tr>
+            </td>
+        </tr>
+            <tr>
+          <td align="center">
+              <div style="background:#fff;margin:0 auto;padding:20px;max-width: 350px; padding-top: 0px;">
+            <div style="font-size:16px; line-height:24px;margin-bottom:16px">
+              <br>
+              <p style="text-align:left;color:#4B5563;margin:0;font-size:18px"><b>Congratulations ${candidateName}!</b> 
+              </p>
+              <br>
+              <p style="text-align:left;color:#4B5563;margin:0;"> You have successfully passed the pre-assessment. 
+              </p>
+              <br>
+              <p style="text-align:left;color:#4B5563;margin:0;">Our team will reach out to you shortly for next steps. If you have any questions, you can reach us at careers@copods.co</p>
+              <br/>
+              <p style="text-align:left;color:#4B5563;margin:0;">Follow us on 
+              <a href="https://www.linkedin.com/company/copods"><img src="https://res.cloudinary.com/drpi0krkh/image/upload/v1707735468/linkedin_j2twnk.png" alt="linekdin" height="24"></a>, 
+              <a href="https://www.instagram.com/copods.co"><img src="https://res.cloudinary.com/drpi0krkh/image/upload/v1707735467/instagram_ntkceo.png" alt="instagram" height="24"></a>
+             
+              </p>
+            </div> 
+          </div>
+          </td>
+      </tr>
+      </table>
+          <div style="text-align:center;padding: 20px 20px 24px;font-family:'Poppins', sans-serif;">K - Quiz @ Copods</div>
+        </div>
+        </body>
+      </html>`
+
+  sendgrid.setApiKey(env.SENDGRID_API_KEY as string)
+
+  const msg = {
+    to,
+    from, // Use the email address or domain you verified above
+    subject,
+    text,
+    html:isQualified?htmlQualified:htmlNotQualified,
+  }
+  await sendgrid.send(msg).then(
+    () => {
+      return "ok"
+    },
+    (error) => {
+      if (error.response) {
+        console.error("Sendgrid Error: ", error.response.body)
+      }
+    }
+  )
+
+  return "Done"
+}
