@@ -8,7 +8,7 @@ import type {
   SectionInTest,
 } from "@prisma/client"
 
-import { sendMailToRecruiter, sendOTPMail } from "./sendgrid.servers"
+import { sendMailToRecruiter, sendOTPMail, sendTestResponseMail } from "./sendgrid.servers"
 
 import { prisma } from "~/db.server"
 import { QuestionTypes } from "~/interface/Interface"
@@ -90,6 +90,7 @@ export async function updateCandidateFirstLastName(
     throw new Error("Something went wrong..!")
   }
 }
+
 export async function resendOtp({ assessmentId }: { assessmentId: string }) {
   const user = await prisma.candidateTest.findUnique({
     where: { id: assessmentId },
@@ -155,6 +156,7 @@ export async function getCandidateEmail(id: string) {
     },
   })
 }
+
 export async function getTestInstructionForCandidate(id: CandidateTest["id"]) {
   try {
     return await prisma.candidateTest.findUnique({
@@ -274,6 +276,7 @@ export async function getCandidateTest(id: CandidateTest["id"]) {
     throw new Error("Something went wrong..!")
   }
 }
+
 export async function candidateTestStart(id: CandidateTest["id"]) {
   try {
     return await prisma.candidateTest.update({
@@ -427,6 +430,7 @@ export async function startAndGetQuestion(id: CandidateQuestion["id"]) {
     throw new Error("Something went wrong..!")
   }
 }
+
 export async function skipAnswerAndNextQuestion({
   selectedOptions,
   sectionId,
@@ -605,7 +609,7 @@ export async function endAssessment(id: string) {
   if (candidateTest?.endAt) {
     return { msg: "Exam already ended" }
   }
-  calculateOverallResult(id)
+  const resultScore= await calculateOverallResult(id)
   let endExam = await prisma.candidateTest.update({
     where: {
       id,
@@ -616,8 +620,10 @@ export async function endAssessment(id: string) {
   })
   if (candidateTest)
     await sendMailToRecruiter(recruiterEmail, testName, candidateName)
+  await sendTestResponseMail(candidateTest?.candidate?.email as string,candidateTest?.candidate?.firstName as string,(resultScore || 0)>=0.5)
   return endExam
 }
+
 async function calculateResultBySectionId(sectionid?: string) {
   const section = await prisma.sectionInCandidateTest.findUnique({
     where: {
@@ -839,6 +845,7 @@ async function calculateOverallResult(id: CandidateTest["id"]) {
         isQualified: false,
       },
     })
+    return correctInTest/totalQuestionInTest
   }
 }
 
