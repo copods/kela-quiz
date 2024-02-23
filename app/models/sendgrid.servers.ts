@@ -246,6 +246,7 @@ export async function sendOTPMail(email: string, otp: number) {
   )
   return "Done"
 }
+
 export async function sendMailToRecruiter(
   recruiterEmail?: string,
   testName?: string,
@@ -326,6 +327,7 @@ export async function sendMailToRecruiter(
 
   return "Done"
 }
+
 export async function sendNewPassword(email: string, password: string) {
   const to = email
   const from = "careers@copods.co"
@@ -396,6 +398,7 @@ export async function sendNewPassword(email: string, password: string) {
   )
   return "Done"
 }
+
 export async function sendMemberInvite(
   email: string,
   name: string,
@@ -564,10 +567,16 @@ export async function sendTestFeedbackMail(email: string, link: string) {
   return "Done"
 }
 
-export async function sendTestResponseMail(email: string,candidateName:string, isQualified: boolean) {
+export async function sendTestResponseMail(
+  email: string,
+  candidateName: string,
+  isQualified: boolean
+) {
   const to = email
   const from = "careers@copods.co"
-  const subject = isQualified ? `Congratulations ${candidateName}!` :  `Better luck next time ${candidateName}!`
+  const subject = isQualified
+    ? `Congratulations ${candidateName}!`
+    : `Better luck next time ${candidateName}!`
   const text = "K - Quiz @ Copods"
   const logo = "K - Quiz logo"
   const htmlNotQualified = `
@@ -621,7 +630,7 @@ export async function sendTestResponseMail(email: string,candidateName:string, i
 </html>
       `
 
-      const htmlQualified=`
+  const htmlQualified = `
       <html>
         <head>
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -675,7 +684,7 @@ export async function sendTestResponseMail(email: string,candidateName:string, i
     from, // Use the email address or domain you verified above
     subject,
     text,
-    html:isQualified?htmlQualified:htmlNotQualified,
+    html: isQualified ? htmlQualified : htmlNotQualified,
   }
   await sendgrid.send(msg).then(
     () => {

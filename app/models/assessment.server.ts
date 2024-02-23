@@ -8,7 +8,11 @@ import type {
   SectionInTest,
 } from "@prisma/client"
 
-import { sendMailToRecruiter, sendOTPMail, sendTestResponseMail } from "./sendgrid.servers"
+import {
+  sendMailToRecruiter,
+  sendOTPMail,
+  sendTestResponseMail,
+} from "./sendgrid.servers"
 
 import { prisma } from "~/db.server"
 import { QuestionTypes } from "~/interface/Interface"
@@ -609,7 +613,7 @@ export async function endAssessment(id: string) {
   if (candidateTest?.endAt) {
     return { msg: "Exam already ended" }
   }
-  const resultScore= await calculateOverallResult(id)
+  const resultScore = await calculateOverallResult(id)
   let endExam = await prisma.candidateTest.update({
     where: {
       id,
@@ -620,7 +624,11 @@ export async function endAssessment(id: string) {
   })
   if (candidateTest)
     await sendMailToRecruiter(recruiterEmail, testName, candidateName)
-  await sendTestResponseMail(candidateTest?.candidate?.email as string,candidateTest?.candidate?.firstName as string,(resultScore || 0)>=0.5)
+  await sendTestResponseMail(
+    candidateTest?.candidate?.email as string,
+    candidateTest?.candidate?.firstName as string,
+    (resultScore || 0) >= 0.7
+  )
   return endExam
 }
 
@@ -845,7 +853,7 @@ async function calculateOverallResult(id: CandidateTest["id"]) {
         isQualified: false,
       },
     })
-    return correctInTest/totalQuestionInTest
+    return correctInTest / totalQuestionInTest
   }
 }
 
