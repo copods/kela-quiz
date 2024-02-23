@@ -50,9 +50,9 @@ export async function getCandidatesFeedback(
         },
         candidateTest: {
           select: {
-            test: true
-          }
-        }
+            test: true,
+          },
+        },
       },
     })
   } catch (error) {

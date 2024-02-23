@@ -183,17 +183,17 @@ const CandidateListOfTest = () => {
     return (
       <span
         title={
-          data.createdAt ? moment(data.createdAt).format("DD MMMM YY") : "-"
+          data.createdAt ? moment(data.createdAt).format("DD MMM YYYY") : "-"
         }
       >
-        {data.createdAt ? moment(data.createdAt).format("DD MMMM YY") : "-"}
+        {data.createdAt ? moment(data.createdAt).format("DD MMM YYYY") : "-"}
       </span>
     )
   }
   const StartedAtCell = (data: CandidateResult) => {
     return (
       <span>
-        {data.startedAt ? moment(data.startedAt).format("DD MMMM YY") : "-"}
+        {data.startedAt ? moment(data.startedAt).format("DD MMM YYYY") : "-"}
       </span>
     )
   }
@@ -207,7 +207,11 @@ const CandidateListOfTest = () => {
       let result = 0
       for (let i of data.candidateResult) {
         result = (i.correctQuestion / i.totalQuestion) * 100
-        return `${parseInt(result.toFixed(2))}%`
+        return <div className={` ${result>70? 'text-green-600' : 'text-red-600'}`}>
+          {result>70 ? 'Pass':'Fail'}  
+          <span className="text-slate-400">&nbsp;•&nbsp;</span>
+          <span className="text-xs text-slate-800">{`${parseInt(result.toFixed(2))}%`}</span>
+        </div>
       }
     }
     return <span>{getPercent() ?? "NA"}</span>

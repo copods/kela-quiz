@@ -1,4 +1,4 @@
-import type { CandidateTest, Prisma , Test } from "@prisma/client"
+import type { CandidateTest, Prisma, Test } from "@prisma/client"
 
 import { checkFeatureAuthorization } from "./authorization.server"
 

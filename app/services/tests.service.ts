@@ -14,7 +14,7 @@ import {
   getQuestionType,
   deleteQuestionById,
   addQuestion,
-  getFirstSection
+  getFirstSection,
 } from "~/models/sections.server"
 import { createTest } from "~/models/tests.server"
 import { getAllUsers } from "~/models/user.server"
