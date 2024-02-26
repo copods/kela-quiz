@@ -42,6 +42,21 @@ const filterByStatus = [
   },
 ]
 
+const filterByPassFail = [
+  {
+    name: "All",
+    value: "all",
+  },
+  {
+    name: "Pass",
+    value: "pass",
+  },
+  {
+    name: "Fail",
+    value: "fail",
+  },
+]
+
 const CandidateListOfTest = () => {
   const { candidatesOfTest, currentWorkspaceId } = useLoaderData()
   const candidatesLoaderData = useLoaderData()
@@ -58,6 +73,11 @@ const CandidateListOfTest = () => {
     getStoredValue("candidateListFilter")
       ? getStoredValue("candidateListFilter")?.value
       : filterByStatus[0].value
+  )
+  const [passFailFilter, setPassFailFilter] = useState(
+    getStoredValue("candidateListPassFailFilter")
+      ? getStoredValue("candidateListPassFailFilter")?.value
+      : filterByPassFail[0].value
   )
   let [filteredData, setFilteredData] = useState(candidatesOfTest.candidateTest)
   const [pageSize, setPageSize] = useState(10)
@@ -77,13 +97,14 @@ const CandidateListOfTest = () => {
       {
         searchText: searchText,
         filterByStatus: statusFilter,
+        filterByPassFail: passFailFilter,
       },
       {
         method: "get",
       }
     )
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchText, statusFilter])
+  }, [searchText, statusFilter, passFailFilter])
 
   useEffect(() => {
     if (fetcher.data) {
@@ -93,17 +114,22 @@ const CandidateListOfTest = () => {
   }, [fetcher.data, searchText])
 
   useEffect(() => {
-    navigate(`?page=${1}&pageSize=${pageSize}&filterByStatus=${statusFilter}`, {
-      replace: true,
-    })
+    navigate(
+      `?page=${1}&pageSize=${pageSize}&filterByStatus=${statusFilter}&filterByPassFail=${passFailFilter}`,
+      {
+        replace: true,
+      }
+    )
     setStatusFilter(statusFilter)
+    setPassFailFilter(passFailFilter)
     setCustomStorage("candidateListFilter", statusFilter)
+    setCustomStorage("candidateListPassFailFilter", passFailFilter)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [statusFilter])
+  }, [statusFilter, passFailFilter])
 
   useEffect(() => {
     navigate(
-      `?page=${currentPage}&pageSize=${pageSize}&filterByStatus=${statusFilter}`,
+      `?page=${currentPage}&pageSize=${pageSize}&filterByStatus=${statusFilter}&filterByPassFail=${passFailFilter}`,
       { replace: true }
     )
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -207,11 +233,17 @@ const CandidateListOfTest = () => {
       let result = 0
       for (let i of data.candidateResult) {
         result = (i.correctQuestion / i.totalQuestion) * 100
-        return <div className={` ${result>70? 'text-green-600' : 'text-red-600'}`}>
-          {result>70 ? 'Pass':'Fail'}  
-          <span className="text-slate-400">&nbsp;•&nbsp;</span>
-          <span className="text-xs text-slate-800">{`${parseInt(result.toFixed(2))}%`}</span>
-        </div>
+        return (
+          <div
+            className={` ${result > 70 ? "text-green-600" : "text-red-600"}`}
+          >
+            {result > 70 ? "Pass" : "Fail"}
+            <span className="text-slate-400">&nbsp;•&nbsp;</span>
+            <span className="text-xs text-slate-800">{`${parseInt(
+              result.toFixed(2)
+            )}%`}</span>
+          </div>
+        )
       }
     }
     return <span>{getPercent() ?? "NA"}</span>
@@ -361,6 +393,15 @@ const CandidateListOfTest = () => {
             valueKey="value"
             value={statusFilter}
             setValue={setStatusFilter}
+          />
+        </div>
+        <div className="w-36">
+          <DropdownField
+            data={filterByPassFail}
+            displayKey="name"
+            valueKey="value"
+            value={passFailFilter}
+            setValue={setPassFailFilter}
           />
         </div>
       </div>

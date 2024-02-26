@@ -142,7 +142,8 @@ export const getCountofAllCandidatesOfTest = async (
   statusFilter: string,
   userId: string,
   workspaceId: string,
-  searchText?: string
+  searchText?: string,
+  passFailFilter?: string
 ) => {
   try {
     return await getAllCandidatesOfTestCount(
@@ -150,7 +151,8 @@ export const getCountofAllCandidatesOfTest = async (
       statusFilter,
       userId,
       workspaceId,
-      searchText
+      searchText,
+      passFailFilter
     )
   } catch (error) {
     throw error
@@ -176,6 +178,7 @@ export const getDetailsOfCandidatePerPage = async ({
   pageSize,
   statusFilter,
   searchText,
+  passFailFilter,
 }: {
   id: string
   workspaceId: string
@@ -185,6 +188,7 @@ export const getDetailsOfCandidatePerPage = async ({
   pageSize: number
   statusFilter: string
   searchText?: string
+  passFailFilter: string
 }) => {
   try {
     return await getAllCandidatesOfTest({
@@ -196,6 +200,7 @@ export const getDetailsOfCandidatePerPage = async ({
       pageSize,
       statusFilter,
       searchText,
+      passFailFilter,
     })
   } catch (error) {
     throw error
