@@ -9,7 +9,8 @@ export async function getAllCandidatesOfTestCount(
   statusFilter: string,
   userId: string,
   workspaceId: string,
-  searchText?: string
+  searchText?: string,
+  passFailFilter?: string
 ) {
   try {
     if (
@@ -21,24 +22,60 @@ export async function getAllCandidatesOfTestCount(
     }
     const searchFilter: Prisma.CandidateWhereInput = searchText
       ? {
-          OR: [
-            { firstName: { contains: searchText, mode: "insensitive" } },
-            { lastName: { contains: searchText, mode: "insensitive" } },
-            { email: { contains: searchText, mode: "insensitive" } },
-          ],
-        }
+        OR: [
+          { firstName: { contains: searchText, mode: "insensitive" } },
+          { lastName: { contains: searchText, mode: "insensitive" } },
+          { email: { contains: searchText, mode: "insensitive" } },
+        ],
+      }
       : {}
-    const count = prisma.candidateTest.count({
+
+    // ============================================================
+    // filter by pass fail
+    // ============================================================
+
+    const test = await prisma.candidateTest.findFirst({
+      where: { testId: id },
+      select: { candidateResult: true },
+    })
+    const qualyfing = Math.ceil(
+      (test?.candidateResult[0]?.totalQuestion as number | 0) * 0.7
+    ) // for 70% passing marks
+
+    const candidateFilters: Prisma.CandidateTestWhereInput = {
+      candidateResult: {},
+    }
+
+    if (passFailFilter === "pass") {
+      candidateFilters.candidateResult = {
+        some: {
+          correctQuestion: { gte: qualyfing },
+        },
+      }
+    }
+    if (passFailFilter === "fail") {
+      candidateFilters.candidateResult = {
+        some: {
+          correctQuestion: { lt: qualyfing },
+        },
+      }
+    }
+    // ============================================================
+    // filter by pass fail end
+    // ============================================================
+
+    const count = await prisma.candidateTest.count({
       where: {
         ...(statusFilter === "complete"
           ? { NOT: { endAt: { equals: null } } }
           : statusFilter === "pending"
-          ? { startedAt: { equals: null } }
-          : {}),
+            ? { startedAt: { equals: null } }
+            : {}),
         testId: id,
         candidate: {
           ...searchFilter,
         },
+        ...candidateFilters,
       },
     })
     return count
@@ -56,6 +93,7 @@ export async function getAllCandidatesOfTest({
   pageSize,
   statusFilter,
   searchText,
+  passFailFilter,
 }: {
   id: string
   workspaceId: string
@@ -65,6 +103,7 @@ export async function getAllCandidatesOfTest({
   pageSize?: number
   statusFilter?: string
   searchText?: string
+  passFailFilter?: string
 }) {
   try {
     if (
@@ -81,13 +120,48 @@ export async function getAllCandidatesOfTest({
     }
     const searchFilter: Prisma.CandidateWhereInput = searchText
       ? {
-          OR: [
-            { firstName: { contains: searchText, mode: "insensitive" } },
-            { lastName: { contains: searchText, mode: "insensitive" } },
-            { email: { contains: searchText, mode: "insensitive" } },
-          ],
-        }
+        OR: [
+          { firstName: { contains: searchText, mode: "insensitive" } },
+          { lastName: { contains: searchText, mode: "insensitive" } },
+          { email: { contains: searchText, mode: "insensitive" } },
+        ],
+      }
       : {}
+
+    // ============================================================
+    // filter by pass fail
+    // ============================================================
+
+    const test = await prisma.candidateTest.findFirst({
+      where: { testId: id },
+      select: { candidateResult: true },
+    })
+    // const totalQuestionInTest= test?.candidateResult[0]?.totalQuestion
+    const qualyfing = Math.ceil(
+      (test?.candidateResult[0]?.totalQuestion as number | 0) * 0.7
+    ) // for 70% passing marks
+
+    const candidateFilters: Prisma.CandidateTestWhereInput = {
+      candidateResult: {},
+    }
+
+    if (passFailFilter === "pass") {
+      candidateFilters.candidateResult = {
+        some: {
+          correctQuestion: { gte: qualyfing },
+        },
+      }
+    }
+    if (passFailFilter === "fail") {
+      candidateFilters.candidateResult = {
+        some: {
+          correctQuestion: { lt: qualyfing },
+        },
+      }
+    }
+    // ============================================================
+    // filter by pass fail end
+    // ============================================================
 
     return prisma.test.findFirst({
       where: {
@@ -101,11 +175,12 @@ export async function getAllCandidatesOfTest({
             ...(statusFilter === "complete"
               ? { NOT: { endAt: { equals: null } } }
               : statusFilter === "pending"
-              ? { startedAt: { equals: null } }
-              : {}),
+                ? { startedAt: { equals: null } }
+                : {}),
             candidate: {
               ...searchFilter,
             },
+            ...candidateFilters,
           },
           skip: (currentPage! - 1) * pageSize!,
           orderBy: { createdAt: "desc" },
@@ -304,8 +379,8 @@ export async function getAllCandidateTestsCount(
         ...(statusFilter === "active"
           ? { NOT: { deleted: { equals: true } } }
           : statusFilter === "inactive"
-          ? { deleted: { equals: true } }
-          : {}),
+            ? { deleted: { equals: true } }
+            : {}),
         workspaceId,
         candidateTest: {
           some: {
@@ -348,8 +423,8 @@ export async function getAllCandidateTests(
         ...(statusFilter === "active"
           ? { NOT: { deleted: { equals: true } } }
           : statusFilter === "inactive"
-          ? { deleted: { equals: true } }
-          : {}),
+            ? { deleted: { equals: true } }
+            : {}),
         workspaceId,
         candidateTest: {
           some: {
