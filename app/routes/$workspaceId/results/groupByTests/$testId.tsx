@@ -66,7 +66,6 @@ export const loader: LoaderFunction = async ({ request, params }) => {
       permission,
     })
   } catch (error: any) {
-    console.log('error-3',error)
     if (error.status === 403) {
       return redirect(routes.unauthorized)
     }

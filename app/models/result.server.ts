@@ -36,11 +36,22 @@ export async function getAllCandidatesOfTestCount(
 
     const test = await prisma.candidateTest.findFirst({
       where: { testId: id },
-      select: { candidateResult: true },
+      select: {
+        test: {
+          select: { sections: true }
+        }
+      }
     })
+    let totalQuestions = 0
+    if (test?.test.sections) {
+      for (let temp of test?.test.sections) {
+        totalQuestions += temp.totalQuestions
+      }
+    }
     const qualyfing = Math.ceil(
-      (test?.candidateResult[0]?.totalQuestion as number | 0) * 0.7
+      totalQuestions * 0.7
     ) // for 70% passing marks
+
 
     const candidateFilters: Prisma.CandidateTestWhereInput = {
       candidateResult: {},
@@ -80,7 +91,6 @@ export async function getAllCandidatesOfTestCount(
     })
     return count
   } catch (error) {
-    console.log("err-1", error)
     throw error
   }
 }
@@ -135,12 +145,22 @@ export async function getAllCandidatesOfTest({
 
     const test = await prisma.candidateTest.findFirst({
       where: { testId: id },
-      select: { candidateResult: true },
+      select: {
+        test: {
+          select: { sections: true }
+        }
+      }
     })
-    // const totalQuestionInTest= test?.candidateResult[0]?.totalQuestion
+    let totalQuestions = 0
+    if (test?.test.sections) {
+      for (let temp of test?.test.sections) {
+        totalQuestions += temp.totalQuestions
+      }
+    }
     const qualyfing = Math.ceil(
-      (test?.candidateResult[0]?.totalQuestion as number | 0) * 0.7
+      totalQuestions * 0.7
     ) // for 70% passing marks
+
 
     const candidateFilters: Prisma.CandidateTestWhereInput = {
       candidateResult: {},
@@ -205,7 +225,6 @@ export async function getAllCandidatesOfTest({
       },
     })
   } catch (error) {
-    console.log("err-2", error)
     throw error
   }
 }

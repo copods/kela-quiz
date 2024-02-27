@@ -80,7 +80,6 @@ const CandidateListOfTest = () => {
       ? getStoredValue("candidateListPassFailFilter")?.value
       : filterByPassFail[0].value
   )
-  console.log("candidatesOfTest", candidatesOfTest,a)
   let [filteredData, setFilteredData] = useState(candidatesOfTest.candidateTest)
   const [pageSize, setPageSize] = useState(10)
   const [currentPage, setCurrentPage] = useState(
