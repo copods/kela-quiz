@@ -66,9 +66,11 @@ export const loader: LoaderFunction = async ({ request, params }) => {
       permission,
     })
   } catch (error: any) {
+    console.log(error)
     if (error.status === 403) {
       return redirect(routes.unauthorized)
     }
+    return error
   }
 }
 export const action: ActionFunction = async ({ request, params }) => {

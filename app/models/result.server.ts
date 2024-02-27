@@ -204,6 +204,7 @@ export async function getAllCandidatesOfTest({
       },
     })
   } catch (error) {
+    console.log(error)
     throw error
   }
 }
