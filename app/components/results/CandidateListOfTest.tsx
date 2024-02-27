@@ -59,7 +59,6 @@ const filterByPassFail = [
 
 const CandidateListOfTest = () => {
   const { candidatesOfTest, currentWorkspaceId } = useLoaderData()
-  const a=useLoaderData()
   const candidatesLoaderData = useLoaderData()
   const { setCustomStorage, getStoredValue } = useCommonContext()
   const { t } = useTranslation()
