@@ -402,7 +402,8 @@ export async function sendNewPassword(email: string, password: string) {
 export async function sendMemberInvite(
   email: string,
   name: string,
-  workspaceJoinLink: string
+  workspaceJoinLink: string,
+  workspaceName: string
 ) {
   const to = email
   const from = "careers@copods.co"
@@ -434,7 +435,7 @@ export async function sendMemberInvite(
           <p style="text-align:left;color:#4B5563;margin:0;"><span>Hi,</span>
           </p>
           <br>
-          <p style="text-align:left;color:#4B5563;margin:0;">You have been invited to join k-Quiz by ${name}
+          <p style="text-align:left;color:#4B5563;margin:0;">You have been invited to join <b>${workspaceName}</b> on k-Quiz by ${name}
           </p>
           <br>
           <p style="text-align:left;color:#4B5563;margin:0;font-family:'Poppins', sans-serif;">
