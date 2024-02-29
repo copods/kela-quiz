@@ -183,8 +183,8 @@ const CandidateListOfTest = () => {
     return (
       <span data-cy="candidateName">
         {data.candidate.firstName &&
-        data.candidate.lastName &&
-        data.startedAt ? (
+          data.candidate.lastName &&
+          data.startedAt ? (
           <Link
             to={`/${currentWorkspaceId}/results/groupByTests/${data?.testId}/${data?.candidateId}`}
             className="col-span-2 flex  truncate font-semibold text-primary"
@@ -216,19 +216,17 @@ const CandidateListOfTest = () => {
       </span>
     )
   }
-  const StartedAtCell = (data: CandidateResult) => {
-    return (
-      <span>
-        {data.startedAt ? moment(data.startedAt).format("DD MMM YYYY") : "-"}
-      </span>
-    )
-  }
-  const InvitedByCell = (data: {
-    candidate: { createdBy: { firstName: string } }
-  }) => {
-    return <span>{data.candidate.createdBy.firstName}</span>
-  }
-  const ResultCell = (data: { candidateResult: CandidateResult[] }) => {
+
+  const ResultCell = (
+    data: {
+      candidateResult: CandidateResult[]
+      linkSentOn: string
+    } & CandidateResult
+  ) => {
+    const now = moment(new Date())
+    const LinkSendedTime = moment(data?.linkSentOn)
+    const duration = now.diff(LinkSendedTime, "hours")
+
     function getPercent() {
       let result = 0
       for (let i of data.candidateResult) {
@@ -239,16 +237,35 @@ const CandidateListOfTest = () => {
           >
             {result > 70 ? "Pass" : "Fail"}
             <span className="text-slate-400">&nbsp;•&nbsp;</span>
-            <span className="text-xs text-slate-800">{`${parseInt(
-              result.toFixed(2)
-            )}%`}</span>
+            <span className="text-xs text-slate-800">
+              {`${parseInt(result.toFixed(2))}%`}
+            </span>
           </div>
         )
       }
     }
-    return <span>{getPercent() ?? "NA"}</span>
+
+    function getTestStatus() {
+      return (
+        <>
+          {data.startedAt === null ? (
+            <span className="px-2 py-1 text-sm">
+              {t("commonConstants.pending")}
+            </span>
+          ) : data.startedAt != null && data.endAt === null && duration < 48 ? (
+            <span className="px-2 py-1 text-sm">
+              {t("commonConstants.onGoing")}
+            </span>
+          ) : (
+            <span className="px-2 py-1 text-sm">NA</span>
+          )}
+        </>
+      )
+    }
+    return <span>{getPercent() ?? getTestStatus()}</span>
   }
-  const StatusCell = (
+
+  const ActionsCell = (
     data: {
       candidateResult: CandidateResult[]
       linkSentOn: string
@@ -272,73 +289,38 @@ const CandidateListOfTest = () => {
         handleItemAction: () => copyLink(data.link as string),
       },
     ]
-    const now = moment(new Date())
-    const LinkSendedTime = moment(data?.linkSentOn)
-    const duration = now.diff(LinkSendedTime, "hours")
 
     return (
-      <div id="status-cell" className="flex items-center">
-        <div
-          tabIndex={0}
-          role={"banner"}
-          className="flex items-center justify-between"
-        >
-          {data.startedAt === null ? (
-            <span className="rounded-full bg-yellow-200 px-2 py-1 text-xs">
-              {t("commonConstants.pending")}
-            </span>
-          ) : data.startedAt != null && data.endAt === null && duration < 48 ? (
-            <span className="rounded-full bg-blue-50 px-2 py-1 text-xs">
-              {t("commonConstants.onGoing")}
-            </span>
-          ) : (
-            (data.endAt != null || duration >= 48) && (
-              <span className="rounded-full bg-green-200 px-2 py-1 text-xs">
-                {t("commonConstants.completed")}
-              </span>
-            )
-          )}
-          {data?.candidateResult.length <= 0 && (
-            <ListActionMenu
-              menuIcon={"mdi:dots-vertical"}
-              onItemClick={setmenuListOpen}
-              open={menuListOpen}
-              aria-label={t("testTableItem.menu")}
-              id={data.id}
-              menuDetails={menuItemsDetailsList.filter((list) => list.show)}
-              customClasses={{
-                item: "text-primary text-xs w-36 shadow-sm",
-              }}
-            />
-          )}
-        </div>
+      <div id="status-cell">
+        {data?.candidateResult.length <= 0 && (
+          <ListActionMenu
+            menuIcon={"mdi:dots-vertical"}
+            onItemClick={setmenuListOpen}
+            open={menuListOpen}
+            aria-label={t("testTableItem.menu")}
+            id={data.id}
+            menuDetails={menuItemsDetailsList.filter((list) => list.show)}
+            customClasses={{
+              item: "text-primary text-xs w-36 shadow-sm",
+            }}
+          />
+        )}
       </div>
     )
   }
+
   const column: tableColumnType[] = [
-    { title: "Sr.No", field: "sr_no", render: SeriaLNoCell },
-    { title: "Name", field: "name", render: NameDataCell, width: "15%" },
-    { title: "Email", field: "email", render: EmailDataCell, width: "20%" },
+    { title: "Sr.No", field: "sr_no", render: SeriaLNoCell, width: "10%" },
+    { title: "Name", field: "name", render: NameDataCell, width: "30%" },
+    { title: "Email", field: "email", render: EmailDataCell, width: "30%" },
     {
       title: "Invited At",
       field: "invitedAt",
       render: InvitedAtCell,
       width: "15%",
     },
-    {
-      title: "Started At",
-      field: "invitedAt",
-      render: StartedAtCell,
-      width: "15%",
-    },
-    {
-      title: "Invited By",
-      field: "invitedBy",
-      render: InvitedByCell,
-      width: "10%",
-    },
     { title: "Result", field: "Result", render: ResultCell },
-    { title: "Status", field: "status", render: StatusCell, width: "10%" },
+    { title: "", field: "actions", render: ActionsCell, width: "5%" },
   ]
 
   return (

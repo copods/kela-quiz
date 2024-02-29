@@ -67,7 +67,8 @@ export async function inviteNewUser({
       return await sendMemberInvite(
         email,
         name as string,
-        workspaceJoinLink as string
+        workspaceJoinLink as string,
+        res?.invitedForWorkspace?.name as string
       )
     }
     return res
@@ -220,10 +221,12 @@ export async function reinviteMemberForWorkspace({
     const name = ((user?.invitedById?.firstName as string) +
       " " +
       user?.invitedById?.lastName) as string
+
     return await sendMemberInvite(
       user?.email as string,
       name as string,
-      workspaceJoinLink as string
+      workspaceJoinLink as string,
+      user?.invitedForWorkspace?.name as string
     )
   } catch (error) {
     throw error

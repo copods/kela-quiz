@@ -4,7 +4,7 @@ import invariant from "tiny-invariant"
 
 import ResultDetailsComponent from "~/components/results/ResultDetails"
 import { routes } from "~/constants/route.constants"
-import type { CandidateTest, Candidate } from "~/interface/Interface"
+import type { CandidateTest, Candidate, CandidateResult } from "~/interface/Interface"
 import {
   getSectionWiseResultsOFIndividualCandidate,
   getWorkspaces,
@@ -18,13 +18,13 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const workspaces = await getWorkspaces(userId as string)
   invariant(params.testId, "resultId not found")
   try {
-    const { sections, candidate } =
+    const { sections, candidate, candidateResult } =
       (await getSectionWiseResultsOFIndividualCandidate({
         testId: params?.testId as string,
         candidateId: params?.candidateId as string,
         workspaceId: currentWorkspaceId,
         userId: userId!,
-      })) || ({} as CandidateTest & { candidate: Candidate })
+      })) || ({} as CandidateTest & { candidate: Candidate } & { candidateResult: CandidateResult })
     if (!sections || !candidate) {
       throw new Response("Not Found", { status: 404 })
     }
@@ -34,6 +34,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
       candidate,
       workspaces,
       currentWorkspaceId,
+      candidateResult
     })
   } catch (error: any) {
     if (error.status === 403) {

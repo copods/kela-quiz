@@ -253,6 +253,7 @@ export async function getSectionWiseResultsOfIndividualCandidate({
         candidateId_testId: { candidateId, testId },
       },
       select: {
+        candidateResult: true,
         candidate: {
           select: {
             firstName: true,
