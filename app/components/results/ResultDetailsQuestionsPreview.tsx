@@ -71,6 +71,8 @@ const ResultDetailsQuestionsPreview = ({
     questionType: string,
     correctAnswers: any
   ) => {
+    answers.sort((a, b) => (a.id > b.id) ? 1: -1)
+    correctAnswers.sort((a:any, b:any) => (a.id > b.id) ? 1: -1)
     if (questionType === QuestionTypes.text) {
       if (answers.length === 0) {
         setCorrectAnswer(false)
@@ -84,7 +86,7 @@ const ResultDetailsQuestionsPreview = ({
       for (const [index, value] of answers.entries()) {
         if (
           (questionType === QuestionTypes.singleChoice ||
-            QuestionTypes.multipleChoice) &&
+            questionType ===QuestionTypes.multipleChoice) &&
           value.id !== correctAnswers[index]?.id
         ) {
           setCorrectAnswer(false)
