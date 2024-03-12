@@ -55,7 +55,7 @@ const ResultDetailsComponent = () => {
             <span className="text-3xl font-semibold text-gray-900" id="title">
               {candidate?.firstName} {candidate?.lastName}
             </span>
-            <div
+            {result ? <div
               className={`text-lg ${result > 70 ? "text-green-600" : "text-red-600"}`}
             >
               {result > 70 ? "Pass" : "Fail"}
@@ -63,7 +63,7 @@ const ResultDetailsComponent = () => {
               <span className="text-base text-slate-800">{`${parseInt(
                 result.toFixed(2)
               )}%`}</span>
-            </div>
+            </div>:null}
           </div>
         </div>
       </header>
