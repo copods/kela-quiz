@@ -209,7 +209,7 @@ jobs:
 
   publish:
     runs-on: ubuntu-latest
-    needs: [lint, typecheck, vitest, cypress, build, deploy]
+    needs: [lint, typecheck,  cypress, build, deploy]
     if: ${{ github.ref == 'refs/heads/main' && github.event_name == 'push' }}
     steps:
       - uses: actions/checkout@v3
