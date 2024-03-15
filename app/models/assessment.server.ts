@@ -785,6 +785,7 @@ async function calculateOverallResult(id: CandidateTest["id"]) {
   let correctInTest = 0
   let skippedInTest = 0
   let incorrectInTest = 0
+  let testPresentage = 0.0
   const candidateTest = await prisma.candidateTest.findUnique({
     where: {
       id,
@@ -840,6 +841,7 @@ async function calculateOverallResult(id: CandidateTest["id"]) {
         incorrectInTest += section.SectionWiseResult[0].incorrect!
       }
     }
+    testPresentage = correctInTest / totalQuestionInTest
     await prisma.candidateResult.create({
       data: {
         candidateId: candidateTest?.candidateId,
@@ -850,10 +852,10 @@ async function calculateOverallResult(id: CandidateTest["id"]) {
         skipped: skippedInTest,
         incorrect: incorrectInTest,
         testId: candidateTest?.testId,
-        isQualified: false,
+        isQualified: testPresentage >= 0.7,
       },
     })
-    return correctInTest / totalQuestionInTest
+    return testPresentage
   }
 }
 

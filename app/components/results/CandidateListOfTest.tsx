@@ -183,8 +183,8 @@ const CandidateListOfTest = () => {
     return (
       <span data-cy="candidateName">
         {data.candidate.firstName &&
-          data.candidate.lastName &&
-          data.startedAt ? (
+        data.candidate.lastName &&
+        data.startedAt ? (
           <Link
             to={`/${currentWorkspaceId}/results/groupByTests/${data?.testId}/${data?.candidateId}`}
             className="col-span-2 flex  truncate font-semibold text-primary"
@@ -233,9 +233,9 @@ const CandidateListOfTest = () => {
         result = (i.correctQuestion / i.totalQuestion) * 100
         return (
           <div
-            className={` ${result > 70 ? "text-green-600" : "text-red-600"}`}
+            className={` ${result >= 70 ? "text-green-600" : "text-red-600"}`}
           >
-            {result > 70 ? "Pass" : "Fail"}
+            {result >= 70 ? "Pass" : "Fail"}
             <span className="text-slate-400">&nbsp;•&nbsp;</span>
             <span className="text-xs text-slate-800">
               {`${parseInt(result.toFixed(2))}%`}

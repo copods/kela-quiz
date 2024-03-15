@@ -31,6 +31,14 @@ Click this button to create a [Gitpod](https://gitpod.io) workspace with the pro
 It is important for you to have these things installed:
 
 1. [Node.js](https://nodejs.org/en/)
+
+   > **Note:** This project is compatible with up to Node v18 (check with `node -v`), If you have latest or newer version of node then please use nvm to switch to node v18.
+
+   - Follow these steps if your Node version is higher than v18:
+     1. Install NVM (https://github.com/nvm-sh/nvm).
+     2. Execute 'nvm install 18' to install Node v18.
+     3. Switch to using Node v18 with 'nvm use 18'.
+
 2. [Docker](https://www.docker.com/get-started)
 
 - You have to clone the code by using this URL https://github.com/copods/kela-quiz.git
