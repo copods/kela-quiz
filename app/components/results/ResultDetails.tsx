@@ -65,17 +65,19 @@ const ResultDetailsComponent = () => {
             <span className="text-3xl font-semibold text-gray-900" id="title">
               {candidate?.firstName} {candidate?.lastName}
             </span>
-            <div
-              className={`text-lg ${
-                result >= 70 ? "text-green-600" : "text-red-600"
-              }`}
-            >
-              {result >= 70 ? "Pass" : "Fail"}
-              <span className="text-slate-400">&nbsp;•&nbsp;</span>
-              <span className="text-base text-slate-800">{`${parseInt(
-                result.toFixed(2)
-              )}%`}</span>
-            </div>
+            {result ? (
+              <div
+                className={`text-lg ${
+                  result >= 70 ? "text-green-600" : "text-red-600"
+                }`}
+              >
+                {result >= 70 ? "Pass" : "Fail"}
+                <span className="text-slate-400">&nbsp;•&nbsp;</span>
+                <span className="text-base text-slate-800">{`${parseInt(
+                  result.toFixed(2)
+                )}%`}</span>
+              </div>
+            ) : null}
           </div>
         </div>
       </header>
