@@ -8,7 +8,6 @@ import {
   useActionData,
   useFetcher,
   useNavigate,
-  useSubmit,
   useLoaderData,
 } from "@remix-run/react"
 import { useTranslation } from "react-i18next"
@@ -63,7 +62,6 @@ const CandidateListOfTest = () => {
   const { setCustomStorage, getStoredValue } = useCommonContext()
   const { t } = useTranslation()
   let navigate = useNavigate()
-  const submit = useSubmit()
   const fetcher = useFetcher()
   const actionData = useActionData()
   const loaderData = useLoaderData()
@@ -107,11 +105,23 @@ const CandidateListOfTest = () => {
   }, [searchText, statusFilter, passFailFilter])
 
   useEffect(() => {
-    if (fetcher.data) {
+    if (
+      fetcher.data &&
+      fetcher.data.candidateInviteStatus &&
+      fetcher.data.candidateInviteStatus ===
+        t("candidateExamConstants.candidateTestCreated")
+    ) {
+      toast.success(t("testsConstants.reinvited"))
+    }
+    if (
+      fetcher.data &&
+      fetcher.data.candidatesOfTest?.candidateTest &&
+      fetcher.data.candidatesCount
+    ) {
       setFilteredData(fetcher.data.candidatesOfTest.candidateTest)
       setCandidateCounts(fetcher.data.candidatesCount)
     }
-  }, [fetcher.data, searchText])
+  }, [fetcher.data, searchText, t])
 
   useEffect(() => {
     navigate(
@@ -139,8 +149,16 @@ const CandidateListOfTest = () => {
     setCurrentPage(candidatesLoaderData.currentPage)
   }, [candidatesLoaderData.currentPage])
 
+  useEffect(() => {
+    if (
+      actionData?.candidateInviteStatus === t("candidateExamConstants.endTest")
+    ) {
+      toast.error(t("testsConstants.testEnded"))
+    }
+  }, [actionData, t])
+
   const resendInvite = (id: string, candidateId: string, testId: string) => {
-    submit(
+    fetcher.submit(
       {
         action: "resendInvite",
         id: id,
@@ -150,19 +168,6 @@ const CandidateListOfTest = () => {
       { method: "post" }
     )
   }
-
-  useEffect(() => {
-    if (
-      actionData?.candidateInviteStatus ===
-      t("candidateExamConstants.candidateTestCreated")
-    ) {
-      toast.success(t("testsConstants.reinvited"))
-    } else if (
-      actionData?.candidateInviteStatus === t("candidateExamConstants.endTest")
-    ) {
-      toast.error(t("testsConstants.testEnded"))
-    }
-  }, [actionData, t])
 
   const copyLink = (link: string) => {
     navigator.clipboard.writeText(link).then(
