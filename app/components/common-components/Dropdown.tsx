@@ -26,6 +26,7 @@ function DropdownField({
   callToAction,
   actionName,
   setOpen,
+  label
 }: {
   data: Array<any>
   displayKey: string
@@ -36,6 +37,7 @@ function DropdownField({
   setOpen?: (e: boolean) => void
   callToAction?: boolean
   actionName?: string
+  label?: string
 }) {
   const { t } = useTranslation()
   const createQuestionDropdownOptions = data.filter(
@@ -61,8 +63,9 @@ function DropdownField({
       }}
     >
       {({ open }) => (
-        <>
-          <div
+          <div className="flex gap-1 items-center  text-sm text-gray-600">
+            {label&& <label>{label}: </label>}
+            <div
             className="dropdown relative w-full"
             id="dropdown"
             title={t("sectionsConstants.dropdown")}
@@ -159,7 +162,7 @@ function DropdownField({
               </Listbox.Options>
             </Transition>
           </div>
-        </>
+          </div>
       )}
     </Listbox>
   )

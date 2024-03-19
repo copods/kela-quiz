@@ -377,6 +377,7 @@ const CandidateListOfTest = () => {
             valueKey="value"
             value={statusFilter}
             setValue={setStatusFilter}
+            label="Status"
           />
         </div>
         <div className="w-36">
@@ -386,6 +387,7 @@ const CandidateListOfTest = () => {
             valueKey="value"
             value={passFailFilter}
             setValue={setPassFailFilter}
+            label="Result"
           />
         </div>
       </div>
