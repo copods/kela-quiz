@@ -105,21 +105,18 @@ const CandidateListOfTest = () => {
   }, [searchText, statusFilter, passFailFilter])
 
   useEffect(() => {
+    const { candidateInviteStatus, candidatesOfTest, candidatesCount } =
+      fetcher.data || {}
+
     if (
-      fetcher.data &&
-      fetcher.data.candidateInviteStatus &&
-      fetcher.data.candidateInviteStatus ===
-        t("candidateExamConstants.candidateTestCreated")
+      candidateInviteStatus === t("candidateExamConstants.candidateTestCreated")
     ) {
       toast.success(t("testsConstants.reinvited"))
     }
-    if (
-      fetcher.data &&
-      fetcher.data.candidatesOfTest?.candidateTest &&
-      fetcher.data.candidatesCount
-    ) {
-      setFilteredData(fetcher.data.candidatesOfTest.candidateTest)
-      setCandidateCounts(fetcher.data.candidatesCount)
+
+    if (candidatesOfTest?.candidateTest && candidatesCount) {
+      setFilteredData(candidatesOfTest.candidateTest)
+      setCandidateCounts(candidatesCount)
     }
   }, [fetcher.data, searchText, t])
 
