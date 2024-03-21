@@ -26,7 +26,7 @@ function DropdownField({
   callToAction,
   actionName,
   setOpen,
-  label
+  label,
 }: {
   data: Array<any>
   displayKey: string
@@ -63,9 +63,9 @@ function DropdownField({
       }}
     >
       {({ open }) => (
-          <div className="flex gap-1 items-center  text-sm text-gray-600">
-            {label&& <label>{label}: </label>}
-            <div
+        <div className="flex items-center gap-1  text-sm text-gray-600">
+          {label && <label>{label}: </label>}
+          <div
             className="dropdown relative w-full"
             id="dropdown"
             title={t("sectionsConstants.dropdown")}
@@ -162,7 +162,7 @@ function DropdownField({
               </Listbox.Options>
             </Transition>
           </div>
-          </div>
+        </div>
       )}
     </Listbox>
   )
