@@ -10,7 +10,8 @@ export async function getAllCandidatesOfTestCount(
   userId: string,
   workspaceId: string,
   searchText?: string,
-  passFailFilter?: string
+  passFailFilter?: string,
+  customFilter?: Array<string>
 ) {
   try {
     if (
@@ -68,6 +69,19 @@ export async function getAllCandidatesOfTestCount(
         },
       }
     }
+    if (passFailFilter === "custom") {
+      const lowerLimit = Math.ceil(
+        totalQuestions * (Number((customFilter as any)[0]) / 100)
+      )
+      const upperLimit = Math.ceil(
+        totalQuestions * (Number((customFilter as any)[1]) / 100)
+      )
+      candidateFilters.candidateResult = {
+        some: {
+          correctQuestion: { lte: upperLimit, gte: lowerLimit },
+        },
+      }
+    }
     // ============================================================
     // filter by pass fail end
     // ============================================================
@@ -102,6 +116,7 @@ export async function getAllCandidatesOfTest({
   statusFilter,
   searchText,
   passFailFilter,
+  customFilter,
 }: {
   id: string
   workspaceId: string
@@ -112,6 +127,7 @@ export async function getAllCandidatesOfTest({
   statusFilter?: string
   searchText?: string
   passFailFilter?: string
+  customFilter: Array<string>
 }) {
   try {
     if (
@@ -171,6 +187,19 @@ export async function getAllCandidatesOfTest({
       candidateFilters.candidateResult = {
         some: {
           correctQuestion: { lt: qualyfing },
+        },
+      }
+    }
+    if (passFailFilter === "custom") {
+      const lowerLimit = Math.ceil(
+        totalQuestions * (Number(customFilter[0]) / 100)
+      )
+      const upperLimit = Math.ceil(
+        totalQuestions * (Number(customFilter[1]) / 100)
+      )
+      candidateFilters.candidateResult = {
+        some: {
+          correctQuestion: { lte: upperLimit, gte: lowerLimit },
         },
       }
     }

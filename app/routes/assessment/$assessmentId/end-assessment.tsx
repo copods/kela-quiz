@@ -25,7 +25,6 @@ export const loader: LoaderFunction = async ({ params, request }) => {
 export const action: ActionFunction = async ({ params, request }) => {
   const formData = await request.formData()
   const action = formData.get("action")
-  console.log(action, "hhh")
   if (action === "giveFeedback") {
     await updateNextStep({
       assessmentId: params.assessmentId as string,

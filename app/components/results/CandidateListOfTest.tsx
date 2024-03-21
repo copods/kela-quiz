@@ -26,6 +26,7 @@ import type {
   CandidateResult,
   tableColumnType,
 } from "~/interface/Interface"
+import RangeSlider from "../common-components/RangeSlider/RangeSlider"
 const filterByStatus = [
   {
     name: "All",
@@ -54,6 +55,10 @@ const filterByPassFail = [
     name: "Fail",
     value: "fail",
   },
+  {
+    name: "Custom",
+    value: "custom",
+  },
 ]
 
 const CandidateListOfTest = () => {
@@ -78,6 +83,12 @@ const CandidateListOfTest = () => {
       : filterByPassFail[0].value
   )
   let [filteredData, setFilteredData] = useState(candidatesOfTest.candidateTest)
+  const [customFilter, setCustomFilter] = useState(
+    getStoredValue("customFilter")
+      ? getStoredValue("customFilter")?.value
+      : [40, 80]
+  )
+
   const [pageSize, setPageSize] = useState(10)
   const [currentPage, setCurrentPage] = useState(
     candidatesLoaderData.currentPage
@@ -89,20 +100,20 @@ const CandidateListOfTest = () => {
   useEffect(() => {
     setFilteredData(candidatesOfTest.candidateTest)
   }, [candidatesOfTest.candidateTest])
-
   useEffect(() => {
     fetcher.submit(
       {
         searchText: searchText,
         filterByStatus: statusFilter,
         filterByPassFail: passFailFilter,
+        customFilter: customFilter.toString(),
       },
       {
         method: "get",
       }
     )
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchText, statusFilter, passFailFilter])
+  }, [searchText, statusFilter, passFailFilter, customFilter])
 
   useEffect(() => {
     const { candidateInviteStatus, candidatesOfTest, candidatesCount } =
@@ -122,7 +133,7 @@ const CandidateListOfTest = () => {
 
   useEffect(() => {
     navigate(
-      `?page=${1}&pageSize=${pageSize}&filterByStatus=${statusFilter}&filterByPassFail=${passFailFilter}`,
+      `?page=${1}&pageSize=${pageSize}&filterByStatus=${statusFilter}&filterByPassFail=${passFailFilter}&customFilter=${customFilter}`,
       {
         replace: true,
       }
@@ -131,12 +142,13 @@ const CandidateListOfTest = () => {
     setPassFailFilter(passFailFilter)
     setCustomStorage("candidateListFilter", statusFilter)
     setCustomStorage("candidateListPassFailFilter", passFailFilter)
+    setCustomStorage("customFilter", customFilter)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [statusFilter, passFailFilter])
 
   useEffect(() => {
     navigate(
-      `?page=${currentPage}&pageSize=${pageSize}&filterByStatus=${statusFilter}&filterByPassFail=${passFailFilter}`,
+      `?page=${currentPage}&pageSize=${pageSize}&filterByStatus=${statusFilter}&filterByPassFail=${passFailFilter}&customFilter=${customFilter}`,
       { replace: true }
     )
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -153,6 +165,10 @@ const CandidateListOfTest = () => {
       toast.error(t("testsConstants.testEnded"))
     }
   }, [actionData, t])
+
+  const updateCustomFilter = (e: any) => {
+    setCustomFilter(e)
+  }
 
   const resendInvite = (id: string, candidateId: string, testId: string) => {
     fetcher.submit(
@@ -185,8 +201,8 @@ const CandidateListOfTest = () => {
     return (
       <span data-cy="candidateName">
         {data.candidate.firstName &&
-        data.candidate.lastName &&
-        data.startedAt ? (
+          data.candidate.lastName &&
+          data.startedAt ? (
           <Link
             to={`/${currentWorkspaceId}/results/groupByTests/${data?.testId}/${data?.candidateId}`}
             className="col-span-2 flex  truncate font-semibold text-primary"
@@ -370,7 +386,7 @@ const CandidateListOfTest = () => {
             setSearchText(e.target.value)
           }}
         />
-        <div className="w-36">
+        <div className="w-44">
           <DropdownField
             data={filterByStatus}
             displayKey="name"
@@ -380,7 +396,7 @@ const CandidateListOfTest = () => {
             label="Status"
           />
         </div>
-        <div className="w-36">
+        <div className="w-44">
           <DropdownField
             data={filterByPassFail}
             displayKey="name"
@@ -390,6 +406,18 @@ const CandidateListOfTest = () => {
             label="Result"
           />
         </div>
+        {passFailFilter == "custom" && (
+          <div className="flex w-80 items-center gap-2  text-sm text-gray-600">
+            <span>Range: </span>{" "}
+            <RangeSlider
+              min={0}
+              max={100}
+              minValue={customFilter[0]}
+              maxValue={customFilter[1]}
+              onChange={updateCustomFilter}
+            />
+          </div>
+        )}
       </div>
       <Table
         columns={column}
