@@ -31,76 +31,45 @@ export async function getAllCandidatesOfTestCount(
       }
       : {}
 
-    // ============================================================
-    // filter by pass fail
-    // ============================================================
+    const cFilter_min =
+      passFailFilter == "pass"
+        ? 70
+        : passFailFilter == "fail"
+          ? 0
+          : passFailFilter == "custom"
+            ? Number(customFilter ? customFilter[0] : 0)
+            : 0
+    const cFilter_max =
+      passFailFilter == "pass"
+        ? 101
+        : passFailFilter == "fail"
+          ? 70
+          : passFailFilter == "custom"
+            ? Number(customFilter ? customFilter[1] : 100) + 1
+            : 101
 
-    const test = await prisma.candidateTest.findFirst({
-      where: { testId: id },
-      select: {
-        test: {
-          select: { sections: true },
-        },
-      },
-    })
-    let totalQuestions = 0
-    if (test?.test.sections) {
-      for (let temp of test?.test.sections) {
-        totalQuestions += temp.totalQuestions
-      }
-    }
-    const qualyfing = Math.ceil(totalQuestions * 0.7) // for 70% passing marks
+    const queryResult: any = await prisma.$queryRaw`SELECT
+        ct.*
 
-    const candidateFilters: Prisma.CandidateTestWhereInput = {
-      candidateResult: {},
-    }
-
-    if (passFailFilter === "pass") {
-      candidateFilters.candidateResult = {
-        some: {
-          correctQuestion: { gte: qualyfing },
-        },
-      }
-    }
-    if (passFailFilter === "fail") {
-      candidateFilters.candidateResult = {
-        some: {
-          correctQuestion: { lt: qualyfing },
-        },
-      }
-    }
-    if (passFailFilter === "custom") {
-      const lowerLimit = Math.ceil(
-        totalQuestions * (Number((customFilter as any)[0]) / 100)
-      )
-      const upperLimit = Math.ceil(
-        totalQuestions * (Number((customFilter as any)[1]) / 100)
-      )
-      candidateFilters.candidateResult = {
-        some: {
-          correctQuestion: { lte: upperLimit, gte: lowerLimit },
-        },
-      }
-    }
-    // ============================================================
-    // filter by pass fail end
-    // ============================================================
-
-    const count = await prisma.candidateTest.count({
-      where: {
-        ...(statusFilter === "complete"
-          ? { NOT: { endAt: { equals: null } } }
-          : statusFilter === "pending"
-            ? { startedAt: { equals: null } }
-            : {}),
-        testId: id,
-        candidate: {
-          ...searchFilter,
-        },
-        ...candidateFilters,
-      },
-    })
-    return count
+    FROM
+        "CandidateTest" ct
+    JOIN
+        "Test" t ON ct."testId" = t.id
+    JOIN
+        "Candidate" c ON ct."candidateId" = c.id
+    JOIN
+        "CandidateResult" cr ON ct.id = cr."candidateTestId"
+    LEFT JOIN
+        "User" u ON c."createdById" = u.id
+    WHERE
+        t."workspaceId" = ${workspaceId} 
+        AND t.id = ${id}
+        AND (
+                 (cr."correctQuestion"::FLOAT / cr."totalQuestion") * 100 >= ${cFilter_min}
+                AND (cr."correctQuestion"::FLOAT / cr."totalQuestion") * 100 < ${cFilter_max}
+        )
+   `
+    return queryResult?.length
   } catch (error) {
     throw error
   }

@@ -27,6 +27,8 @@ import type {
   tableColumnType,
 } from "~/interface/Interface"
 import RangeSlider from "../common-components/RangeSlider/RangeSlider"
+import debounce from 'debounce';
+
 const filterByStatus = [
   {
     name: "All",
@@ -100,7 +102,8 @@ const CandidateListOfTest = () => {
   useEffect(() => {
     setFilteredData(candidatesOfTest.candidateTest)
   }, [candidatesOfTest.candidateTest])
-  useEffect(() => {
+
+  const fetchData = debounce(() => {
     fetcher.submit(
       {
         searchText: searchText,
@@ -112,6 +115,9 @@ const CandidateListOfTest = () => {
         method: "get",
       }
     )
+  }, 500)
+  useEffect(() => {
+    fetchData()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchText, statusFilter, passFailFilter, customFilter])
 
@@ -125,7 +131,7 @@ const CandidateListOfTest = () => {
       toast.success(t("testsConstants.reinvited"))
     }
 
-    if (candidatesOfTest?.candidateTest && candidatesCount) {
+    if (candidatesOfTest?.candidateTest) {
       setFilteredData(candidatesOfTest.candidateTest)
       setCandidateCounts(candidatesCount)
     }
