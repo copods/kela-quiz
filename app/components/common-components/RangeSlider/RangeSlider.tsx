@@ -1,11 +1,11 @@
-import { Range } from "react-range"
+import { Range, getTrackBackground } from "react-range"
 
 const RangeSlider = ({
   min = 10,
   max = 50,
   minValue = 40,
   maxValue = 70,
-  onChange = () => {},
+  onChange = () => { },
 }: any) => {
   const handleChange = (e: any) => {
     onChange(e)
@@ -20,13 +20,32 @@ const RangeSlider = ({
       onChange={handleChange}
       renderTrack={({ props, children }) => (
         <div
-          {...props}
+          onMouseDown={props.onMouseDown}
+          onTouchStart={props.onTouchStart}
           style={{
             ...props.style,
+            height: '36px',
+            display: 'flex',
+            width: '100%'
           }}
-          className="h-1 w-full bg-gray-300"
         >
-          {children}
+          <div
+            ref={props.ref}
+            style={{
+              height: '5px',
+              width: '100%',
+              borderRadius: '4px',
+              background: getTrackBackground({
+                values: [minValue, maxValue],
+                colors: ['#ccc', '#353988', '#ccc'],
+                min: min,
+                max: max,
+              }),
+              alignSelf: 'center'
+            }}
+          >
+            {children}
+          </div>
         </div>
       )}
       renderThumb={({ props }) => (
