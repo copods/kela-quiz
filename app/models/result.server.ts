@@ -21,16 +21,6 @@ export async function getAllCandidatesOfTestCount(
         status: 403,
       }
     }
-    const searchFilter: Prisma.CandidateWhereInput = searchText
-      ? {
-          OR: [
-            { firstName: { contains: searchText, mode: "insensitive" } },
-            { lastName: { contains: searchText, mode: "insensitive" } },
-            { email: { contains: searchText, mode: "insensitive" } },
-          ],
-        }
-      : {}
-
     const cFilter_min =
       passFailFilter == "pass"
         ? 70
@@ -63,6 +53,10 @@ export async function getAllCandidatesOfTestCount(
         "User" u ON c."createdById" = u.id
     WHERE
         t."workspaceId" = ${workspaceId} 
+        AND (
+          c.email ILIKE '%' || ${searchText} || '%'
+          OR CONCAT(c."firstName", ' ', c."lastName") ILIKE '%' || ${searchText} || '%'
+        )
         AND (CASE WHEN ${passFailFilter != "all"} THEN    (
                    (cr."correctQuestion"::FLOAT / cr."totalQuestion") * 100 >= ${cFilter_min}
                   AND (cr."correctQuestion"::FLOAT / cr."totalQuestion") * 100 < ${cFilter_max}
@@ -111,16 +105,6 @@ export async function getAllCandidatesOfTest({
         status: 403,
       }
     }
-    const searchFilter: Prisma.CandidateWhereInput = searchText
-      ? {
-          OR: [
-            { firstName: { contains: searchText, mode: "insensitive" } },
-            { lastName: { contains: searchText, mode: "insensitive" } },
-            { email: { contains: searchText, mode: "insensitive" } },
-          ],
-        }
-      : {}
-
     const testResp = await prisma.test.findFirst({
       where: {
         id,
@@ -178,6 +162,10 @@ export async function getAllCandidatesOfTest({
           "User" u ON c."createdById" = u.id
       WHERE
           t."workspaceId" = ${workspaceId} 
+          AND (
+            c.email ILIKE '%' || ${searchText} || '%'
+            OR CONCAT(c."firstName", ' ', c."lastName") ILIKE '%' || ${searchText} || '%'
+          )
           AND (CASE WHEN ${passFailFilter != "all"} THEN    (
                    (cr."correctQuestion"::FLOAT / cr."totalQuestion") * 100 >= ${cFilter_min}
                   AND (cr."correctQuestion"::FLOAT / cr."totalQuestion") * 100 < ${cFilter_max}
