@@ -20,6 +20,8 @@ const RangeSlider = ({
       onChange={handleChange}
       renderTrack={({ props, children }) => (
         <div
+          role="button"
+          tabIndex={-1}
           onMouseDown={props.onMouseDown}
           onTouchStart={props.onTouchStart}
           style={{

@@ -10,11 +10,13 @@ import {
   useNavigate,
   useLoaderData,
 } from "@remix-run/react"
+import debounce from "debounce"
 import { useTranslation } from "react-i18next"
 import { toast } from "react-toastify"
 
 import ListActionMenu from "../../components/ListActionMenu"
 import DropdownField from "../common-components/Dropdown"
+import RangeSlider from "../common-components/RangeSlider/RangeSlider"
 import Table from "../common-components/TableComponent"
 
 import resendTestLink from "~/../public/assets/resend-test-invitation.svg"
@@ -26,8 +28,6 @@ import type {
   CandidateResult,
   tableColumnType,
 } from "~/interface/Interface"
-import RangeSlider from "../common-components/RangeSlider/RangeSlider"
-import debounce from "debounce"
 
 const filterByStatus = [
   {
