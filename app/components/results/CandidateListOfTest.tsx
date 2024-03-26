@@ -250,43 +250,38 @@ const CandidateListOfTest = () => {
     const now = moment(new Date())
     const LinkSendedTime = moment(data?.linkSentOn)
     const duration = now.diff(LinkSendedTime, "hours")
-
-    function getPercent() {
-      let result = 0
-      for (let i of data.candidateResult) {
-        result = (i.correctQuestion / i.totalQuestion) * 100
-        return (
-          <div
-            className={` ${result >= 70 ? "text-green-600" : "text-red-600"}`}
-          >
-            {result >= 70 ? "Pass" : "Fail"}
-            <span className="text-slate-400">&nbsp;•&nbsp;</span>
-            <span className="text-xs text-slate-800">
-              {`${parseInt(result.toFixed(2))}%`}
-            </span>
-          </div>
-        )
-      }
+    // console.log(candidateResult)
+    let result = 0
+    for (let i of data.candidateResult) {
+      result = (i.correctQuestion / i.totalQuestion) * 100
     }
+    const resUI = (
+      <div className={` ${result >= 70 ? "text-green-600" : "text-red-600"}`}>
+        {result >= 70 ? "Pass" : "Fail"}
+        <span className="text-slate-400">&nbsp;•&nbsp;</span>
+        <span className="text-xs text-slate-800">
+          {`${parseInt(result.toFixed(2))}%`}
+        </span>
+      </div>
+    )
 
-    function getTestStatus() {
-      return (
-        <>
-          {data.startedAt === null ? (
-            <span className="px-2 py-1 text-sm">
-              {t("commonConstants.pending")}
-            </span>
-          ) : data.startedAt != null && data.endAt === null && duration < 48 ? (
-            <span className="px-2 py-1 text-sm">
-              {t("commonConstants.onGoing")}
-            </span>
-          ) : (
-            <span className="px-2 py-1 text-sm">NA</span>
-          )}
-        </>
-      )
-    }
-    return <span>{getPercent() ?? getTestStatus()}</span>
+    const statusUI = (
+      <>
+        {data.startedAt === null ? (
+          <span className="px-2 py-1 text-sm">
+            {t("commonConstants.pending")}
+          </span>
+        ) : data.startedAt != null && data.endAt === null && duration < 48 ? (
+          <span className="px-2 py-1 text-sm">
+            {t("commonConstants.onGoing")}
+          </span>
+        ) : (
+          <span className="px-2 py-1 text-sm">NA</span>
+        )}
+      </>
+    )
+
+    return <span>{result ? resUI : statusUI}</span>
   }
 
   const ActionsCell = (
