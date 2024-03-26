@@ -5,7 +5,7 @@ const RangeSlider = ({
   max = 50,
   minValue = 40,
   maxValue = 70,
-  onChange = () => { },
+  onChange = () => {},
 }: any) => {
   const handleChange = (e: any) => {
     onChange(e)
@@ -24,24 +24,24 @@ const RangeSlider = ({
           onTouchStart={props.onTouchStart}
           style={{
             ...props.style,
-            height: '36px',
-            display: 'flex',
-            width: '100%'
+            height: "36px",
+            display: "flex",
+            width: "100%",
           }}
         >
           <div
             ref={props.ref}
             style={{
-              height: '5px',
-              width: '100%',
-              borderRadius: '4px',
+              height: "5px",
+              width: "100%",
+              borderRadius: "4px",
               background: getTrackBackground({
                 values: [minValue, maxValue],
-                colors: ['#ccc', '#353988', '#ccc'],
+                colors: ["#ccc", "#353988", "#ccc"],
                 min: min,
                 max: max,
               }),
-              alignSelf: 'center'
+              alignSelf: "center",
             }}
           >
             {children}

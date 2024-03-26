@@ -27,7 +27,7 @@ import type {
   tableColumnType,
 } from "~/interface/Interface"
 import RangeSlider from "../common-components/RangeSlider/RangeSlider"
-import debounce from 'debounce';
+import debounce from "debounce"
 
 const filterByStatus = [
   {
@@ -207,8 +207,8 @@ const CandidateListOfTest = () => {
     return (
       <span data-cy="candidateName">
         {data.candidate.firstName &&
-          data.candidate.lastName &&
-          data.startedAt ? (
+        data.candidate.lastName &&
+        data.startedAt ? (
           <Link
             to={`/${currentWorkspaceId}/results/groupByTests/${data?.testId}/${data?.candidateId}`}
             className="col-span-2 flex  truncate font-semibold text-primary"

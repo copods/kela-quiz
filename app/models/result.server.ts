@@ -23,30 +23,30 @@ export async function getAllCandidatesOfTestCount(
     }
     const searchFilter: Prisma.CandidateWhereInput = searchText
       ? {
-        OR: [
-          { firstName: { contains: searchText, mode: "insensitive" } },
-          { lastName: { contains: searchText, mode: "insensitive" } },
-          { email: { contains: searchText, mode: "insensitive" } },
-        ],
-      }
+          OR: [
+            { firstName: { contains: searchText, mode: "insensitive" } },
+            { lastName: { contains: searchText, mode: "insensitive" } },
+            { email: { contains: searchText, mode: "insensitive" } },
+          ],
+        }
       : {}
 
     const cFilter_min =
       passFailFilter == "pass"
         ? 70
         : passFailFilter == "fail"
-          ? 0
-          : passFailFilter == "custom"
-            ? Number(customFilter ? customFilter[0] : 0)
-            : 0
+        ? 0
+        : passFailFilter == "custom"
+        ? Number(customFilter ? customFilter[0] : 0)
+        : 0
     const cFilter_max =
       passFailFilter == "pass"
         ? 101
         : passFailFilter == "fail"
-          ? 70
-          : passFailFilter == "custom"
-            ? Number(customFilter ? customFilter[1] : 100) + 1
-            : 101
+        ? 70
+        : passFailFilter == "custom"
+        ? Number(customFilter ? customFilter[1] : 100) + 1
+        : 101
 
     const queryResult: any = await prisma.$queryRaw`SELECT
         ct.*
@@ -57,17 +57,17 @@ export async function getAllCandidatesOfTestCount(
         "Test" t ON ct."testId" = t.id
     JOIN
         "Candidate" c ON ct."candidateId" = c.id
-    JOIN
+    LEFT JOIN
         "CandidateResult" cr ON ct.id = cr."candidateTestId"
     LEFT JOIN
         "User" u ON c."createdById" = u.id
     WHERE
         t."workspaceId" = ${workspaceId} 
-        AND t.id = ${id}
-        AND (
-                 (cr."correctQuestion"::FLOAT / cr."totalQuestion") * 100 >= ${cFilter_min}
-                AND (cr."correctQuestion"::FLOAT / cr."totalQuestion") * 100 < ${cFilter_max}
-        )
+        AND (CASE WHEN ${passFailFilter != "all"} THEN    (
+                   (cr."correctQuestion"::FLOAT / cr."totalQuestion") * 100 >= ${cFilter_min}
+                  AND (cr."correctQuestion"::FLOAT / cr."totalQuestion") * 100 < ${cFilter_max}
+                  AND t.id = ${id}
+          ) ELSE  t.id = ${id}  END)
    `
     return queryResult?.length
   } catch (error) {
@@ -113,12 +113,12 @@ export async function getAllCandidatesOfTest({
     }
     const searchFilter: Prisma.CandidateWhereInput = searchText
       ? {
-        OR: [
-          { firstName: { contains: searchText, mode: "insensitive" } },
-          { lastName: { contains: searchText, mode: "insensitive" } },
-          { email: { contains: searchText, mode: "insensitive" } },
-        ],
-      }
+          OR: [
+            { firstName: { contains: searchText, mode: "insensitive" } },
+            { lastName: { contains: searchText, mode: "insensitive" } },
+            { email: { contains: searchText, mode: "insensitive" } },
+          ],
+        }
       : {}
 
     const testResp = await prisma.test.findFirst({
@@ -132,18 +132,18 @@ export async function getAllCandidatesOfTest({
       passFailFilter == "pass"
         ? 70
         : passFailFilter == "fail"
-          ? 0
-          : passFailFilter == "custom"
-            ? Number(customFilter[0])
-            : 0
+        ? 0
+        : passFailFilter == "custom"
+        ? Number(customFilter[0])
+        : 0
     const cFilter_max =
       passFailFilter == "pass"
         ? 101
         : passFailFilter == "fail"
-          ? 70
-          : passFailFilter == "custom"
-            ? Number(customFilter[1]) + 1
-            : 101
+        ? 70
+        : passFailFilter == "custom"
+        ? Number(customFilter[1]) + 1
+        : 101
 
     const queryResult: any = await prisma.$queryRaw`SELECT
           ct.*,
@@ -172,17 +172,17 @@ export async function getAllCandidatesOfTest({
           "Test" t ON ct."testId" = t.id
       JOIN
           "Candidate" c ON ct."candidateId" = c.id
-      JOIN
+      LEFT JOIN
           "CandidateResult" cr ON ct.id = cr."candidateTestId"
       LEFT JOIN
           "User" u ON c."createdById" = u.id
       WHERE
           t."workspaceId" = ${workspaceId} 
-          AND t.id = ${id}
-          AND (
+          AND (CASE WHEN ${passFailFilter != "all"} THEN    (
                    (cr."correctQuestion"::FLOAT / cr."totalQuestion") * 100 >= ${cFilter_min}
                   AND (cr."correctQuestion"::FLOAT / cr."totalQuestion") * 100 < ${cFilter_max}
-          )
+                  AND t.id = ${id}
+          ) ELSE  t.id = ${id}  END)
       ORDER BY
           ct."createdAt" DESC
       LIMIT
@@ -413,8 +413,8 @@ export async function getAllCandidateTestsCount(
         ...(statusFilter === "active"
           ? { NOT: { deleted: { equals: true } } }
           : statusFilter === "inactive"
-            ? { deleted: { equals: true } }
-            : {}),
+          ? { deleted: { equals: true } }
+          : {}),
         workspaceId,
         candidateTest: {
           some: {
@@ -457,8 +457,8 @@ export async function getAllCandidateTests(
         ...(statusFilter === "active"
           ? { NOT: { deleted: { equals: true } } }
           : statusFilter === "inactive"
-            ? { deleted: { equals: true } }
-            : {}),
+          ? { deleted: { equals: true } }
+          : {}),
         workspaceId,
         candidateTest: {
           some: {
