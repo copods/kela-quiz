@@ -1,4 +1,5 @@
 import { Text, View } from "@react-pdf/renderer"
+import { useTranslation } from "react-i18next"
 
 import { styles } from "./styles"
 
@@ -11,24 +12,35 @@ export const SectionHeader = ({
   sections: any
   sectionIndex: number
 }) => {
+  const { t } = useTranslation()
   return (
     <View style={styles.sectionHeader}>
       <Text>{section.section.name}</Text>
       <View style={styles.sectionResult}>
         <Text style={styles.status}>
-          {`Correct: ${sections[sectionIndex].SectionWiseResult[0].correctQuestion} | `}
+          {`${t("resultConstants.correct")}: ${
+            sections[sectionIndex].SectionWiseResult[0].correctQuestion
+          } | `}
         </Text>
         <Text style={styles.status}>
-          {`Incorrect: ${sections[sectionIndex].SectionWiseResult[0].incorrect} | `}
+          {`${t("resultConstants.incorrect")}: ${
+            sections[sectionIndex].SectionWiseResult[0].incorrect
+          } | `}
         </Text>
         <Text style={styles.status}>
-          {`Skipped: ${sections[sectionIndex].SectionWiseResult[0].skipped} | `}
+          {`${t("resultConstants.skipped")}: ${
+            sections[sectionIndex].SectionWiseResult[0].skipped
+          } | `}
         </Text>
         <Text style={styles.status}>
-          {`Unanswered: ${sections[sectionIndex].SectionWiseResult[0].unanswered} | `}
+          {`${t("resultConstants.unanswered")}: ${
+            sections[sectionIndex].SectionWiseResult[0].unanswered
+          } | `}
         </Text>
         <Text style={styles.status}>
-          {`Total: ${sections[sectionIndex].SectionWiseResult[0].totalQuestion}`}
+          {`${t("resultConstants.total")}: ${
+            sections[sectionIndex].SectionWiseResult[0].totalQuestion
+          }`}
         </Text>
       </View>
     </View>

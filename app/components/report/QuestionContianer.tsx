@@ -1,4 +1,5 @@
 import { Text, View } from "@react-pdf/renderer"
+import { useTranslation } from "react-i18next"
 import { Html } from "react-pdf-html"
 
 import Divider from "../common-components/divider"
@@ -14,23 +15,26 @@ export const QuestionContianer = ({
   q: any
   questionIndex: number
 }) => {
+  const { t } = useTranslation()
   return (
     <View style={styles.questionContainer}>
       <View style={styles.questionMainContainer}>
         <View style={styles.questionContentContainer}>
-          <Text>Question {questionIndex + 1} </Text>
+          <Text>{`${t("candidateExamConstants.question")} ${
+            questionIndex + 1
+          }`}</Text>
           {q.question.questionType.value === QuestionTypes.text ? (
             <View style={styles.questionContentTypeContainer}>
-              <Text>TEXT</Text>
+              <Text>{t("resultConstants.text")}</Text>
             </View>
           ) : q.question.questionType.value === QuestionTypes.multipleChoice ? (
             <View style={styles.questionContentTypeContainer}>
-              <Text>MCQ</Text>
+              <Text>{t("sectionsConstants.mcq")}</Text>
             </View>
           ) : (
             q.question.questionType.value === QuestionTypes.singleChoice && (
               <View style={styles.questionContentTypeContainer}>
-                <Text>MSQ</Text>
+                <Text>{t("sectionsConstants.msq")}</Text>
               </View>
             )
           )}
@@ -41,7 +45,7 @@ export const QuestionContianer = ({
       <View style={styles.questionMainContainer}>
         <View style={styles.questionMainContainer}>
           <View style={styles.answerContentContainer}>
-            <Text> Given Answer: </Text>
+            <Text> {t("resultConstants.givenAnswer")}: </Text>
             <View
               style={
                 q.status === "ANSWERED" &&
@@ -75,7 +79,7 @@ export const QuestionContianer = ({
                     color: styles.correct.color,
                   }}
                 >
-                  Correct Answer:
+                  {t("resultConstants.correctAnswer")}:
                 </Text>
                 <Html style={styles.answerText}>
                   {q.question.correctOptions
