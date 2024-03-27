@@ -194,23 +194,25 @@ export async function getAllCandidatesOfTest({
       createdAt: res.createdAt,
       updatedAt: res.updatedAt,
       linkSentOn: res.linkSentOn,
-      candidateResult: [
-        {
-          id: res.cr_id,
-          candidateId: res.cr_candidateId,
-          candidateTestId: res.cr_candidateTestId,
-          totalQuestion: res.cr_totalQuestion,
-          correctQuestion: res.cr_correctQuestion,
-          unanswered: res.cr_unanswered,
-          incorrect: res.cr_incorrect,
-          skipped: res.cr_skipped,
-          testId: res.cr_testId,
-          isQualified: res.cr_isQualified,
-          createdAt: res.cr_createdAt,
-          updatedAt: res.cr_updatedAt,
-          workspaceId: res.cr_workspaceId,
-        },
-      ],
+      candidateResult: res.cr_id
+        ? [
+            {
+              id: res.cr_id,
+              candidateId: res.cr_candidateId,
+              candidateTestId: res.cr_candidateTestId,
+              totalQuestion: res.cr_totalQuestion,
+              correctQuestion: res.cr_correctQuestion,
+              unanswered: res.cr_unanswered,
+              incorrect: res.cr_incorrect,
+              skipped: res.cr_skipped,
+              testId: res.cr_testId,
+              isQualified: res.cr_isQualified,
+              createdAt: res.cr_createdAt,
+              updatedAt: res.cr_updatedAt,
+              workspaceId: res.cr_workspaceId,
+            },
+          ]
+        : [],
       candidate: {
         email: res.c_email,
         firstName: res.c_firstName,
