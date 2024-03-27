@@ -10,11 +10,13 @@ import {
   useNavigate,
   useLoaderData,
 } from "@remix-run/react"
+import debounce from "debounce"
 import { useTranslation } from "react-i18next"
 import { toast } from "react-toastify"
 
 import ListActionMenu from "../../components/ListActionMenu"
 import DropdownField from "../common-components/Dropdown"
+import RangeSlider from "../common-components/RangeSlider/RangeSlider"
 import Table from "../common-components/TableComponent"
 
 import resendTestLink from "~/../public/assets/resend-test-invitation.svg"
@@ -26,6 +28,7 @@ import type {
   CandidateResult,
   tableColumnType,
 } from "~/interface/Interface"
+
 const filterByStatus = [
   {
     name: "All",
@@ -54,6 +57,10 @@ const filterByPassFail = [
     name: "Fail",
     value: "fail",
   },
+  {
+    name: "Custom",
+    value: "custom",
+  },
 ]
 
 const CandidateListOfTest = () => {
@@ -78,6 +85,12 @@ const CandidateListOfTest = () => {
       : filterByPassFail[0].value
   )
   let [filteredData, setFilteredData] = useState(candidatesOfTest.candidateTest)
+  const [customFilter, setCustomFilter] = useState(
+    getStoredValue("customFilter")
+      ? getStoredValue("customFilter")?.value
+      : [40, 80]
+  )
+
   const [pageSize, setPageSize] = useState(10)
   const [currentPage, setCurrentPage] = useState(
     candidatesLoaderData.currentPage
@@ -90,19 +103,23 @@ const CandidateListOfTest = () => {
     setFilteredData(candidatesOfTest.candidateTest)
   }, [candidatesOfTest.candidateTest])
 
-  useEffect(() => {
+  const fetchData = debounce(() => {
     fetcher.submit(
       {
         searchText: searchText,
         filterByStatus: statusFilter,
         filterByPassFail: passFailFilter,
+        customFilter: customFilter.toString(),
       },
       {
         method: "get",
       }
     )
+  }, 500)
+  useEffect(() => {
+    fetchData()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchText, statusFilter, passFailFilter])
+  }, [searchText, statusFilter, passFailFilter, customFilter])
 
   useEffect(() => {
     const { candidateInviteStatus, candidatesOfTest, candidatesCount } =
@@ -114,7 +131,7 @@ const CandidateListOfTest = () => {
       toast.success(t("testsConstants.reinvited"))
     }
 
-    if (candidatesOfTest?.candidateTest && candidatesCount) {
+    if (candidatesOfTest?.candidateTest) {
       setFilteredData(candidatesOfTest.candidateTest)
       setCandidateCounts(candidatesCount)
     }
@@ -122,7 +139,7 @@ const CandidateListOfTest = () => {
 
   useEffect(() => {
     navigate(
-      `?page=${1}&pageSize=${pageSize}&filterByStatus=${statusFilter}&filterByPassFail=${passFailFilter}`,
+      `?page=${1}&pageSize=${pageSize}&filterByStatus=${statusFilter}&filterByPassFail=${passFailFilter}&customFilter=${customFilter}`,
       {
         replace: true,
       }
@@ -131,12 +148,13 @@ const CandidateListOfTest = () => {
     setPassFailFilter(passFailFilter)
     setCustomStorage("candidateListFilter", statusFilter)
     setCustomStorage("candidateListPassFailFilter", passFailFilter)
+    setCustomStorage("customFilter", customFilter)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [statusFilter, passFailFilter])
 
   useEffect(() => {
     navigate(
-      `?page=${currentPage}&pageSize=${pageSize}&filterByStatus=${statusFilter}&filterByPassFail=${passFailFilter}`,
+      `?page=${currentPage}&pageSize=${pageSize}&filterByStatus=${statusFilter}&filterByPassFail=${passFailFilter}&customFilter=${customFilter}`,
       { replace: true }
     )
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -153,6 +171,10 @@ const CandidateListOfTest = () => {
       toast.error(t("testsConstants.testEnded"))
     }
   }, [actionData, t])
+
+  const updateCustomFilter = (e: any) => {
+    setCustomFilter(e)
+  }
 
   const resendInvite = (id: string, candidateId: string, testId: string) => {
     fetcher.submit(
@@ -228,43 +250,38 @@ const CandidateListOfTest = () => {
     const now = moment(new Date())
     const LinkSendedTime = moment(data?.linkSentOn)
     const duration = now.diff(LinkSendedTime, "hours")
-
-    function getPercent() {
-      let result = 0
-      for (let i of data.candidateResult) {
-        result = (i.correctQuestion / i.totalQuestion) * 100
-        return (
-          <div
-            className={` ${result >= 70 ? "text-green-600" : "text-red-600"}`}
-          >
-            {result >= 70 ? "Pass" : "Fail"}
-            <span className="text-slate-400">&nbsp;•&nbsp;</span>
-            <span className="text-xs text-slate-800">
-              {`${parseInt(result.toFixed(2))}%`}
-            </span>
-          </div>
-        )
-      }
+    // console.log(candidateResult)
+    let result = 0
+    for (let i of data.candidateResult) {
+      result = (i.correctQuestion / i.totalQuestion) * 100
     }
+    const resUI = (
+      <div className={` ${result >= 70 ? "text-green-600" : "text-red-600"}`}>
+        {result >= 70 ? "Pass" : "Fail"}
+        <span className="text-slate-400">&nbsp;•&nbsp;</span>
+        <span className="text-xs text-slate-800">
+          {`${parseInt(result.toFixed(2))}%`}
+        </span>
+      </div>
+    )
 
-    function getTestStatus() {
-      return (
-        <>
-          {data.startedAt === null ? (
-            <span className="px-2 py-1 text-sm">
-              {t("commonConstants.pending")}
-            </span>
-          ) : data.startedAt != null && data.endAt === null && duration < 48 ? (
-            <span className="px-2 py-1 text-sm">
-              {t("commonConstants.onGoing")}
-            </span>
-          ) : (
-            <span className="px-2 py-1 text-sm">NA</span>
-          )}
-        </>
-      )
-    }
-    return <span>{getPercent() ?? getTestStatus()}</span>
+    const statusUI = (
+      <>
+        {data.startedAt === null ? (
+          <span className="px-2 py-1 text-sm">
+            {t("commonConstants.pending")}
+          </span>
+        ) : data.startedAt != null && data.endAt === null && duration < 48 ? (
+          <span className="px-2 py-1 text-sm">
+            {t("commonConstants.onGoing")}
+          </span>
+        ) : (
+          <span className="px-2 py-1 text-sm">NA</span>
+        )}
+      </>
+    )
+
+    return <span>{result ? resUI : statusUI}</span>
   }
 
   const ActionsCell = (
@@ -370,7 +387,7 @@ const CandidateListOfTest = () => {
             setSearchText(e.target.value)
           }}
         />
-        <div className="w-36">
+        <div className="w-44">
           <DropdownField
             data={filterByStatus}
             displayKey="name"
@@ -380,7 +397,7 @@ const CandidateListOfTest = () => {
             label="Status"
           />
         </div>
-        <div className="w-36">
+        <div className="w-44">
           <DropdownField
             data={filterByPassFail}
             displayKey="name"
@@ -390,6 +407,18 @@ const CandidateListOfTest = () => {
             label="Result"
           />
         </div>
+        {passFailFilter == "custom" && (
+          <div className="flex w-80 items-center gap-2  text-sm text-gray-600">
+            <span>Range: </span>{" "}
+            <RangeSlider
+              min={0}
+              max={100}
+              minValue={customFilter[0]}
+              maxValue={customFilter[1]}
+              onChange={updateCustomFilter}
+            />
+          </div>
+        )}
       </div>
       <Table
         columns={column}

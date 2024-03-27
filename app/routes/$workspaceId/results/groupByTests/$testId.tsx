@@ -33,6 +33,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const searchText = query.get("searchText") as string
   const workspaces = await getWorkspaces(userId as string)
   const passFailFilter = query.get("filterByPassFail") as string
+  const customFilters = query.get("customFilter") as string
   invariant(params.testId, "resultId not found")
 
   try {
@@ -42,7 +43,8 @@ export const loader: LoaderFunction = async ({ request, params }) => {
       userId!,
       currentWorkspaceId!,
       searchText,
-      passFailFilter
+      passFailFilter,
+      customFilters?.split(",")
     )
     const candidatesOfTest = await getDetailsOfCandidatePerPage({
       id: params.testId,
@@ -54,6 +56,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
       statusFilter,
       searchText,
       passFailFilter,
+      customFilter: customFilters?.split(","),
     })
     return json({
       candidatesOfTest,
