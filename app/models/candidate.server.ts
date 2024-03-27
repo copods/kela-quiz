@@ -123,9 +123,37 @@ export async function createSectionInTest({
         candidateTestId,
         order,
       },
+      include: {
+        candidateTest: true,
+      },
     })
     let randomQuestionsOfSections: Array<Question> =
-      await prisma.$queryRaw`SELECT * FROM "Question" WHERE "sectionId" = ${sectionId} AND "deleted" = FALSE  ORDER BY RANDOM() LIMIT ${totalQuestions};`
+      // await prisma.$queryRaw`SELECT * FROM "Question" WHERE "sectionId" = ${sectionId} AND "deleted" = FALSE ORDER BY RANDOM() LIMIT ${totalQuestions};`
+      await prisma.$queryRaw`SELECT q.*
+        FROM "Question" q
+        WHERE q."sectionId" = ${sectionId}
+          AND q."deleted" = FALSE
+          AND NOT EXISTS (
+            SELECT 1
+            FROM "CandidateQuestion" cq
+            JOIN "SectionInCandidateTest" sict ON cq."sectionInCandidateTestId" = sict.id
+            JOIN "CandidateTest" ct ON sict."candidateTestId" = ct.id
+            WHERE cq."questionId" = q.id
+              AND ct."candidateId" = ${sectioInTest.candidateTest.candidateId}
+              AND sict."sectionId" = ${sectionId}
+          )
+        ORDER BY RANDOM()
+        LIMIT ${totalQuestions};
+        `
+    if (randomQuestionsOfSections?.length < totalQuestions) {
+      const restQuestions: Array<Question> =
+        await prisma.$queryRaw`SELECT * FROM "Question" WHERE "sectionId" = ${sectionId} AND "deleted" = FALSE ORDER BY RANDOM() LIMIT ${totalQuestions};`
+      randomQuestionsOfSections = [
+        ...randomQuestionsOfSections,
+        ...restQuestions,
+      ]
+    }
+
     for (let i = 0; i < randomQuestionsOfSections.length; i++) {
       await prisma.candidateQuestion.create({
         data: {
