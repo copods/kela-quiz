@@ -24,3 +24,14 @@ export function isElementInViewport(
     )
   }
 }
+
+export function base64ToBlob(base64: string, contentType: string) {
+  const dataUrl = `data:${contentType};base64,${base64}`
+
+  return fetch(dataUrl)
+    .then((response) => response.blob())
+    .catch((e) => {
+      console.error("Error converting base64 to Blob: ", e)
+      throw new Error("Failed to convert base64 to Blob")
+    })
+}
