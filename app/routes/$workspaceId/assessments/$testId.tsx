@@ -6,6 +6,7 @@ import invariant from "tiny-invariant"
 import TestDetails from "~/components/tests/TestDetails"
 import { routes } from "~/constants/route.constants"
 import { checkUserFeatureAuthorization } from "~/models/authorization.server"
+import { updateTest } from "~/models/tests.server"
 import {
   getAssessmentById,
   getCandidateByAssessmentId,
@@ -48,7 +49,29 @@ export const action: ActionFunction = async ({ request, params }) => {
   const formData = await request.formData()
   const createdById = await requireUserId(request)
   const testId = formData.get("inviteCandidates") as string
+  const updateAssessment = formData.get("updateAssessment")
+  const dispatchResultOnTestCompleted = formData.get(
+    "dispatchResultOnTestCompleted"
+  )
   formData.delete("inviteCandidates")
+
+  if (updateAssessment && userId && params.testId) {
+    try {
+      return await updateTest(
+        currentWorkspaceId,
+        params.testId,
+        {
+          dispatchResultOnTestCompleted:
+            dispatchResultOnTestCompleted === "true" ? true : false,
+        },
+        userId
+      )
+    } catch (error: any) {
+      if (error.status === 403) {
+        return redirect(routes.unauthorized)
+      }
+    }
+  }
 
   // creating candidate for assessment
   if (testId !== null) {

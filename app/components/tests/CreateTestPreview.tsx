@@ -12,6 +12,8 @@ const TestPreview = ({
   name,
   testId,
   description,
+  dispatchResultOnTestCompleted,
+  setDispatchResultOnTestCompleted,
   onChangeSelectedSectionsOrder,
   selectedSections,
   isPreviewEditable = true,
@@ -20,6 +22,8 @@ const TestPreview = ({
   name: string
   testId?: string
   description: string
+  dispatchResultOnTestCompleted: boolean
+  setDispatchResultOnTestCompleted: (e: boolean) => void
   selectedSections: Array<TestSection>
   onChangeSelectedSectionsOrder?: (e: TestSection[]) => void
   isPreviewEditable: boolean
@@ -27,6 +31,7 @@ const TestPreview = ({
 }) => {
   const { t } = useTranslation()
   const loaderData = useLoaderData()
+
   const changeSelectedSectionsOrder = (index: number, action: string) => {
     if (
       (index === 0 && action === "up") ||
@@ -214,6 +219,29 @@ const TestPreview = ({
               </div>
             )
           })}
+        </div>
+      </div>
+      <div className="flex flex-col gap-6">
+        <h1 id="test-preview-selected-tests" className="text-xl font-semibold">
+          Assessment Configuration
+        </h1>
+        <div className="flex items-center gap-4 pl-2 text-base">
+          <label
+            htmlFor="sendReportCheckbox"
+            className="flex min-w-200 cursor-pointer items-center gap-2 text-base font-medium text-gray-500"
+          >
+            <span>Dispatch results to candidates upon test completion</span>
+          </label>
+          <input
+            id="sendReportCheckbox"
+            name="sendReportToCandidates"
+            type="checkbox"
+            checked={dispatchResultOnTestCompleted}
+            onChange={() =>
+              setDispatchResultOnTestCompleted(!dispatchResultOnTestCompleted)
+            }
+            aria-describedby="sendReportDescription"
+          />
         </div>
       </div>
     </div>

@@ -1,9 +1,36 @@
+import { useEffect, useState } from "react"
+
 import { Icon } from "@iconify/react"
-import { Link, useLoaderData } from "@remix-run/react"
+import { Link, useLoaderData, useSubmit } from "@remix-run/react"
 
 import TestPreview from "./CreateTestPreview"
+
 const TestDetails = () => {
   const { testPreview, currentWorkspaceId } = useLoaderData()
+  const [dispatchResultOnTestCompleted, setDispatchResultOnTestCompleted] =
+    useState<boolean>(testPreview.dispatchResultOnTestCompleted)
+  const submit = useSubmit()
+  useEffect(() => {
+    if (
+      dispatchResultOnTestCompleted !==
+      testPreview.dispatchResultOnTestCompleted
+    ) {
+      submit(
+        {
+          updateAssessment: "true",
+          dispatchResultOnTestCompleted: dispatchResultOnTestCompleted
+            ? "true"
+            : "false",
+        },
+        { method: "post" }
+      )
+    }
+  }, [
+    dispatchResultOnTestCompleted,
+    submit,
+    testPreview.dispatchResultOnTestCompleted,
+  ])
+
   return (
     <div id="test-details" className="h-full">
       <header className="mb-8">
@@ -31,6 +58,8 @@ const TestDetails = () => {
           testId={testPreview.id}
           name={testPreview.name}
           description={testPreview.description}
+          dispatchResultOnTestCompleted={dispatchResultOnTestCompleted}
+          setDispatchResultOnTestCompleted={setDispatchResultOnTestCompleted}
           selectedSections={testPreview.sections}
           isPreviewEditable={false}
           showInviteAction={true}

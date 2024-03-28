@@ -58,6 +58,7 @@ export type ActionData = {
 export type createTestData = {
   name: string
   description: string
+  dispatchResultOnTestCompleted: boolean
   sections: Array<{
     sectionId: string
     totalQuestions: number

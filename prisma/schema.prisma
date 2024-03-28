@@ -172,21 +172,22 @@ model Option {
 }
 
 model Test {
-  id                String              @id @default(uuid())
-  name              String
-  description       String
-  sections          SectionInTest[]
-  createdBy         User                @relation(fields: [createdById], references: [id])
-  createdById       String
-  candidateTest     CandidateTest[]
-  candidateResult   CandidateResult[]
-  createdAt         DateTime            @default(now())
-  updatedAt         DateTime            @updatedAt
-  deleted           Boolean             @default(false)
-  deletedAt         String?             @default("na")
-  SectionWiseResult SectionWiseResult[]
-  workspace         Workspace?          @relation(fields: [workspaceId], references: [id])
-  workspaceId       String?
+  id                            String              @id @default(uuid())
+  name                          String
+  description                   String
+  sections                      SectionInTest[]
+  createdBy                     User                @relation(fields: [createdById], references: [id])
+  createdById                   String
+  candidateTest                 CandidateTest[]
+  candidateResult               CandidateResult[]
+  createdAt                     DateTime            @default(now())
+  updatedAt                     DateTime            @updatedAt
+  deleted                       Boolean             @default(false)
+  dispatchResultOnTestCompleted Boolean             @default(false)
+  deletedAt                     String?             @default("na")
+  SectionWiseResult             SectionWiseResult[]
+  workspace                     Workspace?          @relation(fields: [workspaceId], references: [id])
+  workspaceId                   String?
 
   @@unique([name, deletedAt, deleted, workspaceId])
 }

@@ -111,6 +111,7 @@ export async function createTest(
   data: {
     name: string
     description: string
+    dispatchResultOnTestCompleted: boolean
     sections: Array<{
       sectionId: string
       timeInSeconds: number
@@ -137,11 +138,46 @@ export async function createTest(
       data: {
         name: data.name,
         description: data.description,
+        dispatchResultOnTestCompleted: data.dispatchResultOnTestCompleted,
         createdById,
         workspaceId,
         sections: {
           create: [...data.sections],
         },
+      },
+    })
+  } catch (error) {
+    throw error
+  }
+}
+
+export async function updateTest(
+  workspaceId: string,
+  id: string,
+  data: {
+    dispatchResultOnTestCompleted: boolean
+  },
+  userId: string
+) {
+  try {
+    if (
+      !(await checkFeatureAuthorization(
+        userId,
+        workspaceId,
+        "assessments",
+        "update"
+      ))
+    ) {
+      throw {
+        status: 403,
+      }
+    }
+    return await prisma.test.update({
+      where: {
+        id,
+      },
+      data: {
+        dispatchResultOnTestCompleted: data.dispatchResultOnTestCompleted,
       },
     })
   } catch (error) {
