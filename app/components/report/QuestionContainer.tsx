@@ -12,9 +12,11 @@ import type { SectionQuestion } from "~/interface/Interface"
 
 export function QuestionContainer({
   question,
+  index,
   key,
 }: {
   question: SectionQuestion
+  index: number
   key: number
 }) {
   const { t } = useTranslation()
@@ -48,7 +50,7 @@ export function QuestionContainer({
     <View style={styles.questionContainer}>
       <View style={styles.questionMainContainer}>
         <View style={styles.questionContentContainer}>
-          <Text>{`${t("candidateExamConstants.question")} ${key + 1}`}</Text>
+          <Text>{`${t("candidateExamConstants.question")} ${index + 1}`}</Text>
           <View style={styles.questionContentTypeContainer}>
             <Text>
               {

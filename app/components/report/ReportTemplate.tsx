@@ -8,7 +8,6 @@ import type {
   CandidateResult,
   SectionDetailsType,
   SectionInCandidateTest,
-  SectionQuestion,
 } from "~/interface/Interface"
 
 export type TemplateData = {
@@ -18,9 +17,11 @@ export type TemplateData = {
   sectionsDetails: SectionDetailsType[]
 }
 
-const PDF = ({ data }: { data: TemplateData }) => {
-  const { candidateName, sections, sectionsDetails } = data
-
+const PDFDocument = ({
+  candidateName,
+  sections,
+  sectionsDetails,
+}: TemplateData) => {
   return (
     <Document>
       <Page size="A3" orientation="landscape" style={styles.page} wrap={false}>
@@ -35,11 +36,13 @@ const PDF = ({ data }: { data: TemplateData }) => {
               sectionIndex={sectionIndex}
             />
             <View style={styles.sectionContent}>
-              {section.questions.map(
-                (question: SectionQuestion, questionIndex) => (
-                  <QuestionContainer question={question} key={questionIndex} />
-                )
-              )}
+              {section.questions.map((question, questionIndex) => (
+                <QuestionContainer
+                  question={question}
+                  index={questionIndex}
+                  key={questionIndex}
+                />
+              ))}
             </View>
           </View>
         ))}
@@ -48,6 +51,6 @@ const PDF = ({ data }: { data: TemplateData }) => {
   )
 }
 
-export default async (data: TemplateData) => {
-  return await ReactPDF.renderToStream(<PDF {...{ data }} />)
+export default async (templateData: TemplateData) => {
+  return await ReactPDF.renderToStream(<PDFDocument {...templateData} />)
 }
