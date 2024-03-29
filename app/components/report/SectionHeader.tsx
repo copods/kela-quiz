@@ -18,34 +18,33 @@ export const SectionHeader = ({
   sectionIndex: number
 }) => {
   const { t } = useTranslation()
+
+  const sectionWiseResult = sections[sectionIndex].SectionWiseResult[0]
+
   return (
     <View style={styles.sectionHeader}>
       <Text>{section.section.name}</Text>
       <View style={styles.sectionResult}>
         <Text style={styles.status}>
           {`${t("resultConstants.correct")}: ${
-            sections[sectionIndex].SectionWiseResult[0].correctQuestion
+            sectionWiseResult.correctQuestion
           } | `}
         </Text>
         <Text style={styles.status}>
           {`${t("resultConstants.incorrect")}: ${
-            sections[sectionIndex].SectionWiseResult[0].incorrect
+            sectionWiseResult.incorrect
           } | `}
         </Text>
         <Text style={styles.status}>
-          {`${t("resultConstants.skipped")}: ${
-            sections[sectionIndex].SectionWiseResult[0].skipped
-          } | `}
+          {`${t("resultConstants.skipped")}: ${sectionWiseResult.skipped} | `}
         </Text>
         <Text style={styles.status}>
           {`${t("resultConstants.unanswered")}: ${
-            sections[sectionIndex].SectionWiseResult[0].unanswered
+            sectionWiseResult.unanswered
           } | `}
         </Text>
         <Text style={styles.status}>
-          {`${t("resultConstants.total")}: ${
-            sections[sectionIndex].SectionWiseResult[0].totalQuestion
-          }`}
+          {`${t("resultConstants.total")}: ${sectionWiseResult.totalQuestion}`}
         </Text>
       </View>
     </View>
