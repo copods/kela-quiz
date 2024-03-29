@@ -226,12 +226,6 @@ const TestPreview = ({
           Assessment Configuration
         </h1>
         <div className="flex items-center gap-4 pl-2 text-base">
-          <label
-            htmlFor="sendReportCheckbox"
-            className="flex min-w-200 cursor-pointer items-center gap-2 text-base font-medium text-gray-500"
-          >
-            <span>Dispatch results to candidates upon test completion</span>
-          </label>
           <input
             id="sendReportCheckbox"
             name="sendReportToCandidates"
@@ -242,6 +236,12 @@ const TestPreview = ({
             }
             aria-describedby="sendReportDescription"
           />
+          <label
+            htmlFor="sendReportCheckbox"
+            className="flex min-w-200 cursor-pointer items-center gap-2 text-base font-medium text-gray-500"
+          >
+            <span>Dispatch results to candidates upon test completion</span>
+          </label>
         </div>
       </div>
     </div>
