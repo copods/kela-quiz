@@ -47,7 +47,7 @@ const ResultDetailsComponent = () => {
   }, [candidateResult])
 
   useEffect(() => {
-    async function createAndDownloadBlob() {
+    async function createAndDownloadPDF() {
       if (actionData?.report) {
         try {
           const base64Response = actionData.report
@@ -67,7 +67,7 @@ const ResultDetailsComponent = () => {
       }
     }
 
-    createAndDownloadBlob()
+    createAndDownloadPDF()
   }, [actionData?.report])
 
   const generateReport = () => {
