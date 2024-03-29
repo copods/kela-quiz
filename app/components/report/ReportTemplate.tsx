@@ -1,6 +1,6 @@
 import ReactPDF, { Page, Text, View, Document } from "@react-pdf/renderer"
 
-import { QuestionContianer } from "./QuestionContianer"
+import { QuestionContainer } from "./QuestionContainer"
 import { SectionHeader } from "./SectionHeader"
 import { styles } from "./styles"
 
@@ -35,13 +35,11 @@ const PDF = ({ data }: { data: TemplateData }) => {
               sectionIndex={sectionIndex}
             />
             <View style={styles.sectionContent}>
-              {section.questions.map((q: SectionQuestion, questionIndex) => (
-                <QuestionContianer
-                  q={q}
-                  questionIndex={questionIndex}
-                  key={questionIndex}
-                />
-              ))}
+              {section.questions.map(
+                (question: SectionQuestion, questionIndex) => (
+                  <QuestionContainer question={question} key={questionIndex} />
+                )
+              )}
             </View>
           </View>
         ))}

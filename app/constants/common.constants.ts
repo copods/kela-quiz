@@ -190,6 +190,7 @@ export const resultConstants = {
   active: "Active",
   startedAt: "Started At",
   correct: "Correct",
+  incorrect: "Incorrect",
   skipped: "Skipped",
   total: "Total",
 }
