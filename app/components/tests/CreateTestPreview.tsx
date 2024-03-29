@@ -1,3 +1,4 @@
+import type { Dispatch, SetStateAction } from "react"
 import { useState } from "react"
 
 import { Icon } from "@iconify/react"
@@ -23,7 +24,7 @@ const TestPreview = ({
   testId?: string
   description: string
   dispatchResultOnTestCompleted: boolean
-  setDispatchResultOnTestCompleted: (e: boolean) => void
+  setDispatchResultOnTestCompleted: Dispatch<SetStateAction<boolean>>
   selectedSections: Array<TestSection>
   onChangeSelectedSectionsOrder?: (e: TestSection[]) => void
   isPreviewEditable: boolean
