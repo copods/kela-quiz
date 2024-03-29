@@ -49,13 +49,16 @@ export const action: ActionFunction = async ({ request, params }) => {
   const formData = await request.formData()
   const createdById = await requireUserId(request)
   const testId = formData.get("inviteCandidates") as string
-  const updateAssessment = formData.get("updateAssessment")
+  const updateAssessmentAction = formData.get("updateAssessment")
   const dispatchResultOnTestCompleted = formData.get(
     "dispatchResultOnTestCompleted"
   )
   formData.delete("inviteCandidates")
 
-  if (updateAssessment && userId && params.testId) {
+  const isUpdateAssessmentRequested =
+    updateAssessmentAction && userId && params.testId
+
+  if (isUpdateAssessmentRequested && params.testId) {
     try {
       return await updateTest(
         currentWorkspaceId,

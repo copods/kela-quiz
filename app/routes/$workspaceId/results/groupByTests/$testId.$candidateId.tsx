@@ -58,14 +58,20 @@ export const action: ActionFunction = async ({ request, params }) => {
   const formData = await request.formData()
   const candidateStatus = formData.get("candidateStatus")
   const resultId = formData.get("resultId")
-  const report = formData.get("generateReport")
-  if (resultId && userId && currentWorkspaceId && candidateStatus) {
+  const reportRequest = formData.get("generateReport")
+
+  const isUpdateCandidateStatusRequest =
+    resultId && userId && currentWorkspaceId && candidateStatus
+
+  const isGenerateReportRequest = reportRequest && userId
+
+  if (isUpdateCandidateStatusRequest) {
     try {
       const updateStatus = await updateCandidateSTATUS({
         id: resultId as string,
         candidateStatus: candidateStatus as string,
         currentWorkspaceId,
-        userId: userId!,
+        userId: userId,
       })
       return { updateStatus }
     } catch (error: any) {
@@ -73,14 +79,18 @@ export const action: ActionFunction = async ({ request, params }) => {
         return redirect(routes.unauthorized)
       }
     }
-  } else if (report && userId) {
+  } else if (isGenerateReportRequest) {
     try {
       const assessmentId = await getAssessmentIdFromCandidateIdAndTestId(
         params?.candidateId as string,
         params?.testId as string
       )
 
-      const report = await getGeneratePdfReport(assessmentId?.id as string)
+      if (!assessmentId) {
+        throw new Error("Assessment ID not found")
+      }
+
+      const report = await getGeneratePdfReport(assessmentId.id as string)
 
       return { report }
     } catch (error) {

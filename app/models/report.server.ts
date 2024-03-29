@@ -106,10 +106,14 @@ export async function getGeneratedReport(assessmentId: string) {
       },
     },
   })
+
   const candidate = await getCandidateIDFromAssessmentID(assessmentId)
   const candidateId = candidate?.candidateId
   const testId = candidateTest?.test.id
-  if (candidateId && testId) {
+
+  const isValidTestAndCandidate = candidateId && testId
+
+  if (isValidTestAndCandidate) {
     const { sections, candidate, candidateResult } =
       (await prisma.candidateTest.findUnique({
         where: {
@@ -170,13 +174,15 @@ export async function getGeneratedReport(assessmentId: string) {
       ({} as CandidateTest & { candidate: Candidate } & {
         candidateResult: CandidateResult
       })
-    if (sections && candidate && candidateResult) {
-      const report = await generateReport(
+
+    const hasNecessaryDetails = sections && candidate && candidateResult
+
+    if (hasNecessaryDetails) {
+      return await generateReport(
         sections as SectionInCandidateTest[],
         candidate as Candidate,
         candidateResult as CandidateResult
       )
-      return report
     }
   }
 }
