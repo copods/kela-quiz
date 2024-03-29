@@ -50,8 +50,8 @@ export const QuestionContianer = ({
             <View
               style={
                 q.status === "ANSWERED" &&
-                q.selectedOptions.some((o: any) =>
-                  q.question.correctOptions.some((co: any) => co.id === o.id)
+                q.selectedOptions.some((o) =>
+                  q.question.correctOptions.some((co) => co.id === o.id)
                 )
                   ? styles.correct
                   : styles.incorrect
@@ -59,8 +59,8 @@ export const QuestionContianer = ({
             >
               <Text>
                 {q.status === "ANSWERED" &&
-                q.selectedOptions.some((o: any) =>
-                  q.question.correctOptions.some((co: any) => co.id === o.id)
+                q.selectedOptions.some((o) =>
+                  q.question.correctOptions.some((co) => co.id === o.id)
                 )
                   ? "Correct"
                   : "Incorrect"}
@@ -68,11 +68,11 @@ export const QuestionContianer = ({
             </View>
           </View>
           <Html style={styles.answerText}>
-            {q.selectedOptions.map((o: any) => o.option).join(", ")}
+            {q.selectedOptions.map((o) => o.option).join(", ")}
           </Html>
           {q.status === "ANSWERED" &&
-            !q.selectedOptions.some((o: any) =>
-              q.question.correctOptions.some((co: any) => co.id === o.id)
+            !q.selectedOptions.some((o) =>
+              q.question.correctOptions.some((co) => co.id === o.id)
             ) && (
               <View style={styles.questionMainContainer}>
                 <Text
@@ -83,9 +83,7 @@ export const QuestionContianer = ({
                   {t("resultConstants.correctAnswer")}:
                 </Text>
                 <Html style={styles.answerText}>
-                  {q.question.correctOptions
-                    .map((co: any) => co.option)
-                    .join(", ")}
+                  {q.question.correctOptions.map((co) => co.option).join(", ")}
                 </Html>
               </View>
             )}
