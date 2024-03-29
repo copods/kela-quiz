@@ -7,78 +7,83 @@ import type {
   Candidate,
   CandidateResult,
   CandidateTest,
+  SectionDetailsType,
+  SectionInCandidateTest,
 } from "~/interface/Interface"
 
 export async function generateReport(
-  sections: any,
-  candidate: any,
-  candidateResult: any
+  sections: SectionInCandidateTest[],
+  candidate: Candidate,
+  candidateResult: CandidateResult
 ) {
   try {
-    const sectionIds = sections.map((section: any) => section.id)
-    const sectionsDetails = await prisma.sectionInCandidateTest.findMany({
-      where: {
-        id: {
-          in: sectionIds,
-        },
-      },
-      select: {
-        candidateTest: {
-          select: {
-            candidate: {
-              select: {
-                firstName: true,
-                lastName: true,
-              },
-            },
+    const sectionIds = sections.map((section) => section.id)
+    const sectionsDetails: unknown =
+      await prisma.sectionInCandidateTest.findMany({
+        where: {
+          id: {
+            in: sectionIds,
           },
         },
-        section: {
-          select: {
-            name: true,
-          },
-        },
-        questions: {
-          select: {
-            question: {
-              select: {
-                question: true,
-                correctOptions: {
-                  select: {
-                    option: true,
-                    id: true,
-                  },
+        select: {
+          candidateTest: {
+            select: {
+              candidate: {
+                select: {
+                  firstName: true,
+                  lastName: true,
                 },
-                questionType: {
-                  select: {
-                    value: true,
-                  },
-                },
-                options: true,
-                correctAnswer: true,
-                checkOrder: true,
               },
             },
-            answers: true,
-            status: true,
-            id: true,
-            selectedOptions: {
-              select: {
-                id: true,
-                option: true,
-                questionId: true,
+          },
+          section: {
+            select: {
+              name: true,
+            },
+          },
+          questions: {
+            select: {
+              question: {
+                select: {
+                  question: true,
+                  correctOptions: {
+                    select: {
+                      option: true,
+                      id: true,
+                    },
+                  },
+                  questionType: {
+                    select: {
+                      value: true,
+                    },
+                  },
+                  options: true,
+                  correctAnswer: true,
+                  checkOrder: true,
+                },
+              },
+              answers: true,
+              status: true,
+              id: true,
+              selectedOptions: {
+                select: {
+                  id: true,
+                  option: true,
+                  questionId: true,
+                },
               },
             },
           },
         },
-      },
-    })
+      })
 
+    const typedSectionsDetails: SectionDetailsType[] =
+      sectionsDetails as SectionDetailsType[]
     const content: TemplateData = {
       candidateName: `${candidate?.firstName} ${candidate?.lastName}`,
       candidateResult,
       sections,
-      sectionsDetails,
+      sectionsDetails: typedSectionsDetails,
     }
     const stream = await reportTemplate(content)
     const buffers: Buffer[] = []
@@ -166,7 +171,11 @@ export async function getGeneratedReport(assessmentId: string) {
         candidateResult: CandidateResult
       })
     if (sections && candidate && candidateResult) {
-      const report = await generateReport(sections, candidate, candidateResult)
+      const report = await generateReport(
+        sections as SectionInCandidateTest[],
+        candidate as Candidate,
+        candidateResult as CandidateResult
+      )
       return report
     }
   }

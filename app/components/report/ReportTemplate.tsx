@@ -4,17 +4,18 @@ import { QuestionContianer } from "./QuestionContianer"
 import { SectionHeader } from "./SectionHeader"
 import { styles } from "./styles"
 
+import type {
+  CandidateResult,
+  SectionDetailsType,
+  SectionInCandidateTest,
+  SectionQuestion,
+} from "~/interface/Interface"
+
 export type TemplateData = {
   candidateName: string
-  candidateResult: {
-    totalQuestion: number
-    correctQuestion: number
-    unanswered: number
-    incorrect: number
-    skipped: number
-  }
-  sections: any
-  sectionsDetails: any[]
+  candidateResult: CandidateResult
+  sections: SectionInCandidateTest[]
+  sectionsDetails: SectionDetailsType[]
 }
 
 const PDF = ({ data }: { data: TemplateData }) => {
@@ -34,7 +35,7 @@ const PDF = ({ data }: { data: TemplateData }) => {
               sectionIndex={sectionIndex}
             />
             <View style={styles.sectionContent}>
-              {section.questions.map((q: any, questionIndex: number) => (
+              {section.questions.map((q: SectionQuestion, questionIndex) => (
                 <QuestionContianer
                   q={q}
                   questionIndex={questionIndex}

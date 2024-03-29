@@ -3,13 +3,18 @@ import { useTranslation } from "react-i18next"
 
 import { styles } from "./styles"
 
+import type {
+  SectionDetailsType,
+  SectionInCandidateTest,
+} from "~/interface/Interface"
+
 export const SectionHeader = ({
   section,
   sections,
   sectionIndex,
 }: {
-  section: any
-  sections: any
+  section: SectionDetailsType
+  sections: SectionInCandidateTest[]
   sectionIndex: number
 }) => {
   const { t } = useTranslation()

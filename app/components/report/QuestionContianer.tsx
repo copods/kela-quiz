@@ -6,13 +6,14 @@ import Divider from "../common-components/divider"
 
 import { styles } from "./styles"
 
+import type { SectionQuestion } from "~/interface/Interface"
 import { QuestionTypes } from "~/interface/Interface"
 
 export const QuestionContianer = ({
   q,
   questionIndex,
 }: {
-  q: any
+  q: SectionQuestion
   questionIndex: number
 }) => {
   const { t } = useTranslation()

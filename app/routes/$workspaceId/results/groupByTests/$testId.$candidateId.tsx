@@ -79,7 +79,6 @@ export const action: ActionFunction = async ({ request, params }) => {
         params?.candidateId as string,
         params?.testId as string
       )
-      console.log(assessmentId)
 
       const report = await getGeneratePdfReport(assessmentId?.id as string)
 

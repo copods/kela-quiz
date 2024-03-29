@@ -167,6 +167,38 @@ export interface Question {
   candidateQuestion: CandidateQuestion[]
 }
 
+export interface SectionQuestion {
+  question: {
+    question: string
+    correctOptions: {
+      option: string
+      id: string
+    }[]
+    questionType: {
+      value: string
+    }
+    options: {
+      id: string
+      option: string
+      questionId: string
+      coInQuestionId: string | null
+      createdById: string
+      createdAt: string
+      updatedAt: string
+    }[]
+    correctAnswer: string[]
+    checkOrder: boolean
+  }
+  answers: string[]
+  status: string
+  id: string
+  selectedOptions: {
+    id: string
+    option: string
+    questionId: string
+  }[]
+}
+
 export interface Test {
   id: string
   name: string
@@ -251,6 +283,46 @@ export interface SectionInCandidateTest {
   endAt: Date | null
   createdAt: Date
   updatedAt: Date
+}
+
+export type SectionDetailsType = {
+  candidateTest: {
+    candidate: Candidate
+  }
+  section: {
+    name: string
+  }
+  questions: {
+    question: {
+      question: string
+      correctOptions: {
+        option: string
+        id: string
+      }[]
+      questionType: {
+        value: string
+      }
+      options: {
+        id: string
+        option: string
+        questionId: string
+        coInQuestionId: string | null
+        createdById: string
+        createdAt: string
+        updatedAt: string
+      }[]
+      correctAnswer: string[]
+      checkOrder: boolean
+    }
+    answers: string[]
+    status: string
+    id: string
+    selectedOptions: {
+      id: string
+      option: string
+      questionId: string
+    }[]
+  }[]
 }
 
 export interface Candidate {
