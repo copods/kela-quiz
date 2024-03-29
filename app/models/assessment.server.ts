@@ -8,6 +8,7 @@ import type {
   SectionInTest,
 } from "@prisma/client"
 
+import { getGeneratedReport } from "./report.server"
 import {
   sendMailToRecruiter,
   sendOTPMail,
@@ -578,7 +579,7 @@ export async function endCurrentSection(
   })
 }
 
-export async function endAssessment(id: string) {
+export async function endAssessment(id: string, sectionId?: string) {
   const candidateTest = await prisma.candidateTest.findUnique({
     where: {
       id,
@@ -590,6 +591,8 @@ export async function endAssessment(id: string) {
       test: {
         select: {
           name: true,
+          id: true,
+          dispatchResultOnTestCompleted: true,
         },
       },
       candidate: {
@@ -622,14 +625,30 @@ export async function endAssessment(id: string) {
       endAt: new Date(),
     },
   })
-  if (candidateTest)
+
+  if (candidateTest) {
     await sendMailToRecruiter(recruiterEmail, testName, candidateName)
-  await sendTestResponseMail(
-    candidateTest?.candidate?.email as string,
-    candidateTest?.candidate?.firstName as string,
-    (resultScore || 0) >= 0.7
-  )
-  return endExam
+
+    // get generated report
+
+    if (candidateTest.test.dispatchResultOnTestCompleted === true) {
+      const report = await getGeneratedReport(id)
+      await sendTestResponseMail(
+        candidateTest?.candidate?.email as string,
+        candidateTest?.candidate?.firstName as string,
+        (resultScore || 0) >= 0.7,
+        report
+      )
+    } else {
+      await sendTestResponseMail(
+        candidateTest?.candidate?.email as string,
+        candidateTest?.candidate?.firstName as string,
+        (resultScore || 0) >= 0.7
+      )
+    }
+
+    return endExam
+  }
 }
 
 async function calculateResultBySectionId(sectionid?: string) {
@@ -928,6 +947,29 @@ export async function getAssessmentName(assessmentId: string) {
       return test.test.name
     }
   } catch (error) {
+    throw new Error("Something went wrong..!")
+  }
+}
+export async function getAssessmentIdFromCandidateIdAndTestId(
+  candidateId: string,
+  testId: string
+) {
+  try {
+    const test = await prisma.candidateTest.findUnique({
+      where: {
+        candidateId_testId: {
+          candidateId,
+          testId,
+        },
+      },
+
+      select: {
+        id: true,
+      },
+    })
+    return test
+  } catch (error) {
+    console.error(error)
     throw new Error("Something went wrong..!")
   }
 }

@@ -9,6 +9,8 @@ import type {
   Candidate,
   CandidateResult,
 } from "~/interface/Interface"
+import { getAssessmentIdFromCandidateIdAndTestId } from "~/models/assessment.server"
+import { getGeneratePdfReport } from "~/services/report.service"
 import {
   getSectionWiseResultsOFIndividualCandidate,
   getWorkspaces,
@@ -56,17 +58,34 @@ export const action: ActionFunction = async ({ request, params }) => {
   const formData = await request.formData()
   const candidateStatus = formData.get("candidateStatus")
   const resultId = formData.get("resultId")
-  try {
-    const updateStatus = await updateCandidateSTATUS({
-      id: resultId as string,
-      candidateStatus: candidateStatus as string,
-      currentWorkspaceId,
-      userId: userId!,
-    })
-    return { updateStatus }
-  } catch (error: any) {
-    if (error.status === 403) {
-      return redirect(routes.unauthorized)
+  const report = formData.get("generateReport")
+  if (resultId && userId && currentWorkspaceId && candidateStatus) {
+    try {
+      const updateStatus = await updateCandidateSTATUS({
+        id: resultId as string,
+        candidateStatus: candidateStatus as string,
+        currentWorkspaceId,
+        userId: userId!,
+      })
+      return { updateStatus }
+    } catch (error: any) {
+      if (error.status === 403) {
+        return redirect(routes.unauthorized)
+      }
+    }
+  } else if (report && userId) {
+    try {
+      const assessmentId = await getAssessmentIdFromCandidateIdAndTestId(
+        params?.candidateId as string,
+        params?.testId as string
+      )
+      console.log(assessmentId)
+
+      const report = await getGeneratePdfReport(assessmentId?.id as string)
+
+      return { report }
+    } catch (error) {
+      throw error
     }
   }
 }

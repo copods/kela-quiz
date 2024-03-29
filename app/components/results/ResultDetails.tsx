@@ -1,9 +1,15 @@
 import { useEffect, useState } from "react"
 
 import { Icon } from "@iconify/react"
-import { useLoaderData, useNavigate } from "@remix-run/react"
+import {
+  useLoaderData,
+  useNavigate,
+  useSubmit,
+  useActionData,
+} from "@remix-run/react"
 
 import BarGraph from "../barGraph/barGraph"
+import Button from "../common-components/Button"
 import Divider from "../common-components/divider"
 import EmptyStateComponent from "../common-components/EmptyStateComponent"
 
@@ -11,12 +17,16 @@ import SectionCardForResultDetail from "./SectionCardForResultDetail"
 
 import { routes } from "~/constants/route.constants"
 import type { SectionInCandidateTest } from "~/interface/Interface"
+import { base64ToBlob } from "~/utils/common.utils"
 
 const ResultDetailsComponent = () => {
   const { params, sections, candidate, currentWorkspaceId, candidateResult } =
     useLoaderData()
 
   const [result, setResult] = useState(0)
+
+  const submit = useSubmit()
+  const actionData = useActionData()
 
   let navigate = useNavigate()
   const sortedSections = sections.sort(
@@ -35,6 +45,40 @@ const ResultDetailsComponent = () => {
       )
     )
   }, [candidateResult])
+
+  useEffect(() => {
+    async function createAndDownloadBlob() {
+      if (actionData?.report) {
+        try {
+          const base64Response = actionData.report
+          const blob = await base64ToBlob(base64Response, "application/pdf")
+
+          const blobUrl = URL.createObjectURL(blob)
+          const link = document.createElement("a")
+          link.href = blobUrl
+          link.setAttribute("download", "report.pdf")
+          document.body.appendChild(link)
+          link.click()
+          document.body.removeChild(link)
+          URL.revokeObjectURL(blobUrl)
+        } catch (error) {
+          console.error(error)
+        }
+      }
+    }
+
+    createAndDownloadBlob()
+  }, [actionData?.report])
+
+  const generateReport = () => {
+    submit(
+      {
+        generateReport: "true",
+      },
+      { method: "post" }
+    )
+  }
+
   return (
     <div id="test-details" className="flex h-full flex-col gap-6">
       <header>
@@ -65,19 +109,27 @@ const ResultDetailsComponent = () => {
             <span className="text-3xl font-semibold text-gray-900" id="title">
               {candidate?.firstName} {candidate?.lastName}
             </span>
-            {result ? (
-              <div
-                className={`text-lg ${
-                  result >= 70 ? "text-green-600" : "text-red-600"
-                }`}
-              >
-                {result >= 70 ? "Pass" : "Fail"}
-                <span className="text-slate-400">&nbsp;•&nbsp;</span>
-                <span className="text-base text-slate-800">{`${parseInt(
-                  result.toFixed(2)
-                )}%`}</span>
-              </div>
-            ) : null}
+            <div className="flex items-center justify-center gap-4">
+              <Button
+                variant="primary-solid"
+                buttonText={"Genrate Report"}
+                type="button"
+                onClick={generateReport}
+              />
+              {result && (
+                <div
+                  className={`text-lg ${
+                    result >= 70 ? "text-green-600" : "text-red-600"
+                  }`}
+                >
+                  {result >= 70 ? "Pass" : "Fail"}
+                  <span className="text-slate-400">&nbsp;•&nbsp;</span>
+                  <span className="text-base text-slate-800">{`${parseInt(
+                    result.toFixed(2)
+                  )}%`}</span>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </header>

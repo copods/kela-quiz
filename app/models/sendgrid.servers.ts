@@ -571,7 +571,8 @@ export async function sendTestFeedbackMail(email: string, link: string) {
 export async function sendTestResponseMail(
   email: string,
   candidateName: string,
-  isQualified: boolean
+  isQualified: boolean,
+  report?: string
 ) {
   const to = email
   const from = "careers@copods.co"
@@ -679,7 +680,6 @@ export async function sendTestResponseMail(
       </html>`
 
   sendgrid.setApiKey(env.SENDGRID_API_KEY as string)
-
   const msg = {
     to,
     from, // Use the email address or domain you verified above
@@ -687,7 +687,23 @@ export async function sendTestResponseMail(
     text,
     html: isQualified ? htmlQualified : htmlNotQualified,
   }
-  await sendgrid.send(msg).then(
+
+  const msgwithReport = {
+    to,
+    from, // Use the email address or domain you verified above
+    subject,
+    attachments: [
+      {
+        filename: `report.pdf`,
+        content: report,
+        type: "application/pdf",
+        disposition: "attachment",
+      },
+    ],
+    text,
+    html: isQualified ? htmlQualified : htmlNotQualified,
+  }
+  await sendgrid.send(report ? msgwithReport : msg).then(
     () => {
       return "ok"
     },

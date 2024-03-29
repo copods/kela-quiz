@@ -403,7 +403,7 @@ export async function endCandidateAssessment(
     nextRoute: "end",
     isSection: false,
   })
-  await endAssessment(assessmentId as string)
+  await endAssessment(assessmentId as string, sectionId as string)
   return redirect(`/assessment/${assessmentId}/end-assessment`)
 }
 
