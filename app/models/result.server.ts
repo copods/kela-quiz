@@ -1,4 +1,4 @@
-import type { CandidateTest, Prisma, Test } from "@prisma/client"
+import type { CandidateTest, Test } from "@prisma/client"
 
 import { checkFeatureAuthorization } from "./authorization.server"
 
@@ -21,86 +21,49 @@ export async function getAllCandidatesOfTestCount(
         status: 403,
       }
     }
-    const searchFilter: Prisma.CandidateWhereInput = searchText
-      ? {
-          OR: [
-            { firstName: { contains: searchText, mode: "insensitive" } },
-            { lastName: { contains: searchText, mode: "insensitive" } },
-            { email: { contains: searchText, mode: "insensitive" } },
-          ],
-        }
-      : {}
+    const cFilter_min =
+      passFailFilter == "pass"
+        ? 70
+        : passFailFilter == "fail"
+        ? 0
+        : passFailFilter == "custom"
+        ? Number(customFilter ? customFilter[0] : 0)
+        : 0
+    const cFilter_max =
+      passFailFilter == "pass"
+        ? 101
+        : passFailFilter == "fail"
+        ? 70
+        : passFailFilter == "custom"
+        ? Number(customFilter ? customFilter[1] : 100) + 1
+        : 101
 
-    // ============================================================
-    // filter by pass fail
-    // ============================================================
+    const queryResult: any = await prisma.$queryRaw`SELECT
+        ct.*
 
-    const test = await prisma.candidateTest.findFirst({
-      where: { testId: id },
-      select: {
-        test: {
-          select: { sections: true },
-        },
-      },
-    })
-    let totalQuestions = 0
-    if (test?.test.sections) {
-      for (let temp of test?.test.sections) {
-        totalQuestions += temp.totalQuestions
-      }
-    }
-    const qualyfing = Math.ceil(totalQuestions * 0.7) // for 70% passing marks
-
-    const candidateFilters: Prisma.CandidateTestWhereInput = {
-      candidateResult: {},
-    }
-
-    if (passFailFilter === "pass") {
-      candidateFilters.candidateResult = {
-        some: {
-          correctQuestion: { gte: qualyfing },
-        },
-      }
-    }
-    if (passFailFilter === "fail") {
-      candidateFilters.candidateResult = {
-        some: {
-          correctQuestion: { lt: qualyfing },
-        },
-      }
-    }
-    if (passFailFilter === "custom") {
-      const lowerLimit = Math.ceil(
-        totalQuestions * (Number((customFilter as any)[0]) / 100)
-      )
-      const upperLimit = Math.ceil(
-        totalQuestions * (Number((customFilter as any)[1]) / 100)
-      )
-      candidateFilters.candidateResult = {
-        some: {
-          correctQuestion: { lte: upperLimit, gte: lowerLimit },
-        },
-      }
-    }
-    // ============================================================
-    // filter by pass fail end
-    // ============================================================
-
-    const count = await prisma.candidateTest.count({
-      where: {
-        ...(statusFilter === "complete"
-          ? { NOT: { endAt: { equals: null } } }
-          : statusFilter === "pending"
-          ? { startedAt: { equals: null } }
-          : {}),
-        testId: id,
-        candidate: {
-          ...searchFilter,
-        },
-        ...candidateFilters,
-      },
-    })
-    return count
+    FROM
+        "CandidateTest" ct
+    JOIN
+        "Test" t ON ct."testId" = t.id
+    JOIN
+        "Candidate" c ON ct."candidateId" = c.id
+    LEFT JOIN
+        "CandidateResult" cr ON ct.id = cr."candidateTestId"
+    LEFT JOIN
+        "User" u ON c."createdById" = u.id
+    WHERE
+        t."workspaceId" = ${workspaceId} 
+        AND (
+          c.email ILIKE '%' || ${searchText} || '%'
+          OR CONCAT(c."firstName", ' ', c."lastName") ILIKE '%' || ${searchText} || '%'
+        )
+        AND (CASE WHEN ${passFailFilter != "all"} THEN    (
+                   (cr."correctQuestion"::FLOAT / cr."totalQuestion") * 100 >= ${cFilter_min}
+                  AND (cr."correctQuestion"::FLOAT / cr."totalQuestion") * 100 < ${cFilter_max}
+                  AND t.id = ${id}
+          ) ELSE  t.id = ${id}  END)
+   `
+    return queryResult?.length
   } catch (error) {
     throw error
   }
@@ -142,112 +105,128 @@ export async function getAllCandidatesOfTest({
         status: 403,
       }
     }
-    const searchFilter: Prisma.CandidateWhereInput = searchText
-      ? {
-          OR: [
-            { firstName: { contains: searchText, mode: "insensitive" } },
-            { lastName: { contains: searchText, mode: "insensitive" } },
-            { email: { contains: searchText, mode: "insensitive" } },
-          ],
-        }
-      : {}
-
-    // ============================================================
-    // filter by pass fail
-    // ============================================================
-
-    const test = await prisma.candidateTest.findFirst({
-      where: { testId: id },
-      select: {
-        test: {
-          select: { sections: true },
-        },
-      },
-    })
-    let totalQuestions = 0
-    if (test?.test.sections) {
-      for (let temp of test?.test.sections) {
-        totalQuestions += temp.totalQuestions
-      }
-    }
-    const qualyfing = Math.ceil(totalQuestions * 0.7) // for 70% passing marks
-
-    const candidateFilters: Prisma.CandidateTestWhereInput = {
-      candidateResult: {},
-    }
-
-    if (passFailFilter === "pass") {
-      candidateFilters.candidateResult = {
-        some: {
-          correctQuestion: { gte: qualyfing },
-        },
-      }
-    }
-    if (passFailFilter === "fail") {
-      candidateFilters.candidateResult = {
-        some: {
-          correctQuestion: { lt: qualyfing },
-        },
-      }
-    }
-    if (passFailFilter === "custom") {
-      const lowerLimit = Math.ceil(
-        totalQuestions * (Number(customFilter[0]) / 100)
-      )
-      const upperLimit = Math.ceil(
-        totalQuestions * (Number(customFilter[1]) / 100)
-      )
-      candidateFilters.candidateResult = {
-        some: {
-          correctQuestion: { lte: upperLimit, gte: lowerLimit },
-        },
-      }
-    }
-    // ============================================================
-    // filter by pass fail end
-    // ============================================================
-
-    return prisma.test.findFirst({
+    const testResp = await prisma.test.findFirst({
       where: {
         id,
         workspaceId,
       },
-      include: {
-        candidateTest: {
-          take: pageSize,
-          where: {
-            ...(statusFilter === "complete"
-              ? { NOT: { endAt: { equals: null } } }
-              : statusFilter === "pending"
-              ? { startedAt: { equals: null } }
-              : {}),
-            candidate: {
-              ...searchFilter,
+    })
+
+    const cFilter_min =
+      passFailFilter == "pass"
+        ? 70
+        : passFailFilter == "fail"
+        ? 0
+        : passFailFilter == "custom"
+        ? Number(customFilter[0])
+        : 0
+    const cFilter_max =
+      passFailFilter == "pass"
+        ? 101
+        : passFailFilter == "fail"
+        ? 70
+        : passFailFilter == "custom"
+        ? Number(customFilter[1]) + 1
+        : 101
+
+    const queryResult: any = await prisma.$queryRaw`SELECT
+          ct.*,
+          c."email" AS "c_email",
+          c."firstName" AS "c_firstName",
+          c."lastName" AS "c_lastName",
+          u."firstName" AS "createdBy_firstName",
+          u."lastName" AS "createdBy_lastName",
+          cr."id" AS "cr_id",
+          cr."candidateId" AS "cr_candidateId",
+          cr."candidateTestId" AS "cr_candidateTestId",
+          cr."totalQuestion" AS "cr_totalQuestion",
+          cr."correctQuestion" AS "cr_correctQuestion",
+          cr."unanswered" AS "cr_unanswered",
+          cr."incorrect" AS "cr_incorrect",
+          cr."skipped" AS "cr_skipped",
+          cr."testId" AS "cr_testId",
+          cr."isQualified" AS "cr_isQualified",
+          cr."createdAt" AS "cr_createdAt",
+          cr."updatedAt" AS "cr_updatedAt",
+          cr."workspaceId" "AS cr_workspaceId"
+
+      FROM
+          "CandidateTest" ct
+      JOIN
+          "Test" t ON ct."testId" = t.id
+      JOIN
+          "Candidate" c ON ct."candidateId" = c.id
+      LEFT JOIN
+          "CandidateResult" cr ON ct.id = cr."candidateTestId"
+      LEFT JOIN
+          "User" u ON c."createdById" = u.id
+      WHERE
+          t."workspaceId" = ${workspaceId} 
+          AND (
+            c.email ILIKE '%' || ${searchText} || '%'
+            OR CONCAT(c."firstName", ' ', c."lastName") ILIKE '%' || ${searchText} || '%'
+          )
+          AND (CASE WHEN ${passFailFilter != "all"} THEN    (
+                   (cr."correctQuestion"::FLOAT / cr."totalQuestion") * 100 >= ${cFilter_min}
+                  AND (cr."correctQuestion"::FLOAT / cr."totalQuestion") * 100 < ${cFilter_max}
+                  AND t.id = ${id}
+          ) ELSE  t.id = ${id}  END)
+      ORDER BY
+          ct."createdAt" DESC
+      LIMIT
+          ${pageSize}
+      OFFSET
+          (${currentPage} - 1) * ${pageSize};`
+
+    let response: any = {
+      ...testResp,
+      candidateTest: [],
+    }
+
+    response.candidateTest = queryResult?.map((res: any) => ({
+      id: res.id,
+      testId: res.testId,
+      link: res.link,
+      candidateId: res.candidateId,
+      candidateStep: res.candidateStep,
+      startedAt: res.startedAt,
+      endAt: res.endAt,
+      createdAt: res.createdAt,
+      updatedAt: res.updatedAt,
+      linkSentOn: res.linkSentOn,
+      candidateResult: res.cr_id
+        ? [
+            {
+              id: res.cr_id,
+              candidateId: res.cr_candidateId,
+              candidateTestId: res.cr_candidateTestId,
+              totalQuestion: res.cr_totalQuestion,
+              correctQuestion: res.cr_correctQuestion,
+              unanswered: res.cr_unanswered,
+              incorrect: res.cr_incorrect,
+              skipped: res.cr_skipped,
+              testId: res.cr_testId,
+              isQualified: res.cr_isQualified,
+              createdAt: res.cr_createdAt,
+              updatedAt: res.cr_updatedAt,
+              workspaceId: res.cr_workspaceId,
             },
-            ...candidateFilters,
-          },
-          skip: (currentPage! - 1) * pageSize!,
-          orderBy: { createdAt: "desc" },
-          include: {
-            candidateResult: true,
-            candidate: {
-              select: {
-                email: true,
-                firstName: true,
-                lastName: true,
-                createdBy: {
-                  select: {
-                    firstName: true,
-                    lastName: true,
-                  },
-                },
-              },
-            },
-          },
+          ]
+        : [],
+      candidate: {
+        email: res.c_email,
+        firstName: res.c_firstName,
+        lastName: res.c_lastName,
+        createdBy: {
+          firstName: res.createdBy_firstName,
+          lastName: res.createdBy_lastName,
         },
       },
-    })
+    }))
+
+    return response
   } catch (error) {
+    console.log("errrrr", error)
     throw error
   }
 }

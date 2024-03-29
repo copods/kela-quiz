@@ -10,11 +10,13 @@ import {
   useNavigate,
   useLoaderData,
 } from "@remix-run/react"
+import debounce from "debounce"
 import { useTranslation } from "react-i18next"
 import { toast } from "react-toastify"
 
 import ListActionMenu from "../../components/ListActionMenu"
 import DropdownField from "../common-components/Dropdown"
+import RangeSlider from "../common-components/RangeSlider/RangeSlider"
 import Table from "../common-components/TableComponent"
 
 import resendTestLink from "~/../public/assets/resend-test-invitation.svg"
@@ -26,7 +28,7 @@ import type {
   CandidateResult,
   tableColumnType,
 } from "~/interface/Interface"
-import RangeSlider from "../common-components/RangeSlider/RangeSlider"
+
 const filterByStatus = [
   {
     name: "All",
@@ -100,7 +102,8 @@ const CandidateListOfTest = () => {
   useEffect(() => {
     setFilteredData(candidatesOfTest.candidateTest)
   }, [candidatesOfTest.candidateTest])
-  useEffect(() => {
+
+  const fetchData = debounce(() => {
     fetcher.submit(
       {
         searchText: searchText,
@@ -112,6 +115,9 @@ const CandidateListOfTest = () => {
         method: "get",
       }
     )
+  }, 500)
+  useEffect(() => {
+    fetchData()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchText, statusFilter, passFailFilter, customFilter])
 
@@ -125,7 +131,7 @@ const CandidateListOfTest = () => {
       toast.success(t("testsConstants.reinvited"))
     }
 
-    if (candidatesOfTest?.candidateTest && candidatesCount) {
+    if (candidatesOfTest?.candidateTest) {
       setFilteredData(candidatesOfTest.candidateTest)
       setCandidateCounts(candidatesCount)
     }
@@ -201,8 +207,8 @@ const CandidateListOfTest = () => {
     return (
       <span data-cy="candidateName">
         {data.candidate.firstName &&
-          data.candidate.lastName &&
-          data.startedAt ? (
+        data.candidate.lastName &&
+        data.startedAt ? (
           <Link
             to={`/${currentWorkspaceId}/results/groupByTests/${data?.testId}/${data?.candidateId}`}
             className="col-span-2 flex  truncate font-semibold text-primary"
@@ -244,43 +250,38 @@ const CandidateListOfTest = () => {
     const now = moment(new Date())
     const LinkSendedTime = moment(data?.linkSentOn)
     const duration = now.diff(LinkSendedTime, "hours")
-
-    function getPercent() {
-      let result = 0
-      for (let i of data.candidateResult) {
-        result = (i.correctQuestion / i.totalQuestion) * 100
-        return (
-          <div
-            className={` ${result >= 70 ? "text-green-600" : "text-red-600"}`}
-          >
-            {result >= 70 ? "Pass" : "Fail"}
-            <span className="text-slate-400">&nbsp;•&nbsp;</span>
-            <span className="text-xs text-slate-800">
-              {`${parseInt(result.toFixed(2))}%`}
-            </span>
-          </div>
-        )
-      }
+    // console.log(candidateResult)
+    let result = 0
+    for (let i of data.candidateResult) {
+      result = (i.correctQuestion / i.totalQuestion) * 100
     }
+    const resUI = (
+      <div className={` ${result >= 70 ? "text-green-600" : "text-red-600"}`}>
+        {result >= 70 ? "Pass" : "Fail"}
+        <span className="text-slate-400">&nbsp;•&nbsp;</span>
+        <span className="text-xs text-slate-800">
+          {`${parseInt(result.toFixed(2))}%`}
+        </span>
+      </div>
+    )
 
-    function getTestStatus() {
-      return (
-        <>
-          {data.startedAt === null ? (
-            <span className="px-2 py-1 text-sm">
-              {t("commonConstants.pending")}
-            </span>
-          ) : data.startedAt != null && data.endAt === null && duration < 48 ? (
-            <span className="px-2 py-1 text-sm">
-              {t("commonConstants.onGoing")}
-            </span>
-          ) : (
-            <span className="px-2 py-1 text-sm">NA</span>
-          )}
-        </>
-      )
-    }
-    return <span>{getPercent() ?? getTestStatus()}</span>
+    const statusUI = (
+      <>
+        {data.startedAt === null ? (
+          <span className="px-2 py-1 text-sm">
+            {t("commonConstants.pending")}
+          </span>
+        ) : data.startedAt != null && data.endAt === null && duration < 48 ? (
+          <span className="px-2 py-1 text-sm">
+            {t("commonConstants.onGoing")}
+          </span>
+        ) : (
+          <span className="px-2 py-1 text-sm">NA</span>
+        )}
+      </>
+    )
+
+    return <span>{result ? resUI : statusUI}</span>
   }
 
   const ActionsCell = (
