@@ -268,15 +268,13 @@ const CandidateListOfTest = () => {
     const statusUI = (
       <>
         {data.startedAt === null ? (
-          <span className="px-2 py-1 text-sm">
-            {t("commonConstants.pending")}
-          </span>
+          <span className="py-1 text-sm">{t("commonConstants.pending")}</span>
         ) : data.startedAt != null && data.endAt === null && duration < 48 ? (
-          <span className="px-2 py-1 text-sm">
-            {t("commonConstants.onGoing")}
-          </span>
+          <span className="py-1 text-sm">{t("commonConstants.onGoing")}</span>
+        ) : data.startedAt != null && data.endAt !== null ? (
+          <span className="py-1 text-sm">{resUI}</span>
         ) : (
-          <span className="px-2 py-1 text-sm">NA</span>
+          <span className="py-1 text-sm">NA</span>
         )}
       </>
     )
