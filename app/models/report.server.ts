@@ -1,6 +1,6 @@
 import { getCandidateIDFromAssessmentID } from "./assessment.server"
 
-import type { TemplateData } from "~/components/report/ReportTemplate"
+import type { TemplateDataType } from "~/components/report/ReportTemplate"
 import reportTemplate from "~/components/report/ReportTemplate"
 import { prisma } from "~/db.server"
 import type {
@@ -13,8 +13,7 @@ import type {
 
 export async function generateReport(
   sections: SectionInCandidateTest[],
-  candidate: Candidate,
-  candidateResult: CandidateResult
+  candidate: Candidate
 ) {
   try {
     const sectionIds = sections.map((section) => section.id)
@@ -79,9 +78,8 @@ export async function generateReport(
 
     const typedSectionsDetails: SectionDetailsType[] =
       sectionsDetails as SectionDetailsType[]
-    const content: TemplateData = {
+    const content: TemplateDataType = {
       candidateName: `${candidate?.firstName} ${candidate?.lastName}`,
-      candidateResult,
       sections,
       sectionsDetails: typedSectionsDetails,
     }
@@ -114,7 +112,7 @@ export async function getGeneratedReport(assessmentId: string) {
   const isValidTestAndCandidate = candidateId && testId
 
   if (isValidTestAndCandidate) {
-    const { sections, candidate, candidateResult } =
+    const { sections, candidate } =
       (await prisma.candidateTest.findUnique({
         where: {
           candidateId_testId: { candidateId, testId },
@@ -175,14 +173,12 @@ export async function getGeneratedReport(assessmentId: string) {
         candidateResult: CandidateResult
       })
 
-    const hasNecessaryDetailsToGenerateReport =
-      sections && candidate && candidateResult
+    const hasNecessaryDetailsToGenerateReport = sections && candidate
 
     if (hasNecessaryDetailsToGenerateReport) {
       return await generateReport(
         sections as SectionInCandidateTest[],
-        candidate as Candidate,
-        candidateResult as CandidateResult
+        candidate as Candidate
       )
     }
   }

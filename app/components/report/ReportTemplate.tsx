@@ -5,23 +5,18 @@ import { SectionHeader } from "./SectionHeader"
 import { styles } from "./styles"
 
 import type {
-  CandidateResult,
   SectionDetailsType,
   SectionInCandidateTest,
 } from "~/interface/Interface"
 
-export type TemplateData = {
+export type TemplateDataType = {
   candidateName: string
-  candidateResult: CandidateResult
   sections: SectionInCandidateTest[]
   sectionsDetails: SectionDetailsType[]
 }
 
-const PDFDocument = ({
-  candidateName,
-  sections,
-  sectionsDetails,
-}: TemplateData) => {
+const PDFDocument = ({ templateData }: { templateData: TemplateDataType }) => {
+  const { candidateName, sections, sectionsDetails } = templateData
   return (
     <Document>
       <Page size="A3" orientation="landscape" style={styles.page} wrap={false}>
@@ -51,6 +46,8 @@ const PDFDocument = ({
   )
 }
 
-export default async (templateData: TemplateData) => {
-  return await ReactPDF.renderToStream(<PDFDocument {...templateData} />)
+export default async (templateData: TemplateDataType) => {
+  return await ReactPDF.renderToStream(
+    <PDFDocument templateData={templateData} />
+  )
 }
