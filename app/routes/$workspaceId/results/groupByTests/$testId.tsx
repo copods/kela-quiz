@@ -67,6 +67,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
       currentPage,
       pageSize,
       permission,
+      env: process.env,
     })
   } catch (error: any) {
     if (error.status === 403) {
@@ -101,7 +102,6 @@ export const action: ActionFunction = async ({ request, params }) => {
   }
 }
 function CandidateListRoute() {
-  console.log("asdjkahk")
   return <CandidateListOfTest />
 }
 
