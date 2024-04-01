@@ -42,7 +42,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
       statusFilter,
       userId!,
       currentWorkspaceId!,
-      searchText,
+      searchText ? searchText : "",
       passFailFilter,
       customFilters?.split(",")
     )
@@ -54,7 +54,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
       currentPage,
       pageSize,
       statusFilter,
-      searchText,
+      searchText: searchText ? searchText : "",
       passFailFilter,
       customFilter: customFilters?.split(","),
     })
@@ -101,6 +101,7 @@ export const action: ActionFunction = async ({ request, params }) => {
   }
 }
 function CandidateListRoute() {
+  console.log("asdjkahk")
   return <CandidateListOfTest />
 }
 
