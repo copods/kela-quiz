@@ -175,9 +175,10 @@ export async function getGeneratedReport(assessmentId: string) {
         candidateResult: CandidateResult
       })
 
-    const hasNecessaryDetails = sections && candidate && candidateResult
+    const hasNecessaryDetailsToGenerateReport =
+      sections && candidate && candidateResult
 
-    if (hasNecessaryDetails) {
+    if (hasNecessaryDetailsToGenerateReport) {
       return await generateReport(
         sections as SectionInCandidateTest[],
         candidate as Candidate,

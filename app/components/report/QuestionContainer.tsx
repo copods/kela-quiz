@@ -31,7 +31,7 @@ export function QuestionContainer({
     [QuestionTypes.singleChoice]: t("sectionsConstants.msq"),
   }
 
-  const isAnsweredCorrectly =
+  const isAnswerCorrect =
     question.status === QuestionStatus.answered &&
     question.selectedOptions.some((option) =>
       question.question.correctOptions.some(
@@ -39,10 +39,10 @@ export function QuestionContainer({
       )
     )
 
-  const answerFeedbackText = isAnsweredCorrectly
+  const answerFeedbackText = isAnswerCorrect
     ? resultConstants.correct
     : resultConstants.incorrect
-  const answerFeedbackStyle = isAnsweredCorrectly
+  const answerFeedbackStyle = isAnswerCorrect
     ? styles.correct
     : styles.incorrect
 
@@ -76,7 +76,7 @@ export function QuestionContainer({
         <Html style={styles.answerText}>
           {question.selectedOptions.map((option) => option.option).join(", ")}
         </Html>
-        {!isAnsweredCorrectly && (
+        {!isAnswerCorrect && (
           <View style={styles.questionMainContainer}>
             <Text style={{ color: styles.correct.color }}>
               {t("resultConstants.correctAnswer")}:
