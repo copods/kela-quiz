@@ -64,7 +64,7 @@ const filterByPassFail = [
 ]
 
 const CandidateListOfTest = () => {
-  const { candidatesOfTest, currentWorkspaceId } = useLoaderData()
+  const { candidatesOfTest, currentWorkspaceId, env } = useLoaderData()
   const candidatesLoaderData = useLoaderData()
   const { setCustomStorage, getStoredValue } = useCommonContext()
   const { t } = useTranslation()
@@ -188,7 +188,8 @@ const CandidateListOfTest = () => {
     )
   }
 
-  const copyLink = (link: string) => {
+  const copyLink = (id: string) => {
+    const link = `${env.PUBLIC_URL}/assessment/${id}`
     navigator.clipboard.writeText(link).then(
       () => toast.success(t("testsConstants.copyLink")),
       (error) => toast.error(`${t("testConstants.copyLinkFailed")}${error}`)
@@ -250,7 +251,6 @@ const CandidateListOfTest = () => {
     const now = moment(new Date())
     const LinkSendedTime = moment(data?.linkSentOn)
     const duration = now.diff(LinkSendedTime, "hours")
-    // console.log(candidateResult)
     let result = 0
     for (let i of data.candidateResult) {
       result = (i.correctQuestion / i.totalQuestion) * 100
@@ -305,7 +305,7 @@ const CandidateListOfTest = () => {
         id: "copy-link",
         menuListText: t("resultConstants.copyLink"),
         menuListIcon: "material-symbols:content-copy-outline",
-        handleItemAction: () => copyLink(data.link as string),
+        handleItemAction: () => copyLink(data.id as string),
       },
     ]
 
