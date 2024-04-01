@@ -42,7 +42,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
       statusFilter,
       userId!,
       currentWorkspaceId!,
-      searchText,
+      searchText ? searchText : "",
       passFailFilter,
       customFilters?.split(",")
     )
@@ -54,7 +54,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
       currentPage,
       pageSize,
       statusFilter,
-      searchText,
+      searchText: searchText ? searchText : "",
       passFailFilter,
       customFilter: customFilters?.split(","),
     })
@@ -67,6 +67,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
       currentPage,
       pageSize,
       permission,
+      env: process.env,
     })
   } catch (error: any) {
     if (error.status === 403) {
