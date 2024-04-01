@@ -9,7 +9,7 @@ export async function sendMail(
   role: string
 ) {
   const to = email
-  const from = "careers@copods.co"
+  const from = "Copods Carrers <careers@copods.co>"
   const subject = "Welcome to K - Quiz @ Copods"
   const text = "K - Quiz @ Copods"
   const logo = "K - Quiz logo"
@@ -95,7 +95,7 @@ export async function sendTestInviteMail(
   time: string
 ) {
   const to = email
-  const from = "careers@copods.co"
+  const from = "Copods Carrers <careers@copods.co>"
   const subject = "Welcome to K - Quiz @ Copods"
   const text = "K - Quiz @ Copods"
   const logo = "K - Quiz logo"
@@ -178,7 +178,7 @@ export async function sendTestInviteMail(
 
 export async function sendOTPMail(email: string, otp: number) {
   const to = email
-  const from = "careers@copods.co"
+  const from = "Copods Carrers <careers@copods.co>"
   const subject = "OTP - Quiz @ Copods"
   const text = "K - Quiz @ Copods"
   const logo = "K - Quiz logo"
@@ -253,7 +253,7 @@ export async function sendMailToRecruiter(
   candidateName?: string
 ) {
   const to = recruiterEmail
-  const from = "careers@copods.co"
+  const from = "Copods Carrers <careers@copods.co>"
   const subject = `${candidateName} has finished the assessment of K - Quiz @ Copods`
   const text = "K - Quiz @ Copods"
   const logo = "K - Quiz logo"
@@ -330,7 +330,7 @@ export async function sendMailToRecruiter(
 
 export async function sendNewPassword(email: string, password: string) {
   const to = email
-  const from = "careers@copods.co"
+  const from = "Copods Carrers <careers@copods.co>"
   const subject = "RESET PASSWORD - Quiz @ Copods"
   const text = "K - Quiz @ Copods"
   const logo = "K - Quiz logo"
@@ -406,7 +406,7 @@ export async function sendMemberInvite(
   workspaceName: string
 ) {
   const to = email
-  const from = "careers@copods.co"
+  const from = "Copods Carrers <careers@copods.co>"
   const subject = "Welcome to K - Quiz @ Copods"
   const text = "K - Quiz @ Copods"
   const logo = "K - Quiz logo"
@@ -487,7 +487,7 @@ export async function sendMemberInvite(
 
 export async function sendTestFeedbackMail(email: string, link: string) {
   const to = email
-  const from = "careers@copods.co"
+  const from = "Copods Carrers <careers@copods.co>"
   const subject = "Welcome to K - Quiz @ Copods"
   const text = "K - Quiz @ Copods"
   const logo = "K - Quiz logo"
@@ -574,7 +574,7 @@ export async function sendTestResponseMail(
   isQualified: boolean
 ) {
   const to = email
-  const from = "careers@copods.co"
+  const from = "Copods Carrers <careers@copods.co>"
   const subject = isQualified
     ? `Congratulations ${candidateName}!`
     : `Better luck next time ${candidateName}!`
