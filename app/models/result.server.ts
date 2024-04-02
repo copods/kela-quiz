@@ -62,6 +62,11 @@ export async function getAllCandidatesOfTestCount(
                   AND (cr."correctQuestion"::FLOAT / cr."totalQuestion") * 100 < ${cFilter_max}
                   AND t.id = ${id}
           ) ELSE  t.id = ${id}  END)
+          AND ( 
+              (${statusFilter} = 'complete' AND ct."endAt" IS NOT NULL)
+              OR (${statusFilter} = 'pending' AND ct."startedAt" IS NULL)
+              OR ${statusFilter} = 'all'
+          )
    `
     return queryResult?.length
   } catch (error) {
@@ -171,6 +176,11 @@ export async function getAllCandidatesOfTest({
                   AND (cr."correctQuestion"::FLOAT / cr."totalQuestion") * 100 < ${cFilter_max}
                   AND t.id = ${id}
           ) ELSE  t.id = ${id}  END)
+          AND ( 
+              (${statusFilter} = 'complete' AND ct."endAt" IS NOT NULL)
+              OR (${statusFilter} = 'pending' AND ct."startedAt" IS NULL)
+              OR ${statusFilter} = 'all'
+          )
       ORDER BY
           ct."createdAt" DESC
       LIMIT
