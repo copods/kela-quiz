@@ -72,9 +72,7 @@ function Login({ actionData, redirectTo }: LoginProps) {
     },
   }
   const navigate = useNavigate()
-  const signUp = () => {
-    navigate(routes.signUp)
-  }
+
   const forgetPassword = () => {
     navigate(routes.forgotPassword)
   }
@@ -153,7 +151,7 @@ function Login({ actionData, redirectTo }: LoginProps) {
         </Form>
       </div>
       <div className="flex pt-6 pb-4">
-        <div className="text-base font-medium text-gray-500">
+        {/* <div className="text-base font-medium text-gray-500">
           {t("logIn.dontHaveAnAccountYet")}{" "}
           <span
             id="sign-up"
@@ -169,7 +167,7 @@ function Login({ actionData, redirectTo }: LoginProps) {
           >
             {t("logIn.signUp")}
           </span>
-        </div>
+        </div> */}
       </div>
     </div>
   )
