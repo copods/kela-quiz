@@ -47,7 +47,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     const lastLoginWorkspaceId = await getWorkspaceId(request)
 
     if (lastLoginWorkspaceId && lastLoginWorkspaceId != currentWorkspaceId) {
-      return redirect(`/${lastLoginWorkspaceId}`)
+      return redirect(`/${lastLoginWorkspaceId}/members`)
     }
     const defaultWorkspace = await getDefaultWorkspaceIdForUserQuery(userId)
     currentWorkspaceId = defaultWorkspace?.workspace[0].id as string
