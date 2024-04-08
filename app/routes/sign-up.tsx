@@ -1,5 +1,5 @@
 import type { ActionFunction, LoaderFunction } from "@remix-run/node"
-import { json } from "@remix-run/node"
+import { json, redirect } from "@remix-run/node"
 
 import SignUp from "~/components/login/SignUp"
 import { routes } from "~/constants/route.constants"
@@ -31,7 +31,10 @@ export const loader: LoaderFunction = async ({ request }) => {
   if (inviteId) {
     userData = await getInvitedMemberById(inviteId)
   }
-  return json({ inviteId, userData })
+  if (inviteId && userData?.email.includes("@copods.co")) {
+    return json({ inviteId, userData })
+  }
+  return redirect("/sing-in")
 }
 export const action: ActionFunction = async ({ request }) => {
   const formData = await request.formData()
