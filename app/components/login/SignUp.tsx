@@ -195,6 +195,7 @@ const SignUp = ({ error }: { error?: string }) => {
         <div className="flex flex-col items-center justify-center gap-6">
           <div className="-mt-20 flex justify-center">
             <Logo height="64" width="64" />
+            test
           </div>
           <h2
             id="signup-page-title"
