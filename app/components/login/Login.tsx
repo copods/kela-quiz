@@ -72,9 +72,7 @@ function Login({ actionData, redirectTo }: LoginProps) {
     },
   }
   const navigate = useNavigate()
-  const signUp = () => {
-    navigate(routes.signUp)
-  }
+
   const forgetPassword = () => {
     navigate(routes.forgotPassword)
   }
