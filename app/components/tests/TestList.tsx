@@ -33,14 +33,14 @@ const TestList = () => {
   const testLoaderData = useLoaderData()
   const testActionData = useActionData()
   if (t(testLoaderData.status as string) != t("statusCheck.success")) {
-    toast.warn(t("statusCheck.commonError"))
+    toast.warn(t("statusCheck.commonError") as string)
   }
   useEffect(() => {
     if (testActionData) {
       if (testActionData?.resp?.statusCode === 200) {
-        toast.success(t(testActionData?.resp?.message))
+        toast.success(t(testActionData?.resp?.message) as string)
       } else if (testActionData?.errors?.statusCode === 400) {
-        toast.error(t(testActionData?.errors?.message), {
+        toast.error(t(testActionData?.errors?.message) as string, {
           toastId: testActionData?.errors?.statusCode,
         })
       }

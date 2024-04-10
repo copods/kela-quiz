@@ -117,10 +117,18 @@ const FeedbackForm = () => {
             />
             <div className="flex flex-col items-center gap-6">
               <span className="text-2xl font-bold text-gray-900">
-                {t("candidateExamConstants.feedbackSubmissionHeading")}
+                {
+                  t(
+                    "candidateExamConstants.feedbackSubmissionHeading"
+                  ) as string
+                }
               </span>
               <span className="text-lg font-medium text-gray-500">
-                {t("candidateExamConstants.feedbackSubmissionContent")}
+                {
+                  t(
+                    "candidateExamConstants.feedbackSubmissionContent"
+                  ) as string
+                }
               </span>
             </div>
           </div>

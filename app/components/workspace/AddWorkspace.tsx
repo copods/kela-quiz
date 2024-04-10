@@ -54,10 +54,10 @@ export default function AddWorkspace({
         setWorkspaceId
       ) {
         setWorkspaceId(data.resp?.workspaceId)
-        toast.success(t(data.resp?.title))
+        toast.success(t(data.resp?.title) as string)
         setShowAddWorkspaceModal(false)
       } else if (data.errors?.status === 400 && setShowAddWorkspaceModal) {
-        toast.error(t(data.errors?.title), {
+        toast.error(t(data.errors?.title) as string, {
           toastId: data.errors?.title,
         })
         setShowAddWorkspaceModal(true)

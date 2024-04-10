@@ -97,12 +97,12 @@ const AddEditSection = ({
     if (fetcherData?.errors?.status === 403) {
       return navigate(routes.unauthorized)
     } else if (fetcherData?.resp?.status === "statusCheck.testAddedSuccess") {
-      toast.success(t(fetcherData?.resp?.status as string), {
+      toast.success(t(fetcherData?.resp?.status as string) as string, {
         toastId: "test-added-sucessfully",
       })
       setOpen(false)
     } else if (fetcherData?.resp?.status === "statusCheck.testUpdatedSuccess") {
-      toast.success(t(fetcherData?.resp?.status as string), {
+      toast.success(t(fetcherData?.resp?.status as string) as string, {
         toastId: t(fetcherData?.resp?.status as string),
       })
       navigate(`${location.pathname}${location.search}`)

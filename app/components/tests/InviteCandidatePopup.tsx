@@ -42,7 +42,7 @@ const InviteCandidatePopup = ({
   const navigate = useNavigate()
   useEffect(() => {
     if (actionData?.status == 401 && testId === actionData?.testId) {
-      toast.warn(t(actionData.message))
+      toast.warn(t(actionData.message) as string)
     }
     if (
       actionData?.candidateInviteStatus?.created ===
@@ -65,7 +65,7 @@ const InviteCandidatePopup = ({
             )
           }
         } else {
-          toast.success(t("testsConstants.candidateInvited"))
+          toast.success(t("testsConstants.candidateInvited") as string)
         }
       navigate(
         `?sortBy=${sortBy}&sort=${sortDirection}&page=${testsCurrentPage}&limit=${testsPageSize}`
@@ -75,7 +75,7 @@ const InviteCandidatePopup = ({
     } else {
       if (actionData?.candidateInviteStatus === "already exists") {
         if (actionData?.testId === testId) {
-          toast.error(t("testsConstants.candidateAlreadyInvited"))
+          toast.error(t("testsConstants.candidateAlreadyInvited") as string)
         }
       }
     }

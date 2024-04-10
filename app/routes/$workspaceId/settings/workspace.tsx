@@ -128,14 +128,14 @@ const WorkspaceSetting = () => {
       actionData?.resp?.status === 200 &&
       actionData?.resp?.title === "settings.workspaceUpdated"
     ) {
-      toast.success(t(actionData?.resp?.title))
+      toast.success(t(actionData?.resp?.title) as string)
     } else if (actionData?.resp?.status === 200) {
-      toast.success(t(actionData?.resp?.title))
+      toast.success(t(actionData?.resp?.title) as string)
       navigate(`/${workspaceLoaderData?.ownersWorkspace?.id}${routes.members}`)
     } else if (actionData?.resp?.status === 400) {
-      toast.error(t(actionData?.resp?.title))
+      toast.error(t(actionData?.resp?.title) as string)
     } else if (actionData?.errors?.status === 400) {
-      toast.error(t("toastConstants.ownerTransferOwnerShip"))
+      toast.error(t("toastConstants.ownerTransferOwnerShip") as string)
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

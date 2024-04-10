@@ -100,15 +100,15 @@ const AddTestComponent = ({
   }
   const submitAddTest = () => {
     if (typeof name !== "string" || name.length === 0) {
-      toast.error(t("toastConstants.addAssessment"))
+      toast.error(t("toastConstants.addAssessment") as string)
       return
     }
     if (typeof description !== "string" || description.length === 0) {
-      toast.error(t("toastConstants.enterDescription"))
+      toast.error(t("toastConstants.enterDescription") as string)
       return
     }
     if (allSelectedSections.length === 0) {
-      toast.error(t("toastConstants.addTest"))
+      toast.error(t("toastConstants.addTest") as string)
       return
     }
     let sendData: {

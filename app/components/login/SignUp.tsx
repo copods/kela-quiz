@@ -30,7 +30,7 @@ const SignUp = ({ error }: { error?: string }) => {
   useEffect(() => {
     if (signUpActionData) {
       if (signUpActionData?.errors?.title) {
-        toast.error(t(signUpActionData?.errors?.title), {
+        toast.error(t(signUpActionData?.errors?.title) as string, {
           toastId: signUpActionData?.errors?.title,
         })
       }

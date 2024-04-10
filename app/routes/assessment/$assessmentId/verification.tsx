@@ -95,14 +95,14 @@ const Verification = () => {
   const action = useActionData()
   useEffect(() => {
     if (action?.value === checks.success && !getToaster().successToaster) {
-      toast.success(t("statusCheck.otpSent"))
+      toast.success(t("statusCheck.otpSent") as string)
     } else if (
       action?.value === checks.commonError &&
       !getToaster().errorToaster
     ) {
-      toast.error(t("statusCheck.erroSendingOtp"))
+      toast.error(t("statusCheck.erroSendingOtp") as string)
     } else if (action?.value === false && !getToaster().errorToaster) {
-      toast.error(t("statusCheck.correctOtp"))
+      toast.error(t("statusCheck.correctOtp") as string)
     }
   }, [action?.timestamp, action?.value, t])
   return (

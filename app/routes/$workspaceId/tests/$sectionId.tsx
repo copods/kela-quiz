@@ -68,9 +68,9 @@ export default function Section() {
     if (section?.errors?.status === 403) {
       navigate(routes.unauthorized)
     } else if (section?.resp?.title === deleteQuestionStatus.deleted) {
-      toast.success(t("statusCheck.deletedSuccess"))
+      toast.success(t("statusCheck.deletedSuccess") as string)
     } else if (section?.resp?.title === deleteQuestionStatus.notDeleted) {
-      toast.error(t("sectionsConstants.questionNotDeleted"), {
+      toast.error(t("sectionsConstants.questionNotDeleted") as string, {
         toastId: "question-not-deleted",
       })
     }

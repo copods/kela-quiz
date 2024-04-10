@@ -50,10 +50,10 @@ export default function ChangeRolePopUp({
 
   useEffect(() => {
     if (actionData?.response?.status === 203) {
-      toast.success(t("toastConstants.roleUpdatedSuccessfully"))
+      toast.success(t("toastConstants.roleUpdatedSuccessfully") as string)
       setOpen(!open)
     } else if (actionData?.response?.status === 400) {
-      toast.error(t("statusCheck.commonError"))
+      toast.error(t("statusCheck.commonError") as string)
       setOpen(!open)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

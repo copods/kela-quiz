@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 
+import type { ReactI18NextChild } from "react-i18next"
 import { useTranslation } from "react-i18next"
 
 import Chip from "../common-components/Chip"
@@ -197,7 +198,7 @@ const ResultDetailsQuestionsPreview = ({
                 ? textAnswer.map((textAnswer: CorrectAnswer, index: number) => {
                     return (
                       <div key={index} className={`h-full ${optionContainer}`}>
-                        {textAnswer}
+                        {textAnswer as unknown as ReactI18NextChild}
                       </div>
                     )
                   })

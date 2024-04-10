@@ -112,9 +112,9 @@ const AddTest = () => {
     if (actionData) {
       if (actionData.resp?.status === 200) {
         navigate(`/${testData.currentWorkspaceId}${routes.assessments}`)
-        toast.success(t(actionData.resp?.title))
+        toast.success(t(actionData.resp?.title) as string)
       } else if (actionData.errors?.status === 400) {
-        toast.error(t(actionData.errors?.title), {
+        toast.error(t(actionData.errors?.title) as string, {
           toastId: actionData.errors?.title,
         })
       } else if (actionData.errors?.status === 403) {
@@ -125,7 +125,7 @@ const AddTest = () => {
   }, [actionData, navigate, t])
 
   if (t(testData.status) != t("statusCheck.success")) {
-    toast.success(t("statusCheck.commonError"))
+    toast.success(t("statusCheck.commonError") as string)
   }
 
   return (

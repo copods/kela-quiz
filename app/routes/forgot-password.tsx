@@ -29,7 +29,7 @@ const ForgetPassword = () => {
       setCheckErrorStatus(true)
     }
     if (action === "Done") {
-      toast.success(t("statusCheck.resendPasswordSuccess"))
+      toast.success(t("statusCheck.resendPasswordSuccess") as string)
       navigate(routes.signIn)
     }
   }, [action, navigate, t, action?.time])

@@ -125,7 +125,7 @@ const TableDataCell = <T,>({
       }}
       className="flex h-16 max-h-20 flex-1 items-center truncate border-b px-4 text-gray-700"
     >
-      {rowData[field as keyof typeof rowData]}
+      {rowData[field as keyof typeof rowData] as string}
     </div>
   )
 }
@@ -133,7 +133,7 @@ const TableDataCell = <T,>({
 const TableEmptyState = () => {
   return (
     <div className="flex justify-center bg-white py-7 text-gray-700">
-      <span>{t("commonConstants.noRowsToShow")}</span>
+      <span>{t("commonConstants.noRowsToShow") as string}</span>
     </div>
   )
 }

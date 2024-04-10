@@ -59,12 +59,12 @@ export default function OptionForQuestion({
       getQuestionType(selectedTypeOfQuestion) === QuestionTypes.singleChoice
     ) {
       if (options.length > 5) {
-        return toast.error(t("statusCheck.maxOptions"), { toastId })
+        return toast.error(t("statusCheck.maxOptions") as string, { toastId })
       }
       setOptions([...options, { option: "", isCorrect: false, id: uuidv4() }])
     } else if (getQuestionType(selectedTypeOfQuestion) === QuestionTypes.text) {
       if (textCorrectAnswer.length > 5) {
-        return toast.error(t("statusCheck.maxOptions"), { toastId })
+        return toast.error(t("statusCheck.maxOptions") as string, { toastId })
       }
       setTextCorrectAnswer([...textCorrectAnswer, { id: uuidv4(), answer: "" }])
     }

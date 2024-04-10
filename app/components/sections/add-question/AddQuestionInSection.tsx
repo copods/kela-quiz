@@ -89,7 +89,7 @@ const AddQuestionInSection = () => {
 
   const saveQuestion = (addMoreQuestion: boolean) => {
     if (!question.length) {
-      toast.error(t("addQuestion.enterTheQuestion"), {
+      toast.error(t("addQuestion.enterTheQuestion") as string, {
         toastId: "questionRequired",
       })
       return
@@ -107,7 +107,7 @@ const AddQuestionInSection = () => {
         }
       }
       if (optionCount < 2) {
-        toast.error(t("addQuestion.mimimumTwoOptionsRequired"), {
+        toast.error(t("addQuestion.mimimumTwoOptionsRequired") as string, {
           toastId: "optionsRequired",
         })
         return
@@ -115,7 +115,7 @@ const AddQuestionInSection = () => {
       let flag = 0
       for (let option of options) {
         if (option.isCorrect && !option.option) {
-          toast.error(t("statusCheck.selectCorrOption"), {
+          toast.error(t("statusCheck.selectCorrOption") as string, {
             toastId: "correctOptionRequired",
           })
           return
@@ -128,7 +128,7 @@ const AddQuestionInSection = () => {
         flag === 0 &&
         getQuestionType(selectedTypeOfQuestion) === QuestionTypes.multipleChoice
       ) {
-        toast.error(t("statusCheck.selectCorrOption"), {
+        toast.error(t("statusCheck.selectCorrOption") as string, {
           toastId: "correctOptionRequired",
         })
         return
@@ -139,7 +139,7 @@ const AddQuestionInSection = () => {
           QuestionTypes.singleChoice &&
         !singleChoiceAnswer
       ) {
-        toast.error(t("statusCheck.selectCorrOption"), {
+        toast.error(t("statusCheck.selectCorrOption") as string, {
           toastId: "correctOptionsRequired",
         })
         return

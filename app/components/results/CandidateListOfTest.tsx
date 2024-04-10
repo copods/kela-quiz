@@ -128,7 +128,7 @@ const CandidateListOfTest = () => {
     if (
       candidateInviteStatus === t("candidateExamConstants.candidateTestCreated")
     ) {
-      toast.success(t("testsConstants.reinvited"))
+      toast.success(t("testsConstants.reinvited") as string)
     }
 
     if (candidatesOfTest?.candidateTest) {
@@ -168,7 +168,7 @@ const CandidateListOfTest = () => {
     if (
       actionData?.candidateInviteStatus === t("candidateExamConstants.endTest")
     ) {
-      toast.error(t("testsConstants.testEnded"))
+      toast.error(t("testsConstants.testEnded") as string)
     }
   }, [actionData, t])
 
@@ -191,7 +191,7 @@ const CandidateListOfTest = () => {
   const copyLink = (id: string) => {
     const link = `${env.PUBLIC_URL}/assessment/${id}`
     navigator.clipboard.writeText(link).then(
-      () => toast.success(t("testsConstants.copyLink")),
+      () => toast.success(t("testsConstants.copyLink") as string),
       (error) => toast.error(`${t("testConstants.copyLinkFailed")}${error}`)
     )
   }

@@ -7,7 +7,7 @@ const EmptyStateComponent = ({ text }: { text?: string }) => {
     <div className="flex h-full flex-col items-center justify-center gap-16">
       <img src={noData} alt={t("candidateExamConstants.alreadySubmitted")} />
       <span className="text-2xl font-bold">
-        {text ?? t("sectionsConstants.noDataToShow")}
+        {text ?? (t("sectionsConstants.noDataToShow") as string)}
       </span>
     </div>
   )

@@ -30,10 +30,12 @@ export const FeedbackTableHeader = ({
   return (
     <div className="flex h-9" data-cy="feedback-table-header">
       <div className="flex items-center gap-4">
-        <span className="text-xl">{t("commonConstants.feedback")}</span>
+        <span className="text-xl">
+          {t("commonConstants.feedback") as string}
+        </span>
         <span className="h-4 w-[1px] border-r-[1px] border-gray-300"></span>
         <span className="text-xs text-gray-500">
-          {t("commonConstants.filters")}
+          {t("commonConstants.filters") as string}
         </span>
         <div className="w-52">
           <NewDropdownField
@@ -61,7 +63,7 @@ export const FeedbackTableHeader = ({
         </div>
         <span className="h-4 w-[1px] border-r-[1px] border-gray-300"></span>
         <span className="text-xs text-gray-500">
-          {t("commonConstants.sortBy")}
+          {t("commonConstants.sortBy") as string}
         </span>
         <div className="w-52">
           <NewDropdownField

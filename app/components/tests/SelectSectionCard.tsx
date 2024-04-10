@@ -25,7 +25,7 @@ const SelectSectionCard = ({
     selected?: boolean
   ) => {
     if (questionCount === 0) {
-      toast.error(t("toastConstants.cannotAddTestZeroQuestion"))
+      toast.error(t("toastConstants.cannotAddTestZeroQuestion") as string)
       return
     }
     let tempSection = {
@@ -48,13 +48,16 @@ const SelectSectionCard = ({
         break
       case "totalQuestions":
         if (parseInt(value || "") > (questionCount || 0)) {
-          toast.error(t("toastConstants.notAdMoreThanAvailableQuestion"), {
-            toastId: t("toastConstants.notAdMoreThanAvailableQuestion"),
-          })
+          toast.error(
+            t("toastConstants.notAdMoreThanAvailableQuestion") as string,
+            {
+              toastId: t("toastConstants.notAdMoreThanAvailableQuestion"),
+            }
+          )
           return
         }
         if (parseInt(value || "") == 0) {
-          toast.error(t("toastConstants.cannotAddTestZeroQuestion"))
+          toast.error(t("toastConstants.cannotAddTestZeroQuestion") as string)
           return
         }
         tempSection.totalQuestions = parseInt(value || "")

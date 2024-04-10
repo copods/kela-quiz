@@ -323,12 +323,12 @@ export default function SectionPage() {
   const location = useLocation()
   const navigate = useNavigate()
   if (t(data.status) != t("statusCheck.success")) {
-    toast.error(t("statusCheck.commonError"))
+    toast.error(t("statusCheck.commonError") as string)
   }
 
   useEffect(() => {
     if (sectionActionData?.deleted === "deleteLastTestOnPage") {
-      toast.success(t("statusCheck.deletedSuccess"), {
+      toast.success(t("statusCheck.deletedSuccess") as string, {
         toastId: t("statusCheck.deletedSuccess"),
       })
       navigate(sectionActionData?.path)
@@ -341,12 +341,12 @@ export default function SectionPage() {
         t(sectionActionData.resp?.status as string) ===
         t("statusCheck.testUpdatedSuccess")
       ) {
-        toast.success(t(sectionActionData.resp?.status as string), {
+        toast.success(t(sectionActionData.resp?.status as string) as string, {
           toastId: t(sectionActionData.resp?.status as string),
         })
         navigate(`${location.pathname}${location.search}`)
       } else if (sectionActionData?.deleted) {
-        toast.success(t("statusCheck.deletedSuccess"), {
+        toast.success(t("statusCheck.deletedSuccess") as string, {
           toastId: t("statusCheck.deletedSuccess"),
         })
         setCustomStorage("activeTest", sectionActionData?.sectionId)

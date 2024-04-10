@@ -118,10 +118,10 @@ const MyProfileComponent = () => {
   useEffect(() => {
     if (userActionData?.resp?.status === 200) {
       setViewMode(true)
-      toast.success(t(userActionData?.resp?.title))
+      toast.success(t(userActionData?.resp?.title) as string)
     } else if (userActionData?.errors?.status === 400) {
       setViewMode(false)
-      toast.error(t(userActionData?.errors?.title), {
+      toast.error(t(userActionData?.errors?.title) as string, {
         toastId: userActionData?.errors?.title,
       })
     }

@@ -47,10 +47,10 @@ const MembersWrapper = () => {
     if (membersActionData) {
       if (membersActionData.resp?.status === 200) {
         setActionStatus(true)
-        toast.success(t(membersActionData.resp?.title))
+        toast.success(t(membersActionData.resp?.title) as string)
       } else if (membersActionData.errors?.status === 400) {
         setActionStatus(false)
-        toast.error(t(membersActionData.errors?.title), {
+        toast.error(t(membersActionData.errors?.title) as string, {
           toastId: membersActionData.errors?.title,
         })
       } else if (membersActionData.errors?.status === 403) {

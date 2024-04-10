@@ -107,7 +107,7 @@ export default function AddQuestion() {
   const [addQuestionKey, setAddQuestionKey] = useState(0)
   useEffect(() => {
     if (actionData?.success) {
-      toast.success(t(actionData?.success?.data), {
+      toast.success(t(actionData?.success?.data) as string, {
         toastId: actionData?.success?.data,
       })
       if (actionData.success.addMoreQuestion) {
@@ -120,7 +120,7 @@ export default function AddQuestion() {
     } else if (actionData?.error?.status === 403) {
       navigate(routes.unauthorized)
     } else if (actionData?.error) {
-      toast.error(t(actionData?.data))
+      toast.error(t(actionData?.data) as string)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [actionData, navigate, sectionDetail.sectionDetails?.id, t])
