@@ -15,7 +15,7 @@ type CommonContextType = {
 
 const CommonContext = createContext<CommonContextType | null>(null)
 
-const CommonContextProvider: FC<ReactNode> = ({ children }) => {
+const CommonContextProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [storage, setStorage] = useState<IStorage[]>([])
 
   const setCustomStorage = <T,>(key: string, value?: T) => {
