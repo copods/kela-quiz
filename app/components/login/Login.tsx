@@ -88,7 +88,7 @@ function Login({ actionData, redirectTo }: LoginProps) {
           {t("logIn.signInMessage")}
         </h1>
         <div className="flex justify-center">
-          <hr className="mt-7 mb-5 h-px w-6/12 border-none bg-gray-500 text-center" />
+          <hr className="mb-5 mt-7 h-px w-6/12 border-none bg-gray-500 text-center" />
         </div>
         <Form
           method="post"
@@ -107,7 +107,7 @@ function Login({ actionData, redirectTo }: LoginProps) {
               )
             })}
           </div>
-          <div className="flex justify-between pt-4 pb-7">
+          <div className="flex justify-between pb-7 pt-4">
             <div className="flex">
               <Checkbox {...checkboxProps} name="remember" id="remember" />
               <label
@@ -152,7 +152,7 @@ function Login({ actionData, redirectTo }: LoginProps) {
           </div>
         </Form>
       </div>
-      <div className="flex pt-6 pb-4">
+      <div className="flex pb-4 pt-6">
         <div className="text-base font-medium text-gray-500">
           {t("logIn.dontHaveAnAccountYet")}{" "}
           <span

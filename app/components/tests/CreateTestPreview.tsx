@@ -63,37 +63,38 @@ const TestPreview = ({
           >
             {t("testsConstants.testDetailsText")}
           </h1>
-          {showInviteAction && loaderData.permission.invite_candidate.create && (
-            <div>
-              <div
-                role={"button"}
-                tabIndex={0}
-                onClick={() => {
-                  setCandidatePopupOpen(true)
-                }}
-                onKeyUp={(e) => {
-                  if (e.key === "Enter") setCandidatePopupOpen(true)
-                }}
-                className="flex gap-2"
-              >
-                <Icon
-                  id="invite-popup-open"
-                  className="h-6 w-6 cursor-pointer text-primary "
-                  icon={"ant-design:user-add-outlined"}
-                  aria-label={t("members.inviteMember")}
+          {showInviteAction &&
+            loaderData.permission.invite_candidate.create && (
+              <div>
+                <div
+                  role={"button"}
+                  tabIndex={0}
+                  onClick={() => {
+                    setCandidatePopupOpen(true)
+                  }}
+                  onKeyUp={(e) => {
+                    if (e.key === "Enter") setCandidatePopupOpen(true)
+                  }}
+                  className="flex gap-2"
+                >
+                  <Icon
+                    id="invite-popup-open"
+                    className="h-6 w-6 cursor-pointer text-primary "
+                    icon={"ant-design:user-add-outlined"}
+                    aria-label={t("members.inviteMember")}
+                  />
+                  <span id="invite-popup-open-text" className="text-primary">
+                    {t("inviteMemeberPopUpConstants.inviteCandidate")}
+                  </span>
+                </div>
+                <InviteCandidatePopup
+                  openInvitePopup={candidatePopupOpen}
+                  setOpenInvitePopup={setCandidatePopupOpen}
+                  testName={name}
+                  testId={testId}
                 />
-                <span id="invite-popup-open-text" className="text-primary">
-                  {t("inviteMemeberPopUpConstants.inviteCandidate")}
-                </span>
               </div>
-              <InviteCandidatePopup
-                openInvitePopup={candidatePopupOpen}
-                setOpenInvitePopup={setCandidatePopupOpen}
-                testName={name}
-                testId={testId}
-              />
-            </div>
-          )}
+            )}
         </div>
 
         <div className="flex flex-col gap-4 text-base">
@@ -155,7 +156,7 @@ const TestPreview = ({
                 <div className="min-w-184 text-base text-gray-500">
                   {t("testsConstants.testText")} {index + 1}
                 </div>
-                <div className="flex max-w-2xl flex-1 items-center justify-between gap-6 rounded-lg border border-gray-300 py-3 px-4 text-gray-700">
+                <div className="flex max-w-2xl flex-1 items-center justify-between gap-6 rounded-lg border border-gray-300 px-4 py-3 text-gray-700">
                   <div className="text-base font-semibold text-gray-700">
                     {section.name ? section.name : section.section?.name}
                   </div>

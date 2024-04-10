@@ -13,7 +13,7 @@ const CandidateQuestionFooter = () => {
       <div>
         {question?.order !== section?.totalQuestions && (
           <Button
-            className="max-w-max border-none bg-inherit py-0 px-0 text-base font-bold text-black underline shadow-none hover:bg-white"
+            className="max-w-max border-none bg-inherit px-0 py-0 text-base font-bold text-black underline shadow-none hover:bg-white"
             variant="primary-outlined"
             title={"Skip Question"}
             buttonText={"Skip Question"}

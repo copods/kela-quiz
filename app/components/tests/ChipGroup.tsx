@@ -53,7 +53,7 @@ const ChipGroup = ({
           >
             <Menu.Items
               id="menu-items"
-              className={`sectionMenu absolute top-8 z-40 max-h-52 overflow-auto rounded-2xl bg-white py-4 px-4 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none ${
+              className={`sectionMenu absolute top-8 z-40 max-h-52 overflow-auto rounded-2xl bg-white px-4 py-4 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none ${
                 elementViewPortVisiblility
                   ? ""
                   : "-top-1 -translate-y-full transform"
