@@ -162,6 +162,7 @@ export async function sendTestInviteMail(
     text,
     html,
   }
+  console.log("anurag")
   await sendgrid.send(msg).then(
     () => {
       return "ok"
