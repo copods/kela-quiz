@@ -1,5 +1,5 @@
 // import { Icon } from "@iconify/react"
-import { t } from "i18next"
+import i18next from "i18next"
 
 // import downloadExcelIcon from "../../../public/assets/downloadExcel.svg"
 import { NewDropdownField } from "../common-components/Dropdown"
@@ -21,6 +21,7 @@ export const FeedbackTableHeader = ({
   sortFilter: string
   setSortFilter: (e: string) => void
 }) => {
+  const t = i18next.t.bind(i18next)
   const feedbackTypeOptions = [
     { name: "All Feedbacks", value: "all_feedbacks" },
     { name: "Positive", value: "positive" },

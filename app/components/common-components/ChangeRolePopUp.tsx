@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 
 import { Form, useActionData, useSubmit } from "@remix-run/react"
-import { t } from "i18next"
+import i18next from "i18next"
 import { toast } from "react-toastify"
 
 import DropdownField from "../common-components/Dropdown"
@@ -29,6 +29,7 @@ export default function ChangeRolePopUp({
   memberId: string
   roles: Role[]
 }) {
+  const t = i18next.t.bind(i18next)
   const [userRole, setUserRole] = useState(currentRole)
   const actionData = useActionData()
 

@@ -1,4 +1,4 @@
-import { t } from "i18next"
+import i18next from "i18next"
 
 import Pagination from "./Pagination"
 
@@ -131,6 +131,7 @@ const TableDataCell = <T,>({
 }
 
 const TableEmptyState = () => {
+  const t = i18next.t.bind(i18next)
   return (
     <div className="flex justify-center bg-white py-7 text-gray-700">
       <span>{t("commonConstants.noRowsToShow") as string}</span>

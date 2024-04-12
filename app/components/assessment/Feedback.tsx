@@ -2,7 +2,7 @@ import type { MutableRefObject } from "react"
 import { useEffect, useRef, useState } from "react"
 
 import { useActionData, useLoaderData, useSubmit } from "@remix-run/react"
-import { t } from "i18next"
+import i18next from "i18next"
 
 import FeedbackIcon from "../../../public/assets/feedback.svg"
 import FeedbackComponent from "../common-components/FeedbackComponent"
@@ -17,6 +17,7 @@ const FeedbackForm = () => {
   const [levelValue, setLevelValue] = useState<string>("")
   const [overallValue, setOverAllValue] = useState<string>("")
   const [feebackComment, setFeedbackComment] = useState<string>("")
+  const t = i18next.t.bind(i18next)
 
   const bottomRef = useRef() as MutableRefObject<HTMLDivElement>
 

@@ -6,7 +6,7 @@ import {
   useSubmit,
   useTransition,
 } from "@remix-run/react"
-import { t } from "i18next"
+import i18next from "i18next"
 import { toast } from "react-toastify"
 
 import Button from "../common-components/Button"
@@ -20,6 +20,7 @@ const MyProfileComponent = () => {
   const userActionData = useActionData()
   const transition = useTransition()
   const submit = useSubmit()
+  const t = i18next.t.bind(i18next)
 
   const [viewMode, setViewMode] = useState(true)
   const [firstName, setFirstName] = useState(userData.firstName)

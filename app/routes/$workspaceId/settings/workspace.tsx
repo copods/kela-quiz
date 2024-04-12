@@ -3,7 +3,7 @@ import { useEffect } from "react"
 import type { LoaderFunction, ActionFunction } from "@remix-run/node"
 import { redirect, json } from "@remix-run/node"
 import { useActionData, useLoaderData, useNavigate } from "@remix-run/react"
-import { t } from "i18next"
+import i18next from "i18next"
 import { toast } from "react-toastify"
 
 import { routes } from "../../../constants/route.constants"
@@ -121,6 +121,7 @@ const WorkspaceSetting = () => {
   const actionData = useActionData()
   const workspaceLoaderData = useLoaderData()
   const navigate = useNavigate()
+  const t = i18next.t.bind(i18next)
 
   useEffect(() => {
     if (

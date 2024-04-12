@@ -1,5 +1,3 @@
-import { hydrate } from "react-dom"
-
 import { RemixBrowser } from "@remix-run/react"
 import i18next from "i18next"
 import LanguageDetector from "i18next-browser-languagedetector"
@@ -8,6 +6,7 @@ import { I18nextProvider, initReactI18next } from "react-i18next"
 import { getInitialNamespaces } from "remix-i18next"
 
 import i18nextOptions from "./i18nextOptions"
+import { hydrateRoot } from "react-dom/client"
 
 // initialize i18next using initReactI18next and configuring it
 if (!i18next.isInitialized)
@@ -34,11 +33,11 @@ if (!i18next.isInitialized)
     })
     .then(() => {
       // then hydrate your app wrapped in the I18nextProvider
-      return hydrate(
+      return hydrateRoot(
+        document,
         <I18nextProvider i18n={i18next}>
           <RemixBrowser />
-        </I18nextProvider>,
-        document
+        </I18nextProvider>
       )
     })
 

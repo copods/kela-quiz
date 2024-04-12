@@ -1,6 +1,6 @@
 import type { MutableRefObject } from "react"
 
-import { t } from "i18next"
+import i18next from "i18next"
 
 import Rating from "../assessment/Rating"
 
@@ -25,6 +25,7 @@ const FeedbackComponent = ({
   handleChange: () => void
   emailReplyHandleChange?: () => void
 }) => {
+  const t = i18next.t.bind(i18next)
   const isButtonDisabled = () => {
     const isDisabled = feebackDetails.some(
       (feedback) => !feedback.value && feedback.required

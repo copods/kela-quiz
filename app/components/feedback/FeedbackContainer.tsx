@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 
 import { useLoaderData, useLocation, useNavigate } from "@remix-run/react"
-import { t } from "i18next"
+import i18next from "i18next"
 
 import negativeFeedbackIcon from "../../../public/assets/negativeFeedback.svg"
 import neutralFeedbackIcon from "../../../public/assets/neutralFeedback.svg"
@@ -25,6 +25,7 @@ import {
 import type { CandidateFeedbacks, tableColumnType } from "~/interface/Interface"
 
 export const FeedbackContainer = () => {
+  const t = i18next.t.bind(i18next)
   const candidatesFeedbackData = JSON.parse(useLoaderData())
 
   const [feedbackCurrentPage, setFeedbackCurrentPage] = useState(

@@ -1,7 +1,7 @@
 import { useMemo } from "react"
 
 import { useMatches } from "@remix-run/react"
-import { t } from "i18next"
+import i18next from "i18next"
 
 import type { User } from "~/models/user.server"
 const DEFAULT_REDIRECT = "/"
@@ -86,6 +86,7 @@ export function trimValue(value: string) {
   return str
 }
 export function checkPasswordStrength(password: string) {
+  const t = i18next.t.bind(i18next)
   let strength = 0
   for (let char of password) {
     if (char) {
