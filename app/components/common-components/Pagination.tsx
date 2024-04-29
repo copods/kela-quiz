@@ -20,6 +20,7 @@ const PaginationButtons = ({
     if (paginationRangeItems === -1) {
       return (
         <Icon
+          key={index}
           className="w-8 text-gray-500 "
           icon="bx:dots-horizontal-rounded"
         />
