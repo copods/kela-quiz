@@ -111,6 +111,7 @@
     "createOptions": "Create Options",
     "addOptions": "Add Options",
     "addQuestion": "Add Question",
+    "uploadCsv": "Upload CSV",
     "note": "Note",
     "mimimumTwoOptionsRequired": "Minimum 2 Options Required",
     "multipleAnswersSelected": "Multiple answers selected",
