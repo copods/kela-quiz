@@ -15,6 +15,7 @@ import {
   deleteQuestionById,
   addQuestion,
   getFirstSection,
+  addBulkQuestions,
 } from "~/models/sections.server"
 import { createTest } from "~/models/tests.server"
 import { getAllUsers } from "~/models/user.server"
@@ -339,6 +340,14 @@ export const deleteTestQuestionById = async (
   } catch (error) {
     throw error
   }
+}
+
+export const addQuestionByCSV = async (
+  questions: any,
+  userId: any,
+  currentWorkspaceId: any
+) => {
+  return await addBulkQuestions(questions, userId!, currentWorkspaceId)
 }
 
 /**

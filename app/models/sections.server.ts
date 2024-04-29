@@ -261,6 +261,27 @@ export async function getQuestionType() {
   return prisma.questionType.findMany()
 }
 
+export async function addBulkQuestions(
+  questions: any,
+  userId: any,
+  currentWorkspaceId: any
+) {
+  for (let question of questions) {
+    await addQuestion(
+      question.question,
+      question.options,
+      [],
+      question.questionTypeId,
+      question.sectionId,
+      userId,
+      false,
+      userId,
+      currentWorkspaceId
+    )
+  }
+  return {}
+}
+
 export async function addQuestion(
   question: string,
   options: Array<{ id: string; option: string; isCorrect: boolean }>,

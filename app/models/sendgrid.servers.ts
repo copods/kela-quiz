@@ -162,16 +162,22 @@ export async function sendTestInviteMail(
     text,
     html,
   }
-  await sendgrid.send(msg).then(
-    () => {
-      return "ok"
-    },
-    (error) => {
-      if (error.response) {
-        console.error("Sendgrid Error: ", error.response.body)
+  await sendgrid
+    .send(msg)
+    .then(
+      () => {
+        return "ok"
+      },
+      (error) => {
+        if (error.response) {
+          console.error("Sendgrid Error: ", error.response.body)
+        }
       }
-    }
-  )
+    )
+    .catch((err) => {
+      console.error("Sendgrid Error: ", err)
+      throw new Error("Error in sending mail")
+    })
 
   return "Done"
 }
