@@ -189,7 +189,7 @@
     "type": "git",
     "url": "https://github.com/copods/kela-quiz.git"
   },
-  "author": "",
+  "author": "Anurag Patel <anurag@copods.co>",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/copods/kela-quiz/issues"
