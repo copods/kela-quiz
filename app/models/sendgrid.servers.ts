@@ -1,6 +1,54 @@
 import { env } from "process"
 
-import sendgrid from "@sendgrid/mail"
+// import entire SDK
+import AWS from "aws-sdk"
+
+// Configure AWS SDK
+// AWS.config.update({
+//   accessKeyId: env.SES_ACCESS_KEY_ID,
+//   secretAccessKey: env.SES_SECRET_ACCESS_KEY,
+//   region: "ap-south-1", // Ensure the region is set correctly
+// })
+
+// Configure AWS SDK
+AWS.config.update({
+  accessKeyId: "AKIA2UC3E3DCDGS3HQGW",
+  secretAccessKey: "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",
+  region: "ap-south-1", // Ensure the region is set correctly
+})
+
+const ses = new AWS.SES({ apiVersion: "2010-12-01" })
+
+function sendEmail({ to, subject, body }: any) {
+  let params = {
+    Source: "careers@copods.co", // Ensure this email is verified
+    Destination: {
+      // ToAddresses: ["patelanurag.0411@gmail.com"],
+      ToAddresses: [to],
+    },
+    ReplyToAddresses: ["kQuiz @ Copods <careers@copods.co>"],
+    Message: {
+      Body: {
+        Html: {
+          Charset: "UTF-8",
+          Data: body,
+        },
+      },
+      Subject: {
+        Charset: "UTF-8",
+        Data: subject,
+      },
+    },
+  }
+
+  ses.sendEmail(params, (err, data) => {
+    if (err) {
+      console.error("Error sending email:", err)
+    } else {
+      console.log("Email sent:", data)
+    }
+  })
+}
 
 export async function sendMail(
   passwordGenerationLink: string,
@@ -9,9 +57,7 @@ export async function sendMail(
   role: string
 ) {
   const to = email
-  const from = "Copods Careers <careers@copods.co>"
   const subject = "Welcome to K - Quiz @ Copods"
-  const text = "K - Quiz @ Copods"
   const logo = "K - Quiz logo"
   const html = `<html>
   <head>
@@ -66,27 +112,7 @@ export async function sendMail(
 </html>
     `
 
-  sendgrid.setApiKey(env.SENDGRID_API_KEY as string)
-
-  const msg = {
-    to,
-    from, // Use the email address or domain you verified above
-    subject,
-    text,
-    html,
-  }
-  await sendgrid.send(msg).then(
-    () => {
-      return "ok"
-    },
-    (error) => {
-      if (error.response) {
-        console.error("Sendgrid Error: ", error.response.body)
-      }
-    }
-  )
-
-  return "Done"
+  sendEmail({ to, subject, body: html })
 }
 
 export async function sendTestInviteMail(
@@ -95,9 +121,7 @@ export async function sendTestInviteMail(
   time: string
 ) {
   const to = email
-  const from = "Copods Careers <careers@copods.co>"
   const subject = "Welcome to K - Quiz @ Copods"
-  const text = "K - Quiz @ Copods"
   const logo = "K - Quiz logo"
   const html = `<html>
   <head>
@@ -152,41 +176,12 @@ export async function sendTestInviteMail(
   </body>
 </html>
       `
-
-  sendgrid.setApiKey(env.SENDGRID_API_KEY as string)
-
-  const msg = {
-    to,
-    from, // Use the email address or domain you verified above
-    subject,
-    text,
-    html,
-  }
-  await sendgrid
-    .send(msg)
-    .then(
-      () => {
-        return "ok"
-      },
-      (error) => {
-        if (error.response) {
-          console.error("Sendgrid Error: ", error.response.body)
-        }
-      }
-    )
-    .catch((err) => {
-      console.error("Sendgrid Error: ", err)
-      throw new Error("Error in sending mail")
-    })
-
-  return "Done"
+  sendEmail({ to, subject, body: html })
 }
 
 export async function sendOTPMail(email: string, otp: number) {
   const to = email
-  const from = "Copods Careers <careers@copods.co>"
   const subject = "OTP - Quiz @ Copods"
-  const text = "K - Quiz @ Copods"
   const logo = "K - Quiz logo"
   const html = `<html>
   <head>
@@ -232,25 +227,7 @@ export async function sendOTPMail(email: string, otp: number) {
 </html>
       `
 
-  sendgrid.setApiKey(env.SENDGRID_API_KEY as string)
-  const msg = {
-    to,
-    from, // Use the email address or domain you verified above
-    subject,
-    text,
-    html,
-  }
-  await sendgrid.send(msg).then(
-    () => {
-      return "ok"
-    },
-    (error) => {
-      if (error.response) {
-        console.error("Sendgrid Error: ", error.response.body)
-      }
-    }
-  )
-  return "Done"
+  sendEmail({ to, subject, body: html })
 }
 
 export async function sendMailToRecruiter(
@@ -259,9 +236,7 @@ export async function sendMailToRecruiter(
   candidateName?: string
 ) {
   const to = recruiterEmail
-  const from = "Copods Careers <careers@copods.co>"
   const subject = `${candidateName} has finished the assessment of K - Quiz @ Copods`
-  const text = "K - Quiz @ Copods"
   const logo = "K - Quiz logo"
   const html = `<html>
   <head>
@@ -310,35 +285,12 @@ export async function sendMailToRecruiter(
   </body>
 </html>
       `
-
-  sendgrid.setApiKey(env.SENDGRID_API_KEY as string)
-
-  const msg = {
-    to,
-    from, // Use the email address or domain you verified above
-    subject,
-    text,
-    html,
-  }
-  await sendgrid.send(msg).then(
-    () => {
-      return "ok"
-    },
-    (error) => {
-      if (error.response) {
-        console.error("Sendgrid Error: ", error.response.body)
-      }
-    }
-  )
-
-  return "Done"
+  sendEmail({ to, subject, body: html })
 }
 
 export async function sendNewPassword(email: string, password: string) {
   const to = email
-  const from = "Copods Careers <careers@copods.co>"
   const subject = "RESET PASSWORD - Quiz @ Copods"
-  const text = "K - Quiz @ Copods"
   const logo = "K - Quiz logo"
   const html = `<html>
   <head>
@@ -382,27 +334,7 @@ export async function sendNewPassword(email: string, password: string) {
   </html>
 </html>
       `
-
-  sendgrid.setApiKey(env.SENDGRID_API_KEY as string)
-
-  const msg = {
-    to,
-    from, // Use the email address or domain you verified above
-    subject,
-    text,
-    html,
-  }
-  await sendgrid.send(msg).then(
-    () => {
-      return "ok"
-    },
-    (error) => {
-      if (error.response) {
-        console.error("Sendgrid Error: ", error.response.body)
-      }
-    }
-  )
-  return "Done"
+  sendEmail({ to, subject, body: html })
 }
 
 export async function sendMemberInvite(
@@ -412,9 +344,7 @@ export async function sendMemberInvite(
   workspaceName: string
 ) {
   const to = email
-  const from = "Copods Careers <careers@copods.co>"
   const subject = "Welcome to K - Quiz @ Copods"
-  const text = "K - Quiz @ Copods"
   const logo = "K - Quiz logo"
   const html = `<html>
   <head>
@@ -468,34 +398,12 @@ export async function sendMemberInvite(
 </html>
     `
 
-  sendgrid.setApiKey(env.SENDGRID_API_KEY as string)
-
-  const msg = {
-    to,
-    from, // Use the email address or domain you verified above
-    subject,
-    text,
-    html,
-  }
-  await sendgrid.send(msg).then(
-    () => {
-      return "ok"
-    },
-    (error) => {
-      if (error.response) {
-        console.error("Sendgrid Error: ", error.response.body)
-      }
-    }
-  )
-
-  return "Done"
+  sendEmail({ to, subject, body: html })
 }
 
 export async function sendTestFeedbackMail(email: string, link: string) {
   const to = email
-  const from = "Copods Careers <careers@copods.co>"
   const subject = "Welcome to K - Quiz @ Copods"
-  const text = "K - Quiz @ Copods"
   const logo = "K - Quiz logo"
   const html = `<html>
   <head>
@@ -551,27 +459,7 @@ export async function sendTestFeedbackMail(email: string, link: string) {
 </html>
       `
 
-  sendgrid.setApiKey(env.SENDGRID_API_KEY as string)
-
-  const msg = {
-    to,
-    from, // Use the email address or domain you verified above
-    subject,
-    text,
-    html,
-  }
-  await sendgrid.send(msg).then(
-    () => {
-      return "ok"
-    },
-    (error) => {
-      if (error.response) {
-        console.error("Sendgrid Error: ", error.response.body)
-      }
-    }
-  )
-
-  return "Done"
+  sendEmail({ to, subject, body: html })
 }
 
 export async function sendTestResponseMail(
@@ -580,11 +468,9 @@ export async function sendTestResponseMail(
   isQualified: boolean
 ) {
   const to = email
-  const from = "Copods Careers <careers@copods.co>"
   const subject = isQualified
     ? `Congratulations ${candidateName}!`
     : `Better luck next time ${candidateName}!`
-  const text = "K - Quiz @ Copods"
   const logo = "K - Quiz logo"
   const htmlNotQualified = `
   <html>
@@ -684,25 +570,9 @@ export async function sendTestResponseMail(
         </body>
       </html>`
 
-  sendgrid.setApiKey(env.SENDGRID_API_KEY as string)
-
-  const msg = {
+  sendEmail({
     to,
-    from, // Use the email address or domain you verified above
     subject,
-    text,
-    html: isQualified ? htmlQualified : htmlNotQualified,
-  }
-  await sendgrid.send(msg).then(
-    () => {
-      return "ok"
-    },
-    (error) => {
-      if (error.response) {
-        console.error("Sendgrid Error: ", error.response.body)
-      }
-    }
-  )
-
-  return "Done"
+    body: isQualified ? htmlQualified : htmlNotQualified,
+  })
 }
