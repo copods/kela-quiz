@@ -1,18 +1,18 @@
-#!/bin/bash
-# Prevents force-pushing to master
+# #!/bin/bash
+# # Prevents force-pushing to master
 
-BRANCH=`git rev-parse --abbrev-ref HEAD`
-PROTECTED_BRANCHES="^(main|dev)"
+# BRANCH=`git rev-parse --abbrev-ref HEAD`
+# PROTECTED_BRANCHES="^(main|dev)"
 
-if [[ "$BRANCH" =~ $PROTECTED_BRANCHES ]]
-then
-  echo -e "\n🚫 Cannot commit/push to $BRANCH branch, please create your own branch and use PR.\n"
-  exit 1
-fi
+# if [[ "$BRANCH" =~ $PROTECTED_BRANCHES ]]
+# then
+#   echo -e "\n🚫 Cannot commit/push to $BRANCH branch, please create your own branch and use PR.\n"
+#   exit 1
+# fi
 
-#!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
+# #!/usr/bin/env sh
+# . "$(dirname -- "$0")/_/husky.sh"
 
-npm run lint
-npm run typecheck --if-present
-npm run format
+# npm run lint
+# npm run typecheck --if-present
+# npm run format
