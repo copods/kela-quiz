@@ -62,7 +62,7 @@ const SectionDetails = () => {
     // Function to handle the file download
     console.log("ok")
     const link = document.createElement("a")
-    link.href = `/path/to/your/assets/Smaple_Sheet.csv` // Update the path as needed
+    link.href = `/Smaple_Sheet.csv` // Update the path as needed
     link.download = "Smaple_Sheet.csv" // Update the filename as needed
     link.click()
   }
