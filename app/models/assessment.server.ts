@@ -73,7 +73,8 @@ async function sendOTPToUser({ id, OTP }: { id: string; OTP: number }) {
     where: { id },
     select: { email: true },
   })
-  return await sendOTPMail(user?.email as string, OTP)
+  await sendOTPMail(user?.email as string, OTP)
+  return "Done"
 }
 
 export async function updateCandidateFirstLastName(
@@ -108,7 +109,8 @@ export async function resendOtp({ assessmentId }: { assessmentId: string }) {
         OTP: OTPValue,
       },
     })
-    return await sendOTPMail(user?.candidate?.email as string, OTPValue)
+    await sendOTPMail(user?.candidate?.email as string, OTPValue)
+    return "Done"
   } else return null
 }
 

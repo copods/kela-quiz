@@ -214,7 +214,8 @@ export async function sendResetPassword(email: string) {
         hash: hashedPassword,
       },
     })
-    return await sendNewPassword(userEmail?.email as string, password)
+    await sendNewPassword(userEmail?.email as string, password)
+    return "Done"
   } else {
     return { value: null, time: Date.now() }
   }
