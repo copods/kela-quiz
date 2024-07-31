@@ -19,6 +19,9 @@ const CSVQuestionUploadDrawer = ({ open, setOpen, data, setData }: any) => {
   const { t } = useTranslation()
   const submit = useSubmit()
 
+  const getOption = (optionsArr: any, option: string) =>
+    optionsArr.split(",").includes(option)
+
   useEffect(() => {
     setInvalidQuestions(
       data.questions.filter((_: any, index: number) => {
@@ -28,19 +31,37 @@ const CSVQuestionUploadDrawer = ({ open, setOpen, data, setData }: any) => {
           return true
         }
         if (
-          _.Answer != "A" &&
-          _.Answer != "B" &&
-          _.Answer != "C" &&
-          _.Answer != "D"
+          getOption(_.Answer, "A") &&
+          getOption(_.Answer, "B") &&
+          getOption(_.Answer, "C") &&
+          getOption(_.Answer, "D")
         ) {
           _.selected = false
           _.disabled = true
           return true
         }
+
+        if (
+          _.Answer.split(",").some(
+            (_: string) => !["A", "B", "C", "D"].includes(_)
+          )
+        ) {
+          _.selected = false
+          _.disabled = true
+          _.incorrectAnswer = true
+          return true
+        }
+
         const tempKeys: any = Object.keys(_).map((key) => {
           return _[key] ? key : null
         })
-        if (!tempKeys.includes(_.Answer)) {
+
+        if (
+          !_.Answer.split(",").every((element: any) =>
+            tempKeys.includes(element)
+          )
+        ) {
+          console.log("x", tempKeys, tempKeys.includes(_.Answer), _.Answer)
           _.selected = false
           _.disabled = true
           return true
@@ -71,15 +92,26 @@ const CSVQuestionUploadDrawer = ({ open, setOpen, data, setData }: any) => {
           question: question.Question,
           options: [],
           correctAnswer: [],
-          questionTypeId: questionTypes.find(
-            (item: {
-              createdAt: string
-              displayName: string
-              id: string
-              updatedAt: string
-              value: string
-            }) => item.value === QuestionTypes.singleChoice
-          )?.id,
+          questionTypeId:
+            question.Answer?.split(",")?.length == 1
+              ? questionTypes.find(
+                  (item: {
+                    createdAt: string
+                    displayName: string
+                    id: string
+                    updatedAt: string
+                    value: string
+                  }) => item.value === QuestionTypes.singleChoice
+                )?.id
+              : questionTypes.find(
+                  (item: {
+                    createdAt: string
+                    displayName: string
+                    id: string
+                    updatedAt: string
+                    value: string
+                  }) => item.value === QuestionTypes.multipleChoice
+                )?.id,
 
           sectionId: sectionDetails?.id as string,
           checkOrder: false,
@@ -89,7 +121,7 @@ const CSVQuestionUploadDrawer = ({ open, setOpen, data, setData }: any) => {
           let optionForQuestion = {
             id: uuidv4(),
             option: question.A,
-            isCorrect: question.Answer == "A",
+            isCorrect: getOption(question.Answer, "A"),
           }
           testQuestion.options.push(optionForQuestion)
         }
@@ -97,7 +129,7 @@ const CSVQuestionUploadDrawer = ({ open, setOpen, data, setData }: any) => {
           let optionForQuestion = {
             id: uuidv4(),
             option: question.B,
-            isCorrect: question.Answer == "B",
+            isCorrect: getOption(question.Answer, "B"),
           }
           testQuestion.options.push(optionForQuestion)
         }
@@ -105,7 +137,7 @@ const CSVQuestionUploadDrawer = ({ open, setOpen, data, setData }: any) => {
           let optionForQuestion = {
             id: uuidv4(),
             option: question.C,
-            isCorrect: question.Answer == "C",
+            isCorrect: getOption(question.Answer, "C"),
           }
           testQuestion.options.push(optionForQuestion)
         }
@@ -113,7 +145,7 @@ const CSVQuestionUploadDrawer = ({ open, setOpen, data, setData }: any) => {
           let optionForQuestion = {
             id: uuidv4(),
             option: question.D,
-            isCorrect: question.Answer == "D",
+            isCorrect: getOption(question.Answer, "D"),
           }
           testQuestion.options.push(optionForQuestion)
         }
@@ -189,10 +221,14 @@ const CSVQuestionUploadDrawer = ({ open, setOpen, data, setData }: any) => {
                     {question.A && (
                       <div className="flex items-center gap-3 text-sm">
                         <input
-                          type="radio"
+                          type={
+                            question.Answer.split(",")?.length == 1
+                              ? "radio"
+                              : "checkbox"
+                          }
                           name={`answer-${index}`}
                           value="A"
-                          checked={question.Answer == "A"}
+                          checked={getOption(question.Answer, "A")}
                         />
                         <span>{question.A}</span>
                       </div>
@@ -200,10 +236,14 @@ const CSVQuestionUploadDrawer = ({ open, setOpen, data, setData }: any) => {
                     {question.B && (
                       <div className="flex items-center gap-3 text-sm">
                         <input
-                          type="radio"
+                          type={
+                            question.Answer.split(",")?.length == 1
+                              ? "radio"
+                              : "checkbox"
+                          }
                           name={`answer-${index}`}
                           value="B"
-                          checked={question.Answer == "B"}
+                          checked={getOption(question.Answer, "B")}
                         />
                         <span>{question.B}</span>
                       </div>
@@ -211,10 +251,14 @@ const CSVQuestionUploadDrawer = ({ open, setOpen, data, setData }: any) => {
                     {question.C && (
                       <div className="flex items-center gap-3 text-sm">
                         <input
-                          type="radio"
+                          type={
+                            question.Answer.split(",")?.length == 1
+                              ? "radio"
+                              : "checkbox"
+                          }
                           name={`answer-${index}`}
                           value="C"
-                          checked={question.Answer == "C"}
+                          checked={getOption(question.Answer, "C")}
                         />
                         <span>{question.C}</span>
                       </div>
@@ -222,10 +266,14 @@ const CSVQuestionUploadDrawer = ({ open, setOpen, data, setData }: any) => {
                     {question.D && (
                       <div className="flex items-center gap-3 text-sm">
                         <input
-                          type="radio"
+                          type={
+                            question.Answer.split(",")?.length == 1
+                              ? "radio"
+                              : "checkbox"
+                          }
                           name={`answer-${index}`}
                           value="D"
-                          checked={question.Answer == "D"}
+                          checked={getOption(question.Answer, "D")}
                         />
                         <span>{question.D}</span>
                       </div>
@@ -233,7 +281,9 @@ const CSVQuestionUploadDrawer = ({ open, setOpen, data, setData }: any) => {
                   </div>
                   {question.disabled && (
                     <span className="text-xs text-red-600">
-                      Invalid Question
+                      {question.incorrectAnswer
+                        ? "Incorrect Answer"
+                        : "Invalid Question"}
                     </span>
                   )}
                   {question.warn && (

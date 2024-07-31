@@ -114,6 +114,7 @@ const ResultDetailsQuestionsPreview = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  console.log("QuestionTypes", QuestionTypes, questionType)
   return (
     <div className="flex w-full rounded-lg border border-gray-300 bg-white">
       <div className="flex w-6/12 flex-col gap-6 p-6">
@@ -127,10 +128,10 @@ const ResultDetailsQuestionsPreview = ({
               {questionType.value === QuestionTypes.text ? (
                 <Chip text={t("resultConstants.text")} />
               ) : questionType.value === QuestionTypes.multipleChoice ? (
-                <Chip text={t("sectionsConstants.mcq")} />
+                <Chip text={t("sectionsConstants.msq")} />
               ) : (
                 questionType.value === QuestionTypes.singleChoice && (
-                  <Chip text={t("sectionsConstants.msq")} />
+                  <Chip text={t("sectionsConstants.mcq")} />
                 )
               )}
             </span>
