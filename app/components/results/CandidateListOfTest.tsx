@@ -195,6 +195,14 @@ const CandidateListOfTest = () => {
       (error) => toast.error(`${t("testConstants.copyLinkFailed")}${error}`)
     )
   }
+
+  const copyOTP = (otp: string) => {
+    navigator.clipboard.writeText(otp).then(
+      () => toast.success("OTP copied"),
+      (error) => toast.error(`${t("testConstants.copyLinkFailed")}${error}`)
+    )
+  }
+
   const SeriaLNoCell = (data: { [key: string]: string }, index: number) => {
     return <span>{(currentPage - 1) * pageSize + index + 1}</span>
   }
@@ -289,6 +297,14 @@ const CandidateListOfTest = () => {
     } & CandidateResult
   ) => {
     const menuItemsDetailsList = [
+      {
+        show: (data as any)?.candidate?.OTP,
+        id: "copy-link",
+        menuListText: t("resultConstants.copyOTP"),
+        menuListIcon: "teenyicons:otp-outline",
+        handleItemAction: () => copyOTP((data as any).candidate?.OTP as string),
+      },
+
       {
         show: loaderData.permission.invite_candidate.update && !data.startedAt,
         id: "resend-invite",

@@ -211,7 +211,8 @@
     "text": "TEXT",
     "givenAnswers": "Given Answers",
     "givenAnswer": "Given Answer",
-    "wrong": "Wrong"
+    "wrong": "Wrong",
+    "copyOTP": "Copy OTP"
   },
   "forgotPasswordConstants": {
     "header": "Forgot password?",
