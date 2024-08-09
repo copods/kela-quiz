@@ -139,6 +139,7 @@ export async function getAllCandidatesOfTest({
           c."email" AS "c_email",
           c."firstName" AS "c_firstName",
           c."lastName" AS "c_lastName",
+          c."OTP" AS "c_OTP",
           u."firstName" AS "createdBy_firstName",
           u."lastName" AS "createdBy_lastName",
           cr."id" AS "cr_id",
@@ -227,6 +228,7 @@ export async function getAllCandidatesOfTest({
         email: res.c_email,
         firstName: res.c_firstName,
         lastName: res.c_lastName,
+        OTP: res.c_OTP,
         createdBy: {
           firstName: res.createdBy_firstName,
           lastName: res.createdBy_lastName,
