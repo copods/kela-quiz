@@ -77,7 +77,9 @@
     "totalQuestionsText": "Total Questions",
     "noRecords": "No Records",
     "sortBy": "Sort by",
-    "close": "Close"
+    "close": "Close",
+    "groupByCandidate": "Group by Candidate",
+    "groupByTest": "Group by Test"
   },
   "sideNav": {
     "sideNavHeading": "Quiz",

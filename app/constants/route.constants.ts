@@ -8,6 +8,7 @@ export const routes = {
   addQuestion: "/add-question",
   addAssessment: "/assessments/add-assessment",
   resultGroupTest: "/results/groupByTests",
+  resultGroupCandidate: "/results/groupByCandidate",
   members: "/members",
   generalSettings: "/settings/general",
   workspaceSetting: "/settings/workspace",
