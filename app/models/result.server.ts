@@ -582,3 +582,150 @@ export async function getResultDetailBySection(
     throw error
   }
 }
+
+export async function getAllCandidateCount(
+  userId: string,
+  workspaceId: string,
+  searchText?: string
+) {
+  try {
+    if (
+      !(await checkFeatureAuthorization(userId, workspaceId, "results", "read"))
+    ) {
+      throw {
+        status: 403,
+      }
+    }
+    const queryResult: any = await prisma.$queryRaw`SELECT
+          c.*
+
+      FROM
+          "Candidate" c
+      WHERE
+          (
+            c.email ILIKE '%' || ${searchText} || '%'
+            OR CONCAT(c."firstName", ' ', c."lastName") ILIKE '%' || ${searchText} || '%'
+          )
+
+      `
+    return queryResult?.length
+  } catch (error) {
+    throw error
+  }
+}
+
+export async function getAllCandidatesPerPage({
+  userId,
+  currentWorkspaceId,
+  currentPage,
+  pageSize,
+  searchText,
+}: {
+  userId: string
+  currentWorkspaceId: string
+  currentPage: number
+  pageSize: number
+  searchText: string | undefined
+}) {
+  try {
+    if (
+      !(await checkFeatureAuthorization(
+        userId,
+        currentWorkspaceId,
+        "results",
+        "read"
+      ))
+    ) {
+      throw {
+        status: 403,
+      }
+    }
+
+    const queryResult: any = await prisma.$queryRaw`
+            SELECT
+          c.*,
+          c."email" AS "c_email",
+          c."firstName" AS "c_firstName",
+          c."lastName" AS "c_lastName",
+          c."OTP" AS "c_OTP",
+          c."id" AS "c_id",
+          c."createdAt" AS "c_createdAt",
+          c."updatedAt" AS "c_updatedAt",
+
+          ct."startedAt" AS "ct_startedAt",
+          ct."endAt" AS "ct_endAt",
+          ct."id" AS "ct_id",
+          t.name AS "test_name",
+          cr."candidateId" AS "cr_candidateId",
+          cr."candidateTestId" AS "cr_candidateTestId",
+          cr."totalQuestion" AS "cr_totalQuestion",
+          cr."correctQuestion" AS "cr_correctQuestion",
+          cr."unanswered" AS "cr_unanswered",
+          cr."incorrect" AS "cr_incorrect",
+          cr."skipped" AS "cr_skipped",
+          cr."id" AS "cr_id",
+          cr."testId" AS "cr_testId",
+          cr."isQualified" AS "cr_isQualified",
+          cr."createdAt" AS "cr_createdAt",
+          cr."updatedAt" AS "cr_updatedAt",
+          cr."workspaceId" AS "cr_workspaceId"
+      FROM
+          "Candidate" c
+      LEFT JOIN
+          "CandidateTest" ct ON ct."candidateId" = c.id
+      LEFT JOIN
+          "Test" t ON t.id = ct."testId"
+      LEFT JOIN
+          "CandidateResult" cr ON cr."candidateTestId" = ct.id
+      WHERE
+          c.email ILIKE '%' || ${searchText} || '%'
+          -- OR CONCAT(c."firstName", ' ', c."lastName") ILIKE '%' || ${searchText} || '%'
+      ORDER BY
+          c."createdAt" DESC
+      LIMIT
+          ${pageSize}
+      OFFSET
+          (${currentPage} - 1) * ${pageSize};
+
+      `
+    let response: any = []
+
+    response = queryResult?.map((res: any) => ({
+      id: res.c_id,
+      email: res.c_email,
+      firstName: res.c_firstName,
+      lastName: res.c_lastName,
+      createdAt: res.c_createdAt,
+      updatedAt: res.c_updatedAt,
+      testId: res.ct_id,
+      candidateId: res.cr_candidateId,
+      candidateTestId: res.cr_candidateTestId,
+      startedAt: res.ct_startedAt,
+      endAt: res.ct_endAt,
+      testName: res.test_name,
+      candidateResult: res.cr_id
+        ? [
+            {
+              id: res.cr_id,
+              candidateId: res.cr_candidateId,
+              candidateTestId: res.cr_candidateTestId,
+              totalQuestion: res.cr_totalQuestion,
+              correctQuestion: res.cr_correctQuestion,
+              unanswered: res.cr_unanswered,
+              incorrect: res.cr_incorrect,
+              skipped: res.cr_skipped,
+              testId: res.cr_testId,
+              isQualified: res.cr_isQualified,
+              createdAt: res.cr_createdAt,
+              updatedAt: res.cr_updatedAt,
+              workspaceId: res.cr_workspaceId,
+            },
+          ]
+        : [],
+    }))
+
+    return response
+  } catch (error) {
+    throw error
+  }
+}

@@ -1,9 +1,11 @@
 import { resendTestLink } from "~/models/candidate.server"
 import {
+  getAllCandidateCount,
   getAllCandidateTests,
   getAllCandidateTestsCount,
   getAllCandidatesOfTest,
   getAllCandidatesOfTestCount,
+  getAllCandidatesPerPage,
   getSectionWiseResultsOfIndividualCandidate,
   getTotalTestCount,
   updateCandidateStatus,
@@ -264,4 +266,43 @@ export const getSectionWiseResultsOFIndividualCandidate = async ({
     workspaceId,
     userId,
   })
+}
+
+export const getCountofAllCandidates = async (
+  userId: string,
+  workspaceId: string,
+  searchText?: string
+) => {
+  try {
+    console.log("test")
+    return await getAllCandidateCount(userId, workspaceId, searchText)
+  } catch (error) {
+    throw error
+  }
+}
+
+export const getAllCandidatePerPage = async ({
+  userId,
+  currentWorkspaceId,
+  currentPage,
+  pageSize,
+  searchText,
+}: {
+  userId: string
+  currentWorkspaceId: string
+  currentPage: number
+  pageSize: number
+  searchText?: string
+}) => {
+  try {
+    return await getAllCandidatesPerPage({
+      userId,
+      currentWorkspaceId,
+      currentPage,
+      pageSize,
+      searchText,
+    })
+  } catch (error) {
+    throw error
+  }
 }
