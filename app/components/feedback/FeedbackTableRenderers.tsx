@@ -32,19 +32,25 @@ export const TestNameRenderer = (data: tableData, index: number) => {
 }
 
 export const FeedbackTypeRenderer = (data: tableData, index: number) => {
+  const hasFeedbackText = data?.action.filter(
+    (item) => item.question == "Write your feedback"
+  )[0]?.value
   return (
-    <Chip
-      text={data.feedback_type}
-      variant={
-        data.feedback_type === "Positive"
-          ? "success"
-          : data.feedback_type === "Negative"
-          ? "error"
-          : data.feedback_type === "Neutral"
-          ? "warning"
-          : "default"
-      }
-    />
+    <div className="flex items-center gap-1">
+      <Chip
+        text={data.feedback_type}
+        variant={
+          data.feedback_type === "Positive"
+            ? "success"
+            : data.feedback_type === "Negative"
+            ? "error"
+            : data.feedback_type === "Neutral"
+            ? "warning"
+            : "default"
+        }
+      />
+      {hasFeedbackText && <div className="h-1 w-1 rounded bg-green-600"></div>}
+    </div>
   )
 }
 
