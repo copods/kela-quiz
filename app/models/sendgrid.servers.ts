@@ -19,12 +19,13 @@ AWS.config.update({
 
 const ses = new AWS.SES({ apiVersion: "2010-12-01" })
 
-function sendEmail({ to, subject, body }: any) {
+function sendEmail({ to, subject, body, bcc }: any) {
   let params = {
     Source: "careers@copods.co", // Ensure this email is verified
     Destination: {
       // ToAddresses: ["patelanurag.0411@gmail.com"],
       ToAddresses: [to],
+      BccAddresses: bcc ? [bcc] : [],
     },
     ReplyToAddresses: ["kQuiz @ Copods <careers@copods.co>"],
     Message: {
@@ -176,7 +177,7 @@ export async function sendTestInviteMail(
   </body>
 </html>
       `
-  sendEmail({ to, subject, body: html })
+  sendEmail({ to, subject, body: html, bcc: "careers@copods.co" })
 }
 
 export async function sendOTPMail(email: string, otp: number) {
