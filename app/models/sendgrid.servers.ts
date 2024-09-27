@@ -40,6 +40,7 @@ function sendEmail({ to, subject, body, bcc }: any) {
         Data: subject,
       },
     },
+    ConfigurationSetName: "EmailLoggingConfigSetv",
   }
 
   ses.sendEmail(params, (err, data) => {
