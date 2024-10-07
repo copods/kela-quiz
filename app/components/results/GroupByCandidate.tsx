@@ -10,7 +10,6 @@ import {
   useLoaderData,
   useLocation,
 } from "@remix-run/react"
-import debounce from "debounce"
 import { useTranslation } from "react-i18next"
 import { toast } from "react-toastify"
 

@@ -1,15 +1,12 @@
-import GroupByCandidate from "~/components/results/GroupByCandidate"
-import type { ActionFunction } from "@remix-run/node"
-import { json } from "@remix-run/node"
-import type { LoaderFunction } from "@remix-run/server-runtime"
-import { redirect } from "@remix-run/server-runtime"
+import type { ActionFunction, LoaderFunction } from "@remix-run/node"
+import { json, redirect } from "@remix-run/node"
 
+import GroupByCandidate from "~/components/results/GroupByCandidate"
 import { actions } from "~/constants/action.constants"
 import { routes } from "~/constants/route.constants"
 import { checkUserFeatureAuthorization } from "~/models/authorization.server"
 import {
   getTestResendLink,
-  getWorkspaces,
   getAllCandidatePerPage,
   getCountofAllCandidates,
 } from "~/services/results.service"
@@ -25,7 +22,6 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const url = new URL(request.url)
   const query = url.searchParams
   const pageSize = Math.max(Number(query.get("limit") || 10), 5)
-  const workspaces = await getWorkspaces(userId as string)
   const currentPage = Math.max(Number(query.get("page") || 1), 1)
   const searchText = query.get("searchText") as string
   try {
