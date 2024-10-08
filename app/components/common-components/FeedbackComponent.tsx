@@ -35,7 +35,7 @@ const FeedbackComponent = ({
   return (
     <div className="flex h-728 w-728 flex-col overflow-hidden rounded-lg bg-white shadow-sm">
       <div
-        className="flex w-full flex-col items-center border-b border-gray-200 py-6 px-4"
+        className="flex w-full flex-col items-center border-b border-gray-200 px-4 py-6"
         data-cy="feedback-form-header"
       >
         <span className="text-2xl font-bold text-gray-900">{`${t(
@@ -89,7 +89,7 @@ const FeedbackComponent = ({
         })}
       </div>
       <div
-        className={`flex border-t border-gray-200 py-6 px-8 ${
+        className={`flex border-t border-gray-200 px-8 py-6 ${
           readOnly ? "justify-end" : "justify-center"
         }`}
         data-cy="feedback-form-footer"

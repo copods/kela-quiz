@@ -175,7 +175,7 @@ const CSVQuestionUploadDrawer = ({ open, setOpen, data, setData }: any) => {
   return (
     <>
       {open && (
-        <div className="backdrop fixed top-0 left-0 right-0 bottom-0 bg-slate-200 opacity-50"></div>
+        <div className="backdrop fixed bottom-0 left-0 right-0 top-0 bg-slate-200 opacity-50"></div>
       )}
       <div className={`${classes} ${open ? "right-0" : "right-[-75%]"}`}>
         <div className="flex items-start justify-between font-semibold">

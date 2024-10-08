@@ -101,7 +101,7 @@ const PaginationDropDown = ({
                     onPageChange(1)
                   }}
                   className={({ active }) =>
-                    `relative cursor-pointer select-none py-2 px-8 text-xs text-gray-600 ${
+                    `relative cursor-pointer select-none px-8 py-2 text-xs text-gray-600 ${
                       selected === item
                         ? " bg-gray-100"
                         : active

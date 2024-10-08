@@ -96,7 +96,7 @@ function DropdownField({
                     className={({ active }) =>
                       classNames(
                         active ? "bg-primary text-white" : "text-gray-900",
-                        "relative z-20 cursor-pointer select-none py-2 px-3"
+                        "relative z-20 cursor-pointer select-none px-3 py-2"
                       )
                     }
                     value={actionName}
@@ -121,7 +121,7 @@ function DropdownField({
                     className={({ active }) =>
                       classNames(
                         active ? "bg-primary text-white" : "text-gray-900",
-                        "relative z-20 cursor-pointer select-none py-2 px-3"
+                        "relative z-20 cursor-pointer select-none px-3 py-2"
                       )
                     }
                     value={option[valueKey]}
@@ -324,7 +324,7 @@ export const NewDropdownField = <
                         className={({ active }) =>
                           classNames(
                             active ? "bg-primary text-white" : "text-gray-900",
-                            "relative z-20 cursor-pointer select-none py-2 px-3"
+                            "relative z-20 cursor-pointer select-none px-3 py-2"
                           )
                         }
                         value={action.actionName}
@@ -373,7 +373,7 @@ export const NewDropdownField = <
                                 : active
                                 ? "bg-hover"
                                 : "text-gray-900",
-                              "relative z-20 cursor-pointer select-none py-3 px-4"
+                              "relative z-20 cursor-pointer select-none px-4 py-3"
                             )
                           }
                           key={i}
@@ -446,7 +446,7 @@ export const NewDropdownField = <
                       .includes(searchLabel?.toLocaleLowerCase())
                   ).length === 0 && (
                     <Listbox.Option
-                      className={`relative z-20 cursor-not-allowed select-none py-3 px-4`}
+                      className={`relative z-20 cursor-not-allowed select-none px-4 py-3`}
                       value={null}
                     >
                       <div className="flex items-center">
