@@ -39,7 +39,7 @@ const PasswordInputFields = ({
         />
         <button
           type="button"
-          className="btn btn-outline-primary absolute right-0 left-auto mr-3.5"
+          className="btn btn-outline-primary absolute left-auto right-0 mr-3.5"
           onClick={() => setShowPassword(!showPassword)}
         >
           {showPassword ? (

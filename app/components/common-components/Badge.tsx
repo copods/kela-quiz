@@ -5,7 +5,7 @@ const Badge = (props: BadgeComponent) => {
 
   return (
     <span
-      className={`inline-block rounded-2xl py-1 px-2 text-center text-xs font-normal ${bgColor} ${textColor}`}
+      className={`inline-block rounded-2xl px-2 py-1 text-center text-xs font-normal ${bgColor} ${textColor}`}
       data-cy="badge-tag"
     >
       {children}

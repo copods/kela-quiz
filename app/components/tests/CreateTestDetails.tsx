@@ -44,7 +44,7 @@ const TestDetails = ({
           {t("testsConstants.descriptionText")}
           <span className="text-red-600">*</span>
         </label>
-        <div className="h-full pt-2 pb-4">
+        <div className="h-full pb-4 pt-2">
           <ClientOnly fallback={<div></div>}>
             {() => (
               <QuillEditor
