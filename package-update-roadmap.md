@@ -1,96 +1,85 @@
-# Package Update List
+# Kela-Quiz Upgrade Estimate
 
-## Security-Critical Updates
+## Upgrade Steps and Time Estimates
 
-- express: 4.19.2 -> 4.21.0 (Minor)
-- sanitize-html: 2.7.1 -> 2.13.1 (Minor)
-- bcryptjs: 2.4.3 (No update available)
-- aws-sdk: 2.1630.0 -> 2.1691.0 (Minor)
-- node-fetch: 3.3.0 -> 3.3.2 (Minor)
-- uuid: 9.0.0 -> 10.0.0 (Major)
-- @prisma/client: 4.9.0 -> 5.20.0 (Major)
-- dotenv: 16.0.1 -> 16.4.5 (Minor)
+### 1. Minor and Patch Version Updates of Package Dependencies (Completed)
 
-## Major Version Updates
+- Time spent: 2 days
 
-- @commitlint/cli: 17.4.0 -> 19.5.0 [Dev]
-- @commitlint/config-conventional: 17.4.0 -> 19.5.0 [Dev]
-- @faker-js/faker: 6.3.1 -> 9.0.3
-- @headlessui/react: 1.6.6 -> 2.1.9
-- @iconify/react: 3.2.2 -> 5.0.2
-- @remix-run/dev: 1.19.3 -> 2.12.1 [Dev]
-- @remix-run/eslint-config: 1.19.3 -> 2.12.1 [Dev]
-- @remix-run/express: 1.19.3 -> 2.12.1
-- @remix-run/node: 1.19.3 -> 2.12.1
-- @remix-run/react: 1.19.3 -> 2.12.1
-- @remix-run/server-runtime: 1.19.3 -> 2.12.1
-- @semantic-release/github: 8.0.7 -> 11.0.0 [Dev]
-- @testing-library/cypress: 8.0.3 -> 10.0.2 [Dev]
-- @testing-library/dom: 8.17.1 -> 10.4.0 [Dev]
-- @testing-library/jest-dom: 5.16.5 -> 6.5.0 [Dev]
-- @testing-library/react: 12.1.5 -> 16.0.1 [Dev]
-- @tinymce/tinymce-react: 4.2.0 -> 5.1.1
-- @types/eslint: 8.4.5 -> 9.6.1 [Dev]
-- @types/express: 4.17.13 -> 5.0.0 [Dev]
-- @types/node: 17.0.45 -> 22.7.4 [Dev]
-- @types/react: 17.0.48 -> 18.3.11 [Dev]
-- @types/react-dom: 17.0.17 -> 18.3.0 [Dev]
-- @vitejs/plugin-react: 1.3.2 -> 4.3.2 [Dev]
-- c8: 7.12.0 -> 10.1.2 [Dev]
-- cypress: 10.4.0 -> 13.15.0 [Dev]
-- esbuild: 0.14.54 -> 0.24.0 [Dev]
-- eslint: 8.22.0 -> 9.12.0 [Dev]
-- eslint-config-prettier: 8.5.0 -> 9.1.0 [Dev]
-- find-unused-exports: 5.0.0 -> 7.0.0 [Dev]
-- happy-dom: 5.4.0 -> 15.7.4 [Dev]
-- highcharts: 10.2.1 -> 11.4.8
-- husky: 8.0.1 -> 9.1.6 [Dev]
-- i18next: 21.9.1 -> 23.15.2
-- i18next-browser-languagedetector: 6.1.5 -> 8.0.0
-- i18next-fs-backend: 1.1.5 -> 2.3.2
-- i18next-http-backend: 1.4.1 -> 2.6.2
-- lint-staged: 13.0.3 -> 15.2.10 [Dev]
-- msw: 0.42.3 -> 2.4.9 [Dev]
-- prettier: 2.7.1 -> 3.3.3 [Dev]
-- prettier-plugin-tailwindcss: 0.1.13 -> 0.6.8 [Dev]
-- quill: 1.3.7 -> 2.0.2
-- react: 17.0.2 -> 18.3.1
-- react-dom: 17.0.2 -> 18.3.1
-- react-i18next: 11.18.6 -> 15.0.2
-- react-quilljs: 1.3.1 -> 2.0.4
-- react-toastify: 9.0.8 -> 10.0.5
-- remix-i18next: 4.1.1 -> 6.4.1
-- remix-utils: 3.3.0 -> 7.7.0
-- semantic-release: 23.0.7 -> 24.1.2 [Dev]
-- start-server-and-test: 1.14.0 -> 2.0.8 [Dev]
-- tsconfig-paths: 3.15.0 -> 4.2.0 [Dev]
-- typescript: 4.7.4 -> 5.6.2 [Dev]
-- vite: 2.9.14 -> 5.4.8 [Dev]
-- vite-tsconfig-paths: 3.5.0 -> 5.0.1 [Dev]
-- vitest: 0.14.2 -> 2.1.2 [Dev]
+#### Key package updates:
 
-## Minor and Patch Updates
+<details>
+<summary>View package updated</summary>
 
-- @semantic-release/npm: 12.0.0 -> 12.0.1 [Dev]
-- @testing-library/user-event: 14.4.3 -> 14.5.2 [Dev]
-- @types/bcryptjs: 2.4.2 -> 2.4.6 [Dev]
-- @types/compression: 1.7.2 -> 1.7.5 [Dev]
-- @types/i18next-fs-backend: 1.1.2 -> 1.1.5 [Dev]
-- @types/morgan: 1.9.3 -> 1.9.9 [Dev]
-- @types/node-cron: 3.0.7 -> 3.0.11 [Dev]
-- @types/quill: 2.0.9 -> 2.0.14 [Dev]
-- @types/sanitize-html: 2.6.2 -> 2.13.0 [Dev]
-- @types/uuid: 9.0.0 -> 9.0.8 [Dev]
-- autoprefixer: 10.4.8 -> 10.4.20 [Dev]
-- debounce: 2.0.0 -> 2.1.1
-- eslint-plugin-jsx-a11y: 6.8.0 -> 6.10.0 [Dev]
-- highcharts-react-official: 3.1.0 -> 3.2.1
-- highlight.js: 11.6.0 -> 11.10.0
-- moment: 2.29.4 -> 2.30.1
-- node-cron: 3.0.2 -> 3.0.3
-- postcss: 8.4.38 -> 8.4.47 [Dev]
-- prisma: 4.9.0 -> 4.16.2 [Dev]
-- react-range: 1.8.14 -> 1.10.0
-- tailwindcss: 3.1.8 -> 3.4.13 [Dev]
-- tiny-invariant: 1.2.0 -> 1.3.3
-- ts-node: 10.9.1 -> 10.9.2 [Dev]
+| Package                         | Old Version | New Version |
+| ------------------------------- | ----------- | ----------- |
+| @commitlint/cli                 | 17.4.0      | 17.8.1      |
+| @commitlint/config-conventional | 17.4.0      | 17.8.1      |
+| @headlessui/react               | 1.6.6       | 1.7.19      |
+| @prisma/client                  | 4.9.0       | 4.16.2      |
+| @semantic-release/github        | 8.0.7       | 8.1.0       |
+| @semantic-release/npm           | 12.0.0      | 12.0.1      |
+| @testing-library/cypress        | 8.0.3       | 8.0.7       |
+| @testing-library/dom            | 8.17.1      | 8.20.1      |
+| @testing-library/jest-dom       | 5.16.5      | 5.17.0      |
+| @testing-library/user-event     | 14.4.3      | 14.5.2      |
+| @tinymce/tinymce-react          | 4.2.0       | 4.3.2       |
+| autoprefixer                    | 10.4.8      | 10.4.20     |
+| aws-sdk                         | 2.1630.0    | 2.1691.0    |
+| cypress                         | 10.4.0      | 10.11.0     |
+| dotenv                          | 16.0.1      | 16.4.5      |
+| eslint                          | 8.22.0      | 8.57.1      |
+| express                         | 4.19.2      | 4.21.0      |
+| highcharts                      | 10.2.1      | 10.3.3      |
+| i18next                         | 21.9.1      | 21.10.0     |
+| postcss                         | 8.4.38      | 8.4.47      |
+| prettier                        | 2.7.1       | 2.8.8       |
+| prisma                          | 4.9.0       | 4.16.2      |
+| tailwindcss                     | 3.1.8       | 3.4.13      |
+| typescript                      | 4.7.4       | 4.9.5       |
+| vite                            | 2.9.14      | 2.9.18      |
+
+</details>
+
+### 2. Remix Core Upgrade (3 days)
+
+- Upgrade Remix and related packages to the latest stable version (4 hours)
+- Update Remix configuration for new APIs (4 hours)
+- Refactor code to use new v2 APIs:
+  - Update `CatchBoundary` and `ErrorBoundary` (4 hours)
+  - Implement `v2_normalizeFormMethod` changes (3 hours)
+  - Update route `meta` API usage (3 hours)
+  - Refactor route `headers` API (3 hours)
+- Update server module format if necessary (2 hours)
+- Implement new route file convention if desired (4 hours)
+
+### 3. Dependency Upgrades (2.5 days)
+
+- Upgrade React and React DOM to v18 (4 hours)
+- Update Node.js from version 18 to 20 (4 hours)
+- Update other major dependencies:
+  - @prisma/client and prisma (3 hours)
+  - @testing-library packages (2 hours)
+  - eslint and related packages (2 hours)
+  - typescript (2 hours)
+  - vite and related packages (3 hours)
+- Address breaking changes and refactor as needed (8 hours)
+
+### 4. Testing and Debugging (2 days)
+
+- Update and run unit tests (4 hours)
+- Update and run integration tests (4 hours)
+- Perform manual testing of critical paths (4 hours)
+- Debug and fix issues uncovered during testing (8 hours)
+
+## Total Time Estimate
+
+- Completed work: 2 days
+- Remaining work: 7.5 days
+- Total estimated time: 9.5 days (76 hours)
+
+## Breakdown of Remaining Work
+
+- Remix Core Upgrade: 3 days (27 hours)
+- Dependency Upgrades: 2.5 days (20 hours)
+- Testing and Debugging: 2 days (20 hours)
