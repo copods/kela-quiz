@@ -1,7 +1,5 @@
 import { defineConfig } from "cypress"
 
-global.Headers = global.Headers || require("node-fetch").Headers
-
 export default defineConfig({
   viewportHeight: 1000,
   viewportWidth: 1200,
