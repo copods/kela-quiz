@@ -83,6 +83,9 @@ jobs:
         with:
           useLockFile: false
 
+      - name: Install Docker Compose
+        run: sudo apt-get install docker-compose
+
       - name: 🐳 Docker compose
         # the sleep is just there to give time for postgres to get started
         run: docker-compose up -d && sleep 3
