@@ -29,7 +29,7 @@ async function seed() {
 
   const createRoles = () => {
     roles.forEach(async (role) => {
-      await prisma.role.upsert({
+      role = await prisma.role.upsert({
         where: {
           id: role.id,
         },
@@ -42,8 +42,11 @@ async function seed() {
           name: role.name,
         },
       })
+      console.log('----role---', role)
     })
   }
+
+
 
   const createMasterAdmin = async () => {
     user = await prisma.user.upsert({
