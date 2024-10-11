@@ -5,41 +5,38 @@
 ### 1. Minor and Patch Version Updates of Package Dependencies (Completed)
 
 - Time spent: 2 days
+  <details>
+  <summary>Key package updates:</summary>
 
-#### Key package updates:
+  | Package                         | Old Version | New Version |
+  | ------------------------------- | ----------- | ----------- |
+  | @commitlint/cli                 | 17.4.0      | 17.8.1      |
+  | @commitlint/config-conventional | 17.4.0      | 17.8.1      |
+  | @headlessui/react               | 1.6.6       | 1.7.19      |
+  | @prisma/client                  | 4.9.0       | 4.16.2      |
+  | @semantic-release/github        | 8.0.7       | 8.1.0       |
+  | @semantic-release/npm           | 12.0.0      | 12.0.1      |
+  | @testing-library/cypress        | 8.0.3       | 8.0.7       |
+  | @testing-library/dom            | 8.17.1      | 8.20.1      |
+  | @testing-library/jest-dom       | 5.16.5      | 5.17.0      |
+  | @testing-library/user-event     | 14.4.3      | 14.5.2      |
+  | @tinymce/tinymce-react          | 4.2.0       | 4.3.2       |
+  | autoprefixer                    | 10.4.8      | 10.4.20     |
+  | aws-sdk                         | 2.1630.0    | 2.1691.0    |
+  | cypress                         | 10.4.0      | 10.11.0     |
+  | dotenv                          | 16.0.1      | 16.4.5      |
+  | eslint                          | 8.22.0      | 8.57.1      |
+  | express                         | 4.19.2      | 4.21.0      |
+  | highcharts                      | 10.2.1      | 10.3.3      |
+  | i18next                         | 21.9.1      | 21.10.0     |
+  | postcss                         | 8.4.38      | 8.4.47      |
+  | prettier                        | 2.7.1       | 2.8.8       |
+  | prisma                          | 4.9.0       | 4.16.2      |
+  | tailwindcss                     | 3.1.8       | 3.4.13      |
+  | typescript                      | 4.7.4       | 4.9.5       |
+  | vite                            | 2.9.14      | 2.9.18      |
 
-<details>
-<summary>View package updated</summary>
-
-| Package                         | Old Version | New Version |
-| ------------------------------- | ----------- | ----------- |
-| @commitlint/cli                 | 17.4.0      | 17.8.1      |
-| @commitlint/config-conventional | 17.4.0      | 17.8.1      |
-| @headlessui/react               | 1.6.6       | 1.7.19      |
-| @prisma/client                  | 4.9.0       | 4.16.2      |
-| @semantic-release/github        | 8.0.7       | 8.1.0       |
-| @semantic-release/npm           | 12.0.0      | 12.0.1      |
-| @testing-library/cypress        | 8.0.3       | 8.0.7       |
-| @testing-library/dom            | 8.17.1      | 8.20.1      |
-| @testing-library/jest-dom       | 5.16.5      | 5.17.0      |
-| @testing-library/user-event     | 14.4.3      | 14.5.2      |
-| @tinymce/tinymce-react          | 4.2.0       | 4.3.2       |
-| autoprefixer                    | 10.4.8      | 10.4.20     |
-| aws-sdk                         | 2.1630.0    | 2.1691.0    |
-| cypress                         | 10.4.0      | 10.11.0     |
-| dotenv                          | 16.0.1      | 16.4.5      |
-| eslint                          | 8.22.0      | 8.57.1      |
-| express                         | 4.19.2      | 4.21.0      |
-| highcharts                      | 10.2.1      | 10.3.3      |
-| i18next                         | 21.9.1      | 21.10.0     |
-| postcss                         | 8.4.38      | 8.4.47      |
-| prettier                        | 2.7.1       | 2.8.8       |
-| prisma                          | 4.9.0       | 4.16.2      |
-| tailwindcss                     | 3.1.8       | 3.4.13      |
-| typescript                      | 4.7.4       | 4.9.5       |
-| vite                            | 2.9.14      | 2.9.18      |
-
-</details>
+  </details>
 
 ### 2. Remix Core Upgrade (3 days)
 
