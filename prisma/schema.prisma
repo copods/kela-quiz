@@ -1,0 +1,363 @@
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DATABASE_DIRECT_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Workspace {
+  id              String            @id @default(uuid())
+  name            String
+  createdBy       User              @relation(fields: [createdById], references: [id])
+  createdById     String
+  ownerId         String            @default("")
+  userWorkspace   UserWorkspace[]
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  updatedById     String            @default("")
+  section         Section[]
+  test            Test[]
+  candidateResult CandidateResult[]
+
+  Invites      Invites[]
+  UserFeedback UserFeedback[]
+
+  @@unique([name, createdById])
+}
+
+model UserWorkspace {
+  id          String    @id @default(uuid())
+  workspace   Workspace @relation(fields: [workspaceId], references: [id])
+  workspaceId String
+  user        User      @relation(fields: [userId], references: [id])
+  userId      String
+  role        Role      @relation(fields: [roleId], references: [id])
+  roleId      String
+  isDefault   Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@unique([workspaceId, userId])
+}
+
+model User {
+  id            String          @id @default(uuid())
+  email         String          @unique
+  firstName     String
+  lastName      String
+  role          Role            @relation(fields: [roleId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  roleId        String
+  password      Password?
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  Section       Section[]
+  Question      Question[]
+  Option        Option[]
+  Test          Test[]
+  Candidate     Candidate[]
+  userWorkspace UserWorkspace[]
+  workspace     Workspace[]
+  Invites       Invites[]
+}
+
+model Password {
+  hash   String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId String @unique
+}
+
+model Role {
+  id            String          @id @default(uuid())
+  name          String          @unique
+  users         User[]
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  userWorkspace UserWorkspace[]
+  Invites       Invites[]
+}
+
+model Invites {
+  id                  String     @id @default(uuid())
+  email               String
+  invitedById         User?      @relation(fields: [userId], references: [id])
+  userId              String?
+  invitedForWorkspace Workspace? @relation(fields: [workspaceId], references: [id])
+  workspaceId         String?
+  role                Role       @relation(fields: [roleId], references: [id])
+  roleId              String
+  invitedOn           DateTime   @default(now())
+  deleted             Boolean    @default(false)
+  deletedAt           String?    @default("na")
+  joined              Boolean?
+  joinedAt            String?    @default("na")
+  createdAt           DateTime   @default(now())
+  updatedAt           DateTime   @updatedAt
+
+  @@unique([email, deletedAt, deleted, workspaceId])
+}
+
+model Section {
+  id                     String                   @id @default(uuid())
+  name                   String
+  description            String
+  createdBy              User                     @relation(fields: [createdById], references: [id])
+  createdById            String
+  questions              Question[]
+  sectionInCandidateTest SectionInCandidateTest[]
+  sectionInTest          SectionInTest[]
+  deleted                Boolean                  @default(false)
+  deletedAt              String?                  @default("na")
+  createdAt              DateTime                 @default(now())
+  updatedAt              DateTime                 @updatedAt
+  workspace              Workspace?               @relation(fields: [workspaceId], references: [id])
+  workspaceId            String?
+
+  @@unique([name, deletedAt, deleted, workspaceId])
+}
+
+model Question {
+  id                String              @id @default(uuid())
+  question          String
+  options           Option[]            @relation("options_in_question")
+  correctOptions    Option[]            @relation("correct_options_in_question")
+  correctAnswer     CorrectAnswer[]
+  marks             Int                 @default(1)
+  checkOrder        Boolean             @default(false)
+  questionType      QuestionType        @relation(fields: [questionTypeId], references: [id])
+  questionTypeId    String
+  section           Section             @relation(fields: [sectionId], references: [id])
+  sectionId         String
+  createdBy         User                @relation(fields: [createdById], references: [id])
+  createdById       String
+  candidateQuestion CandidateQuestion[]
+  createdAt         DateTime            @default(now())
+  deleted           Boolean             @default(false)
+  deletedAt         String?             @default("na")
+  updatedAt         DateTime            @updatedAt
+}
+
+model CorrectAnswer {
+  id         String    @id @default(uuid())
+  answer     String
+  order      Int
+  question   Question? @relation(fields: [questionId], references: [id])
+  questionId String?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+}
+
+model QuestionType {
+  id          String     @id @default(uuid())
+  value       String     @unique
+  displayName String
+  questions   Question[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+model Option {
+  id                String              @id @default(uuid())
+  option            String
+  question          Question            @relation("options_in_question", fields: [questionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  questionId        String
+  coInQuestion      Question?           @relation("correct_options_in_question", fields: [coInQuestionId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  coInQuestionId    String?
+  createdBy         User                @relation(fields: [createdById], references: [id])
+  createdById       String
+  candidateQuestion CandidateQuestion[]
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+}
+
+model Test {
+  id                String              @id @default(uuid())
+  name              String
+  description       String
+  sections          SectionInTest[]
+  createdBy         User                @relation(fields: [createdById], references: [id])
+  createdById       String
+  candidateTest     CandidateTest[]
+  candidateResult   CandidateResult[]
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  deleted           Boolean             @default(false)
+  deletedAt         String?             @default("na")
+  SectionWiseResult SectionWiseResult[]
+  workspace         Workspace?          @relation(fields: [workspaceId], references: [id])
+  workspaceId       String?
+
+  @@unique([name, deletedAt, deleted, workspaceId])
+}
+
+model SectionInTest {
+  id             String   @id @default(uuid())
+  section        Section  @relation(fields: [sectionId], references: [id])
+  sectionId      String
+  order          Int
+  timeInSeconds  Int
+  totalQuestions Int
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  test           Test     @relation(fields: [testId], references: [id])
+  testId         String
+}
+
+model Candidate {
+  id           String            @id @default(uuid())
+  email        String            @unique
+  firstName    String?
+  lastName     String?
+  isQualified  Boolean?
+  OTP          Int               @default(0)
+  tests        CandidateTest[]
+  results      CandidateResult[]
+  createdBy    User              @relation(fields: [createdById], references: [id])
+  createdById  String
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+  UserFeedback UserFeedback[]
+}
+
+model CandidateTest {
+  id                 String                   @id @default(uuid())
+  sections           SectionInCandidateTest[]
+  test               Test                     @relation(fields: [testId], references: [id])
+  testId             String
+  link               String?
+  candidate          Candidate                @relation(fields: [candidateId], references: [id])
+  candidateId        String
+  candidateResult    CandidateResult[]
+  candidateStep      Json                     @default("{ \"nextRoute\": \"register\", \"isSection\": false, \"currentSectionID\": null }") // register || instructions || section
+  startedAt          DateTime?
+  endAt              DateTime?
+  createdAt          DateTime                 @default(now())
+  updatedAt          DateTime                 @updatedAt
+  linkSentOn         DateTime?                @default(now())
+  sectionWiseResults SectionWiseResult[]
+  UserFeedback       UserFeedback[]
+
+  @@unique([candidateId, testId])
+}
+
+model SectionInCandidateTest {
+  id                      String                    @id @default(uuid())
+  section                 Section                   @relation(fields: [sectionId], references: [id])
+  sectionId               String
+  questions               CandidateQuestion[]
+  candidateTest           CandidateTest             @relation(fields: [candidateTestId], references: [id])
+  candidateTestId         String
+  timeInCandidateQuestion TimeInCandidateQuestion[]
+  order                   Int
+  startedAt               DateTime?
+  endAt                   DateTime?
+  createdAt               DateTime                  @default(now())
+  updatedAt               DateTime                  @updatedAt
+  SectionWiseResult       SectionWiseResult[]
+}
+
+model CandidateQuestion {
+  id                       String                    @id @default(uuid())
+  question                 Question                  @relation(fields: [questionId], references: [id])
+  questionId               String
+  status                   String                    @default("NOT_VIEWED") // NOT_VIEWED, VIEWED, SKIPPED, ANSWERED
+  selectedOptions          Option[]
+  answers                  String[]
+  order                    Int
+  sectionInCandidateTest   SectionInCandidateTest    @relation(fields: [sectionInCandidateTestId], references: [id])
+  sectionInCandidateTestId String
+  timeInCandidateQuestion  TimeInCandidateQuestion[]
+  answeredAt               DateTime?
+  createdAt                DateTime                  @default(now())
+  updatedAt                DateTime                  @updatedAt
+}
+
+model TimeInCandidateQuestion {
+  id         String                 @id @default(uuid())
+  question   CandidateQuestion      @relation(fields: [questionId], references: [id])
+  questionId String
+  section    SectionInCandidateTest @relation(fields: [sectionId], references: [id])
+  sectionId  String
+  enterAt    DateTime
+  exitAt     DateTime
+  createdAt  DateTime               @default(now())
+  updatedAt  DateTime               @updatedAt
+}
+
+model CandidateResult {
+  id              String        @id @default(uuid())
+  candidate       Candidate     @relation(fields: [candidateId], references: [id])
+  candidateId     String
+  candidateTest   CandidateTest @relation(fields: [candidateTestId], references: [id])
+  candidateTestId String
+
+  totalQuestion   Int
+  correctQuestion Int
+  unanswered      Int
+  incorrect       Int? @default(0)
+  skipped         Int? @default(0)
+
+  // easier access of test and results
+  test        Test       @relation(fields: [testId], references: [id])
+  testId      String
+  isQualified Boolean
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  workspace   Workspace? @relation(fields: [workspaceId], references: [id])
+  workspaceId String?
+}
+
+model SectionWiseResult {
+  id                       String                 @id @default(uuid())
+  section                  SectionInCandidateTest @relation(fields: [sectionInCandidateTestId], references: [id])
+  sectionInCandidateTestId String
+  totalQuestion            Int
+  correctQuestion          Int
+  unanswered               Int
+  incorrect                Int?                   @default(0)
+  skipped                  Int?                   @default(0)
+
+  // easier access of test and results
+  test   Test   @relation(fields: [testId], references: [id])
+  testId String
+
+  candidateTest   CandidateTest @relation(fields: [candidateTestId], references: [id])
+  candidateTestId String
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  @@unique([sectionInCandidateTestId, testId])
+}
+
+model UserFeedback {
+  id              String        @id @default(uuid())
+  candidateTest   CandidateTest @relation(fields: [candidateTestId], references: [id])
+  candidateTestId String
+
+  workspace   Workspace @relation(fields: [workspaceId], references: [id])
+  workspaceId String
+
+  userFeedbackQuestion UserFeedbackQuestion[]
+  candidate            Candidate?             @relation(fields: [candidateId], references: [id])
+  candidateId          String?
+  feedbackType         String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model UserFeedbackQuestion {
+  id             String        @id @default(uuid())
+  question       String
+  value          String
+  questionType   String
+  UserFeedback   UserFeedback? @relation(fields: [userFeedbackId], references: [id])
+  userFeedbackId String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([id])
+}

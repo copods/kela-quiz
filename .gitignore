@@ -1,5 +1,15 @@
 node_modules
+coverage
 
-/.cache
 /build
+/public/build
 .env
+
+/cypress/screenshots
+/cypress/videos
+/postgres-data
+
+/app/tailwind.css
+
+
+**/.DS_Store
