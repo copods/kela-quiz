@@ -1,0 +1,48 @@
+/*  TODO: Remove unused font weight on the end of development/ design compleyte */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+* {
+    font-family: "Poppins", sans-serif;
+}
+
+.disable-text-selection {
+    -ms-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    -khtml-user-select: none;
+    user-select: none;
+}
+
+*:focus-visible {
+    outline: 2px dotted rgb(91, 91, 91);
+    border-radius: 3px;
+}
+
+.highcharts-credits {
+    display: none;
+}
+
+.highcharts-root {
+    border-radius: 8px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+#table-td:has(#status-cell) {
+    overflow: visible !important;
+    display: flex;
+}
+
+#table-td:has(#action-cell) {
+    overflow: visible !important;
+    display: flex;
+}
+
+#table-td:has(#section-count-button) {
+    overflow: visible !important;
+}
