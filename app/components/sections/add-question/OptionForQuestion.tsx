@@ -4,7 +4,7 @@ import { useEffect } from "react"
 import { Icon } from "@iconify/react"
 import { useTranslation } from "react-i18next"
 import { toast } from "react-toastify"
-import { ClientOnly } from "remix-utils"
+import { ClientOnly } from "remix-utils/client-only";
 import { v4 as uuidv4 } from "uuid"
 
 import Button from "~/components/common-components/Button"
@@ -55,7 +55,7 @@ export default function OptionForQuestion({
   const addOptionArea = () => {
     if (
       getQuestionType(selectedTypeOfQuestion) ===
-        QuestionTypes.multipleChoice ||
+      QuestionTypes.multipleChoice ||
       getQuestionType(selectedTypeOfQuestion) === QuestionTypes.singleChoice
     ) {
       if (options.length > 5) {
@@ -72,7 +72,7 @@ export default function OptionForQuestion({
   const deleteOption = (index: number, id?: string) => {
     if (
       getQuestionType(selectedTypeOfQuestion) ===
-        QuestionTypes.multipleChoice ||
+      QuestionTypes.multipleChoice ||
       getQuestionType(selectedTypeOfQuestion) === QuestionTypes.singleChoice
     ) {
       if (options.length === 2) {
@@ -134,7 +134,7 @@ export default function OptionForQuestion({
       <div className="flex h-11 flex-row items-end justify-between p-1">
         {getQuestionType(selectedTypeOfQuestion) ===
           QuestionTypes.multipleChoice ||
-        getQuestionType(selectedTypeOfQuestion) ===
+          getQuestionType(selectedTypeOfQuestion) ===
           QuestionTypes.singleChoice ? (
           <div
             className="ml-7 text-base font-medium text-gray-600"
@@ -165,12 +165,12 @@ export default function OptionForQuestion({
         {(getQuestionType(selectedTypeOfQuestion) ===
           QuestionTypes.multipleChoice ||
           getQuestionType(selectedTypeOfQuestion) ===
-            QuestionTypes.singleChoice) &&
+          QuestionTypes.singleChoice) &&
           options.map((option, index) => {
             return (
               <div className="flex items-center gap-2.5 p-1" key={option.id}>
                 {getQuestionType(selectedTypeOfQuestion) ===
-                QuestionTypes.multipleChoice ? (
+                  QuestionTypes.multipleChoice ? (
                   <input
                     name="checkbox"
                     tabIndex={0}
@@ -184,7 +184,7 @@ export default function OptionForQuestion({
                   />
                 ) : (
                   getQuestionType(selectedTypeOfQuestion) ===
-                    QuestionTypes.singleChoice && (
+                  QuestionTypes.singleChoice && (
                     <input
                       tabIndex={0}
                       type="radio"
@@ -230,11 +230,10 @@ export default function OptionForQuestion({
                       id="delete-option"
                       aria-label={t("commonConstants.delete")}
                       icon="ic:outline-delete-outline"
-                      className={`h-6 w-6 ${index} ${
-                        options.length < 2
+                      className={`h-6 w-6 ${index} ${options.length < 2
                           ? "cursor-not-allowed text-red-400"
                           : "cursor-pointer text-red-600"
-                      }`}
+                        }`}
                       role="button"
                     />
                   )}
@@ -266,11 +265,10 @@ export default function OptionForQuestion({
                         onClick={() => deleteOption(index)}
                         tabIndex={0}
                         icon="ic:outline-delete-outline"
-                        className={`h-6 w-6 ${index} ${
-                          textCorrectAnswer.length < 2
+                        className={`h-6 w-6 ${index} ${textCorrectAnswer.length < 2
                             ? "cursor-not-allowed text-red-400"
                             : "cursor-pointer text-red-600"
-                        }`}
+                          }`}
                         onKeyDown={(e) => {
                           if (e.key === "Enter") deleteOption(index, option?.id)
                         }}
