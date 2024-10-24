@@ -14,7 +14,7 @@ import {
 
 import { routes } from "~/constants/route.constants"
 import { useCommonContext } from "~/context/Common.context"
-import type { LoaderData } from "~/routes/$workspaceId/tests"
+import type { LoaderData } from "~/routes/$workspaceId.tests"
 import { trimValue } from "~/utils"
 
 export interface editItem {

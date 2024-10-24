@@ -224,7 +224,10 @@ const AddQuestionInSection = () => {
         testQuestion.correctAnswer.push(optionForQuestion)
       })
     }
-    submit({ quesData: JSON.stringify(testQuestion) }, { method: "post" })
+    submit({ quesData: JSON.stringify(testQuestion) }, {
+      method: "post",
+      action: `/${currentWorkspaceId}/tests/${sectionDetails.id}/add-question`
+    })
   }
   return (
     <div className="flex h-full flex-col gap-6">
