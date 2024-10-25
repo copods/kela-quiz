@@ -1,3 +1,4 @@
+// $workspaceId.tests.tsx
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react"
 
@@ -357,23 +358,30 @@ export default function SectionPage() {
     ])
 
     useEffect(() => {
-        //checking if tests are zero then redirect to /tests
+        // If no tests exist, redirect to tests page
         if (data.getAllTestsCount === 0) {
-            navigate(`/${data.currentWorkspaceId}${routes.tests}`)
-        } else if (
-            // checking if new test added && total count of tests are not zero or data is present for present page
-            // navigate to given path
-            data.getAllTestsCount > 0 ||
+            navigate(`/${data.currentWorkspaceId}${routes.tests}`);
+            return;
+        }
+
+        // Skip navigation if on add-question route
+        if (location.pathname.includes('/add-question')) {
+            return;
+        }
+
+        // Build the navigation URL
+        const queryParams = `sortBy=${sortBy}&sort=${order}&testPage=${testsCurrentPage}&testItems=${testsPageSize}`;
+        const activeTestId = getStoredValue("activeTest")?.value || data.sections[0]?.id;
+        const targetPath = `/${data.currentWorkspaceId}${routes.tests}/${activeTestId}?${queryParams}`;
+
+        // Navigate if we have tests and valid section data
+        const hasTestsOrSections = data.getAllTestsCount > 0 && (
             data.sections.length >= 0 ||
             (!location.search && data.getAllTestsCount > 0)
-        ) {
-            navigate(
-                `/${data.currentWorkspaceId}${routes.tests}/${getStoredValue("activeTest")?.value
-                    ? getStoredValue("activeTest")?.value
-                    : data.sections[0]?.id
-                }?sortBy=${sortBy}&sort=${order}&testPage=${testsCurrentPage}&testItems=${testsPageSize}`,
-                { replace: true }
-            )
+        );
+
+        if (hasTestsOrSections) {
+            navigate(targetPath, { replace: true });
         }
     }, [
         testsCurrentPage,
@@ -445,7 +453,7 @@ export default function SectionPage() {
                     />
                 )}
             </header>
-            {data.sections.length > 0 && location.pathname.includes("/tests/") ? (
+            {data.sections.length > 0 && location.pathname.includes("/tests") ? (
                 <div
                     className={`flex flex-1 overflow-hidden ${sectionDetailFull ? "" : "gap-5"
                         }`}
