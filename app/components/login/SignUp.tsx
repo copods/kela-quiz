@@ -5,7 +5,7 @@ import {
   useLoaderData,
   useNavigate,
   useSubmit,
-  useTransition,
+  useNavigation,
 } from "@remix-run/react"
 import { useTranslation } from "react-i18next"
 import { toast } from "react-toastify"
@@ -36,7 +36,7 @@ const SignUp = ({ error }: { error?: string }) => {
       }
     }
   }, [signUpActionData, navigate, t])
-  const transition = useTransition()
+  const transition = useNavigation()
   const submit = useSubmit()
 
   const [firstName, setFirstName] = useState("")
@@ -72,7 +72,7 @@ const SignUp = ({ error }: { error?: string }) => {
   }
   const [emailFieldError, setEmailFieldError] = useState(
     signUpActionData?.errors?.enterVaildMailAddress ||
-      signUpActionData?.errors?.emailRequired
+    signUpActionData?.errors?.emailRequired
   )
   const [onBlurPasswordErr, setOnBlurPasswordErr] = useState("")
   const [onBlurConfPasswordErr, setOnConfBlurPasswordErr] = useState("")
@@ -97,7 +97,7 @@ const SignUp = ({ error }: { error?: string }) => {
   useEffect(() => {
     setEmailFieldError(
       signUpActionData?.errors?.enterVaildMailAddress ||
-        signUpActionData?.errors?.emailRequired
+      signUpActionData?.errors?.emailRequired
     )
   }, [signUpActionData?.errors])
   useEffect(() => {

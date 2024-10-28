@@ -1,66 +1,73 @@
-import moment from "moment"
+import { useRef } from "react";
 
-import Highcharts from "highcharts"
-import type { TooltipFormatterContextObject } from "highcharts"
-import HighchartsReact from "highcharts-react-official"
+import moment from "moment";
+
+import { ClientOnly } from "remix-utils/client-only";
+
+import { HighchartsReact, Highcharts } from "~/components/highcharts.client";
 
 import type {
   SectionInCandidateTest,
-  SectionInTest,
   SectionWiseResults,
-} from "~/interface/Interface"
+} from "~/interface/Interface";
 
-const BarGraph = ({
-  candidateTestResult,
-}: {
-  candidateTestResult: SectionInCandidateTest[]
-}) => {
+
+interface BarGraphProps {
+  candidateTestResult: SectionInCandidateTest[];
+}
+
+const BarGraph: React.FC<BarGraphProps> = ({ candidateTestResult }) => {
+  const chartComponentRef = useRef<HighchartsReact.RefObject>(null);
+
   const calculateResult = candidateTestResult.filter(
-    (data: SectionInCandidateTest) => {
-      return data.SectionWiseResult.length > 0
-    }
-  )
-  const getDifferenceMin = () => {
-    let finalResult: Array<number> = []
+    (data: SectionInCandidateTest) => data.SectionWiseResult.length > 0
+  );
+
+  const getDifferenceMin = (): number[] => {
+    const finalResult: number[] = [];
     calculateResult.forEach((result: SectionInCandidateTest) => {
       result.SectionWiseResult.forEach((data: SectionWiseResults) => {
-        const startingTime = moment(data?.section?.startedAt)
-        const endingTime = moment(data?.section?.endAt)
-        const difference = endingTime.diff(startingTime)
-        finalResult.push(parseFloat((difference / 60000).toFixed(1)))
-      })
-    })
+        const startingTime = moment(data?.section?.startedAt);
+        const endingTime = moment(data?.section?.endAt);
+        const difference = endingTime.diff(startingTime);
+        finalResult.push(parseFloat((difference / 60000).toFixed(1)));
+      });
+    });
+    return finalResult;
+  };
 
-    return finalResult
-  }
-  let result: Array<number> = []
-  calculateResult.map((data: SectionInCandidateTest) => {
-    return data.SectionWiseResult?.forEach((results: SectionWiseResults) => {
-      const sectionInTestData = results.section.section.sectionInTest.map(
-        (data: SectionInTest) => {
-          return data
-        }
-      )
-      result.push(Math.floor(sectionInTestData[0].timeInSeconds / 60))
-    })
-  })
-  const getLabelData = (sectionName: string, resultKind: string) => {
-    const getRequiredSection = calculateResult.filter(
-      (result: SectionInCandidateTest) => {
-        return result?.section?.name === sectionName
-      }
-    )
-    if (resultKind === "total") {
-      return getRequiredSection[0]?.SectionWiseResult[0]?.totalQuestion
-    } else if (resultKind === "correct") {
-      return getRequiredSection[0]?.SectionWiseResult[0]?.correctQuestion
-    } else if (resultKind === "skipped") {
-      return (
-        (getRequiredSection[0]?.SectionWiseResult[0]?.totalQuestion as number) -
-        (getRequiredSection[0]?.SectionWiseResult[0]?.correctQuestion as number)
-      )
+  const getAllotedTimes = (): number[] => {
+    const result: number[] = [];
+    calculateResult.forEach((data) => {
+      data.SectionWiseResult?.forEach((results) => {
+        const sectionInTestData = results.section.section.sectionInTest[0];
+        result.push(Math.floor(sectionInTestData.timeInSeconds / 60));
+      });
+    });
+    return result;
+  };
+
+  const getLabelData = (sectionName: string, resultKind: "total" | "correct" | "skipped"): number => {
+    const getRequiredSection = calculateResult.find(
+      (result) => result?.section?.name === sectionName
+    );
+
+    if (!getRequiredSection?.SectionWiseResult[0]) return 0;
+
+    const sectionResult = getRequiredSection.SectionWiseResult[0];
+
+    switch (resultKind) {
+      case "total":
+        return sectionResult.totalQuestion ?? 0;
+      case "correct":
+        return sectionResult.correctQuestion ?? 0;
+      case "skipped":
+        return (sectionResult.totalQuestion ?? 0) - (sectionResult.correctQuestion ?? 0);
+      default:
+        return 0;
     }
-  }
+  };
+
   const options: Highcharts.Options = {
     chart: {
       type: "column",
@@ -69,19 +76,14 @@ const BarGraph = ({
       text: "",
     },
     xAxis: {
-      categories: calculateResult.map((result: SectionInCandidateTest) => {
-        return result?.section.name
-      }),
+      categories: calculateResult.map((result) => result?.section.name),
     },
-    yAxis: [
-      {
-        min: 0,
-        title: {
-          text: "Time (in min)",
-        },
+    yAxis: [{
+      min: 0,
+      title: {
+        text: "Time (in min)",
       },
-    ],
-
+    }],
     legend: {
       shadow: false,
     },
@@ -95,35 +97,34 @@ const BarGraph = ({
       shadow: true,
       padding: 15,
       followTouchMove: true,
-      formatter: function (): any {
-        return this.points?.reduce(
-          (
-            acc: TooltipFormatterContextObject
-          ): TooltipFormatterContextObject => {
-            return ("<div>" +
-              "Total" +
-              ": " +
-              '<span style="color: #353988; fontWeight: 500; margin: 20px">' +
-              getLabelData(acc.key as string, "total") +
-              "</span>" +
-              "<div/> </br>" +
-              "<div>" +
-              "Correct" +
-              ": " +
-              '<span style="color: #059669; fontWeight: 500; margin: 20px">' +
-              getLabelData(acc.key as string, "correct") +
-              "</span>" +
-              "<div/> </br>" +
-              "<div>" +
-              "Skipped" +
-              ": " +
-              '<span style="color: #D97706; fontWeight: 500; margin: 20px">' +
-              getLabelData(acc.key as string, "skipped") +
-              "</span>" +
-              "<div/>") as unknown as TooltipFormatterContextObject
-          }
-        )
-      },
+      formatter: function (this: Highcharts.TooltipFormatterContextObject): string {
+        if (!this.points) return "";
+
+        const point = this.points[0];
+        const sectionName = point.key as string;
+
+        return `
+          <div style="font-family: system-ui, sans-serif;">
+            <div style="margin-bottom: 8px">
+              <span style="color: #666">Total:</span>
+              <span style="color: #353988; font-weight: 500; margin-left: 8px">
+                ${getLabelData(sectionName, "total")}
+              </span>
+            </div>
+            <div style="margin-bottom: 8px">
+              <span style="color: #666">Correct:</span>
+              <span style="color: #059669; font-weight: 500; margin-left: 8px">
+                ${getLabelData(sectionName, "correct")}
+              </span>
+            </div>
+            <div>
+              <span style="color: #666">Skipped:</span>
+              <span style="color: #D97706; font-weight: 500; margin-left: 8px">
+                ${getLabelData(sectionName, "skipped")}
+              </span>
+            </div>
+          </div>`;
+      }
     },
     plotOptions: {
       column: {
@@ -134,9 +135,10 @@ const BarGraph = ({
     },
     series: [
       {
+        name: "Alloted Time",
         showInLegend: false,
         color: "#F3F4F6",
-        data: result,
+        data: getAllotedTimes(),
         states: {
           hover: {
             color: "#F3F4F6",
@@ -145,6 +147,7 @@ const BarGraph = ({
         type: "column",
       },
       {
+        name: "Time Taken",
         showInLegend: false,
         color: "#353988",
         data: getDifferenceMin(),
@@ -156,13 +159,19 @@ const BarGraph = ({
         type: "column",
       },
     ],
-  }
+  };
 
   return (
     <div className="rounded-lg border bg-white pt-3">
-      <HighchartsReact highcharts={Highcharts} options={options} />
+      <ClientOnly fallback={<p>Loading...</p>}>
+        {() => (
+          <div>
+            <HighchartsReact highcharts={Highcharts} options={options} ref={chartComponentRef} />
+          </div>
+        )}
+      </ClientOnly>
     </div>
-  )
-}
+  );
+};
 
-export default BarGraph
+export default BarGraph;

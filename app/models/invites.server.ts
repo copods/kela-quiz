@@ -1,6 +1,6 @@
 import { env } from "process"
 
-import faker from "@faker-js/faker"
+import { faker } from "@faker-js/faker"
 import type { Invites } from "@prisma/client"
 import bcrypt from "bcryptjs"
 

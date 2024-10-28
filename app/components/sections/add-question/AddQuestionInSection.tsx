@@ -5,7 +5,7 @@ import {
   useLoaderData,
   useNavigate,
   useSubmit,
-  useTransition,
+  useNavigation,
 } from "@remix-run/react"
 import { useTranslation } from "react-i18next"
 import { toast } from "react-toastify"
@@ -63,7 +63,7 @@ const AddQuestionInSection = () => {
     },
   ])
   const [checkOrder, setCheckOrder] = useState(false)
-  const transition = useTransition()
+  const transition = useNavigation()
   const navigate = useNavigate()
   const submit = useSubmit()
   const [answerCount, setAnswerCount] = useState(0)
@@ -97,7 +97,7 @@ const AddQuestionInSection = () => {
 
     if (
       getQuestionType(selectedTypeOfQuestion) ===
-        QuestionTypes.multipleChoice ||
+      QuestionTypes.multipleChoice ||
       getQuestionType(selectedTypeOfQuestion) === QuestionTypes.singleChoice
     ) {
       let optionCount = 0
@@ -136,7 +136,7 @@ const AddQuestionInSection = () => {
       if (
         flag === 0 &&
         getQuestionType(selectedTypeOfQuestion) ===
-          QuestionTypes.singleChoice &&
+        QuestionTypes.singleChoice &&
         !singleChoiceAnswer
       ) {
         toast.error(t("statusCheck.selectCorrOption"), {
@@ -170,14 +170,14 @@ const AddQuestionInSection = () => {
       questionTypeId:
         answerCount === 1
           ? questionTypes.find(
-              (item: {
-                createdAt: string
-                displayName: string
-                id: string
-                updatedAt: string
-                value: string
-              }) => item.value === QuestionTypes.singleChoice
-            )?.id
+            (item: {
+              createdAt: string
+              displayName: string
+              id: string
+              updatedAt: string
+              value: string
+            }) => item.value === QuestionTypes.singleChoice
+          )?.id
           : selectedTypeOfQuestion,
       sectionId: sectionDetails?.id as string,
       addMoreQuestion,
@@ -185,7 +185,7 @@ const AddQuestionInSection = () => {
     }
     if (
       getQuestionType(selectedTypeOfQuestion) ===
-        QuestionTypes.multipleChoice &&
+      QuestionTypes.multipleChoice &&
       answerCount === 1
     ) {
       options.forEach((option) => {
@@ -224,7 +224,10 @@ const AddQuestionInSection = () => {
         testQuestion.correctAnswer.push(optionForQuestion)
       })
     }
-    submit({ quesData: JSON.stringify(testQuestion) }, { method: "post" })
+    submit({ quesData: JSON.stringify(testQuestion) }, {
+      method: "post",
+      action: `/${currentWorkspaceId}/tests/${sectionDetails.id}/add-question`
+    })
   }
   return (
     <div className="flex h-full flex-col gap-6">

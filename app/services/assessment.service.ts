@@ -1,7 +1,6 @@
 import moment from "moment"
 
-import { redirect } from "@remix-run/node"
-import { json } from "remix-utils"
+import { redirect, json } from "@remix-run/node"
 
 import {
   candidateSectionStart,

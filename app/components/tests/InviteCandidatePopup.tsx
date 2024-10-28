@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 
 import { useNavigate } from "react-router-dom"
 
-import { Form, useActionData, useTransition } from "@remix-run/react"
+import { Form, useActionData, useNavigation } from "@remix-run/react"
 import { useTranslation } from "react-i18next"
 import { toast } from "react-toastify"
 
@@ -57,8 +57,7 @@ const InviteCandidatePopup = ({
             toast.success(`${t("testsConstants.allCandidatesInvited")}`)
           } else {
             toast.success(
-              `${actionData?.candidateInviteStatus.neverInvitedCount} out of ${
-                actionData?.candidateInviteStatus.emailCount
+              `${actionData?.candidateInviteStatus.neverInvitedCount} out of ${actionData?.candidateInviteStatus.emailCount
               } ${t("testsConstants.candidatesInvited")}. ${t(
                 "testsConstants.othersWereAlreadyInvited"
               )}`
@@ -85,7 +84,7 @@ const InviteCandidatePopup = ({
     setOpenInvitePopup(false)
     setEmails([""])
   }
-  const transition = useTransition()
+  const transition = useNavigation()
   useEffect(() => {
     setEmails([""])
     setError({})

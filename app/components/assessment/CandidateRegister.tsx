@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 
-import { Form, useLoaderData, useTransition } from "@remix-run/react"
+import { Form, useLoaderData, useNavigation } from "@remix-run/react"
 import { useTranslation } from "react-i18next"
 
 import Button from "~/components/common-components/Button"
@@ -21,8 +21,8 @@ function CandidateRegister() {
       : ""
   )
 
-  const { state } = useTransition()
-  const busy = state === "submitting"
+  const navigation = useNavigation()
+  const busy = navigation.state === "submitting"
 
   const canSubmitBtnBeEnabled = () => {
     return firstName.length > 0 && lastName.length > 0

@@ -7,7 +7,7 @@ import Button from "../common-components/Button"
 import Header from "./Header"
 const AlredySubmitted = () => {
   const { t } = useTranslation()
-  const feedbackSubmitted = JSON.parse(useLoaderData())
+  const feedbackSubmitted = useLoaderData();
   const submit = useSubmit()
   return (
     <div className="flex h-screen flex-col bg-gray-50">

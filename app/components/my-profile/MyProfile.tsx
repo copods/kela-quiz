@@ -4,7 +4,7 @@ import {
   useActionData,
   useLoaderData,
   useSubmit,
-  useTransition,
+  useNavigation,
 } from "@remix-run/react"
 import { t } from "i18next"
 import { toast } from "react-toastify"
@@ -18,7 +18,7 @@ import { trimValue } from "~/utils"
 const MyProfileComponent = () => {
   const userData = useLoaderData()
   const userActionData = useActionData()
-  const transition = useTransition()
+  const transition = useNavigation()
   const submit = useSubmit()
 
   const [viewMode, setViewMode] = useState(true)

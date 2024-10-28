@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 
-import { useSubmit, useTransition } from "@remix-run/react"
+import { useSubmit, useNavigation } from "@remix-run/react"
 import { useTranslation } from "react-i18next"
 
 import Button from "../common-components/Button"
@@ -29,7 +29,7 @@ export default function AddMemberModal({
 }) {
   const { t } = useTranslation()
 
-  const transition = useTransition()
+  const transition = useNavigation()
   const submit = useSubmit()
   const [email, setEmail] = useState("")
   const [role, setRole] = useState(roles[0].id)

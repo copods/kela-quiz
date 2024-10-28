@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 
-import { useFetcher, useTransition } from "@remix-run/react"
+import { useFetcher, useNavigation } from "@remix-run/react"
 import { useTranslation } from "react-i18next"
 import { toast } from "react-toastify"
 
@@ -35,7 +35,7 @@ const ResetPassword = ({
       toast.success(t("settings.passResetSuccessfully"))
     }
   }, [fetcher.data, setOpenResetPassModel, t])
-  const transition = useTransition()
+  const transition = useNavigation()
 
   const [password, setPassword] = useState("")
   const [newPassword, setNewPassword] = useState("")

@@ -1,18 +1,40 @@
-import path from "path"
+import * as fs from "node:fs";
+import * as path from "node:path";
+import * as url from "node:url";
 
-import { createRequestHandler } from "@remix-run/express"
-import compression from "compression"
-import express from "express"
-import morgan from "morgan"
+import { PrismaClient } from "@prisma/client";
+import { createRequestHandler, type RequestHandler } from "@remix-run/express";
+import { broadcastDevReady, installGlobals } from "@remix-run/node";
+import compression from "compression";
+import express from "express";
+import morgan from "morgan";
+import sourceMapSupport from "source-map-support";
 
-const app = express()
+// patch in Remix runtime globals
+installGlobals();
+sourceMapSupport.install();
+
+const prisma = new PrismaClient();
+const debug = (...args: any[]) => console.log("[server]", ...args);
+
+prisma.$connect()
+  .then(() => debug("Connected to database"))
+  .catch((error) => debug("Failed to connect to database:", error));
+
+const BUILD_PATH = path.resolve("build/index.js");
+const VERSION_PATH = path.resolve("build/version.txt");
+
+let build = await reimportServer();
+
+const chokidar =
+  process.env.NODE_ENV === "development" ? await import("chokidar") : null;
+
+const app = express();
 
 app.use((req, res, next) => {
-  // helpful headers:
   res.set("x-fly-region", process.env.FLY_REGION ?? "unknown")
   res.set("Strict-Transport-Security", `max-age=${60 * 60 * 24 * 365 * 100}`)
 
-  // /clean-urls/ -> /clean-urls
   if (req.path.endsWith("/") && req.path.length > 1) {
     const query = req.url.slice(req.path.length)
     const safepath = req.path.slice(0, -1).replace(/\/+/g, "/")
@@ -22,85 +44,69 @@ app.use((req, res, next) => {
   next()
 })
 
-// if we're not in the primary region, then we need to make sure all
-// non-GET/HEAD/OPTIONS requests hit the primary region rather than read-only
-// Postgres DBs.
-// learn more: https://fly.io/docs/getting-started/multi-region-databases/#replay-the-request
-app.all("*", function getReplayResponse(req, res, next) {
-  const { method, path: pathname } = req
-  const { PRIMARY_REGION, FLY_REGION } = process.env
-
-  const isMethodReplayable = !["GET", "OPTIONS", "HEAD"].includes(method)
-  const isReadOnlyRegion =
-    FLY_REGION && PRIMARY_REGION && FLY_REGION !== PRIMARY_REGION
-
-  const shouldReplay = isMethodReplayable && isReadOnlyRegion
-
-  if (!shouldReplay) return next()
-
-  const logInfo = {
-    pathname,
-    method,
-    PRIMARY_REGION,
-    FLY_REGION,
-  }
-  console.info(`Replaying:`, logInfo)
-  res.set("fly-replay", `region=${PRIMARY_REGION}`)
-  return res.sendStatus(409)
-})
-
-app.use(compression())
-
-// http://expressjs.com/en/advanced/best-practice-security.html#at-a-minimum-disable-x-powered-by-header
-app.disable("x-powered-by")
-
-// Remix fingerprints its assets so we can cache forever.
+app.use(compression());
+app.disable("x-powered-by");
 app.use(
   "/build",
   express.static("public/build", { immutable: true, maxAge: "1y" })
-)
-
-// Everything else (like favicon.ico) is cached for an hour. You may want to be
-// more aggressive with this caching.
-app.use(express.static("public", { maxAge: "1h" }))
-
-app.use(morgan("tiny"))
-
-const MODE = process.env.NODE_ENV
-const BUILD_DIR = path.join(process.cwd(), "build")
+);
+app.use(express.static("public", { maxAge: "1h" }));
+app.use(morgan("tiny"));
 
 app.all(
   "*",
-  MODE === "production"
-    ? createRequestHandler({ build: require(BUILD_DIR) })
-    : (...args) => {
-        purgeRequireCache()
-        const requestHandler = createRequestHandler({
-          build: require(BUILD_DIR),
-          mode: MODE,
-        })
-        return requestHandler(...args)
-      }
-)
+  (req, res, next) => {
+    const handler = process.env.NODE_ENV === "development"
+      ? createDevRequestHandler()
+      : createRequestHandler({
+        build,
+        mode: process.env.NODE_ENV,
+      });
 
-const port = process.env.PORT || 3000
-
-app.listen(port, () => {
-  // require the built app so we're ready when the first request comes in
-  require(BUILD_DIR)
-  console.log(`✅ app ready: http://localhost:${port}`)
-})
-
-function purgeRequireCache() {
-  // purge require cache on requests for "server side HMR" this won't let
-  // you have in-memory objects between requests in development,
-  // alternatively you can set up nodemon/pm2-dev to restart the server on
-  // file changes, we prefer the DX of this though, so we've included it
-  // for you by default
-  for (const key in require.cache) {
-    if (key.startsWith(BUILD_DIR)) {
-      // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
-      delete require.cache[key]
-    }
+    handler(req, res, next).catch((error) => {
+      next(error);
+    });
   }
+);
+
+const port = process.env.PORT || 3000;
+
+app.listen(port, async () => {
+  console.log(`✅ app ready: http://localhost:${port}`)
+  if (process.env.NODE_ENV === "development") {
+    await broadcastDevReady(build);
+  }
+});
+
+function createDevRequestHandler(): RequestHandler {
+  async function handleServerUpdate() {
+    build = await reimportServer();
+    if (build?.assets === undefined) {
+      console.log(build.assets);
+      debugger;
+    }
+    await broadcastDevReady(build);
+  }
+
+  chokidar
+    ?.watch(VERSION_PATH, { ignoreInitial: true })
+    .on("add", handleServerUpdate)
+    .on("change", handleServerUpdate);
+
+  return async (req, res, next) => {
+    try {
+      return createRequestHandler({
+        build,
+        mode: "development",
+      })(req, res, next);
+    } catch (error) {
+      next(error);
+    }
+  };
+}
+
+async function reimportServer() {
+  const stat = fs.statSync(BUILD_PATH);
+  const BUILD_URL = url.pathToFileURL(BUILD_PATH).href;
+  return import(BUILD_URL + "?t=" + stat.mtimeMs);
 }
