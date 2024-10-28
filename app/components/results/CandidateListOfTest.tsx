@@ -220,7 +220,7 @@ const CandidateListOfTest = () => {
         data.startedAt ? (
           <Link
             to={`/${currentWorkspaceId}/results/groupByTests/${data?.testId}/${data?.candidateId}`}
-            className="col-span-2 flex  truncate font-semibold text-primary"
+            className="text-primary col-span-2  flex truncate font-semibold"
             title={candidateName}
           >
             {candidateName}

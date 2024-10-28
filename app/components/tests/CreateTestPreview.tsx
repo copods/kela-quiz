@@ -54,7 +54,7 @@ const TestPreview = ({
   }
   const [candidatePopupOpen, setCandidatePopupOpen] = useState<boolean>(false)
   return (
-    <div className="flex flex-1 flex-col gap-9 overflow-scroll rounded-lg bg-white p-6 shadow-base">
+    <div className="shadow-base flex flex-1 flex-col gap-9 overflow-scroll rounded-lg bg-white p-6">
       <div className="flex flex-col gap-6">
         <div className="flex justify-between">
           <h1
@@ -79,7 +79,7 @@ const TestPreview = ({
                 >
                   <Icon
                     id="invite-popup-open"
-                    className="h-6 w-6 cursor-pointer text-primary "
+                    className="text-primary h-6 w-6 cursor-pointer "
                     icon={"ant-design:user-add-outlined"}
                     aria-label={t("members.inviteMember")}
                   />

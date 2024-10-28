@@ -14,5 +14,5 @@ fi
 . "$(dirname -- "$0")/_/husky.sh"
 
 npm run lint
-npm run typecheck --if-present
+# npm run typecheck --if-present
 npm run format

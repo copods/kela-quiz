@@ -4,14 +4,14 @@ import { redirect } from "@remix-run/node"
 import { checkIfTestLinkIsValidAndRedirect } from "~/services/assessment.service"
 
 export const loader: LoaderFunction = async ({ params, request }) => {
-    const nextCandidateRoute = await checkIfTestLinkIsValidAndRedirect(
-        params?.assessmentId as string,
-        "/"
-    )
-    if (typeof nextCandidateRoute === "string") {
-        return redirect(nextCandidateRoute)
-    } else if (nextCandidateRoute === null) {
-        throw new Response("Not Found", { status: 404 })
-    }
-    return null
+  const nextCandidateRoute = await checkIfTestLinkIsValidAndRedirect(
+    params?.assessmentId as string,
+    "/"
+  )
+  if (typeof nextCandidateRoute === "string") {
+    return redirect(nextCandidateRoute)
+  } else if (nextCandidateRoute === null) {
+    throw new Response("Not Found", { status: 404 })
+  }
+  return null
 }

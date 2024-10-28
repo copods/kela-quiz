@@ -22,28 +22,28 @@ export default function QuillEditor({
   const theme = "snow"
   const modules = fullAccess
     ? {
-      toolbar: [
-        ["bold", "italic", "underline"],
-        [{ align: [] }],
-        [{ list: "ordered" }, { list: "bullet" }],
-        [{ header: [1, 2, 3, 4, 5, 6, false] }],
-        ["link", "image"],
-        [{ color: [] }, { background: [] }],
-        ["code-block"],
-        ["clean"],
-      ],
-      clipboard: {
-        matchVisual: false,
-      },
-      blotFormatter: {},
-    }
+        toolbar: [
+          ["bold", "italic", "underline"],
+          [{ align: [] }],
+          [{ list: "ordered" }, { list: "bullet" }],
+          [{ header: [1, 2, 3, 4, 5, 6, false] }],
+          ["link", "image"],
+          [{ color: [] }, { background: [] }],
+          ["code-block"],
+          ["clean"],
+        ],
+        clipboard: {
+          matchVisual: false,
+        },
+        blotFormatter: {},
+      }
     : {
-      toolbar: [["bold", "italic", "underline"], ["image"], ["code-block"]],
-      clipboard: {
-        matchVisual: false,
-      },
-      blotFormatter: {},
-    }
+        toolbar: [["bold", "italic", "underline"], ["image"], ["code-block"]],
+        clipboard: {
+          matchVisual: false,
+        },
+        blotFormatter: {},
+      }
   const placeholder = `Write your ${quillPlaceholder} here....`
   let formats = [
     "bold",
@@ -83,8 +83,9 @@ export default function QuillEditor({
   }, [quill, onTextChange])
   return (
     <div
-      className={`flex h-full w-full flex-col rounded-lg bg-white ${fullAccess ? "" : "setDynamicHeight"
-        }`}
+      className={`flex h-full w-full flex-col rounded-lg bg-white ${
+        fullAccess ? "" : "setDynamicHeight"
+      }`}
       id="quill-editor"
       ref={editorRef}
     >

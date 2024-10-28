@@ -87,7 +87,7 @@ const Question = () => {
     <div className="flex h-screen flex-col">
       <CandidateQuestionHeader />
 
-      <div className="flex w-full flex-1 flex-col overflow-hidden bg-questionBackground">
+      <div className="bg-questionBackground flex w-full flex-1 flex-col overflow-hidden">
         <form method="post" className="flex max-h-full flex-1 flex-col">
           <div className="px-5 py-5">
             <CandidateQuestionStepper />

@@ -13,7 +13,7 @@ const JoinWorkspace = () => {
   return (
     <div className="flex h-full flex-col items-center justify-center gap-6 rounded-lg">
       <div className="rounded-lg border-solid border-gray-50 bg-white px-14 py-10 shadow-sm">
-        <div className="flex max-w-554 flex-col items-center gap-10">
+        <div className="max-w-554 flex flex-col items-center gap-10">
           <img className="h-24 w-32" src={logo} alt="" />
           <div className="flex flex-col gap-12">
             <div className="flex flex-col items-center justify-center gap-4 text-2xl">
@@ -26,7 +26,7 @@ const JoinWorkspace = () => {
                 {t("members.workspaceInvitation")}
               </span>
               {workspcaceInvitationData === "joined" ? (
-                <span className="text-center text-primary">
+                <span className="text-primary text-center">
                   {t("members.alreadyJoinedWorkspace")}
                 </span>
               ) : workspcaceInvitationData?.loginWithWrongId ? (

@@ -58,7 +58,7 @@ const CandidateInstruction = () => {
             </p> */}
           </div>
           <div className="flex gap-12">
-            <div className="flex w-438 flex-col gap-10 rounded-lg border border-gray-50 bg-white p-10 shadow-sm">
+            <div className="w-438 flex flex-col gap-10 rounded-lg border border-gray-50 bg-white p-10 shadow-sm">
               <h3
                 className="text-center text-2xl font-bold text-gray-900"
                 data-cy="testSectionHeading"
@@ -86,7 +86,7 @@ const CandidateInstruction = () => {
                 )}
               </div>
             </div>
-            <div className="flex w-438 flex-col gap-10 rounded-lg border border-gray-50 bg-white p-10 shadow-sm">
+            <div className="w-438 flex flex-col gap-10 rounded-lg border border-gray-50 bg-white p-10 shadow-sm">
               <h3
                 className="text-center text-2xl font-bold text-gray-900"
                 data-cy="instructionSectionHeading"

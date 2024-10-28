@@ -43,7 +43,7 @@ const CandidateQuestionStepper = () => {
                     : question.status === "SKIPPED" ||
                       question.status === "VIEWED"
                     ? "bg-gray-700 text-white"
-                    : "border border-primary text-primary"
+                    : "border-primary text-primary border"
                 }`}
               >
                 {params.questionId === question.id ? (

@@ -57,7 +57,8 @@ const InviteCandidatePopup = ({
             toast.success(`${t("testsConstants.allCandidatesInvited")}`)
           } else {
             toast.success(
-              `${actionData?.candidateInviteStatus.neverInvitedCount} out of ${actionData?.candidateInviteStatus.emailCount
+              `${actionData?.candidateInviteStatus.neverInvitedCount} out of ${
+                actionData?.candidateInviteStatus.emailCount
               } ${t("testsConstants.candidatesInvited")}. ${t(
                 "testsConstants.othersWereAlreadyInvited"
               )}`
@@ -142,7 +143,7 @@ const InviteCandidatePopup = ({
                   role={"button"}
                   id="invite-more"
                   tabIndex={0}
-                  className="cursor-pointer px-0.5 text-sm font-normal text-primary"
+                  className="text-primary cursor-pointer px-0.5 text-sm font-normal"
                   onClick={() => setEmails([...emails, ""])}
                   onKeyUp={(e) => {
                     if (e.key === "Enter") setEmails([...emails, ""])

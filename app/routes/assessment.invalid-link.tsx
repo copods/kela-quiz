@@ -1,7 +1,7 @@
 import InvalidLinkComponent from "~/components/assessment/InvalidLink"
 
 const InvalidLink = () => {
-    return <InvalidLinkComponent />
+  return <InvalidLinkComponent />
 }
 
 export default InvalidLink

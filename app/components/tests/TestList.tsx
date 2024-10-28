@@ -106,7 +106,7 @@ const TestList = () => {
   const TestNameDataCell = (data: Test, index: number) => {
     return (
       <div
-        className="test-name-navigation w-4/12 cursor-pointer p-1 text-base font-medium text-primary"
+        className="test-name-navigation text-primary w-4/12 cursor-pointer p-1 text-base font-medium"
         aria-label={data.name}
         title={data.name}
         onClick={() =>
@@ -164,7 +164,7 @@ const TestList = () => {
               id={`invite-popup-open${index}`}
               role={"button"}
               tabIndex={0}
-              className="candidateInviteIcon cursor-pointer text-2xl text-primary focus:outline-dotted focus:outline-2"
+              className="candidateInviteIcon text-primary cursor-pointer text-2xl focus:outline-dotted focus:outline-2"
               icon={"ant-design:user-add-outlined"}
               onClick={(e) => {
                 setCandidatePopupOpen(true)

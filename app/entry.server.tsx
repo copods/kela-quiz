@@ -4,7 +4,7 @@
  * For more information, see https://remix.run/file-conventions/entry.server
  */
 
-import { resolve } from "node:path";
+import { resolve } from "node:path"
 import type { EntryContext } from "@remix-run/node"
 import { RemixServer } from "@remix-run/react"
 import { createInstance } from "i18next"
@@ -14,7 +14,6 @@ import { initReactI18next } from "react-i18next"
 
 import i18n from "./i18.server"
 import i18nextOptions from "./i18nextOptions"
-
 
 export default async function handleRequest(
   request: Request,

@@ -71,7 +71,7 @@ const SectionCardForResultDetail = ({
               <span className="text-gray-500">
                 {t("resultConstants.total")}:
               </span>
-              <span className="font-bold text-primary">{totalQuestions}</span>
+              <span className="text-primary font-bold">{totalQuestions}</span>
             </div>
             <hr className="h-5 w-px bg-gray-300" />
             <div className="flex gap-2 text-sm">
@@ -80,7 +80,7 @@ const SectionCardForResultDetail = ({
                 to={`/${currentWorkspaceId}/results/groupByTests/${testId}/${candidateId}/${sectionId}`}
                 id="result-detail-by-section"
                 data-cy="result-details"
-                className="groupByItemTest text-base font-semibold text-primary"
+                className="groupByItemTest text-primary text-base font-semibold"
               >
                 {t("resultConstants.viewDetails")}
               </Link>

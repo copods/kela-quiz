@@ -25,7 +25,7 @@ const NotFound = () => {
         <div className="text-center leading-8">
           <p className="text-2xl font-bold">{t("notFound.urlNotFound")}</p>
           <div
-            className="font-semibold text-primary underline"
+            className="text-primary font-semibold underline"
             tabIndex={0}
             role="button"
             onClick={() => navigateToHomepage()}

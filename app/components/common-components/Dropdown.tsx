@@ -391,7 +391,7 @@ export const NewDropdownField = <
                                 <span
                                   className={classNames(
                                     selected
-                                      ? "font-semibold text-primary"
+                                      ? "text-primary font-semibold"
                                       : "not-selected font-normal",
                                     "dropdown-option block truncate"
                                   )}
@@ -422,7 +422,7 @@ export const NewDropdownField = <
                               {selected ? (
                                 <span
                                   className={classNames(
-                                    "absolute inset-y-0 right-0 flex items-center pr-4 text-primary"
+                                    "text-primary absolute inset-y-0 right-0 flex items-center pr-4"
                                   )}
                                 >
                                   <Icon

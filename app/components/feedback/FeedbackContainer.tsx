@@ -25,7 +25,7 @@ import {
 import type { CandidateFeedbacks, tableColumnType } from "~/interface/Interface"
 
 export const FeedbackContainer = () => {
-  const candidatesFeedbackData = useLoaderData();
+  const candidatesFeedbackData = useLoaderData()
 
   const [feedbackCurrentPage, setFeedbackCurrentPage] = useState(
     candidatesFeedbackData.feedbackCurrentPage
@@ -173,7 +173,7 @@ export const FeedbackContainer = () => {
       {candidatesFeedbackData.totalFeedbackCounts.positive +
         candidatesFeedbackData.totalFeedbackCounts.negative +
         candidatesFeedbackData.totalFeedbackCounts.neutral >
-        0 ? (
+      0 ? (
         <div className="flex h-full w-full flex-col gap-8">
           <div
             className="grid grid-cols-4 gap-5"

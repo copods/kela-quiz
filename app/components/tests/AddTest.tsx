@@ -84,7 +84,7 @@ const AddTestComponent = ({
           allSelectedSections.forEach((selected: TestSection) => {
             const targetData = data.target as keyof TestSection
             if (selected.id === sec[index].id && targetData in selected) {
-              ; (selected[targetData] as unknown) = sec[index][targetData]
+              ;(selected[targetData] as unknown) = sec[index][targetData]
             }
           })
         } else {

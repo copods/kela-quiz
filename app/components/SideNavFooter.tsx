@@ -56,7 +56,7 @@ function Footer({
       <hr className="mb-3 mt-3 border border-solid border-gray-300"></hr>
       <div className="flex items-center justify-between gap-1">
         <div className="flex items-center gap-1">
-          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary">
+          <div className="bg-primary flex h-10 w-10 items-center justify-center rounded-full">
             <span
               id="sidenav-user-avatar"
               className="text-lg font-medium text-white"

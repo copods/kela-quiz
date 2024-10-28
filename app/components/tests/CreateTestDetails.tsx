@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next"
-import { ClientOnly } from "remix-utils/client-only";
+import { ClientOnly } from "remix-utils/client-only"
 
 import QuillEditor from "../QuillEditor.client"
 

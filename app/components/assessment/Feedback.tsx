@@ -22,7 +22,7 @@ const FeedbackForm = () => {
   const bottomRef = useRef() as MutableRefObject<HTMLDivElement>
 
   const actionData = useActionData()
-  const { feedbackSubmittedAlready, assessmentName } = useLoaderData();
+  const { feedbackSubmittedAlready, assessmentName } = useLoaderData()
   const [feedbackSubmitted, setFeedbackSubmitted] = useState(
     feedbackSubmittedAlready
   )
@@ -35,7 +35,7 @@ const FeedbackForm = () => {
       questionType: "rating",
       required: true,
       handleChange: (value: string) => {
-        setSubmitError(null);
+        setSubmitError(null)
         setExperienceValue(value)
       },
     },
@@ -46,7 +46,7 @@ const FeedbackForm = () => {
       questionType: "rating",
       required: true,
       handleChange: (value: string) => {
-        setSubmitError(null);
+        setSubmitError(null)
         setLevelValue(value)
       },
     },
@@ -57,7 +57,7 @@ const FeedbackForm = () => {
       questionType: "rating",
       required: true,
       handleChange: (value: string) => {
-        setSubmitError(null);
+        setSubmitError(null)
         setOverAllValue(value)
       },
     },
@@ -68,7 +68,7 @@ const FeedbackForm = () => {
       questionType: "text",
       required: false,
       handleChange: (value: string) => {
-        setSubmitError(null);
+        setSubmitError(null)
         setFeedbackComment(value)
       },
     },
@@ -77,31 +77,35 @@ const FeedbackForm = () => {
 
   const validateFeedback = () => {
     // Check if all required fields have values
-    const requiredFields = candidateFeedbackDetails.filter(field => field.required);
-    const missingFields = requiredFields.filter(field => !field.value);
+    const requiredFields = candidateFeedbackDetails.filter(
+      (field) => field.required
+    )
+    const missingFields = requiredFields.filter((field) => !field.value)
 
     if (missingFields.length > 0) {
-      return false;
+      return false
     }
 
     // Check if ratings are within valid range (assuming 1-5)
-    const ratingFields = candidateFeedbackDetails.filter(field => field.questionType === "rating");
-    const invalidRatings = ratingFields.filter(field => {
-      const rating = parseInt(field.value);
-      return isNaN(rating) || rating < 1 || rating > 5;
-    });
+    const ratingFields = candidateFeedbackDetails.filter(
+      (field) => field.questionType === "rating"
+    )
+    const invalidRatings = ratingFields.filter((field) => {
+      const rating = parseInt(field.value)
+      return isNaN(rating) || rating < 1 || rating > 5
+    })
 
     if (invalidRatings.length > 0) {
-      return false;
+      return false
     }
 
-    return true;
+    return true
   }
 
   const onSubmit = () => {
     if (!validateFeedback()) {
-      setSubmitError("Please fill in all required fields with valid ratings");
-      return;
+      setSubmitError("Please fill in all required fields with valid ratings")
+      return
     }
 
     const data = candidateFeedbackDetails.map(
@@ -121,13 +125,14 @@ const FeedbackForm = () => {
   useEffect(() => {
     if (actionData) {
       if (actionData.resp?.status === 200) {
-        setFeedbackSubmitted(true);
-        setSubmitError(null);
+        setFeedbackSubmitted(true)
+        setSubmitError(null)
       } else if (actionData.errors) {
-        setSubmitError(actionData.errors.title === "commonConstants.commonError"
-          ? "There was an error submitting your feedback. Please try again."
-          : actionData.errors.title
-        );
+        setSubmitError(
+          actionData.errors.title === "commonConstants.commonError"
+            ? "There was an error submitting your feedback. Please try again."
+            : actionData.errors.title
+        )
       }
     }
   }, [actionData])
@@ -145,7 +150,7 @@ const FeedbackForm = () => {
   return (
     <div className="flex h-screen flex-col bg-gray-50">
       <Header />
-      <div className="flex flex-1 justify-center bg-questionBackground pt-14">
+      <div className="bg-questionBackground flex flex-1 justify-center pt-14">
         {!feedbackSubmitted ? (
           <div className="flex flex-col items-center">
             <FeedbackComponent
@@ -156,13 +161,13 @@ const FeedbackForm = () => {
               handleChange={onSubmit}
             />
             {submitError && (
-              <div className="mt-4 p-4 text-red-600 bg-red-50 rounded-md">
+              <div className="mt-4 rounded-md bg-red-50 p-4 text-red-600">
                 {submitError}
               </div>
             )}
           </div>
         ) : (
-          <div className="mx-auto flex h-728 w-coolDownCard flex-col items-center justify-center gap-10 rounded-lg bg-white py-16">
+          <div className="h-728 w-coolDownCard mx-auto flex flex-col items-center justify-center gap-10 rounded-lg bg-white py-16">
             <img
               src={FeedbackIcon}
               alt={t("candidateExamConstants.endTest")}

@@ -117,7 +117,7 @@ const CandidateOtp = ({ email }: { email: string }) => {
 
   return (
     <div className="flex flex-1 items-center justify-center bg-gray-50">
-      <div className="flex max-w-454 flex-1 flex-col gap-10 rounded-md border border-gray-50 bg-white p-12 text-center drop-shadow-sm">
+      <div className="max-w-454 flex flex-1 flex-col gap-10 rounded-md border border-gray-50 bg-white p-12 text-center drop-shadow-sm">
         <div className="flex justify-center">
           <img src={otpImage} alt={t("otpConstants.otp")} />
         </div>
@@ -126,7 +126,7 @@ const CandidateOtp = ({ email }: { email: string }) => {
         </div>
         <div className="gap-4 text-base text-gray-500">
           {t("otpConstants.enterOTP")}{" "}
-          <span className="font-medium text-primary" data-cy="email">
+          <span className="text-primary font-medium" data-cy="email">
             {email}
           </span>
         </div>
@@ -153,13 +153,13 @@ const CandidateOtp = ({ email }: { email: string }) => {
               ? t("otpConstants.didntGetCode")
               : t("otpConstants.resendCodeIn")}
             {finalTime !== "00:00" ? (
-              <span className="font-medium text-primary" data-cy="resendOTP">
+              <span className="text-primary font-medium" data-cy="resendOTP">
                 {` ${finalTime}`}
               </span>
             ) : (
               <span
                 tabIndex={0}
-                className="font-medium text-primary"
+                className="text-primary font-medium"
                 data-cy="resendButton"
                 onClick={() => {
                   resend()

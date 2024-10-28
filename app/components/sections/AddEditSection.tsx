@@ -245,8 +245,8 @@ const AddEditSection = ({
                       ? t("commonConstants.updating")
                       : t("commonConstants.adding")
                     : editItem
-                      ? t("commonConstants.edit")
-                      : t("commonConstants.add")
+                    ? t("commonConstants.edit")
+                    : t("commonConstants.add")
                 }
                 buttonText={
                   transition.state === "submitting"
@@ -254,8 +254,8 @@ const AddEditSection = ({
                       ? t("commonConstants.updating")
                       : t("commonConstants.adding")
                     : editItem
-                      ? t("commonConstants.update")
-                      : t("commonConstants.add")
+                    ? t("commonConstants.update")
+                    : t("commonConstants.add")
                 }
               />
             </div>

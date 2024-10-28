@@ -72,7 +72,7 @@ const SignUp = ({ error }: { error?: string }) => {
   }
   const [emailFieldError, setEmailFieldError] = useState(
     signUpActionData?.errors?.enterVaildMailAddress ||
-    signUpActionData?.errors?.emailRequired
+      signUpActionData?.errors?.emailRequired
   )
   const [onBlurPasswordErr, setOnBlurPasswordErr] = useState("")
   const [onBlurConfPasswordErr, setOnConfBlurPasswordErr] = useState("")
@@ -97,7 +97,7 @@ const SignUp = ({ error }: { error?: string }) => {
   useEffect(() => {
     setEmailFieldError(
       signUpActionData?.errors?.enterVaildMailAddress ||
-      signUpActionData?.errors?.emailRequired
+        signUpActionData?.errors?.emailRequired
     )
   }, [signUpActionData?.errors])
   useEffect(() => {
@@ -267,7 +267,7 @@ const SignUp = ({ error }: { error?: string }) => {
           <div className="text-base font-medium text-gray-500">
             {t("logIn.alreadyHaveAnAccount")}{" "}
             <span
-              className="cursor-pointer text-primary"
+              className="text-primary cursor-pointer"
               tabIndex={0}
               onClick={() => {
                 signIn()

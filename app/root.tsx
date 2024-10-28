@@ -1,4 +1,9 @@
-import { json, LinksFunction, LoaderFunction, MetaFunction } from "@remix-run/node";
+import {
+  json,
+  LinksFunction,
+  LoaderFunction,
+  MetaFunction,
+} from "@remix-run/node"
 import {
   Links,
   LiveReload,
@@ -6,17 +11,17 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-} from "@remix-run/react";
-import { useTranslation } from "react-i18next";
-import { CommonContextProvider } from "./context/Common.context";
-import { ToastContainer } from "react-toastify";
+} from "@remix-run/react"
+import { useTranslation } from "react-i18next"
+import { CommonContextProvider } from "./context/Common.context"
+import { ToastContainer } from "react-toastify"
 import quillEditorStyles from "quill/dist/quill.snow.css"
 import toasterStyles from "react-toastify/dist/ReactToastify.css"
 import globalStyles from "./styles/global.css"
 import quillStyles from "./styles/quill.css"
 import tailwindStylesheetUrl from "./styles/tailwind.css"
 import toastifyStyles from "./styles/toastify.css"
-import { getUser } from "./session.server";
+import { getUser } from "./session.server"
 
 export const links: LinksFunction = () => {
   return [
@@ -28,13 +33,11 @@ export const links: LinksFunction = () => {
     { rel: "stylesheet", href: toasterStyles },
   ]
 }
-export const meta: MetaFunction = () => (
-  [
-    { property: "charset", content: "utf-8" },
-    { title: "K-Quiz" },
-    { property: "viewport", content: "width=device-width, initial-scale=1" }
-  ]
-)
+export const meta: MetaFunction = () => [
+  { property: "charset", content: "utf-8" },
+  { title: "K-Quiz" },
+  { property: "viewport", content: "width=device-width, initial-scale=1" },
+]
 
 type LoaderData = {
   user: Awaited<ReturnType<typeof getUser>>
@@ -84,5 +87,5 @@ export default function App() {
         </CommonContextProvider>
       </body>
     </html>
-  );
+  )
 }

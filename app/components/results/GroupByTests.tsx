@@ -78,7 +78,7 @@ const GroupByTests = () => {
         to={`/${candidateTestData.currentWorkspaceId}/results/groupByTests/${data.id}`}
         id="group-by-item-test"
         data-cy="group-by-item-test"
-        className="groupByItemTest text-base font-semibold text-primary"
+        className="groupByItemTest text-primary text-base font-semibold"
         onClick={() => clearStoredValue("candidateListFilter")}
       >
         {data.name}

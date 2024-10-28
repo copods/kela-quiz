@@ -24,7 +24,7 @@ export const TestNameRenderer = (data: tableData, index: number) => {
     <div
       key={index}
       title={data.test_name}
-      className="truncate text-base font-semibold text-primary"
+      className="text-primary truncate text-base font-semibold"
     >
       {data.test_name}
     </div>

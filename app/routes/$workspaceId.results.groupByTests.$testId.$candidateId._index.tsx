@@ -5,73 +5,73 @@ import invariant from "tiny-invariant"
 import ResultDetailsComponent from "~/components/results/ResultDetails"
 import { routes } from "~/constants/route.constants"
 import type {
-    CandidateTest,
-    Candidate,
-    CandidateResult,
+  CandidateTest,
+  Candidate,
+  CandidateResult,
 } from "~/interface/Interface"
 import {
-    getSectionWiseResultsOFIndividualCandidate,
-    getWorkspaces,
-    updateCandidateSTATUS,
+  getSectionWiseResultsOFIndividualCandidate,
+  getWorkspaces,
+  updateCandidateSTATUS,
 } from "~/services/results.service"
 import { getUserId } from "~/session.server"
 
 export const loader: LoaderFunction = async ({ request, params }) => {
-    const userId = await getUserId(request)
-    const currentWorkspaceId = params.workspaceId as string
-    const workspaces = await getWorkspaces(userId as string)
-    invariant(params.testId, "resultId not found")
-    try {
-        const { sections, candidate, candidateResult } =
-            (await getSectionWiseResultsOFIndividualCandidate({
-                testId: params?.testId as string,
-                candidateId: params?.candidateId as string,
-                workspaceId: currentWorkspaceId,
-                userId: userId!,
-            })) ||
-            ({} as CandidateTest & { candidate: Candidate } & {
-                candidateResult: CandidateResult
-            })
-        if (!sections || !candidate) {
-            throw new Response("Not Found", { status: 404 })
-        }
-        return json({
-            params,
-            sections,
-            candidate,
-            workspaces,
-            currentWorkspaceId,
-            candidateResult,
-        })
-    } catch (error: any) {
-        if (error.status === 403) {
-            return redirect(routes.unauthorized)
-        }
+  const userId = await getUserId(request)
+  const currentWorkspaceId = params.workspaceId as string
+  const workspaces = await getWorkspaces(userId as string)
+  invariant(params.testId, "resultId not found")
+  try {
+    const { sections, candidate, candidateResult } =
+      (await getSectionWiseResultsOFIndividualCandidate({
+        testId: params?.testId as string,
+        candidateId: params?.candidateId as string,
+        workspaceId: currentWorkspaceId,
+        userId: userId!,
+      })) ||
+      ({} as CandidateTest & { candidate: Candidate } & {
+        candidateResult: CandidateResult
+      })
+    if (!sections || !candidate) {
+      throw new Response("Not Found", { status: 404 })
     }
+    return json({
+      params,
+      sections,
+      candidate,
+      workspaces,
+      currentWorkspaceId,
+      candidateResult,
+    })
+  } catch (error: any) {
+    if (error.status === 403) {
+      return redirect(routes.unauthorized)
+    }
+  }
 }
 
 export const action: ActionFunction = async ({ request, params }) => {
-    const userId = await getUserId(request)
-    const currentWorkspaceId = params.workspaceId as string
-    const formData = await request.formData()
-    const candidateStatus = formData.get("candidateStatus")
-    const resultId = formData.get("resultId")
-    try {
-        const updateStatus = await updateCandidateSTATUS({
-            id: resultId as string,
-            candidateStatus: candidateStatus as string,
-            currentWorkspaceId,
-            userId: userId!,
-        })
-        return { updateStatus }
-    } catch (error: any) {
-        if (error.status === 403) {
-            return redirect(routes.unauthorized)
-        }
+  const userId = await getUserId(request)
+  const currentWorkspaceId = params.workspaceId as string
+  const formData = await request.formData()
+  const candidateStatus = formData.get("candidateStatus")
+  const resultId = formData.get("resultId")
+  try {
+    const updateStatus = await updateCandidateSTATUS({
+      id: resultId as string,
+      candidateStatus: candidateStatus as string,
+      currentWorkspaceId,
+      userId: userId!,
+    })
+    return { updateStatus }
+  } catch (error: any) {
+    if (error.status === 403) {
+      return redirect(routes.unauthorized)
     }
+  }
 }
 
 const ResultDetails = () => {
-    return <ResultDetailsComponent />
+  return <ResultDetailsComponent />
 }
 export default ResultDetails

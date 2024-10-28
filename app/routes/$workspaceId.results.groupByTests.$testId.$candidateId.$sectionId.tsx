@@ -7,35 +7,35 @@ import { getResultDetailBySection } from "~/models/result.server"
 import { getUserId } from "~/session.server"
 
 export type LoaderData = {
-    sectionDetail: Awaited<ReturnType<typeof getResultDetailBySection>>
-    params: {
-        workspaceId?: string
-        testId?: string
-        candidateId?: string
-        sectionId?: string
-    }
+  sectionDetail: Awaited<ReturnType<typeof getResultDetailBySection>>
+  params: {
+    workspaceId?: string
+    testId?: string
+    candidateId?: string
+    sectionId?: string
+  }
 }
 export const loader: LoaderFunction = async ({ request, params }) => {
-    const userId = await getUserId(request)
-    const currentWorkspaceId = params.workspaceId as string
-    try {
-        const sectionDetail = await getResultDetailBySection(
-            params?.sectionId as string,
-            userId!,
-            currentWorkspaceId
-        )
-        return json<LoaderData>({ params, sectionDetail })
-    } catch (error: any) {
-        if (error.status === 403) {
-            return redirect(routes.unauthorized)
-        }
+  const userId = await getUserId(request)
+  const currentWorkspaceId = params.workspaceId as string
+  try {
+    const sectionDetail = await getResultDetailBySection(
+      params?.sectionId as string,
+      userId!,
+      currentWorkspaceId
+    )
+    return json<LoaderData>({ params, sectionDetail })
+  } catch (error: any) {
+    if (error.status === 403) {
+      return redirect(routes.unauthorized)
     }
+  }
 }
 const ResultDetail = () => {
-    return (
-        <>
-            <ResultDetailBySections />
-        </>
-    )
+  return (
+    <>
+      <ResultDetailBySections />
+    </>
+  )
 }
 export default ResultDetail

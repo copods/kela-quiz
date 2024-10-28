@@ -29,7 +29,7 @@ const GeneralSettings = () => {
             <button
               tabIndex={0}
               onClick={() => setOpenResetPassModel(!openResetPassModel)}
-              className="resetPassOpenPopUpLink cursor-pointer self-start text-base font-medium text-primary"
+              className="resetPassOpenPopUpLink text-primary cursor-pointer self-start text-base font-medium"
             >
               {t("settings.clickToChange")}
             </button>
