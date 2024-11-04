@@ -28,6 +28,10 @@ import type {
   CandidateResult,
   tableColumnType,
 } from "~/interface/Interface"
+import type {
+  action,
+  loader,
+} from "~/routes/$workspaceId.results.groupByTests.$testId._index"
 
 const filterByStatus = [
   {
@@ -64,14 +68,15 @@ const filterByPassFail = [
 ]
 
 const CandidateListOfTest = () => {
-  const { candidatesOfTest, currentWorkspaceId, env } = useLoaderData()
-  const candidatesLoaderData = useLoaderData()
+  const { candidatesOfTest, currentWorkspaceId, env } =
+    useLoaderData<typeof loader>()
+  const candidatesLoaderData = useLoaderData<typeof loader>()
   const { setCustomStorage, getStoredValue } = useCommonContext()
   const { t } = useTranslation()
   let navigate = useNavigate()
   const fetcher = useFetcher()
-  const actionData = useActionData()
-  const loaderData = useLoaderData()
+  const actionData = useActionData<typeof action>()
+  const loaderData = useLoaderData<typeof loader>()
   const [menuListOpen, setmenuListOpen] = useState<boolean>(false)
   const [searchText, setSearchText] = useState("")
   const [statusFilter, setStatusFilter] = useState(

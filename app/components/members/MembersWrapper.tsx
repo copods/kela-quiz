@@ -13,6 +13,7 @@ import InvitedMembersList from "~/components/members/InvitedMembersList"
 import MembersHeader from "~/components/members/MembersHeader"
 import MembersList from "~/components/members/MembersList"
 import { routes } from "~/constants/route.constants"
+import type { loader } from "~/routes/$workspaceId.members"
 
 type ActionData = {
   errors?: {
@@ -28,7 +29,7 @@ const MembersWrapper = () => {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const membersActionData = useActionData() as ActionData
-  const memberLoaderData = useLoaderData()
+  const memberLoaderData = useLoaderData<typeof loader>()
   const location = useLocation()
   //states
   const [actionStatus, setActionStatus] = useState<boolean>(false)

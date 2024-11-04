@@ -5,10 +5,11 @@ import { useTranslation } from "react-i18next"
 
 import Button from "~/components/common-components/Button"
 import InputField from "~/components/common-components/InputField"
+import type { loader } from "~/routes/assessment.$assessmentId.register"
 
 function CandidateRegister() {
   const { t } = useTranslation()
-  const loaderData = useLoaderData()
+  const loaderData = useLoaderData<typeof loader>()
 
   const [firstName, setFirstName] = useState(
     loaderData.candidateDetails.firstName

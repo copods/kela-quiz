@@ -1,6 +1,6 @@
+import { json } from "@remix-run/node"
 import type { ActionFunction, LoaderFunction } from "@remix-run/server-runtime"
 import { redirect } from "@remix-run/server-runtime"
-import { json } from "@remix-run/node"
 
 import FeedbackForm from "~/components/assessment/Feedback"
 import {

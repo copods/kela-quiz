@@ -19,11 +19,13 @@ import QuestionEditor from "./QuestionEditor"
 import Button from "~/components/common-components/Button"
 import { routes } from "~/constants/route.constants"
 import { QuestionTypes, sortByOrder } from "~/interface/Interface"
+import type { loader } from "~/routes/$workspaceId.$"
 
 const AddQuestionInSection = () => {
   const { t } = useTranslation()
 
-  const { sectionDetails, questionTypes, currentWorkspaceId } = useLoaderData()
+  const { sectionDetails, questionTypes, currentWorkspaceId } =
+    useLoaderData<typeof loader>()
   const [selectedTypeOfQuestion, onQuestionTypeChange] = useState(() => {
     for (let questionType of questionTypes) {
       if (questionType.value === QuestionTypes.multipleChoice) {

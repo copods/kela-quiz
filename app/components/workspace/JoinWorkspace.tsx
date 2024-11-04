@@ -5,11 +5,12 @@ import logo from "../../../public/assets/member-invitation.svg"
 import Button from "../common-components/Button"
 
 import { routes } from "~/constants/route.constants"
+import type { loader } from "~/routes/workspace.$inviteId.join"
 
 const JoinWorkspace = () => {
   const { t } = useTranslation()
   let navigate = useNavigate()
-  const workspcaceInvitationData = useLoaderData()
+  const workspcaceInvitationData = useLoaderData<typeof loader>()
   return (
     <div className="flex h-full flex-col items-center justify-center gap-6 rounded-lg">
       <div className="rounded-lg border-solid border-gray-50 bg-white px-14 py-10 shadow-sm">

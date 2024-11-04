@@ -23,6 +23,7 @@ import { routes } from "~/constants/route.constants"
 import { useCommonContext } from "~/context/Common.context"
 import { sortByOrder } from "~/interface/Interface"
 import type { Test, User, tableColumnType } from "~/interface/Interface"
+import type { loader, action } from "~/routes/$workspaceId.assessments._index"
 
 const TestList = () => {
   const { t } = useTranslation()
@@ -30,8 +31,8 @@ const TestList = () => {
   const submit = useSubmit()
   const location = useLocation()
   //loader and action data
-  const testLoaderData = useLoaderData()
-  const testActionData = useActionData()
+  const testLoaderData = useLoaderData<typeof loader>()
+  const testActionData = useActionData<typeof action>()
   if (t(testLoaderData.status as string) != t("statusCheck.success")) {
     toast.warn(t("statusCheck.commonError"))
   }

@@ -13,11 +13,12 @@ import Button from "../common-components/Button"
 import InputField from "../common-components/InputField"
 import Header from "../header/Header"
 
+import type { action, loader } from "~/routes/$workspaceId.my-profile"
 import { trimValue } from "~/utils"
 
 const MyProfileComponent = () => {
-  const userData = useLoaderData()
-  const userActionData = useActionData()
+  const userData = useLoaderData<typeof loader>()
+  const userActionData = useActionData<typeof action>()
   const transition = useNavigation()
   const submit = useSubmit()
 

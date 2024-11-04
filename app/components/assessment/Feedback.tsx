@@ -11,6 +11,10 @@ import Header from "./Header"
 
 import { useScrollIntoView } from "~/hooks/useScrollIntoView"
 import type { CandidateFeedbackDetails } from "~/interface/Interface"
+import type {
+  action,
+  loader,
+} from "~/routes/assessment.$assessmentId.feedback-form"
 
 const FeedbackForm = () => {
   const [experienceValue, setExperienceValue] = useState<string>("")
@@ -21,8 +25,9 @@ const FeedbackForm = () => {
 
   const bottomRef = useRef() as MutableRefObject<HTMLDivElement>
 
-  const actionData = useActionData()
-  const { feedbackSubmittedAlready, assessmentName } = useLoaderData()
+  const actionData = useActionData<typeof action>()
+  const { feedbackSubmittedAlready, assessmentName } =
+    useLoaderData<typeof loader>()
   const [feedbackSubmitted, setFeedbackSubmitted] = useState(
     feedbackSubmittedAlready
   )

@@ -18,12 +18,13 @@ import Table from "../common-components/TableComponent"
 
 import resendTestLink from "~/../public/assets/resend-test-invitation.svg"
 import type { CandidateResult, tableColumnType } from "~/interface/Interface"
+import type { loader } from "~/routes/$workspaceId.results.groupByCandidate._index"
 
 const GroupByCandidate = () => {
   const { t } = useTranslation()
 
   const { candidates, candidatesCount, currentWorkspaceId, currentPage, env } =
-    useLoaderData()
+    useLoaderData<typeof loader>()
 
   const navigate = useNavigate()
   const location = useLocation()

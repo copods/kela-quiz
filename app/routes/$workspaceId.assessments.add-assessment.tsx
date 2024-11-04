@@ -1,9 +1,9 @@
 import { useEffect } from "react"
 
 import type { Section } from "@prisma/client"
+import { json, redirect } from "@remix-run/node"
 import { useLoaderData, useActionData, useNavigate } from "@remix-run/react"
 import type { ActionFunction, LoaderFunction } from "@remix-run/server-runtime"
-import { json, redirect } from "@remix-run/node"
 import { useTranslation } from "react-i18next"
 import { toast } from "react-toastify"
 
@@ -105,8 +105,8 @@ export const action: ActionFunction = async ({ request, params }) => {
 
 const AddTest = () => {
   const { t } = useTranslation()
-  const testData = useLoaderData() as unknown as LoaderData
-  const actionData = useActionData() as ActionData
+  const testData = useLoaderData<typeof loader>()
+  const actionData = useActionData<typeof action>()
   const navigate = useNavigate()
   useEffect(() => {
     if (actionData) {

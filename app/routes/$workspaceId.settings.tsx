@@ -90,7 +90,7 @@ export default function Settings() {
   const { t } = useTranslation()
   const location = useLocation()
   const navigate = useNavigate()
-  const { currentWorkspaceId } = useLoaderData()
+  const { currentWorkspaceId } = useLoaderData<typeof loader>()
 
   useEffect(() => {
     if (location.pathname === routes.settings)

@@ -23,9 +23,10 @@ import {
 } from "./FeedbackTableRenderers"
 
 import type { CandidateFeedbacks, tableColumnType } from "~/interface/Interface"
+import type { loader } from "~/routes/$workspaceId.feedback._index"
 
 export const FeedbackContainer = () => {
-  const candidatesFeedbackData = useLoaderData()
+  const candidatesFeedbackData = useLoaderData<typeof loader>()
 
   const [feedbackCurrentPage, setFeedbackCurrentPage] = useState(
     candidatesFeedbackData.feedbackCurrentPage

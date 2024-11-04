@@ -16,6 +16,7 @@ import PasswordInputFields from "../common-components/PasswordInputField"
 import Button from "~/components/common-components/Button"
 import Logo from "~/components/Logo"
 import { routes } from "~/constants/route.constants"
+import type { action, loader } from "~/routes/sign-up"
 import {
   checkPasswordStrength,
   getPasswordStrengthColor,
@@ -24,9 +25,9 @@ import {
 
 const SignUp = ({ error }: { error?: string }) => {
   const navigate = useNavigate()
-  const signUpLoaderData = useLoaderData()
+  const signUpLoaderData = useLoaderData<typeof loader>()
   const { t } = useTranslation()
-  const signUpActionData = useActionData()
+  const signUpActionData = useActionData<typeof action>()
   useEffect(() => {
     if (signUpActionData) {
       if (signUpActionData?.errors?.title) {

@@ -11,6 +11,8 @@ import DeletePopUp from "../common-components/DeletePopUp"
 
 import AddEditSection from "./AddEditSection"
 
+import type { loader } from "~/routes/$workspaceId.tests"
+
 const SectionCard = ({
   name,
   description,
@@ -54,7 +56,7 @@ const SectionCard = ({
 }) => {
   const { t } = useTranslation()
   const submit = useSubmit()
-  const data = useLoaderData()
+  const data = useLoaderData<typeof loader>()
   const [editMode, setEditMode] = useState(false)
   const [editItem, setEditItem] = useState({
     name: "",

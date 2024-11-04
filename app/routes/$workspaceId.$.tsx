@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+
 import { json } from "@remix-run/node"
 import { useActionData, useNavigate, useLocation } from "@remix-run/react"
 import type { ActionFunction, LoaderFunction } from "@remix-run/server-runtime"
@@ -151,7 +152,7 @@ export default function CatchAllRoute() {
   }
 
   const { t } = useTranslation()
-  const actionData = useActionData()
+  const actionData = useActionData<typeof action>()
   const navigate = useNavigate()
   const [addQuestionKey, setAddQuestionKey] = useState(0)
 

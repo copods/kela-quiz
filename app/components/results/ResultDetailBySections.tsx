@@ -7,9 +7,10 @@ import ResultDetailsQuestionsPreview from "./ResultDetailsQuestionsPreview"
 
 import { routes } from "~/constants/route.constants"
 import type { Question, SectionInCandidateTest } from "~/interface/Interface"
+import type { loader } from "~/routes/$workspaceId.results.groupByTests.$testId.$candidateId.$sectionId"
 
 const ResultDetailBySections = () => {
-  const resultDetailsLoaderData = useLoaderData()
+  const resultDetailsLoaderData = useLoaderData<typeof loader>()
   const sectionDetail = resultDetailsLoaderData.sectionDetail
   const navigate = useNavigate()
   const navigateToGraphPage = `/${resultDetailsLoaderData.params.workspaceId}${routes.resultGroupTest}/${resultDetailsLoaderData.params?.testId}/${resultDetailsLoaderData.params.candidateId}`

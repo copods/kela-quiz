@@ -23,16 +23,16 @@ const ForgetPassword = () => {
   const { t } = useTranslation()
   let navigate = useNavigate()
   const [checkErrorStatus, setCheckErrorStatus] = useState(false)
-  const action = useActionData()
+  const actionData = useActionData<typeof action>()
   useEffect(() => {
-    if (action?.value === null) {
+    if (actionData?.value === null) {
       setCheckErrorStatus(true)
     }
-    if (action === "Done") {
+    if (actionData === "Done") {
       toast.success(t("statusCheck.resendPasswordSuccess"))
       navigate(routes.signIn)
     }
-  }, [action, navigate, t, action?.time])
+  }, [actionData, navigate, t, actionData?.time])
   return (
     <div className="flex h-full flex-col">
       <UserForgetPassword

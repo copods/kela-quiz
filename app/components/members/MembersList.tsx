@@ -13,6 +13,7 @@ import DeletePopUp from "../common-components/DeletePopUp"
 import Table from "../common-components/TableComponent"
 
 import type { User, Invites, UserWorkspace, Role } from "~/interface/Interface"
+import type { loader } from "~/routes/$workspaceId.members"
 
 export default function MembersList({
   membersCurrentPage,
@@ -29,7 +30,7 @@ export default function MembersList({
 }) {
   const { t } = useTranslation()
   const submit = useSubmit()
-  const memberLoaderData = useLoaderData()
+  const memberLoaderData = useLoaderData<typeof loader>()
   const loggedInUser = memberLoaderData.userId
   const [openDeleteModal, setOpenDeleteModal] = useState(false)
   const [openRoleModal, setOpenRoleModal] = useState(false)

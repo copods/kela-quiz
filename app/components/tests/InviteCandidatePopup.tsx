@@ -13,6 +13,8 @@ import {
   DialogHeader,
   DialogWrapper,
 } from "../common-components/Dialog"
+
+import type { action } from "~/routes/$workspaceId.assessments._index"
 interface error {
   [key: number]: string
 }
@@ -38,7 +40,7 @@ const InviteCandidatePopup = ({
   const { t } = useTranslation()
   const [emails, setEmails] = useState<Array<string>>([""])
   const [errors, setError] = useState({})
-  const actionData = useActionData()
+  const actionData = useActionData<typeof action>()
   const navigate = useNavigate()
   useEffect(() => {
     if (actionData?.status == 401 && testId === actionData?.testId) {

@@ -11,10 +11,11 @@ import SectionCardForResultDetail from "./SectionCardForResultDetail"
 
 import { routes } from "~/constants/route.constants"
 import type { SectionInCandidateTest } from "~/interface/Interface"
+import type { loader } from "~/routes/$workspaceId.results.groupByTests.$testId.$candidateId._index"
 
 const ResultDetailsComponent = () => {
   const { params, sections, candidate, currentWorkspaceId, candidateResult } =
-    useLoaderData()
+    useLoaderData<typeof loader>()
 
   const [result, setResult] = useState(0)
 

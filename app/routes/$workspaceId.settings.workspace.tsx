@@ -6,9 +6,8 @@ import { useActionData, useLoaderData, useNavigate } from "@remix-run/react"
 import { t } from "i18next"
 import { toast } from "react-toastify"
 
-import { routes } from "~/constants/route.constants"
-
 import Workspace from "~/components/settings/Workspace"
+import { routes } from "~/constants/route.constants"
 import { checkUserFeatureAuthorization } from "~/models/authorization.server"
 import {
   getActiveOwnerWorkspaces,
@@ -118,8 +117,8 @@ export const action: ActionFunction = async ({ request, params }) => {
   }
 }
 const WorkspaceSetting = () => {
-  const actionData = useActionData()
-  const workspaceLoaderData = useLoaderData()
+  const actionData = useActionData<typeof action>()
+  const workspaceLoaderData = useLoaderData<typeof loader>()
   const navigate = useNavigate()
 
   useEffect(() => {

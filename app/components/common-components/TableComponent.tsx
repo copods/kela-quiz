@@ -125,7 +125,7 @@ const TableDataCell = <T,>({
       }}
       className="flex h-16 max-h-20 flex-1 items-center truncate border-b px-4 text-gray-700"
     >
-      {rowData[field as keyof typeof rowData]}
+      {String(rowData[field as keyof T] ?? "")}
     </div>
   )
 }

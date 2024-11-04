@@ -7,10 +7,11 @@ import Button from "../common-components/Button"
 import Header from "./Header"
 
 import cooldownImage from "~/../public/assets/cooldown.svg"
+import type { loader } from "~/routes/assessment.$assessmentId.$sectionId.cooldown"
 
 const Cooldown = () => {
   const { t } = useTranslation()
-  const { candidateSection, candidateTests } = useLoaderData()
+  const { candidateSection, candidateTests } = useLoaderData<typeof loader>()
   const submit = useSubmit()
   const startSection = async () => {
     //getting first test of this section

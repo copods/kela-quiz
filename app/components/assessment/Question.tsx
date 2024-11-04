@@ -12,10 +12,11 @@ import CandidateQuestionStepper from "./CandidateQuestionStepper"
 
 import type { Option } from "~/interface/Interface"
 import { QuestionTypes } from "~/interface/Interface"
+import type { loader } from "~/routes/assessment.$assessmentId.$sectionId.$questionId"
 
 const Question = () => {
   const { t } = useTranslation()
-  const { question } = useLoaderData()
+  const { question } = useLoaderData<typeof loader>()
   const questionType = question?.question?.questionType?.value
   const [userAnswer, setUserAnswer] = useState(
     questionType === QuestionTypes.singleChoice

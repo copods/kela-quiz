@@ -6,6 +6,7 @@ import Table from "../common-components/TableComponent"
 
 import memberResendIcon from "~/../public/assets/resend-member-invitation.svg"
 import type { User, Role, Invites } from "~/interface/Interface"
+import type { loader } from "~/routes/$workspaceId.members"
 
 const InvitedMembersList = ({
   actionStatus,
@@ -20,10 +21,10 @@ const InvitedMembersList = ({
   invitedMemberPageSize: number
   setInvitedMemberPageSize: (e: number) => void
 }) => {
-  const membersData = useLoaderData()
+  const membersData = useLoaderData<typeof loader>()
   const invitedMember = membersData.invitedMembers
   const submit = useSubmit()
-  const memberLoaderData = useLoaderData()
+  const memberLoaderData = useLoaderData<typeof loader>()
 
   const InvitedByCell = (data: Invites) => {
     return (

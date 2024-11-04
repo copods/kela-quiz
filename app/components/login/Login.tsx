@@ -11,10 +11,11 @@ import Checkbox from "../form/CheckBox"
 import Logo from "~/components/Logo"
 import { routes } from "~/constants/route.constants"
 import type { LoginProps } from "~/interface/Interface"
+import type { loader } from "~/routes/sign-in"
 function Login({ actionData, redirectTo }: LoginProps) {
   const { t } = useTranslation()
 
-  const loginLoaderData = useLoaderData()
+  const loginLoaderData = useLoaderData<typeof loader>()
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [rememberMe, setRememberMe] = useState(false)

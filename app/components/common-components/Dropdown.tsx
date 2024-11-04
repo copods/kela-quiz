@@ -398,13 +398,15 @@ export const NewDropdownField = <
                                   id="option"
                                 >
                                   {labelKey
-                                    ? (
-                                        option as Record<
-                                          typeof labelKey,
-                                          string
-                                        >
-                                      )[labelKey]
-                                    : option}
+                                    ? String(
+                                        (
+                                          option as Record<
+                                            typeof labelKey,
+                                            string
+                                          >
+                                        )[labelKey]
+                                      )
+                                    : String(option)}
                                 </span>
                                 {helperText && (
                                   <span className="text-xs leading-4 text-gray-500">

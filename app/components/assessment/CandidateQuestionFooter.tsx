@@ -2,12 +2,14 @@ import { useLoaderData } from "@remix-run/react"
 import { useTranslation } from "react-i18next"
 
 import Button from "../common-components/Button"
+
+import type { loader } from "~/routes/assessment.$assessmentId.$sectionId.$questionId"
 // import CandidateQuestionStepper from './CandidateQuestionStepper'
 
 const CandidateQuestionFooter = () => {
   const { t } = useTranslation()
 
-  const { question, section, lastSection } = useLoaderData()
+  const { question, section, lastSection } = useLoaderData<typeof loader>()
   return (
     <div className="flex h-16 items-center justify-between gap-6 border-t bg-white px-6 py-4">
       <div>
