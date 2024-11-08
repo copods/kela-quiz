@@ -9,6 +9,7 @@ import { toast } from "react-toastify"
 
 import AddQuestionInSection from "~/components/sections/add-question/AddQuestionInSection"
 import { routes } from "~/constants/route.constants"
+import type { Section } from "~/interface/Interface"
 import { checkUserFeatureAuthorization } from "~/models/authorization.server"
 import {
   getAddQuestion,
@@ -25,9 +26,49 @@ type LoaderData = {
   currentWorkspaceId: string
   permission: { [key: string]: { [key: string]: boolean } }
 }
+export type ActionData = {
+  errors?: {
+    title?: string
+    body?: string
+    status?: number
+    check?: Date
+    name?: string
+    description?: string
+    email?: string
+    password?: string
+  }
+  error?:
+    | {
+        data?: string
+        status?: number
+      }
+    | boolean
+  success?:
+    | {
+        data?: string
+        addMoreQuestion?: boolean
+        status?: number
+        redirectTo?: string
+      }
+    | boolean
+  createSectionFieldError?: {
+    title?: string
+    description?: string
+    duplicateTitle?: string
+  }
+  resp?: {
+    status?: string | number
+    check?: Date
+    title?: string
+    data?: Section
+    id?: string
+  }
+  redirectTo?: string
+  data?: string
+}
 
 function extractSectionIdFromPath(path: string): string | null {
-  const matches = path.match(/\/tests\/([^\/]+)\/add-question$/)
+  const matches = path.match(/\/tests\/([^/]+)\/add-question$/)
   return matches ? matches[1] : null
 }
 
@@ -99,7 +140,10 @@ export const action: ActionFunction = async ({ request, params }) => {
     const questionData = formData.get("quesData")
 
     if (!questionData) {
-      return json({ error: true, data: "Invalid form data" }, { status: 400 })
+      return json<ActionData>(
+        { error: true, data: "Invalid form data" },
+        { status: 400 }
+      )
     }
 
     const question = JSON.parse(questionData as string)
@@ -119,20 +163,19 @@ export const action: ActionFunction = async ({ request, params }) => {
       userId!,
       currentWorkspaceId
     )
-
-    if (response.success) {
+    const responseData = (await response.json()) as ActionData
+    if (responseData.success) {
       if (question.addMoreQuestion) {
-        return json({ success: response.success })
+        return json<ActionData>({ success: responseData.success })
       } else {
-        // Instead of returning redirect, return a success response with redirect info
-        return json({
+        return json<ActionData>({
           success: true,
           redirectTo: `/${currentWorkspaceId}${routes.tests}/${question.sectionId}`,
         })
       }
     }
 
-    return response
+    return json<ActionData>(responseData)
   } catch (error: any) {
     if (error.status === 403) {
       return redirect(routes.unauthorized)

@@ -19,6 +19,13 @@ import {
   trimValue,
 } from "~/utils"
 
+interface PasswordResetFetcherData {
+  errors?: {
+    valid?: string
+    passShouldNotBeSame?: string
+  }
+}
+
 const ResetPassword = ({
   openResetPassModel,
   setOpenResetPassModel,
@@ -27,7 +34,7 @@ const ResetPassword = ({
   setOpenResetPassModel: (e: boolean) => void
 }) => {
   const { t } = useTranslation()
-  const fetcher = useFetcher()
+  const fetcher = useFetcher<PasswordResetFetcherData>()
 
   useEffect(() => {
     if (fetcher.data && fetcher.data === "DONE") {

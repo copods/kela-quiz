@@ -33,6 +33,15 @@ import type {
   loader,
 } from "~/routes/$workspaceId.results.groupByTests.$testId._index"
 
+interface FetcherData {
+  candidateInviteStatus?: string
+  candidatesOfTest?: {
+    candidateTest: CandidateTest[]
+    name: string
+  }
+  candidatesCount?: number
+}
+
 const filterByStatus = [
   {
     name: "All",
@@ -74,7 +83,7 @@ const CandidateListOfTest = () => {
   const { setCustomStorage, getStoredValue } = useCommonContext()
   const { t } = useTranslation()
   let navigate = useNavigate()
-  const fetcher = useFetcher()
+  const fetcher = useFetcher<FetcherData>()
   const actionData = useActionData<typeof action>()
   const loaderData = useLoaderData<typeof loader>()
   const [menuListOpen, setmenuListOpen] = useState<boolean>(false)

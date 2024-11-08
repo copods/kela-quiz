@@ -21,6 +21,24 @@ export interface editItem {
   name: string
   description: string
 }
+
+interface SectionFetcherData {
+  createSectionFieldError?: {
+    title?: string
+    description?: string
+  }
+  errors?: {
+    title?: string
+    status?: number
+    check?: string
+  }
+  resp?: {
+    status?: string
+    data?: {
+      id: string
+    }
+  }
+}
 const AddEditSection = ({
   open,
   setOpen,
@@ -58,7 +76,7 @@ const AddEditSection = ({
   const transition = useNavigation()
   const [sectionName, setSectionName] = useState("")
   const [description, setDescription] = useState("")
-  const fetcher = useFetcher()
+  const fetcher = useFetcher<SectionFetcherData>()
   const editSection = (name: string, description: string) => {
     fetcher.submit(
       {
