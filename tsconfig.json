@@ -3,7 +3,7 @@
   "include": ["remix.env.d.ts", "**/*.ts", "**/*.tsx"],
   "compilerOptions": {
     "lib": ["DOM", "DOM.Iterable", "ES2022"],
-    "types": ["@remix-run/node", "vite/client", "jest"],
+    "types": ["@remix-run/node", "vite/client", "jest", "cypress"],
     "isolatedModules": true,
     "esModuleInterop": true,
     "jsx": "react-jsx",
