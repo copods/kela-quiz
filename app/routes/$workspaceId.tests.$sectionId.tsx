@@ -84,7 +84,7 @@ export const action: ActionFunction = async ({ request, params }) => {
 }
 export default function Section() {
   const { t } = useTranslation()
-  const section = useActionData()
+  const section = useActionData<typeof action>()
   const navigate = useNavigate()
 
   useEffect(() => {

@@ -106,7 +106,7 @@ const QuestionCard = ({
               <span
                 id="question-type"
                 title={displayName?.full}
-                className="flex flex-1 items-center rounded-52 border border-gray-700 px-3 text-sm text-gray-700"
+                className="rounded-52 flex flex-1 items-center border border-gray-700 px-3 text-sm text-gray-700"
               >
                 {displayName?.name}
               </span>

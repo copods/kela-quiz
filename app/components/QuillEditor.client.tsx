@@ -1,7 +1,6 @@
 import { useEffect, useRef } from "react"
 
 import hljs from "highlight.js"
-import BlotFormatter from "quill-blot-formatter"
 import { useQuill } from "react-quilljs"
 
 export default function QuillEditor({
@@ -60,15 +59,15 @@ export default function QuillEditor({
     "code-block",
   ]
   const editorRef = useRef(null)
-  const { quill, quillRef, Quill } = useQuill({
+  const { quill, quillRef } = useQuill({
     theme,
     modules,
     formats,
     placeholder,
   })
-  if (Quill && !quill) {
-    Quill.register("modules/blotFormatter", BlotFormatter)
-  }
+  // if (Quill && !quill) {
+  //   Quill.register("modules/blotFormatter", BlotFormatter)
+  // }
   useEffect(() => {
     if (quill && text) {
       quill.clipboard.dangerouslyPasteHTML(text)

@@ -28,6 +28,19 @@ import type {
   CandidateResult,
   tableColumnType,
 } from "~/interface/Interface"
+import type {
+  action,
+  loader,
+} from "~/routes/$workspaceId.results.groupByTests.$testId._index"
+
+interface FetcherData {
+  candidateInviteStatus?: string
+  candidatesOfTest?: {
+    candidateTest: CandidateTest[]
+    name: string
+  }
+  candidatesCount?: number
+}
 
 const filterByStatus = [
   {
@@ -64,14 +77,15 @@ const filterByPassFail = [
 ]
 
 const CandidateListOfTest = () => {
-  const { candidatesOfTest, currentWorkspaceId, env } = useLoaderData()
-  const candidatesLoaderData = useLoaderData()
+  const { candidatesOfTest, currentWorkspaceId, env } =
+    useLoaderData<typeof loader>()
+  const candidatesLoaderData = useLoaderData<typeof loader>()
   const { setCustomStorage, getStoredValue } = useCommonContext()
   const { t } = useTranslation()
   let navigate = useNavigate()
-  const fetcher = useFetcher()
-  const actionData = useActionData()
-  const loaderData = useLoaderData()
+  const fetcher = useFetcher<FetcherData>()
+  const actionData = useActionData<typeof action>()
+  const loaderData = useLoaderData<typeof loader>()
   const [menuListOpen, setmenuListOpen] = useState<boolean>(false)
   const [searchText, setSearchText] = useState("")
   const [statusFilter, setStatusFilter] = useState(
@@ -220,7 +234,7 @@ const CandidateListOfTest = () => {
         data.startedAt ? (
           <Link
             to={`/${currentWorkspaceId}/results/groupByTests/${data?.testId}/${data?.candidateId}`}
-            className="col-span-2 flex  truncate font-semibold text-primary"
+            className="text-primary col-span-2  flex truncate font-semibold"
             title={candidateName}
           >
             {candidateName}

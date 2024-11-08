@@ -49,7 +49,7 @@ const UserForgetPassword = ({
     <div className="flex flex-1 items-center justify-center bg-gray-50">
       <div
         id="forget-password-card"
-        className="flex w-full max-w-554 flex-col gap-6 rounded-md border border-gray-50 bg-white px-24 pb-12 drop-shadow-xl"
+        className="max-w-554 flex w-full flex-col gap-6 rounded-md border border-gray-50 bg-white px-24 pb-12 drop-shadow-xl"
       >
         <div className="-mt-9 flex justify-center">
           <Logo height="64" width="64" />
@@ -83,7 +83,7 @@ const UserForgetPassword = ({
                 if (e.key === "Enter") navigate(routes.signIn)
               }}
               role="link"
-              className="cursor-pointer text-sm text-primary"
+              className="text-primary cursor-pointer text-sm"
             >
               {t("forgotPasswordConstants.backToLogin")}
             </span>
@@ -93,7 +93,7 @@ const UserForgetPassword = ({
             id="reset-password"
             variant="primary-solid"
             type="submit"
-            className="h-11 w-358"
+            className="w-358 h-11"
             title={t("forgotPasswordConstants.resetPassword")}
             buttonText={t("forgotPasswordConstants.resetPassword")}
           />

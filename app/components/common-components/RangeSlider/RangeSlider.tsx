@@ -57,7 +57,7 @@ const RangeSlider = ({
             ...props.style,
           }}
         >
-          <div className="h-5 w-5 rounded-full bg-primary" />
+          <div className="bg-primary h-5 w-5 rounded-full" />
           <span
             className="absolute text-xs text-gray-500"
             style={{

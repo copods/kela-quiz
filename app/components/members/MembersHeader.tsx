@@ -7,6 +7,8 @@ import Button from "../common-components/Button"
 
 import AddMemberModal from "./AddMemberModal"
 
+import type { loader } from "~/routes/$workspaceId.members"
+
 export default function MembersHeader({
   actionStatus,
   setActionStatus,
@@ -16,7 +18,7 @@ export default function MembersHeader({
 }) {
   const { t } = useTranslation()
 
-  const membersData = useLoaderData()
+  const membersData = useLoaderData<typeof loader>()
   const loggedInUser = membersData.getUser.email
   const [open, setOpen] = useState(false)
   useEffect(() => {

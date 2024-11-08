@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 
-import { Form, useFetcher, useNavigate, useTransition } from "@remix-run/react"
+import { Form, useFetcher, useNavigate, useNavigation } from "@remix-run/react"
 import { useTranslation } from "react-i18next"
 import { toast } from "react-toastify"
 
@@ -14,12 +14,30 @@ import {
 
 import { routes } from "~/constants/route.constants"
 import { useCommonContext } from "~/context/Common.context"
-import type { LoaderData } from "~/routes/$workspaceId/tests"
+import type { LoaderData } from "~/routes/$workspaceId.tests"
 import { trimValue } from "~/utils"
 
 export interface editItem {
   name: string
   description: string
+}
+
+interface SectionFetcherData {
+  createSectionFieldError?: {
+    title?: string
+    description?: string
+  }
+  errors?: {
+    title?: string
+    status?: number
+    check?: string
+  }
+  resp?: {
+    status?: string
+    data?: {
+      id: string
+    }
+  }
 }
 const AddEditSection = ({
   open,
@@ -55,10 +73,10 @@ const AddEditSection = ({
 }) => {
   const { t } = useTranslation()
   const { clearStoredValue } = useCommonContext()
-  const transition = useTransition()
+  const transition = useNavigation()
   const [sectionName, setSectionName] = useState("")
   const [description, setDescription] = useState("")
-  const fetcher = useFetcher()
+  const fetcher = useFetcher<SectionFetcherData>()
   const editSection = (name: string, description: string) => {
     fetcher.submit(
       {

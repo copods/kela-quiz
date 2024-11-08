@@ -17,6 +17,7 @@ import { WorkspaceDetailsSection } from "./WorkspaceDetailsSection"
 
 import Header from "~/components/header/Header"
 import type { SettingWorkspace } from "~/interface/Interface"
+import type { loader } from "~/routes/$workspaceId.settings.workspace"
 
 const CancelAndSaveButton = ({
   inputValue,
@@ -78,7 +79,7 @@ const Workspace = () => {
   const [newOwner, setNewOwner] = useState("")
   const [actionDropdown, setActionDropdown] = useState(false)
   const [isEdit, setIsEdit] = useState(false)
-  const workspaceLoaderData = useLoaderData()
+  const workspaceLoaderData = useLoaderData<typeof loader>()
   const [inputValue, setInputValue] = useState(
     workspaceLoaderData?.userWorkspaces?.find(
       (workspaces: SettingWorkspace) =>

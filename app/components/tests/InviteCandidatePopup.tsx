@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 
 import { useNavigate } from "react-router-dom"
 
-import { Form, useActionData, useTransition } from "@remix-run/react"
+import { Form, useActionData, useNavigation } from "@remix-run/react"
 import { useTranslation } from "react-i18next"
 import { toast } from "react-toastify"
 
@@ -13,6 +13,8 @@ import {
   DialogHeader,
   DialogWrapper,
 } from "../common-components/Dialog"
+
+import type { action } from "~/routes/$workspaceId.assessments._index"
 interface error {
   [key: number]: string
 }
@@ -38,7 +40,7 @@ const InviteCandidatePopup = ({
   const { t } = useTranslation()
   const [emails, setEmails] = useState<Array<string>>([""])
   const [errors, setError] = useState({})
-  const actionData = useActionData()
+  const actionData = useActionData<typeof action>()
   const navigate = useNavigate()
   useEffect(() => {
     if (actionData?.status == 401 && testId === actionData?.testId) {
@@ -85,7 +87,7 @@ const InviteCandidatePopup = ({
     setOpenInvitePopup(false)
     setEmails([""])
   }
-  const transition = useTransition()
+  const transition = useNavigation()
   useEffect(() => {
     setEmails([""])
     setError({})
@@ -143,7 +145,7 @@ const InviteCandidatePopup = ({
                   role={"button"}
                   id="invite-more"
                   tabIndex={0}
-                  className="cursor-pointer px-0.5 text-sm font-normal text-primary"
+                  className="text-primary cursor-pointer px-0.5 text-sm font-normal"
                   onClick={() => setEmails([...emails, ""])}
                   onKeyUp={(e) => {
                     if (e.key === "Enter") setEmails([...emails, ""])

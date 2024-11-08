@@ -11,6 +11,8 @@ import DeletePopUp from "../common-components/DeletePopUp"
 
 import AddEditSection from "./AddEditSection"
 
+import type { loader } from "~/routes/$workspaceId.tests"
+
 const SectionCard = ({
   name,
   description,
@@ -54,7 +56,7 @@ const SectionCard = ({
 }) => {
   const { t } = useTranslation()
   const submit = useSubmit()
-  const data = useLoaderData()
+  const data = useLoaderData<typeof loader>()
   const [editMode, setEditMode] = useState(false)
   const [editItem, setEditItem] = useState({
     name: "",
@@ -89,7 +91,7 @@ const SectionCard = ({
     <div
       className={`sectionCard section-card flex flex-col gap-2 rounded-lg p-5 pt-4 ${
         isActive
-          ? "border border-l-8 border-transparent border-l-primary bg-white pl-13 shadow-md"
+          ? "border-l-primary pl-13 border border-l-8 border-transparent bg-white shadow-md"
           : "border border-gray-300 bg-gray-100"
       }`}
       id="section-card"
@@ -120,7 +122,7 @@ const SectionCard = ({
                             tabIndex={0}
                             id="edit-test-button"
                             data-cy="edit-section"
-                            className="text-gray-primary undefined inline-flex w-36 items-center justify-start bg-white px-2 py-2 text-xs font-medium text-primary transition delay-75 ease-in-out hover:bg-gray-100"
+                            className="text-gray-primary undefined text-primary inline-flex w-36 items-center justify-start bg-white px-2 py-2 text-xs font-medium transition delay-75 ease-in-out hover:bg-gray-100"
                             onClick={() => {
                               setEditMode(true)
                               setEditItem({
@@ -147,7 +149,7 @@ const SectionCard = ({
                             tabIndex={0}
                             id="delete-test-button"
                             data-cy="delete-section"
-                            className="text-gray-primary undefined inline-flex w-36 items-center justify-start bg-white px-2 py-2 text-xs font-medium text-primary transition delay-75 ease-in-out hover:bg-gray-100"
+                            className="text-gray-primary undefined text-primary inline-flex w-36 items-center justify-start bg-white px-2 py-2 text-xs font-medium transition delay-75 ease-in-out hover:bg-gray-100"
                             onClick={() => {
                               setIsDelete(true)
                             }}

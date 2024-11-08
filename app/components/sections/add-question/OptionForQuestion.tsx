@@ -4,7 +4,7 @@ import { useEffect } from "react"
 import { Icon } from "@iconify/react"
 import { useTranslation } from "react-i18next"
 import { toast } from "react-toastify"
-import { ClientOnly } from "remix-utils"
+import { ClientOnly } from "remix-utils/client-only"
 import { v4 as uuidv4 } from "uuid"
 
 import Button from "~/components/common-components/Button"

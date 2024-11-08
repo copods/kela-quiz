@@ -21,11 +21,12 @@ import QuestionCard from "./QuestionCard"
 import { routes } from "~/constants/route.constants"
 import { useCommonContext } from "~/context/Common.context"
 import type { Question } from "~/interface/Interface"
+import type { loader } from "~/routes/$workspaceId.tests.$sectionId"
 
 const SectionDetails = () => {
   const { t } = useTranslation()
   const { setCustomStorage } = useCommonContext()
-  const sectionDetails = useLoaderData()
+  const sectionDetails = useLoaderData<typeof loader>()
   const [currentAccordian, setCurrentAccordian] = useState(-1)
   const [searchText, setSearchText] = useState("")
 

@@ -1,6 +1,6 @@
 import { Fragment, useState, useEffect } from "react"
 
-import { useFetcher, useTransition } from "@remix-run/react"
+import { useFetcher, useNavigation } from "@remix-run/react"
 import { useTranslation } from "react-i18next"
 import { toast } from "react-toastify"
 
@@ -17,6 +17,18 @@ import { actions } from "~/constants/action.constants"
 import { routes } from "~/constants/route.constants"
 import { trimValue } from "~/utils"
 
+interface WorkspaceResponse {
+  resp?: {
+    status: number
+    workspaceId: string
+    title: string
+  }
+  errors?: {
+    status: number
+    title: string
+  }
+}
+
 export default function AddWorkspace({
   showAddWorkspaceModal,
   setShowAddWorkspaceModal,
@@ -29,8 +41,8 @@ export default function AddWorkspace({
   currentWorkspaceId: string
 }) {
   const { t } = useTranslation()
-  const fetcher = useFetcher()
-  const transition = useTransition()
+  const fetcher = useFetcher<WorkspaceResponse>()
+  const transition = useNavigation()
   const [workspace, setWorkspace] = useState("")
   const submitWorkspaceForm = () => {
     fetcher.submit(

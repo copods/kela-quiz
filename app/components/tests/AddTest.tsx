@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 
-import { useNavigate, useSubmit, useTransition } from "@remix-run/react"
+import { useNavigate, useSubmit, useNavigation } from "@remix-run/react"
 import { useTranslation } from "react-i18next"
 import { toast } from "react-toastify"
 
@@ -27,7 +27,7 @@ const AddTestComponent = ({
 }) => {
   const { t } = useTranslation()
 
-  const transition = useTransition()
+  const transition = useNavigation()
   const submit = useSubmit()
   const [sectionsCopy, setSectionsCopy] = useState(sections)
   const [allSelectedSections, setAllSelectedSections] = useState<

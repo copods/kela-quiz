@@ -1,14 +1,15 @@
 import React, { useState } from "react"
 
-import { Form, useLoaderData, useTransition } from "@remix-run/react"
+import { Form, useLoaderData, useNavigation } from "@remix-run/react"
 import { useTranslation } from "react-i18next"
 
 import Button from "~/components/common-components/Button"
 import InputField from "~/components/common-components/InputField"
+import type { loader } from "~/routes/assessment.$assessmentId.register"
 
 function CandidateRegister() {
   const { t } = useTranslation()
-  const loaderData = useLoaderData()
+  const loaderData = useLoaderData<typeof loader>()
 
   const [firstName, setFirstName] = useState(
     loaderData.candidateDetails.firstName
@@ -21,8 +22,8 @@ function CandidateRegister() {
       : ""
   )
 
-  const { state } = useTransition()
-  const busy = state === "submitting"
+  const navigation = useNavigation()
+  const busy = navigation.state === "submitting"
 
   const canSubmitBtnBeEnabled = () => {
     return firstName.length > 0 && lastName.length > 0
@@ -55,7 +56,7 @@ function CandidateRegister() {
     },
   ]
   return (
-    <div className="z-10 flex	w-full max-w-454 flex-col gap-12 rounded-lg bg-white p-12 drop-shadow-xl">
+    <div className="max-w-454 z-10	flex w-full flex-col gap-12 rounded-lg bg-white p-12 drop-shadow-xl">
       <h1 className="text-center text-3xl font-bold text-gray-900">Welcome</h1>
       <div className="flex justify-center">
         <Form method="post" className="flex w-full flex-col gap-10">

@@ -64,7 +64,7 @@ export const action: ActionFunction = async ({ params, request }) => {
   if (typeof nextSecRoute === "string") return redirect(nextSecRoute)
 }
 const AssessmentSection = () => {
-  const { section, candidateTests, params } = useLoaderData()
+  const { section, candidateTests, params } = useLoaderData<typeof loader>()
   return (
     <SectionQuestionPage
       section={section}

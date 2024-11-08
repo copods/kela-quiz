@@ -1,7 +1,6 @@
 import { useState } from "react"
 
 import { Icon } from "@iconify/react"
-import { useLoaderData } from "@remix-run/react"
 import { useTranslation } from "react-i18next"
 
 import InviteCandidatePopup from "./InviteCandidatePopup"
@@ -16,6 +15,7 @@ const TestPreview = ({
   selectedSections,
   isPreviewEditable = true,
   showInviteAction,
+  loaderDataPermissionInviteCandidateCreate,
 }: {
   name: string
   testId?: string
@@ -24,9 +24,9 @@ const TestPreview = ({
   onChangeSelectedSectionsOrder?: (e: TestSection[]) => void
   isPreviewEditable: boolean
   showInviteAction?: boolean
+  loaderDataPermissionInviteCandidateCreate?: boolean
 }) => {
   const { t } = useTranslation()
-  const loaderData = useLoaderData()
   const changeSelectedSectionsOrder = (index: number, action: string) => {
     if (
       (index === 0 && action === "up") ||
@@ -54,7 +54,7 @@ const TestPreview = ({
   }
   const [candidatePopupOpen, setCandidatePopupOpen] = useState<boolean>(false)
   return (
-    <div className="flex flex-1 flex-col gap-9 overflow-scroll rounded-lg bg-white p-6 shadow-base">
+    <div className="shadow-base flex flex-1 flex-col gap-9 overflow-scroll rounded-lg bg-white p-6">
       <div className="flex flex-col gap-6">
         <div className="flex justify-between">
           <h1
@@ -63,38 +63,37 @@ const TestPreview = ({
           >
             {t("testsConstants.testDetailsText")}
           </h1>
-          {showInviteAction &&
-            loaderData.permission.invite_candidate.create && (
-              <div>
-                <div
-                  role={"button"}
-                  tabIndex={0}
-                  onClick={() => {
-                    setCandidatePopupOpen(true)
-                  }}
-                  onKeyUp={(e) => {
-                    if (e.key === "Enter") setCandidatePopupOpen(true)
-                  }}
-                  className="flex gap-2"
-                >
-                  <Icon
-                    id="invite-popup-open"
-                    className="h-6 w-6 cursor-pointer text-primary "
-                    icon={"ant-design:user-add-outlined"}
-                    aria-label={t("members.inviteMember")}
-                  />
-                  <span id="invite-popup-open-text" className="text-primary">
-                    {t("inviteMemeberPopUpConstants.inviteCandidate")}
-                  </span>
-                </div>
-                <InviteCandidatePopup
-                  openInvitePopup={candidatePopupOpen}
-                  setOpenInvitePopup={setCandidatePopupOpen}
-                  testName={name}
-                  testId={testId}
+          {showInviteAction && loaderDataPermissionInviteCandidateCreate && (
+            <div>
+              <div
+                role={"button"}
+                tabIndex={0}
+                onClick={() => {
+                  setCandidatePopupOpen(true)
+                }}
+                onKeyUp={(e) => {
+                  if (e.key === "Enter") setCandidatePopupOpen(true)
+                }}
+                className="flex gap-2"
+              >
+                <Icon
+                  id="invite-popup-open"
+                  className="text-primary h-6 w-6 cursor-pointer "
+                  icon={"ant-design:user-add-outlined"}
+                  aria-label={t("members.inviteMember")}
                 />
+                <span id="invite-popup-open-text" className="text-primary">
+                  {t("inviteMemeberPopUpConstants.inviteCandidate")}
+                </span>
               </div>
-            )}
+              <InviteCandidatePopup
+                openInvitePopup={candidatePopupOpen}
+                setOpenInvitePopup={setCandidatePopupOpen}
+                testName={name}
+                testId={testId}
+              />
+            </div>
+          )}
         </div>
 
         <div className="flex flex-col gap-4 text-base">

@@ -5,9 +5,10 @@ import { useLoaderData, useSubmit } from "@remix-run/react"
 import dash from "~/../public/assets/dash.svg"
 import tickMark from "~/../public/assets/tickMark.svg"
 import type { CandidateQuestion } from "~/interface/Interface"
+import type { loader } from "~/routes/assessment.$assessmentId.$sectionId.$questionId"
 
 const CandidateQuestionStepper = () => {
-  const { section, candidateTests, params } = useLoaderData()
+  const { section, candidateTests, params } = useLoaderData<typeof loader>()
   const submit = useSubmit()
 
   return (
@@ -43,7 +44,7 @@ const CandidateQuestionStepper = () => {
                     : question.status === "SKIPPED" ||
                       question.status === "VIEWED"
                     ? "bg-gray-700 text-white"
-                    : "border border-primary text-primary"
+                    : "border-primary text-primary border"
                 }`}
               >
                 {params.questionId === question.id ? (

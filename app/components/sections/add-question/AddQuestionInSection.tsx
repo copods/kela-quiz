@@ -5,7 +5,7 @@ import {
   useLoaderData,
   useNavigate,
   useSubmit,
-  useTransition,
+  useNavigation,
 } from "@remix-run/react"
 import { useTranslation } from "react-i18next"
 import { toast } from "react-toastify"
@@ -19,11 +19,13 @@ import QuestionEditor from "./QuestionEditor"
 import Button from "~/components/common-components/Button"
 import { routes } from "~/constants/route.constants"
 import { QuestionTypes, sortByOrder } from "~/interface/Interface"
+import type { loader } from "~/routes/$workspaceId.$"
 
 const AddQuestionInSection = () => {
   const { t } = useTranslation()
 
-  const { sectionDetails, questionTypes, currentWorkspaceId } = useLoaderData()
+  const { sectionDetails, questionTypes, currentWorkspaceId } =
+    useLoaderData<typeof loader>()
   const [selectedTypeOfQuestion, onQuestionTypeChange] = useState(() => {
     for (let questionType of questionTypes) {
       if (questionType.value === QuestionTypes.multipleChoice) {
@@ -63,7 +65,7 @@ const AddQuestionInSection = () => {
     },
   ])
   const [checkOrder, setCheckOrder] = useState(false)
-  const transition = useTransition()
+  const transition = useNavigation()
   const navigate = useNavigate()
   const submit = useSubmit()
   const [answerCount, setAnswerCount] = useState(0)
@@ -224,7 +226,13 @@ const AddQuestionInSection = () => {
         testQuestion.correctAnswer.push(optionForQuestion)
       })
     }
-    submit({ quesData: JSON.stringify(testQuestion) }, { method: "post" })
+    submit(
+      { quesData: JSON.stringify(testQuestion) },
+      {
+        method: "post",
+        action: `/${currentWorkspaceId}/tests/${sectionDetails.id}/add-question`,
+      }
+    )
   }
   return (
     <div className="flex h-full flex-col gap-6">

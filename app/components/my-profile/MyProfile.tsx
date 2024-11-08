@@ -4,7 +4,7 @@ import {
   useActionData,
   useLoaderData,
   useSubmit,
-  useTransition,
+  useNavigation,
 } from "@remix-run/react"
 import { t } from "i18next"
 import { toast } from "react-toastify"
@@ -13,12 +13,13 @@ import Button from "../common-components/Button"
 import InputField from "../common-components/InputField"
 import Header from "../header/Header"
 
+import type { action, loader } from "~/routes/$workspaceId.my-profile"
 import { trimValue } from "~/utils"
 
 const MyProfileComponent = () => {
-  const userData = useLoaderData()
-  const userActionData = useActionData()
-  const transition = useTransition()
+  const userData = useLoaderData<typeof loader>()
+  const userActionData = useActionData<typeof action>()
+  const transition = useNavigation()
   const submit = useSubmit()
 
   const [viewMode, setViewMode] = useState(true)

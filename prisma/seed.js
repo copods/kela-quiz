@@ -1,5 +1,5 @@
-const { PrismaClient } = require("@prisma/client")
-const bcrypt = require("bcryptjs")
+import { PrismaClient } from "@prisma/client"
+import bcrypt from "bcryptjs"
 
 const prisma = new PrismaClient()
 
@@ -29,7 +29,7 @@ async function seed() {
 
   const createRoles = () => {
     roles.forEach(async (role) => {
-      role = await prisma.role.upsert({
+      await prisma.role.upsert({
         where: {
           id: role.id,
         },
@@ -42,11 +42,8 @@ async function seed() {
           name: role.name,
         },
       })
-      console.log('----role---', role)
     })
   }
-
-
 
   const createMasterAdmin = async () => {
     user = await prisma.user.upsert({

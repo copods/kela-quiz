@@ -1,5 +1,10 @@
-import { resolve } from "node:path"
+/**
+ * By default, Remix will handle generating the HTTP Response for you.
+ * You are free to delete this file if you'd like to, but if you ever want it revealed again, you can run `npx remix reveal` ✨
+ * For more information, see https://remix.run/file-conventions/entry.server
+ */
 
+import { resolve } from "node:path"
 import type { EntryContext } from "@remix-run/node"
 import { RemixServer } from "@remix-run/react"
 import { createInstance } from "i18next"
@@ -7,7 +12,7 @@ import Backend from "i18next-fs-backend"
 import { renderToString } from "react-dom/server"
 import { initReactI18next } from "react-i18next"
 
-import i18n from "./i18n.server"
+import i18n from "./i18.server"
 import i18nextOptions from "./i18nextOptions"
 
 export default async function handleRequest(
@@ -53,24 +58,3 @@ export default async function handleRequest(
     headers: responseHeaders,
   })
 }
-
-// export default async function handleRequest(
-//   request,
-//   statusCode,
-//   headers,
-//   context
-// ) {
-
-//   const markup = renderToString(
-//     <I18nextProvider i18n={instance}>
-//       <RemixServer context={context} url={request.url} />
-//     </I18nextProvider>
-//   );
-
-//   headers.set("Content-Type", "text/html");
-
-//   return new Response("<!DOCTYPE html>" + markup, {
-//     status: statusCode,
-//     headers: headers,
-//   })
-// }

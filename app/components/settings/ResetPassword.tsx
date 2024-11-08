@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 
-import { useFetcher, useTransition } from "@remix-run/react"
+import { useFetcher, useNavigation } from "@remix-run/react"
 import { useTranslation } from "react-i18next"
 import { toast } from "react-toastify"
 
@@ -19,6 +19,13 @@ import {
   trimValue,
 } from "~/utils"
 
+interface PasswordResetFetcherData {
+  errors?: {
+    valid?: string
+    passShouldNotBeSame?: string
+  }
+}
+
 const ResetPassword = ({
   openResetPassModel,
   setOpenResetPassModel,
@@ -27,7 +34,7 @@ const ResetPassword = ({
   setOpenResetPassModel: (e: boolean) => void
 }) => {
   const { t } = useTranslation()
-  const fetcher = useFetcher()
+  const fetcher = useFetcher<PasswordResetFetcherData>()
 
   useEffect(() => {
     if (fetcher.data && fetcher.data === "DONE") {
@@ -35,7 +42,7 @@ const ResetPassword = ({
       toast.success(t("settings.passResetSuccessfully"))
     }
   }, [fetcher.data, setOpenResetPassModel, t])
-  const transition = useTransition()
+  const transition = useNavigation()
 
   const [password, setPassword] = useState("")
   const [newPassword, setNewPassword] = useState("")

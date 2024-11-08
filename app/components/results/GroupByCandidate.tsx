@@ -18,12 +18,13 @@ import Table from "../common-components/TableComponent"
 
 import resendTestLink from "~/../public/assets/resend-test-invitation.svg"
 import type { CandidateResult, tableColumnType } from "~/interface/Interface"
+import type { loader } from "~/routes/$workspaceId.results.groupByCandidate._index"
 
 const GroupByCandidate = () => {
   const { t } = useTranslation()
 
   const { candidates, candidatesCount, currentWorkspaceId, currentPage, env } =
-    useLoaderData()
+    useLoaderData<typeof loader>()
 
   const navigate = useNavigate()
   const location = useLocation()
@@ -76,7 +77,7 @@ const GroupByCandidate = () => {
         {data.firstName && data.lastName && data.startedAt ? (
           <Link
             to={`/${currentWorkspaceId}/results/groupByTests/${data?.candidateResult[0]?.testId}/${data?.candidateId}`}
-            className="col-span-2 flex truncate font-semibold text-primary"
+            className="text-primary col-span-2 flex truncate font-semibold"
             title={candidateName}
           >
             {NameC}

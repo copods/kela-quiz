@@ -12,10 +12,11 @@ import CandidateQuestionStepper from "./CandidateQuestionStepper"
 
 import type { Option } from "~/interface/Interface"
 import { QuestionTypes } from "~/interface/Interface"
+import type { loader } from "~/routes/assessment.$assessmentId.$sectionId.$questionId"
 
 const Question = () => {
   const { t } = useTranslation()
-  const { question } = useLoaderData()
+  const { question } = useLoaderData<typeof loader>()
   const questionType = question?.question?.questionType?.value
   const [userAnswer, setUserAnswer] = useState(
     questionType === QuestionTypes.singleChoice
@@ -87,7 +88,7 @@ const Question = () => {
     <div className="flex h-screen flex-col">
       <CandidateQuestionHeader />
 
-      <div className="flex w-full flex-1 flex-col overflow-hidden bg-questionBackground">
+      <div className="bg-questionBackground flex w-full flex-1 flex-col overflow-hidden">
         <form method="post" className="flex max-h-full flex-1 flex-col">
           <div className="px-5 py-5">
             <CandidateQuestionStepper />

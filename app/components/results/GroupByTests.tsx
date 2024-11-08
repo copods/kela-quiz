@@ -10,6 +10,7 @@ import Table from "../common-components/TableComponent"
 import { useCommonContext } from "~/context/Common.context"
 import { sortByOrder } from "~/interface/Interface"
 import type { tableColumnType, OtherFilters, Test } from "~/interface/Interface"
+import type { loader } from "~/routes/$workspaceId.results.groupByTests._index"
 
 const sortByDetails = [
   {
@@ -40,7 +41,7 @@ const GroupByTests = () => {
   const { setCustomStorage, getStoredValue, clearStoredValue } =
     useCommonContext()
   const navigate = useNavigate()
-  const candidateTestData = useLoaderData()
+  const candidateTestData = useLoaderData<typeof loader>()
   const [sortDirection, onSortDirectionChange] = useState(
     sortByOrder.desc as string
   )
@@ -78,7 +79,7 @@ const GroupByTests = () => {
         to={`/${candidateTestData.currentWorkspaceId}/results/groupByTests/${data.id}`}
         id="group-by-item-test"
         data-cy="group-by-item-test"
-        className="groupByItemTest text-base font-semibold text-primary"
+        className="groupByItemTest text-primary text-base font-semibold"
         onClick={() => clearStoredValue("candidateListFilter")}
       >
         {data.name}

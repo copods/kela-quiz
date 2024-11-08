@@ -33,7 +33,7 @@ const FeedbackComponent = ({
   }
 
   return (
-    <div className="flex h-728 w-728 flex-col overflow-hidden rounded-lg bg-white shadow-sm">
+    <div className="h-728 w-728 flex flex-col overflow-hidden rounded-lg bg-white shadow-sm">
       <div
         className="flex w-full flex-col items-center border-b border-gray-200 px-4 py-6"
         data-cy="feedback-form-header"

@@ -11,10 +11,11 @@ import Checkbox from "../form/CheckBox"
 import Logo from "~/components/Logo"
 import { routes } from "~/constants/route.constants"
 import type { LoginProps } from "~/interface/Interface"
+import type { loader } from "~/routes/sign-in"
 function Login({ actionData, redirectTo }: LoginProps) {
   const { t } = useTranslation()
 
-  const loginLoaderData = useLoaderData()
+  const loginLoaderData = useLoaderData<typeof loader>()
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [rememberMe, setRememberMe] = useState(false)
@@ -77,7 +78,7 @@ function Login({ actionData, redirectTo }: LoginProps) {
     navigate(routes.forgotPassword)
   }
   return (
-    <div className="z-10 flex w-full max-w-554 flex-col items-center justify-center rounded-lg bg-white px-24 drop-shadow-xl">
+    <div className="max-w-554 z-10 flex w-full flex-col items-center justify-center rounded-lg bg-white px-24 drop-shadow-xl">
       <div className="z-20 -mt-8 mb-6">
         <Logo height="64" width="64" />
       </div>
@@ -125,7 +126,7 @@ function Login({ actionData, redirectTo }: LoginProps) {
                 if (e.key === "Enter") forgetPassword()
               }}
               role="link"
-              className="cursor-pointer text-sm text-primary"
+              className="text-primary cursor-pointer text-sm"
             >
               {t("forgotPasswordConstants.header")}
             </span>

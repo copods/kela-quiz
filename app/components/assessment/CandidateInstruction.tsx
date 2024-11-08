@@ -7,14 +7,16 @@ import Header from "./Header"
 
 import checkIcon from "~/../public/assets/checkIcon.svg"
 import contactSupport from "~/../public/assets/contactSupport.svg"
-import type { SectionInTest, TestSection } from "~/interface/Interface"
+import type { SectionInTest } from "~/interface/Interface"
+import type { loader } from "~/routes/assessment.$assessmentId.instructions"
 
 const CandidateInstruction = () => {
   const { t } = useTranslation()
-  const { firstSection, instructions, candidate } = useLoaderData()
+  const { firstSection, instructions, candidate } =
+    useLoaderData<typeof loader>()
 
   const candidateSections = instructions?.test?.sections.sort(
-    (a: TestSection & { order: number }, b: TestSection & { order: number }) =>
+    (a: { order: number }, b: { order: number }) =>
       a.order > b.order ? 1 : b.order > a.order ? -1 : 0
   )
   const submit = useSubmit()
@@ -58,7 +60,7 @@ const CandidateInstruction = () => {
             </p> */}
           </div>
           <div className="flex gap-12">
-            <div className="flex w-438 flex-col gap-10 rounded-lg border border-gray-50 bg-white p-10 shadow-sm">
+            <div className="w-438 flex flex-col gap-10 rounded-lg border border-gray-50 bg-white p-10 shadow-sm">
               <h3
                 className="text-center text-2xl font-bold text-gray-900"
                 data-cy="testSectionHeading"
@@ -86,7 +88,7 @@ const CandidateInstruction = () => {
                 )}
               </div>
             </div>
-            <div className="flex w-438 flex-col gap-10 rounded-lg border border-gray-50 bg-white p-10 shadow-sm">
+            <div className="w-438 flex flex-col gap-10 rounded-lg border border-gray-50 bg-white p-10 shadow-sm">
               <h3
                 className="text-center text-2xl font-bold text-gray-900"
                 data-cy="instructionSectionHeading"

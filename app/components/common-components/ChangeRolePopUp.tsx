@@ -15,6 +15,7 @@ import {
 } from "./Dialog"
 
 import type { Role } from "~/interface/Interface"
+import type { action } from "~/routes/$workspaceId.members"
 
 export default function ChangeRolePopUp({
   open,
@@ -30,7 +31,7 @@ export default function ChangeRolePopUp({
   roles: Role[]
 }) {
   const [userRole, setUserRole] = useState(currentRole)
-  const actionData = useActionData()
+  const actionData = useActionData<typeof action>()
 
   const submit = useSubmit()
 

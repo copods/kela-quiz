@@ -198,7 +198,9 @@ const ResultDetailsQuestionsPreview = ({
                 ? textAnswer.map((textAnswer: CorrectAnswer, index: number) => {
                     return (
                       <div key={index} className={`h-full ${optionContainer}`}>
-                        {textAnswer}
+                        {typeof textAnswer === "string"
+                          ? textAnswer
+                          : textAnswer?.answer || ""}
                       </div>
                     )
                   })

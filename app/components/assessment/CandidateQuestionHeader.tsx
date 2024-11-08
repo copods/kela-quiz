@@ -5,9 +5,10 @@ import TimerComponent from "./Timer"
 
 import logo from "~/../public/assets/logo.svg"
 import type { SectionInCandidateTest } from "~/interface/Interface"
+import type { loader } from "~/routes/assessment.$assessmentId.$sectionId.$questionId"
 
 const CandidateQuestionHeader = () => {
-  const { candidateTests, section } = useLoaderData()
+  const { candidateTests, section } = useLoaderData<typeof loader>()
   const { t } = useTranslation()
 
   let candidateSection: SectionInCandidateTest | null = null

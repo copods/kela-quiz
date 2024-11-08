@@ -91,20 +91,20 @@ const getToaster = () => {
 
 const Verification = () => {
   const { t } = useTranslation()
-  const loaderData = useLoaderData()
-  const action = useActionData()
+  const loaderData = useLoaderData<typeof loader>()
+  const actionData = useActionData<typeof action>()
   useEffect(() => {
-    if (action?.value === checks.success && !getToaster().successToaster) {
+    if (actionData?.value === checks.success && !getToaster().successToaster) {
       toast.success(t("statusCheck.otpSent"))
     } else if (
-      action?.value === checks.commonError &&
+      actionData?.value === checks.commonError &&
       !getToaster().errorToaster
     ) {
       toast.error(t("statusCheck.erroSendingOtp"))
-    } else if (action?.value === false && !getToaster().errorToaster) {
+    } else if (actionData?.value === false && !getToaster().errorToaster) {
       toast.error(t("statusCheck.correctOtp"))
     }
-  }, [action?.timestamp, action?.value, t])
+  }, [actionData?.timestamp, actionData?.value, t])
   return (
     <div className="flex h-full flex-col">
       <Header />

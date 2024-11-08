@@ -14,6 +14,7 @@ import Header from "~/components/SideNavHeader"
 import { actions } from "~/constants/action.constants"
 import { routes } from "~/constants/route.constants"
 import type { UserWorkspace } from "~/interface/Interface"
+import type { loader } from "~/routes/$workspaceId"
 
 type SideNavGuideItem = {
   navGuide: string
@@ -30,7 +31,11 @@ const SideNav = () => {
   const { t } = useTranslation()
   const param = useParams()
   const [showAddWorkspaceModal, setShowAddWorkspaceModal] = useState(false)
-  const { workspaces = [], currentWorkspaceId, permission } = useLoaderData()
+  const {
+    workspaces = [],
+    currentWorkspaceId,
+    permission,
+  } = useLoaderData<typeof loader>()
   const [workspace, setWorkspace] = useState<string>(param.workspaceId!)
   const fetcher = useFetcher()
   const tempWorkspaces = workspaces.map((userWorkspace: UserWorkspace) => {

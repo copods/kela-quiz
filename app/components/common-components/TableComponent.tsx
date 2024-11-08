@@ -69,7 +69,7 @@ const HeaderDataCell = ({
       }}
       data-cy={title}
       id="table-th"
-      className={`flex flex-1 items-center border-b bg-tableBg px-4 text-sm text-gray-500 ${
+      className={`bg-tableBg flex flex-1 items-center border-b px-4 text-sm text-gray-500 ${
         index === 0
           ? "rounded-tl-md"
           : index === totalHeader
@@ -125,7 +125,7 @@ const TableDataCell = <T,>({
       }}
       className="flex h-16 max-h-20 flex-1 items-center truncate border-b px-4 text-gray-700"
     >
-      {rowData[field as keyof typeof rowData]}
+      {String(rowData[field as keyof T] ?? "")}
     </div>
   )
 }
@@ -151,15 +151,15 @@ const Table = <T extends object>({
     return null
   }
   return (
-    <div className="flex h-full flex-1 flex-col overflow-auto rounded-md border-t border-tableBorder">
+    <div className="border-tableBorder flex h-full flex-1 flex-col overflow-auto rounded-md border-t">
       <div
-        className={`border-l border-r border-tableBorder shadow-tableShadow ${
+        className={`border-tableBorder shadow-tableShadow border-l border-r ${
           paginationEnabled ? "rounded-t-md" : "rounded-md"
         }`}
       >
         <div
           id="table-head-row"
-          className="sticky top-0 z-10 flex h-3.25 rounded-t-md bg-gray-100"
+          className="h-3.25 sticky top-0 z-10 flex rounded-t-md bg-gray-100"
         >
           {columns.map((header, index) => (
             <HeaderDataCell
@@ -178,7 +178,7 @@ const Table = <T extends object>({
             <div
               id="table-row"
               key={String(rowData.id) + i}
-              className="tableRow flex bg-white hover:bg-hover"
+              className="tableRow hover:bg-hover flex bg-white"
             >
               {columns.map((column, j) =>
                 column.render ? (
@@ -203,7 +203,7 @@ const Table = <T extends object>({
         )}
       </div>
       {paginationEnabled ? (
-        <div className="sticky bottom-0 z-0 flex min-h-2.875 items-center rounded-b-md border border-tableBorder bg-tableBg px-4">
+        <div className="min-h-2.875 border-tableBorder bg-tableBg sticky bottom-0 z-0 flex items-center rounded-b-md border px-4">
           <Pagination
             currentPage={currentPage!}
             onPageChange={(page) => onPageChange?.(page)}

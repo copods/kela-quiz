@@ -10,11 +10,12 @@ import Button from "../common-components/Button"
 import Loading from "../common-components/Loading"
 
 import { QuestionTypes } from "~/interface/Interface"
+import type { loader, action } from "~/routes/$workspaceId.tests.$sectionId"
 
 const CSVQuestionUploadDrawer = ({ open, setOpen, data, setData }: any) => {
   const [invalidQuestions, setInvalidQuestions] = useState(0)
   const [loading, setLoading] = useState(false)
-  const { sectionDetails, questionTypes } = useLoaderData()
+  const { sectionDetails, questionTypes } = useLoaderData<typeof loader>()
 
   const { t } = useTranslation()
   const submit = useSubmit()
@@ -163,7 +164,7 @@ const CSVQuestionUploadDrawer = ({ open, setOpen, data, setData }: any) => {
     )
   }
 
-  const actionData = useActionData()
+  const actionData = useActionData<typeof action>()
   useEffect(() => {
     if (actionData?.msg === "success") {
       setLoading(false)

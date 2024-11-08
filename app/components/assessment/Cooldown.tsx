@@ -7,10 +7,11 @@ import Button from "../common-components/Button"
 import Header from "./Header"
 
 import cooldownImage from "~/../public/assets/cooldown.svg"
+import type { loader } from "~/routes/assessment.$assessmentId.$sectionId.cooldown"
 
 const Cooldown = () => {
   const { t } = useTranslation()
-  const { candidateSection, candidateTests } = useLoaderData()
+  const { candidateSection, candidateTests } = useLoaderData<typeof loader>()
   const submit = useSubmit()
   const startSection = async () => {
     //getting first test of this section
@@ -48,7 +49,7 @@ const Cooldown = () => {
     <div className="flex h-screen w-screen flex-col bg-slate-50">
       <Header />
       <div className="py-auto flex flex-1 items-center justify-center overflow-auto">
-        <div className="flex w-coolDownCard flex-col items-center justify-center gap-8 bg-white py-12">
+        <div className="w-coolDownCard flex flex-col items-center justify-center gap-8 bg-white py-12">
           <span className="text-lg font-medium text-gray-500">
             {t("candidateExamConstants.takeBreak")}
           </span>

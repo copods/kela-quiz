@@ -106,7 +106,7 @@ export const action: ActionFunction = async ({ params, request }) => {
 }
 
 const AssessmentQuestionForSection = () => {
-  const { question } = useLoaderData()
+  const { question } = useLoaderData<typeof loader>()
   return <Question key={question.id} />
 }
 

@@ -391,20 +391,22 @@ export const NewDropdownField = <
                                 <span
                                   className={classNames(
                                     selected
-                                      ? "font-semibold text-primary"
+                                      ? "text-primary font-semibold"
                                       : "not-selected font-normal",
                                     "dropdown-option block truncate"
                                   )}
                                   id="option"
                                 >
                                   {labelKey
-                                    ? (
-                                        option as Record<
-                                          typeof labelKey,
-                                          string
-                                        >
-                                      )[labelKey]
-                                    : option}
+                                    ? String(
+                                        (
+                                          option as Record<
+                                            typeof labelKey,
+                                            string
+                                          >
+                                        )[labelKey]
+                                      )
+                                    : String(option)}
                                 </span>
                                 {helperText && (
                                   <span className="text-xs leading-4 text-gray-500">
@@ -422,7 +424,7 @@ export const NewDropdownField = <
                               {selected ? (
                                 <span
                                   className={classNames(
-                                    "absolute inset-y-0 right-0 flex items-center pr-4 text-primary"
+                                    "text-primary absolute inset-y-0 right-0 flex items-center pr-4"
                                   )}
                                 >
                                   <Icon

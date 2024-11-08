@@ -35,7 +35,7 @@ const StepsTabComponent = ({
             }}
           >
             <hr
-              className={`mb-3 h-1 w-full rounded-1 border-0 ${
+              className={`rounded-1 mb-3 h-1 w-full border-0 ${
                 tab.id === currentTab ||
                 (currentTab == tabs[1].id && tab.id == tabs[0].id) ||
                 (currentTab == tabs[2].id &&
@@ -46,7 +46,7 @@ const StepsTabComponent = ({
             />
             <div
               title={tab.name}
-              className="stepsName mb-1 text-xs font-semibold text-primary"
+              className="stepsName text-primary mb-1 text-xs font-semibold"
             >
               {tab.name}
             </div>

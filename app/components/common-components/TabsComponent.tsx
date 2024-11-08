@@ -18,7 +18,7 @@ const TabComponent = ({ tab }: { tab: TabsComponent }) => {
       <div
         className={`px-6 py-4 text-base  ${
           tab.active
-            ? "font-semibold text-primary"
+            ? "text-primary font-semibold"
             : "font-normal text-gray-600"
         }`}
       >

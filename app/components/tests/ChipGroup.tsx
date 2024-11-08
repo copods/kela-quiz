@@ -23,7 +23,7 @@ const ChipGroup = ({
 
   return (
     <div className="chip-group mr-3 flex items-center gap-2" ref={elementRef}>
-      <div className="truncate rounded-52 bg-blue-50 px-1.5 py-1.5 text-xs text-gray-900">
+      <div className="rounded-52 truncate bg-blue-50 px-1.5 py-1.5 text-xs text-gray-900">
         {sections[0]?.section.name}
       </div>
       {sections.length > 1 && (
@@ -36,7 +36,7 @@ const ChipGroup = ({
             >
               <div
                 aria-label={`+ ${sections.length - 1} Sections in Test`}
-                className="cursor-pointer rounded-52 bg-blue-50 px-1 py-1 text-xs text-gray-900"
+                className="rounded-52 cursor-pointer bg-blue-50 px-1 py-1 text-xs text-gray-900"
               >
                 + {sections.length - 1}
               </div>
@@ -63,7 +63,7 @@ const ChipGroup = ({
                 {sections.map((sect) => {
                   return (
                     <Menu.Item key={sect?.section?.id}>
-                      <span className="truncate rounded-52 bg-blue-50 px-2 py-1.5 text-xs text-gray-900">
+                      <span className="rounded-52 truncate bg-blue-50 px-2 py-1.5 text-xs text-gray-900">
                         {sect?.section?.name}
                       </span>
                     </Menu.Item>

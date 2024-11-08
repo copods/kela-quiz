@@ -81,9 +81,9 @@ const SelectSectionCard = ({
   return (
     <div
       id="section"
-      className={`flex min-w-sectionCard flex-1 flex-col gap-2 rounded-lg  ${
+      className={`min-w-sectionCard flex flex-1 flex-col gap-2 rounded-lg  ${
         section.isSelected
-          ? "border-3 border-primary bg-white px-18 py-22"
+          ? "border-3 border-primary px-18 py-22 bg-white"
           : "border border-gray-300 bg-gray-100 px-5 py-6"
       } h-max`}
     >

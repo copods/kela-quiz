@@ -13,6 +13,16 @@ import { routes } from "~/constants/route.constants"
 import { sortByOrder } from "~/interface/Interface"
 import type { TestSection, AddedSectionDetails } from "~/interface/Interface"
 
+interface SerializedTestSection
+  extends Omit<TestSection, "createdAt" | "updatedAt"> {
+  createdAt: string
+  updatedAt: string
+}
+
+interface FetcherData {
+  sections: SerializedTestSection[]
+}
+
 const SelectSections = ({
   sections,
   setSections,
@@ -48,7 +58,7 @@ const SelectSections = ({
     },
   ]
 
-  const fetcher = useFetcher()
+  const fetcher = useFetcher<FetcherData>()
   const { t } = useTranslation()
   const navigate = useNavigate()
 
@@ -85,12 +95,17 @@ const SelectSections = ({
 
   useEffect(() => {
     const { data } = fetcher
-    if (data) {
-      // if there is nothing in selected Array then we are updating the section Array
-      let sortedData = data.sections
+    if (data?.sections) {
+      // Convert string dates to Date objects
+      const convertedSections = data.sections.map((section) => ({
+        ...section,
+        createdAt: new Date(section.createdAt),
+        updatedAt: new Date(section.updatedAt),
+      })) as TestSection[]
+
+      let sortedData = convertedSections
       if (allSelectedSections.length > 0) {
-        // if there is something in selected array then we are updating that section array here
-        sortedData = data.sections.map((section: TestSection) => {
+        sortedData = convertedSections.map((section) => {
           const selected = allSelectedSections.find(
             (selected) => selected.id === section.id
           )
@@ -99,8 +114,7 @@ const SelectSections = ({
       }
       updateSectionsList(sortedData)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fetcher])
+  }, [fetcher, allSelectedSections, updateSectionsList])
 
   return (
     <div className="flex w-full flex-1 flex-col gap-6 overflow-x-auto rounded-lg bg-white p-6 shadow">
@@ -134,7 +148,7 @@ const SelectSections = ({
               return (
                 <div
                   key={temp}
-                  className="h-1 min-w-sectionCard flex-1 border border-transparent px-5 py-6"
+                  className="min-w-sectionCard h-1 flex-1 border border-transparent px-5 py-6"
                 ></div>
               )
             })}
