@@ -7,7 +7,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "noEmit": true,
-    "types": ["node"],
+    "types": ["node", "cypress", "@testing-library/cypress"],
     "esModuleInterop": true,
     "jsx": "react-jsx",
     "moduleResolution": "node",
