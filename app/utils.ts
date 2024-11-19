@@ -168,9 +168,9 @@ export function checkPasswordStrength(password: string) {
   const TotalRepeatCount = Array.from(new Set([...password])).reduce(
     (prev, curr) => {
       let repeatCount = 0
-        ;[...password].forEach((char, i) => {
-          if (char === curr && password[i + 1] === curr) repeatCount++
-        })
+      ;[...password].forEach((char, i) => {
+        if (char === curr && password[i + 1] === curr) repeatCount++
+      })
       repeatCount && (prev += repeatCount + 1)
       return prev
     },
