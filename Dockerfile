@@ -1,52 +1,31 @@
-# base node image
-FROM node:16-bullseye-slim as base
 
-# set for base and all layer that inherit from it
-ENV NODE_ENV production
+# Use Node.js 20 with Alpine for a lightweight base image
+FROM node:20-alpine
 
-# Install openssl for Prisma
-RUN apt-get update && apt-get install -y openssl
+# Set the working directory
+WORKDIR /app-doc-build
 
-# Install all node_modules, including dev dependencies
-FROM base as deps
+# Copy package.json and package-lock.json first (to leverage Docker's caching)
+COPY package.json package-lock.json ./
 
-WORKDIR /myapp
+# Install dependencies
+RUN npm install 
 
-ADD package.json package-lock.json ./
-RUN npm install --production=false
-
-# Setup production node_modules
-FROM base as production-deps
-
-WORKDIR /myapp
-
-COPY --from=deps /myapp/node_modules /myapp/node_modules
-ADD package.json package-lock.json ./
-RUN npm prune --production
-
-# Build the app
-FROM base as build
-
-WORKDIR /myapp
-
-COPY --from=deps /myapp/node_modules /myapp/node_modules
-
-ADD prisma .
+# Copy Prisma schema and initialize the Prisma client
+COPY prisma ./prisma
 RUN npx prisma generate
 
-ADD . .
+# Copy the rest of the app's source code
+COPY . .
+
+# Build the Remix app
 RUN npm run build
 
-# Finally, build the production image with minimal footprint
-FROM base
+# Set the environment to production
+ENV NODE_ENV=production
 
-WORKDIR /myapp
+# Expose the application's port
+EXPOSE 3000
 
-COPY --from=production-deps /myapp/node_modules /myapp/node_modules
-COPY --from=build /myapp/node_modules/.prisma /myapp/node_modules/.prisma
-
-COPY --from=build /myapp/build /myapp/build
-COPY --from=build /myapp/public /myapp/public
-ADD . .
-
-CMD ["npm", "start"]
+# Start the application
+CMD ["npm", "run", "start"]
